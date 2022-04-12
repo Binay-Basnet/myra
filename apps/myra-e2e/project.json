@@ -1,0 +1,28 @@
+{
+  "root": "apps/myra-e2e",
+  "sourceRoot": "apps/myra-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/myra-e2e/cypress.json",
+        "devServerTarget": "myra:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "myra:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/myra-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["myra"]
+}
