@@ -107,3 +107,5 @@ export function TabMenu() {
     </Box>
   );
 }
+
+export default TabMenu;
