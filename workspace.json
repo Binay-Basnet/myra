@@ -3,7 +3,7 @@
   "projects": {
     "myra": "apps/myra",
     "myra-e2e": "apps/myra-e2e",
-    "shared-ui": "libs/shared/ui",
-    "storybook.e2e-ui-e2e": "apps/storybook.e2e/ui-e2e"
+    "myra-ui": "libs/myra/ui",
+    "myra-ui-e2e": "apps/myra-ui-e2e"
   }
 }

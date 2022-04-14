@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import SharedUi from './shared-ui';
+import MyraUi from './myra-ui';
 
-describe('SharedUi', () => {
+describe('MyraUi', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<SharedUi />);
+    const { baseElement } = render(<MyraUi />);
     expect(baseElement).toBeTruthy();
   });
 });

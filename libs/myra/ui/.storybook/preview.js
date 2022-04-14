@@ -1,8 +1,6 @@
-import { AppProps } from 'next/app';
-import Head from 'next/head';
+// import { ThemeProvider as Emotion10ThemeProvider } from 'emotion-theming';
 import { ChakraProvider } from '@chakra-ui/react';
 
-// 1. Import the extendTheme function
 import { extendTheme } from '@chakra-ui/react';
 
 const primary = '#8CC63F';
@@ -39,17 +37,12 @@ const theme = extendTheme({
   },
 });
 
-function CustomApp({ Component, pageProps }: AppProps) {
+const withThemeProvider = (Story, context) => {
   return (
     <ChakraProvider theme={theme}>
-      <Head>
-        <title>Welcome to myra!</title>
-      </Head>
-      <main className="app">
-        <Component {...pageProps} />
-      </main>
+      <Story {...context} />
     </ChakraProvider>
   );
-}
+};
 
-export default CustomApp;
+export const decorators = [withThemeProvider];

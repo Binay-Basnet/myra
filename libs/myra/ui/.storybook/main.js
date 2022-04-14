@@ -10,6 +10,7 @@ module.exports = {
     '../src/lib/**/*.stories.mdx',
     '../src/lib/**/*.stories.@(js|jsx|ts|tsx)',
   ],
+  staticDirs: ['../../../../apps/myra/public'],
   addons: [...rootMain.addons, '@nrwl/react/plugins/storybook'],
   webpackFinal: async (config, { configType }) => {
     // apply any global webpack configs that might have been specified in .storybook/main.js

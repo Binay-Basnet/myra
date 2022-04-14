@@ -1,0 +1,12 @@
+import { Story, Meta } from '@storybook/react';
+import { MyraUi, MyraUiProps } from './myra-ui';
+
+export default {
+  component: MyraUi,
+  title: 'MyraUi',
+} as Meta;
+
+const Template: Story<MyraUiProps> = (args) => <MyraUi {...args} />;
+
+export const Primary = Template.bind({});
+Primary.args = {};

@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@saccos/shared/ui": ["libs/shared/ui/src/index.ts"]
+      "@saccos/myra/ui": ["libs/myra/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

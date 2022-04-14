@@ -1,0 +1,28 @@
+{
+  "root": "apps/myra-ui-e2e",
+  "sourceRoot": "apps/myra-ui-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/myra-ui-e2e/cypress.json",
+        "devServerTarget": "myra-ui:storybook"
+      },
+      "configurations": {
+        "ci": {
+          "devServerTarget": "myra-ui:storybook:ci"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/myra-ui-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["myra-ui"]
+}
