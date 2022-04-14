@@ -2,6 +2,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
 
+// ! TODO move this theme to a separate directory within libs folder
 // 1. Import the extendTheme function
 import { extendTheme } from '@chakra-ui/react';
 
@@ -10,7 +11,11 @@ const primary = '#8CC63F';
 const theme = extendTheme({
   styles: {
     global: () => ({
-      background: '#EEF2F7',
+      'html, body': {
+        fontSize: 'sm',
+        background: '#EEF2F7',
+        lineHeight: 'tall',
+      },
     }),
   },
   colors: {
