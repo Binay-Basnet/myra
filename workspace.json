@@ -4,6 +4,7 @@
     "myra": "apps/myra",
     "myra-e2e": "apps/myra-e2e",
     "myra-ui": "libs/myra/ui",
-    "myra-ui-e2e": "apps/myra-ui-e2e"
+    "myra-ui-e2e": "apps/myra-ui-e2e",
+    "myra-util": "libs/myra/util"
   }
 }

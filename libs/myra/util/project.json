@@ -1,0 +1,23 @@
+{
+  "root": "libs/myra/util",
+  "sourceRoot": "libs/myra/util/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/myra/util/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/myra/util"],
+      "options": {
+        "jestConfig": "libs/myra/util/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

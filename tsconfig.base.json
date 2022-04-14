@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@saccos/myra/ui": ["libs/myra/ui/src/index.ts"]
+      "@saccos/myra/ui": ["libs/myra/ui/src/index.ts"],
+      "@saccos/myra/util": ["libs/myra/util/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
