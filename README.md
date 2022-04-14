@@ -1,94 +1,85 @@
-
-
 # Saccos
 
 This project was generated using [Nx](https://nx.dev).
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+## Folder Structure
 
-🔎 **Smart, Fast and Extensible Build System**
+Learn about workspace structure from [here](https://nx.dev/structure/applications-and-libraries)
 
-## Adding capabilities to your workspace
+Also understand carefully about library [types](https://nx.dev/structure/library-types), [grouping libraries](https://nx.dev/structure/grouping-libraries) and what goes in apps and libs folder. Explore all the sub topics from WORKSPACE STRUCTURE group within the [nx](https://nx.dev) documentation.
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+The actual working directory for now is here:
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+```
+apps/
+    myra/
+```
 
-Below are our core plugins:
+This app is a [Nextjs](https://nextjs.org/) application.
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+The UI libraries for the app is generated here:
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+```
+libs/
+  myra/
+    ui/
+```
 
-## Generate an application
+This workspace structure is subject to change with growing codebase so carefully read the [nx](https://nx.dev) documentation as we will be strictly following the workspace structure provided by nx documentation.
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+## Some Short commands
 
-> You can use any of the plugins above to generate applications as well.
+- To generate UI components for myra app
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+```cmd
+  make create-myra-ui name=NameOfYourComponent
+```
 
-## Generate a library
+This command generates a UI component with tests and stories on
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+```
+  libs/
+    myra/
+      ui/
+        src/
+          lib/
+```
 
-> You can also use any of the plugins above to generate libraries as well.
+## How to start
 
-Libraries are shareable across libraries and applications. They can be imported from `@saccos/mylib`.
+Runs the dev server for myra application
 
-## Development server
+```
+yarn start:myra
+```
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+Runs the storybook for myra ui component
 
-## Code scaffolding
+```
+yarn storybook:myra-ui
+```
 
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+## Existing problem:
 
-## Build
+From package.json file I've removed emotion dependency.
 
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```
+//package.json
 
-## Running unit tests
+ "@emotion/react": "^11",
+```
 
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+This dependency is required by [Chakra Ui](https://chakra-ui.com/guides/getting-started/nextjs-guide) but conflicts with storybook. For that I tried the follwing things:
 
-Run `nx affected:test` to execute the unit tests affected by a change.
+- [update .storybook/main.js](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#emotion11-quasi-compatibility)
+- [upgraded storybook](https://github.com/storybookjs/storybook/issues/13114#issuecomment-1026850608)
 
-## Running end-to-end tests
+But somehow the storybook still seem to parse package.json and throw error when it finds unsupported `@emotion/react` version (^11). So to run storybook I removed the dependency fromm package.json but It should be available in our node_modules directory. So, install the package with:
 
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
+```
+yarn add @emotion/react@^11
+```
 
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
+and remove from `package.json` again.
 
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+I know its weird. But I didn't find any other way. will be looking into solutions though. Any help will be appreciated!!
