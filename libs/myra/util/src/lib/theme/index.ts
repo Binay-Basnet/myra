@@ -8,7 +8,7 @@ export const theme = extendTheme({
   styles: {
     global: () => ({
       'html, body': {
-        fontSize: 'sm',
+        fontSize: 'md',
         background: '#EEF2F7',
         lineHeight: 'tall',
       },

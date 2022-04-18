@@ -12,8 +12,8 @@
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^1.8.8",
+    "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@nrwl/next": "13.10.1",
     "core-js": "^3.6.5",
     "framer-motion": "^6",
     "next": "^12.1.5",
@@ -31,6 +31,7 @@
     "@nrwl/eslint-plugin-nx": "13.10.1",
     "@nrwl/jest": "13.10.1",
     "@nrwl/linter": "13.10.1",
+    "@nrwl/next": "^13.10.2",
     "@nrwl/react": "13.10.1",
     "@nrwl/storybook": "13.10.1",
     "@nrwl/web": "13.10.1",

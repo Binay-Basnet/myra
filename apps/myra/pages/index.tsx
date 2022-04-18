@@ -237,19 +237,11 @@ const nomineeInformation = [
   },
 ];
 
-const Header = () => {
+const Index = () => {
   return (
     <>
       <Navbar />
       <TabMenu />
-    </>
-  );
-};
-
-const Index = () => {
-  return (
-    <>
-      <Header />
       <Container
         maxW="904px"
         height="fit-content"

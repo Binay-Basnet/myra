@@ -12,7 +12,9 @@
         "outputPath": "dist/apps/myra"
       },
       "configurations": {
-        "production": {}
+        "production": {
+          "outputPath": "apps/myra/dist"
+        }
       }
     },
     "serve": {
