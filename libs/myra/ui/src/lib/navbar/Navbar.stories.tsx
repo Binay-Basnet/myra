@@ -1,12 +1,12 @@
 import { Story, Meta } from '@storybook/react';
-import { Navbar, NavbarProps } from './Navbar';
+import { Navbar, MyraUiNavbarProps } from './Navbar';
 
 export default {
   component: Navbar,
   title: 'Navbar',
 } as Meta;
 
-const Template: Story<NavbarProps> = (args) => <Navbar {...args} />;
+const Template: Story<MyraUiNavbarProps> = (args) => <Navbar {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};

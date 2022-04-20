@@ -3,6 +3,8 @@ import {
   Container,
   Heading,
   Grid,
+  Flex,
+  Spacer,
   GridItem,
   FormControl,
   FormLabel,
@@ -11,7 +13,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { GrClose } from 'react-icons/gr';
-
+import { Button } from '@saccos/myra/ui';
+import Link from 'next/link';
 // NAV
 // import { Flex, Image, InputGroup, InputLeftElement } from '@chakra-ui/react';
 // import { AiOutlineSearch } from 'react-icons/ai';
@@ -20,6 +23,7 @@ import { GrClose } from 'react-icons/gr';
 // import Avatar from 'assets/avatar.png';
 
 import { Navbar, TabMenu } from '@saccos/myra/ui';
+import { useState } from 'react';
 // Tab
 
 const forms = [
@@ -27,23 +31,27 @@ const forms = [
     label: 'First Name',
     required: true,
     placeholder: 'First Name',
+    name: 'first_name',
   },
   {
     label: 'Middle Name',
     required: false,
     placeholder: 'Middle Name',
     type: 'text',
+    name: 'middle_name',
   },
   {
     label: 'Last Name',
     required: true,
     placeholder: 'Last Name',
+    name: 'last_name',
   },
   {
     label: 'Gender',
     required: false,
     placeholder: 'Select Gender',
     type: 'select',
+    name: 'gender',
     component: 'select',
   },
   {
@@ -57,31 +65,38 @@ const forms = [
     placeholder: 'Date of Birth',
     type: 'date',
     component: 'datePicker',
+    name: 'dob',
   },
   {
     label: 'Nationality',
     required: false,
+    name: 'nationality',
   },
   {
     label: 'Citizenship No.',
     required: false,
+    name: 'citizenship_no',
   },
   {
     label: 'Place of Issue',
     required: false,
+    name: 'citizenship_issue_place',
   },
   {
     label: 'Citizenship Issued Date',
     type: 'date',
     component: 'datePicker',
+    name: 'citizenship_issue_place',
   },
   {
     label: 'Occupation',
     required: false,
+    name: 'occupation',
   },
   {
     label: 'PAN Number',
     required: false,
+    name: 'panNumber',
   },
 ];
 
@@ -91,6 +106,7 @@ const family = [
     required: false,
     placeholder: "Father's Name",
     component: '',
+    name: 'father_name',
   },
   {
     label: "Mother's Name",
@@ -98,24 +114,28 @@ const family = [
     placeholder: "Mother's Name",
     type: 'text',
     component: '',
+    name: 'mother_name',
   },
   {
     label: "Grandfather's Name",
     required: false,
     placeholder: "Grandfather's Name",
     component: '',
+    name: 'grandfather_name',
   },
   {
     label: "Grandmother's Name",
     required: false,
     placeholder: "Grandmother's Name",
     component: '',
+    name: 'grandmother_name',
   },
   {
     label: "Spouse's Name",
     required: false,
     placeholder: "Spouse's Name",
     component: '',
+    name: 'spouse_name',
   },
 ];
 
@@ -126,12 +146,14 @@ const perAddress = [
     placeholder: 'State',
     component: 'select',
     type: 'text',
+    name: 'state',
   },
   {
     label: 'District',
     required: false,
     placeholder: 'District',
     component: 'select',
+    name: 'district',
     type: 'text',
   },
   {
@@ -139,6 +161,7 @@ const perAddress = [
     required: false,
     placeholder: 'VDC / Municipality',
     component: 'select',
+    name: 'vdc',
     type: 'text',
   },
   {
@@ -146,12 +169,14 @@ const perAddress = [
     required: false,
     placeholder: 'Ward No.',
     type: 'text',
+    name: 'ward_no',
   },
   {
     label: 'Locality',
     required: false,
     placeholder: 'Locality',
     type: 'text',
+    name: 'locality',
   },
 ];
 
@@ -162,6 +187,7 @@ const contactInfo = [
     type: 'text',
     placeholder: 'Office Phone',
     component: '',
+    name: 'office_ph',
   },
   {
     label: 'Residence Phone',
@@ -169,6 +195,7 @@ const contactInfo = [
     type: 'text',
     placeholder: 'Residence Phone',
     component: '',
+    name: 'residense_phn',
   },
   {
     label: 'Mobile Phone',
@@ -176,6 +203,7 @@ const contactInfo = [
     type: 'text',
     placeholder: 'Mobile Phone',
     component: '',
+    name: 'mob_num',
   },
 ];
 
@@ -185,6 +213,7 @@ const nomineeInformation = [
     required: true,
     placeholder: 'First Name',
     component: '',
+    name: 'nominee_first_name',
   },
   {
     label: 'Middle Name',
@@ -192,48 +221,56 @@ const nomineeInformation = [
     placeholder: 'Middle Name',
     type: 'text',
     component: '',
+    name: 'nominee_middle_name',
   },
   {
     label: 'Last Name',
     required: true,
     placeholder: 'Last Name',
     component: '',
+    name: 'nominee_last_name',
   },
   {
     label: 'Title',
     required: false,
     placeholder: 'Title',
     component: '',
+    name: 'nominee_title',
   },
   {
     label: 'Relation',
     required: false,
     placeholder: 'Relation',
     component: '',
+    name: 'nominee_relation',
   },
   {
     label: 'Permanent Address',
     required: false,
     placeholder: 'Address',
     component: '',
+    name: 'nominee_per_address',
   },
   {
     label: 'Citizenship No.',
     required: false,
     placeholder: 'Citizenship No.',
     component: '',
+    name: 'nominee_citizenship_no',
   },
   {
     label: 'Place of Issue',
     required: false,
     placeholder: 'Place of Issue',
     component: '',
+    name: 'nominee_citizenship_issusePlace',
   },
   {
     label: 'Contact Number',
     required: false,
     placeholder: 'Contact Number',
     component: '',
+    name: 'nominee_contactno_no',
   },
 ];
 
@@ -247,6 +284,16 @@ const Header = () => {
 };
 
 const Index = () => {
+  const [personalInformation, setPersonalInformation] = useState({});
+  const onSubmit = () => {
+    console.log(personalInformation);
+    window.localStorage.setItem(
+      'PersonalInfo',
+      JSON.stringify(personalInformation)
+    );
+  };
+
+  console.log('personal Information', personalInformation);
   return (
     <>
       <Header />
@@ -280,15 +327,28 @@ const Index = () => {
           <Box>
             <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
               {forms.map(
-                ({ label, component, type, placeholder, required }, index) =>
+                (
+                  { label, component, type, placeholder, required, name },
+                  index
+                ) =>
                   component === 'select' ? (
                     <GridItem w="100%" h="10" key={label}>
                       <FormControl>
-                        <FormLabel htmlFor="email">{label}</FormLabel>
+                        <FormLabel htmlFor="email">
+                          <>{label} </>
+                        </FormLabel>
+
                         <Select
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
                           placeholder="Select gender"
                           borderRadius="2px"
                           borderColor="#CBD0D6"
+                          name={name}
                         >
                           <option>Male</option>
                           <option>Female</option>
@@ -301,6 +361,13 @@ const Index = () => {
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <input
+                          name={name}
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
                           type={type}
                           style={{
                             borderRadius: '2px',
@@ -316,6 +383,13 @@ const Index = () => {
                       <FormControl isRequired={required}>
                         <FormLabel htmlFor={type}>{label}</FormLabel>
                         <Input
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           borderRadius="2px"
                           borderColor="#CBD0D6"
                           placeholder={placeholder || label}
@@ -346,12 +420,22 @@ const Index = () => {
           <Box>
             <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
               {family.map(
-                ({ label, component, type, placeholder, required }, index) =>
+                (
+                  { label, component, type, placeholder, required, name },
+                  index
+                ) =>
                   component === 'select' ? (
                     <GridItem w="100%" h="10">
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <Select
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           placeholder="Select gender"
                           borderRadius="2px"
                           borderColor="#CBD0D6"
@@ -367,6 +451,13 @@ const Index = () => {
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <input
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           type={type}
                           style={{
                             borderRadius: '2px',
@@ -382,6 +473,13 @@ const Index = () => {
                       <FormControl isRequired={required}>
                         <FormLabel htmlFor={type}>{label}</FormLabel>
                         <Input
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           borderRadius="2px"
                           borderColor="#CBD0D6"
                           placeholder={placeholder || label}
@@ -412,12 +510,22 @@ const Index = () => {
           <Box>
             <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
               {perAddress.map(
-                ({ label, component, type, placeholder, required }, index) =>
+                (
+                  { label, component, type, placeholder, required, name },
+                  index
+                ) =>
                   component === 'select' ? (
                     <GridItem w="100%" h="10">
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <Select
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           placeholder={placeholder}
                           borderRadius="2px"
                           borderColor="#CBD0D6"
@@ -433,6 +541,13 @@ const Index = () => {
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <input
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           type={type}
                           style={{
                             borderRadius: '2px',
@@ -448,6 +563,13 @@ const Index = () => {
                       <FormControl isRequired={required}>
                         <FormLabel htmlFor={type}>{label}</FormLabel>
                         <Input
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           borderRadius="2px"
                           borderColor="#CBD0D6"
                           placeholder={placeholder || label}
@@ -478,12 +600,22 @@ const Index = () => {
           <Box>
             <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
               {contactInfo.map(
-                ({ label, component, type, placeholder, required }, index) =>
+                (
+                  { label, component, type, placeholder, required, name },
+                  index
+                ) =>
                   component === 'select' ? (
                     <GridItem w="100%" h="10">
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <Select
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           placeholder={placeholder}
                           borderRadius="2px"
                           borderColor="#CBD0D6"
@@ -499,6 +631,13 @@ const Index = () => {
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <input
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           type={type}
                           style={{
                             borderRadius: '2px',
@@ -514,6 +653,13 @@ const Index = () => {
                       <FormControl isRequired={required}>
                         <FormLabel htmlFor={type}>{label}</FormLabel>
                         <Input
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           borderRadius="2px"
                           borderColor="#CBD0D6"
                           placeholder={placeholder || label}
@@ -544,12 +690,22 @@ const Index = () => {
           <Box>
             <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
               {nomineeInformation.map(
-                ({ label, component, type, placeholder, required }, index) =>
+                (
+                  { label, component, type, placeholder, required, name },
+                  index
+                ) =>
                   component === 'select' ? (
                     <GridItem w="100%" h="10">
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <Select
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           placeholder={placeholder}
                           borderRadius="2px"
                           borderColor="#CBD0D6"
@@ -565,6 +721,13 @@ const Index = () => {
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <input
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           type={type}
                           style={{
                             borderRadius: '2px',
@@ -580,6 +743,13 @@ const Index = () => {
                       <FormControl isRequired={required}>
                         <FormLabel htmlFor={type}>{label}</FormLabel>
                         <Input
+                          onChange={(e) => {
+                            setPersonalInformation({
+                              ...personalInformation,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          name={name}
                           borderRadius="2px"
                           borderColor="#CBD0D6"
                           placeholder={placeholder || label}
@@ -594,7 +764,6 @@ const Index = () => {
           </Box>
         </Box>
       </Container>
-
       <Container
         maxW="904px"
         height="280px"
@@ -653,6 +822,27 @@ const Index = () => {
             </Grid>
           </Box>
         </Box>
+      </Container>
+      <Container
+        maxW="904px"
+        height="40px"
+        background="white"
+        mt="35"
+        p="0"
+        pb="55px"
+        pt="5px"
+      >
+        <Flex>
+          <Box p="4">form data saved in draft</Box>
+          <Spacer />
+          <Box p="4">
+            <Button onClick={() => onSubmit()} colorScheme="teal" size="md">
+              <Link href="/member">
+                <a>Submit Those things</a>
+              </Link>
+            </Button>
+          </Box>
+        </Flex>
       </Container>
     </>
   );
