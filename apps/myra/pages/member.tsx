@@ -10,9 +10,8 @@ import {
   Input,
 } from '@chakra-ui/react';
 import { GrClose } from 'react-icons/gr';
-import { Navbar, TabMenu } from '@saccos/myra/ui';
-import { useState, useEffect } from 'react';
-import { Button } from '@saccos/myra/ui';
+import { ReactElement, useEffect, useState } from 'react';
+import { Button, MainLayout } from '@saccos/myra/ui';
 import Link from 'next/link';
 
 const InputField = chakra(Input, {
@@ -23,25 +22,16 @@ const InputField = chakra(Input, {
   },
 });
 
-const Header = () => {
-  return (
-    <>
-      <Navbar />
-      <TabMenu />
-    </>
-  );
-};
-
 const Member = () => {
-  const [member, setMember] = useState<any>([]);
+  const [member, setMember] = useState({});
+
   useEffect(() => {
-    setMember(JSON.parse(window.localStorage.getItem('PersonalInfo')));
+    setMember(JSON.parse(localStorage.getItem('PersonalInfo')));
   }, []);
-  console.log(member);
+  const translatableFieldsArray = Object.keys(member);
 
   return (
     <>
-      <Header />
       <Container
         maxW="904px"
         height="fit-content"
@@ -66,166 +56,33 @@ const Member = () => {
           <GrClose size="14px" color="#91979F" />
         </Box>
 
-        {member.first_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.first_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField type="text" value={member.first_name} />
-            </Box>
-          </HStack>
-        )}
-        {member.middle_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.middle_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField
-                type="text"
-                value={member.middle_name}
-                style={{
-                  border: '1px solid #E6E6E6',
-                  width: '200px',
-                }}
-              />
-            </Box>
-          </HStack>
-        )}
-        {member.first_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.last_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField type="text" value={member.last_name} style={{}} />
-            </Box>
-          </HStack>
-        )}
-        {member.father_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.father_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField type="text" value={member.father_name} style={{}} />
-            </Box>
-          </HStack>
-        )}
-        {member.mother_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.mother_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField type="text" value={member.mother_name} style={{}} />
-            </Box>
-          </HStack>
-        )}
-        {member.grandfather_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.grandfather_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField
-                type="text"
-                value={member.grandfather_name}
-                style={{}}
-              />
-            </Box>
-          </HStack>
-        )}
-        {member.grandmother_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.grandmother_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField
-                type="text"
-                value={member.grandmother_name}
-                style={{}}
-              />
-            </Box>
-          </HStack>
-        )}
-        {member.spouse_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.spouse_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField type="text" value={member.spouse_name} style={{}} />
-            </Box>
-          </HStack>
-        )}
-
-        {member.nominee_first_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.nominee_first_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField
-                type="text"
-                value={member.nominee_first_name}
-                style={{}}
-              />
-            </Box>
-          </HStack>
-        )}
-        {member.nominee_middle_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.nominee_middle_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField
-                type="text"
-                value={member.nominee_middle_name}
-                style={{}}
-              />
-            </Box>
-          </HStack>
-        )}
-        {member.nominee_last_name && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.nominee_last_name}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField
-                type="text"
-                value={member.nominee_last_name}
-                style={{}}
-              />
-            </Box>
-          </HStack>
-        )}
-        {member.locality && (
-          <HStack spacing="100px" px="25" mt="15">
-            <Box w="200px">
-              <Text color="#006837"> {member.locality}</Text>
-            </Box>
-            <Box>
-              {' '}
-              <InputField type="text" value={member.locality} style={{}} />
-            </Box>
-          </HStack>
-        )}
+        <Box w={'80%'}>
+          {translatableFieldsArray.map((key) => {
+            if (!member[key]) return null;
+            return (
+              <HStack
+                spacing="100px"
+                px="25"
+                mt="15"
+                key={key}
+                justifyContent="space-between"
+              >
+                <Box>
+                  <Text
+                    minW={275}
+                    color="gray.800"
+                    fontSize="14px"
+                    fontWeight="bold"
+                  >
+                    {' '}
+                    {member[key]}
+                  </Text>
+                </Box>
+                <InputField flex={1} type="text" value={member[key]} />
+              </HStack>
+            );
+          })}
+        </Box>
       </Container>
       <Container
         maxW="904px"
@@ -253,5 +110,9 @@ const Member = () => {
       </Container>
     </>
   );
+};
+
+Member.getLayout = function getLayout(page: ReactElement) {
+  return <MainLayout>{page}</MainLayout>;
 };
 export default Member;

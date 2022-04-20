@@ -283,13 +283,44 @@ const Header = () => {
   );
 };
 
+interface IPersonalInformation {
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  father_name: string;
+  mother_name: string;
+  grandfather_name: string;
+  grandmother_name: string;
+  spouse_name: string;
+  nominee_first_name: string;
+  nominee_middle_name: string;
+  nominee_last_name: string;
+  locality: string;
+}
+
 const Index = () => {
-  const [personalInformation, setPersonalInformation] = useState({});
+  const [personalInformation, setPersonalInformation] =
+    useState<IPersonalInformation>(null);
   const onSubmit = () => {
     console.log(personalInformation);
+
+    const translatableFields = {
+      firstName: personalInformation.first_name,
+      middleName: personalInformation.middle_name,
+      lastName: personalInformation.last_name,
+      fatherName: personalInformation.father_name,
+      motherName: personalInformation.mother_name,
+      spouseName: personalInformation.spouse_name,
+      grandMotherName: personalInformation.grandmother_name,
+      grandFatherName: personalInformation.grandfather_name,
+      locality: personalInformation.locality,
+      nomineeLastName: personalInformation.nominee_last_name,
+      nomineeFirstName: personalInformation.nominee_first_name,
+      nomineeMiddleName: personalInformation.nominee_middle_name,
+    };
     window.localStorage.setItem(
       'PersonalInfo',
-      JSON.stringify(personalInformation)
+      JSON.stringify(translatableFields)
     );
   };
 
