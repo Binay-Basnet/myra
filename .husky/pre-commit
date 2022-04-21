@@ -3,5 +3,5 @@
 
 # npm test
 # npx --no-install commitlint --edit "$1"
-# echo 'hello'
-yarn lint-staged
+echo 'commiting'
+# yarn lint-staged
