@@ -5,6 +5,8 @@ import { GrClose } from 'react-icons/gr';
 
 // ! TODO separate components
 const Translate = () => {
+  const [state, setState] = useState();
+
   return (
     <Container
       maxW="904px"
