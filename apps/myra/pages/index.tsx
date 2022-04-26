@@ -26,7 +26,16 @@ import { Navbar, TabMenu } from '@saccos/myra/ui';
 import { useState } from 'react';
 // Tab
 
-const forms = [
+type FormType = {
+  label: string;
+  required?: boolean;
+  placeholder?: string;
+  name: keyof IPersonalInformation;
+  type?: string;
+  component?: string;
+};
+
+const forms: FormType[] = [
   {
     label: 'First Name',
     required: true,
@@ -58,6 +67,7 @@ const forms = [
     label: 'Title',
     required: false,
     placeholder: 'Title',
+    name: 'title',
   },
   {
     label: 'Date of birth',
@@ -86,7 +96,7 @@ const forms = [
     label: 'Citizenship Issued Date',
     type: 'date',
     component: 'datePicker',
-    name: 'citizenship_issue_place',
+    name: 'citizenship_issue_date',
   },
   {
     label: 'Occupation',
@@ -287,23 +297,104 @@ interface IPersonalInformation {
   first_name: string;
   middle_name: string;
   last_name: string;
+  gender: string;
+  title: string;
+  dob: string;
+  nationality: string;
+  citizenship_no: string;
+  citizenship_issue_place: string;
+  citizenship_issue_date: string;
+  occupation: string;
+  panNumber: number;
   father_name: string;
   mother_name: string;
   grandfather_name: string;
   grandmother_name: string;
   spouse_name: string;
+  state: string;
+  district: string;
+  vdc: string;
+  ward_no: string;
+  locality: string;
+  office_ph: string;
+  residense_phn: string;
+  mob_num: number;
   nominee_first_name: string;
   nominee_middle_name: string;
   nominee_last_name: string;
-  locality: string;
+  nominee_title: string;
+  nominee_relation: string;
+  nominee_per_address: string;
+  nominee_citizenship_no: string;
+  nominee_citizenship_issusePlace: string;
+  nominee_contactno_no: number;
+}
+
+// interface IPersonalDetails {
+//   first_name: string;
+//   middle_name: string;
+//   last_name: string;
+//   gender: string;
+//   title: string;
+//   dob: string;
+//   nationality: string;
+//   citizenship_no: string;
+//   citizenship_issue_place: string;
+//   citizenship_issue_date: string;
+//   occupation: string;
+//   panNumber: number;
+// }
+
+// interface IFamilyInformation {
+//   father_name: string;
+//   mother_name: string;
+//   grandfather_name: string;
+//   grandmother_name: string;
+//   spouse_name: string;
+// }
+
+// interface IAddressInformation {
+//   state: string;
+//   district: string;
+//   vdc: string;
+//   ward_no: string;
+//   locality: string;
+// }
+
+// interface IContactInformation {
+//   office_ph: string;
+//   residense_phn: string;
+//   mob_num: number;
+// }
+
+// interface INomineeInformation {
+//   nominee_first_name: string;
+//   nominee_middle_name: string;
+//   nominee_last_name: string;
+//   nominee_title: string;
+//   nominee_relation: string;
+//   nominee_per_address: string;
+//   nominee_citizenship_no: string;
+//   nominee_citizenship_issusePlace: string;
+//   nominee_contactno_no: number;
+// }
+
+interface IJpt {
+  first_name: string;
+  last_name: string;
 }
 
 const Index = () => {
   const [personalInformation, setPersonalInformation] =
-    useState<IPersonalInformation>(null);
+    useState<IPersonalInformation>({
+      first_name: '',
+      last_name: '',
+    });
+
   const onSubmit = () => {
     console.log(personalInformation);
 
+    if (!personalInformation) return;
     const translatableFields = {
       firstName: personalInformation.first_name,
       middleName: personalInformation.middle_name,
@@ -322,17 +413,85 @@ const Index = () => {
       'PersonalInfo',
       JSON.stringify(translatableFields)
     );
+    const personalDetails = {
+      firstName: personalInformation.first_name,
+      middleName: personalInformation.middle_name,
+      lastName: personalInformation.last_name,
+      gender: personalInformation.gender,
+      title: personalInformation.title,
+      dob: personalInformation.dob,
+      nationality: personalInformation.nationality,
+      citizenshipNo: personalInformation.citizenship_no,
+      citizenshipPlaceOfIssue: personalInformation.citizenship_issue_place,
+      citizenshipIssueDate: personalInformation.citizenship_issue_date,
+      occupation: personalInformation.occupation,
+      panNumber: personalInformation.panNumber,
+    };
+    window.localStorage.setItem(
+      'PersonalDetails',
+      JSON.stringify(personalDetails)
+    );
+    const familyInfo = {
+      fatherName: personalInformation.father_name,
+      motherName: personalInformation.mother_name,
+      grandfatherName: personalInformation.grandfather_name,
+      grandmotherName: personalInformation.grandmother_name,
+      spouseName: personalInformation.spouse_name,
+    };
+
+    window.localStorage.setItem(
+      'FamilyInformation',
+      JSON.stringify(familyInfo)
+    );
+    const permanentAdd = {
+      state: personalInformation.state,
+      district: personalInformation.district,
+      vdc: personalInformation.vdc,
+      wardNo: personalInformation.ward_no,
+      locality: personalInformation.locality,
+    };
+    window.localStorage.setItem(
+      'PermanentAddress',
+      JSON.stringify(permanentAdd)
+    );
+    const contactInfo = {
+      officePhone: personalInformation.office_ph,
+      residensePhone: personalInformation.residense_phn,
+      contactNo: personalInformation.mob_num,
+    };
+    window.localStorage.setItem('ContactInfo', JSON.stringify(contactInfo));
+    const nomineeInfo = {
+      nomineeFirstName: personalInformation.nominee_first_name,
+      nomineeMiddleName: personalInformation.nominee_middle_name,
+      nomineeLastName: personalInformation.nominee_last_name,
+      nomineeTilte: personalInformation.nominee_title,
+      nomineeRelation: personalInformation.nominee_relation,
+      nomineePermanentAdd: personalInformation.nominee_per_address,
+      nomineeCitizenshipNum: personalInformation.nominee_citizenship_no,
+      nomineeCitizenshipIssPlace:
+        personalInformation.nominee_citizenship_issusePlace,
+      nomineeContactNumber: personalInformation.nominee_contactno_no,
+    };
+    window.localStorage.setItem('NomineeInfo', JSON.stringify(nomineeInfo));
   };
 
   console.log('personal Information', personalInformation);
   return (
     <>
-      <Header />
+      <Box
+        position="fixed"
+        width="100%"
+        top={0}
+        zIndex={2}
+        backdropFilter="saturate(180%) blur(5px)"
+      >
+        <Header />
+      </Box>
       <Container
         maxW="904px"
         height="fit-content"
         background="white"
-        mt="5"
+        mt="130"
         p="0"
         pb="55px"
       >
@@ -371,15 +530,17 @@ const Index = () => {
 
                         <Select
                           onChange={(e) => {
+                            const { value, name } = e.target;
+
                             setPersonalInformation({
                               ...personalInformation,
-                              [e.target.name]: e.target.value,
+                              [name]: value,
                             });
                           }}
                           placeholder="Select gender"
                           borderRadius="2px"
                           borderColor="#CBD0D6"
-                          name={name}
+                          name={'hello'}
                         >
                           <option>Male</option>
                           <option>Female</option>
@@ -394,10 +555,10 @@ const Index = () => {
                         <input
                           name={name}
                           onChange={(e) => {
-                            setPersonalInformation({
+                            setPersonalInformation((personalInformation) => ({
                               ...personalInformation,
                               [e.target.name]: e.target.value,
-                            });
+                            }));
                           }}
                           type={type}
                           style={{
@@ -803,6 +964,7 @@ const Index = () => {
         p="0"
         pb="55px"
         pt="5px"
+        mb={10}
       >
         <Box px="5">
           <Heading fontSize="14px" my="5" color="#006837">
@@ -854,27 +1016,30 @@ const Index = () => {
           </Box>
         </Box>
       </Container>
-      <Container
-        maxW="904px"
-        height="40px"
-        background="white"
-        mt="35"
-        p="0"
-        pb="55px"
-        pt="5px"
-      >
-        <Flex>
-          <Box p="4">form data saved in draft</Box>
-          <Spacer />
-          <Box p="4">
-            <Button onClick={() => onSubmit()} colorScheme="teal" size="md">
-              <Link href="/member">
-                <a>Submit Those things</a>
-              </Link>
-            </Button>
-          </Box>
-        </Flex>
-      </Container>
+
+      <Box position="fixed" bottom={0} width="100%" bg={'#EEF2F7'}>
+        <Container
+          maxW="904px"
+          height="40px"
+          background="white"
+          mt="2"
+          p="0"
+          pb="55px"
+          pt="5px"
+        >
+          <Flex>
+            <Box p="4">form data saved in draft</Box>
+            <Spacer />
+            <Box p="4">
+              <Button onClick={() => onSubmit()} colorScheme="teal" size="md">
+                <Link href="/member">
+                  <a>Next</a>
+                </Link>
+              </Button>
+            </Box>
+          </Flex>
+        </Container>
+      </Box>
     </>
   );
 };

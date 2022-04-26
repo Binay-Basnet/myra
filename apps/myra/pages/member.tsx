@@ -18,7 +18,6 @@ const InputField = chakra(Input, {
   baseStyle: {
     border: '1px solid #E6E6E6',
     borderRadius: '5px',
-    width: '200px',
   },
 });
 
@@ -36,7 +35,7 @@ const Member = () => {
         maxW="904px"
         height="fit-content"
         background="white"
-        mt="5"
+        mt="130"
         p="0"
         pb="55px"
       >
@@ -103,7 +102,9 @@ const Member = () => {
               </Link>
             </Button>
             <Button mx="25px" colorScheme="teal" size="md">
-              Submit
+              <Link href="/memberDetails">
+                <a>Submit</a>
+              </Link>
             </Button>
           </Box>
         </Flex>
