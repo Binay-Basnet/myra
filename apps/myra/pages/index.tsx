@@ -284,7 +284,7 @@ const nomineeInformation = [
   },
 ];
 
-const Header = () => {
+const Index = () => {
   return (
     <>
       <Navbar />

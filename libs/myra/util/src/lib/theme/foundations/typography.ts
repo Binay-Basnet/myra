@@ -22,6 +22,7 @@ const typography = {
     thin: 200,
     light: 300,
     normal: 400,
+    regular: 400,
     medium: 500,
     semibold: 600,
     bold: 700,
@@ -36,13 +37,18 @@ const typography = {
   },
 
   fontSizes: {
-    xs: '10px',
-    sm: '12px',
-    md: '14px',
-    lg: '16px',
-    xl: '20px',
-    '2xl': '24px',
-    '3xl': '32px',
+    s1: '10px',
+    s2: '12px',
+    s3: '13px',
+    r1: '14px',
+    r2: '16px',
+    r3: '20px',
+    l1: '24px',
+    l2: '28px',
+    l3: '32px',
+    m1: '48px',
+    m2: '56px',
+    m3: '64px',
   },
 };
 

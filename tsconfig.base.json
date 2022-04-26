@@ -13,14 +13,24 @@
     "target": "es2015",
     "module": "esnext",
     "strict": true,
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@saccos/myra/ui": ["libs/myra/ui/src/index.ts"],
-      "@saccos/myra/util": ["libs/myra/util/src/index.ts"]
+      "@saccos/myra/ui": [
+        "libs/myra/ui/src/index.ts"
+      ],
+      "@saccos/myra/util": [
+        "libs/myra/util/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

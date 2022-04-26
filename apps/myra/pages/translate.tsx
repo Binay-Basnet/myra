@@ -1,10 +1,12 @@
-import { Box, Container, Heading } from '@chakra-ui/react';
+import { Box, Container, Heading, Text } from '@chakra-ui/react';
 import { MainLayout } from '@saccos/myra/ui';
 import { ReactElement } from 'react';
 import { GrClose } from 'react-icons/gr';
 
 // ! TODO separate components
 const Translate = () => {
+  //   const [state, setState] = useState();
+
   return (
     <Container
       maxW="904px"
@@ -28,6 +30,12 @@ const Translate = () => {
           Add New Member
         </Heading>
         <GrClose size="14px" color="#91979F" />
+      </Box>
+      <Box px="5">
+        <Text color="primary" fontWeight="bold" fontSize="">
+          {' '}
+          8 texts need to be translatedm1
+        </Text>
       </Box>
     </Container>
   );
