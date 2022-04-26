@@ -5,7 +5,7 @@ import { GrClose } from 'react-icons/gr';
 
 // ! TODO separate components
 const Translate = () => {
-  const [state, setState] = useState();
+  //   const [state, setState] = useState();
 
   return (
     <Container
@@ -32,9 +32,9 @@ const Translate = () => {
         <GrClose size="14px" color="#91979F" />
       </Box>
       <Box px="5">
-        <Text color="primary" fontWeight="bold">
+        <Text color="primary" fontWeight="bold" fontSize="">
           {' '}
-          8 texts need to be translated
+          8 texts need to be translatedm1
         </Text>
       </Box>
     </Container>

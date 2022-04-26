@@ -8,7 +8,9 @@
     "test": "nx test",
     "start:myra": "nx serve myra",
     "storybook:myra-ui": "nx run myra-ui:storybook",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "gen:theme-typings": "chakra-cli tokens ./libs/myra/util/src/lib/theme/index.ts",
+    "postinstall": "yarn gen:theme-typings"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +32,7 @@
   "devDependencies": {
     "@babel/core": "7.12.13",
     "@babel/preset-typescript": "7.12.13",
+    "@chakra-ui/cli": "^1.9.0",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
     "@nrwl/cli": "13.10.1",
