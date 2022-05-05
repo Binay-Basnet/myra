@@ -24,6 +24,7 @@ import Link from 'next/link';
 
 import { Navbar, TabMenu } from '@saccos/myra/ui';
 import { useState } from 'react';
+// import { useStatHospitalQuery } from '../generated/graphql';
 // Tab
 
 type FormType = {
@@ -385,6 +386,9 @@ interface IJpt {
 }
 
 const Index = () => {
+  // const hospitalQuery = useStatHospitalQuery();
+  // console.log('hospitalTotal', hospitalQuery.data?.statHospital.total);
+
   const [personalInformation, setPersonalInformation] =
     useState<IPersonalInformation>({
       first_name: '',
@@ -617,7 +621,7 @@ const Index = () => {
                   index
                 ) =>
                   component === 'select' ? (
-                    <GridItem w="100%" h="10">
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <Select
@@ -639,7 +643,7 @@ const Index = () => {
                       </FormControl>
                     </GridItem>
                   ) : component === 'datePicker' ? (
-                    <GridItem w="100%" h="10">
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <input
@@ -661,7 +665,7 @@ const Index = () => {
                       </FormControl>
                     </GridItem>
                   ) : (
-                    <GridItem w="100%" h="10" key={index}>
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl isRequired={required}>
                         <FormLabel htmlFor={type}>{label}</FormLabel>
                         <Input
@@ -707,7 +711,7 @@ const Index = () => {
                   index
                 ) =>
                   component === 'select' ? (
-                    <GridItem w="100%" h="10">
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <Select
@@ -729,7 +733,7 @@ const Index = () => {
                       </FormControl>
                     </GridItem>
                   ) : component === 'datePicker' ? (
-                    <GridItem w="100%" h="10">
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <input
@@ -751,7 +755,7 @@ const Index = () => {
                       </FormControl>
                     </GridItem>
                   ) : (
-                    <GridItem w="100%" h="10" key={index}>
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl isRequired={required}>
                         <FormLabel htmlFor={type}>{label}</FormLabel>
                         <Input
@@ -797,7 +801,7 @@ const Index = () => {
                   index
                 ) =>
                   component === 'select' ? (
-                    <GridItem w="100%" h="10">
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <Select
@@ -819,7 +823,7 @@ const Index = () => {
                       </FormControl>
                     </GridItem>
                   ) : component === 'datePicker' ? (
-                    <GridItem w="100%" h="10">
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <input
@@ -841,7 +845,7 @@ const Index = () => {
                       </FormControl>
                     </GridItem>
                   ) : (
-                    <GridItem w="100%" h="10" key={index}>
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl isRequired={required}>
                         <FormLabel htmlFor={type}>{label}</FormLabel>
                         <Input
@@ -887,7 +891,7 @@ const Index = () => {
                   index
                 ) =>
                   component === 'select' ? (
-                    <GridItem w="100%" h="10">
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <Select
@@ -909,7 +913,7 @@ const Index = () => {
                       </FormControl>
                     </GridItem>
                   ) : component === 'datePicker' ? (
-                    <GridItem w="100%" h="10">
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl>
                         <FormLabel htmlFor="email">{label}</FormLabel>
                         <input
@@ -931,7 +935,7 @@ const Index = () => {
                       </FormControl>
                     </GridItem>
                   ) : (
-                    <GridItem w="100%" h="10" key={index}>
+                    <GridItem w="100%" h="10" key={label}>
                       <FormControl isRequired={required}>
                         <FormLabel htmlFor={type}>{label}</FormLabel>
                         <Input
