@@ -1,3 +1,4 @@
+export * from './lib/chakra-tab/ChakraTab';
 export * from './lib/navbarfordaashboard/Navbarfordaashboard';
 
 export * from './lib/button/Button';

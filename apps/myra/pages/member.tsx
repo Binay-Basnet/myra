@@ -11,8 +11,12 @@ import {
 } from '@chakra-ui/react';
 import { GrClose } from 'react-icons/gr';
 import { ReactElement, useEffect, useState } from 'react';
-import { Button, MainLayout } from '@saccos/myra/ui';
+import { MainLayout } from '@saccos/myra/ui';
 import Link from 'next/link';
+import { AddIcon} from '@chakra-ui/icons';
+
+import { Button, ChakraTab } from '@saccos/myra/ui';
+
 
 const InputField = chakra(Input, {
   baseStyle: {
@@ -29,6 +33,38 @@ const Member = () => {
   }, []);
   const translatableFieldsArray = Object.keys(member);
 
+  if(true) {
+    return (
+      <Box mt="130" p={5} display='flex'>
+        <Box  >
+          <Text fontSize={20} fontWeight={600}>Members</Text>
+          <br /><br />
+          <Box display='flex' flexDirection='column' alignItems='center' >
+            <Button
+              width={184}
+              leftIcon={<AddIcon h={11} />}
+              bg='#006837'
+              fontSize={14}
+              borderRadius={0}
+            >
+              Add New Member
+            </Button>
+            <br />
+            <ChakraTab
+              orientation='vertical'
+              tabList={['Member List', 'Balance Report', 'Member Activity', 'Member Settings']}
+              tabWidth={216}
+            />
+          </Box>
+        </Box>
+        <Box width={1269} display='flex' flexDirection='column'>
+          <Box>
+            table
+          </Box>
+        </Box>
+      </Box>
+    )
+  }
   return (
     <>
       <Container
