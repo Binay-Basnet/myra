@@ -18,6 +18,7 @@ import { AddIcon} from '@chakra-ui/icons';
 import { Button, ChakraTab } from '@saccos/myra/ui';
 
 
+
 const InputField = chakra(Input, {
   baseStyle: {
     border: '1px solid #E6E6E6',
@@ -29,6 +30,7 @@ const Member = () => {
   const [member, setMember] = useState({});
 
   useEffect(() => {
+
     setMember(JSON.parse(localStorage.getItem('PersonalInfo')));
   }, []);
   const translatableFieldsArray = Object.keys(member);

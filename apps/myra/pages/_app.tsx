@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import { theme } from '@saccos/myra/util';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -15,14 +16,31 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
+  const fiveMinutesInMs = 5 * 60 * 1000;
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        retry: false,
+        cacheTime: fiveMinutesInMs,
+        staleTime: fiveMinutesInMs,
+      },
+    },
+  });
+
   const getLayout = Component.getLayout || ((page) => page);
   return (
-    <ChakraProvider theme={theme}>
-      <Head>
-        <title>Welcome to myra!</title>
-      </Head>
-      <main className="app">{getLayout(<Component {...pageProps} />)}</main>
-    </ChakraProvider>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={theme}>
+        <Head>
+          <title>Welcome to myra!</title>
+        </Head>
+        <main className="app">{getLayout(<Component {...pageProps} />)}</main>
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }
 
