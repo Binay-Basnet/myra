@@ -380,10 +380,10 @@ interface IPersonalInformation {
 //   nominee_contactno_no: number;
 // }
 
-interface IJpt {
-  first_name: string;
-  last_name: string;
-}
+// interface IJpt {
+//   first_name: string;
+//   last_name: string;
+// }
 
 const Index = () => {
   // const hospitalQuery = useStatHospitalQuery();

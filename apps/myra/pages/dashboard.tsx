@@ -7,8 +7,6 @@ import {
   Img,
   HStack,
 } from '@chakra-ui/react';
-import { Button } from '@saccos/myra/ui';
-import Link from 'next/link';
 import { Navbarfordaashboard } from '@saccos/myra/ui';
 
 const Dashboard = () => {

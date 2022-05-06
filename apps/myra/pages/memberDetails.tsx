@@ -13,7 +13,7 @@ import {
 import { GrClose } from 'react-icons/gr';
 import { ReactElement, useEffect, useState } from 'react';
 import { Button, MainLayout } from '@saccos/myra/ui';
-import Link from 'next/link';
+
 interface IPersonalDetails {
   firstName: string;
   middleName: string;
