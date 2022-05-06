@@ -29,7 +29,6 @@ export enum Activity_Type {
 }
 
 export type Action = {
-  __typename?: 'Action';
   askQuestion?: Maybe<AskQuestionsAction>;
   showMessage?: Maybe<ShowMessageAction>;
   triggerChecklist?: Maybe<TriggerChecklistsAction>;
@@ -51,7 +50,6 @@ export enum ActionType {
 }
 
 export type Admission = {
-  __typename?: 'Admission';
   admittedAt: Scalars['Time'];
   assignedChecklists?: Maybe<Array<Checklist>>;
   bed: Bed;
@@ -68,7 +66,6 @@ export type AdmissionObj = {
 };
 
 export type AskQuestionsAction = {
-  __typename?: 'AskQuestionsAction';
   checklistId: Scalars['String'];
   parentQuestionId: Scalars['String'];
   questionRanks: Array<Scalars['Int']>;
@@ -82,7 +79,6 @@ export type AskQuestionsActionObj = {
 };
 
 export type Bed = {
-  __typename?: 'Bed';
   admission?: Maybe<Admission>;
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -94,7 +90,6 @@ export type BedObj = {
 };
 
 export type Checklist = {
-  __typename?: 'Checklist';
   active: Scalars['Boolean'];
   collections?: Maybe<Array<Collection>>;
   id: Scalars['ID'];
@@ -110,14 +105,12 @@ export type ChecklistObj = {
 };
 
 export type ChecklistRound = {
-  __typename?: 'ChecklistRound';
   round: Scalars['Int'];
   roundForNow: Scalars['Boolean'];
   survey?: Maybe<Survey>;
 };
 
 export type Collection = {
-  __typename?: 'Collection';
   checklist: Checklist;
   groups?: Maybe<Array<Group>>;
   id: Scalars['ID'];
@@ -126,7 +119,6 @@ export type Collection = {
 };
 
 export type CollectionData = {
-  __typename?: 'CollectionData';
   group?: Maybe<Array<Maybe<GroupData>>>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -138,7 +130,6 @@ export type CollectionObj = {
 };
 
 export type CollectionState = {
-  __typename?: 'CollectionState';
   collectionCompleted: Scalars['Boolean'];
   collectionId: Scalars['String'];
   completedGroupId?: Maybe<Scalars['String']>;
@@ -146,7 +137,6 @@ export type CollectionState = {
 };
 
 export type DoctorNoteConf = {
-  __typename?: 'DoctorNoteConf';
   checklistId: Scalars['String'];
   collectionId?: Maybe<Scalars['String']>;
   expression: Scalars['String'];
@@ -168,7 +158,6 @@ export type DoctorNoteConfObj = {
 };
 
 export type DoctorNotes = {
-  __typename?: 'DoctorNotes';
   CreatedDate: Scalars['String'];
   TimeStamp: Scalars['Time'];
   id: Scalars['ID'];
@@ -182,12 +171,10 @@ export type DoctorNotesObj = {
 };
 
 export type EmrBooleanValue = {
-  __typename?: 'EMRBooleanValue';
   value: Scalars['Boolean'];
 };
 
 export type EmrLabel = {
-  __typename?: 'EMRLabel';
   description: Scalars['String'];
   name: Scalars['String'];
   slug: Scalars['ID'];
@@ -200,55 +187,46 @@ export type EmrLabelObj = {
 };
 
 export type EmrNumericValue = {
-  __typename?: 'EMRNumericValue';
   value: Scalars['Float'];
 };
 
 export type EmrNumericValueObj = {
-  __typename?: 'EMRNumericValueObj';
   maxValue?: Maybe<Scalars['Float']>;
   minValue?: Maybe<Scalars['Float']>;
   recentValue?: Maybe<Scalars['Float']>;
 };
 
 export type EmrTextValue = {
-  __typename?: 'EMRTextValue';
   value: Scalars['String'];
 };
 
 export type EmrValue = {
-  __typename?: 'EMRValue';
   boolean?: Maybe<EmrBooleanValue>;
   numeric?: Maybe<EmrNumericValue>;
   text?: Maybe<EmrTextValue>;
 };
 
 export type EmrValueObj = {
-  __typename?: 'EMRValueObj';
   boolean?: Maybe<EmrBooleanValue>;
   numeric?: Maybe<EmrNumericValueObj>;
   text?: Maybe<EmrTextValue>;
 };
 
 export type EmrData = {
-  __typename?: 'EmrData';
   emr_value: Scalars['Int'];
   name: Scalars['String'];
 };
 
 export type ExcelData = {
-  __typename?: 'ExcelData';
   SurvayDateStatus?: Maybe<Array<Maybe<SurvayDateStatus>>>;
   name?: Maybe<Scalars['String']>;
 };
 
 export type ExcelFileName = {
-  __typename?: 'ExcelFileName';
   name: Scalars['String'];
 };
 
 export type Feedback = {
-  __typename?: 'Feedback';
   checklistId: Scalars['String'];
   feedback: Scalars['String'];
   id: Scalars['ID'];
@@ -270,7 +248,6 @@ export enum Gender {
 }
 
 export type Group = {
-  __typename?: 'Group';
   collection: Collection;
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -279,14 +256,12 @@ export type Group = {
 };
 
 export type GroupData = {
-  __typename?: 'GroupData';
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   questionAreList?: Maybe<Array<Maybe<QuestionAre>>>;
 };
 
 export type GroupHarmTrigger = {
-  __typename?: 'GroupHarmTrigger';
   checklistId: Scalars['String'];
   collectionId: Scalars['String'];
   groupId: Scalars['String'];
@@ -299,7 +274,6 @@ export type GroupObj = {
 };
 
 export type Harm = {
-  __typename?: 'Harm';
   id: Scalars['ID'];
   name: Scalars['String'];
   slug: Scalars['String'];
@@ -311,7 +285,6 @@ export type HarmObj = {
 };
 
 export type HarmSettings = {
-  __typename?: 'HarmSettings';
   checklistId: Scalars['String'];
   expression: Scalars['String'];
   harmSlug: Scalars['String'];
@@ -333,13 +306,11 @@ export type HarmSettingsObj = {
 };
 
 export type HarmSlugValues = {
-  __typename?: 'HarmSlugValues';
   calculatedAt: Scalars['Time'];
   value: Scalars['Int'];
 };
 
 export type Hospital = {
-  __typename?: 'Hospital';
   active: Scalars['Boolean'];
   address: Scalars['String'];
   contact: Scalars['String'];
@@ -356,7 +327,6 @@ export type HospitalObj = {
 };
 
 export type HospitalStat = {
-  __typename?: 'HospitalStat';
   total: Scalars['Int'];
 };
 
@@ -366,7 +336,6 @@ export enum IncrementType {
 }
 
 export type MedicalRecord = {
-  __typename?: 'MedicalRecord';
   id: Scalars['ID'];
   label: EmrLabel;
   measuredAt: Scalars['Time'];
@@ -374,7 +343,6 @@ export type MedicalRecord = {
 };
 
 export type MedicalRecordObj = {
-  __typename?: 'MedicalRecordObj';
   id: Scalars['ID'];
   label: EmrLabel;
   measuredAt: Scalars['Time'];
@@ -388,7 +356,6 @@ export enum MessageLevel {
 }
 
 export type Mutation = {
-  __typename?: 'Mutation';
   AddDoctorNoteConf: Array<Maybe<DoctorNoteConf>>;
   AddHarmSettings: Array<Maybe<HarmSettings>>;
   AddWeight?: Maybe<Array<Maybe<Weight>>>;
@@ -758,7 +725,6 @@ export type MutationUpdateWardArgs = {
 };
 
 export type NumericInputConfig = {
-  __typename?: 'NumericInputConfig';
   maxValue?: Maybe<Scalars['Float']>;
   minValue?: Maybe<Scalars['Float']>;
 };
@@ -769,7 +735,6 @@ export type NumericInputConfigObj = {
 };
 
 export type NumericRangeConfig = {
-  __typename?: 'NumericRangeConfig';
   maxValue?: Maybe<Scalars['Int']>;
   minValue?: Maybe<Scalars['Int']>;
   step?: Maybe<Scalars['Int']>;
@@ -782,7 +747,6 @@ export type NumericRangeConfigObj = {
 };
 
 export type Option = {
-  __typename?: 'Option';
   id: Scalars['ID'];
   value: Scalars['String'];
 };
@@ -793,7 +757,6 @@ export type OptionObj = {
 };
 
 export type OptionsConfig = {
-  __typename?: 'OptionsConfig';
   options: Array<Option>;
   type?: Maybe<OptionsType>;
 };
@@ -811,7 +774,6 @@ export enum OptionsType {
 }
 
 export type Patient = {
-  __typename?: 'Patient';
   admission?: Maybe<Admission>;
   ageYears: Scalars['Int'];
   bands: Scalars['String'];
@@ -832,13 +794,11 @@ export type Patient = {
 };
 
 export type PatientChecklist = {
-  __typename?: 'PatientChecklist';
   checklist: Checklist;
   today?: Maybe<Array<ChecklistRound>>;
 };
 
 export type PatientHarm = {
-  __typename?: 'PatientHarm';
   basedOn?: Maybe<PatientHarm>;
   calculatedAt: Scalars['Time'];
   harmSlug: Scalars['String'];
@@ -849,7 +809,6 @@ export type PatientHarm = {
 };
 
 export type PatientHarmTrend = {
-  __typename?: 'PatientHarmTrend';
   harmSlug: Scalars['String'];
   name: Scalars['String'];
   patientId: Scalars['String'];
@@ -857,7 +816,6 @@ export type PatientHarmTrend = {
 };
 
 export type PatientHistory = {
-  __typename?: 'PatientHistory';
   checklistId?: Maybe<Scalars['String']>;
   data?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -876,12 +834,10 @@ export type PatientHistoryObj = {
 };
 
 export type PatientStat = {
-  __typename?: 'PatientStat';
   total: Scalars['Int'];
 };
 
 export type Query = {
-  __typename?: 'Query';
   ChecklistStatAdmin: ChecklistStat;
   checkResponse: Array<Action>;
   designer_GetQuestionTrigger: Trigger;
@@ -1083,7 +1039,6 @@ export type QueryResumeSurveyArgs = {
 };
 
 export type Question = {
-  __typename?: 'Question';
   config: QuestionConfig;
   group: Group;
   hasBranchQuestions: Scalars['Boolean'];
@@ -1093,13 +1048,11 @@ export type Question = {
 };
 
 export type QuestionAre = {
-  __typename?: 'QuestionAre';
   answers?: Maybe<Scalars['String']>;
   question?: Maybe<Scalars['String']>;
 };
 
 export type QuestionConfig = {
-  __typename?: 'QuestionConfig';
   numericInput?: Maybe<NumericInputConfig>;
   numericRange?: Maybe<NumericRangeConfig>;
   options?: Maybe<OptionsConfig>;
@@ -1122,7 +1075,6 @@ export type ResponseObj = {
 };
 
 export type Round = {
-  __typename?: 'Round';
   collectionData?: Maybe<Array<Maybe<CollectionData>>>;
   doctorNotes?: Maybe<DoctorNotes>;
   roundNo?: Maybe<Scalars['Int']>;
@@ -1130,7 +1082,6 @@ export type Round = {
 };
 
 export type Schedule = {
-  __typename?: 'Schedule';
   days?: Maybe<Array<Scalars['Int']>>;
   rounds?: Maybe<Array<Scalars['Int']>>;
   type: ScheduleType;
@@ -1148,7 +1099,6 @@ export enum ScheduleType {
 }
 
 export type ShowMessageAction = {
-  __typename?: 'ShowMessageAction';
   level: MessageLevel;
   message: Scalars['String'];
 };
@@ -1163,7 +1113,6 @@ export enum SnippetType {
 }
 
 export type SurvayDateStatus = {
-  __typename?: 'SurvayDateStatus';
   Activity?: Maybe<Array<Maybe<PatientHistory>>>;
   Overview?: Maybe<Scalars['String']>;
   Round?: Maybe<Array<Maybe<Round>>>;
@@ -1173,7 +1122,6 @@ export type SurvayDateStatus = {
 };
 
 export type Survey = {
-  __typename?: 'Survey';
   admission: Admission;
   checklist: Checklist;
   completedAt?: Maybe<Scalars['Time']>;
@@ -1186,7 +1134,6 @@ export type Survey = {
 };
 
 export type SurveyLogger = {
-  __typename?: 'SurveyLogger';
   CreatedDate: Scalars['Time'];
   admissionId: Scalars['String'];
   checklistId: Scalars['String'];
@@ -1195,7 +1142,6 @@ export type SurveyLogger = {
 };
 
 export type SurveyResponse = {
-  __typename?: 'SurveyResponse';
   collection: Collection;
   group: Group;
   id: Scalars['ID'];
@@ -1211,13 +1157,11 @@ export type SurveyResponseObj = {
 };
 
 export type SurveyScore = {
-  __typename?: 'SurveyScore';
   key: Scalars['String'];
   value: Scalars['Int'];
 };
 
 export type SurveySnippet = {
-  __typename?: 'SurveySnippet';
   name: Scalars['String'];
   slug: Scalars['String'];
   type: SnippetType;
@@ -1225,7 +1169,6 @@ export type SurveySnippet = {
 };
 
 export type SurveyStep = {
-  __typename?: 'SurveyStep';
   isSurveyComplete: Scalars['Boolean'];
   nextGroup?: Maybe<Group>;
   responses: Array<SurveyResponse>;
@@ -1234,7 +1177,6 @@ export type SurveyStep = {
 };
 
 export type TextInputConfig = {
-  __typename?: 'TextInputConfig';
   maxLength?: Maybe<Scalars['Int']>;
   minLength?: Maybe<Scalars['Int']>;
   type?: Maybe<TextType>;
@@ -1252,7 +1194,6 @@ export enum TextType {
 }
 
 export type Trigger = {
-  __typename?: 'Trigger';
   action: Action;
   id: Scalars['ID'];
   if: Scalars['String'];
@@ -1260,7 +1201,6 @@ export type Trigger = {
 };
 
 export type TriggerChecklistsAction = {
-  __typename?: 'TriggerChecklistsAction';
   checklists: Array<Checklist>;
 };
 
@@ -1274,7 +1214,6 @@ export type TriggerObj = {
 };
 
 export type UpdateHarmAction = {
-  __typename?: 'UpdateHarmAction';
   harm: Scalars['String'];
   update: Scalars['Int'];
   updateType: ValueUpdateType;
@@ -1292,7 +1231,6 @@ export enum ValueUpdateType {
 }
 
 export type Ward = {
-  __typename?: 'Ward';
   beds?: Maybe<Array<Bed>>;
   capacity: Scalars['Int'];
   hospital: Hospital;
@@ -1306,14 +1244,12 @@ export type WardObj = {
 };
 
 export type WardStat = {
-  __typename?: 'WardStat';
   totalBed: Scalars['Int'];
   totalBedOccupied: Scalars['Int'];
   ward: Ward;
 };
 
 export type Weight = {
-  __typename?: 'Weight';
   checklistId: Scalars['String'];
   collectionId: Scalars['String'];
   groupId: Scalars['String'];
@@ -1334,13 +1270,11 @@ export type WeightObj = {
 };
 
 export type ChecklistStat = {
-  __typename?: 'checklistStat';
   active: Scalars['Int'];
   total: Scalars['Int'];
 };
 
 export type EmrStat = {
-  __typename?: 'emrStat';
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -1360,7 +1294,6 @@ export type GetWeightIndicator = {
 };
 
 export type GroupDoctorNote = {
-  __typename?: 'groupDoctorNote';
   checklistId: Scalars['String'];
   collectionId: Scalars['String'];
   createdAt: Scalars['Time'];
@@ -1380,12 +1313,10 @@ export type GroupDoctorNoteFinder = {
 };
 
 export type HarmStat = {
-  __typename?: 'harmStat';
   total: Scalars['Int'];
 };
 
 export type StatAdmin = {
-  __typename?: 'statAdmin';
   checklistStat?: Maybe<ChecklistStat>;
   emrStat?: Maybe<EmrStat>;
   harmStat?: Maybe<HarmStat>;
@@ -1401,7 +1332,7 @@ export type WeightData = {
 export type StatHospitalQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StatHospitalQuery = { __typename?: 'Query', statHospital: { __typename?: 'HospitalStat', total: number } };
+export type StatHospitalQuery = { statHospital: { total: number } };
 
 
 export const StatHospitalDocument = `
