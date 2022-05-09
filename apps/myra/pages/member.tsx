@@ -14,8 +14,10 @@ import { ReactElement, useEffect, useState } from 'react';
 import { MainLayout } from '@saccos/myra/ui';
 import Link from 'next/link';
 import { AddIcon } from '@chakra-ui/icons';
+import { useRouter } from 'next/router';
 
 import { Button, ChakraTab } from '@saccos/myra/ui';
+import { en, ne } from '../locales';
 
 const InputField = chakra(Input, {
   baseStyle: {
@@ -26,6 +28,9 @@ const InputField = chakra(Input, {
 
 const Member = () => {
   const [member, setMember] = useState({});
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : ne;
 
   useEffect(() => {
     setMember(JSON.parse(localStorage.getItem('PersonalInfo')));
@@ -38,7 +43,7 @@ const Member = () => {
       <Box mt="130" p={5} display="flex">
         <Box>
           <Text fontSize={20} fontWeight={600}>
-            Members
+            {t.members}
           </Text>
           <br />
           <br />
