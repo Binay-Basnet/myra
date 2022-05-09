@@ -1,162 +1,140 @@
 import {
-  Box,
-  Container,
-  Heading,
-  HStack,
   Flex,
-  Spacer,
   Text,
-  chakra,
+  Icon,
+  InputGroup,
+  InputLeftElement,
   Input,
+  IconButton,
 } from '@chakra-ui/react';
-import { GrClose } from 'react-icons/gr';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement } from 'react';
 import { MainLayout } from '@saccos/myra/ui';
-import Link from 'next/link';
 import { AddIcon } from '@chakra-ui/icons';
-import { useRouter } from 'next/router';
+import { Button, Box } from '@saccos/myra/ui';
+import {
+  SearchIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  HamburgerIcon,
+} from '@chakra-ui/icons';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import TabColumn from '../components/TabforMemberPage';
+import TabRow from '../components/TabMemberPageRow';
 
-import { Button, ChakraTab } from '@saccos/myra/ui';
-import { en, ne } from '../locales';
-
-const InputField = chakra(Input, {
-  baseStyle: {
-    border: '1px solid #E6E6E6',
-    borderRadius: '5px',
-  },
-});
+const column = [
+  'Member list',
+  'Balance Report',
+  'Member Details',
+  'Member Settings',
+];
+const rows = ['Active', 'Inactive', 'WIP', 'Draft'];
 
 const Member = () => {
-  const [member, setMember] = useState({});
-  const router = useRouter();
-  const { locale } = router;
-  const t = locale === 'en' ? en : ne;
+  return (
+    <Box mt="100px" p="16px" display="flex">
+      <Box mt="24px">
+        <Text fontSize="20px" fontWeight="600" pl="16px">
+          Members
+        </Text>
 
-  useEffect(() => {
-    setMember(JSON.parse(localStorage.getItem('PersonalInfo')));
-  }, []);
-  const translatableFieldsArray = Object.keys(member);
-  const isTrue = true;
-
-  if (isTrue) {
-    return (
-      <Box mt="130" p={5} display="flex">
-        <Box>
-          <Text fontSize={20} fontWeight={600}>
-            {t.members}
-          </Text>
-          <br />
-          <br />
-          <Box display="flex" flexDirection="column" alignItems="center">
+        <Box mt="58px" display="flex" flexDirection="column" width="238px">
+          <Box pl="16px">
             <Button
-              width={184}
-              leftIcon={<AddIcon h={11} />}
+              width="184px"
+              leftIcon={<AddIcon h="11px" />}
               bg="#006837"
-              fontSize={14}
-              borderRadius={0}
+              fontSize="14px"
+              borderRadius="0"
             >
               Add New Member
             </Button>
-            <br />
-            <ChakraTab
-              orientation="vertical"
-              tabList={[
-                'Member List',
-                'Balance Report',
-                'Member Activity',
-                'Member Settings',
-              ]}
-              tabWidth={216}
-            />
           </Box>
-        </Box>
-        <Box width={1269} display="flex" flexDirection="column">
-          <Box>table</Box>
+          <br />
+
+          <TabColumn list={column} />
         </Box>
       </Box>
-    );
-  }
-  return (
-    <>
-      <Container
-        maxW="904px"
-        height="fit-content"
-        background="white"
-        mt="130"
-        p="0"
-        pb="55px"
-      >
+      <Box width="1269px" mt="12px" bg="white">
+        <Box h="50px" w="1269px" borderBottom="1px solid #E6E6E6" pl="16px">
+          <Flex justify="flex-start" h="100%">
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              maxH="50px"
+            >
+              <Text fontSize="16" fontWeight="600" color="#343C46">
+                Member List{' '}
+              </Text>
+            </Box>
+            <Box ml="48px" display="flex" alignItems="flex-end">
+              <TabRow list={rows} />
+            </Box>
+          </Flex>
+        </Box>
         <Box
-          height="60px"
+          h="50px"
+          w="100%"
           display="flex"
-          justifyContent="space-between"
-          alignItems={'center'}
-          style={{
-            borderBottom: '1px solid #E6E6E6',
-          }}
-          px="5"
+          flexDirection="row"
+          justifyContent="flex-start"
+          borderBottom="3px solid #E6E6E6"
         >
-          <Heading size="16px" as="h4">
-            Add New Member
-          </Heading>
-          <GrClose size="14px" color="#91979F" />
-        </Box>
-
-        <Box w={'80%'}>
-          {translatableFieldsArray.map((key) => {
-            if (!member[key]) return null;
-            return (
-              <HStack
-                spacing="100px"
-                px="25"
-                mt="15"
-                key={key}
-                justifyContent="space-between"
-              >
-                <Box>
-                  <Text
-                    minW={275}
-                    color="gray.800"
-                    fontSize="14px"
-                    fontWeight="bold"
-                  >
-                    {' '}
-                    {member[key]}
-                  </Text>
-                </Box>
-                <InputField flex={1} type="text" value={member[key]} />
-              </HStack>
-            );
-          })}
-        </Box>
-      </Container>
-      <Container
-        maxW="904px"
-        height="40px"
-        background="white"
-        mt="35"
-        p="0"
-        pb="55px"
-        pt="5px"
-      >
-        <Flex>
-          <Box p="4">data saved successfully</Box>
-          <Spacer />
-          <Box p="4">
-            <Button colorScheme="teal" size="md">
-              <Link href="/">
-                <a>Go back</a>
-              </Link>
+          <Box w="500px" pt="15px" pl="20px">
+            <InputGroup size="sm">
+              <InputLeftElement pointerEvents="none" h="22px">
+                <SearchIcon color="gray.300" />
+              </InputLeftElement>
+              <Input
+                variant="unstyled"
+                type="search"
+                placeholder="Search Members"
+              />
+            </InputGroup>
+          </Box>
+          <Box w="345px"></Box>
+          <Box
+            w="184px"
+            borderLeft="1px solid #E6E6E6"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <IconButton
+              aria-label="Previous"
+              variant="ghost"
+              icon={<ChevronLeftIcon />}
+              h="100%"
+            />
+            <Text fontSize="13px" fontWeight="600" color="#252525">
+              1 - 20 / 50
+            </Text>
+            <IconButton
+              variant="ghost"
+              aria-label="Next"
+              icon={<ChevronRightIcon />}
+              h="100%"
+            />
+          </Box>
+          <Box
+            flex={1}
+            borderLeft="1px solid #E6E6E6"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            {' '}
+            <Button variant="ghost">
+              <HamburgerIcon color="#1DB954" /> <Text ml="10px">Default</Text>
             </Button>
-            <Button mx="25px" colorScheme="teal" size="md">
-              <Link href="/memberDetails">
-                <a>Submit</a>
-              </Link>
+            <Button variant="ghost">
+              <Icon as={BsThreeDotsVertical} color="#636972" />{' '}
+              <Text ml="10px">Options</Text>
             </Button>
           </Box>
-        </Flex>
-      </Container>
-    </>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
