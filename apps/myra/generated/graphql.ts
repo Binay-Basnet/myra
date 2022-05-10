@@ -850,9 +850,11 @@ export type Query = {
   getAdminStat: StatAdmin;
   getDoctorNotes: DoctorNotes;
   getGroupDoctorNotes?: Maybe<Array<Maybe<GroupDoctorNote>>>;
+  getGroupDoctorNotesBySurveyId?: Maybe<Array<Maybe<GroupDoctorNote>>>;
   getPatient: Patient;
   getPatientHarmTrend: Array<PatientHarm>;
   getSurvey: Survey;
+  getWard: Ward;
   listAdmission: Array<Admission>;
   listBeds: Array<Bed>;
   listChecklist: Array<Checklist>;
@@ -937,6 +939,11 @@ export type QueryGetGroupDoctorNotesArgs = {
 };
 
 
+export type QueryGetGroupDoctorNotesBySurveyIdArgs = {
+  surveyId: Scalars['String'];
+};
+
+
 export type QueryGetPatientArgs = {
   patientId: Scalars['String'];
 };
@@ -950,6 +957,11 @@ export type QueryGetPatientHarmTrendArgs = {
 
 export type QueryGetSurveyArgs = {
   surveyId: Scalars['String'];
+};
+
+
+export type QueryGetWardArgs = {
+  wardId: Scalars['String'];
 };
 
 
