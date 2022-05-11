@@ -13,6 +13,8 @@ generates:
       - 'typescript-operations'
       - 'typescript-react-query'
     config:
+      scalars:
+        Time: string
       skipTypename: true
       inlineFragmentTypes: combine
       fetcher:
