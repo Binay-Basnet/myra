@@ -31,6 +31,8 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
     },
   });
 
+  console.log('NX Schema path', process.env.NX_SCHEMA_PATH);
+
   const getLayout = Component.getLayout || ((page) => page);
   return (
     <QueryClientProvider client={queryClient}>
