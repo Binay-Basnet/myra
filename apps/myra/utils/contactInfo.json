@@ -1,0 +1,24 @@
+{
+  "title": "Contact Information",
+  "id": "contact information",
+  "fields": [
+    {
+      "type": "number",
+      "name": "officeNo",
+      "id": "officeNo",
+      "title": "Office No"
+    },
+    {
+      "type": "number",
+      "name": "residenceNo",
+      "id": "residenceNo",
+      "title": "Residence No"
+    },
+    {
+      "type": "number",
+      "name": "mobileNo",
+      "id": "mobileNo",
+      "title": "Mobile No"
+    }
+  ]
+}

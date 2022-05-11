@@ -9,9 +9,8 @@ import {
   Avatar,
 } from '@chakra-ui/react';
 import { ReactElement, useMemo } from 'react';
-import { MainLayout } from '@saccos/myra/ui';
 import { AddIcon } from '@chakra-ui/icons';
-import { Button, Box } from '@saccos/myra/ui';
+import { Button, Box, MainLayout } from '@saccos/myra/ui';
 import {
   SearchIcon,
   ChevronLeftIcon,

@@ -1,0 +1,85 @@
+{
+  "title": "Personal Information",
+  "id": "personal_information",
+  "fields": [
+    {
+      "type": "text",
+      "name": "firstName",
+      "id": "firstName",
+      "title": "First Name",
+      "validationProps": {
+        "required": "This is a mandatory field"
+      }
+    },
+    {
+      "type": "text",
+      "name": "middleName",
+      "id": "middleName",
+      "title": "Middle Name"
+    },
+    {
+      "type": "text",
+      "name": "lastName",
+      "id": "lastName",
+      "title": "Last Name",
+      "validationProps": {
+        "required": "This is a mandatory field"
+      }
+    },
+    {
+      "type": "select",
+      "name": "gender",
+      "id": "gender",
+      "title": "Gender",
+      "options": ["male", "female", "others"]
+    },
+    {
+      "type": "text",
+      "name": "title",
+      "id": "title",
+      "title": "Title"
+    },
+    {
+      "type": "date",
+      "name": "dateOfBirth",
+      "id": "dateOfBirth",
+      "title": "Date of Birth"
+    },
+    {
+      "type": "text",
+      "name": "nationality",
+      "id": "nationality",
+      "title": "Nationality"
+    },
+    {
+      "type": "number",
+      "name": "citizenshipNo",
+      "id": "citizenshipNo",
+      "title": "Citizenship No"
+    },
+    {
+      "type": "text",
+      "name": "citizenshipPlaceOfIssue",
+      "id": "citizenshipPlaceOfIssue",
+      "title": "Place of Issue"
+    },
+    {
+      "type": "date",
+      "name": "citizenshipIssueDate",
+      "id": "citizenshipIssueDate",
+      "title": "Citizen Issue Date"
+    },
+    {
+      "type": "text",
+      "name": "occupation",
+      "id": "occupation",
+      "title": "Occupation"
+    },
+    {
+      "type": "number",
+      "name": "panNumber",
+      "id": "panNumber",
+      "title": "PAN Number"
+    }
+  ]
+}
