@@ -14,7 +14,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  Time: any;
+  Time: string;
 };
 
 export enum Activity_Type {
