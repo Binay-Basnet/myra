@@ -11,6 +11,8 @@ export const useAxios = <TData, TVariables>(
   return async (variables?: TVariables) => {
     return axios
       .post<{ data: TData }>(url, { query, variables })
-      .then((res) => res.data.data);
+      .then((res) => {
+        return res.data.data;
+      });
   };
 };

@@ -1,0 +1,13 @@
+query members {
+  members {
+    list {
+      id
+      firstName
+      middleName
+      lastName
+      gender
+      title
+      dateOfBirth
+    }
+  }
+}
