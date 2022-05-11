@@ -1,16 +1,5 @@
 import { GrClose } from 'react-icons/gr';
-import {
-  Box,
-  Container,
-  Heading,
-  Grid,
-  Flex,
-  Spacer,
-  GridItem,
-  FormControl,
-  FormLabel,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Container, Heading, Grid, Text } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -43,7 +32,6 @@ const Index = () => {
     resolver: yupResolver(validationSchema),
   });
   const onSubmit = (data, e) => console.log('data', data);
-  console.log('hello', validationSchema);
   return (
     <>
       <Box
@@ -56,14 +44,7 @@ const Index = () => {
         <Header />
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Container
-          maxW="904px"
-          height="fit-content"
-          background="white"
-          mt="130"
-          p="0"
-          pb="55px"
-        >
+        <Container maxW="904px" height="fit-content" mt="130" p="0" pb="55px">
           <Box
             height="60px"
             display="flex"
@@ -73,16 +54,18 @@ const Index = () => {
               borderBottom: '1px solid #E6E6E6',
             }}
             px="5"
+            background="white"
           >
             <Heading size="16px" as="h4">
               Add New Member
             </Heading>
             <GrClose size="14px" color="#91979F" />
           </Box>
-          <Box px="5">
-            <Heading fontSize="14px" my="5" color="#006837">
+          <Box background="white" p={5}>
+            <Heading fontSize="14px" color="#006837">
               {personalInfo.title}
             </Heading>
+            <br />
             <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
               <MemberCommonForm
                 fields={personalInfo?.fields}
@@ -91,20 +74,12 @@ const Index = () => {
               />
             </Grid>
           </Box>
-        </Container>
-        <Container
-          maxW="904px"
-          height="fit-content"
-          background="white"
-          mt="5"
-          p="0"
-          pb="55px"
-          pt="5px"
-        >
-          <Box px="5">
-            <Heading fontSize="14px" my="5" color="#006837">
+          <br />
+          <Box background="white" p={5}>
+            <Heading fontSize="14px" color="#006837">
               {familyInfo?.title}
             </Heading>
+            <br />
             <Box>
               <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
                 <MemberCommonForm
@@ -115,20 +90,12 @@ const Index = () => {
               </Grid>
             </Box>
           </Box>
-        </Container>
-        <Container
-          maxW="904px"
-          height="fit-content"
-          background="white"
-          mt="5"
-          p="0"
-          pb="55px"
-          pt="5px"
-        >
-          <Box px="5">
-            <Heading fontSize="14px" my="5" color="#006837">
+          <br />
+          <Box bg="white" p={5}>
+            <Heading fontSize="14px" color="#006837">
               Permanent Address
             </Heading>
+            <br />
             <Box>
               <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
                 <MemberCommonForm
@@ -139,18 +106,9 @@ const Index = () => {
               </Grid>
             </Box>
           </Box>
-        </Container>
-        <Container
-          maxW="904px"
-          height="fit-content"
-          background="white"
-          mt="5"
-          p="0"
-          pb="55px"
-          pt="5px"
-        >
-          <Box px="5">
-            <Heading fontSize="14px" my="5" color="#006837">
+          <br />
+          <Box bg="white" p={5}>
+            <Heading fontSize="14px" color="#006837">
               Contact Information
             </Heading>
             <Box>
@@ -163,18 +121,9 @@ const Index = () => {
               </Grid>
             </Box>
           </Box>
-        </Container>
-        <Container
-          maxW="904px"
-          height="fit-content"
-          background="white"
-          mt="5"
-          p="0"
-          pb="55px"
-          pt="5px"
-        >
-          <Box px="5">
-            <Heading fontSize="14px" my="5" color="#006837">
+          <br />
+          <Box bg="white" p={5}>
+            <Heading fontSize="14px" color="#006837">
               {nomineeInfo.title}
             </Heading>
             <Box>
@@ -187,89 +136,47 @@ const Index = () => {
               </Grid>
             </Box>
           </Box>
-        </Container>
-        <Container
-          maxW="904px"
-          height="280px"
-          background="white"
-          mt="5"
-          p="0"
-          pb="55px"
-          pt="5px"
-          mb={10}
-        >
-          <Box px="5">
-            <Heading fontSize="14px" my="5" color="#006837">
+          <br />
+          <Box bg="white" p="5">
+            <Heading fontSize="14px" color="#006837">
               Photo
             </Heading>
-            <Box>
-              <Grid templateColumns="repeat(2, 1fr)" gap={'3em'}>
-                <GridItem w="100%" h="10">
-                  <FormControl>
-                    <FormLabel htmlFor="email">
-                      Member Photo
-                      <Box
-                        mt="4"
-                        background={'#EEF2F7'}
-                        width="400px"
-                        height="148px"
-                        display={'flex'}
-                        justifyContent="center"
-                        alignItems={'center'}
-                      >
-                        <Text color="#006837">
-                          Drop or click here to upload photo
-                        </Text>
-                      </Box>
-                    </FormLabel>
-                  </FormControl>
-                </GridItem>
-                <GridItem w="100%" h="10">
-                  <FormControl>
-                    <FormLabel htmlFor="email">
-                      Member Signature
-                      <Box
-                        mt="4"
-                        background={'#EEF2F7'}
-                        width="400px"
-                        height="148px"
-                        display={'flex'}
-                        justifyContent="center"
-                        alignItems={'center'}
-                      >
-                        <Text color="#006837">
-                          Drop or click here to upload photo
-                        </Text>
-                      </Box>
-                    </FormLabel>
-                  </FormControl>
-                </GridItem>
-              </Grid>
+            <Box display="flex" justifyContent="space-between">
+              <Box>
+                <Text>Member Photo</Text>
+                <Box
+                  w={423}
+                  h={148}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  bg="#EEF2F7"
+                >
+                  Drop or Click to upload photo
+                </Box>
+              </Box>
+              <Box>
+                <Text>Member Signature</Text>
+                <Box
+                  w={423}
+                  h={148}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  bg="#EEF2F7"
+                >
+                  Drop or click to upload photo
+                </Box>
+              </Box>
             </Box>
           </Box>
+          <br />
+          <Box width="100%" bg="white" p="5">
+            <Button type="submit" variant="primary" size="md" bg="primary">
+              Save Member
+            </Button>
+          </Box>
         </Container>
-
-        <Box position="fixed" bottom={0} width="100%" bg={'#EEF2F7'}>
-          <Container
-            maxW="904px"
-            height="40px"
-            background="white"
-            mt="2"
-            p="0"
-            pb="55px"
-            pt="5px"
-          >
-            <Flex>
-              <Box p="4">form data saved in draft</Box>
-              <Spacer />
-              <Box p="4">
-                <Button type="submit" colorScheme="teal" size="md">
-                  <a>Next</a>
-                </Button>
-              </Box>
-            </Flex>
-          </Container>
-        </Box>
       </form>
     </>
   );
