@@ -21,6 +21,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import TabColumn from '../components/TabforMemberPage';
 import TabRow from '../components/TabMemberPageRow';
 import TableComponent from '../components/TableComponent';
+import { useMembersQuery } from '../generated/graphql';
 
 const column = [
   'Member list',
@@ -31,6 +32,8 @@ const column = [
 const rows = ['Active', 'Inactive', 'WIP', 'Draft'];
 
 const Member = () => {
+  const { data, isLoading } = useMembersQuery();
+
   const columns = useMemo(
     () => [
       {
@@ -38,8 +41,12 @@ const Member = () => {
         accessor: 'id',
       },
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: 'Title',
+        accessor: 'title',
+      },
+      {
+        Header: 'First Name',
+        accessor: 'firstName',
         Cell: ({ value }) => (
           <Flex alignItems="center" gap="2">
             <Avatar
@@ -52,19 +59,23 @@ const Member = () => {
         ),
       },
       {
-        Header: 'Address',
-        accessor: 'address',
+        Header: 'Middle Name',
+        accessor: 'middleName',
         style: {
           width: '550px',
         },
       },
       {
-        Header: 'Contact',
-        accessor: 'contact',
+        Header: 'Last Name',
+        accessor: 'lastName',
       },
       {
-        Header: 'Date Joined',
-        accessor: 'dateJoined',
+        Header: 'Gender',
+        accessor: 'gender',
+      },
+      {
+        Header: 'Date Of Birth',
+        accessor: 'dateOfBirth',
       },
       {
         accessor: 'actions',
@@ -80,46 +91,8 @@ const Member = () => {
     []
   );
 
-  const data = useMemo(
-    () => [
-      {
-        id: 123432,
-        name: 'Taylor',
-        address: 'USA',
-        contact: 98213123,
-        dateJoined: '2022/02/12',
-      },
-      {
-        id: 223422,
-        name: 'Ariana',
-        address: 'USA',
-        contact: 3423653,
-        dateJoined: '2021/12/12',
-      },
-      {
-        id: 654323,
-        name: 'Lana',
-        address: 'USA',
-        contact: 789324234,
-        dateJoined: '1996/12/26',
-      },
-      {
-        id: 454223,
-        name: 'Mikael',
-        address: 'Sweden',
-        contact: 12312453,
-        dateJoined: '1999/07/05',
-      },
-      {
-        id: 565432,
-        name: 'Steven',
-        address: 'UK',
-        contact: 876345,
-        dateJoined: '1976/02/15',
-      },
-    ],
-    []
-  );
+  const rowData = useMemo(() => data && data?.members?.list, [data]);
+
   return (
     <Box mt="100px" p="16px" display="flex">
       <Box mt="24px">
@@ -224,7 +197,7 @@ const Member = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          <TableComponent data={data} columns={columns} />
+          {!isLoading && <TableComponent data={rowData} columns={columns} />}
         </Box>
       </Box>
     </Box>
