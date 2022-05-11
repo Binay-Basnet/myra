@@ -66,7 +66,7 @@ export function TabMenu() {
     <Box
       height="60px"
       px="5"
-      background={'primary.dark'}
+      background="#00382F"
       alignItems="center"
       display="flex"
     >

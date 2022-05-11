@@ -9,7 +9,7 @@ import {
   Th,
   Tbody,
   Td,
-  Checkbox,
+  // Checkbox,
   // chakra,
 } from '@chakra-ui/react';
 
@@ -38,7 +38,7 @@ const IndeterminateCheckbox = forwardRef<
 
   return (
     <>
-      <Checkbox type="checkbox" ref={resolvedRef} {...rest} />
+      <input type="checkbox" ref={resolvedRef} {...rest} />
     </>
   );
 });
@@ -49,26 +49,31 @@ export default function TableComponent<T>(props: ChakraTableProps<T>) {
   const id = useId();
   const { data, columns } = props;
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data }, useSortBy, useRowSelect, (hooks) => {
-      hooks.visibleColumns.push((column) => [
-        {
-          id: 'selection',
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
-        },
-        ...column,
-      ]);
-    });
-
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    // selectedFlatRows,
+  } = useTable({ columns, data }, useSortBy, useRowSelect, (hooks) => {
+    hooks.visibleColumns.push((column) => [
+      {
+        id: 'selection',
+        Header: ({ getToggleAllRowsSelectedProps }) => (
+          <div>
+            <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+          </div>
+        ),
+        Cell: ({ row }) => (
+          <div>
+            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+          </div>
+        ),
+      },
+      ...column,
+    ]);
+  });
   return (
     <TableContainer
       style={{
