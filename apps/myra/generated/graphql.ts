@@ -14,231 +14,66 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  Time: any;
+  Any: any;
+  Time: string;
 };
 
-export enum Activity_Type {
-  AddPatient = 'ADD_PATIENT',
-  DoctorNotes = 'DOCTOR_NOTES',
-  EmrRecordsReceived = 'EMR_RECORDS_RECEIVED',
-  HarmScoreUpdate = 'HARM_SCORE_UPDATE',
-  PatientDischarge = 'PATIENT_DISCHARGE',
-  SurveyDone = 'SURVEY_DONE',
-  SurveyIncomplete = 'SURVEY_INCOMPLETE',
-  SurveyNotStarted = 'SURVEY_NOT_STARTED'
+export type Address = {
+  district?: Maybe<Scalars['String']>;
+  locality?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  vdc?: Maybe<Scalars['String']>;
+  wardNo?: Maybe<Scalars['String']>;
+};
+
+export enum Arrange {
+  Ascending = 'ASCENDING',
+  Descending = 'DESCENDING'
 }
 
-export type Action = {
-  askQuestion?: Maybe<AskQuestionsAction>;
-  showMessage?: Maybe<ShowMessageAction>;
-  triggerChecklist?: Maybe<TriggerChecklistsAction>;
-  updateHarm?: Maybe<UpdateHarmAction>;
+export type Base = {
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  id: Scalars['ID'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
 };
 
-export type ActionObj = {
-  askQuestion?: InputMaybe<AskQuestionsActionObj>;
-  showMessage?: InputMaybe<ShowMessageActionObj>;
-  triggerChecklist?: InputMaybe<TriggerChecklistsActionObj>;
-  updateHarm?: InputMaybe<UpdateHarmActionObj>;
+export type Citizenship = {
+  issueDate?: Maybe<Scalars['String']>;
+  issuePlace?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['String']>;
 };
 
-export enum ActionType {
-  AskQuestion = 'ASK_QUESTION',
-  ShowMessage = 'SHOW_MESSAGE',
-  TriggerChecklist = 'TRIGGER_CHECKLIST',
-  UpdateHarm = 'UPDATE_HARM'
+export enum ComparatorType {
+  EqualTo = 'EqualTo',
+  GreaterThan = 'GreaterThan',
+  LessThan = 'LessThan'
 }
 
-export type Admission = {
-  admittedAt: Scalars['Time'];
-  assignedChecklists?: Maybe<Array<Checklist>>;
-  bed: Bed;
-  cautions: Array<Scalars['String']>;
-  dischargedAt?: Maybe<Scalars['Time']>;
-  id: Scalars['ID'];
-  patient: Patient;
-  reasonForAdmittance: Scalars['String'];
+export type Condition = {
+  column: Scalars['String'];
+  comparator: ComparatorType;
+  value: Scalars['Any'];
 };
 
-export type AdmissionObj = {
-  bedId: Scalars['String'];
-  patientId: Scalars['String'];
+export type Contact = {
+  mobile?: Maybe<Scalars['String']>;
+  office?: Maybe<Scalars['String']>;
+  residence?: Maybe<Scalars['String']>;
 };
 
-export type AskQuestionsAction = {
-  checklistId: Scalars['String'];
-  parentQuestionId: Scalars['String'];
-  questionRanks: Array<Scalars['Int']>;
-  questions: Array<Question>;
+export type Family = {
+  fatherName?: Maybe<Scalars['String']>;
+  grandFatherName?: Maybe<Scalars['String']>;
+  grandMotherName?: Maybe<Scalars['String']>;
+  motherName?: Maybe<Scalars['String']>;
+  spouseName?: Maybe<Scalars['String']>;
 };
 
-export type AskQuestionsActionObj = {
-  checklistId: Scalars['String'];
-  parentQuestionId: Scalars['String'];
-  questionsRanks: Array<Scalars['Int']>;
-};
-
-export type Bed = {
-  admission?: Maybe<Admission>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  ward: Ward;
-};
-
-export type BedObj = {
-  name: Scalars['String'];
-};
-
-export type Checklist = {
-  active: Scalars['Boolean'];
-  collections?: Maybe<Array<Collection>>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  schedule?: Maybe<Schedule>;
-  triggers?: Maybe<Array<Trigger>>;
-};
-
-export type ChecklistObj = {
-  active: Scalars['Boolean'];
-  name: Scalars['String'];
-  schedule?: InputMaybe<ScheduleObj>;
-};
-
-export type ChecklistRound = {
-  round: Scalars['Int'];
-  roundForNow: Scalars['Boolean'];
-  survey?: Maybe<Survey>;
-};
-
-export type Collection = {
-  checklist: Checklist;
-  groups?: Maybe<Array<Group>>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  patientAttributes?: Maybe<Array<Scalars['String']>>;
-};
-
-export type CollectionData = {
-  group?: Maybe<Array<Maybe<GroupData>>>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-};
-
-export type CollectionObj = {
-  name: Scalars['String'];
-  patientAttributes?: InputMaybe<Array<Scalars['String']>>;
-};
-
-export type CollectionState = {
-  collectionCompleted: Scalars['Boolean'];
-  collectionId: Scalars['String'];
-  completedGroupId?: Maybe<Scalars['String']>;
-  numberOfGroupsCompleted: Scalars['Int'];
-};
-
-export type DoctorNoteConf = {
-  checklistId: Scalars['String'];
-  collectionId?: Maybe<Scalars['String']>;
-  expression: Scalars['String'];
-  groupId: Scalars['String'];
-  id: Scalars['ID'];
-  message: Scalars['String'];
-};
-
-export type DoctorNoteConfData = {
-  expression: Scalars['String'];
-  message: Scalars['String'];
-};
-
-export type DoctorNoteConfObj = {
-  checklistId: Scalars['String'];
-  collectionId?: InputMaybe<Scalars['String']>;
-  data: Array<InputMaybe<DoctorNoteConfData>>;
-  groupId: Scalars['String'];
-};
-
-export type DoctorNotes = {
-  CreatedDate: Scalars['String'];
-  TimeStamp: Scalars['Time'];
-  id: Scalars['ID'];
-  message: Scalars['String'];
-  patientId: Scalars['String'];
-};
-
-export type DoctorNotesObj = {
-  message: Scalars['String'];
-  patientId: Scalars['String'];
-};
-
-export type EmrBooleanValue = {
-  value: Scalars['Boolean'];
-};
-
-export type EmrLabel = {
-  description: Scalars['String'];
-  name: Scalars['String'];
-  slug: Scalars['ID'];
-};
-
-export type EmrLabelObj = {
-  description: Scalars['String'];
-  name: Scalars['String'];
-  slug: Scalars['ID'];
-};
-
-export type EmrNumericValue = {
-  value: Scalars['Float'];
-};
-
-export type EmrNumericValueObj = {
-  maxValue?: Maybe<Scalars['Float']>;
-  minValue?: Maybe<Scalars['Float']>;
-  recentValue?: Maybe<Scalars['Float']>;
-};
-
-export type EmrTextValue = {
-  value: Scalars['String'];
-};
-
-export type EmrValue = {
-  boolean?: Maybe<EmrBooleanValue>;
-  numeric?: Maybe<EmrNumericValue>;
-  text?: Maybe<EmrTextValue>;
-};
-
-export type EmrValueObj = {
-  boolean?: Maybe<EmrBooleanValue>;
-  numeric?: Maybe<EmrNumericValueObj>;
-  text?: Maybe<EmrTextValue>;
-};
-
-export type EmrData = {
-  emr_value: Scalars['Int'];
-  name: Scalars['String'];
-};
-
-export type ExcelData = {
-  SurvayDateStatus?: Maybe<Array<Maybe<SurvayDateStatus>>>;
-  name?: Maybe<Scalars['String']>;
-};
-
-export type ExcelFileName = {
-  name: Scalars['String'];
-};
-
-export type Feedback = {
-  checklistId: Scalars['String'];
-  feedback: Scalars['String'];
-  id: Scalars['ID'];
-};
-
-export type FeedbackMessage = {
-  message: Scalars['String'];
-};
-
-export type FeedbackObj = {
-  checklistId: Scalars['String'];
-  feedback?: InputMaybe<Array<InputMaybe<FeedbackMessage>>>;
+export type Filter = {
+  orConditions: Array<OrConditions>;
 };
 
 export enum Gender {
@@ -247,1122 +82,169 @@ export enum Gender {
   Other = 'OTHER'
 }
 
-export type Group = {
-  collection: Collection;
+export type Identity = {
   id: Scalars['ID'];
   name: Scalars['String'];
-  patientAttributes?: Maybe<Array<Scalars['String']>>;
-  questions?: Maybe<Array<Question>>;
-};
-
-export type GroupData = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  questionAreList?: Maybe<Array<Maybe<QuestionAre>>>;
-};
-
-export type GroupHarmTrigger = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-  groupId: Scalars['String'];
-  surveyId?: Maybe<Scalars['String']>;
-};
-
-export type GroupObj = {
-  name: Scalars['String'];
-  patientAttributes?: InputMaybe<Array<Scalars['String']>>;
-};
-
-export type Harm = {
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  slug: Scalars['String'];
-};
-
-export type HarmObj = {
-  name: Scalars['String'];
-  slug: Scalars['String'];
-};
-
-export type HarmSettings = {
-  checklistId: Scalars['String'];
-  expression: Scalars['String'];
-  harmSlug: Scalars['String'];
-  harmValue: Scalars['Int'];
-  id: Scalars['ID'];
-  incrementType: IncrementType;
-};
-
-export type HarmSettingsDataObj = {
-  expression: Scalars['String'];
-  harmSlug: Scalars['String'];
-  harmValue: Scalars['Int'];
-  incrementType: IncrementType;
-};
-
-export type HarmSettingsObj = {
-  checklistId: Scalars['String'];
-  data: Array<InputMaybe<HarmSettingsDataObj>>;
-};
-
-export type HarmSlugValues = {
-  calculatedAt: Scalars['Time'];
-  value: Scalars['Int'];
-};
-
-export type Hospital = {
-  active: Scalars['Boolean'];
-  address: Scalars['String'];
-  contact: Scalars['String'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  wards?: Maybe<Array<Ward>>;
-};
-
-export type HospitalObj = {
-  active: Scalars['Boolean'];
-  address: Scalars['String'];
-  contact: Scalars['String'];
-  name: Scalars['String'];
-};
-
-export type HospitalStat = {
-  total: Scalars['Int'];
-};
-
-export enum IncrementType {
-  Fixed = 'FIXED',
-  Relative = 'RELATIVE'
-}
-
-export type MedicalRecord = {
-  id: Scalars['ID'];
-  label: EmrLabel;
-  measuredAt: Scalars['Time'];
-  value: EmrValue;
-};
-
-export type MedicalRecordObj = {
-  id: Scalars['ID'];
-  label: EmrLabel;
-  measuredAt: Scalars['Time'];
-  value: EmrValueObj;
-};
-
-export enum MessageLevel {
-  Critical = 'CRITICAL',
-  Info = 'INFO',
-  Warning = 'WARNING'
-}
-
-export type Mutation = {
-  AddDoctorNoteConf: Array<Maybe<DoctorNoteConf>>;
-  AddHarmSettings: Array<Maybe<HarmSettings>>;
-  AddWeight?: Maybe<Array<Maybe<Weight>>>;
-  ChecklistFeedback: Array<Maybe<Feedback>>;
-  addBed: Bed;
-  addDoctorNotes: DoctorNotes;
-  addHarm: Harm;
-  addHospital: Hospital;
-  addMessageSurveyHistory: PatientHistory;
-  addPatient: Admission;
-  addPatientChecklists: Admission;
-  addWard: Ward;
-  beginSurvey: SurveyStep;
-  deleteBed: Scalars['Boolean'];
-  deleteEMRLabel: Scalars['Boolean'];
-  deleteHarm: Scalars['Boolean'];
-  deleteHospital: Scalars['Boolean'];
-  deleteWard: Scalars['Boolean'];
-  designer_AddBranchQuestion: Question;
-  designer_AddChecklist: Checklist;
-  designer_AddChecklistAction: Checklist;
-  designer_AddChecklistTrigger: Trigger;
-  designer_AddCollection: Collection;
-  designer_AddGroup: Group;
-  designer_AddQuestion: Question;
-  designer_AddQuestionAction: Question;
-  designer_AddQuestionTrigger: Trigger;
-  designer_ArrangeCollection: Array<Collection>;
-  designer_ArrangeGroup: Array<Group>;
-  designer_ArrangeQuestion: Array<Question>;
-  designer_DeleteChecklist: Scalars['Boolean'];
-  designer_DeleteChecklistAction: Checklist;
-  designer_DeleteChecklistTrigger: Checklist;
-  designer_DeleteCollection: Scalars['Boolean'];
-  designer_DeleteGroup: Scalars['Boolean'];
-  designer_DeleteQuestion: Scalars['Boolean'];
-  designer_DeleteQuestionAction: Question;
-  designer_DeleteQuestionTrigger: Question;
-  designer_UpdateChecklist: Checklist;
-  designer_UpdateCollection: Collection;
-  designer_UpdateGroup: Group;
-  designer_UpdateQuestionConfig: Question;
-  designer_UpdateQuestionText: Question;
-  dischargePatient: Admission;
-  putEMRLabel: EmrLabel;
-  removePatientChecklist: Admission;
-  submitResponse: SurveyStep;
-  transferPatient: Admission;
-  updateBed: Bed;
-  updateHarm: Harm;
-  updateHospital: Hospital;
-  updateWard: Ward;
-};
-
-
-export type MutationAddDoctorNoteConfArgs = {
-  obj: DoctorNoteConfObj;
-};
-
-
-export type MutationAddHarmSettingsArgs = {
-  obj: HarmSettingsObj;
-};
-
-
-export type MutationAddWeightArgs = {
-  obj: WeightObj;
-};
-
-
-export type MutationChecklistFeedbackArgs = {
-  data: FeedbackObj;
-};
-
-
-export type MutationAddBedArgs = {
-  bed: BedObj;
-  wardId: Scalars['String'];
-};
-
-
-export type MutationAddDoctorNotesArgs = {
-  data: DoctorNotesObj;
-};
-
-
-export type MutationAddHarmArgs = {
-  harm: HarmObj;
-};
-
-
-export type MutationAddHospitalArgs = {
-  hospital: HospitalObj;
-};
-
-
-export type MutationAddMessageSurveyHistoryArgs = {
-  id: Scalars['String'];
-  message: Scalars['String'];
-};
-
-
-export type MutationAddPatientArgs = {
-  admission: AdmissionObj;
-};
-
-
-export type MutationAddPatientChecklistsArgs = {
-  admissionId: Scalars['String'];
-  checklistIds: Array<Scalars['String']>;
-};
-
-
-export type MutationAddWardArgs = {
-  hospitalId: Scalars['String'];
-  ward: WardObj;
-};
-
-
-export type MutationBeginSurveyArgs = {
-  admissionId: Scalars['String'];
-  checklistId: Scalars['String'];
-};
-
-
-export type MutationDeleteBedArgs = {
-  bedId: Scalars['String'];
-};
-
-
-export type MutationDeleteEmrLabelArgs = {
-  labelSlug: Scalars['String'];
-};
-
-
-export type MutationDeleteHarmArgs = {
-  harmId: Scalars['String'];
-};
-
-
-export type MutationDeleteHospitalArgs = {
-  hospitalId: Scalars['String'];
-};
-
-
-export type MutationDeleteWardArgs = {
-  wardId: Scalars['String'];
-};
-
-
-export type MutationDesigner_AddBranchQuestionArgs = {
-  checklistId: Scalars['String'];
-  questionId: Scalars['String'];
-  text?: InputMaybe<Scalars['String']>;
-};
-
-
-export type MutationDesigner_AddChecklistArgs = {
-  checklist: ChecklistObj;
-  checklistId: Scalars['String'];
-};
-
-
-export type MutationDesigner_AddChecklistActionArgs = {
-  action: ActionObj;
-  checklistId: Scalars['String'];
-  triggerId: Scalars['String'];
-};
-
-
-export type MutationDesigner_AddChecklistTriggerArgs = {
-  checklistId: Scalars['String'];
-  trigger: TriggerObj;
-};
-
-
-export type MutationDesigner_AddCollectionArgs = {
-  checklistId: Scalars['String'];
-  collection: CollectionObj;
-};
-
-
-export type MutationDesigner_AddGroupArgs = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-  group: GroupObj;
-};
-
-
-export type MutationDesigner_AddQuestionArgs = {
-  checklistId: Scalars['String'];
-  groupId: Scalars['String'];
-  text?: InputMaybe<Scalars['String']>;
-};
-
-
-export type MutationDesigner_AddQuestionActionArgs = {
-  action: ActionObj;
-  checklistId: Scalars['String'];
-  questionId: Scalars['String'];
-  triggerId: Scalars['String'];
-};
-
-
-export type MutationDesigner_AddQuestionTriggerArgs = {
-  checklistId: Scalars['String'];
-  questionId: Scalars['String'];
-  trigger: TriggerObj;
-};
-
-
-export type MutationDesigner_ArrangeCollectionArgs = {
-  checklistId: Scalars['String'];
-  collectionIds: Array<Scalars['String']>;
-};
-
-
-export type MutationDesigner_ArrangeGroupArgs = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-  groupIds: Array<Scalars['String']>;
-};
-
-
-export type MutationDesigner_ArrangeQuestionArgs = {
-  checklistId: Scalars['String'];
-  groupId: Scalars['String'];
-  questionIds: Array<Scalars['String']>;
-};
-
-
-export type MutationDesigner_DeleteChecklistArgs = {
-  checklistId: Scalars['String'];
-};
-
-
-export type MutationDesigner_DeleteChecklistActionArgs = {
-  actionType: ActionType;
-  checklistId: Scalars['String'];
-  triggerId: Scalars['String'];
-};
-
-
-export type MutationDesigner_DeleteChecklistTriggerArgs = {
-  checklistId: Scalars['String'];
-  triggerId: Scalars['String'];
-};
-
-
-export type MutationDesigner_DeleteCollectionArgs = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-};
-
-
-export type MutationDesigner_DeleteGroupArgs = {
-  checklistId: Scalars['String'];
-  groupId: Scalars['String'];
-};
-
-
-export type MutationDesigner_DeleteQuestionArgs = {
-  checklistId: Scalars['String'];
-  questionId: Scalars['String'];
-};
-
-
-export type MutationDesigner_DeleteQuestionActionArgs = {
-  actionType: ActionType;
-  checklistId: Scalars['String'];
-  questionId: Scalars['String'];
-  triggerId: Scalars['String'];
-};
-
-
-export type MutationDesigner_DeleteQuestionTriggerArgs = {
-  checklistId: Scalars['String'];
-  questionId: Scalars['String'];
-  triggerId: Scalars['String'];
-};
-
-
-export type MutationDesigner_UpdateChecklistArgs = {
-  checklist: ChecklistObj;
-  checklistId: Scalars['String'];
-};
-
-
-export type MutationDesigner_UpdateCollectionArgs = {
-  checklistId: Scalars['String'];
-  collection: CollectionObj;
-  collectionId: Scalars['String'];
-};
-
-
-export type MutationDesigner_UpdateGroupArgs = {
-  checklistId: Scalars['String'];
-  group: GroupObj;
-  groupId: Scalars['String'];
-};
-
-
-export type MutationDesigner_UpdateQuestionConfigArgs = {
-  checklistId: Scalars['String'];
-  config: QuestionConfigObj;
-  questionId: Scalars['String'];
-};
-
-
-export type MutationDesigner_UpdateQuestionTextArgs = {
-  checklistId: Scalars['String'];
-  questionId: Scalars['String'];
-  text: Scalars['String'];
-};
-
-
-export type MutationDischargePatientArgs = {
-  admissionId: Scalars['String'];
-};
-
-
-export type MutationPutEmrLabelArgs = {
-  label: EmrLabelObj;
-};
-
-
-export type MutationRemovePatientChecklistArgs = {
-  admissionId: Scalars['String'];
-  checklistId: Scalars['String'];
-};
-
-
-export type MutationSubmitResponseArgs = {
-  groupId: Scalars['String'];
-  response: SurveyResponseObj;
-  surveyId: Scalars['String'];
-};
-
-
-export type MutationTransferPatientArgs = {
-  admissionId: Scalars['String'];
-  toBedId: Scalars['String'];
-};
-
-
-export type MutationUpdateBedArgs = {
-  bed: BedObj;
-  bedId: Scalars['String'];
-};
-
-
-export type MutationUpdateHarmArgs = {
-  harm: HarmObj;
-  harmId: Scalars['String'];
-};
-
-
-export type MutationUpdateHospitalArgs = {
-  hospital: HospitalObj;
-  hospitalId: Scalars['String'];
-};
-
-
-export type MutationUpdateWardArgs = {
-  ward: WardObj;
-  wardId: Scalars['String'];
-};
-
-export type NumericInputConfig = {
-  maxValue?: Maybe<Scalars['Float']>;
-  minValue?: Maybe<Scalars['Float']>;
-};
-
-export type NumericInputConfigObj = {
-  maxValue?: InputMaybe<Scalars['Float']>;
-  minValue?: InputMaybe<Scalars['Float']>;
-};
-
-export type NumericRangeConfig = {
-  maxValue?: Maybe<Scalars['Int']>;
-  minValue?: Maybe<Scalars['Int']>;
-  step?: Maybe<Scalars['Int']>;
-};
-
-export type NumericRangeConfigObj = {
-  maxValue?: InputMaybe<Scalars['Int']>;
-  minValue?: InputMaybe<Scalars['Int']>;
-  step?: InputMaybe<Scalars['Int']>;
-};
-
-export type Option = {
-  id: Scalars['ID'];
-  value: Scalars['String'];
-};
-
-export type OptionObj = {
-  id: Scalars['ID'];
-  value: Scalars['String'];
-};
-
-export type OptionsConfig = {
-  options: Array<Option>;
-  type?: Maybe<OptionsType>;
-};
-
-export type OptionsConfigObj = {
-  options: Array<OptionObj>;
-  type?: InputMaybe<OptionsType>;
-};
-
-export enum OptionsType {
-  MultiSelect = 'MULTI_SELECT',
-  MultiSelectDropdown = 'MULTI_SELECT_DROPDOWN',
-  SingleSelect = 'SINGLE_SELECT',
-  SingleSelectDropdown = 'SINGLE_SELECT_DROPDOWN'
-}
-
-export type Patient = {
-  admission?: Maybe<Admission>;
-  ageYears: Scalars['Int'];
-  bands: Scalars['String'];
-  birthGender?: Maybe<Gender>;
-  bloodGroup: Scalars['String'];
-  checklists: Array<PatientChecklist>;
-  doctorNotes?: Maybe<Array<Maybe<DoctorNotes>>>;
-  emrLatest: Array<MedicalRecordObj>;
-  emrTrend: Array<PatientHarm>;
+  password: Scalars['String'];
+  userType: UserType;
+  username: Scalars['String'];
+};
+
+export type Member = Base & {
+  address?: Maybe<Address>;
+  anotherStuff?: Maybe<Scalars['String']>;
+  citizenship?: Maybe<Citizenship>;
+  contact?: Maybe<Contact>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  dateOfBirth?: Maybe<Scalars['String']>;
+  family?: Maybe<Family>;
   firstName: Scalars['String'];
-  harmLatest: Array<PatientHarm>;
-  heightCM: Scalars['Int'];
+  gender: Gender;
   id: Scalars['ID'];
   lastName: Scalars['String'];
-  patientActivity?: Maybe<Array<Maybe<PatientHistory>>>;
-  surveys?: Maybe<Array<Survey>>;
-  weightKg: Scalars['Int'];
+  middleName?: Maybe<Scalars['String']>;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  nationality?: Maybe<Scalars['String']>;
+  nominee?: Maybe<Nominee>;
+  objState: ObjState;
+  occupation?: Maybe<Scalars['String']>;
+  panNumber?: Maybe<Scalars['String']>;
+  searchText?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
 };
 
-export type PatientChecklist = {
-  checklist: Checklist;
-  today?: Maybe<Array<ChecklistRound>>;
+export type MemberInput = {
+  citizenshipIssueDate?: InputMaybe<Scalars['String']>;
+  citizenshipIssuePlace?: InputMaybe<Scalars['String']>;
+  citizenshipNo?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['String']>;
+  district?: InputMaybe<Scalars['String']>;
+  fatherName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  gender?: InputMaybe<Gender>;
+  grandFatherName?: InputMaybe<Scalars['String']>;
+  grandMotherName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  locality?: InputMaybe<Scalars['String']>;
+  middleName?: InputMaybe<Scalars['String']>;
+  mobileNumber?: InputMaybe<Scalars['String']>;
+  motherName?: InputMaybe<Scalars['String']>;
+  nationality?: InputMaybe<Scalars['String']>;
+  nomineeCitizenshipNumber?: InputMaybe<Scalars['String']>;
+  nomineeContact?: InputMaybe<Scalars['String']>;
+  nomineeFirstName?: InputMaybe<Scalars['String']>;
+  nomineeIssuePlace?: InputMaybe<Scalars['String']>;
+  nomineeLastName?: InputMaybe<Scalars['String']>;
+  nomineeMiddleName?: InputMaybe<Scalars['String']>;
+  nomineeRelation?: InputMaybe<Scalars['String']>;
+  nomineeTitle?: InputMaybe<Scalars['String']>;
+  occupation?: InputMaybe<Scalars['String']>;
+  officeContact?: InputMaybe<Scalars['String']>;
+  panNumber?: InputMaybe<Scalars['String']>;
+  residenceContact?: InputMaybe<Scalars['String']>;
+  spouseName?: InputMaybe<Scalars['String']>;
+  state?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  vdc?: InputMaybe<Scalars['String']>;
+  wardNo?: InputMaybe<Scalars['String']>;
 };
 
-export type PatientHarm = {
-  basedOn?: Maybe<PatientHarm>;
-  calculatedAt: Scalars['Time'];
-  harmSlug: Scalars['String'];
+export type MemberMutation = {
+  save: Member;
+};
+
+
+export type MemberMutationSaveArgs = {
+  data: MemberInput;
   id: Scalars['ID'];
-  narration?: Maybe<Scalars['String']>;
-  patient: Patient;
-  value: Scalars['Int'];
 };
 
-export type PatientHarmTrend = {
-  harmSlug: Scalars['String'];
-  name: Scalars['String'];
-  patientId: Scalars['String'];
-  values?: Maybe<Array<HarmSlugValues>>;
+export type MemberQuery = {
+  get: Member;
+  list: Array<Member>;
 };
 
-export type PatientHistory = {
-  checklistId?: Maybe<Scalars['String']>;
-  data?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  narration: Scalars['String'];
-  patient: Patient;
-  time_stamp: Scalars['Time'];
-  type: Scalars['String'];
+
+export type MemberQueryGetArgs = {
+  id: Scalars['String'];
 };
 
-export type PatientHistoryObj = {
-  id?: InputMaybe<Scalars['ID']>;
-  narration: Scalars['String'];
-  patientID: Scalars['String'];
-  time_stamp?: InputMaybe<Scalars['Time']>;
-  type: Scalars['String'];
+
+export type MemberQueryListArgs = {
+  filter?: InputMaybe<Filter>;
+  order?: InputMaybe<Array<Order>>;
 };
 
-export type PatientStat = {
-  total: Scalars['Int'];
+export type Mutation = {
+  members?: Maybe<MemberMutation>;
+  newId: Scalars['String'];
+};
+
+export type Nominee = {
+  citizenship?: Maybe<Citizenship>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
+  relation?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+export enum ObjState {
+  Approved = 'APPROVED',
+  Draft = 'DRAFT',
+  Validated = 'VALIDATED'
+}
+
+export type OrConditions = {
+  andConditions: Array<Condition>;
+};
+
+export type Order = {
+  arrange: Arrange;
+  column: Scalars['String'];
 };
 
 export type Query = {
-  ChecklistStatAdmin: ChecklistStat;
-  checkResponse: Array<Action>;
-  designer_GetQuestionTrigger: Trigger;
-  designer_GetQuestions: Array<Question>;
-  designer_ListChecklist: Array<Checklist>;
-  designer_ListCollection: Array<Collection>;
-  designer_ListGroup: Array<Group>;
-  designer_ListQuestion: Array<Question>;
-  exportPatientHistry: ExcelFileName;
-  getAdminStat: StatAdmin;
-  getDoctorNotes: DoctorNotes;
-  getGroupDoctorNotes?: Maybe<Array<Maybe<GroupDoctorNote>>>;
-  getGroupDoctorNotesBySurveyId?: Maybe<Array<Maybe<GroupDoctorNote>>>;
-  getPatient: Patient;
-  getPatientHarmTrend: Array<PatientHarm>;
-  getSurvey: Survey;
-  getWard: Ward;
-  listAdmission: Array<Admission>;
-  listBeds: Array<Bed>;
-  listChecklist: Array<Checklist>;
-  listChecklistFeedback?: Maybe<Array<Maybe<Feedback>>>;
-  listCollection: Array<Collection>;
-  listDoctorNoteConf?: Maybe<Array<Maybe<DoctorNoteConf>>>;
-  listEMRLabel: Array<EmrLabel>;
-  listEmr: Array<Maybe<EmrValue>>;
-  listHarm: Array<Harm>;
-  listHarmSettings?: Maybe<Array<Maybe<HarmSettings>>>;
-  listHospital: Array<Hospital>;
-  listPatientActivity: Array<PatientHistory>;
-  listPatientHarmTrends?: Maybe<Array<Maybe<PatientHarmTrend>>>;
-  listWard: Array<WardStat>;
-  listWeight?: Maybe<Array<Maybe<Weight>>>;
-  resumeSurvey: SurveyStep;
-  statHospital: HospitalStat;
-  statPatient: PatientStat;
-  statWard: Array<WardStat>;
+  members?: Maybe<MemberQuery>;
 };
 
-
-export type QueryChecklistStatAdminArgs = {
-  filter?: InputMaybe<Array<Scalars['String']>>;
-};
-
-
-export type QueryCheckResponseArgs = {
-  response: ResponseObj;
-  surveyId: Scalars['String'];
-};
-
-
-export type QueryDesigner_GetQuestionTriggerArgs = {
-  checklistId: Scalars['String'];
-  questionId: Scalars['String'];
-  triggerId: Scalars['String'];
-};
-
-
-export type QueryDesigner_GetQuestionsArgs = {
-  checklistId: Scalars['String'];
-  questionIds: Array<Scalars['String']>;
-};
-
-
-export type QueryDesigner_ListChecklistArgs = {
-  filter?: InputMaybe<Array<Scalars['String']>>;
-};
-
-
-export type QueryDesigner_ListCollectionArgs = {
-  checklistId: Scalars['String'];
-};
-
-
-export type QueryDesigner_ListGroupArgs = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-};
-
-
-export type QueryDesigner_ListQuestionArgs = {
-  checklistId: Scalars['String'];
-  groupId: Scalars['String'];
-  parentQuestionId?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QueryExportPatientHistryArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryGetDoctorNotesArgs = {
-  patientId: Scalars['String'];
-};
-
-
-export type QueryGetGroupDoctorNotesArgs = {
-  filter: GroupDoctorNoteFinder;
-};
-
-
-export type QueryGetGroupDoctorNotesBySurveyIdArgs = {
-  surveyId: Scalars['String'];
-};
-
-
-export type QueryGetPatientArgs = {
-  patientId: Scalars['String'];
-};
-
-
-export type QueryGetPatientHarmTrendArgs = {
-  HarmSlug: Scalars['String'];
-  patientId: Scalars['String'];
-};
-
-
-export type QueryGetSurveyArgs = {
-  surveyId: Scalars['String'];
-};
-
-
-export type QueryGetWardArgs = {
-  wardId: Scalars['String'];
-};
-
-
-export type QueryListAdmissionArgs = {
-  hospitalId?: InputMaybe<Scalars['String']>;
-  wardId?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QueryListBedsArgs = {
-  filter?: InputMaybe<Array<Scalars['String']>>;
-  wardId: Scalars['String'];
-};
-
-
-export type QueryListChecklistArgs = {
-  filter?: InputMaybe<Array<Scalars['String']>>;
-};
-
-
-export type QueryListChecklistFeedbackArgs = {
-  checklistId: Scalars['String'];
-};
-
-
-export type QueryListCollectionArgs = {
-  checklistId: Scalars['String'];
-};
-
-
-export type QueryListDoctorNoteConfArgs = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-  groupId: Scalars['String'];
-};
-
-
-export type QueryListEmrLabelArgs = {
-  filter?: InputMaybe<Array<Scalars['String']>>;
-};
-
-
-export type QueryListEmrArgs = {
-  patientId: Scalars['String'];
-};
-
-
-export type QueryListHarmArgs = {
-  filter?: InputMaybe<Array<Scalars['String']>>;
-};
-
-
-export type QueryListHarmSettingsArgs = {
-  checklistId: Scalars['String'];
-};
-
-
-export type QueryListHospitalArgs = {
-  filter?: InputMaybe<Array<Scalars['String']>>;
-};
-
-
-export type QueryListPatientActivityArgs = {
-  patientId: Scalars['String'];
-};
-
-
-export type QueryListPatientHarmTrendsArgs = {
-  patientId: Scalars['String'];
-};
-
-
-export type QueryListWardArgs = {
-  filter?: InputMaybe<Array<Scalars['String']>>;
-  hospitalId: Scalars['String'];
-};
-
-
-export type QueryListWeightArgs = {
-  filter: GetWeightIndicator;
-};
-
-
-export type QueryResumeSurveyArgs = {
-  collectionId?: InputMaybe<Scalars['String']>;
-  surveyId: Scalars['String'];
-};
-
-export type Question = {
-  config: QuestionConfig;
-  group: Group;
-  hasBranchQuestions: Scalars['Boolean'];
-  id: Scalars['ID'];
-  text: Scalars['String'];
-  triggers?: Maybe<Array<Trigger>>;
-};
-
-export type QuestionAre = {
-  answers?: Maybe<Scalars['String']>;
-  question?: Maybe<Scalars['String']>;
-};
-
-export type QuestionConfig = {
-  numericInput?: Maybe<NumericInputConfig>;
-  numericRange?: Maybe<NumericRangeConfig>;
-  options?: Maybe<OptionsConfig>;
-  textInput?: Maybe<TextInputConfig>;
-  useEmr?: Maybe<Scalars['String']>;
-};
-
-export type QuestionConfigObj = {
-  numericInputConfig?: InputMaybe<NumericInputConfigObj>;
-  numericRangeConfig?: InputMaybe<NumericRangeConfigObj>;
-  optionsConfig?: InputMaybe<OptionsConfigObj>;
-  textInputConfig?: InputMaybe<TextInputConfigObj>;
-  useEmr?: InputMaybe<Scalars['String']>;
-};
-
-export type ResponseObj = {
-  OptionsId: Array<Scalars['String']>;
-  questionId: Scalars['String'];
-  values: Array<Scalars['String']>;
-};
-
-export type Round = {
-  collectionData?: Maybe<Array<Maybe<CollectionData>>>;
-  doctorNotes?: Maybe<DoctorNotes>;
-  roundNo?: Maybe<Scalars['Int']>;
-  time?: Maybe<Scalars['String']>;
-};
-
-export type Schedule = {
-  days?: Maybe<Array<Scalars['Int']>>;
-  rounds?: Maybe<Array<Scalars['Int']>>;
-  type: ScheduleType;
-};
-
-export type ScheduleObj = {
-  days?: InputMaybe<Array<Scalars['Int']>>;
-  rounds?: InputMaybe<Array<Scalars['Int']>>;
-  type: ScheduleType;
-};
-
-export enum ScheduleType {
-  Daily = 'DAILY',
-  Weekly = 'WEEKLY'
+export enum UserType {
+  Human = 'HUMAN',
+  System = 'SYSTEM'
 }
 
-export type ShowMessageAction = {
-  level: MessageLevel;
-  message: Scalars['String'];
-};
-
-export type ShowMessageActionObj = {
-  level: MessageLevel;
-  message: Scalars['String'];
-};
-
-export enum SnippetType {
-  PatientEmr = 'PATIENT_EMR'
-}
-
-export type SurvayDateStatus = {
-  Activity?: Maybe<Array<Maybe<PatientHistory>>>;
-  Overview?: Maybe<Scalars['String']>;
-  Round?: Maybe<Array<Maybe<Round>>>;
-  Status?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
-  day: Scalars['Int'];
-};
-
-export type Survey = {
-  admission: Admission;
-  checklist: Checklist;
-  completedAt?: Maybe<Scalars['Time']>;
-  id: Scalars['ID'];
-  responses?: Maybe<Array<SurveyResponse>>;
-  round: Scalars['Int'];
-  startedAt: Scalars['Time'];
-  states?: Maybe<Array<CollectionState>>;
-  surveyScores?: Maybe<Array<SurveyScore>>;
-};
-
-export type SurveyLogger = {
-  CreatedDate: Scalars['Time'];
-  admissionId: Scalars['String'];
-  checklistId: Scalars['String'];
-  id: Scalars['ID'];
-  round: Scalars['Int'];
-};
-
-export type SurveyResponse = {
-  collection: Collection;
-  group: Group;
-  id: Scalars['ID'];
-  question: Question;
-  survey: Survey;
-  values: Array<Scalars['String']>;
-};
-
-export type SurveyResponseObj = {
-  collectionId: Scalars['String'];
-  groupId: Scalars['String'];
-  responses: Array<ResponseObj>;
-};
-
-export type SurveyScore = {
-  key: Scalars['String'];
-  value: Scalars['Int'];
-};
-
-export type SurveySnippet = {
-  name: Scalars['String'];
-  slug: Scalars['String'];
-  type: SnippetType;
-  value: Scalars['String'];
-};
-
-export type SurveyStep = {
-  isSurveyComplete: Scalars['Boolean'];
-  nextGroup?: Maybe<Group>;
-  responses: Array<SurveyResponse>;
-  snippets: Array<SurveySnippet>;
-  survey: Survey;
-};
-
-export type TextInputConfig = {
-  maxLength?: Maybe<Scalars['Int']>;
-  minLength?: Maybe<Scalars['Int']>;
-  type?: Maybe<TextType>;
-};
-
-export type TextInputConfigObj = {
-  maxLength?: InputMaybe<Scalars['Int']>;
-  minLength?: InputMaybe<Scalars['Int']>;
-  type?: InputMaybe<TextType>;
-};
-
-export enum TextType {
-  LongText = 'LONG_TEXT',
-  ShortText = 'SHORT_TEXT'
-}
-
-export type Trigger = {
-  action: Action;
-  id: Scalars['ID'];
-  if: Scalars['String'];
-  name: Scalars['String'];
-};
-
-export type TriggerChecklistsAction = {
-  checklists: Array<Checklist>;
-};
-
-export type TriggerChecklistsActionObj = {
-  checklistIds: Array<Scalars['String']>;
-};
-
-export type TriggerObj = {
-  if: Scalars['String'];
-  name: Scalars['String'];
-};
-
-export type UpdateHarmAction = {
-  harm: Scalars['String'];
-  update: Scalars['Int'];
-  updateType: ValueUpdateType;
-};
-
-export type UpdateHarmActionObj = {
-  harm: Scalars['String'];
-  update: Scalars['Int'];
-  updateType: ValueUpdateType;
-};
-
-export enum ValueUpdateType {
-  Absolute = 'ABSOLUTE',
-  Percentage = 'PERCENTAGE'
-}
-
-export type Ward = {
-  beds?: Maybe<Array<Bed>>;
-  capacity: Scalars['Int'];
-  hospital: Hospital;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-};
-
-export type WardObj = {
-  capacity: Scalars['Int'];
-  name: Scalars['String'];
-};
-
-export type WardStat = {
-  totalBed: Scalars['Int'];
-  totalBedOccupied: Scalars['Int'];
-  ward: Ward;
-};
-
-export type Weight = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-  groupId: Scalars['String'];
-  id: Scalars['ID'];
-  key: Scalars['String'];
-  optionId: Scalars['String'];
-  questionId: Scalars['String'];
-  value: Scalars['Float'];
-};
-
-export type WeightObj = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-  data?: InputMaybe<Array<WeightData>>;
-  groupId: Scalars['String'];
-  optionId: Scalars['String'];
-  questionId: Scalars['String'];
-};
-
-export type ChecklistStat = {
-  active: Scalars['Int'];
-  total: Scalars['Int'];
-};
-
-export type EmrStat = {
-  total?: Maybe<Scalars['Int']>;
-};
-
-export type GetWeight = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-  groupId: Scalars['String'];
-  questionId: Scalars['String'];
-};
-
-export type GetWeightIndicator = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-  groupId: Scalars['String'];
-  optionId: Scalars['String'];
-  questionId: Scalars['String'];
-};
-
-export type GroupDoctorNote = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-  createdAt: Scalars['Time'];
-  groupId: Scalars['String'];
-  id: Scalars['ID'];
-  message: Scalars['String'];
-  patientId: Scalars['String'];
-  surveyId: Scalars['String'];
-};
-
-export type GroupDoctorNoteFinder = {
-  checklistId: Scalars['String'];
-  collectionId: Scalars['String'];
-  groupId: Scalars['String'];
-  patientId: Scalars['String'];
-  surveyId: Scalars['String'];
-};
-
-export type HarmStat = {
-  total: Scalars['Int'];
-};
-
-export type StatAdmin = {
-  checklistStat?: Maybe<ChecklistStat>;
-  emrStat?: Maybe<EmrStat>;
-  harmStat?: Maybe<HarmStat>;
-  hospitalStat?: Maybe<HospitalStat>;
-  patientStat?: Maybe<PatientStat>;
-};
-
-export type WeightData = {
-  key: Scalars['String'];
-  value: Scalars['Float'];
-};
-
-export type StatHospitalQueryVariables = Exact<{ [key: string]: never; }>;
+export type MembersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StatHospitalQuery = { statHospital: { total: number } };
+export type MembersQuery = { members?: { list: Array<{ id: string, firstName: string, middleName?: string | null, lastName: string, gender: Gender, title?: string | null, dateOfBirth?: string | null }> } | null };
 
 
-export const StatHospitalDocument = `
-    query statHospital {
-  statHospital {
-    total
+export const MembersDocument = `
+    query members {
+  members {
+    list {
+      id
+      firstName
+      middleName
+      lastName
+      gender
+      title
+      dateOfBirth
+    }
   }
 }
     `;
-export const useStatHospitalQuery = <
-      TData = StatHospitalQuery,
+export const useMembersQuery = <
+      TData = MembersQuery,
       TError = unknown
     >(
-      variables?: StatHospitalQueryVariables,
-      options?: UseQueryOptions<StatHospitalQuery, TError, TData>
+      variables?: MembersQueryVariables,
+      options?: UseQueryOptions<MembersQuery, TError, TData>
     ) =>
-    useQuery<StatHospitalQuery, TError, TData>(
-      variables === undefined ? ['statHospital'] : ['statHospital', variables],
-      useAxios<StatHospitalQuery, StatHospitalQueryVariables>(StatHospitalDocument).bind(null, variables),
+    useQuery<MembersQuery, TError, TData>(
+      variables === undefined ? ['members'] : ['members', variables],
+      useAxios<MembersQuery, MembersQueryVariables>(MembersDocument).bind(null, variables),
       options
     );

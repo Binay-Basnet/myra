@@ -1,5 +1,5 @@
 overwrite: true
-schema: 'http://159.89.231.86:8004/query'
+schema: ${NX_SCHEMA_PATH}
 documents: 'apps/myra/**/*.graphql'
 watch: true
 generates:
@@ -13,6 +13,8 @@ generates:
       - 'typescript-operations'
       - 'typescript-react-query'
     config:
+      scalars:
+        Time: string
       skipTypename: true
       inlineFragmentTypes: combine
       fetcher:

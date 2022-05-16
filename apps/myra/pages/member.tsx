@@ -6,11 +6,11 @@ import {
   InputLeftElement,
   Input,
   IconButton,
+  Avatar,
 } from '@chakra-ui/react';
-import { ReactElement } from 'react';
-import { MainLayout } from '@saccos/myra/ui';
+import { ReactElement, useMemo } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
-import { Button, Box } from '@saccos/myra/ui';
+import { Button, Box, MainLayout } from '@saccos/myra/ui';
 import {
   SearchIcon,
   ChevronLeftIcon,
@@ -20,6 +20,8 @@ import {
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import TabColumn from '../components/TabforMemberPage';
 import TabRow from '../components/TabMemberPageRow';
+import TableComponent from '../components/TableComponent';
+import { useMembersQuery } from '../generated/graphql';
 
 const column = [
   'Member list',
@@ -30,6 +32,67 @@ const column = [
 const rows = ['Active', 'Inactive', 'WIP', 'Draft'];
 
 const Member = () => {
+  const { data, isLoading } = useMembersQuery();
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Member #',
+        accessor: 'id',
+      },
+      {
+        Header: 'Title',
+        accessor: 'title',
+      },
+      {
+        Header: 'First Name',
+        accessor: 'firstName',
+        Cell: ({ value }) => (
+          <Flex alignItems="center" gap="2">
+            <Avatar
+              name="Dan Abrahmov"
+              size="sm"
+              src="https://bit.ly/dan-abramov"
+            />
+            <span>{value}</span>
+          </Flex>
+        ),
+      },
+      {
+        Header: 'Middle Name',
+        accessor: 'middleName',
+        style: {
+          width: '550px',
+        },
+      },
+      {
+        Header: 'Last Name',
+        accessor: 'lastName',
+      },
+      {
+        Header: 'Gender',
+        accessor: 'gender',
+      },
+      {
+        Header: 'Date Of Birth',
+        accessor: 'dateOfBirth',
+      },
+      {
+        accessor: 'actions',
+        Cell: () => (
+          <IconButton
+            variant="ghost"
+            aria-label="Search database"
+            icon={<BsThreeDotsVertical />}
+          />
+        ),
+      },
+    ],
+    []
+  );
+
+  const rowData = useMemo(() => data && data?.members?.list, [data]);
+
   return (
     <Box mt="100px" p="16px" display="flex">
       <Box mt="24px">
@@ -132,6 +195,9 @@ const Member = () => {
               <Text ml="10px">Options</Text>
             </Button>
           </Box>
+        </Box>
+        <Box width={'100%'}>
+          {!isLoading && <TableComponent data={rowData} columns={columns} />}
         </Box>
       </Box>
     </Box>

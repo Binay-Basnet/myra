@@ -5,10 +5,14 @@ export const useAxios = <TData, TVariables>(
 ): ((variables?: TVariables) => Promise<TData>) => {
   // it is safe to call React Hooks here.
   // const { url, headers } = React.useContext(FetchParamsContext)
-  const url = 'http://159.89.231.86:8004/query';
+  const url = process.env.NX_SCHEMA_PATH ?? '';
   // return axios.post<TData>(url,data:{query,variables}).then((res) => res.data);
 
   return async (variables?: TVariables) => {
-    return axios.post<{data:TData}>(url, { query, variables }).then((res) => res.data.data);
+    return axios
+      .post<{ data: TData }>(url, { query, variables })
+      .then((res) => {
+        return res.data.data;
+      });
   };
 };
