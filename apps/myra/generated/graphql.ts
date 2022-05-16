@@ -14,31 +14,119 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Any: any;
   Time: string;
 };
 
-export type Base = {
-  createdAt: Scalars['Time'];
-  createdBy: Iam;
-  id: Scalars['ID'];
-  modifiedAt: Scalars['Time'];
-  modifiedBy: Iam;
-  objectState?: Maybe<ObjectState>;
-  searchText: Scalars['String'];
+export type Address = {
+  district?: Maybe<Scalars['String']>;
+  locality?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  vdc?: Maybe<Scalars['String']>;
+  wardNo?: Maybe<Scalars['String']>;
 };
 
-export type CreateMemberInput = {
+export enum Arrange {
+  Ascending = 'ASCENDING',
+  Descending = 'DESCENDING'
+}
+
+export type Base = {
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  id: Scalars['ID'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
+};
+
+export type Citizenship = {
+  issueDate?: Maybe<Scalars['String']>;
+  issuePlace?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['String']>;
+};
+
+export enum ComparatorType {
+  EqualTo = 'EqualTo',
+  GreaterThan = 'GreaterThan',
+  LessThan = 'LessThan'
+}
+
+export type Condition = {
+  column: Scalars['String'];
+  comparator: ComparatorType;
+  value: Scalars['Any'];
+};
+
+export type Contact = {
+  mobile?: Maybe<Scalars['String']>;
+  office?: Maybe<Scalars['String']>;
+  residence?: Maybe<Scalars['String']>;
+};
+
+export type Family = {
+  fatherName?: Maybe<Scalars['String']>;
+  grandFatherName?: Maybe<Scalars['String']>;
+  grandMotherName?: Maybe<Scalars['String']>;
+  motherName?: Maybe<Scalars['String']>;
+  spouseName?: Maybe<Scalars['String']>;
+};
+
+export type Filter = {
+  orConditions: Array<OrConditions>;
+};
+
+export enum Gender {
+  Female = 'FEMALE',
+  Male = 'MALE',
+  Other = 'OTHER'
+}
+
+export type Identity = {
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+  userType: UserType;
+  username: Scalars['String'];
+};
+
+export type Member = Base & {
+  address?: Maybe<Address>;
+  anotherStuff?: Maybe<Scalars['String']>;
+  citizenship?: Maybe<Citizenship>;
+  contact?: Maybe<Contact>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  dateOfBirth?: Maybe<Scalars['String']>;
+  family?: Maybe<Family>;
+  firstName: Scalars['String'];
+  gender: Gender;
+  id: Scalars['ID'];
+  lastName: Scalars['String'];
+  middleName?: Maybe<Scalars['String']>;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  nationality?: Maybe<Scalars['String']>;
+  nominee?: Maybe<Nominee>;
+  objState: ObjState;
+  occupation?: Maybe<Scalars['String']>;
+  panNumber?: Maybe<Scalars['String']>;
+  searchText?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+export type MemberInput = {
   citizenshipIssueDate?: InputMaybe<Scalars['String']>;
   citizenshipIssuePlace?: InputMaybe<Scalars['String']>;
   citizenshipNo?: InputMaybe<Scalars['String']>;
   dateOfBirth?: InputMaybe<Scalars['String']>;
   district?: InputMaybe<Scalars['String']>;
   fatherName?: InputMaybe<Scalars['String']>;
-  firstName: Scalars['String'];
-  gender: GenderEnum;
+  firstName?: InputMaybe<Scalars['String']>;
+  gender?: InputMaybe<Gender>;
   grandFatherName?: InputMaybe<Scalars['String']>;
   grandMotherName?: InputMaybe<Scalars['String']>;
-  lastName: Scalars['String'];
+  lastName?: InputMaybe<Scalars['String']>;
   locality?: InputMaybe<Scalars['String']>;
   middleName?: InputMaybe<Scalars['String']>;
   mobileNumber?: InputMaybe<Scalars['String']>;
@@ -63,86 +151,63 @@ export type CreateMemberInput = {
   wardNo?: InputMaybe<Scalars['String']>;
 };
 
-export enum GenderEnum {
-  Female = 'FEMALE',
-  Male = 'MALE',
-  Other = 'OTHER'
-}
+export type MemberMutation = {
+  save: Member;
+};
 
-export type Iam = {
+
+export type MemberMutationSaveArgs = {
+  data: MemberInput;
   id: Scalars['ID'];
-  name: Scalars['String'];
-  userType: UserType;
 };
 
-export type Member = Base & {
-  citizenshipIssueDate?: Maybe<Scalars['String']>;
-  citizenshipIssuePlace?: Maybe<Scalars['String']>;
-  citizenshipNo?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Time'];
-  createdBy: Iam;
-  dateOfBirth?: Maybe<Scalars['String']>;
-  district?: Maybe<Scalars['String']>;
-  fatherName?: Maybe<Scalars['String']>;
-  firstName: Scalars['String'];
-  gender?: Maybe<GenderEnum>;
-  grandFatherName?: Maybe<Scalars['String']>;
-  grandMotherName?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  lastName: Scalars['String'];
-  locality?: Maybe<Scalars['String']>;
-  middleName?: Maybe<Scalars['String']>;
-  mobileNumber?: Maybe<Scalars['String']>;
-  modifiedAt: Scalars['Time'];
-  modifiedBy: Iam;
-  motherName?: Maybe<Scalars['String']>;
-  nationality?: Maybe<Scalars['String']>;
-  nomineeCitizenshipNumber?: Maybe<Scalars['String']>;
-  nomineeContact?: Maybe<Scalars['String']>;
-  nomineeFirstName?: Maybe<Scalars['String']>;
-  nomineeIssuePlace?: Maybe<Scalars['String']>;
-  nomineeLastName?: Maybe<Scalars['String']>;
-  nomineeMiddleName?: Maybe<Scalars['String']>;
-  nomineeRelation?: Maybe<Scalars['String']>;
-  nomineeTitle?: Maybe<Scalars['String']>;
-  objectState?: Maybe<ObjectState>;
-  occupation?: Maybe<Scalars['String']>;
-  officeContact?: Maybe<Scalars['String']>;
-  panNumber?: Maybe<Scalars['String']>;
-  residenceContact?: Maybe<Scalars['String']>;
-  searchText: Scalars['String'];
-  spouseName?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  vdc?: Maybe<Scalars['String']>;
-  wardNo?: Maybe<Scalars['String']>;
-};
-
-export type MemberMutationFunc = {
-  add?: Maybe<Member>;
-};
-
-
-export type MemberMutationFuncAddArgs = {
-  data?: InputMaybe<CreateMemberInput>;
-};
-
-export type MemberQueryFunc = {
+export type MemberQuery = {
+  get: Member;
   list: Array<Member>;
 };
 
-export type Mutation = {
-  members?: Maybe<MemberMutationFunc>;
+
+export type MemberQueryGetArgs = {
+  id: Scalars['String'];
 };
 
-export enum ObjectState {
+
+export type MemberQueryListArgs = {
+  filter?: InputMaybe<Filter>;
+  order?: InputMaybe<Array<Order>>;
+};
+
+export type Mutation = {
+  members?: Maybe<MemberMutation>;
+  newId: Scalars['String'];
+};
+
+export type Nominee = {
+  citizenship?: Maybe<Citizenship>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
+  relation?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+export enum ObjState {
   Approved = 'APPROVED',
   Draft = 'DRAFT',
   Validated = 'VALIDATED'
 }
 
+export type OrConditions = {
+  andConditions: Array<Condition>;
+};
+
+export type Order = {
+  arrange: Arrange;
+  column: Scalars['String'];
+};
+
 export type Query = {
-  members?: Maybe<MemberQueryFunc>;
+  members?: Maybe<MemberQuery>;
 };
 
 export enum UserType {
@@ -153,7 +218,7 @@ export enum UserType {
 export type MembersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MembersQuery = { members?: { list: Array<{ id: string, firstName: string, middleName?: string | null, lastName: string, gender?: GenderEnum | null, title?: string | null, dateOfBirth?: string | null }> } | null };
+export type MembersQuery = { members?: { list: Array<{ id: string, firstName: string, middleName?: string | null, lastName: string, gender: Gender, title?: string | null, dateOfBirth?: string | null }> } | null };
 
 
 export const MembersDocument = `
