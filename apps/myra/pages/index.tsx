@@ -11,6 +11,7 @@ import {
   Input,
   Select,
   Text,
+  useColorMode,
 } from '@chakra-ui/react';
 import { GrClose } from 'react-icons/gr';
 import { Button } from '@saccos/myra/ui';
@@ -394,6 +395,8 @@ const Index = () => {
       first_name: '',
       last_name: '',
     });
+
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const onSubmit = () => {
     console.log(personalInformation);
@@ -1032,7 +1035,10 @@ const Index = () => {
           pt="5px"
         >
           <Flex>
-            <Box p="4">form data saved in draft</Box>
+            <Text color="primary">form data saved in draft</Text>
+            <Box p="4">
+              <Button onClick={toggleColorMode}>Toggle mode</Button>
+            </Box>
             <Spacer />
             <Box p="4">
               <Button onClick={() => onSubmit()} colorScheme="teal" size="md">

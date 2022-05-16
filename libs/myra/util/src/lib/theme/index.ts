@@ -4,6 +4,7 @@ import foundations from './foundations';
 import button from './foundations/button';
 
 // 2. Call `extendTheme` and pass your custom values
+
 export const theme = extendTheme({
   styles: {
     global: () => ({
@@ -23,11 +24,23 @@ export const theme = extendTheme({
   semanticTokens: {
     colors: {
       primary: {
-        default: '#8CC63F',
+        default: 'primary.500',
+        _dark: 'red',
       },
       secondary: {
-        default: '#1C2298',
-        500: '#1C2298',
+        default: 'secondary.500',
+      },
+      success: {
+        default: 'success.500',
+      },
+      danger: {
+        default: 'danger.500',
+      },
+      background: {
+        default: 'bakground.500',
+      },
+      highlight: {
+        default: 'highlight.500',
       },
     },
   },
