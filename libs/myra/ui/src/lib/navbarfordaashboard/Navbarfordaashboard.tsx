@@ -10,20 +10,20 @@ import {
   Spacer,
   Avatar,
 } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 export interface NavbarfordaashboardProps {}
 
 export function Navbarfordaashboard(props: NavbarfordaashboardProps) {
   return (
-    <Box h="60px" px="5" background={'primary.dark'}>
+    <Box h="60px" px="5" background={'#002B24'}>
       <Flex>
         <Box>
           <Image src="/dashboardnavbar/MyraLogo.png" alt="logo" />
         </Box>
         <Spacer />
-        <Box display="flex" alignItems="flex-end">
+        <Box display="flex">
           <Tabs variant="line" colorScheme="green">
             <TabList>
               <Link href="/dashboard">

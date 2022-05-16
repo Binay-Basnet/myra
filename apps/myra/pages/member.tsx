@@ -33,8 +33,8 @@ const column = [
 const rows = ['Active', 'Inactive', 'WIP', 'Draft'];
 
 const Member = () => {
-  const { data, isLoading } = useMembersQuery();
-
+  const { data } = useMembersQuery();
+  console.log(data);
   const columns = useMemo(
     () => [
       {
@@ -198,7 +198,7 @@ const Member = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          {!isLoading && <TableComponent data={rowData} columns={columns} />}
+          {rowData && <TableComponent data={rowData} columns={columns} />}
         </Box>
       </Box>
     </Box>
