@@ -20,27 +20,33 @@ export const theme = extendTheme({
   fonts: foundations.fonts,
 
   fontSizes: foundations.fontSizes,
+  fontWeight: foundations.fontWeights,
   spacing: foundations.space,
   semanticTokens: {
     colors: {
       primary: {
-        default: 'primary.500',
+        default: 'primary.default',
         _dark: 'red',
       },
       secondary: {
-        default: 'secondary.500',
+        default: 'secondary.default',
       },
       success: {
-        default: 'success.500',
+        default: 'success.default',
       },
       danger: {
-        default: 'danger.500',
+        default: 'danger.default',
       },
       background: {
-        default: 'bakground.500',
+        default: 'bakground.50',
       },
       highlight: {
-        default: 'highlight.500',
+        default: 'highlight.50',
+      },
+    },
+    typography: {
+      fontSizes: {
+        default: 'fontSizes.m2',
       },
     },
   },

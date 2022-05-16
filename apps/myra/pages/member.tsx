@@ -32,8 +32,8 @@ const column = [
 const rows = ['Active', 'Inactive', 'WIP', 'Draft'];
 
 const Member = () => {
-  const { data, isLoading } = useMembersQuery();
-
+  const { data } = useMembersQuery();
+  console.log(data);
   const columns = useMemo(
     () => [
       {
@@ -145,7 +145,7 @@ const Member = () => {
         >
           <Box w="500px" pt="15px" pl="20px">
             <InputGroup size="sm">
-              <InputLeftElement pointerEvents="none" h="22px">
+              <InputLeftElement pointerEvents="none" h="22px" zIndex="0">
                 <SearchIcon color="gray.300" />
               </InputLeftElement>
               <Input
@@ -197,7 +197,7 @@ const Member = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          {!isLoading && <TableComponent data={rowData} columns={columns} />}
+          {rowData && <TableComponent data={rowData} columns={columns} />}
         </Box>
       </Box>
     </Box>

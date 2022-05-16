@@ -1,5 +1,4 @@
 import { forwardRef, useEffect, useRef, useId } from 'react';
-import { useTable, useSortBy, useRowSelect } from 'react-table';
 // import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import {
   TableContainer,
@@ -12,12 +11,20 @@ import {
   // Checkbox,
   // chakra,
 } from '@chakra-ui/react';
+import { useTableHook } from './useTableHook';
 
 /* eslint-disable-next-line */
-export interface ChakraTableProps<T> {
-  data: T[];
-  columns: T[];
+interface ChakraDataProps<T> {
+  rowData: T[];
+}
+interface ChakraColumnsProps<T> {
+  Header: string;
+  accessor: string;
   Cell?: (arg: T) => JSX.Element;
+}
+export interface ChakraTableProps<T> {
+  data: ChakraDataProps<T>;
+  columns: ChakraColumnsProps<T>;
 }
 
 interface IIndeterminateInputProps {
@@ -29,7 +36,7 @@ const IndeterminateCheckbox = forwardRef<
   HTMLInputElement,
   IIndeterminateInputProps
 >(({ indeterminate, ...rest }, ref) => {
-  const defaultRef = useRef<HTMLInputElement | null>(null);
+  const defaultRef = useRef<HTMLInputElement>(null);
   const resolvedRef = ref || defaultRef;
 
   useEffect(() => {
@@ -49,31 +56,9 @@ export default function TableComponent<T>(props: ChakraTableProps<T>) {
   const id = useId();
   const { data, columns } = props;
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    // selectedFlatRows,
-  } = useTable({ columns, data }, useSortBy, useRowSelect, (hooks) => {
-    hooks.visibleColumns.push((column) => [
-      {
-        id: 'selection',
-        Header: ({ getToggleAllRowsSelectedProps }) => (
-          <div>
-            <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-          </div>
-        ),
-        Cell: ({ row }) => (
-          <div>
-            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-          </div>
-        ),
-      },
-      ...column,
-    ]);
-  });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTableHook({ columns, data });
+
   return (
     <TableContainer
       style={{

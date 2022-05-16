@@ -18,16 +18,11 @@ const typography = {
   },
 
   fontWeights: {
-    hairline: 100,
-    thin: 200,
-    light: 300,
-    normal: 400,
-    regular: 400,
-    medium: 500,
-    semibold: 600,
-    bold: 700,
-    extrabold: 800,
-    black: 900,
+    300: 'Inter Light',
+    400: 'Inter Regular',
+    500: 'Inter Medium',
+    600: 'Inter Semi-bold',
+    700: 'Inter Bold',
   },
 
   fonts: {
@@ -45,10 +40,8 @@ const typography = {
     r3: '20px',
     l1: '24px',
     l2: '28px',
-    l3: '32px',
-    m1: '48px',
-    m2: '56px',
-    m3: '64px',
+    m1: '32px',
+    m2: '48px',
   },
 };
 
