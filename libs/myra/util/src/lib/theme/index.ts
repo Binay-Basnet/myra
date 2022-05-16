@@ -4,6 +4,7 @@ import foundations from './foundations';
 import button from './foundations/button';
 
 // 2. Call `extendTheme` and pass your custom values
+
 export const theme = extendTheme({
   styles: {
     global: () => ({
@@ -19,15 +20,33 @@ export const theme = extendTheme({
   fonts: foundations.fonts,
 
   fontSizes: foundations.fontSizes,
+  fontWeight: foundations.fontWeights,
   spacing: foundations.space,
   semanticTokens: {
     colors: {
       primary: {
-        default: '#8CC63F',
+        default: 'primary.default',
+        _dark: 'red',
       },
       secondary: {
-        default: '#1C2298',
-        500: '#1C2298',
+        default: 'secondary.default',
+      },
+      success: {
+        default: 'success.default',
+      },
+      danger: {
+        default: 'danger.default',
+      },
+      background: {
+        default: 'bakground.50',
+      },
+      highlight: {
+        default: 'highlight.50',
+      },
+    },
+    typography: {
+      fontSizes: {
+        default: 'fontSizes.m2',
       },
     },
   },

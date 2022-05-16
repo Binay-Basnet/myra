@@ -9,9 +9,8 @@ import {
   Avatar,
 } from '@chakra-ui/react';
 import { ReactElement, useMemo } from 'react';
-import { MainLayout } from '@saccos/myra/ui';
 import { AddIcon } from '@chakra-ui/icons';
-import { Button, Box } from '@saccos/myra/ui';
+import { Button, Box, MainLayout } from '@saccos/myra/ui';
 import {
   SearchIcon,
   ChevronLeftIcon,
@@ -146,7 +145,7 @@ const Member = () => {
         >
           <Box w="500px" pt="15px" pl="20px">
             <InputGroup size="sm">
-              <InputLeftElement pointerEvents="none" h="22px">
+              <InputLeftElement pointerEvents="none" h="22px" zIndex="0">
                 <SearchIcon color="gray.300" />
               </InputLeftElement>
               <Input

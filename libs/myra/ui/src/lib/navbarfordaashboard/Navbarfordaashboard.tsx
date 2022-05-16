@@ -17,7 +17,7 @@ export interface NavbarfordaashboardProps {}
 
 export function Navbarfordaashboard(props: NavbarfordaashboardProps) {
   return (
-    <Box h="60px" px="5" background={'#002B24'}>
+    <Box h="60px" px="5" background="primary">
       <Flex>
         <Box>
           <Image src="/dashboardnavbar/MyraLogo.png" alt="logo" />
@@ -35,12 +35,7 @@ export function Navbarfordaashboard(props: NavbarfordaashboardProps) {
                   h="60px"
                   w="100px"
                 >
-                  <Text
-                    fontFamily="inter"
-                    fontSize="14px"
-                    fontWeight="600"
-                    color="#FFFFFF"
-                  >
+                  <Text fontSize="14px" fontWeight="600" color="#FFFFFF">
                     Home
                   </Text>
                 </Tab>
@@ -54,12 +49,7 @@ export function Navbarfordaashboard(props: NavbarfordaashboardProps) {
                   h="60px"
                   w="100px"
                 >
-                  <Text
-                    fontFamily="inter"
-                    fontSize="14px"
-                    fontWeight="600"
-                    color="#FFFFFF"
-                  >
+                  <Text fontSize="r1" fontWeight="600" color="#FFFFFF">
                     Dashboard
                   </Text>
                 </Tab>

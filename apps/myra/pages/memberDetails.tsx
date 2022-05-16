@@ -567,12 +567,10 @@ const MemberDetails = () => {
               <Box>
                 <HStack spacing={25}>
                   <Button colorScheme={'teal'} size="md" variant="ghost">
-                    {' '}
-                    Edit Details{' '}
+                    Edit Details
                   </Button>
                   <Button colorScheme={'blue'} size="md">
-                    {' '}
-                    Save{' '}
+                    Save
                   </Button>
                 </HStack>
               </Box>

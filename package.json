@@ -24,10 +24,12 @@
     "@chakra-ui/react": "^1.8.8",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11",
+    "@hookform/resolvers": "^2.8.8",
     "@nrwl/next": "13.10.1",
     "axios": "^0.27.2",
     "concurrently": "^7.1.0",
     "core-js": "^3.6.5",
+    "dotenv": "^16.0.0",
     "framer-motion": "^6",
     "graphql": "^16.4.0",
     "next": "^12.1.5",
@@ -38,7 +40,8 @@
     "react-query": "^3.38.1",
     "react-table": "^7.7.0",
     "regenerator-runtime": "0.13.7",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "7.12.13",
