@@ -10,7 +10,7 @@ import {
   HStack,
   Avatar,
 } from '@chakra-ui/react';
-import { Navbarfordaashboard } from '@saccos/myra/ui';
+import { Navbarfordaashboard, Button } from '@saccos/myra/ui';
 const data = [
   {
     avatar: '/dashboardmain/avatar.png',

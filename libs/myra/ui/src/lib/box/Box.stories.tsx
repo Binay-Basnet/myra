@@ -9,4 +9,8 @@ export default {
 const Template: Story<BoxProps> = (args) => <Box {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  bg: 'red.500',
+  w: '70%',
+  children: 'This is a Red Box ',
+};

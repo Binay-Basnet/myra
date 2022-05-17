@@ -9,4 +9,8 @@ export default {
 const Template: Story<InputProps> = (args) => <Input {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  variant: 'filled',
+  placeholder: 'Enter your name',
+  focusBorderColor: 'red.500',
+};
