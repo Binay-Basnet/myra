@@ -26,12 +26,13 @@ export function Navbarfordaashboard(props: NavbarfordaashboardProps) {
         <Box display="flex">
           <Tabs variant="line" colorScheme="green">
             <TabList>
-              <Link href="/dashboard">
+              <Link href="/">
                 <Tab
                   _selected={{
                     color: 'white',
                     boxShadow: ' inset 0px -4px 0px #8CC63F',
                   }}
+                  isSelected={true}
                   h="60px"
                   w="100px"
                 >

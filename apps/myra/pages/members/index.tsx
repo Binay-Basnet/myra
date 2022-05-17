@@ -19,9 +19,9 @@ import {
   HamburgerIcon,
 } from '@chakra-ui/icons';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import TabColumn from '../../components/TabforMemberPage';
-import TabRow from '../../components/TabMemberPageRow';
-import TableComponent from '../../components/TableComponent';
+import { TabColumn } from '@saccos/myra/components';
+import { TabRow } from '@saccos/myra/components';
+import { TableComponent } from '@saccos/myra/components';
 import { useMembersQuery } from '../../generated/graphql';
 
 const column = [
