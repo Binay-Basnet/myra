@@ -11,7 +11,7 @@ import {
   // Checkbox,
   // chakra,
 } from '@chakra-ui/react';
-import { useTableHook } from './useTableHook';
+import { useTableHook } from '@saccos/myra/util';
 
 /* eslint-disable-next-line */
 interface ChakraDataProps<T> {
@@ -52,7 +52,7 @@ const IndeterminateCheckbox = forwardRef<
 
 IndeterminateCheckbox.displayName = 'IndeterminateCheckbox';
 
-export default function TableComponent<T>(props: ChakraTableProps<T>) {
+export function TableComponent<T>(props: ChakraTableProps<T>) {
   const id = useId();
   const { data, columns } = props;
 

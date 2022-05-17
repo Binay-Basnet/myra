@@ -13,7 +13,7 @@ const TabCol = chakra(Tab, {
     _selected: { color: '#37474F', bg: '#FFFFFF' },
   },
 });
-const TabColumn = ({ list }) => {
+export const TabColumn = ({ list }) => {
   return (
     <Tabs variant="unstyled">
       {list.map((item, index) => {
@@ -26,4 +26,3 @@ const TabColumn = ({ list }) => {
     </Tabs>
   );
 };
-export default TabColumn;

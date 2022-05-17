@@ -16,7 +16,7 @@ const TabElement = chakra(Tab, {
   },
 });
 
-const TabRow = ({ list }) => {
+export const TabRow = ({ list }) => {
   return (
     <Tabs variant="unstyled">
       <TabList>
@@ -27,4 +27,3 @@ const TabRow = ({ list }) => {
     </Tabs>
   );
 };
-export default TabRow;
