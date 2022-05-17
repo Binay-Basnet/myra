@@ -3,7 +3,10 @@ import {
   InputProps as ChakraInputProps,
 } from '@chakra-ui/react';
 /* eslint-disable-next-line */
-export interface InputProps extends ChakraInputProps {}
+export interface InputProps extends ChakraInputProps {
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  variant?: 'outline' | 'filled' | 'flushed' | 'unstyled';
+}
 
 export function Input(props: InputProps) {
   return <ChakraInput {...props} />;

@@ -1,5 +1,7 @@
+import { Box as ChakraBox, BoxProps as ChakraBoxProps } from '@chakra-ui/react';
+
 /* eslint-disable-next-line */
-import { Box as ChakraBox, BoxProps } from '@chakra-ui/react';
+export interface BoxProps extends ChakraBoxProps {}
 
 export function Box(props: BoxProps) {
   const { children, ...rest } = props;

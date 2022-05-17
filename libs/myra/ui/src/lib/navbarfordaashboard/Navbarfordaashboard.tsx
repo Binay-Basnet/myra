@@ -13,6 +13,7 @@ import {
 // import { useRouter } from 'next/router';
 import Link from 'next/link';
 
+/* eslint-disable-next-line */
 export interface NavbarfordaashboardProps {}
 
 export function Navbarfordaashboard(props: NavbarfordaashboardProps) {

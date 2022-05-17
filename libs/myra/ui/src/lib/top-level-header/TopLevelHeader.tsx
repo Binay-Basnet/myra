@@ -14,15 +14,15 @@ import { MdOutlineHelpOutline } from 'react-icons/md';
 import { BiBell } from 'react-icons/bi';
 
 /* eslint-disable-next-line */
-export interface NavbarDashboardProps {
+export interface TopLevelHeaderProps {
   imageSrc?: string;
 }
 
-export function NavbarDashboard(props: NavbarDashboardProps) {
+export function TopLevelHeader(props: TopLevelHeaderProps) {
   return (
     <Box
       h="60px"
-      background={'primary.dark'}
+      background={'secondary.700'}
       display={'flex'}
       alignItems={'center'}
       justifyContent={'flex-start'}
@@ -46,10 +46,15 @@ export function NavbarDashboard(props: NavbarDashboardProps) {
           justifyContent={'center'}
           alignItems={'flex-start'}
         >
-          <Text fontSize="16px" fontWeight="bold" color={'white'}>
+          <Text
+            fontSize="16px"
+            fontWeight="bold"
+            color={'white'}
+            fontFamily="Mukta"
+          >
             नमुना बचत तथ ऋण सहकारी{' '}
           </Text>
-          <Text fontSize="16px" color={'white'}>
+          <Text fontSize="16px" color={'white'} fontFamily="Mukta">
             ललितपुर
           </Text>
         </Box>
@@ -114,4 +119,4 @@ export function NavbarDashboard(props: NavbarDashboardProps) {
   );
 }
 
-export default NavbarDashboard;
+export default TopLevelHeader;
