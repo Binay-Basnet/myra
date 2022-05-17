@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@saccos/myra/ui';
 import { Input, Select } from '@chakra-ui/react';
 
-const MemberCommonForm = ({ fields, register, error }) => {
+export const MemberCommonForm = ({ fields, register, error }) => {
   return fields.map((field) => {
     const { title, type, id, name, options, validationProps } = field;
 
@@ -42,4 +42,4 @@ const MemberCommonForm = ({ fields, register, error }) => {
   });
 };
 
-export default MemberCommonForm;
+// export default MemberCommonForm;

@@ -7,6 +7,7 @@ import { BiTransfer } from 'react-icons/bi';
 import { MdBackupTable } from 'react-icons/md';
 import { CgDropOpacity } from 'react-icons/cg';
 import { FiShare2 } from 'react-icons/fi';
+import Link from 'next/link';
 
 const demotabs = [
   {
@@ -81,25 +82,28 @@ export function TabMenu() {
           {demotabs.map(({ title }, index) => {
             const isActive = tabIndex === index;
             return (
-              <Tab
-                isDisabled={true}
-                _selected={{
-                  background: '#EEF2F7',
-                  color: '#042E33',
-                }}
-                style={{
-                  color: isActive ? '#042E33' : 'white',
-                  fontWeight: 500,
-                  fontSize: '1.1rem',
-                  height: 50,
-                  borderRadius: 0,
-                  outline: 'none',
-                }}
-                key={index}
+              <Link
+                href={title === 'Dashboard' ? '/' : `/${title.toLowerCase()}`}
               >
-                {getTabIcon(title, isActive)}
-                <Text mx="2">{title}</Text>
-              </Tab>
+                <Tab
+                  _selected={{
+                    background: '#EEF2F7',
+                    color: '#042E33',
+                  }}
+                  style={{
+                    color: isActive ? '#042E33' : 'white',
+                    fontWeight: 500,
+                    fontSize: '1.1rem',
+                    height: 50,
+                    borderRadius: 0,
+                    outline: 'none',
+                  }}
+                  key={index}
+                >
+                  {getTabIcon(title, isActive)}
+                  <Text mx="2">{title}</Text>
+                </Tab>
+              </Link>
             );
           })}
         </TabList>
