@@ -8,6 +8,7 @@ import {
   IconButton,
   Avatar,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import { ReactElement, useMemo } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import { Button, Box, MainLayout } from '@saccos/myra/ui';
@@ -18,10 +19,10 @@ import {
   HamburgerIcon,
 } from '@chakra-ui/icons';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import TabColumn from '../components/TabforMemberPage';
-import TabRow from '../components/TabMemberPageRow';
-import TableComponent from '../components/TableComponent';
-import { useMembersQuery } from '../generated/graphql';
+import TabColumn from '../../components/TabforMemberPage';
+import TabRow from '../../components/TabMemberPageRow';
+import TableComponent from '../../components/TableComponent';
+import { useMembersQuery } from '../../generated/graphql';
 
 const column = [
   'Member list',
@@ -102,15 +103,17 @@ const Member = () => {
 
         <Box mt="58px" display="flex" flexDirection="column" width="238px">
           <Box pl="16px">
-            <Button
-              width="184px"
-              leftIcon={<AddIcon h="11px" />}
-              bg="#006837"
-              fontSize="14px"
-              borderRadius="0"
-            >
-              Add New Member
-            </Button>
+            <Link href="/members/addMember" passHref>
+              <Button
+                width="184px"
+                leftIcon={<AddIcon h="11px" />}
+                bg="#006837"
+                fontSize="14px"
+                borderRadius="0"
+              >
+                Add New Members
+              </Button>
+            </Link>
           </Box>
           <br />
 
