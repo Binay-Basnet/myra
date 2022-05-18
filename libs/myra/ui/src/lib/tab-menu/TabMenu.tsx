@@ -12,48 +12,48 @@ import { useRouter } from 'next/router';
 
 const demotabs = [
   {
-    title: 'Dashboard',
+    title: 'navbarDashboard',
   },
   {
-    title: 'Members',
+    title: 'navbarMembers',
   },
   {
-    title: 'Share',
+    title: 'navbarShare',
   },
   {
-    title: 'Accounts',
+    title: 'navbarAccounts',
   },
   {
-    title: 'Transactions',
+    title: 'navbarTransactions',
   },
   {
-    title: 'Loan',
+    title: 'navbarLoan',
   },
   {
-    title: 'Reports',
+    title: 'navbarReports',
   },
   {
-    title: 'Utilities',
+    title: 'navbarUtilities',
   },
 ];
 
 const getTabIcon = (iconName: string, isActive: boolean) => {
   switch (iconName) {
-    case 'Dashboard':
+    case 'navbarDashboard':
       return <AiOutlineAppstore size={18} color="#8CC63F" />;
-    case 'Members':
+    case 'navbarMembers':
       return <FaUser size={18} color="#8CC63F" />;
-    case 'Share':
+    case 'navbarShare':
       return <FiShare2 size={18} color="#8CC63F" />;
-    case 'Accounts':
+    case 'navbarAccounts':
       return <AiOutlineAppstore size={18} color="#8CC63F" />;
-    case 'Transactions':
+    case 'navbarTransactions':
       return <VscListFlat size={18} color="#8CC63F" />;
-    case 'Loan':
+    case 'navbarLoan':
       return <BiTransfer size={18} color="#8CC63F" />;
-    case 'Reports':
+    case 'navbarReports':
       return <MdBackupTable size={18} color="#8CC63F" />;
-    case 'Utilities':
+    case 'navbarUtilities':
       return <CgDropOpacity size={18} color="#8CC63F" />;
     default:
       return <AiOutlineAppstore size={18} color="#8CC63F" />;
@@ -61,7 +61,7 @@ const getTabIcon = (iconName: string, isActive: boolean) => {
 };
 
 // ! TODO create theme and tests
-export function TabMenu() {
+export function TabMenu({ t }) {
   const [tabIndex, setTabIndex] = useState(1);
   const route = useRouter();
   console.log('route', route);
@@ -104,7 +104,7 @@ export function TabMenu() {
                   key={index}
                 >
                   {getTabIcon(title, isActive)}
-                  <Text mx="2">{title}</Text>
+                  <Text mx="2">{t[title]}</Text>
                 </Tab>
               </Link>
             );
