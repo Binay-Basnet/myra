@@ -13,9 +13,6 @@
     "noFallthroughCasesInSwitch": true
   },
   "files": [],
-  "include": [
-    "src/lib/table/react-table.config.d.ts"
-  ],
   "references": [
     {
       "path": "./tsconfig.lib.json"

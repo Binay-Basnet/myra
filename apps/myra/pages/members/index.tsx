@@ -17,12 +17,11 @@ import {
   HamburgerIcon,
   SearchIcon,
 } from '@chakra-ui/icons';
-import { Box, Button, MainLayout, Table } from '@saccos/myra/ui';
+import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import TabColumn from '../../components/TabforMemberPage';
 import TabRow from '../../components/TabMemberPageRow';
 import { Gender, useMembersQuery } from '../../generated/graphql';
-import { Column } from 'react-table';
 
 const column = [
   'Member list',
@@ -46,7 +45,7 @@ const Member = () => {
   const { data } = useMembersQuery();
 
   const rowData = useMemo(() => data && data?.members?.list, [data]);
-  const columns: Array<Column<MemberData>> = useMemo(
+  const columns: Column<MemberData>[] = useMemo(
     () => [
       {
         Header: 'Member #',
@@ -85,7 +84,8 @@ const Member = () => {
         accessor: 'dateOfBirth',
         maxWidth: 2,
       },
-      /*   {
+      /*
+      {
            accessor: 'actions',
            Cell: () => (
              <IconButton
@@ -94,7 +94,8 @@ const Member = () => {
                icon={<BsThreeDotsVertical />}
              />
            ),
-         },*/
+         }
+       */
     ],
     []
   );
@@ -205,7 +206,7 @@ const Member = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          {rowData && <Table<MemberData> data={rowData} columns={columns} />}
+          {rowData && <Table data={rowData} columns={columns} />}
         </Box>
       </Box>
     </Box>

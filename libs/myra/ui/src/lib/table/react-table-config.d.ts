@@ -1,7 +1,9 @@
-import { MouseEventHandler } from 'react';
 import {
   ActionType,
   Column,
+  ColumnGroup,
+  ColumnWithLooseAccessor,
+  ColumnWithStrictAccessor,
   Meta,
   TableInstance,
   UseColumnOrderInstanceProps,
@@ -151,21 +153,25 @@ declare module 'react-table' {
     extends UseExpandedRowProps<D>,
       UseGroupByRowProps<D>,
       UseRowSelectRowProps<D> {}
-
-  export interface TableCommonProps {
-    title?: string;
-    'aria-label'?: string;
-  }
-
-  export interface TableSortByToggleProps {
-    title?: string;
-  }
-
-  export interface TableGroupByToggleProps {
-    title?: string;
-  }
 }
 
-export type TableMouseEventHandler = (
-  instance: TableInstance<T>
-) => MouseEventHandler;
+export interface ExtraColumnProps {
+  isNumeric?: boolean;
+  paddingX?: string | number | number[];
+  paddingY?: string | number | number[];
+  imgSrc?: string;
+}
+
+export interface TableProps<T extends Record<string, unknown>> {
+  data: T[];
+  hasRowSelection?: boolean;
+  columns: Array<Column<T> | ExtraColumnProps> | Record<string, unknown>;
+  name?: string;
+}
+
+export type Column<D extends Record<string, unknown>> =
+  | ColumnGroup<D>
+  | ColumnWithLooseAccessor<D>
+  | ColumnWithStrictAccessor<D>;
+
+export { Column, Cell, HeaderGroup } from 'react-table';
