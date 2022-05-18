@@ -464,54 +464,50 @@ const DashboardMain = () => {
                 pl="45px"
                 pr="20px"
                 h="79px"
+                display={'flex'}
+                alignItems="center"
+                justifyContent="flex-start"
               >
-                <Flex>
-                  <Box mt="24px" w="470px">
-                    <HStack spacing="16px">
-                      <Box w="32px" h="32px">
-                        <Avatar src={data[keys].avatar} />
-                      </Box>
-                      <Box>
-                        <Text fontSize="13px" fontWeight="600" color="#37474F">
-                          {data[keys].text}
-                        </Text>
-                        <Text fontSize="13px" fontWeight="400" color="#607D8B">
-                          {data[keys].subtext}
-                        </Text>
-                      </Box>
-                    </HStack>
+                <Box w="470px" display={'flex'} flexDirection="row">
+                  <Avatar src={data[keys].avatar} />
+                  <Box
+                    display={'flex'}
+                    flexDirection="column"
+                    alignItems={'flex-start'}
+                    px="16px"
+                  >
+                    <Text fontSize="13px" fontWeight="600" color="#37474F">
+                      {data[keys].text}
+                    </Text>
+                    <Text fontSize="13px" fontWeight="400" color="#607D8B">
+                      {data[keys].subtext}
+                    </Text>
                   </Box>
+                </Box>
 
-                  <Box mt="25px">
-                    <Flex>
-                      <Box w="24px" h="24px">
-                        <Img src={data[keys].importance} alt="importance" />
-                      </Box>
-                      <Box minW="10px" minH="10px" ml="19px" mt="6px">
-                        <Img src={data[keys].icon} alt="check" />
-                      </Box>
-                      <Box mt="2px" ml="8px">
-                        <Text fontSize="13px" fontWeight="400" color="#343C46">
-                          {data[keys].status}
-                        </Text>
-                      </Box>
-                    </Flex>
+                <Box>
+                  <Flex>
+                    <Box w="24px" h="24px">
+                      <Img src={data[keys].importance} alt="importance" />
+                    </Box>
+                    <Box minW="10px" minH="10px" ml="19px" mt="6px">
+                      <Img src={data[keys].icon} alt="check" />
+                    </Box>
+                    <Box mt="2px" ml="8px">
+                      <Text fontSize="13px" fontWeight="400" color="#343C46">
+                        {data[keys].status}
+                      </Text>
+                    </Box>
+                  </Flex>
+                </Box>
+                <Spacer />
+                <Box display={'flex'} justifyContent="flex-end">
+                  <Avatar src={data[keys].avatar} mr="45px" />
+
+                  <Box pt="15px">
+                    <Img src="/dashboardmain/options.svg" alt="more options" />
                   </Box>
-                  <Spacer />
-                  <Box mt="25px">
-                    <Flex justify="flex-end">
-                      <Box mr="55px" w="32px" h="32px">
-                        <Avatar src={data[keys].avatar} />
-                      </Box>
-                      <Box pt="10px">
-                        <Img
-                          src="/dashboardmain/options.svg"
-                          alt="more options"
-                        />
-                      </Box>
-                    </Flex>
-                  </Box>
-                </Flex>
+                </Box>
               </Box>
             );
           })}
