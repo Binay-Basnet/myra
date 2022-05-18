@@ -3,9 +3,13 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { Box, Input, Text } from '@chakra-ui/react';
 
 /* eslint-disable-next-line */
-export interface MyraUiNavbarProps {}
+export interface MyraUiNavbarProps {
+  t: {
+    searchMembersNameReportsEtc: string;
+  };
+}
 
-export function Navbar(props: MyraUiNavbarProps) {
+export function Navbar({ t }: MyraUiNavbarProps) {
   return (
     <Box
       height="60px"
@@ -28,7 +32,7 @@ export function Navbar(props: MyraUiNavbarProps) {
           <InputGroup>
             <Input
               background="#EEF1F7"
-              placeholder="Search Members Name, Reports, etc"
+              placeholder={t.searchMembersNameReportsEtc}
               _placeholder={{ color: '#333333' }}
             />
             <InputLeftElement

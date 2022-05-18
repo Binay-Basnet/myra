@@ -8,31 +8,32 @@ import { MdBackupTable } from 'react-icons/md';
 import { CgDropOpacity } from 'react-icons/cg';
 import { FiShare2 } from 'react-icons/fi';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const demotabs = [
   {
-    title: 'Dashboard',
+    title: 'navbarDashboard',
   },
   {
-    title: 'Members',
+    title: 'navbarMembers',
   },
   {
-    title: 'Share',
+    title: 'navbarShare',
   },
   {
-    title: 'Accounts',
+    title: 'navbarAccounts',
   },
   {
-    title: 'Transactions',
+    title: 'navbarTransactions',
   },
   {
-    title: 'Loan',
+    title: 'navbarLoan',
   },
   {
-    title: 'Reports',
+    title: 'navbarReports',
   },
   {
-    title: 'Utilities',
+    title: 'navbarUtilities',
   },
 ];
 
@@ -114,8 +115,10 @@ const getTabIcon = (iconName: string, isActive: boolean) => {
 };
 
 // ! TODO create theme and tests
-export function TabMenu() {
+export function TabMenu({ t }: { t: Record<string, string> }) {
   const [tabIndex, setTabIndex] = useState(1);
+  const route = useRouter();
+  console.log('route', route);
 
   return (
     <Box
@@ -157,7 +160,7 @@ export function TabMenu() {
                   key={index}
                 >
                   {getTabIcon(title, isActive)}
-                  <Text mx="2">{title}</Text>
+                  <Text mx="2">{t[title]}</Text>
                 </Tab>
               </Link>
             );

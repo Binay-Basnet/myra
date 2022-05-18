@@ -1,53 +1,71 @@
 import {
+  Avatar,
   Flex,
-  Text,
   Icon,
+  IconButton,
+  Input,
   InputGroup,
   InputLeftElement,
-  Input,
-  IconButton,
-  Avatar,
+  Text,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { ReactElement, useMemo } from 'react';
-import { AddIcon } from '@chakra-ui/icons';
-import { Button, Box, MainLayout } from '@saccos/myra/ui';
 import {
-  SearchIcon,
+  AddIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   HamburgerIcon,
+  SearchIcon,
 } from '@chakra-ui/icons';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+
+import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
 import { TabColumn } from '@saccos/myra/components';
 import { TabRow } from '@saccos/myra/components';
-import { TableComponent } from '@saccos/myra/components';
-import { useMembersQuery } from '../../generated/graphql';
+import { Gender, useMembersQuery } from '../../generated/graphql';
+import { useTranslation } from '@saccos/myra/util';
 
 const column = [
-  'Member list',
-  'Balance Report',
-  'Member Details',
-  'Member Settings',
+  'memberList',
+  'balanceReport',
+  'memberDetails',
+  'memberSettings',
 ];
-const rows = ['Active', 'Inactive', 'WIP', 'Draft'];
+const rows = [
+  'memberNavActive',
+  'memberNavInactive',
+  'memberNavWip',
+  'memberNavDraft',
+];
+
+type MemberData = {
+  id: string;
+  firstName: string;
+  middleName?: string | null;
+  lastName: string;
+  gender: Gender;
+  title?: string | null;
+  dateOfBirth?: string | null;
+};
 
 const Member = () => {
   const { data } = useMembersQuery();
-  console.log(data);
-  const columns = useMemo(
+  const { t } = useTranslation();
+
+  const rowData = useMemo(() => data && data?.members?.list, [data]);
+
+  const columns: Column<MemberData>[] = useMemo(
     () => [
       {
         Header: 'Member #',
         accessor: 'id',
+        maxWidth: 4,
       },
-      {
-        Header: 'Title',
-        accessor: 'title',
-      },
+
       {
         Header: 'First Name',
         accessor: 'firstName',
+        width: '80%',
         Cell: ({ value }) => (
           <Flex alignItems="center" gap="2">
             <Avatar
@@ -60,45 +78,42 @@ const Member = () => {
         ),
       },
       {
-        Header: 'Middle Name',
-        accessor: 'middleName',
-        style: {
-          width: '550px',
-        },
+        Header: 'Title',
+        accessor: 'title',
+        width: '40%',
       },
-      {
-        Header: 'Last Name',
-        accessor: 'lastName',
-      },
+
       {
         Header: 'Gender',
         accessor: 'gender',
+        maxWidth: 2,
       },
       {
         Header: 'Date Of Birth',
         accessor: 'dateOfBirth',
+        maxWidth: 2,
       },
+      /*
       {
-        accessor: 'actions',
-        Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDotsVertical />}
-          />
-        ),
-      },
+           accessor: 'actions',
+           Cell: () => (
+             <IconButton
+               variant="ghost"
+               aria-label="Search database"
+               icon={<BsThreeDotsVertical />}
+             />
+           ),
+         }
+       */
     ],
     []
   );
-
-  const rowData = useMemo(() => data && data?.members?.list, [data]);
 
   return (
     <Box mt="100px" p="16px" display="flex">
       <Box mt="24px">
         <Text fontSize="20px" fontWeight="600" pl="16px">
-          Members
+          {t.members}
         </Text>
 
         <Box mt="58px" display="flex" flexDirection="column" width="238px">
@@ -111,13 +126,13 @@ const Member = () => {
                 fontSize="14px"
                 borderRadius="0"
               >
-                Add New Members
+                {t.membersAddNewMembers}
               </Button>
             </Link>
           </Box>
           <br />
 
-          <TabColumn list={column} />
+          <TabColumn list={column} t={t} />
         </Box>
       </Box>
       <Box width="1269px" mt="12px" bg="white">
@@ -130,11 +145,11 @@ const Member = () => {
               maxH="50px"
             >
               <Text fontSize="16" fontWeight="600" color="#343C46">
-                Member List{' '}
+                {t.memberList}
               </Text>
             </Box>
             <Box ml="48px" display="flex" alignItems="flex-end">
-              <TabRow list={rows} />
+              <TabRow t={t} list={rows} />
             </Box>
           </Flex>
         </Box>
@@ -200,7 +215,7 @@ const Member = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          {rowData && <TableComponent data={rowData} columns={columns} />}
+          {rowData && <Table data={rowData} columns={columns} />}
         </Box>
       </Box>
     </Box>
