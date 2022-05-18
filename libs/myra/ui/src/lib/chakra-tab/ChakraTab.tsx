@@ -1,16 +1,20 @@
-import { Tabs, TabList, Tab } from '@chakra-ui/react';
+import { Tabs, TabList, Tab, TabsProps } from '@chakra-ui/react';
 
 /* eslint-disable-next-line */
-export interface ChakraTabProps {
+export interface ChakraTabProps extends TabsProps {
   tabList?: string[];
   orientation?: 'vertical' | 'horizontal';
   tabWidth?: number;
 }
 
 export function ChakraTab(props: ChakraTabProps) {
-  const { tabList, orientation, tabWidth } = props;
+  const { tabList, orientation, tabWidth, ...rest } = props;
   return (
-    <Tabs orientation={orientation || 'horizontal'} variant="unstyled">
+    <Tabs
+      orientation={orientation || 'horizontal'}
+      variant="unstyled"
+      {...rest}
+    >
       <TabList>
         {tabList?.map((item, index) => (
           <Tab
