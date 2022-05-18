@@ -19,12 +19,11 @@ import {
 } from '@chakra-ui/icons';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
-import { useRouter } from 'next/router';
 import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
 import { TabColumn } from '@saccos/myra/components';
 import { TabRow } from '@saccos/myra/components';
 import { Gender, useMembersQuery } from '../../generated/graphql';
-import { translation } from '@saccos/myra/util';
+import { useTranslation } from '@saccos/myra/util';
 
 const column = [
   'memberList',
@@ -51,10 +50,10 @@ type MemberData = {
 
 const Member = () => {
   const { data } = useMembersQuery();
-  const route = useRouter();
-  const t = translation(route);
+  const { t } = useTranslation();
 
   const rowData = useMemo(() => data && data?.members?.list, [data]);
+
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {

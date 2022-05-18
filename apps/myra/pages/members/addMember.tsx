@@ -16,8 +16,7 @@ import {
 } from '@saccos/myra/jsonData';
 
 import { validationSchema } from '@saccos/myra/util';
-import { useRouter } from 'next/router';
-import { translation } from '@saccos/myra/util';
+import { useTranslation } from '@saccos/myra/util';
 
 const Header = ({ t }) => {
   return (
@@ -29,8 +28,7 @@ const Header = ({ t }) => {
 };
 
 const AddMember = () => {
-  const router = useRouter();
-  const t = translation(router);
+  const { t } = useTranslation();
 
   const {
     register,

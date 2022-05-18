@@ -9,12 +9,10 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { Navbarfordaashboard } from '@saccos/myra/ui';
-import { useRouter } from 'next/router';
-import { translation } from '@saccos/myra/util';
+import { useTranslation } from '@saccos/myra/util';
 
 const Dashboard = () => {
-  const router = useRouter();
-  const t = translation(router);
+  const { t } = useTranslation();
 
   return (
     <>

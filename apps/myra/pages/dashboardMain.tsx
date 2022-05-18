@@ -11,8 +11,7 @@ import {
   Avatar,
 } from '@chakra-ui/react';
 import { Navbarfordaashboard } from '@saccos/myra/ui';
-import { useRouter } from 'next/router';
-import { translation } from '@saccos/myra/util';
+import { useTranslation } from '@saccos/myra/util';
 
 const data = [
   {
@@ -67,8 +66,7 @@ const data = [
 
 const dataKeys = Object.keys(data);
 const DashboardMain = () => {
-  const router = useRouter();
-  const t = translation(router);
+  const { t } = useTranslation();
   return (
     <>
       <Box position="fixed" width="100%" zIndex={2} top="0">
