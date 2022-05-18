@@ -14,7 +14,7 @@ export function Navbar({ t }: MyraUiNavbarProps) {
     <Box
       height="60px"
       px="5"
-      background="#042E33"
+      background="secondary.700"
       alignItems="center"
       display="flex"
       style={{

@@ -9,4 +9,6 @@ export default {
 const Template: Story<TextProps> = (args) => <Text {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  children: 'This is a Text Box ',
+};

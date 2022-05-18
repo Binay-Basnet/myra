@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Text, Tabs, TabList, Tab } from '@chakra-ui/react';
+import { Box, Text, Tabs, TabList, Tab, Icon } from '@chakra-ui/react';
 import { AiOutlineAppstore } from 'react-icons/ai';
 import { FaUser } from 'react-icons/fa';
 import { VscListFlat } from 'react-icons/vsc';
@@ -39,44 +39,97 @@ const demotabs = [
 
 const getTabIcon = (iconName: string, isActive: boolean) => {
   switch (iconName) {
-    case 'navbarDashboard':
-      return <AiOutlineAppstore size={18} color="#8CC63F" />;
-    case 'navbarMembers':
-      return <FaUser size={18} color="#8CC63F" />;
-    case 'navbarShare':
-      return <FiShare2 size={18} color="#8CC63F" />;
-    case 'navbarAccounts':
-      return <AiOutlineAppstore size={18} color="#8CC63F" />;
-    case 'navbarTransactions':
-      return <VscListFlat size={18} color="#8CC63F" />;
-    case 'navbarLoan':
-      return <BiTransfer size={18} color="#8CC63F" />;
-    case 'navbarReports':
-      return <MdBackupTable size={18} color="#8CC63F" />;
-    case 'navbarUtilities':
-      return <CgDropOpacity size={18} color="#8CC63F" />;
+    case 'Dashboard':
+      return (
+        <Icon
+          as={AiOutlineAppstore}
+          size={18}
+          color={isActive ? 'primary.500' : 'primary.300'}
+        />
+      );
+    case 'Members':
+      return (
+        <Icon
+          as={FaUser}
+          size={18}
+          color={isActive ? 'primary.500' : 'primary.300'}
+        />
+      );
+    case 'Share':
+      return (
+        <Icon
+          as={FiShare2}
+          size={18}
+          color={isActive ? 'primary.500' : 'primary.300'}
+        />
+      );
+    case 'Accounts':
+      return (
+        <Icon
+          as={AiOutlineAppstore}
+          size={18}
+          color={isActive ? 'primary.500' : 'primary.300'}
+        />
+      );
+    case 'Transactions':
+      return (
+        <Icon
+          as={VscListFlat}
+          size={18}
+          color={isActive ? 'primary.500' : 'primary.300'}
+        />
+      );
+    case 'Loan':
+      return (
+        <Icon
+          as={BiTransfer}
+          size={18}
+          color={isActive ? 'primary.500' : 'primary.300'}
+        />
+      );
+    case 'Reports':
+      return (
+        <Icon
+          as={MdBackupTable}
+          size={18}
+          color={isActive ? 'primary.500' : 'primary.300'}
+        />
+      );
+    case 'Utilities':
+      return (
+        <Icon
+          as={CgDropOpacity}
+          size={18}
+          color={isActive ? 'primary.500' : 'primary.300'}
+        />
+      );
     default:
-      return <AiOutlineAppstore size={18} color="#8CC63F" />;
+      return (
+        <Icon
+          as={AiOutlineAppstore}
+          size={18}
+          color={isActive ? 'primary.500' : 'primary.300'}
+        />
+      );
   }
 };
 
 // ! TODO create theme and tests
-export function TabMenu({ t }) {
+export function TabMenu({ t }: { t: Record<string, string> }) {
   const [tabIndex, setTabIndex] = useState(1);
   const route = useRouter();
   console.log('route', route);
 
   return (
     <Box
-      height="60px"
+      height="50px"
       px="5"
-      background="#00382F"
+      background="secondary.700"
       alignItems="center"
       display="flex"
     >
       <Tabs
         defaultIndex={1}
-        mt="3"
         size="md"
         variant="enclosed"
         onChange={(index) => setTabIndex(index)}
@@ -89,16 +142,19 @@ export function TabMenu({ t }) {
                 href={title === 'Dashboard' ? '/' : `/${title.toLowerCase()}`}
               >
                 <Tab
+                  isDisabled
+                  width="150"
+                  borderRadius="8px 8px 0 0"
+                  p="s4 s16"
                   _selected={{
                     background: '#EEF2F7',
-                    color: '#042E33',
+                    color: 'gray.800',
                   }}
                   style={{
-                    color: isActive ? '#042E33' : 'white',
+                    color: isActive ? 'gray.800' : 'white',
                     fontWeight: 500,
-                    fontSize: '1.1rem',
+                    fontSize: 'r1',
                     height: 50,
-                    borderRadius: 0,
                     outline: 'none',
                   }}
                   key={index}

@@ -3,7 +3,7 @@ import {
   AvatarProps as ChakraAvatarProps,
 } from '@chakra-ui/react';
 export interface AvatarProps extends ChakraAvatarProps {
-  size?: '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size?: '2xs' | 'xs' | 'sm' | 'md' | 'lg';
   bg?: string;
 }
 
