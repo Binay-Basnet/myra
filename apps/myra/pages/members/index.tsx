@@ -19,10 +19,12 @@ import {
   HamburgerIcon,
 } from '@chakra-ui/icons';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { useRouter } from 'next/router';
 import { TabColumn } from '@saccos/myra/components';
 import { TabRow } from '@saccos/myra/components';
 import { TableComponent } from '@saccos/myra/components';
 import { useMembersQuery } from '../../generated/graphql';
+import { translation } from '@saccos/myra/util';
 
 const column = [
   'Member list',
@@ -34,7 +36,8 @@ const rows = ['Active', 'Inactive', 'WIP', 'Draft'];
 
 const Member = () => {
   const { data } = useMembersQuery();
-  console.log(data);
+  const router = useRouter();
+
   const columns = useMemo(
     () => [
       {
@@ -94,11 +97,13 @@ const Member = () => {
 
   const rowData = useMemo(() => data && data?.members?.list, [data]);
 
+  const t = translation(router);
+
   return (
     <Box mt="100px" p="16px" display="flex">
       <Box mt="24px">
         <Text fontSize="20px" fontWeight="600" pl="16px">
-          Members
+          {t.members}
         </Text>
 
         <Box mt="58px" display="flex" flexDirection="column" width="238px">
