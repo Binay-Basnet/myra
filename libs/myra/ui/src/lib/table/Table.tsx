@@ -1,5 +1,8 @@
-import { Cell, Column, HeaderGroup, TableOptions, useTable } from './useTable';
+/* eslint-disable-next-line */
+
+import { Column, HeaderGroup, useRowSelect, useTable } from './useTable';
 import {
+  Checkbox,
   Table as ChakraTable,
   TableContainer,
   Tbody,
@@ -8,43 +11,96 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import { forwardRef, RefObject, useEffect, useRef } from 'react';
+import { Cell, CellProps, HeaderProps, Hooks } from 'react-table';
+
+interface IIndeterminateInputProps {
+  indeterminate?: boolean;
+  checked?: boolean;
+}
+
+const IndeterminateCheckbox = forwardRef<
+  HTMLInputElement,
+  IIndeterminateInputProps
+>(({ indeterminate, checked, ...rest }, ref) => {
+  const defaultRef = useRef<HTMLInputElement>(null);
+  const resolvedRef = (ref || defaultRef) as RefObject<HTMLInputElement>;
+
+  useEffect(() => {
+    if (defaultRef?.current?.indeterminate) {
+      defaultRef.current.indeterminate = indeterminate ?? false;
+    }
+  }, [resolvedRef, checked]);
+
+  return (
+    <Checkbox
+      colorScheme="primary"
+      isIndeterminate={indeterminate}
+      isChecked={checked}
+      {...rest}
+    />
+  );
+});
+
+IndeterminateCheckbox.displayName = 'IndeterminateCheckbox';
 
 interface ExtraColumnProps {
   isNumeric?: boolean;
   paddingX?: string | number | number[];
   paddingY?: string | number | number[];
+  imgSrc?: string;
 }
 
-export interface TableProps<T extends Record<string, unknown>>
-  extends TableOptions<T> {
-  columns: ReadonlyArray<
-    Column<T> & ExtraColumnProps & Record<string, unknown>
-  >;
+export interface TableProps<T extends Record<string, unknown>> {
+  data: T[];
+  columns: Array<Column<T> & ExtraColumnProps>;
   name?: string;
 }
+
+function selectionHook<T extends Record<string, unknown>>(hooks: Hooks<T>) {
+  hooks.allColumns.push((columns) => [
+    // Let's make a column for selection
+    {
+      id: '_selector',
+      minWidth: 45,
+      width: 45,
+      maxWidth: 45,
+
+      Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<T>) => (
+        <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+      ),
+      Cell: ({ row }: CellProps<T>) => (
+        <div>
+          <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+        </div>
+      ),
+    },
+    ...columns,
+  ]);
+}
+
+const hooks = [useRowSelect, selectionHook];
 
 export function Table<T extends Record<string, unknown>>({
   data,
   columns,
   ...props
 }: TableProps<T>) {
-  const tableInstance = useTable<T>({
-    ...props,
-    data,
-    columns,
-  });
+  const tableInstance = useTable<T>(
+    {
+      ...props,
+      data,
+      columns,
+    },
+    ...hooks
+  );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
   return (
     <TableContainer>
-      <ChakraTable
-        bg="white"
-        variant="simple"
-        colorScheme="blackAlpha"
-        {...getTableProps()}
-      >
+      <ChakraTable bg="white" size="sm" {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
@@ -73,7 +129,11 @@ export function Table<T extends Record<string, unknown>>({
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <Tr {...row.getRowProps()}>
+              <Tr
+                _hover={{ background: '#EEF2F7' }}
+                bg={row.isSelected ? 'primary.0' : 'white'}
+                {...row.getRowProps()}
+              >
                 {row.cells.map(
                   (
                     cell: Cell<T> & {
