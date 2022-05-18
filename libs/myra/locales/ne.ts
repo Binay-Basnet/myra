@@ -52,7 +52,7 @@ const ne = {
   tasks: 'कार्यहरू',
 
   // member page
-  members: 'Members',
+  members: 'सदस्यहरू',
   membersAddNewMembers: 'नयाँ सदस्यहरू थप्नुहोस्',
   balanceReport: 'सन्तुलन प्रतिवेदन',
   memberDetails: 'सदस्य विवरण',
