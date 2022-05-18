@@ -13,7 +13,7 @@ function ActiveLink(props: { children: React.ReactNode; href: string }) {
     marginRight: 10,
     height: '60px',
     width: '100px',
-    boxShadow: router.asPath === href ? ' inset 0px -4px 0px #8CC63F' : 'none',
+    boxShadow: router?.asPath === href ? ' inset 0px -4px 0px #8CC63F' : 'none',
   };
 
   return (

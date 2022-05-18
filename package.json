@@ -25,7 +25,6 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11",
     "@hookform/resolvers": "^2.8.8",
-    "@nrwl/next": "13.10.1",
     "axios": "^0.27.2",
     "concurrently": "^7.1.0",
     "core-js": "^3.6.5",
