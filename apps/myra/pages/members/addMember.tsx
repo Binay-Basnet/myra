@@ -16,17 +16,20 @@ import {
 } from '@saccos/myra/jsonData';
 
 import { validationSchema } from '@saccos/myra/util';
+import { useTranslation } from '@saccos/myra/util';
 
-const Header = () => {
+const Header = ({ t }) => {
   return (
     <>
-      <Navbar />
-      <TabMenu />
+      <Navbar t={t} />
+      <TabMenu t={t} />
     </>
   );
 };
 
 const AddMember = () => {
+  const { t } = useTranslation();
+
   const {
     register,
     handleSubmit,
@@ -45,7 +48,7 @@ const AddMember = () => {
         zIndex={2}
         backdropFilter="saturate(180%) blur(5px)"
       >
-        <Header />
+        <Header t={t} />
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container maxW="904px" height="fit-content" mt="130" p="0" pb="55px">
@@ -61,7 +64,7 @@ const AddMember = () => {
             background="white"
           >
             <Heading size="16px" as="h4">
-              Add New Member
+              {t.membersFormAddNewMembers}
             </Heading>
             <GrClose size="14px" color="#91979F" />
           </Box>
@@ -97,7 +100,7 @@ const AddMember = () => {
           <br />
           <Box bg="white" p={5}>
             <Heading fontSize="14px" color="#006837">
-              Permanent Address
+              {t.memberPermanentAddress}
             </Heading>
             <br />
             <Box>
@@ -113,7 +116,7 @@ const AddMember = () => {
           <br />
           <Box bg="white" p={5}>
             <Heading fontSize="14px" color="#006837">
-              Contact Information
+              {t.memberContactInformation}
             </Heading>
             <Box>
               <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
@@ -143,11 +146,11 @@ const AddMember = () => {
           <br />
           <Box bg="white" p="5">
             <Heading fontSize="14px" color="#006837">
-              Photo
+              {t.memberPhoto}
             </Heading>
             <Box display="flex" justifyContent="space-between">
               <Box>
-                <Text>Member Photo</Text>
+                <Text>{t.memberPhotoUpload}</Text>
                 <Box
                   w={423}
                   h={148}
@@ -156,11 +159,11 @@ const AddMember = () => {
                   justifyContent="center"
                   bg="#EEF2F7"
                 >
-                  Drop or Click to upload photo
+                  {t.memberDropOrClickToUploadPhoto}
                 </Box>
               </Box>
               <Box>
-                <Text>Member Signature</Text>
+                <Text>{t.memberSignature}</Text>
                 <Box
                   w={423}
                   h={148}
@@ -169,15 +172,21 @@ const AddMember = () => {
                   justifyContent="center"
                   bg="#EEF2F7"
                 >
-                  Drop or click to upload photo
+                  {t.memberDropOrClickToUploadPhoto}
                 </Box>
               </Box>
             </Box>
           </Box>
           <br />
           <Box width="100%" bg="white" p="5">
-            <Button type="submit" variant="primary" size="md" bg="primary">
-              Save Member
+            <Button
+              textColor="white"
+              type="submit"
+              variant="primary"
+              size="md"
+              bg="primary"
+            >
+              {t.saveMember}
             </Button>
           </Box>
         </Container>

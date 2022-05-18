@@ -19,20 +19,24 @@ import {
 } from '@chakra-ui/icons';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
-import { useRouter } from 'next/router';
 import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
 import { TabColumn } from '@saccos/myra/components';
 import { TabRow } from '@saccos/myra/components';
 import { Gender, useMembersQuery } from '../../generated/graphql';
-import { translation } from '@saccos/myra/util';
+import { useTranslation } from '@saccos/myra/util';
 
 const column = [
-  'Member list',
-  'Balance Report',
-  'Member Details',
-  'Member Settings',
+  'memberList',
+  'balanceReport',
+  'memberDetails',
+  'memberSettings',
 ];
-const rows = ['Active', 'Inactive', 'WIP', 'Draft'];
+const rows = [
+  'memberNavActive',
+  'memberNavInactive',
+  'memberNavWip',
+  'memberNavDraft',
+];
 
 type MemberData = {
   id: string;
@@ -46,10 +50,10 @@ type MemberData = {
 
 const Member = () => {
   const { data } = useMembersQuery();
-  const route = useRouter();
-  const t = translation(route);
+  const { t } = useTranslation();
 
   const rowData = useMemo(() => data && data?.members?.list, [data]);
+
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
@@ -122,13 +126,13 @@ const Member = () => {
                 fontSize="14px"
                 borderRadius="0"
               >
-                Add New Members
+                {t.membersAddNewMembers}
               </Button>
             </Link>
           </Box>
           <br />
 
-          <TabColumn list={column} />
+          <TabColumn list={column} t={t} />
         </Box>
       </Box>
       <Box width="1269px" mt="12px" bg="white">
@@ -141,11 +145,11 @@ const Member = () => {
               maxH="50px"
             >
               <Text fontSize="16" fontWeight="600" color="#343C46">
-                Member List{' '}
+                {t.memberList}
               </Text>
             </Box>
             <Box ml="48px" display="flex" alignItems="flex-end">
-              <TabRow list={rows} />
+              <TabRow t={t} list={rows} />
             </Box>
           </Flex>
         </Box>

@@ -13,13 +13,13 @@ const TabCol = chakra(Tab, {
     _selected: { color: '#37474F', bg: '#FFFFFF' },
   },
 });
-export const TabColumn = ({ list }) => {
+export const TabColumn = ({ list, t }) => {
   return (
     <Tabs variant="unstyled">
       {list.map((item, index) => {
         return (
           <TabCol key={`${item}${index}`}>
-            <Text ml="16px">{item}</Text>
+            <Text ml="16px">{t[item]}</Text>
           </TabCol>
         );
       })}

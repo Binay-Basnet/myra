@@ -2,18 +2,11 @@
 //You can update the queries or mutations in *.graphql to generate any new changes.
 import { useQuery, UseQueryOptions } from 'react-query';
 import { useAxios } from './axiosHelper';
-
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -35,7 +28,7 @@ export type Address = {
 
 export enum Arrange {
   Ascending = 'ASCENDING',
-  Descending = 'DESCENDING',
+  Descending = 'DESCENDING'
 }
 
 export type Base = {
@@ -56,7 +49,7 @@ export type Citizenship = {
 export enum ComparatorType {
   EqualTo = 'EqualTo',
   GreaterThan = 'GreaterThan',
-  LessThan = 'LessThan',
+  LessThan = 'LessThan'
 }
 
 export type Condition = {
@@ -86,7 +79,7 @@ export type Filter = {
 export enum Gender {
   Female = 'FEMALE',
   Male = 'MALE',
-  Other = 'OTHER',
+  Other = 'OTHER'
 }
 
 export type Identity = {
@@ -162,6 +155,7 @@ export type MemberMutation = {
   save: Member;
 };
 
+
 export type MemberMutationSaveArgs = {
   data: MemberInput;
   id: Scalars['ID'];
@@ -172,9 +166,11 @@ export type MemberQuery = {
   list: Array<Member>;
 };
 
+
 export type MemberQueryGetArgs = {
   id: Scalars['String'];
 };
+
 
 export type MemberQueryListArgs = {
   filter?: InputMaybe<Filter>;
@@ -198,7 +194,7 @@ export type Nominee = {
 export enum ObjState {
   Approved = 'APPROVED',
   Draft = 'DRAFT',
-  Validated = 'VALIDATED',
+  Validated = 'VALIDATED'
 }
 
 export type OrConditions = {
@@ -216,24 +212,14 @@ export type Query = {
 
 export enum UserType {
   Human = 'HUMAN',
-  System = 'SYSTEM',
+  System = 'SYSTEM'
 }
 
-export type MembersQueryVariables = Exact<{ [key: string]: never }>;
+export type MembersQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type MembersQuery = {
-  members?: {
-    list: Array<{
-      id: string;
-      firstName: string;
-      middleName?: string | null;
-      lastName: string;
-      gender: Gender;
-      title?: string | null;
-      dateOfBirth: string;
-    }>;
-  } | null;
-};
+
+export type MembersQuery = { members?: { list: Array<{ id: string, firstName: string, middleName?: string | null, lastName: string, gender: Gender, title?: string | null, dateOfBirth?: string | null }> } | null };
+
 
 export const MembersDocument = `
     query members {
@@ -250,15 +236,15 @@ export const MembersDocument = `
   }
 }
     `;
-export const useMembersQuery = <TData = MembersQuery, TError = unknown>(
-  variables?: MembersQueryVariables,
-  options?: UseQueryOptions<MembersQuery, TError, TData>
-) =>
-  useQuery<MembersQuery, TError, TData>(
-    variables === undefined ? ['members'] : ['members', variables],
-    useAxios<MembersQuery, MembersQueryVariables>(MembersDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
+export const useMembersQuery = <
+      TData = MembersQuery,
+      TError = unknown
+    >(
+      variables?: MembersQueryVariables,
+      options?: UseQueryOptions<MembersQuery, TError, TData>
+    ) =>
+    useQuery<MembersQuery, TError, TData>(
+      variables === undefined ? ['members'] : ['members', variables],
+      useAxios<MembersQuery, MembersQueryVariables>(MembersDocument).bind(null, variables),
+      options
+    );
