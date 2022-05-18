@@ -1,3 +1,4 @@
+export * from './lib/form/Form';
 export * from './lib/text-fields/TextFields';
 export * from './lib/divider/Divider';
 export * from './lib/select-/Select';
