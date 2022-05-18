@@ -17,11 +17,14 @@ import {
   HamburgerIcon,
   SearchIcon,
 } from '@chakra-ui/icons';
-import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import TabColumn from '../../components/TabforMemberPage';
-import TabRow from '../../components/TabMemberPageRow';
+
+import { useRouter } from 'next/router';
+import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
+import { TabColumn } from '@saccos/myra/components';
+import { TabRow } from '@saccos/myra/components';
 import { Gender, useMembersQuery } from '../../generated/graphql';
+import { translation } from '@saccos/myra/util';
 
 const column = [
   'Member list',
@@ -43,6 +46,8 @@ type MemberData = {
 
 const Member = () => {
   const { data } = useMembersQuery();
+  const route = useRouter();
+  const t = translation(route);
 
   const rowData = useMemo(() => data && data?.members?.list, [data]);
   const columns: Column<MemberData>[] = useMemo(
@@ -104,7 +109,7 @@ const Member = () => {
     <Box mt="100px" p="16px" display="flex">
       <Box mt="24px">
         <Text fontSize="20px" fontWeight="600" pl="16px">
-          Members
+          {t.members}
         </Text>
 
         <Box mt="58px" display="flex" flexDirection="column" width="238px">

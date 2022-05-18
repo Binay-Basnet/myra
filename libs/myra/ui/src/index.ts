@@ -1,4 +1,5 @@
 export * from './lib/table/Table';
+export * from './lib/text-fields/TextFields';
 export * from './lib/divider/Divider';
 export * from './lib/select-/Select';
 export * from './lib/input-/Input';

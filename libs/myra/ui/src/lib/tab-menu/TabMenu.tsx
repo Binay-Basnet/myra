@@ -8,6 +8,7 @@ import { MdBackupTable } from 'react-icons/md';
 import { CgDropOpacity } from 'react-icons/cg';
 import { FiShare2 } from 'react-icons/fi';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const demotabs = [
   {
@@ -62,6 +63,8 @@ const getTabIcon = (iconName: string, isActive: boolean) => {
 // ! TODO create theme and tests
 export function TabMenu() {
   const [tabIndex, setTabIndex] = useState(1);
+  const route = useRouter();
+  console.log('route', route);
 
   return (
     <Box
