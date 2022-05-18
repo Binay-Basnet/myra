@@ -149,7 +149,7 @@ declare module 'react-table' {
     D extends Record<string, unknown> = Record<string, unknown>
   > = UseGroupByCellProps<D>;
 
-  export interface Row<D extends object = {}>
+  export interface Row<D extends Record<string, unknown>>
     extends UseExpandedRowProps<D>,
       UseGroupByRowProps<D>,
       UseRowSelectRowProps<D> {}
@@ -162,16 +162,16 @@ export interface ExtraColumnProps {
   imgSrc?: string;
 }
 
-export interface TableProps<T extends Record<string, unknown>> {
-  data: T[];
-  hasRowSelection?: boolean;
-  columns: Array<Column<T> | ExtraColumnProps> | Record<string, unknown>;
-  name?: string;
-}
-
 export type Column<D extends Record<string, unknown>> =
   | ColumnGroup<D>
   | ColumnWithLooseAccessor<D>
   | ColumnWithStrictAccessor<D>;
+
+export interface TableProps<T extends Record<string, unknown>> {
+  data: T[];
+  hasRowSelection?: boolean;
+  columns: Array<Column<T> & ExtraColumnProps>;
+  name?: string;
+}
 
 export { Column, Cell, HeaderGroup } from 'react-table';
