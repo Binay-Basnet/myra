@@ -1,29 +1,29 @@
 import {
+  Avatar,
   Flex,
-  Text,
   Icon,
+  IconButton,
+  Input,
   InputGroup,
   InputLeftElement,
-  Input,
-  IconButton,
-  Avatar,
+  Text,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { ReactElement, useMemo } from 'react';
-import { AddIcon } from '@chakra-ui/icons';
-import { Button, Box, MainLayout } from '@saccos/myra/ui';
 import {
-  SearchIcon,
+  AddIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   HamburgerIcon,
+  SearchIcon,
 } from '@chakra-ui/icons';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+
 import { useRouter } from 'next/router';
+import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
 import { TabColumn } from '@saccos/myra/components';
 import { TabRow } from '@saccos/myra/components';
-import { TableComponent } from '@saccos/myra/components';
-import { useMembersQuery } from '../../generated/graphql';
+import { Gender, useMembersQuery } from '../../generated/graphql';
 import { translation } from '@saccos/myra/util';
 
 const column = [
@@ -34,23 +34,34 @@ const column = [
 ];
 const rows = ['Active', 'Inactive', 'WIP', 'Draft'];
 
+type MemberData = {
+  id: string;
+  firstName: string;
+  middleName?: string | null;
+  lastName: string;
+  gender: Gender;
+  title?: string | null;
+  dateOfBirth?: string | null;
+};
+
 const Member = () => {
   const { data } = useMembersQuery();
-  const router = useRouter();
+  const route = useRouter();
+  const t = translation(route);
 
-  const columns = useMemo(
+  const rowData = useMemo(() => data && data?.members?.list, [data]);
+  const columns: Column<MemberData>[] = useMemo(
     () => [
       {
         Header: 'Member #',
         accessor: 'id',
+        maxWidth: 4,
       },
-      {
-        Header: 'Title',
-        accessor: 'title',
-      },
+
       {
         Header: 'First Name',
         accessor: 'firstName',
+        width: '80%',
         Cell: ({ value }) => (
           <Flex alignItems="center" gap="2">
             <Avatar
@@ -63,41 +74,36 @@ const Member = () => {
         ),
       },
       {
-        Header: 'Middle Name',
-        accessor: 'middleName',
-        style: {
-          width: '550px',
-        },
+        Header: 'Title',
+        accessor: 'title',
+        width: '40%',
       },
-      {
-        Header: 'Last Name',
-        accessor: 'lastName',
-      },
+
       {
         Header: 'Gender',
         accessor: 'gender',
+        maxWidth: 2,
       },
       {
         Header: 'Date Of Birth',
         accessor: 'dateOfBirth',
+        maxWidth: 2,
       },
+      /*
       {
-        accessor: 'actions',
-        Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDotsVertical />}
-          />
-        ),
-      },
+           accessor: 'actions',
+           Cell: () => (
+             <IconButton
+               variant="ghost"
+               aria-label="Search database"
+               icon={<BsThreeDotsVertical />}
+             />
+           ),
+         }
+       */
     ],
     []
   );
-
-  const rowData = useMemo(() => data && data?.members?.list, [data]);
-
-  const t = translation(router);
 
   return (
     <Box mt="100px" p="16px" display="flex">
@@ -205,7 +211,7 @@ const Member = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          {rowData && <TableComponent data={rowData} columns={columns} />}
+          {rowData && <Table data={rowData} columns={columns} />}
         </Box>
       </Box>
     </Box>

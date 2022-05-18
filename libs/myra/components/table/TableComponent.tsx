@@ -1,30 +1,21 @@
-import { forwardRef, useEffect, useRef, useId } from 'react';
+import { forwardRef, RefObject, useEffect, useId, useRef } from 'react';
+import { Column, useRowSelect, useSortBy, useTable } from 'react-table';
 // import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import {
-  TableContainer,
   Table,
-  Thead,
-  Tr,
-  Th,
+  TableContainer,
   Tbody,
   Td,
-  // Checkbox,
-  // chakra,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react';
-import { useTableHook } from '@saccos/myra/util';
 
 /* eslint-disable-next-line */
-interface ChakraDataProps<T> {
-  rowData: T[];
-}
-interface ChakraColumnsProps<T> {
-  Header: string;
-  accessor: string;
+export interface ChakraTableProps<T extends Record<string, unknown>> {
+  data: T[];
+  columns: Column[];
   Cell?: (arg: T) => JSX.Element;
-}
-export interface ChakraTableProps<T> {
-  data: ChakraDataProps<T>;
-  columns: ChakraColumnsProps<T>;
 }
 
 interface IIndeterminateInputProps {
@@ -37,10 +28,12 @@ const IndeterminateCheckbox = forwardRef<
   IIndeterminateInputProps
 >(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef<HTMLInputElement>(null);
-  const resolvedRef = ref || defaultRef;
+  const resolvedRef = (ref || defaultRef) as RefObject<HTMLInputElement>;
 
   useEffect(() => {
-    resolvedRef.current.indeterminate = indeterminate;
+    if (defaultRef?.current?.indeterminate) {
+      defaultRef.current.indeterminate! = indeterminate!;
+    }
   }, [resolvedRef, indeterminate]);
 
   return (
@@ -52,13 +45,37 @@ const IndeterminateCheckbox = forwardRef<
 
 IndeterminateCheckbox.displayName = 'IndeterminateCheckbox';
 
-export function TableComponent<T>(props: ChakraTableProps<T>) {
+export default function TableComponent<T extends Record<string, unknown>>(
+  props: ChakraTableProps<T>
+) {
   const id = useId();
   const { data, columns } = props;
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTableHook({ columns, data });
-
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    // selectedFlatRows,
+  } = useTable({ columns, data }, useSortBy, useRowSelect, (hooks) => {
+    hooks.visibleColumns.push((column) => [
+      {
+        id: 'selection',
+        Header: ({ getToggleAllRowsSelectedProps }: any) => (
+          <div>
+            <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+          </div>
+        ),
+        Cell: ({ row }: any) => (
+          <div>
+            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+          </div>
+        ),
+      },
+      ...column,
+    ]);
+  });
   return (
     <TableContainer
       style={{
@@ -69,10 +86,9 @@ export function TableComponent<T>(props: ChakraTableProps<T>) {
       <Table {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
-            <Tr key={id} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
+            <Tr {...headerGroup.getHeaderGroupProps()} key={id}>
+              {headerGroup.headers.map((column: any) => (
                 <Th
-                  key={id}
                   // {...column.getHeaderProps(column.getSortByToggleProps())}
                   {...column.getHeaderProps([
                     {
@@ -85,6 +101,7 @@ export function TableComponent<T>(props: ChakraTableProps<T>) {
                       },
                     },
                   ])}
+                  key={id}
                   isNumeric={column.isNumeric}
                 >
                   {column.render('Header')}
@@ -103,13 +120,12 @@ export function TableComponent<T>(props: ChakraTableProps<T>) {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {rows.map((row: any) => {
             prepareRow(row);
             return (
-              <Tr key={id} {...row.getRowProps()}>
+              <Tr {...row.getRowProps()} key={id}>
                 {row.cells.map((cell) => (
                   <Td
-                    key={id}
                     {...cell.getCellProps([
                       {
                         style: {
@@ -122,6 +138,7 @@ export function TableComponent<T>(props: ChakraTableProps<T>) {
                         },
                       },
                     ])}
+                    key={id}
                     isNumeric={cell.column.isNumeric}
                   >
                     {cell.render('Cell')}
