@@ -20,8 +20,7 @@ import {
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
-import { TabColumn } from '@saccos/myra/components';
-import { TabRow } from '@saccos/myra/components';
+import { TabColumn, TabRow } from '@saccos/myra/components';
 import { Gender, useMembersQuery } from '../../generated/graphql';
 import { useTranslation } from '@saccos/myra/util';
 
@@ -159,7 +158,7 @@ const Member = () => {
           display="flex"
           flexDirection="row"
           justifyContent="flex-start"
-          borderBottom="3px solid #E6E6E6"
+          borderBottom="1px solid #E6E6E6"
         >
           <Box w="500px" pt="15px" pl="20px">
             <InputGroup size="sm">
@@ -215,7 +214,7 @@ const Member = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          {rowData && <Table data={rowData} columns={columns} />}
+          {rowData && <Table data={rowData.slice(0, 10)} columns={columns} />}
         </Box>
       </Box>
     </Box>

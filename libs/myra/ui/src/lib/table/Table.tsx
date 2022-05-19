@@ -22,6 +22,7 @@ export function Table<T extends Record<string, unknown>>({
   data,
   columns,
   hasRowSelection = true,
+  size = 'default',
   ...props
 }: TableProps<T>) {
   const tableInstance = useTable({ columns, data, hasRowSelection, ...props });
@@ -31,21 +32,14 @@ export function Table<T extends Record<string, unknown>>({
 
   return (
     <TableContainer>
-      <ChakraTable bg="white" size="sm" {...getTableProps()}>
+      <ChakraTable size={size} {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(
                 (column: HeaderGroup<T> & ExtraColumnProps) => (
                   <Th
-                    paddingX={column.paddingX}
                     width={column.width}
-                    color="gray.900"
-                    fontSize="sm"
-                    letterSpacing="normal"
-                    fontWeight="semibold"
-                    paddingY={column.paddingY ?? '18px'}
-                    textTransform="capitalize"
                     {...column.getHeaderProps()}
                     isNumeric={column.isNumeric}
                   >
@@ -73,15 +67,17 @@ export function Table<T extends Record<string, unknown>>({
                   ) => (
                     <Td
                       isTruncated
-                      paddingX={cell.column.paddingX}
-                      paddingY={cell.column.paddingY ?? '24px'}
                       maxWidth={cell.column.maxWidth}
                       minWidth={cell.column.minWidth}
                       width={cell.column.width}
-                      letterSpacing="wide"
-                      color="gray.700"
-                      fontSize="sm"
-                      fontWeight="light"
+                      /*  isTruncated*/
+                      /*  paddingX={cell.column.paddingX}
+                        paddingY={cell.column.paddingY ?? '24px'}
+
+                        letterSpacing="wide"
+                        color="gray.700"
+                        fontSize="sm"
+                        fontWeight="light"*/
                       {...cell.getCellProps()}
                       isNumeric={cell.column.isNumeric}
                     >

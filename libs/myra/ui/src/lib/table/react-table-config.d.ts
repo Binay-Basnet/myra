@@ -172,6 +172,7 @@ export interface TableProps<T extends Record<string, unknown>> {
   hasRowSelection?: boolean;
   columns: Array<Column<T> & ExtraColumnProps>;
   name?: string;
+  size?: 'default' | 'compact';
 }
 
 export { Column, Cell, HeaderGroup } from 'react-table';
