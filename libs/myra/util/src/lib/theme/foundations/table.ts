@@ -13,6 +13,7 @@ const baseStyle: PartsStyleObject<typeof parts> = {
     borderCollapse: 'collapse',
     width: 'full',
   },
+
   th: {
     fontFamily: 'heading',
     fontWeight: 'semibold',
@@ -85,6 +86,7 @@ const sizes: Record<string, PartsStyleObject<typeof parts>> = {
       py: '2',
       lineHeight: '5',
       fontSize: 's3',
+      height: '50px',
     },
     caption: {
       px: '4',
@@ -98,6 +100,7 @@ const sizes: Record<string, PartsStyleObject<typeof parts>> = {
       py: '17px',
       lineHeight: '4',
       fontSize: 's3',
+      height: '60px',
     },
     td: {
       px: '6',
