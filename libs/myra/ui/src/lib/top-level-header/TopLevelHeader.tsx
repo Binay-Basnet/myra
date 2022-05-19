@@ -6,19 +6,21 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
 } from '@chakra-ui/react';
 import { RiHistoryFill } from 'react-icons/ri';
 import { IoSearchSharp } from 'react-icons/io5';
 import { CgMenuGridO } from 'react-icons/cg';
 import { MdOutlineHelpOutline } from 'react-icons/md';
 import { BiBell } from 'react-icons/bi';
-
+import { useState } from 'react';
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
   imageSrc?: string;
 }
 
 export function TopLevelHeader(props: TopLevelHeaderProps) {
+  const [isClose, setIsClose] = useState(true);
   return (
     <Box
       h="60px"
@@ -79,13 +81,40 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             aria-label="History"
             variant={'ghost'}
             color={'white'}
+            _hover={{ backgroundColor: 'secondary.800' }}
           />
-          <InputGroup flex={1}>
+          <InputGroup
+            onFocus={() => {
+              setIsClose(false);
+            }}
+            onBlur={() => setIsClose(true)}
+            flex={1}
+            bg={isClose ? 'secondary.800' : 'gray.0'}
+            color={isClose ? 'gray.600' : 'gray.0'}
+            _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
+          >
             <InputLeftElement
               pointerEvents="none"
-              children={<IoSearchSharp color="white" />}
+              color={'currentColor'}
+              children={<IoSearchSharp />}
             />
-            <Input type="search" placeholder="खोज्नुहोस्" color={'white'} />
+            <Input
+              type="search"
+              placeholder="खोज्नुहोस्"
+              color={'gray.500'}
+              fontSize="r1"
+            />
+            {isClose && (
+              <InputRightElement
+                pointerEvents="none"
+                color={'currentcolor'}
+                children={
+                  <Text fontSize={'r1'} alignItems="center" pr="12px">
+                    Ctrl+/
+                  </Text>
+                }
+              />
+            )}
           </InputGroup>
         </Box>
         <Box
@@ -108,7 +137,8 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           />
           <Avatar src={'avatar.png'} size="sm" />{' '}
           <IconButton
-            icon={<CgMenuGridO />}
+            _hover={{ backgroundColor: 'secondary.900' }}
+            icon={<CgMenuGridO size={'xs'} />}
             aria-label="menu"
             variant={'ghost'}
             color={'white'}

@@ -5,7 +5,12 @@ import Link from 'next/link';
 import React from 'react';
 
 /* eslint-disable-next-line */
-export interface NavbarfordaashboardProps {}
+export interface NavbarfordaashboardProps {
+  t: {
+    home: string;
+    dashboard: string;
+  };
+}
 function ActiveLink(props: { children: React.ReactNode; href: string }) {
   const { children, href } = props;
   const router = useRouter();
@@ -36,6 +41,7 @@ function ActiveLink(props: { children: React.ReactNode; href: string }) {
 }
 
 export function Navbarfordaashboard(props: NavbarfordaashboardProps) {
+  const { t } = props;
   return (
     <Box h="60px" px="5" background={'primary.dark'}>
       <Flex>
@@ -44,8 +50,8 @@ export function Navbarfordaashboard(props: NavbarfordaashboardProps) {
         </Box>
         <Spacer />
         <Box display="flex" alignItems="flex-end" h="60px">
-          <ActiveLink href="/">Home</ActiveLink>
-          <ActiveLink href="/dashboardMain">Dashboard</ActiveLink>
+          <ActiveLink href="/">{t.home}</ActiveLink>
+          <ActiveLink href="/dashboardMain">{t.dashboard}</ActiveLink>
         </Box>
         <Spacer />
         <Box>
