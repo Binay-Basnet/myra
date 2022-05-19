@@ -1,47 +1,51 @@
 import React from 'react';
-import { RegisterOptions } from 'react-hook-form';
-import { InputProps, SelectProps } from '@chakra-ui/react';
 
 import { Input } from './components';
 
-interface IInputJson extends InputProps {
-  type: 'input';
-}
+import type {
+  DataSchema,
+  DefaultFieldTypes,
+  Dependencies,
+  IConditionalProps,
+  IInputProps,
+} from './types';
 
-interface ISelectJson extends SelectProps {
-  type: 'select';
-}
+export interface IFormGeneratorProps<TfieldTypes extends DefaultFieldTypes> {
+  dataSchema: DataSchema<TfieldTypes>[];
 
-interface ICommonJsonProps {
-  label: React.ReactNode;
-  name: string;
-  validations?: RegisterOptions;
-}
-
-export type DataSchema = (IInputJson | ISelectJson) & ICommonJsonProps;
-
-export interface IFormGeneratorProps {
-  dataSchema: DataSchema[];
+  // WARNING! THIS IS EXPERIMENTAL PROPS. DO NOT USE IT RIGHT NOW
+  dependencies?: Dependencies<TfieldTypes>; // TODO! check its viablity
 
   // WARNING!! THIS IS EXPERIMENTAL PROPS. DO NOT USE IT RIGHT NOW
   // !!EXPERIMENTAL!!
+  // This will be overridden if `onChange` prop is present in dataSchema.
+  // This is prone to bugs and will be hard to debug
   onEachFieldChange?: () => void; // TODO! check its viability
 }
-export function FormGenerator(props: IFormGeneratorProps) {
-  const { dataSchema, onEachFieldChange } = props;
+export function FormGenerator<TfieldTypes extends DefaultFieldTypes>(
+  props: IFormGeneratorProps<TfieldTypes>
+) {
+  const { dataSchema, dependencies, onEachFieldChange } = props;
   return (
     <>
       {dataSchema.map((data) => {
-        if (data.type === 'input') {
+        if (data.variant === 'input') {
           const { name, validations, label, onChange, ...otherProps } = data;
 
+          //! TODO This is bad typescript
+          const dependency = dependencies?.[name] as IConditionalProps<
+            IInputProps,
+            TfieldTypes
+          >;
           return (
-            <Input
+            <Input<TfieldTypes>
+              key={name}
               name={name}
               onChange={onChange ?? onEachFieldChange}
               validations={validations}
               label={label}
               {...otherProps}
+              dependency={dependency}
             />
           );
         }

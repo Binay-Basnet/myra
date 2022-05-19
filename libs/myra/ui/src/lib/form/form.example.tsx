@@ -1,44 +1,96 @@
-import { Button } from '@chakra-ui/react';
-import Form, { DataSchema } from './Form';
+import { Button, Flex } from '@chakra-ui/react';
+import Form, { DataSchema, Dependencies } from './Form';
 import { FormGenerator } from './FormGenerator';
 import { useForm } from 'react-hook-form';
 
 type IFormValues = {
   firstName: string;
   lastName: string;
-  username: string;
+  username: number;
 };
 
 export const Example = () => {
   const methods = useForm<IFormValues>();
+  interface FieldTypes {
+    lastName: 'input';
+    username: 'input';
+    gender: 'input';
+    contact: 'input';
+    firstName: 'select';
+    district: 'input';
+    province: 'input';
+  }
 
-  // const { getValues } = methods;
-  // const debounced = debounce(() => console.log(getValues()));
-
-  const dataSchema: DataSchema[] = [
+  const dataSchema: DataSchema<FieldTypes>[] = [
     {
       label: 'First Name',
       name: 'firstName',
-      type: 'input',
-      padding: 100,
+      variant: 'input',
     },
     {
       label: 'Last Name',
       name: 'lastName',
       validations: { required: 'This is required' },
-      type: 'input',
-      onChange: () => {
-        //debounced
-        console.log('input here');
-      },
+      variant: 'input',
     },
     {
       label: 'User Name',
       name: 'username',
       validations: { required: 'This is required' },
-      type: 'input',
+      variant: 'input',
+    },
+    {
+      label: 'Gender',
+      name: 'gender',
+      validations: { required: 'This is required' },
+      variant: 'input',
+    },
+    {
+      label: 'Contact Number',
+      name: 'contact',
+      variant: 'input',
+    },
+    {
+      label: 'District',
+      name: 'district',
+      variant: 'input',
+    },
+    {
+      label: 'Province',
+      name: 'province',
+      variant: 'input',
     },
   ];
+
+  const dependencies: Dependencies<FieldTypes> = {
+    lastName: {
+      keys: ['gender'],
+      conditions: (valueOf) => {
+        if (!valueOf) return null;
+        if (valueOf['gender'] === 'female') {
+          return {
+            label: 'what the fuck ',
+            bg: 'green',
+          };
+        }
+        return null;
+      },
+    },
+
+    district: {
+      keys: ['province'],
+      conditions: (valueOf) => {
+        if (!valueOf) return null;
+        if (valueOf['province'] === 'what') {
+          return {
+            label: 'province aayo',
+          };
+        }
+
+        return null;
+      },
+    },
+  };
 
   return (
     <Form<IFormValues>
@@ -47,12 +99,18 @@ export const Example = () => {
         console.log('data', data);
       }}
     >
-      <FormGenerator
-        dataSchema={dataSchema}
-        onEachFieldChange={() => {
-          // debounced();
-        }}
-      />
+      <Flex>
+        <FormGenerator
+          dataSchema={dataSchema}
+          dependencies={dependencies}
+          // layout
+
+          // onMount
+          onEachFieldChange={() => {
+            // debounced();
+          }}
+        />
+      </Flex>
       <Button type="submit">submit</Button>
     </Form>
   );

@@ -1,43 +1,71 @@
 import React, { useId } from 'react';
-import { useFormContext, RegisterOptions, Controller } from 'react-hook-form';
+import { useFormContext, Controller, useWatch } from 'react-hook-form';
 import {
   FormErrorMessage,
   FormLabel,
   FormControl,
   Input as ChakraInput,
-  InputProps,
 } from '@chakra-ui/react';
 
-interface IInputProps extends InputProps {
-  name: string;
-  label: React.ReactNode;
-  validations?: RegisterOptions;
+import type { IInputProps } from '../types';
+
+function useProps<TfieldTypes>(props: IInputProps<TfieldTypes>) {
+  //! TODO: Type this
+  const { control } = useFormContext();
+
+  const { dependency, name } = props;
+
+  const keys = dependency?.keys as string[];
+
+  const values = useWatch({
+    control,
+    name: Array.isArray(keys) ? [...keys, String(name)] : [''], // TODO!
+    disabled: !dependency,
+  });
+
+  //! TODO this is just shit typescript
+  const valuesObj = keys?.reduce(
+    (obj, curr, index) => ({ [curr]: values[index] }),
+    {} as Record<string, string>
+  );
+
+  //! TODO this is just shit typescript
+  const newProps = dependency?.conditions(
+    (valuesObj as Record<keyof TfieldTypes, string>) ?? null
+  );
+  return { ...props, ...newProps };
 }
 
-export const Input = (props: IInputProps) => {
-  const {
-    validations,
-    label,
-    name,
-    onChange: onChangeFromProps,
-    ...otherProps
-  } = props;
+export function Input<TfieldTypes>(props: IInputProps<TfieldTypes>) {
+  const methods = useFormContext();
   const {
     formState: { errors },
     control,
-  } = useFormContext();
+  } = methods;
+  const {
+    validations,
+    name,
+    label,
+    render = true,
+    onChange: onChangeFromProps,
+    variant,
+    dependency: d,
+    ...otherProps
+  } = useProps(props);
 
   const id = useId();
   const customId = `${id}-${name}`;
 
   const error = errors[name];
 
+  if (!render) return null;
+
   return (
     <FormControl isInvalid={!!error}>
       <FormLabel htmlFor={customId}>{label}</FormLabel>
 
       <Controller
-        name={name}
+        name={String(name)} // TODO! Check why this has to be done
         control={control}
         render={({ field: { onChange, ...otherFields } }) => (
           <ChakraInput
@@ -52,8 +80,7 @@ export const Input = (props: IInputProps) => {
           />
         )}
       />
-
       <FormErrorMessage>{error && error?.message}</FormErrorMessage>
     </FormControl>
   );
-};
+}
