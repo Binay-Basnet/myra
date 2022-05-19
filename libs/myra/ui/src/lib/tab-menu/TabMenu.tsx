@@ -13,106 +13,37 @@ import { useRouter } from 'next/router';
 const demotabs = [
   {
     title: 'navbarDashboard',
+    icon: AiOutlineAppstore,
   },
   {
     title: 'navbarMembers',
+    icon: FaUser,
   },
   {
     title: 'navbarShare',
+    icon: FiShare2,
   },
   {
     title: 'navbarAccounts',
+    icon: VscListFlat,
   },
   {
     title: 'navbarTransactions',
+    icon: BiTransfer,
   },
   {
     title: 'navbarLoan',
+    icon: MdBackupTable,
   },
   {
     title: 'navbarReports',
+    icon: CgDropOpacity,
   },
   {
     title: 'navbarUtilities',
+    icon: CgDropOpacity,
   },
 ];
-
-const getTabIcon = (iconName: string, isActive: boolean) => {
-  switch (iconName) {
-    case 'Dashboard':
-      return (
-        <Icon
-          as={AiOutlineAppstore}
-          size={18}
-          color={isActive ? 'primary.500' : 'primary.300'}
-        />
-      );
-    case 'Members':
-      return (
-        <Icon
-          as={FaUser}
-          size={18}
-          color={isActive ? 'primary.500' : 'primary.300'}
-        />
-      );
-    case 'Share':
-      return (
-        <Icon
-          as={FiShare2}
-          size={18}
-          color={isActive ? 'primary.500' : 'primary.300'}
-        />
-      );
-    case 'Accounts':
-      return (
-        <Icon
-          as={AiOutlineAppstore}
-          size={18}
-          color={isActive ? 'primary.500' : 'primary.300'}
-        />
-      );
-    case 'Transactions':
-      return (
-        <Icon
-          as={VscListFlat}
-          size={18}
-          color={isActive ? 'primary.500' : 'primary.300'}
-        />
-      );
-    case 'Loan':
-      return (
-        <Icon
-          as={BiTransfer}
-          size={18}
-          color={isActive ? 'primary.500' : 'primary.300'}
-        />
-      );
-    case 'Reports':
-      return (
-        <Icon
-          as={MdBackupTable}
-          size={18}
-          color={isActive ? 'primary.500' : 'primary.300'}
-        />
-      );
-    case 'Utilities':
-      return (
-        <Icon
-          as={CgDropOpacity}
-          size={18}
-          color={isActive ? 'primary.500' : 'primary.300'}
-        />
-      );
-    default:
-      return (
-        <Icon
-          as={AiOutlineAppstore}
-          size={18}
-          color={isActive ? 'primary.500' : 'primary.300'}
-        />
-      );
-  }
-};
 
 // ! TODO create theme and tests
 export function TabMenu({ t }: { t: Record<string, string> }) {
@@ -135,7 +66,7 @@ export function TabMenu({ t }: { t: Record<string, string> }) {
         onChange={(index) => setTabIndex(index)}
       >
         <TabList>
-          {demotabs.map(({ title }, index) => {
+          {demotabs.map(({ title, icon }, index) => {
             const isActive = tabIndex === index;
             return (
               <Link
@@ -159,7 +90,12 @@ export function TabMenu({ t }: { t: Record<string, string> }) {
                   }}
                   key={index}
                 >
-                  {getTabIcon(title, isActive)}
+                  <Icon
+                    as={icon}
+                    size={18}
+                    color={isActive ? 'primary.500' : 'primary.300'}
+                  />
+
                   <Text mx="2">{t[title]}</Text>
                 </Tab>
               </Link>
