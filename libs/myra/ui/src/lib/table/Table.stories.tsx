@@ -1,11 +1,19 @@
 import { Meta, Story } from '@storybook/react';
-import { Column, Table } from './Table';
-import { TableProps } from './react-table-config';
+import { Table } from './Table';
+import { Column, TableProps } from './react-table-config';
 import { Avatar, Flex } from '@chakra-ui/react';
 
 export default {
   component: Table,
   title: 'Table',
+  argTypes: {
+    isStatic: {
+      control: false,
+    },
+    hasRowSelection: {
+      control: false,
+    },
+  },
 } as Meta;
 
 type TableDummyDataType = {
@@ -17,18 +25,18 @@ type TableDummyDataType = {
   date_joined: string;
 };
 
-const columns = [
+const columns: Column<TableDummyDataType>[] = [
   {
     Header: 'Member #',
     accessor: 'member_id',
     width: 0,
+    disableSortBy: true,
   },
   {
     Header: 'First Name',
     accessor: 'name',
     width: '50%',
     imgSrc: 'src',
-    paddingX: 8,
 
     Cell: ({ cell }) => {
       return (
@@ -54,7 +62,7 @@ const columns = [
     accessor: 'date_joined',
     isNumeric: true,
   },
-] as Column<TableDummyDataType>[];
+];
 
 const data = [
   {
@@ -75,9 +83,9 @@ const data = [
   },
 ];
 
-const Template: Story<TableProps<TableDummyDataType>> = (args) => (
-  <Table<TableDummyDataType> {...args} />
-);
+const Template: Story<Omit<TableProps<TableDummyDataType>, 'isStatic'>> = (
+  args
+) => <Table<TableDummyDataType> {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
