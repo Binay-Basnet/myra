@@ -2,11 +2,22 @@ import {
   Select as ChakraSelect,
   SelectProps as ChakraSelectProps,
 } from '@chakra-ui/react';
+
 /* eslint-disable-next-line */
-export interface SelectProps extends ChakraSelectProps {}
+export interface SelectProps extends ChakraSelectProps {
+  options: { value: string; label: string }[];
+}
 
 export function Select(props: SelectProps) {
-  return <ChakraSelect {...props} />;
+  const { options, ...rest } = props;
+  return (
+    <ChakraSelect {...rest}>
+      {' '}
+      {options?.map((option) => (
+        <option value={option.value}>{option.label}</option>
+      ))}{' '}
+    </ChakraSelect>
+  );
 }
 
 export default Select;
