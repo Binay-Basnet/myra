@@ -17,7 +17,7 @@ const Dashboard = () => {
   return (
     <>
       <Box position="fixed" width="100%" zIndex={2} top="0">
-        <Navbarfordaashboard t={t} />
+        <Navbarfordaashboard />
       </Box>
       <Container maxW="904px" height="fit-content" mt="100px" p="0" pb="55px">
         <Box>
