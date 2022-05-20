@@ -1,4 +1,5 @@
 export * from './lib/form/Form';
+export * from './lib/table/Table';
 export * from './lib/text-fields/TextFields';
 export * from './lib/divider/Divider';
 export * from './lib/select-/Select';
@@ -10,7 +11,6 @@ export * from './lib/chakra-table/ChakraTable';
 export * from './lib/box/Box';
 export * from './lib/chakra-tab/ChakraTab';
 export * from './lib/navbarfordaashboard/Navbarfordaashboard';
-
 export * from './lib/button/Button';
 export * from './lib/main-layout/MainLayout';
 export * from './lib/tab-menu/TabMenu';

@@ -1,13 +1,11 @@
 import React from 'react';
-import { Box } from '@saccos/myra/ui';
-import { Input, Select } from '@chakra-ui/react';
+import { Input, Select, Box } from '@saccos/myra/ui';
 
 export const MemberCommonForm = ({ fields, register, error }) => {
   return fields.map((field) => {
     const { title, type, id, name, options, validationProps } = field;
 
     if (type === 'text' || type === 'number' || type === 'date') {
-      console.log('hello123', error[name]?.message);
       const errorMessage = error[name]?.message;
       return (
         <Box display="flex" flexDirection="column">
@@ -27,11 +25,7 @@ export const MemberCommonForm = ({ fields, register, error }) => {
       return (
         <Box display="flex" flexDirection="column">
           {title}
-          <Select
-            // placeholder={placeholder}
-            borderRadius="2px"
-            borderColor="#CBD0D6"
-          >
+          <Select borderRadius="2px" borderColor="#CBD0D6">
             {options?.map((item) => (
               <option key={item}>{item}</option>
             ))}
@@ -41,5 +35,3 @@ export const MemberCommonForm = ({ fields, register, error }) => {
     }
   });
 };
-
-// export default MemberCommonForm;

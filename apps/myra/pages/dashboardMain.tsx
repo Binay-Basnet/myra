@@ -10,7 +10,9 @@ import {
   HStack,
   Avatar,
 } from '@chakra-ui/react';
-import { Navbarfordaashboard, Button } from '@saccos/myra/ui';
+import { Navbarfordaashboard } from '@saccos/myra/ui';
+import { useTranslation } from '@saccos/myra/util';
+
 const data = [
   {
     avatar: '/dashboardmain/avatar.png',
@@ -64,10 +66,11 @@ const data = [
 
 const dataKeys = Object.keys(data);
 const DashboardMain = () => {
+  const { t } = useTranslation();
   return (
     <>
       <Box position="fixed" width="100%" zIndex={2} top="0">
-        <Navbarfordaashboard />
+        <Navbarfordaashboard t={t} />
       </Box>
       <Container maxW="904px" height="fit-content" mt="100px" p="0" pb="55px">
         <Box>
@@ -78,7 +81,7 @@ const DashboardMain = () => {
               fontWeight="500"
               color="#07073F"
             >
-              Your Dashboard
+              {t.yourDashboard}
             </Text>
           </Flex>
         </Box>
@@ -91,7 +94,7 @@ const DashboardMain = () => {
                 fontWeight="600"
                 color="#636972"
               >
-                QUICK LINKS
+                {t.quickLinks}
               </Text>
             </Box>
             <Spacer />
@@ -102,7 +105,7 @@ const DashboardMain = () => {
                 fontWeight="500"
                 color="#636972"
               >
-                Edit Links
+                {t.editLinks}
               </Text>
             </Box>
           </Flex>
@@ -124,7 +127,7 @@ const DashboardMain = () => {
                   </Box>
                   <Box>
                     <Text fontSize="12px" fontWeight="500" color="#343C46">
-                      Add New Member{' '}
+                      {t.addNewMember}
                     </Text>
                   </Box>
                 </HStack>
@@ -145,10 +148,10 @@ const DashboardMain = () => {
                   </Box>
                   <Box>
                     <Text fontSize="12px" fontWeight="400" color="#343C46">
-                      Transaction History
+                      {t.transactionHistory}
                     </Text>
                     <Text fontSize="12px" fontWeight="400" color="#91979F">
-                      Report
+                      {t.transactionHistoryReport}
                     </Text>
                   </Box>
                 </HStack>
@@ -172,7 +175,7 @@ const DashboardMain = () => {
                       Ram Krishna (CA2234)
                     </Text>
                     <Text fontSize="12px" fontWeight="400" color="#91979F">
-                      Member Profile
+                      {t.memberProfile}
                     </Text>
                   </Box>
                 </HStack>
@@ -193,10 +196,10 @@ const DashboardMain = () => {
                   </Box>
                   <Box>
                     <Text fontSize="12px" fontWeight="400" color="#343C46">
-                      Share Information
+                      {t.shareInformation}
                     </Text>
                     <Text fontSize="12px" fontWeight="400" color="#91979F">
-                      Report
+                      {t.shareInformationReport}
                     </Text>
                   </Box>
                 </HStack>
@@ -217,7 +220,7 @@ const DashboardMain = () => {
                   </Box>
                   <Box>
                     <Text fontSize="12px" fontWeight="400" color="#343C46">
-                      Add New Loan
+                      {t.addNewLoan}
                     </Text>
                   </Box>
                 </HStack>
@@ -238,7 +241,7 @@ const DashboardMain = () => {
                   </Box>
                   <Box>
                     <Text fontSize="12px" fontWeight="500" color="#343C46">
-                      Add Deposit
+                      {t.addDeposit}
                     </Text>
                   </Box>
                 </HStack>
@@ -250,7 +253,7 @@ const DashboardMain = () => {
           <Flex>
             <Box>
               <Text fontSize="13px" fontWeight="600" color="#636972">
-                TODAY
+                {t.today}
               </Text>
             </Box>
           </Flex>
@@ -262,8 +265,7 @@ const DashboardMain = () => {
               <Flex>
                 <Box mt="16px" ml="16px">
                   <Text fontSize="12px" fontWeight="500" color="#343C46">
-                    {' '}
-                    Deposits
+                    {t.deposits}
                   </Text>
 
                   <Box mt="24px">
@@ -309,8 +311,7 @@ const DashboardMain = () => {
               <Flex>
                 <Box mt="16px" ml="16px">
                   <Text fontSize="12px" fontWeight="500" color="#343C46">
-                    {' '}
-                    Withdraws
+                    {t.withdraws}
                   </Text>
 
                   <Box mt="24px">
@@ -359,8 +360,7 @@ const DashboardMain = () => {
               <Flex>
                 <Box mt="16px" ml="16px">
                   <Text fontSize="12px" fontWeight="500" color="#343C46">
-                    {' '}
-                    Loan
+                    {t.loan}
                   </Text>
 
                   <Box mt="24px">
@@ -406,8 +406,7 @@ const DashboardMain = () => {
               <Flex>
                 <Box mt="16px" ml="16px">
                   <Text fontSize="12px" fontWeight="500" color="#343C46">
-                    {' '}
-                    Transactions
+                    {t.transactions}
                   </Text>
 
                   <Box mt="24px">
@@ -452,7 +451,7 @@ const DashboardMain = () => {
         </Box>
         <Box mt="32px" bg="#FFFFFF" p="16px" pt="24px">
           <Text fontSize="14px" fontWeight="500" color="#343C46">
-            Tasks
+            {t.tasks}
           </Text>
         </Box>
         <Box mt="1px" bg="#FFFFFF">

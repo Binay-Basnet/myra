@@ -9,12 +9,15 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { Navbarfordaashboard } from '@saccos/myra/ui';
+import { useTranslation } from '@saccos/myra/util';
 
 const Dashboard = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Box position="fixed" width="100%" zIndex={2} top="0">
-        <Navbarfordaashboard />
+        <Navbarfordaashboard t={t} />
       </Box>
       <Container maxW="904px" height="fit-content" mt="100px" p="0" pb="55px">
         <Box>
@@ -26,7 +29,6 @@ const Dashboard = () => {
                 fontFamily="Inter"
                 color="#07073F"
               >
-                {' '}
                 Hello Bishal Mahat
               </Text>
             </Box>
@@ -51,8 +53,7 @@ const Dashboard = () => {
               fontWeight="600"
               color="#636972"
             >
-              {' '}
-              YOUR APPLICATION
+              {t.yourApplication}
             </Text>
           </Box>
           <Box mt="24px " alignItems="center">
@@ -92,7 +93,7 @@ const Dashboard = () => {
                       fontWeight="500"
                       color="#232323"
                     >
-                      Core Banking Systems
+                      {t.corebankingSystems}
                     </Text>
                   </Box>
                 </Box>
@@ -125,7 +126,7 @@ const Dashboard = () => {
                     fontWeight="500"
                     color="#232323"
                   >
-                    Business Analytics
+                    {t.businessAnalytics}
                   </Text>
                 </Box>
               </Box>
@@ -158,7 +159,7 @@ const Dashboard = () => {
                     color="#232323"
                     align="center"
                   >
-                    Loan Management System
+                    {t.loanManagementSystem}
                   </Text>
                 </Box>
               </Box>
@@ -191,7 +192,7 @@ const Dashboard = () => {
                     color="#232323"
                     align="right"
                   >
-                    Accounting System
+                    {t.accountingSystem}
                   </Text>
                 </Box>
               </Box>
@@ -252,7 +253,7 @@ const Dashboard = () => {
         <Box mt="32px">
           <Flex>
             <Text fontFamily="Inter" fontSize="12px" fontWeight="600">
-              OTHER APPLICATIONS{' '}
+              {t.otherApplications}
             </Text>
           </Flex>
         </Box>
@@ -287,7 +288,7 @@ const Dashboard = () => {
                   color="#232323"
                   align="center"
                 >
-                  Assets and Inventory Management
+                  {t.assetsAndInventoryManagement}
                 </Text>
               </Box>
             </Box>
@@ -320,7 +321,7 @@ const Dashboard = () => {
                   color="#232323"
                   align="center"
                 >
-                  Member and Share Management
+                  {t.memberAndShareManagement}
                 </Text>
               </Box>
             </Box>
@@ -353,8 +354,7 @@ const Dashboard = () => {
                   color="#232323"
                   align="center"
                 >
-                  {' '}
-                  HR Training and Capacity Management
+                  {t.hrTrainingAndCapacityManagement}
                 </Text>
               </Box>
             </Box>
@@ -387,7 +387,7 @@ const Dashboard = () => {
                   color="#232323"
                   align="center"
                 >
-                  Mobile App
+                  {t.mobileApp}
                 </Text>
               </Box>
             </Box>
@@ -424,7 +424,7 @@ const Dashboard = () => {
                   color="#232323"
                   align="center"
                 >
-                  Document Management
+                  {t.documentManagement}
                 </Text>
               </Box>
             </Box>
@@ -457,7 +457,7 @@ const Dashboard = () => {
                   color="#232323"
                   align="center"
                 >
-                  Alternative Channels and Cross Connectivity
+                  {t.alternativeChannelsAndCrossConnectivity}
                 </Text>
               </Box>
             </Box>
@@ -490,7 +490,7 @@ const Dashboard = () => {
                   color="#232323"
                   align="center"
                 >
-                  CRM
+                  {t.crm}
                 </Text>
               </Box>
             </Box>
@@ -523,7 +523,7 @@ const Dashboard = () => {
                   color="#232323"
                   align="center"
                 >
-                  Reconciliation Software
+                  {t.reconciliationSoftware}
                 </Text>
               </Box>
             </Box>

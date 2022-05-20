@@ -5,7 +5,7 @@ const TabElement = chakra(Tab, {
     height: '50px',
     fontSize: '14px',
     fontWeight: '600',
-    width: '80px',
+    width: '100px',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -16,12 +16,12 @@ const TabElement = chakra(Tab, {
   },
 });
 
-export const TabRow = ({ list }) => {
+export const TabRow = ({ list, t }) => {
   return (
     <Tabs variant="unstyled">
       <TabList>
         {list.map((item, index) => {
-          return <TabElement key={`${item}${index}`}>{item}</TabElement>;
+          return <TabElement key={`${item}${index}`}>{t[item]}</TabElement>;
         })}
       </TabList>
     </Tabs>

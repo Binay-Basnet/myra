@@ -1,12 +1,19 @@
-import { Story, Meta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { ChakraTab, ChakraTabProps } from './ChakraTab';
+import { theme } from '@saccos/myra/util';
+import { Theme } from '@chakra-ui/react';
+import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
 
 export default {
   component: ChakraTab,
   title: 'ChakraTab',
+  argTypes: getThemingArgTypes(theme as Theme, 'Tabs'),
 } as Meta;
-
-const Template: Story<ChakraTabProps> = (args) => <ChakraTab {...args} />;
+const Template: StoryFn<ChakraTabProps> = (props) => (
+  <ChakraTab {...props}> {props.children} </ChakraTab>
+);
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  tabList: ['Tab 1', 'Tab 2', 'Tab 3'],
+};
