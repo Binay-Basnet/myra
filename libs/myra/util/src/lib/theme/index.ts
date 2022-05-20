@@ -2,6 +2,8 @@
 import { extendTheme } from '@chakra-ui/react';
 import foundations from './foundations';
 import button from './foundations/button';
+import checkbox from './foundations/checkbox';
+import radio from './foundations/radio';
 import Table from './foundations/table';
 
 // 2. Call `extendTheme` and pass your custom values
@@ -52,6 +54,16 @@ export const theme = extendTheme({
       sizes: button.sizes,
       baseStyle: button.baseStyle,
       defaultProps: button.defaultProps,
+    },
+    Checkbox: {
+      sizes: checkbox.sizes,
+      baseStyle: checkbox.baseStyle,
+      defaultProps: checkbox.defaultProps,
+    },
+    Radio: {
+      sizes: radio.sizes,
+      baseStyle: radio.baseStyle,
+      defaultProps: radio.defaultProps,
     },
     Table,
   },
