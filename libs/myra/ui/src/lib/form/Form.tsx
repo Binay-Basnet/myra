@@ -5,6 +5,7 @@ interface IFormProps<T> {
   methods: UseFormReturn<T, unknown>; //! TODO replace this unknown
   children: React.ReactNode;
   onSubmit: SubmitHandler<T>;
+  onChange?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 // TODO:
@@ -13,11 +14,18 @@ interface IFormProps<T> {
 // 3. Implement Layout props
 
 export default function Form<T>(props: IFormProps<T>) {
-  const { methods, children, onSubmit } = props;
+  const { methods, children, onSubmit, onChange } = props;
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        onChange={(e) => {
+          onChange && onChange(e);
+        }}
+      >
+        {children}
+      </form>
     </FormProvider>
   );
 }

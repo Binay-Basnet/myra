@@ -18,19 +18,16 @@ export interface IFormGeneratorProps<TfieldTypes extends DefaultFieldTypes> {
 
   // WARNING!! THIS IS EXPERIMENTAL PROPS. DO NOT USE IT RIGHT NOW
   // !!EXPERIMENTAL!!
-  // This will be overridden if `onChange` prop is present in dataSchema.
-  // This is prone to bugs and will be hard to debug
-  onEachFieldChange?: () => void; // TODO! check its viability
 }
 export function FormGenerator<TfieldTypes extends DefaultFieldTypes>(
   props: IFormGeneratorProps<TfieldTypes>
 ) {
-  const { dataSchema, dependencies, onEachFieldChange } = props;
+  const { dataSchema, dependencies } = props;
   return (
     <>
       {dataSchema.map((data) => {
         if (data.variant === 'input') {
-          const { name, validations, label, onChange, ...otherProps } = data;
+          const { name, validations, label, ...otherProps } = data;
 
           //! TODO This is bad typescript
           const dependency = dependencies?.[name] as IConditionalProps<
@@ -41,7 +38,6 @@ export function FormGenerator<TfieldTypes extends DefaultFieldTypes>(
             <Input<TfieldTypes>
               key={name}
               name={name}
-              onChange={onChange ?? onEachFieldChange}
               validations={validations}
               label={label}
               {...otherProps}

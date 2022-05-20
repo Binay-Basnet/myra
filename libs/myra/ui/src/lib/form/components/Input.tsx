@@ -47,7 +47,6 @@ export function Input<TfieldTypes>(props: IInputProps<TfieldTypes>) {
     name,
     label,
     render = true,
-    onChange: onChangeFromProps,
     variant,
     dependency: d,
     ...otherProps
@@ -58,27 +57,24 @@ export function Input<TfieldTypes>(props: IInputProps<TfieldTypes>) {
 
   const error = errors[name];
 
+  console.log('error', error);
   if (!render) return null;
 
   return (
     <FormControl isInvalid={!!error}>
       <FormLabel htmlFor={customId}>{label}</FormLabel>
-
       <Controller
         name={String(name)} // TODO! Check why this has to be done
         control={control}
-        render={({ field: { onChange, ...otherFields } }) => (
+        render={({ field: { ...otherFields } }) => (
           <ChakraInput
             id={customId}
             autoComplete="off"
             {...otherFields}
-            onChange={(e) => {
-              onChangeFromProps && onChangeFromProps(e);
-              onChange(e);
-            }}
             {...otherProps}
           />
         )}
+        rules={validations}
       />
       <FormErrorMessage>{error && error?.message}</FormErrorMessage>
     </FormControl>

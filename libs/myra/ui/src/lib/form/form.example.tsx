@@ -1,6 +1,5 @@
 import { Button, Flex } from '@chakra-ui/react';
-import Form, { DataSchema, Dependencies } from './Form';
-import { FormGenerator } from './FormGenerator';
+import { DataSchema, Dependencies, FormGenerator, Form } from '@saccos/myra/ui';
 import { useForm } from 'react-hook-form';
 
 type IFormValues = {
@@ -11,6 +10,7 @@ type IFormValues = {
 
 export const Example = () => {
   const methods = useForm<IFormValues>();
+  const { getValues } = methods;
   interface FieldTypes {
     lastName: 'input';
     username: 'input';
@@ -26,11 +26,12 @@ export const Example = () => {
       label: 'First Name',
       name: 'firstName',
       variant: 'input',
+      validations: { required: 'required' },
     },
     {
       label: 'Last Name',
       name: 'lastName',
-      validations: { required: 'This is required' },
+      validations: { required: 'This is required', deps: ['firstName'] },
       variant: 'input',
     },
     {
@@ -96,22 +97,21 @@ export const Example = () => {
     <Form<IFormValues>
       methods={methods}
       onSubmit={(data) => {
+        alert('submit');
         console.log('data', data);
       }}
+      onChange={() => getValues()}
     >
       <Flex>
         <FormGenerator
           dataSchema={dataSchema}
           dependencies={dependencies}
           // layout
-
-          // onMount
-          onEachFieldChange={() => {
-            // debounced();
-          }}
         />
       </Flex>
       <Button type="submit">submit</Button>
     </Form>
   );
 };
+
+export default Example;
