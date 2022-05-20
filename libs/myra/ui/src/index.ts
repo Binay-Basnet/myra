@@ -1,3 +1,4 @@
+export * from './lib/modal/Modal';
 export * from './lib/indeterminate-checkbox/IndeterminateCheckbox';
 export * from './lib/checkbox-group/CheckboxGroup';
 export * from './lib/checkbox/Checkbox';
