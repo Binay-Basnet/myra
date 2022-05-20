@@ -1,12 +1,12 @@
+import { Grid as ChakraGrid, GridProps as ChakraProps } from '@chakra-ui/react';
 /* eslint-disable-next-line */
-export interface GridProps {}
+export interface GridProps extends ChakraProps {
+  children: React.ReactNode;
+}
 
 export function Grid(props: GridProps) {
-  return (
-    <div>
-      <h1>Welcome to Grid!</h1>
-    </div>
-  );
+  const { children, ...rest } = props;
+  return <ChakraGrid {...rest}> {children}</ChakraGrid>;
 }
 
 export default Grid;
