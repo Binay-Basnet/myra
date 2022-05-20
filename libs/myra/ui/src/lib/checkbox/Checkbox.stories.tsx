@@ -3,7 +3,7 @@ import { Checkbox, CheckboxProps } from './Checkbox';
 import { theme } from '@saccos/myra/util';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
-import { AddIcon } from '@chakra-ui/icons';
+// import { AddIcon } from '@chakra-ui/icons';
 
 export default {
   component: Checkbox,
@@ -17,11 +17,10 @@ export const Primary = Template.bind({});
 Primary.args = {
   size: 'sm',
   spacing: '8px',
-  children: 'Check 1',
+  children: 'Label',
   defaultChecked: false,
   isDisabled: false,
   isInvalid: false,
-  colorScheme: 'green',
   // icon: <AddIcon />,
   // iconColor: 'white.400',
 };

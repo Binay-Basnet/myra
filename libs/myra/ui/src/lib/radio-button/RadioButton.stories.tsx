@@ -15,8 +15,7 @@ const Template: Story<RadioButtonProps> = (args) => <RadioButton {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
   size: 'md',
-  children: 'Radio',
-  colorScheme: 'cyan',
+  spacing: '8px',
+  children: 'Label',
   isDisabled: false,
-  isInvalid: false,
 };

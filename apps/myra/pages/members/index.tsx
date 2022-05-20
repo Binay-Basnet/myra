@@ -20,8 +20,7 @@ import {
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
-import { TabColumn } from '@saccos/myra/components';
-import { TabRow } from '@saccos/myra/components';
+import { TabColumn, TabRow } from '@saccos/myra/components';
 import { Gender, useMembersQuery } from '../../generated/graphql';
 import { useTranslation } from '@saccos/myra/util';
 
@@ -66,6 +65,7 @@ const Member = () => {
         Header: 'First Name',
         accessor: 'firstName',
         width: '80%',
+
         Cell: ({ value }) => (
           <Flex alignItems="center" gap="2">
             <Avatar
@@ -87,6 +87,7 @@ const Member = () => {
         Header: 'Gender',
         accessor: 'gender',
         maxWidth: 2,
+        disableSortBy: true,
       },
       {
         Header: 'Date Of Birth',
@@ -159,7 +160,7 @@ const Member = () => {
           display="flex"
           flexDirection="row"
           justifyContent="flex-start"
-          borderBottom="3px solid #E6E6E6"
+          borderBottom="1px solid #E6E6E6"
         >
           <Box w="500px" pt="15px" pl="20px">
             <InputGroup size="sm">
@@ -204,7 +205,6 @@ const Member = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            {' '}
             <Button variant="ghost">
               <HamburgerIcon color="#1DB954" /> <Text ml="10px">Default</Text>
             </Button>
@@ -215,7 +215,9 @@ const Member = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          {rowData && <Table data={rowData} columns={columns} />}
+          {rowData && (
+            <Table data={rowData.slice(0, 10)} columns={columns} sort={true} />
+          )}
         </Box>
       </Box>
     </Box>

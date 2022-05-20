@@ -38,9 +38,9 @@ export function selectionHook<T extends Record<string, unknown>>(
   hooks.allColumns.push((columns) => [
     {
       id: '_selector',
-      minWidth: 45,
-      width: 45,
-      maxWidth: 45,
+      minWidth: 4,
+      width: 4,
+      maxWidth: 4,
 
       Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<T>) => (
         <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />

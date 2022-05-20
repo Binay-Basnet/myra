@@ -3,6 +3,7 @@ export * from './lib/checkbox-group/CheckboxGroup';
 export * from './lib/checkbox/Checkbox';
 export * from './lib/radio-group/RadioGroup';
 export * from './lib/radio-button/RadioButton';
+export * from './lib/form/Form';
 export * from './lib/table/Table';
 export * from './lib/text-fields/TextFields';
 export * from './lib/divider/Divider';

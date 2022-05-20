@@ -2,6 +2,9 @@
 import { extendTheme } from '@chakra-ui/react';
 import foundations from './foundations';
 import button from './foundations/button';
+import checkbox from './foundations/checkbox';
+import radio from './foundations/radio';
+import Table from './foundations/table';
 
 // 2. Call `extendTheme` and pass your custom values
 
@@ -15,13 +18,8 @@ export const theme = extendTheme({
       },
     }),
   },
-  colors: foundations.colors,
+  ...foundations,
 
-  fonts: foundations.fonts,
-
-  fontSizes: foundations.fontSizes,
-  fontWeight: foundations.fontWeights,
-  spacing: foundations.space,
   semanticTokens: {
     colors: {
       primary: {
@@ -38,7 +36,7 @@ export const theme = extendTheme({
         default: 'danger.default',
       },
       background: {
-        default: 'bakground.50',
+        default: 'background.50',
       },
       highlight: {
         default: 'highlight.50',
@@ -57,6 +55,17 @@ export const theme = extendTheme({
       baseStyle: button.baseStyle,
       defaultProps: button.defaultProps,
     },
+    Checkbox: {
+      sizes: checkbox.sizes,
+      baseStyle: checkbox.baseStyle,
+      defaultProps: checkbox.defaultProps,
+    },
+    Radio: {
+      sizes: radio.sizes,
+      baseStyle: radio.baseStyle,
+      defaultProps: radio.defaultProps,
+    },
+    Table,
   },
 });
 export default theme;

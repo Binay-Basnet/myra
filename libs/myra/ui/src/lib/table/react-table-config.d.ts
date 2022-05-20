@@ -5,7 +5,6 @@ import {
   ColumnWithLooseAccessor,
   ColumnWithStrictAccessor,
   Meta,
-  TableInstance,
   UseColumnOrderInstanceProps,
   UseColumnOrderState,
   UseExpandedHooks,
@@ -50,16 +49,6 @@ import {
 } from 'react-table';
 
 declare module 'react-table' {
-  export interface UseFlexLayoutInstanceProps<
-    D extends Record<string, unknown>
-  > {
-    totalColumnsMinWidth: number;
-  }
-
-  export interface UseFlexLayoutColumnProps<D extends Record<string, unknown>> {
-    totalMinWidth: number;
-  }
-
   export type UseTableOptions<D extends object> = {
     columns: Array<Column<D>>;
     data: readonly D[];
@@ -160,18 +149,25 @@ export interface ExtraColumnProps {
   paddingX?: string | number | number[];
   paddingY?: string | number | number[];
   imgSrc?: string;
+  hasSort?: boolean;
 }
 
-export type Column<D extends Record<string, unknown>> =
+export type SubColumn<D extends Record<string, unknown>> =
   | ColumnGroup<D>
   | ColumnWithLooseAccessor<D>
   | ColumnWithStrictAccessor<D>;
 
+export type Column<T> = SubColumn<T> & ExtraColumnProps;
+
 export interface TableProps<T extends Record<string, unknown>> {
   data: T[];
   hasRowSelection?: boolean;
-  columns: Array<Column<T> & ExtraColumnProps>;
+  columns: Array<Column<T>>;
   name?: string;
+  size?: 'default' | 'compact';
+  sort?: boolean;
+  manualSort?: boolean;
+  isStatic?: boolean;
 }
 
-export { Column, Cell, HeaderGroup } from 'react-table';
+export { Cell, HeaderGroup } from 'react-table';

@@ -17,13 +17,13 @@ const Template: Story<CheckboxGroupProps> = (args) => (
 
 export const Primary = Template.bind({});
 Primary.args = {
-  size: 'md',
-  colorScheme: 'cyan',
+  size: 'sm',
   isDisabled: false,
   isInvalid: false,
   spacing: 4,
   direction: 'row',
-  checkList: ['Check 1', 'Check 2', 'Check 3'],
-  icon: <AddIcon />,
-  iconColor: 'white.400',
+  checkList: ['Label 1', 'Label 2', 'Label 3'],
+  variant: 'simple',
+  // icon: <AddIcon />,
+  // iconColor: 'white.400',
 };
