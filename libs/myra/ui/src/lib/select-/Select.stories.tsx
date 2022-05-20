@@ -9,4 +9,19 @@ export default {
 const Template: Story<SelectProps> = (args) => <Select {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  options: [
+    {
+      label: 'Option 1',
+      value: 'option-1',
+    },
+    {
+      label: 'Option 2',
+      value: 'option-2',
+    },
+    {
+      label: 'Option 3',
+      value: 'option-3',
+    },
+  ],
+};
