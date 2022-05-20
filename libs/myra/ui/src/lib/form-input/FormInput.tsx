@@ -32,7 +32,7 @@ export function FormInput(props: FormInputProps) {
     ...rest
   } = props;
   return (
-    <Box w="300px">
+    <Box w="auto">
       <TextFields variant="formLabel" color="gray.700">
         {label}
       </TextFields>

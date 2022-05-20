@@ -1,4 +1,7 @@
 export * from './lib/modal/Modal';
+export * from './lib/grid-item/GridItem';
+export * from './lib/grid/Grid';
+export * from './lib/container-/Container';
 export * from './lib/indeterminate-checkbox/IndeterminateCheckbox';
 export * from './lib/checkbox-group/CheckboxGroup';
 export * from './lib/checkbox/Checkbox';
@@ -20,5 +23,7 @@ export * from './lib/navbarfordaashboard/Navbarfordaashboard';
 export * from './lib/button/Button';
 export * from './lib/main-layout/MainLayout';
 export * from './lib/tab-menu/TabMenu';
+export * from './lib/icon/Icon';
+export * from './lib/icon-button/IconButton';
 export * from './lib/navbar/Navbar';
 export * from './lib/myra-ui';

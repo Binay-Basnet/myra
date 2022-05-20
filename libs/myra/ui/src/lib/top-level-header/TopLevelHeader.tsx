@@ -14,6 +14,7 @@ import { CgMenuGridO } from 'react-icons/cg';
 import { MdOutlineHelpOutline } from 'react-icons/md';
 import { BiBell } from 'react-icons/bi';
 import { useState } from 'react';
+import { Icon } from '@saccos/myra/ui';
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
   imageSrc?: string;
@@ -72,7 +73,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           alignItems={'center'}
         >
           <IconButton
-            icon={<RiHistoryFill />}
+            icon={<Icon size="md" as={RiHistoryFill} />}
             aria-label="History"
             variant={'ghost'}
             color={'white'}
@@ -119,21 +120,23 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           alignItems="center"
         >
           <IconButton
-            icon={<BiBell />}
+            icon={<Icon size="md" as={BiBell} />}
             aria-label="help"
             variant={'ghost'}
             color={'white'}
           />
           <IconButton
-            icon={<MdOutlineHelpOutline />}
+            icon={<Icon size="md" as={MdOutlineHelpOutline} />}
             aria-label="help"
             variant={'ghost'}
-            color={'white'}
+            color={'gray.50'}
           />
-          <Avatar src={'avatar.png'} size="sm" />{' '}
+          <Box w="fit-content" pl="s16">
+            <Avatar src={'avatar.png'} size="sm" />{' '}
+          </Box>
           <IconButton
             _hover={{ backgroundColor: 'secondary.900' }}
-            icon={<CgMenuGridO size={'xs'} />}
+            icon={<Icon size="lg" as={CgMenuGridO} />}
             aria-label="menu"
             variant={'ghost'}
             color={'white'}

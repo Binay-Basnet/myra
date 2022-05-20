@@ -1,0 +1,12 @@
+import { Story, Meta } from '@storybook/react';
+import { GridItem, GridItemProps } from './GridItem';
+
+export default {
+  component: GridItem,
+  title: 'GridItem',
+} as Meta;
+
+const Template: Story<GridItemProps> = (args) => <GridItem {...args} />;
+
+export const Primary = Template.bind({});
+Primary.args = {};
