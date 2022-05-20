@@ -9,4 +9,15 @@ export default {
 const Template: Story<TabMenuProps> = (args) => <TabMenu {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  t: {
+    navbarDashboard: 'Dashboard',
+    navbarMembers: 'Members',
+    navbarShare: 'Share',
+    navbarAccounts: 'Accounts',
+    navbarTransactions: 'Transactions',
+    navbarLoan: 'Loan',
+    navbarReports: 'Reports',
+    navbarUtilities: 'Utilities',
+  },
+};

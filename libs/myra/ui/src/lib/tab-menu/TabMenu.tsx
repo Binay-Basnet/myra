@@ -9,6 +9,10 @@ import { CgDropOpacity } from 'react-icons/cg';
 import { FiShare2 } from 'react-icons/fi';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from '@saccos/myra/util';
+
+/* eslint-disable-next-line */
+export interface TabMenuProps {}
 
 const demotabs = [
   {
@@ -46,10 +50,11 @@ const demotabs = [
 ];
 
 // ! TODO create theme and tests
-export function TabMenu({ t }: { t: Record<string, string> }) {
+export function TabMenu() {
   const [tabIndex, setTabIndex] = useState(1);
   const route = useRouter();
   console.log('route', route);
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -83,12 +88,14 @@ export function TabMenu({ t }: { t: Record<string, string> }) {
                   }}
                   style={{
                     color: isActive ? 'gray.800' : 'white',
-                    fontWeight: 500,
+                    fontWeight: isActive ? 600 : 500,
                     fontSize: 'r1',
                     height: 50,
                     outline: 'none',
                   }}
                   key={index}
+                  display="flex"
+                  justifyContent="flex-start"
                 >
                   <Icon
                     as={icon}

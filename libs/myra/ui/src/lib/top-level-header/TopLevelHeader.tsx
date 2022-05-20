@@ -36,8 +36,8 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
         justifyContent={'flex-start'}
         alignItems={'center'}
         flexDirection={'row'}
-        pl="16px"
-        pr="16px"
+        pl="r1"
+        pr="r1"
       >
         <Image boxSize={'32px'} src={'logo.svg'} alt="logo" />
         <Box
@@ -48,15 +48,10 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           justifyContent={'center'}
           alignItems={'flex-start'}
         >
-          <Text
-            fontSize="16px"
-            fontWeight="bold"
-            color={'white'}
-            fontFamily="Mukta"
-          >
+          <Text fontSize="r1" fontWeight="bold" color={'white'}>
             नमुना बचत तथ ऋण सहकारी{' '}
           </Text>
-          <Text fontSize="16px" color={'white'} fontFamily="Mukta">
+          <Text fontSize="r1" color={'white'}>
             ललितपुर
           </Text>
         </Box>
@@ -64,8 +59,8 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
       <Box
         h="100%"
         flex={1}
-        pl="16px"
-        pr="16px"
+        pl="r1"
+        pr="r1"
         display={'flex'}
         justifyContent={'space-between'}
         alignItems="center"

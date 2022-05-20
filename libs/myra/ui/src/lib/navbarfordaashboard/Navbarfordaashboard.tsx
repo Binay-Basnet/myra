@@ -3,14 +3,10 @@ import { Box, Text, Image, Flex, Spacer, Avatar } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import React from 'react';
+import { useTranslation } from '@saccos/myra/util';
 
 /* eslint-disable-next-line */
-export interface NavbarfordaashboardProps {
-  t: {
-    home: string;
-    dashboard: string;
-  };
-}
+export interface NavbarfordaashboardProps {}
 function ActiveLink(props: { children: React.ReactNode; href: string }) {
   const { children, href } = props;
   const router = useRouter();
@@ -40,8 +36,8 @@ function ActiveLink(props: { children: React.ReactNode; href: string }) {
   );
 }
 
-export function Navbarfordaashboard(props: NavbarfordaashboardProps) {
-  const { t } = props;
+export function Navbarfordaashboard() {
+  const { t } = useTranslation();
   return (
     <Box h="60px" px="5" background={'primary.dark'}>
       <Flex>

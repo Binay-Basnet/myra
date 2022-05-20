@@ -9,7 +9,8 @@ export interface InputProps extends ChakraInputProps {
 }
 
 export function Input(props: InputProps) {
-  return <ChakraInput {...props} />;
+  const { ...rest } = props;
+  return <ChakraInput p={'12px'} {...rest} />;
 }
 
 export default Input;
