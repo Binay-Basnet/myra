@@ -1,7 +1,9 @@
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { Table } from './Table';
-import { Column, TableProps } from './react-table-config';
-import { Avatar, Flex } from '@chakra-ui/react';
+import Table from './Table';
+import { Avatar, Flex, PopoverContent } from '@chakra-ui/react';
+import { TableListFilterContent } from '../table-list-filter/TableListFilter';
+import { Column, TableProps } from './types';
 
 export default {
   component: Table,
@@ -30,14 +32,42 @@ const columns: Column<TableDummyDataType>[] = [
     Header: 'Member #',
     accessor: 'member_id',
     width: 0,
-    disableSortBy: true,
+    disableSortBy: false,
   },
   {
     Header: 'First Name',
     accessor: 'name',
     width: '50%',
     imgSrc: 'src',
+    disableFilters: false,
 
+    filter: 'includesSome',
+    Filter: ({
+      onClose,
+      initialFocusRef,
+      preFilteredRows,
+      column: { id, setFilter, filterValue },
+    }) => {
+      const uniqueOptions = React.useMemo(() => {
+        const options = new Set<string>();
+        preFilteredRows.forEach((row) => {
+          options.add(row.values[id]);
+        });
+        return [...Array.from(options.values())];
+      }, [id, preFilteredRows]);
+
+      return (
+        <PopoverContent _focus={{ boxShadow: 'E2' }}>
+          <TableListFilterContent
+            onClose={onClose}
+            data={uniqueOptions}
+            ref={initialFocusRef}
+            filterValue={filterValue}
+            setFilter={setFilter}
+          />
+        </PopoverContent>
+      );
+    },
     Cell: ({ cell }) => {
       return (
         <Flex alignItems="center" gap={3}>
@@ -81,11 +111,47 @@ const data = [
     contact_number: '+977-9833919301',
     date_joined: '2010-01-12',
   },
+  {
+    member_id: 224,
+    name: 'John Doe',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: 2139,
+    name: 'Anup Shrestha',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+
+  {
+    member_id: 12,
+    name: 'Test User',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: 24,
+    name: 'Anup Shrestha',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: 2234,
+    name: 'Anup Shrestha',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
 ];
 
-const Template: Story<Omit<TableProps<TableDummyDataType>, 'isStatic'>> = (
-  args
-) => <Table<TableDummyDataType> {...args} />;
+const Template: Story<TableProps<TableDummyDataType>> = (args) => (
+  <Table {...args} />
+);
 
 export const Default = Template.bind({});
 Default.args = {
@@ -98,4 +164,12 @@ Compact.args = {
   columns,
   data,
   size: 'compact',
+};
+
+export const TableWithSort = Template.bind({});
+TableWithSort.args = {
+  columns,
+  data,
+  sort: true,
+  disableSortAll: false,
 };

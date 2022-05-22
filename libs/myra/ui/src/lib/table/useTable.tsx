@@ -1,10 +1,12 @@
 import {
+  useFilters,
   useRowSelect,
   useSortBy,
   useTable as useReactTable,
 } from 'react-table';
-import { TableProps } from './react-table-config';
 import { selectionHook } from './hooks/selectionHook';
+import { useMemo } from 'react';
+import { Column, TableProps } from './types';
 
 const rowSelectionHooks = [useRowSelect, selectionHook];
 
@@ -15,12 +17,22 @@ export function useTable<T extends Record<string, unknown>>({
   sort,
   isStatic,
   manualSort,
+  disableSortAll,
   ...props
 }: TableProps<T>) {
+  const defaultColumn: Partial<Column<T>> = useMemo(
+    () => ({
+      disableFilters: true,
+      disableSortBy: disableSortAll,
+      Filter: () => null,
+    }),
+    []
+  );
+
   const hooks = isStatic
     ? []
     : hasRowSelection
-    ? [useSortBy, ...rowSelectionHooks]
+    ? [useFilters, useSortBy, ...rowSelectionHooks]
     : [];
 
   return useReactTable<T>(
@@ -28,6 +40,7 @@ export function useTable<T extends Record<string, unknown>>({
       ...props,
       data,
       columns,
+      defaultColumn,
       manualSortBy: manualSort,
       disableSortBy: !sort,
       isMultiSortEvent: (e) => {
