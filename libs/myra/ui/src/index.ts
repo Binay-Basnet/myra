@@ -1,3 +1,4 @@
+export * from './lib/search-bar/SearchBar';
 export * from './lib/grid-item/GridItem';
 export * from './lib/grid/Grid';
 export * from './lib/container-/Container';

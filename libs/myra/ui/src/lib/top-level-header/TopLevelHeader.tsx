@@ -15,6 +15,7 @@ import { MdOutlineHelpOutline } from 'react-icons/md';
 import { BiBell } from 'react-icons/bi';
 import { useState } from 'react';
 import { Icon } from '@saccos/myra/ui';
+import { AiOutlineSetting } from 'react-icons/ai';
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
   imageSrc?: string;
@@ -29,6 +30,8 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
       display={'flex'}
       alignItems={'center'}
       justifyContent={'flex-start'}
+      pr={'s16'}
+      cursor={'pointer'}
     >
       <Box
         h="100%"
@@ -119,7 +122,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           justifyContent={'flex-end'}
           alignItems="center"
         >
-          <IconButton
+          {/* <IconButton
             icon={<Icon size="md" as={BiBell} />}
             aria-label="help"
             variant={'ghost'}
@@ -145,7 +148,52 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             variant={'ghost'}
             color={'white'}
             borderRadius={'br1'}
+          /> */}
+          <IconButton
+            icon={<Icon size="md" as={BiBell} />}
+            aria-label="help"
+            variant={'ghost'}
+            color={'white'}
+            borderRadius={'br1'}
+            _hover={{ backgroundColor: 'secondary.900' }}
           />
+          <IconButton
+            icon={<Icon size="md" as={MdOutlineHelpOutline} />}
+            aria-label="help"
+            variant={'ghost'}
+            color={'gray.0'}
+            borderRadius={'br1'}
+            _hover={{ backgroundColor: 'secondary.900' }}
+          />
+
+          <IconButton
+            _hover={{ backgroundColor: 'secondary.900' }}
+            icon={<Icon size="md" as={AiOutlineSetting} />}
+            aria-label="settings"
+            variant={'ghost'}
+            color={'white'}
+            borderRadius={'br1'}
+          />
+
+          <IconButton
+            _hover={{ backgroundColor: 'secondary.900' }}
+            icon={<Icon size="lg" as={CgMenuGridO} />}
+            aria-label="menu"
+            variant={'ghost'}
+            color={'white'}
+            borderRadius={'br1'}
+          />
+
+          <Box
+            w="40px"
+            h="40px"
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            _hover={{ backgroundColor: 'secondary.900' }}
+          >
+            <Avatar src={'avatar.png'} size="sm" />{' '}
+          </Box>
         </Box>
       </Box>
     </Box>
