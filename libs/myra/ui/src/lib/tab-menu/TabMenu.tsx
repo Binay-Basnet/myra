@@ -107,7 +107,7 @@ export function TabMenu() {
                   <Text
                     mx="2"
                     color={isActive ? 'gray.800' : 'gray.0'}
-                    fontWeight={isActive ? '800' : '500'}
+                    fontWeight={isActive ? 'InterSemiBold' : 'InterMedium'}
                   >
                     {t[title]}
                   </Text>
