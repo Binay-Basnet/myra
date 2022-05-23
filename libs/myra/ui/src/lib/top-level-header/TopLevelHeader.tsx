@@ -37,13 +37,13 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
         justifyContent={'flex-start'}
         alignItems={'center'}
         flexDirection={'row'}
-        pl="r1"
-        pr="r1"
+        pl="s16"
+        pr="s16"
       >
         <Image boxSize={'32px'} src={'logo.svg'} alt="logo" />
         <Box
           maxH="100%"
-          pl="8px"
+          pl="s8"
           display={'flex'}
           flexDirection={'column'}
           justifyContent={'center'}
@@ -76,7 +76,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             icon={<Icon size="md" as={RiHistoryFill} />}
             aria-label="History"
             variant={'ghost'}
-            color={'white'}
+            color={'gray.0'}
             _hover={{ backgroundColor: 'secondary.800' }}
           />
           <InputGroup
@@ -86,7 +86,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             onBlur={() => setIsClose(true)}
             flex={1}
             bg={isClose ? 'secondary.800' : 'gray.0'}
-            color={isClose ? 'gray.600' : 'gray.0'}
+            color={isClose ? 'gray.0' : 'gray.500'}
             _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
           >
             <InputLeftElement
@@ -105,7 +105,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                 pointerEvents="none"
                 color={'currentcolor'}
                 children={
-                  <Text fontSize={'r1'} alignItems="center" pr="12px">
+                  <Text fontSize={'r1'} alignItems="center" pr="s12">
                     Ctrl+/
                   </Text>
                 }
@@ -124,12 +124,16 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             aria-label="help"
             variant={'ghost'}
             color={'white'}
+            borderRadius={'br1'}
+            _hover={{ backgroundColor: 'secondary.900' }}
           />
           <IconButton
             icon={<Icon size="md" as={MdOutlineHelpOutline} />}
             aria-label="help"
             variant={'ghost'}
-            color={'gray.50'}
+            color={'gray.0'}
+            borderRadius={'br1'}
+            _hover={{ backgroundColor: 'secondary.900' }}
           />
           <Box w="fit-content" pl="s16">
             <Avatar src={'avatar.png'} size="sm" />{' '}
@@ -140,6 +144,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             aria-label="menu"
             variant={'ghost'}
             color={'white'}
+            borderRadius={'br1'}
           />
         </Box>
       </Box>

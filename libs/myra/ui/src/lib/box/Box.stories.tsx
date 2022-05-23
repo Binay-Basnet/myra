@@ -3,7 +3,7 @@ import { Box, BoxProps } from './Box';
 
 export default {
   component: Box,
-  title: 'Box',
+  title: 'Atoms/Box',
 } as Meta;
 
 const Template: Story<BoxProps> = (args) => <Box {...args} />;

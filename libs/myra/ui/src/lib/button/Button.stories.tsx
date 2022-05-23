@@ -7,7 +7,7 @@ import { BiArrowBack } from 'react-icons/bi';
 
 export default {
   component: Button,
-  title: 'form/Button',
+  title: 'Atoms/Button',
   argTypes: getThemingArgTypes(theme as Theme, 'Button'),
 } as Meta;
 

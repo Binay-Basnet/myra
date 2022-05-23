@@ -21,8 +21,8 @@ import { useTranslation } from '@saccos/myra/util';
 const Header = ({ t }) => {
   return (
     <>
-      <Navbar t={t} />
-      <TabMenu t={t} />
+      <Navbar />
+      <TabMenu />
     </>
   );
 };

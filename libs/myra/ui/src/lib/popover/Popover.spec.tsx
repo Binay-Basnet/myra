@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Form from './Form';
+import Popover from './Popover';
 
-describe('Form', () => {
+describe('Popover', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Form />);
+    const { baseElement } = render(<Popover />);
     expect(baseElement).toBeTruthy();
   });
 });

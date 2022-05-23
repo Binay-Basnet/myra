@@ -12,8 +12,8 @@ type IFormValues = {
 export const Example = () => {
   const methods = useForm<IFormValues>();
 
-  // const { getValues } = methods;
-  // const debounced = debounce(() => console.log(getValues()));
+  const { getValues } = methods;
+  const onChange = () => console.log('value', getValues());
 
   const dataSchema: DataSchema[] = [
     {
@@ -27,10 +27,6 @@ export const Example = () => {
       name: 'lastName',
       validations: { required: 'This is required' },
       type: 'input',
-      onChange: () => {
-        //debounced
-        console.log('input here');
-      },
     },
     {
       label: 'User Name',
@@ -47,12 +43,7 @@ export const Example = () => {
         console.log('data', data);
       }}
     >
-      <FormGenerator
-        dataSchema={dataSchema}
-        onEachFieldChange={() => {
-          // debounced();
-        }}
-      />
+      <FormGenerator dataSchema={dataSchema} onEachFieldChange={onChange} />
       <Button type="submit">submit</Button>
     </Form>
   );

@@ -21,8 +21,8 @@ export function MainLayout(props: MainLayoutProps) {
     // >
     <div>
       <Box position="fixed" top={0} width="100%" zIndex={2}>
-        <Navbar t={t} />
-        <TabMenu t={t} />
+        <Navbar />
+        <TabMenu />
       </Box>
       {children}
     </div>
