@@ -83,7 +83,6 @@ const columns: Column<TableDummyDataType>[] = [
 
     filter: 'includesSome',
     filterType: 'list',
-    disableFilters: false,
   },
 ];
 

@@ -6,13 +6,15 @@ import { VscListFlat } from 'react-icons/vsc';
 import { BiTransfer } from 'react-icons/bi';
 import { MdBackupTable } from 'react-icons/md';
 import { CgDropOpacity } from 'react-icons/cg';
-import { FiShare2 } from 'react-icons/fi';
+import { IoCubeOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from '@saccos/myra/util';
 import { en } from '@saccos/myra/locales';
 import { IconType } from 'react-icons';
 import { Icon } from '@saccos/myra/ui';
+import { ImStack } from 'react-icons/im';
+import { BsArrowLeftRight, BsFileText, BsCardList } from 'react-icons/bs';
 
 /* eslint-disable-next-line */
 export interface TabMenuProps {}
@@ -28,23 +30,23 @@ const demotabs: { title: keyof typeof en; icon: IconType }[] = [
   },
   {
     title: 'navbarShare',
-    icon: FiShare2,
+    icon: IoCubeOutline,
   },
   {
     title: 'navbarAccounts',
-    icon: VscListFlat,
+    icon: ImStack,
   },
   {
     title: 'navbarTransactions',
-    icon: BiTransfer,
+    icon: BsCardList,
   },
   {
     title: 'navbarLoan',
-    icon: MdBackupTable,
+    icon: BsArrowLeftRight,
   },
   {
     title: 'navbarReports',
-    icon: CgDropOpacity,
+    icon: BsFileText,
   },
   {
     title: 'navbarUtilities',
@@ -107,7 +109,7 @@ export function TabMenu() {
                   <Text
                     mx="2"
                     color={isActive ? 'gray.800' : 'gray.0'}
-                    fontWeight={isActive ? '800' : '500'}
+                    fontWeight={isActive ? 'InterSemiBold' : 'InterMedium'}
                   >
                     {t[title]}
                   </Text>
