@@ -1,3 +1,4 @@
+export * from './lib/search-bar/SearchBar';
 export * from './lib/table-amount-filter/TableAmountFilter';
 export * from './lib/modal/Modal';
 export * from './lib/grid-item/GridItem';
