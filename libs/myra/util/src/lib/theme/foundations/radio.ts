@@ -13,12 +13,15 @@ const baseStyleControl: SystemStyleFunction = (props) => {
     ...control,
     bg: 'white',
     borderRadius: 'full',
-    border: '2px solid #8C9196',
+    border: '2px solid',
+    borderColor: 'neutralColorLight.Gray-50',
+    boxShadow: '0px 0px 0px 2px primary.500',
     _checked: {
       ...(control as any)['_checked'],
       borderRadius: 'full',
-      border: '2px solid #8C9196',
-      bg: '#006837',
+      border: '2px solid',
+      borderColor: 'neutralColorLight.Gray-50',
+      bg: 'primary.500',
       _before: {
         content: `""`,
         display: 'inline-block',
@@ -30,12 +33,14 @@ const baseStyleControl: SystemStyleFunction = (props) => {
       },
       _disabled: {
         bg: 'white',
-        border: '5px solid #CBD0D6',
+        border: '5px solid',
+        borderColor: 'disabled.disabled',
       },
     },
     _disabled: {
       bg: 'white',
-      border: '2px solid #CBD0D6',
+      border: '2px solid',
+      borderColor: 'disabled.disabled',
     },
   };
 };
@@ -63,7 +68,7 @@ const sizes: Record<string, PartsStyleObject<typeof parts>> = {
 
 const defaultProps = {
   size: 'sm',
-  colorScheme: '#006837',
+  colorScheme: 'primary.500',
 };
 
 export default {
