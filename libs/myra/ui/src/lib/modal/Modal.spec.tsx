@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Form from './Form';
+import Modal from './Modal';
 
-describe('Form', () => {
+describe('Modal', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Form />);
+    const { baseElement } = render(<Modal />);
     expect(baseElement).toBeTruthy();
   });
 });

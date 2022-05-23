@@ -1,10 +1,14 @@
 import { useTable } from './useTable';
 import {
   Box,
+  Flex,
+  Icon,
+  Popover,
   Table as ChakraTable,
   TableContainer,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
@@ -15,8 +19,12 @@ import {
   ExtraColumnProps,
   HeaderGroup,
   TableProps,
-} from './react-table-config';
+} from './types';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
+import { BiFilter } from 'react-icons/bi';
+import { PopoverContent, PopoverTrigger } from '../popover/Popover';
+import React from 'react';
+import ListFilterPopover from './components/ListFilterPopover';
 
 /**
  *  @description Add disableSortBy in each column to disable column sort in that column.
@@ -27,10 +35,9 @@ export function Table<T extends Record<string, unknown>>({
   data,
   columns,
   hasRowSelection = true,
-  sort = false,
   size = 'default',
   isStatic = false,
-  // TODO ( Implement Manual Sort From API )
+
   manualSort = false,
   ...props
 }: TableProps<T>) {
@@ -38,11 +45,12 @@ export function Table<T extends Record<string, unknown>>({
     columns,
     data,
     hasRowSelection,
-    sort,
     isStatic,
     manualSort,
     ...props,
   });
+
+  const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
@@ -54,50 +62,99 @@ export function Table<T extends Record<string, unknown>>({
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(
-                (column: HeaderGroup<T> & ExtraColumnProps) => (
-                  <Th
-                    {...column.getHeaderProps(
-                      !isStatic ? column.getSortByToggleProps() : undefined
-                    )}
-                    width={column.width}
-                    paddingX={column.paddingX}
-                    paddingY={column.paddingY}
-                    isNumeric={column.isNumeric}
-                  >
-                    <Box
-                      display="flex"
-                      gap="4px"
-                      alignItems="center"
-                      justifyContent={
-                        column.isNumeric ? 'flex-end' : 'flex-start'
-                      }
+                (column: HeaderGroup<T> & ExtraColumnProps) => {
+                  return (
+                    <Th
+                      {...column.getHeaderProps()}
+                      width={column.width}
+                      paddingX={column.paddingX}
+                      paddingY={column.paddingY}
+                      isNumeric={column.isNumeric}
                     >
-                      <span>{column.render('Header')}</span>
+                      <Box
+                        display="flex"
+                        gap="4px"
+                        alignItems="center"
+                        justifyContent={
+                          column.isNumeric ? 'flex-end' : 'flex-start'
+                        }
+                      >
+                        <span {...column.getSortByToggleProps()}>
+                          {column.render('Header')}
+                        </span>
 
-                      <span>
                         {column.isSorted ? (
-                          column.isSortedDesc ? (
-                            <ArrowUpIcon
-                              color="primary.500"
-                              fontWeight="bold"
-                              w="4"
-                              h="6"
+                          <Flex
+                            alignItems="center"
+                            justifyContent="center"
+                            {...column.getSortByToggleProps()}
+                          >
+                            {column.isSortedDesc ? (
+                              <ArrowUpIcon
+                                color="primary.500"
+                                fontWeight="bold"
+                                w="4"
+                                h="6"
+                              />
+                            ) : (
+                              <ArrowDownIcon
+                                w="4"
+                                h="6"
+                                color="primary.500"
+                                fontWeight="bold"
+                              />
+                            )}
+                          </Flex>
+                        ) : null}
+
+                        {column.canFilter ? (
+                          column.filterType === 'list' ? (
+                            <ListFilterPopover
+                              column={column}
+                              uniqueOptions={column.uniqueOptionsForListFilter}
                             />
                           ) : (
-                            <ArrowDownIcon
-                              color="primary.500"
-                              fontWeight="bold"
-                              w="4"
-                              h="6"
-                            />
+                            <Popover
+                              isLazy
+                              placement="bottom-end"
+                              initialFocusRef={initialFocusRef}
+                              colorScheme="primary"
+                            >
+                              {({ onClose }) => (
+                                <>
+                                  <PopoverTrigger>
+                                    <Flex
+                                      alignItems="center"
+                                      justifyContent="center"
+                                      cursor="pointer"
+                                    >
+                                      {column.filterValue ? (
+                                        <Icon as={BiFilter} />
+                                      ) : (
+                                        <Icon
+                                          as={BiFilter}
+                                          w="4"
+                                          h="6"
+                                          fontWeight="bold"
+                                        />
+                                      )}
+                                    </Flex>
+                                  </PopoverTrigger>
+                                  <PopoverContent _focus={{ boxShadow: 'E2' }}>
+                                    {column.render('Filter', {
+                                      onClose,
+                                      initialFocusRef,
+                                    })}
+                                  </PopoverContent>
+                                </>
+                              )}
+                            </Popover>
                           )
-                        ) : (
-                          ''
-                        )}
-                      </span>
-                    </Box>
-                  </Th>
-                )
+                        ) : null}
+                      </Box>
+                    </Th>
+                  );
+                }
               )}
             </Tr>
           ))}
@@ -118,7 +175,6 @@ export function Table<T extends Record<string, unknown>>({
                     }
                   ) => (
                     <Td
-                      isTruncated
                       maxWidth={cell.column.maxWidth}
                       minWidth={cell.column.minWidth}
                       paddingX={cell.column.paddingX}
@@ -127,7 +183,7 @@ export function Table<T extends Record<string, unknown>>({
                       {...cell.getCellProps()}
                       isNumeric={cell.column.isNumeric}
                     >
-                      {cell.render('Cell')}
+                      <Text noOfLines={0}>{cell.render('Cell')}</Text>
                     </Td>
                   )
                 )}
