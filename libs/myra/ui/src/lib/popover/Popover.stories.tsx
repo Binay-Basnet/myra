@@ -1,12 +1,12 @@
-import { Story, Meta } from '@storybook/react';
-import { Popover, PopoverProps } from './Popover';
+import { Meta, Story } from '@storybook/react';
+import { ChakraPopover, PopoverProps } from './Popover';
 
 export default {
-  component: Popover,
+  component: ChakraPopover,
   title: 'Popover',
 } as Meta;
 
-const Template: Story<PopoverProps> = (args) => <Popover {...args} />;
+const Template: Story<PopoverProps> = (args) => <ChakraPopover {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};

@@ -110,7 +110,7 @@ export const TableListFilterContent = React.forwardRef(
       >
         <InputGroup color="neutralColorLight.Gray-50">
           <InputLeftElement>
-            <Icon as={SearchIcon} size="xs" />
+            <Icon as={SearchIcon} size="sm" />
           </InputLeftElement>
           <Input
             type="search"
