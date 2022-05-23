@@ -3,7 +3,7 @@ import { TableListFilter } from './TableListFilter';
 
 export default {
   component: TableListFilter,
-  title: 'Table / TableListFilter',
+  title: 'Table / Table List Filter',
 } as Meta;
 
 const Template: Story = (args) => <TableListFilter {...args} />;

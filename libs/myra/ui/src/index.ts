@@ -1,3 +1,4 @@
+export * from './lib/table-amount-filter/TableAmountFilter';
 export * from './lib/modal/Modal';
 export * from './lib/grid-item/GridItem';
 export * from './lib/grid/Grid';
@@ -28,5 +29,5 @@ export * from './lib/icon/Icon';
 export * from './lib/icon-button/IconButton';
 export * from './lib/navbar/Navbar';
 export * from './lib/myra-ui';
-export { ListFilterPopover } from 'libs/myra/ui/src/lib/table/components/ListFilterPopover';
-export { IListFilterPopoverProps } from 'libs/myra/ui/src/lib/table/components/ListFilterPopover/ListFilterPopver';
+export * from './lib/table-list-filter/TableListFilter';
+export * from './lib/table/components/ListFilterPopover';
