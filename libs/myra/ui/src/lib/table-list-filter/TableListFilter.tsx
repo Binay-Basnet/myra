@@ -253,7 +253,13 @@ const TableListCheckbox = React.memo(
             : setSelectedData((prev) => prev.filter((e) => e !== listItem));
         }}
       >
-        <Text cursor="pointer" paddingY="12px" fontWeight="normal">
+        <Text
+          cursor="pointer"
+          paddingY="12px"
+          fontWeight="normal"
+          noOfLines={1}
+          maxWidth={48}
+        >
           {listItem}
         </Text>
         <Checkbox colorScheme="green" isChecked={isChecked} />

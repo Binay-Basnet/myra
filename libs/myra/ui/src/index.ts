@@ -28,3 +28,5 @@ export * from './lib/icon/Icon';
 export * from './lib/icon-button/IconButton';
 export * from './lib/navbar/Navbar';
 export * from './lib/myra-ui';
+export { ListFilterPopover } from 'libs/myra/ui/src/lib/table/components/ListFilterPopover';
+export { IListFilterPopoverProps } from 'libs/myra/ui/src/lib/table/components/ListFilterPopover/ListFilterPopver';

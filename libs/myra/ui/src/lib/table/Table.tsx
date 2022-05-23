@@ -21,9 +21,10 @@ import {
   TableProps,
 } from './types';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
-import { BsFilter } from 'react-icons/all';
+import { BiFilter } from 'react-icons/bi';
 import { PopoverContent, PopoverTrigger } from '../popover/Popover';
 import React from 'react';
+import ListFilterPopover from './components/ListFilterPopover';
 
 /**
  *  @description Add disableSortBy in each column to disable column sort in that column.
@@ -37,12 +38,9 @@ export function Table<T extends Record<string, unknown>>({
   size = 'default',
   isStatic = false,
 
-  // TODO ( Implement Manual Sort From API )
   manualSort = false,
   ...props
 }: TableProps<T>) {
-  const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
-
   const tableInstance = useTable({
     columns,
     data,
@@ -51,6 +49,8 @@ export function Table<T extends Record<string, unknown>>({
     manualSort,
     ...props,
   });
+
+  const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
@@ -108,42 +108,48 @@ export function Table<T extends Record<string, unknown>>({
                         ) : null}
 
                         {column.canFilter ? (
-                          <Popover
-                            isLazy
-                            placement="bottom-end"
-                            initialFocusRef={initialFocusRef}
-                            colorScheme="primary"
-                          >
-                            {({ onClose }) => (
-                              <>
-                                <PopoverTrigger>
-                                  <Flex
-                                    alignItems="center"
-                                    justifyContent="center"
-                                    cursor="pointer"
-                                  >
-                                    {' '}
-                                    {column.filterValue ? (
-                                      <Icon as={BsFilter} />
-                                    ) : (
-                                      <Icon
-                                        as={BsFilter}
-                                        w="4"
-                                        h="6"
-                                        fontWeight="bold"
-                                      />
-                                    )}
-                                  </Flex>
-                                </PopoverTrigger>
-                                <PopoverContent _focus={{ boxShadow: 'E2' }}>
-                                  {column.render('Filter', {
-                                    onClose,
-                                    initialFocusRef,
-                                  })}
-                                </PopoverContent>
-                              </>
-                            )}
-                          </Popover>
+                          column.filterType === 'list' ? (
+                            <ListFilterPopover
+                              column={column}
+                              uniqueOptions={column.uniqueOptionsForListFilter}
+                            />
+                          ) : (
+                            <Popover
+                              isLazy
+                              placement="bottom-end"
+                              initialFocusRef={initialFocusRef}
+                              colorScheme="primary"
+                            >
+                              {({ onClose }) => (
+                                <>
+                                  <PopoverTrigger>
+                                    <Flex
+                                      alignItems="center"
+                                      justifyContent="center"
+                                      cursor="pointer"
+                                    >
+                                      {column.filterValue ? (
+                                        <Icon as={BiFilter} />
+                                      ) : (
+                                        <Icon
+                                          as={BiFilter}
+                                          w="4"
+                                          h="6"
+                                          fontWeight="bold"
+                                        />
+                                      )}
+                                    </Flex>
+                                  </PopoverTrigger>
+                                  <PopoverContent _focus={{ boxShadow: 'E2' }}>
+                                    {column.render('Filter', {
+                                      onClose,
+                                      initialFocusRef,
+                                    })}
+                                  </PopoverContent>
+                                </>
+                              )}
+                            </Popover>
+                          )
                         ) : null}
                       </Box>
                     </Th>

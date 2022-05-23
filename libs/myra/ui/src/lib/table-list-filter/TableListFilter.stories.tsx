@@ -1,14 +1,12 @@
-import { Story, Meta } from '@storybook/react';
-import { TableListFilter, TableListFilterProps } from './TableListFilter';
+import { Meta, Story } from '@storybook/react';
+import { TableListFilter } from './TableListFilter';
 
 export default {
   component: TableListFilter,
-  title: 'TableListFilter',
+  title: 'Table / TableListFilter',
 } as Meta;
 
-const Template: Story<TableListFilterProps> = (args) => (
-  <TableListFilter {...args} />
-);
+const Template: Story = (args) => <TableListFilter {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};

@@ -17,12 +17,14 @@ export function useTable<T extends Record<string, unknown>>({
   sort,
   isStatic,
   manualSort,
+  filter,
   disableSortAll,
+  disableFilterAll,
   ...props
 }: TableProps<T>) {
   const defaultColumn: Partial<Column<T>> = useMemo(
     () => ({
-      disableFilters: true,
+      disableFilters: disableFilterAll,
       disableSortBy: disableSortAll,
       Filter: () => null,
     }),
@@ -42,6 +44,7 @@ export function useTable<T extends Record<string, unknown>>({
       columns,
       defaultColumn,
       manualSortBy: manualSort,
+      disableFilters: !filter,
       disableSortBy: !sort,
       isMultiSortEvent: (e) => {
         return !e.shiftKey;

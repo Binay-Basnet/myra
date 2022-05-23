@@ -18,14 +18,17 @@ export type BaseColumn<T extends Record<string, unknown>> = {
   accessor: keyof T;
 };
 
-export type ExtraColumnProps = {
-  width?: number | string;
-  maxWidth?: number;
-  isNumeric?: boolean;
-  paddingX?: string | number | number[];
-  paddingY?: string | number | number[];
-  imgSrc?: string;
-};
+export type ExtraColumnProps = Partial<{
+  width: number | string;
+  maxWidth: number;
+  isNumeric: boolean;
+  paddingX: string | number | number[];
+  paddingY: string | number | number[];
+  imgSrc: string;
+
+  filterType?: 'list';
+  uniqueOptionsForListFilter?: string[];
+}>;
 
 export type Column<T extends Record<string, unknown>> = BaseColumn<T> &
   ExtraColumnProps & {
@@ -36,6 +39,16 @@ export type Column<T extends Record<string, unknown>> = BaseColumn<T> &
     Filter?: Renderer<FilterColumnProps<T>>;
     Cell?: Renderer<CellProps<T>>;
   };
+
+export type FilterTableProps =
+  | {
+      filter: true;
+      disableFilterAll?: boolean;
+    }
+  | {
+      filter?: false;
+      disableFilterAll?: never;
+    };
 
 export type SortTableProps =
   | {
@@ -59,6 +72,7 @@ export interface BaseTableProps<T extends Record<string, unknown>> {
 }
 
 export type TableProps<T extends Record<string, unknown>> = BaseTableProps<T> &
-  SortTableProps;
+  SortTableProps &
+  FilterTableProps;
 
 export { Cell, HeaderGroup } from 'react-table';
