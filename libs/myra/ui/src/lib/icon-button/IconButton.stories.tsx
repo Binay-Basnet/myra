@@ -7,7 +7,7 @@ import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
 
 export default {
   component: IconButton,
-  title: 'IconButton',
+  title: 'Atoms/IconButton',
   argTypes: getThemingArgTypes(theme as Theme, 'Button'),
 } as Meta;
 

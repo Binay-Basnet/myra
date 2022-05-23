@@ -6,7 +6,7 @@ import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
 
 export default {
   component: ChakraTab,
-  title: 'ChakraTab',
+  title: 'Atoms/ChakraTab',
   argTypes: getThemingArgTypes(theme as Theme, 'Tabs'),
 } as Meta;
 const Template: StoryFn<ChakraTabProps> = (props) => (
