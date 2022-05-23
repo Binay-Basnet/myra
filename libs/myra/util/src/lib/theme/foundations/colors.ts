@@ -111,7 +111,7 @@ const colors = {
 
   border: {
     layout: '#E0E5EB',
-    element: '#CBD0D6',
+    element: '#91979F',
   },
 
   background: {
@@ -120,6 +120,11 @@ const colors = {
 
   highlight: {
     500: '#EEF1F7',
+  },
+
+  disabled: {
+    disabled: '#CBD0D6',
+    textDisabled: '#91979F',
   },
 
   red: {

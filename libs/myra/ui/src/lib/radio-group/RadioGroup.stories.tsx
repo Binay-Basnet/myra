@@ -17,7 +17,6 @@ Primary.args = {
   size: 'md',
   colorScheme: 'cyan',
   isDisabled: false,
-  isInvalid: false,
   spacing: 4,
   direction: 'row',
   radioList: ['Value 1', 'Value 2', 'Value 3'],

@@ -16,14 +16,13 @@ const baseStyleControl: SystemStyleFunction = (props) => {
     transitionDuration: 'normal',
     border: '2px solid',
     borderRadius: '4px',
-    borderColor: 'inherit',
-    color: 'white',
+    borderColor: 'gray.500',
+    color: 'primary.0',
 
     _checked: {
-      bg: mode(`${c}.500`, `${c}.200`)(props),
-      borderColor: mode(`${c}.500`, `${c}.200`)(props),
+      bg: mode(`primary.500`, `primary.500`)(props),
+      borderColor: mode(`primary.300`, `primary.300`)(props),
       borderRadius: '4px',
-      color: mode('white', 'gray.900')(props),
 
       _hover: {
         bg: mode(`${c}.600`, `${c}.300`)(props),
@@ -31,9 +30,9 @@ const baseStyleControl: SystemStyleFunction = (props) => {
       },
 
       _disabled: {
-        borderColor: mode('gray.200', 'transparent')(props),
-        bg: mode('gray.200', 'whiteAlpha.300')(props),
-        color: mode('gray.500', 'whiteAlpha.500')(props),
+        borderColor: mode('disabled.disabled', 'transparent')(props),
+        bg: mode('disabled.disabled', 'whiteAlpha.300')(props),
+        color: mode('neutralColorLightGray.0', 'whiteAlpha.500')(props),
       },
     },
 
@@ -45,7 +44,7 @@ const baseStyleControl: SystemStyleFunction = (props) => {
 
     _disabled: {
       bg: mode('gray.100', 'whiteAlpha.100')(props),
-      borderColor: mode('primary.100', 'solid')(props),
+      borderColor: mode('disabled.disabled', 'solid')(props),
     },
 
     _focus: {

@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Form from './Form';
+import GridItem from './GridItem';
 
-describe('Form', () => {
+describe('GridItem', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Form />);
+    const { baseElement } = render(<GridItem />);
     expect(baseElement).toBeTruthy();
   });
 });
