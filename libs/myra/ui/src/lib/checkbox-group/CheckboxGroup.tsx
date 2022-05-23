@@ -22,7 +22,7 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
     <ChakraCheckboxGroup>
       {variant === 'simple' && (
         <Stack spacing={spacing} direction={direction}>
-          {checkList.map((item) => (
+          {checkList?.map((item) => (
             <Checkbox id={item} value={item} {...rest}>
               {item}
             </Checkbox>
@@ -32,7 +32,7 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
 
       {variant === 'fullWidth' && (
         <Box>
-          {checkList.map((item) => (
+          {checkList?.map((item) => (
             <Flex justifyContent="space-between">
               <Box>{item}</Box>
               <Box>

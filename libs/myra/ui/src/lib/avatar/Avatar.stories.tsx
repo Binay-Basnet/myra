@@ -6,7 +6,7 @@ import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
 
 export default {
   component: Avatar,
-  title: 'Avatar',
+  title: 'Atoms/Avatar',
   argTypes: getThemingArgTypes(theme as Theme, 'Avatar'),
 } as Meta;
 
@@ -16,4 +16,5 @@ export const Primary = Template.bind({});
 Primary.args = {
   size: 'md',
   name: 'John Doe',
+  border: '1px solid gray.0',
 };

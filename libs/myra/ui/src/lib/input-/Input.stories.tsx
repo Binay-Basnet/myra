@@ -6,7 +6,7 @@ import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
 
 export default {
   component: Input,
-  title: 'Input',
+  title: 'Atoms/Input',
   argTypes: getThemingArgTypes(theme as Theme, 'Input'),
 } as Meta;
 

@@ -3,10 +3,14 @@ import {
   ContainerProps as ChakraProps,
 } from '@chakra-ui/react';
 /* eslint-disable-next-line */
-export interface ContainerProps extends ChakraProps {}
+export interface ContainerProps extends ChakraProps {
+  children?: React.ReactNode;
+}
 
 export function Container(props: ContainerProps) {
-  return <Container {...props} />;
+  const { children, ...rest } = props;
+
+  return <ChakraContainer {...rest}> {children} </ChakraContainer>;
 }
 
 export default Container;

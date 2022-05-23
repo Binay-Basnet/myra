@@ -3,7 +3,7 @@ import { FormInput, FormInputProps } from './FormInput';
 
 export default {
   component: FormInput,
-  title: 'FormInput',
+  title: 'form/FormInput',
 } as Meta;
 
 const Template: Story<FormInputProps> = (args) => <FormInput {...args} />;

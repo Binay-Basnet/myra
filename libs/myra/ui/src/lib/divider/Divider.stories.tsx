@@ -3,7 +3,7 @@ import { Divider, DividerProps } from './Divider';
 
 export default {
   component: Divider,
-  title: 'Divider',
+  title: 'Atoms/Divider',
 } as Meta;
 
 const Template: Story<DividerProps> = (args) => <Divider {...args} />;
