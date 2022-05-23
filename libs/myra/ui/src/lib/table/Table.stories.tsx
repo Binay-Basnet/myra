@@ -1,11 +1,12 @@
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { Table } from './Table';
-import { Column, TableProps } from './react-table-config';
+import Table from './Table';
 import { Avatar, Flex } from '@chakra-ui/react';
+import { Column, TableProps } from './types';
 
 export default {
   component: Table,
-  title: 'Table',
+  title: 'Table / Main Table',
   argTypes: {
     isStatic: {
       control: false,
@@ -17,7 +18,7 @@ export default {
 } as Meta;
 
 type TableDummyDataType = {
-  member_id: number;
+  member_id: string;
   name: string;
   src?: string;
   address: string;
@@ -30,13 +31,23 @@ const columns: Column<TableDummyDataType>[] = [
     Header: 'Member #',
     accessor: 'member_id',
     width: 0,
-    disableSortBy: true,
+
+    disableSortBy: false,
+    disableFilters: false,
+
+    filter: 'includesSome',
+    filterType: 'list',
   },
   {
     Header: 'First Name',
     accessor: 'name',
     width: '50%',
     imgSrc: 'src',
+
+    disableFilters: false,
+
+    filter: 'includesSome',
+    filterType: 'list',
 
     Cell: ({ cell }) => {
       return (
@@ -51,22 +62,34 @@ const columns: Column<TableDummyDataType>[] = [
     Header: 'Address',
     accessor: 'address',
     maxWidth: 24,
+
+    filter: 'includesSome',
+    filterType: 'list',
+    disableFilters: false,
   },
   {
     Header: 'Contact Number',
     accessor: 'contact_number',
     isNumeric: true,
+
+    filter: 'includesSome',
+    filterType: 'list',
+    disableFilters: false,
   },
   {
     Header: 'Date Joined',
     accessor: 'date_joined',
     isNumeric: true,
+
+    filter: 'includesSome',
+    filterType: 'list',
+    disableFilters: false,
   },
 ];
 
 const data = [
   {
-    member_id: 131221,
+    member_id: '131221',
     name: 'Test User',
     src: 'https://images.unsplash.com/photo-1614204424926-196a80bf0be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
     address:
@@ -75,17 +98,52 @@ const data = [
     date_joined: '2020-01-12',
   },
   {
-    member_id: 22139,
+    member_id: '22139',
+    name: 'John Test',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: '224',
     name: 'John Doe',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: '2139',
+    name: 'Anup Shrestha',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: '12',
+    name: 'Test User',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: '24',
+    name: 'Anup Shrestha',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: '2234',
+    name: 'Anup Shrestha',
     address: 'Kathmandu, Nepal',
     contact_number: '+977-9833919301',
     date_joined: '2010-01-12',
   },
 ];
 
-const Template: Story<Omit<TableProps<TableDummyDataType>, 'isStatic'>> = (
-  args
-) => <Table<TableDummyDataType> {...args} />;
+const Template: Story<TableProps<TableDummyDataType>> = (args) => (
+  <Table {...args} />
+);
 
 export const Default = Template.bind({});
 Default.args = {
@@ -98,4 +156,20 @@ Compact.args = {
   columns,
   data,
   size: 'compact',
+};
+
+export const TableWithSort = Template.bind({});
+TableWithSort.args = {
+  columns,
+  data,
+  sort: true,
+  disableSortAll: false,
+};
+
+export const TableWithFilter = Template.bind({});
+TableWithFilter.args = {
+  columns,
+  data,
+  filter: true,
+  disableFilterAll: true,
 };
