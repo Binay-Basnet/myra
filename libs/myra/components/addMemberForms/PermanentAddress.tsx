@@ -5,14 +5,14 @@ import { Grid } from '../../ui/src/lib/grid/Grid';
 export const PermanentAddress = ({ debounced }) => {
   const dataSchema: DataSchema[] = [
     {
-      type: 'select',
+      variant: 'select',
       name: 'state',
       label: 'State',
       placeholder: 'Select State',
       options: [{ label: 'Bagmati', value: 'Bagmati' }],
     },
     {
-      type: 'select',
+      variant: 'select',
       name: 'district',
       label: 'District',
       placeholder: 'Enter District',
@@ -22,7 +22,7 @@ export const PermanentAddress = ({ debounced }) => {
       ],
     },
     {
-      type: 'select',
+      variant: 'select',
       name: 'vdc',
       label: 'VDC/Muncipality',
       placeholder: 'Enter VDC/Muncipality',
@@ -32,13 +32,13 @@ export const PermanentAddress = ({ debounced }) => {
       ],
     },
     {
-      type: 'input',
+      variant: 'input',
       name: 'wardNo',
       label: 'Ward No',
       placeholder: 'Enter Ward no',
     },
     {
-      type: 'input',
+      variant: 'input',
       name: 'locality',
       label: 'Locality',
       placeholder: 'Enter Locality',
@@ -47,12 +47,7 @@ export const PermanentAddress = ({ debounced }) => {
 
   return (
     <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
-      <FormGenerator
-        dataSchema={dataSchema}
-        onEachFieldChange={() => {
-          debounced();
-        }}
-      />
+      <FormGenerator dataSchema={dataSchema} />
     </Grid>
   );
 };
