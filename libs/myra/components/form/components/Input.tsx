@@ -4,14 +4,15 @@ import {
   FormErrorMessage,
   FormLabel,
   FormControl,
-  Input as ChakraInput,
   InputProps,
 } from '@chakra-ui/react';
+import { Input as ChakraInput, TextFields } from '@saccos/myra/ui';
 
 interface IInputProps extends InputProps {
   name: string;
   label: React.ReactNode;
   validations?: RegisterOptions;
+  // placeholder?: string;
 }
 
 export const Input = (props: IInputProps) => {
@@ -19,6 +20,7 @@ export const Input = (props: IInputProps) => {
     validations,
     label,
     name,
+    placeholder,
     onChange: onChangeFromProps,
     ...otherProps
   } = props;
@@ -34,7 +36,7 @@ export const Input = (props: IInputProps) => {
 
   return (
     <FormControl isInvalid={!!error}>
-      <FormLabel htmlFor={customId}>{label}</FormLabel>
+      <TextFields variant="formLabel">{label}</TextFields>
 
       <Controller
         name={name}
@@ -42,13 +44,13 @@ export const Input = (props: IInputProps) => {
         render={({ field: { onChange, ...otherFields } }) => (
           <ChakraInput
             id={customId}
+            placeholder={placeholder}
             autoComplete="off"
             {...otherFields}
             onChange={(e) => {
               onChangeFromProps && onChangeFromProps(e);
               onChange(e);
             }}
-            {...otherProps}
           />
         )}
       />

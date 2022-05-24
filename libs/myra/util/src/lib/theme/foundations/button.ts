@@ -15,6 +15,7 @@ const baseStyle: SystemStyleObject = {
   _focus: {
     boxShadow: 'outline',
     // color: 'yellow.500',
+    color: 'gray.0',
   },
   _disabled: {
     opacity: 0.4,
@@ -79,7 +80,7 @@ const accessibleColorMap: { [key: string]: AccessibleColor } = {
     bg: 'yellow.400',
     color: 'black',
     hoverBg: 'yellow.500',
-    activeBg: 'yellow.600',
+    activeBg: 'gray.0',
   },
   cyan: {
     bg: 'cyan.400',

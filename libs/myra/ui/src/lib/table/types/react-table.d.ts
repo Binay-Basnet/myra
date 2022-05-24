@@ -1,18 +1,17 @@
 import {
   ActionType,
-  Column,
-  ColumnGroup,
-  ColumnWithLooseAccessor,
-  ColumnWithStrictAccessor,
+  DefaultFilterTypes,
+  FilterProps,
+  FilterType,
+  HeaderProps,
   Meta,
+  Renderer,
   UseColumnOrderInstanceProps,
   UseColumnOrderState,
   UseExpandedHooks,
   UseExpandedInstanceProps,
-  UseExpandedOptions,
   UseExpandedRowProps,
   UseExpandedState,
-  UseFiltersColumnOptions,
   UseFiltersColumnProps,
   UseFiltersInstanceProps,
   UseFiltersOptions,
@@ -48,6 +47,7 @@ import {
   UseSortByState,
 } from 'react-table';
 
+// REACT TABLE MODULE DECLARATION - types needed for different hooks of react table.
 declare module 'react-table' {
   export type UseTableOptions<D extends object> = {
     columns: Array<Column<D>>;
@@ -73,8 +73,6 @@ declare module 'react-table' {
 
   export interface TableOptions<D extends Record<string, unknown>>
     extends UseTableOptions<D>,
-      UseExpandedOptions<D>,
-      UseFiltersOptions<D>,
       UseFiltersOptions<D>,
       UseGlobalFiltersOptions<D>,
       UseGroupByOptions<D>,
@@ -126,14 +124,6 @@ declare module 'react-table' {
     align?: string;
   }
 
-  export interface ColumnInstance<
-    D extends Record<string, unknown> = Record<string, unknown>
-  > extends UseFiltersColumnProps<D>,
-      UseGroupByColumnProps<D>,
-      UseResizeColumnsColumnProps<D>,
-      UseFlexLayoutColumnProps<D>,
-      UseSortByColumnProps<D> {}
-
   export type Cell<
     D extends Record<string, unknown> = Record<string, unknown>
   > = UseGroupByCellProps<D>;
@@ -142,32 +132,25 @@ declare module 'react-table' {
     extends UseExpandedRowProps<D>,
       UseGroupByRowProps<D>,
       UseRowSelectRowProps<D> {}
-}
 
-export interface ExtraColumnProps {
-  isNumeric?: boolean;
-  paddingX?: string | number | number[];
-  paddingY?: string | number | number[];
-  imgSrc?: string;
-  hasSort?: boolean;
-}
+  export type FilterProps<D extends object> = HeaderProps<D> & {
+    name: string;
+  };
 
-export type SubColumn<D extends Record<string, unknown>> =
-  | ColumnGroup<D>
-  | ColumnWithLooseAccessor<D>
-  | ColumnWithStrictAccessor<D>;
+  export type UseFiltersColumnOptions<D extends object> = Partial<{
+    Filter: Renderer<FilterProps<D>>;
+    disableFilters: boolean;
+    defaultCanFilter: boolean;
+    filter: FilterType<D> | DefaultFilterTypes | string;
+  }>;
 
-export type Column<T> = SubColumn<T> & ExtraColumnProps;
-
-export interface TableProps<T extends Record<string, unknown>> {
-  data: T[];
-  hasRowSelection?: boolean;
-  columns: Array<Column<T>>;
-  name?: string;
-  size?: 'default' | 'compact';
-  sort?: boolean;
-  manualSort?: boolean;
-  isStatic?: boolean;
+  export interface ColumnInstance<
+    D extends Record<string, unknown> = Record<string, unknown>
+  > extends UseFiltersColumnProps<D>,
+      UseGroupByColumnProps<D>,
+      UseResizeColumnsColumnProps<D>,
+      UseFlexLayoutColumnProps<D>,
+      UseSortByColumnProps<D> {}
 }
 
 export { Cell, HeaderGroup } from 'react-table';

@@ -29,6 +29,6 @@
     "**/*.jsx",
     "**/*.ts",
     "**/*.tsx",
-    "src/lib/table/react-table-config.d.ts"
+    "src/lib/table/types/react-table.d.ts"
   ]
 }

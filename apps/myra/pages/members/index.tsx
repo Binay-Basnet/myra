@@ -19,7 +19,14 @@ import {
 } from '@chakra-ui/icons';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
-import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
+import {
+  Box,
+  Button,
+  Column,
+  MainLayout,
+  Table,
+  // Modal,
+} from '@saccos/myra/ui';
 import { TabColumn, TabRow } from '@saccos/myra/components';
 import { Gender, useMembersQuery } from '../../generated/graphql';
 import { useTranslation } from '@saccos/myra/util';
@@ -82,7 +89,6 @@ const Member = () => {
         accessor: 'title',
         width: '40%',
       },
-
       {
         Header: 'Gender',
         accessor: 'gender',
@@ -131,6 +137,17 @@ const Member = () => {
               </Button>
             </Link>
           </Box>
+          {/* <Modal
+            isCentered={true}
+            // autoFocus={false}
+            modalButtonProp="Click me"
+            titleProps="Test"
+            footerPrimary2Props="Delete"
+            footerSecondaryProps="Cancel"
+            onClickPrimary={() => alert('Deleted!!!')}
+          >
+            <p>Hey tyhis si a a test project</p>
+          </Modal> */}
           <br />
 
           <TabColumn list={column} t={t} />
