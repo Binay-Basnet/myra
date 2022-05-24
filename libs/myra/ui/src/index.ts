@@ -1,3 +1,5 @@
+export * from './lib/chips/Chips';
+export * from './lib/tags/Tags';
 export * from './lib/modal/Modal';
 export * from './lib/grid-item/GridItem';
 export * from './lib/grid/Grid';
