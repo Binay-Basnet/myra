@@ -8,7 +8,6 @@ import {
   InputLeftElement,
   Text,
 } from '@chakra-ui/react';
-import Link from 'next/link';
 import { ReactElement, useMemo } from 'react';
 import {
   AddIcon,
@@ -18,17 +17,15 @@ import {
   SearchIcon,
 } from '@chakra-ui/icons';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { useRouter } from 'next/router';
 
-import {
-  Box,
-  Button,
-  Column,
-  MainLayout,
-  Table,
-  // Modal,
-} from '@saccos/myra/ui';
+import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
 import { TabColumn, TabRow } from '@saccos/myra/components';
-import { Gender, useMembersQuery } from '../../generated/graphql';
+import {
+  Gender,
+  useMembersQuery,
+  useGetNewIdMutation,
+} from '../../generated/graphql';
 import { useTranslation } from '@saccos/myra/util';
 
 const column = [
@@ -59,6 +56,7 @@ const Member = () => {
   const { t } = useTranslation();
 
   const rowData = useMemo(() => data && data?.members?.list, [data]);
+  const router = useRouter();
 
   const columns: Column<MemberData>[] = useMemo(
     () => [
@@ -67,7 +65,6 @@ const Member = () => {
         accessor: 'id',
         maxWidth: 4,
       },
-
       {
         Header: 'First Name',
         accessor: 'firstName',
@@ -89,6 +86,7 @@ const Member = () => {
         accessor: 'title',
         width: '40%',
       },
+
       {
         Header: 'Gender',
         accessor: 'gender',
@@ -116,6 +114,8 @@ const Member = () => {
     []
   );
 
+  const newId = useGetNewIdMutation();
+
   return (
     <Box mt="100px" p="16px" display="flex">
       <Box mt="24px">
@@ -125,17 +125,20 @@ const Member = () => {
 
         <Box mt="58px" display="flex" flexDirection="column" width="238px">
           <Box pl="16px">
-            <Link href="/members/addMember" passHref>
-              <Button
-                width="184px"
-                leftIcon={<AddIcon h="11px" />}
-                bg="#006837"
-                fontSize="14px"
-                borderRadius="0"
-              >
-                {t.membersAddNewMembers}
-              </Button>
-            </Link>
+            <Button
+              width="184px"
+              leftIcon={<AddIcon h="11px" />}
+              bg="#006837"
+              fontSize="14px"
+              borderRadius="0"
+              onClick={() =>
+                newId
+                  .mutateAsync({})
+                  .then((res) => router.push(`members/addMember/${res?.newId}`))
+              }
+            >
+              {t.membersAddNewMembers}
+            </Button>
           </Box>
           {/* <Modal
             isCentered={true}

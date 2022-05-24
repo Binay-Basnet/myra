@@ -112,6 +112,17 @@ const ne = {
   memberDropOrClickToUploadPhoto: 'तस्बिर अपलोड गर्न ड्रप वा क्लिक गर्नुहोस्',
 
   saveMember: 'सदस्य दर्ता गर्नुहोस्',
+
+  // Share Page
+  share: 'Share',
+  shareActive: 'Active',
+  shareSubmitted: 'Submitted',
+  shareDraft: 'Draft',
+
+  shareList: 'Share List',
+  shareReport: 'Share Report',
+  shareConsolidatedReport: 'Share Consolidated Report',
+  shareCertificatePrint: 'Share Certificate Print',
 };
 
 export default ne;

@@ -1,3 +1,4 @@
+export * from './lib/switch/Switch';
 export * from './lib/tags/Tags';
 export * from './lib/search-bar/SearchBar';
 export * from './lib/table-amount-filter/TableAmountFilter';

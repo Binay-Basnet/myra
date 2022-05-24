@@ -13,10 +13,15 @@ export type FilterColumnProps<T extends Record<string, unknown>> =
     initialFocusRef?: React.RefObject<HTMLInputElement>;
   };
 
-export type BaseColumn<T extends Record<string, unknown>> = {
-  Header: string;
-  accessor: keyof T;
-};
+export type BaseColumn<T extends Record<string, unknown>> =
+  | {
+      Header: string;
+      accessor: keyof T;
+    }
+  | {
+      Header?: never;
+      accessor: 'actions';
+    };
 
 export type ExtraColumnProps = Partial<{
   width: number | string;
