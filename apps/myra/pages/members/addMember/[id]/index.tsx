@@ -1,3 +1,4 @@
+import React from 'react';
 import { GrClose } from 'react-icons/gr';
 import { useForm } from 'react-hook-form';
 
@@ -75,14 +76,9 @@ const AddMember = () => {
             <GrClose size="14px" color="#91979F" />
           </Box>
           <Box display="flex" width="100%">
-            <Box
-              display="flex"
-              w={320}
-              p={2}
-              minHeight="100%"
-              bg="whiteAlpha.500"
-            >
-              sidebar
+            <Box w={320} p={2} minHeight="100%" bg="whiteAlpha.500">
+              <Text fontSize="r1">1. Personal Information</Text>
+              <Text fontSize="r1">2. Professional Details</Text>
             </Box>
             <Box w="100%">
               <Box background="white" p={5}>

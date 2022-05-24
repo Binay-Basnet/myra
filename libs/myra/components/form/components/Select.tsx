@@ -7,7 +7,7 @@ import {
   // Input as ChakraInput,
   InputProps,
 } from '@chakra-ui/react';
-import { Select as ChakraSelect, TextFields } from '@saccos/myra/ui';
+import { Select as ChakraSelect, TextFields } from '../../../ui/src';
 
 interface IInputProps extends InputProps {
   name: string;

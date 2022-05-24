@@ -11,3 +11,7 @@ query members {
     }
   }
 }
+
+mutation getNewId {
+  newId
+}
