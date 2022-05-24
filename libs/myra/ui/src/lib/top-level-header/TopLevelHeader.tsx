@@ -122,33 +122,6 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           justifyContent={'flex-end'}
           alignItems="center"
         >
-          {/* <IconButton
-            icon={<Icon size="md" as={BiBell} />}
-            aria-label="help"
-            variant={'ghost'}
-            color={'white'}
-            borderRadius={'br1'}
-            _hover={{ backgroundColor: 'secondary.900' }}
-          />
-          <IconButton
-            icon={<Icon size="md" as={MdOutlineHelpOutline} />}
-            aria-label="help"
-            variant={'ghost'}
-            color={'gray.0'}
-            borderRadius={'br1'}
-            _hover={{ backgroundColor: 'secondary.900' }}
-          />
-          <Box w="fit-content" pl="s16">
-            <Avatar src={'avatar.png'} size="sm" />{' '}
-          </Box>
-          <IconButton
-            _hover={{ backgroundColor: 'secondary.900' }}
-            icon={<Icon size="lg" as={CgMenuGridO} />}
-            aria-label="menu"
-            variant={'ghost'}
-            color={'white'}
-            borderRadius={'br1'}
-          /> */}
           <IconButton
             icon={<Icon size="md" as={BiBell} />}
             aria-label="help"

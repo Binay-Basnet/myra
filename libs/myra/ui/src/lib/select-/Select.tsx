@@ -6,6 +6,7 @@ import {
 /* eslint-disable-next-line */
 export interface SelectProps extends ChakraSelectProps {
   options: { value: string; label: string }[];
+  variant?: 'outline' | 'unstyled' | 'flushed' | 'filled';
 }
 
 export function Select(props: SelectProps) {

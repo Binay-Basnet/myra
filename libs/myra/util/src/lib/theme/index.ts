@@ -5,6 +5,7 @@ import button from './foundations/button';
 import checkbox from './foundations/checkbox';
 import radio from './foundations/radio';
 import Table from './foundations/table';
+import Input from './foundations/input';
 
 // 2. Call `extendTheme` and pass your custom values
 
@@ -60,12 +61,14 @@ export const theme = extendTheme({
       baseStyle: checkbox.baseStyle,
       defaultProps: checkbox.defaultProps,
     },
+
     Radio: {
       sizes: radio.sizes,
       baseStyle: radio.baseStyle,
       defaultProps: radio.defaultProps,
     },
     Table,
+    Input,
   },
 });
 export default theme;
