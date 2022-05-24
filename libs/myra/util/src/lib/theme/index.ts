@@ -6,6 +6,7 @@ import checkbox from './foundations/checkbox';
 import radio from './foundations/radio';
 import Table from './foundations/table';
 import modal from './foundations/modal';
+import tags from './foundations/tags';
 
 // 2. Call `extendTheme` and pass your custom values
 
@@ -75,6 +76,12 @@ export const theme = extendTheme({
       defaultProps: modal.defaultProps,
     },
     Table,
+    Tag: {
+      sizes: tags.sizes,
+      variants: tags.variants,
+      baseStyle: tags.baseStyle,
+      defaultProps: tags.defaultProps,
+    },
   },
 });
 export default theme;
