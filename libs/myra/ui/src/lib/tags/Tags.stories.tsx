@@ -12,12 +12,19 @@ export default {
 
 const Template: Story<TagsProps> = (args) => <Tags {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Chip = Template.bind({});
+Chip.args = {
+  type: 'chip',
+  size: 'md',
+  label: 'Chip',
+};
+
+export const Tag = Template.bind({});
+Tag.args = {
+  type: 'tag',
   size: 'md',
   label: 'Tag',
   isRemovable: true,
-  // colorScheme: 'red',
   isDisabled: true,
   onClick: () => console.log('clicked'),
 };

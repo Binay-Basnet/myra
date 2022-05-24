@@ -18,11 +18,11 @@ const typography = {
   },
 
   fontWeights: {
-    300: 'Inter Light',
-    400: 'Inter Regular',
-    500: 'Inter Medium',
-    600: 'Inter Semi-bold',
-    700: 'Inter Bold',
+    InterLight: '300',
+    InterRegular: '400',
+    InterMedium: '500',
+    InterSemiBold: '600',
+    InterBold: '700',
   },
 
   fonts: {

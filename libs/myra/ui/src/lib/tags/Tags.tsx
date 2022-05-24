@@ -7,16 +7,18 @@ import {
 
 /* eslint-disable-next-line */
 export interface TagsProps extends ChakraTagProps {
+  type: string;
   label: string;
-  isRemovable: boolean;
-  isDisabled: boolean;
-  colorScheme: string;
-  size: string;
-  onClick: () => void;
+  isRemovable?: boolean;
+  isDisabled?: boolean;
+  colorScheme?: string;
+  size?: string;
+  onClick?: () => void;
 }
 
 export function Tags(props: TagsProps) {
   const {
+    type,
     size,
     isDisabled,
     colorScheme,
@@ -27,22 +29,37 @@ export function Tags(props: TagsProps) {
   } = props;
 
   return (
-    <ChakraTags
-      disabled={isDisabled}
-      size={size}
-      // colorScheme={colorScheme}
-      // borderRadius="radii.br5"
-      {...rest}
-    >
-      <TagLabel>{label}</TagLabel>
-      {isRemovable && (
-        <TagCloseButton
-          isDisabled={isDisabled}
-          color="gray.500"
-          onClick={onClick}
-        />
+    <>
+      {type === 'chip' && (
+        <ChakraTags
+          size={size}
+          bg="accent.800"
+          padding="s4 s8"
+          borderRadius="br5"
+          {...rest}
+        >
+          <TagLabel>{label}</TagLabel>
+        </ChakraTags>
       )}
-    </ChakraTags>
+
+      {type === 'tag' && (
+        <ChakraTags
+          disabled={isDisabled}
+          size={size}
+          borderRadius="none"
+          {...rest}
+        >
+          <TagLabel>{label}</TagLabel>
+          {isRemovable && (
+            <TagCloseButton
+              isDisabled={isDisabled}
+              color="gray.500"
+              onClick={onClick}
+            />
+          )}
+        </ChakraTags>
+      )}
+    </>
   );
 }
 

@@ -1,9 +1,12 @@
 import { Story, Meta } from '@storybook/react';
 import { Select, SelectProps } from './Select';
-
+import { theme } from '@saccos/myra/util';
+import { Theme } from '@chakra-ui/react';
+import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
 export default {
   component: Select,
   title: 'Select',
+  argTypes: getThemingArgTypes(theme as Theme, 'Select'),
 } as Meta;
 
 const Template: Story<SelectProps> = (args) => <Select {...args} />;
@@ -24,4 +27,5 @@ Primary.args = {
       value: 'option-3',
     },
   ],
+  variant: 'solid',
 };

@@ -2,7 +2,9 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Popover as ChakraPopover,
+  Popover,
+  PopoverAnchor,
+  PopoverArrow,
   PopoverBody,
   PopoverCloseButton,
   PopoverContent,
@@ -16,16 +18,12 @@ export interface PopoverProps {
   name?: string;
 }
 
-export function Popover(props: PopoverProps) {
+export function ChakraPopover({ name = 'Trigger' }: PopoverProps) {
   const initialFocusRef = React.useRef<HTMLButtonElement | null>(null);
   return (
-    <ChakraPopover
-      placement="auto-start"
-      initialFocusRef={initialFocusRef}
-      closeOnBlur={false}
-    >
+    <Popover placement="auto-start" initialFocusRef={initialFocusRef}>
       <PopoverTrigger>
-        <Button>Trigger</Button>
+        <Button>{name}</Button>
       </PopoverTrigger>
       <PopoverContent color="white" bg="blue.800" borderColor="blue.800">
         <PopoverHeader pt={4} fontWeight="bold" border="0">
@@ -52,7 +50,7 @@ export function Popover(props: PopoverProps) {
           </ButtonGroup>
         </PopoverFooter>
       </PopoverContent>
-    </ChakraPopover>
+    </Popover>
   );
 }
 
@@ -63,6 +61,8 @@ export {
   PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
+  PopoverAnchor,
+  PopoverArrow,
 };
 
 export default Popover;

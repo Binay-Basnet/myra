@@ -11,8 +11,7 @@ const baseStyleContainer: SystemStyleObject = {
   lineHeight: 1.2,
   outline: 0,
   padding: 's4',
-  bg: 'background.500',
-  borderRadius: 'radii.br5',
+  bg: 'success',
   _focus: {
     boxShadow: 'outline',
   },
@@ -45,8 +44,8 @@ const baseStyleCloseButton: SystemStyleObject = {
     boxShadow: 'outline',
     borderRadius: 'none',
     borderColor: 'primary.900',
-    bg: 'background.500',
     color: 'gray',
+    bg: 'background',
   },
   _hover: {
     color: 'danger',
@@ -109,7 +108,7 @@ const variants: Record<string, PartsStyleInterpolation<typeof parts>> = {
 const defaultProps = {
   size: 'md',
   variant: 'subtle',
-  colorScheme: 'background.500',
+  colorScheme: 'success',
 };
 
 export default {

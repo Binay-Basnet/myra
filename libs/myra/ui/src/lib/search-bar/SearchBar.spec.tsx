@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Chips from './Chips';
+import SearchBar from './SearchBar';
 
-describe('Chips', () => {
+describe('SearchBar', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Chips />);
+    const { baseElement } = render(<SearchBar />);
     expect(baseElement).toBeTruthy();
   });
 });

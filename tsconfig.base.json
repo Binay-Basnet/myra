@@ -22,7 +22,8 @@
       "@saccos/myra/jsonData": ["libs/myra/jsonData/index.ts"],
       "@saccos/myra/locales": ["libs/myra/locales/index.ts"],
       "@saccos/myra/ui": ["libs/myra/ui/src/index.ts"],
-      "@saccos/myra/util": ["libs/myra/util/src/index.ts"]
+      "@saccos/myra/util": ["libs/myra/util/src/index.ts"],
+      "@saccos/myra/types": ["libs/myra/types/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

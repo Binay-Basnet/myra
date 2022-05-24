@@ -29,7 +29,7 @@ export function TextFields(props: TextFieldsProps) {
       );
     case 'formLabel':
       return (
-        <Text fontSize="r1" fontWeight="500" {...rest} lineHeight="1.5">
+        <Text fontSize="s3" fontWeight="500" {...rest} lineHeight="1.5">
           {children}
         </Text>
       );

@@ -7,7 +7,6 @@ import radio from './foundations/radio';
 import Table from './foundations/table';
 import modal from './foundations/modal';
 import tags from './foundations/tags';
-import chips from './foundations/chips';
 
 // 2. Call `extendTheme` and pass your custom values
 
@@ -82,12 +81,6 @@ export const theme = extendTheme({
       variants: tags.variants,
       baseStyle: tags.baseStyle,
       defaultProps: tags.defaultProps,
-    },
-    Chips: {
-      sizes: chips.sizes,
-      variants: chips.variants,
-      baseStyle: chips.baseStyle,
-      defaultProps: chips.defaultProps,
     },
   },
 });
