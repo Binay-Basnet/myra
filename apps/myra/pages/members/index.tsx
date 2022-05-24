@@ -65,7 +65,6 @@ const Member = () => {
         accessor: 'id',
         maxWidth: 4,
       },
-
       {
         Header: 'First Name',
         accessor: 'firstName',

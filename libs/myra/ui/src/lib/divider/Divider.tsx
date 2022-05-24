@@ -8,9 +8,7 @@ export interface DividerProps extends ChakraDividerProps {}
 export function Divider(props: DividerProps) {
   return (
     <>
-      <br />
       <ChakraDivider {...props} />
-      <br />
     </>
   );
 }

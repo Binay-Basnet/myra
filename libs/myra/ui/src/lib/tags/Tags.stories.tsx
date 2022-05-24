@@ -25,6 +25,6 @@ Tag.args = {
   size: 'md',
   label: 'Tag',
   isRemovable: true,
-  isDisabled: true,
+  isDisabled: false,
   onClick: () => console.log('clicked'),
 };
