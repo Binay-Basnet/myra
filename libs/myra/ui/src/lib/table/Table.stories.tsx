@@ -21,6 +21,7 @@ type TableDummyDataType = {
   member_id: string;
   name: string;
   src?: string;
+  age: number;
   address: string;
   contact_number: string;
   date_joined: string;
@@ -59,6 +60,15 @@ const columns: Column<TableDummyDataType>[] = [
     },
   },
   {
+    Header: 'Age',
+    accessor: 'age',
+    maxWidth: 24,
+
+    filter: 'numberAll',
+    filterType: 'amount',
+    disableFilters: false,
+  },
+  {
     Header: 'Address',
     accessor: 'address',
     maxWidth: 24,
@@ -67,12 +77,12 @@ const columns: Column<TableDummyDataType>[] = [
     filterType: 'list',
     disableFilters: false,
   },
+
   {
     Header: 'Contact Number',
     accessor: 'contact_number',
     isNumeric: true,
 
-    filter: 'includesSome',
     filterType: 'list',
     disableFilters: false,
   },
@@ -90,6 +100,7 @@ const data = [
   {
     member_id: '131221',
     name: 'Test User',
+    age: 12,
     src: 'https://images.unsplash.com/photo-1614204424926-196a80bf0be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
     address:
       'Lalitpur, Nepal, NepalLalitpur, Nepal, NepalLalitpur, Nepal, NepalLalitpur, Nepal, NepalLalitpur, Nepal, NepalLalitpur, Nepal, Nepal ',
@@ -98,6 +109,7 @@ const data = [
   },
   {
     member_id: '22139',
+    age: 43,
     name: 'John Test',
     address: 'Kathmandu, Nepal',
     contact_number: '+977-9833919301',
@@ -105,6 +117,7 @@ const data = [
   },
   {
     member_id: '224',
+    age: 94,
     name: 'John Doe',
     address: 'Kathmandu, Nepal',
     contact_number: '+977-9833919301',
@@ -113,12 +126,14 @@ const data = [
   {
     member_id: '2139',
     name: 'Anup Shrestha',
+    age: 20,
     address: 'Kathmandu, Nepal',
     contact_number: '+977-9833919301',
     date_joined: '2010-01-12',
   },
   {
     member_id: '12',
+    age: 18,
     name: 'Test User',
     address: 'Kathmandu, Nepal',
     contact_number: '+977-9833919301',
@@ -127,6 +142,7 @@ const data = [
   {
     member_id: '24',
     name: 'Anup Shrestha',
+    age: 20,
     address: 'Kathmandu, Nepal',
     contact_number: '+977-9833919301',
     date_joined: '2010-01-12',
@@ -134,6 +150,7 @@ const data = [
   {
     member_id: '2234',
     name: 'Anup Shrestha',
+    age: 43,
     address: 'Kathmandu, Nepal',
     contact_number: '+977-9833919301',
     date_joined: '2010-01-12',

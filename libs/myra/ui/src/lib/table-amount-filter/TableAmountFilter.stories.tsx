@@ -1,14 +1,12 @@
-import { Story, Meta } from '@storybook/react';
-import { TableAmountFilter, TableAmountFilterProps } from './TableAmountFilter';
+import { Meta, Story } from '@storybook/react';
+import { TableAmountFilter } from './TableAmountFilter';
 
 export default {
   component: TableAmountFilter,
-  title: 'TableAmountFilter',
+  title: 'Table / Table Amount Filter',
 } as Meta;
 
-const Template: Story<TableAmountFilterProps> = (args) => (
-  <TableAmountFilter {...args} />
-);
+const Template: Story = (args) => <TableAmountFilter {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};
