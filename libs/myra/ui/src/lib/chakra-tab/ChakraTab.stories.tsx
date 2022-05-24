@@ -16,4 +16,7 @@ const Template: StoryFn<ChakraTabProps> = (props) => (
 export const Primary = Template.bind({});
 Primary.args = {
   tabList: ['Tab 1', 'Tab 2', 'Tab 3'],
+  variant: 'unstyled',
+  align: 'start',
+  isFitted: false,
 };

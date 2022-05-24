@@ -80,10 +80,14 @@ export function TabMenu() {
             const isActive = tabIndex === index;
             return (
               <Link
-                href={title === 'dashboard' ? '/' : `/${title.toLowerCase()}`}
+                href={
+                  title === 'navbarDashboard'
+                    ? '/'
+                    : `/${title.slice(6).toLowerCase()}`
+                }
               >
                 <Tab
-                  isDisabled
+                  // isDisabled
                   borderRadius="br3 br3 0 0"
                   p="s4 s16"
                   _selected={{

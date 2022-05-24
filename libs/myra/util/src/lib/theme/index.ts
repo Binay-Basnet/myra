@@ -5,6 +5,7 @@ import button from './foundations/button';
 import checkbox from './foundations/checkbox';
 import radio from './foundations/radio';
 import Table from './foundations/table';
+import Input from './foundations/input';
 import modal from './foundations/modal';
 import tags from './foundations/tags';
 
@@ -63,6 +64,7 @@ export const theme = extendTheme({
       baseStyle: checkbox.baseStyle,
       defaultProps: checkbox.defaultProps,
     },
+
     Radio: {
       parts: radio.parts,
       sizes: radio.sizes,
@@ -76,6 +78,7 @@ export const theme = extendTheme({
       defaultProps: modal.defaultProps,
     },
     Table,
+    Input,
     Tag: {
       sizes: tags.sizes,
       variants: tags.variants,
