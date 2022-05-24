@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import { Box, Text, Tabs, TabList, Tab } from '@chakra-ui/react';
+import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 import { AiOutlineAppstore } from 'react-icons/ai';
 import { FaUser } from 'react-icons/fa';
-import { VscListFlat } from 'react-icons/vsc';
-import { BiTransfer } from 'react-icons/bi';
-import { MdBackupTable } from 'react-icons/md';
 import { CgDropOpacity } from 'react-icons/cg';
 import { IoCubeOutline } from 'react-icons/io5';
 import Link from 'next/link';
@@ -14,10 +11,21 @@ import { en } from '@saccos/myra/locales';
 import { IconType } from 'react-icons';
 import { Icon } from '@saccos/myra/ui';
 import { ImStack } from 'react-icons/im';
-import { BsArrowLeftRight, BsFileText, BsCardList } from 'react-icons/bs';
+import { BsArrowLeftRight, BsCardList, BsFileText } from 'react-icons/bs';
 
 /* eslint-disable-next-line */
 export interface TabMenuProps {}
+
+const NAVBAR_TAB_OBJECT: Record<string, number> = {
+  '/dashboard': 0,
+  '/members': 1,
+  '/share': 2,
+  '/accounts': 3,
+  '/transactions': 4,
+  '/loan': 5,
+  '/reports': 6,
+  '/utilities': 7,
+};
 
 const demotabs: { title: keyof typeof en; icon: IconType }[] = [
   {
@@ -70,14 +78,14 @@ export function TabMenu() {
       display="flex"
     >
       <Tabs
-        defaultIndex={1}
+        index={NAVBAR_TAB_OBJECT[route.asPath]}
         size="md"
         variant="enclosed"
         onChange={(index) => setTabIndex(index)}
       >
         <TabList>
           {demotabs.map(({ title, icon }, index) => {
-            const isActive = tabIndex === index;
+            const isActive = route.asPath.includes(t[title].toLowerCase());
             return (
               <Link
                 href={
@@ -89,17 +97,15 @@ export function TabMenu() {
                 <Tab
                   // isDisabled
                   borderRadius="br3 br3 0 0"
+                  _focus={{}}
                   p="s4 s16"
                   _selected={{
                     background: '#EEF2F7',
                     color: 'gray.800',
                   }}
-                  style={{
-                    color: isActive ? 'gray.800' : 'gray.0',
-                    fontSize: 'r1',
-                    height: '51px',
-                    outline: 'none',
-                  }}
+                  fontSize="r1"
+                  height="50px"
+                  color={isActive ? 'gray.800' : 'gray.0'}
                   key={index}
                   display="flex"
                   justifyContent="flex-start"
