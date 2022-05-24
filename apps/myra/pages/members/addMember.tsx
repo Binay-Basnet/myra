@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form';
 
 import {
   Box,
-  Button,
   Container,
   Navbar,
   TabMenu,
   Text,
   Divider,
+  Button,
 } from '@saccos/myra/ui';
 
 import {
@@ -64,11 +64,9 @@ const AddMember = () => {
             display="flex"
             justifyContent="space-between"
             alignItems={'center'}
-            style={{
-              borderBottom: '1px solid #E6E6E6',
-            }}
             px="5"
             background="white"
+            borderBottom="1px solid #E6E6E6"
             borderTopRadius={5}
           >
             <Text fontSize="r2" fontWeight="600">
@@ -76,7 +74,7 @@ const AddMember = () => {
             </Text>
             <GrClose size="14px" color="#91979F" />
           </Box>
-          <Box display="flex" width="100%" mt={1}>
+          <Box display="flex" width="100%">
             <Box
               display="flex"
               w={320}
@@ -93,27 +91,34 @@ const AddMember = () => {
                 </Text>
                 <br />
                 <BasicInfo debounced={debounced} />
-                <br />
                 <Divider />
-                <br />
                 <Text fontSize="r1" fontWeight="600">
                   Contact Details
                 </Text>
                 <br />
                 <ContactDetails debounced={debounced} />
-                <br />
                 <Divider />
-                <br />
                 <Text fontSize="r1" fontWeight="600">
                   Permanent Address
                 </Text>
                 <br />
                 <PermanentAddress debounced={debounced} />
-                <br />
                 <Divider />
-                <br />
               </Box>
             </Box>
+          </Box>
+          <br />
+          <Box
+            height="60px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            px="5"
+            background="white"
+            borderTopRadius={5}
+          >
+            <Text>Save as Draft</Text>
+            <Button>Next</Button>
           </Box>
         </Container>
       </Form>

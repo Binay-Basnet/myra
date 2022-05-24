@@ -29,6 +29,7 @@ export const BasicInfo = ({ debounced }) => {
       name: 'gender',
       label: 'Gender',
       validations: { required: 'This is required' },
+      placeholder: 'Enter gender',
       options: [
         { label: 'male', value: 'male' },
         { label: 'female', value: 'female' },
@@ -38,31 +39,46 @@ export const BasicInfo = ({ debounced }) => {
       type: 'input',
       name: 'dateOfBirthBs',
       label: 'Date of Birth(BS)',
+      placeholder: 'Enter Date of Birth in BS',
     },
     {
       type: 'input',
       name: 'dateOfBirthAd',
       label: 'Date of Birth(AD)',
+      placeholder: 'Enter Date of Birth in AD',
     },
     {
       type: 'input',
       name: 'nationality',
       label: 'Nationality',
+      placeholder: 'Enter nationality',
     },
     {
-      type: 'input',
+      type: 'select',
       name: 'educationalQualification',
       label: 'Educational Qualification',
+      placeholder: 'Enter Education Qualification',
+      options: [
+        { label: 'slc', value: 'slc' },
+        { label: '+2', value: '+2' },
+        { label: 'graduate', value: 'graduate' },
+      ],
     },
     {
-      type: 'input',
+      type: 'select',
       name: 'religion',
       label: 'Religion',
+      placeholder: 'Enter Religion',
+      options: [
+        { label: 'hindu', value: 'hindu' },
+        { label: 'buddhist', value: 'buddhist' },
+      ],
     },
     {
       type: 'input',
       name: 'vehicleColor',
       label: 'Vehicle Color',
+      placeholder: 'Enter Vehicle color',
     },
   ];
 

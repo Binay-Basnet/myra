@@ -8,16 +8,19 @@ export const ContactDetails = ({ debounced }) => {
       type: 'input',
       name: 'mobileNo',
       label: 'Mobile No',
+      placeholder: 'Enter Mobile no',
     },
     {
       type: 'input',
       name: 'phoneNo',
       label: 'Phone No',
+      placeholder: 'Enter phone no',
     },
     {
       type: 'input',
       name: 'email',
       label: 'Email',
+      placeholder: 'Enter email address',
     },
   ];
 
