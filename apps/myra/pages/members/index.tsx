@@ -17,9 +17,9 @@ import {
   HamburgerIcon,
   SearchIcon,
 } from '@chakra-ui/icons';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
 
-import { Box, Button, Column, MainLayout, Table, Modal } from '@saccos/myra/ui';
+import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
 import { TabColumn, TabRow } from '@saccos/myra/components';
 import { Gender, useMembersQuery } from '../../generated/graphql';
 import { useTranslation } from '@saccos/myra/util';
@@ -78,34 +78,33 @@ const Member = () => {
         ),
       },
       {
-        Header: 'Title',
+        Header: 'Address',
         accessor: 'title',
         width: '40%',
       },
 
       {
-        Header: 'Gender',
+        Header: 'Phone No',
         accessor: 'gender',
         maxWidth: 2,
         disableSortBy: true,
       },
       {
-        Header: 'Date Of Birth',
+        Header: 'Date Joined',
         accessor: 'dateOfBirth',
         maxWidth: 2,
       },
-      /*
+
       {
-           accessor: 'actions',
-           Cell: () => (
-             <IconButton
-               variant="ghost"
-               aria-label="Search database"
-               icon={<BsThreeDotsVertical />}
-             />
-           ),
-         }
-       */
+        accessor: 'actions',
+        Cell: () => (
+          <IconButton
+            variant="ghost"
+            aria-label="Search database"
+            icon={<BsThreeDots />}
+          />
+        ),
+      },
     ],
     []
   );
@@ -147,8 +146,8 @@ const Member = () => {
           <TabColumn list={column} t={t} />
         </Box>
       </Box>
-      <Box width="1269px" mt="12px" bg="white">
-        <Box h="50px" w="1269px" borderBottom="1px solid #E6E6E6" pl="16px">
+      <Box width="100%" mt="12px" bg="white">
+        <Box h="50px" w="100%" borderBottom="1px solid #E6E6E6" pl="16px">
           <Flex justify="flex-start" h="100%">
             <Box
               display="flex"
@@ -170,7 +169,7 @@ const Member = () => {
           w="100%"
           display="flex"
           flexDirection="row"
-          justifyContent="flex-start"
+          justifyContent="space-between"
           borderBottom="1px solid #E6E6E6"
         >
           <Box w="500px" pt="15px" pl="20px">
@@ -185,44 +184,45 @@ const Member = () => {
               />
             </InputGroup>
           </Box>
-          <Box w="345px"></Box>
-          <Box
-            w="184px"
-            borderLeft="1px solid #E6E6E6"
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <IconButton
-              aria-label="Previous"
-              variant="ghost"
-              icon={<ChevronLeftIcon />}
-              h="100%"
-            />
-            <Text fontSize="13px" fontWeight="600" color="#252525">
-              1 - 20 / 50
-            </Text>
-            <IconButton
-              variant="ghost"
-              aria-label="Next"
-              icon={<ChevronRightIcon />}
-              h="100%"
-            />
-          </Box>
-          <Box
-            flex={1}
-            borderLeft="1px solid #E6E6E6"
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Button variant="ghost">
-              <HamburgerIcon color="#1DB954" /> <Text ml="10px">Default</Text>
-            </Button>
-            <Button variant="ghost">
-              <Icon as={BsThreeDotsVertical} color="#636972" />{' '}
-              <Text ml="10px">Options</Text>
-            </Button>
+          <Box display="flex">
+            <Box
+              w="184px"
+              borderLeft="1px solid #E6E6E6"
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <IconButton
+                aria-label="Previous"
+                variant="ghost"
+                icon={<ChevronLeftIcon />}
+                h="100%"
+              />
+              <Text fontSize="13px" fontWeight="600" color="#252525">
+                1 - 20 / 50
+              </Text>
+              <IconButton
+                variant="ghost"
+                aria-label="Next"
+                icon={<ChevronRightIcon />}
+                h="100%"
+              />
+            </Box>
+            <Box
+              flex={1}
+              borderLeft="1px solid #E6E6E6"
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Button variant="ghost">
+                <HamburgerIcon color="#1DB954" /> <Text ml="10px">Default</Text>
+              </Button>
+              <Button variant="ghost">
+                <Icon as={BsThreeDotsVertical} color="#636972" />{' '}
+                <Text ml="10px">Options</Text>
+              </Button>
+            </Box>
           </Box>
         </Box>
         <Box width={'100%'}>
