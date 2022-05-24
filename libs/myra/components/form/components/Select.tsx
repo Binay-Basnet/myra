@@ -12,6 +12,7 @@ import { Select as ChakraSelect, TextFields } from '@saccos/myra/ui';
 interface IInputProps extends InputProps {
   name: string;
   label: React.ReactNode;
+  placeholder: string;
   validations?: RegisterOptions;
   options: { label: string; value: string }[];
 }
@@ -20,6 +21,7 @@ export const Select = (props: IInputProps) => {
   const {
     validations,
     label,
+    placeholder,
     name,
     options,
     onChange: onChangeFromProps,
@@ -51,6 +53,7 @@ export const Select = (props: IInputProps) => {
               onChange(e);
             }}
             options={options}
+            placeholder={placeholder}
           />
         )}
       />

@@ -14,6 +14,7 @@ interface ISelectJson extends SelectProps {
 
 interface ICommonJsonProps {
   label: React.ReactNode;
+  placeholder: string;
   name: string;
   validations?: RegisterOptions;
   options?: { label: string; value: string }[];
@@ -55,8 +56,15 @@ export function FormGenerator(props: IFormGeneratorProps) {
           );
         }
         if (data.type === 'select') {
-          const { name, validations, label, onChange, options, ...otherProps } =
-            data;
+          const {
+            name,
+            validations,
+            label,
+            placeholder,
+            onChange,
+            options,
+            ...otherProps
+          } = data;
 
           return (
             <Select
@@ -64,6 +72,7 @@ export function FormGenerator(props: IFormGeneratorProps) {
               onChange={onChange ?? onEachFieldChange}
               validations={validations}
               label={label}
+              placeholder={placeholder}
               options={options}
               {...otherProps}
             ></Select>
