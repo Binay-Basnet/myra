@@ -6,13 +6,7 @@ import {
 export interface DividerProps extends ChakraDividerProps {}
 
 export function Divider(props: DividerProps) {
-  return (
-    <>
-      <br />
-      <ChakraDivider {...props} />
-      <br />
-    </>
-  );
+  return <ChakraDivider py={'s16'} />;
 }
 
 export default Divider;

@@ -12,6 +12,7 @@ export interface ButtonProps extends ChakrabuttonProps {
   spinner?: React.ReactElement;
   type?: 'button' | 'reset' | 'submit';
   bg?: string;
+  variant?: 'solid' | 'outline' | 'link' | 'ghost';
 }
 
 export function Button(props: ButtonProps) {

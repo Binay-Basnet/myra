@@ -26,6 +26,7 @@ Primary.args = {
   children: 'Button',
   loadingText: 'Loading...',
   colorScheme: 'primary',
+  rightIcon: <BiArrowBack />,
 };
 export const Danger = Template.bind({});
 Danger.args = {

@@ -16,4 +16,7 @@ const Template: Story<IconButtonProps> = (args) => <IconButton {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
   icon: <AiOutlineAppstore />,
+  size: 'md',
+  width: '40px',
+  p: '0',
 };
