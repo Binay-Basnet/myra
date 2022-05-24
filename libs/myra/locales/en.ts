@@ -11,7 +11,7 @@ const en = {
   navbarTransactions: 'Transactions',
   navbarLoan: 'Loan',
   navbarReports: 'Reports',
-  navbarUtilities: 'Share',
+  navbarUtilities: 'Utilities',
 
   // table navbar
   default: 'Default',
@@ -113,6 +113,17 @@ const en = {
   memberDropOrClickToUploadPhoto: 'Drop or Click to upload photo',
 
   saveMember: 'Save Member',
+
+  // Share Page
+  share: 'Share',
+  shareActive: 'Active',
+  shareSubmitted: 'Submitted',
+  shareDraft: 'Draft',
+
+  shareList: 'Share List',
+  shareReport: 'Share Report',
+  shareConsolidatedReport: 'Share Consolidated Report',
+  shareCertificatePrint: 'Share Certificate Print',
 };
 
 export default en;

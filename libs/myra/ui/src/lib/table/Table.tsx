@@ -25,6 +25,7 @@ import { BiFilter } from 'react-icons/bi';
 import { PopoverContent, PopoverTrigger } from '../popover/Popover';
 import React from 'react';
 import ListFilterPopover from './components/ListFilterPopover';
+import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
 
 /**
  *  @description Add disableSortBy in each column to disable column sort in that column.
@@ -113,6 +114,8 @@ export function Table<T extends Record<string, unknown>>({
                               column={column}
                               uniqueOptions={column.uniqueOptionsForListFilter}
                             />
+                          ) : column.filterType === 'amount' ? (
+                            <AmountFilterPopover column={column} />
                           ) : (
                             <Popover
                               isLazy
@@ -197,4 +200,4 @@ export function Table<T extends Record<string, unknown>>({
 }
 
 export default Table;
-export type { Column };
+export type { Column, HeaderGroup };

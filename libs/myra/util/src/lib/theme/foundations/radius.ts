@@ -3,7 +3,8 @@ const radii = {
   br1: '2px',
   br2: '4px',
   br3: '8px',
-  br4: '16px', 
+  br4: '16px',
+  br5: '20px',
 };
 
 /**

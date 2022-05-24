@@ -29,9 +29,9 @@ export function SearchBar(props: SearchBarProps) {
         children={<IoSearchSharp />}
       />
       <Input
-        focusBorderColor="primary.300"
+        // focusBorderColor="primary.300"
         border={'2px solid'}
-        borderColor={isClose ? 'gray.50' : 'primary.500'}
+        // borderColor={isClose ? 'gray.50' : 'primary.500'}
         type="search"
         placeholder="खोज्नुहोस्"
         color={'gray.500'}

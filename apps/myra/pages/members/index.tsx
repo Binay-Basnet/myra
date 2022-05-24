@@ -8,7 +8,6 @@ import {
   InputLeftElement,
   Text,
 } from '@chakra-ui/react';
-import Link from 'next/link';
 import { ReactElement, useMemo } from 'react';
 import {
   AddIcon,

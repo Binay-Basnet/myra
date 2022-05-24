@@ -7,8 +7,13 @@ import {
 import { selectionHook } from './hooks/selectionHook';
 import { useMemo } from 'react';
 import { Column, TableProps } from './types';
+import { amountFilter } from './filters/amountFilter';
 
 const rowSelectionHooks = [useRowSelect, selectionHook];
+
+const filterTypes = {
+  numberAll: amountFilter,
+};
 
 export function useTable<T extends Record<string, unknown>>({
   data,
@@ -42,6 +47,7 @@ export function useTable<T extends Record<string, unknown>>({
       ...props,
       data,
       columns,
+      filterTypes,
       defaultColumn,
       manualSortBy: manualSort,
       disableFilters: !filter,

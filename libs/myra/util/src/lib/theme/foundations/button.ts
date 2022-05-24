@@ -14,6 +14,7 @@ const baseStyle: SystemStyleObject = {
   transitionDuration: 'normal',
   _focus: {
     boxShadow: 'outline',
+    // color: 'yellow.500',
     color: 'gray.0',
   },
   _disabled: {

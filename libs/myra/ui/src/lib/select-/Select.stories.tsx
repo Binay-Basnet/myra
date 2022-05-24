@@ -27,5 +27,5 @@ Primary.args = {
       value: 'option-3',
     },
   ],
-  variant: 'solid',
+  variant: 'outline',
 };
