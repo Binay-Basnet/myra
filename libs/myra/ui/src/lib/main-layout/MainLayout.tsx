@@ -1,7 +1,6 @@
 import { Navbar } from '../navbar/Navbar';
 import { TabMenu } from '../tab-menu/TabMenu';
 import { Box } from '@chakra-ui/react';
-import { useTranslation } from '@saccos/myra/util';
 
 export interface MainLayoutProps {
   children: React.ReactNode;
@@ -9,7 +8,6 @@ export interface MainLayoutProps {
 
 // ! TODO use THEMES
 export function MainLayout(props: MainLayoutProps) {
-  const { t } = useTranslation();
   const { children } = props;
   return (
     // <Box
