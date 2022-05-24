@@ -26,7 +26,7 @@ export type ExtraColumnProps = Partial<{
   paddingY: string | number | number[];
   imgSrc: string;
 
-  filterType?: 'list';
+  filterType?: 'list' | 'amount';
   uniqueOptionsForListFilter?: string[];
 }>;
 
@@ -34,7 +34,7 @@ export type Column<T extends Record<string, unknown>> = BaseColumn<T> &
   ExtraColumnProps & {
     disableSortBy?: boolean;
     disableFilters?: boolean;
-    filter?: FilterType<T> | DefaultFilterTypes | string;
+    filter?: FilterType<T> | DefaultFilterTypes | string | 'numberAll';
 
     Filter?: Renderer<FilterColumnProps<T>>;
     Cell?: Renderer<CellProps<T>>;
