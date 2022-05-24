@@ -11,7 +11,7 @@ const en = {
   navbarTransactions: 'Transactions',
   navbarLoan: 'Loan',
   navbarReports: 'Reports',
-  navbarUtilities: 'Share',
+  navbarUtilities: 'Utilities',
 
   // table navbar
   default: 'Default',

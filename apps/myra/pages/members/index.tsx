@@ -19,7 +19,14 @@ import {
 } from '@chakra-ui/icons';
 import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
 
-import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
+import {
+  Box,
+  Button,
+  Column,
+  MainLayout,
+  Table,
+  // Modal,
+} from '@saccos/myra/ui';
 import { TabColumn, TabRow } from '@saccos/myra/components';
 import { Gender, useMembersQuery } from '../../generated/graphql';
 import { useTranslation } from '@saccos/myra/util';

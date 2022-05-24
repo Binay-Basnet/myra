@@ -56,8 +56,8 @@ export function FormInput(props: FormInputProps) {
           fontSize="r2"
           fontWeight="400"
           color={'gray.700'}
-          _focus={{ borderColor: 'primary.500' }}
-          _hover={{ borderColor: 'primary.500' }}
+          // _focus={{ borderColor: 'primary.500' }}
+          // _hover={{ borderColor: 'primary.500' }}
         />
         {rightElement && (
           <InputRightElement pointerEvents="none" children={rightElement} />
