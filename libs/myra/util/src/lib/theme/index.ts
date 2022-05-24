@@ -7,6 +7,7 @@ import radio from './foundations/radio';
 import Table from './foundations/table';
 import modal from './foundations/modal';
 import tags from './foundations/tags';
+import switches from './foundations/switches';
 
 // 2. Call `extendTheme` and pass your custom values
 
@@ -81,6 +82,12 @@ export const theme = extendTheme({
       variants: tags.variants,
       baseStyle: tags.baseStyle,
       defaultProps: tags.defaultProps,
+    },
+    Switch: {
+      sizes: switches.sizes,
+      variants: switches.variants,
+      baseStyle: switches.baseStyle,
+      defaultProps: switches.defaultProps,
     },
   },
 });

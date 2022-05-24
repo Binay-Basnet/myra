@@ -27,25 +27,25 @@ const baseStyleLabel: SystemStyleObject = {
 };
 
 const baseStyleCloseButton: SystemStyleObject = {
-  fontSize: '18px',
-  w: '1.25rem',
-  h: '1.25rem',
+  fontSize: 's16',
+  w: 's12',
+  h: 's12',
   transitionProperty: 'common',
   transitionDuration: 'normal',
-  borderRadius: 'full',
+  borderColor: 'red',
   marginStart: '0.375rem',
-  marginEnd: '-1',
+  marginEnd: '-0.5',
   marginLeft: 's12',
   _disabled: {
     opacity: 0.4,
     color: 'disabled.textDisabled',
   },
   _focus: {
-    boxShadow: 'outline',
+    boxShadow: 'tagShadow',
     borderRadius: 'none',
-    borderColor: 'primary.900',
-    color: 'gray',
-    bg: 'background',
+    borderColor: 'primary.300',
+    color: 'red',
+    bg: 'background.500',
   },
   _hover: {
     color: 'danger',
