@@ -5,27 +5,27 @@ import { Grid } from '../../ui/src/lib/grid/Grid';
 export const BasicInfo = ({ debounced }) => {
   const dataSchema: DataSchema[] = [
     {
-      type: 'input',
+      variant: 'input',
       name: 'firstName',
       label: 'First Name',
       validations: { required: 'This is required' },
       placeholder: 'Enter First Name',
     },
     {
-      type: 'input',
+      variant: 'input',
       name: 'middleName',
       label: 'Middle Name',
       placeholder: 'Enter Middle Name',
     },
     {
-      type: 'input',
+      variant: 'input',
       name: 'lastName',
       label: 'Last Name',
       validations: { required: 'This is required' },
       placeholder: 'Enter Last Name',
     },
     {
-      type: 'select',
+      variant: 'select',
       name: 'gender',
       label: 'Gender',
       validations: { required: 'This is required' },
@@ -36,25 +36,25 @@ export const BasicInfo = ({ debounced }) => {
       ],
     },
     {
-      type: 'input',
+      variant: 'input',
       name: 'dateOfBirthBs',
       label: 'Date of Birth(BS)',
       placeholder: 'Enter Date of Birth in BS',
     },
     {
-      type: 'input',
+      variant: 'input',
       name: 'dateOfBirthAd',
       label: 'Date of Birth(AD)',
       placeholder: 'Enter Date of Birth in AD',
     },
     {
-      type: 'input',
+      variant: 'input',
       name: 'nationality',
       label: 'Nationality',
       placeholder: 'Enter nationality',
     },
     {
-      type: 'select',
+      variant: 'select',
       name: 'educationalQualification',
       label: 'Educational Qualification',
       placeholder: 'Enter Education Qualification',
@@ -65,7 +65,7 @@ export const BasicInfo = ({ debounced }) => {
       ],
     },
     {
-      type: 'select',
+      variant: 'select',
       name: 'religion',
       label: 'Religion',
       placeholder: 'Enter Religion',
@@ -75,7 +75,7 @@ export const BasicInfo = ({ debounced }) => {
       ],
     },
     {
-      type: 'input',
+      variant: 'input',
       name: 'vehicleColor',
       label: 'Vehicle Color',
       placeholder: 'Enter Vehicle color',
@@ -84,12 +84,7 @@ export const BasicInfo = ({ debounced }) => {
 
   return (
     <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
-      <FormGenerator
-        dataSchema={dataSchema}
-        onEachFieldChange={() => {
-          debounced();
-        }}
-      />
+      <FormGenerator dataSchema={dataSchema} />
     </Grid>
   );
 };

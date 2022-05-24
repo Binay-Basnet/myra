@@ -1,83 +1,69 @@
 import React from 'react';
-import { RegisterOptions } from 'react-hook-form';
-import { InputProps, SelectProps } from '@chakra-ui/react';
 
 import { Input, Select } from './components';
 
-interface IInputJson extends InputProps {
-  type: 'input';
-}
+import type {
+  DataSchema,
+  DefaultFieldTypes,
+  Dependencies,
+  IConditionalProps,
+  IInputProps,
+} from './types';
 
-interface ISelectJson extends SelectProps {
-  type: 'select';
-}
+export interface IFormGeneratorProps<TfieldTypes extends DefaultFieldTypes> {
+  dataSchema: DataSchema<TfieldTypes>[];
 
-interface ICommonJsonProps {
-  label: React.ReactNode;
-  placeholder: string;
-  name: string;
-  validations?: RegisterOptions;
-  options?: { label: string; value: string }[];
-}
-
-export type DataSchema = (IInputJson | ISelectJson) & ICommonJsonProps;
-
-export interface IFormGeneratorProps {
-  dataSchema: DataSchema[];
+  // WARNING! THIS IS EXPERIMENTAL PROPS. DO NOT USE IT RIGHT NOW
+  dependencies?: Dependencies<TfieldTypes>; // TODO! check its viablity
 
   // WARNING!! THIS IS EXPERIMENTAL PROPS. DO NOT USE IT RIGHT NOW
   // !!EXPERIMENTAL!!
-  onEachFieldChange?: () => void; // TODO! check its viability
 }
-export function FormGenerator(props: IFormGeneratorProps) {
-  const { dataSchema, onEachFieldChange } = props;
+export function FormGenerator<TfieldTypes extends DefaultFieldTypes>(
+  props: IFormGeneratorProps<TfieldTypes>
+) {
+  const { dataSchema, dependencies } = props;
   return (
     <>
       {dataSchema.map((data) => {
-        if (data.type === 'input') {
-          const {
-            name,
-            validations,
-            label,
-            placeholder,
-            onChange,
-            ...otherProps
-          } = data;
+        if (data.variant === 'input') {
+          const { name, validations, label, ...otherProps } = data;
 
+          //! TODO This is bad typescript
+          const dependency = dependencies?.[name] as IConditionalProps<
+            IInputProps,
+            TfieldTypes
+          >;
           return (
-            <Input
+            <Input<TfieldTypes>
+              key={name}
               name={name}
-              placeholder={placeholder}
-              onChange={onChange ?? onEachFieldChange}
               validations={validations}
               label={label}
               {...otherProps}
+              dependency={dependency}
             />
           );
         }
-        if (data.type === 'select') {
-          const {
-            name,
-            validations,
-            label,
-            placeholder,
-            onChange,
-            options,
-            ...otherProps
-          } = data;
+        // if (data.variant === 'select') {
+        //   const {
+        //     name,
+        //     validations,
+        //     label,
+        //     options,
+        //     ...otherProps
+        //   } = data;
 
-          return (
-            <Select
-              name={name}
-              onChange={onChange ?? onEachFieldChange}
-              validations={validations}
-              label={label}
-              placeholder={placeholder}
-              options={options}
-              {...otherProps}
-            ></Select>
-          );
-        }
+        //   return (
+        //     <Select
+        //       name={name}
+        //       validations={validations}
+        //       label={label}
+        //       options={options}
+        //       {...otherProps}
+        //     ></Select>
+        //   );
+        // }
         return null;
       })}
     </>
