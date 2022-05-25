@@ -1,36 +1,29 @@
 import React from 'react';
-import { Input, Select, Box } from '@saccos/myra/ui';
+import { FormInput, FormSelect } from '@saccos/myra/components';
 
-export const MemberCommonForm = ({ fields, register, error }) => {
+export const MemberCommonForm = ({ fields, control }) => {
   return fields.map((field) => {
-    const { title, type, id, name, options, validationProps } = field;
+    const { label, type, name, options, placeholder, variant } = field;
 
-    if (type === 'text' || type === 'number' || type === 'date') {
-      const errorMessage = error[name]?.message;
+    if (variant === 'input') {
       return (
-        <Box display="flex" flexDirection="column">
-          {title}
-          <Input
-            borderRadius="2px"
-            borderColor="#CBD0D6"
-            placeholder={title}
-            id={id}
-            type={type || 'text'}
-            {...register(name)}
-          />
-          <p>{errorMessage && errorMessage}</p>
-        </Box>
+        <FormInput
+          type={type}
+          control={control}
+          placeholder={placeholder}
+          name={name}
+          label={label}
+        />
       );
-    } else if (type === 'select') {
+    } else if (variant === 'select') {
       return (
-        <Box display="flex" flexDirection="column">
-          {title}
-          <Select borderRadius="2px" borderColor="#CBD0D6">
-            {options?.map((item) => (
-              <option key={item}>{item}</option>
-            ))}
-          </Select>
-        </Box>
+        <FormSelect
+          control={control}
+          placeholder={placeholder}
+          name={name}
+          label={label}
+          options={options}
+        />
       );
     }
   });

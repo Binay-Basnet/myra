@@ -1,7 +1,8 @@
-import personalInfo from './personalInfo.json';
+import { personalInfo } from './personalInfo';
 import familyInfo from './familyInfo.json';
 import permanentAddressInfo from './permanentAddressInfo.json';
-import contactInfo from './contactInfo.json';
+import { contactInfo } from './contactInfo';
+import { citizenshipData } from './citizenshipData';
 import nomineeInfo from './nomineeInfo.json';
 
 export {
@@ -10,4 +11,5 @@ export {
   permanentAddressInfo,
   contactInfo,
   nomineeInfo,
+  citizenshipData,
 };

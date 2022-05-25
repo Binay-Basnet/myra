@@ -88,7 +88,7 @@ export const theme = extendTheme({
     },
     Switch: {
       sizes: switches.sizes,
-      variants: switches.variants,
+      // variants: switches.variants,
       baseStyle: switches.baseStyle,
       defaultProps: switches.defaultProps,
     },
