@@ -8,6 +8,7 @@ const ne = {
   navbarMembers: 'सदस्यहरू',
   navbarShare: 'भाग',
   navbarAccounts: 'खाताहरू',
+  navbarInventory: 'खाताहरू',
   navbarTransactions: 'लेनदेन',
   navbarLoan: 'ऋण',
   navbarReports: 'प्रतिवेदन',
@@ -123,6 +124,24 @@ const ne = {
   shareReport: 'Share Report',
   shareConsolidatedReport: 'Share Consolidated Report',
   shareCertificatePrint: 'Share Certificate Print',
+
+  //Account Page TODO ( Update Translations)
+
+  account: 'Account',
+  accountNavActive: 'Active',
+  accountNavSubmitted: 'Submitted',
+  accountNavDraft: 'Draft',
+
+  accountList: 'Account List',
+  accountReport: 'Account Report',
+  accountConsolidatedReport: 'Account Consolidated Report',
+  accountCertificatePrint: 'Account Certificate Print',
+
+  // Inventory Page TODO ( Update Translations )
+  inventoryProduct: 'Product',
+  inventoryItemGroup: 'Item Group',
+  inventoryUnitOfMeasure: 'Unit of Measure',
+  inventoryVendor: 'Vendor',
 };
 
 export default ne;

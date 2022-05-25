@@ -1,5 +1,5 @@
 export * from './MemberCommonForm';
-export * from './table/TableComponent';
+export * from './table/MemberTable';
 export * from './tab/TabMemberPageRow';
 export * from './tab/TabforMemberPage';
 export * from './addMemberForms';
