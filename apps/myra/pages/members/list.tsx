@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Flex,
   Icon,
   IconButton,
@@ -8,8 +7,7 @@ import {
   InputLeftElement,
   Text,
 } from '@chakra-ui/react';
-import Link from 'next/link';
-import { ReactElement, useMemo } from 'react';
+import { ReactElement } from 'react';
 import {
   AddIcon,
   ChevronLeftIcon,
@@ -17,19 +15,33 @@ import {
   HamburgerIcon,
   SearchIcon,
 } from '@chakra-ui/icons';
-import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
-import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
-import { TabColumn, TabRow } from '@saccos/myra/components';
-import { Gender, useMembersQuery } from '../generated/graphql';
+import { Box, Button, MainLayout } from '@saccos/myra/ui';
+import { MemberTable, TabColumn, TabRow } from '@saccos/myra/components';
+import { useGetNewIdMutation } from '../../generated/graphql';
 import { useTranslation } from '@saccos/myra/util';
+import { useRouter } from 'next/router';
 
 const column = [
-  'shareList',
-  'shareReport',
-  'shareConsolidatedReport',
-  'shareCertificatePrint',
+  {
+    title: 'memberList',
+    link: '/members/list',
+  },
+  {
+    title: 'balanceReport',
+    link: '/members/balanceReport',
+  },
+  {
+    title: 'memberDetails',
+    link: '/members/details',
+  },
+  {
+    title: 'memberSettings',
+    link: '/members/settings',
+  },
 ];
+
 const rows = [
   'memberNavActive',
   'memberNavInactive',
@@ -37,123 +49,41 @@ const rows = [
   'memberNavDraft',
 ];
 
-type MemberData = {
-  id: string;
-  firstName: string;
-  middleName?: string | null;
-  lastName: string;
-  gender: Gender;
-  title?: string | null;
-  dateOfBirth?: string | null;
-};
+const Member = () => {
+  const router = useRouter();
+  const newId = useGetNewIdMutation();
 
-const Share = () => {
-  const { data } = useMembersQuery();
   const { t } = useTranslation();
 
-  const rowData = useMemo(() => data && data?.members?.list, [data]);
-
-  const columns: Column<MemberData>[] = useMemo(
-    () => [
-      {
-        Header: 'Date Joined',
-        accessor: 'id',
-        maxWidth: 4,
-      },
-
-      {
-        Header: 'Type',
-        accessor: 'middleName',
-        width: '2%',
-        maxWidth: 12,
-      },
-
-      {
-        Header: 'Member Id',
-        accessor: 'lastName',
-        maxWidth: 4,
-      },
-
-      {
-        Header: 'Name',
-        accessor: 'firstName',
-        width: '80%',
-
-        Cell: ({ value }) => (
-          <Flex alignItems="center" gap="2">
-            <Avatar
-              name="Dan Abrahmov"
-              size="sm"
-              src="https://bit.ly/dan-abramov"
-            />
-            <span>{value}</span>
-          </Flex>
-        ),
-      },
-      {
-        Header: 'Share Count',
-        accessor: 'title',
-        width: '40%',
-      },
-
-      {
-        Header: 'Share Value',
-        accessor: 'gender',
-        maxWidth: 2,
-        disableSortBy: true,
-      },
-
-      {
-        accessor: 'actions',
-        Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
-        ),
-      },
-    ],
-    []
-  );
-
   return (
-    <Box mt="100px" p="16px" display="flex" width="100%">
-      <Box width={'15%'} mt="24px">
-        <Text fontSize="24px" fontWeight="600" pl="16px">
-          {t.share}
+    <Box mt="100px" p="16px" display="flex">
+      <Box width="15%" mt="24px">
+        <Text fontSize="20px" fontWeight="600" pl="16px">
+          {t.members}
         </Text>
 
         <Box mt="58px" display="flex" flexDirection="column" width="238px">
           <Box pl="16px">
-            <Link href="/members/addMember" passHref>
-              <Button
-                width="100%"
-                display="flex"
-                justifyContent="flex-start"
-                leftIcon={<AddIcon h="11px" />}
-                bg="#006837"
-                fontSize="14px"
-                py="6"
-              >
-                New Share
-              </Button>
-            </Link>
+            <Button
+              width="100%"
+              leftIcon={<AddIcon h="11px" />}
+              bg="#006837"
+              fontSize="14px"
+              py="6"
+              onClick={() =>
+                newId
+                  .mutateAsync({})
+                  .then((res) =>
+                    router.push(`/members/addMember/${res?.newId}`)
+                  )
+              }
+            >
+              {t.membersAddNewMembers}
+            </Button>
           </Box>
-          {/* <Modal
-            isCentered={true}
-            // autoFocus={false}
-            modalButtonProp="Click me"
-            titleProps="Test"
-            footerPrimary2Props="Delete"
-            footerSecondaryProps="Cancel"
-            onClickPrimary={() => alert('Deleted!!!')}
-          >
-            <p>Hey tyhis si a a test project</p>
-          </Modal> */}
           <br />
 
-          <TabColumn list={column} t={t} />
+          <TabColumn list={column} />
         </Box>
       </Box>
       <Box width="85%" mt="12px" bg="white">
@@ -166,7 +96,7 @@ const Share = () => {
               maxH="50px"
             >
               <Text fontSize="16" fontWeight="600" color="#343C46">
-                Share Register
+                {t.memberList}
               </Text>
             </Box>
             <Box ml="48px" display="flex" alignItems="flex-end">
@@ -236,16 +166,15 @@ const Share = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          {rowData && (
-            <Table data={rowData.slice(0, 10)} columns={columns} sort={true} />
-          )}
+          <MemberTable />
         </Box>
       </Box>
     </Box>
   );
 };
 
-Share.getLayout = function getLayout(page: ReactElement) {
+Member.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };
-export default Share;
+
+export default Member;
