@@ -17,6 +17,5 @@ export const Primary = Template.bind({});
 Primary.args = {
   icon: <AiOutlineAppstore />,
   size: 'md',
-  width: '40px',
-  p: '0',
+  fontSize: '24px',
 };
