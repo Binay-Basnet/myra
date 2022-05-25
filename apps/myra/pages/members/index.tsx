@@ -20,7 +20,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 
 import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
-import { TabColumn, TabRow } from '@saccos/myra/components';
+import { TabColumn, TabRow, AcordianComponent } from '@saccos/myra/components';
 import {
   Gender,
   useMembersQuery,
@@ -40,6 +40,13 @@ const rows = [
   'memberNavWip',
   'memberNavDraft',
 ];
+const sectionList = [
+  'Section 1: Personal Information',
+  'Section 2: Professional Information',
+  'Section 3: Cooperative Information',
+];
+const accordionList = ['Gender', 'Nationality', 'Others'];
+const list = ['Male', 'Female', 'Others'];
 
 type MemberData = {
   id: string;
@@ -234,6 +241,11 @@ const Member = () => {
             </Button>
           </Box>
         </Box>
+        <AcordianComponent
+          sectionList={sectionList}
+          accordionList={accordionList}
+          list={list}
+        />
         <Box width={'100%'}>
           {rowData && (
             <Table data={rowData.slice(0, 10)} columns={columns} sort={true} />

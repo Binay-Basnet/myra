@@ -8,9 +8,9 @@ import {
 
 export interface RadioGroupProps extends ChakraRadioProps {
   colorScheme?: string;
-  radioList?: string[];
-  spacing: number;
-  direction: 'column' | 'column-reverse' | 'row' | 'row-reverse';
+  radioList: string[];
+  spacing?: number;
+  direction?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
 }
 
 export function RadioGroup(props: RadioGroupProps) {
