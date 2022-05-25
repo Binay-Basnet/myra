@@ -4,6 +4,7 @@ import {
   Flex,
   Icon,
   Popover,
+  Spinner,
   Table as ChakraTable,
   TableContainer,
   Tbody,
@@ -38,7 +39,7 @@ export function Table<T extends Record<string, unknown>>({
   hasRowSelection = true,
   size = 'default',
   isStatic = false,
-
+  isLoading,
   manualSort = false,
   ...props
 }: TableProps<T>) {
@@ -55,6 +56,24 @@ export function Table<T extends Record<string, unknown>>({
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
+
+  if (isLoading) {
+    return (
+      <Flex justifyContent="center" height="100px" alignItems="center">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="primary.500"
+          size="xl"
+        />
+      </Flex>
+    );
+  }
+
+  if (data.length === 0) {
+    return <div>No Data Found</div>;
+  }
 
   return (
     <TableContainer>
