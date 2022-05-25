@@ -9,6 +9,7 @@ import Input from './foundations/input';
 import modal from './foundations/modal';
 import tags from './foundations/tags';
 import switches from './foundations/switches';
+import accordion from './foundations/accordion';
 
 // 2. Call `extendTheme` and pass your custom values
 
@@ -90,6 +91,9 @@ export const theme = extendTheme({
       sizes: switches.sizes,
       baseStyle: switches.baseStyle,
       defaultProps: switches.defaultProps,
+    },
+    Accordion: {
+      baseStyle: accordion.baseStyle,
     },
   },
 });
