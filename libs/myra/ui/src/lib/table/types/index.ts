@@ -81,4 +81,4 @@ export type TableProps<T extends Record<string, unknown>> = BaseTableProps<T> &
   SortTableProps &
   FilterTableProps;
 
-export { Cell, HeaderGroup } from 'react-table';
+export type { Cell, HeaderGroup } from 'react-table';

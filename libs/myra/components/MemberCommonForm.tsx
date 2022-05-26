@@ -25,7 +25,7 @@ export const MemberCommonForm = ({ fields, register, error }) => {
       return (
         <Box display="flex" flexDirection="column">
           {title}
-          <Select borderRadius="2px" borderColor="#CBD0D6">
+          <Select options={options} borderRadius="2px" borderColor="#CBD0D6">
             {options?.map((item) => (
               <option key={item}>{item}</option>
             ))}
