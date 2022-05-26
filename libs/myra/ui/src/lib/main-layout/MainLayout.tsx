@@ -191,6 +191,7 @@ const shareRows = ['shareActive', 'shareSubmitted', 'shareDraft'];
 interface ILayoutColumnProps {
   children: React.ReactNode;
   headingText: string;
+  onClick?: () => void;
 }
 
 export const ShareLayout = (props: ILayoutColumnProps) => {
@@ -311,19 +312,18 @@ export const InventoryLayout = (props: ILayoutColumnProps) => {
     <MainLayoutWithColumn
       mainBtn={
         // TODO ( Update this btn component )
-        <Link href="/inventory/items" passHref>
-          <Button
-            width="100%"
-            display="flex"
-            justifyContent="flex-start"
-            leftIcon={<AddIcon h="11px" />}
-            bg="#006837"
-            fontSize="14px"
-            py="6"
-          >
-            New Item
-          </Button>
-        </Link>
+        <Button
+          width="100%"
+          display="flex"
+          justifyContent="flex-start"
+          leftIcon={<AddIcon h="11px" />}
+          bg="#006837"
+          fontSize="14px"
+          py="6"
+          onClick={props.onClick}
+        >
+          New Item
+        </Button>
       }
       headingText={props.headingText}
       mainHeadingText="Inventory"
