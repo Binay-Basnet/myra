@@ -20,7 +20,7 @@ export function RadioGroup(props: RadioGroupProps) {
       <Stack spacing={spacing} direction={direction}>
         {radioList.map((item, index) => {
           return (
-            <Radio {...rest} id={index} value={item}>
+            <Radio {...rest} id={index.toString()} value={item}>
               {item}
             </Radio>
           );

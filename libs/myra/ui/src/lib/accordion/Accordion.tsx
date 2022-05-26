@@ -5,6 +5,9 @@ import {
   AccordionPanel,
   AccordionIcon,
   AccordionProps as ChakraAccordianProps,
+  AccordionItemProps as ChakraAccordianItemProps,
+  AccordionButtonProps as ChakraAccordianButtonProps,
+  AccordionPanelProps as ChakraAccordianPanelProps,
 } from '@chakra-ui/react';
 import { Box } from '@saccos/myra/ui';
 
@@ -16,6 +19,27 @@ export interface AccordionProps extends ChakraAccordianProps {
   children: React.ReactNode;
 }
 
+const AccordionItemComponent = ({
+  children,
+  ...rest
+}: ChakraAccordianItemProps) => {
+  return <AccordionItem {...rest}>{children}</AccordionItem>;
+};
+
+const AccordionButtonComponent = ({
+  children,
+  ...rest
+}: ChakraAccordianButtonProps) => {
+  return <AccordionButton {...rest}>{children}</AccordionButton>;
+};
+
+const AccordionPanelComponent = ({
+  children,
+  ...rest
+}: ChakraAccordianPanelProps) => {
+  return <AccordionPanel {...rest}>{children}</AccordionPanel>;
+};
+
 export function Accordion(props: AccordionProps) {
   const { children, allowMultiple, allowToggle, title, ...rest } = props;
   return (
@@ -25,19 +49,19 @@ export function Accordion(props: AccordionProps) {
       allowToggle={allowToggle}
       {...rest}
     >
-      <AccordionItem>
+      <AccordionItemComponent>
         <h2>
-          <AccordionButton>
+          <AccordionButtonComponent>
             <Box flex="1" textAlign="left">
               {title}
             </Box>
             <AccordionIcon />
-          </AccordionButton>
+          </AccordionButtonComponent>
         </h2>
-        <AccordionPanel bg="white" pb={4}>
+        <AccordionPanelComponent bg="white" pb={4}>
           {children}
-        </AccordionPanel>
-      </AccordionItem>
+        </AccordionPanelComponent>
+      </AccordionItemComponent>
     </ChakraAccordian>
   );
 }
