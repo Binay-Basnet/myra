@@ -1,11 +1,11 @@
 import { ReactElement } from 'react';
 
 import { ShareLayout } from '@saccos/myra/ui';
-import { MemberTable } from '@saccos/myra/components';
+import { ShareTable } from '@saccos/myra/components';
 
 // TODO ( UPDATE THIS PAGE A/C TO DESIGN )
 const ShareReport = () => {
-  return <MemberTable />;
+  return <ShareTable />;
 };
 
 ShareReport.getLayout = function getLayout(page: ReactElement) {

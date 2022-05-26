@@ -1,10 +1,10 @@
 import { ReactElement } from 'react';
 
 import { InventoryLayout } from '@saccos/myra/ui';
-import { MemberTable } from '@saccos/myra/components';
+import { InventoryUseOfMeasureTable } from '@saccos/myra/components';
 
 const InventoryUnitsOfMeasure = () => {
-  return <MemberTable />;
+  return <InventoryUseOfMeasureTable />;
 };
 
 InventoryUnitsOfMeasure.getLayout = function getLayout(page: ReactElement) {
