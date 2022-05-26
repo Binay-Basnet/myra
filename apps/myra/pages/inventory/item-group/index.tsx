@@ -1,7 +1,9 @@
 import { ReactElement } from 'react';
 
-import { InventoryLayout } from '@saccos/myra/ui';
-import { InventoryItemGroupTable } from '@saccos/myra/components';
+import {
+  InventoryItemGroupTable,
+  InventoryLayout,
+} from '@saccos/myra/components';
 import Router from 'next/router';
 
 const InventoryItemGroupPage = () => {

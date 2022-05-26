@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 
-import { ShareLayout } from '@saccos/myra/ui';
-import { ShareTable } from '@saccos/myra/components';
+import { ShareLayout, ShareTable } from '@saccos/myra/components';
 
 // TODO ( Update this page when design arrives )
 const ShareCertificatePrint = () => {
