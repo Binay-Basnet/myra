@@ -1,4 +1,5 @@
-import { chakra, Tab, Tabs, TabList } from '@chakra-ui/react';
+import { chakra, Tab, TabList, Tabs } from '@chakra-ui/react';
+
 const TabElement = chakra(Tab, {
   baseStyle: {
     color: '#636972',
@@ -16,11 +17,11 @@ const TabElement = chakra(Tab, {
   },
 });
 
-export const TabRow = ({ list, t }) => {
+export const TabRow = ({ list, t }: any) => {
   return (
     <Tabs variant="unstyled">
       <TabList>
-        {list.map((item, index) => {
+        {list.map((item: any, index: number) => {
           return <TabElement key={`${item}${index}`}>{t[item]}</TabElement>;
         })}
       </TabList>
