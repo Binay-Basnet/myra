@@ -7,15 +7,14 @@ import type {
 const baseStyle: SystemStyleObject = {
   textTransform: 'initial',
   lineHeight: '1.2',
-  borderRadius: 'base',
+  borderRadius: '4px',
   padding: '12px',
   fontWeight: 'medium',
   transitionProperty: 'common',
   transitionDuration: 'normal',
   _focus: {
-    boxShadow: 'outline',
+    boxShadow: 'none',
     // color: 'yellow.500',
-    color: 'gray.0',
   },
   _disabled: {
     opacity: 0.4,
@@ -34,11 +33,11 @@ const variantGhost: SystemStyleFunction = (props) => {
 
   if (c === 'gray') {
     return {
-      color: mode(`inherit`, `whiteAlpha.900`)(props),
+      color: mode(`gray.600`, `whiteAlpha.900`)(props),
       _hover: {
-        bg: mode(`gray.100`, `whiteAlpha.200`)(props),
+        bg: mode(`gray.700`, `whiteAlpha.200`)(props),
       },
-      _active: { bg: mode(`gray.200`, `whiteAlpha.300`)(props) },
+      _active: { bg: mode(`gray.800`, `whiteAlpha.300`)(props) },
     };
   }
 
@@ -94,17 +93,18 @@ const variantSolid: SystemStyleFunction = (props) => {
   const { colorScheme: c } = props;
 
   if (c === 'gray') {
-    const bg = mode(`gray.100`, `whiteAlpha.200`)(props);
+    const bg = mode(`gray.600`, `whiteAlpha.200`)(props);
 
     return {
       bg,
+      color: 'white',
       _hover: {
-        bg: mode(`gray.200`, `whiteAlpha.300`)(props),
+        bg: mode(`gray.700`, `whiteAlpha.300`)(props),
         _disabled: {
           bg,
         },
       },
-      _active: { bg: mode(`gray.300`, `whiteAlpha.400`)(props) },
+      _active: { bg: mode(`gray.800`, `whiteAlpha.400`)(props) },
     };
   }
 
@@ -171,26 +171,30 @@ const sizes: Record<string, SystemStyleObject> = {
   lg: {
     h: 12,
     minW: 12,
-    fontSize: 'lg',
-    px: 6,
+    fontSize: 'md',
+    px: 3,
+    py: 3,
   },
   md: {
     h: 10,
     minW: 10,
-    fontSize: 'md',
-    px: 4,
+    fontSize: 'sm',
+    px: 3,
+    py: 2,
   },
   sm: {
     h: 8,
     minW: 8,
-    fontSize: 'sm',
+    fontSize: 'xs',
     px: 3,
+    py: 1,
   },
   xs: {
     h: 6,
     minW: 6,
     fontSize: 'xs',
-    px: 2,
+    px: 3,
+    py: 1,
   },
 };
 
