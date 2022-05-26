@@ -27,7 +27,7 @@ export const personalInfo = {
       variant: 'select',
       name: 'gender',
       label: 'Gender',
-      placeholder: 'Enter gender',
+      placeholder: 'Select gender',
       options: [
         { label: 'male', value: 'male' },
         { label: 'female', value: 'female' },
@@ -59,7 +59,7 @@ export const personalInfo = {
       variant: 'select',
       name: 'educationQualification',
       label: 'Educational Qualification',
-      placeholder: 'Enter Educational Qualification',
+      placeholder: 'Select Educational Qualification',
       options: [
         { label: '10', value: 'ten' },
         { label: '12', value: 'twelve' },
@@ -72,7 +72,7 @@ export const personalInfo = {
       variant: 'select',
       name: 'religion',
       label: 'Religion',
-      placeholder: 'Enter Religion',
+      placeholder: 'Select Religion',
       options: [
         { label: 'Christain', value: 'christain' },
         { label: 'Hindu', value: 'hindu' },

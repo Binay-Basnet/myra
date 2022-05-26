@@ -12,6 +12,7 @@ import {
   Button,
   Grid,
   Checkbox,
+  Switch,
 } from '@saccos/myra/ui';
 
 import { MemberCommonForm } from '@saccos/myra/components';
@@ -20,12 +21,14 @@ import {
   personalInfo,
   contactInfo,
   citizenshipData,
+  permanentAddress,
+  rentedDetails,
 } from '@saccos/myra/jsonData';
 
 const identificationDetails = [
   'Citizenship',
   'Driving License',
-  'Password',
+  'Passport',
   'Voters Card',
   'National ID',
 ];
@@ -157,6 +160,48 @@ const AddMember = () => {
                 />
               </Grid>
               <Divider my={8} />
+              <Text fontSize="r1" fontWeight="InterSemiBold">
+                Permanent Address
+              </Text>
+              <br />
+              <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+                <MemberCommonForm
+                  control={control}
+                  fields={permanentAddress.fields}
+                />
+              </Grid>
+              <br />
+              <Button>Pin on Map</Button>
+              <br />
+              <br />
+              <Text fontSize="r1" fontWeight="InterSemiBold">
+                Temporary Address
+              </Text>
+              <br />
+              <Box display="flex" flexDirection="row" alignItems="center">
+                <Switch mr={5} />
+                <Text fontSize="r1">Temporary Address same as permanent</Text>
+              </Box>
+              <br />
+              <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+                <MemberCommonForm
+                  control={control}
+                  fields={permanentAddress.fields}
+                />
+              </Grid>
+              <br />
+              <Button>Pin on Map</Button>
+              <br /> <br />
+              <Text fontSize="r1" fontWeight="InterSemiBold">
+                INCASE RESIDING IN RENTED HOUSE
+              </Text>
+              <br />
+              <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+                <MemberCommonForm
+                  control={control}
+                  fields={rentedDetails.fields}
+                />
+              </Grid>
             </Box>
           </Box>
         </Box>
