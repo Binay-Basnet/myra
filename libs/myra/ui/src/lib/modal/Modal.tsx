@@ -13,8 +13,8 @@ import { Button, Divider } from '@saccos/myra/ui';
 
 /* eslint-disable-next-line */
 export interface ModalProps extends ChakraModalProps {
-  isOpen?: boolean;
-  onClose?: () => void;
+  // isOpen: boolean;
+  // onClose?: () => void;
   modalButtonProp: string;
   children: React.ReactNode;
   titleProps?: React.ReactNode;
@@ -33,13 +33,16 @@ export function Modal(props: ModalProps) {
     footerPrimary2Props,
     footerSecondaryProps,
     onClickPrimary,
+
     ...rest
   } = props;
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <Button onClick={onOpen}>{modalButtonProp}</Button>
-      <ChakraModal isOpen={isOpen} onClose={onClose} {...rest}>
+      {/* TODO check this isOpen and onClose Log here */}
+      <ChakraModal {...rest} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           {titleProps && (

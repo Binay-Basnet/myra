@@ -3,7 +3,19 @@ import { FormGenerator } from '../form/FormGenerator';
 import { Grid } from '../../ui/src/lib/grid/Grid';
 
 export const BasicInfo = ({ debounced }) => {
-  const dataSchema: DataSchema[] = [
+  type Fields = {
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    gender: string;
+    dateOfBirthBs: string;
+    dateOfBirthAd: string;
+    nationality: string;
+    educationalQualification: string;
+    religion: string;
+    vehicleColor: string;
+  };
+  const dataSchema: DataSchema<Fields>[] = [
     {
       variant: 'input',
       name: 'firstName',
