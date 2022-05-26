@@ -1,11 +1,11 @@
-import { Column, Table } from '../../ui/src';
+import { Column, Table } from '../../../ui/src';
 import { useMemo } from 'react';
+import { IconButton } from '@chakra-ui/react';
+import { BsThreeDots } from 'react-icons/bs';
 import {
   Gender,
   useMembersQuery,
-} from '../../../../apps/myra/generated/graphql';
-import { Avatar, Flex, IconButton } from '@chakra-ui/react';
-import { BsThreeDots } from 'react-icons/bs';
+} from '../../../../../apps/myra/generated/graphql';
 
 type MemberData = {
   id: string;
@@ -17,50 +17,26 @@ type MemberData = {
   dateOfBirth?: string | null;
 };
 
-export const MemberTable = () => {
-  const { data, isLoading } = useMembersQuery();
-
+export const InventoryItemGroupTable = () => {
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
-        Header: 'Member #',
-        accessor: 'id',
-        maxWidth: 4,
-      },
-
-      {
-        Header: 'First Name',
+        Header: 'Name',
         accessor: 'firstName',
         width: '80%',
-
-        Cell: ({ value }) => (
-          <Flex alignItems="center" gap="2">
-            <Avatar
-              name="Dan Abrahmov"
-              size="sm"
-              src="https://bit.ly/dan-abramov"
-            />
-            <span>{value}</span>
-          </Flex>
-        ),
       },
       {
-        Header: 'Title',
+        Header: 'Parent Category',
         accessor: 'title',
         width: '40%',
       },
 
       {
-        Header: 'Gender',
+        Header: 'Description',
         accessor: 'gender',
-        maxWidth: 2,
-        disableSortBy: true,
+        width: '40%',
       },
-      {
-        Header: 'Date Of Birth',
-        accessor: 'dateOfBirth',
-        maxWidth: 2,
-      },
+
       {
         accessor: 'actions',
         Cell: () => (
@@ -74,6 +50,7 @@ export const MemberTable = () => {
     ],
     []
   );
+  const { data, isLoading } = useMembersQuery();
 
   const rowData = useMemo(() => data && data?.members?.list, [data]);
 

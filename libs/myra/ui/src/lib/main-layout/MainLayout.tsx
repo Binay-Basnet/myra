@@ -286,20 +286,21 @@ export const AccountLayout = (props: ILayoutColumnProps) => {
 
 const inventoryColumns = [
   {
-    title: 'inventoryProduct',
-    link: '/inventory/product',
+    title: 'inventoryItems',
+    link: '/inventory/items',
   },
   {
     title: 'inventoryItemGroup',
     link: '/inventory/item-group',
   },
-  {
-    title: 'inventoryUnitOfMeasure',
-    link: '/inventory/units-of-measure',
-  },
+
   {
     title: 'inventoryVendor',
     link: '/inventory/vendor',
+  },
+  {
+    title: 'inventoryUnitOfMeasure',
+    link: '/inventory/units-of-measure',
   },
 ];
 
@@ -310,7 +311,7 @@ export const InventoryLayout = (props: ILayoutColumnProps) => {
     <MainLayoutWithColumn
       mainBtn={
         // TODO ( Update this btn component )
-        <Link href="/inventory/product" passHref>
+        <Link href="/inventory/items" passHref>
           <Button
             width="100%"
             display="flex"
@@ -320,7 +321,7 @@ export const InventoryLayout = (props: ILayoutColumnProps) => {
             fontSize="14px"
             py="6"
           >
-            New Inventory
+            New Item
           </Button>
         </Link>
       }

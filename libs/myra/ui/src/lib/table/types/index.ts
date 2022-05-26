@@ -19,7 +19,7 @@ export type BaseColumn<T extends Record<string, unknown>> =
       accessor: keyof T;
     }
   | {
-      Header?: never;
+      Header?: never | undefined;
       accessor: 'actions';
     };
 
