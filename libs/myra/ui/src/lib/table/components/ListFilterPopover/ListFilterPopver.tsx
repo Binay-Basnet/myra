@@ -11,7 +11,8 @@ import { HeaderGroup } from '../../types';
 import { TableAmountFilterContent } from '../../../table-amount-filter/TableAmountFilter';
 
 interface IListFilterPopoverProps<T extends Record<string, unknown>> {
-  column: HeaderGroup<T>;
+  //TODO! HeaderGroup<T>
+  column: any;
   uniqueOptions?: string[];
 }
 
@@ -23,7 +24,7 @@ export const ListFilterPopover = <T extends Record<string, unknown>>({
 
   const uniqueOptionsFromColumn = React.useMemo(() => {
     const options = new Set<string>();
-    preFilteredRows.forEach((row) => {
+    preFilteredRows.forEach((row: any) => {
       options.add(row.values[id]);
     });
     return [...Array.from(options.values())];

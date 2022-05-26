@@ -1,3 +1,4 @@
 import IFormValues from './IFormValues';
+import IPurchaseFormValues from './IPurchaseFormValues';
 
-export { IFormValues };
+export type { IFormValues, IPurchaseFormValues };

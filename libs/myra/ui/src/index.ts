@@ -1,3 +1,4 @@
+export * from './lib/accordion/Accordion';
 export * from './lib/switch/Switch';
 export * from './lib/tags/Tags';
 export * from './lib/search-bar/SearchBar';

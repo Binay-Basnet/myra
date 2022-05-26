@@ -18,6 +18,7 @@ interface IInputJson<TfieldTypes> extends InputProps {
 
 interface ISelectJson<TfieldTypes> extends SelectProps {
   variant: 'select';
+  options: { label: string; value: string }[];
   dependency?: IConditionalProps<ISelectProps, TfieldTypes>;
 }
 

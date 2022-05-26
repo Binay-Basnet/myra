@@ -18,15 +18,8 @@ interface IInputProps extends InputProps {
 }
 
 export const Select = (props: IInputProps) => {
-  const {
-    validations,
-    label,
-    placeholder,
-    name,
-    options,
-    onChange: onChangeFromProps,
-    ...otherProps
-  } = props;
+  const { validations, label, placeholder, name, options, ...otherProps } =
+    props;
   const {
     formState: { errors },
     control,
@@ -48,10 +41,6 @@ export const Select = (props: IInputProps) => {
           <ChakraSelect
             id={customId}
             {...otherFields}
-            onChange={(e) => {
-              onChangeFromProps && onChangeFromProps(e);
-              onChange(e);
-            }}
             options={options}
             placeholder={placeholder}
           />

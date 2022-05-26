@@ -71,6 +71,7 @@ export interface BaseTableProps<T extends Record<string, unknown>> {
   size?: 'default' | 'compact';
   hasRowSelection?: boolean;
 
+  isLoading?: boolean;
   name?: string;
   manualSort?: boolean;
   isStatic?: boolean;
@@ -80,4 +81,4 @@ export type TableProps<T extends Record<string, unknown>> = BaseTableProps<T> &
   SortTableProps &
   FilterTableProps;
 
-export { Cell, HeaderGroup } from 'react-table';
+export type { Cell, HeaderGroup } from 'react-table';
