@@ -71,6 +71,7 @@ export interface BaseTableProps<T extends Record<string, unknown>> {
   size?: 'default' | 'compact';
   hasRowSelection?: boolean;
 
+  isLoading?: boolean;
   name?: string;
   manualSort?: boolean;
   isStatic?: boolean;

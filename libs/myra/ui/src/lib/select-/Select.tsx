@@ -13,10 +13,9 @@ export function Select(props: SelectProps) {
   const { options, ...rest } = props;
   return (
     <ChakraSelect {...rest}>
-      {' '}
       {options?.map((option) => (
         <option value={option.value}>{option.label}</option>
-      ))}{' '}
+      ))}
     </ChakraSelect>
   );
 }

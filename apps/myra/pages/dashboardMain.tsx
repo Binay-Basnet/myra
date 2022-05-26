@@ -1,17 +1,19 @@
 import {
+  Avatar,
   Box,
   Container,
   Flex,
-  Spacer,
-  Text,
   Grid,
   GridItem,
-  Img,
   HStack,
-  Avatar,
+  Img,
+  Spacer,
+  Text,
 } from '@chakra-ui/react';
 import { Navbarfordaashboard } from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
+import { useGetNewIdMutation } from '../generated/graphql';
+import { useRouter } from 'next/router';
 
 const data = [
   {
@@ -67,10 +69,13 @@ const data = [
 const dataKeys = Object.keys(data);
 const DashboardMain = () => {
   const { t } = useTranslation();
+  const newId = useGetNewIdMutation();
+  const router = useRouter();
+
   return (
     <>
       <Box position="fixed" width="100%" zIndex={2} top="0">
-        <Navbarfordaashboard t={t} />
+        <Navbarfordaashboard />
       </Box>
       <Container maxW="904px" height="fit-content" mt="100px" p="0" pb="55px">
         <Box>
@@ -126,7 +131,19 @@ const DashboardMain = () => {
                     <Img src="/Icon_Add.svg" alt="add icon" />
                   </Box>
                   <Box>
-                    <Text fontSize="12px" fontWeight="500" color="#343C46">
+                    <Text
+                      fontSize="12px"
+                      fontWeight="500"
+                      color="#343C46"
+                      cursor="pointer"
+                      onClick={() =>
+                        newId
+                          .mutateAsync({})
+                          .then((res) =>
+                            router.push(`members/addMember/${res?.newId}`)
+                          )
+                      }
+                    >
                       {t.addNewMember}
                     </Text>
                   </Box>

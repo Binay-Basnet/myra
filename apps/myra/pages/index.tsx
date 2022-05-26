@@ -58,7 +58,7 @@ const Dashboard = () => {
           </Box>
           <Box mt="24px " alignItems="center">
             <HStack spacing="14px">
-              <Link href="/members" passHref>
+              <Link href="/members/list" passHref>
                 <Box
                   w="215.5px"
                   h="215.5px"

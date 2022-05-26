@@ -9,6 +9,7 @@ const en = {
   navbarShare: 'Share',
   navbarAccounts: 'Accounts',
   navbarTransactions: 'Transactions',
+  navbarInventory: 'Inventory',
   navbarLoan: 'Loan',
   navbarReports: 'Reports',
   navbarUtilities: 'Utilities',
@@ -124,6 +125,24 @@ const en = {
   shareReport: 'Share Report',
   shareConsolidatedReport: 'Share Consolidated Report',
   shareCertificatePrint: 'Share Certificate Print',
+
+  //Account Page TODO ( Update Translations)
+
+  account: 'Account',
+  accountNavActive: 'Active',
+  accountNavSubmitted: 'Submitted',
+  accountNavDraft: 'Draft',
+
+  accountList: 'Account List',
+  accountReport: 'Account Report',
+  accountConsolidatedReport: 'Account Consolidated Report',
+  accountCertificatePrint: 'Account Certificate Print',
+
+  // Inventory Page TODO ( Update Translations )
+  inventoryProduct: 'Product',
+  inventoryItemGroup: 'Item Group',
+  inventoryUnitOfMeasure: 'Unit of Measure',
+  inventoryVendor: 'Vendor',
 };
 
 export default en;

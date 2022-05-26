@@ -3,7 +3,7 @@ import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 import { AiOutlineAppstore } from 'react-icons/ai';
 import { FaUser } from 'react-icons/fa';
 import { CgDropOpacity } from 'react-icons/cg';
-import { IoCubeOutline } from 'react-icons/io5';
+import { IoArchiveOutline, IoCubeOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from '@saccos/myra/util';
@@ -21,53 +21,73 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/members': 1,
   '/share': 2,
   '/accounts': 3,
-  '/transactions': 4,
-  '/loan': 5,
-  '/reports': 6,
-  '/utilities': 7,
+  '/inventory': 4,
+  '/transactions': 5,
+  '/loan': 6,
+  '/reports': 7,
+  '/utilities': 8,
 };
 
-const demotabs: { title: keyof typeof en; icon: IconType }[] = [
+const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'navbarDashboard',
     icon: AiOutlineAppstore,
+    link: '/',
   },
   {
     title: 'navbarMembers',
     icon: FaUser,
+    link: '/members/list',
   },
   {
     title: 'navbarShare',
     icon: IoCubeOutline,
+    link: '/share/list',
   },
   {
     title: 'navbarAccounts',
     icon: ImStack,
+    link: '/accounts/list',
+  },
+  {
+    title: 'navbarInventory',
+    icon: IoArchiveOutline,
+    link: '/inventory/product',
   },
   {
     title: 'navbarTransactions',
     icon: BsCardList,
+    link: '/transactions',
   },
   {
     title: 'navbarLoan',
     icon: BsArrowLeftRight,
+    link: '/loan',
   },
   {
     title: 'navbarReports',
     icon: BsFileText,
+    link: '/reports',
   },
   {
     title: 'navbarUtilities',
     icon: CgDropOpacity,
+    link: '/utilities',
   },
 ];
 
 // ! TODO create theme and tests
 export function TabMenu() {
   const [tabIndex, setTabIndex] = useState(1);
-  const route = useRouter();
-  console.log('route', route);
+  const router = useRouter();
   const { t } = useTranslation();
+
+  const currentIndex =
+    NAVBAR_TAB_OBJECT[
+      Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
+        router.pathname.includes(string)
+      ) ?? '/dashboard'
+    ];
 
   return (
     <Box
@@ -78,22 +98,16 @@ export function TabMenu() {
       display="flex"
     >
       <Tabs
-        index={NAVBAR_TAB_OBJECT[route.asPath]}
+        index={currentIndex}
         size="md"
         variant="enclosed"
         onChange={(index) => setTabIndex(index)}
       >
         <TabList>
-          {demotabs.map(({ title, icon }, index) => {
-            const isActive = route.asPath.includes(t[title].toLowerCase());
+          {demotabs.map(({ title, icon, link }, index) => {
+            const isActive = router.asPath.includes(t[title].toLowerCase());
             return (
-              <Link
-                href={
-                  title === 'navbarDashboard'
-                    ? '/'
-                    : `/${title.slice(6).toLowerCase()}`
-                }
-              >
+              <Link href={link}>
                 <Tab
                   // isDisabled
                   borderRadius="br3 br3 0 0"
