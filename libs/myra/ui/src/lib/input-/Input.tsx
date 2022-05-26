@@ -5,12 +5,12 @@ import {
 /* eslint-disable-next-line */
 export interface InputProps extends ChakraInputProps {
   size?: 'xs' | 'sm' | 'md' | 'lg';
-  variant?: 'outline' | 'filled' | 'flushed' | 'unstyled';
+  variant?: 'outline' | 'unstyled';
 }
 
 export function Input(props: InputProps) {
   const { ...rest } = props;
-  return <ChakraInput p={'12px'} {...rest} />;
+  return <ChakraInput p={'s12'} {...rest} />;
 }
 
 export default Input;

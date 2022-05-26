@@ -67,7 +67,8 @@ export function Input<TfieldTypes>(props: IInputProps<TfieldTypes>) {
             id={customId}
             autoComplete="off"
             {...otherFields}
-            {...otherProps}
+            // TODO Something is wrong here
+            // {...otherProps}
           />
         )}
         rules={validations}

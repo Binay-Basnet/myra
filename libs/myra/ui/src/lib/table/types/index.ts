@@ -19,7 +19,7 @@ export type BaseColumn<T extends Record<string, unknown>> =
       accessor: keyof T;
     }
   | {
-      Header?: never;
+      Header?: never | undefined;
       accessor: 'actions';
     };
 
@@ -81,4 +81,4 @@ export type TableProps<T extends Record<string, unknown>> = BaseTableProps<T> &
   SortTableProps &
   FilterTableProps;
 
-export { Cell, HeaderGroup } from 'react-table';
+export type { Cell, HeaderGroup } from 'react-table';

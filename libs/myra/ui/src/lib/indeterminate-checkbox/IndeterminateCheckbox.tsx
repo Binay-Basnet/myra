@@ -37,6 +37,7 @@ export function IndeterminateCheckbox(props: IndeterminateCheckboxProps) {
   console.log('isIndeterminate', resolvedRef, defaultRef, isIndeterminate);
   useEffect(() => {
     if (defaultRef?.current?.indeterminate) {
+      //! TODO Forbidden non-null assertion re.. fix this
       defaultRef.current.indeterminate! = isIndeterminate!;
     }
   }, [resolvedRef, isIndeterminate]);
@@ -46,7 +47,7 @@ export function IndeterminateCheckbox(props: IndeterminateCheckboxProps) {
         {children}
       </IndeterminateChakraCheckbox>
       <Stack pl={pl} mt={mt} spacing={spacing} direction={direction}>
-        {checkList.map((item) => (
+        {checkList?.map((item) => (
           <IndeterminateChakraCheckbox
             // isIndeterminate
             ref={resolvedRef}

@@ -3,7 +3,12 @@ import { FormGenerator } from '../form/FormGenerator';
 import { Grid } from '../../ui/src/lib/grid/Grid';
 
 export const ContactDetails = ({ debounced }) => {
-  const dataSchema: DataSchema[] = [
+  type Fields = {
+    mobileNo: string;
+    phoneNo: string;
+    email: string;
+  };
+  const dataSchema: DataSchema<Fields>[] = [
     {
       variant: 'input',
       name: 'mobileNo',

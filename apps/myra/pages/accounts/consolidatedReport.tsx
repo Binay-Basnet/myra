@@ -1,11 +1,11 @@
 import { ReactElement } from 'react';
 
 import { AccountLayout } from '@saccos/myra/ui';
-import { MemberTable } from '@saccos/myra/components';
+import { ShareTable } from '@saccos/myra/components';
 
 // TODO ( Update this page when design arrives )
 const AccountConsolidatedPage = () => {
-  return <MemberTable />;
+  return <ShareTable />;
 };
 
 AccountConsolidatedPage.getLayout = function getLayout(page: ReactElement) {

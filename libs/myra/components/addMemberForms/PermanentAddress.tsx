@@ -3,7 +3,14 @@ import { FormGenerator } from '../form/FormGenerator';
 import { Grid } from '../../ui/src/lib/grid/Grid';
 
 export const PermanentAddress = ({ debounced }) => {
-  const dataSchema: DataSchema[] = [
+  type Fields = {
+    state: string;
+    district: string;
+    vdc: string;
+    wardNo: string;
+    locality: string;
+  };
+  const dataSchema: DataSchema<Fields>[] = [
     {
       variant: 'select',
       name: 'state',

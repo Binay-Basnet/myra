@@ -20,12 +20,16 @@ const Template: StoryFn<ButtonProps> = (props) => (
 export const Primary = Template.bind({});
 Primary.args = {
   size: 'md',
+  mod: 'primary',
   leftIcon: <BiArrowBack />,
   isLoading: false,
   variant: 'solid',
   children: 'Button',
   loadingText: 'Loading...',
-  colorScheme: 'primary',
+
+  rightIcon: <BiArrowBack />,
+  isDisabled: false,
+  isActive: false,
 };
 export const Danger = Template.bind({});
 Danger.args = {
@@ -34,7 +38,8 @@ Danger.args = {
   variant: 'solid',
   children: 'Button',
   loadingText: 'Loading...',
-  colorScheme: 'danger',
+
+  mod: 'danger',
 };
 export const Neutral = Template.bind({});
 Neutral.args = {
@@ -43,5 +48,6 @@ Neutral.args = {
   variant: 'solid',
   children: 'Button',
   loadingText: 'Loading...',
-  colorScheme: 'blackAlpha',
+
+  mod: 'netral',
 };

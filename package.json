@@ -10,7 +10,6 @@
     "storybook:myra-ui": "nx run myra-ui:storybook",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./libs/myra/util/src/lib/theme/index.ts",
-    "postinstall": "yarn gen:theme-typings",
     "graphql:codegen": "graphql-codegen --config apps/myra/codegen.yml -r dotenv/config",
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
@@ -47,7 +46,7 @@
   "devDependencies": {
     "@babel/core": "7.12.13",
     "@babel/preset-typescript": "7.12.13",
-    "@chakra-ui/cli": "^1.9.0",
+    "@chakra-ui/cli": "^2.0.0",
     "@chakra-ui/storybook-addon": "^2.0.0",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
