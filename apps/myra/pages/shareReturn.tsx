@@ -199,15 +199,27 @@ const SharePurchase = () => {
             </Box>
             <Divider m="2" />
             <Box w={250} p={2} bg="white">
-              <Text fontSize="12px">Membership Date: 2078/10/04</Text>
-              <Text fontSize="12px">Phone No: 981234567</Text>
               <Text fontSize="12px">
-                Address: Kathmandu, Tokha Municipality-10
+                Membership Date: &nbsp;&nbsp;&nbsp;&nbsp; 2078/10/04
               </Text>
-              <Text fontSize="12px">Branch Name: Main Branch</Text>
-              <Text fontSize="12px">Father’s Name: Elex Nepal</Text>
-              <Text fontSize="12px">No of Shares: 3230</Text>
-              <Text fontSize="12px">Total Amount: 323000</Text>
+              <Text fontSize="12px">
+                Phone No: &nbsp;&nbsp;&nbsp;&nbsp; 981234567
+              </Text>
+              <Text fontSize="12px">
+                Address: &nbsp; Kathmandu, Tokha Municipality-10
+              </Text>
+              <Text fontSize="12px">
+                Branch Name: &nbsp;&nbsp;&nbsp;&nbsp; Main Branch
+              </Text>
+              <Text fontSize="12px">
+                Father’s Name: &nbsp;&nbsp;&nbsp;&nbsp; Elex Nepal
+              </Text>
+              <Text fontSize="12px">
+                No of Shares: &nbsp;&nbsp;&nbsp;&nbsp; 3230
+              </Text>
+              <Text fontSize="12px">
+                Total Amount: &nbsp;&nbsp;&nbsp;&nbsp; 323000
+              </Text>
             </Box>
           </Box>
         </Box>

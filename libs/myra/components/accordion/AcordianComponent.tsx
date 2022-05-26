@@ -10,7 +10,17 @@ import {
 } from '@saccos/myra/ui';
 import { CloseIcon, DragHandleIcon, AddIcon } from '@chakra-ui/icons';
 
-export const AcordianComponent = ({ sectionList, accordionList, list }) => {
+type accordionProps = {
+  sectionList: string[];
+  accordionList: string[];
+  list: string[];
+};
+
+export const AcordianComponent = ({
+  sectionList,
+  accordionList,
+  list,
+}: accordionProps) => {
   return (
     <>
       {sectionList.map((secList) => (
