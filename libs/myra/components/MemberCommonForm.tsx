@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormInput, FormSelect } from '@saccos/myra/components';
+import { FormInput, FormSelect } from './newFormComponents';
 
 export const MemberCommonForm = ({ fields, control }) => {
   return fields.map((field) => {

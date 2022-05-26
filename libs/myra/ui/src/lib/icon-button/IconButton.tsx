@@ -7,8 +7,8 @@ import {
 export interface IconButtonProps extends ChakraProps {}
 
 export function IconButton(props: IconButtonProps) {
-  const { icon, as, ...rest } = props;
-  return <ChakraIcon {...rest} icon={icon} />;
+  const { ...rest } = props;
+  return <ChakraIcon {...rest} />;
 }
 
 export default IconButton;

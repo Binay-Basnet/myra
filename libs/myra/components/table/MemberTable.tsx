@@ -1,11 +1,11 @@
 import { Column, Table } from '../../ui/src';
 import { useMemo } from 'react';
-import { Avatar, Flex, IconButton } from '@chakra-ui/react';
-import { BsThreeDots } from 'react-icons/bs';
 import {
   Gender,
   useMembersQuery,
 } from '../../../../apps/myra/generated/graphql';
+import { Avatar, Flex, IconButton } from '@chakra-ui/react';
+import { BsThreeDots } from 'react-icons/bs';
 
 type MemberData = {
   id: string;
@@ -18,29 +18,18 @@ type MemberData = {
 };
 
 export const MemberTable = () => {
+  const { data, isLoading } = useMembersQuery();
+
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
-        Header: 'Date Joined',
+        Header: 'Member #',
         accessor: 'id',
         maxWidth: 4,
       },
 
       {
-        Header: 'Type',
-        accessor: 'middleName',
-        width: '2%',
-        maxWidth: 12,
-      },
-
-      {
-        Header: 'Member Id',
-        accessor: 'lastName',
-        maxWidth: 4,
-      },
-
-      {
-        Header: 'Name',
+        Header: 'First Name',
         accessor: 'firstName',
         width: '80%',
 
@@ -56,18 +45,22 @@ export const MemberTable = () => {
         ),
       },
       {
-        Header: 'Share Count',
+        Header: 'Title',
         accessor: 'title',
         width: '40%',
       },
 
       {
-        Header: 'Share Value',
+        Header: 'Gender',
         accessor: 'gender',
         maxWidth: 2,
         disableSortBy: true,
       },
-
+      {
+        Header: 'Date Of Birth',
+        accessor: 'dateOfBirth',
+        maxWidth: 2,
+      },
       {
         accessor: 'actions',
         Cell: () => (
@@ -81,8 +74,6 @@ export const MemberTable = () => {
     ],
     []
   );
-
-  const { data, isLoading } = useMembersQuery();
 
   const rowData = useMemo(() => data && data?.members?.list, [data]);
 

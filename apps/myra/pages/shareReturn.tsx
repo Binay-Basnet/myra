@@ -17,6 +17,7 @@ import {
   Navbar,
   TabMenu,
   Avatar,
+  Checkbox,
 } from '@saccos/myra/ui';
 import { Form } from '@saccos/myra/components';
 import { IPurchaseFormValues } from '@saccos/myra/types';
@@ -74,69 +75,66 @@ const SharePurchase = () => {
           <Text fontSize="r2" fontWeight="600">
             New Share Return
           </Text>
+          <CloseIcon />
         </Box>
         <Box display="flex" width="100%">
           <Box w="100%">
             <Box background="white" p={5}>
-              <Text mb="8px">Member ID</Text>
+              <Text fontSize="14px" mb="8px">
+                Member ID
+              </Text>
               <Input w="25%" placeholder="Enter Member ID" />
+
               <Divider mt="4" mb="4" />
-              <Text mb="8px">No of Shares</Text>
+
+              <Text fontSize="16px" fontWeight="bold" mb="8px">
+                Shares
+              </Text>
+              <Checkbox spacing="10px">
+                <Text fontSize="14px">Select All Shares</Text>
+              </Checkbox>
+
+              <br />
+              <br />
+              <Text color="#636972" fontSize="14px" mb="8px">
+                No of Shares to Return
+              </Text>
               <Input w="25%" placeholder="No of Shares" />
 
               <br />
               <br />
-              <Text color="gray.500" mb="8px">
-                Share Amount
+              <Text color="#636972" mb="8px">
+                Withdraw Amount
               </Text>
-              <Text mb="8px">Rs. 5000</Text>
-
-              <br />
-              <br />
-              <Text mb="8px">Extra fees & charges</Text>
-
-              <br />
-              <Box p={3} bg="background.500">
-                <Box display="flex" justifyContent="flex-end" m="2">
-                  <CloseIcon w={4} h={4} />
-                </Box>
-                <Grid mb="3" templateColumns="repeat(2, 1fr)">
-                  <GridItem>
-                    <Text mb="8px">Fees & Charges</Text>
-                    <Input bg="white" w="50%" placeholder="Fees & Charges" />
-                  </GridItem>
-                  <GridItem>
-                    <Text mb="8px">Amount</Text>
-                    <Input
-                      textAlign="right"
-                      bg="white"
-                      w="50%"
-                      placeholder="0.00"
-                    />
-                  </GridItem>
-                </Grid>
-              </Box>
-
-              <br />
-              <Button leftIcon={<AddIcon />} variant="outline">
-                Add New
-              </Button>
-
-              <br />
-              <br />
-              <Text color="gray.500" mb="8px">
-                Total Amount
+              <Text fontWeight="bold" mb="8px">
+                Rs. 0.00
               </Text>
-              <Text mb="8px">Rs. 12,344</Text>
+
+              <br />
+              <Text color="#636972" mb="8px">
+                Remaining Share
+              </Text>
+              <Text fontWeight="bold" mb="8px">
+                20
+              </Text>
+
+              <br />
+              <Text color="#636972" mb="8px">
+                Remaining Share Value
+              </Text>
+              <Text fontWeight="bold" mb="8px">
+                2000
+              </Text>
 
               <Divider mt="4" mb="4" />
               <Text fontWeight="bold">Payment Mode</Text>
 
               <br />
               <RadioGroup
+                spacing={6}
                 size="md"
                 direction="row"
-                radioList={['Bank Voucher', 'Account']}
+                radioList={['Bank Voucher', 'Account', 'Cash']}
               />
               <br />
               <Box p={2} w="25%">
@@ -147,6 +145,7 @@ const SharePurchase = () => {
               <br />
               <Text>Select Account</Text>
               <Select
+                w="30%"
                 placeholder="Select Account"
                 options={[
                   {
@@ -165,7 +164,7 @@ const SharePurchase = () => {
                 variant="outline"
               />
               <br />
-              <Button>Complete Share Purchase</Button>
+              <Button>Complete Share Return</Button>
             </Box>
           </Box>
 
@@ -179,7 +178,12 @@ const SharePurchase = () => {
                 alignContent="center"
               >
                 <GridItem>
-                  <Avatar size="lg" name="John Doe" border="1px solid gray.0" />
+                  <Avatar
+                    src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
+                    size="lg"
+                    name="John Doe"
+                    border="1px solid gray.0"
+                  />
                 </GridItem>
                 <GridItem mt="2">
                   <Box>
@@ -195,15 +199,27 @@ const SharePurchase = () => {
             </Box>
             <Divider m="2" />
             <Box w={250} p={2} bg="white">
-              <Text fontSize="12px">Membership Date: 2078/10/04</Text>
-              <Text fontSize="12px">Phone No: 981234567</Text>
               <Text fontSize="12px">
-                Address: Kathmandu, Tokha Municipality-10
+                Membership Date: &nbsp;&nbsp;&nbsp;&nbsp; 2078/10/04
               </Text>
-              <Text fontSize="12px">Branch Name: Main Branch</Text>
-              <Text fontSize="12px">Father’s Name: Elex Nepal</Text>
-              <Text fontSize="12px">No of Shares: 3230</Text>
-              <Text fontSize="12px">Total Amount: 323000</Text>
+              <Text fontSize="12px">
+                Phone No: &nbsp;&nbsp;&nbsp;&nbsp; 981234567
+              </Text>
+              <Text fontSize="12px">
+                Address: &nbsp; Kathmandu, Tokha Municipality-10
+              </Text>
+              <Text fontSize="12px">
+                Branch Name: &nbsp;&nbsp;&nbsp;&nbsp; Main Branch
+              </Text>
+              <Text fontSize="12px">
+                Father’s Name: &nbsp;&nbsp;&nbsp;&nbsp; Elex Nepal
+              </Text>
+              <Text fontSize="12px">
+                No of Shares: &nbsp;&nbsp;&nbsp;&nbsp; 3230
+              </Text>
+              <Text fontSize="12px">
+                Total Amount: &nbsp;&nbsp;&nbsp;&nbsp; 323000
+              </Text>
             </Box>
           </Box>
         </Box>

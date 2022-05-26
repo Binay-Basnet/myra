@@ -139,7 +139,7 @@ const en = {
   accountCertificatePrint: 'Account Certificate Print',
 
   // Inventory Page TODO ( Update Translations )
-  inventoryProduct: 'Product',
+  inventoryItems: 'Items',
   inventoryItemGroup: 'Item Group',
   inventoryUnitOfMeasure: 'Unit of Measure',
   inventoryVendor: 'Vendor',

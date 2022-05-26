@@ -1,11 +1,10 @@
 import { ReactElement } from 'react';
 
-import { AccountLayout } from '@saccos/myra/ui';
-import { MemberTable } from '@saccos/myra/components';
+import { AccountLayout, ShareTable } from '@saccos/myra/components';
 
 // TODO ( Update this page when design arrives )
 const AccountReportPage = () => {
-  return <MemberTable />;
+  return <ShareTable />;
 };
 
 AccountReportPage.getLayout = function getLayout(page: ReactElement) {

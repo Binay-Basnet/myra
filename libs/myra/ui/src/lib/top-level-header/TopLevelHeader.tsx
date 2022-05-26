@@ -35,7 +35,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
     >
       <Box
         h="100%"
-        w="300px"
+        w="260px"
         display={'flex'}
         justifyContent={'flex-start'}
         alignItems={'center'}
@@ -52,7 +52,12 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           justifyContent={'center'}
           alignItems={'flex-start'}
         >
-          <Text fontSize="r1" fontWeight="bold" color={'white'}>
+          <Text
+            fontSize="r1"
+            fontWeight="InterMedium"
+            lineHeight={'1'}
+            color={'white'}
+          >
             नमुना बचत तथ ऋण सहकारी{' '}
           </Text>
           <Text fontSize="r1" color={'white'}>

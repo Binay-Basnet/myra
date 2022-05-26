@@ -52,7 +52,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'navbarInventory',
     icon: IoArchiveOutline,
-    link: '/inventory/product',
+    link: '/inventory/items',
   },
   {
     title: 'navbarTransactions',

@@ -74,6 +74,7 @@ const SharePurchase = () => {
           <Text fontSize="r2" fontWeight="600">
             New Share Purchase
           </Text>
+          <CloseIcon />
         </Box>
         <Box display="flex" width="100%">
           <Box w="100%">
@@ -90,8 +91,15 @@ const SharePurchase = () => {
                   Share Certificate
                 </Text>
                 <br />
-                <Text fontSize="14px">Certificate No 1</Text>
-                <Text fontSize="14px">No of Shares: 1000</Text>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems={'center'}
+                >
+                  <Text fontSize="14px">Certificate No 1</Text>
+                  <Text fontSize="14px">No of Shares: 1000</Text>
+                </Box>
+
                 <br />
                 <Text>
                   This is to certify that Ajit Nepal of Kathmandu, Tokha
@@ -164,6 +172,7 @@ const SharePurchase = () => {
               <br />
               <Text>Select Account</Text>
               <Select
+                w="30%"
                 placeholder="Select Account"
                 options={[
                   {
@@ -196,7 +205,12 @@ const SharePurchase = () => {
                 alignContent="center"
               >
                 <GridItem>
-                  <Avatar size="lg" name="John Doe" border="1px solid gray.0" />
+                  <Avatar
+                    src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
+                    size="lg"
+                    name="John Doe"
+                    border="1px solid gray.0"
+                  />
                 </GridItem>
                 <GridItem mt="2">
                   <Box>
@@ -212,15 +226,27 @@ const SharePurchase = () => {
             </Box>
             <Divider m="2" />
             <Box w={250} p={2} bg="white">
-              <Text fontSize="12px">Membership Date: 2078/10/04</Text>
-              <Text fontSize="12px">Phone No: 981234567</Text>
               <Text fontSize="12px">
-                Address: Kathmandu, Tokha Municipality-10
+                Membership Date: &nbsp;&nbsp;&nbsp;&nbsp; 2078/10/04
               </Text>
-              <Text fontSize="12px">Branch Name: Main Branch</Text>
-              <Text fontSize="12px">Father’s Name: Elex Nepal</Text>
-              <Text fontSize="12px">No of Shares: 3230</Text>
-              <Text fontSize="12px">Total Amount: 323000</Text>
+              <Text fontSize="12px">
+                Phone No: &nbsp;&nbsp;&nbsp;&nbsp; 981234567
+              </Text>
+              <Text fontSize="12px">
+                Address: &nbsp; Kathmandu, Tokha Municipality-10
+              </Text>
+              <Text fontSize="12px">
+                Branch Name: &nbsp;&nbsp;&nbsp;&nbsp; Main Branch
+              </Text>
+              <Text fontSize="12px">
+                Father’s Name: &nbsp;&nbsp;&nbsp;&nbsp; Elex Nepal
+              </Text>
+              <Text fontSize="12px">
+                No of Shares: &nbsp;&nbsp;&nbsp;&nbsp; 3230
+              </Text>
+              <Text fontSize="12px">
+                Total Amount: &nbsp;&nbsp;&nbsp;&nbsp; 323000
+              </Text>
             </Box>
           </Box>
         </Box>

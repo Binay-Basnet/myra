@@ -82,7 +82,8 @@ export function Table<T extends Record<string, unknown>>({
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(
-                (column: HeaderGroup<T> & ExtraColumnProps) => {
+                //TODO  HeaderGroup<T> & ExtraColumnProps
+                (column: any) => {
                   return (
                     <Th
                       {...column.getHeaderProps()}
