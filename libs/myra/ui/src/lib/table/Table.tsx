@@ -71,7 +71,7 @@ export function Table<T extends Record<string, unknown>>({
     );
   }
 
-  if (data.length === 0) {
+  if (data?.length === 0) {
     return <div>No Data Found</div>;
   }
 
