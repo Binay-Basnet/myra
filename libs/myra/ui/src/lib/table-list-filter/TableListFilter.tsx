@@ -89,12 +89,12 @@ export const TableListFilterContent = React.forwardRef(
     const listData = useMemo(() => [BLANK_OPTION, ...data], []);
 
     const isSelectionFull = useMemo(
-      () => selectedData.length === listData.length,
-      [selectedData.length]
+      () => selectedData?.length === listData?.length,
+      [selectedData?.length]
     );
     const isSelectionEmpty = useMemo(
-      () => selectedData.length === 0,
-      [selectedData.length]
+      () => selectedData?.length === 0,
+      [selectedData?.length]
     );
 
     return (
@@ -207,7 +207,7 @@ export const TableListFilterContent = React.forwardRef(
             onClick={() => {
               if (setFilter) {
                 if (
-                  selectedData.length === 1 &&
+                  selectedData?.length === 1 &&
                   selectedData.includes(BLANK_OPTION)
                 ) {
                   setFilter([]);
