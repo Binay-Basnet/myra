@@ -9,6 +9,7 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 import { RiHistoryFill } from 'react-icons/ri';
+import Link from 'next/link';
 import { IoSearchSharp } from 'react-icons/io5';
 import { CgMenuGridO } from 'react-icons/cg';
 import { MdOutlineHelpOutline } from 'react-icons/md';
@@ -35,7 +36,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
     >
       <Box
         h="100%"
-        w="260px"
+        w="300px"
         display={'flex'}
         justifyContent={'flex-start'}
         alignItems={'center'}
@@ -43,7 +44,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
         pl="s16"
         pr="s16"
       >
-        <Image boxSize={'32px'} src={'logo.svg'} alt="logo" />
+        <Image boxSize={'32px'} src={'/logo.svg'} alt="logo" />
         <Box
           maxH="100%"
           pl="s8"
@@ -52,12 +53,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           justifyContent={'center'}
           alignItems={'flex-start'}
         >
-          <Text
-            fontSize="r1"
-            fontWeight="InterMedium"
-            lineHeight={'1'}
-            color={'white'}
-          >
+          <Text fontSize="r1" fontWeight="bold" color={'white'}>
             नमुना बचत तथ ऋण सहकारी{' '}
           </Text>
           <Text fontSize="r1" color={'white'}>
@@ -103,6 +99,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               children={<IoSearchSharp />}
             />
             <Input
+              borderRadius={'none'}
               type="search"
               placeholder="खोज्नुहोस्"
               color={'gray.500'}
@@ -143,15 +140,16 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             borderRadius={'br1'}
             _hover={{ backgroundColor: 'secondary.900' }}
           />
-
-          <IconButton
-            _hover={{ backgroundColor: 'secondary.900' }}
-            icon={<Icon size="md" as={AiOutlineSetting} />}
-            aria-label="settings"
-            variant={'ghost'}
-            color={'white'}
-            borderRadius={'br1'}
-          />
+          <Link href={'/settings'}>
+            <IconButton
+              _hover={{ backgroundColor: 'secondary.900' }}
+              icon={<Icon size="md" as={AiOutlineSetting} />}
+              aria-label="settings"
+              variant={'ghost'}
+              color={'white'}
+              borderRadius={'br1'}
+            />
+          </Link>
 
           <IconButton
             _hover={{ backgroundColor: 'secondary.900' }}
@@ -170,7 +168,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             alignItems={'center'}
             _hover={{ backgroundColor: 'secondary.900' }}
           >
-            <Avatar src={'avatar.png'} size="sm" />{' '}
+            <Avatar src={'/avatar.png'} size="sm" />{' '}
           </Box>
         </Box>
       </Box>
