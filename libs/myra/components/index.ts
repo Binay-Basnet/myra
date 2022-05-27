@@ -13,5 +13,5 @@ export * from './newFormComponents';
 export * from './tab/verticleSidebar';
 export * from './tab/settings';
 export * from './tab/settingsGeneral';
-export * from './accordion/AcordianComponent';
+export * from './accordion/AccordionComponent';
 export * from './layout';

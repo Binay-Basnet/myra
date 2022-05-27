@@ -10,6 +10,7 @@ import modal from './foundations/modal';
 import tags from './foundations/tags';
 import switches from './foundations/switches';
 import accordion from './foundations/accordion';
+import tabs from './foundations/tabs';
 
 // 2. Call `extendTheme` and pass your custom values
 
@@ -94,6 +95,12 @@ export const theme = extendTheme({
     },
     Accordion: {
       baseStyle: accordion.baseStyle,
+    },
+    Tabs: {
+      sizes: tabs.sizes,
+      variants: tabs.variants,
+      baseStyle: tabs.baseStyle,
+      defaultProps: tabs.defaultProps,
     },
   },
 });

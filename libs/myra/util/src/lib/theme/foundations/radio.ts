@@ -11,7 +11,6 @@ const baseStyleControl: SystemStyleFunction = (props) => {
 
   return {
     ...control,
-    bg: 'white',
     borderRadius: 'full',
     border: '2px solid',
     borderColor: 'neutralColorLight.Gray-50',
@@ -20,21 +19,26 @@ const baseStyleControl: SystemStyleFunction = (props) => {
       ...(control as any)['_checked'],
       borderRadius: 'full',
       border: '2px solid',
-      borderColor: 'neutralColorLight.Gray-50',
-      bg: 'primary.500',
+      bg: 'gray.0',
       _before: {
         content: `""`,
         display: 'inline-block',
         pos: 'relative',
-        w: '50%',
-        h: '50%',
+        w: '75%',
+        h: '75%',
         borderRadius: '100%',
-        bg: 'Gray-30',
+        bg: 'primary.500',
       },
       _disabled: {
         bg: 'white',
         border: '5px solid',
         borderColor: 'disabled.disabled',
+      },
+      _hover: {
+        bg: 'gray.0',
+      },
+      _focus: {
+        borderColor: 'primary.300',
       },
     },
     _disabled: {

@@ -6,7 +6,9 @@ import type {
 
 const baseStyleContainer: SystemStyleObject = {
   borderTopWidth: '1px',
-  borderColor: 'inherit',
+  bg: 'gray.0',
+  borderRadius: 'br2',
+  borderColor: 'border.layout',
   _last: {
     borderBottomWidth: '1px',
   },
