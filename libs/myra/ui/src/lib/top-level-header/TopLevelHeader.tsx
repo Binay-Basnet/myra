@@ -140,7 +140,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             borderRadius={'br1'}
             _hover={{ backgroundColor: 'secondary.900' }}
           />
-          <Link href={'/settings'}>
+          <Link href={'/settings/general/organization'}>
             <IconButton
               _hover={{ backgroundColor: 'secondary.900' }}
               icon={<Icon size="md" as={AiOutlineSetting} />}
