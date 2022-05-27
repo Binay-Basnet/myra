@@ -230,19 +230,18 @@ export const AccountLayout = (props: ILayoutColumnProps) => {
     <MainLayoutWithColumn
       mainBtn={
         // TODO ( Update this btn component )
-        <Link href="/accounts/list" passHref>
-          <Button
-            width="100%"
-            display="flex"
-            justifyContent="flex-start"
-            leftIcon={<AddIcon h="11px" />}
-            bg="#006837"
-            fontSize="14px"
-            py="6"
-          >
-            New Account
-          </Button>
-        </Link>
+        <Button
+          width="100%"
+          display="flex"
+          justifyContent="flex-start"
+          leftIcon={<AddIcon h="11px" />}
+          bg="#006837"
+          fontSize="14px"
+          py="6"
+          onClick={props.onClick}
+        >
+          New Account
+        </Button>
       }
       headingText={props.headingText}
       mainHeadingText="Accounts"
