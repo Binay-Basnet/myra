@@ -33,11 +33,11 @@ const variantGhost: SystemStyleFunction = (props) => {
 
   if (c === 'gray') {
     return {
-      color: mode(`gray.600`, `whiteAlpha.900`)(props),
+      color: mode(`gray.800`, `whiteAlpha.900`)(props),
       _hover: {
-        bg: mode(`gray.700`, `whiteAlpha.200`)(props),
+        bg: mode(`gray.200`, `whiteAlpha.200`)(props),
       },
-      _active: { bg: mode(`gray.800`, `whiteAlpha.300`)(props) },
+      _active: { bg: mode(`gray.200`, `whiteAlpha.300`)(props) },
     };
   }
 
@@ -47,22 +47,29 @@ const variantGhost: SystemStyleFunction = (props) => {
   return {
     color: mode(`${c}.600`, `${c}.200`)(props),
     bg: 'transparent',
+    // bg: 'gray.200',
     _hover: {
-      bg: mode(`${c}.50`, darkHoverBg)(props),
+      bg: mode(`${c}.200`, darkHoverBg)(props),
     },
     _active: {
-      bg: mode(`${c}.100`, darkActiveBg)(props),
+      bg: mode(`${c}.300`, darkActiveBg)(props),
     },
   };
 };
 
 const variantOutline: SystemStyleFunction = (props) => {
   const { colorScheme: c } = props;
-  const borderColor = mode(`gray.200`, `whiteAlpha.300`)(props);
+  const borderColor = mode(`gray.800`, `whiteAlpha.300`)(props);
+
   return {
+    // bg: 'none',
+
     border: '1px solid',
     borderColor: c === 'gray' ? borderColor : 'currentColor',
     ...variantGhost(props),
+    _hover: {
+      bg: 'none',
+    },
   };
 };
 
