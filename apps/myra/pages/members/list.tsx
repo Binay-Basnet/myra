@@ -57,12 +57,12 @@ const Member = () => {
 
   return (
     <Box mt="100px" p="16px" display="flex">
-      <Box width="15%" mt="24px">
+      <Box width="20%" mt="24px">
         <Text fontSize="20px" fontWeight="600" pl="16px">
           {t.members}
         </Text>
 
-        <Box mt="58px" display="flex" flexDirection="column" width="238px">
+        <Box pr={3} mt="58px" display="flex" flexDirection="column">
           <Box pl="16px">
             <Button
               width="100%"
@@ -86,7 +86,7 @@ const Member = () => {
           <TabColumn list={column} />
         </Box>
       </Box>
-      <Box width="85%" mt="12px" bg="white">
+      <Box width="80%" mt="12px" bg="white">
         <Box h="50px" w="100%" borderBottom="1px solid #E6E6E6" pl="16px">
           <Flex justify="flex-start" h="100%">
             <Box

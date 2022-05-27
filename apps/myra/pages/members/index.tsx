@@ -130,10 +130,10 @@ const Member = () => {
           {t.members}
         </Text>
 
-        <Box mt="58px" display="flex" flexDirection="column" width="238px">
+        <Box mt="58px" display="flex" flexDirection="column">
           <Box pl="16px">
             <Button
-              width="184px"
+              width="50px"
               leftIcon={<AddIcon h="11px" />}
               bg="#006837"
               fontSize="14px"
