@@ -93,7 +93,7 @@ export const BasicInfo = ({ debounced }) => {
       placeholder: 'Enter Vehicle color',
     },
   ];
-
+  console.log('text');
   return (
     <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
       <FormGenerator dataSchema={dataSchema} />
