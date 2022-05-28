@@ -19,7 +19,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 
 import { Box, Button, MainLayout } from '@saccos/myra/ui';
 import { MemberTable, TabColumn, TabRow } from '@saccos/myra/components';
-import { AccordionComponent } from '@saccos/myra/components';
+// import { AccordionComponent } from '@saccos/myra/components';
 import { useGetNewIdMutation } from '../../generated/graphql';
 import { useTranslation } from '@saccos/myra/util';
 import { useRouter } from 'next/router';
@@ -49,13 +49,13 @@ const rows = [
   'memberNavWip',
   'memberNavDraft',
 ];
-const sectionList = [
-  'Section 1: Personal Information',
-  'Section 2: Professional Information',
-  'Section 3: Cooperative Information',
-];
-const accordionList = ['Gender', 'Nationality', 'Others'];
-const list = ['Male', 'Female', 'Others'];
+// const sectionList = [
+//   'Section 1: Personal Information',
+//   'Section 2: Professional Information',
+//   'Section 3: Cooperative Information',
+// ];
+// const accordionList = ['Gender', 'Nationality', 'Others'];
+// const list = ['Male', 'Female', 'Others'];
 
 const Member = () => {
   const router = useRouter();
@@ -171,11 +171,11 @@ const Member = () => {
             </Box>
           </Box>
         </Box>
-        <AccordionComponent
+        {/* <AccordionComponent
           sectionList={sectionList}
           accordionList={accordionList}
           list={list}
-        />
+        /> */}
         <Box width={'100%'}>
           <MemberTable />
         </Box>
