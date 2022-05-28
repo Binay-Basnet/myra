@@ -9,31 +9,40 @@ import {
   Icon,
   Button,
   GridItem,
+  Checkbox,
 } from '../../../ui/src';
 
 import { FormInput, FormSelect } from '../../newFormComponents';
 
-export const MemberFamilyDetails = ({ control }) => {
+const annualFamilyIncome = [
+  'Upto 4 lakhs',
+  '4 lakhs to 1 million',
+  '1 million to 2.5 million',
+  '2.5 million to 5 million',
+  'More than 5 million',
+];
+
+export const MemberIncomeSourceDetails = ({ control }) => {
   return (
     <>
       <Text fontSize="r1" fontWeight="SemiBold">
-        FAMILY DETAILS
+        INCOME SOURCE DETAILS
       </Text>
       <br />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
-        <FormSelect
-          control={control}
-          name="martialStatus"
-          label="Martial Status"
-          placeholder="Select Martial Status"
-          options={[
-            { value: 'married', label: 'Married' },
-            { value: 'unmarried', label: 'Unmarried' },
-          ]}
-        />
-      </Grid>
+      <Box display="flex" flexDirection="column">
+        <Text fontSize="s3" mb={3}>
+          Annual Family Income
+        </Text>
+        {annualFamilyIncome.map((item) => (
+          <Checkbox>
+            <Text fontSize="s3">{item}</Text>
+          </Checkbox>
+        ))}
+      </Box>
       <br />
-      <Text fontSize="s3">Family members</Text>
+      <Text fontSize="s3">
+        Income greater than 4 lakhs in the previous fiscal year
+      </Text>
       <Box p={2} boxShadow="xs" borderRadius={5}>
         <Box
           p={4}
@@ -56,18 +65,18 @@ export const MemberFamilyDetails = ({ control }) => {
               <FormInput
                 control={control}
                 type="text"
-                name="familyMemberRelation"
-                label="Relation"
-                placeholder="Enter Relation"
+                name="incomeSource"
+                label="Income Source"
+                placeholder="Enter Income Source"
               />
             </GridItem>
             <GridItem colSpan={2}>
               <FormInput
                 control={control}
-                type="text"
-                name="familyMemberFullName"
-                label="FullName"
-                placeholder="Enter Fullname"
+                type="number"
+                name="incomeSourceAmount"
+                label="Amout"
+                placeholder="Enter Amount"
               />
             </GridItem>
           </Grid>
@@ -77,7 +86,7 @@ export const MemberFamilyDetails = ({ control }) => {
           variant="outline"
           mt={2}
         >
-          Add Family Member
+          New Entry
         </Button>
       </Box>
     </>

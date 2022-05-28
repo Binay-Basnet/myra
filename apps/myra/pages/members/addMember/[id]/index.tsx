@@ -18,6 +18,10 @@ import {
   MemberIdentificationDetails,
   MemberAddress,
   MemberFamilyDetails,
+  MemberProfession,
+  MemberMainOccupation,
+  MemberHushbandWifeOccupation,
+  MemberIncomeSourceDetails,
 } from '@saccos/myra/components';
 import { useTranslation } from '@saccos/myra/util';
 
@@ -92,6 +96,18 @@ const AddMember = () => {
               <MemberAddress control={control} />
               <Divider my={8} />
               <MemberFamilyDetails control={control} />
+              <br />
+              <Text fontSize="r3" fontWeight="SemiBold">
+                2. Professional Information
+              </Text>
+              <br />
+              <MemberProfession control={control} />
+              <Divider my={8} />
+              <MemberMainOccupation control={control} />
+              <Divider my={8} />
+              <MemberHushbandWifeOccupation control={control} />
+              <Divider my={8} />
+              <MemberIncomeSourceDetails control={control} />
             </Box>
           </Box>
         </Box>
@@ -106,7 +122,10 @@ const AddMember = () => {
           borderTopRadius={5}
         >
           <Text>Save as Draft</Text>
-          <Button>Next</Button>
+          <Box>
+            <Button>Save Draft</Button>&nbsp;
+            <Button>Next</Button>
+          </Box>
         </Box>
       </Container>
     </form>
