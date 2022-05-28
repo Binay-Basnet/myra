@@ -19,7 +19,7 @@ import {
 import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
 
 import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
-import { TabColumn, TabRow, AcordianComponent } from '@saccos/myra/components';
+import { TabColumn, TabRow, AccordionComponent } from '@saccos/myra/components';
 import {
   Gender,
   useGetNewIdMutation,
@@ -231,7 +231,7 @@ const Member = () => {
             </Box>
           </Box>
         </Box>
-        <AcordianComponent
+        <AccordionComponent
           sectionList={sectionList}
           accordionList={accordionList}
           list={list}
