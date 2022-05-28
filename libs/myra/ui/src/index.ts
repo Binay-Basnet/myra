@@ -1,3 +1,4 @@
+export * from './lib/switch-tabs/SwitchTabs';
 export * from './lib/accordion/Accordion';
 export * from './lib/switch/Switch';
 export * from './lib/tags/Tags';
