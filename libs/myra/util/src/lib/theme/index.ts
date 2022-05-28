@@ -95,12 +95,6 @@ export const theme = extendTheme({
     Accordion: {
       baseStyle: accordion.baseStyle,
     },
-    Tabs: {
-      sizes: tabs.sizes,
-      variants: tabs.variants,
-      baseStyle: tabs.baseStyle,
-      defaultProps: tabs.defaultProps,
-    },
   },
 });
 export default theme;
