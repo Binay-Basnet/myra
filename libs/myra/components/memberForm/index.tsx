@@ -4,10 +4,19 @@ import { MemberIdentificationDetails } from './personalInfo/MemberIdentification
 import { MemberAddress } from './personalInfo/MemberAddress';
 import { MemberFamilyDetails } from './personalInfo/MemberFamilyDetails';
 
+import { MemberProfession } from './professionalInfo/MemberProfession';
+import { MemberMainOccupation } from './professionalInfo/MemberMainOccupation';
+import { MemberHushbandWifeOccupation } from './professionalInfo/MemberHusbandWifeOccupation';
+import { MemberIncomeSourceDetails } from './professionalInfo/MemberIncomeSourceDetails';
+
 export {
   MemberBasicInfo,
   MemberContactDetails,
   MemberIdentificationDetails,
   MemberAddress,
   MemberFamilyDetails,
+  MemberProfession,
+  MemberMainOccupation,
+  MemberHushbandWifeOccupation,
+  MemberIncomeSourceDetails,
 };

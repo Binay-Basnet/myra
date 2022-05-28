@@ -13,33 +13,19 @@ import {
 
 import { FormInput, FormSelect } from '../../newFormComponents';
 
-export const MemberFamilyDetails = ({ control }) => {
+export const MemberMainOccupation = ({ control }) => {
   return (
     <>
       <Text fontSize="r1" fontWeight="SemiBold">
-        FAMILY DETAILS
+        MAIN OCCUPATION
       </Text>
       <br />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
-        <FormSelect
-          control={control}
-          name="martialStatus"
-          label="Martial Status"
-          placeholder="Select Martial Status"
-          options={[
-            { value: 'married', label: 'Married' },
-            { value: 'unmarried', label: 'Unmarried' },
-          ]}
-        />
-      </Grid>
-      <br />
-      <Text fontSize="s3">Family members</Text>
       <Box p={2} boxShadow="xs" borderRadius={5}>
         <Box
           p={4}
           display="flex"
           flexDirection="column"
-          h={130}
+          h={220}
           bg="gray.100"
           borderRadius={5}
         >
@@ -51,25 +37,50 @@ export const MemberFamilyDetails = ({ control }) => {
             size="md"
             icon={<Icon size="md" as={AiOutlineClose} />}
           />
-          <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+          <Grid templateColumns="repeat(3, 1fr)" gap={'2em'}>
             <GridItem colSpan={1}>
-              <FormInput
+              <FormSelect
                 control={control}
-                type="text"
-                name="familyMemberRelation"
-                label="Relation"
-                placeholder="Enter Relation"
+                name="occupation"
+                label="Occupation"
+                placeholder="Select Occupation"
+                options={[
+                  { label: 'Agriculture', value: 'agriculature' },
+                  { label: 'Student', value: 'student' },
+                ]}
               />
             </GridItem>
             <GridItem colSpan={2}>
               <FormInput
                 control={control}
                 type="text"
-                name="familyMemberFullName"
-                label="FullName"
-                placeholder="Enter Fullname"
+                name="orgFirmName"
+                label="Org/Frim Name"
+                placeholder="Org/Firm Name"
               />
             </GridItem>
+
+            <FormInput
+              control={control}
+              type="text"
+              name="panVatNo"
+              label="Pan/Vat number"
+              placeholder="Pan/Vat number"
+            />
+            <FormInput
+              control={control}
+              type="text"
+              name="occupationAddress"
+              label="Address"
+              placeholder="Enter Address"
+            />
+            <FormInput
+              control={control}
+              type="number"
+              name="occupationAnnualIncome"
+              label="Annual Income"
+              placeholder="0.00"
+            />
           </Grid>
         </Box>
         <Button
@@ -77,7 +88,7 @@ export const MemberFamilyDetails = ({ control }) => {
           variant="outline"
           mt={2}
         >
-          Add Family Member
+          Add Occupation
         </Button>
       </Box>
     </>
