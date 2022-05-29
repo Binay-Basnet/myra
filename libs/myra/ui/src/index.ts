@@ -37,4 +37,4 @@ export * from './lib/navbar/Navbar';
 export * from './lib/myra-ui';
 export * from './lib/table-list-filter/TableListFilter';
 export * from './lib/table/components/ListFilterPopover';
-// export * from './lib/select/Select';
+export * from './lib/select/Select';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { Select as StorybookSelect, TextFields, Box } from '../../ui/src';
+import { BaseSelect as StorybookSelect, Box, TextFields } from '../../ui/src';
 
 export const FormSelect = ({ control, placeholder, name, label, options }) => {
   return (
