@@ -1,3 +1,4 @@
+export * from './lib/select/Select';
 export * from './lib/switch-tabs/SwitchTabs';
 export * from './lib/accordion/Accordion';
 export * from './lib/switch/Switch';
@@ -18,7 +19,7 @@ export * from './lib/table-list-filter/TableListFilter';
 export * from './lib/table/Table';
 export * from './lib/text-fields/TextFields';
 export * from './lib/divider/Divider';
-export * from './lib/select-/Select';
+export * from './lib/base-select/BaseSelect';
 export * from './lib/input-/Input';
 export * from './lib/text/Text';
 export * from './lib/top-level-header/TopLevelHeader';
@@ -36,3 +37,4 @@ export * from './lib/navbar/Navbar';
 export * from './lib/myra-ui';
 export * from './lib/table-list-filter/TableListFilter';
 export * from './lib/table/components/ListFilterPopover';
+// export * from './lib/select/Select';
