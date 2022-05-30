@@ -1,12 +1,11 @@
 import { VerticalSideBar } from '../';
+
+import { Box, Divider, Text } from '@chakra-ui/react';
+
 type TabList = {
   title: string;
   to: string;
 };
-import { useRouter } from 'next/router';
-
-// import { SettingsLayout } from '@saccos/myra/components';
-import { Box, Divider, Text } from '@chakra-ui/react';
 
 const tabList: TabList[] = [
   {
@@ -19,7 +18,7 @@ const tabList: TabList[] = [
   },
   {
     title: 'Charts of Accounts',
-    to: '/settings/general/chartsOfAccounts',
+    to: '/settings/general/charts-of-accounts',
   },
   {
     title: 'Members',
@@ -31,7 +30,7 @@ const tabList: TabList[] = [
   },
   {
     title: 'Deposit / Withdraw',
-    to: '/settings/general/depositWithdraw',
+    to: '/settings/general/deposit-withdraw',
   },
   {
     title: 'Loan',
@@ -42,17 +41,21 @@ const tabList: TabList[] = [
 export const SettingsGeneral = () => {
   return (
     <>
-      <Box w="12%" display="flex" flexDirection={'column'} mt="s24">
-        <Text pl={'s24'} fontSize="16px" fontWeight="600">
-          {' '}
+      <Box
+        w="13%"
+        display="flex"
+        flexDirection="column"
+        gap="s16"
+        flexShrink={0}
+        minWidth="250px"
+        pt="s8"
+        pl="s8"
+      >
+        <Text fontSize="r3" fontWeight="600">
           General
         </Text>
-        <Box pl="s24">
-          <Divider />
-        </Box>
-        <Box pt="s16">
-          <VerticalSideBar props={tabList} />
-        </Box>
+        <Divider borderColor="border.layout" />
+        <VerticalSideBar tablinks={tabList} />
       </Box>
     </>
   );

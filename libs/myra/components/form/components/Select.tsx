@@ -1,13 +1,7 @@
 import React, { useId } from 'react';
-import { useFormContext, RegisterOptions, Controller } from 'react-hook-form';
-import {
-  FormErrorMessage,
-  FormLabel,
-  FormControl,
-  // Input as ChakraInput,
-  InputProps,
-} from '@chakra-ui/react';
-import { Select as ChakraSelect, TextFields } from '../../../ui/src';
+import { Controller, RegisterOptions, useFormContext } from 'react-hook-form';
+import { FormControl, FormErrorMessage, InputProps } from '@chakra-ui/react';
+import { BaseSelect as ChakraSelect, TextFields } from '../../../ui/src';
 
 interface IInputProps extends InputProps {
   name: string;

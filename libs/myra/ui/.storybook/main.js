@@ -17,6 +17,14 @@ module.exports = {
     '@nrwl/react/plugins/storybook',
     '@chakra-ui/storybook-addon',
   ],
+  typescript: {
+    check: false,
+    checkOptions: {},
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+    },
+  },
   features: {
     emotionAlias: false,
   },

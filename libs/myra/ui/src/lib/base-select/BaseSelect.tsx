@@ -4,12 +4,12 @@ import {
 } from '@chakra-ui/react';
 
 /* eslint-disable-next-line */
-export interface SelectProps extends ChakraSelectProps {
+export interface BaseSelectProps extends ChakraSelectProps {
   options: { value: string; label: string }[];
   variant?: 'outline' | 'unstyled' | 'flushed' | 'filled';
 }
 
-export function Select(props: SelectProps) {
+export function BaseSelect(props: BaseSelectProps) {
   const { options, ...rest } = props;
   return (
     <ChakraSelect {...rest}>
@@ -20,4 +20,4 @@ export function Select(props: SelectProps) {
   );
 }
 
-export default Select;
+export default BaseSelect;

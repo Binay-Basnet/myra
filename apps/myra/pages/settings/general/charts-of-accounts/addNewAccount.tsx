@@ -1,14 +1,15 @@
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 import React from 'react';
 import {
+  BaseSelect,
   Box,
-  Text,
+  Button,
   Container,
-  Input,
-  Select,
   Divider,
   Button,
   SwitchTabs,
+  Input,
+  Text,
 } from '@saccos/myra/ui';
 import { CloseIcon } from '@chakra-ui/icons';
 import { FormControl, FormLabel } from '@chakra-ui/react';
@@ -54,7 +55,7 @@ const AddNewAccount = () => {
             <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
               Under
             </FormLabel>
-            <Select
+            <BaseSelect
               id="type"
               defaultValue="Staff Bonus Fund"
               options={[
@@ -81,7 +82,7 @@ const AddNewAccount = () => {
             <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
               Account Type
             </FormLabel>
-            <Select
+            <BaseSelect
               id="type"
               options={[
                 {
@@ -110,7 +111,7 @@ const AddNewAccount = () => {
             <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
               Currency
             </FormLabel>
-            <Select
+            <BaseSelect
               id="type"
               options={[
                 {
@@ -140,7 +141,7 @@ const AddNewAccount = () => {
               <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
                 Bank
               </FormLabel>
-              <Select
+              <BaseSelect
                 id="type"
                 options={[
                   {
