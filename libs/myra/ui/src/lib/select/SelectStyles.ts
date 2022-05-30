@@ -5,15 +5,17 @@ export const chakraStyles: ChakraStylesConfig = {
     ...provided,
     // mt: '0',
     maxHeight: '200px',
+    boxShadow: 'E1',
   }),
   menuList: (provided) => ({
     ...provided,
     maxHeight: '200px',
+    paddingY: '0',
   }),
   option: (provided, state) => ({
     ...provided,
     color:
-      state.isSelected && !state.isMulti
+      state.isSelected && !state.isMulti && state.options.length > 5
         ? 'primary.500'
         : state.isDisabled
         ? 'neutralColorLight.Gray-40'

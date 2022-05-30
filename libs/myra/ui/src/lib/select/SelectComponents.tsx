@@ -17,15 +17,19 @@ export const components: SelectComponentsConfig<
     </chakraComponents.DropdownIndicator>
   ),
   Option: ({ children, ...props }) => {
-    console.log(props.isMulti, props.isSelected);
-
     return (
       <chakraComponents.Option {...props}>
         {children}
         {props.isMulti ? (
           <Checkbox isChecked={props.isSelected} />
         ) : props.isSelected ? (
-          <Icon as={IoCheckmarkSharp} w="20px" h="20px" cursor="pointer" />
+          <Icon
+            as={IoCheckmarkSharp}
+            w="20px"
+            h="20px"
+            cursor="pointer"
+            color="primary.500"
+          />
         ) : null}
       </chakraComponents.Option>
     );

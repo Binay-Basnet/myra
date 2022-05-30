@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Grid } from '../../../ui/src';
+import { Grid, Text } from '../../../ui/src';
 
 import { FormInput, FormSelect } from '../../newFormComponents';
 
@@ -78,7 +78,7 @@ export const MemberBasicInfo = ({ control }) => {
             { label: 'SEE', value: 'see' },
             { label: '+2', value: 'twelve' },
             { label: 'Graduate', value: 'graduate' },
-            { label: 'Post Graduate', valiee: 'postGraduate' },
+            { label: 'Post Graduate', value: 'postGraduate' },
             { label: 'Doctorate', value: 'doctorate' },
           ]}
         />

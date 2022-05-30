@@ -10,7 +10,7 @@ export interface SelectOption extends OptionBase {
 
 export interface SelectProps extends Omit<Props, 'size'> {
   label?: string;
-  options?: SelectOption[];
+  options: SelectOption[];
 }
 
 export function Select({ label, isMulti, ...rest }: SelectProps) {
