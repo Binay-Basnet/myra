@@ -37,7 +37,7 @@ const Header = ({ t }) => {
 const AddMember = () => {
   const { t } = useTranslation();
   // const methods = useForm<IFormValues>();
-  const { control, handleSubmit, watch } = useForm();
+  const { control, handleSubmit } = useForm();
 
   // const debounced = () => console.log('hello123', getValues());
 
@@ -87,7 +87,7 @@ const AddMember = () => {
                 1. Personal Information
               </Text>
               <br />
-              <MemberBasicInfo control={control} watch={watch} />
+              <MemberBasicInfo control={control} />
               <Divider my={8} />
               <MemberContactDetails control={control} />
               <Divider my={8} />
