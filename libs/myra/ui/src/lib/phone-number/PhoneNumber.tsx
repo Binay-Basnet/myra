@@ -20,7 +20,7 @@ export const PhoneNumber = forwardRef<HTMLInputElement, PhoneNumberProps>(
     const { label, placeholder, labelColor, ...rest } = props;
     return (
       <>
-        <TextFields variant="formLabel" color={labelColor}>
+        <TextFields variant="formLabel" color={labelColor ?? 'gray.700'}>
           {' '}
           {label ?? 'Phone Number'}
         </TextFields>

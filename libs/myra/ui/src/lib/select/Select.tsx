@@ -18,7 +18,7 @@ export function Select({ label, isMulti, ...rest }: SelectProps) {
   return (
     <Flex direction="column">
       <Text
-        fontSize="r1"
+        fontSize="s3"
         color="neutralColorLight.Gray-70"
         fontWeight="500"
         textTransform="capitalize"

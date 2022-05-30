@@ -1,4 +1,5 @@
 import {
+  AccorrdianAddMember,
   MemberAddress,
   MemberBasicInfo,
   MemberContactDetails,
@@ -75,8 +76,7 @@ const AddMember = () => {
         </Box>
         <Box display="flex" width="100%">
           <Box w={320} p={2} minHeight="100%" bg="white">
-            <Text fontSize="r1">1. Personal Information</Text>
-            <Text fontSize="r1">2. Professional Details</Text>
+            <AccorrdianAddMember />
           </Box>
           <Divider orientation="vertical" />
           <Box w="100%">

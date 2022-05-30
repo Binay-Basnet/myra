@@ -7,11 +7,14 @@ import {
   Container,
   Divider,
   Input,
+  SwitchTabs,
   Text,
 } from '@saccos/myra/ui';
 import React from 'react';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
+
+const list = ['Yes', 'No'];
 
 const AddNewAccount = () => {
   return (
@@ -196,7 +199,9 @@ const AddNewAccount = () => {
             </Text>
           </Box>
 
-          <Box justifySelf="flex-end">Switch</Box>
+          <Box justifySelf="flex-end">
+            <SwitchTabs list={list} />
+          </Box>
         </Box>
 
         <Divider />
@@ -207,7 +212,9 @@ const AddNewAccount = () => {
             </Text>
           </Box>
 
-          <Box justifySelf="flex-end">Switch</Box>
+          <Box justifySelf="flex-end">
+            <SwitchTabs list={list} />
+          </Box>
         </Box>
 
         <Divider />
@@ -218,7 +225,9 @@ const AddNewAccount = () => {
             </Text>
           </Box>
 
-          <Box justifySelf="flex-end">Switch</Box>
+          <Box justifySelf="flex-end">
+            <SwitchTabs list={list} />
+          </Box>
         </Box>
 
         <Divider />
@@ -229,7 +238,9 @@ const AddNewAccount = () => {
             </Text>
           </Box>
 
-          <Box justifySelf="flex-end">Switch</Box>
+          <Box justifySelf="flex-end">
+            <SwitchTabs list={list} />
+          </Box>
         </Box>
 
         <Divider />
@@ -240,7 +251,9 @@ const AddNewAccount = () => {
             </Text>
           </Box>
 
-          <Box justifySelf="flex-end">Switch</Box>
+          <Box justifySelf="flex-end">
+            <SwitchTabs list={list} />
+          </Box>
         </Box>
 
         <Divider />
@@ -251,7 +264,9 @@ const AddNewAccount = () => {
             </Text>
           </Box>
 
-          <Box justifySelf="flex-end">Switch</Box>
+          <Box justifySelf="flex-end">
+            <SwitchTabs list={list} />
+          </Box>
         </Box>
 
         <Divider />
@@ -262,7 +277,9 @@ const AddNewAccount = () => {
             </Text>
           </Box>
 
-          <Box justifySelf="flex-end">Switch</Box>
+          <Box justifySelf="flex-end">
+            <SwitchTabs list={list} />
+          </Box>
         </Box>
 
         <Divider />
@@ -273,7 +290,9 @@ const AddNewAccount = () => {
             </Text>
           </Box>
 
-          <Box justifySelf="flex-end">Switch</Box>
+          <Box justifySelf="flex-end">
+            <SwitchTabs list={list} />
+          </Box>
         </Box>
       </Box>
     </Container>

@@ -27,7 +27,7 @@ export const chakraStyles: ChakraStylesConfig = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    fontSize: 'r1',
+    fontSize: 's3',
     _hover: {
       bg: 'highlight.500',
     },
@@ -38,7 +38,7 @@ export const chakraStyles: ChakraStylesConfig = {
   control: (provided, state) => ({
     ...provided,
     bg: 'white',
-    borderRadius: 'br1',
+    borderRadius: 'br2',
     px: 's12',
   }),
   valueContainer: (provided, state) => ({
@@ -47,13 +47,15 @@ export const chakraStyles: ChakraStylesConfig = {
     display: 'flex',
     alignItems: 'center',
     height: '40px',
-    color: 'neutralColorLight.Gray-50',
-    fontSize: 'r1',
+    color: state.hasValue
+      ? 'neutralColorLight.Gray-80'
+      : 'neutralColorLight.Gray-50',
+    fontSize: 's3',
   }),
   placeholder: (provided) => ({
     ...provided,
     color: 'neutralColorLight.Gray-50',
-    fontSize: 'r1',
+    fontSize: 's3',
   }),
 
   input: (provided) => ({
