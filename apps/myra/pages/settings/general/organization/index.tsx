@@ -5,13 +5,17 @@ import { Box, Text } from '@saccos/myra/ui';
 const Organization = () => {
   return (
     <Box
-      px="s16"
       py="s20"
       width="full"
       borderBottom="1px"
       borderBottomColor="border.layout"
     >
-      <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">
+      <Text
+        fontSize="r2"
+        px="s16"
+        fontWeight="600"
+        color="neutralColorLight.Gray-80"
+      >
         Organization
       </Text>
     </Box>

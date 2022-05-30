@@ -17,3 +17,4 @@ export * from './tab/settingsGeneral';
 export * from './accordion/AccordionComponent';
 export * from './layout';
 export * from './memberForm';
+export * from './accordion/AccordianMemberPage';
