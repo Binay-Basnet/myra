@@ -19,7 +19,7 @@ const tabList: TabList[] = [
   },
   {
     title: 'Charts of Accounts',
-    to: '/settings/general/chartsOfAccounts',
+    to: '/settings/general/charts-of-accounts',
   },
   {
     title: 'Members',
@@ -31,7 +31,7 @@ const tabList: TabList[] = [
   },
   {
     title: 'Deposit / Withdraw',
-    to: '/settings/general/depositWithdraw',
+    to: '/settings/general/deposit-withdraw',
   },
   {
     title: 'Loan',

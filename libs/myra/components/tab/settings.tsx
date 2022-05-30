@@ -9,7 +9,7 @@ const demotabs: { title: string; icon: IconType; link: string }[] = [
   {
     title: 'General',
     icon: AiOutlineAppstore,
-    link: '/settings/general',
+    link: '/settings/general/organization',
   },
   {
     title: 'Users',
@@ -77,7 +77,7 @@ export const SettingsLayout = () => {
         <TabList>
           {demotabs.map(({ title, icon, link }, index) => {
             const isActive =
-              route.asPath === '/settings' && index === 0
+              route.asPath === '/settings/general/organization' && index === 0
                 ? true
                 : route.asPath.includes(title.toLowerCase());
             return (
