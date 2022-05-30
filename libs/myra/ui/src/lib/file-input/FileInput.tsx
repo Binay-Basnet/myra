@@ -1,7 +1,7 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { useCallback, useMemo } from 'react';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
-import { BsCloudUpload } from 'react-icons/all';
+import { BsCloudUpload } from 'react-icons/bs';
 
 import Box from '../box/Box';
 import Button from '../button/Button';
