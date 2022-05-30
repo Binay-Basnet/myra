@@ -1,5 +1,6 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import { AddIcon, CloseIcon } from '@chakra-ui/icons';
+import { Form } from '@saccos/myra/components';
+import { IPurchaseFormValues } from '@saccos/myra/types';
 import {
   Avatar,
   BaseSelect,
@@ -16,9 +17,8 @@ import {
   TabMenu,
   Text,
 } from '@saccos/myra/ui';
-import { Form } from '@saccos/myra/components';
-import { IPurchaseFormValues } from '@saccos/myra/types';
-import { AddIcon, CloseIcon } from '@chakra-ui/icons';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
 const Header = () => {
   return (

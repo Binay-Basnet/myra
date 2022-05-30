@@ -4,6 +4,7 @@ import {
   PartsStyleObject,
   SystemStyleFunction,
 } from '@chakra-ui/theme-tools';
+
 import Checkbox from './checkbox';
 
 const baseStyleControl: SystemStyleFunction = (props) => {

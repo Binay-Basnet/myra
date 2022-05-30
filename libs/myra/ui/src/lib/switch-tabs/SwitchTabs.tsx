@@ -1,14 +1,14 @@
 import {
-  Tabs as ChakraSwitchTabs,
-  TabList,
-  Tab,
-  TabsProps as ChakraSwitchTabsProps,
-  Icon,
   chakra,
+  Icon,
+  Tab,
+  TabList,
+  Tabs as ChakraSwitchTabs,
+  TabsProps as ChakraSwitchTabsProps,
   Text,
 } from '@chakra-ui/react';
-import { BsDot } from 'react-icons/bs';
 import { useState } from 'react';
+import { BsDot } from 'react-icons/bs';
 
 /* eslint-disable-next-line */
 export interface SwitchTabsProps

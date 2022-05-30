@@ -1,6 +1,7 @@
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 import { AccordionComponent } from '@saccos/myra/components';
 import { Box } from '@saccos/myra/ui';
+
+import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const ChartsOfAccounts = () => {
   return (

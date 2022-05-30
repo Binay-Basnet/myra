@@ -1,7 +1,6 @@
-import { ReactElement } from 'react';
-
 import { InventoryItemTable, InventoryLayout } from '@saccos/myra/components';
 import Router from 'next/router';
+import { ReactElement } from 'react';
 
 const InventoryProduct = () => {
   return <InventoryItemTable />;

@@ -1,8 +1,8 @@
-import { getColor, mode, transparentize } from '@chakra-ui/theme-tools';
 import type {
   SystemStyleFunction,
   SystemStyleObject,
 } from '@chakra-ui/theme-tools';
+import { getColor, mode, transparentize } from '@chakra-ui/theme-tools';
 
 const baseStyle: SystemStyleObject = {
   px: 1,

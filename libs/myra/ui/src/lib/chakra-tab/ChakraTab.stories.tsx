@@ -1,8 +1,9 @@
-import { StoryFn, Meta } from '@storybook/react';
-import { ChakraTab, ChakraTabProps } from './ChakraTab';
-import { theme } from '@saccos/myra/util';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
+import { theme } from '@saccos/myra/util';
+import { Meta,StoryFn } from '@storybook/react';
+
+import { ChakraTab, ChakraTabProps } from './ChakraTab';
 
 export default {
   component: ChakraTab,

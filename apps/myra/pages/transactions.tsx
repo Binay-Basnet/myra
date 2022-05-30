@@ -1,5 +1,5 @@
-import React from 'react';
 import { MainLayout } from '@saccos/myra/ui';
+import React from 'react';
 import { ReactElement } from 'react';
 
 const Transactions = () => {

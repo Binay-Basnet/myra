@@ -1,17 +1,18 @@
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
-import React from 'react';
+import { CloseIcon } from '@chakra-ui/icons';
+import { FormControl, FormLabel } from '@chakra-ui/react';
 import {
   BaseSelect,
   Box,
+  Button,
   Container,
   Divider,
-  Button,
-  SwitchTabs,
   Input,
+  SwitchTabs,
   Text,
 } from '@saccos/myra/ui';
-import { CloseIcon } from '@chakra-ui/icons';
-import { FormControl, FormLabel } from '@chakra-ui/react';
+import React from 'react';
+
+import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const list = ['Yes', 'No'];
 

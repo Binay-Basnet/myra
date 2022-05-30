@@ -1,8 +1,9 @@
-import { Story, Meta } from '@storybook/react';
-import { RadioGroup, RadioGroupProps } from './RadioGroup';
-import { theme } from '@saccos/myra/util';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
+import { theme } from '@saccos/myra/util';
+import { Meta,Story } from '@storybook/react';
+
+import { RadioGroup, RadioGroupProps } from './RadioGroup';
 
 export default {
   component: RadioGroup,

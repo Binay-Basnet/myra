@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/react';
+
 import { ChakraPopover, PopoverProps } from './Popover';
 
 export default {

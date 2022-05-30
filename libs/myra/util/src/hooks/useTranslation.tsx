@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+
 import { en, ne } from '../../../locales';
 
 export const useTranslation = () => {

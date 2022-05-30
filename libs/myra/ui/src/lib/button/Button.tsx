@@ -3,6 +3,7 @@ import {
   Button as ChakraButton,
   ButtonProps as ChakrabuttonProps,
 } from '@chakra-ui/react';
+
 // type buttonsizes = 'xl' | 'sm' | 'md' | 'lg';
 export interface ButtonProps extends ChakrabuttonProps {
   colorScheme?: string;
@@ -12,13 +13,13 @@ export interface ButtonProps extends ChakrabuttonProps {
   spinner?: React.ReactElement;
   bg?: string;
   variant?: 'solid' | 'outline' | 'link' | 'ghost';
-  mod?: 'primary' | 'danger' | 'netral';
+  shade?: 'primary' | 'danger' | 'neutral';
 }
 
 export function Button(props: ButtonProps) {
-  const { children, bg, mod, ...rest } = props;
+  const { children, bg, shade, ...rest } = props;
 
-  switch (mod) {
+  switch (shade) {
     case 'primary':
       return (
         <ChakraButton colorScheme="primary" {...rest}>
@@ -31,7 +32,7 @@ export function Button(props: ButtonProps) {
           {children}
         </ChakraButton>
       );
-    case 'netral':
+    case 'neutral':
       return (
         <ChakraButton colorScheme={'gray'} {...rest}>
           {children}
