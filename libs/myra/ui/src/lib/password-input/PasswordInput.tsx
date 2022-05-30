@@ -26,7 +26,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
 
     return (
       <>
-        <TextFields variant="formLabel" color={labelColor}>
+        <TextFields variant="formLabel" color={labelColor ?? 'gray.700'}>
           {' '}
           {label ?? 'Password'}
         </TextFields>

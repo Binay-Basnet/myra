@@ -18,7 +18,7 @@ export const AmountInputNormal = forwardRef<
 
   return (
     <>
-      <TextFields variant="formLabel" color={labelColor}>
+      <TextFields variant="formLabel" color={labelColor ?? 'gray.700'}>
         {' '}
         {label ?? 'Quantity'}
       </TextFields>

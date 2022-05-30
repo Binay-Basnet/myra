@@ -26,7 +26,7 @@ export const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
     return (
       <>
         <Text
-          fontWeight={'700'}
+          fontWeight={'500'}
           color={labelColor ?? 'gray.700'}
           fontSize="s2"
           mb="s4"
