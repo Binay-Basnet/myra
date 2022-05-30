@@ -1,3 +1,4 @@
+export * from './lib/file-input/FileInput';
 export * from './lib/select/Select';
 export * from './lib/slug-input/SlugInput';
 export * from './lib/text-area-input/TextAreaInput';
