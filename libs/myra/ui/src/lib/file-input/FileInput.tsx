@@ -1,6 +1,6 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { useCallback, useMemo } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import { BsCloudUpload } from 'react-icons/all';
 
 import Box from '../box/Box';
@@ -9,25 +9,30 @@ import Icon from '../icon/Icon';
 import { TextFields } from '../text-fields/TextFields';
 import { dropdownStyles } from './FileInputStyles';
 
-export interface FileInputProps {
-  size: 'sm' | 'md' | 'lg';
+export interface FileInputProps extends DropzoneOptions {
+  size?: 'sm' | 'md' | 'lg';
   dropText?: string;
-  // TODO ( Change this any )
-  onChange: any;
+  onChange: (file: File | null) => void;
 }
 
+/**
+ *
+ * @see https://react-dropzone.js.org/#section-accepting-specific-file-types for more info about providing props.
+ */
 export function FileInput({
   size = 'md',
   onChange,
   dropText = 'or drop files to upload',
+  ...rest
 }: FileInputProps) {
-  const onDrop = useCallback((acceptedFiles: any[]) => {
+  const onDrop = useCallback((acceptedFiles: File[]) => {
     onChange(acceptedFiles[0]);
   }, []);
 
   const { getInputProps, getRootProps, isFocused, isDragAccept, isDragReject } =
     useDropzone({
       onDrop,
+      ...rest,
     });
 
   const style = useMemo(
@@ -49,7 +54,7 @@ export function FileInput({
       }}
       {...getRootProps({ style })}
     >
-      <input {...getInputProps({ onChange })} />
+      <input {...getInputProps()} />
       <Flex
         direction="column"
         gap={size === 'md' ? 's8' : 's16'}
