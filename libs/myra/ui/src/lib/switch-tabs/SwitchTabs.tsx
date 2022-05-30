@@ -5,54 +5,65 @@ import {
   TabsProps as ChakraSwitchTabsProps,
   Icon,
   chakra,
+  Text,
 } from '@chakra-ui/react';
 import { BsDot } from 'react-icons/bs';
+import { useState } from 'react';
 
 /* eslint-disable-next-line */
-export interface SwitchTabsProps extends ChakraSwitchTabsProps {
+export interface SwitchTabsProps
+  extends Omit<ChakraSwitchTabsProps, 'children'> {
   list: string[];
 }
 
 const TabElement = chakra(Tab, {
   baseStyle: {
-    tablist: {
+    border: '2px solid',
+    borderRadius: 'br2',
+    borderColor: 'border.layout',
+    bg: 'background.500',
+    margin: '-2px',
+    _selected: {
+      color: 'neutralColorLight.g-80',
+      boxShadow: 'inset 0px -2px 0px transparent',
       border: '2px solid',
-      borderColor: 'inherit',
-    },
-    tab: {
-      border: '1px solid',
-      borderRadius: 'br2',
       borderColor: 'border.layout',
-      margin: '-2px',
-      bg: 'background.500',
-      _selected: {
-        color: '#343C46',
-        boxShadow: 'inset 0px -2px 0px transparent',
-      },
-      _active: {
-        bg: 'gray.0',
-        borderColor: 'transparent',
-      },
-      _focus: {
-        bg: 'gray.0',
-        borderColor: 'transparent',
-      },
-      _disabled: {
-        _active: { bg: 'none' },
-      },
+      bg: 'gray.0',
+    },
+    _active: {
+      border: '2px solid',
+      bg: 'gray.0',
+    },
+    _focus: {
+      bg: 'gray.0',
+      borderColor: 'border.layout',
+    },
+    _disabled: {
+      _active: { bg: 'none' },
     },
   },
 });
 
 export function SwitchTabs(props: SwitchTabsProps) {
   const { list } = props;
+  const [activeTab, setActivetab] = useState<number | null>(0);
   return (
-    <ChakraSwitchTabs variant="unstyled">
-      <TabList>
-        {list.map((item) => (
-          <TabElement>
-            <Icon w={6} h={6} color="primary.500" as={BsDot} />
-            {item}
+    <ChakraSwitchTabs size="sm" variant="unstyled">
+      <TabList borderRadius="br2">
+        {list.map((item, index) => (
+          <TabElement onClick={() => setActivetab(index)}>
+            <Icon
+              w={8}
+              h={8}
+              color={activeTab === index ? 'primary.500' : 'gray.500'}
+              as={BsDot}
+            />
+            <Text
+              variant="switch"
+              color={activeTab === index ? 'gray.800' : 'gray.600'}
+            >
+              {item}
+            </Text>
           </TabElement>
         ))}
       </TabList>
