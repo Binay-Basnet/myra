@@ -32,6 +32,7 @@ const AddNewItemPage = () => {
         <Text fontSize="r2" fontWeight="600">
           Add New Item
         </Text>
+
         <GrClose size="14px" color="#91979F" />
       </Box>
       <br />
@@ -43,9 +44,9 @@ const AddNewItemPage = () => {
         flexDirection="column"
         gap={6}
       >
-        <Text fontSize="r1" fontWeight="600">
+        {/* <Text fontSize="r1" fontWeight="600">
           Basic Information
-        </Text>
+        </Text> */}
         <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gap={6}>
           <FormControl>
             <FormLabel htmlFor="name">Item Name</FormLabel>
