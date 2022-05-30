@@ -2,20 +2,21 @@ import React from 'react';
 import SettingsLayout from '.';
 import { Box } from '@saccos/myra/ui';
 import { SettingsGeneral as Layout } from '@saccos/myra/components';
+
 interface ISettingsLayout {
   children: React.ReactNode;
 }
-const GeneralLayout = (props: ISettingsLayout) => {
-  const { children } = props;
-  return (
-    <>
-      <SettingsLayout />
-      <Box display={'flex'} flexDirection={'row'}>
-        <Layout />
-        <Box ml={'s16'}>{children}</Box>
+
+const GeneralLayout = ({ children }: ISettingsLayout) => (
+  <>
+    <SettingsLayout />
+    <Box display={'flex'} p="s16" flexDirection={'row'} gap="s16">
+      <Layout />
+      <Box width="100%" bg="white" borderRadius="br3">
+        {children}
       </Box>
-    </>
-  );
-};
+    </Box>
+  </>
+);
 
 export default GeneralLayout;
