@@ -1,27 +1,25 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import {
-  MainLayout,
-  Input,
+  Avatar,
+  BaseSelect,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  Divider,
   Grid,
   GridItem,
-  RadioGroup,
-  Select,
-} from '@saccos/myra/ui';
-import {
-  Box,
-  Container,
-  Text,
-  Divider,
-  Button,
+  Input,
+  MainLayout,
   Navbar,
+  RadioGroup,
   TabMenu,
-  Avatar,
-  Checkbox,
+  Text,
 } from '@saccos/myra/ui';
 import { Form } from '@saccos/myra/components';
 import { IPurchaseFormValues } from '@saccos/myra/types';
-import { CloseIcon, AddIcon } from '@chakra-ui/icons';
+import { CloseIcon } from '@chakra-ui/icons';
 
 const Header = () => {
   return (
@@ -144,7 +142,7 @@ const SharePurchase = () => {
 
               <br />
               <Text>Select Account</Text>
-              <Select
+              <BaseSelect
                 w="30%"
                 placeholder="Select Account"
                 options={[

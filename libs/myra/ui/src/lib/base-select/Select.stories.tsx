@@ -1,15 +1,16 @@
-import { Story, Meta } from '@storybook/react';
-import { Select, SelectProps } from './Select';
+import { Meta, Story } from '@storybook/react';
+import { BaseSelect, BaseSelectProps } from './BaseSelect';
 import { theme } from '@saccos/myra/util';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
+
 export default {
-  component: Select,
+  component: BaseSelect,
   title: 'Select',
   argTypes: getThemingArgTypes(theme as Theme, 'Select'),
 } as Meta;
 
-const Template: Story<SelectProps> = (args) => <Select {...args} />;
+const Template: Story<BaseSelectProps> = (args) => <BaseSelect {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

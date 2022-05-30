@@ -7,6 +7,7 @@ export const spacing = {
   s20: '20px',
   s24: '24px',
   s32: '32px',
+  s40: '40px',
   s48: '48px',
   s60: '60px',
 };

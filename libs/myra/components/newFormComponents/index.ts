@@ -1,4 +1,4 @@
 import { FormInput } from './FormInput';
-import { FormSelect } from './FromSelect';
+import { FormSelect } from './FormSelect';
 
 export { FormInput, FormSelect };

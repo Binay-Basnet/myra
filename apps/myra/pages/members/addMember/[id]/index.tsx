@@ -4,24 +4,24 @@ import { useForm } from 'react-hook-form';
 
 import {
   Box,
+  Button,
   Container,
+  Divider,
   Navbar,
   TabMenu,
   Text,
-  Divider,
-  Button,
 } from '@saccos/myra/ui';
 
 import {
+  MemberAddress,
   MemberBasicInfo,
   MemberContactDetails,
-  MemberIdentificationDetails,
-  MemberAddress,
   MemberFamilyDetails,
-  MemberProfession,
-  MemberMainOccupation,
   MemberHushbandWifeOccupation,
+  MemberIdentificationDetails,
   MemberIncomeSourceDetails,
+  MemberMainOccupation,
+  MemberProfession,
 } from '@saccos/myra/components';
 import { useTranslation } from '@saccos/myra/util';
 
@@ -37,7 +37,7 @@ const Header = ({ t }) => {
 const AddMember = () => {
   const { t } = useTranslation();
   // const methods = useForm<IFormValues>();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, watch } = useForm();
 
   // const debounced = () => console.log('hello123', getValues());
 
@@ -87,7 +87,7 @@ const AddMember = () => {
                 1. Personal Information
               </Text>
               <br />
-              <MemberBasicInfo control={control} />
+              <MemberBasicInfo control={control} watch={watch} />
               <Divider my={8} />
               <MemberContactDetails control={control} />
               <Divider my={8} />
