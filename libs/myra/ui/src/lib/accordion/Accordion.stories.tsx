@@ -10,6 +10,7 @@ const Template: Story<AccordionProps> = (args) => <Accordion {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
+  id: 'test1',
   title: 'test',
   allowToggle: true,
   allowMultiple: true,

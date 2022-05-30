@@ -10,9 +10,11 @@ import {
   AccordionPanelProps as ChakraAccordianPanelProps,
 } from '@chakra-ui/react';
 import { Box } from '@saccos/myra/ui';
+import Divider from '../divider/Divider';
 
 /* eslint-disable-next-line */
 export interface AccordionProps extends ChakraAccordianProps {
+  id: string;
   title: string;
   allowToggle: boolean;
   allowMultiple?: boolean;
@@ -41,15 +43,14 @@ const AccordionPanelComponent = ({
 };
 
 export function Accordion(props: AccordionProps) {
-  const { children, allowMultiple, allowToggle, title, ...rest } = props;
+  const { children, id, allowMultiple, allowToggle, title, ...rest } = props;
   return (
     <ChakraAccordian
-      bg="primary.0"
       allowMultiple={allowMultiple}
       allowToggle={allowToggle}
       {...rest}
     >
-      <AccordionItemComponent>
+      <AccordionItemComponent id={id}>
         <h2>
           <AccordionButtonComponent>
             <Box flex="1" textAlign="left">

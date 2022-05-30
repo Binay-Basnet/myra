@@ -19,7 +19,7 @@ import {
 import { BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs';
 
 import { Box, Button, Column, MainLayout, Table } from '@saccos/myra/ui';
-import { TabColumn, TabRow, AcordianComponent } from '@saccos/myra/components';
+import { TabColumn, TabRow } from '@saccos/myra/components';
 import {
   Gender,
   useGetNewIdMutation,
@@ -40,13 +40,13 @@ const rows = [
   'memberNavWip',
   'memberNavDraft',
 ];
-const sectionList = [
-  'Section 1: Personal Information',
-  'Section 2: Professional Information',
-  'Section 3: Cooperative Information',
-];
-const accordionList = ['Gender', 'Nationality', 'Others'];
-const list = ['Male', 'Female', 'Others'];
+// const sectionList = [
+//   'Section 1: Personal Information',
+//   'Section 2: Professional Information',
+//   'Section 3: Cooperative Information',
+// ];
+// const accordionList = ['Gender', 'Nationality', 'Others'];
+// const list = ['Male', 'Female', 'Others'];
 
 type MemberData = {
   id: string;
@@ -130,10 +130,10 @@ const Member = () => {
           {t.members}
         </Text>
 
-        <Box mt="58px" display="flex" flexDirection="column" width="238px">
+        <Box mt="58px" display="flex" flexDirection="column">
           <Box pl="16px">
             <Button
-              width="184px"
+              width="50px"
               leftIcon={<AddIcon h="11px" />}
               bg="#006837"
               fontSize="14px"
@@ -231,11 +231,11 @@ const Member = () => {
             </Box>
           </Box>
         </Box>
-        <AcordianComponent
+        {/* <AccordionComponent
           sectionList={sectionList}
           accordionList={accordionList}
           list={list}
-        />
+        /> */}
         <Box width={'100%'}>
           {rowData && (
             <Table data={rowData.slice(0, 10)} columns={columns} sort={true} />
