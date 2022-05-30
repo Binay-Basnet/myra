@@ -1,5 +1,6 @@
-import { Navbar } from '../navbar/Navbar';
+// import { Navbar } from '../navbar/Navbar';
 import { TabMenu } from '../tab-menu/TabMenu';
+import { TopLevelHeader } from '../top-level-header/TopLevelHeader';
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 
@@ -20,7 +21,9 @@ export function MainLayout(props: MainLayoutProps) {
     // >
     <div>
       <Box position="fixed" top={0} width="100%" zIndex={2}>
-        <Navbar />
+        {/* <Navbar /> */}
+
+        <TopLevelHeader />
         <TabMenu />
       </Box>
       {children}

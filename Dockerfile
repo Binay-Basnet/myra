@@ -32,7 +32,7 @@ COPY --from=builder /app/apps/myra/dist/package.json ./package.json
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/apps/myra/dist/.next/standalone/apps/myra/ .
 COPY --from=builder --chown=nextjs:nodejs /app/apps/myra/dist/.next/standalone/node_modules ./node_modules
-COPY --from=builder --chown=nextjs:nodejs /app/apps/myra/dist/.next/static ./dist/.next/
+COPY --from=builder --chown=nextjs:nodejs /app/apps/myra/dist/.next/static ./dist/.next/static
 
 USER nextjs
 
