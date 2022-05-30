@@ -1,6 +1,6 @@
-import { CellProps, HeaderProps, Hooks } from 'react-table';
-import { forwardRef, RefObject, useEffect, useRef } from 'react';
 import { Checkbox } from '@chakra-ui/react';
+import { forwardRef, RefObject, useEffect, useRef } from 'react';
+import { CellProps, HeaderProps, Hooks } from 'react-table';
 
 interface IIndeterminateInputProps {
   indeterminate?: boolean;

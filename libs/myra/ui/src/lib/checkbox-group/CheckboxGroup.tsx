@@ -1,10 +1,10 @@
 import {
-  Checkbox,
-  CheckboxProps as ChakraCheckboxProps,
-  CheckboxGroup as ChakraCheckboxGroup,
-  Stack,
-  Flex,
   Box,
+  Checkbox,
+  CheckboxGroup as ChakraCheckboxGroup,
+  CheckboxProps as ChakraCheckboxProps,
+  Flex,
+  Stack,
 } from '@chakra-ui/react';
 
 /* eslint-disable-next-line */

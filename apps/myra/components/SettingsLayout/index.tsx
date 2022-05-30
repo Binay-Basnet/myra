@@ -1,6 +1,6 @@
-import React from 'react';
-import { TopLevelHeader } from '@saccos/myra/ui';
 import { SettingsLayout as Layout } from '@saccos/myra/components';
+import { TopLevelHeader } from '@saccos/myra/ui';
+import React from 'react';
 
 interface ISettingsLayout {
   children?: React.ReactNode;

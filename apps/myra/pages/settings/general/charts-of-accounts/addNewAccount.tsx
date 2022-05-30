@@ -1,5 +1,5 @@
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
-import React from 'react';
+import { CloseIcon } from '@chakra-ui/icons';
+import { FormControl, FormLabel } from '@chakra-ui/react';
 import {
   BaseSelect,
   Box,
@@ -9,8 +9,9 @@ import {
   Input,
   Text,
 } from '@saccos/myra/ui';
-import { CloseIcon } from '@chakra-ui/icons';
-import { FormControl, FormLabel } from '@chakra-ui/react';
+import React from 'react';
+
+import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const AddNewAccount = () => {
   return (

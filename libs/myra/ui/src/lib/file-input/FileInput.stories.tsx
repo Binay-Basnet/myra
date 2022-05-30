@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/react';
+
 import { FileInput, FileInputProps } from './FileInput';
 
 export default {

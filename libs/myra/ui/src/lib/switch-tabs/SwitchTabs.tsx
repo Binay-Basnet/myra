@@ -1,10 +1,10 @@
 import {
-  Tabs as ChakraSwitchTabs,
-  TabList,
-  Tab,
-  TabsProps as ChakraSwitchTabsProps,
-  Icon,
   chakra,
+  Icon,
+  Tab,
+  TabList,
+  Tabs as ChakraSwitchTabs,
+  TabsProps as ChakraSwitchTabsProps,
 } from '@chakra-ui/react';
 import { BsDot } from 'react-icons/bs';
 

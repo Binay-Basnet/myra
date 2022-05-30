@@ -1,9 +1,8 @@
-import { ReactElement } from 'react';
-
 import {
   InventoryLayout,
   InventoryUseOfMeasureTable,
 } from '@saccos/myra/components';
+import { ReactElement } from 'react';
 
 const InventoryUnitsOfMeasure = () => {
   return <InventoryUseOfMeasureTable />;

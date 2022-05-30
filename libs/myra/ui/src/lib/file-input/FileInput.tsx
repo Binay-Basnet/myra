@@ -1,11 +1,12 @@
-import { useDropzone } from 'react-dropzone';
+import { Flex, Text } from '@chakra-ui/react';
 import { useCallback, useMemo } from 'react';
-import { TextFields } from '../text-fields/TextFields';
+import { useDropzone } from 'react-dropzone';
+import { BsCloudUpload } from 'react-icons/all';
+
+import Box from '../box/Box';
 import Button from '../button/Button';
 import Icon from '../icon/Icon';
-import { BsCloudUpload } from 'react-icons/all';
-import { Flex, Text } from '@chakra-ui/react';
-import Box from '../box/Box';
+import { TextFields } from '../text-fields/TextFields';
 import { dropdownStyles } from './FileInputStyles';
 
 export interface FileInputProps {

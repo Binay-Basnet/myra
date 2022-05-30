@@ -1,17 +1,3 @@
-import React from 'react';
-import { GrClose } from 'react-icons/gr';
-import { useForm } from 'react-hook-form';
-
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Navbar,
-  TabMenu,
-  Text,
-} from '@saccos/myra/ui';
-
 import {
   MemberAddress,
   MemberBasicInfo,
@@ -23,7 +9,19 @@ import {
   MemberMainOccupation,
   MemberProfession,
 } from '@saccos/myra/components';
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Navbar,
+  TabMenu,
+  Text,
+} from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { GrClose } from 'react-icons/gr';
 
 const Header = ({ t }) => {
   return (

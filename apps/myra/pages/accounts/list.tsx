@@ -1,7 +1,6 @@
-import { ReactElement } from 'react';
-
 import { AccountLayout, AccountListTable } from '@saccos/myra/components';
 import Router from 'next/router';
+import { ReactElement } from 'react';
 
 // TODO ( Update this page when design arrives )
 const AccountListPage = () => {
