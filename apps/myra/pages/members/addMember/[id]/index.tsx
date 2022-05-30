@@ -36,12 +36,40 @@ const Header = ({ t }) => {
 const AddMember = () => {
   const { t } = useTranslation();
   // const methods = useForm<IFormValues>();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      familyMember: [{ familyMemberFullName: '', familyMemberRelation: '' }],
+      mainOccupation: [
+        {
+          occupation: '',
+          orgFirmName: '',
+          panVatNo: '',
+          address: '',
+          annualIncome: '',
+        },
+      ],
+      hushbandWifeOccupation: [
+        {
+          occupation: '',
+          orgFirmName: '',
+          panVatNo: '',
+          address: '',
+          annualIncome: '',
+        },
+      ],
+      incomeSource: [
+        {
+          incomeSource: '',
+          incomeAmount: '',
+        },
+      ],
+    },
+  });
 
   // const debounced = () => console.log('hello123', getValues());
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
+    <form onSubmit={handleSubmit((data) => console.log('data', data))}>
       <Box
         position="fixed"
         width="100%"
@@ -121,7 +149,7 @@ const AddMember = () => {
         >
           <Text>Save as Draft</Text>
           <Box>
-            <Button>Save Draft</Button>&nbsp;
+            <Button type="submit">Save Draft</Button>&nbsp;
             <Button>Next</Button>
           </Box>
         </Box>

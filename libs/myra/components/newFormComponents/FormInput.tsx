@@ -14,6 +14,7 @@ export const FormInput = ({ control, placeholder, name, label, type }) => {
             type={type}
             placeholder={placeholder}
             onChange={onChange}
+            bg="white"
           />
         )}
       />
