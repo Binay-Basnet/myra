@@ -13,11 +13,16 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     const { labelColor, label, placeholder, ...rest } = props;
     return (
       <>
-        <TextFields variant="formLabel" color={labelColor ?? 'gray.700'}>
+        <TextFields
+          mb="s4"
+          variant="formLabel"
+          color={labelColor ?? 'gray.700'}
+        >
           {' '}
           {label ?? 'Name'}
         </TextFields>
         <Input
+          p="s12"
           variant={'outline'}
           type="text"
           fontSize={'s2'}
