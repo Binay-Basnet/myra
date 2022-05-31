@@ -40,6 +40,7 @@ const IncomeSource = ({ control, index, removeIncomeSource }) => {
         aria-label="close"
         size="md"
         icon={<Icon size="md" as={AiOutlineClose} />}
+        onClick={removeIncomeSource}
       />
       <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
         <GridItem colSpan={1}>
@@ -97,7 +98,7 @@ export const MemberIncomeSourceDetails = ({ control }) => {
             <Box key={item.id} mb={2}>
               <IncomeSource
                 control={control}
-                removeIncomeSource={() => incomeSourceRemove()}
+                removeIncomeSource={() => incomeSourceRemove(index)}
                 index={index}
               />
             </Box>
