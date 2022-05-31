@@ -1,8 +1,8 @@
 import { RadioGroup, Radio, Box, Grid, GridItem } from '@chakra-ui/react';
 
-export const RadioOrganization = (register) => {
+export const RadioOrganization = () => {
   return (
-    <RadioGroup fontWeight={'400'} {...register('TypeOfMember')}>
+    <RadioGroup fontWeight={'400'}>
       {/* <Box display="flex" justifyContent={'flex-start'}> */}
       <Grid templateColumns={'repeat(5, 1fr)'} gap={'s16'}>
         <Radio value="1"> Individual</Radio>
