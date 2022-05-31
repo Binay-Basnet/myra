@@ -7,9 +7,37 @@
     "@nrwl/nx",
     "simple-import-sort"
   ],
+  "extends": [
+    "eslint:recommended"
+  ],
   "rules": {
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "warn",
+    "simple-import-sort/imports": [
+      "warn",
+      {
+        "groups": [
+          [
+            "^react",
+            "^@?\\w"
+          ],
+          // Packages 'react' related packages come first.
+          [
+            "^@/sacoos"
+          ],
+          [
+            "^\\./?$",
+            "^\\.(?!/?$)",
+            "^\\.\\./?$",
+            "^\\.\\.(?!/?$)",
+            "^\\.\\./\\.\\./?$",
+            "^\\.\\./\\.\\.(?!/?$)",
+            "^\\.\\./\\.\\./\\.\\./?$",
+            "^\\.\\./\\.\\./\\.\\.(?!/?$)"
+          ]
+          // relative paths up until 3 levels
+        ]
+      }
+    ]
   },
   "overrides": [
     {
@@ -59,4 +87,3 @@
     }
   ]
 }
-

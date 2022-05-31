@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import {
   AddIcon,
   ChevronLeftIcon,
@@ -18,8 +20,6 @@ import { MemberTable, TabColumn, TabRow } from '@saccos/myra/components';
 import { Box, Button, MainLayout } from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
 import { useRouter } from 'next/router';
-import { ReactElement } from 'react';
-import { BsThreeDotsVertical } from 'react-icons/bs';
 
 import { useGetNewIdMutation } from '../../generated/graphql';
 

@@ -1,8 +1,8 @@
+import { BiArrowBack } from 'react-icons/bi';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
 import { theme } from '@saccos/myra/util';
 import { Meta, StoryFn } from '@storybook/react';
-import { BiArrowBack } from 'react-icons/bi';
 
 import Button, { ButtonProps } from './Button';
 

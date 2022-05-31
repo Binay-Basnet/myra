@@ -1,3 +1,5 @@
+import React from 'react';
+import { BiFilter } from 'react-icons/bi';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -14,10 +16,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import React from 'react';
-import { BiFilter } from 'react-icons/bi';
 
-import { PopoverContent, PopoverTrigger } from '../popover/Popover';
 import ListFilterPopover from './components/ListFilterPopover';
 import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
 import {
@@ -28,6 +27,7 @@ import {
   TableProps,
 } from './types';
 import { useTable } from './useTable';
+import { PopoverContent, PopoverTrigger } from '../popover/Popover';
 
 /**
  *  @description Add disableSortBy in each column to disable column sort in that column.

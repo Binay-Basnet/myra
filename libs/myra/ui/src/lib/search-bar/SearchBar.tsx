@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { IoSearchSharp } from 'react-icons/io5';
 import {
   Input,
   InputGroup,
@@ -5,8 +7,7 @@ import {
   InputRightElement,
   Text,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { IoSearchSharp } from 'react-icons/io5';
+
 /* eslint-disable-next-line */
 export interface SearchBarProps {}
 

@@ -1,3 +1,4 @@
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import {
   AddIcon,
   ChevronLeftIcon,
@@ -16,11 +17,13 @@ import {
   Input,
   Text,
 } from '@saccos/myra/ui';
-import { BsThreeDotsVertical } from 'react-icons/bs';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
+import { useMembersQuery } from '../../../../generated/graphql';
 
 const ChartsOfAccounts = () => {
+  const { data, isLoading } = useMembersQuery();
+
   return (
     <Box width="full" borderBottom="1px" borderBottomColor="border.layout">
       <Box
@@ -109,7 +112,7 @@ const ChartsOfAccounts = () => {
         </Box>
       </Box>
       <Box width={'100%'}>
-        <CoaAccountListTable />
+        <CoaAccountListTable data={data} isLoading={isLoading} />
       </Box>
     </Box>
   );

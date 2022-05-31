@@ -1,15 +1,20 @@
-import { Flex, Image, InputGroup, InputLeftElement } from '@chakra-ui/react';
-import { Box, Input, Text } from '@chakra-ui/react';
-import { useTranslation } from '@saccos/myra/util';
 import { AiOutlineSearch } from 'react-icons/ai';
+import {
+  Box,
+  Flex,
+  Image,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Text,
+} from '@chakra-ui/react';
+import { useTranslation } from '@saccos/myra/util';
 
 /* eslint-disable-next-line */
-export interface MyraUiNavbarProps {
-
-}
+export interface MyraUiNavbarProps {}
 
 export function Navbar() {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <Box

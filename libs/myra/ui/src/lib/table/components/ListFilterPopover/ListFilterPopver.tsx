@@ -1,15 +1,14 @@
+import React from 'react';
+import { BiFilter } from 'react-icons/bi';
 import {
   IconButton,
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@chakra-ui/react';
-import React from 'react';
-import { BiFilter } from 'react-icons/bi';
 
 import { TableAmountFilterContent } from '../../../table-amount-filter/TableAmountFilter';
 import { TableListFilterContent } from '../../../table-list-filter/TableListFilter';
-import { HeaderGroup } from '../../types';
 
 interface IListFilterPopoverProps<T extends Record<string, unknown>> {
   //TODO! HeaderGroup<T>

@@ -1,6 +1,6 @@
+import React from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
 import { Meta, Story } from '@storybook/react';
-import React from 'react';
 
 import Table from './Table';
 import { Column, TableProps } from './types';
