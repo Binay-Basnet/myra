@@ -1,7 +1,7 @@
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const Loan = () => {
-  return <> Loan </>;
+  return <> Loan is added</>;
 };
 
 export default Loan;
