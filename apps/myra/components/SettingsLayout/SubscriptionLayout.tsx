@@ -1,5 +1,4 @@
 import SettingsLayout from '.';
-import { Box } from '@saccos/myra/ui';
 interface ISettingsLayout {
   children?: React.ReactNode;
 }

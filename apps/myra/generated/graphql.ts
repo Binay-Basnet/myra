@@ -14,7 +14,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  Any: any;
+  Any: unknown;
   Time: string;
 };
 

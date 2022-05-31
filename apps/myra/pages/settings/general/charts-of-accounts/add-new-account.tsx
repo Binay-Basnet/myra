@@ -1,23 +1,33 @@
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
-import React from 'react';
+// import { useForm } from 'react-hook-form';
 import {
-  BaseSelect,
+  Select,
   Box,
-  Container,
   Divider,
   Button,
   SwitchTabs,
-  Input,
   Text,
+  AmountInput,
+  TextInput,
 } from '@saccos/myra/ui';
 import { CloseIcon } from '@chakra-ui/icons';
-import { FormControl, FormLabel } from '@chakra-ui/react';
+import { FormControl } from '@chakra-ui/react';
 
 const list = ['Yes', 'No'];
+const accountList = ['Cash', 'Journal', 'Bank'];
 
 const AddNewAccount = () => {
+  const router = useRouter();
+  const [selectedTab, setSelectedTab] = useState<string | null>('Cash');
+
+  const switchTabsFxn = (data: string) => {
+    setSelectedTab(data);
+  };
+
   return (
-    <Container minW="container.md" height="fit-content" mt="5" p="0">
+    <Box width="full" borderBottom="1px" borderBottomColor="border.layout">
       <Box
         height="60px"
         display="flex"
@@ -33,7 +43,11 @@ const AddNewAccount = () => {
         </Text>
         <Box>
           <Button mr="5">Save Account </Button>
-          <CloseIcon color="#91979F" />
+          <CloseIcon
+            cursor="pointer"
+            onClick={() => router.back()}
+            color="#91979F"
+          />
         </Box>
       </Box>
       <Box
@@ -43,19 +57,14 @@ const AddNewAccount = () => {
         flexDirection="column"
         gap={6}
       >
-        <Box display="flex" flexDirection="row" justifyContent="space-between">
+        <Box display="flex" justifyContent="center" gap={5}>
           <FormControl flex={1}>
-            <FormLabel color="gray.700" fontSize="s3" htmlFor="accountName">
-              Account Name
-            </FormLabel>
-            <Input id="accountName" placeholder="Account Name" />
+            <TextInput id="accountName" placeholder="Account Name" />
           </FormControl>
-          <FormControl w="30%" ml="s16">
-            <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
-              Under
-            </FormLabel>
-            <BaseSelect
+          <FormControl w="30%">
+            <Select
               id="type"
+              label="Under"
               defaultValue="Staff Bonus Fund"
               options={[
                 {
@@ -71,18 +80,15 @@ const AddNewAccount = () => {
                   value: 'option-3',
                 },
               ]}
-              variant="outline"
             />
           </FormControl>
         </Box>
 
-        <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gap={6}>
+        <Box display="flex" gap={5} justifyContent="space-between">
           <FormControl>
-            <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
-              Account Type
-            </FormLabel>
-            <BaseSelect
+            <Select
               id="type"
+              label="Account Type"
               options={[
                 {
                   label: 'Liabilities',
@@ -97,21 +103,19 @@ const AddNewAccount = () => {
                   value: 'option-3',
                 },
               ]}
-              variant="outline"
             />
           </FormControl>
           <FormControl>
-            <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
-              Account Code
-            </FormLabel>
-            <Input id="type" placeholder="Account Code" />
+            <TextInput
+              label="Account Code"
+              id="type"
+              placeholder="Account Code"
+            />
           </FormControl>
           <FormControl>
-            <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
-              Currency
-            </FormLabel>
-            <BaseSelect
+            <Select
               id="type"
+              label="Currency"
               options={[
                 {
                   label: 'NPR',
@@ -126,68 +130,85 @@ const AddNewAccount = () => {
                   value: 'option-3',
                 },
               ]}
-              variant="outline"
             />
           </FormControl>
         </Box>
 
         <Divider />
 
-        <Text>Types of Account</Text>
-        <Box display="flex" justifyContent="center" gap={5}>
-          <Box flex={1}>
-            <FormControl>
-              <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
-                Bank
-              </FormLabel>
-              <BaseSelect
-                id="type"
-                options={[
-                  {
-                    label: 'Credit Terms',
-                    value: 'Credit Terms',
-                  },
-                  {
-                    label: 'Option 2',
-                    value: 'option-2',
-                  },
-                  {
-                    label: 'Option 3',
-                    value: 'option-3',
-                  },
-                ]}
-                variant="outline"
-              />
-            </FormControl>
+        <Box>
+          <Text mb="5px">Type of Account</Text>
 
-            <Box mt="3" display="flex" gap={5} justifyContent="space-around">
-              <FormControl w="50%">
-                <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
-                  Opening Balance
-                </FormLabel>
-                <Input textAlign="right" id="type" placeholder="0.00" />
+          <SwitchTabs onclick={switchTabsFxn} list={accountList} />
+        </Box>
+
+        {selectedTab === 'Cash' && (
+          <Box display="flex" justifyContent="flex-start">
+            <FormControl w="35%">
+              <AmountInput label="Opening Balance" />
+            </FormControl>
+          </Box>
+        )}
+
+        {selectedTab === 'Journal' && (
+          <Box display="flex" justifyContent="flex-start">
+            <Box w="70%">
+              <Box display="flex" gap={5} justifyContent="space-around">
+                <FormControl>
+                  <AmountInput label="Opening Balance" />
+                </FormControl>
+                <FormControl>
+                  <TextInput label="Journal Code" placeholder="Accout Number" />
+                </FormControl>
+              </Box>
+            </Box>
+          </Box>
+        )}
+
+        {selectedTab === 'Bank' && (
+          <Box display="flex" justifyContent="center" gap={5}>
+            <Box flex={1}>
+              <FormControl>
+                <Select
+                  id="type"
+                  label="Bank"
+                  options={[
+                    {
+                      label: 'Credit Terms',
+                      value: 'Credit Terms',
+                    },
+                    {
+                      label: 'Option 2',
+                      value: 'option-2',
+                    },
+                    {
+                      label: 'Option 3',
+                      value: 'option-3',
+                    },
+                  ]}
+                />
               </FormControl>
-              <FormControl w="50%">
-                <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
-                  Bank GL Code
-                </FormLabel>
-                <Input id="type" placeholder="GL Code" />
+
+              <Box mt="3" display="flex" gap={5} justifyContent="space-around">
+                <FormControl w="50%">
+                  <AmountInput label="Opening Balance" />
+                </FormControl>
+                <FormControl w="50%">
+                  <TextInput label=" Bank GL Code" />
+                </FormControl>
+              </Box>
+            </Box>
+            <Box w="30%">
+              <FormControl>
+                <TextInput id="type" placeholder="Bank Account Number" />
               </FormControl>
             </Box>
           </Box>
-          <Box w="30%">
-            <FormControl>
-              <FormLabel color="gray.700" fontSize="s3" htmlFor="type">
-                Bank Account Number
-              </FormLabel>
-              <Input id="type" placeholder="Bank Account Number" />
-            </FormControl>
-          </Box>
-        </Box>
+        )}
 
         <Divider />
 
-        <Box display="flex" alignItems="center" justifyContent="flex-start">
+        <Box display="grid" gridTemplateColumns="repeat(2, 2fr)">
           <Box>
             <Text color="Gray.700" fontWeight="medium" fontSize="s3">
               Ledger Account
@@ -294,7 +315,7 @@ const AddNewAccount = () => {
           </Box>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 
