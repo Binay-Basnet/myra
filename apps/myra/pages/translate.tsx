@@ -1,7 +1,7 @@
-import { Box, Container, Heading, Text } from '@chakra-ui/react';
-import { MainLayout } from '@saccos/myra/ui';
 import { ReactElement } from 'react';
 import { GrClose } from 'react-icons/gr';
+import { Box, Container, Heading, Text } from '@chakra-ui/react';
+import { MainLayout } from '@saccos/myra/ui';
 
 // ! TODO separate components
 const Translate = () => {

@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react';
 
-import Box from '../box/Box';
 import { Select, SelectProps } from './Select';
+import Box from '../box/Box';
 
 export default {
   component: Select,

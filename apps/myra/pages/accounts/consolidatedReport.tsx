@@ -1,9 +1,13 @@
-import { AccountLayout, ShareTable } from '@saccos/myra/components';
 import { ReactElement } from 'react';
+import { AccountLayout, ShareTable } from '@saccos/myra/components';
+
+import { useMembersQuery } from '../../generated/graphql';
 
 // TODO ( Update this page when design arrives )
 const AccountConsolidatedPage = () => {
-  return <ShareTable />;
+  const { data, isLoading } = useMembersQuery();
+
+  return <ShareTable data={data} isLoading={isLoading} />;
 };
 
 AccountConsolidatedPage.getLayout = function getLayout(page: ReactElement) {

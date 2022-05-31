@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { FormControl } from '@chakra-ui/react';
 // import { useForm } from 'react-hook-form';
@@ -12,7 +13,6 @@ import {
   TextInput,
 } from '@saccos/myra/ui';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 

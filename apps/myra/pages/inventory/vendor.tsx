@@ -1,8 +1,12 @@
-import { InventoryLayout, InventoryVendorTable } from '@saccos/myra/components';
 import { ReactElement } from 'react';
+import { InventoryLayout, InventoryVendorTable } from '@saccos/myra/components';
+
+import { useMembersQuery } from '../../generated/graphql';
 
 const InventoryVendor = () => {
-  return <InventoryVendorTable />;
+  const { data, isLoading } = useMembersQuery();
+
+  return <InventoryVendorTable data={data} isLoading={isLoading} />;
 };
 
 InventoryVendor.getLayout = function getLayout(page: ReactElement) {

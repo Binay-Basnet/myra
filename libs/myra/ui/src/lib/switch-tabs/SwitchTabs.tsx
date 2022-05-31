@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { BsDot } from 'react-icons/bs';
 import {
   chakra,
   Icon,
@@ -7,8 +9,6 @@ import {
   TabsProps as ChakraSwitchTabsProps,
   Text,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { BsDot } from 'react-icons/bs';
 
 /* eslint-disable-next-line */
 export interface SwitchTabsProps

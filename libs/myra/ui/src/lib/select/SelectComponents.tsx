@@ -1,10 +1,10 @@
+import { IoCheckmarkSharp, IoChevronDownSharp } from 'react-icons/io5';
 import { Checkbox, Icon } from '@chakra-ui/react';
 import {
   chakraComponents,
   GroupBase,
   SelectComponentsConfig,
 } from 'chakra-react-select';
-import { IoCheckmarkSharp, IoChevronDownSharp } from 'react-icons/io5';
 
 export const components: SelectComponentsConfig<
   unknown,

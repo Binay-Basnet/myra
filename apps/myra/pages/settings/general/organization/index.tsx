@@ -1,15 +1,16 @@
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { FaMap } from 'react-icons/fa';
 import {
   AddressOrganization,
   ContactDetailsOrganization,
   FormFileInput,
+  FormTextInput,
   MainContactPersonOrganization,
   RadioOrganization,
   RegistrationDetailsOrganization,
 } from '@saccos/myra/components';
-import { Box, Button, Icon, Text, TextInput } from '@saccos/myra/ui';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { FaMap } from 'react-icons/fa';
+import { Box, Button, Icon, Text } from '@saccos/myra/ui';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
@@ -53,7 +54,13 @@ const Organization = () => {
             <Box py={'s24'}>
               <Text fontWeight="600">BASIC DETAILS</Text>
               <Box mt="s24" w="100%">
-                <TextInput label="Organization Name" placeholder="Enter name" />
+                <FormTextInput
+                  label="Organization Name"
+                  placeholder="Enter name"
+                  control={control}
+                  name="organizationName"
+                  type="text"
+                />
               </Box>
               <Text mt={'s16'} fontSize="s3" fontWeight="500">
                 Organization Logo
@@ -121,8 +128,13 @@ const Organization = () => {
                 {' '}
                 DOCUMENTS
               </Text>
-              <Box w="100%">
+              <Box w="100%" mt="s16" h="500px">
                 {/* ==========================TODO ADD DROPDOWN HERE ===================== */}
+                <FormFileInput
+                  control={control}
+                  name="organizationLogo"
+                  size="lg"
+                />
               </Box>
             </Box>
           </Box>
