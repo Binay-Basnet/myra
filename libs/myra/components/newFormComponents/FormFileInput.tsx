@@ -16,7 +16,7 @@ export const FormFileInput = ({
       control={control}
       name={name}
       render={({ field: { onChange } }) => (
-        <FileInput onChange={onChange} {...rest} />
+        <FileInput {...rest} onChange={onChange} />
       )}
     />
   );

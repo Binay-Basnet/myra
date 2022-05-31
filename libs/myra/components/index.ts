@@ -23,3 +23,4 @@ export * from './setings/general/organizations/MainContactPerson';
 export * from './setings/general/organizations/AddressOrganization';
 export * from './setings/general/organizations/RegistrationDetails';
 export * from './setings/general/organizations/RadioOrganization';
+export * from './newFormComponents/FormFileInput';

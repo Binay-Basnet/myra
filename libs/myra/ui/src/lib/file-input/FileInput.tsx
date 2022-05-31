@@ -12,7 +12,7 @@ import { dropdownStyles } from './FileInputStyles';
 export interface FileInputProps extends DropzoneOptions {
   size?: 'sm' | 'md' | 'lg';
   dropText?: string;
-  onChange: (file: File | null) => void;
+  onChange?: (file: File | null) => void;
 }
 
 /**
@@ -26,7 +26,7 @@ export function FileInput({
   ...rest
 }: FileInputProps) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    onChange(acceptedFiles[0]);
+    onChange && onChange(acceptedFiles[0]);
   }, []);
 
   const { getInputProps, getRootProps, isFocused, isDragAccept, isDragReject } =
@@ -59,6 +59,7 @@ export function FileInput({
         direction="column"
         gap={size === 'md' ? 's8' : 's16'}
         alignItems="center"
+        justifyContent={'center'}
       >
         {size === 'lg' || size === 'sm' ? (
           <Icon as={BsCloudUpload} size="xl" />
@@ -76,6 +77,7 @@ export function FileInput({
 
         {size === 'sm' ? null : (
           <TextFields
+            align={'center'}
             variant={size === 'md' ? 'bodySmall' : 'bodyRegular'}
             color="neutralColorLight.Gray-60"
           >
