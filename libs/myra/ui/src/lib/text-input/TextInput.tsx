@@ -19,7 +19,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           color={labelColor ?? 'gray.700'}
         >
           {' '}
-          {label ?? 'Name'}
+          {label}
         </TextFields>
         <Input
           p="s12"
