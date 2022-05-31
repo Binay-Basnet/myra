@@ -9,4 +9,6 @@ export default {
 const Template: Story<AmountInputProps> = (args) => <AmountInput {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  label: 'happy new year',
+};
