@@ -14,6 +14,7 @@ import { BsDot } from 'react-icons/bs';
 export interface SwitchTabsProps
   extends Omit<ChakraSwitchTabsProps, 'children'> {
   list: string[];
+  onclick?: (data: string | number) => void;
 }
 
 const TabElement = chakra(Tab, {
@@ -45,13 +46,20 @@ const TabElement = chakra(Tab, {
 });
 
 export function SwitchTabs(props: SwitchTabsProps) {
-  const { list } = props;
+  const { list, onclick } = props;
   const [activeTab, setActivetab] = useState<number | null>(0);
   return (
     <ChakraSwitchTabs size="sm" variant="unstyled">
       <TabList borderRadius="br2">
         {list.map((item, index) => (
-          <TabElement onClick={() => setActivetab(index)}>
+          <TabElement
+            onClick={() => {
+              setActivetab(index);
+              {
+                onclick && onclick(item);
+              }
+            }}
+          >
             <Icon
               w={8}
               h={8}

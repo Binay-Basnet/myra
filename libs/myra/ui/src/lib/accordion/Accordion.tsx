@@ -9,8 +9,7 @@ import {
   AccordionButtonProps as ChakraAccordianButtonProps,
   AccordionPanelProps as ChakraAccordianPanelProps,
 } from '@chakra-ui/react';
-import { Box } from '@saccos/myra/ui';
-import Divider from '../divider/Divider';
+import { Box, Divider } from '@saccos/myra/ui';
 
 /* eslint-disable-next-line */
 export interface AccordionProps extends ChakraAccordianProps {
@@ -60,6 +59,7 @@ export function Accordion(props: AccordionProps) {
           </AccordionButtonComponent>
         </h2>
         <AccordionPanelComponent bg="white" pb={4}>
+          <Divider mb="10px" />
           {children}
         </AccordionPanelComponent>
       </AccordionItemComponent>
