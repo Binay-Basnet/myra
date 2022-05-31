@@ -1,9 +1,8 @@
 import React from 'react';
+import { FormInput } from '@saccos/myra/components';
 import { Grid, Text } from '@saccos/myra/ui';
 
-import { FormInput } from '../../newFormComponents';
-
-export const MemberContactDetails = ({ control }: any) => {
+export const MemberContactDetails = ({ control }) => {
   return (
     <>
       <Text fontSize="r1" fontWeight="SemiBold">
@@ -14,14 +13,14 @@ export const MemberContactDetails = ({ control }: any) => {
         <FormInput
           control={control}
           type="text"
-          name="mobileNo"
+          name="mobileNumber"
           label="Mobile No"
           placeholder="Enter Mobile No"
         />
         <FormInput
           control={control}
           type="text"
-          name="phoneNo"
+          name="phoneNumber"
           label="Phone No"
           placeholder="Enter Phone No"
         />

@@ -1,10 +1,9 @@
 import React from 'react';
 import { FaMap } from 'react-icons/fa';
+import { FormInput, FormSelect } from '@saccos/myra/components';
 import { Box, Button, Grid, Icon, Switch, Text } from '@saccos/myra/ui';
 
-import { FormInput, FormSelect } from '../../newFormComponents';
-
-export const MemberAddress = ({ control }: any) => {
+export const MemberAddress = ({ control }) => {
   return (
     <>
       <Text fontSize="r1" fontWeight="SemiBold">
@@ -14,7 +13,7 @@ export const MemberAddress = ({ control }: any) => {
       <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
         <FormSelect
           control={control}
-          name="permananetAddressState"
+          name="permananetStateId"
           label="State"
           placeholder="Select State"
           options={[
@@ -24,7 +23,7 @@ export const MemberAddress = ({ control }: any) => {
         />
         <FormSelect
           control={control}
-          name="permanantAddressDistrict"
+          name="permanantDistrictId"
           label="District"
           placeholder="Select District"
           options={[
@@ -34,7 +33,7 @@ export const MemberAddress = ({ control }: any) => {
         />
         <FormSelect
           control={control}
-          name="permanantAddressVdc"
+          name="permanantLocalityId"
           label="VDC / Muncipality"
           placeholder="Select VDC / Muncipality"
           options={[
@@ -45,14 +44,14 @@ export const MemberAddress = ({ control }: any) => {
         <FormInput
           control={control}
           type="number"
-          name="temporaryWardNo"
+          name="permanentWardId"
           label="Ward No"
           placeholder="Enter Ward No"
         />
         <FormInput
           control={control}
           type="text"
-          name="temporaryLocality"
+          name="permanentTole"
           label="Locality"
           placeholder="Enter Locality"
         />
@@ -68,14 +67,14 @@ export const MemberAddress = ({ control }: any) => {
       </Text>
       <br />
       <Box display="flex" flexDirection="row" alignItems="center">
-        <Switch mr={5} />
+        <Switch mr={5} onChange={(e) => console.log('event', e)} />
         <Text fontSize="r1">Temporary Address same as permanent</Text>
       </Box>
       <br />
       <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
         <FormSelect
           control={control}
-          name="temporaryAddressState"
+          name="temporaryStateId"
           label="State"
           placeholder="Select State"
           options={[
@@ -85,7 +84,7 @@ export const MemberAddress = ({ control }: any) => {
         />
         <FormSelect
           control={control}
-          name="temporaryAddressDistrict"
+          name="temporaryDistrictId"
           label="District"
           placeholder="Select District"
           options={[
@@ -95,7 +94,7 @@ export const MemberAddress = ({ control }: any) => {
         />
         <FormSelect
           control={control}
-          name="temporaryAddressVdc"
+          name="temporaryLocalityId"
           label="VDC / Muncipality"
           placeholder="Select VDC / Muncipality"
           options={[
@@ -106,14 +105,14 @@ export const MemberAddress = ({ control }: any) => {
         <FormInput
           control={control}
           type="number"
-          name="teamporaryAddressWardNo"
+          name="teamporaryWardId"
           label="Ward No"
           placeholder="Enter Ward No"
         />
         <FormInput
           control={control}
           type="text"
-          name="temporaryAddressLocality"
+          name="temporaryTole"
           label="Locality"
           placeholder="Enter Locality"
         />
