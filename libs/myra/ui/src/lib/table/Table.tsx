@@ -1,4 +1,4 @@
-import { useTable } from './useTable';
+import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import {
   Box,
   Flex,
@@ -14,6 +14,12 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import React from 'react';
+import { BiFilter } from 'react-icons/bi';
+
+import { PopoverContent, PopoverTrigger } from '../popover/Popover';
+import ListFilterPopover from './components/ListFilterPopover';
+import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
 import {
   Cell,
   Column,
@@ -21,12 +27,7 @@ import {
   HeaderGroup,
   TableProps,
 } from './types';
-import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
-import { BiFilter } from 'react-icons/bi';
-import { PopoverContent, PopoverTrigger } from '../popover/Popover';
-import React from 'react';
-import ListFilterPopover from './components/ListFilterPopover';
-import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
+import { useTable } from './useTable';
 
 /**
  *  @description Add disableSortBy in each column to disable column sort in that column.

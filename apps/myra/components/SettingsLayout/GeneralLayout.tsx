@@ -1,7 +1,8 @@
-import React from 'react';
-import SettingsLayout from '.';
-import { Box } from '@saccos/myra/ui';
 import { SettingsGeneral as Layout } from '@saccos/myra/components';
+import { Box } from '@saccos/myra/ui';
+import React from 'react';
+
+import SettingsLayout from '.';
 
 interface ISettingsLayout {
   children: React.ReactNode;

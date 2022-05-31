@@ -1,13 +1,12 @@
 import {
+  Box,
   Input,
   InputGroup,
-  InputRightElement,
-  Box,
-  Text,
   InputProps,
+  InputRightElement,
+  Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-
 import { forwardRef } from 'react';
 
 /* eslint-disable-next-line */

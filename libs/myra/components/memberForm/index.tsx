@@ -9,6 +9,9 @@ import { MemberMainOccupation } from './professionalInfo/MemberMainOccupation';
 import { MemberHushbandWifeOccupation } from './professionalInfo/MemberHusbandWifeOccupation';
 import { MemberIncomeSourceDetails } from './professionalInfo/MemberIncomeSourceDetails';
 
+import { BasicSaccosDetails } from './saccosMemberInfo/BasicSaccosDetails';
+import { FinancialTransactionDetails } from './saccosMemberInfo/FinancialTransactionDetails';
+
 export {
   MemberBasicInfo,
   MemberContactDetails,
@@ -19,4 +22,6 @@ export {
   MemberMainOccupation,
   MemberHushbandWifeOccupation,
   MemberIncomeSourceDetails,
+  BasicSaccosDetails,
+  FinancialTransactionDetails,
 };

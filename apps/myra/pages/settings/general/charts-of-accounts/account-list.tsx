@@ -1,23 +1,24 @@
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
-import {
-  Box,
-  Text,
-  Button,
-  ChakraTab,
-  Input,
-  IconButton,
-  Icon,
-} from '@saccos/myra/ui';
 import {
   AddIcon,
-  SearchIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   HamburgerIcon,
+  SearchIcon,
 } from '@chakra-ui/icons';
-import { CoaAccountListTable } from '@saccos/myra/components';
 import { InputGroup, InputLeftElement } from '@chakra-ui/react';
+import { CoaAccountListTable } from '@saccos/myra/components';
+import {
+  Box,
+  Button,
+  ChakraTab,
+  Icon,
+  IconButton,
+  Input,
+  Text,
+} from '@saccos/myra/ui';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+
+import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const ChartsOfAccounts = () => {
   return (

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { FormControl, FormLabel } from '@chakra-ui/react';
 import {
   Box,
   Button,
@@ -7,8 +7,8 @@ import {
   MainLayout,
   Text,
 } from '@saccos/myra/ui';
+import React, { ReactElement } from 'react';
 import { GrClose } from 'react-icons/gr';
-import { FormControl, FormLabel } from '@chakra-ui/react';
 
 const AddNewItemGroupPage = () => {
   return (

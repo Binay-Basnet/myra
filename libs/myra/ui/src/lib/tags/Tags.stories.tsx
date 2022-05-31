@@ -1,8 +1,9 @@
-import { Story, Meta } from '@storybook/react';
-import { Tags, TagsProps } from './Tags';
-import { theme } from '@saccos/myra/util';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
+import { theme } from '@saccos/myra/util';
+import { Meta,Story } from '@storybook/react';
+
+import { Tags, TagsProps } from './Tags';
 
 export default {
   component: Tags,

@@ -1,8 +1,9 @@
-import { Meta, Story } from '@storybook/react';
-import { BaseSelect, BaseSelectProps } from './BaseSelect';
-import { theme } from '@saccos/myra/util';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
+import { theme } from '@saccos/myra/util';
+import { Meta, Story } from '@storybook/react';
+
+import { BaseSelect, BaseSelectProps } from './BaseSelect';
 
 export default {
   component: BaseSelect,

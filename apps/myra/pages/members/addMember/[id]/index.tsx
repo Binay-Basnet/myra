@@ -1,19 +1,7 @@
-import React from 'react';
-import { GrClose } from 'react-icons/gr';
-import { useForm } from 'react-hook-form';
-
 import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Navbar,
-  TabMenu,
-  Text,
-} from '@saccos/myra/ui';
-import { AccorrdianAddMember } from '@saccos/myra/components';
-
-import {
+  AccorrdianAddMember,
+  BasicSaccosDetails,
+  FinancialTransactionDetails,
   MemberAddress,
   MemberBasicInfo,
   MemberContactDetails,
@@ -24,7 +12,19 @@ import {
   MemberMainOccupation,
   MemberProfession,
 } from '@saccos/myra/components';
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Navbar,
+  TabMenu,
+  Text,
+} from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { GrClose } from 'react-icons/gr';
 
 const Header = ({ t }) => {
   return (
@@ -38,12 +38,40 @@ const Header = ({ t }) => {
 const AddMember = () => {
   const { t } = useTranslation();
   // const methods = useForm<IFormValues>();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      familyMember: [{ familyMemberFullName: '', familyMemberRelation: '' }],
+      mainOccupation: [
+        {
+          occupation: '',
+          orgFirmName: '',
+          panVatNo: '',
+          address: '',
+          annualIncome: '',
+        },
+      ],
+      hushbandWifeOccupation: [
+        {
+          occupation: '',
+          orgFirmName: '',
+          panVatNo: '',
+          address: '',
+          annualIncome: '',
+        },
+      ],
+      incomeSource: [
+        {
+          incomeSource: '',
+          incomeAmount: '',
+        },
+      ],
+    },
+  });
 
   // const debounced = () => console.log('hello123', getValues());
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
+    <form onSubmit={handleSubmit((data) => console.log('data', data))}>
       <Box
         position="fixed"
         width="100%"
@@ -108,6 +136,14 @@ const AddMember = () => {
               <MemberHushbandWifeOccupation control={control} />
               <Divider my={8} />
               <MemberIncomeSourceDetails control={control} />
+              <Divider my={8} />
+              <Text fontSize="r3" fontWeight="SemiBold">
+                3. SACOOS membership
+              </Text>
+              <br />
+              <BasicSaccosDetails control={control} />
+              <Divider my={8} />
+              <FinancialTransactionDetails control={control} />
             </Box>
           </Box>
         </Box>
@@ -121,9 +157,12 @@ const AddMember = () => {
           background="white"
           borderTopRadius={5}
         >
-          <Text>Save as Draft</Text>
+          <Text>Form Details saved to draft</Text>
           <Box>
-            <Button>Save Draft</Button>&nbsp;
+            <Button type="submit" variant="ghost">
+              Save Draft
+            </Button>
+            &nbsp;
             <Button>Next</Button>
           </Box>
         </Box>

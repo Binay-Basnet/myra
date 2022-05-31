@@ -1,4 +1,11 @@
 import {
+  AddIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  HamburgerIcon,
+  SearchIcon,
+} from '@chakra-ui/icons';
+import {
   Flex,
   Icon,
   IconButton,
@@ -7,21 +14,14 @@ import {
   InputLeftElement,
   Text,
 } from '@chakra-ui/react';
-import { ReactElement } from 'react';
-import {
-  AddIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  HamburgerIcon,
-  SearchIcon,
-} from '@chakra-ui/icons';
-import { BsThreeDotsVertical } from 'react-icons/bs';
-
-import { Box, Button, MainLayout } from '@saccos/myra/ui';
 import { MemberTable, TabColumn, TabRow } from '@saccos/myra/components';
-import { useGetNewIdMutation } from '../../generated/graphql';
+import { Box, Button, MainLayout } from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
 import { useRouter } from 'next/router';
+import { ReactElement } from 'react';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+
+import { useGetNewIdMutation } from '../../generated/graphql';
 
 const column = [
   {

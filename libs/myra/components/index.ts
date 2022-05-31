@@ -21,3 +21,8 @@ export * from './accordion/AccordionComponent';
 export * from './layout';
 export * from './memberForm';
 export * from './accordion/AccordianMemberPage';
+export * from './setings/general/organizations/Contact Details';
+export * from './setings/general/organizations/MainContactPerson';
+export * from './setings/general/organizations/AddressOrganization';
+export * from './setings/general/organizations/RegistrationDetails';
+export * from './setings/general/organizations/RadioOrganization';

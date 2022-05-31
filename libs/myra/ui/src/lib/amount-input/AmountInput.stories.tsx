@@ -1,4 +1,5 @@
-import { Story, Meta } from '@storybook/react';
+import { Meta,Story } from '@storybook/react';
+
 import { AmountInput, AmountInputProps } from './AmountInput';
 
 export default {
@@ -9,4 +10,6 @@ export default {
 const Template: Story<AmountInputProps> = (args) => <AmountInput {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  label: 'happy new year',
+};

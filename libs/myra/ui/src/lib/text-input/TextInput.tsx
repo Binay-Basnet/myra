@@ -22,6 +22,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           {label ?? 'Name'}
         </TextFields>
         <Input
+          p="s12"
           variant={'outline'}
           type="text"
           fontSize={'s2'}
