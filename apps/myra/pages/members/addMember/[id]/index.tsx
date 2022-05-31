@@ -1,5 +1,7 @@
 import {
   AccorrdianAddMember,
+  BasicSaccosDetails,
+  FinancialTransactionDetails,
   MemberAddress,
   MemberBasicInfo,
   MemberContactDetails,
@@ -134,6 +136,14 @@ const AddMember = () => {
               <MemberHushbandWifeOccupation control={control} />
               <Divider my={8} />
               <MemberIncomeSourceDetails control={control} />
+              <Divider my={8} />
+              <Text fontSize="r3" fontWeight="SemiBold">
+                3. SACOOS membership
+              </Text>
+              <br />
+              <BasicSaccosDetails control={control} />
+              <Divider my={8} />
+              <FinancialTransactionDetails control={control} />
             </Box>
           </Box>
         </Box>
@@ -147,9 +157,12 @@ const AddMember = () => {
           background="white"
           borderTopRadius={5}
         >
-          <Text>Save as Draft</Text>
+          <Text>Form Details saved to draft</Text>
           <Box>
-            <Button type="submit">Save Draft</Button>&nbsp;
+            <Button type="submit" variant="ghost">
+              Save Draft
+            </Button>
+            &nbsp;
             <Button>Next</Button>
           </Box>
         </Box>
