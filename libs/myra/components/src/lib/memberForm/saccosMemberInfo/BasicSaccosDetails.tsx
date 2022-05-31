@@ -1,6 +1,7 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
+import { FormSelect } from '@saccos/myra/components';
 import {
   Box,
   Button,
@@ -12,15 +13,13 @@ import {
   Text,
 } from '@saccos/myra/ui';
 
-import { FormSelect } from '../../newFormComponents';
-
-export const BasicSaccosDetails = ({ control }: any) => {
+export const BasicSaccosDetails = ({ control }) => {
   return (
     <Box>
       <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
         <FormSelect
           control={control}
-          name="becomeMemberMainPurpose"
+          name="purposeId"
           label="Main purpose of becoming a member"
           placeholder="Select purpose of becoming a member"
           options={[

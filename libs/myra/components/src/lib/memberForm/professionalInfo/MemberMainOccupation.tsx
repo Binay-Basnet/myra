@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
+import { FormInput, FormSelect } from '@saccos/myra/components';
 import {
   Box,
   Button,
@@ -11,9 +12,7 @@ import {
   Text,
 } from '@saccos/myra/ui';
 
-import { FormInput, FormSelect } from '../../newFormComponents';
-
-const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
+const MainOccupation = ({ control, index, removeMainOccupation }) => {
   return (
     <Box
       p={4}
@@ -49,7 +48,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
           <FormInput
             control={control}
             type="text"
-            name={`mainOccupation[${index}].orgFirmName`}
+            name={`mainOccupation[${index}].orgName`}
             label="Org/Frim Name"
             placeholder="Org/Firm Name"
           />
@@ -58,7 +57,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
         <FormInput
           control={control}
           type="text"
-          name={`mainOccupation[${index}].panVatNo`}
+          name={`mainOccupation[${index}].idNumber`}
           label="Pan/Vat number"
           placeholder="Pan/Vat number"
         />
@@ -72,7 +71,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
         <FormInput
           control={control}
           type="number"
-          name={`mainOccupation[${index}].annualIncome`}
+          name={`mainOccupation[${index}].estimatedAnnualIncome`}
           label="Annual Income"
           placeholder="0.00"
         />
@@ -81,7 +80,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
   );
 };
 
-export const MemberMainOccupation = ({ control }: any) => {
+export const MemberMainOccupation = ({ control }) => {
   const {
     fields: mainOccupationFields,
     append: mainOccupationAppend,

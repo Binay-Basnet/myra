@@ -1,17 +1,13 @@
-query members {
-  members {
-    list {
-      id
-      firstName
-      middleName
-      lastName
-      gender
-      title
-      dateOfBirth
-    }
-  }
-}
-
 mutation getNewId {
   newId
+}
+
+mutation setMemberData($id: ID!, $data: KymIndMemberInput!) {
+  members {
+    individual(id: $id) {
+      add(data: $data) {
+        recordId
+      }
+    }
+  }
 }
