@@ -1,6 +1,7 @@
 import {
   AddressOrganization,
   ContactDetailsOrganization,
+  FormFileInput,
   MainContactPersonOrganization,
   RadioOrganization,
   RegistrationDetailsOrganization,
@@ -13,55 +14,57 @@ import { FaMap } from 'react-icons/fa';
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const Organization = () => {
-  const { register, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm();
   return (
-    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
-      <Box
-        borderBottom="1px"
-        borderBottomColor="border.layout"
-        display={'flex'}
-        alignItems={'center'}
-        h="60px"
-      >
-        <Text
-          fontSize="r2"
-          px="s16"
-          fontWeight="600"
-          color="neutralColorLight.Gray-80"
-        >
-          Organization
-        </Text>
-      </Box>
-      <Box display={'flex'} flexDirection="row" h="fit-content">
+    <form onSubmit={handleSubmit((data) => console.log('data', data))}>
+      <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
         <Box
-          w="300px"
-          px="s8"
-          py="s16"
-          borderRight={'1px'}
-          borderRightColor="border.layout"
+          borderBottom="1px"
+          borderBottomColor="border.layout"
+          display={'flex'}
+          alignItems={'center'}
+          h="60px"
         >
-          <Box bg="#EEF2F7" p="s16">
-            <Text fontSize={'r1'} fontWeight="600">
-              Initial Setup
-            </Text>
-          </Box>
+          <Text
+            fontSize="r2"
+            px="s16"
+            fontWeight="600"
+            color="neutralColorLight.Gray-80"
+          >
+            Organization
+          </Text>
         </Box>
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <Box display={'flex'} flexDirection="row" h="fit-content">
+          <Box
+            w="300px"
+            px="s8"
+            py="s16"
+            borderRight={'1px'}
+            borderRightColor="border.layout"
+          >
+            <Box bg="#EEF2F7" p="s16">
+              <Text fontSize={'r1'} fontWeight="600">
+                Initial Setup
+              </Text>
+            </Box>
+          </Box>
+
           <Box px="s16" flex={1} display="flex" flexDirection={'column'}>
             <Box py={'s24'}>
               <Text fontWeight="600">BASIC DETAILS</Text>
               <Box mt="s24" w="100%">
-                <TextInput
-                  label="Organization Name"
-                  {...register('OrganizationName')}
-                  placeholder="Enter name"
-                />
+                <TextInput label="Organization Name" placeholder="Enter name" />
               </Box>
               <Text mt={'s16'} fontSize="s3" fontWeight="500">
                 Organization Logo
               </Text>
-              <Box mt="s16">
+              <Box mt="s16" w={'110px'}>
                 {/* =====================TODO ADD FILE DROPBOX =====================================================*/}
+                <FormFileInput
+                  control={control}
+                  name="organizationLogo"
+                  size="md"
+                />
               </Box>
               <Box mt={'s16'}>
                 {' '}
@@ -123,9 +126,9 @@ const Organization = () => {
               </Box>
             </Box>
           </Box>
-        </form>
+        </Box>
       </Box>
-    </Box>
+    </form>
   );
 };
 
