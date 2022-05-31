@@ -21,6 +21,7 @@ export function Select({ label, isMulti, ...rest }: SelectProps) {
         fontSize="s3"
         color="neutralColorLight.Gray-70"
         fontWeight="500"
+        mb="s4"
         textTransform="capitalize"
       >
         {label}

@@ -1,15 +1,25 @@
 import React from 'react';
-import { FormInput, FormSelect } from '@saccos/myra/components';
-import { Grid, Text } from '@saccos/myra/ui';
+import { Control } from 'react-hook-form';
+import { Grid, Text } from '../../../ui/src';
 
-export const MemberBasicInfo = ({ control }) => {
+import { FormInput, FormSelect } from '../../newFormComponents';
+
+interface IMemberBasicInfo {
+  control: Control<any>;
+}
+
+export const MemberBasicInfo = ({ control }: IMemberBasicInfo) => {
   return (
     <>
-      <Text fontSize="r1" fontWeight="SemiBold">
+      <Text
+        fontSize="r1"
+        fontWeight="semibold"
+        color="neutralColorLight.Gray-80"
+        mb="s32"
+      >
         BASIC INFORMATION
       </Text>
-      <br />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+      <Grid templateColumns="repeat(3, 1fr)" gap="s20">
         <FormInput
           control={control}
           type="text"
@@ -33,25 +43,25 @@ export const MemberBasicInfo = ({ control }) => {
         />
         <FormSelect
           control={control}
-          name="genderId"
+          name="gender"
           label="Gender"
           placeholder="Select Gender"
           options={[
-            { label: 'male', value: 'male' },
-            { label: 'female', value: 'female' },
-            { label: 'other', value: 'other' },
+            { label: 'Male', value: 'Male' },
+            { label: 'Female', value: 'Female' },
+            { label: 'Other', value: 'Other' },
           ]}
         />
         <FormInput
           control={control}
           type="date"
-          name="dateOfBirth"
+          name="dateOfBirthBs"
           label="Date of Birth(BS)"
           placeholder="Enter date of birth"
         />
         <FormSelect
           control={control}
-          name="ethnicityId"
+          name="ethnicity"
           label="Ethnicity"
           placeholder="Select Ethnicity"
           options={[
@@ -64,13 +74,13 @@ export const MemberBasicInfo = ({ control }) => {
         <FormInput
           control={control}
           type="text"
-          name="nationalityId"
+          name="nationality"
           label="Nationality"
           placeholder="Enter Nationality"
         />
         <FormSelect
           control={control}
-          name="educationalQualificationId"
+          name="educationalQualification"
           label="Educational Qualification"
           placeholder="Select Educational Qualification"
           options={[
@@ -83,7 +93,7 @@ export const MemberBasicInfo = ({ control }) => {
         />
         <FormSelect
           control={control}
-          name="religionId"
+          name="religion"
           label="Religion"
           placeholder="Select Religion"
           options={[

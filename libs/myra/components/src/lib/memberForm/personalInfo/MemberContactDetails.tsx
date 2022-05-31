@@ -1,26 +1,36 @@
 import React from 'react';
-import { FormInput } from '@saccos/myra/components';
-import { Grid, Text } from '@saccos/myra/ui';
+import { Control } from 'react-hook-form';
+import { Grid, Text } from '../../../ui/src';
 
-export const MemberContactDetails = ({ control }) => {
+import { FormInput } from '../../newFormComponents';
+
+interface IMemberContactDetails {
+  control: Control<any>;
+}
+
+export const MemberContactDetails = ({ control }: IMemberContactDetails) => {
   return (
     <>
-      <Text fontSize="r1" fontWeight="SemiBold">
+      <Text
+        fontSize="r1"
+        fontWeight="semibold"
+        color="neutralColorLight.Gray-80"
+        mb="s32"
+      >
         CONTACT DETAILS
       </Text>
-      <br />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+      <Grid templateColumns="repeat(3, 1fr)" gap="s20">
         <FormInput
           control={control}
           type="text"
-          name="mobileNumber"
+          name="mobileNo"
           label="Mobile No"
           placeholder="Enter Mobile No"
         />
         <FormInput
           control={control}
           type="text"
-          name="phoneNumber"
+          name="phoneNo"
           label="Phone No"
           placeholder="Enter Phone No"
         />

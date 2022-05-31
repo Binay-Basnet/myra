@@ -122,19 +122,18 @@ const AddMember = () => {
           </Box>
           <Divider orientation="vertical" />
           <Box w="100%">
-            <Box background="white" p={5}>
-              <Text fontSize="r3" fontWeight="SemiBold">
+            <Box background="white" p="s20">
+              <Text fontSize="r3" fontWeight="SemiBold" mb="s48">
                 1. Personal Information
               </Text>
-              <br />
               <MemberBasicInfo control={control} />
-              <Divider my={8} />
+              <Divider my="s32" />
               <MemberContactDetails control={control} />
-              <Divider my={8} />
+              <Divider my="s32" />
               <MemberIdentificationDetails control={control} />
-              <Divider my={8} />
+              <Divider my="s32" />
               <MemberAddress control={control} />
-              <Divider my={8} />
+              <Divider my="s32" />
               <MemberFamilyDetails control={control} />
               <br />
               <Text fontSize="r3" fontWeight="SemiBold">
@@ -142,19 +141,19 @@ const AddMember = () => {
               </Text>
               <br />
               <MemberProfession control={control} />
-              <Divider my={8} />
+              <Divider my="s32" />
               <MemberMainOccupation control={control} />
-              <Divider my={8} />
+              <Divider my="s32" />
               <MemberHushbandWifeOccupation control={control} />
-              <Divider my={8} />
+              <Divider my="s32" />
               <MemberIncomeSourceDetails control={control} />
-              <Divider my={8} />
+              <Divider my="s32" />
               <Text fontSize="r3" fontWeight="SemiBold">
                 3. SACOOS membership
               </Text>
               <br />
               <BasicSaccosDetails control={control} />
-              <Divider my={8} />
+              <Divider my="s32" />
               <FinancialTransactionDetails control={control} />
             </Box>
           </Box>

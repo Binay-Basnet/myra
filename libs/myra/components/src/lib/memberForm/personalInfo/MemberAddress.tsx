@@ -1,19 +1,18 @@
-import React from 'react';
 import { FaMap } from 'react-icons/fa';
-import { FormInput, FormSelect } from '@saccos/myra/components';
-import { Box, Button, Grid, Icon, Switch, Text } from '@saccos/myra/ui';
+import { Box, Button, Grid, Icon, Switch, Text } from '../../../ui/src';
+
+import { FormInput, FormSelect } from '../../newFormComponents';
 
 export const MemberAddress = ({ control }) => {
   return (
     <>
-      <Text fontSize="r1" fontWeight="SemiBold">
+      <Text fontSize="r1" fontWeight="SemiBold" mb="s32">
         PERMANENT ADDRESS
       </Text>
-      <br />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+      <Grid templateColumns="repeat(3, 1fr)" gap="s20">
         <FormSelect
           control={control}
-          name="permananetStateId"
+          name="permanentAddress.state"
           label="State"
           placeholder="Select State"
           options={[
@@ -23,7 +22,7 @@ export const MemberAddress = ({ control }) => {
         />
         <FormSelect
           control={control}
-          name="permanantDistrictId"
+          name="permanentAddress.district"
           label="District"
           placeholder="Select District"
           options={[
@@ -33,7 +32,7 @@ export const MemberAddress = ({ control }) => {
         />
         <FormSelect
           control={control}
-          name="permanantLocalityId"
+          name="permanentAddress.vdc"
           label="VDC / Muncipality"
           placeholder="Select VDC / Muncipality"
           options={[
@@ -44,37 +43,33 @@ export const MemberAddress = ({ control }) => {
         <FormInput
           control={control}
           type="number"
-          name="permanentWardId"
+          name="temporaryWardNo"
           label="Ward No"
           placeholder="Enter Ward No"
         />
         <FormInput
           control={control}
           type="text"
-          name="permanentTole"
+          name="temporaryLocality"
           label="Locality"
           placeholder="Enter Locality"
         />
       </Grid>
-      <br />
       <Button leftIcon={<Icon size="md" as={FaMap} />} mt={2}>
         Pin on Map
       </Button>
-      <br />
-      <br />
+
       <Text fontSize="r1" fontWeight="SemiBold">
         TEMPORARY ADDRESS
       </Text>
-      <br />
       <Box display="flex" flexDirection="row" alignItems="center">
-        <Switch mr={5} onChange={(e) => console.log('event', e)} />
+        <Switch mr={5} />
         <Text fontSize="r1">Temporary Address same as permanent</Text>
       </Box>
-      <br />
       <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
         <FormSelect
           control={control}
-          name="temporaryStateId"
+          name="temporaryAddressState"
           label="State"
           placeholder="Select State"
           options={[
@@ -84,7 +79,7 @@ export const MemberAddress = ({ control }) => {
         />
         <FormSelect
           control={control}
-          name="temporaryDistrictId"
+          name="temporaryAddressDistrict"
           label="District"
           placeholder="Select District"
           options={[
@@ -94,7 +89,7 @@ export const MemberAddress = ({ control }) => {
         />
         <FormSelect
           control={control}
-          name="temporaryLocalityId"
+          name="temporaryAddressVdc"
           label="VDC / Muncipality"
           placeholder="Select VDC / Muncipality"
           options={[
@@ -105,27 +100,24 @@ export const MemberAddress = ({ control }) => {
         <FormInput
           control={control}
           type="number"
-          name="teamporaryWardId"
+          name="teamporaryAddressWardNo"
           label="Ward No"
           placeholder="Enter Ward No"
         />
         <FormInput
           control={control}
           type="text"
-          name="temporaryTole"
+          name="temporaryAddressLocality"
           label="Locality"
           placeholder="Enter Locality"
         />
       </Grid>
-      <br />
       <Button leftIcon={<Icon size="md" as={FaMap} />} mt={2}>
         Pin on Map
       </Button>
-      <br /> <br />
       <Text fontSize="r1" fontWeight="SemiBold">
         INCASE RESIDING IN RENTED HOUSE
       </Text>
-      <br />
       <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
         <FormInput
           control={control}
