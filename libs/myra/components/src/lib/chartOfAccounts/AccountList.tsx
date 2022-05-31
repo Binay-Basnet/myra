@@ -11,7 +11,12 @@ import { Box, Button, Icon, IconButton, Input, Text } from '@saccos/myra/ui';
 
 import { CoaAccountListTable } from '../table/settings/chartsOfAccounts/CoaAccountListTable';
 
-export const AccountList = () => {
+interface IAccountListProps {
+  data: any;
+  isLoading: boolean;
+}
+
+export const AccountList = ({ data, isLoading }: IAccountListProps) => {
   return (
     <>
       <Box
@@ -75,7 +80,7 @@ export const AccountList = () => {
         </Box>
       </Box>
       <Box width={'100%'}>
-        <CoaAccountListTable />
+        <CoaAccountListTable data={data} isLoading={isLoading} />
       </Box>
     </>
   );

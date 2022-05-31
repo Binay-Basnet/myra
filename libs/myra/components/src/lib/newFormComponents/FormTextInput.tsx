@@ -1,6 +1,6 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { TextInput as StorybookInput, TextFields, Box } from '../../ui/src';
+import { Box, TextFields, TextInput as StorybookInput } from '@saccos/myra/ui';
 
 export const FormTextInput = ({ control, placeholder, name, label, type }) => {
   return (

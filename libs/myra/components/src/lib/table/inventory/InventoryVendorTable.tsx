@@ -3,7 +3,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 import { Column, Table } from '@saccos/myra/ui';
 
-export enum Gender {
+enum Gender {
   Female = 'FEMALE',
   Male = 'MALE',
   Other = 'OTHER',

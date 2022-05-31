@@ -1,17 +1,16 @@
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { FaMap } from 'react-icons/fa';
 import {
   AddressOrganization,
   ContactDetailsOrganization,
   FormFileInput,
+  FormTextInput,
   MainContactPersonOrganization,
   RadioOrganization,
   RegistrationDetailsOrganization,
 } from '@saccos/myra/components';
-import { Box, Button, Icon, Text, TextInput } from '@saccos/myra/ui';
-import { FormTextInput } from '@saccos/myra/components';
 import { Box, Button, Icon, Text } from '@saccos/myra/ui';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { FaMap } from 'react-icons/fa';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 

@@ -21,7 +21,7 @@ import { Box, Button, MainLayout } from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
 import { useRouter } from 'next/router';
 
-import { useGetNewIdMutation } from '../../generated/graphql';
+import { useGetNewIdMutation, useMembersQuery } from '../../generated/graphql';
 
 const column = [
   {
@@ -52,6 +52,8 @@ const rows = [
 const Member = () => {
   const router = useRouter();
   const newId = useGetNewIdMutation();
+
+  const { data, isLoading } = useMembersQuery();
 
   const { t } = useTranslation();
 
@@ -164,7 +166,7 @@ const Member = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          <MemberTable />
+          <MemberTable data={data} isLoading={isLoading} />
         </Box>
       </Box>
     </Box>
