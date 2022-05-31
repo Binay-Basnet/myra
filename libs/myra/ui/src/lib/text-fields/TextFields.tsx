@@ -1,7 +1,9 @@
 import { Text, TextProps } from '@chakra-ui/react';
+
 /* eslint-disable-next-line */
 export interface TextFieldsProps extends TextProps {
   variant?:
+    | 'bodySmall'
     | 'bodyLarge'
     | 'bodyRegular'
     | 'formLabel'
@@ -22,6 +24,12 @@ export function TextFields(props: TextFieldsProps) {
     case 'bodyLarge':
       return (
         <Text fontSize="r3" fontWeight="400" {...rest} lineHeight="1.5">
+          {children}
+        </Text>
+      );
+    case 'bodySmall':
+      return (
+        <Text fontSize="s2" fontWeight="400" {...rest} lineHeight="1.5">
           {children}
         </Text>
       );

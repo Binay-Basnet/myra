@@ -1,6 +1,5 @@
-import { ReactElement } from 'react';
-
 import { AccountLayout, ShareTable } from '@saccos/myra/components';
+import { ReactElement } from 'react';
 
 // TODO ( Update this page when design arrives )
 const AccountCertificatePrint = () => {

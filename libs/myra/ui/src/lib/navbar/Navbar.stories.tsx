@@ -1,5 +1,6 @@
-import { Story, Meta } from '@storybook/react';
-import { Navbar, MyraUiNavbarProps } from './Navbar';
+import { Meta,Story } from '@storybook/react';
+
+import { MyraUiNavbarProps,Navbar } from './Navbar';
 
 export default {
   component: Navbar,

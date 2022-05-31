@@ -3,7 +3,7 @@ import {
   CheckboxProps as ChakraCheckboxProps,
   Stack,
 } from '@chakra-ui/react';
-import { useEffect, forwardRef, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 
 /* eslint-disable-next-line */
 export interface IndeterminateCheckboxProps extends ChakraCheckboxProps {

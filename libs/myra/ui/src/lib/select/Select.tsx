@@ -1,7 +1,8 @@
-import { OptionBase, Props, Select as ChakraSelect } from 'chakra-react-select';
 import { Flex, Text } from '@chakra-ui/react';
-import { chakraStyles } from './SelectStyles';
+import { OptionBase, Props, Select as ChakraSelect } from 'chakra-react-select';
+
 import { components } from './SelectComponents';
+import { chakraStyles } from './SelectStyles';
 
 export interface SelectOption extends OptionBase {
   label: string;
@@ -17,7 +18,7 @@ export function Select({ label, isMulti, ...rest }: SelectProps) {
   return (
     <Flex direction="column">
       <Text
-        fontSize="r1"
+        fontSize="s3"
         color="neutralColorLight.Gray-70"
         fontWeight="500"
         textTransform="capitalize"

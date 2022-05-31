@@ -1,6 +1,5 @@
-import { ReactElement } from 'react';
-
 import { ShareLayout, ShareTable } from '@saccos/myra/components';
+import { ReactElement } from 'react';
 
 // TODO ( UPDATE THIS PAGE A/C TO DESIGN )
 const ShareReportPage = () => {

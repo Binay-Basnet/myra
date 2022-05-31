@@ -12,8 +12,9 @@ import {
 } from '@chakra-ui/react';
 import { Navbarfordaashboard } from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
-import { useGetNewIdMutation } from '../generated/graphql';
 import { useRouter } from 'next/router';
+
+import { useGetNewIdMutation } from '../generated/graphql';
 
 const data = [
   {

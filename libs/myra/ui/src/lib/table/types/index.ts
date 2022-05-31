@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   CellProps,
   DefaultFilterTypes,
@@ -5,7 +6,6 @@ import {
   FilterType,
   Renderer,
 } from 'react-table';
-import React from 'react';
 
 export type FilterColumnProps<T extends Record<string, unknown>> =
   FilterProps<T> & {

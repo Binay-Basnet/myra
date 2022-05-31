@@ -1,4 +1,5 @@
-import { Story, Meta } from '@storybook/react';
+import { Meta,Story } from '@storybook/react';
+
 import { PasswordInput, PasswordInputProps } from './PasswordInput';
 
 export default {

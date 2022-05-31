@@ -1,22 +1,17 @@
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
-import React from 'react';
 import {
-  RadioGroup,
-  Box,
-  Text,
-  TextInput,
-  Button,
-  Icon,
-} from '@saccos/myra/ui';
-import { FaMap } from 'react-icons/fa';
-import {
+  AddressOrganization,
   ContactDetailsOrganization,
   MainContactPersonOrganization,
-  AddressOrganization,
-  RegistrationDetailsOrganization,
   RadioOrganization,
+  RegistrationDetailsOrganization,
 } from '@saccos/myra/components';
+import { Box, Button, Icon, Text, TextInput } from '@saccos/myra/ui';
+import React from 'react';
 import { useForm } from 'react-hook-form';
+import { FaMap } from 'react-icons/fa';
+
+import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
+
 const Organization = () => {
   const { register, handleSubmit } = useForm();
   return (
@@ -75,7 +70,7 @@ const Organization = () => {
                 </Text>
                 <Box mt="s16">
                   {/* <RadioGroup radioList={radiolist}> </RadioGroup> */}
-                  <RadioOrganization register={register} />
+                  <RadioOrganization />
                 </Box>
               </Box>
               <Box mt="s16" py="s24">

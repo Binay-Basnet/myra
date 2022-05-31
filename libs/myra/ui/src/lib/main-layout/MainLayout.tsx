@@ -1,8 +1,9 @@
 // import { Navbar } from '../navbar/Navbar';
-import { TabMenu } from '../tab-menu/TabMenu';
-import { TopLevelHeader } from '../top-level-header/TopLevelHeader';
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+
+import { TabMenu } from '../tab-menu/TabMenu';
+import { TopLevelHeader } from '../top-level-header/TopLevelHeader';
 
 export interface MainLayoutProps {
   children: React.ReactNode;

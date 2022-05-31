@@ -1,18 +1,18 @@
 import {
   Box,
   Container,
-  Heading,
-  Text,
+  Flex,
   Grid,
   GridItem,
-  Img,
-  Flex,
-  Spacer,
+  Heading,
   HStack,
+  Img,
+  Spacer,
+  Text,
 } from '@chakra-ui/react';
-import { GrClose } from 'react-icons/gr';
-import { ReactElement, useEffect, useState } from 'react';
 import { Button, MainLayout } from '@saccos/myra/ui';
+import { ReactElement, useEffect, useState } from 'react';
+import { GrClose } from 'react-icons/gr';
 
 interface IPersonalDetails {
   firstName: string;
