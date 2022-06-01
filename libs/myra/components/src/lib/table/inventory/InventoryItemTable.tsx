@@ -19,15 +19,7 @@ type MemberData = {
   dateOfBirth?: string | null;
 };
 
-interface IInventoryItemTableProps {
-  data: any;
-  isLoading: boolean;
-}
-
-export const InventoryItemTable = ({
-  data,
-  isLoading,
-}: IInventoryItemTableProps) => {
+export const InventoryItemTable = () => {
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
@@ -79,12 +71,19 @@ export const InventoryItemTable = ({
     []
   );
 
-  const rowData = useMemo(() => data && data?.members?.list, [data]);
-
   return (
     <Table
-      isLoading={isLoading}
-      data={rowData?.slice(0, 10) ?? []}
+      data={[
+        {
+          firstName: 'Hello',
+          lastName: '123',
+          title: '123',
+          dateOfBirth: '1331',
+          location: 'Patan, Lalitpur',
+          gender: '301849-3910',
+          id: '123',
+        },
+      ]}
       columns={columns}
       sort={true}
     />

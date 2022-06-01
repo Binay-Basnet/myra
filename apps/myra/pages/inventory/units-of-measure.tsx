@@ -4,12 +4,8 @@ import {
   InventoryUseOfMeasureTable,
 } from '@saccos/myra/components';
 
-import { useMembersQuery } from '../../generated/graphql';
-
 const InventoryUnitsOfMeasure = () => {
-  const { data, isLoading } = useMembersQuery();
-
-  return <InventoryUseOfMeasureTable data={data} isLoading={isLoading} />;
+  return <InventoryUseOfMeasureTable />;
 };
 
 InventoryUnitsOfMeasure.getLayout = function getLayout(page: ReactElement) {

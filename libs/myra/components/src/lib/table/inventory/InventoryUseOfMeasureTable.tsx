@@ -19,15 +19,7 @@ type MemberData = {
   dateOfBirth?: string | null;
 };
 
-interface IInventoryUseOfMeasureTableProps {
-  data: any;
-  isLoading: boolean;
-}
-
-export const InventoryUseOfMeasureTable = ({
-  isLoading,
-  data,
-}: IInventoryUseOfMeasureTableProps) => {
+export const InventoryUseOfMeasureTable = () => {
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
@@ -61,12 +53,15 @@ export const InventoryUseOfMeasureTable = ({
     []
   );
 
-  const rowData = useMemo(() => data && data?.members?.list, [data]);
-
   return (
     <Table
-      isLoading={isLoading}
-      data={rowData?.slice(0, 10) ?? []}
+      data={[
+        {
+          firstName: 'Test Unit',
+          title: 'TU',
+          gender: 'false',
+        },
+      ]}
       columns={columns}
       sort={true}
     />

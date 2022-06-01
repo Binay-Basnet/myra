@@ -17,12 +17,10 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { MemberTable, TabColumn, TabRow } from '@saccos/myra/components';
-import { useGetMemberListQuery } from '@saccos/myra/graphql';
+import { useGetNewIdMutation } from '@saccos/myra/graphql';
 import { Box, Button, MainLayout } from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
 import { useRouter } from 'next/router';
-
-import { useGetNewIdMutation } from '../../generated/graphql';
 
 const column = [
   {
@@ -55,7 +53,6 @@ const Member = () => {
   const newId = useGetNewIdMutation();
 
   const { t } = useTranslation();
-  const { data, isLoading } = useGetMemberListQuery();
 
   return (
     <Box mt="100px" p="16px" display="flex">
@@ -168,7 +165,7 @@ const Member = () => {
           </Box>
         </Box>
         <Box width={'100%'}>
-          <MemberTable data={data} isLoading={isLoading} />
+          <MemberTable />
         </Box>
       </Box>
     </Box>

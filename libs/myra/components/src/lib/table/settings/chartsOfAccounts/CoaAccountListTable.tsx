@@ -19,15 +19,7 @@ type MemberData = {
   dateOfBirth?: string | null;
 };
 
-interface ICoaAccountListTable {
-  data: any;
-  isLoading: boolean;
-}
-
-export const CoaAccountListTable = ({
-  isLoading,
-  data,
-}: ICoaAccountListTable) => {
+export const CoaAccountListTable = () => {
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
@@ -66,12 +58,16 @@ export const CoaAccountListTable = ({
     []
   );
 
-  const rowData = useMemo(() => data && data?.members?.list, [data]);
-
   return (
     <Table
-      isLoading={isLoading}
-      data={rowData?.slice(0, 10) ?? []}
+      data={[
+        {
+          id: '0012',
+          firstName: '123',
+          title: 'Account Test',
+          gender: 'Account Group',
+        },
+      ]}
       columns={columns}
       sort={true}
     />

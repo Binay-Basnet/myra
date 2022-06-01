@@ -1,6 +1,6 @@
 overwrite: true
 schema: ${NX_SCHEMA_PATH}
-documents: 'libs/myra/graphql/src/lib/query/*.graphql'
+documents: 'libs/myra/graphql/src/lib/**/*.graphql'
 watch: true
 generates:
   libs/myra/graphql/src/generated/graphql.ts:
@@ -16,6 +16,10 @@ generates:
       scalars:
         Time: string
         Any: unknown
+        Cursor: string
+        InvalidData: Record<string, Array<string>>
+        Map: Record<string, string>
+        Date: string
       skipTypename: true
       inlineFragmentTypes: combine
       fetcher:
