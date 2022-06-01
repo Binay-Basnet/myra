@@ -18,8 +18,9 @@ export const AccountList = () => {
         display="flex"
         flexDirection="row"
         justifyContent="flex-start"
+        borderBottom="1px solid #E6E6E6"
       >
-        <Box w="100%" pt="15px" pl="20px">
+        <Box w="100%" pt="15px" pl="s16">
           <InputGroup size="sm">
             <InputLeftElement pointerEvents="none" h="22px" zIndex="0">
               <SearchIcon color="gray.300" />
@@ -31,6 +32,7 @@ export const AccountList = () => {
             />
           </InputGroup>
         </Box>
+
         <Box display="flex">
           <Box
             w="184px"

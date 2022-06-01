@@ -16,10 +16,14 @@ import {
   TextInput,
   Checkbox,
   TextFields,
+  Icon,
 } from '@saccos/myra/ui';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { GrPhone, GrLocation, GrMail } from 'react-icons/gr';
+import { IoLocationSharp } from 'react-icons/io5';
+import { RiShareBoxFill } from 'react-icons/ri';
+import { BsFillTelephoneFill } from 'react-icons/bs';
 
 const Header = () => {
   return (
@@ -105,28 +109,17 @@ const ShareReturn = () => {
                 <Box p={2} bg="background.500">
                   <Grid
                     templateRows="repeat(1,1fr)"
-                    templateColumns="repeat(4,1fr)"
+                    templateColumns="repeat(5,1fr)"
+                    gap={2}
                   >
-                    {/* <GridItem display="flex" alignSelf="center">
-                      <Avatar
-                        src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
-                        size="lg"
-                        name="John Doe"
-                        border="1px solid"
-                        borderColor="gray.0"
-                      />
-                    </GridItem> */}
-
-                    <GridItem display="flex">
-                      <Avatar
-                        src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
-                        size="lg"
-                        name="John Doe"
-                        border="1px solid"
-                        borderColor="gray.0"
-                        ml="10px"
-                        mr="10px"
-                      />
+                    <GridItem display="flex" alignSelf="center" colSpan={2}>
+                      <Box m="10px">
+                        <Avatar
+                          src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
+                          size="lg"
+                          name="Ajit Nepal"
+                        />
+                      </Box>
                       <Box>
                         <TextFields
                           color="neutralColorLight.Gray-80"
@@ -147,7 +140,7 @@ const ShareReturn = () => {
                           fontWeight="Regular"
                           fontSize="s3"
                         >
-                          Membership Since: 2078/10/04
+                          Member Since: 2078/10/04
                         </Text>
 
                         <Text
@@ -160,33 +153,65 @@ const ShareReturn = () => {
                       </Box>
                     </GridItem>
 
-                    <GridItem>
-                      <GrPhone color="primary.500" />
-                      <TextFields variant="profileBody" fontSize="12px">
-                        981234567
-                      </TextFields>
-                      <GrMail color="primary.500" />
-                      <TextFields variant="profileBody" fontSize="12px">
-                        ajitnepal65@gmail.com
-                      </TextFields>
-                      <GrLocation color="primary.500" />
-                      <TextFields variant="profileBody" fontSize="12px">
-                        Kathmandu, Tokha Municipality-10
-                      </TextFields>
-                    </GridItem>
-
                     <GridItem
                       display="flex"
-                      justifyContent="center"
+                      flexDirection="column"
+                      alignSelf="center"
                       colSpan={2}
+                      gap={3}
                     >
+                      <Box display="flex">
+                        <Icon
+                          size="sm"
+                          as={BsFillTelephoneFill}
+                          color="primary.500"
+                        />
+                        <TextFields
+                          ml="10px"
+                          variant="profileBody"
+                          fontSize="12px"
+                        >
+                          981234567
+                        </TextFields>
+                      </Box>
+
+                      <Box display="flex">
+                        <Icon size="sm" as={GrMail} color="primary.500" />
+                        <TextFields
+                          ml="10px"
+                          variant="profileBody"
+                          fontSize="12px"
+                        >
+                          ajitnepal65@gmail.com
+                        </TextFields>
+                      </Box>
+
+                      <Box display="flex">
+                        <Icon
+                          size="sm"
+                          as={IoLocationSharp}
+                          color="primary.500"
+                        />
+                        <TextFields
+                          ml="10px"
+                          variant="profileBody"
+                          fontSize="12px"
+                        >
+                          Kathmandu, Tokha Municipality-10
+                        </TextFields>
+                      </Box>
+                    </GridItem>
+
+                    <GridItem display="flex" justifyContent="center">
                       <Text
                         fontWeight="Medium"
                         color="primary.500"
                         fontSize="s2"
+                        mr="5px"
                       >
                         View Profile
                       </Text>
+                      <Icon size="sm" as={RiShareBoxFill} color="primary.500" />
                     </GridItem>
                   </Grid>
                 </Box>
