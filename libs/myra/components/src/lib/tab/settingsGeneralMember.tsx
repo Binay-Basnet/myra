@@ -1,7 +1,7 @@
-import {} from '../';
+import { Box } from '@chakra-ui/react';
 
-import { Box, Divider, Text } from '@chakra-ui/react';
 import { VerticalSideBarSettings } from './verticleSideBarSettings';
+import {} from '../';
 
 type TabList = {
   title: string;
@@ -33,19 +33,17 @@ const tabList: TabList[] = [
 
 export const SettingsGeneralMember = () => {
   return (
-    <>
-      <Box
-        w="13%"
-        display="flex"
-        flexDirection="column"
-        gap="s16"
-        flexShrink={0}
-        minWidth="250px"
-        pt="s8"
-        pl="s8"
-      >
-        <VerticalSideBarSettings tablinks={tabList} />
-      </Box>
-    </>
+    <Box
+      w="13%"
+      display="flex"
+      flexDirection="column"
+      gap="s16"
+      flexShrink={0}
+      minWidth="250px"
+      pt="s8"
+      pl="s8"
+    >
+      <VerticalSideBarSettings tablinks={tabList} />
+    </Box>
   );
 };
