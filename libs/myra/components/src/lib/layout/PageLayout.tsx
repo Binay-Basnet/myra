@@ -15,7 +15,9 @@ import {
   InputGroup,
   InputLeftElement,
 } from '@chakra-ui/react';
+import { useGetNewIdMutation } from '@saccos/myra/graphql';
 import { Box, Button, Divider, Icon, MainLayout, Text } from '@saccos/myra/ui';
+import { useRouter } from 'next/router';
 
 import { TabColumn } from '../tab/TabforMemberPage';
 import { TabRow } from '../tab/TabMemberPageRow';
@@ -31,6 +33,7 @@ interface IPageLayoutProps {
     title: string;
     key: string;
   }[];
+  btnOnClick: () => void;
 }
 
 export const PageLayout = ({
@@ -38,6 +41,7 @@ export const PageLayout = ({
   heading,
   columns,
   rows,
+  btnOnClick,
 }: IPageLayoutProps) => {
   return (
     <MainLayout>
@@ -52,6 +56,7 @@ export const PageLayout = ({
             size="lg"
             justifyContent="start"
             leftIcon={<AddIcon h="11px" />}
+            onClick={btnOnClick}
           >
             New {heading}
           </Button>
@@ -68,7 +73,7 @@ export const PageLayout = ({
               <Icon as={AiOutlineSetting} size="md" color="primary.500" />
             }
           >
-            Member Settings
+            {heading} Settings
           </Button>
         </Box>
 
@@ -83,7 +88,7 @@ export const PageLayout = ({
                   maxH="50px"
                 >
                   <Text fontSize="r2" fontWeight="600" color="gray.800">
-                    Member List
+                    {heading} List
                   </Text>
                 </Box>
                 <Box ml="48px" display="flex" alignItems="flex-end">
@@ -172,7 +177,7 @@ const memberColumns = [
   },
   {
     title: 'balanceReport',
-    link: '/members/balanceReport',
+    link: '/members/reports',
   },
 ];
 
@@ -192,8 +197,20 @@ const memberRows = [
 ];
 
 export const MemberPageLayout = ({ children }: IMemberPageLayout) => {
+  const newId = useGetNewIdMutation();
+  const router = useRouter();
+
   return (
-    <PageLayout rows={memberRows} columns={memberColumns} heading={'Member'}>
+    <PageLayout
+      rows={memberRows}
+      columns={memberColumns}
+      btnOnClick={() => {
+        newId
+          .mutateAsync({})
+          .then((res) => router.push(`/members/addMember/${res?.newId}`));
+      }}
+      heading={'Member'}
+    >
       {children}
     </PageLayout>
   );

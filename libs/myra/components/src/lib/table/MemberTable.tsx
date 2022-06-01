@@ -3,6 +3,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { Avatar, Flex, IconButton } from '@chakra-ui/react';
 import {
   KymMemberListEdges,
+  ObjState,
   useGetMemberListQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
@@ -12,7 +13,7 @@ import { useRouter } from 'next/router';
 export const MemberTable = () => {
   const router = useRouter();
   const { data, isLoading } = useGetMemberListQuery({
-    filter: String(router.query['objState']),
+    objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
   });
 
   const rowData = useMemo(() => data?.members?.list?.edges, [data]);

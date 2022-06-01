@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
 import { MemberPageLayout, MemberTable } from '@saccos/myra/components';
 
-const MemberListPage = () => {
+const MemberReportPage = () => {
   return <MemberTable />;
 };
 
-MemberListPage.getLayout = function getLayout(page: ReactElement) {
+MemberReportPage.getLayout = function getLayout(page: ReactElement) {
   return <MemberPageLayout>{page}</MemberPageLayout>;
 };
 
-export default MemberListPage;
+export default MemberReportPage;

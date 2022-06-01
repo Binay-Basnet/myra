@@ -34,13 +34,12 @@ export const TabRow = ({
   const router = useRouter();
   const { t } = useTranslation();
 
+  const currentIndex = list.findIndex(
+    (value) => router.query['objState'] === value.key
+  );
+
   return (
-    <Tabs
-      variant="unstyled"
-      index={
-        list.findIndex((value) => router.query['objState'] === value.key) ?? 0
-      }
-    >
+    <Tabs variant="unstyled" index={currentIndex === -1 ? 0 : currentIndex}>
       <TabList>
         {list.map((item, index) => {
           return (
