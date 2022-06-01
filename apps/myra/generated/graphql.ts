@@ -450,6 +450,13 @@ export type Filter = {
   orConditions: Array<OrConditions>;
 };
 
+<<<<<<< HEAD
+export enum Gender {
+  Female = 'FEMALE',
+  Male = 'MALE',
+  Other = 'OTHER',
+}
+=======
 export type GeneralMutation = {
   branch?: Maybe<BranchMutation>;
   kym?: Maybe<KymMutation>;
@@ -466,6 +473,7 @@ export type Grievance = {
   enabled: Scalars['Boolean'];
   name: Scalars['String'];
 };
+>>>>>>> 72ad3b94f12d38913f682f219f7f5f8a577c4c3e
 
 export type Identity = {
   id: Scalars['ID'];
@@ -967,11 +975,16 @@ export type MemberMutationGenerateExcelArgs = {
   id: Scalars['ID'];
 };
 
+<<<<<<< HEAD
+export type MemberMutationSaveArgs = {
+  data: MemberInput;
+=======
 export type MemberMutationIndividualArgs = {
   id: Scalars['ID'];
 };
 
 export type MemberMutationMemberPdfArgs = {
+>>>>>>> 72ad3b94f12d38913f682f219f7f5f8a577c4c3e
   id: Scalars['ID'];
 };
 
@@ -981,6 +994,9 @@ export type MemberQuery = {
   memberTypes: Array<Maybe<KymMemberTypes>>;
 };
 
+<<<<<<< HEAD
+export type MemberQueryGetArgs = {
+=======
 export type MemberQueryListArgs = {
   filter?: InputMaybe<KymMemberDataFilter>;
   pagination?: InputMaybe<Pagination>;
@@ -988,16 +1004,23 @@ export type MemberQueryListArgs = {
 
 export type MonthlyTransactions = {
   closingBalance?: Maybe<Scalars['Float']>;
+>>>>>>> 72ad3b94f12d38913f682f219f7f5f8a577c4c3e
   id: Scalars['String'];
   month: Scalars['String'];
   transactions: Array<Maybe<Transactions>>;
 };
 
+<<<<<<< HEAD
+export type MemberQueryListArgs = {
+  filter?: InputMaybe<Filter>;
+  order?: InputMaybe<Array<Order>>;
+=======
 export type Municipality = {
   id: Scalars['Int'];
   name: Scalars['String'];
   nameNp: Scalars['String'];
   wards: Array<Scalars['Int']>;
+>>>>>>> 72ad3b94f12d38913f682f219f7f5f8a577c4c3e
 };
 
 export type Mutation = {
@@ -1203,6 +1226,30 @@ export type Query = {
   settings: SettingsQuery;
 };
 
+<<<<<<< HEAD
+export enum UserType {
+  Human = 'HUMAN',
+  System = 'SYSTEM',
+}
+
+export type MembersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MembersQuery = {
+  members?: {
+    list: Array<{
+      id: string;
+      firstName: string;
+      middleName?: string | null;
+      lastName: string;
+      gender: Gender;
+      title?: string | null;
+      dateOfBirth?: string | null;
+    }>;
+  } | null;
+};
+
+export type GetNewIdMutationVariables = Exact<{ [key: string]: never }>;
+=======
 export type RecentTransactionFilter = {
   limit: Scalars['Int'];
 };
@@ -1283,6 +1330,7 @@ export type TransactionFilter = {
   toDate?: InputMaybe<Scalars['Date']>;
   type?: InputMaybe<TranslateInput>;
 };
+>>>>>>> 72ad3b94f12d38913f682f219f7f5f8a577c4c3e
 
 export type Transactions = {
   amount: Scalars['Float'];
@@ -1293,6 +1341,35 @@ export type Transactions = {
   transactionType: Transaction_Type;
 };
 
+<<<<<<< HEAD
+export const MembersDocument = `
+    query members {
+  members {
+    list {
+      id
+      firstName
+      middleName
+      lastName
+      gender
+      title
+      dateOfBirth
+    }
+  }
+}
+    `;
+export const useMembersQuery = <TData = MembersQuery, TError = unknown>(
+  variables?: MembersQueryVariables,
+  options?: UseQueryOptions<MembersQuery, TError, TData>
+) =>
+  useQuery<MembersQuery, TError, TData>(
+    variables === undefined ? ['members'] : ['members', variables],
+    useAxios<MembersQuery, MembersQueryVariables>(MembersDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+=======
 export type TranslateData = {
   data?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -1335,6 +1412,7 @@ export type SetMemberDataMutation = {
   members: { individual?: { add?: { recordId: string } | null } | null };
 };
 
+>>>>>>> 72ad3b94f12d38913f682f219f7f5f8a577c4c3e
 export const GetNewIdDocument = `
     mutation getNewId {
   newId
@@ -1353,6 +1431,8 @@ export const useGetNewIdMutation = <TError = unknown, TContext = unknown>(
     useAxios<GetNewIdMutation, GetNewIdMutationVariables>(GetNewIdDocument),
     options
   );
+<<<<<<< HEAD
+=======
 export const SetMemberDataDocument = `
     mutation setMemberData($id: ID!, $data: KymIndMemberInput!) {
   members {
@@ -1384,3 +1464,4 @@ export const useSetMemberDataMutation = <TError = unknown, TContext = unknown>(
     ),
     options
   );
+>>>>>>> 72ad3b94f12d38913f682f219f7f5f8a577c4c3e
