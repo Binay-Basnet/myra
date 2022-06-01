@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import {
   InventoryItemGroupTable,
-  InventoryLayout,
+  InventoryPageLayout,
 } from '@saccos/myra/components';
 import Router from 'next/router';
 
@@ -11,14 +11,14 @@ const InventoryItemGroupPage = () => {
 
 InventoryItemGroupPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <InventoryLayout
-      onClick={() => {
+    <InventoryPageLayout
+      onBtnClick={() => {
         Router.push('/inventory/item-group/add-new-item-group');
       }}
-      headingText="Item Group"
+      mainTitle="Item Group"
     >
       {page}
-    </InventoryLayout>
+    </InventoryPageLayout>
   );
 };
 export default InventoryItemGroupPage;

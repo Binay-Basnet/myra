@@ -1,5 +1,8 @@
 import { ReactElement } from 'react';
-import { InventoryItemTable, InventoryLayout } from '@saccos/myra/components';
+import {
+  InventoryItemTable,
+  InventoryPageLayout,
+} from '@saccos/myra/components';
 import Router from 'next/router';
 
 const InventoryProduct = () => {
@@ -8,14 +11,14 @@ const InventoryProduct = () => {
 
 InventoryProduct.getLayout = function getLayout(page: ReactElement) {
   return (
-    <InventoryLayout
-      headingText="Products"
-      onClick={() => {
+    <InventoryPageLayout
+      mainTitle="Products"
+      onBtnClick={() => {
         Router.push('/inventory/items/add-new-item');
       }}
     >
       {page}
-    </InventoryLayout>
+    </InventoryPageLayout>
   );
 };
 export default InventoryProduct;
