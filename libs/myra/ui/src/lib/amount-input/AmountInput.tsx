@@ -1,3 +1,4 @@
+import { forwardRef, useState } from 'react';
 import {
   Box,
   Input,
@@ -6,8 +7,6 @@ import {
   InputRightElement,
   Text,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { forwardRef } from 'react';
 
 /* eslint-disable-next-line */
 export interface AmountInputProps extends InputProps {

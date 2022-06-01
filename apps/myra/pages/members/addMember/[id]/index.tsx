@@ -1,3 +1,6 @@
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { GrClose } from 'react-icons/gr';
 import {
   AccorrdianAddMember,
   BasicSaccosDetails,
@@ -22,9 +25,10 @@ import {
   Text,
 } from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { GrClose } from 'react-icons/gr';
+import debounce from 'lodash/debounce';
+import { useRouter } from 'next/router';
+
+// import { useSetMemberDataMutation } from '../../../../generated/graphql';
 
 const Header = ({ t }) => {
   return (
@@ -38,40 +42,48 @@ const Header = ({ t }) => {
 const AddMember = () => {
   const { t } = useTranslation();
   // const methods = useForm<IFormValues>();
-  const { control, handleSubmit } = useForm({
+  const router = useRouter();
+  console.log('hello', router);
+  // const id = router?.query?.id;
+  // const setMembers = useSetMemberDataMutation();
+
+  const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
-      familyMember: [{ familyMemberFullName: '', familyMemberRelation: '' }],
+      familyDetails: [{ relationshipId: '', fullaname: '' }],
       mainOccupation: [
         {
           occupation: '',
-          orgFirmName: '',
-          panVatNo: '',
+          orgName: '',
+          idNumber: '',
           address: '',
-          annualIncome: '',
+          estimatedAnnualIncome: '',
         },
       ],
-      hushbandWifeOccupation: [
+      spouceOccupation: [
         {
           occupation: '',
-          orgFirmName: '',
-          panVatNo: '',
+          orgName: '',
+          idNumber: '',
           address: '',
-          annualIncome: '',
+          estimatedAnnualIncome: '',
         },
       ],
-      incomeSource: [
+      incomeSourceDetails: [
         {
-          incomeSource: '',
-          incomeAmount: '',
+          source: '',
+          amount: '',
         },
       ],
     },
   });
 
-  // const debounced = () => console.log('hello123', getValues());
-
   return (
-    <form onSubmit={handleSubmit((data) => console.log('data', data))}>
+    <form
+      onChange={debounce(() => {
+        console.log('values', getValues());
+      }, 3000)}
+      onSubmit={handleSubmit((data) => console.log('data', data))}
+    >
       <Box
         position="fixed"
         width="100%"

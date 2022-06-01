@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Box,
   Button,
@@ -12,7 +13,6 @@ import {
   PopoverHeader,
   PopoverTrigger,
 } from '@chakra-ui/react';
-import React from 'react';
 
 export interface PopoverProps {
   name?: string;

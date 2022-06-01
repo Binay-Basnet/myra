@@ -15,6 +15,7 @@ generates:
     config:
       scalars:
         Time: string
+        Any: unknown
       skipTypename: true
       inlineFragmentTypes: combine
       fetcher:

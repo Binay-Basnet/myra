@@ -5,10 +5,9 @@ import type {
 } from '@chakra-ui/theme-tools';
 
 const baseStyleContainer: SystemStyleObject = {
-  borderTopWidth: '1px',
   bg: 'gray.0',
   borderRadius: 'br2',
-  borderColor: 'border.layout',
+  border: '1px solid #E0E5EB',
   _last: {
     borderBottomWidth: '1px',
   },

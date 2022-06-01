@@ -1,7 +1,8 @@
-import { Tabs, TabList, Tab, TabsProps, Box, chakra } from '@chakra-ui/react';
+import { Tabs, TabList, Tab, TabsProps, chakra } from '@chakra-ui/react';
 import { TextFields } from '@saccos/myra/ui';
 /* eslint-disable-next-line */
-export interface ChakraTabProps extends TabsProps {
+export interface ChakraTabProps extends Omit<TabsProps, 'children'> {
+  onclick?: (data: string | number) => void;
   tabList?: string[];
   orientation?: 'vertical' | 'horizontal';
   tabWidth?: number;
@@ -16,15 +17,14 @@ const TabElement = chakra(Tab, {
     pr: 's24',
     _selected: {
       color: '#343C46',
-      boxShadow: 'inset 0px -2px 0px #8CC63F',
+      boxShadow: 'inset 0px -2px 0px #006837',
     },
   },
 });
 
 export function ChakraTab(props: ChakraTabProps) {
-  const { tabList, orientation, tabWidth, ...rest } = props;
+  const { tabList, orientation, onclick, tabWidth, ...rest } = props;
   return (
-    // <Box w="fit-content">
     <Tabs
       orientation={orientation || 'horizontal'}
       variant="unstyled"
@@ -37,13 +37,16 @@ export function ChakraTab(props: ChakraTabProps) {
     >
       <TabList>
         {tabList?.map((item, index) => (
-          <TabElement key={`${item}${index}`} width={tabWidth}>
+          <TabElement
+            onClick={() => onclick && onclick(item)}
+            key={`${item}${index}`}
+            width={tabWidth}
+          >
             <TextFields variant="tabs">{item}</TextFields>
           </TabElement>
         ))}
       </TabList>
     </Tabs>
-    // </Box>
   );
 }
 
