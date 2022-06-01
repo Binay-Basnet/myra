@@ -24,3 +24,5 @@ export * from './setings/general/organizations/AddressOrganization';
 export * from './setings/general/organizations/RegistrationDetails';
 export * from './setings/general/organizations/RadioOrganization';
 export * from './newFormComponents/FormFileInput';
+export * from './tab/verticleSideBarSettings';
+export * from './tab/settingsGeneralMember';
