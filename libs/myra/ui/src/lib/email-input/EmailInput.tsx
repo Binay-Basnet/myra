@@ -22,7 +22,7 @@ export const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
       <>
         <TextFields variant="formLabel" color={labelColor ?? 'gray.700'}>
           {' '}
-          {label ?? 'Email Address'}
+          {label}
         </TextFields>
         <InputGroup mt="s4">
           <InputLeftElement children={<MdEmail />} />

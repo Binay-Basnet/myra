@@ -1,5 +1,9 @@
-import { Grid, Radio, RadioGroup } from '@chakra-ui/react';
+import { Grid, Radio, RadioGroup, RadioGroupProps } from '@chakra-ui/react';
+// import{ Control} from 'react-hook-form';
 
+// interface Props extends RadioGroupProps{
+//     control:Control;
+// }
 export const RadioOrganization = () => {
   return (
     <RadioGroup fontWeight={'400'}>

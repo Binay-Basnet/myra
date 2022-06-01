@@ -142,20 +142,16 @@ export const MainLayoutWithColumn = (props: IMainLayoutWithColumnProps) => {
 
 const shareColumns = [
   {
-    title: 'shareList',
-    link: '/share/list',
+    title: 'shareBalance',
+    link: '/share/balance',
+  },
+  {
+    title: 'shareRegister',
+    link: '/share/register',
   },
   {
     title: 'shareReport',
     link: '/share/report',
-  },
-  {
-    title: 'shareConsolidatedReport',
-    link: '/share/consolidatedReport',
-  },
-  {
-    title: 'shareCertificatePrint',
-    link: '/share/certificate',
   },
 ];
 
@@ -165,6 +161,7 @@ interface ILayoutColumnProps {
   children: React.ReactNode;
   headingText: string;
   onClick?: () => void;
+  rows?: boolean;
 }
 
 export const ShareLayout = (props: ILayoutColumnProps) => {
@@ -189,7 +186,7 @@ export const ShareLayout = (props: ILayoutColumnProps) => {
       headingText={props.headingText}
       mainHeadingText="Shares"
       column={shareColumns}
-      rows={shareRows}
+      rows={props.rows ? shareRows : []}
     >
       {props.children}
     </MainLayoutWithColumn>

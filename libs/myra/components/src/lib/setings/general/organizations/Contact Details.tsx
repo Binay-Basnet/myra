@@ -1,3 +1,4 @@
+import { Control } from 'react-hook-form';
 import {
   Box,
   EmailInput,
@@ -7,20 +8,41 @@ import {
   TextInput,
 } from '@saccos/myra/ui';
 
-export const ContactDetailsOrganization = () => {
+import { FormEmailInput } from '../../../newFormComponents/FormEmailInput';
+import { FormPhoneNumber } from '../../../newFormComponents/FormPhoneNumber';
+import { FormTextInput } from '../../../newFormComponents/FormTextInput';
+type Props = {
+  control: Control<any>;
+};
+
+export const ContactDetailsOrganization = ({ control }: Props) => {
   return (
     <Box>
       <Grid templateColumns="repeat(3, 1fr)" gap="s16">
         <GridItem>
           {' '}
-          <PhoneNumber label="Phone No" />
+          <FormPhoneNumber
+            control={control}
+            name={'contactNumber'}
+            label={'Phone No'}
+            placeholder={'Phone No'}
+          />
         </GridItem>
         <GridItem>
-          <EmailInput label="Email Address" />
+          <FormEmailInput
+            label="Email Address"
+            name={'Email Address'}
+            control={control}
+          />
         </GridItem>
         <GridItem>
           {' '}
-          <TextInput label="Website" placeholder="Enter Website" />
+          <FormTextInput
+            label="Website"
+            placeholder="Enter Website"
+            name={'website'}
+            control={control}
+          />
         </GridItem>
       </Grid>
     </Box>

@@ -1,15 +1,13 @@
-import React from 'react';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { Box, Input, IconButton, Text, Button, Icon } from '@saccos/myra/ui';
+import { InputGroup, InputLeftElement } from '@chakra-ui/react';
 import {
+  SearchIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   HamburgerIcon,
-  SearchIcon,
 } from '@chakra-ui/icons';
-import { InputGroup, InputLeftElement } from '@chakra-ui/react';
-import { Box, Button, Icon, IconButton, Input, Text } from '@saccos/myra/ui';
-
 import { CoaAccountListTable } from '../table/settings/chartsOfAccounts/CoaAccountListTable';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export const AccountList = () => {
   return (
@@ -19,7 +17,7 @@ export const AccountList = () => {
         w="100%"
         display="flex"
         flexDirection="row"
-        justifyContent="space-between"
+        justifyContent="flex-start"
       >
         <Box w="100%" pt="15px" pl="20px">
           <InputGroup size="sm">
