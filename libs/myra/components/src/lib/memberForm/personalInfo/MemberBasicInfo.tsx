@@ -1,9 +1,8 @@
 import React from 'react';
+import { FormInput, FormSelect } from '@saccos/myra/components';
 import { Grid, Text } from '@saccos/myra/ui';
 
-import { FormInput, FormSelect } from '../../newFormComponents';
-
-export const MemberBasicInfo = ({ control }: any) => {
+export const MemberBasicInfo = ({ control }) => {
   return (
     <>
       <Text fontSize="r1" fontWeight="SemiBold">
@@ -34,7 +33,7 @@ export const MemberBasicInfo = ({ control }: any) => {
         />
         <FormSelect
           control={control}
-          name="gender"
+          name="genderId"
           label="Gender"
           placeholder="Select Gender"
           options={[
@@ -46,13 +45,13 @@ export const MemberBasicInfo = ({ control }: any) => {
         <FormInput
           control={control}
           type="date"
-          name="dateOfBirthBs"
+          name="dateOfBirth"
           label="Date of Birth(BS)"
           placeholder="Enter date of birth"
         />
         <FormSelect
           control={control}
-          name="ethnicity"
+          name="ethnicityId"
           label="Ethnicity"
           placeholder="Select Ethnicity"
           options={[
@@ -65,13 +64,13 @@ export const MemberBasicInfo = ({ control }: any) => {
         <FormInput
           control={control}
           type="text"
-          name="nationality"
+          name="nationalityId"
           label="Nationality"
           placeholder="Enter Nationality"
         />
         <FormSelect
           control={control}
-          name="educationalQualification"
+          name="educationalQualificationId"
           label="Educational Qualification"
           placeholder="Select Educational Qualification"
           options={[
@@ -84,7 +83,7 @@ export const MemberBasicInfo = ({ control }: any) => {
         />
         <FormSelect
           control={control}
-          name="religion"
+          name="religionId"
           label="Religion"
           placeholder="Select Religion"
           options={[

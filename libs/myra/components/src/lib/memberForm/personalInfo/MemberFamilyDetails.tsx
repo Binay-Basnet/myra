@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
+import { FormInput, FormSelect } from '@saccos/myra/components';
 import {
   Box,
   Button,
@@ -11,9 +12,7 @@ import {
   Text,
 } from '@saccos/myra/ui';
 
-import { FormInput, FormSelect } from '../../newFormComponents';
-
-const AddFamilyMember = ({ control, index, removeFamilyMember }: any) => {
+const AddFamilyMember = ({ control, index, removeFamilyMember }) => {
   return (
     <Box
       p={4}
@@ -37,7 +36,7 @@ const AddFamilyMember = ({ control, index, removeFamilyMember }: any) => {
           <FormInput
             control={control}
             type="text"
-            name={`familyMember[${index}].familyMemberRelation`}
+            name={`familyMember[${index}].relationshipId`}
             label="Relation"
             placeholder="Enter Relation"
           />
@@ -46,7 +45,7 @@ const AddFamilyMember = ({ control, index, removeFamilyMember }: any) => {
           <FormInput
             control={control}
             type="text"
-            name={`familyMember[${index}].familyMemberFullName`}
+            name={`familyMember[${index}].fullName`}
             label="FullName"
             placeholder="Enter Fullname"
           />
@@ -56,7 +55,7 @@ const AddFamilyMember = ({ control, index, removeFamilyMember }: any) => {
   );
 };
 
-export const MemberFamilyDetails = ({ control }: any) => {
+export const MemberFamilyDetails = ({ control }) => {
   const {
     fields: familyFields,
     append: familyAppend,

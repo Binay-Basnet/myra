@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
+import { FormInput, FormSelect } from '@saccos/myra/components';
 import {
   Box,
   Button,
@@ -11,13 +12,11 @@ import {
   Text,
 } from '@saccos/myra/ui';
 
-import { FormInput, FormSelect } from '../../newFormComponents';
-
 const HushbandWifeOccupation = ({
   control,
   index,
   removeHushbandWifeOccupation,
-}: any) => {
+}) => {
   return (
     <Box
       p={4}
@@ -40,7 +39,7 @@ const HushbandWifeOccupation = ({
         <GridItem colSpan={1}>
           <FormSelect
             control={control}
-            name={`hushbandWifeOccupation[${index}].occupation`}
+            name={`spouceOccupation[${index}].occupation`}
             label="Occupation"
             placeholder="Select Occupation"
             options={[
@@ -53,7 +52,7 @@ const HushbandWifeOccupation = ({
           <FormInput
             control={control}
             type="text"
-            name={`hushbandWifeOccupation[${index}].orgFirmName`}
+            name={`spouceOccupation[${index}].orgName`}
             label="Org/Frim Name"
             placeholder="Org/Firm Name"
           />
@@ -62,21 +61,21 @@ const HushbandWifeOccupation = ({
         <FormInput
           control={control}
           type="text"
-          name={`hushbandWifeOccupation[${index}].panVatNo`}
+          name={`spouceOccupation[${index}].idNumber`}
           label="Pan/Vat number"
           placeholder="Pan/Vat number"
         />
         <FormInput
           control={control}
           type="text"
-          name={`hushbandWifeOccupation[${index}].address`}
+          name={`spouceOccupation[${index}].address`}
           label="Address"
           placeholder="Enter Address"
         />
         <FormInput
           control={control}
           type="number"
-          name={`hushbandWifeOccupation[${index}].annualIncome`}
+          name={`spouceOccupation[${index}].estimatedAnnualIncome`}
           label="Annual Income"
           placeholder="0.00"
         />
@@ -85,7 +84,7 @@ const HushbandWifeOccupation = ({
   );
 };
 
-export const MemberHushbandWifeOccupation = ({ control }: any) => {
+export const MemberHushbandWifeOccupation = ({ control }) => {
   const {
     fields: hushbandWifeOccupationFields,
     append: hushbandWifeOccupationAppend,
