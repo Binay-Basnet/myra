@@ -6,6 +6,11 @@ import { PageLayout } from './PageLayout';
 
 interface IMemberPageLayout {
   children: React.ReactNode;
+  mainTitle: string;
+  rows?: {
+    title: string;
+    key: string;
+  }[];
 }
 
 const memberColumns = [
@@ -34,13 +39,19 @@ const memberRows = [
   },
 ];
 
-export const MemberPageLayout = ({ children }: IMemberPageLayout) => {
+export const MemberPageLayout = ({
+  children,
+  mainTitle,
+  rows,
+}: IMemberPageLayout) => {
   const newId = useGetNewIdMutation();
   const router = useRouter();
 
   return (
     <PageLayout
-      rows={memberRows}
+      settingOnClick={() => router.push('/members/settings')}
+      mainTitle={mainTitle}
+      rows={rows ?? memberRows}
       columns={memberColumns}
       btnOnClick={() => {
         newId

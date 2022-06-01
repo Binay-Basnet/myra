@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
 import { PageLayout } from './PageLayout';
 
@@ -46,9 +47,12 @@ export const SharePageLayout = ({
   rows,
   mainTitle,
 }: IMemberPageLayout) => {
+  const router = useRouter();
+
   return (
     <PageLayout
       mainTitle={mainTitle}
+      settingOnClick={() => router.push('/share/settings')}
       rows={rows ?? shareRows}
       columns={shareColumns}
       btnOnClick={() => {

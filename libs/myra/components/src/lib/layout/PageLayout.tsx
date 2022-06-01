@@ -33,6 +33,7 @@ interface IPageLayoutProps {
   }[];
   btnOnClick: () => void;
   mainTitle: string;
+  settingOnClick: () => void;
 }
 
 export const PageLayout = ({
@@ -41,6 +42,7 @@ export const PageLayout = ({
   columns,
   rows,
   btnOnClick,
+  settingOnClick,
   mainTitle,
 }: IPageLayoutProps) => {
   return (
@@ -64,6 +66,7 @@ export const PageLayout = ({
           <TabColumn list={columns} />
           <Divider my="s16" />
           <Button
+            onClick={settingOnClick}
             variant="ghost"
             color="#37474F"
             height="s48"

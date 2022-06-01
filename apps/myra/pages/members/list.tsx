@@ -6,7 +6,7 @@ const MemberListPage = () => {
 };
 
 MemberListPage.getLayout = function getLayout(page: ReactElement) {
-  return <MemberPageLayout>{page}</MemberPageLayout>;
+  return <MemberPageLayout mainTitle="Member List">{page}</MemberPageLayout>;
 };
 
 export default MemberListPage;
