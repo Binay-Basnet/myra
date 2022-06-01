@@ -71,7 +71,7 @@ export function Table<T extends Record<string, unknown>>({
   }
 
   return (
-    <TableContainer>
+    <TableContainer borderRadius="inherit">
       <ChakraTable size={size} {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (

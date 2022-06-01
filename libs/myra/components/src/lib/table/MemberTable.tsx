@@ -7,16 +7,20 @@ import {
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 
 export const MemberTable = () => {
-  const { data, isLoading } = useGetMemberListQuery();
+  const router = useRouter();
+  const { data, isLoading } = useGetMemberListQuery({
+    filter: String(router.query['objState']),
+  });
 
   const rowData = useMemo(() => data?.members?.list?.edges, [data]);
 
   const columns: Column<KymMemberListEdges>[] = useMemo(
     () => [
       {
-        Header: 'Member #',
+        Header: 'Member ID',
         accessor: 'node.id',
         maxWidth: 4,
       },

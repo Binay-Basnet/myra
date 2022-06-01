@@ -3200,18 +3200,6 @@
             "deprecationReason": null
           },
           {
-            "name": "mySaccos",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "MySaccosQuery",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "notification",
             "description": null,
             "args": [],
@@ -3258,6 +3246,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "EBankingTransactionQuery",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "utilities",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "UtilitiesQuery",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3929,7 +3929,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "GeneralMutation",
+        "name": "GeneralSettingsMutation",
         "description": null,
         "fields": [
           {
@@ -3939,6 +3939,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "BranchMutation",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "generalOrganizationSetting",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrganizationMutation",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3955,18 +3967,6 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
-          },
-          {
-            "name": "organization",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "OrganizationMutation",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -3976,7 +3976,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "GeneralQuery",
+        "name": "GeneralSettingsQuery",
         "description": null,
         "fields": [
           {
@@ -3992,24 +3992,24 @@
             "deprecationReason": null
           },
           {
-            "name": "kym",
+            "name": "generalOrganizationSetting",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymQuery",
+              "name": "OrganizationQuery",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "organization",
+            "name": "kym",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "OrganizationQuery",
+              "name": "KymQuery",
               "ofType": null
             },
             "isDeprecated": false,
@@ -4182,6 +4182,29 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "InvalidDataError",
+        "description": null,
+        "fields": [
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "InvalidData",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -7859,53 +7882,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "OBJECT",
-        "name": "MainContactPerson",
-        "description": null,
-        "fields": [
-          {
-            "name": "contactPersonContactNumber",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "contactPersonName",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "title",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "SCALAR",
         "name": "Map",
         "description": null,
@@ -8676,113 +8652,6 @@
       },
       {
         "kind": "OBJECT",
-        "name": "MySaccosQuery",
-        "description": null,
-        "fields": [
-          {
-            "name": "chequeServices",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "ChequeService",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "downloads",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "Downloads",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "grievances",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "Grievance",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "loanServices",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "LoanService",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
         "name": "Name",
         "description": null,
         "fields": [
@@ -9325,7 +9194,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "MainContactPerson",
+              "name": "OrganizationMainContactPerson",
               "ofType": null
             },
             "isDeprecated": false,
@@ -9350,12 +9219,184 @@
         "possibleTypes": null
       },
       {
+        "kind": "UNION",
+        "name": "OrganizationAddError",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "OrganizationAddInvalidDataError",
+            "ofType": null
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrganizationAddFormStatus",
+        "description": null,
+        "fields": [
+          {
+            "name": "lastUpdated",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "OrganizationAddLUS",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sectionStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrganizationAddSectionStatus",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrganizationAddInvalidDataError",
+        "description": null,
+        "fields": [
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "InvalidData",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "UNION",
+        "name": "OrganizationAddLUS",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "OrganizationPersonalLUS",
+            "ofType": null
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrganizationAddResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "OrganizationAddError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "query",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrganizationQuery",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "record",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Organization",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrganizationAddSectionStatus",
+        "description": null,
+        "fields": [
+          {
+            "name": "personal",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrganizationPersonalStatus",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "OrganizationAddress",
         "description": null,
         "fields": [
           {
-            "name": "district",
+            "name": "districtId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "latitude",
             "description": null,
             "args": [],
             "type": {
@@ -9367,7 +9408,19 @@
             "deprecationReason": null
           },
           {
-            "name": "locality",
+            "name": "localityId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "longitude",
             "description": null,
             "args": [],
             "type": {
@@ -9379,36 +9432,24 @@
             "deprecationReason": null
           },
           {
-            "name": "pinOnMap",
+            "name": "provinceId",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "ID",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "province",
+            "name": "vdcId",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "vdc",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
+              "name": "ID",
               "ofType": null
             },
             "isDeprecated": false,
@@ -9420,7 +9461,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "ID",
               "ofType": null
             },
             "isDeprecated": false,
@@ -9438,7 +9479,7 @@
         "description": null,
         "fields": [
           {
-            "name": "organizationLogo",
+            "name": "logo",
             "description": null,
             "args": [],
             "type": {
@@ -9450,7 +9491,7 @@
             "deprecationReason": null
           },
           {
-            "name": "organizationName",
+            "name": "name",
             "description": null,
             "args": [],
             "type": {
@@ -9536,9 +9577,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -9573,6 +9618,29 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "OrganizationGetResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrganizationRecord",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "OrganizationInput",
         "description": null,
@@ -9603,11 +9671,11 @@
             "deprecationReason": null
           },
           {
-            "name": "district",
+            "name": "districtId",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -9618,9 +9686,13 @@
             "name": "documents",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -9639,7 +9711,7 @@
             "deprecationReason": null
           },
           {
-            "name": "locality",
+            "name": "latitude",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -9651,7 +9723,19 @@
             "deprecationReason": null
           },
           {
-            "name": "organizationLogo",
+            "name": "localityId",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "logo",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -9663,7 +9747,19 @@
             "deprecationReason": null
           },
           {
-            "name": "organizationName",
+            "name": "longitude",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -9699,23 +9795,11 @@
             "deprecationReason": null
           },
           {
-            "name": "pinOnMap",
+            "name": "provinceId",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "province",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -9783,11 +9867,11 @@
             "deprecationReason": null
           },
           {
-            "name": "vdc",
+            "name": "vdcId",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -9799,7 +9883,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -9825,20 +9909,71 @@
       },
       {
         "kind": "OBJECT",
+        "name": "OrganizationMainContactPerson",
+        "description": null,
+        "fields": [
+          {
+            "name": "contactPersonContactNumber",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "contactPersonName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "title",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "OrganizationMutation",
         "description": null,
         "fields": [
           {
-            "name": "initialOrganizationSetup",
+            "name": "initialSetup",
             "description": null,
             "args": [
               {
                 "name": "data",
                 "description": null,
                 "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "OrganizationInput",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "OrganizationInput",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -9846,11 +9981,120 @@
               }
             ],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "OBJECT",
+              "name": "OrganizationAddResult",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrganizationPersonalLUS",
+        "description": null,
+        "fields": [
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "OrganizationPersonalSection",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "OrganizationPersonalSection",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ADDRESS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "BASIC_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CONTACT_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DOCUMENTS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MAIN_CONTACT_PERSON",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REGISTRATION_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrganizationPersonalStatus",
+        "description": null,
+        "fields": [
+          {
+            "name": "completed",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "OBJECT",
-                "name": "Organization",
+                "kind": "ENUM",
+                "name": "OrganizationPersonalSection",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrganizationPersonalSection",
                 "ofType": null
               }
             },
@@ -9893,6 +10137,64 @@
             "deprecationReason": null
           },
           {
+            "name": "formStatus",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrganizationAddFormStatus",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "get",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrganizationGetResult",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getOrganization",
             "description": null,
             "args": [
@@ -9921,6 +10223,45 @@
                   "ofType": null
                 }
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrganizationRecord",
+        "description": null,
+        "fields": [
+          {
+            "name": "organization",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Organization",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sectionStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrganizationAddFormStatus",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -10704,29 +11045,13 @@
         "description": null,
         "fields": [
           {
-            "name": "general",
+            "name": "generalSettings",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "GeneralMutation",
+              "name": "GeneralSettingsMutation",
               "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "newId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -10743,12 +11068,12 @@
         "description": null,
         "fields": [
           {
-            "name": "general",
+            "name": "generalSettings",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "GeneralQuery",
+              "name": "GeneralSettingsQuery",
               "ofType": null
             },
             "isDeprecated": false,
@@ -10998,7 +11323,7 @@
         "description": null,
         "fields": [
           {
-            "name": "purchaseShare",
+            "name": "purchase",
             "description": null,
             "args": [
               {
@@ -11039,7 +11364,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "ShareRegister",
+                "name": "SharePurchaseResult",
                 "ofType": null
               }
             },
@@ -11047,7 +11372,7 @@
             "deprecationReason": null
           },
           {
-            "name": "returnShare",
+            "name": "return",
             "description": null,
             "args": [
               {
@@ -11088,7 +11413,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "ShareRegister",
+                "name": "ShareReturnResult",
                 "ofType": null
               }
             },
@@ -11100,6 +11425,22 @@
         "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
+      },
+      {
+        "kind": "UNION",
+        "name": "SharePurchaseError",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "InvalidDataError",
+            "ofType": null
+          }
+        ]
       },
       {
         "kind": "INPUT_OBJECT",
@@ -11222,11 +11563,74 @@
       },
       {
         "kind": "OBJECT",
+        "name": "SharePurchaseResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "SharePurchaseError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "query",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShareQuery",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "record",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShareRegister",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recordId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "ShareQuery",
         "description": null,
         "fields": [
           {
-            "name": "shareBalance",
+            "name": "balance",
             "description": null,
             "args": [
               {
@@ -11263,7 +11667,7 @@
             "deprecationReason": null
           },
           {
-            "name": "shareRegister",
+            "name": "register",
             "description": null,
             "args": [
               {
@@ -11682,6 +12086,22 @@
         "possibleTypes": null
       },
       {
+        "kind": "UNION",
+        "name": "ShareReturnError",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "InvalidDataError",
+            "ofType": null
+          }
+        ]
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "ShareReturnInput",
         "description": null,
@@ -11833,6 +12253,69 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ShareReturnResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "ShareReturnError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "query",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShareQuery",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "record",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShareRegister",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recordId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -12381,7 +12864,7 @@
             "deprecationReason": null
           },
           {
-            "name": "COOPERATIVEUNION",
+            "name": "COOPERATIVE_UNION",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -12422,6 +12905,113 @@
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "UtilitiesQuery",
+        "description": null,
+        "fields": [
+          {
+            "name": "chequeServices",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ChequeService",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "downloads",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Downloads",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "grievances",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Grievance",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "loanServices",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "LoanService",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
         "possibleTypes": null
       },
       {
