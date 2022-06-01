@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { FormControl } from '@chakra-ui/react';
-// import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   AmountInput,
   Box,
@@ -11,15 +11,19 @@ import {
   SwitchTabs,
   Text,
   TextInput,
+  GridItem,
+  Grid,
 } from '@saccos/myra/ui';
 import { useRouter } from 'next/router';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
+import { FormInput } from '@saccos/myra/components';
 
 const list = ['Yes', 'No'];
 const accountList = ['Cash', 'Journal', 'Bank'];
 
 const AddNewAccount = () => {
+  const { control } = useForm();
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<string | null>('Cash');
 
@@ -51,95 +55,104 @@ const AddNewAccount = () => {
           />
         </Box>
       </Box>
+
       <Box
-        background="white"
-        p={5}
         display="flex"
         flexDirection="column"
-        gap={6}
+        p="5"
+        background="white"
+        borderBottom="1px solid #E6E6E6"
+        borderTopRadius={5}
       >
-        <Box display="flex" justifyContent="center" gap={5}>
-          <FormControl flex={1}>
-            <TextInput id="accountName" placeholder="Account Name" />
-          </FormControl>
-          <FormControl w="30%">
-            <Select
-              id="type"
-              label="Under"
-              defaultValue="Staff Bonus Fund"
-              options={[
-                {
-                  label: 'Staff Bonus Fund',
-                  value: 'Staff Bonus Fund',
-                },
-                {
-                  label: 'Option 2',
-                  value: 'option-2',
-                },
-                {
-                  label: 'Option 3',
-                  value: 'option-3',
-                },
-              ]}
+        <Grid
+          gap={5}
+          templateRows="repeat(2, 1fr)"
+          templateColumns="repeat(3,1fr)"
+        >
+          <GridItem colSpan={2}>
+            <FormInput
+              control={control}
+              type="text"
+              name="name"
+              label="Account Name"
+              placeholder="Enter Account Name"
             />
-          </FormControl>
-        </Box>
+          </GridItem>
 
-        <Box display="flex" gap={5} justifyContent="space-between">
-          <FormControl>
-            <Select
-              id="type"
-              label="Account Type"
-              options={[
-                {
-                  label: 'Liabilities',
-                  value: 'Liabilities',
-                },
-                {
-                  label: 'Option 2',
-                  value: 'option-2',
-                },
-                {
-                  label: 'Option 3',
-                  value: 'option-3',
-                },
-              ]}
-            />
-          </FormControl>
-          <FormControl>
+          <GridItem>
             <TextInput
-              label="Account Code"
-              id="type"
-              placeholder="Account Code"
+              id="accountName"
+              label="Account Name"
+              placeholder="Account Name"
             />
-          </FormControl>
-          <FormControl>
-            <Select
-              id="type"
-              label="Currency"
-              options={[
-                {
-                  label: 'NPR',
-                  value: 'NPR',
-                },
-                {
-                  label: 'Option 2',
-                  value: 'option-2',
-                },
-                {
-                  label: 'Option 3',
-                  value: 'option-3',
-                },
-              ]}
-            />
-          </FormControl>
-        </Box>
+          </GridItem>
 
-        <Divider />
+          <GridItem>
+            <FormControl>
+              <Select
+                id="type"
+                label="Account Type"
+                options={[
+                  {
+                    label: 'Liabilities',
+                    value: 'Liabilities',
+                  },
+                  {
+                    label: 'Option 2',
+                    value: 'option-2',
+                  },
+                  {
+                    label: 'Option 3',
+                    value: 'option-3',
+                  },
+                ]}
+              />
+            </FormControl>
+          </GridItem>
+          <GridItem>
+            <FormControl>
+              <TextInput
+                label="Account Code"
+                id="type"
+                placeholder="Account Code"
+              />
+            </FormControl>
+          </GridItem>
+          <GridItem>
+            <FormControl>
+              <Select
+                id="type"
+                label="Currency"
+                options={[
+                  {
+                    label: 'NPR',
+                    value: 'NPR',
+                  },
+                  {
+                    label: 'Option 2',
+                    value: 'option-2',
+                  },
+                  {
+                    label: 'Option 3',
+                    value: 'option-3',
+                  },
+                ]}
+              />
+            </FormControl>
+          </GridItem>
+        </Grid>
+      </Box>
 
-        <Box>
+      <Box
+        display="flex"
+        flexDirection="column"
+        p="5"
+        background="white"
+        borderBottom="1px solid #E6E6E6"
+        borderTopRadius={5}
+      >
+        <Box mb="5px">
           <Text mb="5px">Type of Account</Text>
-
           <SwitchTabs onclick={switchTabsFxn} list={accountList} />
         </Box>
 
@@ -201,14 +214,25 @@ const AddNewAccount = () => {
             </Box>
             <Box w="30%">
               <FormControl>
-                <TextInput id="type" placeholder="Bank Account Number" />
+                <TextInput
+                  id="type"
+                  label="Bank Account Number"
+                  placeholder="Bank Account Number"
+                />
               </FormControl>
             </Box>
           </Box>
         )}
+      </Box>
 
-        <Divider />
-
+      <Box
+        p={5}
+        display="flex"
+        flexDirection="column"
+        h="100%"
+        alignContent="space-between"
+        gap={4}
+      >
         <Box display="grid" gridTemplateColumns="repeat(2, 2fr)">
           <Box>
             <Text color="Gray.700" fontWeight="medium" fontSize="s3">

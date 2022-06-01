@@ -121,10 +121,9 @@ const en = {
   shareSubmitted: 'Submitted',
   shareDraft: 'Draft',
 
-  shareList: 'Share List',
+  shareBalance: 'Share Balance',
   shareReport: 'Share Report',
-  shareConsolidatedReport: 'Share Consolidated Report',
-  shareCertificatePrint: 'Share Certificate Print',
+  shareRegister: 'Share Register',
 
   //Account Page TODO ( Update Translations)
 

@@ -1,8 +1,8 @@
+import { FormInput } from '@saccos/myra/components';
+import { Box, Button, Container, MainLayout, Text } from '@saccos/myra/ui';
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { GrClose } from 'react-icons/gr';
-import { FormInput } from '@saccos/myra/components';
-import { Box, Button, Container, MainLayout, Text } from '@saccos/myra/ui';
 
 const AddNewItemPage = () => {
   const { control } = useForm();
