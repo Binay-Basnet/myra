@@ -5,12 +5,8 @@ import {
 } from '@saccos/myra/components';
 import Router from 'next/router';
 
-import { useMembersQuery } from '../../../generated/graphql';
-
 const InventoryItemGroupPage = () => {
-  const { data, isLoading } = useMembersQuery();
-
-  return <InventoryItemGroupTable data={data} isLoading={isLoading} />;
+  return <InventoryItemGroupTable />;
 };
 
 InventoryItemGroupPage.getLayout = function getLayout(page: ReactElement) {

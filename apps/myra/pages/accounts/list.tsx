@@ -1,14 +1,10 @@
 import { ReactElement } from 'react';
-import { AccountLayout, AccountListTable } from '@saccos/myra/components';
+import { AccountLayout, ShareTable } from '@saccos/myra/components';
 import Router from 'next/router';
-
-import { useMembersQuery } from '../../generated/graphql';
 
 // TODO ( Update this page when design arrives )
 const AccountListPage = () => {
-  const { data, isLoading } = useMembersQuery();
-
-  return <AccountListTable data={data} isLoading={isLoading} />;
+  return <ShareTable />;
 };
 
 AccountListPage.getLayout = function getLayout(page: ReactElement) {
