@@ -35,7 +35,6 @@ const inventoryColumns = [
 
 export const InventoryPageLayout = ({
   children,
-  rows,
   mainTitle,
   onBtnClick,
 }: IInventoryPageLayoutProps) => {
@@ -48,7 +47,7 @@ export const InventoryPageLayout = ({
       rows={[]}
       columns={inventoryColumns}
       btnOnClick={() => onBtnClick && onBtnClick()}
-      heading={'Share'}
+      heading={'Inventory'}
     >
       {children}
     </PageLayout>
