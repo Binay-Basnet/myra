@@ -1,12 +1,12 @@
-import {chakra, Tab, Tabs, Text} from '@chakra-ui/react';
-import {en} from '@saccos/myra/locales';
-import {useTranslation} from '@saccos/myra/util';
+import { chakra, Tab, Tabs, Text } from '@chakra-ui/react';
+import { en } from '@saccos/myra/locales';
+import { useTranslation } from '@saccos/myra/util';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
-    color: '#37474F',
+    color: 'gray.600',
     height: '48px',
     fontSize: '14px',
     fontWeight: '500',
@@ -14,7 +14,10 @@ const TabCol = chakra(Tab, {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    _selected: {color: '#37474F', bg: '#FFFFFF'},
+    _focus: {
+      boxShadow: 'none',
+    },
+    _selected: { color: '#37474F', bg: 'gray.200' },
   },
 });
 
@@ -25,16 +28,15 @@ interface ITabColumnProps {
   }[];
 }
 
-export const TabColumn = ({list}: ITabColumnProps) => {
-  const {t} = useTranslation();
+export const TabColumn = ({ list }: ITabColumnProps) => {
+  const { t } = useTranslation();
 
   const router = useRouter();
 
   return (
     <Tabs
       variant="unstyled"
-      pl="16px"
-      index={list.findIndex((value) => router.asPath === value.link) ?? 0}
+      index={list.findIndex((value) => router.asPath.includes(value.link)) ?? 0}
     >
       {list.map((item, index) => {
         return (

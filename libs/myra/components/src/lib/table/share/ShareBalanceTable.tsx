@@ -2,18 +2,17 @@ import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { Avatar, Flex, IconButton } from '@chakra-ui/react';
 import {
-  KymMemberListEdges,
-  useGetMemberListQuery,
+  ShareBalanceEdge,
+  useGetShareBalanceListQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
-import moment from 'moment';
 
 export const ShareBalanceTable = () => {
-  const { data, isLoading } = useGetMemberListQuery();
+  const { data, isLoading } = useGetShareBalanceListQuery();
 
-  const rowData = useMemo(() => data?.members?.list?.edges, [data]);
+  const rowData = useMemo(() => data?.share.balance?.edges, [data]);
 
-  const columns: Column<KymMemberListEdges>[] = useMemo(
+  const columns: Column<ShareBalanceEdge>[] = useMemo(
     () => [
       {
         Header: 'Member #',
@@ -23,7 +22,7 @@ export const ShareBalanceTable = () => {
 
       {
         Header: 'Name',
-        accessor: 'node.personalInformation.name.firstName',
+        accessor: 'node.member.personalInformation.name.firstName',
         width: '80%',
 
         Cell: ({ value, row }) => {
@@ -36,7 +35,10 @@ export const ShareBalanceTable = () => {
               />
               <span>
                 {value}{' '}
-                {row?.original?.node?.personalInformation?.name?.lastName}
+                {
+                  row?.original?.node?.member?.personalInformation?.name
+                    ?.lastName
+                }
               </span>
             </Flex>
           );
@@ -44,29 +46,18 @@ export const ShareBalanceTable = () => {
       },
 
       {
-        Header: 'Address',
-        accessor: 'node.address.permanent.district',
+        Header: 'Share Count',
+        accessor: 'node.shareCount',
         maxWidth: 48,
+      },
+      {
+        Header: 'Balance',
+        accessor: 'node.balance',
+        Cell: ({ value, row }) => {
+          return <span>{Number(value).toFixed(2)}</span>;
+        },
+      },
 
-        Cell: ({ value, row }) => {
-          return (
-            <span>
-              {value}, {row?.original?.node?.address?.permanent?.state}
-            </span>
-          );
-        },
-      },
-      {
-        Header: 'Phone No.',
-        accessor: 'node.contact.mobile',
-      },
-      {
-        Header: 'Date Joined',
-        accessor: 'node.createdAt',
-        Cell: ({ value, row }) => {
-          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
-        },
-      },
       {
         accessor: 'actions',
         Cell: () => (

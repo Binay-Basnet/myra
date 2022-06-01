@@ -2,28 +2,40 @@ import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { Avatar, Flex, IconButton } from '@chakra-ui/react';
 import {
-  KymMemberListEdges,
-  useGetMemberListQuery,
+  ShareRegisterEdge,
+  useGetShareRegisterListQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 import moment from 'moment';
 
 export const ShareRegisterTable = () => {
-  const { data, isLoading } = useGetMemberListQuery();
+  const { data, isLoading } = useGetShareRegisterListQuery();
 
-  const rowData = useMemo(() => data?.members?.list?.edges, [data]);
+  const rowData = useMemo(() => data?.share?.register?.edges, [data]);
 
-  const columns: Column<KymMemberListEdges>[] = useMemo(
+  const columns: Column<ShareRegisterEdge>[] = useMemo(
     () => [
       {
-        Header: 'Member #',
+        Header: 'Date',
+        accessor: 'node.transactionDate',
+        Cell: ({ value, row }) => {
+          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+        },
+      },
+
+      {
+        Header: 'Member ID',
         accessor: 'node.id',
         maxWidth: 4,
       },
 
       {
+        Header: 'Type',
+        accessor: 'node.transactionDirection',
+      },
+      {
         Header: 'Name',
-        accessor: 'node.personalInformation.name.firstName',
+        accessor: 'node.member.personalInformation.name.firstName',
         width: '80%',
 
         Cell: ({ value, row }) => {
@@ -36,7 +48,10 @@ export const ShareRegisterTable = () => {
               />
               <span>
                 {value}{' '}
-                {row?.original?.node?.personalInformation?.name?.lastName}
+                {
+                  row?.original?.node?.member?.personalInformation?.name
+                    ?.lastName
+                }
               </span>
             </Flex>
           );
@@ -44,27 +59,53 @@ export const ShareRegisterTable = () => {
       },
 
       {
-        Header: 'Address',
-        accessor: 'node.address.permanent.district',
+        Header: 'To - From',
+        accessor: 'node.shareStartNumber',
         maxWidth: 48,
 
         Cell: ({ value, row }) => {
           return (
             <span>
-              {value}, {row?.original?.node?.address?.permanent?.state}
+              {value} - {row?.original?.node?.shareEndNumber}
             </span>
           );
         },
       },
       {
-        Header: 'Phone No.',
-        accessor: 'node.contact.mobile',
+        Header: 'Share Count',
+        accessor: 'node.noOfShare',
       },
       {
-        Header: 'Date Joined',
-        accessor: 'node.createdAt',
+        Header: 'Share Dr',
+        accessor: 'node.member.address.permanent.inNepali.locality',
         Cell: ({ value, row }) => {
-          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+          return (
+            <span>
+              {row.original.node.transactionDirection === 'PURCHASE'
+                ? row.original.node.shareAmount.toFixed(2)
+                : '-'}
+            </span>
+          );
+        },
+      },
+      {
+        Header: 'Share Cr',
+        accessor: 'node.member.address.permanent.inNepali.district',
+        Cell: ({ value, row }) => {
+          return (
+            <span>
+              {row.original.node.transactionDirection === 'RETURN'
+                ? row.original.node.shareAmount.toFixed(2)
+                : '-'}
+            </span>
+          );
+        },
+      },
+      {
+        Header: 'Balance',
+        accessor: 'node.balance',
+        Cell: ({ value, row }) => {
+          return <span>{Number(value).toFixed(2)}</span>;
         },
       },
       {

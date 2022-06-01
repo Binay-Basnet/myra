@@ -1888,10 +1888,22 @@ export type SetMemberDataMutationVariables = Exact<{
 
 export type SetMemberDataMutation = { members: { individual?: { add?: { recordId: string } | null } | null } };
 
-export type GetMemberListQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetMemberListQueryVariables = Exact<{
+  objState?: InputMaybe<ObjState>;
+}>;
 
 
-export type GetMemberListQuery = { members: { list: { edges?: Array<{ node?: { id: string, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { edges?: Array<{ cursor: string, node?: { id: string, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+
+export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetShareBalanceListQuery = { share: { balance?: { edges: Array<{ node: { id: string, balance: number, shareCount: number, member: { personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null } } }>, pageInfo: { endCursor?: string | null, startCursor?: string | null } } | null } };
+
+export type GetShareRegisterListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, shareStartNumber: number, shareEndNumber: number, shareAmount: number, noOfShare: number, member: { personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null } } }> } | null } };
 
 
 export const GetNewIdDocument = `
@@ -1929,9 +1941,12 @@ export const useSetMemberDataMutation = <
       options
     );
 export const GetMemberListDocument = `
-    query getMemberList {
+    query getMemberList($objState: ObjState) {
   members {
-    list(pagination: {after: "GnScEVElJwWskbrdOjkMlflHX", first: 10}) {
+    list(
+      pagination: {first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA"}
+      filter: {objState: $objState}
+    ) {
       edges {
         node {
           id
@@ -1952,6 +1967,7 @@ export const GetMemberListDocument = `
           }
           createdAt
         }
+        cursor
       }
       pageInfo {
         startCursor
@@ -1971,5 +1987,84 @@ export const useGetMemberListQuery = <
     useQuery<GetMemberListQuery, TError, TData>(
       variables === undefined ? ['getMemberList'] : ['getMemberList', variables],
       useAxios<GetMemberListQuery, GetMemberListQueryVariables>(GetMemberListDocument).bind(null, variables),
+      options
+    );
+export const GetShareBalanceListDocument = `
+    query getShareBalanceList {
+  share {
+    balance {
+      edges {
+        node {
+          id
+          balance
+          shareCount
+          member {
+            personalInformation {
+              name {
+                firstName
+                lastName
+              }
+            }
+          }
+        }
+      }
+      pageInfo {
+        endCursor
+        startCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetShareBalanceListQuery = <
+      TData = GetShareBalanceListQuery,
+      TError = unknown
+    >(
+      variables?: GetShareBalanceListQueryVariables,
+      options?: UseQueryOptions<GetShareBalanceListQuery, TError, TData>
+    ) =>
+    useQuery<GetShareBalanceListQuery, TError, TData>(
+      variables === undefined ? ['getShareBalanceList'] : ['getShareBalanceList', variables],
+      useAxios<GetShareBalanceListQuery, GetShareBalanceListQueryVariables>(GetShareBalanceListDocument).bind(null, variables),
+      options
+    );
+export const GetShareRegisterListDocument = `
+    query getShareRegisterList {
+  share {
+    register {
+      edges {
+        node {
+          transactionDate
+          transactionDirection
+          id
+          member {
+            personalInformation {
+              name {
+                firstName
+                lastName
+              }
+            }
+          }
+          balance
+          shareStartNumber
+          shareEndNumber
+          shareAmount
+          noOfShare
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetShareRegisterListQuery = <
+      TData = GetShareRegisterListQuery,
+      TError = unknown
+    >(
+      variables?: GetShareRegisterListQueryVariables,
+      options?: UseQueryOptions<GetShareRegisterListQuery, TError, TData>
+    ) =>
+    useQuery<GetShareRegisterListQuery, TError, TData>(
+      variables === undefined ? ['getShareRegisterList'] : ['getShareRegisterList', variables],
+      useAxios<GetShareRegisterListQuery, GetShareRegisterListQueryVariables>(GetShareRegisterListDocument).bind(null, variables),
       options
     );

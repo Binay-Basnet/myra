@@ -1,5 +1,5 @@
-import { ShareLayout, ShareRegisterTable } from '@saccos/myra/components';
 import { ReactElement } from 'react';
+import { SharePageLayout, ShareRegisterTable } from '@saccos/myra/components';
 
 // TODO ( Update this page when design arrives )
 const ShareRegister = () => {
@@ -7,10 +7,6 @@ const ShareRegister = () => {
 };
 
 ShareRegister.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <ShareLayout rows={true} headingText={'Share Register'}>
-      {page}
-    </ShareLayout>
-  );
+  return <SharePageLayout mainTitle="Share Register">{page}</SharePageLayout>;
 };
 export default ShareRegister;

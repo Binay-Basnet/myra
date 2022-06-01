@@ -178,7 +178,7 @@ const sizes: Record<string, SystemStyleObject> = {
   lg: {
     h: 12,
     minW: 12,
-    fontSize: 'md',
+    fontSize: 'r1',
     px: 3,
     py: 3,
   },

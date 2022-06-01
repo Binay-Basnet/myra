@@ -1,0 +1,55 @@
+query getShareBalanceList {
+  share {
+    balance {
+      edges {
+        node {
+          id
+          balance
+          shareCount
+          member {
+            personalInformation {
+              name {
+                firstName
+                lastName
+              }
+            }
+          }
+
+        }
+      }
+      pageInfo {
+        endCursor
+        startCursor
+      }
+    }
+  }
+}
+
+
+query getShareRegisterList {
+  share {
+    register {
+      edges {
+        node {
+          transactionDate
+          transactionDirection
+          id
+          member {
+            personalInformation {
+              name {
+                firstName
+                lastName
+              }
+            }
+          }
+          balance
+          shareStartNumber
+          shareEndNumber
+          shareAmount
+          noOfShare
+        }
+      }
+    }
+
+  }
+}
