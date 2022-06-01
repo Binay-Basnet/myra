@@ -15,9 +15,7 @@ import {
   InputGroup,
   InputLeftElement,
 } from '@chakra-ui/react';
-import { useGetNewIdMutation } from '@saccos/myra/graphql';
 import { Box, Button, Divider, Icon, MainLayout, Text } from '@saccos/myra/ui';
-import { useRouter } from 'next/router';
 
 import { TabColumn } from '../tab/TabforMemberPage';
 import { TabRow } from '../tab/TabMemberPageRow';
@@ -34,6 +32,7 @@ interface IPageLayoutProps {
     key: string;
   }[];
   btnOnClick: () => void;
+  mainTitle: string;
 }
 
 export const PageLayout = ({
@@ -42,6 +41,7 @@ export const PageLayout = ({
   columns,
   rows,
   btnOnClick,
+  mainTitle,
 }: IPageLayoutProps) => {
   return (
     <MainLayout>
@@ -88,7 +88,7 @@ export const PageLayout = ({
                   maxH="50px"
                 >
                   <Text fontSize="r2" fontWeight="600" color="gray.800">
-                    {heading} List
+                    {mainTitle}
                   </Text>
                 </Box>
                 <Box ml="48px" display="flex" alignItems="flex-end">
@@ -163,55 +163,5 @@ export const PageLayout = ({
         </Box>
       </Box>
     </MainLayout>
-  );
-};
-
-interface IMemberPageLayout {
-  children: React.ReactNode;
-}
-
-const memberColumns = [
-  {
-    title: 'memberList',
-    link: '/members/list',
-  },
-  {
-    title: 'balanceReport',
-    link: '/members/reports',
-  },
-];
-
-const memberRows = [
-  {
-    title: 'memberNavActive',
-    key: 'APPROVED',
-  },
-  {
-    title: 'memberNavInactive',
-    key: 'VALIDATED',
-  },
-  {
-    title: 'memberNavDraft',
-    key: 'DRAFT',
-  },
-];
-
-export const MemberPageLayout = ({ children }: IMemberPageLayout) => {
-  const newId = useGetNewIdMutation();
-  const router = useRouter();
-
-  return (
-    <PageLayout
-      rows={memberRows}
-      columns={memberColumns}
-      btnOnClick={() => {
-        newId
-          .mutateAsync({})
-          .then((res) => router.push(`/members/addMember/${res?.newId}`));
-      }}
-      heading={'Member'}
-    >
-      {children}
-    </PageLayout>
   );
 };

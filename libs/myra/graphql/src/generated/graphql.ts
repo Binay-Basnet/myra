@@ -49,7 +49,7 @@ export type AccountConnection = {
 };
 
 export type AccountEdge = {
-  cursor: Scalars['String'];
+  cursor: Scalars['Cursor'];
   node: Account;
 };
 
@@ -514,8 +514,279 @@ export type Identity = {
   username: Scalars['String'];
 };
 
+export type InvItems = {
+  itemCode: Scalars['String'];
+  itemId: Scalars['ID'];
+  itemQuantity: Scalars['Float'];
+  name: Scalars['String'];
+  type: Scalars['String'];
+  unitPrice: Scalars['Float'];
+};
+
+export type InvItemsAddResult = {
+  error?: Maybe<InvItemsError>;
+  query?: Maybe<InvItemsQuery>;
+  record?: Maybe<InvItems>;
+};
+
+export type InvItemsConnection = {
+  edges: Array<Maybe<InvItemsEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type InvItemsEdge = {
+  cursor: Scalars['Cursor'];
+  node: InvItems;
+};
+
+export type InvItemsError = InvItemsInvalidDataError;
+
+export type InvItemsGroup = {
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  parentCategory: Scalars['String'];
+};
+
+export type InvItemsGroupAddResult = {
+  error?: Maybe<InvItemsGroupError>;
+  query?: Maybe<InvItemsGroupQuery>;
+  record?: Maybe<InvItemsGroup>;
+};
+
+export type InvItemsGroupConnection = {
+  edges: Array<Maybe<InvItemsGroupEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type InvItemsGroupEdge = {
+  cursor: Scalars['Cursor'];
+  node: InvItemsGroup;
+};
+
+export type InvItemsGroupError = InvItemsGroupInvalidDataError;
+
+export type InvItemsGroupInput = {
+  description: Scalars['String'];
+  name: Scalars['String'];
+  parentCategory: Scalars['String'];
+};
+
+export type InvItemsGroupInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InvItemsGroupMutation = {
+  add: InvItemsGroupAddResult;
+};
+
+
+export type InvItemsGroupMutationAddArgs = {
+  data: InvItemsGroupInput;
+};
+
+export type InvItemsGroupQuery = {
+  all?: Maybe<InvItemsGroupConnection>;
+  get: InvItemsGroup;
+};
+
+
+export type InvItemsGroupQueryAllArgs = {
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type InvItemsGroupQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvItemsInput = {
+  itemCode: Scalars['String'];
+  itemGroup: Scalars['String'];
+  itemQuantity: Scalars['Float'];
+  name: Scalars['String'];
+  primaryUnit: Scalars['String'];
+  tax: Scalars['String'];
+  type: Scalars['String'];
+  unitPrice: Scalars['Float'];
+};
+
+export type InvItemsInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InvItemsMutation = {
+  add: InvItemsAddResult;
+};
+
+
+export type InvItemsMutationAddArgs = {
+  data: InvItemsInput;
+};
+
+export type InvItemsQuery = {
+  all?: Maybe<InvItemsConnection>;
+  get: InvItems;
+};
+
+
+export type InvItemsQueryAllArgs = {
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type InvItemsQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvUnitOfMeasure = {
+  acceptFraction: Scalars['Boolean'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  shortName: Scalars['String'];
+};
+
+export type InvUnitOfMeasureAddResult = {
+  error?: Maybe<InvUnitOfMeasureError>;
+  query?: Maybe<InvUnitOfMeasureQuery>;
+  record?: Maybe<InvUnitOfMeasure>;
+};
+
+export type InvUnitOfMeasureConnection = {
+  edges: Array<Maybe<InvUnitOfMeasureEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type InvUnitOfMeasureEdge = {
+  cursor: Scalars['Cursor'];
+  node: InvUnitOfMeasure;
+};
+
+export type InvUnitOfMeasureError = InvUnitOfMeasureInvalidDataError;
+
+export type InvUnitOfMeasureInput = {
+  acceptFraction: Scalars['Boolean'];
+  description: Scalars['String'];
+  name: Scalars['String'];
+  shortName: Scalars['String'];
+};
+
+export type InvUnitOfMeasureInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InvUnitOfMeasureMutation = {
+  add: InvUnitOfMeasureAddResult;
+};
+
+
+export type InvUnitOfMeasureMutationAddArgs = {
+  data: InvUnitOfMeasureInput;
+};
+
+export type InvUnitOfMeasureQuery = {
+  all?: Maybe<InvUnitOfMeasureConnection>;
+  get: InvUnitOfMeasure;
+};
+
+
+export type InvUnitOfMeasureQueryAllArgs = {
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type InvUnitOfMeasureQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvVendors = {
+  email: Scalars['String'];
+  id: Scalars['ID'];
+  location: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+};
+
+export type InvVendorsAddResult = {
+  error?: Maybe<InvVendorsError>;
+  query?: Maybe<InvVendorsQuery>;
+  record?: Maybe<InvVendors>;
+};
+
+export type InvVendorsConnection = {
+  edges: Array<Maybe<InvVendorsEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type InvVendorsEdge = {
+  cursor: Scalars['Cursor'];
+  node: InvVendors;
+};
+
+export type InvVendorsError = InvVendorsInvalidDataError;
+
+export type InvVendorsInput = {
+  contactName: Scalars['String'];
+  contactPhoneNo: Scalars['String'];
+  creditLimit: Scalars['Float'];
+  creditTerms: Scalars['String'];
+  email: Scalars['String'];
+  location: Scalars['String'];
+  name: Scalars['String'];
+  openingBalance: Scalars['Float'];
+  panNo: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  vendorCode: Scalars['String'];
+};
+
+export type InvVendorsInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InvVendorsMutation = {
+  add: InvVendorsAddResult;
+};
+
+
+export type InvVendorsMutationAddArgs = {
+  data: InvVendorsInput;
+};
+
+export type InvVendorsQuery = {
+  all?: Maybe<InvVendorsConnection>;
+  get: InvVendors;
+};
+
+
+export type InvVendorsQueryAllArgs = {
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type InvVendorsQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
 export type InvalidDataError = {
   error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InventoryMutation = {
+  items?: Maybe<InvItemsMutation>;
+  itemsGroup?: Maybe<InvItemsGroupMutation>;
+  unitOfMeasure?: Maybe<InvUnitOfMeasureMutation>;
+  vendors?: Maybe<InvVendorsMutation>;
+};
+
+export type InventoryQuery = {
+  items?: Maybe<InvItemsQuery>;
+  itemsGroup?: Maybe<InvItemsGroupQuery>;
+  unitOfMeasure?: Maybe<InvUnitOfMeasureQuery>;
+  vendors?: Maybe<InvVendorsQuery>;
 };
 
 export type KymAdditionalFields = {
@@ -1063,6 +1334,7 @@ export type Municipality = {
 
 export type Mutation = {
   example: ExampleMutation;
+  inventory: InventoryMutation;
   members: MemberMutation;
   newId: Scalars['String'];
   settings: SettingsMutation;
@@ -1332,6 +1604,7 @@ export type Query = {
   administration: AdministrationQuery;
   dashboard: DashboardQuery;
   eBanking: EBankingQuery;
+  inventory: InventoryQuery;
   members: MemberQuery;
   settings: SettingsQuery;
   share: ShareQuery;
@@ -1527,6 +1800,14 @@ export enum TextFormat {
   IPv6 = 'IPv6'
 }
 
+export enum TimePeriod {
+  Day = 'DAY',
+  Fortnight = 'FORTNIGHT',
+  Month = 'MONTH',
+  Week = 'WEEK',
+  Year = 'YEAR'
+}
+
 export type TodayTrend = {
   trendData?: Maybe<Array<Maybe<Scalars['Float']>>>;
   type: DashboardTodayType;
@@ -1571,6 +1852,7 @@ export type TranslateInput = {
 
 export type TrendDataFilter = {
   fromDate?: InputMaybe<Scalars['Date']>;
+  period?: InputMaybe<TimePeriod>;
   toDate?: InputMaybe<Scalars['Date']>;
 };
 
@@ -1611,7 +1893,17 @@ export type GetMemberListQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { edges?: Array<{ node?: { id: string, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { edges?: Array<{ cursor: string, node?: { id: string, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+
+export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetShareBalanceListQuery = { share: { balance?: { edges: Array<{ node: { id: string, balance: number, shareCount: number, member: { personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null } } }>, pageInfo: { endCursor?: string | null, startCursor?: string | null } } | null } };
+
+export type GetShareRegisterListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, shareStartNumber: number, shareEndNumber: number, shareAmount: number, noOfShare: number, member: { personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null } } }> } | null } };
 
 
 export const GetNewIdDocument = `
@@ -1651,7 +1943,10 @@ export const useSetMemberDataMutation = <
 export const GetMemberListDocument = `
     query getMemberList($objState: ObjState) {
   members {
-    list(pagination: {first: 10}, filter: {objState: $objState}) {
+    list(
+      pagination: {first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA"}
+      filter: {objState: $objState}
+    ) {
       edges {
         node {
           id
@@ -1672,6 +1967,7 @@ export const GetMemberListDocument = `
           }
           createdAt
         }
+        cursor
       }
       pageInfo {
         startCursor
@@ -1691,5 +1987,84 @@ export const useGetMemberListQuery = <
     useQuery<GetMemberListQuery, TError, TData>(
       variables === undefined ? ['getMemberList'] : ['getMemberList', variables],
       useAxios<GetMemberListQuery, GetMemberListQueryVariables>(GetMemberListDocument).bind(null, variables),
+      options
+    );
+export const GetShareBalanceListDocument = `
+    query getShareBalanceList {
+  share {
+    balance {
+      edges {
+        node {
+          id
+          balance
+          shareCount
+          member {
+            personalInformation {
+              name {
+                firstName
+                lastName
+              }
+            }
+          }
+        }
+      }
+      pageInfo {
+        endCursor
+        startCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetShareBalanceListQuery = <
+      TData = GetShareBalanceListQuery,
+      TError = unknown
+    >(
+      variables?: GetShareBalanceListQueryVariables,
+      options?: UseQueryOptions<GetShareBalanceListQuery, TError, TData>
+    ) =>
+    useQuery<GetShareBalanceListQuery, TError, TData>(
+      variables === undefined ? ['getShareBalanceList'] : ['getShareBalanceList', variables],
+      useAxios<GetShareBalanceListQuery, GetShareBalanceListQueryVariables>(GetShareBalanceListDocument).bind(null, variables),
+      options
+    );
+export const GetShareRegisterListDocument = `
+    query getShareRegisterList {
+  share {
+    register {
+      edges {
+        node {
+          transactionDate
+          transactionDirection
+          id
+          member {
+            personalInformation {
+              name {
+                firstName
+                lastName
+              }
+            }
+          }
+          balance
+          shareStartNumber
+          shareEndNumber
+          shareAmount
+          noOfShare
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetShareRegisterListQuery = <
+      TData = GetShareRegisterListQuery,
+      TError = unknown
+    >(
+      variables?: GetShareRegisterListQueryVariables,
+      options?: UseQueryOptions<GetShareRegisterListQuery, TError, TData>
+    ) =>
+    useQuery<GetShareRegisterListQuery, TError, TData>(
+      variables === undefined ? ['getShareRegisterList'] : ['getShareRegisterList', variables],
+      useAxios<GetShareRegisterListQuery, GetShareRegisterListQueryVariables>(GetShareRegisterListDocument).bind(null, variables),
       options
     );

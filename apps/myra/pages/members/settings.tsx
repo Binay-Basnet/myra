@@ -97,7 +97,7 @@ const Member = () => {
               </Text>
             </Box>
             <Box ml="48px" display="flex" alignItems="flex-end">
-              <TabRow t={t} list={rows} />
+              <TabRow list={[]} />
             </Box>
           </Flex>
         </Box>

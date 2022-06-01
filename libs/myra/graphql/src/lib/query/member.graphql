@@ -1,6 +1,6 @@
 query getMemberList ($objState: ObjState) {
   members {
-    list(pagination: { first: 10 }, filter: { objState: $objState }) {
+    list(pagination: { first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA"  }, filter: { objState: $objState }) {
       edges {
         node {
           id
@@ -21,6 +21,7 @@ query getMemberList ($objState: ObjState) {
           }
           createdAt
         }
+        cursor
       }
       pageInfo {
         startCursor

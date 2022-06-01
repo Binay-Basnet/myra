@@ -1,2 +1,3 @@
 export * from './layout';
-export * from './PageLayout';
+export * from './MemberLayout';
+export * from './ShareLayout';
