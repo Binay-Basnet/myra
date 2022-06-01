@@ -2,17 +2,17 @@ import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 import {
   Box,
+  EmailInput as StorybookInput,
+  EmailInputProps as StorybookInputProps,
   TextFields,
-  TextInput as StorybookInput,
-  TextInputProps,
 } from '@saccos/myra/ui';
 
-interface Iprops extends TextInputProps {
+interface Iprops extends StorybookInputProps {
   control: Control<any>;
   name: string;
 }
 
-export const FormTextInput = ({
+export const FormEmailInput = ({
   control,
   placeholder,
   name,

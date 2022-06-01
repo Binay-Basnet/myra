@@ -16,7 +16,9 @@ import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const Organization = () => {
   const { control, handleSubmit } = useForm();
+
   return (
+    // onSubmit={handleSubmit((data) => console.log('data', data))}
     <form onSubmit={handleSubmit((data) => console.log('data', data))}>
       <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
         <Box
@@ -89,7 +91,7 @@ const Organization = () => {
                   CONTACT DETAILS
                 </Text>
                 <Box mt="s16">
-                  <ContactDetailsOrganization />
+                  <ContactDetailsOrganization control={control} />
                 </Box>
               </Box>
               <Box mt="s16" py="s24">
@@ -98,7 +100,7 @@ const Organization = () => {
                   MAIN CONTACT PERSON
                 </Text>
                 <Box mt="s16">
-                  <MainContactPersonOrganization />
+                  <MainContactPersonOrganization control={control} />
                 </Box>
               </Box>
               <Box mt="s16" py="s24">
@@ -107,10 +109,14 @@ const Organization = () => {
                   ADDRESS
                 </Text>
                 <Box mt="s16">
-                  <AddressOrganization />
+                  <AddressOrganization control={control} />
                 </Box>
               </Box>
-              <Button leftIcon={<Icon size="md" as={FaMap} />} mt={'s16'}>
+              <Button
+                leftIcon={<Icon size="md" as={FaMap} />}
+                mt={'s16'}
+                type="submit"
+              >
                 Pin on Map
               </Button>
             </Box>
@@ -120,7 +126,7 @@ const Organization = () => {
                 REGISTRATION DETAILS
               </Text>
               <Box mt="s16">
-                <RegistrationDetailsOrganization />
+                <RegistrationDetailsOrganization control={control} />
               </Box>
             </Box>
             <Box mt="s16" py="s24">
