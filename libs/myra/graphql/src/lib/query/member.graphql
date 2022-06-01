@@ -1,0 +1,33 @@
+query getMemberList {
+  members{
+    list(pagination:{  after:"GnScEVElJwWskbrdOjkMlflHX", first: 100}){
+      edges{
+        node {
+          id
+          personalInformation {
+            name {
+              firstName
+              middleName
+              lastName
+            }
+          }
+          address {
+            permanent {
+              district
+              locality
+              state
+            }
+          }
+          contact {
+            mobile
+          }
+          createdAt
+        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
