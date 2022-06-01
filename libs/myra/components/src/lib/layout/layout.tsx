@@ -65,7 +65,7 @@ export const MainLayoutWithColumn = (props: IMainLayoutWithColumnProps) => {
                 </Text>
               </Box>
               <Box ml="48px" display="flex" alignItems="flex-end">
-                <TabRow t={t} list={props.rows} />
+                <TabRow list={[]} />
               </Box>
             </Flex>
           </Box>

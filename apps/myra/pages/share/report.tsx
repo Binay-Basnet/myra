@@ -1,5 +1,5 @@
-import { ShareLayout, ShareRegisterTable } from '@saccos/myra/components';
 import { ReactElement } from 'react';
+import { SharePageLayout, ShareRegisterTable } from '@saccos/myra/components';
 
 // TODO ( UPDATE THIS PAGE A/C TO DESIGN )
 const ShareReport = () => {
@@ -7,10 +7,6 @@ const ShareReport = () => {
 };
 
 ShareReport.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <ShareLayout rows={true} headingText="Share Report">
-      {page}
-    </ShareLayout>
-  );
+  return <SharePageLayout mainTitle="Share Report">{page}</SharePageLayout>;
 };
 export default ShareReport;

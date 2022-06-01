@@ -1,5 +1,5 @@
-import { ShareBalanceTable,ShareLayout } from '@saccos/myra/components';
 import { ReactElement } from 'react';
+import { ShareBalanceTable, SharePageLayout } from '@saccos/myra/components';
 
 // TODO ( Update this page when design arrives )
 const ShareBalance = () => {
@@ -8,9 +8,9 @@ const ShareBalance = () => {
 
 ShareBalance.getLayout = function getLayout(page: ReactElement) {
   return (
-    <ShareLayout rows={false} headingText={'Share Balance'}>
+    <SharePageLayout mainTitle="Share Balance" rows={[]}>
       {page}
-    </ShareLayout>
+    </SharePageLayout>
   );
 };
 export default ShareBalance;
