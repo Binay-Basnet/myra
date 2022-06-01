@@ -49,7 +49,7 @@ export type AccountConnection = {
 };
 
 export type AccountEdge = {
-  cursor: Scalars['String'];
+  cursor: Scalars['Cursor'];
   node: Account;
 };
 
@@ -156,7 +156,7 @@ export type Branch = {
   branchCode: Scalars['Int'];
   contactNumber?: Maybe<Scalars['String']>;
   district?: Maybe<Scalars['String']>;
-  manager?: Maybe<Scalars['String']>;
+  manager?: Maybe<BranchManager>;
 };
 
 export type BranchConnection = {
@@ -166,7 +166,7 @@ export type BranchConnection = {
 };
 
 export type BranchEdge = {
-  cursor: Scalars['String'];
+  cursor: Scalars['Cursor'];
   node: Branch;
 };
 
@@ -182,29 +182,9 @@ export type BranchInput = {
   manager?: InputMaybe<Scalars['String']>;
 };
 
-export type BranchMutation = {
-  newBranch: Branch;
-};
-
-
-export type BranchMutationNewBranchArgs = {
-  data?: InputMaybe<BranchInput>;
-};
-
-export type BranchQuery = {
-  getBranch: Branch;
-  list?: Maybe<BranchConnection>;
-};
-
-
-export type BranchQueryGetBranchArgs = {
-  branchCode?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type BranchQueryListArgs = {
-  filter?: InputMaybe<BranchSearchFilter>;
-  paginate?: InputMaybe<Pagination>;
+export type BranchManager = {
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type BranchSearchFilter = {
@@ -214,6 +194,31 @@ export type BranchSearchFilter = {
   district?: InputMaybe<Scalars['String']>;
   manager?: InputMaybe<Scalars['String']>;
   searchField?: InputMaybe<Scalars['String']>;
+};
+
+export type BranchSettingsMutation = {
+  newBranch: Branch;
+};
+
+
+export type BranchSettingsMutationNewBranchArgs = {
+  data?: InputMaybe<BranchInput>;
+};
+
+export type BranchSettingsQuery = {
+  getBranch: Branch;
+  list?: Maybe<BranchConnection>;
+};
+
+
+export type BranchSettingsQueryGetBranchArgs = {
+  branchCode?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type BranchSettingsQueryListArgs = {
+  filter?: InputMaybe<BranchSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
 };
 
 export type CbsData = {
@@ -396,11 +401,11 @@ export type EBankingQuery = {
   account?: Maybe<EBankingAccountQuery>;
   home: EBankingCombined;
   me?: Maybe<Member>;
-  mySaccos?: Maybe<MySaccosQuery>;
   notification?: Maybe<EBankingNotificationQuery>;
   services?: Maybe<Array<Maybe<Services>>>;
   share?: Maybe<EBankingShareQuery>;
   transaction?: Maybe<EBankingTransactionQuery>;
+  utilities?: Maybe<UtilitiesQuery>;
 };
 
 export type EBankingShareQuery = {
@@ -484,16 +489,16 @@ export type Filter = {
   orConditions: Array<OrConditions>;
 };
 
-export type GeneralMutation = {
-  branch?: Maybe<BranchMutation>;
+export type GeneralSettingsMutation = {
+  generalBranchSetting?: Maybe<BranchSettingsMutation>;
+  generalOrganizationSetting?: Maybe<OrganizationMutation>;
   kym?: Maybe<KymMutation>;
-  organization?: Maybe<OrganizationMutation>;
 };
 
-export type GeneralQuery = {
-  branch?: Maybe<BranchQuery>;
+export type GeneralSettingsQuery = {
+  generalBranchSetting?: Maybe<BranchSettingsQuery>;
+  generalOrganizationSetting?: Maybe<OrganizationQuery>;
   kym?: Maybe<KymQuery>;
-  organization?: Maybe<OrganizationQuery>;
 };
 
 export type Grievance = {
@@ -507,6 +512,281 @@ export type Identity = {
   password: Scalars['String'];
   userType: UserType;
   username: Scalars['String'];
+};
+
+export type InvItems = {
+  itemCode: Scalars['String'];
+  itemId: Scalars['ID'];
+  itemQuantity: Scalars['Float'];
+  name: Scalars['String'];
+  type: Scalars['String'];
+  unitPrice: Scalars['Float'];
+};
+
+export type InvItemsAddResult = {
+  error?: Maybe<InvItemsError>;
+  query?: Maybe<InvItemsQuery>;
+  record?: Maybe<InvItems>;
+};
+
+export type InvItemsConnection = {
+  edges: Array<Maybe<InvItemsEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type InvItemsEdge = {
+  cursor: Scalars['Cursor'];
+  node: InvItems;
+};
+
+export type InvItemsError = InvItemsInvalidDataError;
+
+export type InvItemsGroup = {
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  parentCategory: Scalars['String'];
+};
+
+export type InvItemsGroupAddResult = {
+  error?: Maybe<InvItemsGroupError>;
+  query?: Maybe<InvItemsGroupQuery>;
+  record?: Maybe<InvItemsGroup>;
+};
+
+export type InvItemsGroupConnection = {
+  edges: Array<Maybe<InvItemsGroupEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type InvItemsGroupEdge = {
+  cursor: Scalars['Cursor'];
+  node: InvItemsGroup;
+};
+
+export type InvItemsGroupError = InvItemsGroupInvalidDataError;
+
+export type InvItemsGroupInput = {
+  description: Scalars['String'];
+  name: Scalars['String'];
+  parentCategory: Scalars['String'];
+};
+
+export type InvItemsGroupInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InvItemsGroupMutation = {
+  add: InvItemsGroupAddResult;
+};
+
+
+export type InvItemsGroupMutationAddArgs = {
+  data: InvItemsGroupInput;
+};
+
+export type InvItemsGroupQuery = {
+  all?: Maybe<InvItemsGroupConnection>;
+  get: InvItemsGroup;
+};
+
+
+export type InvItemsGroupQueryAllArgs = {
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type InvItemsGroupQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvItemsInput = {
+  itemCode: Scalars['String'];
+  itemGroup: Scalars['String'];
+  itemQuantity: Scalars['Float'];
+  name: Scalars['String'];
+  primaryUnit: Scalars['String'];
+  tax: Scalars['String'];
+  type: Scalars['String'];
+  unitPrice: Scalars['Float'];
+};
+
+export type InvItemsInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InvItemsMutation = {
+  add: InvItemsAddResult;
+};
+
+
+export type InvItemsMutationAddArgs = {
+  data: InvItemsInput;
+};
+
+export type InvItemsQuery = {
+  all?: Maybe<InvItemsConnection>;
+  get: InvItems;
+};
+
+
+export type InvItemsQueryAllArgs = {
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type InvItemsQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvUnitOfMeasure = {
+  acceptFraction: Scalars['Boolean'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  shortName: Scalars['String'];
+};
+
+export type InvUnitOfMeasureAddResult = {
+  error?: Maybe<InvUnitOfMeasureError>;
+  query?: Maybe<InvUnitOfMeasureQuery>;
+  record?: Maybe<InvUnitOfMeasure>;
+};
+
+export type InvUnitOfMeasureConnection = {
+  edges: Array<Maybe<InvUnitOfMeasureEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type InvUnitOfMeasureEdge = {
+  cursor: Scalars['Cursor'];
+  node: InvUnitOfMeasure;
+};
+
+export type InvUnitOfMeasureError = InvUnitOfMeasureInvalidDataError;
+
+export type InvUnitOfMeasureInput = {
+  acceptFraction: Scalars['Boolean'];
+  description: Scalars['String'];
+  name: Scalars['String'];
+  shortName: Scalars['String'];
+};
+
+export type InvUnitOfMeasureInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InvUnitOfMeasureMutation = {
+  add: InvUnitOfMeasureAddResult;
+};
+
+
+export type InvUnitOfMeasureMutationAddArgs = {
+  data: InvUnitOfMeasureInput;
+};
+
+export type InvUnitOfMeasureQuery = {
+  all?: Maybe<InvUnitOfMeasureConnection>;
+  get: InvUnitOfMeasure;
+};
+
+
+export type InvUnitOfMeasureQueryAllArgs = {
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type InvUnitOfMeasureQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvVendors = {
+  email: Scalars['String'];
+  id: Scalars['ID'];
+  location: Scalars['String'];
+  name: Scalars['String'];
+  phoneNumber: Scalars['String'];
+};
+
+export type InvVendorsAddResult = {
+  error?: Maybe<InvVendorsError>;
+  query?: Maybe<InvVendorsQuery>;
+  record?: Maybe<InvVendors>;
+};
+
+export type InvVendorsConnection = {
+  edges: Array<Maybe<InvVendorsEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type InvVendorsEdge = {
+  cursor: Scalars['Cursor'];
+  node: InvVendors;
+};
+
+export type InvVendorsError = InvVendorsInvalidDataError;
+
+export type InvVendorsInput = {
+  contactName: Scalars['String'];
+  contactPhoneNo: Scalars['String'];
+  creditLimit: Scalars['Float'];
+  creditTerms: Scalars['String'];
+  email: Scalars['String'];
+  location: Scalars['String'];
+  name: Scalars['String'];
+  openingBalance: Scalars['Float'];
+  panNo: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  vendorCode: Scalars['String'];
+};
+
+export type InvVendorsInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InvVendorsMutation = {
+  add: InvVendorsAddResult;
+};
+
+
+export type InvVendorsMutationAddArgs = {
+  data: InvVendorsInput;
+};
+
+export type InvVendorsQuery = {
+  all?: Maybe<InvVendorsConnection>;
+  get: InvVendors;
+};
+
+
+export type InvVendorsQueryAllArgs = {
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type InvVendorsQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type InvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type InventoryMutation = {
+  items?: Maybe<InvItemsMutation>;
+  itemsGroup?: Maybe<InvItemsGroupMutation>;
+  unitOfMeasure?: Maybe<InvUnitOfMeasureMutation>;
+  vendors?: Maybe<InvVendorsMutation>;
+};
+
+export type InventoryQuery = {
+  items?: Maybe<InvItemsQuery>;
+  itemsGroup?: Maybe<InvItemsGroupQuery>;
+  unitOfMeasure?: Maybe<InvUnitOfMeasureQuery>;
+  vendors?: Maybe<InvVendorsQuery>;
 };
 
 export type KymAdditionalFields = {
@@ -977,12 +1257,6 @@ export type LoanService = {
   name: Scalars['String'];
 };
 
-export type MainContactPerson = {
-  contactPersonContactNumber?: Maybe<Scalars['String']>;
-  contactPersonName?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-};
-
 export type Member = Base & {
   address?: Maybe<AddressType>;
   contact?: Maybe<Contact>;
@@ -1060,17 +1334,11 @@ export type Municipality = {
 
 export type Mutation = {
   example: ExampleMutation;
+  inventory: InventoryMutation;
   members: MemberMutation;
   newId: Scalars['String'];
   settings: SettingsMutation;
   share: ShareMutation;
-};
-
-export type MySaccosQuery = {
-  chequeServices: Array<ChequeService>;
-  downloads: Array<Downloads>;
-  grievances: Array<Grievance>;
-  loanServices: Array<LoanService>;
 };
 
 export type Name = {
@@ -1135,22 +1403,46 @@ export type Organization = {
   contactDetails?: Maybe<OrganizationContactDetails>;
   documents?: Maybe<OrganizationDocument>;
   id: Scalars['ID'];
-  mainContactPerson?: Maybe<MainContactPerson>;
+  mainContactPerson?: Maybe<OrganizationMainContactPerson>;
   registrationDetails?: Maybe<OrganizationRegistrationDetails>;
 };
 
+export type OrganizationAddError = OrganizationAddInvalidDataError;
+
+export type OrganizationAddFormStatus = {
+  lastUpdated?: Maybe<OrganizationAddLus>;
+  sectionStatus?: Maybe<OrganizationAddSectionStatus>;
+};
+
+export type OrganizationAddInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type OrganizationAddLus = OrganizationPersonalLus;
+
+export type OrganizationAddResult = {
+  error?: Maybe<OrganizationAddError>;
+  query?: Maybe<OrganizationQuery>;
+  record?: Maybe<Organization>;
+};
+
+export type OrganizationAddSectionStatus = {
+  personal?: Maybe<OrganizationPersonalStatus>;
+};
+
 export type OrganizationAddress = {
-  district?: Maybe<Scalars['String']>;
-  locality?: Maybe<Scalars['String']>;
-  pinOnMap?: Maybe<Scalars['String']>;
-  province?: Maybe<Scalars['String']>;
-  vdc?: Maybe<Scalars['String']>;
-  wardNo?: Maybe<Scalars['String']>;
+  districtId?: Maybe<Scalars['ID']>;
+  latitude?: Maybe<Scalars['String']>;
+  localityId?: Maybe<Scalars['ID']>;
+  longitude?: Maybe<Scalars['String']>;
+  provinceId?: Maybe<Scalars['ID']>;
+  vdcId?: Maybe<Scalars['ID']>;
+  wardNo?: Maybe<Scalars['ID']>;
 };
 
 export type OrganizationBasicDetails = {
-  organizationLogo?: Maybe<Scalars['String']>;
-  organizationName?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   typeOfMember?: Maybe<TypeOfMember>;
 };
 
@@ -1161,53 +1453,99 @@ export type OrganizationContactDetails = {
 };
 
 export type OrganizationDocument = {
-  documents?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type OrganizationFilter = {
   id?: InputMaybe<Scalars['String']>;
 };
 
+export type OrganizationGetResult = {
+  data?: Maybe<OrganizationRecord>;
+};
+
 export type OrganizationInput = {
   contactPersonContactNumber?: InputMaybe<Scalars['String']>;
   contactPersonName?: InputMaybe<Scalars['String']>;
-  district?: InputMaybe<Scalars['String']>;
-  documents?: InputMaybe<Scalars['String']>;
+  districtId?: InputMaybe<Scalars['ID']>;
+  documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   email?: InputMaybe<Scalars['String']>;
-  locality?: InputMaybe<Scalars['String']>;
-  organizationLogo?: InputMaybe<Scalars['String']>;
-  organizationName?: InputMaybe<Scalars['String']>;
+  latitude?: InputMaybe<Scalars['String']>;
+  localityId?: InputMaybe<Scalars['ID']>;
+  logo?: InputMaybe<Scalars['String']>;
+  longitude?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
   pan?: InputMaybe<Scalars['String']>;
   phoneNumber?: InputMaybe<Scalars['String']>;
-  pinOnMap?: InputMaybe<Scalars['String']>;
-  province?: InputMaybe<Scalars['String']>;
+  provinceId?: InputMaybe<Scalars['ID']>;
   regdAddress?: InputMaybe<Scalars['String']>;
   regdNo?: InputMaybe<Scalars['String']>;
   regdOffice?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   typeOfMember?: InputMaybe<TypeOfMember>;
-  vdc?: InputMaybe<Scalars['String']>;
-  wardNo?: InputMaybe<Scalars['String']>;
+  vdcId?: InputMaybe<Scalars['ID']>;
+  wardNo?: InputMaybe<Scalars['ID']>;
   website?: InputMaybe<Scalars['String']>;
 };
 
+export type OrganizationMainContactPerson = {
+  contactPersonContactNumber?: Maybe<Scalars['String']>;
+  contactPersonName?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
 export type OrganizationMutation = {
-  initialOrganizationSetup: Organization;
+  initialSetup?: Maybe<OrganizationAddResult>;
 };
 
 
-export type OrganizationMutationInitialOrganizationSetupArgs = {
-  data?: InputMaybe<OrganizationInput>;
+export type OrganizationMutationInitialSetupArgs = {
+  data: OrganizationInput;
+};
+
+export type OrganizationPersonalLus = {
+  name?: Maybe<OrganizationPersonalSection>;
+};
+
+export enum OrganizationPersonalSection {
+  Address = 'ADDRESS',
+  BasicDetails = 'BASIC_DETAILS',
+  ContactDetails = 'CONTACT_DETAILS',
+  Documents = 'DOCUMENTS',
+  MainContactPerson = 'MAIN_CONTACT_PERSON',
+  RegistrationDetails = 'REGISTRATION_DETAILS'
+}
+
+export type OrganizationPersonalStatus = {
+  completed?: Maybe<Array<Maybe<OrganizationPersonalSection>>>;
+  error?: Maybe<Array<Maybe<OrganizationPersonalSection>>>;
 };
 
 export type OrganizationQuery = {
   allOrganization: Array<Organization>;
+  formStatus?: Maybe<OrganizationAddFormStatus>;
+  get?: Maybe<OrganizationGetResult>;
   getOrganization?: Maybe<Array<Organization>>;
+};
+
+
+export type OrganizationQueryFormStatusArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type OrganizationQueryGetArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type OrganizationQueryGetOrganizationArgs = {
   filter?: InputMaybe<OrganizationFilter>;
+};
+
+export type OrganizationRecord = {
+  organization: Organization;
+  sectionStatus?: Maybe<OrganizationAddFormStatus>;
 };
 
 export type OrganizationRegistrationDetails = {
@@ -1266,6 +1604,7 @@ export type Query = {
   administration: AdministrationQuery;
   dashboard: DashboardQuery;
   eBanking: EBankingQuery;
+  inventory: InventoryQuery;
   members: MemberQuery;
   settings: SettingsQuery;
   share: ShareQuery;
@@ -1299,12 +1638,11 @@ export type Services = {
 };
 
 export type SettingsMutation = {
-  general?: Maybe<GeneralMutation>;
-  newId: Scalars['String'];
+  generalSettings?: Maybe<GeneralSettingsMutation>;
 };
 
 export type SettingsQuery = {
-  general?: Maybe<GeneralQuery>;
+  generalSettings?: Maybe<GeneralSettingsQuery>;
 };
 
 export type ShareBalance = {
@@ -1332,21 +1670,23 @@ export type ShareBalanceFilter = {
 };
 
 export type ShareMutation = {
-  purchaseShare: ShareRegister;
-  returnShare: ShareRegister;
+  purchase: SharePurchaseResult;
+  return: ShareReturnResult;
 };
 
 
-export type ShareMutationPurchaseShareArgs = {
+export type ShareMutationPurchaseArgs = {
   data: SharePurchaseInput;
   id: Scalars['ID'];
 };
 
 
-export type ShareMutationReturnShareArgs = {
+export type ShareMutationReturnArgs = {
   data: ShareReturnInput;
   id: Scalars['ID'];
 };
+
+export type SharePurchaseError = InvalidDataError;
 
 export type SharePurchaseInput = {
   accountId?: InputMaybe<Scalars['String']>;
@@ -1360,19 +1700,26 @@ export type SharePurchaseInput = {
   voucherNumber?: InputMaybe<Scalars['String']>;
 };
 
+export type SharePurchaseResult = {
+  error?: Maybe<SharePurchaseError>;
+  query?: Maybe<ShareQuery>;
+  record?: Maybe<ShareRegister>;
+  recordId: Scalars['ID'];
+};
+
 export type ShareQuery = {
-  shareBalance?: Maybe<ShareBalanceConnection>;
-  shareRegister?: Maybe<ShareRegisterConnection>;
+  balance?: Maybe<ShareBalanceConnection>;
+  register?: Maybe<ShareRegisterConnection>;
 };
 
 
-export type ShareQueryShareBalanceArgs = {
+export type ShareQueryBalanceArgs = {
   filter?: InputMaybe<ShareBalanceFilter>;
   paginate?: InputMaybe<Pagination>;
 };
 
 
-export type ShareQueryShareRegisterArgs = {
+export type ShareQueryRegisterArgs = {
   filter?: InputMaybe<ShareRegisterFilter>;
   paginate?: InputMaybe<Pagination>;
 };
@@ -1411,6 +1758,8 @@ export type ShareRegisterFilter = {
   transactionDirection?: InputMaybe<Share_Transaction_Direction>;
 };
 
+export type ShareReturnError = InvalidDataError;
+
 export type ShareReturnInput = {
   accountId?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['String']>;
@@ -1424,6 +1773,13 @@ export type ShareReturnInput = {
   totalAmount?: InputMaybe<Scalars['Float']>;
   voucherNumber?: InputMaybe<Scalars['String']>;
   withdrawAmount?: InputMaybe<Scalars['Float']>;
+};
+
+export type ShareReturnResult = {
+  error?: Maybe<ShareReturnError>;
+  query?: Maybe<ShareQuery>;
+  record?: Maybe<ShareRegister>;
+  recordId: Scalars['ID'];
 };
 
 export enum Transaction_Direction {
@@ -1442,6 +1798,14 @@ export enum TextFormat {
   Email = 'EMAIL',
   IPv4 = 'IPv4',
   IPv6 = 'IPv6'
+}
+
+export enum TimePeriod {
+  Day = 'DAY',
+  Fortnight = 'FORTNIGHT',
+  Month = 'MONTH',
+  Week = 'WEEK',
+  Year = 'YEAR'
 }
 
 export type TodayTrend = {
@@ -1488,12 +1852,13 @@ export type TranslateInput = {
 
 export type TrendDataFilter = {
   fromDate?: InputMaybe<Scalars['Date']>;
+  period?: InputMaybe<TimePeriod>;
   toDate?: InputMaybe<Scalars['Date']>;
 };
 
 export enum TypeOfMember {
   Cooperative = 'COOPERATIVE',
-  Cooperativeunion = 'COOPERATIVEUNION',
+  CooperativeUnion = 'COOPERATIVE_UNION',
   Individual = 'INDIVIDUAL',
   Institutional = 'INSTITUTIONAL'
 }
@@ -1502,6 +1867,13 @@ export enum UserType {
   Human = 'HUMAN',
   System = 'SYSTEM'
 }
+
+export type UtilitiesQuery = {
+  chequeServices: Array<ChequeService>;
+  downloads: Array<Downloads>;
+  grievances: Array<Grievance>;
+  loanServices: Array<LoanService>;
+};
 
 export type GetNewIdMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -1515,6 +1887,11 @@ export type SetMemberDataMutationVariables = Exact<{
 
 
 export type SetMemberDataMutation = { members: { individual?: { add?: { recordId: string } | null } | null } };
+
+export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string }> }> }> } };
 
 export type GetMemberListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1554,6 +1931,36 @@ export const useSetMemberDataMutation = <
     useMutation<SetMemberDataMutation, TError, SetMemberDataMutationVariables, TContext>(
       ['setMemberData'],
       useAxios<SetMemberDataMutation, SetMemberDataMutationVariables>(SetMemberDataDocument),
+      options
+    );
+export const AllAdministrationDocument = `
+    query allAdministration {
+  administration {
+    all {
+      id
+      name
+      districts {
+        id
+        name
+        municipalities {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useAllAdministrationQuery = <
+      TData = AllAdministrationQuery,
+      TError = unknown
+    >(
+      variables?: AllAdministrationQueryVariables,
+      options?: UseQueryOptions<AllAdministrationQuery, TError, TData>
+    ) =>
+    useQuery<AllAdministrationQuery, TError, TData>(
+      variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
+      useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
       options
     );
 export const GetMemberListDocument = `

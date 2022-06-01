@@ -41,7 +41,7 @@ export function Navbarfordaashboard() {
   return (
     <Box h="60px" px="5" background={'primary.dark'}>
       <Flex>
-        <Box>
+        <Box cursor={'pointer'}>
           <Image src="/dashboardnavbar/MyraLogo.png" alt="logo" />
         </Box>
         <Spacer />

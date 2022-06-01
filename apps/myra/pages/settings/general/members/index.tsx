@@ -1,11 +1,20 @@
 import { SettingsGeneralMember } from '@saccos/myra/components';
-import { Box, CheckboxGroup, Grid, GridItem, Text } from '@saccos/myra/ui';
+import {
+  Box,
+  Button,
+  CheckboxGroup,
+  Grid,
+  GridItem,
+  Input,
+  Text,
+} from '@saccos/myra/ui';
 const checkBox = [
   'Individual',
   'Institutional',
   'Cooperative',
   'Corporative Union',
 ];
+import { AddIcon } from '@chakra-ui/icons';
 const riskArray = ['General Risk', 'Medium Risk', 'High Risk'];
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
@@ -110,11 +119,87 @@ const Members = () => {
             </Box>
             <Box
               pl="s16"
-              py="s12"
               border={'1px'}
               borderColor="border.layout"
               w="100%"
-            ></Box>
+              pb="s16"
+            >
+              <Box
+                h="36px"
+                display="flex"
+                alignItems="center"
+                justifyContent={'space-between'}
+                pt="s16"
+                px="s16"
+              >
+                <Text
+                  fontSize="r1"
+                  fontWeight="600"
+                  color="gray.800"
+                  lineHeight={1.5}
+                >
+                  {' '}
+                  Risk Level
+                </Text>
+                <Text
+                  fontSize="r1"
+                  fontWeight="600"
+                  color="gray.800"
+                  lineHeight={1.5}
+                  w="25%"
+                >
+                  {' '}
+                  Years till KYM Update
+                </Text>
+              </Box>
+              {riskArray.map((item, index) => (
+                <Box
+                  key={`${item}${index}`}
+                  display="flex"
+                  justifyContent={'space-between'}
+                  mt="s16"
+                  px="s16"
+                >
+                  <Box h="36px" display="flex" alignItems="center" flex={1}>
+                    <Text
+                      fontSize="r1"
+                      fontWeight="400"
+                      color="gray.800"
+                      lineHeight={1.5}
+                    >
+                      {item}
+                    </Text>
+                  </Box>
+                  <Input
+                    variant="outline"
+                    type={'number'}
+                    textAlign="left"
+                    size="sm"
+                    w="25%"
+                    h="36px"
+                    borderColor={'#CBD0D6'}
+                  />
+                </Box>
+              ))}
+            </Box>
+            <Box
+              pl="s16"
+              border={'1px'}
+              py="s16"
+              borderColor="border.layout"
+              w="100%"
+              display={'flex'}
+              alignItems={'center'}
+            >
+              <Button
+                variant="ghost"
+                size={'md'}
+                shade="primary"
+                leftIcon={<AddIcon />}
+              >
+                Add New Option
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Box>

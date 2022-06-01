@@ -75,7 +75,7 @@ export function AccorrdianAddMember() {
                   pl="s16"
                   fontSize="s2"
                   fontWeight="400"
-                  key={'${item}${index}'}
+                  key={`${item}${index}`}
                 >
                   {item}
                 </Text>
