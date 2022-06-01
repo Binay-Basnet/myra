@@ -1,70 +1,71 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { Avatar, Flex, IconButton } from '@chakra-ui/react';
+import {
+  KymMemberListEdges,
+  useGetMemberListQuery,
+} from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
+import moment from 'moment';
 
-enum Gender {
-  Female = 'FEMALE',
-  Male = 'MALE',
-  Other = 'OTHER',
-}
+export const MemberTable = () => {
+  const { data, isLoading } = useGetMemberListQuery();
 
-type MemberData = {
-  id: string;
-  firstName: string;
-  middleName?: string | null;
-  lastName: string;
-  gender: Gender;
-  title?: string | null;
-  dateOfBirth?: string | null;
-};
+  const rowData = useMemo(() => data?.members?.list?.edges, [data]);
 
-interface IMemberTableProps {
-  data: any;
-  isLoading: boolean;
-}
-
-export const MemberTable = ({ data, isLoading }: IMemberTableProps) => {
-  const columns: Column<MemberData>[] = useMemo(
+  const columns: Column<KymMemberListEdges>[] = useMemo(
     () => [
       {
         Header: 'Member #',
-        accessor: 'id',
+        accessor: 'node.id',
         maxWidth: 4,
       },
 
       {
-        Header: 'First Name',
-        accessor: 'firstName',
+        Header: 'Name',
+        accessor: 'node.personalInformation.name.firstName',
         width: '80%',
 
-        Cell: ({ value }) => (
-          <Flex alignItems="center" gap="2">
-            <Avatar
-              name="Dan Abrahmov"
-              size="sm"
-              src="https://bit.ly/dan-abramov"
-            />
-            <span>{value}</span>
-          </Flex>
-        ),
-      },
-      {
-        Header: 'Title',
-        accessor: 'title',
-        width: '40%',
+        Cell: ({ value, row }) => {
+          return (
+            <Flex alignItems="center" gap="2">
+              <Avatar
+                name="Dan Abrahmov"
+                size="sm"
+                src="https://bit.ly/dan-abramov"
+              />
+              <span>
+                {value}{' '}
+                {row?.original?.node?.personalInformation?.name?.lastName}
+              </span>
+            </Flex>
+          );
+        },
       },
 
       {
-        Header: 'Gender',
-        accessor: 'gender',
-        maxWidth: 2,
-        disableSortBy: true,
+        Header: 'Address',
+        accessor: 'node.address.permanent.district',
+        maxWidth: 48,
+
+        Cell: ({ value, row }) => {
+          return (
+            <span>
+              {value}, {row?.original?.node?.address?.permanent?.state}
+            </span>
+          );
+        },
       },
       {
-        Header: 'Date Of Birth',
-        accessor: 'dateOfBirth',
-        maxWidth: 2,
+        Header: 'Phone No.',
+        accessor: 'node.contact.mobile',
+      },
+      {
+        Header: 'Date Joined',
+        accessor: 'node.createdAt',
+        Cell: ({ value, row }) => {
+          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+        },
       },
       {
         accessor: 'actions',
@@ -80,12 +81,10 @@ export const MemberTable = ({ data, isLoading }: IMemberTableProps) => {
     []
   );
 
-  const rowData = useMemo(() => data && data?.members?.list, [data]);
-
   return (
     <Table
       isLoading={isLoading}
-      data={rowData?.slice(0, 10) ?? []}
+      data={rowData ?? []}
       columns={columns}
       sort={true}
     />

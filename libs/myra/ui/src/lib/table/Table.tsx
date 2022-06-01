@@ -19,13 +19,7 @@ import {
 
 import ListFilterPopover from './components/ListFilterPopover';
 import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
-import {
-  Cell,
-  Column,
-  ExtraColumnProps,
-  HeaderGroup,
-  TableProps,
-} from './types';
+import { Column, HeaderGroup, TableProps } from './types';
 import { useTable } from './useTable';
 import { PopoverContent, PopoverTrigger } from '../popover/Popover';
 
@@ -184,7 +178,8 @@ export function Table<T extends Record<string, unknown>>({
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {/*// TODO ( WILL CHANGE THIS ANY LATER )*/}
+          {rows.map((row: any) => {
             prepareRow(row);
             return (
               <Tr
@@ -192,25 +187,19 @@ export function Table<T extends Record<string, unknown>>({
                 bg={row.isSelected ? 'primary.0' : 'white'}
                 {...row.getRowProps()}
               >
-                {row.cells.map(
-                  (
-                    cell: Cell<T> & {
-                      column: ExtraColumnProps;
-                    }
-                  ) => (
-                    <Td
-                      maxWidth={cell.column.maxWidth}
-                      minWidth={cell.column.minWidth}
-                      paddingX={cell.column.paddingX}
-                      paddingY={cell.column.paddingY}
-                      width={cell.column.width}
-                      {...cell.getCellProps()}
-                      isNumeric={cell.column.isNumeric}
-                    >
-                      <Text noOfLines={0}>{cell.render('Cell')}</Text>
-                    </Td>
-                  )
-                )}
+                {row.cells.map((cell: any) => (
+                  <Td
+                    maxWidth={cell.column.maxWidth}
+                    minWidth={cell.column.minWidth}
+                    paddingX={cell.column.paddingX}
+                    paddingY={cell.column.paddingY}
+                    width={cell.column.width}
+                    {...cell.getCellProps()}
+                    isNumeric={cell.column.isNumeric}
+                  >
+                    <Text noOfLines={0}>{cell.render('Cell')}</Text>
+                  </Td>
+                ))}
               </Tr>
             );
           })}

@@ -203,7 +203,17 @@ export type BranchQueryGetBranchArgs = {
 
 
 export type BranchQueryListArgs = {
-  filter?: InputMaybe<Pagination>;
+  filter?: InputMaybe<BranchSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type BranchSearchFilter = {
+  address?: InputMaybe<Scalars['String']>;
+  branchCode?: InputMaybe<Scalars['Int']>;
+  contactNumber?: InputMaybe<Scalars['String']>;
+  district?: InputMaybe<Scalars['String']>;
+  manager?: InputMaybe<Scalars['String']>;
+  searchField?: InputMaybe<Scalars['String']>;
 };
 
 export type CbsData = {
@@ -1358,27 +1368,25 @@ export enum UserType {
 export type GetMemberListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMemberListQuery = { members: { list: { edges?: Array<{ node?: { id: string, createdAt: string, personalInformation?: { name?: { firstName?: string | null, middleName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, locality?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: any | null, endCursor?: any | null } | null } } };
+export type GetMemberListQuery = { members: { list: { edges?: Array<{ node?: { id: string, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: any | null, endCursor?: any | null } | null } } };
 
 
 export const GetMemberListDocument = `
     query getMemberList {
   members {
-    list(pagination: {after: "GnScEVElJwWskbrdOjkMlflHX", first: 100}) {
+    list(pagination: {after: "GnScEVElJwWskbrdOjkMlflHX", first: 10}) {
       edges {
         node {
           id
           personalInformation {
             name {
               firstName
-              middleName
               lastName
             }
           }
           address {
             permanent {
               district
-              locality
               state
             }
           }
