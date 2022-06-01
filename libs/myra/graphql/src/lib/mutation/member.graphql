@@ -1,0 +1,13 @@
+mutation getNewId {
+  newId
+}
+
+mutation setMemberData($id: ID!, $data: KymIndMemberInput!) {
+  members {
+    individual(id: $id) {
+      add(data: $data) {
+        recordId
+      }
+    }
+  }
+}

@@ -1,12 +1,12 @@
 import { SettingsGeneralMember } from '@saccos/myra/components';
 import { Box, CheckboxGroup, Grid, GridItem, Text } from '@saccos/myra/ui';
-const checkBox: string[] = [
+const checkBox = [
   'Individual',
   'Institutional',
   'Cooperative',
   'Corporative Union',
 ];
-const riskArray: string[] = ['General Risk', 'Medium Risk', 'High Risk'];
+const riskArray = ['General Risk', 'Medium Risk', 'High Risk'];
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 const Members = () => {
@@ -114,13 +114,7 @@ const Members = () => {
               border={'1px'}
               borderColor="border.layout"
               w="100%"
-            >
-              {/* <Grid templateColumns="repeat(5, 1fr)" gap={'s8'}>
-                {riskArray.map((item) => (
-                  <GridItem>
-
-              </Grid> */}
-            </Box>
+            ></Box>
           </Box>
         </Box>
       </Box>

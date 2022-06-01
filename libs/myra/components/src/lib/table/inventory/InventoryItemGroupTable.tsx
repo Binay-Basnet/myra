@@ -19,15 +19,7 @@ type MemberData = {
   dateOfBirth?: string | null;
 };
 
-interface IInventoryVendorTableProps {
-  data: any;
-  isLoading: boolean;
-}
-
-export const InventoryItemGroupTable = ({
-  isLoading,
-  data,
-}: IInventoryVendorTableProps) => {
+export const InventoryItemGroupTable = () => {
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
@@ -61,12 +53,15 @@ export const InventoryItemGroupTable = ({
     []
   );
 
-  const rowData = useMemo(() => data && data?.members?.list, [data]);
-
   return (
     <Table
-      isLoading={isLoading}
-      data={rowData?.slice(0, 10) ?? []}
+      data={[
+        {
+          firstName: 'Test Item Group',
+          title: 'Item',
+          gender: 'This is a item group',
+        },
+      ]}
       columns={columns}
       sort={true}
     />

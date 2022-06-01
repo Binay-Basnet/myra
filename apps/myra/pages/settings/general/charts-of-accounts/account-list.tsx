@@ -19,11 +19,8 @@ import {
 } from '@saccos/myra/ui';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
-import { useMembersQuery } from '../../../../generated/graphql';
 
 const ChartsOfAccounts = () => {
-  const { data, isLoading } = useMembersQuery();
-
   return (
     <Box width="full" borderBottom="1px" borderBottomColor="border.layout">
       <Box
@@ -112,7 +109,7 @@ const ChartsOfAccounts = () => {
         </Box>
       </Box>
       <Box width={'100%'}>
-        <CoaAccountListTable data={data} isLoading={isLoading} />
+        <CoaAccountListTable />
       </Box>
     </Box>
   );

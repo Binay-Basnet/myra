@@ -7,6 +7,20 @@ import {
   Renderer,
 } from 'react-table';
 
+type DotPrefix<T extends string> = T extends '' ? '' : `.${T}`;
+
+type DotNestedKeys<T> = (
+  T extends object
+    ? {
+        [K in Exclude<keyof T, symbol>]: `${K}${DotPrefix<
+          DotNestedKeys<T[K]>
+        >}`;
+      }[Exclude<keyof T, symbol>]
+    : ''
+) extends infer D
+  ? Extract<D, string>
+  : never;
+
 export type FilterColumnProps<T extends Record<string, unknown>> =
   FilterProps<T> & {
     onClose?: () => void;
@@ -16,7 +30,7 @@ export type FilterColumnProps<T extends Record<string, unknown>> =
 export type BaseColumn<T extends Record<string, unknown>> =
   | {
       Header: string;
-      accessor: keyof T;
+      accessor: DotNestedKeys<T>;
     }
   | {
       Header?: never | undefined;
@@ -66,8 +80,8 @@ export type SortTableProps =
     };
 
 export interface BaseTableProps<T extends Record<string, unknown>> {
-  data: T[];
-  columns: Column<T>[];
+  data: T[] | any;
+  columns: Column<T>[] | any;
   size?: 'default' | 'compact';
   hasRowSelection?: boolean;
 

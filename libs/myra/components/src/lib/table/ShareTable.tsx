@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { Avatar, Flex, IconButton } from '@chakra-ui/react';
-import { Column, Table } from '@saccos/myra/ui';
+import { Column } from '@saccos/myra/ui';
+
+import { MemberTable } from './MemberTable';
 
 enum Gender {
   Female = 'FEMALE',
@@ -24,7 +26,7 @@ interface ShareTableProps {
   isLoading: boolean;
 }
 
-export const ShareTable = ({ isLoading, data }: ShareTableProps) => {
+export const ShareTable = () => {
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
@@ -89,14 +91,5 @@ export const ShareTable = ({ isLoading, data }: ShareTableProps) => {
     []
   );
 
-  const rowData = useMemo(() => data && data?.members?.list, [data]);
-
-  return (
-    <Table
-      isLoading={isLoading}
-      data={rowData?.slice(0, 10) ?? []}
-      columns={columns}
-      sort={true}
-    />
-  );
+  return <MemberTable />;
 };

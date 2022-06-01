@@ -1,8 +1,24 @@
 import React from 'react';
-import { Controller } from 'react-hook-form';
-import { Box, TextFields, TextInput as StorybookInput } from '@saccos/myra/ui';
+import { Control, Controller } from 'react-hook-form';
+import {
+  Box,
+  TextFields,
+  TextInput as StorybookInput,
+  TextInputProps,
+} from '@saccos/myra/ui';
 
-export const FormTextInput = ({ control, placeholder, name, label, type }) => {
+interface Iprops extends TextInputProps {
+  control: Control<any>;
+  name: string;
+}
+
+export const FormTextInput = ({
+  control,
+  placeholder,
+  name,
+  label,
+  type,
+}: Iprops) => {
   return (
     <Box display="flex" flexDirection="column">
       <TextFields fontSize="s3">{label}</TextFields>

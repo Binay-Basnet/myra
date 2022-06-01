@@ -4,6 +4,7 @@
     "myra": "apps/myra",
     "myra-components": "libs/myra/components",
     "myra-e2e": "apps/myra-e2e",
+    "myra-graphql": "libs/myra/graphql",
     "myra-ui": "libs/myra/ui",
     "myra-ui-e2e": "apps/myra-ui-e2e",
     "myra-util": "libs/myra/util"

@@ -5,7 +5,6 @@ import { Box, Button, ChakraTab, Text } from '@saccos/myra/ui';
 import { useRouter } from 'next/router';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
-import { useMembersQuery } from '../../../../generated/graphql';
 
 const ChartsOfAccounts = () => {
   const router = useRouter();
@@ -14,8 +13,6 @@ const ChartsOfAccounts = () => {
   const switchTabsFxn = (data: string) => {
     setSelectedTab(data);
   };
-
-  const { data, isLoading } = useMembersQuery();
 
   return (
     <Box width="full" borderBottom="1px" borderBottomColor="border.layout">
@@ -54,9 +51,7 @@ const ChartsOfAccounts = () => {
       </Box>
       <Box>
         {selectedTab === 'Full View' && <FullView />}
-        {selectedTab === 'Account List' && (
-          <AccountList data={data} isLoading={isLoading} />
-        )}
+        {selectedTab === 'Account List' && <AccountList />}
       </Box>
     </Box>
   );
