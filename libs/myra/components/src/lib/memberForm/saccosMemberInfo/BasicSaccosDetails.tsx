@@ -1,6 +1,3 @@
-import React from 'react';
-import { Controller } from 'react-hook-form';
-import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import { FormSelect } from '@saccos/myra/components';
 import {
   Box,
@@ -12,8 +9,11 @@ import {
   Select,
   Text,
 } from '@saccos/myra/ui';
+import React from 'react';
+import { Controller } from 'react-hook-form';
+import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 
-export const BasicSaccosDetails = ({ control }) => {
+export const BasicSaccosDetails = ({ control }: any) => {
   return (
     <Box>
       <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>

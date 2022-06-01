@@ -1,6 +1,3 @@
-import React from 'react';
-import { useFieldArray } from 'react-hook-form';
-import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
 import { FormInput, FormSelect } from '@saccos/myra/components';
 import {
   Box,
@@ -11,8 +8,11 @@ import {
   IconButton,
   Text,
 } from '@saccos/myra/ui';
+import React from 'react';
+import { useFieldArray } from 'react-hook-form';
+import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
 
-const MainOccupation = ({ control, index, removeMainOccupation }) => {
+const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
   return (
     <Box
       p={4}
@@ -80,7 +80,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }) => {
   );
 };
 
-export const MemberMainOccupation = ({ control }) => {
+export const MemberMainOccupation = ({ control }: any) => {
   const {
     fields: mainOccupationFields,
     append: mainOccupationAppend,

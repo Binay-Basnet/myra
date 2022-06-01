@@ -1,9 +1,9 @@
 import { FaMap } from 'react-icons/fa';
-import { Box, Button, Grid, Icon, Switch, Text } from '../../../ui/src';
+import { Box, Button, Grid, Icon, Switch, Text } from '@saccos/myra/ui';
 
 import { FormInput, FormSelect } from '../../newFormComponents';
 
-export const MemberAddress = ({ control }) => {
+export const MemberAddress = ({ control }: any) => {
   return (
     <>
       <Text fontSize="r1" fontWeight="SemiBold" mb="s32">

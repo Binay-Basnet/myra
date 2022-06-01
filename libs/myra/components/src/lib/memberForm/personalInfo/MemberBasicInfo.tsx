@@ -1,6 +1,6 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import { Grid, Text } from '../../../ui/src';
+import { Grid, Text } from '@saccos/myra/ui';
 
 import { FormInput, FormSelect } from '../../newFormComponents';
 

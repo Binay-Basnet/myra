@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Checkbox, Grid, Text } from '../../../ui/src';
+import { Box, Checkbox, Grid, Text } from '@saccos/myra/ui';
 
 import { FormInput } from '../../newFormComponents';
 
@@ -11,7 +11,7 @@ const identificationDetails = [
   'National ID',
 ];
 
-export const MemberIdentificationDetails = ({ control }) => {
+export const MemberIdentificationDetails = ({ control }: any) => {
   return (
     <>
       <Text fontSize="r1" fontWeight="semibold" mb="s32">

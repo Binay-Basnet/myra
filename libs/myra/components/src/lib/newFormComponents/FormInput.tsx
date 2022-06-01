@@ -1,5 +1,5 @@
 import { Control, Controller } from 'react-hook-form';
-import { Box, TextInput, TextInputProps } from '../../ui/src';
+import { Box, TextInput, TextInputProps } from '@saccos/myra/ui';
 
 interface IFormInputProps extends TextInputProps {
   control: Control;

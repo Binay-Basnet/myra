@@ -1,7 +1,6 @@
 import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
-import { FormInput } from '@saccos/myra/components';
 import {
   Box,
   Button,
@@ -13,6 +12,8 @@ import {
   Text,
 } from '@saccos/myra/ui';
 
+import { FormInput } from '../../newFormComponents';
+
 const annualFamilyIncome = [
   'Upto 4 lakhs',
   '4 lakhs to 1 million',
@@ -21,7 +22,7 @@ const annualFamilyIncome = [
   'More than 5 million',
 ];
 
-const IncomeSource = ({ control, index, removeIncomeSource }) => {
+const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
   return (
     <Box
       p={4}
@@ -64,7 +65,7 @@ const IncomeSource = ({ control, index, removeIncomeSource }) => {
   );
 };
 
-export const MemberIncomeSourceDetails = ({ control }) => {
+export const MemberIncomeSourceDetails = ({ control }: any) => {
   const {
     fields: incomeSourceFields,
     append: incomeSourceAppend,

@@ -1,6 +1,3 @@
-import React from 'react';
-import { useFieldArray } from 'react-hook-form';
-import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
 import { FormInput, FormSelect } from '@saccos/myra/components';
 import {
   Box,
@@ -11,12 +8,15 @@ import {
   IconButton,
   Text,
 } from '@saccos/myra/ui';
+import React from 'react';
+import { useFieldArray } from 'react-hook-form';
+import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
 
 const HushbandWifeOccupation = ({
   control,
   index,
   removeHushbandWifeOccupation,
-}) => {
+}: any) => {
   return (
     <Box
       p={4}
@@ -84,7 +84,7 @@ const HushbandWifeOccupation = ({
   );
 };
 
-export const MemberHushbandWifeOccupation = ({ control }) => {
+export const MemberHushbandWifeOccupation = ({ control }: any) => {
   const {
     fields: hushbandWifeOccupationFields,
     append: hushbandWifeOccupationAppend,
