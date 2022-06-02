@@ -30,7 +30,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
         <GridItem colSpan={1}>
           <FormSelect
             control={control}
-            name={`mainOccupation[${index}].occupation`}
+            name={`mainOccupation.${index}.occupation`}
             label="Occupation"
             placeholder="Select Occupation"
             options={[
@@ -44,7 +44,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
             bg="white"
             control={control}
             type="text"
-            name={`mainOccupation[${index}].orgName`}
+            name={`mainOccupation.${index}.orgName`}
             label="Org/Frim Name"
             placeholder="Org/Firm Name"
           />
@@ -54,7 +54,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
           control={control}
           bg="white"
           type="text"
-          name={`mainOccupation[${index}].idNumber`}
+          name={`mainOccupation.${index}.idNumber`}
           label="Pan/Vat number"
           placeholder="Pan/Vat number"
         />
@@ -62,7 +62,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
           control={control}
           type="text"
           bg="white"
-          name={`mainOccupation[${index}].address`}
+          name={`mainOccupation.${index}.address`}
           label="Address"
           placeholder="Enter Address"
         />
@@ -70,7 +70,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
           bg="white"
           control={control}
           type="number"
-          name={`mainOccupation[${index}].estimatedAnnualIncome`}
+          name={`mainOccupation.${index}.estimatedAnnualIncome`}
           label="Annual Income"
           placeholder="0.00"
         />

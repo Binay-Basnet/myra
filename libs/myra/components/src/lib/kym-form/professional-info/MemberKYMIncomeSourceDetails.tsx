@@ -40,7 +40,7 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
             control={control}
             type="text"
             bg="white"
-            name={`incomeSourceDetails[${index}].source`}
+            name={`incomeSourceDetails.${index}.source`}
             label="Income Source"
             placeholder="Enter Income Source"
           />
@@ -50,7 +50,7 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
             control={control}
             type="number"
             bg="white"
-            name={`incomeSourceDetails[${index}].amount`}
+            name={`incomeSourceDetails.${index}.amount`}
             label="Amount"
             placeholder="Enter Amount"
           />
