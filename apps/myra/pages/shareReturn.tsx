@@ -1,29 +1,31 @@
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { BsFillTelephoneFill } from 'react-icons/bs';
+import { GrMail } from 'react-icons/gr';
+import { IoLocationSharp } from 'react-icons/io5';
+import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
 import { Form, ShareReturnHistoryTable } from '@saccos/myra/components';
+import { FormFooter } from '@saccos/myra/components';
 import { IPurchaseFormValues } from '@saccos/myra/types';
 import {
   Avatar,
   BaseSelect,
   Box,
+  Button,
+  Checkbox,
   Container,
   Grid,
   GridItem,
+  Icon,
   MainLayout,
   Navbar,
+  SwitchTabs,
   TabMenu,
   Text,
-  SwitchTabs,
-  TextInput,
-  Checkbox,
   TextFields,
-  Icon,
+  TextInput,
 } from '@saccos/myra/ui';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { GrPhone, GrLocation, GrMail } from 'react-icons/gr';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
-import { BsFillTelephoneFill } from 'react-icons/bs';
 
 const Header = () => {
   return (
@@ -228,80 +230,6 @@ const ShareReturn = () => {
                   </Text>
                   <ShareReturnHistoryTable />
                 </Box>
-
-                {/* <Box p={2} bg="background.500">
-                  <Grid templateColumns="repeat(2,1fr)" bg="red">
-                    <GridItem colSpan={1}>
-                      <Avatar
-                        src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
-                        size="lg"
-                        name="John Doe"
-                        border="1px solid"
-                        borderColor="gray.0"
-                      />
-                    </GridItem>
-                  </Grid>
-                  <Grid
-                    display="flex"
-                    templateColumns="repeat(4, 1fr)"
-                    justifyContent="space-around"
-                    alignContent="center"
-                  >
-                    <GridItem>
-                      <Text
-                        color="neutralColorLight.Gray-80"
-                        fontWeight="Medium"
-                        fontSize="r2"
-                      >
-                        Ajit Nepal
-                      </Text>
-                      <Text
-                        color="neutralColorLight.Gray-80"
-                        fontSize="s3"
-                        fontWeight="Regular"
-                      >
-                        ID: 23524364456
-                      </Text>
-
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Regular"
-                        fontSize="s3"
-                      >
-                        Membership Since: 2078/10/04
-                      </Text>
-
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Regular"
-                        fontSize="s3"
-                      >
-                        Branch: Tokha
-                      </Text>
-                    </GridItem>
-
-                    <GridItem>
-                      <GrPhone color="primary.500" />
-                      <Text fontSize="12px">981234567</Text>
-                      <GrMail color="primary.500" />
-                      <Text fontSize="12px">ajitnepal65@gmail.com</Text>
-                      <GrLocation color="primary.500" />
-                      <Text fontSize="12px">
-                        Kathmandu, Tokha Municipality-10
-                      </Text>
-                    </GridItem>
-
-                    <GridItem>
-                      <Text
-                        fontWeight="Medium"
-                        color="primary.500"
-                        fontSize="s2"
-                      >
-                        View Profile
-                      </Text>
-                    </GridItem>
-                  </Grid>
-                </Box> */}
               </Box>
             </Box>
 
@@ -503,6 +431,9 @@ const ShareReturn = () => {
           </Box>
         </Box>
         <br />
+      </Container>
+      <Container minW="container.md" height="fit-content" p="0">
+        <FormFooter />
       </Container>
     </Form>
   );

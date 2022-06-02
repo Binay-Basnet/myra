@@ -207,9 +207,13 @@ export type CbsDataDocument = {
   maxSize: Scalars['String'];
 };
 
-export type ChequeService = {
-  enabled: Scalars['Boolean'];
-  name: Scalars['String'];
+export type ChequePastRequest = {
+  account: Account;
+  branch: Branch;
+  id: Scalars['ID'];
+  requestNumber: Scalars['Int'];
+  requestType: Scalars['String'];
+  status: EBankingChequeServiceStatus;
 };
 
 export type Citizenship = {
@@ -327,6 +331,12 @@ export type EBankingAccountQueryListArgs = {
   filter?: InputMaybe<Pagination>;
 };
 
+export enum EBankingActiveLoanStatus {
+  Pending = 'Pending',
+  Processing = 'Processing',
+  Scheduled = 'Scheduled'
+}
+
 export type EBankingAnnouncementQuery = {
   list: Array<Maybe<EBankingAppAnnouncement>>;
 };
@@ -361,12 +371,97 @@ export type EBankingAppNotificationQueryListArgs = {
   filter?: InputMaybe<NotificationFilter>;
 };
 
+export type EBankingChequeQuery = {
+  options: Array<EBankingCooperativeServiceOption>;
+  pastRequests: Array<ChequePastRequest>;
+};
+
+
+export type EBankingChequeQueryPastRequestsArgs = {
+  filter?: InputMaybe<EBankingCooperativeServiceFilter>;
+};
+
+export enum EBankingChequeServiceStatus {
+  Completed = 'Completed',
+  Declined = 'Declined',
+  Pending = 'Pending'
+}
+
 export type EBankingCombined = {
   accounts: Array<Maybe<Account>>;
   recentTransactions: Array<Maybe<Transactions>>;
   services: Array<Maybe<Services>>;
   share: EbankingShare;
 };
+
+export type EBankingCooperativeServiceFilter = {
+  requestType?: InputMaybe<Scalars['String']>;
+};
+
+export type EBankingCooperativeServiceOption = {
+  enabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  requestType?: Maybe<Scalars['String']>;
+};
+
+export type EBankingCooperativeServiceQuery = {
+  cheque?: Maybe<EBankingChequeQuery>;
+  grievance?: Maybe<EBankingGrievanceQuery>;
+  loan?: Maybe<EBankingLoanQuery>;
+};
+
+export type EBankingGrievanceHistory = {
+  applicationNumber: Scalars['Int'];
+  detailedAccount?: Maybe<Scalars['String']>;
+  feedbackDate: Scalars['Date'];
+  id: Scalars['ID'];
+  peopleInvolved?: Maybe<Scalars['String']>;
+  proposedSolution?: Maybe<Scalars['String']>;
+  status: EBankingGrievanceStatus;
+  violatedPolicies?: Maybe<Scalars['String']>;
+};
+
+export type EBankingGrievanceQuery = {
+  history: Array<EBankingGrievanceHistory>;
+  options: Array<EBankingCooperativeServiceOption>;
+};
+
+export enum EBankingGrievanceStatus {
+  Declined = 'Declined',
+  Pending = 'Pending',
+  Resolved = 'Resolved'
+}
+
+export type EBankingLoanFilter = {
+  status?: InputMaybe<Scalars['String']>;
+};
+
+export type EBankingLoanHistory = {
+  activeLoanStatus?: Maybe<EBankingActiveLoanStatus>;
+  amount: Scalars['Float'];
+  appliedDate: Scalars['Date'];
+  branch: Branch;
+  id: Scalars['String'];
+  scheduledDate?: Maybe<Scalars['Date']>;
+  status: EBankingLoanServiceStatus;
+  type: Scalars['String'];
+};
+
+export type EBankingLoanQuery = {
+  history: Array<EBankingLoanHistory>;
+  options: Array<EBankingCooperativeServiceOption>;
+};
+
+
+export type EBankingLoanQueryHistoryArgs = {
+  filter?: InputMaybe<EBankingLoanFilter>;
+};
+
+export enum EBankingLoanServiceStatus {
+  Active = 'Active',
+  Approved = 'Approved',
+  Declined = 'Declined'
+}
 
 export type EBankingNotificationQuery = {
   announcements?: Maybe<EBankingAnnouncementQuery>;
@@ -375,13 +470,13 @@ export type EBankingNotificationQuery = {
 
 export type EBankingQuery = {
   account?: Maybe<EBankingAccountQuery>;
+  cooperativeServices?: Maybe<EBankingCooperativeServiceQuery>;
   home: EBankingCombined;
   me?: Maybe<Member>;
   notification?: Maybe<EBankingNotificationQuery>;
   services?: Maybe<Array<Maybe<Services>>>;
   share?: Maybe<EBankingShareQuery>;
   transaction?: Maybe<EBankingTransactionQuery>;
-  utilities?: Maybe<UtilitiesQuery>;
 };
 
 export type EBankingShareQuery = {
@@ -531,11 +626,6 @@ export type GeneralSettingsQuery = {
   branch?: Maybe<GeneralBranchSettingsQuery>;
   kym?: Maybe<KymQuery>;
   organization?: Maybe<GeneralOrganizationSettingsQuery>;
-};
-
-export type Grievance = {
-  enabled: Scalars['Boolean'];
-  name: Scalars['String'];
 };
 
 export type Identity = {
@@ -1482,11 +1572,6 @@ export type Level2AddArgs = {
   data: ExampleInput;
 };
 
-export type LoanService = {
-  enabled: Scalars['Boolean'];
-  name: Scalars['String'];
-};
-
 export type Member = Base & {
   address?: Maybe<AddressType>;
   contact?: Maybe<Contact>;
@@ -2066,13 +2151,6 @@ export enum UserType {
   Human = 'HUMAN',
   System = 'SYSTEM'
 }
-
-export type UtilitiesQuery = {
-  chequeServices: Array<ChequeService>;
-  downloads: Array<Downloads>;
-  grievances: Array<Grievance>;
-  loanServices: Array<LoanService>;
-};
 
 export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;

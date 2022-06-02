@@ -1,19 +1,25 @@
-import React from 'react';
+import { Control } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
-import { FormInput, FormSelect } from '@saccos/myra/components';
-import { Box, Button, Grid, Icon, Switch, Text } from '@saccos/myra/ui';
+import { KymIndMemberInput } from '@saccos/myra/graphql';
+import { Button, Icon, Text } from '@saccos/myra/ui';
 
-export const MemberAddress = ({ control }) => {
+import { GroupContainer, InputGroupContainer } from '../containers';
+import { FormInput, FormSelect, FormSwitch } from '../../newFormComponents';
+
+interface IMemberKYMAddress {
+  control: Control<KymIndMemberInput | any>;
+}
+
+export const MemberKYMAddress = ({ control }: IMemberKYMAddress) => {
   return (
-    <>
+    <GroupContainer>
       <Text fontSize="r1" fontWeight="SemiBold">
         PERMANENT ADDRESS
       </Text>
-      <br />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+      <InputGroupContainer>
         <FormSelect
           control={control}
-          name="permananetStateId"
+          name="permanentStateId"
           label="State"
           placeholder="Select State"
           options={[
@@ -23,7 +29,7 @@ export const MemberAddress = ({ control }) => {
         />
         <FormSelect
           control={control}
-          name="permanantDistrictId"
+          name="permanentDistrictId"
           label="District"
           placeholder="Select District"
           options={[
@@ -33,9 +39,9 @@ export const MemberAddress = ({ control }) => {
         />
         <FormSelect
           control={control}
-          name="permanantLocalityId"
-          label="VDC / Muncipality"
-          placeholder="Select VDC / Muncipality"
+          name="permanentLocalityId"
+          label="VDC / Municipality"
+          placeholder="Select VDC / Municipality"
           options={[
             { label: 'Lalitpur-16', value: 'lalitpur16' },
             { label: 'Kathmandu-5', value: 'kathmandu5' },
@@ -55,23 +61,27 @@ export const MemberAddress = ({ control }) => {
           label="Locality"
           placeholder="Enter Locality"
         />
-      </Grid>
-      <br />
-      <Button leftIcon={<Icon size="md" as={FaMap} />} mt={2}>
+      </InputGroupContainer>
+
+      <Button
+        alignSelf="start"
+        mt="-16px"
+        leftIcon={<Icon size="md" as={FaMap} />}
+      >
         Pin on Map
       </Button>
-      <br />
-      <br />
+
       <Text fontSize="r1" fontWeight="SemiBold">
         TEMPORARY ADDRESS
       </Text>
-      <br />
-      <Box display="flex" flexDirection="row" alignItems="center">
-        <Switch mr={5} onChange={(e) => console.log('event', e)} />
-        <Text fontSize="r1">Temporary Address same as permanent</Text>
-      </Box>
-      <br />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+
+      <FormSwitch
+        control={control}
+        name="isPermanentAndTemporaryAddressSame"
+        label="Temporary Address same as permanent"
+      />
+
+      <InputGroupContainer>
         <FormSelect
           control={control}
           name="temporaryStateId"
@@ -105,7 +115,7 @@ export const MemberAddress = ({ control }) => {
         <FormInput
           control={control}
           type="number"
-          name="teamporaryWardId"
+          name="temporaryWardId"
           label="Ward No"
           placeholder="Enter Ward No"
         />
@@ -116,32 +126,33 @@ export const MemberAddress = ({ control }) => {
           label="Locality"
           placeholder="Enter Locality"
         />
-      </Grid>
-      <br />
-      <Button leftIcon={<Icon size="md" as={FaMap} />} mt={2}>
+      </InputGroupContainer>
+      <Button
+        mt="-16px"
+        alignSelf="start"
+        leftIcon={<Icon size="md" as={FaMap} />}
+      >
         Pin on Map
       </Button>
-      <br /> <br />
       <Text fontSize="r1" fontWeight="SemiBold">
         INCASE RESIDING IN RENTED HOUSE
       </Text>
-      <br />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+      <InputGroupContainer>
         <FormInput
           control={control}
           type="text"
-          name="landlordsName"
+          name={'landlordName'}
           label="Landlords Name"
           placeholder="Landlords Name"
         />
         <FormInput
           control={control}
           type="text"
-          name="landlordsContactNo"
+          name={'landlordContact'}
           label="Contact No"
           placeholder="Contact No"
         />
-      </Grid>
-    </>
+      </InputGroupContainer>
+    </GroupContainer>
   );
 };

@@ -1,28 +1,30 @@
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { BsFillTelephoneFill } from 'react-icons/bs';
+import { GrMail } from 'react-icons/gr';
+import { IoLocationSharp } from 'react-icons/io5';
+import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
 import { Form, SharePurchaseHistoryTable } from '@saccos/myra/components';
+import { FormFooter } from '@saccos/myra/components';
 import { IPurchaseFormValues } from '@saccos/myra/types';
 import {
   Avatar,
   BaseSelect,
   Box,
+  Button,
   Container,
   Grid,
   GridItem,
+  Icon,
   MainLayout,
   Navbar,
+  SwitchTabs,
   TabMenu,
   Text,
-  SwitchTabs,
-  TextInput,
   TextFields,
-  Icon,
+  TextInput,
 } from '@saccos/myra/ui';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { GrMail, GrShare } from 'react-icons/gr';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
 
 const Header = () => {
   return (
@@ -202,14 +204,16 @@ const SharePurchase = () => {
                     </GridItem>
 
                     <GridItem display="flex" justifyContent="center">
-                      <Text
-                        fontWeight="Medium"
-                        color="primary.500"
-                        fontSize="s2"
-                        mr="5px"
-                      >
-                        View Profile
-                      </Text>
+                      <Button variant="link">
+                        <Text
+                          fontWeight="Medium"
+                          color="primary.500"
+                          fontSize="s2"
+                          mr="5px"
+                        >
+                          View Profile
+                        </Text>
+                      </Button>
                       <Icon size="sm" as={RiShareBoxFill} color="primary.500" />
                     </GridItem>
                   </Grid>
@@ -399,6 +403,10 @@ const SharePurchase = () => {
           </Box>
         </Box>
         <br />
+      </Container>
+
+      <Container minW="container.md" height="fit-content" p="0">
+        <FormFooter />
       </Container>
     </Form>
   );

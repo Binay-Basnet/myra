@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { Avatar, Flex, IconButton } from '@chakra-ui/react';
+import { Avatar, Flex } from '@chakra-ui/react';
 import {
   ShareBalanceEdge,
   useGetShareBalanceListQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
+import { PopoverComponent } from '@saccos/myra/components';
 import { TableListPageHeader } from 'libs/myra/components/src/lib/TableListPageHeader';
 import { TableSearch } from 'libs/myra/components/src/lib/TableSearch';
 
@@ -13,6 +13,8 @@ export const ShareBalanceTable = () => {
   const { data, isLoading } = useGetShareBalanceListQuery();
 
   const rowData = useMemo(() => data?.share.balance?.edges, [data]);
+
+  const popoverTitle = ['View Member Profile'];
 
   const columns: Column<ShareBalanceEdge>[] = useMemo(
     () => [
@@ -62,13 +64,7 @@ export const ShareBalanceTable = () => {
 
       {
         accessor: 'actions',
-        Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
-        ),
+        Cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
     []

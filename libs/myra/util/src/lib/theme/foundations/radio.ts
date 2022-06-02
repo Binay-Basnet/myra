@@ -13,7 +13,7 @@ const baseStyleControl: SystemStyleFunction = (props) => {
   return {
     ...control,
     borderRadius: 'full',
-    border: '2px solid',
+    border: '1px solid',
     borderColor: 'neutralColorLight.Gray-50',
     boxShadow: '0px 0px 0px 2px primary.500',
     _checked: {
@@ -66,8 +66,8 @@ const sizes: Record<string, PartsStyleObject<typeof parts>> = {
     label: { fontSize: 'lg' },
   },
   sm: {
-    control: { width: 3, height: 3 },
-    label: { fontSize: 'sm' },
+    control: { width: 5, height: 5 },
+    label: { fontSize: 'r1' },
   },
 };
 

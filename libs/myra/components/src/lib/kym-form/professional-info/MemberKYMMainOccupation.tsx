@@ -1,54 +1,50 @@
 import React from 'react';
 import { useFieldArray } from 'react-hook-form';
-import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
-import { FormInput, FormSelect } from '@saccos/myra/components';
-import {
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  Icon,
-  IconButton,
-  Text,
-} from '@saccos/myra/ui';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { CloseIcon } from '@chakra-ui/icons';
+import { Box, Button, GridItem, Icon, Text } from '@saccos/myra/ui';
 
-const MainOccupation = ({ control, index, removeMainOccupation }) => {
+import {
+  DynamicBoxContainer,
+  DynamicBoxGroupContainer,
+  GroupContainer,
+  InputGroupContainer,
+} from '../containers';
+import { FormInput, FormSelect } from '../../newFormComponents';
+
+const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
   return (
-    <Box
-      p={4}
-      display="flex"
-      flexDirection="column"
-      h={220}
-      bg="gray.100"
-      borderRadius={5}
-    >
-      <IconButton
-        alignSelf="flex-end"
-        variant="ghost"
-        colorScheme="teal"
-        aria-label="close"
-        size="md"
-        icon={<Icon size="md" as={AiOutlineClose} />}
+    <DynamicBoxContainer>
+      <CloseIcon
+        cursor="pointer"
         onClick={removeMainOccupation}
+        color="gray.500"
+        _hover={{
+          color: 'gray.900',
+        }}
+        aria-label="close"
+        alignSelf="flex-end"
       />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'2em'}>
+
+      <InputGroupContainer>
         <GridItem colSpan={1}>
           <FormSelect
             control={control}
-            name={`mainOccupation[${index}].occupation`}
+            name={`mainOccupation.${index}.occupation`}
             label="Occupation"
             placeholder="Select Occupation"
             options={[
-              { label: 'Agriculture', value: 'agriculature' },
+              { label: 'Agriculture', value: 'agriculture' },
               { label: 'Student', value: 'student' },
             ]}
           />
         </GridItem>
         <GridItem colSpan={2}>
           <FormInput
+            bg="white"
             control={control}
             type="text"
-            name={`mainOccupation[${index}].orgName`}
+            name={`mainOccupation.${index}.orgName`}
             label="Org/Frim Name"
             placeholder="Org/Firm Name"
           />
@@ -56,46 +52,48 @@ const MainOccupation = ({ control, index, removeMainOccupation }) => {
 
         <FormInput
           control={control}
+          bg="white"
           type="text"
-          name={`mainOccupation[${index}].idNumber`}
+          name={`mainOccupation.${index}.idNumber`}
           label="Pan/Vat number"
           placeholder="Pan/Vat number"
         />
         <FormInput
           control={control}
           type="text"
-          name={`mainOccupation[${index}].address`}
+          bg="white"
+          name={`mainOccupation.${index}.address`}
           label="Address"
           placeholder="Enter Address"
         />
         <FormInput
+          bg="white"
           control={control}
           type="number"
-          name={`mainOccupation[${index}].estimatedAnnualIncome`}
+          name={`mainOccupation.${index}.estimatedAnnualIncome`}
           label="Annual Income"
           placeholder="0.00"
         />
-      </Grid>
-    </Box>
+      </InputGroupContainer>
+    </DynamicBoxContainer>
   );
 };
 
-export const MemberMainOccupation = ({ control }) => {
+export const MemberKYMMainOccupation = ({ control }: any) => {
   const {
     fields: mainOccupationFields,
     append: mainOccupationAppend,
     remove: mainOccupationRemove,
   } = useFieldArray({ control, name: 'mainOccupation' });
   return (
-    <>
+    <GroupContainer>
       <Text fontSize="r1" fontWeight="SemiBold">
         MAIN OCCUPATION
       </Text>
-      <br />
-      <Box p={2} boxShadow="xs" borderRadius={5}>
+      <DynamicBoxGroupContainer>
         {mainOccupationFields.map((item, index) => {
           return (
-            <Box key={item.id} mb={2}>
+            <Box key={item.id}>
               <MainOccupation
                 control={control}
                 index={index}
@@ -106,16 +104,16 @@ export const MemberMainOccupation = ({ control }) => {
         })}
 
         <Button
+          alignSelf="start"
           leftIcon={<Icon size="md" as={AiOutlinePlus} />}
           variant="outline"
-          mt={2}
           onClick={() => {
             mainOccupationAppend({});
           }}
         >
           Add Occupation
         </Button>
-      </Box>
-    </>
+      </DynamicBoxGroupContainer>
+    </GroupContainer>
   );
 };

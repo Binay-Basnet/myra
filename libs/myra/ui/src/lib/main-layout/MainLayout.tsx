@@ -12,7 +12,7 @@ export function MainLayout(props: MainLayoutProps) {
   const { children } = props;
   return (
     <div>
-      <Box position="fixed" top={0} width="100%" zIndex={2}>
+      <Box position="fixed" top={0} width="100%" zIndex={11}>
         <TopLevelHeader />
         <TabMenu />
       </Box>

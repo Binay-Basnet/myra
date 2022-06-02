@@ -56,6 +56,7 @@ export const chakraStyles: ChakraStylesConfig = {
     ...provided,
     color: 'neutralColorLight.Gray-50',
     fontSize: 's3',
+    noOfLines: 1,
   }),
 
   input: (provided) => ({

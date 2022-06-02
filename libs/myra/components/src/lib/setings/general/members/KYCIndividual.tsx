@@ -22,9 +22,10 @@ const Gender = () => {
   const handleDragEnd = (result: DropResult) => {
     const items = Array.from(genderInfo);
     const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setGenderInfo(items);
+    if (result.destination) {
+      items.splice(result.destination.index, 0, reorderedItem);
+      setGenderInfo(items);
+    }
   };
   return (
     <DragDropContext onDragEnd={handleDragEnd}>

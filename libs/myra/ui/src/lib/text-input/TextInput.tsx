@@ -1,6 +1,8 @@
-import { Text, TextProps, Input, InputProps } from '@chakra-ui/react';
-import { TextFields } from '@saccos/myra/ui';
 import { forwardRef } from 'react';
+import { Input, InputProps } from '@chakra-ui/react';
+
+import { TextFields } from '../text-fields/TextFields';
+
 /* eslint-disable-next-line */
 export interface TextInputProps extends InputProps {
   label?: string;
@@ -16,16 +18,16 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         <TextFields
           mb="s4"
           variant="formLabel"
+          whiteSpace="nowrap"
           color={labelColor ?? 'gray.700'}
         >
-          {' '}
           {label}
         </TextFields>
         <Input
-          p="s12"
+          flexGrow={0}
           variant={'outline'}
           type="text"
-          fontSize={'s2'}
+          borderRadius="br2"
           placeholder={placeholder ?? 'Enter your Name'}
           ref={ref}
           {...rest}
