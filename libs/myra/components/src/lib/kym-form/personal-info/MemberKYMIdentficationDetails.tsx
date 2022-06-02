@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Checkbox, Grid, Text } from '@saccos/myra/ui';
 
+import { GroupContainer } from '../containers';
 import { FormInput } from '../../newFormComponents';
 
 const identificationDetails = [
@@ -11,16 +12,16 @@ const identificationDetails = [
   'National ID',
 ];
 
-export const MemberIdentificationDetails = ({ control }: any) => {
+export const MemberKYMIdentificationDetails = ({ control }: any) => {
   return (
-    <>
-      <Text fontSize="r1" fontWeight="semibold" mb="s32">
+    <GroupContainer>
+      <Text fontSize="r1" fontWeight="semibold">
         IDENTIFICATION DETAILS
       </Text>
-      <Text fontSize="r1" fontWeight="medium" mb="s32">
+      <Text fontSize="r1" fontWeight="medium">
         Choose identification details
       </Text>
-      <Box display="flex" mb="s32">
+      <Box display="flex">
         {identificationDetails.map((item, index) => (
           <Checkbox mr={5} key={index}>
             <Text fontSize="s3">{item}</Text>
@@ -28,8 +29,8 @@ export const MemberIdentificationDetails = ({ control }: any) => {
         ))}
       </Box>
 
-      <Box display="flex" flexDirection="column" gap="s32">
-        <Box display="flex" flexDirection="column" gap="s20">
+      <GroupContainer>
+        <Box display="flex" flexDirection="column" gap="s24">
           <Text
             fontSize="r1"
             fontWeight="medium"
@@ -61,7 +62,7 @@ export const MemberIdentificationDetails = ({ control }: any) => {
             />
           </Grid>
         </Box>
-        <Box display="flex" flexDirection="column" gap="s20">
+        <Box display="flex" flexDirection="column" gap="s24">
           <Text
             fontSize="r1"
             fontWeight="medium"
@@ -93,7 +94,7 @@ export const MemberIdentificationDetails = ({ control }: any) => {
             />
           </Grid>
         </Box>
-        <Box display="flex" flexDirection="column" gap="s20">
+        <Box display="flex" flexDirection="column" gap="s24">
           <Text
             fontSize="r1"
             fontWeight="medium"
@@ -118,7 +119,7 @@ export const MemberIdentificationDetails = ({ control }: any) => {
             />
           </Grid>
         </Box>
-      </Box>
-    </>
+      </GroupContainer>
+    </GroupContainer>
   );
 };

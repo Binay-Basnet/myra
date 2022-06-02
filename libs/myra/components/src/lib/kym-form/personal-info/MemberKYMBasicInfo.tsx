@@ -1,25 +1,25 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import { Grid, Text } from '@saccos/myra/ui';
+import { Text } from '@saccos/myra/ui';
 
+import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormInput, FormSelect } from '../../newFormComponents';
 
-interface IMemberBasicInfo {
+interface IMemberKYMBasicInfo {
   control: Control<any>;
 }
 
-export const MemberBasicInfo = ({ control }: IMemberBasicInfo) => {
+export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
   return (
-    <>
+    <GroupContainer>
       <Text
         fontSize="r1"
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
-        mb="s32"
       >
         BASIC INFORMATION
       </Text>
-      <Grid templateColumns="repeat(3, 1fr)" gap="s20">
+      <InputGroupContainer>
         <FormInput
           control={control}
           type="text"
@@ -103,7 +103,7 @@ export const MemberBasicInfo = ({ control }: IMemberBasicInfo) => {
             { label: 'Christain', value: 'christain' },
           ]}
         />
-      </Grid>
-    </>
+      </InputGroupContainer>
+    </GroupContainer>
   );
 };

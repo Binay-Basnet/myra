@@ -55,3 +55,4 @@ export * from './lib/text-fields/TextFields';
 export * from './lib/text-input/TextInput';
 export * from './lib/text-input/TextInput';
 export * from './lib/top-level-header/TopLevelHeader';
+export * from './lib/vstack/VStack';

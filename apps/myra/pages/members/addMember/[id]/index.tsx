@@ -3,26 +3,34 @@ import { useForm } from 'react-hook-form';
 import { GrClose } from 'react-icons/gr';
 import {
   AccorrdianAddMember,
-  BasicSaccosDetails,
-  FinancialTransactionDetails,
-  MemberAddress,
-  MemberBasicInfo,
-  MemberContactDetails,
-  MemberFamilyDetails,
-  MemberHushbandWifeOccupation,
-  MemberIdentificationDetails,
-  MemberIncomeSourceDetails,
-  MemberMainOccupation,
-  MemberProfession,
+  ContainerWithDivider,
+  KYMBasicSaccosDetails,
+  KYMDeclaration,
+  KYMDocumentDeclaration,
+  KYMEstimatedAmount,
+  KYMFinancialTransactionDetails,
+  KYMLocation,
+  MemberKYMAddress,
+  MemberKYMBasicInfo,
+  MemberKYMContactDetails,
+  MemberKYMFamilyDetails,
+  MemberKYMHusbandWifeOccupation,
+  MemberKYMIdentificationDetails,
+  MemberKYMIncomeSourceDetails,
+  MemberKYMMainOccupation,
+  MemberKYMProfession,
+  SectionContainer,
 } from '@saccos/myra/components';
 import {
   Box,
   Button,
+  Checkbox,
   Container,
   Divider,
   Navbar,
   TabMenu,
   Text,
+  TextFields,
 } from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
 import debounce from 'lodash/debounce';
@@ -49,7 +57,7 @@ const AddMember = () => {
 
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
-      familyDetails: [{ relationshipId: '', fullaname: '' }],
+      familyDetails: [{ relationshipId: '', fullName: '' }],
       mainOccupation: [
         {
           occupation: '',
@@ -123,38 +131,65 @@ const AddMember = () => {
           <Divider orientation="vertical" />
           <Box w="100%">
             <Box background="white" p="s20">
-              <Text fontSize="r3" fontWeight="SemiBold" mb="s48">
-                1. Personal Information
-              </Text>
-              <MemberBasicInfo control={control} />
-              <Divider my="s32" />
-              <MemberContactDetails control={control} />
-              <Divider my="s32" />
-              <MemberIdentificationDetails control={control} />
-              <Divider my="s32" />
-              <MemberAddress control={control} />
-              <Divider my="s32" />
-              <MemberFamilyDetails control={control} />
-              <br />
-              <Text fontSize="r3" fontWeight="SemiBold">
-                2. Professional Information
-              </Text>
-              <br />
-              <MemberProfession control={control} />
-              <Divider my="s32" />
-              <MemberMainOccupation control={control} />
-              <Divider my="s32" />
-              <MemberHushbandWifeOccupation control={control} />
-              <Divider my="s32" />
-              <MemberIncomeSourceDetails control={control} />
-              <Divider my="s32" />
-              <Text fontSize="r3" fontWeight="SemiBold">
-                3. SACOOS membership
-              </Text>
-              <br />
-              <BasicSaccosDetails control={control} />
-              <Divider my="s32" />
-              <FinancialTransactionDetails control={control} />
+              <SectionContainer>
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    1. Personal Information
+                  </Text>
+                  <ContainerWithDivider>
+                    <MemberKYMBasicInfo control={control} />
+                    <MemberKYMContactDetails control={control} />
+                    <MemberKYMIdentificationDetails control={control} />
+                    <MemberKYMAddress control={control} />
+                    <MemberKYMFamilyDetails control={control} />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    2. Professional Information
+                  </Text>
+                  <ContainerWithDivider>
+                    <MemberKYMProfession control={control} />
+                    <MemberKYMMainOccupation control={control} />
+                    <MemberKYMHusbandWifeOccupation control={control} />
+                    <MemberKYMIncomeSourceDetails control={control} />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    3. SACCOS membership
+                  </Text>
+                  <ContainerWithDivider>
+                    <KYMBasicSaccosDetails control={control} />
+                    <KYMFinancialTransactionDetails control={control} />
+                    <KYMEstimatedAmount control={control} />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    4. Declaration
+                  </Text>
+                  <ContainerWithDivider>
+                    <KYMDeclaration control={control} />
+                    <KYMLocation control={control} />
+                    <KYMDocumentDeclaration control={control} />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <Box display="flex" gap="s16" alignItems="start">
+                  <Checkbox fontSize="s3">{''}</Checkbox>
+                  <TextFields variant="formInput" mt="-6px">
+                    I hereby declare that the information provided by me/us in
+                    this form and documents provided to the co-operative are
+                    true and correct. All transaction in this account are from
+                    legitimate source. If found otherwise, I shall bear the
+                    consequences thereof.
+                  </TextFields>
+                </Box>
+              </SectionContainer>
             </Box>
           </Box>
         </Box>

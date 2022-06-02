@@ -1,25 +1,25 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import { Grid, Text } from '@saccos/myra/ui';
+import { Text } from '@saccos/myra/ui';
 
+import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormInput } from '../../newFormComponents';
 
 interface IMemberContactDetails {
   control: Control<any>;
 }
 
-export const MemberContactDetails = ({ control }: IMemberContactDetails) => {
+export const MemberKYMContactDetails = ({ control }: IMemberContactDetails) => {
   return (
-    <>
+    <GroupContainer>
       <Text
         fontSize="r1"
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
-        mb="s32"
       >
         CONTACT DETAILS
       </Text>
-      <Grid templateColumns="repeat(3, 1fr)" gap="s20">
+      <InputGroupContainer>
         <FormInput
           control={control}
           type="text"
@@ -41,7 +41,7 @@ export const MemberContactDetails = ({ control }: IMemberContactDetails) => {
           label="Email"
           placeholder="Enter email"
         />
-      </Grid>
-    </>
+      </InputGroupContainer>
+    </GroupContainer>
   );
 };

@@ -1,15 +1,16 @@
 import { FaMap } from 'react-icons/fa';
-import { Box, Button, Grid, Icon, Switch, Text } from '@saccos/myra/ui';
+import { Box, Button, Icon, Switch, Text } from '@saccos/myra/ui';
 
+import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormInput, FormSelect } from '../../newFormComponents';
 
-export const MemberAddress = ({ control }: any) => {
+export const MemberKYMAddress = ({ control }: any) => {
   return (
-    <>
-      <Text fontSize="r1" fontWeight="SemiBold" mb="s32">
+    <GroupContainer>
+      <Text fontSize="r1" fontWeight="SemiBold">
         PERMANENT ADDRESS
       </Text>
-      <Grid templateColumns="repeat(3, 1fr)" gap="s20">
+      <InputGroupContainer>
         <FormSelect
           control={control}
           name="permanentAddress.state"
@@ -54,19 +55,24 @@ export const MemberAddress = ({ control }: any) => {
           label="Locality"
           placeholder="Enter Locality"
         />
-      </Grid>
-      <Button leftIcon={<Icon size="md" as={FaMap} />} mt={2}>
+      </InputGroupContainer>
+
+      <Button
+        alignSelf="start"
+        mt="-16px"
+        leftIcon={<Icon size="md" as={FaMap} />}
+      >
         Pin on Map
       </Button>
 
       <Text fontSize="r1" fontWeight="SemiBold">
         TEMPORARY ADDRESS
       </Text>
-      <Box display="flex" flexDirection="row" alignItems="center">
+      <Box display="flex" flexDirection="row" alignItems="center" mb="-16px">
         <Switch mr={5} />
         <Text fontSize="r1">Temporary Address same as permanent</Text>
       </Box>
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+      <InputGroupContainer>
         <FormSelect
           control={control}
           name="temporaryAddressState"
@@ -111,14 +117,18 @@ export const MemberAddress = ({ control }: any) => {
           label="Locality"
           placeholder="Enter Locality"
         />
-      </Grid>
-      <Button leftIcon={<Icon size="md" as={FaMap} />} mt={2}>
+      </InputGroupContainer>
+      <Button
+        mt="-16px"
+        alignSelf="start"
+        leftIcon={<Icon size="md" as={FaMap} />}
+      >
         Pin on Map
       </Button>
       <Text fontSize="r1" fontWeight="SemiBold">
         INCASE RESIDING IN RENTED HOUSE
       </Text>
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+      <InputGroupContainer>
         <FormInput
           control={control}
           type="text"
@@ -133,7 +143,7 @@ export const MemberAddress = ({ control }: any) => {
           label="Contact No"
           placeholder="Contact No"
         />
-      </Grid>
-    </>
+      </InputGroupContainer>
+    </GroupContainer>
   );
 };

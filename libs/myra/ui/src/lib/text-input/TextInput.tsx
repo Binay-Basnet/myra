@@ -1,5 +1,5 @@
-import { Input, InputProps } from '@chakra-ui/react';
 import { forwardRef } from 'react';
+import { Input, InputProps } from '@chakra-ui/react';
 
 import { TextFields } from '../text-fields/TextFields';
 
@@ -18,11 +18,13 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         <TextFields
           mb="s4"
           variant="formLabel"
+          whiteSpace="nowrap"
           color={labelColor ?? 'gray.700'}
         >
-          {label ?? 'Name'}
+          {label}
         </TextFields>
         <Input
+          flexGrow={0}
           variant={'outline'}
           type="text"
           borderRadius="br2"

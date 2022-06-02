@@ -12,7 +12,8 @@ export interface TextFieldsProps extends TextProps {
     | 'tableHeader'
     | 'pageHeader'
     | 'tabs'
-    | 'switch';
+    | 'switch'
+    | string;
   children?: React.ReactNode;
   color?: string;
 }

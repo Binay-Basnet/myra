@@ -1,41 +1,35 @@
-import { FormInput, FormSelect } from '@saccos/myra/components';
-import {
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  Icon,
-  IconButton,
-  Text,
-} from '@saccos/myra/ui';
 import React from 'react';
 import { useFieldArray } from 'react-hook-form';
-import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { CloseIcon } from '@chakra-ui/icons';
+import { Box, Button, GridItem, Icon, Text } from '@saccos/myra/ui';
 
-const HushbandWifeOccupation = ({
+import {
+  DynamicBoxContainer,
+  DynamicBoxGroupContainer,
+  GroupContainer,
+  InputGroupContainer,
+} from '../containers';
+import { FormInput, FormSelect } from '../../newFormComponents';
+
+const HusbandWifeOccupation = ({
   control,
   index,
-  removeHushbandWifeOccupation,
+  removeHusbandWifeOccupation,
 }: any) => {
   return (
-    <Box
-      p={4}
-      display="flex"
-      flexDirection="column"
-      h={220}
-      bg="gray.100"
-      borderRadius={5}
-    >
-      <IconButton
-        alignSelf="flex-end"
-        variant="ghost"
-        colorScheme="teal"
+    <DynamicBoxContainer>
+      <CloseIcon
+        cursor="pointer"
+        onClick={removeHusbandWifeOccupation}
+        color="gray.500"
+        _hover={{
+          color: 'gray.900',
+        }}
         aria-label="close"
-        size="md"
-        icon={<Icon size="md" as={AiOutlineClose} />}
-        onClick={removeHushbandWifeOccupation}
+        alignSelf="flex-end"
       />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'2em'}>
+      <InputGroupContainer>
         <GridItem colSpan={1}>
           <FormSelect
             control={control}
@@ -55,15 +49,16 @@ const HushbandWifeOccupation = ({
             name={`spouceOccupation[${index}].orgName`}
             label="Org/Frim Name"
             placeholder="Org/Firm Name"
+            bg="white"
           />
         </GridItem>
-
         <FormInput
           control={control}
           type="text"
           name={`spouceOccupation[${index}].idNumber`}
           label="Pan/Vat number"
           placeholder="Pan/Vat number"
+          bg="white"
         />
         <FormInput
           control={control}
@@ -71,41 +66,43 @@ const HushbandWifeOccupation = ({
           name={`spouceOccupation[${index}].address`}
           label="Address"
           placeholder="Enter Address"
+          bg="white"
         />
         <FormInput
           control={control}
           type="number"
           name={`spouceOccupation[${index}].estimatedAnnualIncome`}
           label="Annual Income"
+          bg="white"
           placeholder="0.00"
         />
-      </Grid>
-    </Box>
+      </InputGroupContainer>
+    </DynamicBoxContainer>
   );
 };
 
-export const MemberHushbandWifeOccupation = ({ control }: any) => {
+export const MemberKYMHusbandWifeOccupation = ({ control }: any) => {
   const {
-    fields: hushbandWifeOccupationFields,
-    append: hushbandWifeOccupationAppend,
-    remove: hushbandWifeOccupationRemove,
+    fields: husbandWifeOccupationFields,
+    append: husbandWifeOccupationAppend,
+    remove: husbandWifeOccupationRemove,
   } = useFieldArray({ control, name: 'mainOccupation' });
 
   return (
-    <>
+    <GroupContainer>
       <Text fontSize="r1" fontWeight="SemiBold">
-        MAIN OCCUPATION OF HUSHBAND/WIFE
+        MAIN OCCUPATION OF HUSBAND/WIFE
       </Text>
-      <br />
-      <Box p={2} boxShadow="xs" borderRadius={5}>
-        {hushbandWifeOccupationFields.map((item, index) => {
+
+      <DynamicBoxGroupContainer>
+        {husbandWifeOccupationFields.map((item, index) => {
           return (
-            <Box key={item.id} mb={2}>
-              <HushbandWifeOccupation
+            <Box key={item.id}>
+              <HusbandWifeOccupation
                 control={control}
                 index={index}
-                removeHushbandWifeOccupation={() =>
-                  hushbandWifeOccupationRemove(index)
+                removeHusbandWifeOccupation={() =>
+                  husbandWifeOccupationRemove(index)
                 }
               />
             </Box>
@@ -113,16 +110,16 @@ export const MemberHushbandWifeOccupation = ({ control }: any) => {
         })}
 
         <Button
+          alignSelf="start"
           leftIcon={<Icon size="md" as={AiOutlinePlus} />}
           variant="outline"
-          mt={2}
           onClick={() => {
-            hushbandWifeOccupationAppend({});
+            husbandWifeOccupationAppend({});
           }}
         >
           Add Occupation
         </Button>
-      </Box>
-    </>
+      </DynamicBoxGroupContainer>
+    </GroupContainer>
   );
 };
