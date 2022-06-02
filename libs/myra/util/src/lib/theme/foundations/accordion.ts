@@ -8,6 +8,12 @@ const baseStyleContainer: SystemStyleObject = {
   bg: 'gray.0',
   borderRadius: 'br2',
   border: '1px solid #E0E5EB',
+  // px: 's16',
+  // py: 's16',
+  _focus: {
+    boxShadow: 'none',
+    bg: 'background.500',
+  },
   _last: {
     borderBottomWidth: '1px',
   },
@@ -16,12 +22,18 @@ const baseStyleContainer: SystemStyleObject = {
 const baseStyleButton: SystemStyleObject = {
   transitionProperty: 'common',
   transitionDuration: 'normal',
+  boxShadow: 'none',
   fontSize: '1rem',
-  _focus: {
-    boxShadow: 'outline',
+  _expanded: {
+    boxShadow: 'none',
+    bg: 'background.500',
+  },
+  _close: {
+    bg: 'red',
   },
   _hover: {
-    bg: 'blackAlpha.50',
+    boxShadow: 'none',
+    bg: 'background.500',
   },
   _disabled: {
     opacity: 0.4,
@@ -32,9 +44,8 @@ const baseStyleButton: SystemStyleObject = {
 };
 
 const baseStylePanel: SystemStyleObject = {
-  pt: 2,
-  px: 4,
-  pb: 5,
+  py: 's16',
+  px: 's16',
 };
 
 const baseStyleIcon: SystemStyleObject = {

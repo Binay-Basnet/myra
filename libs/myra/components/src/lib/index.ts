@@ -30,3 +30,4 @@ export * from './table/MemberTable';
 export * from './table/settings/chartsOfAccounts/CoaAccountListTable';
 export * from './table/ShareTable';
 export * from './table/share';
+export * from './popover/Popover';

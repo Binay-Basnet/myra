@@ -21,7 +21,7 @@ export function MainLayout(props: MainLayoutProps) {
     //   backdropFilter="saturate(180%) blur(5px)"
     // >
     <div>
-      <Box position="fixed" top={0} width="100%" zIndex={2}>
+      <Box position="fixed" top={0} width="100%" zIndex={11}>
         {/* <Navbar /> */}
 
         <TopLevelHeader />

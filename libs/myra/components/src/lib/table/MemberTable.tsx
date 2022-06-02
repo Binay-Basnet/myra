@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { Avatar, Flex, IconButton } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import moment from 'moment';
+import { Avatar, Flex } from '@chakra-ui/react';
 import {
   KymMemberListEdges,
   ObjState,
   useGetMemberListQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
-import moment from 'moment';
-import { useRouter } from 'next/router';
+import { PopoverComponent } from '@saccos/myra/components';
 
 export const MemberTable = () => {
   const router = useRouter();
@@ -17,6 +17,8 @@ export const MemberTable = () => {
   });
 
   const rowData = useMemo(() => data?.members?.list?.edges, [data]);
+
+  const popoverTitle = [' View Member Profile', 'Edit Member', 'Make Inactive'];
 
   const columns: Column<KymMemberListEdges>[] = useMemo(
     () => [
@@ -68,19 +70,13 @@ export const MemberTable = () => {
       {
         Header: 'Date Joined',
         accessor: 'node.createdAt',
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return <span>{moment(value).format('YYYY-MM-DD')}</span>;
         },
       },
       {
         accessor: 'actions',
-        Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
-        ),
+        Cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
     []

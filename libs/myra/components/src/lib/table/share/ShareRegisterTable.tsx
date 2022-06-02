@@ -1,17 +1,19 @@
 import { useMemo } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { Avatar, Flex, IconButton } from '@chakra-ui/react';
+import moment from 'moment';
+import { Avatar, Flex } from '@chakra-ui/react';
 import {
   ShareRegisterEdge,
   useGetShareRegisterListQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
-import moment from 'moment';
+import { PopoverComponent } from '@saccos/myra/components';
 
 export const ShareRegisterTable = () => {
   const { data, isLoading } = useGetShareRegisterListQuery();
 
   const rowData = useMemo(() => data?.share?.register?.edges, [data]);
+
+  const popoverTitle = ['View Detail', 'View Member Profile'];
 
   const columns: Column<ShareRegisterEdge>[] = useMemo(
     () => [
@@ -110,13 +112,7 @@ export const ShareRegisterTable = () => {
       },
       {
         accessor: 'actions',
-        Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
-        ),
+        Cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
     []
