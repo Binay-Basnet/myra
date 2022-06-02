@@ -1,3 +1,10 @@
+import { useState } from 'react';
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from 'react-beautiful-dnd';
 import { CgCloseO, CgMenuGridO } from 'react-icons/cg';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { AddIcon } from '@chakra-ui/icons';
@@ -11,34 +18,63 @@ import { Box, Button, Checkbox, Icon, Switch, Text } from '@saccos/myra/ui';
 const genderDetails = ['Male', 'Female', 'Transgender'];
 
 const Gender = () => {
+  const [genderInfo, setGenderInfo] = useState(genderDetails);
+  const handleDragEnd = (result: DropResult) => {
+    const items = Array.from(genderInfo);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setGenderInfo(items);
+  };
   return (
-    <Box>
-      {genderDetails.map((item, index) => {
-        return (
-          <Box
-            display={'flex'}
-            key={`${item}${index}`}
-            justifyContent={'space-between'}
-            alignItems="center"
-            h="60px"
-          >
-            <Box pr="s16" display={'flex'} justifyContent="flex-start">
-              <Icon size="md" as={CgMenuGridO} />
-              <Switch size="md" ml="s20" />
-              <Text
-                fontSize={'r1'}
-                fontWeight="400"
-                color={'gray.800'}
-                ml="s20"
-              >
-                {item}
-              </Text>
-            </Box>
-            <Icon as={CgCloseO} size="sm" />
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <Droppable droppableId="gender">
+        {(provided) => (
+          <Box {...provided.droppableProps} ref={provided.innerRef}>
+            {genderInfo.map((item, index) => {
+              return (
+                <Draggable
+                  key={`${item}${index}`}
+                  draggableId={item}
+                  index={index}
+                >
+                  {(provided) => (
+                    <Box
+                      display={'flex'}
+                      justifyContent={'space-between'}
+                      alignItems="center"
+                      h="60px"
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <Box
+                        pr="s16"
+                        display={'flex'}
+                        justifyContent="flex-start"
+                      >
+                        <Icon size="md" as={CgMenuGridO} />
+                        <Switch size="md" ml="s20" />
+                        <Text
+                          fontSize={'r1'}
+                          fontWeight="400"
+                          color={'gray.800'}
+                          ml="s20"
+                        >
+                          {item}
+                        </Text>
+                      </Box>
+                      <Icon as={CgCloseO} size="sm" />
+                    </Box>
+                  )}
+                </Draggable>
+              );
+            })}
+            {provided.placeholder}
           </Box>
-        );
-      })}
-    </Box>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 const PersonalInformation = [
