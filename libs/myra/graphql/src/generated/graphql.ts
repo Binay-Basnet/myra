@@ -637,6 +637,7 @@ export type Identity = {
 };
 
 export type InvItems = {
+  id: Scalars['ID'];
   itemCode: Scalars['String'];
   itemQuantity: Scalars['Float'];
   name: Scalars['String'];

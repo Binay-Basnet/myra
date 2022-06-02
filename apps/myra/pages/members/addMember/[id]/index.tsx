@@ -59,35 +59,36 @@ const AddMember = () => {
   const id = String(router?.query?.id);
   const { mutate } = useSetMemberDataMutation();
 
-  const { control, handleSubmit, getValues } = useForm<KymIndMemberInput>({
-    defaultValues: {
-      familyDetails: [{ relationshipId: '', fullName: '' }],
-      mainOccupation: [
-        {
-          occupation: '',
-          orgName: '',
-          idNumber: '',
-          address: '',
-          estimatedAnnualIncome: 0,
-        },
-      ],
-      spouseOccupation: [
-        {
-          occupation: '',
-          orgName: '',
-          idNumber: '',
-          address: '',
-          estimatedAnnualIncome: 0,
-        },
-      ],
-      incomeSourceDetails: [
-        {
-          source: '',
-          amount: 0,
-        },
-      ],
-    },
-  });
+  const { control, handleSubmit, getValues, watch } =
+    useForm<KymIndMemberInput>({
+      defaultValues: {
+        familyDetails: [{ relationshipId: '', fullName: '' }],
+        mainOccupation: [
+          {
+            occupation: '',
+            orgName: '',
+            idNumber: '',
+            address: '',
+            estimatedAnnualIncome: 0,
+          },
+        ],
+        spouseOccupation: [
+          {
+            occupation: '',
+            orgName: '',
+            idNumber: '',
+            address: '',
+            estimatedAnnualIncome: 0,
+          },
+        ],
+        incomeSourceDetails: [
+          {
+            source: '',
+            amount: 0,
+          },
+        ],
+      },
+    });
 
   return (
     <form
@@ -145,7 +146,7 @@ const AddMember = () => {
                     <MemberKYMBasicInfo control={control} />
                     <MemberKYMContactDetails control={control} />
                     <MemberKYMIdentificationDetails control={control} />
-                    <MemberKYMAddress control={control} />
+                    <MemberKYMAddress control={control} watch={watch} />
                     <MemberKYMFamilyDetails control={control} />
                   </ContainerWithDivider>
                 </SectionContainer>
