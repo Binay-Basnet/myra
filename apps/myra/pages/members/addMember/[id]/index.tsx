@@ -157,8 +157,11 @@ const AddMember = () => {
                   </Text>
                   <ContainerWithDivider>
                     <MemberKYMProfession control={control} />
-                    <MemberKYMMainOccupation control={control} />
-                    <MemberKYMHusbandWifeOccupation control={control} />
+                    <MemberKYMMainOccupation control={control} watch={watch} />
+                    <MemberKYMHusbandWifeOccupation
+                      control={control}
+                      watch={watch}
+                    />
                     <MemberKYMIncomeSourceDetails control={control} />
                   </ContainerWithDivider>
                 </SectionContainer>
