@@ -6,7 +6,7 @@ import { chakraStyles } from './SelectStyles';
 
 export interface SelectOption extends OptionBase {
   label: string;
-  value: string;
+  value: string | number;
 }
 
 export interface SelectProps extends Omit<Props, 'size' | 'onChange'> {

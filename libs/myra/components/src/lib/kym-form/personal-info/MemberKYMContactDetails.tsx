@@ -4,7 +4,8 @@ import { KymIndMemberInput } from '@saccos/myra/graphql';
 import { Text } from '@saccos/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
-import { FormInput } from '../../newFormComponents';
+import { FormEmailInput } from '../../newFormComponents/FormEmailInput';
+import { FormPhoneNumber } from '../../newFormComponents/FormPhoneNumber';
 
 interface IMemberContactDetails {
   control: Control<KymIndMemberInput>;
@@ -21,21 +22,21 @@ export const MemberKYMContactDetails = ({ control }: IMemberContactDetails) => {
         CONTACT DETAILS
       </Text>
       <InputGroupContainer>
-        <FormInput
+        <FormPhoneNumber
           control={control}
           type="text"
           name="mobileNumber"
           label="Mobile No"
           placeholder="Enter Mobile No"
         />
-        <FormInput
+        <FormPhoneNumber
           control={control}
           type="text"
           name="phoneNumber"
           label="Phone No"
           placeholder="Enter Phone No"
         />
-        <FormInput
+        <FormEmailInput
           control={control}
           type="text"
           name="email"

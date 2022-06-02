@@ -20,6 +20,7 @@ export const KYMEstimatedAmount = ({ control }: any) => {
           name="estimatedAnnualAccountTransactionAmount"
           label="Estimated annual account transaction (Debit/Credit)"
           placeholder="0.00"
+          textAlign="right"
         />
       </InputGroupContainer>
 
@@ -43,6 +44,7 @@ export const KYMEstimatedAmount = ({ control }: any) => {
           name="estimatedAnnualDepositAmount"
           label="Estimated Annual Deposit"
           placeholder="0.00"
+          textAlign="right"
         />
       </InputGroupContainer>
 
@@ -53,6 +55,7 @@ export const KYMEstimatedAmount = ({ control }: any) => {
           name="estimatedAnnualLoanAmount"
           label="Estimated Annual Loan"
           placeholder="0.00"
+          textAlign="right"
         />
       </InputGroupContainer>
     </GroupContainer>

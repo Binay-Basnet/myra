@@ -77,11 +77,13 @@ export const MemberKYMIncomeSourceDetails = ({ control }: any) => {
           <Text fontSize="s3" mb={3}>
             Annual Family Income
           </Text>
-          {annualFamilyIncome.map((item) => (
-            <Checkbox>
-              <Text fontSize="s3">{item}</Text>
-            </Checkbox>
-          ))}
+          <Box display="flex" flexDirection="column" gap="s8">
+            {annualFamilyIncome.map((item) => (
+              <Checkbox>
+                <Text fontSize="s3">{item}</Text>
+              </Checkbox>
+            ))}
+          </Box>
         </Box>
         <div>
           <Text fontSize="s3" mb="s4">
