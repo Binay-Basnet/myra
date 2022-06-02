@@ -112,15 +112,13 @@ const SharePurchase = () => {
                     gap={2}
                   >
                     <GridItem display="flex" alignSelf="center" colSpan={2}>
-                      <Avatar
-                        src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
-                        size="lg"
-                        name="John Doe"
-                        border="1px solid"
-                        borderColor="gray.0"
-                        ml="10px"
-                        mr="10px"
-                      />
+                      <Box m="10px">
+                        <Avatar
+                          src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
+                          size="lg"
+                          name="Ajit Nepal"
+                        />
+                      </Box>
                       <Box>
                         <TextFields
                           color="neutralColorLight.Gray-80"
@@ -141,7 +139,7 @@ const SharePurchase = () => {
                           fontWeight="Regular"
                           fontSize="s3"
                         >
-                          Membership Since: 2078/10/04
+                          Member Since: 2078/10/04
                         </Text>
 
                         <Text
@@ -159,9 +157,14 @@ const SharePurchase = () => {
                       flexDirection="column"
                       alignSelf="center"
                       colSpan={2}
+                      gap={3}
                     >
                       <Box display="flex">
-                        <Icon as={BsFillTelephoneFill} color="primary.500" />
+                        <Icon
+                          size="sm"
+                          as={BsFillTelephoneFill}
+                          color="primary.500"
+                        />
                         <TextFields
                           ml="10px"
                           variant="profileBody"
@@ -172,7 +175,7 @@ const SharePurchase = () => {
                       </Box>
 
                       <Box display="flex">
-                        <Icon as={GrMail} color="primary.500" />
+                        <Icon size="sm" as={GrMail} color="primary.500" />
                         <TextFields
                           ml="10px"
                           variant="profileBody"
@@ -182,9 +185,17 @@ const SharePurchase = () => {
                         </TextFields>
                       </Box>
 
-                      <Box>
-                        <Icon as={IoLocationSharp} color="primary.500" />
-                        <TextFields variant="profileBody" fontSize="12px">
+                      <Box display="flex">
+                        <Icon
+                          size="sm"
+                          as={IoLocationSharp}
+                          color="primary.500"
+                        />
+                        <TextFields
+                          ml="10px"
+                          variant="profileBody"
+                          fontSize="12px"
+                        >
                           Kathmandu, Tokha Municipality-10
                         </TextFields>
                       </Box>
@@ -199,11 +210,12 @@ const SharePurchase = () => {
                       >
                         View Profile
                       </Text>
-                      <Icon as={RiShareBoxFill} color="primary.500" />
+                      <Icon size="sm" as={RiShareBoxFill} color="primary.500" />
                     </GridItem>
                   </Grid>
                 </Box>
                 <br />
+
                 <Box p="2px">
                   <Text
                     color="neutralColorLight.Gray-80"
@@ -215,80 +227,6 @@ const SharePurchase = () => {
                   </Text>
                   <SharePurchaseHistoryTable />
                 </Box>
-
-                {/* <Box p={2} bg="background.500">
-                  <Grid templateColumns="repeat(2,1fr)" bg="red">
-                    <GridItem colSpan={1}>
-                      <Avatar
-                        src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
-                        size="lg"
-                        name="John Doe"
-                        border="1px solid"
-                        borderColor="gray.0"
-                      />
-                    </GridItem>
-                  </Grid>
-                  <Grid
-                    display="flex"
-                    templateColumns="repeat(4, 1fr)"
-                    justifyContent="space-around"
-                    alignContent="center"
-                  >
-                    <GridItem>
-                      <Text
-                        color="neutralColorLight.Gray-80"
-                        fontWeight="Medium"
-                        fontSize="r2"
-                      >
-                        Ajit Nepal
-                      </Text>
-                      <Text
-                        color="neutralColorLight.Gray-80"
-                        fontSize="s3"
-                        fontWeight="Regular"
-                      >
-                        ID: 23524364456
-                      </Text>
-
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Regular"
-                        fontSize="s3"
-                      >
-                        Membership Since: 2078/10/04
-                      </Text>
-
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Regular"
-                        fontSize="s3"
-                      >
-                        Branch: Tokha
-                      </Text>
-                    </GridItem>
-
-                    <GridItem>
-                      <GrPhone color="primary.500" />
-                      <Text fontSize="12px">981234567</Text>
-                      <GrMail color="primary.500" />
-                      <Text fontSize="12px">ajitnepal65@gmail.com</Text>
-                      <GrLocation color="primary.500" />
-                      <Text fontSize="12px">
-                        Kathmandu, Tokha Municipality-10
-                      </Text>
-                    </GridItem>
-
-                    <GridItem>
-                      <Text
-                        fontWeight="Medium"
-                        color="primary.500"
-                        fontSize="s2"
-                      >
-                        View Profile
-                      </Text>
-                    </GridItem>
-                  </Grid>
-                </Box> */}
               </Box>
             </Box>
 

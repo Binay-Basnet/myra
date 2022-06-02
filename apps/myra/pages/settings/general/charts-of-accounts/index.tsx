@@ -17,7 +17,6 @@ const ChartsOfAccounts = () => {
   return (
     <Box width="full" borderBottom="1px" borderBottomColor="border.layout">
       <Box
-        height="60px"
         display="flex"
         justifyContent="space-between"
         alignItems={'center'}
