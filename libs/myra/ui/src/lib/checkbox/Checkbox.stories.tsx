@@ -1,7 +1,7 @@
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
 import { theme } from '@saccos/myra/util';
-import { Meta,Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 
 import { Checkbox, CheckboxProps } from './Checkbox';
 // import { AddIcon } from '@chakra-ui/icons';

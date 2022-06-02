@@ -55,6 +55,7 @@ export function ChakraPopover({ name = 'Trigger' }: PopoverProps) {
 }
 
 export {
+  Popover,
   PopoverAnchor,
   PopoverArrow,
   PopoverBody,

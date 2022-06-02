@@ -30,5 +30,6 @@ export * from './table/inventory/InventoryVendorTable';
 export * from './table/MemberTable';
 export * from './table/settings/chartsOfAccounts/CoaAccountListTable';
 export * from './table/share';
+export * from './popover/Popover';
 export * from './table/ShareTable';
 export * from './TableListPageHeader';
