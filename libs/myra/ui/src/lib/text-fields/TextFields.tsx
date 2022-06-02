@@ -13,8 +13,7 @@ export interface TextFieldsProps extends TextProps {
     | 'pageHeader'
     | 'tabs'
     | 'switch'
-    | 'profileHeader'
-    | 'profileBody';
+    | string;
   children?: React.ReactNode;
   color?: string;
 }
@@ -43,7 +42,7 @@ export function TextFields(props: TextFieldsProps) {
       );
     case 'formLabel':
       return (
-        <Text fontSize="s3" fontWeight="500" {...rest} lineHeight="1.5">
+        <Text fontSize="s3" fontWeight="medium" {...rest} lineHeight="1.5">
           {children}
         </Text>
       );
@@ -80,20 +79,6 @@ export function TextFields(props: TextFieldsProps) {
     case 'switch':
       return (
         <Text fontSize="r1" fontWeight="500" {...rest} lineHeight="1.3">
-          {children}
-        </Text>
-      );
-
-    case 'profileHeader':
-      return (
-        <Text fontSize="r1" fontWeight="Medium" {...rest} lineHeight="1.5">
-          {children}
-        </Text>
-      );
-
-    case 'profileBody':
-      return (
-        <Text fontSize="s3" fontWeight="Regular" {...rest} lineHeight="1.5">
           {children}
         </Text>
       );

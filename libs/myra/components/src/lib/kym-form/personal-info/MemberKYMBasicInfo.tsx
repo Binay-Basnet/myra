@@ -1,19 +1,30 @@
 import React from 'react';
-import { FormInput, FormSelect } from '@saccos/myra/components';
-import { Grid, Text } from '@saccos/myra/ui';
+import { Control } from 'react-hook-form';
+import { KymIndMemberInput } from '@saccos/myra/graphql';
+import { Text } from '@saccos/myra/ui';
 
-export const MemberBasicInfo = ({ control }) => {
+import { GroupContainer, InputGroupContainer } from '../containers';
+import { FormInput, FormSelect } from '../../newFormComponents';
+
+interface IMemberKYMBasicInfo {
+  control: Control<KymIndMemberInput>;
+}
+
+export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
   return (
-    <>
-      <Text fontSize="r1" fontWeight="SemiBold">
+    <GroupContainer>
+      <Text
+        fontSize="r1"
+        fontWeight="semibold"
+        color="neutralColorLight.Gray-80"
+      >
         BASIC INFORMATION
       </Text>
-      <br />
-      <Grid templateColumns="repeat(3, 1fr)" gap={'3em'}>
+      <InputGroupContainer>
         <FormInput
           control={control}
           type="text"
-          name="firstName"
+          name={'firstName'}
           label="First Name"
           placeholder="Enter first name"
         />
@@ -37,9 +48,9 @@ export const MemberBasicInfo = ({ control }) => {
           label="Gender"
           placeholder="Select Gender"
           options={[
-            { label: 'male', value: 'male' },
-            { label: 'female', value: 'female' },
-            { label: 'other', value: 'other' },
+            { label: 'Male', value: 'Male' },
+            { label: 'Female', value: 'Female' },
+            { label: 'Other', value: 'Other' },
           ]}
         />
         <FormInput
@@ -70,7 +81,7 @@ export const MemberBasicInfo = ({ control }) => {
         />
         <FormSelect
           control={control}
-          name="educationalQualificationId"
+          name={'educationQualificationId'}
           label="Educational Qualification"
           placeholder="Select Educational Qualification"
           options={[
@@ -93,7 +104,7 @@ export const MemberBasicInfo = ({ control }) => {
             { label: 'Christain', value: 'christain' },
           ]}
         />
-      </Grid>
-    </>
+      </InputGroupContainer>
+    </GroupContainer>
   );
 };
