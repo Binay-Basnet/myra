@@ -207,9 +207,13 @@ export type CbsDataDocument = {
   maxSize: Scalars['String'];
 };
 
-export type ChequeService = {
-  enabled: Scalars['Boolean'];
-  name: Scalars['String'];
+export type ChequePastRequest = {
+  account: Account;
+  branch: Branch;
+  id: Scalars['ID'];
+  requestNumber: Scalars['Int'];
+  requestType: Scalars['String'];
+  status: EBankingChequeServiceStatus;
 };
 
 export type Citizenship = {
@@ -327,6 +331,12 @@ export type EBankingAccountQueryListArgs = {
   filter?: InputMaybe<Pagination>;
 };
 
+export enum EBankingActiveLoanStatus {
+  Pending = 'Pending',
+  Processing = 'Processing',
+  Scheduled = 'Scheduled'
+}
+
 export type EBankingAnnouncementQuery = {
   list: Array<Maybe<EBankingAppAnnouncement>>;
 };
@@ -361,12 +371,97 @@ export type EBankingAppNotificationQueryListArgs = {
   filter?: InputMaybe<NotificationFilter>;
 };
 
+export type EBankingChequeQuery = {
+  options: Array<EBankingCooperativeServiceOption>;
+  pastRequests: Array<ChequePastRequest>;
+};
+
+
+export type EBankingChequeQueryPastRequestsArgs = {
+  filter?: InputMaybe<EBankingCooperativeServiceFilter>;
+};
+
+export enum EBankingChequeServiceStatus {
+  Completed = 'Completed',
+  Declined = 'Declined',
+  Pending = 'Pending'
+}
+
 export type EBankingCombined = {
   accounts: Array<Maybe<Account>>;
   recentTransactions: Array<Maybe<Transactions>>;
   services: Array<Maybe<Services>>;
   share: EbankingShare;
 };
+
+export type EBankingCooperativeServiceFilter = {
+  requestType?: InputMaybe<Scalars['String']>;
+};
+
+export type EBankingCooperativeServiceOption = {
+  enabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  requestType?: Maybe<Scalars['String']>;
+};
+
+export type EBankingCooperativeServiceQuery = {
+  cheque?: Maybe<EBankingChequeQuery>;
+  grievance?: Maybe<EBankingGrievanceQuery>;
+  loan?: Maybe<EBankingLoanQuery>;
+};
+
+export type EBankingGrievanceHistory = {
+  applicationNumber: Scalars['Int'];
+  detailedAccount?: Maybe<Scalars['String']>;
+  feedbackDate: Scalars['Date'];
+  id: Scalars['ID'];
+  peopleInvolved?: Maybe<Scalars['String']>;
+  proposedSolution?: Maybe<Scalars['String']>;
+  status: EBankingGrievanceStatus;
+  violatedPolicies?: Maybe<Scalars['String']>;
+};
+
+export type EBankingGrievanceQuery = {
+  history: Array<EBankingGrievanceHistory>;
+  options: Array<EBankingCooperativeServiceOption>;
+};
+
+export enum EBankingGrievanceStatus {
+  Declined = 'Declined',
+  Pending = 'Pending',
+  Resolved = 'Resolved'
+}
+
+export type EBankingLoanFilter = {
+  status?: InputMaybe<Scalars['String']>;
+};
+
+export type EBankingLoanHistory = {
+  activeLoanStatus?: Maybe<EBankingActiveLoanStatus>;
+  amount: Scalars['Float'];
+  appliedDate: Scalars['Date'];
+  branch: Branch;
+  id: Scalars['String'];
+  scheduledDate?: Maybe<Scalars['Date']>;
+  status: EBankingLoanServiceStatus;
+  type: Scalars['String'];
+};
+
+export type EBankingLoanQuery = {
+  history: Array<EBankingLoanHistory>;
+  options: Array<EBankingCooperativeServiceOption>;
+};
+
+
+export type EBankingLoanQueryHistoryArgs = {
+  filter?: InputMaybe<EBankingLoanFilter>;
+};
+
+export enum EBankingLoanServiceStatus {
+  Active = 'Active',
+  Approved = 'Approved',
+  Declined = 'Declined'
+}
 
 export type EBankingNotificationQuery = {
   announcements?: Maybe<EBankingAnnouncementQuery>;
@@ -375,13 +470,13 @@ export type EBankingNotificationQuery = {
 
 export type EBankingQuery = {
   account?: Maybe<EBankingAccountQuery>;
+  cooperativeServices?: Maybe<EBankingCooperativeServiceQuery>;
   home: EBankingCombined;
   me?: Maybe<Member>;
   notification?: Maybe<EBankingNotificationQuery>;
   services?: Maybe<Array<Maybe<Services>>>;
   share?: Maybe<EBankingShareQuery>;
   transaction?: Maybe<EBankingTransactionQuery>;
-  utilities?: Maybe<UtilitiesQuery>;
 };
 
 export type EBankingShareQuery = {
@@ -533,11 +628,6 @@ export type GeneralSettingsQuery = {
   organization?: Maybe<GeneralOrganizationSettingsQuery>;
 };
 
-export type Grievance = {
-  enabled: Scalars['Boolean'];
-  name: Scalars['String'];
-};
-
 export type Identity = {
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -548,7 +638,6 @@ export type Identity = {
 
 export type InvItems = {
   itemCode: Scalars['String'];
-  itemId: Scalars['ID'];
   itemQuantity: Scalars['Float'];
   name: Scalars['String'];
   type: Scalars['String'];
@@ -559,12 +648,18 @@ export type InvItemsAddResult = {
   error?: Maybe<InvItemsError>;
   query?: Maybe<InvItemsQuery>;
   record?: Maybe<InvItems>;
+  recordId: Scalars['ID'];
 };
 
 export type InvItemsConnection = {
   edges: Array<Maybe<InvItemsEdge>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type InvItemsDataFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export type InvItemsEdge = {
@@ -585,12 +680,18 @@ export type InvItemsGroupAddResult = {
   error?: Maybe<InvItemsGroupError>;
   query?: Maybe<InvItemsGroupQuery>;
   record?: Maybe<InvItemsGroup>;
+  recordId: Scalars['ID'];
 };
 
 export type InvItemsGroupConnection = {
   edges: Array<Maybe<InvItemsGroupEdge>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type InvItemsGroupDataFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export type InvItemsGroupEdge = {
@@ -620,18 +721,19 @@ export type InvItemsGroupMutationAddArgs = {
 };
 
 export type InvItemsGroupQuery = {
-  all?: Maybe<InvItemsGroupConnection>;
   get: InvItemsGroup;
-};
-
-
-export type InvItemsGroupQueryAllArgs = {
-  pagination?: InputMaybe<Pagination>;
+  list?: Maybe<InvItemsGroupConnection>;
 };
 
 
 export type InvItemsGroupQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+
+export type InvItemsGroupQueryListArgs = {
+  filter?: InputMaybe<InvItemsGroupDataFilter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type InvItemsInput = {
@@ -659,18 +761,25 @@ export type InvItemsMutationAddArgs = {
 };
 
 export type InvItemsQuery = {
-  all?: Maybe<InvItemsConnection>;
   get: InvItems;
-};
-
-
-export type InvItemsQueryAllArgs = {
-  pagination?: InputMaybe<Pagination>;
+  getNewItemCode: Scalars['String'];
+  list?: Maybe<InvItemsConnection>;
 };
 
 
 export type InvItemsQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+
+export type InvItemsQueryGetNewItemCodeArgs = {
+  type?: InputMaybe<Scalars['String']>;
+};
+
+
+export type InvItemsQueryListArgs = {
+  filter?: InputMaybe<InvItemsDataFilter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type InvUnitOfMeasure = {
@@ -684,12 +793,18 @@ export type InvUnitOfMeasureAddResult = {
   error?: Maybe<InvUnitOfMeasureError>;
   query?: Maybe<InvUnitOfMeasureQuery>;
   record?: Maybe<InvUnitOfMeasure>;
+  recordId: Scalars['ID'];
 };
 
 export type InvUnitOfMeasureConnection = {
   edges: Array<Maybe<InvUnitOfMeasureEdge>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type InvUnitOfMeasureDataFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export type InvUnitOfMeasureEdge = {
@@ -720,18 +835,19 @@ export type InvUnitOfMeasureMutationAddArgs = {
 };
 
 export type InvUnitOfMeasureQuery = {
-  all?: Maybe<InvUnitOfMeasureConnection>;
   get: InvUnitOfMeasure;
-};
-
-
-export type InvUnitOfMeasureQueryAllArgs = {
-  pagination?: InputMaybe<Pagination>;
+  list?: Maybe<InvUnitOfMeasureConnection>;
 };
 
 
 export type InvUnitOfMeasureQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+
+export type InvUnitOfMeasureQueryListArgs = {
+  filter?: InputMaybe<InvUnitOfMeasureDataFilter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type InvVendors = {
@@ -746,12 +862,18 @@ export type InvVendorsAddResult = {
   error?: Maybe<InvVendorsError>;
   query?: Maybe<InvVendorsQuery>;
   record?: Maybe<InvVendors>;
+  recordId: Scalars['ID'];
 };
 
 export type InvVendorsConnection = {
   edges: Array<Maybe<InvVendorsEdge>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type InvVendorsDataFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export type InvVendorsEdge = {
@@ -764,12 +886,12 @@ export type InvVendorsError = InvVendorsInvalidDataError;
 export type InvVendorsInput = {
   contactName: Scalars['String'];
   contactPhoneNo: Scalars['String'];
-  creditLimit: Scalars['Float'];
-  creditTerms: Scalars['String'];
+  creditLimit?: InputMaybe<Scalars['Float']>;
+  creditTerms?: InputMaybe<Scalars['String']>;
   email: Scalars['String'];
   location: Scalars['String'];
   name: Scalars['String'];
-  openingBalance: Scalars['Float'];
+  openingBalance?: InputMaybe<Scalars['Float']>;
   panNo: Scalars['String'];
   phoneNumber: Scalars['String'];
   vendorCode: Scalars['String'];
@@ -789,18 +911,19 @@ export type InvVendorsMutationAddArgs = {
 };
 
 export type InvVendorsQuery = {
-  all?: Maybe<InvVendorsConnection>;
   get: InvVendors;
-};
-
-
-export type InvVendorsQueryAllArgs = {
-  pagination?: InputMaybe<Pagination>;
+  list?: Maybe<InvVendorsConnection>;
 };
 
 
 export type InvVendorsQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+
+export type InvVendorsQueryListArgs = {
+  filter?: InputMaybe<InvVendorsDataFilter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type InvalidDataError = {
@@ -1449,11 +1572,6 @@ export type Level2AddArgs = {
   data: ExampleInput;
 };
 
-export type LoanService = {
-  enabled: Scalars['Boolean'];
-  name: Scalars['String'];
-};
-
 export type Member = Base & {
   address?: Maybe<AddressType>;
   contact?: Maybe<Contact>;
@@ -2033,13 +2151,6 @@ export enum UserType {
   Human = 'HUMAN',
   System = 'SYSTEM'
 }
-
-export type UtilitiesQuery = {
-  chequeServices: Array<ChequeService>;
-  downloads: Array<Downloads>;
-  grievances: Array<Grievance>;
-  loanServices: Array<LoanService>;
-};
 
 export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;

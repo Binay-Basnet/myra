@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { CloseIcon } from '@chakra-ui/icons';
 import { FormControl } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
+import { FormInput } from '@saccos/myra/components';
 import {
   AmountInput,
   Box,
   Button,
   Divider,
+  Grid,
+  GridItem,
   Select,
   SwitchTabs,
   Text,
   TextInput,
-  GridItem,
-  Grid,
 } from '@saccos/myra/ui';
 import { useRouter } from 'next/router';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
-import { FormInput } from '@saccos/myra/components';
 
 const list = ['Yes', 'No'];
 const accountList = ['Cash', 'Journal', 'Bank'];

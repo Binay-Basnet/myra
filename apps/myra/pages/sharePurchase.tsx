@@ -1,30 +1,30 @@
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { BsFillTelephoneFill } from 'react-icons/bs';
+import { GrMail } from 'react-icons/gr';
+import { IoLocationSharp } from 'react-icons/io5';
+import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
 import { Form, SharePurchaseHistoryTable } from '@saccos/myra/components';
+import { FormFooter } from '@saccos/myra/components';
 import { IPurchaseFormValues } from '@saccos/myra/types';
 import {
   Avatar,
   BaseSelect,
   Box,
+  Button,
   Container,
   Grid,
   GridItem,
+  Icon,
   MainLayout,
   Navbar,
+  SwitchTabs,
   TabMenu,
   Text,
-  SwitchTabs,
-  TextInput,
   TextFields,
-  Icon,
-  Button,
+  TextInput,
 } from '@saccos/myra/ui';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { GrMail } from 'react-icons/gr';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
-import { FormFooter } from 'libs/myra/components/src/lib/form/components';
 
 const Header = () => {
   return (
