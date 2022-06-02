@@ -9,7 +9,7 @@ const MemberReportPage = () => {
 MemberReportPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
-      <MemberPagesLayout mainTitle="Member Reports">{page}</MemberPagesLayout>{' '}
+      <MemberPagesLayout>{page}</MemberPagesLayout>{' '}
     </MainLayout>
   );
 };
