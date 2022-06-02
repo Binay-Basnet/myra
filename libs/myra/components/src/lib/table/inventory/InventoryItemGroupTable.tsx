@@ -1,44 +1,36 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
+import {
+  InvItemsGroupEdge,
+  useGetInventoryItemGroupQuery,
+} from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 import { TableSearch } from '../../TableSearch';
 
-enum Gender {
-  Female = 'FEMALE',
-  Male = 'MALE',
-  Other = 'OTHER',
-}
-
-type MemberData = {
-  id: string;
-  firstName: string;
-  middleName?: string | null;
-  lastName: string;
-  gender: Gender;
-  title?: string | null;
-  dateOfBirth?: string | null;
-};
-
 export const InventoryItemGroupTable = () => {
-  const columns: Column<MemberData>[] = useMemo(
+  const { data, isLoading } = useGetInventoryItemGroupQuery();
+
+  const rowItems = data?.inventory.itemsGroup?.list?.edges ?? [];
+
+  const columns: Column<InvItemsGroupEdge>[] = useMemo(
     () => [
       {
         Header: 'Name',
-        accessor: 'firstName',
+        accessor: 'node.name',
         width: '80%',
       },
       {
         Header: 'Parent Category',
-        accessor: 'title',
+        accessor: 'node.parentCategory',
         width: '40%',
       },
 
       {
         Header: 'Description',
-        accessor: 'gender',
+        accessor: 'node.description',
         width: '40%',
       },
 
@@ -61,13 +53,8 @@ export const InventoryItemGroupTable = () => {
       <TableListPageHeader heading={'Item Groups'} />
       <TableSearch />
       <Table
-        data={[
-          {
-            firstName: 'Test Item Group',
-            title: 'Item',
-            gender: 'This is a item group',
-          },
-        ]}
+        data={rowItems}
+        isLoading={isLoading}
         columns={columns}
         sort={true}
       />
