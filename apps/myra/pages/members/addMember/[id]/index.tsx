@@ -87,6 +87,12 @@ const AddMember = () => {
             amount: 0,
           },
         ],
+        familyMemberInThisCooperative: [
+          {
+            relationshipId: '',
+            memberId: '',
+          },
+        ],
       },
     });
 

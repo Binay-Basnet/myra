@@ -153,11 +153,25 @@ export type Base = {
 };
 
 export type Branch = {
-  address?: Maybe<Scalars['String']>;
+  address: Scalars['String'];
   branchCode: Scalars['Int'];
-  contactNumber?: Maybe<Scalars['String']>;
-  district?: Maybe<Scalars['String']>;
-  manager?: Maybe<BranchManager>;
+  contactNumber: Scalars['String'];
+  district: Scalars['String'];
+  id: Scalars['ID'];
+  manager: BranchManager;
+};
+
+export type BranchAddError = BranchAddInvalidDataError;
+
+export type BranchAddInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type BranchAddResult = {
+  error?: Maybe<BranchAddError>;
+  query?: Maybe<GeneralBranchSettingsQuery>;
+  record: Branch;
+  recordId: Scalars['ID'];
 };
 
 export type BranchConnection = {
@@ -171,10 +185,6 @@ export type BranchEdge = {
   node: Branch;
 };
 
-export type BranchFilter = {
-  page: Scalars['String'];
-};
-
 export type BranchInput = {
   address?: InputMaybe<Scalars['String']>;
   branchCode?: InputMaybe<Scalars['Int']>;
@@ -185,16 +195,12 @@ export type BranchInput = {
 
 export type BranchManager = {
   id?: Maybe<Scalars['ID']>;
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 export type BranchSearchFilter = {
-  address?: InputMaybe<Scalars['String']>;
-  branchCode?: InputMaybe<Scalars['Int']>;
-  contactNumber?: InputMaybe<Scalars['String']>;
-  district?: InputMaybe<Scalars['String']>;
-  manager?: InputMaybe<Scalars['String']>;
-  searchField?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export type CbsData = {
@@ -561,11 +567,11 @@ export type Filter = {
 };
 
 export type GeneralBranchSettingsMutation = {
-  newBranch: Branch;
+  add: BranchAddResult;
 };
 
 
-export type GeneralBranchSettingsMutationNewBranchArgs = {
+export type GeneralBranchSettingsMutationAddArgs = {
   data?: InputMaybe<BranchInput>;
 };
 
@@ -576,7 +582,7 @@ export type GeneralBranchSettingsQuery = {
 
 
 export type GeneralBranchSettingsQueryGetBranchArgs = {
-  branchCode?: InputMaybe<Scalars['Int']>;
+  id: Scalars['ID'];
 };
 
 
@@ -596,13 +602,13 @@ export type GeneralOrganizationSettingsMutationInitialSetupArgs = {
 
 export type GeneralOrganizationSettingsQuery = {
   allOrganization: Array<Organization>;
-  formStatus?: Maybe<OrganizationAddFormStatus>;
+  formState?: Maybe<OrganizationFormStateQuery>;
   get?: Maybe<OrganizationGetResult>;
   getOrganization?: Maybe<Array<Organization>>;
 };
 
 
-export type GeneralOrganizationSettingsQueryFormStatusArgs = {
+export type GeneralOrganizationSettingsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
 
@@ -1727,7 +1733,6 @@ export type OrganizationAddError = OrganizationAddInvalidDataError;
 
 export type OrganizationAddFormStatus = {
   lastUpdated?: Maybe<OrganizationAddLus>;
-  sectionStatus?: Maybe<OrganizationAddSectionStatus>;
 };
 
 export type OrganizationAddInvalidDataError = {
@@ -1740,10 +1745,7 @@ export type OrganizationAddResult = {
   error?: Maybe<OrganizationAddError>;
   query?: Maybe<GeneralOrganizationSettingsQuery>;
   record?: Maybe<Organization>;
-};
-
-export type OrganizationAddSectionStatus = {
-  personal?: Maybe<OrganizationPersonalStatus>;
+  recordId: Scalars['ID'];
 };
 
 export type OrganizationAddress = {
@@ -1774,6 +1776,38 @@ export type OrganizationDocument = {
 
 export type OrganizationFilter = {
   id?: InputMaybe<Scalars['String']>;
+};
+
+export type OrganizationFormData = {
+  contactPersonContactNumber?: Maybe<Scalars['String']>;
+  contactPersonName?: Maybe<Scalars['String']>;
+  districtId?: Maybe<Scalars['ID']>;
+  documents?: Maybe<Array<Maybe<Scalars['String']>>>;
+  email?: Maybe<Scalars['String']>;
+  latitude?: Maybe<Scalars['String']>;
+  localityId?: Maybe<Scalars['ID']>;
+  logo?: Maybe<Scalars['String']>;
+  longitude?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  pan?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  provinceId?: Maybe<Scalars['ID']>;
+  regdAddress?: Maybe<Scalars['String']>;
+  regdNo?: Maybe<Scalars['String']>;
+  regdOffice?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  typeOfMember?: Maybe<TypeOfMember>;
+  vdcId?: Maybe<Scalars['ID']>;
+  wardNo?: Maybe<Scalars['ID']>;
+  website?: Maybe<Scalars['String']>;
+};
+
+export type OrganizationFormState = {
+  formData?: Maybe<OrganizationFormData>;
+};
+
+export type OrganizationFormStateQuery = {
+  data?: Maybe<OrganizationFormState>;
 };
 
 export type OrganizationGetResult = {
@@ -1816,21 +1850,15 @@ export type OrganizationPersonalLus = {
 
 export enum OrganizationPersonalSection {
   Address = 'ADDRESS',
-  BasicDetails = 'BASIC_DETAILS',
+  BasicInformation = 'BASIC_INFORMATION',
   ContactDetails = 'CONTACT_DETAILS',
   Documents = 'DOCUMENTS',
   MainContactPerson = 'MAIN_CONTACT_PERSON',
   RegistrationDetails = 'REGISTRATION_DETAILS'
 }
 
-export type OrganizationPersonalStatus = {
-  completed?: Maybe<Array<Maybe<OrganizationPersonalSection>>>;
-  error?: Maybe<Array<Maybe<OrganizationPersonalSection>>>;
-};
-
 export type OrganizationRecord = {
   organization: Organization;
-  sectionStatus?: Maybe<OrganizationAddFormStatus>;
 };
 
 export type OrganizationRegistrationDetails = {
