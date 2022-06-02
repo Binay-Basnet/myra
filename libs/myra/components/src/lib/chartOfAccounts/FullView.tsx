@@ -1,8 +1,5 @@
-import React from 'react';
-import { Box } from '@saccos/myra/ui';
-
 import { AccordionComponent } from '../accordion/AccordionComponent';
-
+import { Box } from '@saccos/myra/ui';
 export const FullView = () => {
   return (
     <Box

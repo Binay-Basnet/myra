@@ -58,13 +58,13 @@ const en = {
   members: 'Members',
   membersAddNewMembers: 'Add New Members',
   memberList: 'Member List',
-  balanceReport: 'Balance Report',
+  balanceReport: 'Member Reports',
   memberDetails: 'Member Details',
   memberSettings: 'Member Settings',
 
   navMemberList: 'Member List',
   memberNavActive: 'Active',
-  memberNavInactive: 'Inactive',
+  memberNavInactive: 'Submitted',
   memberNavWip: 'WIP',
   memberNavDraft: 'Draft',
   searchMembers: 'Search Members',
@@ -121,10 +121,9 @@ const en = {
   shareSubmitted: 'Submitted',
   shareDraft: 'Draft',
 
-  shareList: 'Share List',
+  shareBalance: 'Share Balance',
   shareReport: 'Share Report',
-  shareConsolidatedReport: 'Share Consolidated Report',
-  shareCertificatePrint: 'Share Certificate Print',
+  shareRegister: 'Share Register',
 
   //Account Page TODO ( Update Translations)
 

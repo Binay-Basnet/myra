@@ -1,6 +1,9 @@
 import { ReactElement } from 'react';
-import { InventoryItemTable, InventoryLayout } from '@saccos/myra/components';
-import Router from 'next/router';
+import {
+  InventoryItemTable,
+  InventoryPageLayout,
+} from '@saccos/myra/components';
+import { MainLayout } from '@saccos/myra/ui';
 
 const InventoryProduct = () => {
   return <InventoryItemTable />;
@@ -8,14 +11,9 @@ const InventoryProduct = () => {
 
 InventoryProduct.getLayout = function getLayout(page: ReactElement) {
   return (
-    <InventoryLayout
-      headingText="Products"
-      onClick={() => {
-        Router.push('/inventory/items/add-new-item');
-      }}
-    >
-      {page}
-    </InventoryLayout>
+    <MainLayout>
+      <InventoryPageLayout>{page}</InventoryPageLayout>{' '}
+    </MainLayout>
   );
 };
 export default InventoryProduct;

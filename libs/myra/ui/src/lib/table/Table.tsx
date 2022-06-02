@@ -54,7 +54,7 @@ export function Table<T extends Record<string, unknown>>({
 
   if (isLoading) {
     return (
-      <Flex justifyContent="center" height="100px" alignItems="center">
+      <Flex justifyContent="center" height="300px" alignItems="center">
         <Spinner
           thickness="4px"
           speed="0.65s"
@@ -67,11 +67,17 @@ export function Table<T extends Record<string, unknown>>({
   }
 
   if (data?.length === 0) {
-    return <div>No Data Found</div>;
+    return (
+      <Flex justifyContent="center" height="300px" alignItems="center">
+        <Text fontSize="r3" color="gray.500">
+          No Data Found
+        </Text>
+      </Flex>
+    );
   }
 
   return (
-    <TableContainer>
+    <TableContainer borderRadius="inherit">
       <ChakraTable size={size} {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (

@@ -1,8 +1,7 @@
 export * from './accordion/AccordianMemberPage';
 export * from './accordion/AccordionComponent';
 export * from './addMemberForms';
-export * from './chartOfAccounts/AccountList';
-export * from './chartOfAccounts/FullView';
+export * from './chartOfAccounts';
 export * from './form/Form';
 export * from './layout';
 export * from './MemberCommonForm';
@@ -30,4 +29,6 @@ export * from './table/inventory/InventoryUseOfMeasureTable';
 export * from './table/inventory/InventoryVendorTable';
 export * from './table/MemberTable';
 export * from './table/settings/chartsOfAccounts/CoaAccountListTable';
+export * from './table/share';
 export * from './table/ShareTable';
+export * from './TableListPageHeader';
