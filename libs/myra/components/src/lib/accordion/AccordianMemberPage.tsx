@@ -31,7 +31,12 @@ const SACCOSmembership: string[] = [
   'Financial Transaction Details',
   'Estimated Withdraw/Deposit Amount in the Institureion',
 ];
-const Decleration: string[] = ['Declaration', 'Declaration of the Member'];
+const Decleration: string[] = [
+  'Next to Kin',
+  'Family members in politics,"Beneficial Owner',
+  'Convicted/Non-convicted Status',
+  'Residential permit of foreign country?',
+];
 // const Text = chakra(Tab, {
 //   baseStyle: {
 //     color: '#474F5C',
@@ -49,12 +54,12 @@ const Decleration: string[] = ['Declaration', 'Declaration of the Member'];
 export function AccorrdianAddMember() {
   return (
     <Accordion allowMultiple allowToggle mb="0">
-      <AccordionItem>
+      <AccordionItem border="none">
         {({ isExpanded }) => (
           <>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                <Text fontSize={'s2'} fontWeight="600">
+                <Text fontSize={'r1'} fontWeight="600">
                   {' '}
                   1. Personal Details
                 </Text>
@@ -66,14 +71,14 @@ export function AccorrdianAddMember() {
               )}
             </AccordionButton>
 
-            <AccordionPanel pb={2}>
+            <AccordionPanel pb={2} border="none">
               {' '}
               {PersonalInformation.map((item, index) => (
                 // <Text key={`${item}${index}`}>{item}</Text>
                 <Text
                   mb="s16"
                   pl="s16"
-                  fontSize="s2"
+                  fontSize="r1"
                   fontWeight="400"
                   key={`${item}${index}`}
                 >
@@ -84,12 +89,12 @@ export function AccorrdianAddMember() {
           </>
         )}
       </AccordionItem>
-      <AccordionItem>
+      <AccordionItem border="none" mt="s12">
         {({ isExpanded }) => (
           <>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                <Text fontSize={'s2'} fontWeight="600">
+                <Text fontSize={'r1'} fontWeight="600">
                   {' '}
                   2. Professional Details
                 </Text>
@@ -108,7 +113,7 @@ export function AccorrdianAddMember() {
                   key={`${item}${index}`}
                   mb="s16"
                   pl="s16"
-                  fontSize="s2"
+                  fontSize="r1"
                   fontWeight="400"
                 >
                   {item}
@@ -118,12 +123,12 @@ export function AccorrdianAddMember() {
           </>
         )}
       </AccordionItem>
-      <AccordionItem>
+      <AccordionItem border="none" mt="s12">
         {({ isExpanded }) => (
           <>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                <Text fontSize={'s2'} fontWeight="600">
+                <Text fontSize={'r1'} fontWeight="600">
                   {' '}
                   3. SACCOS Membership
                 </Text>
@@ -142,7 +147,7 @@ export function AccorrdianAddMember() {
                   key={`${item}${index}`}
                   mb="s16"
                   pl="s16"
-                  fontSize="s2"
+                  fontSize="r1"
                   fontWeight="400"
                 >
                   {item}
@@ -152,12 +157,12 @@ export function AccorrdianAddMember() {
           </>
         )}
       </AccordionItem>
-      <AccordionItem>
+      <AccordionItem border="none" mt="s12">
         {({ isExpanded }) => (
           <>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                <Text fontSize={'s2'} fontWeight="600">
+                <Text fontSize={'r1'} fontWeight="600">
                   {' '}
                   4. Decleration
                 </Text>
@@ -176,7 +181,7 @@ export function AccorrdianAddMember() {
                   key={`${item}${index}`}
                   mb="s16"
                   pl="s16"
-                  fontSize="s2"
+                  fontSize="r1"
                   fontWeight="400"
                 >
                   {item}

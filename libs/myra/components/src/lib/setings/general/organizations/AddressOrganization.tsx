@@ -1,6 +1,6 @@
 import { Control } from 'react-hook-form';
-import { Box, Grid, GridItem, Select, TextInput } from '@saccos/myra/ui';
-import { useAllAdministrationQuery } from 'libs/myra/graphql/src';
+import { useAllAdministrationQuery } from '@saccos/myra/graphql';
+import { Box, Grid, GridItem } from '@saccos/myra/ui';
 
 import { FormSelect } from '../../../newFormComponents';
 import { FormTextInput } from '../../../newFormComponents';
@@ -62,7 +62,7 @@ export const AddressOrganization = ({ control }: Props) => {
         <GridItem>
           {' '}
           <FormSelect
-            label="Happy days"
+            label="provinces"
             options={options}
             control={control}
             onChange={(e) => {

@@ -196,31 +196,6 @@ export type BranchSearchFilter = {
   searchField?: InputMaybe<Scalars['String']>;
 };
 
-export type BranchSettingsMutation = {
-  newBranch: Branch;
-};
-
-
-export type BranchSettingsMutationNewBranchArgs = {
-  data?: InputMaybe<BranchInput>;
-};
-
-export type BranchSettingsQuery = {
-  getBranch: Branch;
-  list?: Maybe<BranchConnection>;
-};
-
-
-export type BranchSettingsQueryGetBranchArgs = {
-  branchCode?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type BranchSettingsQueryListArgs = {
-  filter?: InputMaybe<BranchSearchFilter>;
-  paginate?: InputMaybe<Pagination>;
-};
-
 export type CbsData = {
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -489,16 +464,72 @@ export type Filter = {
   orConditions: Array<OrConditions>;
 };
 
+export type GeneralBranchSettingsMutation = {
+  newBranch: Branch;
+};
+
+
+export type GeneralBranchSettingsMutationNewBranchArgs = {
+  data?: InputMaybe<BranchInput>;
+};
+
+export type GeneralBranchSettingsQuery = {
+  getBranch: Branch;
+  list?: Maybe<BranchConnection>;
+};
+
+
+export type GeneralBranchSettingsQueryGetBranchArgs = {
+  branchCode?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type GeneralBranchSettingsQueryListArgs = {
+  filter?: InputMaybe<BranchSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type GeneralOrganizationSettingsMutation = {
+  initialSetup?: Maybe<OrganizationAddResult>;
+};
+
+
+export type GeneralOrganizationSettingsMutationInitialSetupArgs = {
+  data: OrganizationInput;
+};
+
+export type GeneralOrganizationSettingsQuery = {
+  allOrganization: Array<Organization>;
+  formStatus?: Maybe<OrganizationAddFormStatus>;
+  get?: Maybe<OrganizationGetResult>;
+  getOrganization?: Maybe<Array<Organization>>;
+};
+
+
+export type GeneralOrganizationSettingsQueryFormStatusArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type GeneralOrganizationSettingsQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type GeneralOrganizationSettingsQueryGetOrganizationArgs = {
+  filter?: InputMaybe<OrganizationFilter>;
+};
+
 export type GeneralSettingsMutation = {
-  generalBranchSetting?: Maybe<BranchSettingsMutation>;
-  generalOrganizationSetting?: Maybe<OrganizationMutation>;
+  branch?: Maybe<GeneralBranchSettingsMutation>;
   kym?: Maybe<KymMutation>;
+  organization?: Maybe<GeneralOrganizationSettingsMutation>;
 };
 
 export type GeneralSettingsQuery = {
-  generalBranchSetting?: Maybe<BranchSettingsQuery>;
-  generalOrganizationSetting?: Maybe<OrganizationQuery>;
+  branch?: Maybe<GeneralBranchSettingsQuery>;
   kym?: Maybe<KymQuery>;
+  organization?: Maybe<GeneralOrganizationSettingsQuery>;
 };
 
 export type Grievance = {
@@ -1422,7 +1453,7 @@ export type OrganizationAddLus = OrganizationPersonalLus;
 
 export type OrganizationAddResult = {
   error?: Maybe<OrganizationAddError>;
-  query?: Maybe<OrganizationQuery>;
+  query?: Maybe<GeneralOrganizationSettingsQuery>;
   record?: Maybe<Organization>;
 };
 
@@ -1494,15 +1525,6 @@ export type OrganizationMainContactPerson = {
   title?: Maybe<Scalars['String']>;
 };
 
-export type OrganizationMutation = {
-  initialSetup?: Maybe<OrganizationAddResult>;
-};
-
-
-export type OrganizationMutationInitialSetupArgs = {
-  data: OrganizationInput;
-};
-
 export type OrganizationPersonalLus = {
   name?: Maybe<OrganizationPersonalSection>;
 };
@@ -1519,28 +1541,6 @@ export enum OrganizationPersonalSection {
 export type OrganizationPersonalStatus = {
   completed?: Maybe<Array<Maybe<OrganizationPersonalSection>>>;
   error?: Maybe<Array<Maybe<OrganizationPersonalSection>>>;
-};
-
-export type OrganizationQuery = {
-  allOrganization: Array<Organization>;
-  formStatus?: Maybe<OrganizationAddFormStatus>;
-  get?: Maybe<OrganizationGetResult>;
-  getOrganization?: Maybe<Array<Organization>>;
-};
-
-
-export type OrganizationQueryFormStatusArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type OrganizationQueryGetArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type OrganizationQueryGetOrganizationArgs = {
-  filter?: InputMaybe<OrganizationFilter>;
 };
 
 export type OrganizationRecord = {
@@ -1638,11 +1638,11 @@ export type Services = {
 };
 
 export type SettingsMutation = {
-  generalSettings?: Maybe<GeneralSettingsMutation>;
+  general?: Maybe<GeneralSettingsMutation>;
 };
 
 export type SettingsQuery = {
-  generalSettings?: Maybe<GeneralSettingsQuery>;
+  general?: Maybe<GeneralSettingsQuery>;
 };
 
 export type ShareBalance = {

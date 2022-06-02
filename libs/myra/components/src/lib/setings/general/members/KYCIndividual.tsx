@@ -1,149 +1,403 @@
-import { AiFillCaretRight, AiOutlineCaretDown } from 'react-icons/ai';
+import { CgCloseO, CgMenuGridO } from 'react-icons/cg';
+import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import { AddIcon } from '@chakra-ui/icons';
 import {
   Accordion,
   AccordionButton,
-  AccordionIcon,
   AccordionItem,
   AccordionPanel,
 } from '@chakra-ui/react';
-import { Box, Text } from '@saccos/myra/ui';
+import { Box, Button, Checkbox, Icon, Switch, Text } from '@saccos/myra/ui';
+const genderDetails = ['Male', 'Female', 'Transgender'];
 
-const KYCIndividualPersonal = () => {
+const Gender = () => {
+  return (
+    <Box>
+      {genderDetails.map((item, index) => {
+        return (
+          <Box
+            display={'flex'}
+            key={`${item}${index}`}
+            justifyContent={'space-between'}
+            alignItems="center"
+            h="60px"
+          >
+            <Box pr="s16" display={'flex'} justifyContent="flex-start">
+              <Icon size="md" as={CgMenuGridO} />
+              <Switch size="md" ml="s20" />
+              <Text
+                fontSize={'r1'}
+                fontWeight="400"
+                color={'gray.800'}
+                ml="s20"
+              >
+                {item}
+              </Text>
+            </Box>
+            <Icon as={CgCloseO} size="sm" />
+          </Box>
+        );
+      })}
+    </Box>
+  );
+};
+const PersonalInformation = [
+  'Gender',
+  'Nationality',
+  'Contact Details',
+  'Education Qualification',
+  'Religion',
+  'Marital Status',
+  'Family Relationship',
+  'Identification Documents',
+];
+
+export const KYCIndividualPersonal = () => {
   return (
     <Accordion allowMultiple allowToggle mb="0">
       <AccordionItem>
         {({ isExpanded }) => (
           <>
-            <AccordionButton>
+            <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
               <Box flex="1" textAlign="left">
-                <Text fontSize={'s2'} fontWeight="600">
+                <Text fontSize={'r1'} fontWeight="600">
                   {' '}
-                  1. Personal Details
+                  Section 1 : Personal Information
                 </Text>
               </Box>
               {isExpanded ? (
-                <AiOutlineCaretDown fontSize="12px" />
+                <>
+                  <Button
+                    variant="ghost"
+                    size={'md'}
+                    shade="primary"
+                    leftIcon={<AddIcon />}
+                    mr="s8"
+                  >
+                    Add New Field
+                  </Button>
+                  <IoChevronUpOutline fontSize="18px" />
+                </>
               ) : (
-                <AiFillCaretRight fontSize="12px" />
+                <IoChevronDownOutline fontSize="18px" />
               )}
             </AccordionButton>
 
             <AccordionPanel pb={2}>
-              {' '}
-              {PersonalInformation.map((item, index) => (
-                // <Text key={`${item}${index}`}>{item}</Text>
-                <Text
-                  mb="s16"
-                  pl="s16"
-                  fontSize="s2"
-                  fontWeight="400"
-                  key={`${item}${index}`}
-                >
-                  {item}
-                </Text>
-              ))}
+              <Accordion allowMultiple allowToggle mb="0" px="s12" pb="s12">
+                {' '}
+                {PersonalInformation.map((item, index) => (
+                  // <Text key={`${item}${index}`}>{item}</Text>
+                  <AccordionItem key={`${item}${index}`} mt="s12">
+                    {({ isExpanded }) => (
+                      <>
+                        <AccordionButton
+                          bg={isExpanded ? '#E0E5EB' : ''}
+                          h="60px"
+                        >
+                          <Box flex="1" textAlign="left">
+                            <Text fontSize={'r1'} fontWeight="500">
+                              {' '}
+                              {item}
+                            </Text>
+                          </Box>
+                          {isExpanded ? (
+                            <IoChevronUpOutline fontSize="18px" />
+                          ) : (
+                            <IoChevronDownOutline fontSize="18px" />
+                          )}
+                        </AccordionButton>
+                        <AccordionPanel
+                          pb={'0'}
+                          border={'1px'}
+                          borderColor={'border.layout'}
+                        >
+                          {Gender()}
+                        </AccordionPanel>
+                        <AccordionPanel pb="0">
+                          <Box
+                            display="flex"
+                            alignItems={'center'}
+                            justifyContent="space-between"
+                            h="60px"
+                          >
+                            <Button
+                              variant="ghost"
+                              size={'md'}
+                              shade="primary"
+                              leftIcon={<AddIcon />}
+                            >
+                              Add New Option
+                            </Button>
+                            <Checkbox children="Show “Other” option" />
+                          </Box>
+                        </AccordionPanel>
+                      </>
+                    )}
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </AccordionPanel>
           </>
         )}
       </AccordionItem>
-      <AccordionItem>
+      {/* ====================================================part 2 ============================================================== */}
+      <AccordionItem mt="s16">
         {({ isExpanded }) => (
           <>
-            <AccordionButton>
+            <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
               <Box flex="1" textAlign="left">
-                <Text fontSize={'s2'} fontWeight="600">
+                <Text fontSize={'r1'} fontWeight="600">
                   {' '}
-                  2. Professional Details
+                  Section 2: Professional Information
                 </Text>
               </Box>
               {isExpanded ? (
-                <AiOutlineCaretDown fontSize="12px" />
+                <>
+                  <Button
+                    variant="ghost"
+                    size={'md'}
+                    shade="primary"
+                    leftIcon={<AddIcon />}
+                    mr="s8"
+                  >
+                    Add New Field
+                  </Button>
+                  <IoChevronUpOutline fontSize="18px" />
+                </>
               ) : (
-                <AiFillCaretRight fontSize="12px" />
+                <IoChevronDownOutline fontSize="18px" />
               )}
             </AccordionButton>
 
             <AccordionPanel pb={2}>
-              {' '}
-              {ProfessionalDetails.map((item, index) => (
-                <Text
-                  key={`${item}${index}`}
-                  mb="s16"
-                  pl="s16"
-                  fontSize="s2"
-                  fontWeight="400"
-                >
-                  {item}
-                </Text>
-              ))}
+              <Accordion allowMultiple allowToggle mb="0" px="s12" pb="s12">
+                {' '}
+                {PersonalInformation.map((item, index) => (
+                  // <Text key={`${item}${index}`}>{item}</Text>
+                  <AccordionItem key={`${item}${index}`} mt="s12">
+                    {({ isExpanded }) => (
+                      <>
+                        <AccordionButton
+                          bg={isExpanded ? '#E0E5EB' : ''}
+                          h="60px"
+                        >
+                          <Box flex="1" textAlign="left">
+                            <Text fontSize={'r1'} fontWeight="500">
+                              {' '}
+                              {item}
+                            </Text>
+                          </Box>
+                          {isExpanded ? (
+                            <IoChevronUpOutline fontSize="18px" />
+                          ) : (
+                            <IoChevronDownOutline fontSize="18px" />
+                          )}
+                        </AccordionButton>
+                        <AccordionPanel
+                          pb={'0'}
+                          border={'1px'}
+                          borderColor={'border.layout'}
+                        >
+                          {Gender()}
+                        </AccordionPanel>
+                        <AccordionPanel pb="0">
+                          <Box
+                            display="flex"
+                            alignItems={'center'}
+                            justifyContent="space-between"
+                            h="60px"
+                          >
+                            <Button
+                              variant="ghost"
+                              size={'md'}
+                              shade="primary"
+                              leftIcon={<AddIcon />}
+                            >
+                              Add New Option
+                            </Button>
+                            <Checkbox children="Show “Other” option" />
+                          </Box>
+                        </AccordionPanel>
+                      </>
+                    )}
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </AccordionPanel>
           </>
         )}
       </AccordionItem>
-      <AccordionItem>
+      {/* ===============================================================part3===================================================== */}
+      <AccordionItem mt="s16">
         {({ isExpanded }) => (
           <>
-            <AccordionButton>
+            <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
               <Box flex="1" textAlign="left">
-                <Text fontSize={'s2'} fontWeight="600">
+                <Text fontSize={'r1'} fontWeight="600">
                   {' '}
-                  3. SACCOS Membership
+                  Section 3 : Cooperative Information
                 </Text>
               </Box>
               {isExpanded ? (
-                <AiOutlineCaretDown fontSize="12px" />
+                <>
+                  <Button
+                    variant="ghost"
+                    size={'md'}
+                    shade="primary"
+                    leftIcon={<AddIcon />}
+                    mr="s8"
+                  >
+                    Add New Field
+                  </Button>
+                  <IoChevronUpOutline fontSize="18px" />
+                </>
               ) : (
-                <AiFillCaretRight fontSize="12px" />
+                <IoChevronDownOutline fontSize="18px" />
               )}
             </AccordionButton>
 
             <AccordionPanel pb={2}>
-              {' '}
-              {SACCOSmembership.map((item, index) => (
-                <Text
-                  key={`${item}${index}`}
-                  mb="s16"
-                  pl="s16"
-                  fontSize="s2"
-                  fontWeight="400"
-                >
-                  {item}
-                </Text>
-              ))}
+              <Accordion allowMultiple allowToggle mb="0" px="s12" pb="s12">
+                {' '}
+                {PersonalInformation.map((item, index) => (
+                  // <Text key={`${item}${index}`}>{item}</Text>
+                  <AccordionItem key={`${item}${index}`} mt="s12">
+                    {({ isExpanded }) => (
+                      <>
+                        <AccordionButton
+                          bg={isExpanded ? '#E0E5EB' : ''}
+                          h="60px"
+                        >
+                          <Box flex="1" textAlign="left">
+                            <Text fontSize={'r1'} fontWeight="500">
+                              {' '}
+                              {item}
+                            </Text>
+                          </Box>
+                          {isExpanded ? (
+                            <IoChevronUpOutline fontSize="18px" />
+                          ) : (
+                            <IoChevronDownOutline fontSize="18px" />
+                          )}
+                        </AccordionButton>
+                        <AccordionPanel
+                          pb={'0'}
+                          border={'1px'}
+                          borderColor={'border.layout'}
+                        >
+                          {Gender()}
+                        </AccordionPanel>
+                        <AccordionPanel pb="0">
+                          <Box
+                            display="flex"
+                            alignItems={'center'}
+                            justifyContent="space-between"
+                            h="60px"
+                          >
+                            <Button
+                              variant="ghost"
+                              size={'md'}
+                              shade="primary"
+                              leftIcon={<AddIcon />}
+                            >
+                              Add New Option
+                            </Button>
+                            <Checkbox children="Show “Other” option" />
+                          </Box>
+                        </AccordionPanel>
+                      </>
+                    )}
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </AccordionPanel>
           </>
         )}
       </AccordionItem>
-      <AccordionItem>
+      {/* ============================================= part 4 ============================================================ */}
+      <AccordionItem mt="s16">
         {({ isExpanded }) => (
           <>
-            <AccordionButton>
+            <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
               <Box flex="1" textAlign="left">
-                <Text fontSize={'s2'} fontWeight="600">
+                <Text fontSize={'r1'} fontWeight="600">
                   {' '}
-                  4. Decleration
+                  Section 4 : Documents and Declarations
                 </Text>
               </Box>
               {isExpanded ? (
-                <AiOutlineCaretDown fontSize="12px" />
+                <>
+                  <Button
+                    variant="ghost"
+                    size={'md'}
+                    shade="primary"
+                    leftIcon={<AddIcon />}
+                    mr="s8"
+                  >
+                    Add New Field
+                  </Button>
+                  <IoChevronUpOutline fontSize="18px" />
+                </>
               ) : (
-                <AiFillCaretRight fontSize="12px" />
+                <IoChevronDownOutline fontSize="18px" />
               )}
             </AccordionButton>
 
             <AccordionPanel pb={2}>
-              {' '}
-              {Decleration.map((item, index) => (
-                <Text
-                  key={`${item}${index}`}
-                  mb="s16"
-                  pl="s16"
-                  fontSize="s2"
-                  fontWeight="400"
-                >
-                  {item}
-                </Text>
-              ))}
+              <Accordion allowMultiple allowToggle mb="0" px="s12" pb="s12">
+                {' '}
+                {PersonalInformation.map((item, index) => (
+                  // <Text key={`${item}${index}`}>{item}</Text>
+                  <AccordionItem key={`${item}${index}`} mt="s12">
+                    {({ isExpanded }) => (
+                      <>
+                        <AccordionButton
+                          bg={isExpanded ? '#E0E5EB' : ''}
+                          h="60px"
+                        >
+                          <Box flex="1" textAlign="left">
+                            <Text fontSize={'r1'} fontWeight="500">
+                              {' '}
+                              {item}
+                            </Text>
+                          </Box>
+                          {isExpanded ? (
+                            <IoChevronUpOutline fontSize="18px" />
+                          ) : (
+                            <IoChevronDownOutline fontSize="18px" />
+                          )}
+                        </AccordionButton>
+                        <AccordionPanel
+                          pb={'0'}
+                          border={'1px'}
+                          borderColor={'border.layout'}
+                        >
+                          {Gender()}
+                        </AccordionPanel>
+                        <AccordionPanel pb="0">
+                          <Box
+                            display="flex"
+                            alignItems={'center'}
+                            justifyContent="space-between"
+                            h="60px"
+                          >
+                            <Button
+                              variant="ghost"
+                              size={'md'}
+                              shade="primary"
+                              leftIcon={<AddIcon />}
+                            >
+                              Add New Option
+                            </Button>
+                            <Checkbox children="Show “Other” option" />
+                          </Box>
+                        </AccordionPanel>
+                      </>
+                    )}
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </AccordionPanel>
           </>
         )}

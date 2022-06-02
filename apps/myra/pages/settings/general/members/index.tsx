@@ -34,7 +34,7 @@ const Members = () => {
           fontWeight="600"
           color="neutralColorLight.Gray-80"
         >
-          Organization
+          Members
         </Text>
       </Box>
       <Box display={'flex'} flexDirection="row" h="fit-content">
