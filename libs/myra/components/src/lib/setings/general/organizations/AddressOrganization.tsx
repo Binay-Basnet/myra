@@ -1,8 +1,10 @@
 import { Control } from 'react-hook-form';
-import { Box, Grid, GridItem, Select, TextInput } from '@saccos/myra/ui';
+import { useAllAdministrationQuery } from '@saccos/myra/graphql';
+import { Box, Grid, GridItem } from '@saccos/myra/ui';
 
 import { FormSelect } from '../../../newFormComponents';
 import { FormTextInput } from '../../../newFormComponents';
+
 const options = [
   { label: 'Option 1', value: '1' },
   { label: 'Option 2', value: '2' },
@@ -11,6 +13,48 @@ const options = [
 type Props = {
   control: Control<any>;
 };
+
+interface IOptions {
+  label: string;
+  value: string;
+}
+
+const useAdminsitration = () => {
+  const { status, data } = useAllAdministrationQuery();
+
+  if (status === 'loading') return null;
+
+  if (data) {
+    const provinceOptions = data.administration.all.map(({ id, name }) => ({
+      label: name,
+      value: id,
+    }));
+
+    const allProvinces = data.administration.all;
+
+    const districtsOptions = allProvinces.reduce((obj, curr) => {
+      return {
+        ...obj,
+        [curr.id]: curr.districts.map(({ id, name }) => ({
+          label: name,
+          value: id,
+        })),
+      };
+    }, {} as { [key: string]: Array<IOptions> });
+    const municipalitiesOptions = allProvinces.reduce((obj, curr) => {
+      return {
+        ...obj,
+        [curr.id]: curr.districts.map(({ id, name }) => ({
+          label: name,
+          value: id,
+        })),
+      };
+    }, {} as { [key: string]: Array<IOptions> });
+
+    return { provinces: provinceOptions, districts: districtsOptions };
+  }
+};
+
 export const AddressOrganization = ({ control }: Props) => {
   return (
     <Box>
@@ -18,9 +62,12 @@ export const AddressOrganization = ({ control }: Props) => {
         <GridItem>
           {' '}
           <FormSelect
-            label="Province"
+            label="provinces"
             options={options}
             control={control}
+            onChange={(e) => {
+              console.log('event', e);
+            }}
             name="organizationProvince"
           />
         </GridItem>

@@ -17,6 +17,7 @@ export type Scalars = {
   Any: unknown;
   Cursor: string;
   Date: string;
+  HTML: any;
   InvalidData: Record<string, Array<string>>;
   Map: Record<string, string>;
   Time: string;
@@ -336,19 +337,19 @@ export type EBankingAnnouncementQueryListArgs = {
 };
 
 export type EBankingAppAnnouncement = {
-  date?: Maybe<Scalars['Date']>;
-  description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['ID']>;
-  subject?: Maybe<Scalars['String']>;
-  summary?: Maybe<Scalars['String']>;
+  date: Scalars['Date'];
+  details: Scalars['HTML'];
+  id: Scalars['ID'];
+  summary: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type EBankingAppNotification = {
-  date?: Maybe<Scalars['Date']>;
-  description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['ID']>;
-  parameters?: Maybe<Scalars['Map']>;
-  subject?: Maybe<Scalars['String']>;
+  date: Scalars['Date'];
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  parameters: Scalars['Map'];
+  subject: Scalars['String'];
 };
 
 export type EBankingAppNotificationQuery = {
@@ -825,8 +826,24 @@ export type KymAdditionalFields = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+export type KymAdditionalFieldsFormState = {
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+export type KymAddressType = {
+  isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
+  permanent?: Maybe<KymLocalizedAddress>;
+  temporary?: Maybe<KymLocalizedAddress>;
+};
+
 export type KymDocuments = {
   documentUrl?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  id: Scalars['ID'];
+};
+
+export type KymDocumentsFormState = {
+  documentUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
   id: Scalars['ID'];
 };
 
@@ -835,13 +852,28 @@ export type KymFamilyDetails = {
   relationshipId: Scalars['ID'];
 };
 
+export type KymFamilyDetailsFormState = {
+  fullName?: Maybe<Scalars['String']>;
+  relationshipId: Scalars['ID'];
+};
+
 export type KymFamilyMemberDetailsInThisCooperative = {
   memberId?: InputMaybe<Scalars['ID']>;
   relationshipId?: InputMaybe<Scalars['ID']>;
 };
 
+export type KymFamilyMemberDetailsInThisCooperativeFormState = {
+  memberId?: Maybe<Scalars['ID']>;
+  relationshipId?: Maybe<Scalars['ID']>;
+};
+
 export type KymIdentification = {
   fields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  id: Scalars['ID'];
+};
+
+export type KymIdentificationFormState = {
+  fields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
   id: Scalars['ID'];
 };
 
@@ -851,10 +883,16 @@ export type KymIncomeSourceDetails = {
   source?: InputMaybe<Scalars['String']>;
 };
 
+export type KymIncomeSourceDetailsFormState = {
+  additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
+  amount?: Maybe<Scalars['Float']>;
+  source?: Maybe<Scalars['String']>;
+};
+
 export type KymIndAddError = KymIndAddInvalidDataError;
 
 export type KymIndAddFormStatus = {
-  lastUpdated?: Maybe<KymIndAddLus>;
+  lastUpdated: KymIndAddLus;
   sectionStatus?: Maybe<KymIndAddSectionStatus>;
 };
 
@@ -886,7 +924,7 @@ export type KymIndAddSectionStatus = {
 };
 
 export type KymIndCooperativeLus = {
-  name?: Maybe<KymIndPersonalSection>;
+  name: KymIndPersonalSection;
 };
 
 export enum KymIndCooperativeMemberSection {
@@ -903,7 +941,7 @@ export type KymIndCooperativeMemberStatus = {
 };
 
 export type KymIndDeclarationLus = {
-  name?: Maybe<KymIndPersonalSection>;
+  name: KymIndPersonalSection;
 };
 
 export enum KymIndDeclarationSection {
@@ -913,6 +951,72 @@ export enum KymIndDeclarationSection {
 export type KymIndDeclarationStatus = {
   completed?: Maybe<Array<Maybe<KymIndDeclarationSection>>>;
   error?: Maybe<Array<Maybe<KymIndDeclarationSection>>>;
+};
+
+export type KymIndFormData = {
+  annualIncomeSourceId?: Maybe<Scalars['ID']>;
+  beneficialFullName?: Maybe<Scalars['String']>;
+  beneficialRelationshipId?: Maybe<Scalars['ID']>;
+  convictionDetails?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<KymDocumentsFormState>>>;
+  educationQualificationId?: Maybe<Scalars['ID']>;
+  email?: Maybe<Scalars['String']>;
+  estimatedAnnualDepositAmount?: Maybe<Scalars['Float']>;
+  estimatedAnnualLoanAmount?: Maybe<Scalars['Float']>;
+  estimatedAnnualTransactionAmount?: Maybe<Scalars['Float']>;
+  estimatedAnnualTransactionFrequencyId?: Maybe<Scalars['ID']>;
+  ethnicityId?: Maybe<Scalars['ID']>;
+  familyDetails?: Maybe<Array<Maybe<KymFamilyDetailsFormState>>>;
+  familyMemberInThisCooperative?: Maybe<Array<Maybe<KymFamilyMemberDetailsInThisCooperativeFormState>>>;
+  firstName?: Maybe<Scalars['String']>;
+  foreignResidentialPermitDetails?: Maybe<Array<Maybe<KymIdentificationFormState>>>;
+  genderId?: Maybe<Scalars['ID']>;
+  hasBeneficialOwner?: Maybe<Scalars['Boolean']>;
+  hasForeignResidentialPermit?: Maybe<Scalars['Boolean']>;
+  identification?: Maybe<Array<Maybe<KymFamilyDetailsFormState>>>;
+  incomeSourceDetails?: Maybe<Array<Maybe<KymIncomeSourceDetailsFormState>>>;
+  isConvicted?: Maybe<Scalars['Boolean']>;
+  isMemberOfAnotherCooperative?: Maybe<Scalars['Boolean']>;
+  isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
+  isPoliticallyExposed?: Maybe<Scalars['Boolean']>;
+  lastName?: Maybe<Scalars['String']>;
+  latitude?: Maybe<Scalars['String']>;
+  loan?: Maybe<Scalars['Float']>;
+  localKinAddress?: Maybe<Scalars['String']>;
+  localKinContact?: Maybe<Scalars['String']>;
+  localKinName?: Maybe<Scalars['String']>;
+  localKinRelationshipId?: Maybe<Scalars['ID']>;
+  longitude?: Maybe<Scalars['String']>;
+  mainOccupation?: Maybe<Array<Maybe<KymOccupationDetailsFormState>>>;
+  middleName?: Maybe<Scalars['String']>;
+  mobileNumber?: Maybe<Scalars['Int']>;
+  nationalityId?: Maybe<Scalars['ID']>;
+  occupationId?: Maybe<Scalars['ID']>;
+  other?: Maybe<Scalars['Float']>;
+  otherOccupation?: Maybe<Scalars['String']>;
+  permanentDistrictId?: Maybe<Scalars['ID']>;
+  permanentLocalityId?: Maybe<Scalars['ID']>;
+  permanentStateId?: Maybe<Scalars['ID']>;
+  permanentTole?: Maybe<Scalars['String']>;
+  permanentWardId?: Maybe<Scalars['ID']>;
+  phoneNumber?: Maybe<Scalars['Int']>;
+  purposeId?: Maybe<Scalars['ID']>;
+  religionId?: Maybe<Scalars['ID']>;
+  savings?: Maybe<Scalars['Float']>;
+  share?: Maybe<Scalars['Int']>;
+  spouseOccupation?: Maybe<Array<Maybe<KymOccupationDetailsFormState>>>;
+  temporaryDistrictId?: Maybe<Scalars['ID']>;
+  temporaryLocalityId?: Maybe<Scalars['ID']>;
+  temporaryStateId?: Maybe<Scalars['ID']>;
+  temporaryTole?: Maybe<Scalars['String']>;
+  temporaryWardId?: Maybe<Scalars['ID']>;
+};
+
+export type KymIndFormState = {
+  formData?: Maybe<KymIndFormData>;
+  lastUpdated: KymIndAddLus;
+  sectionStatus?: Maybe<KymIndAddSectionStatus>;
 };
 
 export type KymIndGetResult = {
@@ -1006,7 +1110,7 @@ export type KymIndMutationAddArgs = {
 };
 
 export type KymIndPersonalLus = {
-  name?: Maybe<KymIndPersonalSection>;
+  name: KymIndPersonalSection;
 };
 
 export enum KymIndPersonalSection {
@@ -1025,7 +1129,7 @@ export type KymIndPersonalStatus = {
 };
 
 export type KymIndProfessionalLus = {
-  name?: Maybe<KymIndPersonalSection>;
+  name: KymIndPersonalSection;
 };
 
 export enum KymIndProfessionalSection {
@@ -1041,14 +1145,14 @@ export type KymIndProfessionalStatus = {
 };
 
 export type KymIndQuery = {
-  formStatus?: Maybe<KymIndAddFormStatus>;
+  formState?: Maybe<KymIndFormStateQuery>;
   get?: Maybe<KymIndGetResult>;
   options?: Maybe<KymIndMemberOptionQuery>;
   translate: Array<Maybe<TranslateData>>;
 };
 
 
-export type KymIndQueryFormStatusArgs = {
+export type KymIndQueryFormStateArgs = {
   id: Scalars['ID'];
 };
 
@@ -1067,6 +1171,59 @@ export type KymIndRecord = {
   sectionStatus?: Maybe<KymIndAddFormStatus>;
 };
 
+export type KymLocalizedAddress = {
+  district?: Maybe<Scalars['String']>;
+  locality?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  tole?: Maybe<Scalars['String']>;
+  wardNo?: Maybe<Scalars['String']>;
+};
+
+export type KymLocalizedFamilyDetails = {
+  fatherName?: Maybe<Scalars['String']>;
+  grandFatherName?: Maybe<Scalars['String']>;
+  grandMotherName?: Maybe<Scalars['String']>;
+  motherName?: Maybe<Scalars['String']>;
+  spouseName?: Maybe<Scalars['String']>;
+};
+
+export type KymLocalizedMemberList = Base & {
+  address?: Maybe<KymAddressType>;
+  contact?: Maybe<Contact>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  documents?: Maybe<Document>;
+  family?: Maybe<KymLocalizedFamilyDetails>;
+  id: Scalars['ID'];
+  memberId?: Maybe<Scalars['String']>;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  nominee?: Maybe<KymLocalizedNominee>;
+  objState: ObjState;
+  personalInformation?: Maybe<KymLocalizedPersonalInformation>;
+  searchText?: Maybe<Scalars['String']>;
+};
+
+export type KymLocalizedNominee = {
+  address?: Maybe<KymAddressType>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
+  relation?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+export type KymLocalizedPersonalInformation = {
+  dateOfBirth?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['String']>;
+  name?: Maybe<Name>;
+  nationality?: Maybe<Scalars['String']>;
+  occupation?: Maybe<Scalars['String']>;
+  panNumber?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
 export type KymMemberDataFilter = {
   id?: InputMaybe<Scalars['ID']>;
   objState?: InputMaybe<ObjState>;
@@ -1081,7 +1238,7 @@ export type KymMemberListConnection = {
 
 export type KymMemberListEdges = {
   cursor: Scalars['Cursor'];
-  node?: Maybe<Member>;
+  node?: Maybe<KymLocalizedMemberList>;
 };
 
 export type KymMemberTypes = {
@@ -1238,6 +1395,15 @@ export type KymOccupationDetails = {
   idNumber?: InputMaybe<Scalars['String']>;
   occupation: Scalars['ID'];
   orgName?: InputMaybe<Scalars['String']>;
+};
+
+export type KymOccupationDetailsFormState = {
+  additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
+  address?: Maybe<Scalars['String']>;
+  estimatedAnnualIncome?: Maybe<Scalars['Float']>;
+  idNumber?: Maybe<Scalars['String']>;
+  occupation: Scalars['ID'];
+  orgName?: Maybe<Scalars['String']>;
 };
 
 export type KymQuery = {
@@ -1875,6 +2041,10 @@ export type UtilitiesQuery = {
   loanServices: Array<LoanService>;
 };
 
+export type KymIndFormStateQuery = {
+  data?: Maybe<KymIndFormState>;
+};
+
 export type GetNewIdMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1887,6 +2057,11 @@ export type SetMemberDataMutationVariables = Exact<{
 
 
 export type SetMemberDataMutation = { members: { individual?: { add?: { recordId: string } | null } | null } };
+
+export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string }> }> }> } };
 
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
@@ -1938,6 +2113,36 @@ export const useSetMemberDataMutation = <
     useMutation<SetMemberDataMutation, TError, SetMemberDataMutationVariables, TContext>(
       ['setMemberData'],
       useAxios<SetMemberDataMutation, SetMemberDataMutationVariables>(SetMemberDataDocument),
+      options
+    );
+export const AllAdministrationDocument = `
+    query allAdministration {
+  administration {
+    all {
+      id
+      name
+      districts {
+        id
+        name
+        municipalities {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useAllAdministrationQuery = <
+      TData = AllAdministrationQuery,
+      TError = unknown
+    >(
+      variables?: AllAdministrationQueryVariables,
+      options?: UseQueryOptions<AllAdministrationQuery, TError, TData>
+    ) =>
+    useQuery<AllAdministrationQuery, TError, TData>(
+      variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
+      useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
       options
     );
 export const GetMemberListDocument = `

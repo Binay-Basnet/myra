@@ -3,6 +3,9 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 import { Column, Table } from '@saccos/myra/ui';
 
+import { TableListPageHeader } from '../../TableListPageHeader';
+import { TableSearch } from '../../TableSearch';
+
 enum Gender {
   Female = 'FEMALE',
   Male = 'MALE',
@@ -72,20 +75,25 @@ export const InventoryItemTable = () => {
   );
 
   return (
-    <Table
-      data={[
-        {
-          firstName: 'Hello',
-          lastName: '123',
-          title: '123',
-          dateOfBirth: '1331',
-          location: 'Patan, Lalitpur',
-          gender: '301849-3910',
-          id: '123',
-        },
-      ]}
-      columns={columns}
-      sort={true}
-    />
+    <>
+      <TableListPageHeader heading={'Items'} />
+      <TableSearch />
+
+      <Table
+        data={[
+          {
+            firstName: 'Hello',
+            lastName: '123',
+            title: '123',
+            dateOfBirth: '1331',
+            location: 'Patan, Lalitpur',
+            gender: '301849-3910',
+            id: '123',
+          },
+        ]}
+        columns={columns}
+        sort={true}
+      />
+    </>
   );
 };

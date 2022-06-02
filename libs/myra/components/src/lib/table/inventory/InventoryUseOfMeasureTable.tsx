@@ -3,6 +3,9 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 import { Column, Table } from '@saccos/myra/ui';
 
+import { TableListPageHeader } from '../../TableListPageHeader';
+import { TableSearch } from '../../TableSearch';
+
 enum Gender {
   Female = 'FEMALE',
   Male = 'MALE',
@@ -54,16 +57,20 @@ export const InventoryUseOfMeasureTable = () => {
   );
 
   return (
-    <Table
-      data={[
-        {
-          firstName: 'Test Unit',
-          title: 'TU',
-          gender: 'false',
-        },
-      ]}
-      columns={columns}
-      sort={true}
-    />
+    <>
+      <TableListPageHeader heading={'Units of Measure'} />
+      <TableSearch />
+      <Table
+        data={[
+          {
+            firstName: 'Test Unit',
+            title: 'TU',
+            gender: 'false',
+          },
+        ]}
+        columns={columns}
+        sort={true}
+      />
+    </>
   );
 };

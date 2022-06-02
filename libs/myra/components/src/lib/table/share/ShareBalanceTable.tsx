@@ -6,6 +6,8 @@ import {
   useGetShareBalanceListQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
+import { TableListPageHeader } from 'libs/myra/components/src/lib/TableListPageHeader';
+import { TableSearch } from 'libs/myra/components/src/lib/TableSearch';
 
 export const ShareBalanceTable = () => {
   const { data, isLoading } = useGetShareBalanceListQuery();
@@ -73,11 +75,15 @@ export const ShareBalanceTable = () => {
   );
 
   return (
-    <Table
-      isLoading={isLoading}
-      data={rowData ?? []}
-      columns={columns}
-      sort={true}
-    />
+    <>
+      <TableListPageHeader heading={'Share Balance'} />
+      <TableSearch />
+      <Table
+        isLoading={isLoading}
+        data={rowData ?? []}
+        columns={columns}
+        sort={true}
+      />
+    </>
   );
 };

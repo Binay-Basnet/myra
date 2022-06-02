@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import { MemberPageLayout, MemberTable } from '@saccos/myra/components';
-import { Box } from '@saccos/myra/ui';
+import { MemberPagesLayout, MemberTable } from '@saccos/myra/components';
+import { Box, MainLayout } from '@saccos/myra/ui';
 
 const Member = () => {
   return (
@@ -12,7 +12,9 @@ const Member = () => {
 
 Member.getLayout = function getLayout(page: ReactElement) {
   return (
-    <MemberPageLayout mainTitle="Member Settings">{page}</MemberPageLayout>
+    <MainLayout>
+      <MemberPagesLayout>{page}</MemberPagesLayout>{' '}
+    </MainLayout>
   );
 };
 
