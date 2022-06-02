@@ -6,13 +6,15 @@ import {
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 import { PopoverComponent } from '@saccos/myra/components';
+import { TableListPageHeader } from 'libs/myra/components/src/lib/TableListPageHeader';
+import { TableSearch } from 'libs/myra/components/src/lib/TableSearch';
 
 export const ShareBalanceTable = () => {
   const { data, isLoading } = useGetShareBalanceListQuery();
 
   const rowData = useMemo(() => data?.share.balance?.edges, [data]);
 
-  const popoverTitle = ['View Member Profile' ];
+  const popoverTitle = ['View Member Profile'];
 
   const columns: Column<ShareBalanceEdge>[] = useMemo(
     () => [
@@ -62,20 +64,22 @@ export const ShareBalanceTable = () => {
 
       {
         accessor: 'actions',
-        Cell: () => (
-          <PopoverComponent title={popoverTitle} />,
-        ),
+        Cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
     []
   );
 
   return (
-    <Table
-      isLoading={isLoading}
-      data={rowData ?? []}
-      columns={columns}
-      sort={true}
-    />
+    <>
+      <TableListPageHeader heading={'Share Balance'} />
+      <TableSearch />
+      <Table
+        isLoading={isLoading}
+        data={rowData ?? []}
+        columns={columns}
+        sort={true}
+      />
+    </>
   );
 };

@@ -3,6 +3,9 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 import { Column, Table } from '@saccos/myra/ui';
 
+import { TableListPageHeader } from '../../TableListPageHeader';
+import { TableSearch } from '../../TableSearch';
+
 enum Gender {
   Female = 'FEMALE',
   Male = 'MALE',
@@ -54,16 +57,20 @@ export const InventoryItemGroupTable = () => {
   );
 
   return (
-    <Table
-      data={[
-        {
-          firstName: 'Test Item Group',
-          title: 'Item',
-          gender: 'This is a item group',
-        },
-      ]}
-      columns={columns}
-      sort={true}
-    />
+    <>
+      <TableListPageHeader heading={'Item Groups'} />
+      <TableSearch />
+      <Table
+        data={[
+          {
+            firstName: 'Test Item Group',
+            title: 'Item',
+            gender: 'This is a item group',
+          },
+        ]}
+        columns={columns}
+        sort={true}
+      />
+    </>
   );
 };

@@ -1,4 +1,5 @@
 import { SettingsGeneralMember } from '@saccos/myra/components';
+import { KYCIndividualPersonal } from '@saccos/myra/components';
 import { Box, Text } from '@saccos/myra/ui';
 
 import GeneralLayout from '../../../../../components/SettingsLayout/GeneralLayout';
@@ -18,7 +19,7 @@ const KYMIndividual = () => {
           fontWeight="600"
           color="neutralColorLight.Gray-80"
         >
-          Organization
+          Members
         </Text>
       </Box>
       <Box display={'flex'} flexDirection="row" h="fit-content">
@@ -30,6 +31,28 @@ const KYMIndividual = () => {
           borderRightColor="border.layout"
         >
           <SettingsGeneralMember />
+        </Box>
+        <Box flex={1} p="s16">
+          <Box
+            borderBottom={'1px'}
+            borderBottomColor="border.layout"
+            py="s8"
+            w="100%"
+          >
+            <Text
+              fontSize="r2"
+              fontWeight="600"
+              color="neutralColorLight.Gray-80"
+            >
+              KYM Form - Individual
+            </Text>
+            <Text pt={'s2'} fontSize="r1" fontWeight="400" color="gray.400">
+              Settings to change options and fields in KYM form for individuals
+            </Text>
+          </Box>
+          <Box mt="s16">
+            <KYCIndividualPersonal />
+          </Box>
         </Box>
       </Box>
     </Box>

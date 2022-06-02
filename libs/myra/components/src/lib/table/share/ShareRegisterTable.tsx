@@ -8,6 +8,9 @@ import {
 import { Column, Table } from '@saccos/myra/ui';
 import { PopoverComponent } from '@saccos/myra/components';
 
+import { TableListPageHeader } from '../../TableListPageHeader';
+import { TableSearch } from '../../TableSearch';
+
 export const ShareRegisterTable = () => {
   const { data, isLoading } = useGetShareRegisterListQuery();
 
@@ -118,12 +121,34 @@ export const ShareRegisterTable = () => {
     []
   );
 
+  const shareRows = useMemo(
+    () => [
+      {
+        title: 'shareActive',
+        key: 'APPROVED',
+      },
+      {
+        title: 'shareSubmitted',
+        key: 'VALIDATED',
+      },
+      {
+        title: 'shareDraft',
+        key: 'DRAFT',
+      },
+    ],
+    []
+  );
+
   return (
-    <Table
-      isLoading={isLoading}
-      data={rowData ?? []}
-      columns={columns}
-      sort={true}
-    />
+    <>
+      <TableListPageHeader heading={'Share Register'} tabItems={shareRows} />
+      <TableSearch />
+      <Table
+        isLoading={isLoading}
+        data={rowData ?? []}
+        columns={columns}
+        sort={true}
+      />
+    </>
   );
 };

@@ -10,6 +10,9 @@ import {
 import { Column, Table } from '@saccos/myra/ui';
 import { PopoverComponent } from '@saccos/myra/components';
 
+import { TableListPageHeader } from '../TableListPageHeader';
+import { TableSearch } from '../TableSearch';
+
 export const MemberTable = () => {
   const router = useRouter();
   const { data, isLoading } = useGetMemberListQuery({
@@ -82,12 +85,34 @@ export const MemberTable = () => {
     []
   );
 
+  const memberRows = useMemo(
+    () => [
+      {
+        title: 'memberNavActive',
+        key: 'APPROVED',
+      },
+      {
+        title: 'memberNavInactive',
+        key: 'VALIDATED',
+      },
+      {
+        title: 'memberNavDraft',
+        key: 'DRAFT',
+      },
+    ],
+    []
+  );
+
   return (
-    <Table
-      isLoading={isLoading}
-      data={rowData ?? []}
-      columns={columns}
-      sort={true}
-    />
+    <>
+      <TableListPageHeader heading={'Member List'} tabItems={memberRows} />
+      <TableSearch />
+      <Table
+        isLoading={isLoading}
+        data={rowData ?? []}
+        columns={columns}
+        sort={true}
+      />
+    </>
   );
 };

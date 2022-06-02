@@ -3,6 +3,7 @@ import {
   InventoryPageLayout,
   InventoryVendorTable,
 } from '@saccos/myra/components';
+import { MainLayout } from '@saccos/myra/ui';
 
 const InventoryVendor = () => {
   return <InventoryVendorTable />;
@@ -10,7 +11,9 @@ const InventoryVendor = () => {
 
 InventoryVendor.getLayout = function getLayout(page: ReactElement) {
   return (
-    <InventoryPageLayout mainTitle="Item Group">{page}</InventoryPageLayout>
+    <MainLayout>
+      <InventoryPageLayout>{page}</InventoryPageLayout>{' '}
+    </MainLayout>
   );
 };
 export default InventoryVendor;
