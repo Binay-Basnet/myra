@@ -1,12 +1,17 @@
 import { ReactElement } from 'react';
-import { MemberPageLayout, MemberTable } from '@saccos/myra/components';
+import { MemberPagesLayout, MemberTable } from '@saccos/myra/components';
+import { MainLayout } from '@saccos/myra/ui';
 
 const MemberListPage = () => {
   return <MemberTable />;
 };
 
 MemberListPage.getLayout = function getLayout(page: ReactElement) {
-  return <MemberPageLayout mainTitle="Member List">{page}</MemberPageLayout>;
+  return (
+    <MainLayout>
+      <MemberPagesLayout>{page}</MemberPagesLayout>{' '}
+    </MainLayout>
+  );
 };
 
 export default MemberListPage;
