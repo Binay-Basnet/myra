@@ -1,12 +1,13 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
+import { KymIndMemberInput } from '@saccos/myra/graphql';
 import { Text } from '@saccos/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormInput, FormSelect } from '../../newFormComponents';
 
 interface IMemberKYMBasicInfo {
-  control: Control<any>;
+  control: Control<KymIndMemberInput>;
 }
 
 export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
@@ -23,7 +24,7 @@ export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
         <FormInput
           control={control}
           type="text"
-          name="firstName"
+          name={'firstName'}
           label="First Name"
           placeholder="Enter first name"
         />
@@ -43,7 +44,7 @@ export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
         />
         <FormSelect
           control={control}
-          name="gender"
+          name="genderId"
           label="Gender"
           placeholder="Select Gender"
           options={[
@@ -55,13 +56,13 @@ export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
         <FormInput
           control={control}
           type="date"
-          name="dateOfBirthBs"
+          name="dateOfBirth"
           label="Date of Birth(BS)"
           placeholder="Enter date of birth"
         />
         <FormSelect
           control={control}
-          name="ethnicity"
+          name="ethnicityId"
           label="Ethnicity"
           placeholder="Select Ethnicity"
           options={[
@@ -74,13 +75,13 @@ export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
         <FormInput
           control={control}
           type="text"
-          name="nationality"
+          name="nationalityId"
           label="Nationality"
           placeholder="Enter Nationality"
         />
         <FormSelect
           control={control}
-          name="educationalQualification"
+          name={'educationQualificationId'}
           label="Educational Qualification"
           placeholder="Select Educational Qualification"
           options={[
@@ -93,7 +94,7 @@ export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
         />
         <FormSelect
           control={control}
-          name="religion"
+          name="religionId"
           label="Religion"
           placeholder="Select Religion"
           options={[

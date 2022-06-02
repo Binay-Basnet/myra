@@ -30,6 +30,7 @@ export * from './table/inventory/InventoryUseOfMeasureTable';
 export * from './table/inventory/InventoryVendorTable';
 export * from './table/MemberTable';
 export * from './table/settings/chartsOfAccounts/CoaAccountListTable';
+export * from './table/ShareTable';
 export * from './table/share';
 export * from './table/ShareTable';
 export * from './TableListPageHeader';

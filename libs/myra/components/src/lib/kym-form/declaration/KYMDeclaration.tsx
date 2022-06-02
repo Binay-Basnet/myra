@@ -1,17 +1,14 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import {
-  Box,
-  Checkbox,
-  Grid,
-  RadioGroup,
-  Text,
-  TextAreaInput,
-  TextFields,
-} from '@saccos/myra/ui';
+import { Box, Checkbox, Grid, Text, TextFields } from '@saccos/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
-import { FormInput, FormSelect } from '../../newFormComponents';
+import {
+  FormInput,
+  FormRadioGroup,
+  FormSelect,
+  FormTextArea,
+} from '../../newFormComponents';
 
 interface IKYMDeclaration {
   control: Control<any>;
@@ -28,74 +25,79 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
           <FormInput
             control={control}
             type="text"
-            name="nextToKinRelationship"
+            name="localKinRelationshipId"
             placeholder="Relationship"
           />
           <FormInput
             control={control}
             type="text"
-            name="nextToKinName"
+            name="localKinName"
             placeholder="Name"
           />
           <div />
           <FormInput
             control={control}
             type="text"
-            name="nextToKinContactNo"
+            name="localKinContact"
             placeholder="Contact No"
           />
           <FormInput
             control={control}
             type="text"
-            name="nextToKinAddress"
+            name="localKinAddress"
             placeholder="Address"
           />
         </Grid>
       </Box>
 
-      <Box display="flex" flexDirection="column" gap="s16">
-        <TextFields variant="formLabel">
-          Are you or any of your family politically exposed person{' '}
-        </TextFields>
-        <RadioGroup direction="row" radioList={['Yes', 'No']} />
-      </Box>
+      <FormRadioGroup
+        control={control}
+        name={'isPoliticallyExposed'}
+        radioList={['Yes', 'No']}
+        label=" Are you or any of your family politically exposed person?"
+      />
 
-      <Box display="flex" flexDirection="column" gap="s16">
-        <TextFields variant="formLabel">
-          Do you have a beneficial owner?{' '}
-        </TextFields>
-        <RadioGroup direction="row" radioList={['Yes', 'No']} />
-      </Box>
+      <FormRadioGroup
+        control={control}
+        name={'hasBeneficialOwner'}
+        radioList={['Yes', 'No']}
+        label="Do you have a beneficial owner?"
+      />
 
       <InputGroupContainer>
         <FormSelect
           control={control}
-          name={'beneficialOwnerDeclaration'}
+          name={'beneficialRelationShipId'}
           options={[{ label: 'Father', value: 'father' }]}
           placeholder="Relationship"
           label="If yes, please write name and relationship "
         />
       </InputGroupContainer>
 
-      <Box display="flex" flexDirection="column" gap="s16">
-        <TextFields variant="formLabel">
-          Declaration of convicted/Non-convicted for any crimes in Past
-        </TextFields>
-        <RadioGroup direction="row" radioList={['Yes', 'No']} />
-      </Box>
+      <FormRadioGroup
+        control={control}
+        name={'isConvicted'}
+        radioList={['Yes', 'No']}
+        label="Declaration of convicted/Non-convicted for any crimes in Past"
+      />
 
       <InputGroupContainer>
         <Box display="flex" flexDirection="column">
-          <TextAreaInput label="Please specify" placeholder="Enter Details" />
+          <FormTextArea
+            name="convictionDetails"
+            control={control}
+            label="Please specify"
+            placeholder="Enter Details"
+          />
         </Box>
       </InputGroupContainer>
 
-      <Box display="flex" flexDirection="column" gap="s16">
-        <TextFields variant="formLabel">
-          Do you hold residential permit of foreign country?{' '}
-        </TextFields>
-        <RadioGroup direction="row" radioList={['Yes', 'No']} />
-      </Box>
+      <FormRadioGroup
+        control={control}
+        name={'hasForeignResidentialPermit'}
+        radioList={['Yes', 'No']}
+        label="Do you hold residential permit of foreign country?"
+      />
 
       <Box display="flex" flexDirection="column">
         <Text fontSize="s3" mb="s16">

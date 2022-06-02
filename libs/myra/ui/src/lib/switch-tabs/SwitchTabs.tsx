@@ -50,7 +50,12 @@ export function SwitchTabs(props: SwitchTabsProps) {
   const [activeTab, setActivetab] = useState<number | null>(0);
   return (
     <ChakraSwitchTabs size="sm" variant="unstyled">
-      <TabList borderRadius="br2">
+      <TabList
+        borderRadius="br2"
+        onChange={(e) => {
+          console.log(e);
+        }}
+      >
         {list.map((item, index) => (
           <TabElement
             onClick={() => {

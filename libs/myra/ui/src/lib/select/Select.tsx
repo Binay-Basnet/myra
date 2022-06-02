@@ -9,9 +9,11 @@ export interface SelectOption extends OptionBase {
   value: string;
 }
 
-export interface SelectProps extends Omit<Props, 'size'> {
+export interface SelectProps extends Omit<Props, 'size' | 'onChange'> {
   label?: string;
   options: SelectOption[];
+  // TODO Change this any.
+  onChange?: any;
 }
 
 export function Select({ label, isMulti, ...rest }: SelectProps) {

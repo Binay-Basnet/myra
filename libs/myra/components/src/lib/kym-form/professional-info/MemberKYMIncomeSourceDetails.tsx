@@ -40,7 +40,7 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
             control={control}
             type="text"
             bg="white"
-            name={`incomeSource[${index}].source`}
+            name={`incomeSourceDetails[${index}].source`}
             label="Income Source"
             placeholder="Enter Income Source"
           />
@@ -50,8 +50,8 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
             control={control}
             type="number"
             bg="white"
-            name={`incomeSource[${index}].amount`}
-            label="Amout"
+            name={`incomeSourceDetails[${index}].amount`}
+            label="Amount"
             placeholder="Enter Amount"
           />
         </GridItem>
@@ -72,6 +72,7 @@ export const MemberKYMIncomeSourceDetails = ({ control }: any) => {
         INCOME SOURCE DETAILS
       </Text>
       <GroupContainer>
+        {/* TODO ->  Add Controller*/}
         <Box display="flex" flexDirection="column">
           <Text fontSize="s3" mb={3}>
             Annual Family Income

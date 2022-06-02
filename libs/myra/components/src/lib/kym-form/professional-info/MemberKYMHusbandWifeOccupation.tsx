@@ -33,7 +33,7 @@ const HusbandWifeOccupation = ({
         <GridItem colSpan={1}>
           <FormSelect
             control={control}
-            name={`spouceOccupation[${index}].occupation`}
+            name={`spouseOccupation.${index}.occupation`}
             label="Occupation"
             placeholder="Select Occupation"
             options={[
@@ -46,8 +46,8 @@ const HusbandWifeOccupation = ({
           <FormInput
             control={control}
             type="text"
-            name={`spouceOccupation[${index}].orgName`}
-            label="Org/Frim Name"
+            name={`spouseOccupation.${index}.orgName`}
+            label="Org/Firm Name"
             placeholder="Org/Firm Name"
             bg="white"
           />
@@ -55,7 +55,7 @@ const HusbandWifeOccupation = ({
         <FormInput
           control={control}
           type="text"
-          name={`spouceOccupation[${index}].idNumber`}
+          name={`spouseOccupation.${index}.idNumber`}
           label="Pan/Vat number"
           placeholder="Pan/Vat number"
           bg="white"
@@ -63,7 +63,7 @@ const HusbandWifeOccupation = ({
         <FormInput
           control={control}
           type="text"
-          name={`spouceOccupation[${index}].address`}
+          name={`spouseOccupation.${index}.address`}
           label="Address"
           placeholder="Enter Address"
           bg="white"
@@ -71,7 +71,7 @@ const HusbandWifeOccupation = ({
         <FormInput
           control={control}
           type="number"
-          name={`spouceOccupation[${index}].estimatedAnnualIncome`}
+          name={`spouseOccupation.${index}.estimatedAnnualIncome`}
           label="Annual Income"
           bg="white"
           placeholder="0.00"
@@ -86,7 +86,7 @@ export const MemberKYMHusbandWifeOccupation = ({ control }: any) => {
     fields: husbandWifeOccupationFields,
     append: husbandWifeOccupationAppend,
     remove: husbandWifeOccupationRemove,
-  } = useFieldArray({ control, name: 'mainOccupation' });
+  } = useFieldArray({ control, name: 'spouseOccupation' });
 
   return (
     <GroupContainer>

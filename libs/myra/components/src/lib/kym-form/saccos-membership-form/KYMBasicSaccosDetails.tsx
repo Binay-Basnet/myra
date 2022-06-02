@@ -15,7 +15,7 @@ import {
 } from '@saccos/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
-import { FormSelect } from '../../newFormComponents';
+import { FormRadioGroup, FormSelect } from '../../newFormComponents';
 
 export const KYMBasicSaccosDetails = ({ control }: any) => {
   return (
@@ -32,12 +32,13 @@ export const KYMBasicSaccosDetails = ({ control }: any) => {
           ]}
         />
       </InputGroupContainer>
-      <Box display="flex" flexDirection="column" gap="s8">
-        <TextFields variant="formLabel">
-          Member of Another Cooperative
-        </TextFields>
-        <RadioGroup direction="row" radioList={['Yes', 'No']} />
-      </Box>
+
+      <FormRadioGroup
+        control={control}
+        label="Member of Another Cooperative"
+        name={'isMemberOfAnotherCooperative'}
+        radioList={['Yes', 'No']}
+      />
 
       <Box display="flex" flexDirection="column" gap="s4">
         <TextFields variant="formLabel">Membership Details</TextFields>
@@ -81,12 +82,12 @@ export const KYMBasicSaccosDetails = ({ control }: any) => {
       </Box>
 
       <Box display="flex" flexDirection="column" gap="s4">
-        <Text fontSize="s3">Family member in this instituttion</Text>
+        <Text fontSize="s3">Family member in this institution</Text>
         <Grid templateColumns="repeat(6, 1fr)" gap={'1em'}>
           <GridItem colSpan={1}>
             <Controller
               control={control}
-              name="saccosMemberRelationship"
+              name="familyMemberInThisCooperative.relationshipId"
               render={({ field: { onChange } }) => (
                 <Select
                   onChange={onChange}
@@ -102,7 +103,7 @@ export const KYMBasicSaccosDetails = ({ control }: any) => {
           <GridItem colSpan={2}>
             <Controller
               control={control}
-              name="memberNo"
+              name="familyMemberInThisCooperative.memberId"
               render={({ field: { onChange } }) => (
                 <Input
                   type="text"

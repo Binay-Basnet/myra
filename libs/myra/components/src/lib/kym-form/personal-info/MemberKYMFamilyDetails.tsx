@@ -1,7 +1,8 @@
 import React from 'react';
-import { useFieldArray } from 'react-hook-form';
+import { Control, useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
+import { KymIndMemberInput } from '@saccos/myra/graphql';
 import { Box, Button, GridItem, Icon, Text } from '@saccos/myra/ui';
 
 import {
@@ -12,7 +13,17 @@ import {
 } from '../containers';
 import { FormInput, FormSelect } from '../../newFormComponents';
 
-const AddFamilyMember = ({ control, index, removeFamilyMember }: any) => {
+interface IAddFamilyMember {
+  control: Control<KymIndMemberInput>;
+  index: number;
+  removeFamilyMember: () => void;
+}
+
+const AddFamilyMember = ({
+  control,
+  index,
+  removeFamilyMember,
+}: IAddFamilyMember) => {
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -32,7 +43,7 @@ const AddFamilyMember = ({ control, index, removeFamilyMember }: any) => {
             control={control}
             type="text"
             bg="white"
-            name={`familyDetails[${index}].relationshipId`}
+            name={`familyDetails.${index}.relationshipId`}
             label="Relation"
             placeholder="Enter Relation"
           />
@@ -42,7 +53,7 @@ const AddFamilyMember = ({ control, index, removeFamilyMember }: any) => {
             control={control}
             type="text"
             bg="white"
-            name={`familyDetails[${index}].fullName`}
+            name={`familyDetails.${index}.fullName`}
             label="FullName"
             placeholder="Enter Full Name"
           />
@@ -52,7 +63,13 @@ const AddFamilyMember = ({ control, index, removeFamilyMember }: any) => {
   );
 };
 
-export const MemberKYMFamilyDetails = ({ control }: any) => {
+interface IMemberKYMFamilyDetails {
+  control: Control<KymIndMemberInput | any>;
+}
+
+export const MemberKYMFamilyDetails = ({
+  control,
+}: IMemberKYMFamilyDetails) => {
   const {
     fields: familyFields,
     append: familyAppend,
@@ -67,7 +84,7 @@ export const MemberKYMFamilyDetails = ({ control }: any) => {
       <InputGroupContainer>
         <FormSelect
           control={control}
-          name="martialStatus"
+          name={'maritalStatus'}
           label="Martial Status"
           placeholder="Select Martial Status"
           options={[

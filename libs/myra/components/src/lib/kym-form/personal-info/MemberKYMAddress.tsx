@@ -1,10 +1,16 @@
+import { Control } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
-import { Box, Button, Icon, Switch, Text } from '@saccos/myra/ui';
+import { KymIndMemberInput } from '@saccos/myra/graphql';
+import { Button, Icon, Text } from '@saccos/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
-import { FormInput, FormSelect } from '../../newFormComponents';
+import { FormInput, FormSelect, FormSwitch } from '../../newFormComponents';
 
-export const MemberKYMAddress = ({ control }: any) => {
+interface IMemberKYMAddress {
+  control: Control<KymIndMemberInput | any>;
+}
+
+export const MemberKYMAddress = ({ control }: IMemberKYMAddress) => {
   return (
     <GroupContainer>
       <Text fontSize="r1" fontWeight="SemiBold">
@@ -13,7 +19,7 @@ export const MemberKYMAddress = ({ control }: any) => {
       <InputGroupContainer>
         <FormSelect
           control={control}
-          name="permanentAddress.state"
+          name="permanentStateId"
           label="State"
           placeholder="Select State"
           options={[
@@ -23,7 +29,7 @@ export const MemberKYMAddress = ({ control }: any) => {
         />
         <FormSelect
           control={control}
-          name="permanentAddress.district"
+          name="permanentDistrictId"
           label="District"
           placeholder="Select District"
           options={[
@@ -33,9 +39,9 @@ export const MemberKYMAddress = ({ control }: any) => {
         />
         <FormSelect
           control={control}
-          name="permanentAddress.vdc"
-          label="VDC / Muncipality"
-          placeholder="Select VDC / Muncipality"
+          name="permanentLocalityId"
+          label="VDC / Municipality"
+          placeholder="Select VDC / Municipality"
           options={[
             { label: 'Lalitpur-16', value: 'lalitpur16' },
             { label: 'Kathmandu-5', value: 'kathmandu5' },
@@ -44,14 +50,14 @@ export const MemberKYMAddress = ({ control }: any) => {
         <FormInput
           control={control}
           type="number"
-          name="temporaryWardNo"
+          name="permanentWardId"
           label="Ward No"
           placeholder="Enter Ward No"
         />
         <FormInput
           control={control}
           type="text"
-          name="temporaryLocality"
+          name="permanentTole"
           label="Locality"
           placeholder="Enter Locality"
         />
@@ -68,14 +74,17 @@ export const MemberKYMAddress = ({ control }: any) => {
       <Text fontSize="r1" fontWeight="SemiBold">
         TEMPORARY ADDRESS
       </Text>
-      <Box display="flex" flexDirection="row" alignItems="center" mb="-16px">
-        <Switch mr={5} />
-        <Text fontSize="r1">Temporary Address same as permanent</Text>
-      </Box>
+
+      <FormSwitch
+        control={control}
+        name="isPermanentAndTemporaryAddressSame"
+        label="Temporary Address same as permanent"
+      />
+
       <InputGroupContainer>
         <FormSelect
           control={control}
-          name="temporaryAddressState"
+          name="temporaryStateId"
           label="State"
           placeholder="Select State"
           options={[
@@ -85,7 +94,7 @@ export const MemberKYMAddress = ({ control }: any) => {
         />
         <FormSelect
           control={control}
-          name="temporaryAddressDistrict"
+          name="temporaryDistrictId"
           label="District"
           placeholder="Select District"
           options={[
@@ -95,7 +104,7 @@ export const MemberKYMAddress = ({ control }: any) => {
         />
         <FormSelect
           control={control}
-          name="temporaryAddressVdc"
+          name="temporaryLocalityId"
           label="VDC / Muncipality"
           placeholder="Select VDC / Muncipality"
           options={[
@@ -106,14 +115,14 @@ export const MemberKYMAddress = ({ control }: any) => {
         <FormInput
           control={control}
           type="number"
-          name="teamporaryAddressWardNo"
+          name="temporaryWardId"
           label="Ward No"
           placeholder="Enter Ward No"
         />
         <FormInput
           control={control}
           type="text"
-          name="temporaryAddressLocality"
+          name="temporaryTole"
           label="Locality"
           placeholder="Enter Locality"
         />
@@ -132,14 +141,14 @@ export const MemberKYMAddress = ({ control }: any) => {
         <FormInput
           control={control}
           type="text"
-          name="landlordsName"
+          name={'landlordName'}
           label="Landlords Name"
           placeholder="Landlords Name"
         />
         <FormInput
           control={control}
           type="text"
-          name="landlordsContactNo"
+          name={'landlordContact'}
           label="Contact No"
           placeholder="Contact No"
         />

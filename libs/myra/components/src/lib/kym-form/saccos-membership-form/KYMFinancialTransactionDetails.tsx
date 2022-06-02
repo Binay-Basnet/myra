@@ -15,28 +15,28 @@ export const KYMFinancialTransactionDetails = ({ control }: any) => {
           <FormInput
             control={control}
             type="number"
-            name="financialTransactionOrdinaryShare"
+            name="share"
             label="Ordinary Share"
             placeholder="0.00"
           />
           <FormInput
             control={control}
             type="number"
-            name="financialTransactionSavings"
+            name="savings"
             label="Savings"
             placeholder="0.00"
           />
           <FormInput
             control={control}
             type="number"
-            name="financialTransactionLoan"
+            name="loan"
             label="Loan"
             placeholder="0.00"
           />
           <FormInput
             control={control}
             type="number"
-            name="financialTransactionOthers"
+            name="other"
             label="Other"
             placeholder="0.00"
           />

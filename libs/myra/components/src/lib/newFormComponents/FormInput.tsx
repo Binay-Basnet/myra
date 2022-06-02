@@ -1,18 +1,18 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, Path } from 'react-hook-form';
 import { Box, TextInput, TextInputProps } from '@saccos/myra/ui';
 
-interface IFormInputProps extends TextInputProps {
-  control: Control;
-  name: string;
+interface IFormInputProps<T> extends TextInputProps {
+  control: Control<T>;
+  name: Path<T>;
 }
 
-export const FormInput = ({
+export const FormInput = <T,>({
   control,
   placeholder,
   name,
   type,
   ...rest
-}: IFormInputProps) => {
+}: IFormInputProps<T>) => {
   return (
     <Box>
       <Controller

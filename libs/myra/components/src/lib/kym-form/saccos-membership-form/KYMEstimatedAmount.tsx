@@ -17,7 +17,7 @@ export const KYMEstimatedAmount = ({ control }: any) => {
         <FormInput
           control={control}
           type="number"
-          name="estimatedAnnualAccountTransaction"
+          name="estimatedAnnualAccountTransactionAmount"
           label="Estimated annual account transaction (Debit/Credit)"
           placeholder="0.00"
         />
@@ -40,7 +40,7 @@ export const KYMEstimatedAmount = ({ control }: any) => {
         <FormInput
           control={control}
           type="number"
-          name="estimatedAnnualDeposit"
+          name="estimatedAnnualDepositAmount"
           label="Estimated Annual Deposit"
           placeholder="0.00"
         />
@@ -50,7 +50,7 @@ export const KYMEstimatedAmount = ({ control }: any) => {
         <FormInput
           control={control}
           type="number"
-          name="estimatedAnnualLoan"
+          name="estimatedAnnualLoanAmount"
           label="Estimated Annual Loan"
           placeholder="0.00"
         />

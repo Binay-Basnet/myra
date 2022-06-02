@@ -34,7 +34,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
             label="Occupation"
             placeholder="Select Occupation"
             options={[
-              { label: 'Agriculture', value: 'agriculature' },
+              { label: 'Agriculture', value: 'agriculture' },
               { label: 'Student', value: 'student' },
             ]}
           />

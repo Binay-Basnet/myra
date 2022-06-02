@@ -1,12 +1,13 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
+import { KymIndMemberInput } from '@saccos/myra/graphql';
 import { Text } from '@saccos/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormInput } from '../../newFormComponents';
 
 interface IMemberContactDetails {
-  control: Control<any>;
+  control: Control<KymIndMemberInput>;
 }
 
 export const MemberKYMContactDetails = ({ control }: IMemberContactDetails) => {
@@ -23,14 +24,14 @@ export const MemberKYMContactDetails = ({ control }: IMemberContactDetails) => {
         <FormInput
           control={control}
           type="text"
-          name="mobileNo"
+          name="mobileNumber"
           label="Mobile No"
           placeholder="Enter Mobile No"
         />
         <FormInput
           control={control}
           type="text"
-          name="phoneNo"
+          name="phoneNumber"
           label="Phone No"
           placeholder="Enter Phone No"
         />

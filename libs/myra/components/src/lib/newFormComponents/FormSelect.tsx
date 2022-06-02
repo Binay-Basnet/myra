@@ -1,29 +1,26 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, Path } from 'react-hook-form';
 import { Select, SelectProps } from '@saccos/myra/ui';
 
-interface IFormSelectProps extends SelectProps {
-  control: Control;
-  name: string;
-  onChange?: (e: unknown) => void; // TODO Change this typeacript
+interface IFormSelectProps<T> extends SelectProps {
+  control: Control<T>;
+  name: Path<T>;
 }
 
-export const FormSelect = ({
+export const FormSelect = <T,>({
   control,
   name,
-  onChange: onChangeFromProps,
   ...rest
-}: IFormSelectProps) => {
+}: IFormSelectProps<T>) => {
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange } }) => (
         <Select
-          onChange={(e) => {
-            onChange(e);
-            onChangeFromProps && onChangeFromProps(e);
-          }}
           {...rest}
+          onChange={(newValue: { label: string; value: string }) => {
+            onChange(newValue.value);
+          }}
         />
       )}
     />

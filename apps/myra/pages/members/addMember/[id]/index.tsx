@@ -22,6 +22,10 @@ import {
   SectionContainer,
 } from '@saccos/myra/components';
 import {
+  KymIndMemberInput,
+  useSetMemberDataMutation,
+} from '@saccos/myra/graphql';
+import {
   Box,
   Button,
   Checkbox,
@@ -52,10 +56,10 @@ const AddMember = () => {
   // const methods = useForm<IFormValues>();
   const router = useRouter();
   console.log('hello', router);
-  // const id = router?.query?.id;
-  // const setMembers = useSetMemberDataMutation();
+  const id = String(router?.query?.id);
+  const { mutate } = useSetMemberDataMutation();
 
-  const { control, handleSubmit, getValues } = useForm({
+  const { control, handleSubmit, getValues } = useForm<KymIndMemberInput>({
     defaultValues: {
       familyDetails: [{ relationshipId: '', fullName: '' }],
       mainOccupation: [
@@ -64,22 +68,22 @@ const AddMember = () => {
           orgName: '',
           idNumber: '',
           address: '',
-          estimatedAnnualIncome: '',
+          estimatedAnnualIncome: 0,
         },
       ],
-      spouceOccupation: [
+      spouseOccupation: [
         {
           occupation: '',
           orgName: '',
           idNumber: '',
           address: '',
-          estimatedAnnualIncome: '',
+          estimatedAnnualIncome: 0,
         },
       ],
       incomeSourceDetails: [
         {
           source: '',
-          amount: '',
+          amount: 0,
         },
       ],
     },
@@ -89,6 +93,7 @@ const AddMember = () => {
     <form
       onChange={debounce(() => {
         console.log('values', getValues());
+        mutate({ id, data: getValues() });
       }, 3000)}
       onSubmit={handleSubmit((data) => console.log('data', data))}
     >
