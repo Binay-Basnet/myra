@@ -40,11 +40,15 @@ jobs:
           command_timeout: 200m
           script: |
             cd myra/myra-ui-main
+            docker build -t myra-deploy:node-yarn -f ./myra-deploy.Dockerfile .
+            echo custom image created
             git pull origin main
-            docker rm -f myra-ui-main  || true
-            echo previous container removed
             docker build --tag myra-ui-main_image .
             echo docker built successfully
+            docker rm -f myra-ui-main  || true
+            echo previous container removed
             docker run --rm -p 3001:3000 -d --name myra-ui-main myra-ui-main_image
             echo UI deployed successfully
-            docker image prune -a -f || true
+            yes y | docker image prune
+            yes y | docker container prune
+            docker run -d --name backend-temp myra-deploy:node-yarn
