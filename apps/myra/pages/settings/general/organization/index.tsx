@@ -15,11 +15,16 @@ import { Box, Button, Icon, Text } from '@saccos/myra/ui';
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const Organization = () => {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, getValues } = useForm();
 
   return (
     // onSubmit={handleSubmit((data) => console.log('data', data))}
-    <form onSubmit={handleSubmit((data) => console.log('data', data))}>
+    <form
+      onSubmit={handleSubmit((data) => console.log('data', data))}
+      onChange={(e) => {
+        console.log('hello', getValues());
+      }}
+    >
       <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
         <Box
           borderBottom="1px"
