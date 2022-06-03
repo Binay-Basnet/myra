@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import {
-  GetShareHistoryQueryVariables,
+  ShareRegisterEdge,
   useGetShareHistoryQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
@@ -14,7 +14,7 @@ export const ShareReturnHistoryTable = ({ memberId }: memberIdProp) => {
   const { data, isLoading } = useGetShareHistoryQuery({ memberId });
   const rowData = useMemo(() => data?.share?.register?.edges, [data]);
 
-  const columns: Column<GetShareHistoryQueryVariables>[] = useMemo(
+  const columns: Column<ShareRegisterEdge>[] = useMemo(
     () => [
       {
         Header: 'SN',

@@ -28,7 +28,7 @@ const shareColumns = [
 
 export const SharePageLayout = ({ children }: IMemberPageLayout) => {
   const router = useRouter();
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState<Boolean>(false);
 
   const onOpenModal = () => {
     setOpenModal(true);
