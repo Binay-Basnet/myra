@@ -12,7 +12,14 @@ import {
 } from '../containers';
 import { FormInput, FormSelect } from '../../newFormComponents';
 
-const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
+const MainOccupation = ({
+  control,
+  index,
+  removeMainOccupation,
+  watch,
+}: any) => {
+  const profession = watch('profession');
+
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -33,10 +40,12 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
             name={`mainOccupation.${index}.occupation`}
             label="Occupation"
             placeholder="Select Occupation"
-            options={[
-              { label: 'Agriculture', value: 'agriculture' },
-              { label: 'Student', value: 'student' },
-            ]}
+            options={
+              profession?.map((data: string) => ({
+                label: data,
+                value: data,
+              })) ?? []
+            }
           />
         </GridItem>
         <GridItem colSpan={2}>
@@ -45,7 +54,7 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
             control={control}
             type="text"
             name={`mainOccupation.${index}.orgName`}
-            label="Org/Frim Name"
+            label="Org/Firm Name"
             placeholder="Org/Firm Name"
           />
         </GridItem>
@@ -79,12 +88,13 @@ const MainOccupation = ({ control, index, removeMainOccupation }: any) => {
   );
 };
 
-export const MemberKYMMainOccupation = ({ control }: any) => {
+export const MemberKYMMainOccupation = ({ control, watch }: any) => {
   const {
     fields: mainOccupationFields,
     append: mainOccupationAppend,
     remove: mainOccupationRemove,
   } = useFieldArray({ control, name: 'mainOccupation' });
+
   return (
     <GroupContainer>
       <Text fontSize="r1" fontWeight="SemiBold">
@@ -95,6 +105,7 @@ export const MemberKYMMainOccupation = ({ control }: any) => {
           return (
             <Box key={item.id}>
               <MainOccupation
+                watch={watch}
                 control={control}
                 index={index}
                 removeMainOccupation={() => mainOccupationRemove(index)}

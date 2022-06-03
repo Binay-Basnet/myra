@@ -1,8 +1,9 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import { Box, Checkbox, Input, Text } from '@saccos/myra/ui';
+import { Text } from '@saccos/myra/ui';
 
 import { GroupContainer } from '../containers';
+import { FormCheckboxGroup } from '../../newFormComponents/FormCheckboxGroup';
 
 interface IMemberKYMProfession {
   control: Control<any>;
@@ -24,7 +25,15 @@ export const MemberKYMProfession = ({ control }: IMemberKYMProfession) => {
       <Text fontSize="r1" fontWeight="SemiBold">
         PROFESSION
       </Text>
-      <Box display="flex" flexWrap="wrap" columnGap="s48" rowGap="s16">
+
+      <FormCheckboxGroup
+        control={control}
+        name={'profession'}
+        showOther
+        list={occupationDetails}
+      />
+
+      {/* <Box display="flex" flexWrap="wrap" columnGap="s48" rowGap="s16">
         {occupationDetails.map((item, index) => (
           <Checkbox key={index}>
             <Text fontSize="s3">{item}</Text>
@@ -33,7 +42,7 @@ export const MemberKYMProfession = ({ control }: IMemberKYMProfession) => {
         <Checkbox>
           <Input type="text" placeholder="other" />
         </Checkbox>
-      </Box>
+      </Box>*/}
     </GroupContainer>
   );
 };

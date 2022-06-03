@@ -1,6 +1,10 @@
-import { Control } from 'react-hook-form';
+import { useMemo } from 'react';
+import { Control, UseFormWatch } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
-import { KymIndMemberInput } from '@saccos/myra/graphql';
+import {
+  KymIndMemberInput,
+  useAllAdministrationQuery,
+} from '@saccos/myra/graphql';
 import { Button, Icon, Text } from '@saccos/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
@@ -8,9 +12,57 @@ import { FormInput, FormSelect, FormSwitch } from '../../newFormComponents';
 
 interface IMemberKYMAddress {
   control: Control<KymIndMemberInput | any>;
+  watch: UseFormWatch<KymIndMemberInput | any>;
 }
 
-export const MemberKYMAddress = ({ control }: IMemberKYMAddress) => {
+export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
+  const { data } = useAllAdministrationQuery();
+
+  const province = useMemo(() => {
+    return (
+      data?.administration?.all?.map((d) => ({
+        label: d.name,
+        value: d.id,
+      })) ?? []
+    );
+  }, [data?.administration?.all]);
+
+  // FOR PERMANENT ADDRESS
+  const currentProvinceId = watch('permanentStateId');
+  const currentDistrictId = watch('permanentDistrictId');
+
+  const districtList = useMemo(
+    () =>
+      data?.administration.all.find((d) => d.id === currentProvinceId)
+        ?.districts ?? [],
+    [currentProvinceId]
+  );
+
+  const localityList = useMemo(
+    () =>
+      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
+      [],
+    [currentDistrictId]
+  );
+
+  // FOR TEMPORARY ADDRESS
+  const currentTempProvinceId = watch('temporaryStateId');
+  const currentTemptDistrictId = watch('temporaryDistrictId');
+
+  const districtTempList = useMemo(
+    () =>
+      data?.administration.all.find((d) => d.id === currentProvinceId)
+        ?.districts ?? [],
+    [currentTempProvinceId]
+  );
+
+  const localityTempList = useMemo(
+    () =>
+      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
+      [],
+    [currentTemptDistrictId]
+  );
+
   return (
     <GroupContainer>
       <Text fontSize="r1" fontWeight="SemiBold">
@@ -22,30 +74,27 @@ export const MemberKYMAddress = ({ control }: IMemberKYMAddress) => {
           name="permanentStateId"
           label="State"
           placeholder="Select State"
-          options={[
-            { label: 'Bagmati', value: 'bagmati' },
-            { label: 'Gandaki', value: 'gandaki' },
-          ]}
+          options={province}
         />
         <FormSelect
           control={control}
           name="permanentDistrictId"
           label="District"
           placeholder="Select District"
-          options={[
-            { label: 'Lalitpur', value: 'lalitpur' },
-            { label: 'Kathmandu', value: 'kathmandu' },
-          ]}
+          options={districtList.map((d) => ({
+            label: d.name,
+            value: d.id,
+          }))}
         />
         <FormSelect
           control={control}
           name="permanentLocalityId"
           label="VDC / Municipality"
           placeholder="Select VDC / Municipality"
-          options={[
-            { label: 'Lalitpur-16', value: 'lalitpur16' },
-            { label: 'Kathmandu-5', value: 'kathmandu5' },
-          ]}
+          options={localityList.map((d) => ({
+            label: d.name,
+            value: d.id,
+          }))}
         />
         <FormInput
           control={control}
@@ -87,30 +136,27 @@ export const MemberKYMAddress = ({ control }: IMemberKYMAddress) => {
           name="temporaryStateId"
           label="State"
           placeholder="Select State"
-          options={[
-            { label: 'Bagmati', value: 'bagmati' },
-            { label: 'Gandaki', value: 'gandaki' },
-          ]}
+          options={province}
         />
         <FormSelect
           control={control}
           name="temporaryDistrictId"
           label="District"
           placeholder="Select District"
-          options={[
-            { label: 'Lalitpur', value: 'lalitpur' },
-            { label: 'Kathmandu', value: 'kathmandu' },
-          ]}
+          options={districtTempList.map((d) => ({
+            label: d.name,
+            value: d.id,
+          }))}
         />
         <FormSelect
           control={control}
           name="temporaryLocalityId"
           label="VDC / Muncipality"
           placeholder="Select VDC / Muncipality"
-          options={[
-            { label: 'Lalitpur-16', value: 'lalitpur16' },
-            { label: 'Kathmandu-5', value: 'kathmandu5' },
-          ]}
+          options={localityTempList.map((d) => ({
+            label: d.name,
+            value: d.id,
+          }))}
         />
         <FormInput
           control={control}

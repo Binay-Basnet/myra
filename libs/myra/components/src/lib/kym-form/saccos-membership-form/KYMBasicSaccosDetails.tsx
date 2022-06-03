@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import {
   Box,
@@ -18,6 +18,15 @@ import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormRadioGroup, FormSelect } from '../../newFormComponents';
 
 export const KYMBasicSaccosDetails = ({ control }: any) => {
+  const {
+    fields: familyMemberFields,
+    append: familyMemberAppend,
+    remove: familyMemberRemove,
+  } = useFieldArray({
+    control,
+    name: 'familyMemberInThisCooperative',
+  });
+
   return (
     <GroupContainer>
       <InputGroupContainer>
@@ -83,53 +92,79 @@ export const KYMBasicSaccosDetails = ({ control }: any) => {
 
       <Box display="flex" flexDirection="column" gap="s4">
         <Text fontSize="s3">Family member in this institution</Text>
-        <Grid templateColumns="repeat(6, 1fr)" gap={'1em'}>
-          <GridItem colSpan={1}>
-            <Controller
-              control={control}
-              name="familyMemberInThisCooperative.relationshipId"
-              render={({ field: { onChange } }) => (
-                <Select
-                  onChange={onChange}
-                  placeholder="Relationship"
-                  options={[
-                    { label: 'Mother', value: 'mother' },
-                    { label: 'Father', value: 'father' },
-                  ]}
-                />
-              )}
-            />
-          </GridItem>
-          <GridItem colSpan={2}>
-            <Controller
-              control={control}
-              name="familyMemberInThisCooperative.memberId"
-              render={({ field: { onChange } }) => (
-                <Input
-                  type="text"
-                  placeholder="Member No"
-                  onChange={onChange}
-                  bg="white"
-                />
-              )}
-            />
-          </GridItem>
-          <Button
-            variant="outline"
-            leftIcon={<Icon size="md" as={AiOutlineSearch} />}
-          >
-            Find Member
-          </Button>
-        </Grid>
+
+        {familyMemberFields.map((item, index) => {
+          return (
+            <Box key={item.id}>
+              <FamilyMember
+                control={control}
+                index={index}
+                removeFamilyMember={() => familyMemberRemove(index)}
+              />
+            </Box>
+          );
+        })}
+
         <Button
           alignSelf="start"
           mt="s8"
           leftIcon={<Icon size="md" as={AiOutlinePlus} />}
           variant="outline"
+          onClick={() => {
+            familyMemberAppend({});
+          }}
         >
           Add Family Member
         </Button>
       </Box>
     </GroupContainer>
+  );
+};
+
+export const FamilyMember = ({
+  control,
+  index,
+  removeFamilyMember,
+  watch,
+}: any) => {
+  return (
+    <Grid templateColumns="repeat(6, 1fr)" gap="s16">
+      <GridItem colSpan={1}>
+        <Controller
+          control={control}
+          name={`familyMemberInThisCooperative.${index}.relationshipId`}
+          render={({ field: { onChange } }) => (
+            <Select
+              onChange={onChange}
+              placeholder="Relationship"
+              options={[
+                { label: 'Mother', value: 'mother' },
+                { label: 'Father', value: 'father' },
+              ]}
+            />
+          )}
+        />
+      </GridItem>
+      <GridItem colSpan={2}>
+        <Controller
+          control={control}
+          name={`familyMemberInThisCooperative.${index}.memberId`}
+          render={({ field: { onChange } }) => (
+            <Input
+              type="text"
+              placeholder="Member No"
+              onChange={onChange}
+              bg="white"
+            />
+          )}
+        />
+      </GridItem>
+      <Button
+        variant="outline"
+        leftIcon={<Icon size="md" as={AiOutlineSearch} />}
+      >
+        Find Member
+      </Button>
+    </Grid>
   );
 };
