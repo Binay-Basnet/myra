@@ -11,6 +11,7 @@ import {
   Text,
 } from '@saccos/myra/ui';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import flowerSvg from '../../../../assets/svgs/flower.svg';
 
@@ -70,6 +71,7 @@ const familyMembers = [
 ];
 
 const Details = () => {
+  const router = useRouter();
   return (
     <Container minW="container.xl" height="fit-content" p="0" pb="55px">
       <Box
@@ -211,7 +213,7 @@ const Details = () => {
             Pin on Map
           </Button>
           &nbsp;
-          <Button>Complete</Button>
+          <Button onClick={() => router.push('/members/list')}>Complete</Button>
         </Box>
       </Box>
     </Container>

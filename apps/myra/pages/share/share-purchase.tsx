@@ -29,6 +29,7 @@ import {
   TextInput,
   // Button,
 } from '@saccos/myra/ui';
+import { useRouter } from 'next/router';
 
 const Header = () => {
   return (
@@ -44,6 +45,7 @@ const accountList = ['Bank Voucher', 'Account', 'Cash'];
 const SharePurchase = () => {
   const methods = useForm<IPurchaseFormValues>();
   const { getValues } = methods;
+  const router = useRouter();
   const { data } = useGetMemberDataQuery({ id: '123123' });
   const [selectedTab, setSelectedTab] = useState<string | null>('Cash');
 
@@ -55,8 +57,6 @@ const SharePurchase = () => {
   const switchTabsFxn = (datas: string) => {
     setSelectedTab(datas);
   };
-
-  console.log(selectedTab);
 
   return (
     <Form<IPurchaseFormValues>
@@ -470,7 +470,7 @@ const SharePurchase = () => {
       </Container>
 
       <Container minW="container.md" height="fit-content" p="0">
-        <FormFooter />
+        <FormFooter onClick={() => router.push('/share/balance')} />
       </Container>
     </Form>
   );

@@ -30,6 +30,7 @@ import {
   TextInput,
   // Button,
 } from '@saccos/myra/ui';
+import { useRouter } from 'next/router';
 
 const Header = () => {
   return (
@@ -43,6 +44,7 @@ const Header = () => {
 const accountList = ['Bank Voucher', 'Account', 'Cash'];
 
 const ShareReturn = () => {
+  const router = useRouter();
   const methods = useForm<IPurchaseFormValues>();
   const { getValues } = methods;
   const { data } = useGetMemberDataQuery({ id: '123123' });
@@ -515,7 +517,7 @@ const ShareReturn = () => {
         <br />
       </Container>
       <Container minW="container.md" height="fit-content" p="0">
-        <FormFooter />
+        <FormFooter onClick={() => router.push('/share/balance')} />
       </Container>
     </Form>
   );
