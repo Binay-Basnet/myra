@@ -37,7 +37,6 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
         Header: 'No. of Share',
         accessor: 'node.noOfShare',
         maxWidth: 48,
-        Footer: ({ values, row }) => console.log('values, row', values, row),
       },
       {
         Header: 'Share Number',
