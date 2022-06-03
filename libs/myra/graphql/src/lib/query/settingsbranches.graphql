@@ -20,3 +20,18 @@ query getBranchesList {
     }
   }
 }
+
+query getChartOfAccounts {
+  settings {
+    general {
+      chartsOfAccount {
+        class {
+          data {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}

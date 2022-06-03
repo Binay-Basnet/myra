@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Avatar, Flex } from '@chakra-ui/react';
 import { BranchEdge, useGetBranchesListQuery } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 
@@ -15,7 +14,7 @@ export const SettingsBranchesTable = () => {
     [data]
   );
 
-  const popoverTitle = ['View Detail', 'View Member Profile'];
+  const popoverTitle = ['View Detail', 'View Branch Profile'];
 
   const columns: Column<BranchEdge>[] = useMemo(
     () => [
