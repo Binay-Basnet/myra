@@ -2356,6 +2356,30 @@ export type GetMemberListQueryVariables = Exact<{
 
 export type GetMemberListQuery = { members: { list: { edges?: Array<{ cursor: string, node?: { id: string, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
+export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMemberTypesQuery = { members: { memberTypes: Array<{ id: string, type: KymMemberTypesEnum } | null> } };
+
+export type GetMemberTranslationQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetMemberTranslationQuery = { members: { individual?: { translate: Array<{ id: string, data?: string | null, translatedValue?: string | null } | null> } | null } };
+
+export type GetKymFormStatusQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetKymFormStatusQuery = { members: { individual?: { formState?: { data?: { sectionStatus?: { personal?: { completed?: Array<KymIndPersonalSection | null> | null, error?: Array<KymIndPersonalSection | null> | null } | null, professional?: { completed?: Array<KymIndProfessionalSection | null> | null, error?: Array<KymIndProfessionalSection | null> | null } | null, cooperativeMembership?: { completed?: Array<KymIndCooperativeMemberSection | null> | null, error?: Array<KymIndCooperativeMemberSection | null> | null } | null, declaration?: { completed?: Array<KymIndDeclarationSection | null> | null, error?: Array<KymIndDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
+
+export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, address: string, district: string, contactNumber: string, manager: { id?: string | null, name: string } } }> } | null } | null } | null } };
+
 export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2598,6 +2622,131 @@ export const useGetMemberListQuery = <
     useQuery<GetMemberListQuery, TError, TData>(
       variables === undefined ? ['getMemberList'] : ['getMemberList', variables],
       useAxios<GetMemberListQuery, GetMemberListQueryVariables>(GetMemberListDocument).bind(null, variables),
+      options
+    );
+export const GetMemberTypesDocument = `
+    query getMemberTypes {
+  members {
+    memberTypes {
+      id
+      type
+    }
+  }
+}
+    `;
+export const useGetMemberTypesQuery = <
+      TData = GetMemberTypesQuery,
+      TError = unknown
+    >(
+      variables?: GetMemberTypesQueryVariables,
+      options?: UseQueryOptions<GetMemberTypesQuery, TError, TData>
+    ) =>
+    useQuery<GetMemberTypesQuery, TError, TData>(
+      variables === undefined ? ['getMemberTypes'] : ['getMemberTypes', variables],
+      useAxios<GetMemberTypesQuery, GetMemberTypesQueryVariables>(GetMemberTypesDocument).bind(null, variables),
+      options
+    );
+export const GetMemberTranslationDocument = `
+    query getMemberTranslation($id: ID!) {
+  members {
+    individual {
+      translate(id: $id) {
+        id
+        data
+        translatedValue
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberTranslationQuery = <
+      TData = GetMemberTranslationQuery,
+      TError = unknown
+    >(
+      variables: GetMemberTranslationQueryVariables,
+      options?: UseQueryOptions<GetMemberTranslationQuery, TError, TData>
+    ) =>
+    useQuery<GetMemberTranslationQuery, TError, TData>(
+      ['getMemberTranslation', variables],
+      useAxios<GetMemberTranslationQuery, GetMemberTranslationQueryVariables>(GetMemberTranslationDocument).bind(null, variables),
+      options
+    );
+export const GetKymFormStatusDocument = `
+    query getKymFormStatus($id: ID!) {
+  members {
+    individual {
+      formState(id: $id) {
+        data {
+          sectionStatus {
+            personal {
+              completed
+              error
+            }
+            professional {
+              completed
+              error
+            }
+            cooperativeMembership {
+              completed
+              error
+            }
+            declaration {
+              completed
+              error
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetKymFormStatusQuery = <
+      TData = GetKymFormStatusQuery,
+      TError = unknown
+    >(
+      variables: GetKymFormStatusQueryVariables,
+      options?: UseQueryOptions<GetKymFormStatusQuery, TError, TData>
+    ) =>
+    useQuery<GetKymFormStatusQuery, TError, TData>(
+      ['getKymFormStatus', variables],
+      useAxios<GetKymFormStatusQuery, GetKymFormStatusQueryVariables>(GetKymFormStatusDocument).bind(null, variables),
+      options
+    );
+export const GetBranchesListDocument = `
+    query getBranchesList {
+  settings {
+    general {
+      branch {
+        list {
+          edges {
+            node {
+              branchCode
+              address
+              manager {
+                id
+                name
+              }
+              district
+              contactNumber
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBranchesListQuery = <
+      TData = GetBranchesListQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchesListQueryVariables,
+      options?: UseQueryOptions<GetBranchesListQuery, TError, TData>
+    ) =>
+    useQuery<GetBranchesListQuery, TError, TData>(
+      variables === undefined ? ['getBranchesList'] : ['getBranchesList', variables],
+      useAxios<GetBranchesListQuery, GetBranchesListQueryVariables>(GetBranchesListDocument).bind(null, variables),
       options
     );
 export const GetShareBalanceListDocument = `

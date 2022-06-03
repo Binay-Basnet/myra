@@ -47,14 +47,15 @@ const Gender = () => {
                       h="60px"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      {...provided.dragHandleProps}
                     >
                       <Box
                         pr="s16"
                         display={'flex'}
                         justifyContent="flex-start"
                       >
-                        <Icon size="md" as={CgMenuGridO} />
+                        <Box {...provided.dragHandleProps}>
+                          <Icon size="md" as={CgMenuGridO} />
+                        </Box>
                         <Switch size="md" ml="s20" />
                         <Text
                           fontSize={'r1'}
