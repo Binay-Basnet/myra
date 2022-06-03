@@ -98,7 +98,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
   const newId = useGetNewIdMutation();
   const memberTypesQuery = useGetMemberTypesQuery();
   const memberTypes = memberTypesQuery?.data?.members?.memberTypes;
-  const [openModal, setOpenModal] = useState<Boolean>(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const onOpenModal = () => {
     setOpenModal(true);

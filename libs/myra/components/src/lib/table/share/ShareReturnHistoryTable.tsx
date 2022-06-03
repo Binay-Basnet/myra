@@ -53,7 +53,7 @@ export const ShareReturnHistoryTable = ({ memberId }: memberIdProp) => {
       },
       {
         Header: 'Share Dr',
-        accessor: 'shareDr',
+        accessor: 'node.shareStatus',
 
         Cell: ({ row }) => {
           return (
@@ -67,7 +67,7 @@ export const ShareReturnHistoryTable = ({ memberId }: memberIdProp) => {
       },
       {
         Header: 'Share Cr',
-        accessor: 'shareCr',
+        accessor: 'node.shareStatus',
 
         Cell: ({ row }) => {
           return (

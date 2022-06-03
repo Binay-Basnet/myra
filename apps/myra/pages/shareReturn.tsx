@@ -227,7 +227,7 @@ const ShareReturn = () => {
                   >
                     Share History
                   </Text>
-                  <ShareReturnHistoryTable />
+                  <ShareReturnHistoryTable memberId='="klkjkj' />
                 </Box>
               </Box>
             </Box>
