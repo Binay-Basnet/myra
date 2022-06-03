@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
-import { IconButton } from '@chakra-ui/react';
 import { BsThreeDots } from 'react-icons/bs';
+import { IconButton } from '@chakra-ui/react';
 import {
+  Grid,
+  GridItem,
   Popover,
   PopoverBody,
   PopoverCloseButton,
   PopoverContent,
   PopoverTrigger,
-  Grid,
-  GridItem,
   Text,
 } from '@saccos/myra/ui';
 

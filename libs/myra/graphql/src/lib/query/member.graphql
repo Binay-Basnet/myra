@@ -1,6 +1,9 @@
-query getMemberList ($objState: ObjState) {
+query getMemberList($objState: ObjState) {
   members {
-    list(pagination: { first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA"  }, filter: { objState: $objState }) {
+    list(
+      pagination: { first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA" }
+      filter: { objState: $objState }
+    ) {
       edges {
         node {
           id
@@ -27,6 +30,15 @@ query getMemberList ($objState: ObjState) {
         startCursor
         endCursor
       }
+    }
+  }
+}
+
+query getMemberTypes {
+  members {
+    memberTypes {
+      id
+      type
     }
   }
 }

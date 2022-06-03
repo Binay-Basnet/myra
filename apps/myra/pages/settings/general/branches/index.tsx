@@ -1,6 +1,8 @@
+import { SettingsBranchesTable } from '@saccos/myra/components';
+
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 const Branches = () => {
-  return <> Branches</>;
+  return <SettingsBranchesTable />;
 };
 
 export default Branches;
