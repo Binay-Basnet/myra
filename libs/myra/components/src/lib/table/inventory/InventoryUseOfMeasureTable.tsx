@@ -1,45 +1,36 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
+import {
+  InvUnitOfMeasureEdge,
+  useGetInventoryUnitOfMeasureQuery,
+} from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 import { TableSearch } from '../../TableSearch';
 
-enum Gender {
-  Female = 'FEMALE',
-  Male = 'MALE',
-  Other = 'OTHER',
-}
-
-type MemberData = {
-  id: string;
-  firstName: string;
-  middleName?: string | null;
-  lastName: string;
-  gender: Gender;
-  title?: string | null;
-  dateOfBirth?: string | null;
-};
-
 export const InventoryUseOfMeasureTable = () => {
-  const columns: Column<MemberData>[] = useMemo(
+  const { data, isLoading } = useGetInventoryUnitOfMeasureQuery();
+
+  const rowlist = data?.inventory.unitOfMeasure?.list?.edges ?? [];
+
+  const columns: Column<InvUnitOfMeasureEdge>[] = useMemo(
     () => [
       {
         Header: 'Name',
-        accessor: 'firstName',
+        accessor: 'node.name',
         width: '80%',
       },
       {
         Header: 'Short Name',
-        accessor: 'title',
-        width: '40%',
+        accessor: 'node.shortName',
       },
 
       {
         Header: 'Accept Fraction',
-        accessor: 'gender',
-        width: '40%',
+        accessor: 'node.acceptFraction',
+        Cell: ({ value }) => <div>{value.toString()}</div>,
       },
 
       {
@@ -61,13 +52,8 @@ export const InventoryUseOfMeasureTable = () => {
       <TableListPageHeader heading={'Units of Measure'} />
       <TableSearch />
       <Table
-        data={[
-          {
-            firstName: 'Test Unit',
-            title: 'TU',
-            gender: 'false',
-          },
-        ]}
+        isLoading={isLoading}
+        data={rowlist}
         columns={columns}
         sort={true}
       />

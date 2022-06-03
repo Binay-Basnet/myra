@@ -2329,6 +2329,26 @@ export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string }> }> }> } };
 
+export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetInventoryItemsQuery = { inventory: { items?: { list?: { edges: Array<{ node: { id: string, name: string, type: string, unitPrice: number, itemQuantity: number } } | null> } | null } | null } };
+
+export type GetInventoryItemGroupQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetInventoryItemGroupQuery = { inventory: { itemsGroup?: { list?: { edges: Array<{ node: { name: string, id: string, description: string, parentCategory: string } } | null> } | null } | null } };
+
+export type GetInventoryVendorQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetInventoryVendorQuery = { inventory: { vendors?: { list?: { edges: Array<{ node: { name: string, location: string, email: string, phoneNumber: string } } | null> } | null } | null } };
+
+export type GetInventoryUnitOfMeasureQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetInventoryUnitOfMeasureQuery = { inventory: { unitOfMeasure?: { list?: { edges: Array<{ node: { name: string, shortName: string, acceptFraction: boolean } } | null> } | null } | null } };
+
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
 }>;
@@ -2428,6 +2448,126 @@ export const useAllAdministrationQuery = <
     useQuery<AllAdministrationQuery, TError, TData>(
       variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
       useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
+      options
+    );
+export const GetInventoryItemsDocument = `
+    query getInventoryItems {
+  inventory {
+    items {
+      list {
+        edges {
+          node {
+            id
+            name
+            type
+            unitPrice
+            itemQuantity
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInventoryItemsQuery = <
+      TData = GetInventoryItemsQuery,
+      TError = unknown
+    >(
+      variables?: GetInventoryItemsQueryVariables,
+      options?: UseQueryOptions<GetInventoryItemsQuery, TError, TData>
+    ) =>
+    useQuery<GetInventoryItemsQuery, TError, TData>(
+      variables === undefined ? ['getInventoryItems'] : ['getInventoryItems', variables],
+      useAxios<GetInventoryItemsQuery, GetInventoryItemsQueryVariables>(GetInventoryItemsDocument).bind(null, variables),
+      options
+    );
+export const GetInventoryItemGroupDocument = `
+    query getInventoryItemGroup {
+  inventory {
+    itemsGroup {
+      list {
+        edges {
+          node {
+            name
+            id
+            description
+            parentCategory
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInventoryItemGroupQuery = <
+      TData = GetInventoryItemGroupQuery,
+      TError = unknown
+    >(
+      variables?: GetInventoryItemGroupQueryVariables,
+      options?: UseQueryOptions<GetInventoryItemGroupQuery, TError, TData>
+    ) =>
+    useQuery<GetInventoryItemGroupQuery, TError, TData>(
+      variables === undefined ? ['getInventoryItemGroup'] : ['getInventoryItemGroup', variables],
+      useAxios<GetInventoryItemGroupQuery, GetInventoryItemGroupQueryVariables>(GetInventoryItemGroupDocument).bind(null, variables),
+      options
+    );
+export const GetInventoryVendorDocument = `
+    query getInventoryVendor {
+  inventory {
+    vendors {
+      list {
+        edges {
+          node {
+            name
+            location
+            email
+            phoneNumber
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInventoryVendorQuery = <
+      TData = GetInventoryVendorQuery,
+      TError = unknown
+    >(
+      variables?: GetInventoryVendorQueryVariables,
+      options?: UseQueryOptions<GetInventoryVendorQuery, TError, TData>
+    ) =>
+    useQuery<GetInventoryVendorQuery, TError, TData>(
+      variables === undefined ? ['getInventoryVendor'] : ['getInventoryVendor', variables],
+      useAxios<GetInventoryVendorQuery, GetInventoryVendorQueryVariables>(GetInventoryVendorDocument).bind(null, variables),
+      options
+    );
+export const GetInventoryUnitOfMeasureDocument = `
+    query getInventoryUnitOfMeasure {
+  inventory {
+    unitOfMeasure {
+      list {
+        edges {
+          node {
+            name
+            shortName
+            acceptFraction
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInventoryUnitOfMeasureQuery = <
+      TData = GetInventoryUnitOfMeasureQuery,
+      TError = unknown
+    >(
+      variables?: GetInventoryUnitOfMeasureQueryVariables,
+      options?: UseQueryOptions<GetInventoryUnitOfMeasureQuery, TError, TData>
+    ) =>
+    useQuery<GetInventoryUnitOfMeasureQuery, TError, TData>(
+      variables === undefined ? ['getInventoryUnitOfMeasure'] : ['getInventoryUnitOfMeasure', variables],
+      useAxios<GetInventoryUnitOfMeasureQuery, GetInventoryUnitOfMeasureQueryVariables>(GetInventoryUnitOfMeasureDocument).bind(null, variables),
       options
     );
 export const GetMemberListDocument = `

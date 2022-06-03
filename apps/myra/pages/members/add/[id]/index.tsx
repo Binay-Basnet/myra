@@ -63,35 +63,42 @@ const AddMember = () => {
     kymFormStatusQuery?.data?.members?.individual?.formState?.data
       ?.sectionStatus;
 
-  const { control, handleSubmit, getValues } = useForm<KymIndMemberInput>({
-    defaultValues: {
-      familyDetails: [{ relationshipId: '', fullName: '' }],
-      mainOccupation: [
-        {
-          occupation: '',
-          orgName: '',
-          idNumber: '',
-          address: '',
-          estimatedAnnualIncome: 0,
-        },
-      ],
-      spouseOccupation: [
-        {
-          occupation: '',
-          orgName: '',
-          idNumber: '',
-          address: '',
-          estimatedAnnualIncome: 0,
-        },
-      ],
-      incomeSourceDetails: [
-        {
-          source: '',
-          amount: 0,
-        },
-      ],
-    },
-  });
+  const { control, handleSubmit, getValues, watch } =
+    useForm<KymIndMemberInput>({
+      defaultValues: {
+        familyDetails: [{ relationshipId: '', fullName: '' }],
+        mainOccupation: [
+          {
+            occupation: '',
+            orgName: '',
+            idNumber: '',
+            address: '',
+            estimatedAnnualIncome: 0,
+          },
+        ],
+        spouseOccupation: [
+          {
+            occupation: '',
+            orgName: '',
+            idNumber: '',
+            address: '',
+            estimatedAnnualIncome: 0,
+          },
+        ],
+        incomeSourceDetails: [
+          {
+            source: '',
+            amount: 0,
+          },
+        ],
+        familyMemberInThisCooperative: [
+          {
+            relationshipId: '',
+            memberId: '',
+          },
+        ],
+      },
+    });
 
   return (
     <form
@@ -150,7 +157,7 @@ const AddMember = () => {
                     <MemberKYMBasicInfo control={control} />
                     <MemberKYMContactDetails control={control} />
                     <MemberKYMIdentificationDetails control={control} />
-                    <MemberKYMAddress control={control} />
+                    <MemberKYMAddress control={control} watch={watch} />
                     <MemberKYMFamilyDetails control={control} />
                   </ContainerWithDivider>
                 </SectionContainer>
@@ -161,8 +168,11 @@ const AddMember = () => {
                   </Text>
                   <ContainerWithDivider>
                     <MemberKYMProfession control={control} />
-                    <MemberKYMMainOccupation control={control} />
-                    <MemberKYMHusbandWifeOccupation control={control} />
+                    <MemberKYMMainOccupation control={control} watch={watch} />
+                    <MemberKYMHusbandWifeOccupation
+                      control={control}
+                      watch={watch}
+                    />
                     <MemberKYMIncomeSourceDetails control={control} />
                   </ContainerWithDivider>
                 </SectionContainer>

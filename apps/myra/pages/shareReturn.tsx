@@ -6,6 +6,7 @@ import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
 import { Form, ShareReturnHistoryTable } from '@saccos/myra/components';
+import { FormFooter } from '@saccos/myra/components';
 import { IPurchaseFormValues } from '@saccos/myra/types';
 import {
   Avatar,
@@ -24,7 +25,6 @@ import {
   TextFields,
   TextInput,
 } from '@saccos/myra/ui';
-// import { FormFooter } from 'libs/myra/components/src/lib/form/components';
 
 const Header = () => {
   return (
@@ -432,7 +432,7 @@ const ShareReturn = () => {
         <br />
       </Container>
       <Container minW="container.md" height="fit-content" p="0">
-        {/* <FormFooter /> */}
+        <FormFooter />
       </Container>
     </Form>
   );
