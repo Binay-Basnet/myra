@@ -1,5 +1,5 @@
+import { FormFooter } from './FormFooter';
 import { Input } from './Input';
 import { Select } from './Select';
-import { FormFooter } from './FormFooter';
 
-export { Input, Select, FormFooter };
+export { FormFooter, Input, Select };

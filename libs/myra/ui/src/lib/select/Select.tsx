@@ -6,12 +6,14 @@ import { chakraStyles } from './SelectStyles';
 
 export interface SelectOption extends OptionBase {
   label: string;
-  value: string;
+  value: string | number;
 }
 
-export interface SelectProps extends Omit<Props, 'size'> {
+export interface SelectProps extends Omit<Props, 'size' | 'onChange'> {
   label?: string;
   options: SelectOption[];
+  // TODO Change this any.
+  onChange?: any;
 }
 
 export function Select({ label, isMulti, ...rest }: SelectProps) {
@@ -21,6 +23,7 @@ export function Select({ label, isMulti, ...rest }: SelectProps) {
         fontSize="s3"
         color="neutralColorLight.Gray-70"
         fontWeight="500"
+        mb="s4"
         textTransform="capitalize"
       >
         {label}

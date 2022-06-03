@@ -2329,12 +2329,56 @@ export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string }> }> }> } };
 
+export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetInventoryItemsQuery = { inventory: { items?: { list?: { edges: Array<{ node: { id: string, name: string, type: string, unitPrice: number, itemQuantity: number } } | null> } | null } | null } };
+
+export type GetInventoryItemGroupQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetInventoryItemGroupQuery = { inventory: { itemsGroup?: { list?: { edges: Array<{ node: { name: string, id: string, description: string, parentCategory: string } } | null> } | null } | null } };
+
+export type GetInventoryVendorQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetInventoryVendorQuery = { inventory: { vendors?: { list?: { edges: Array<{ node: { name: string, location: string, email: string, phoneNumber: string } } | null> } | null } | null } };
+
+export type GetInventoryUnitOfMeasureQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetInventoryUnitOfMeasureQuery = { inventory: { unitOfMeasure?: { list?: { edges: Array<{ node: { name: string, shortName: string, acceptFraction: boolean } } | null> } | null } | null } };
+
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
 }>;
 
 
 export type GetMemberListQuery = { members: { list: { edges?: Array<{ cursor: string, node?: { id: string, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+
+export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMemberTypesQuery = { members: { memberTypes: Array<{ id: string, type: KymMemberTypesEnum } | null> } };
+
+export type GetMemberTranslationQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetMemberTranslationQuery = { members: { individual?: { translate: Array<{ id: string, data?: string | null, translatedValue?: string | null } | null> } | null } };
+
+export type GetKymFormStatusQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetKymFormStatusQuery = { members: { individual?: { formState?: { data?: { sectionStatus?: { personal?: { completed?: Array<KymIndPersonalSection | null> | null, error?: Array<KymIndPersonalSection | null> | null } | null, professional?: { completed?: Array<KymIndProfessionalSection | null> | null, error?: Array<KymIndProfessionalSection | null> | null } | null, cooperativeMembership?: { completed?: Array<KymIndCooperativeMemberSection | null> | null, error?: Array<KymIndCooperativeMemberSection | null> | null } | null, declaration?: { completed?: Array<KymIndDeclarationSection | null> | null, error?: Array<KymIndDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
+
+export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, address: string, district: string, contactNumber: string, manager: { id?: string | null, name: string } } }> } | null } | null } | null } };
 
 export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2425,6 +2469,126 @@ export const useAllAdministrationQuery = <
       useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
       options
     );
+export const GetInventoryItemsDocument = `
+    query getInventoryItems {
+  inventory {
+    items {
+      list {
+        edges {
+          node {
+            id
+            name
+            type
+            unitPrice
+            itemQuantity
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInventoryItemsQuery = <
+      TData = GetInventoryItemsQuery,
+      TError = unknown
+    >(
+      variables?: GetInventoryItemsQueryVariables,
+      options?: UseQueryOptions<GetInventoryItemsQuery, TError, TData>
+    ) =>
+    useQuery<GetInventoryItemsQuery, TError, TData>(
+      variables === undefined ? ['getInventoryItems'] : ['getInventoryItems', variables],
+      useAxios<GetInventoryItemsQuery, GetInventoryItemsQueryVariables>(GetInventoryItemsDocument).bind(null, variables),
+      options
+    );
+export const GetInventoryItemGroupDocument = `
+    query getInventoryItemGroup {
+  inventory {
+    itemsGroup {
+      list {
+        edges {
+          node {
+            name
+            id
+            description
+            parentCategory
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInventoryItemGroupQuery = <
+      TData = GetInventoryItemGroupQuery,
+      TError = unknown
+    >(
+      variables?: GetInventoryItemGroupQueryVariables,
+      options?: UseQueryOptions<GetInventoryItemGroupQuery, TError, TData>
+    ) =>
+    useQuery<GetInventoryItemGroupQuery, TError, TData>(
+      variables === undefined ? ['getInventoryItemGroup'] : ['getInventoryItemGroup', variables],
+      useAxios<GetInventoryItemGroupQuery, GetInventoryItemGroupQueryVariables>(GetInventoryItemGroupDocument).bind(null, variables),
+      options
+    );
+export const GetInventoryVendorDocument = `
+    query getInventoryVendor {
+  inventory {
+    vendors {
+      list {
+        edges {
+          node {
+            name
+            location
+            email
+            phoneNumber
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInventoryVendorQuery = <
+      TData = GetInventoryVendorQuery,
+      TError = unknown
+    >(
+      variables?: GetInventoryVendorQueryVariables,
+      options?: UseQueryOptions<GetInventoryVendorQuery, TError, TData>
+    ) =>
+    useQuery<GetInventoryVendorQuery, TError, TData>(
+      variables === undefined ? ['getInventoryVendor'] : ['getInventoryVendor', variables],
+      useAxios<GetInventoryVendorQuery, GetInventoryVendorQueryVariables>(GetInventoryVendorDocument).bind(null, variables),
+      options
+    );
+export const GetInventoryUnitOfMeasureDocument = `
+    query getInventoryUnitOfMeasure {
+  inventory {
+    unitOfMeasure {
+      list {
+        edges {
+          node {
+            name
+            shortName
+            acceptFraction
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInventoryUnitOfMeasureQuery = <
+      TData = GetInventoryUnitOfMeasureQuery,
+      TError = unknown
+    >(
+      variables?: GetInventoryUnitOfMeasureQueryVariables,
+      options?: UseQueryOptions<GetInventoryUnitOfMeasureQuery, TError, TData>
+    ) =>
+    useQuery<GetInventoryUnitOfMeasureQuery, TError, TData>(
+      variables === undefined ? ['getInventoryUnitOfMeasure'] : ['getInventoryUnitOfMeasure', variables],
+      useAxios<GetInventoryUnitOfMeasureQuery, GetInventoryUnitOfMeasureQueryVariables>(GetInventoryUnitOfMeasureDocument).bind(null, variables),
+      options
+    );
 export const GetMemberListDocument = `
     query getMemberList($objState: ObjState) {
   members {
@@ -2472,6 +2636,131 @@ export const useGetMemberListQuery = <
     useQuery<GetMemberListQuery, TError, TData>(
       variables === undefined ? ['getMemberList'] : ['getMemberList', variables],
       useAxios<GetMemberListQuery, GetMemberListQueryVariables>(GetMemberListDocument).bind(null, variables),
+      options
+    );
+export const GetMemberTypesDocument = `
+    query getMemberTypes {
+  members {
+    memberTypes {
+      id
+      type
+    }
+  }
+}
+    `;
+export const useGetMemberTypesQuery = <
+      TData = GetMemberTypesQuery,
+      TError = unknown
+    >(
+      variables?: GetMemberTypesQueryVariables,
+      options?: UseQueryOptions<GetMemberTypesQuery, TError, TData>
+    ) =>
+    useQuery<GetMemberTypesQuery, TError, TData>(
+      variables === undefined ? ['getMemberTypes'] : ['getMemberTypes', variables],
+      useAxios<GetMemberTypesQuery, GetMemberTypesQueryVariables>(GetMemberTypesDocument).bind(null, variables),
+      options
+    );
+export const GetMemberTranslationDocument = `
+    query getMemberTranslation($id: ID!) {
+  members {
+    individual {
+      translate(id: $id) {
+        id
+        data
+        translatedValue
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberTranslationQuery = <
+      TData = GetMemberTranslationQuery,
+      TError = unknown
+    >(
+      variables: GetMemberTranslationQueryVariables,
+      options?: UseQueryOptions<GetMemberTranslationQuery, TError, TData>
+    ) =>
+    useQuery<GetMemberTranslationQuery, TError, TData>(
+      ['getMemberTranslation', variables],
+      useAxios<GetMemberTranslationQuery, GetMemberTranslationQueryVariables>(GetMemberTranslationDocument).bind(null, variables),
+      options
+    );
+export const GetKymFormStatusDocument = `
+    query getKymFormStatus($id: ID!) {
+  members {
+    individual {
+      formState(id: $id) {
+        data {
+          sectionStatus {
+            personal {
+              completed
+              error
+            }
+            professional {
+              completed
+              error
+            }
+            cooperativeMembership {
+              completed
+              error
+            }
+            declaration {
+              completed
+              error
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetKymFormStatusQuery = <
+      TData = GetKymFormStatusQuery,
+      TError = unknown
+    >(
+      variables: GetKymFormStatusQueryVariables,
+      options?: UseQueryOptions<GetKymFormStatusQuery, TError, TData>
+    ) =>
+    useQuery<GetKymFormStatusQuery, TError, TData>(
+      ['getKymFormStatus', variables],
+      useAxios<GetKymFormStatusQuery, GetKymFormStatusQueryVariables>(GetKymFormStatusDocument).bind(null, variables),
+      options
+    );
+export const GetBranchesListDocument = `
+    query getBranchesList {
+  settings {
+    general {
+      branch {
+        list {
+          edges {
+            node {
+              branchCode
+              address
+              manager {
+                id
+                name
+              }
+              district
+              contactNumber
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBranchesListQuery = <
+      TData = GetBranchesListQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchesListQueryVariables,
+      options?: UseQueryOptions<GetBranchesListQuery, TError, TData>
+    ) =>
+    useQuery<GetBranchesListQuery, TError, TData>(
+      variables === undefined ? ['getBranchesList'] : ['getBranchesList', variables],
+      useAxios<GetBranchesListQuery, GetBranchesListQueryVariables>(GetBranchesListDocument).bind(null, variables),
       options
     );
 export const GetShareBalanceListDocument = `

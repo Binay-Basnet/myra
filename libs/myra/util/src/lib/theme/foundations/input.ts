@@ -14,6 +14,7 @@ const baseStyle: PartsStyleObject<typeof parts> = {
     position: 'relative',
     appearance: 'none',
     transitionProperty: 'common',
+    borderRadius: 'br2',
     transitionDuration: 'normal',
   },
 };
@@ -23,28 +24,24 @@ const size: Record<string, SystemStyleObject> = {
     fontSize: 'lg',
     px: 4,
     h: 12,
-    borderRadius: 'md',
   },
 
   md: {
-    fontSize: 'md',
-    px: 4,
-    h: 10,
-    borderRadius: 'md',
+    fontSize: 'r1',
+    px: 's12',
+    h: '44px',
   },
 
   sm: {
     fontSize: 'sm',
     px: 3,
     h: 8,
-    borderRadius: 'sm',
   },
 
   xs: {
     fontSize: 'xs',
     px: 2,
     h: 6,
-    borderRadius: 'sm',
   },
 };
 

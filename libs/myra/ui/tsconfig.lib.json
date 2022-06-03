@@ -27,6 +27,7 @@
     "**/*.jsx",
     "**/*.ts",
     "**/*.tsx",
+    "index.d.ts",
     "src/lib/table/types/react-table.ts",
     "../util/src/hooks/useAdministrationHook.tsx"
   ]

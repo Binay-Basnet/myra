@@ -1,6 +1,8 @@
-import { Textarea, TextareaProps, Box } from '@chakra-ui/react';
-import { TextFields } from '@saccos/myra/ui';
 import { forwardRef } from 'react';
+import { Textarea, TextareaProps } from '@chakra-ui/react';
+
+import { TextFields } from '../text-fields/TextFields';
+
 /* eslint-disable-next-line */
 export interface TextAreaInputProps extends TextareaProps {
   label?: string;
