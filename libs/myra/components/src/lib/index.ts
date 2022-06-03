@@ -33,3 +33,4 @@ export * from './table/share';
 export * from './popover/Popover';
 export * from './table/ShareTable';
 export * from './TableListPageHeader';
+export * from './form/components';
