@@ -1,0 +1,85 @@
+query getMemberList($objState: ObjState) {
+  members {
+    list(
+      pagination: { first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA" }
+      filter: { objState: $objState }
+    ) {
+      edges {
+        node {
+          id
+          personalInformation {
+            name {
+              firstName
+              lastName
+            }
+          }
+          address {
+            permanent {
+              district
+              state
+            }
+          }
+          contact {
+            mobile
+          }
+          createdAt
+        }
+        cursor
+      }
+      pageInfo {
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+
+query getMemberTypes {
+  members {
+    memberTypes {
+      id
+      type
+    }
+  }
+}
+
+query getMemberTranslation($id: ID!) {
+  members {
+    individual {
+      translate(id: $id) {
+        id
+        data
+        translatedValue
+      }
+    }
+  }
+}
+
+query getKymFormStatus($id: ID!) {
+  members {
+    individual {
+      formState(id: $id) {
+        data {
+          sectionStatus {
+            personal {
+              completed
+              error
+            }
+            professional {
+              completed
+              error
+            }
+            cooperativeMembership {
+              completed
+              error
+            }
+            declaration {
+              completed
+              error
+            }
+          }
+        }
+      }
+    }
+  }
+}

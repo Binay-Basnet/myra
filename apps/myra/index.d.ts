@@ -8,7 +8,6 @@ declare module '*.svg' {
 import {
   ActionType,
   DefaultFilterTypes,
-  FilterProps,
   FilterType,
   HeaderProps,
   Meta,

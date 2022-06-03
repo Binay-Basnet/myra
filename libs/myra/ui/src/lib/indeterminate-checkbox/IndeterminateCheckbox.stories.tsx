@@ -1,12 +1,13 @@
-import { Story, Meta } from '@storybook/react';
+import { AddIcon } from '@chakra-ui/icons';
+import { Theme } from '@chakra-ui/react';
+import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
+import { theme } from '@saccos/myra/util';
+import { Meta,Story } from '@storybook/react';
+
 import {
   IndeterminateCheckbox,
   IndeterminateCheckboxProps,
 } from './IndeterminateCheckbox';
-import { theme } from '@saccos/myra/util';
-import { Theme } from '@chakra-ui/react';
-import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
-import { AddIcon } from '@chakra-ui/icons';
 
 export default {
   component: IndeterminateCheckbox,

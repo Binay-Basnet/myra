@@ -1,32 +1,22 @@
-// import { Navbar } from '../navbar/Navbar';
+import React from 'react';
+import { Box } from '@chakra-ui/react';
+
 import { TabMenu } from '../tab-menu/TabMenu';
 import { TopLevelHeader } from '../top-level-header/TopLevelHeader';
-import { Box } from '@chakra-ui/react';
-import React from 'react';
 
 export interface MainLayoutProps {
   children: React.ReactNode;
 }
 
-// ! TODO use THEMES
 export function MainLayout(props: MainLayoutProps) {
   const { children } = props;
   return (
-    // <Box
-    //   position="fixed"
-    //   width="100%"
-    //   top={0}
-    //   zIndex={2}
-    //   backdropFilter="saturate(180%) blur(5px)"
-    // >
     <div>
-      <Box position="fixed" top={0} width="100%" zIndex={2}>
-        {/* <Navbar /> */}
-
+      <Box position="fixed" top={0} width="100%" zIndex={11}>
         <TopLevelHeader />
         <TabMenu />
       </Box>
-      {children}
+      <Box mt="120px">{children}</Box>
     </div>
   );
 }

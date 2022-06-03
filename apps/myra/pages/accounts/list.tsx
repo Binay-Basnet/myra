@@ -1,21 +1,17 @@
 import { ReactElement } from 'react';
-
-import { AccountLayout, AccountListTable } from '@saccos/myra/components';
-import Router from 'next/router';
+import { AccountPagesLayout, ShareTable } from '@saccos/myra/components';
+import { MainLayout } from '@saccos/myra/ui';
 
 // TODO ( Update this page when design arrives )
 const AccountListPage = () => {
-  return <AccountListTable />;
+  return <ShareTable />;
 };
 
 AccountListPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <AccountLayout
-      onClick={() => Router.push('/accounts/add-new-account')}
-      headingText={'Accounts List'}
-    >
-      {page}
-    </AccountLayout>
+    <MainLayout>
+      <AccountPagesLayout>{page}</AccountPagesLayout>
+    </MainLayout>
   );
 };
 export default AccountListPage;

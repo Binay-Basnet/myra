@@ -1,8 +1,8 @@
-import { mode, transparentize } from '@chakra-ui/theme-tools';
 import type {
-  SystemStyleObject,
   SystemStyleFunction,
+  SystemStyleObject,
 } from '@chakra-ui/theme-tools';
+import { mode, transparentize } from '@chakra-ui/theme-tools';
 
 const baseStyle: SystemStyleObject = {
   textTransform: 'initial',
@@ -178,7 +178,7 @@ const sizes: Record<string, SystemStyleObject> = {
   lg: {
     h: 12,
     minW: 12,
-    fontSize: 'md',
+    fontSize: 'r1',
     px: 3,
     py: 3,
   },

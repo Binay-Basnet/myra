@@ -1,0 +1,37 @@
+query getBranchesList {
+  settings {
+    general {
+      branch {
+        list {
+          edges {
+            node {
+              branchCode
+              address
+              manager {
+                id
+                name
+              }
+              district
+              contactNumber
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getChartOfAccounts {
+  settings {
+    general {
+      chartsOfAccount {
+        class {
+          data {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}

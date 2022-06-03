@@ -1,12 +1,10 @@
 import type { ReactElement, ReactNode } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ChakraProvider } from '@chakra-ui/react';
+import { theme } from '@saccos/myra/util';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-
-import { ChakraProvider } from '@chakra-ui/react';
-
-import { theme } from '@saccos/myra/util';
-import { QueryClient, QueryClientProvider } from 'react-query';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -15,6 +13,7 @@ type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
+
 function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   const fiveMinutesInMs = 5 * 60 * 1000;
 
@@ -38,7 +37,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
         <Head>
-          <title>Welcome to myra!</title>
+          <title>Myra | Cloud Cooperative Platform</title>
         </Head>
         <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       </ChakraProvider>

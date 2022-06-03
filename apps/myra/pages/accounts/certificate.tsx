@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-
-import { AccountLayout, ShareTable } from '@saccos/myra/components';
+import { AccountPagesLayout, ShareTable } from '@saccos/myra/components';
+import { MainLayout } from '@saccos/myra/ui';
 
 // TODO ( Update this page when design arrives )
 const AccountCertificatePrint = () => {
@@ -9,7 +9,9 @@ const AccountCertificatePrint = () => {
 
 AccountCertificatePrint.getLayout = function getLayout(page: ReactElement) {
   return (
-    <AccountLayout headingText={'Account Certificate'}>{page}</AccountLayout>
+    <MainLayout>
+      <AccountPagesLayout>{page}</AccountPagesLayout>
+    </MainLayout>
   );
 };
 export default AccountCertificatePrint;

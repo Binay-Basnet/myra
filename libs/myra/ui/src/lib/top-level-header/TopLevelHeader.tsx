@@ -45,21 +45,23 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
         pr="s16"
       >
         <Image boxSize={'32px'} src={'/logo.svg'} alt="logo" />
-        <Box
-          maxH="100%"
-          pl="s8"
-          display={'flex'}
-          flexDirection={'column'}
-          justifyContent={'center'}
-          alignItems={'flex-start'}
-        >
-          <Text fontSize="r1" fontWeight="bold" color={'white'}>
-            नमुना बचत तथ ऋण सहकारी{' '}
-          </Text>
-          <Text fontSize="r1" color={'white'}>
-            ललितपुर
-          </Text>
-        </Box>
+        <Link href="/">
+          <Box
+            maxH="100%"
+            pl="s8"
+            display={'flex'}
+            flexDirection={'column'}
+            justifyContent={'center'}
+            alignItems={'flex-start'}
+          >
+            <Text fontSize="r1" fontWeight="bold" color={'white'}>
+              नमुना बचत तथ ऋण सहकारी{' '}
+            </Text>
+            <Text fontSize="r1" color={'white'}>
+              ललितपुर
+            </Text>
+          </Box>
+        </Link>
       </Box>
       <Box
         h="100%"

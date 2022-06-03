@@ -18,7 +18,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@saccos/myra/components": ["libs/myra/components/index.ts"],
+      "@saccos/myra/components": ["libs/myra/components/src/index.ts"],
+      "@saccos/myra/graphql": ["libs/myra/graphql/src/index.ts"],
       "@saccos/myra/jsonData": ["libs/myra/jsonData/index.ts"],
       "@saccos/myra/locales": ["libs/myra/locales/index.ts"],
       "@saccos/myra/types": ["libs/myra/types/index.ts"],

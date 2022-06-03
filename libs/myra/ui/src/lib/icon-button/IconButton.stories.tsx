@@ -1,9 +1,10 @@
-import { Story, Meta } from '@storybook/react';
-import { IconButton, IconButtonProps } from './IconButton';
 import { AiOutlineAppstore } from 'react-icons/ai';
-import { theme } from '@saccos/myra/util';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
+import { theme } from '@saccos/myra/util';
+import { Meta, Story } from '@storybook/react';
+
+import { IconButton, IconButtonProps } from './IconButton';
 
 export default {
   component: IconButton,

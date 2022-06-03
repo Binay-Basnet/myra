@@ -1,9 +1,10 @@
-import { Story, Meta } from '@storybook/react';
-import { CheckboxGroup, CheckboxGroupProps } from './CheckboxGroup';
-import { theme } from '@saccos/myra/util';
+import { AddIcon } from '@chakra-ui/icons';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
-import { AddIcon } from '@chakra-ui/icons';
+import { theme } from '@saccos/myra/util';
+import { Meta,Story } from '@storybook/react';
+
+import { CheckboxGroup, CheckboxGroupProps } from './CheckboxGroup';
 
 export default {
   component: CheckboxGroup,

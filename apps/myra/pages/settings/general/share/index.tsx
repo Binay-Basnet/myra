@@ -1,5 +1,6 @@
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 import React from 'react';
+
+import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const Share = () => {
   return <div>Share</div>;

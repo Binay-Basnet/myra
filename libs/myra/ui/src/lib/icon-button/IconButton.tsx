@@ -1,5 +1,5 @@
 import {
-  IconButton as ChakraIcon,
+  IconButton as ChakraIconButton,
   IconButtonProps as ChakraProps,
 } from '@chakra-ui/react';
 
@@ -8,7 +8,7 @@ export interface IconButtonProps extends ChakraProps {}
 
 export function IconButton(props: IconButtonProps) {
   const { ...rest } = props;
-  return <ChakraIcon {...rest} />;
+  return <ChakraIconButton {...rest} />;
 }
 
 export default IconButton;

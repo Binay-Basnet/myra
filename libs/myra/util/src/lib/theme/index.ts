@@ -1,15 +1,16 @@
 // 1. Import `extendTheme`
 import { extendTheme } from '@chakra-ui/react';
+
 import foundations from './foundations';
+import accordion from './foundations/accordion';
 import button from './foundations/button';
 import checkbox from './foundations/checkbox';
-import radio from './foundations/radio';
-import Table from './foundations/table';
 import Input from './foundations/input';
 import modal from './foundations/modal';
-import tags from './foundations/tags';
+import radio from './foundations/radio';
 import switches from './foundations/switches';
-import accordion from './foundations/accordion';
+import Table from './foundations/table';
+import tags from './foundations/tags';
 
 // 2. Call `extendTheme` and pass your custom values
 

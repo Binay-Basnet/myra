@@ -1,7 +1,7 @@
 import {
   Tag as ChakraTags,
-  TagLabel,
   TagCloseButton,
+  TagLabel,
   TagProps as ChakraTagProps,
 } from '@chakra-ui/react';
 

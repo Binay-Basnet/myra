@@ -1,9 +1,10 @@
-import { Meta, StoryFn } from '@storybook/react';
-import Button, { ButtonProps } from './Button';
-import { theme } from '@saccos/myra/util';
+import { BiArrowBack } from 'react-icons/bi';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
-import { BiArrowBack } from 'react-icons/bi';
+import { theme } from '@saccos/myra/util';
+import { Meta, StoryFn } from '@storybook/react';
+
+import Button, { ButtonProps } from './Button';
 
 export default {
   component: Button,

@@ -1,4 +1,6 @@
-import { useTable } from './useTable';
+import React from 'react';
+import { BiFilter } from 'react-icons/bi';
+import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import {
   Box,
   Flex,
@@ -14,19 +16,12 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import {
-  Cell,
-  Column,
-  ExtraColumnProps,
-  HeaderGroup,
-  TableProps,
-} from './types';
-import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
-import { BiFilter } from 'react-icons/bi';
-import { PopoverContent, PopoverTrigger } from '../popover/Popover';
-import React from 'react';
+
 import ListFilterPopover from './components/ListFilterPopover';
 import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
+import { Column, HeaderGroup, TableProps } from './types';
+import { useTable } from './useTable';
+import { PopoverContent, PopoverTrigger } from '../popover/Popover';
 
 /**
  *  @description Add disableSortBy in each column to disable column sort in that column.
@@ -59,7 +54,7 @@ export function Table<T extends Record<string, unknown>>({
 
   if (isLoading) {
     return (
-      <Flex justifyContent="center" height="100px" alignItems="center">
+      <Flex justifyContent="center" height="300px" alignItems="center">
         <Spinner
           thickness="4px"
           speed="0.65s"
@@ -72,11 +67,17 @@ export function Table<T extends Record<string, unknown>>({
   }
 
   if (data?.length === 0) {
-    return <div>No Data Found</div>;
+    return (
+      <Flex justifyContent="center" height="300px" alignItems="center">
+        <Text fontSize="r3" color="gray.500">
+          No Data Found
+        </Text>
+      </Flex>
+    );
   }
 
   return (
-    <TableContainer>
+    <TableContainer borderRadius="inherit">
       <ChakraTable size={size} {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
@@ -183,7 +184,8 @@ export function Table<T extends Record<string, unknown>>({
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {/*// TODO ( WILL CHANGE THIS ANY LATER )*/}
+          {rows.map((row: any) => {
             prepareRow(row);
             return (
               <Tr
@@ -191,25 +193,19 @@ export function Table<T extends Record<string, unknown>>({
                 bg={row.isSelected ? 'primary.0' : 'white'}
                 {...row.getRowProps()}
               >
-                {row.cells.map(
-                  (
-                    cell: Cell<T> & {
-                      column: ExtraColumnProps;
-                    }
-                  ) => (
-                    <Td
-                      maxWidth={cell.column.maxWidth}
-                      minWidth={cell.column.minWidth}
-                      paddingX={cell.column.paddingX}
-                      paddingY={cell.column.paddingY}
-                      width={cell.column.width}
-                      {...cell.getCellProps()}
-                      isNumeric={cell.column.isNumeric}
-                    >
-                      <Text noOfLines={0}>{cell.render('Cell')}</Text>
-                    </Td>
-                  )
-                )}
+                {row.cells.map((cell: any) => (
+                  <Td
+                    maxWidth={cell.column.maxWidth}
+                    minWidth={cell.column.minWidth}
+                    paddingX={cell.column.paddingX}
+                    paddingY={cell.column.paddingY}
+                    width={cell.column.width}
+                    {...cell.getCellProps()}
+                    isNumeric={cell.column.isNumeric}
+                  >
+                    <Text noOfLines={0}>{cell.render('Cell')}</Text>
+                  </Td>
+                ))}
               </Tr>
             );
           })}

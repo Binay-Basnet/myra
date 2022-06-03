@@ -1,17 +1,17 @@
+import { ReactElement, useEffect, useState } from 'react';
+import { GrClose } from 'react-icons/gr';
 import {
   Box,
   Container,
-  Heading,
-  Text,
+  Flex,
   Grid,
   GridItem,
-  Img,
-  Flex,
-  Spacer,
+  Heading,
   HStack,
+  Img,
+  Spacer,
+  Text,
 } from '@chakra-ui/react';
-import { GrClose } from 'react-icons/gr';
-import { ReactElement, useEffect, useState } from 'react';
 import { Button, MainLayout } from '@saccos/myra/ui';
 
 interface IPersonalDetails {
@@ -28,6 +28,7 @@ interface IPersonalDetails {
   occupation: string;
   panNumber: string;
 }
+
 interface IfamilyInfo {
   fatherName: string;
   motherName: string;
@@ -35,6 +36,7 @@ interface IfamilyInfo {
   grandmotherName: string;
   spouseName: string;
 }
+
 interface IaddressInfo {
   state: string;
   district: string;
@@ -42,11 +44,13 @@ interface IaddressInfo {
   wardNo: string;
   locality: string;
 }
+
 interface IcontactInfo {
   officePhone: string;
   residensePhone: string;
   contactNo: number;
 }
+
 interface InomineeInfo {
   nomineeFirstName: string;
   nomineeMiddleName: string;
@@ -58,6 +62,7 @@ interface InomineeInfo {
   nomineeCitizenshipIssPlace: string;
   nomineeContactNumber: number;
 }
+
 const MemberDetails = () => {
   const [personalInfo, setPersonalInfo] = useState<IPersonalDetails>();
   const [familyDetails, setFamilyDetails] = useState<IfamilyInfo>();

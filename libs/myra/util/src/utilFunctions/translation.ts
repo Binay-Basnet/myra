@@ -1,4 +1,5 @@
 import { NextRouter } from 'next/router';
+
 import { en, ne } from '../../../locales';
 
 export const translation = (router: NextRouter) => {

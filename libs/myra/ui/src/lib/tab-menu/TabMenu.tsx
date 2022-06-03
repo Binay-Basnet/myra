@@ -42,7 +42,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'navbarShare',
     icon: IoCubeOutline,
-    link: '/share/list',
+    link: '/share/balance',
   },
   {
     title: 'navbarAccounts',

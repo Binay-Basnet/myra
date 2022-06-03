@@ -1,13 +1,14 @@
+import { useMemo } from 'react';
 import {
   useFilters,
   useRowSelect,
   useSortBy,
   useTable as useReactTable,
 } from 'react-table';
-import { selectionHook } from './hooks/selectionHook';
-import { useMemo } from 'react';
-import { Column, TableProps } from './types';
+
 import { amountFilter } from './filters/amountFilter';
+import { selectionHook } from './hooks/selectionHook';
+import { Column, TableProps } from './types';
 
 const rowSelectionHooks = [useRowSelect, selectionHook];
 

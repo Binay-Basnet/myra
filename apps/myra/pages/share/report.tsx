@@ -1,13 +1,17 @@
 import { ReactElement } from 'react';
-
-import { ShareLayout, ShareTable } from '@saccos/myra/components';
+import { SharePageLayout, ShareRegisterTable } from '@saccos/myra/components';
+import { MainLayout } from '@saccos/myra/ui';
 
 // TODO ( UPDATE THIS PAGE A/C TO DESIGN )
-const ShareReportPage = () => {
-  return <ShareTable />;
+const ShareReport = () => {
+  return <ShareRegisterTable />;
 };
 
-ShareReportPage.getLayout = function getLayout(page: ReactElement) {
-  return <ShareLayout headingText="Share Report">{page}</ShareLayout>;
+ShareReport.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <MainLayout>
+      <SharePageLayout>{page}</SharePageLayout>{' '}
+    </MainLayout>
+  );
 };
-export default ShareReportPage;
+export default ShareReport;

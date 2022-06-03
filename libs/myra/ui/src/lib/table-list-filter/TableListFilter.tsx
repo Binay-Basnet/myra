@@ -1,3 +1,14 @@
+import React, {
+  Dispatch,
+  ForwardedRef,
+  Fragment,
+  SetStateAction,
+  useId,
+  useMemo,
+  useState,
+} from 'react';
+import { BsFilter } from 'react-icons/bs';
+import { SearchIcon } from '@chakra-ui/icons';
 import {
   Box,
   Checkbox,
@@ -10,20 +21,10 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
-import React, {
-  Dispatch,
-  ForwardedRef,
-  Fragment,
-  SetStateAction,
-  useId,
-  useMemo,
-  useState,
-} from 'react';
-import { SearchIcon } from '@chakra-ui/icons';
+
 import Button from '../button/Button';
 import Icon from '../icon/Icon';
 import { PopoverContent, PopoverTrigger } from '../popover/Popover';
-import { BsFilter } from 'react-icons/bs';
 
 export interface TableListFilterProps {
   name?: string;

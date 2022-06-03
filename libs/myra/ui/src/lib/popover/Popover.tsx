@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Box,
   Button,
@@ -12,16 +13,15 @@ import {
   PopoverHeader,
   PopoverTrigger,
 } from '@chakra-ui/react';
-import React from 'react';
 
 export interface PopoverProps {
   name?: string;
 }
 
-export function ChakraPopover({ name = 'Trigger' }: PopoverProps) {
+export function ChakraPopover({ name = 'Trigger', ...rest }: PopoverProps) {
   const initialFocusRef = React.useRef<HTMLButtonElement | null>(null);
   return (
-    <Popover placement="auto-start" initialFocusRef={initialFocusRef}>
+    <Popover {...rest} placement="auto-start" initialFocusRef={initialFocusRef}>
       <PopoverTrigger>
         <Button>{name}</Button>
       </PopoverTrigger>
@@ -55,14 +55,15 @@ export function ChakraPopover({ name = 'Trigger' }: PopoverProps) {
 }
 
 export {
+  Popover,
+  PopoverAnchor,
+  PopoverArrow,
   PopoverBody,
   PopoverCloseButton,
   PopoverContent,
   PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
-  PopoverAnchor,
-  PopoverArrow,
 };
 
 export default Popover;

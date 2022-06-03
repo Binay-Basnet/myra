@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-
-import { AccountLayout, ShareTable } from '@saccos/myra/components';
+import { AccountPagesLayout, ShareTable } from '@saccos/myra/components';
+import { MainLayout } from '@saccos/myra/ui';
 
 // TODO ( Update this page when design arrives )
 const AccountConsolidatedPage = () => {
@@ -9,9 +9,9 @@ const AccountConsolidatedPage = () => {
 
 AccountConsolidatedPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <AccountLayout headingText={'Account Consolidate Report'}>
-      {page}
-    </AccountLayout>
+    <MainLayout>
+      <AccountPagesLayout>{page}</AccountPagesLayout>
+    </MainLayout>
   );
 };
 export default AccountConsolidatedPage;

@@ -2,9 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../../dist/out-tsc",
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
   "files": [
     "../../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
@@ -29,6 +27,8 @@
     "**/*.jsx",
     "**/*.ts",
     "**/*.tsx",
-    "src/lib/table/types/react-table.ts"
+    "index.d.ts",
+    "src/lib/table/types/react-table.ts",
+    "../util/src/hooks/useAdministrationHook.tsx"
   ]
 }

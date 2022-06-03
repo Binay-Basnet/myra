@@ -41,10 +41,14 @@ jobs:
           script: |
             cd myra/myra-ui-dev
             git pull origin dev
-            docker rm -f myra-ui-dev  || true
-            echo previous container removed
+            docker build -t myra-deploy:node-yarn -f ./myra-deploy.Dockerfile .
+            echo custom image created
             docker build --tag myra-ui-dev_image .
             echo docker built successfully
+            docker rm -f myra-ui-dev  || true
+            echo previous container removed
             docker run --rm -p 3000:3000 -d --name myra-ui-dev myra-ui-dev_image
             echo UI deployed successfully
-            docker image prune -a -f || true
+            yes y | docker image prune
+            yes y | docker container prune
+            docker run -d --name ui-temp myra-deploy:node-yarn

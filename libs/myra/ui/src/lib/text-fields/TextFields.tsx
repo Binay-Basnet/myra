@@ -1,7 +1,9 @@
 import { Text, TextProps } from '@chakra-ui/react';
+
 /* eslint-disable-next-line */
 export interface TextFieldsProps extends TextProps {
   variant?:
+    | 'bodySmall'
     | 'bodyLarge'
     | 'bodyRegular'
     | 'formLabel'
@@ -10,7 +12,8 @@ export interface TextFieldsProps extends TextProps {
     | 'tableHeader'
     | 'pageHeader'
     | 'tabs'
-    | 'switch';
+    | 'switch'
+    | string;
   children?: React.ReactNode;
   color?: string;
 }
@@ -25,6 +28,12 @@ export function TextFields(props: TextFieldsProps) {
           {children}
         </Text>
       );
+    case 'bodySmall':
+      return (
+        <Text fontSize="s2" fontWeight="400" {...rest} lineHeight="1.5">
+          {children}
+        </Text>
+      );
     case 'bodyRegular':
       return (
         <Text fontSize="r2" fontWeight="400" {...rest} lineHeight="1.5">
@@ -33,7 +42,7 @@ export function TextFields(props: TextFieldsProps) {
       );
     case 'formLabel':
       return (
-        <Text fontSize="s3" fontWeight="500" {...rest} lineHeight="1.5">
+        <Text fontSize="s3" fontWeight="medium" {...rest} lineHeight="1.5">
           {children}
         </Text>
       );

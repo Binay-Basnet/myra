@@ -1,4 +1,4 @@
-import { useTable, useSortBy, useRowSelect } from 'react-table';
+import { useRowSelect,useSortBy, useTable } from 'react-table';
 
 export const useTableHook = ({ columns, data }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =

@@ -2,14 +2,14 @@ import {
   Box,
   Container,
   Flex,
+  HStack,
+  Img,
   Spacer,
   Text,
-  Img,
-  HStack,
 } from '@chakra-ui/react';
-import Link from 'next/link';
 import { Navbarfordaashboard } from '@saccos/myra/ui';
 import { useTranslation } from '@saccos/myra/util';
+import Link from 'next/link';
 
 const Dashboard = () => {
   const { t } = useTranslation();
