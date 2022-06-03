@@ -2375,6 +2375,11 @@ export type GetKymFormStatusQueryVariables = Exact<{
 
 export type GetKymFormStatusQuery = { members: { individual?: { formState?: { data?: { sectionStatus?: { personal?: { completed?: Array<KymIndPersonalSection | null> | null, error?: Array<KymIndPersonalSection | null> | null } | null, professional?: { completed?: Array<KymIndProfessionalSection | null> | null, error?: Array<KymIndProfessionalSection | null> | null } | null, cooperativeMembership?: { completed?: Array<KymIndCooperativeMemberSection | null> | null, error?: Array<KymIndCooperativeMemberSection | null> | null } | null, declaration?: { completed?: Array<KymIndDeclarationSection | null> | null, error?: Array<KymIndDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
 
+export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, address: string, district: string, contactNumber: string, manager: { id?: string | null, name: string } } }> } | null } | null } | null } };
+
 export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2706,6 +2711,42 @@ export const useGetKymFormStatusQuery = <
     useQuery<GetKymFormStatusQuery, TError, TData>(
       ['getKymFormStatus', variables],
       useAxios<GetKymFormStatusQuery, GetKymFormStatusQueryVariables>(GetKymFormStatusDocument).bind(null, variables),
+      options
+    );
+export const GetBranchesListDocument = `
+    query getBranchesList {
+  settings {
+    general {
+      branch {
+        list {
+          edges {
+            node {
+              branchCode
+              address
+              manager {
+                id
+                name
+              }
+              district
+              contactNumber
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBranchesListQuery = <
+      TData = GetBranchesListQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchesListQueryVariables,
+      options?: UseQueryOptions<GetBranchesListQuery, TError, TData>
+    ) =>
+    useQuery<GetBranchesListQuery, TError, TData>(
+      variables === undefined ? ['getBranchesList'] : ['getBranchesList', variables],
+      useAxios<GetBranchesListQuery, GetBranchesListQueryVariables>(GetBranchesListDocument).bind(null, variables),
       options
     );
 export const GetShareBalanceListDocument = `

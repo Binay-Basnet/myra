@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
-import moment from 'moment';
 import { Avatar, Flex } from '@chakra-ui/react';
+import { PopoverComponent } from '@saccos/myra/components';
 import {
   KymMemberListEdges,
   ObjState,
   useGetMemberListQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
-import { PopoverComponent } from '@saccos/myra/components';
+import moment from 'moment';
+import { useRouter } from 'next/router';
 
 import { TableListPageHeader } from '../TableListPageHeader';
 import { TableSearch } from '../TableSearch';
