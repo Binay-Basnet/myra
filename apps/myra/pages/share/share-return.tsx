@@ -31,6 +31,7 @@ import {
   // Button,
 } from '@saccos/myra/ui';
 
+// TODO! use Layout
 const Header = () => {
   return (
     <>
@@ -80,7 +81,7 @@ const ShareReturn = () => {
         <Header />
       </Box>
       <Container
-        minW="container.md"
+        minW="container.xl"
         height="fit-content"
         mt="130"
         p="0"
