@@ -12,7 +12,6 @@ import {
   Avatar,
   BaseSelect,
   Box,
-  Button,
   Checkbox,
   Container,
   Grid,

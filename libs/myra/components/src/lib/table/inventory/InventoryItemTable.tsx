@@ -1,63 +1,64 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
+import { InvItemsEdge, useGetInventoryItemsQuery } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 import { TableSearch } from '../../TableSearch';
 
-enum Gender {
-  Female = 'FEMALE',
-  Male = 'MALE',
-  Other = 'OTHER',
-}
-
-type MemberData = {
-  id: string;
-  firstName: string;
-  middleName?: string | null;
-  lastName: string;
-  gender: Gender;
-  title?: string | null;
-  dateOfBirth?: string | null;
-};
-
 export const InventoryItemTable = () => {
-  const columns: Column<MemberData>[] = useMemo(
+  const { data, isLoading } = useGetInventoryItemsQuery();
+
+  const rowItems = data?.inventory.items?.list?.edges ?? [];
+
+  const columns: Column<InvItemsEdge>[] = useMemo(
     () => [
       {
         Header: 'Item Id',
-        accessor: 'id',
+        accessor: 'node.id',
         maxWidth: 4,
       },
 
       {
         Header: 'Name',
-        accessor: 'firstName',
+        accessor: 'node.name',
         width: '80%',
       },
       {
         Header: 'Type',
-        accessor: 'title',
+        accessor: 'node.type',
         width: '40%',
       },
 
       {
         Header: 'Unit Price',
-        accessor: 'gender',
-        maxWidth: 2,
+        accessor: 'node.unitPrice',
+        Cell: ({ value }) => {
+          return <span>{Number(value).toFixed(2)}</span>;
+        },
       },
 
       {
         Header: 'Total Cost',
-        accessor: 'dateOfBirth',
-        maxWidth: 2,
+        accessor: 'cursor',
+        Cell: ({ row }) => {
+          return (
+            <span>
+              {Number(
+                row.original.node.unitPrice * row.original.node.itemQuantity
+              ).toFixed(2)}
+            </span>
+          );
+        },
       },
 
       {
         Header: 'Item Quantity',
-        accessor: 'lastName',
-        maxWidth: 2,
+        accessor: 'node.itemQuantity',
+        Cell: ({ value }) => {
+          return <span>{Number(value).toFixed(2)}</span>;
+        },
       },
 
       {
@@ -80,17 +81,8 @@ export const InventoryItemTable = () => {
       <TableSearch />
 
       <Table
-        data={[
-          {
-            firstName: 'Hello',
-            lastName: '123',
-            title: '123',
-            dateOfBirth: '1331',
-            location: 'Patan, Lalitpur',
-            gender: '301849-3910',
-            id: '123',
-          },
-        ]}
+        isLoading={isLoading}
+        data={rowItems}
         columns={columns}
         sort={true}
       />

@@ -66,7 +66,7 @@ const sizes: Record<string, PartsStyleObject<typeof parts>> = {
     label: { fontSize: 'lg' },
   },
   sm: {
-    control: { width: 5, height: 5 },
+    control: { width: 3, height: 3 },
     label: { fontSize: 'r1' },
   },
 };

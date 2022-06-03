@@ -42,3 +42,44 @@ query getMemberTypes {
     }
   }
 }
+
+query getMemberTranslation($id: ID!) {
+  members {
+    individual {
+      translate(id: $id) {
+        id
+        data
+        translatedValue
+      }
+    }
+  }
+}
+
+query getKymFormStatus($id: ID!) {
+  members {
+    individual {
+      formState(id: $id) {
+        data {
+          sectionStatus {
+            personal {
+              completed
+              error
+            }
+            professional {
+              completed
+              error
+            }
+            cooperativeMembership {
+              completed
+              error
+            }
+            declaration {
+              completed
+              error
+            }
+          }
+        }
+      }
+    }
+  }
+}

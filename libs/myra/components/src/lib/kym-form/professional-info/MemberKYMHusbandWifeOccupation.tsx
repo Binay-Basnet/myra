@@ -16,7 +16,10 @@ const HusbandWifeOccupation = ({
   control,
   index,
   removeHusbandWifeOccupation,
+  watch,
 }: any) => {
+  const profession = watch('profession');
+
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -36,10 +39,12 @@ const HusbandWifeOccupation = ({
             name={`spouseOccupation.${index}.occupation`}
             label="Occupation"
             placeholder="Select Occupation"
-            options={[
-              { label: 'Agriculture', value: 'agriculature' },
-              { label: 'Student', value: 'student' },
-            ]}
+            options={
+              profession?.map((data: string) => ({
+                label: data,
+                value: data,
+              })) ?? []
+            }
           />
         </GridItem>
         <GridItem colSpan={2}>
@@ -81,7 +86,7 @@ const HusbandWifeOccupation = ({
   );
 };
 
-export const MemberKYMHusbandWifeOccupation = ({ control }: any) => {
+export const MemberKYMHusbandWifeOccupation = ({ control, watch }: any) => {
   const {
     fields: husbandWifeOccupationFields,
     append: husbandWifeOccupationAppend,
@@ -101,6 +106,7 @@ export const MemberKYMHusbandWifeOccupation = ({ control }: any) => {
               <HusbandWifeOccupation
                 control={control}
                 index={index}
+                watch={watch}
                 removeHusbandWifeOccupation={() =>
                   husbandWifeOccupationRemove(index)
                 }

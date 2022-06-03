@@ -1,6 +1,7 @@
-import { Input, InputGroup, Text, InputProps } from '@chakra-ui/react';
-import { TextFields } from '@saccos/myra/ui';
 import { forwardRef } from 'react';
+import { Input, InputGroup, InputProps } from '@chakra-ui/react';
+
+import { TextFields } from '../text-fields/TextFields';
 
 /* eslint-disable-next-line */
 export interface AmountInputNormalProps extends InputProps {
@@ -27,7 +28,6 @@ export const AmountInputNormal = forwardRef<
           variant={'outline'}
           type="number"
           fontSize={'s2'}
-          placeholder="00"
           ref={ref}
           {...rest}
         />
