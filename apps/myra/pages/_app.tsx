@@ -37,7 +37,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
         <Head>
-          <title>Welcome to myra!</title>
+          <title>Myra | Cloud Cooperative Platform</title>
         </Head>
         <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       </ChakraProvider>

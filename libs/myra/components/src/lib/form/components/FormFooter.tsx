@@ -1,8 +1,8 @@
 import React from 'react';
-import { Box, Text, Icon, Button } from '@saccos/myra/ui';
 import { BiSave } from 'react-icons/bi';
+import { Box, Button, Icon, Text } from '@saccos/myra/ui';
 
-export const FormFooter = () => {
+export const FormFooter = ({ onClick }) => {
   return (
     <Box
       display="flex"
@@ -37,7 +37,7 @@ export const FormFooter = () => {
             </Text>
           </Button>
         </Box>
-        <Button>Done</Button>
+        <Button onClick={onClick}>Done</Button>
       </Box>
     </Box>
   );

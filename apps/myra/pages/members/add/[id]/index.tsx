@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { GrClose } from 'react-icons/gr';
 import {
@@ -32,6 +32,7 @@ import {
   Checkbox,
   Container,
   Divider,
+  MainLayout,
   Navbar,
   TabMenu,
   Text,
@@ -42,15 +43,6 @@ import debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 
 // import { useSetMemberDataMutation } from '../../../../generated/graphql';
-
-const Header = ({ t }) => {
-  return (
-    <>
-      <Navbar />
-      <TabMenu />
-    </>
-  );
-};
 
 const AddMember = () => {
   const { t } = useTranslation();
@@ -115,9 +107,7 @@ const AddMember = () => {
         top={0}
         zIndex={2}
         backdropFilter="saturate(180%) blur(5px)"
-      >
-        <Header t={t} />
-      </Box>
+      ></Box>
       <Container
         minW="container.xl"
         height="fit-content"
@@ -237,6 +227,10 @@ const AddMember = () => {
       </Container>
     </form>
   );
+};
+
+AddMember.getLayout = function getLayout(page: ReactElement) {
+  return <MainLayout>{page}</MainLayout>;
 };
 
 export default AddMember;
