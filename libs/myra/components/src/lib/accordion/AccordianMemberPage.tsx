@@ -1,11 +1,14 @@
 import React from 'react';
 import { AiFillCaretRight, AiOutlineCaretDown } from 'react-icons/ai';
+import { AiFillCloseCircle } from 'react-icons/ai';
+import { TiTickOutline } from 'react-icons/ti';
 import {
   Accordion,
   AccordionButton,
   AccordionItem,
   AccordionPanel,
   Box,
+  Icon,
   Text,
 } from '@chakra-ui/react';
 
@@ -18,6 +21,17 @@ const PersonalInformation: string[] = [
   'Incase of residing in Rented House',
   'Family Details',
 ];
+
+const personalInfoEnum = {
+  'Basic Information': 'BASIC_INFORMATION',
+  'Contact Details': 'CONTACT_DETAILS',
+  'Identification Details': 'IDENTIFICATION_DETAILS',
+  'Permanent Address': 'PERMANENT_ADDRESS',
+  'Temporary Address': 'TEMPORARY_ADDRESS',
+  'Incase of residing in Rented House': 'REANTED_HOUSE',
+  'Family Details': 'FAMILY_DETAILS',
+};
+
 const ProfessionalDetails: string[] = [
   'Profession',
   'Main Profession',
@@ -51,7 +65,8 @@ const Decleration: string[] = [
 //     _selected: { color: '#37474F', bg: '#E2E8EE', fontWeight: '500' },
 //   },
 // });
-export function AccorrdianAddMember() {
+export function AccorrdianAddMember({ formStatus }) {
+  console.log('hello', formStatus);
   return (
     <Accordion allowMultiple allowToggle mb="0">
       <AccordionItem border="none">
@@ -75,15 +90,18 @@ export function AccorrdianAddMember() {
               {' '}
               {PersonalInformation.map((item, index) => (
                 // <Text key={`${item}${index}`}>{item}</Text>
-                <Text
-                  mb="s16"
-                  pl="s16"
-                  fontSize="r1"
-                  fontWeight="400"
-                  key={`${item}${index}`}
-                >
-                  {item}
-                </Text>
+                <Box key={`${item}${index}`} display="flex">
+                  <Text mb="s16" pl="s16" fontSize="r1" fontWeight="400">
+                    {item}
+                  </Text>
+                  &nbsp; &nbsp;
+                  {formStatus?.personal?.completed.includes(
+                    personalInfoEnum[item]
+                  ) && <Icon size="xs" as={TiTickOutline} />}
+                  {formStatus?.personal?.error.includes(
+                    personalInfoEnum[item]
+                  ) && <Icon size="xs" as={AiFillCloseCircle} />}
+                </Box>
               ))}
             </AccordionPanel>
           </>

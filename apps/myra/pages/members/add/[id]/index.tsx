@@ -23,6 +23,7 @@ import {
 } from '@saccos/myra/components';
 import {
   KymIndMemberInput,
+  useGetKymFormStatusQuery,
   useSetMemberDataMutation,
 } from '@saccos/myra/graphql';
 import {
@@ -55,9 +56,12 @@ const AddMember = () => {
   const { t } = useTranslation();
   // const methods = useForm<IFormValues>();
   const router = useRouter();
-  console.log('hello', router);
   const id = String(router?.query?.id);
   const { mutate } = useSetMemberDataMutation();
+  const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
+  const kymFormStatus =
+    kymFormStatusQuery?.data?.members?.individual?.formState?.data
+      ?.sectionStatus;
 
   const { control, handleSubmit, getValues } = useForm<KymIndMemberInput>({
     defaultValues: {
@@ -92,10 +96,11 @@ const AddMember = () => {
   return (
     <form
       onChange={debounce(() => {
-        console.log('values', getValues());
         mutate({ id, data: getValues() });
       }, 3000)}
-      onSubmit={handleSubmit((data) => console.log('data', data))}
+      onSubmit={handleSubmit((data) => {
+        console.log('data', data);
+      })}
     >
       <Box
         position="fixed"
@@ -131,7 +136,7 @@ const AddMember = () => {
         </Box>
         <Box display="flex" width="100%">
           <Box w={320} p={2} minHeight="100%" bg="white">
-            <AccorrdianAddMember />
+            <AccorrdianAddMember formStatus={kymFormStatus} />
           </Box>
           <Divider orientation="vertical" />
           <Box w="100%">
@@ -214,7 +219,9 @@ const AddMember = () => {
               Save Draft
             </Button>
             &nbsp;
-            <Button>Next</Button>
+            <Button onClick={() => router.push(`/members/translation/${id}`)}>
+              Next
+            </Button>
           </Box>
         </Box>
       </Container>
