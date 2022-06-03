@@ -2380,6 +2380,11 @@ export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, address: string, district: string, contactNumber: string, manager: { id?: string | null, name: string } } }> } | null } | null } | null } };
 
+export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetChartOfAccountsQuery = { settings: { general?: { chartsOfAccount?: { class?: { data?: Array<{ id: string, name: string } | null> | null } | null } | null } | null } };
+
 export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2761,6 +2766,34 @@ export const useGetBranchesListQuery = <
     useQuery<GetBranchesListQuery, TError, TData>(
       variables === undefined ? ['getBranchesList'] : ['getBranchesList', variables],
       useAxios<GetBranchesListQuery, GetBranchesListQueryVariables>(GetBranchesListDocument).bind(null, variables),
+      options
+    );
+export const GetChartOfAccountsDocument = `
+    query getChartOfAccounts {
+  settings {
+    general {
+      chartsOfAccount {
+        class {
+          data {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetChartOfAccountsQuery = <
+      TData = GetChartOfAccountsQuery,
+      TError = unknown
+    >(
+      variables?: GetChartOfAccountsQueryVariables,
+      options?: UseQueryOptions<GetChartOfAccountsQuery, TError, TData>
+    ) =>
+    useQuery<GetChartOfAccountsQuery, TError, TData>(
+      variables === undefined ? ['getChartOfAccounts'] : ['getChartOfAccounts', variables],
+      useAxios<GetChartOfAccountsQuery, GetChartOfAccountsQueryVariables>(GetChartOfAccountsDocument).bind(null, variables),
       options
     );
 export const GetShareBalanceListDocument = `

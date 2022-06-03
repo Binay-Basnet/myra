@@ -1,10 +1,9 @@
-import React, { ReactNode } from 'react';
+import React, { useState } from 'react';
 import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
 import { IoMdPerson } from 'react-icons/io';
 import { IconType } from 'react-icons/lib';
 import { AddIcon } from '@chakra-ui/icons';
 import { Grid } from '@chakra-ui/react';
-// import { AiFillBank } from '@react-icons/ai';
 import {
   useGetMemberTypesQuery,
   useGetNewIdMutation,
@@ -95,10 +94,19 @@ const memberTypesArray = {
 };
 
 export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
+  const router = useRouter();
   const newId = useGetNewIdMutation();
   const memberTypesQuery = useGetMemberTypesQuery();
   const memberTypes = memberTypesQuery?.data?.members?.memberTypes;
-  const router = useRouter();
+  const [openModal, setOpenModal] = useState(false);
+
+  const onOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <Box display="flex">
@@ -108,7 +116,32 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
         </Text>
         <Divider my="s16" />
 
-        <Modal modalButtonProp="New Member" titleProps="Select Member Type">
+        <Button
+          width="full"
+          size="lg"
+          justifyContent="start"
+          leftIcon={<AddIcon h="11px" />}
+          onClick={() => {
+            onOpenModal();
+          }}
+        >
+          New Member
+        </Button>
+
+        <Modal
+          open={openModal}
+          onClose={onCloseModal}
+          isCentered={true}
+          title={
+            <Text
+              fontSize="r2"
+              color="neutralColorLight.Gray-80"
+              fontWeight="SemiBold"
+            >
+              Select Member Type
+            </Text>
+          }
+        >
           <Grid templateColumns="repeat(2, 1fr)" gap="s16">
             {memberTypes?.map((item) => (
               <MemberTypeButton

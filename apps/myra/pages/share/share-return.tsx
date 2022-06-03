@@ -32,6 +32,7 @@ import {
 } from '@saccos/myra/ui';
 import { useRouter } from 'next/router';
 
+// TODO! use Layout
 const Header = () => {
   return (
     <>
@@ -82,7 +83,7 @@ const ShareReturn = () => {
         <Header />
       </Box>
       <Container
-        minW="container.md"
+        minW="container.xl"
         height="fit-content"
         mt="130"
         p="0"

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
+import { BiDownArrowCircle, BiUpArrowCircle } from 'react-icons/bi';
 import { AddIcon } from '@chakra-ui/icons';
-import { Box, Button, Divider, Icon, Text, Modal } from '@saccos/myra/ui';
+import { Box, Button, Divider, Icon, Modal, Text } from '@saccos/myra/ui';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '../tab/TabforMemberPage';
-import { BiUpArrowCircle, BiDownArrowCircle } from 'react-icons/bi';
 
 interface IMemberPageLayout {
   children: React.ReactNode;

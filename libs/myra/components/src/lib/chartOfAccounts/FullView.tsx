@@ -1,62 +1,58 @@
-import { AccordionComponent } from '../accordion/AccordionComponent';
+import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import { AddIcon } from '@chakra-ui/icons';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
+  Text,
+} from '@chakra-ui/react';
+import {
+  useGetChartOfAccountsQuery,
+  useGetMemberTypesQuery,
+} from '@saccos/myra/graphql';
 import { Box } from '@saccos/myra/ui';
+
+import Tree from './Tree';
+import { AccordionComponent } from '../accordion/AccordionComponent';
+
 export const FullView = () => {
+  const { data } = useGetChartOfAccountsQuery();
+  const memberTypes = data?.settings?.general?.chartsOfAccount?.class?.data;
+  console.log(memberTypes);
   return (
     <Box
       p="10px"
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
-      height="35vh"
     >
-      <AccordionComponent id="Equity" title="Equity and Liaibilities">
-        <AccordionComponent id="Equityaaa" title="Equity and Liaibilities">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum
-        </AccordionComponent>
-      </AccordionComponent>
-
-      <AccordionComponent id="Assets" title="Assets">
-        Contrary to popular belief, Lorem Ipsum is not simply random text. It
-        has roots in a piece of classical Latin literature from 45 BC, making it
-        over 2000 years old. Richard McClintock, a Latin professor at
-        Hampden-Sydney College in Virginia, looked up one of the more obscure
-        Latin words, consectetur, from a Lorem Ipsum passage, and going through
-        the cites of the word in classical literature, discovered the
-        undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33
-        of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by
-        Cicero, written in 45 BC. This book is a treatise on the theory of
-        ethics, very popular during the Renaissance. The first line of Lorem
-        Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section
-        1.10.32.
-      </AccordionComponent>
-
-      <AccordionComponent id="Expenditure" title="Expenditure">
-        The standard chunk of Lorem Ipsum used since the 1500s is reproduced
-        below for those interested. Sections 1.10.32 and 1.10.33 from "de
-        Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact
-        original form, accompanied by English versions from the 1914 translation
-        by H. Rackham.
-      </AccordionComponent>
-
-      <AccordionComponent id="Income" title="Income ">
-        It is a long established fact that a reader will be distracted by the
-        readable content of a page when looking at its layout. The point of
-        using Lorem Ipsum is that it has a more-or-less normal distribution of
-        letters, as opposed to using 'Content here, content here', making it
-        look like readable English. Many desktop publishing packages and web
-        page editors now use Lorem Ipsum as their default model text, and a
-        search for 'lorem ipsum' will uncover many web sites still in their
-        infancy. Various versions have evolved over the years, sometimes by
-        accident, sometimes on purpose (injected humour and the like).
-      </AccordionComponent>
+      <Accordion allowMultiple allowToggle mb="0" border="none">
+        {memberTypes?.map((memberType) => (
+          <AccordionItem key={memberType?.id} mt="s8">
+            {({ isExpanded }) => (
+              <>
+                <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
+                  <Box flex="1" textAlign="left">
+                    <Text fontSize={'r1'} fontWeight="600" pl="s16">
+                      {' '}
+                      {memberType?.name}
+                    </Text>
+                  </Box>
+                  {isExpanded ? (
+                    <IoChevronUpOutline fontSize="18px" />
+                  ) : (
+                    <IoChevronDownOutline fontSize="18px" />
+                  )}
+                </AccordionButton>
+                <AccordionPanel>
+                  <Tree code="10" title="Share Capital" isExtensible={false} />
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+        ))}
+      </Accordion>
     </Box>
   );
 };

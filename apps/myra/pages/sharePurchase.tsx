@@ -229,7 +229,7 @@ const SharePurchase = () => {
                   >
                     Share History
                   </Text>
-                  <SharePurchaseHistoryTable />
+                  <SharePurchaseHistoryTable memberId="kkkkk" />
                 </Box>
               </Box>
             </Box>

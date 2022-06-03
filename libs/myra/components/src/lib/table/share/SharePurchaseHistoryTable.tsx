@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import {
-  GetShareHistoryQueryVariables,
+  ShareRegisterEdge,
   useGetShareHistoryQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
@@ -14,7 +14,7 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
   const { data, isLoading } = useGetShareHistoryQuery({ memberId });
   const rowData = useMemo(() => data?.share?.register?.edges, [data]);
 
-  const columns: Column<GetShareHistoryQueryVariables>[] = useMemo(
+  const columns: Column<ShareRegisterEdge>[] = useMemo(
     () => [
       {
         Header: 'SN',
@@ -37,7 +37,6 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
         Header: 'No. of Share',
         accessor: 'node.noOfShare',
         maxWidth: 48,
-        Footer: ({ values, row }) => console.log('values, row', values, row),
       },
       {
         Header: 'Share Number',
@@ -54,7 +53,7 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       },
       {
         Header: 'Share Dr',
-        accessor: 'shareDr',
+        accessor: 'node.shareStatus',
 
         Cell: ({ row }) => {
           return (
@@ -68,7 +67,7 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       },
       {
         Header: 'Share Cr',
-        accessor: 'shareCr',
+        accessor: 'node.shareStatus',
 
         Cell: ({ row }) => {
           return (
