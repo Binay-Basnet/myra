@@ -7,28 +7,30 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalProps as ChakraModalProps,
-  useDisclosure,
 } from '@chakra-ui/react';
 import { Button, Divider } from '@saccos/myra/ui';
 
 /* eslint-disable-next-line */
-export interface ModalProps extends ChakraModalProps {
-  // isOpen: boolean;
-  // onClose?: () => void;
-  modalButtonProp: string;
+export interface ModalProps
+  extends Omit<ChakraModalProps, 'isOpen' | 'onClose'> {
+  open: boolean;
+  onClose: () => void;
   children: React.ReactNode;
-  titleProps?: React.ReactNode;
+  title?: React.ReactNode;
   footerPrimary1Props?: React.ReactNode;
   footerPrimary2Props?: React.ReactNode;
   footerSecondaryProps?: React.ReactNode;
+  leftIcon?: React.ReactElement;
   onClickPrimary?: () => void;
 }
 
 export function Modal(props: ModalProps) {
   const {
-    modalButtonProp,
+    open,
+    onClose,
+    leftIcon,
     children,
-    titleProps,
+    title,
     footerPrimary1Props,
     footerPrimary2Props,
     footerSecondaryProps,
@@ -37,45 +39,40 @@ export function Modal(props: ModalProps) {
     ...rest
   } = props;
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <>
-      <Button onClick={onOpen}>{modalButtonProp}</Button>
-      {/* TODO check this isOpen and onClose Log here */}
-      <ChakraModal {...rest} isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          {titleProps && (
-            <>
-              <ModalHeader>{titleProps}</ModalHeader>
-              <Divider />
-            </>
+    <ChakraModal {...rest} isOpen={open} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        {title && (
+          <>
+            <ModalHeader>{title}</ModalHeader>
+            <Divider />
+          </>
+        )}
+
+        <ModalCloseButton />
+        <ModalBody>{children}</ModalBody>
+        <Divider />
+        <ModalFooter>
+          {footerSecondaryProps && (
+            <Button variant="outline" mr={2} onClick={onClose}>
+              {footerSecondaryProps}
+            </Button>
           )}
 
-          <ModalCloseButton />
-          <ModalBody>{children}</ModalBody>
-          <Divider />
-          <ModalFooter>
-            {footerSecondaryProps && (
-              <Button variant="outline" mr={2} onClick={onClose}>
-                {footerSecondaryProps}
-              </Button>
-            )}
-
-            {footerPrimary1Props && (
-              <Button colorScheme="primary" onClick={onClickPrimary}>
-                {footerPrimary1Props}
-              </Button>
-            )}
-            {footerPrimary2Props && (
-              <Button colorScheme="danger" onClick={onClickPrimary}>
-                {footerPrimary2Props}
-              </Button>
-            )}
-          </ModalFooter>
-        </ModalContent>
-      </ChakraModal>
-    </>
+          {footerPrimary1Props && (
+            <Button colorScheme="primary" onClick={onClickPrimary}>
+              {footerPrimary1Props}
+            </Button>
+          )}
+          {footerPrimary2Props && (
+            <Button colorScheme="danger" onClick={onClickPrimary}>
+              {footerPrimary2Props}
+            </Button>
+          )}
+        </ModalFooter>
+      </ModalContent>
+    </ChakraModal>
   );
 }
 

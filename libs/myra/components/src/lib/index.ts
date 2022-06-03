@@ -36,3 +36,4 @@ export * from './table/share';
 export * from './table/ShareTable';
 export * from './table/ShareTable';
 export * from './TableListPageHeader';
+export * from './form/components';

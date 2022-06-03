@@ -2390,6 +2390,20 @@ export type GetShareRegisterListQueryVariables = Exact<{ [key: string]: never; }
 
 export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, shareStartNumber: number, shareEndNumber: number, shareAmount: number, noOfShare: number, member: { personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null } } }> } | null } };
 
+export type GetMemberDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetMemberDataQuery = { members: { individual?: { get?: { data?: { member: { id: string, address?: { permanent?: { state?: string | null, district?: string | null, vdc?: string | null, wardNo?: string | null, locality?: string | null } | null, temporary?: { state?: string | null, district?: string | null, vdc?: string | null, wardNo?: string | null, locality?: string | null } | null } | null, contact?: { mobile?: string | null, office?: string | null, residence?: string | null } | null, personalInformation?: { gender?: string | null, title?: string | null, dateOfBirth?: string | null, nationality?: string | null, occupation?: string | null, panNumber?: string | null, name?: { firstName?: string | null, middleName?: string | null, lastName?: string | null } | null, citizenship?: { number?: string | null, issuePlace?: string | null, issueDate?: string | null } | null } | null } } | null } | null } | null } };
+
+export type GetShareHistoryQueryVariables = Exact<{
+  memberId: Scalars['String'];
+}>;
+
+
+export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, noOfShare: number, shareStartNumber: number, shareEndNumber: number, shareAmount: number, balance: number, member: { id: string } } }> } | null } };
+
 
 export const GetNewIdDocument = `
     mutation getNewId {
@@ -2826,5 +2840,110 @@ export const useGetShareRegisterListQuery = <
     useQuery<GetShareRegisterListQuery, TError, TData>(
       variables === undefined ? ['getShareRegisterList'] : ['getShareRegisterList', variables],
       useAxios<GetShareRegisterListQuery, GetShareRegisterListQueryVariables>(GetShareRegisterListDocument).bind(null, variables),
+      options
+    );
+export const GetMemberDataDocument = `
+    query getMemberData($id: ID!) {
+  members {
+    individual {
+      get(id: $id) {
+        data {
+          member {
+            id
+            address {
+              permanent {
+                state
+                district
+                vdc
+                wardNo
+                locality
+              }
+              temporary {
+                state
+                district
+                vdc
+                wardNo
+                locality
+              }
+            }
+            contact {
+              mobile
+              office
+              residence
+            }
+            personalInformation {
+              name {
+                firstName
+                middleName
+                lastName
+              }
+              gender
+              title
+              dateOfBirth
+              nationality
+              citizenship {
+                number
+                issuePlace
+                issueDate
+              }
+              occupation
+              panNumber
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberDataQuery = <
+      TData = GetMemberDataQuery,
+      TError = unknown
+    >(
+      variables: GetMemberDataQueryVariables,
+      options?: UseQueryOptions<GetMemberDataQuery, TError, TData>
+    ) =>
+    useQuery<GetMemberDataQuery, TError, TData>(
+      ['getMemberData', variables],
+      useAxios<GetMemberDataQuery, GetMemberDataQueryVariables>(GetMemberDataDocument).bind(null, variables),
+      options
+    );
+export const GetShareHistoryDocument = `
+    query getShareHistory($memberId: String!) {
+  share {
+    register(
+      paginate: {first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA"}
+      filter: {memberId: $memberId}
+    ) {
+      edges {
+        node {
+          id
+          member {
+            id
+          }
+          shareStatus
+          transactionDate
+          transactionDirection
+          noOfShare
+          shareStartNumber
+          shareEndNumber
+          shareAmount
+          balance
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetShareHistoryQuery = <
+      TData = GetShareHistoryQuery,
+      TError = unknown
+    >(
+      variables: GetShareHistoryQueryVariables,
+      options?: UseQueryOptions<GetShareHistoryQuery, TError, TData>
+    ) =>
+    useQuery<GetShareHistoryQuery, TError, TData>(
+      ['getShareHistory', variables],
+      useAxios<GetShareHistoryQuery, GetShareHistoryQueryVariables>(GetShareHistoryDocument).bind(null, variables),
       options
     );

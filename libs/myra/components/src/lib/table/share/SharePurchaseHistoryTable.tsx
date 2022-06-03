@@ -1,81 +1,88 @@
 import { useMemo } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { Avatar, Flex, IconButton } from '@chakra-ui/react';
 import {
-  KymMemberListEdges,
-  useGetMemberListQuery,
+  GetShareHistoryQueryVariables,
+  useGetShareHistoryQuery,
 } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 import moment from 'moment';
 
-export const SharePurchaseHistoryTable = () => {
-  const { data, isLoading } = useGetMemberListQuery();
+type memberIdProp = {
+  memberId: string;
+};
 
-  const rowData = useMemo(() => data?.members?.list?.edges, [data]);
+export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
+  const { data, isLoading } = useGetShareHistoryQuery({ memberId });
+  const rowData = useMemo(() => data?.share?.register?.edges, [data]);
 
-  const columns: Column<KymMemberListEdges>[] = useMemo(
+  const columns: Column<GetShareHistoryQueryVariables>[] = useMemo(
     () => [
       {
-        Header: 'Member #',
+        Header: 'SN',
         accessor: 'node.id',
         maxWidth: 4,
-      },
-
-      {
-        Header: 'Name',
-        accessor: 'node.personalInformation.name.firstName',
-        width: '80%',
-
-        Cell: ({ value, row }) => {
-          return (
-            <Flex alignItems="center" gap="2">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <span>
-                {value}{' '}
-                {row?.original?.node?.personalInformation?.name?.lastName}
-              </span>
-            </Flex>
-          );
+        Cell: ({ row }) => {
+          return <span>{Number(row?.id) + 1}</span>;
         },
       },
 
       {
-        Header: 'Address',
-        accessor: 'node.address.permanent.district',
+        Header: 'Date',
+        accessor: 'node.transactionDate',
+        width: '80%',
+        Cell: ({ value }) => {
+          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+        },
+      },
+      {
+        Header: 'No. of Share',
+        accessor: 'node.noOfShare',
         maxWidth: 48,
-
-        Cell: ({ value, row }) => {
+        Footer: ({ values, row }) => console.log('values, row', values, row),
+      },
+      {
+        Header: 'Share Number',
+        accessor: 'node.shareAmount',
+        maxWidth: 48,
+        Cell: ({ row }) => {
           return (
             <span>
-              {value}, {row?.original?.node?.address?.permanent?.state}
+              {row?.original?.node?.shareStartNumber} {'to '}
+              {row?.original?.node?.shareEndNumber}
             </span>
           );
         },
       },
       {
-        Header: 'Phone No.',
-        accessor: 'node.contact.mobile',
-      },
-      {
-        Header: 'Date Joined',
-        accessor: 'node.createdAt',
-        Cell: ({ value, row }) => {
-          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+        Header: 'Share Dr',
+        accessor: 'shareDr',
+
+        Cell: ({ row }) => {
+          return (
+            <span>
+              {row?.original?.node?.transactionDirection === 'RETURN'
+                ? row?.original?.node?.shareAmount
+                : '-'}
+            </span>
+          );
         },
       },
       {
-        accessor: 'actions',
-        Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
-        ),
+        Header: 'Share Cr',
+        accessor: 'shareCr',
+
+        Cell: ({ row }) => {
+          return (
+            <span>
+              {row?.original?.node?.transactionDirection === 'PURCHASE'
+                ? row?.original?.node?.shareAmount
+                : '-'}
+            </span>
+          );
+        },
+      },
+      {
+        Header: 'Balance',
+        accessor: 'node.balance',
       },
     ],
     []
