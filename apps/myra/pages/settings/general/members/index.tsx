@@ -1,13 +1,5 @@
 import { SettingsGeneralMember } from '@saccos/myra/components';
-import {
-  Box,
-  Button,
-  CheckboxGroup,
-  Grid,
-  GridItem,
-  Input,
-  Text,
-} from '@saccos/myra/ui';
+import { Box, Button, CheckboxGroup, Input, Text } from '@saccos/myra/ui';
 const checkBox = [
   'Individual',
   'Institutional',
