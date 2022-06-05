@@ -5,10 +5,12 @@ import {
   Box,
   Button,
   Container,
+  IconButton,
   Input,
   MainLayout,
   Text,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
+import router from 'next/router';
 
 const AddNewItemPage = () => {
   return (
@@ -33,7 +35,12 @@ const AddNewItemPage = () => {
           Add New Item
         </Text>
 
-        <GrClose size="14px" color="#91979F" />
+        <IconButton
+          variant={'ghost'}
+          aria-label="close"
+          icon={<GrClose />}
+          onClick={() => router.back()}
+        />
       </Box>
       <br />
       <Box

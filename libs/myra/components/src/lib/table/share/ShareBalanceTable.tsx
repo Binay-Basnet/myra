@@ -3,9 +3,9 @@ import { Avatar, Flex } from '@chakra-ui/react';
 import {
   ShareBalanceEdge,
   useGetShareBalanceListQuery,
-} from '@saccos/myra/graphql';
-import { Column, Table } from '@saccos/myra/ui';
-import { PopoverComponent } from '@saccos/myra/components';
+} from '@coop/myra/graphql';
+import { Column, Table } from '@coop/myra/ui';
+import { PopoverComponent } from '@coop/myra/components';
 import { TableListPageHeader } from 'libs/myra/components/src/lib/TableListPageHeader';
 import { TableSearch } from 'libs/myra/components/src/lib/TableSearch';
 

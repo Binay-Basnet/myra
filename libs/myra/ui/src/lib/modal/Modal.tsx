@@ -8,7 +8,7 @@ import {
   ModalCloseButton,
   ModalProps as ChakraModalProps,
 } from '@chakra-ui/react';
-import { Button, Divider } from '@saccos/myra/ui';
+import { Button, Divider } from '@coop/myra/ui';
 
 /* eslint-disable-next-line */
 export interface ModalProps

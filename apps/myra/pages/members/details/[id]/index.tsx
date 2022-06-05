@@ -9,7 +9,7 @@ import {
   Icon,
   MainLayout,
   Text,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -210,7 +210,7 @@ const Details = () => {
             variant="ghost"
             leftIcon={<Icon size="md" as={AiOutlinePrinter} />}
           >
-            Pin on Map
+            Print
           </Button>
           &nbsp;
           <Button onClick={() => router.push('/members/list')}>Complete</Button>

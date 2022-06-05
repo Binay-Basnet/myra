@@ -10,8 +10,8 @@ import {
 import {
   useGetChartOfAccountsQuery,
   useGetMemberTypesQuery,
-} from '@saccos/myra/graphql';
-import { Box } from '@saccos/myra/ui';
+} from '@coop/myra/graphql';
+import { Box } from '@coop/myra/ui';
 
 import Tree from './Tree';
 import { AccordionComponent } from '../accordion/AccordionComponent';

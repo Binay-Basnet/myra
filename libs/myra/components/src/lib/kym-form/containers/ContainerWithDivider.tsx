@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, VStack } from '@saccos/myra/ui';
+import { Divider, VStack } from '@coop/myra/ui';
 
 interface IContainerWithDividerProps {
   children: React.ReactNode;

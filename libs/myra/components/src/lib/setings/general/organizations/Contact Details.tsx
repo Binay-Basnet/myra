@@ -6,7 +6,7 @@ import {
   GridItem,
   PhoneNumber,
   TextInput,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 
 import { FormEmailInput } from '../../../newFormComponents/FormEmailInput';
 import { FormPhoneNumber } from '../../../newFormComponents/FormPhoneNumber';

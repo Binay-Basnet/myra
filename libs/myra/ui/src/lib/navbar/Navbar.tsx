@@ -8,7 +8,7 @@ import {
   InputLeftElement,
   Text,
 } from '@chakra-ui/react';
-import { useTranslation } from '@saccos/myra/util';
+import { useTranslation } from '@coop/myra/util';
 
 /* eslint-disable-next-line */
 export interface MyraUiNavbarProps {}

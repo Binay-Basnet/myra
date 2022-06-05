@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
-import {
-  ShareRegisterEdge,
-  useGetShareHistoryQuery,
-} from '@saccos/myra/graphql';
-import { Column, Table } from '@saccos/myra/ui';
+import { ShareRegisterEdge, useGetShareHistoryQuery } from '@coop/myra/graphql';
+import { Column, Table } from '@coop/myra/ui';
 import moment from 'moment';
 
 type memberIdProp = {

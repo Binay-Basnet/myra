@@ -1,7 +1,7 @@
 import type { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ChakraProvider } from '@chakra-ui/react';
-import { theme } from '@saccos/myra/util';
+import { theme } from '@coop/myra/util';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -37,7 +37,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
         <Head>
-          <title>Myra | Cloud Cooperative Platform</title>
+          <title>Myra | Cloud cooperative Platform</title>
         </Head>
         <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       </ChakraProvider>

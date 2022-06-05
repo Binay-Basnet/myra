@@ -7,8 +7,8 @@ import { Grid } from '@chakra-ui/react';
 import {
   useGetMemberTypesQuery,
   useGetNewIdMutation,
-} from '@saccos/myra/graphql';
-import { Box, Button, Divider, Icon, Modal, Text } from '@saccos/myra/ui';
+} from '@coop/myra/graphql';
+import { Box, Button, Divider, Icon, Modal, Text } from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '../tab/TabforMemberPage';
@@ -81,14 +81,14 @@ const memberTypesArray = {
     title: 'Individual',
     subtitle: 'Create KYM form for institute members',
   },
-  COOPERATIVE: {
+  coopERATIVE: {
     icon: AiFillBank,
-    title: 'Cooperative',
+    title: 'cooperative',
     subtitle: 'Create KYM form for cooperative members',
   },
-  COOPERATIVE_UNION: {
+  coopERATIVE_UNION: {
     icon: AiFillBank,
-    title: 'Cooperative Union',
+    title: 'cooperative Union',
     subtitle: 'Create KYM form for cooperative union members',
   },
 };
@@ -149,7 +149,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                 icon={memberTypesArray[item?.type]?.icon}
                 title={memberTypesArray[item?.type]?.title}
                 subtitle={memberTypesArray[item?.type]?.subtitle}
-                disabled={item?.type !== 'INDIVIDUAL'}
+                // disabled={item?.type !== 'INDIVIDUAL'}
                 onClick={() => {
                   newId
                     .mutateAsync({})

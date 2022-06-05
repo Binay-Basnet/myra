@@ -1,7 +1,7 @@
 import { AiOutlineAppstore } from 'react-icons/ai';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
-import { theme } from '@saccos/myra/util';
+import { theme } from '@coop/myra/util';
 import { Meta, Story } from '@storybook/react';
 
 import { IconButton, IconButtonProps } from './IconButton';

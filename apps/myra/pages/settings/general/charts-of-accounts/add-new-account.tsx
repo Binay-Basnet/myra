@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { CloseIcon } from '@chakra-ui/icons';
 import { FormControl } from '@chakra-ui/react';
-import { FormInput } from '@saccos/myra/components';
+import { FormInput } from '@coop/myra/components';
 import {
   AmountInput,
   Box,
@@ -14,7 +14,7 @@ import {
   SwitchTabs,
   Text,
   TextInput,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';

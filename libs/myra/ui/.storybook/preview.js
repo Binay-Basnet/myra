@@ -1,6 +1,6 @@
 // import { ThemeProvider as Emotion10ThemeProvider } from 'emotion-theming';
 import { ChakraProvider } from '@chakra-ui/react';
-import { theme } from '@saccos/myra/util';
+import { theme } from '@coop/myra/util';
 
 const withThemeProvider = (Story, context) => {
   return (

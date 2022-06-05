@@ -38,9 +38,9 @@ const ProfessionalDetails: string[] = [
   'Main Occupation of Husaband/Wife',
   'Income Source Details',
 ];
-const SACCOSmembership: string[] = [
+const coopmembership: string[] = [
   'Main Purpose of Becoming a Member',
-  'Member of Another Cooperative',
+  'Member of Another cooperative',
   'Family Member in this institution',
   'Financial Transaction Details',
   'Estimated Withdraw/Deposit Amount in the Institureion',
@@ -148,7 +148,7 @@ export function AccorrdianAddMember({ formStatus }) {
               <Box flex="1" textAlign="left">
                 <Text fontSize={'r1'} fontWeight="600">
                   {' '}
-                  3. SACCOS Membership
+                  3. coop Membership
                 </Text>
               </Box>
               {isExpanded ? (
@@ -160,7 +160,7 @@ export function AccorrdianAddMember({ formStatus }) {
 
             <AccordionPanel pb={2}>
               {' '}
-              {SACCOSmembership.map((item, index) => (
+              {coopmembership.map((item, index) => (
                 <Text
                   key={`${item}${index}`}
                   mb="s16"

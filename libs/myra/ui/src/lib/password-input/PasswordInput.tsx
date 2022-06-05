@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { IoLockClosed, IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
-import { TextFields } from '@saccos/myra/ui';
+import { TextFields } from '@coop/myra/ui';
 import { forwardRef } from 'react';
 
 /* eslint-disable-next-line */

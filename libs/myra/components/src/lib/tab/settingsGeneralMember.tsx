@@ -22,11 +22,11 @@ const tabList: TabList[] = [
     to: '/settings/general/members/kym-institutional',
   },
   {
-    title: 'KYM Form - Cooperative',
+    title: 'KYM Form - cooperative',
     to: '/settings/general/members/kym-cooperative',
   },
   {
-    title: 'KYM Form - Cooperative Union',
+    title: 'KYM Form - cooperative Union',
     to: '/settings/general/members/kym-cooperative-union',
   },
 ];

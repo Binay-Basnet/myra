@@ -1,5 +1,5 @@
 import { Control } from 'react-hook-form';
-import { Box, Grid, GridItem, TextInput } from '@saccos/myra/ui';
+import { Box, Grid, GridItem, TextInput } from '@coop/myra/ui';
 
 import { FormTextInput } from '../../../newFormComponents';
 

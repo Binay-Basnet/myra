@@ -1,5 +1,5 @@
 import { Control, Controller, Path } from 'react-hook-form';
-import { Box, TextInput, TextInputProps } from '@saccos/myra/ui';
+import { Box, TextInput, TextInputProps } from '@coop/myra/ui';
 
 interface IFormInputProps<T> extends TextInputProps {
   control: Control<T>;

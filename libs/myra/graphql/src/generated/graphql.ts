@@ -305,7 +305,7 @@ export type ChequePastRequest = {
   id: Scalars['ID'];
   requestNumber: Scalars['Int'];
   requestType: Scalars['String'];
-  status: EBankingChequeServiceStatus;
+  status: EBankingServiceStatus;
 };
 
 export type Citizenship = {
@@ -402,11 +402,6 @@ export type DocumentOption = {
   name: Scalars['String'];
 };
 
-export type Downloads = {
-  enabled: Scalars['Boolean'];
-  name: Scalars['String'];
-};
-
 export type EBankingAccountQuery = {
   get?: Maybe<Account>;
   list?: Maybe<AccountConnection>;
@@ -420,7 +415,7 @@ export type EBankingAccountQueryGetArgs = {
 
 
 export type EBankingAccountQueryListArgs = {
-  filter?: InputMaybe<Pagination>;
+  paginate?: InputMaybe<Pagination>;
 };
 
 export enum EBankingActiveLoanStatus {
@@ -473,12 +468,6 @@ export type EBankingChequeQueryPastRequestsArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
 };
 
-export enum EBankingChequeServiceStatus {
-  Completed = 'Completed',
-  Declined = 'Declined',
-  Pending = 'Pending'
-}
-
 export type EBankingCombined = {
   accounts: Array<Maybe<Account>>;
   recentTransactions: Array<Maybe<Transactions>>;
@@ -487,7 +476,7 @@ export type EBankingCombined = {
 };
 
 export type EBankingCooperativeServiceFilter = {
-  requestType?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<EBankingServiceStatus>;
 };
 
 export type EBankingCooperativeServiceOption = {
@@ -498,8 +487,38 @@ export type EBankingCooperativeServiceOption = {
 
 export type EBankingCooperativeServiceQuery = {
   cheque?: Maybe<EBankingChequeQuery>;
+  downloads?: Maybe<EBankingDownloadsQuery>;
   grievance?: Maybe<EBankingGrievanceQuery>;
   loan?: Maybe<EBankingLoanQuery>;
+  organizationInfo: Organization;
+};
+
+
+export type EBankingCooperativeServiceQueryOrganizationInfoArgs = {
+  id: Scalars['ID'];
+};
+
+export type EBankingDownloadFile = {
+  category: Scalars['String'];
+  extension: Scalars['String'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  size: Scalars['String'];
+  url: Scalars['String'];
+};
+
+export type EBankingDownloadsFilter = {
+  category?: InputMaybe<Scalars['String']>;
+};
+
+export type EBankingDownloadsQuery = {
+  files: Array<EBankingDownloadFile>;
+  options: Array<EBankingCooperativeServiceOption>;
+};
+
+
+export type EBankingDownloadsQueryFilesArgs = {
+  filter?: InputMaybe<EBankingDownloadsFilter>;
 };
 
 export type EBankingGrievanceHistory = {
@@ -509,7 +528,7 @@ export type EBankingGrievanceHistory = {
   id: Scalars['ID'];
   peopleInvolved?: Maybe<Scalars['String']>;
   proposedSolution?: Maybe<Scalars['String']>;
-  status: EBankingGrievanceStatus;
+  status: EBankingServiceStatus;
   violatedPolicies?: Maybe<Scalars['String']>;
 };
 
@@ -518,14 +537,9 @@ export type EBankingGrievanceQuery = {
   options: Array<EBankingCooperativeServiceOption>;
 };
 
-export enum EBankingGrievanceStatus {
-  Declined = 'Declined',
-  Pending = 'Pending',
-  Resolved = 'Resolved'
-}
 
-export type EBankingLoanFilter = {
-  status?: InputMaybe<Scalars['String']>;
+export type EBankingGrievanceQueryHistoryArgs = {
+  filter?: InputMaybe<EBankingCooperativeServiceFilter>;
 };
 
 export type EBankingLoanHistory = {
@@ -535,7 +549,7 @@ export type EBankingLoanHistory = {
   branch: Branch;
   id: Scalars['String'];
   scheduledDate?: Maybe<Scalars['Date']>;
-  status: EBankingLoanServiceStatus;
+  status: EBankingServiceStatus;
   type: Scalars['String'];
 };
 
@@ -546,14 +560,8 @@ export type EBankingLoanQuery = {
 
 
 export type EBankingLoanQueryHistoryArgs = {
-  filter?: InputMaybe<EBankingLoanFilter>;
+  filter?: InputMaybe<EBankingCooperativeServiceFilter>;
 };
-
-export enum EBankingLoanServiceStatus {
-  Active = 'Active',
-  Approved = 'Approved',
-  Declined = 'Declined'
-}
 
 export type EBankingNotificationQuery = {
   announcements?: Maybe<EBankingAnnouncementQuery>;
@@ -570,6 +578,12 @@ export type EBankingQuery = {
   share?: Maybe<EBankingShareQuery>;
   transaction?: Maybe<EBankingTransactionQuery>;
 };
+
+export enum EBankingServiceStatus {
+  Active = 'Active',
+  Completed = 'Completed',
+  Declined = 'Declined'
+}
 
 export type EBankingShareQuery = {
   history?: Maybe<Array<Maybe<EbankingShareHistory>>>;
@@ -1853,6 +1867,7 @@ export type Organization = {
   id: Scalars['ID'];
   mainContactPerson?: Maybe<OrganizationMainContactPerson>;
   registrationDetails?: Maybe<OrganizationRegistrationDetails>;
+  statistics?: Maybe<OrganizationStatistics>;
 };
 
 export type OrganizationAddError = OrganizationAddInvalidDataError;
@@ -1992,6 +2007,11 @@ export type OrganizationRegistrationDetails = {
   regdAddress?: Maybe<Scalars['String']>;
   regdNo?: Maybe<Scalars['String']>;
   regdOffice?: Maybe<Scalars['String']>;
+};
+
+export type OrganizationStatistics = {
+  totalCapital: Scalars['Float'];
+  totalMembers: Scalars['Int'];
 };
 
 export enum Payment_Mode {

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { BranchEdge, useGetBranchesListQuery } from '@saccos/myra/graphql';
-import { Column, Table } from '@saccos/myra/ui';
+import { BranchEdge, useGetBranchesListQuery } from '@coop/myra/graphql';
+import { Column, Table } from '@coop/myra/ui';
 
 import { PopoverComponent } from '../../../../popover/Popover';
 import { TableListPageHeader } from '../../../../TableListPageHeader';

@@ -4,8 +4,8 @@ import { IconButton } from '@chakra-ui/react';
 import {
   InvItemsGroupEdge,
   useGetInventoryItemGroupQuery,
-} from '@saccos/myra/graphql';
-import { Column, Table } from '@saccos/myra/ui';
+} from '@coop/myra/graphql';
+import { Column, Table } from '@coop/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 import { TableSearch } from '../../TableSearch';
