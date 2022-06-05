@@ -1,15 +1,11 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
-import { PopoverComponent } from '@saccos/myra/components';
-import {
-  KymMemberListEdges,
-  ObjState,
-  useGetMemberListQuery,
-} from '@saccos/myra/graphql';
+import { ObjState, useGetMemberListQuery } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 
+import { PopoverComponent } from '../popover/Popover';
 import { TableListPageHeader } from '../TableListPageHeader';
 import { TableSearch } from '../TableSearch';
 
@@ -19,11 +15,11 @@ export const MemberTable = () => {
     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges, [data]);
+  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
   const popoverTitle = [' View Member Profile', 'Edit Member', 'Make Inactive'];
 
-  const columns: Column<KymMemberListEdges>[] = useMemo(
+  const columns: Column<typeof rowData[0]>[] = useMemo(
     () => [
       {
         Header: 'Member ID',
@@ -78,6 +74,7 @@ export const MemberTable = () => {
         },
       },
       {
+        Header: '',
         accessor: 'actions',
         Cell: () => <PopoverComponent title={popoverTitle} />,
       },
@@ -109,7 +106,7 @@ export const MemberTable = () => {
       <TableSearch />
       <Table
         isLoading={isLoading}
-        data={rowData ?? []}
+        data={rowData}
         columns={columns}
         sort={true}
       />

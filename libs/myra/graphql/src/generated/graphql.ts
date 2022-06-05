@@ -2374,7 +2374,7 @@ export type GetMemberListQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { edges?: Array<{ cursor: string, node?: { id: string, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { edges?: Array<{ cursor: string, node?: { id: string, memberId?: string | null, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2624,6 +2624,7 @@ export const GetMemberListDocument = `
       edges {
         node {
           id
+          memberId
           personalInformation {
             name {
               firstName

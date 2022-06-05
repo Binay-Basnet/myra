@@ -1,22 +1,23 @@
 import { useMemo } from 'react';
-import { BranchEdge, useGetBranchesListQuery } from '@saccos/myra/graphql';
+import {
+  PopoverComponent,
+  TableListPageHeader,
+  TableSearch,
+} from '@saccos/myra/components';
+import { useGetBranchesListQuery } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
-
-import { PopoverComponent } from '../../../../popover/Popover';
-import { TableListPageHeader } from '../../../../TableListPageHeader';
-import { TableSearch } from '../../../../TableSearch';
 
 export const SettingsBranchesTable = () => {
   const { data, isLoading } = useGetBranchesListQuery();
 
   const rowData = useMemo(
-    () => data?.settings?.general?.branch?.list?.edges,
+    () => data?.settings?.general?.branch?.list?.edges ?? [],
     [data]
   );
 
   const popoverTitle = ['View Detail', 'View Branch Profile'];
 
-  const columns: Column<BranchEdge>[] = useMemo(
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         Header: 'Branch Code',
