@@ -19,7 +19,7 @@ import {
 
 import ListFilterPopover from './components/ListFilterPopover';
 import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
-import { Column, HeaderGroup, TableProps } from './types';
+import { Column, ExtraColumnProps, HeaderGroup, TableProps } from './types';
 import { useTable } from './useTable';
 import { PopoverContent, PopoverTrigger } from '../popover/Popover';
 
@@ -83,8 +83,7 @@ export function Table<T extends Record<string, unknown>>({
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(
-                //TODO  HeaderGroup<T> & ExtraColumnProps
-                (column: any) => {
+                (column: HeaderGroup<T> & ExtraColumnProps) => {
                   return (
                     <Th
                       {...column.getHeaderProps()}
@@ -185,7 +184,7 @@ export function Table<T extends Record<string, unknown>>({
         </Thead>
         <Tbody {...getTableBodyProps()}>
           {/*// TODO ( WILL CHANGE THIS ANY LATER )*/}
-          {rows.map((row: any) => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <Tr

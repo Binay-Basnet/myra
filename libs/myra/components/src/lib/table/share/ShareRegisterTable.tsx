@@ -1,10 +1,7 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
 import { PopoverComponent } from '@saccos/myra/components';
-import {
-  ShareRegisterEdge,
-  useGetShareRegisterListQuery,
-} from '@saccos/myra/graphql';
+import { useGetShareRegisterListQuery } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 import moment from 'moment';
 
@@ -14,11 +11,11 @@ import { TableSearch } from '../../TableSearch';
 export const ShareRegisterTable = () => {
   const { data, isLoading } = useGetShareRegisterListQuery();
 
-  const rowData = useMemo(() => data?.share?.register?.edges, [data]);
+  const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
 
   const popoverTitle = ['View Detail', 'View Member Profile'];
 
-  const columns: Column<ShareRegisterEdge>[] = useMemo(
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         Header: 'Date',
@@ -32,6 +29,9 @@ export const ShareRegisterTable = () => {
         Header: 'Member ID',
         accessor: 'node.id',
         maxWidth: 4,
+        Cell: ({ value, row }) => {
+          return <span>{value.slice(0, 5).toUpperCase()}</span>;
+        },
       },
 
       {
@@ -66,7 +66,6 @@ export const ShareRegisterTable = () => {
       {
         Header: 'To - From',
         accessor: 'node.shareStartNumber',
-        maxWidth: 48,
 
         Cell: ({ value, row }) => {
           return (
@@ -81,12 +80,13 @@ export const ShareRegisterTable = () => {
         accessor: 'node.noOfShare',
       },
       {
+        id: 'share-dr',
         Header: 'Share Dr',
-        accessor: 'node.member.address.permanent.inNepali.locality',
+        accessor: 'node.transactionDirection',
         Cell: ({ value, row }) => {
           return (
             <span>
-              {row.original.node.transactionDirection === 'PURCHASE'
+              {value === 'PURCHASE'
                 ? row.original.node.shareAmount.toFixed(2)
                 : '-'}
             </span>
@@ -94,12 +94,13 @@ export const ShareRegisterTable = () => {
         },
       },
       {
+        id: 'share-cr',
         Header: 'Share Cr',
-        accessor: 'node.member.address.permanent.inNepali.district',
+        accessor: 'node.transactionDirection',
         Cell: ({ value, row }) => {
           return (
             <span>
-              {row.original.node.transactionDirection === 'RETURN'
+              {value === 'RETURN'
                 ? row.original.node.shareAmount.toFixed(2)
                 : '-'}
             </span>
