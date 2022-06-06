@@ -1,10 +1,7 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
-import {
-  InvItemsGroupEdge,
-  useGetInventoryItemGroupQuery,
-} from '@saccos/myra/graphql';
+import { useGetInventoryItemGroupQuery } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
@@ -15,7 +12,7 @@ export const InventoryItemGroupTable = () => {
 
   const rowItems = data?.inventory.itemsGroup?.list?.edges ?? [];
 
-  const columns: Column<InvItemsGroupEdge>[] = useMemo(
+  const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
         Header: 'Name',
