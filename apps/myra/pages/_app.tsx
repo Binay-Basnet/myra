@@ -1,10 +1,13 @@
 import type { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { Provider } from 'react-redux';
 import { ChakraProvider } from '@chakra-ui/react';
 import { theme } from '@saccos/myra/util';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+
+import { store } from '../redux/store';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -30,18 +33,18 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
     },
   });
 
-  console.log('NX Schema path', process.env.NX_SCHEMA_PATH);
-
   const getLayout = Component.getLayout || ((page) => page);
   return (
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        <Head>
-          <title>Myra | Cloud Cooperative Platform</title>
-        </Head>
-        <main className="app">{getLayout(<Component {...pageProps} />)}</main>
-      </ChakraProvider>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
+          <Head>
+            <title>Myra | Cloud Cooperative Platform</title>
+          </Head>
+          <main className="app">{getLayout(<Component {...pageProps} />)}</main>
+        </ChakraProvider>
+      </QueryClientProvider>
+    </Provider>
   );
 }
 

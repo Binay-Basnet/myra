@@ -203,7 +203,9 @@ export function Table<T extends Record<string, unknown>>({
                     {...cell.getCellProps()}
                     isNumeric={cell.column.isNumeric}
                   >
-                    <Text noOfLines={0}>{cell.render('Cell')}</Text>
+                    <Text as="div" noOfLines={1}>
+                      {cell.render('Cell')}
+                    </Text>
                   </Td>
                 ))}
               </Tr>

@@ -107,7 +107,7 @@ export function TabMenu() {
           {demotabs.map(({ title, icon, link }, index) => {
             const isActive = router.asPath.includes(t[title].toLowerCase());
             return (
-              <Link href={link}>
+              <Link href={link} key={index}>
                 <Tab
                   // isDisabled
                   borderRadius="br3 br3 0 0"
@@ -120,7 +120,6 @@ export function TabMenu() {
                   fontSize="r1"
                   height="50px"
                   color={isActive ? 'gray.800' : 'gray.0'}
-                  key={index}
                   display="flex"
                   justifyContent="flex-start"
                 >

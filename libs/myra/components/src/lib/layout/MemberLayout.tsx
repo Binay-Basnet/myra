@@ -8,7 +8,15 @@ import {
   useGetMemberTypesQuery,
   useGetNewIdMutation,
 } from '@saccos/myra/graphql';
-import { Box, Button, Divider, Icon, Modal, Text } from '@saccos/myra/ui';
+import {
+  Box,
+  Button,
+  Divider,
+  GridItem,
+  Icon,
+  Modal,
+  Text,
+} from '@saccos/myra/ui';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '../tab/TabforMemberPage';
@@ -27,15 +35,6 @@ const memberColumns = [
     link: '/members/reports',
   },
 ];
-// width="full"
-// size="lg"
-// justifyContent="start"
-// leftIcon={<AddIcon h="11px" />}
-// onClick={() => {
-//   newId
-//     .mutateAsync({})
-//     .then((res) => router.push(`/members/addMember/${res?.newId}`));
-// }}
 
 interface memberTypeButtonProps {
   icon: IconType;
@@ -49,23 +48,26 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
   const { icon, title, subtitle, disabled, onClick } = props;
   return (
     <Button
-      display="flex"
-      flexDirection="column"
       variant="outline"
-      width={300}
-      h={168}
       disabled={disabled}
       onClick={onClick}
+      width={300}
+      h={168}
     >
-      <Icon size="xl" as={icon} color="primary.500" />
-      <br />
-      <Text fontSize="r2" fontWeight="medium">
-        {title}
-      </Text>
-      <br />
-      <Text fontSize="s3" textAlign="center">
-        {subtitle}
-      </Text>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Icon size="xl" as={icon} color="primary.500" />
+        <br />
+        <Text fontSize="r2" fontWeight="medium">
+          {title}
+        </Text>
+        <br />
+        <Text fontSize="s3">{subtitle}</Text>
+      </Box>
     </Button>
   );
 };
@@ -89,7 +91,7 @@ const memberTypesArray = {
   COOPERATIVE_UNION: {
     icon: AiFillBank,
     title: 'Cooperative Union',
-    subtitle: 'Create KYM form for cooperative union members',
+    subtitle: 'Create KYM form for cooperative union',
   },
 };
 
@@ -143,20 +145,28 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
           }
         >
           <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-            {memberTypes?.map((item) => (
-              <MemberTypeButton
-                key={item?.id}
-                icon={memberTypesArray[item?.type]?.icon}
-                title={memberTypesArray[item?.type]?.title}
-                subtitle={memberTypesArray[item?.type]?.subtitle}
-                disabled={item?.type !== 'INDIVIDUAL'}
-                onClick={() => {
-                  newId
-                    .mutateAsync({})
-                    .then((res) => router.push(`/members/add/${res?.newId}`));
-                }}
-              />
-            ))}
+            {memberTypes?.map((item) => {
+              if (!item?.type) {
+                return null;
+              }
+              return (
+                <GridItem key={item?.id}>
+                  <MemberTypeButton
+                    icon={memberTypesArray[item.type]?.icon}
+                    title={memberTypesArray[item.type]?.title}
+                    subtitle={memberTypesArray[item.type]?.subtitle}
+                    disabled={item?.type !== 'INDIVIDUAL'}
+                    onClick={() => {
+                      newId
+                        .mutateAsync({})
+                        .then((res) =>
+                          router.push(`/members/add/${res?.newId}`)
+                        );
+                    }}
+                  />
+                </GridItem>
+              );
+            })}
           </Grid>
         </Modal>
         <Divider my="s16" />

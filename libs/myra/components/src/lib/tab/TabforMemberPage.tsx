@@ -40,8 +40,8 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
     >
       {list.map((item, index) => {
         return (
-          <Link href={item.link}>
-            <TabCol key={`${item}${index}`}>
+          <Link href={item.link} key={`${item}${index}`}>
+            <TabCol>
               <Text
                 noOfLines={1}
                 align="left"
