@@ -47,7 +47,7 @@ export function Navbarfordaashboard() {
         <Spacer />
         <Box display="flex" alignItems="flex-end" h="60px">
           <ActiveLink href="/">{t.home}</ActiveLink>
-          <ActiveLink href="/dashboardMain">{t.dashboard}</ActiveLink>
+          <ActiveLink href="/dashboard-main">{t.dashboard}</ActiveLink>
         </Box>
         <Spacer />
         <Box>
