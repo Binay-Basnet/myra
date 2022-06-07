@@ -14,7 +14,6 @@ import { useGetMemberDataQuery } from '@saccos/myra/graphql';
 import { IPurchaseFormValues } from '@saccos/myra/types';
 import {
   Avatar,
-  BaseSelect,
   Box,
   Checkbox,
   Container,
@@ -28,6 +27,7 @@ import {
   Text,
   TextFields,
   TextInput,
+  Select,
   // Button,
 } from '@saccos/myra/ui';
 import { useRouter } from 'next/router';
@@ -48,20 +48,22 @@ const ShareReturn = () => {
   const router = useRouter();
   const methods = useForm<IPurchaseFormValues>();
   const { getValues } = methods;
-  const { data } = useGetMemberDataQuery({ id: '123123' });
-  const [selectedTab, setSelectedTab] = useState<string | null>('Cash');
 
+  const [selectedTab, setSelectedTab] = useState<string | null>('Bank Voucher');
   const [memberIdQuery, setMemberIdQuery] = useState<string | null>('');
   const [noOfShares, setNoOfShares] = useState<number | null>();
   const [adminFees, setAdminFees] = useState<number | null>(34000.0);
   const [printingFees, setPrintingFees] = useState<number | null>(540.0);
   const [allShare, setAllShare] = useState<boolean>(false);
 
+  const { data: memberData } = useGetMemberDataQuery({
+    id: memberIdQuery ? memberIdQuery : null,
+  });
+  const data = memberData?.members?.individual?.get?.data?.member;
+
   const switchTabsFxn = (datas: string) => {
     setSelectedTab(datas);
   };
-
-  console.log(selectedTab);
 
   return (
     <Form<IPurchaseFormValues>
@@ -102,14 +104,14 @@ const ShareReturn = () => {
           <Text fontSize="r2" fontWeight="600">
             New Share Return
           </Text>
-          <CloseIcon />
+          <CloseIcon cursor="pointer" onClick={() => router.back()} />
         </Box>
         <Box display="flex" width="100%">
           <Box w="100%">
             <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
               <TextInput
                 w="50%"
-                label=" Member ID"
+                label=" Member Search"
                 placeholder="Enter Member ID"
                 onChange={(e) => setMemberIdQuery(e.target.value)}
               />
@@ -117,7 +119,7 @@ const ShareReturn = () => {
               <br />
               <br />
 
-              {memberIdQuery && (
+              {data && (
                 <Box
                   border="1px solid"
                   borderColor="border.layout"
@@ -135,10 +137,7 @@ const ShareReturn = () => {
                           <Avatar
                             src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
                             size="lg"
-                            name={
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.name?.firstName
-                            }
+                            name={data?.personalInformation?.name?.firstName}
                           />
                         </Box>
                         <Box>
@@ -146,29 +145,16 @@ const ShareReturn = () => {
                             color="neutralColorLight.Gray-80"
                             variant="profileHeader"
                           >
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.name?.firstName
-                            }{' '}
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.name?.middleName
-                            }{' '}
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.name?.lastName
-                            }
+                            {data?.personalInformation?.name?.firstName}{' '}
+                            {data?.personalInformation?.name?.middleName}{' '}
+                            {data?.personalInformation?.name?.lastName}
                           </TextFields>
                           <Text
                             color="neutralColorLight.Gray-80"
                             fontSize="s3"
                             fontWeight="Regular"
                           >
-                            ID:{' '}
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.panNumber
-                            }
+                            ID: {data?.personalInformation?.panNumber}
                           </Text>
 
                           <Text
@@ -177,10 +163,7 @@ const ShareReturn = () => {
                             fontSize="s3"
                           >
                             Member Since:{' '}
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.dateOfBirth
-                            }
+                            {data?.personalInformation?.dateOfBirth}
                           </Text>
 
                           <Text
@@ -188,11 +171,7 @@ const ShareReturn = () => {
                             fontWeight="Regular"
                             fontSize="s3"
                           >
-                            Branch:{' '}
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.address?.temporary?.state
-                            }
+                            Branch: {data?.address?.temporary?.state}
                           </Text>
                         </Box>
                       </GridItem>
@@ -215,10 +194,7 @@ const ShareReturn = () => {
                             variant="profileBody"
                             fontSize="12px"
                           >
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.contact?.mobile
-                            }
+                            {data?.contact?.mobile}
                           </TextFields>
                         </Box>
 
@@ -244,15 +220,9 @@ const ShareReturn = () => {
                             variant="profileBody"
                             fontSize="12px"
                           >
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.address?.permanent?.district
-                            }
+                            {data?.address?.permanent?.district}
                             {','}
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.address?.permanent?.state
-                            }
+                            {data?.address?.permanent?.state}
                           </TextFields>
                         </Box>
                       </GridItem>
@@ -287,7 +257,7 @@ const ShareReturn = () => {
                     >
                       Share History
                     </Text>
-                    <ShareReturnHistoryTable memberId={memberIdQuery} />
+                    <ShareReturnHistoryTable id={memberIdQuery} />
                   </Box>
                 </Box>
               )}
@@ -364,20 +334,20 @@ const ShareReturn = () => {
                       <Grid templateRows="repeat(4,1fr)">
                         <GridItem>
                           <Box display="flex" justifyContent="space-between">
-                            <TextFields
+                            <Text
                               color="neutralLightColor.Gray-60"
                               fontWeight="Medium"
                               fontSize="s3"
                             >
                               Withdraw Amount
-                            </TextFields>
+                            </Text>
 
                             <Text
                               color="neutralLightColor.Gray-80"
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              {noOfShares * 1000}
+                              Rs. {noOfShares * 100}
                             </Text>
                           </Box>
                         </GridItem>
@@ -388,13 +358,15 @@ const ShareReturn = () => {
                             display="flex"
                             justifyContent="space-between"
                           >
-                            <TextFields
+                            <Text
                               color="neutralLightColor.Gray-60"
                               fontWeight="Medium"
                               fontSize="s3"
+                              display="flex"
+                              alignItems="center"
                             >
                               Administration Fees
-                            </TextFields>
+                            </Text>
                             <TextInput
                               w="50%"
                               id="administrationFees"
@@ -411,13 +383,15 @@ const ShareReturn = () => {
 
                         <GridItem>
                           <Box display="flex" justifyContent="space-between">
-                            <TextFields
+                            <Text
                               color="neutralLightColor.Gray-60"
                               fontWeight="Medium"
                               fontSize="s3"
+                              display="flex"
+                              alignItems="center"
                             >
                               Printing Fees
-                            </TextFields>
+                            </Text>
                             <TextInput
                               w="50%"
                               id="printingFees"
@@ -432,23 +406,23 @@ const ShareReturn = () => {
                           </Box>
                         </GridItem>
 
-                        <GridItem>
+                        <GridItem mt="22px">
                           <Box display="flex" justifyContent="space-between">
-                            <TextFields
+                            <Text
                               color="neutralLightColor.Gray-80"
                               fontWeight="SemiBold"
                               fontSize="s3"
                             >
                               Total Amount
-                            </TextFields>
+                            </Text>
 
-                            <TextFields
+                            <Text
                               color="neutralLightColor.Gray-80"
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              {noOfShares * 1000 + adminFees + printingFees}
-                            </TextFields>
+                              Rs. {noOfShares * 1000 + adminFees + printingFees}
+                            </Text>
                           </Box>
                         </GridItem>
                       </Grid>
@@ -481,37 +455,79 @@ const ShareReturn = () => {
               <SwitchTabs onclick={switchTabsFxn} list={accountList} />
 
               <br />
-              <Text>Select Account</Text>
-              <BaseSelect
-                w="25%"
-                placeholder="Select Account"
-                options={[
-                  {
-                    label: 'Option 1',
-                    value: 'option-1',
-                  },
-                  {
-                    label: 'Option 2',
-                    value: 'option-2',
-                  },
-                  {
-                    label: 'Option 3',
-                    value: 'option-3',
-                  },
-                ]}
-                variant="outline"
-              />
-              <br />
-              <Box p={2} w="25%" bg="background.500">
-                <Text>Available balance</Text>
-                <Text
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                  color="neutralColorLight.Gray-70"
-                >
-                  Rs. 12,342
-                </Text>
-              </Box>
+              {selectedTab === 'Account' && (
+                <Box w="25%">
+                  <Select
+                    label="Select Account"
+                    placeholder="Select Account"
+                    options={[
+                      {
+                        label: 'Option 1',
+                        value: 'option-1',
+                      },
+                      {
+                        label: 'Option 2',
+                        value: 'option-2',
+                      },
+                      {
+                        label: 'Option 3',
+                        value: 'option-3',
+                      },
+                    ]}
+                  />
+                  <br />
+                  <Box p={2} bg="background.500">
+                    <Text>Available balance</Text>
+                    <Text
+                      fontWeight="SemiBold"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                    >
+                      Rs. 12,342
+                    </Text>
+                  </Box>
+                </Box>
+              )}
+              {selectedTab === 'Bank Voucher' && (
+                <Box w="25%">
+                  <Select
+                    label="Select Bank"
+                    placeholder="Select Bank"
+                    options={[
+                      {
+                        label: 'Option 1',
+                        value: 'option-1',
+                      },
+                      {
+                        label: 'Option 2',
+                        value: 'option-2',
+                      },
+                      {
+                        label: 'Option 3',
+                        value: 'option-3',
+                      },
+                    ]}
+                  />
+                  <br />
+                  <TextInput
+                    type="text"
+                    name="name"
+                    placeholder="Enter Voucher Number"
+                    label="Enter Voucher Number"
+                  />
+                </Box>
+              )}
+
+              {selectedTab === 'Cash' && (
+                <Box w="25%">
+                  <TextInput
+                    type="text"
+                    name="name"
+                    placeholder="Enter Cash Amount"
+                    label="Enter Cash Amount"
+                  />
+                </Box>
+              )}
             </Box>
           </Box>
         </Box>

@@ -15,7 +15,7 @@ const ChartsOfAccounts = () => {
   };
 
   return (
-    <Box width="full" borderBottom="1px" borderBottomColor="border.layout">
+    <Box width="full">
       <Box
         display="flex"
         justifyContent="space-between"

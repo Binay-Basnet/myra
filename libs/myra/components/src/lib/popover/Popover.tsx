@@ -10,6 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
+  Button,
 } from '@saccos/myra/ui';
 
 type popoverType = {
@@ -19,14 +20,7 @@ type popoverType = {
 export const PopoverComponent = ({ title }: popoverType) => {
   const initialFocusRef = useRef<HTMLButtonElement | null>(null);
   return (
-    <Popover
-      // px="s8"
-      // py="s8"
-      // borderRadius="br2"
-      placement="bottom-start"
-      initialFocusRef={initialFocusRef}
-      // zIndex={1}
-    >
+    <Popover placement="bottom-start" initialFocusRef={initialFocusRef}>
       <PopoverTrigger>
         <IconButton
           variant="ghost"
@@ -36,13 +30,15 @@ export const PopoverComponent = ({ title }: popoverType) => {
       </PopoverTrigger>
       <PopoverContent minWidth="180px" w="180px" color="white">
         <PopoverCloseButton />
-        <PopoverBody>
+        <PopoverBody px="s6" py="s8">
           <Grid>
             {title.map((item) => (
               <GridItem px="s8" py="s8">
-                <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                  {item}
-                </Text>
+                <Button variant="ghost">
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {item}
+                  </Text>
+                </Button>
               </GridItem>
             ))}
           </Grid>
