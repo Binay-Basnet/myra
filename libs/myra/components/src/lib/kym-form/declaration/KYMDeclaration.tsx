@@ -104,8 +104,8 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
           Specify following details
         </Text>
         <Box display="flex" flexDirection="column" gap="s8">
-          {details.map((item) => (
-            <Checkbox>
+          {details.map((item, index) => (
+            <Checkbox key={index}>
               <Text fontSize="s3">{item}</Text>
             </Checkbox>
           ))}

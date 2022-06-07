@@ -1,10 +1,7 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
-import {
-  InvUnitOfMeasureEdge,
-  useGetInventoryUnitOfMeasureQuery,
-} from '@coop/myra/graphql';
+import { useGetInventoryUnitOfMeasureQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
@@ -13,9 +10,9 @@ import { TableSearch } from '../../TableSearch';
 export const InventoryUseOfMeasureTable = () => {
   const { data, isLoading } = useGetInventoryUnitOfMeasureQuery();
 
-  const rowlist = data?.inventory.unitOfMeasure?.list?.edges ?? [];
+  const rowItems = data?.inventory.unitOfMeasure?.list?.edges ?? [];
 
-  const columns: Column<InvUnitOfMeasureEdge>[] = useMemo(
+  const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
         Header: 'Name',
@@ -53,7 +50,7 @@ export const InventoryUseOfMeasureTable = () => {
       <TableSearch />
       <Table
         isLoading={isLoading}
-        data={rowlist}
+        data={rowItems}
         columns={columns}
         sort={true}
       />

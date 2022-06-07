@@ -45,8 +45,8 @@ export const VerticalSideBar = ({ tablinks }: IVerticalSidebarProps) => {
       <Tabs variant="unstyled" index={currentIndex}>
         {tablinks.map(({ title, to }, index) => {
           return (
-            <Link href={to}>
-              <TabCol key={`${title}${index}`}>
+            <Link href={to} key={`${title}${index}`}>
+              <TabCol>
                 <Text>{title}</Text>
               </TabCol>
             </Link>

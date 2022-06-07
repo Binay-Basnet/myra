@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
-import { BsUnion } from 'react-icons/bs';
 import { IoMdPerson } from 'react-icons/io';
 import { IconType } from 'react-icons/lib';
 import { MdCorporateFare } from 'react-icons/md';
@@ -10,7 +9,15 @@ import {
   useGetMemberTypesQuery,
   useGetNewIdMutation,
 } from '@coop/myra/graphql';
-import { Box, Button, Divider, Icon, Modal, Text } from '@coop/myra/ui';
+import {
+  Box,
+  Button,
+  Divider,
+  GridItem,
+  Icon,
+  Modal,
+  Text,
+} from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '../tab/TabforMemberPage';
@@ -29,15 +36,6 @@ const memberColumns = [
     link: '/members/reports',
   },
 ];
-// width="full"
-// size="lg"
-// justifyContent="start"
-// leftIcon={<AddIcon h="11px" />}
-// onClick={() => {
-//   newId
-//     .mutateAsync({})
-//     .then((res) => router.push(`/members/addMember/${res?.newId}`));
-// }}
 
 interface memberTypeButtonProps {
   icon: IconType;
@@ -49,27 +47,8 @@ interface memberTypeButtonProps {
 
 const MemberTypeButton = (props: memberTypeButtonProps) => {
   const [isActive, setIsActive] = useState(false);
-  const { icon, title, subtitle, disabled, onClick } = props;
+  const { icon, title, subtitle, onClick } = props;
   return (
-    // <Button
-    //   display="flex"
-    //   flexDirection="column"
-    //   variant="outline"
-    //   minWidth={300}
-    //   h={168}
-    //   disabled={disabled}
-    //   onClick={onClick}
-    // >
-    //   <Icon size="xl" as={icon} color="" />
-    //   <br />
-    //   <Text fontSize="r2" fontWeight="medium">
-    //     {title}
-    //   </Text>
-    //   <br />
-    //   <Text fontSize="s3" textAlign="center" px="2px">
-    //     {subtitle}
-    //   </Text>
-    // </Button>
     <Box
       as="button"
       lineHeight="1.2"
@@ -122,9 +101,9 @@ const memberTypesArray = {
     subtitle: 'Create KYM form for CoOperative members',
   },
   COOPERATIVE_UNION: {
-    icon: BsUnion,
-    title: 'cooperative Union',
-    subtitle: 'Create KYM form for CoOperative union members',
+    icon: AiFillBank,
+    title: 'Cooperative Union',
+    subtitle: 'Create KYM form for cooperative union',
   },
 };
 
@@ -179,20 +158,28 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
           }
         >
           <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-            {memberTypes?.map((item) => (
-              <MemberTypeButton
-                key={item?.id}
-                icon={memberTypesArray[item?.type]?.icon}
-                title={memberTypesArray[item?.type]?.title}
-                subtitle={memberTypesArray[item?.type]?.subtitle}
-                // disabled={item?.type !== 'INDIVIDUAL'}
-                onClick={() => {
-                  newId
-                    .mutateAsync({})
-                    .then((res) => router.push(`/members/add/${res?.newId}`));
-                }}
-              />
-            ))}
+            {memberTypes?.map((item) => {
+              if (!item?.type) {
+                return null;
+              }
+              return (
+                <GridItem key={item?.id}>
+                  <MemberTypeButton
+                    icon={memberTypesArray[item.type]?.icon}
+                    title={memberTypesArray[item.type]?.title}
+                    subtitle={memberTypesArray[item.type]?.subtitle}
+                    disabled={item?.type !== 'INDIVIDUAL'}
+                    onClick={() => {
+                      newId
+                        .mutateAsync({})
+                        .then((res) =>
+                          router.push(`/members/add/${res?.newId}`)
+                        );
+                    }}
+                  />
+                </GridItem>
+              );
+            })}
           </Grid>
         </Modal>
         <Divider my="s16" />

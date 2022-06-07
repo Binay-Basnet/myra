@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
-import { InvVendorsEdge, useGetInventoryVendorQuery } from '@coop/myra/graphql';
+import { useGetInventoryVendorQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
@@ -12,7 +12,7 @@ export const InventoryVendorTable = () => {
 
   const rowItems = data?.inventory.vendors?.list?.edges ?? [];
 
-  const columns: Column<InvVendorsEdge>[] = useMemo(
+  const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
         Header: 'Name',

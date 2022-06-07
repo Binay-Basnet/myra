@@ -1,22 +1,19 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
-import {
-  ShareBalanceEdge,
-  useGetShareBalanceListQuery,
-} from '@coop/myra/graphql';
-import { Column, Table } from '@coop/myra/ui';
 import { PopoverComponent } from '@coop/myra/components';
-import { TableListPageHeader } from 'libs/myra/components/src/lib/TableListPageHeader';
-import { TableSearch } from 'libs/myra/components/src/lib/TableSearch';
+import { TableSearch } from '@coop/myra/components';
+import { TableListPageHeader } from '@coop/myra/components';
+import { useGetShareBalanceListQuery } from '@coop/myra/graphql';
+import { Column, Table } from '@coop/myra/ui';
 
 export const ShareBalanceTable = () => {
   const { data, isLoading } = useGetShareBalanceListQuery();
 
-  const rowData = useMemo(() => data?.share.balance?.edges, [data]);
+  const rowData = useMemo(() => data?.share.balance?.edges ?? [], [data]);
 
   const popoverTitle = ['View Member Profile'];
 
-  const columns: Column<ShareBalanceEdge>[] = useMemo(
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         Header: 'Member #',

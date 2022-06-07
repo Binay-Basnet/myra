@@ -27,15 +27,10 @@ export type FilterColumnProps<T extends Record<string, unknown>> =
     initialFocusRef?: React.RefObject<HTMLInputElement>;
   };
 
-export type BaseColumn<T extends Record<string, unknown>> =
-  | {
-      Header: string;
-      accessor: DotNestedKeys<T>;
-    }
-  | {
-      Header?: never | undefined;
-      accessor: 'actions';
-    };
+export type BaseColumn<T extends Maybe<Record<string, unknown>>> = {
+  Header?: string;
+  accessor: DotNestedKeys<T> | 'actions';
+};
 
 export type ExtraColumnProps = Partial<{
   width: number | string;
@@ -44,19 +39,23 @@ export type ExtraColumnProps = Partial<{
   paddingX: string | number | number[];
   paddingY: string | number | number[];
   imgSrc: string;
-
   filterType?: 'list' | 'amount';
   uniqueOptionsForListFilter?: string[];
 }>;
 
-export type Column<T extends Record<string, unknown>> = BaseColumn<T> &
+export type Column<T extends Maybe<Record<string, unknown>>> = BaseColumn<T> &
   ExtraColumnProps & {
+    id?: string;
     disableSortBy?: boolean;
     disableFilters?: boolean;
-    filter?: FilterType<T> | DefaultFilterTypes | string | 'numberAll';
+    filter?:
+      | FilterType<NonNullable<T>>
+      | DefaultFilterTypes
+      | 'numberAll'
+      | Omit<string, DefaultFilterTypes | 'numberAll'>;
 
-    Filter?: Renderer<FilterColumnProps<T>>;
-    Cell?: Renderer<CellProps<T>>;
+    Filter?: Renderer<FilterColumnProps<NonNullable<T>>>;
+    Cell?: Renderer<CellProps<NonNullable<T>>>;
   };
 
 export type FilterTableProps =
@@ -79,9 +78,15 @@ export type SortTableProps =
       disableSortAll?: never;
     };
 
+export type Maybe<T> = T | null;
+
+export type PartialNull<T> = {
+  [P in keyof T]?: T[P] | null;
+};
+
 export interface BaseTableProps<T extends Record<string, unknown>> {
-  data: T[] | any;
-  columns: Column<T>[] | any;
+  data: Maybe<Array<Maybe<T>>>;
+  columns: Maybe<Array<Maybe<Column<Maybe<T>>>>>;
   size?: 'default' | 'compact';
   hasRowSelection?: boolean;
 

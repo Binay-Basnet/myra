@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
-import { InvItemsEdge, useGetInventoryItemsQuery } from '@coop/myra/graphql';
+import { useGetInventoryItemsQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
@@ -12,7 +12,7 @@ export const InventoryItemTable = () => {
 
   const rowItems = data?.inventory.items?.list?.edges ?? [];
 
-  const columns: Column<InvItemsEdge>[] = useMemo(
+  const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
         Header: 'Item Id',
@@ -40,14 +40,13 @@ export const InventoryItemTable = () => {
       },
 
       {
+        id: 'total-cost',
         Header: 'Total Cost',
-        accessor: 'cursor',
-        Cell: ({ row }) => {
+        accessor: 'node.unitPrice',
+        Cell: ({ value, row }) => {
           return (
             <span>
-              {Number(
-                row.original.node.unitPrice * row.original.node.itemQuantity
-              ).toFixed(2)}
+              {Number(value * row.original.node.itemQuantity).toFixed(2)}
             </span>
           );
         },

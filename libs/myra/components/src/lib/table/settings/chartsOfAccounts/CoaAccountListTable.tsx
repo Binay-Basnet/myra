@@ -3,18 +3,12 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 import { Column, Table } from '@coop/myra/ui';
 
-enum Gender {
-  Female = 'FEMALE',
-  Male = 'MALE',
-  Other = 'OTHER',
-}
-
 type MemberData = {
   id: string;
   firstName: string;
   middleName?: string | null;
-  lastName: string;
-  gender: Gender;
+  lastName?: string;
+  gender: string;
   title?: string | null;
   dateOfBirth?: string | null;
 };
