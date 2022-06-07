@@ -36,21 +36,13 @@ export const PopoverComponent = ({ title }: popoverType) => {
         <PopoverCloseButton />
         <PopoverBody px="s6" py="s8">
           <Grid>
-<<<<<<< HEAD
-            {title.map((item) => (
-              <GridItem px="s8" py="s8">
+            {title.map((item, index) => (
+              <GridItem px="s8" py="s8" key={`${item}${index}`}>
                 <Button variant="ghost">
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                     {item}
                   </Text>
                 </Button>
-=======
-            {title.map((item, index) => (
-              <GridItem px="s8" py="s8" key={index}>
-                <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                  {item}
-                </Text>
->>>>>>> 52d608daca8213567826bab8ba454ba6ca7c8d9d
               </GridItem>
             ))}
           </Grid>
