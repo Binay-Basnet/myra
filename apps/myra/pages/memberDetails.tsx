@@ -12,7 +12,7 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
-import { Button, MainLayout } from '@saccos/myra/ui';
+import { Button, MainLayout } from '@coop/myra/ui';
 
 interface IPersonalDetails {
   firstName: string;

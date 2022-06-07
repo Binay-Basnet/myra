@@ -1,6 +1,6 @@
 import React from 'react';
-import { SettingsGeneral as Layout } from '@saccos/myra/components';
-import { Box } from '@saccos/myra/ui';
+import { SettingsGeneral as Layout } from '@coop/myra/components';
+import { Box } from '@coop/myra/ui';
 
 import SettingsLayout from '.';
 

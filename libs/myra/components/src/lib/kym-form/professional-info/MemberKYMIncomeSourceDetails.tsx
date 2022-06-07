@@ -2,7 +2,7 @@ import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
-import { Box, Button, Checkbox, GridItem, Icon, Text } from '@saccos/myra/ui';
+import { Box, Button, Checkbox, GridItem, Icon, Text } from '@coop/myra/ui';
 
 import {
   DynamicBoxContainer,
@@ -78,8 +78,8 @@ export const MemberKYMIncomeSourceDetails = ({ control }: any) => {
             Annual Family Income
           </Text>
           <Box display="flex" flexDirection="column" gap="s8">
-            {annualFamilyIncome.map((item) => (
-              <Checkbox>
+            {annualFamilyIncome.map((item, index) => (
+              <Checkbox key={index}>
                 <Text fontSize="s3">{item}</Text>
               </Checkbox>
             ))}

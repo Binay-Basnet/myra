@@ -1,6 +1,6 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import { Box, Checkbox, Grid, Text, TextFields } from '@saccos/myra/ui';
+import { Box, Checkbox, Grid, Text, TextFields } from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import {
@@ -104,8 +104,8 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
           Specify following details
         </Text>
         <Box display="flex" flexDirection="column" gap="s8">
-          {details.map((item) => (
-            <Checkbox>
+          {details.map((item, index) => (
+            <Checkbox key={index}>
               <Text fontSize="s3">{item}</Text>
             </Checkbox>
           ))}

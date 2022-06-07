@@ -1,4 +1,4 @@
-import { TextFields } from '@saccos/myra/ui';
+import { TextFields } from '@coop/myra/ui';
 import {
   Box,
   InputGroup,

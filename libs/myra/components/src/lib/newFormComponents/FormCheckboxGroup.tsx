@@ -1,6 +1,6 @@
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
-import { Box, Checkbox, Input, Text } from '@saccos/myra/ui';
+import { Box, Checkbox, Input, Text } from '@coop/myra/ui';
 
 interface IFormCheckboxGroupProps {
   control: Control;

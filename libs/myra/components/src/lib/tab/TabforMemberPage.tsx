@@ -1,6 +1,6 @@
 import { chakra, Tab, Tabs, Text } from '@chakra-ui/react';
-import { en } from '@saccos/myra/locales';
-import { useTranslation } from '@saccos/myra/util';
+import { en } from '@coop/myra/locales';
+import { useTranslation } from '@coop/myra/util';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -40,8 +40,8 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
     >
       {list.map((item, index) => {
         return (
-          <Link href={item.link}>
-            <TabCol key={`${item}${index}`}>
+          <Link href={item.link} key={`${item}${index}`}>
+            <TabCol>
               <Text
                 noOfLines={1}
                 align="left"

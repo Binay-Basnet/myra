@@ -1,5 +1,5 @@
 import { Control, Controller, Path } from 'react-hook-form';
-import { Select, SelectProps } from '@saccos/myra/ui';
+import { Select, SelectProps } from '@coop/myra/ui';
 
 interface IFormSelectProps<T> extends SelectProps {
   control: Control<T>;

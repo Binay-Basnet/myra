@@ -1,5 +1,5 @@
 import { Tabs, TabList, Tab, TabsProps, chakra } from '@chakra-ui/react';
-import { TextFields } from '@saccos/myra/ui';
+import { TextFields } from '@coop/myra/ui';
 /* eslint-disable-next-line */
 export interface ChakraTabProps extends Omit<TabsProps, 'children'> {
   onclick?: (data: string | number) => void;

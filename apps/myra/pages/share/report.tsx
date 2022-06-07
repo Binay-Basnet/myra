@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import { SharePageLayout, ShareRegisterTable } from '@saccos/myra/components';
-import { MainLayout } from '@saccos/myra/ui';
+import { SharePageLayout, ShareRegisterTable } from '@coop/myra/components';
+import { MainLayout } from '@coop/myra/ui';
 
 // TODO ( UPDATE THIS PAGE A/C TO DESIGN )
 const ShareReport = () => {

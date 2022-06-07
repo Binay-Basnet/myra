@@ -14,7 +14,7 @@ import {
   AccordionItem,
   AccordionPanel,
 } from '@chakra-ui/react';
-import { Box, Button, Checkbox, Icon, Switch, Text } from '@saccos/myra/ui';
+import { Box, Button, Checkbox, Icon, Switch, Text } from '@coop/myra/ui';
 const genderDetails = ['Male', 'Female', 'Transgender'];
 
 const Gender = () => {
@@ -274,7 +274,7 @@ export const KYCIndividualPersonal = () => {
               <Box flex="1" textAlign="left">
                 <Text fontSize={'r1'} fontWeight="600">
                   {' '}
-                  Section 3 : Cooperative Information
+                  Section 3 : cooperative Information
                 </Text>
               </Box>
               {isExpanded ? (

@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import { AccountPagesLayout, ShareTable } from '@saccos/myra/components';
-import { MainLayout } from '@saccos/myra/ui';
+import { AccountPagesLayout, ShareTable } from '@coop/myra/components';
+import { MainLayout } from '@coop/myra/ui';
 
 // TODO ( Update this page when design arrives )
 const AccountReportPage = () => {

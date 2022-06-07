@@ -4,8 +4,8 @@ import { FaMap } from 'react-icons/fa';
 import {
   KymIndMemberInput,
   useAllAdministrationQuery,
-} from '@saccos/myra/graphql';
-import { Button, Icon, Text } from '@saccos/myra/ui';
+} from '@coop/myra/graphql';
+import { Button, Icon, Text } from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormInput, FormSelect, FormSwitch } from '../../newFormComponents';

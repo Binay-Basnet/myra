@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import {
+  Column,
   useFilters,
   useRowSelect,
   useSortBy,
@@ -8,7 +9,7 @@ import {
 
 import { amountFilter } from './filters/amountFilter';
 import { selectionHook } from './hooks/selectionHook';
-import { Column, TableProps } from './types';
+import { TableProps } from './types';
 
 const rowSelectionHooks = [useRowSelect, selectionHook];
 
@@ -32,6 +33,8 @@ export function useTable<T extends Record<string, unknown>>({
     () => ({
       disableFilters: disableFilterAll,
       disableSortBy: disableSortAll,
+      filter: 'includesSome',
+      filterType: 'list',
       Filter: () => null,
     }),
     []
@@ -46,8 +49,8 @@ export function useTable<T extends Record<string, unknown>>({
   return useReactTable<T>(
     {
       ...props,
-      data,
-      columns,
+      data: data as unknown as T[],
+      columns: columns as unknown as Column<T>[],
       filterTypes,
       defaultColumn,
       manualSortBy: manualSort,

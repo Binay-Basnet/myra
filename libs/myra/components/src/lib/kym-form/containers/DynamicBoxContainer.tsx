@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@saccos/myra/ui';
+import { Box } from '@coop/myra/ui';
 
 interface IGroupContainer {
   children: React.ReactNode;

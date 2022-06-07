@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Checkbox, Text } from '@saccos/myra/ui';
+import { Box, Checkbox, Text } from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormInput } from '../../newFormComponents';
@@ -29,8 +29,8 @@ export const KYMEstimatedAmount = ({ control }: any) => {
           Estimated no. of Annual Transaction
         </Text>
         <Box display="flex" flexDirection="column" gap="s8">
-          {annualFamilyIncome.map((item) => (
-            <Checkbox>
+          {annualFamilyIncome.map((item, index) => (
+            <Checkbox key={index}>
               <Text fontSize="s3">{item}</Text>
             </Checkbox>
           ))}

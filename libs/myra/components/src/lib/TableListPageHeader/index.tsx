@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex } from '@chakra-ui/react';
-import { Box, Text } from '@saccos/myra/ui';
+import { Box, Text } from '@coop/myra/ui';
 
 import { TabRow } from '../tab/TabMemberPageRow';
 

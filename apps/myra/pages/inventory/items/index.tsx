@@ -1,9 +1,6 @@
 import { ReactElement } from 'react';
-import {
-  InventoryItemTable,
-  InventoryPageLayout,
-} from '@saccos/myra/components';
-import { MainLayout } from '@saccos/myra/ui';
+import { InventoryItemTable, InventoryPageLayout } from '@coop/myra/components';
+import { MainLayout } from '@coop/myra/ui';
 
 const InventoryProduct = () => {
   return <InventoryItemTable />;

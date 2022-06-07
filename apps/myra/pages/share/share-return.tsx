@@ -9,9 +9,9 @@ import {
   Form,
   FormFooter,
   ShareReturnHistoryTable,
-} from '@saccos/myra/components';
-import { useGetMemberDataQuery } from '@saccos/myra/graphql';
-import { IPurchaseFormValues } from '@saccos/myra/types';
+} from '@coop/myra/components';
+import { useGetMemberDataQuery } from '@coop/myra/graphql';
+import { IPurchaseFormValues } from '@coop/myra/types';
 import {
   Avatar,
   Box,
@@ -22,14 +22,14 @@ import {
   Icon,
   MainLayout,
   Navbar,
+  Select,
   SwitchTabs,
   TabMenu,
   Text,
   TextFields,
   TextInput,
-  Select,
   // Button,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
 // TODO! use Layout

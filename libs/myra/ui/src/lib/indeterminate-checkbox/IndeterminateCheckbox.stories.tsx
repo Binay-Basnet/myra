@@ -1,8 +1,8 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
-import { theme } from '@saccos/myra/util';
-import { Meta,Story } from '@storybook/react';
+import { theme } from '@coop/myra/util';
+import { Meta, Story } from '@storybook/react';
 
 import {
   IndeterminateCheckbox,

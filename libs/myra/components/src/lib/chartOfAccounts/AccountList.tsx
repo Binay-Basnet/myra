@@ -1,4 +1,4 @@
-import { Box, Input, IconButton, Text, Button, Icon } from '@saccos/myra/ui';
+import { Box, Input, IconButton, Text, Button, Icon } from '@coop/myra/ui';
 import { InputGroup, InputLeftElement } from '@chakra-ui/react';
 import {
   SearchIcon,

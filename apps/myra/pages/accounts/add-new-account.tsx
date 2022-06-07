@@ -1,8 +1,16 @@
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { GrClose } from 'react-icons/gr';
-import { FormInput } from '@saccos/myra/components';
-import { Box, Button, Container, MainLayout, Text } from '@saccos/myra/ui';
+import { FormInput } from '@coop/myra/components';
+import {
+  Box,
+  Button,
+  Container,
+  IconButton,
+  MainLayout,
+  Text,
+} from '@coop/myra/ui';
+import router from 'next/router';
 
 const AddNewItemPage = () => {
   const { control } = useForm();
@@ -28,7 +36,12 @@ const AddNewItemPage = () => {
         <Text fontSize="r2" fontWeight="600">
           Add New Item
         </Text>
-        <GrClose size="14px" color="#91979F" />
+        <IconButton
+          variant={'ghost'}
+          aria-label="close"
+          icon={<GrClose />}
+          onClick={() => router.back()}
+        />
       </Box>
       <br />
       <Box
