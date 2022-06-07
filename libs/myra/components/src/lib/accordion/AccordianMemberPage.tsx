@@ -1,6 +1,7 @@
 import React from 'react';
 import { AiFillCaretRight, AiOutlineCaretDown } from 'react-icons/ai';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { BsCheckCircleFill } from 'react-icons/bs';
 import { TiTickOutline } from 'react-icons/ti';
 import {
   Accordion,
@@ -38,9 +39,9 @@ const ProfessionalDetails: string[] = [
   'Main Occupation of Husaband/Wife',
   'Income Source Details',
 ];
-const SACCOSmembership: string[] = [
+const coopmembership: string[] = [
   'Main Purpose of Becoming a Member',
-  'Member of Another Cooperative',
+  'Member of Another cooperative',
   'Family Member in this institution',
   'Financial Transaction Details',
   'Estimated Withdraw/Deposit Amount in the Institureion',
@@ -97,10 +98,18 @@ export function AccorrdianAddMember({ formStatus }) {
                   &nbsp; &nbsp;
                   {formStatus?.personal?.completed.includes(
                     personalInfoEnum[item]
-                  ) && <Icon size="xs" as={TiTickOutline} />}
+                  ) && (
+                    <Icon
+                      size="xs"
+                      as={BsCheckCircleFill}
+                      color="primary.500"
+                    />
+                  )}
                   {formStatus?.personal?.error.includes(
                     personalInfoEnum[item]
-                  ) && <Icon size="xs" as={AiFillCloseCircle} />}
+                  ) && (
+                    <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />
+                  )}
                 </Box>
               ))}
             </AccordionPanel>
@@ -148,7 +157,7 @@ export function AccorrdianAddMember({ formStatus }) {
               <Box flex="1" textAlign="left">
                 <Text fontSize={'r1'} fontWeight="600">
                   {' '}
-                  3. SACCOS Membership
+                  3. COOP Membership
                 </Text>
               </Box>
               {isExpanded ? (
@@ -160,7 +169,7 @@ export function AccorrdianAddMember({ formStatus }) {
 
             <AccordionPanel pb={2}>
               {' '}
-              {SACCOSmembership.map((item, index) => (
+              {coopmembership.map((item, index) => (
                 <Text
                   key={`${item}${index}`}
                   mb="s16"

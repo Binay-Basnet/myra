@@ -11,7 +11,7 @@ import {
   Button,
   Checkbox,
 } from '@chakra-ui/react';
-import { Box, Text } from '@saccos/myra/ui';
+import { Box, Text } from '@coop/myra/ui';
 import { AddIcon } from '@chakra-ui/icons';
 
 /* eslint-disable-next-line */

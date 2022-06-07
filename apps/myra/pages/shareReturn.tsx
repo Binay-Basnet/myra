@@ -5,9 +5,9 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
-import { Form, ShareReturnHistoryTable } from '@saccos/myra/components';
-import { FormFooter } from '@saccos/myra/components';
-import { IPurchaseFormValues } from '@saccos/myra/types';
+import { Form, ShareReturnHistoryTable } from '@coop/myra/components';
+import { FormFooter } from '@coop/myra/components';
+import { IPurchaseFormValues } from '@coop/myra/types';
 import {
   Avatar,
   BaseSelect,
@@ -24,7 +24,7 @@ import {
   Text,
   TextFields,
   TextInput,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 
 const Header = () => {
   return (

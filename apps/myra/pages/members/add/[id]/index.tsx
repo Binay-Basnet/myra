@@ -4,7 +4,7 @@ import { GrClose } from 'react-icons/gr';
 import {
   AccorrdianAddMember,
   ContainerWithDivider,
-  KYMBasicSaccosDetails,
+  KYMBasiccoopDetails,
   KYMDeclaration,
   KYMDocumentDeclaration,
   KYMEstimatedAmount,
@@ -20,25 +20,26 @@ import {
   MemberKYMMainOccupation,
   MemberKYMProfession,
   SectionContainer,
-} from '@saccos/myra/components';
+} from '@coop/myra/components';
 import {
   KymIndMemberInput,
   useGetKymFormStatusQuery,
   useSetMemberDataMutation,
-} from '@saccos/myra/graphql';
+} from '@coop/myra/graphql';
 import {
   Box,
   Button,
   Checkbox,
   Container,
   Divider,
+  IconButton,
   MainLayout,
   Navbar,
   TabMenu,
   Text,
   TextFields,
-} from '@saccos/myra/ui';
-import { useTranslation } from '@saccos/myra/util';
+} from '@coop/myra/ui';
+import { useTranslation } from '@coop/myra/util';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 
@@ -129,7 +130,12 @@ const AddMember = () => {
           <Text fontSize="r2" fontWeight="SemiBold">
             {t.membersFormAddNewMembers}
           </Text>
-          <GrClose size="14px" color="#91979F" />
+          <IconButton
+            variant={'ghost'}
+            aria-label="close"
+            icon={<GrClose />}
+            onClick={() => router.back()}
+          />
         </Box>
         <Box display="flex" width="100%">
           <Box w={320} p={2} minHeight="100%" bg="white">
@@ -169,10 +175,10 @@ const AddMember = () => {
 
                 <SectionContainer>
                   <Text fontSize="r3" fontWeight="600">
-                    3. SACCOS membership
+                    3. COOP membership
                   </Text>
                   <ContainerWithDivider>
-                    <KYMBasicSaccosDetails control={control} />
+                    <KYMBasiccoopDetails control={control} />
                     <KYMFinancialTransactionDetails control={control} />
                     <KYMEstimatedAmount control={control} />
                   </ContainerWithDivider>

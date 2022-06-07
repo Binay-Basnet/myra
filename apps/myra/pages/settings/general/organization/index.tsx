@@ -9,8 +9,8 @@ import {
   MainContactPersonOrganization,
   RadioOrganization,
   RegistrationDetailsOrganization,
-} from '@saccos/myra/components';
-import { Box, Button, Icon, Text } from '@saccos/myra/ui';
+} from '@coop/myra/components';
+import { Box, Button, Icon, Text } from '@coop/myra/ui';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 

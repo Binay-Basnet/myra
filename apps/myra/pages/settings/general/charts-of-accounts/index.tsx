@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
-import { AccountList, FullView } from '@saccos/myra/components';
-import { Box, Button, ChakraTab, Text } from '@saccos/myra/ui';
+import { AccountList, FullView } from '@coop/myra/components';
+import { Box, Button, ChakraTab, Text } from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';

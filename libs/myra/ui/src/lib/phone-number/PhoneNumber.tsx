@@ -5,7 +5,7 @@ import {
   InputProps,
   InputLeftElement,
 } from '@chakra-ui/react';
-import { TextFields } from '@saccos/myra/ui';
+import { TextFields } from '@coop/myra/ui';
 import { BiLabel } from 'react-icons/bi';
 import { forwardRef } from 'react';
 /* eslint-disable-next-line */

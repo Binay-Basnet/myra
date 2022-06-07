@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from '@saccos/myra/ui';
+import { Text } from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormInput } from '../../newFormComponents';

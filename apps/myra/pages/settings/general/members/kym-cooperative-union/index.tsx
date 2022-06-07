@@ -1,5 +1,5 @@
-import { SettingsGeneralMember } from '@saccos/myra/components';
-import { Box, Text } from '@saccos/myra/ui';
+import { SettingsGeneralMember } from '@coop/myra/components';
+import { Box, Text } from '@coop/myra/ui';
 
 import GeneralLayout from '../../../../../components/SettingsLayout/GeneralLayout';
 const KYMCoperativeUnion = () => {
