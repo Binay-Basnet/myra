@@ -16,7 +16,7 @@ export const ShareBalanceTable = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'Member #',
+        Header: 'Member Id',
         accessor: 'node.id',
         maxWidth: 4,
       },
