@@ -1,6 +1,7 @@
 import React from 'react';
 import { AiFillCaretRight, AiOutlineCaretDown } from 'react-icons/ai';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { BsCheckCircleFill } from 'react-icons/bs';
 import { TiTickOutline } from 'react-icons/ti';
 import {
   Accordion,
@@ -97,10 +98,18 @@ export function AccorrdianAddMember({ formStatus }) {
                   &nbsp; &nbsp;
                   {formStatus?.personal?.completed.includes(
                     personalInfoEnum[item]
-                  ) && <Icon size="xs" as={TiTickOutline} />}
+                  ) && (
+                    <Icon
+                      size="xs"
+                      as={BsCheckCircleFill}
+                      color="primary.500"
+                    />
+                  )}
                   {formStatus?.personal?.error.includes(
                     personalInfoEnum[item]
-                  ) && <Icon size="xs" as={AiFillCloseCircle} />}
+                  ) && (
+                    <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />
+                  )}
                 </Box>
               ))}
             </AccordionPanel>
@@ -148,7 +157,7 @@ export function AccorrdianAddMember({ formStatus }) {
               <Box flex="1" textAlign="left">
                 <Text fontSize={'r1'} fontWeight="600">
                   {' '}
-                  3. coop Membership
+                  3. COOP Membership
                 </Text>
               </Box>
               {isExpanded ? (

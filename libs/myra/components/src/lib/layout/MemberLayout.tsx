@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
+import { BsUnion } from 'react-icons/bs';
 import { IoMdPerson } from 'react-icons/io';
 import { IconType } from 'react-icons/lib';
+import { MdCorporateFare } from 'react-icons/md';
 import { AddIcon } from '@chakra-ui/icons';
 import { Grid } from '@chakra-ui/react';
 import {
@@ -46,50 +48,83 @@ interface memberTypeButtonProps {
 }
 
 const MemberTypeButton = (props: memberTypeButtonProps) => {
+  const [isActive, setIsActive] = useState(false);
   const { icon, title, subtitle, disabled, onClick } = props;
   return (
-    <Button
-      display="flex"
-      flexDirection="column"
-      variant="outline"
-      width={300}
+    // <Button
+    //   display="flex"
+    //   flexDirection="column"
+    //   variant="outline"
+    //   minWidth={300}
+    //   h={168}
+    //   disabled={disabled}
+    //   onClick={onClick}
+    // >
+    //   <Icon size="xl" as={icon} color="" />
+    //   <br />
+    //   <Text fontSize="r2" fontWeight="medium">
+    //     {title}
+    //   </Text>
+    //   <br />
+    //   <Text fontSize="s3" textAlign="center" px="2px">
+    //     {subtitle}
+    //   </Text>
+    // </Button>
+    <Box
+      as="button"
+      lineHeight="1.2"
+      minWidth={300}
       h={168}
-      disabled={disabled}
+      border="1px"
+      px="8px"
+      borderRadius="6px"
+      fontSize="14px"
+      fontWeight="semibold"
       onClick={onClick}
+      boxShadow={'none'}
+      color="#4b4f56"
+      _hover={{ bg: '#ebedf0', color: 'primary.500' }}
+      _active={{
+        bg: '#dddfe2',
+        transform: 'scale(0.98)',
+        borderColor: 'primary.500',
+      }}
+      onTouchMoveCapture={() => setIsActive(true)}
     >
-      <Icon size="xl" as={icon} color="primary.500" />
-      <br />
+      <Icon size="xl" as={icon} />
+      <br />{' '}
       <Text fontSize="r2" fontWeight="medium">
-        {title}
+        {title}{' '}
       </Text>
-      <br />
-      <Text fontSize="s3" textAlign="center">
-        {subtitle}
+      <br />{' '}
+      <Text fontSize="s3" textAlign="center" px="2px">
+        {subtitle}{' '}
       </Text>
-    </Button>
+    </Box>
   );
 };
 
 const memberTypesArray = {
-  INSTITUTION: {
-    icon: AiFillBank,
-    title: 'Institution',
-    subtitle: 'Create KYM form for individual members',
-  },
   INDIVIDUAL: {
     icon: IoMdPerson,
     title: 'Individual',
     subtitle: 'Create KYM form for institute members',
   },
-  coopERATIVE: {
+  INSTITUTION: {
     icon: AiFillBank,
-    title: 'cooperative',
-    subtitle: 'Create KYM form for cooperative members',
+    title: 'Institution',
+    subtitle: 'Create KYM form for individual members',
   },
-  coopERATIVE_UNION: {
-    icon: AiFillBank,
+
+  COOPERATIVE: {
+    icon: MdCorporateFare,
+    title: 'cooperative',
+    subtitle: 'Create KYM form for CoOperative members',
+  },
+  COOPERATIVE_UNION: {
+    icon: BsUnion,
     title: 'cooperative Union',
-    subtitle: 'Create KYM form for cooperative union members',
+    subtitle: 'Create KYM form for CoOperative union members',
   },
 };
 
@@ -107,6 +142,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
   const onCloseModal = () => {
     setOpenModal(false);
   };
+  console.log('memberTypes', memberTypes);
 
   return (
     <Box display="flex">

@@ -15,8 +15,8 @@ export const RadioOrganization = () => {
       {/* </Box> */}
       {/* <Box display="flex" justifyContent={'flex-start'}> */}
       <Grid templateColumns={'repeat(5, 1fr)'} gap={'s16'}>
-        <Radio value="3"> cooperative</Radio>
-        <Radio value="4"> cooperative Union</Radio>
+        <Radio value="3"> CoOperative</Radio>
+        <Radio value="4"> CoOperative Union</Radio>
       </Grid>
       {/* </Box> */}
     </RadioGroup>

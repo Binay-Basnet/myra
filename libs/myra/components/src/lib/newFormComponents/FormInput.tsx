@@ -19,7 +19,12 @@ export const FormInput = <T,>({
         control={control}
         name={name}
         render={({ field: { onChange } }) => (
-          <TextInput placeholder={placeholder} onChange={onChange} {...rest} />
+          <TextInput
+            placeholder={placeholder}
+            name={name}
+            onChange={onChange}
+            {...rest}
+          />
         )}
       />
     </Box>
