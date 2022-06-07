@@ -22,12 +22,12 @@ import {
   Icon,
   MainLayout,
   Navbar,
+  Select,
   SwitchTabs,
   TabMenu,
   Text,
   TextFields,
   TextInput,
-  Select,
   // Button,
 } from '@saccos/myra/ui';
 import { useRouter } from 'next/router';
@@ -272,15 +272,14 @@ const ShareReturn = () => {
               borderTopRadius={5}
             >
               <TextFields variant="tableHeader">Share Information</TextFields>
-              <br />
 
-              <Grid gap={5} templateColumns="repeat(2,1fr)">
+              <Grid mt="20px" gap={5} templateColumns="repeat(2,1fr)">
                 <GridItem>
                   <Grid
                     templateRows={
                       noOfShares ? 'repeat(3,1fr)' : 'repeat(2,0fr)'
                     }
-                    gap={1}
+                    gap={3}
                   >
                     <GridItem>
                       <TextInput

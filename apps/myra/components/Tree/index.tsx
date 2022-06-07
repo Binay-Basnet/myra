@@ -1,9 +1,9 @@
 import { createContext, useContext, useState } from 'react';
-import { AiOutlineCaretRight } from 'react-icons/ai';
+// import { AiOutlineCaretRight } from 'react-icons/ai';
 import {
   BsCaretDownFill,
-  BsCaretRight,
-  BsFillCaretRightFill,
+  // BsCaretRight,
+  // BsFillCaretRightFill,
 } from 'react-icons/bs';
 import { MdOutlineCircle } from 'react-icons/md';
 import { Box, HStack, Icon, Text } from '@chakra-ui/react';
