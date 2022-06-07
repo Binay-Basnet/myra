@@ -10,12 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
-<<<<<<< HEAD
-  Button,
-} from '@saccos/myra/ui';
-=======
 } from '@coop/myra/ui';
->>>>>>> 52d608daca8213567826bab8ba454ba6ca7c8d9d
 
 type popoverType = {
   title: string[];
