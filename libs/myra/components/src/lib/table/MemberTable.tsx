@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/myra/graphql';
-import { Column, Table } from '@coop/myra/ui';
+import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/myra/ui';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 
@@ -11,9 +11,15 @@ import { TableSearch } from '../TableSearch';
 
 export const MemberTable = () => {
   const router = useRouter();
-  const { data, isFetching } = useGetMemberListQuery({
+  const { data, isLoading } = useGetMemberListQuery({
     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+    first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+    last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+    after: router.query['after'] as string,
+    before: router.query['before'] as string,
   });
+
+  console.log(isLoading);
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
@@ -78,6 +84,7 @@ export const MemberTable = () => {
         Header: '',
         accessor: 'actions',
         Cell: () => <PopoverComponent title={popoverTitle} />,
+        disableFilters: true,
       },
     ],
     []
@@ -104,15 +111,26 @@ export const MemberTable = () => {
   return (
     <>
       <TableListPageHeader heading={'Members'} tabItems={memberRows} />
-      <TableSearch />
+      <TableSearch
+        pagination={{
+          total: 1200,
+          endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
+          startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
+        }}
+      />
 
       <Table
-        isLoading={isFetching}
+        isLoading={isLoading}
         data={rowData}
         columns={columns}
         sort={true}
         disableSortAll={true}
         filter={true}
+        pagination={{
+          total: 1200,
+          endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
+          startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
+        }}
       />
     </>
   );

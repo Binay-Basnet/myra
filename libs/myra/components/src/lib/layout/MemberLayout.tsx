@@ -201,7 +201,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
       </Box>
 
       <Box p="s16" width="100%" overflowX="hidden">
-        <Box bg="white" borderRadius="br3" width="100%">
+        <Box bg="white" borderRadius="br3" width="100%" overflow="hidden">
           {children}
         </Box>
       </Box>

@@ -36,7 +36,7 @@ export function TextFields(props: TextFieldsProps) {
       );
     case 'bodyRegular':
       return (
-        <Text fontSize="r2" fontWeight="400" {...rest} lineHeight="1.5">
+        <Text fontSize="r1" fontWeight="400" {...rest} lineHeight="1.5">
           {children}
         </Text>
       );

@@ -103,6 +103,12 @@ export interface BaseTableProps<T extends Record<string, unknown>> {
   name?: string;
   manualSort?: boolean;
   isStatic?: boolean;
+
+  pagination?: {
+    total: number | string;
+    startCursor: string;
+    endCursor: string;
+  };
 }
 
 export type TableProps<T extends Record<string, unknown>> = BaseTableProps<T> &

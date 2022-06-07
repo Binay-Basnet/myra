@@ -16,6 +16,7 @@ module.exports = {
     ...rootMain.addons,
     '@nrwl/react/plugins/storybook',
     '@chakra-ui/storybook-addon',
+    'storybook-addon-next-router',
   ],
   typescript: {
     check: false,

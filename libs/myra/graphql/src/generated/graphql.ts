@@ -2371,10 +2371,14 @@ export type GetInventoryUnitOfMeasureQuery = { inventory: { unitOfMeasure?: { li
 
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
+  first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  after?: InputMaybe<Scalars['Cursor']>;
+  last?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { edges?: Array<{ cursor: string, node?: { id: string, memberId?: string | null, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, memberId?: string | null, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2615,12 +2619,13 @@ export const useGetInventoryUnitOfMeasureQuery = <
       options
     );
 export const GetMemberListDocument = `
-    query getMemberList($objState: ObjState) {
+    query getMemberList($objState: ObjState, $first: Int, $before: Cursor, $after: Cursor, $last: Int) {
   members {
     list(
-      pagination: {first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA"}
+      pagination: {first: $first, before: $before, after: $after, last: $last}
       filter: {objState: $objState}
     ) {
+      totalCount
       edges {
         node {
           id

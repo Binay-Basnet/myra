@@ -1,20 +1,10 @@
 import React from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  HamburgerIcon,
-  SearchIcon,
-} from '@chakra-ui/icons';
-import {
-  IconButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
-} from '@chakra-ui/react';
-import { Box, Button, Icon, Text } from '@coop/myra/ui';
+import { HamburgerIcon, SearchIcon } from '@chakra-ui/icons';
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import { Box, Button, Icon, SmallPagination, Text } from '@coop/myra/ui';
 
-export const TableSearch = () => {
+export const TableSearch = ({ pagination }: any) => {
   return (
     <Box
       h="50px"
@@ -37,29 +27,12 @@ export const TableSearch = () => {
         </InputGroup>
       </Box>
       <Box display="flex">
-        <Box
-          w="184px"
-          borderLeft="1px solid #E6E6E6"
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <IconButton
-            aria-label="Previous"
-            variant="ghost"
-            icon={<ChevronLeftIcon />}
-            h="100%"
-          />
-          <Text fontSize="13px" fontWeight="600" color="#252525">
-            1 - 20 / 50
-          </Text>
-          <IconButton
-            variant="ghost"
-            aria-label="Next"
-            icon={<ChevronRightIcon />}
-            h="100%"
-          />
-        </Box>
+        <SmallPagination
+          limit={20}
+          total={100}
+          startCursor={pagination.startCursor}
+          endCursor={pagination.endCursor}
+        />
         <Box
           flex={1}
           borderLeft="1px solid #E6E6E6"
