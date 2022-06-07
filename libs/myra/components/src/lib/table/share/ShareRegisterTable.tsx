@@ -26,18 +26,10 @@ export const ShareRegisterTable = () => {
       },
 
       {
-        Header: 'Member ID',
-        accessor: 'node.id',
-        maxWidth: 4,
-        Cell: ({ value, row }) => {
-          return <span>{value.slice(0, 5).toUpperCase()}</span>;
-        },
-      },
-
-      {
         Header: 'Type',
         accessor: 'node.transactionDirection',
       },
+
       {
         Header: 'Name',
         accessor: 'node.member.personalInformation.name.firstName',
@@ -70,7 +62,7 @@ export const ShareRegisterTable = () => {
         Cell: ({ value, row }) => {
           return (
             <span>
-              {value} - {row?.original?.node?.shareEndNumber}
+              {value} to {row?.original?.node?.shareEndNumber}
             </span>
           );
         },
@@ -78,11 +70,14 @@ export const ShareRegisterTable = () => {
       {
         Header: 'Share Count',
         accessor: 'node.noOfShare',
+        isNumeric: true,
       },
       {
         id: 'share-dr',
         Header: 'Share Dr',
         accessor: 'node.transactionDirection',
+        isNumeric: true,
+
         Cell: ({ value, row }) => {
           return (
             <span>
@@ -96,6 +91,7 @@ export const ShareRegisterTable = () => {
       {
         id: 'share-cr',
         Header: 'Share Cr',
+        isNumeric: true,
         accessor: 'node.transactionDirection',
         Cell: ({ value, row }) => {
           return (
@@ -110,6 +106,7 @@ export const ShareRegisterTable = () => {
       {
         Header: 'Balance',
         accessor: 'node.balance',
+        isNumeric: true,
         Cell: ({ value, row }) => {
           return <span>{Number(value).toFixed(2)}</span>;
         },

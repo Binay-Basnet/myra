@@ -1,17 +1,18 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
+import {
+  PopoverComponent,
+  TableListPageHeader,
+  TableSearch,
+} from '@saccos/myra/components';
 import { ObjState, useGetMemberListQuery } from '@saccos/myra/graphql';
 import { Column, Table } from '@saccos/myra/ui';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 
-import { PopoverComponent } from '../popover/Popover';
-import { TableListPageHeader } from '../TableListPageHeader';
-import { TableSearch } from '../TableSearch';
-
 export const MemberTable = () => {
   const router = useRouter();
-  const { data, isLoading } = useGetMemberListQuery({
+  const { data, isFetching } = useGetMemberListQuery({
     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
   });
 
@@ -19,12 +20,13 @@ export const MemberTable = () => {
 
   const popoverTitle = [' View Member Profile', 'Edit Member', 'Make Inactive'];
 
-  const columns: Column<typeof rowData[0]>[] = useMemo(
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         Header: 'Member ID',
         accessor: 'node.id',
         maxWidth: 4,
+        disableSortBy: false,
       },
 
       {
@@ -76,6 +78,7 @@ export const MemberTable = () => {
       {
         Header: '',
         accessor: 'actions',
+        disableFilters: true,
         Cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
@@ -102,13 +105,16 @@ export const MemberTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'Member List'} tabItems={memberRows} />
+      <TableListPageHeader heading={'Members'} tabItems={memberRows} />
       <TableSearch />
+
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowData}
         columns={columns}
         sort={true}
+        disableSortAll={true}
+        filter={true}
       />
     </>
   );

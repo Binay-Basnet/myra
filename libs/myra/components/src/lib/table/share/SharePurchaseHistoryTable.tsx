@@ -16,7 +16,7 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       {
         Header: 'SN',
         accessor: 'node.id',
-        maxWidth: 4,
+        maxWidth: 10,
         Cell: ({ row }) => {
           return <span>{Number(row?.id) + 1}</span>;
         },
@@ -25,7 +25,6 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       {
         Header: 'Date',
         accessor: 'node.transactionDate',
-        width: '80%',
         Cell: ({ value }) => {
           return <span>{moment(value).format('YYYY-MM-DD')}</span>;
         },
@@ -34,6 +33,16 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
         Header: 'No. of Share',
         accessor: 'node.noOfShare',
         maxWidth: 48,
+        Footer: (props) => {
+          return (
+            <div>
+              {props.rows.reduce(
+                (sum, row) => Number(row.original.node.noOfShare) + sum,
+                0
+              )}
+            </div>
+          );
+        },
       },
       {
         Header: 'Share Number',
@@ -88,6 +97,8 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
 
   return (
     <Table
+      isStatic={true}
+      size="compact"
       isLoading={isLoading}
       data={rowData ?? []}
       columns={columns}

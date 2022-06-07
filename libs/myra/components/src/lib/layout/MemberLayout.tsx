@@ -186,8 +186,9 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
           Member Settings
         </Button>
       </Box>
-      <Box p="s16" width="100%" borderRadius="br3">
-        <Box bg="white" borderRadius="br3">
+
+      <Box p="s16" width="100%" overflowX="hidden">
+        <Box bg="white" borderRadius="br3" width="100%">
           {children}
         </Box>
       </Box>

@@ -61,6 +61,7 @@ const variantSimple: PartsStyleFunction<typeof parts> = (props) => {
       tr: {
         '&:last-of-type': {
           th: { borderBottomWidth: 0 },
+          td: { borderBottomWidth: 0 },
         },
       },
     },
