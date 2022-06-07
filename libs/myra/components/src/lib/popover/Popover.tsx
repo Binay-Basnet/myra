@@ -10,7 +10,12 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
+<<<<<<< HEAD
+  Button,
+} from '@saccos/myra/ui';
+=======
 } from '@coop/myra/ui';
+>>>>>>> 52d608daca8213567826bab8ba454ba6ca7c8d9d
 
 type popoverType = {
   title: string[];
@@ -19,14 +24,7 @@ type popoverType = {
 export const PopoverComponent = ({ title }: popoverType) => {
   const initialFocusRef = useRef<HTMLButtonElement | null>(null);
   return (
-    <Popover
-      // px="s8"
-      // py="s8"
-      // borderRadius="br2"
-      placement="bottom-start"
-      initialFocusRef={initialFocusRef}
-      // zIndex={1}
-    >
+    <Popover placement="bottom-start" initialFocusRef={initialFocusRef}>
       <PopoverTrigger>
         <IconButton
           variant="ghost"
@@ -36,13 +34,23 @@ export const PopoverComponent = ({ title }: popoverType) => {
       </PopoverTrigger>
       <PopoverContent minWidth="180px" w="180px" color="white">
         <PopoverCloseButton />
-        <PopoverBody>
+        <PopoverBody px="s6" py="s8">
           <Grid>
+<<<<<<< HEAD
+            {title.map((item) => (
+              <GridItem px="s8" py="s8">
+                <Button variant="ghost">
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {item}
+                  </Text>
+                </Button>
+=======
             {title.map((item, index) => (
               <GridItem px="s8" py="s8" key={index}>
                 <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                   {item}
                 </Text>
+>>>>>>> 52d608daca8213567826bab8ba454ba6ca7c8d9d
               </GridItem>
             ))}
           </Grid>

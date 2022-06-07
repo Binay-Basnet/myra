@@ -3,13 +3,16 @@ import { useGetShareHistoryQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 import moment from 'moment';
 
-type memberIdProp = {
-  memberId: string;
+type shareHistoryProps = {
+  id: string;
 };
 
-export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
-  const { data, isLoading } = useGetShareHistoryQuery({ memberId });
-  const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
+export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
+  const { data: shareHistoryTableData, isLoading } = useGetShareHistoryQuery({
+    memberId: id,
+  });
+  const data = shareHistoryTableData?.share?.register?.edges;
+  const rowData = useMemo(() => data, [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -57,7 +60,7 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
           return (
             <span>
               {row?.original?.node?.transactionDirection === 'RETURN'
-                ? row?.original?.node?.shareAmount
+                ? (row?.original?.node?.shareAmount).toFixed(2)
                 : '-'}
             </span>
           );
@@ -66,13 +69,12 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       {
         id: 'share-cr',
         Header: 'Share Cr',
-        accessor: 'node.shareStatus',
-
+        accessor: 'shareCr',
         Cell: ({ row }) => {
           return (
             <span>
               {row?.original?.node?.transactionDirection === 'PURCHASE'
-                ? row?.original?.node?.shareAmount
+                ? (row?.original?.node?.shareAmount).toFixed(2)
                 : '-'}
             </span>
           );
@@ -81,6 +83,15 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       {
         Header: 'Balance',
         accessor: 'node.balance',
+        Cell: ({ row }) => {
+          return (
+            <span>
+              {row?.original?.node?.transactionDirection === 'PURCHASE'
+                ? (row?.original?.node?.balance).toFixed(2)
+                : '-'}
+            </span>
+          );
+        },
       },
     ],
     []
