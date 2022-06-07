@@ -29,6 +29,14 @@ export const ShareRegisterTable = () => {
         Header: 'Type',
         accessor: 'node.transactionDirection',
       },
+      {
+        Header: 'Member ID',
+        accessor: 'node.id',
+        maxWidth: 4,
+        Cell: ({ value }) => {
+          return <span>{value.slice(0, 5).toUpperCase()}</span>;
+        },
+      },
 
       {
         Header: 'Name',
