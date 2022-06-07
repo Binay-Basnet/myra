@@ -1,4 +1,4 @@
-import { SettingsBranchesTable } from '@saccos/myra/components';
+import { SettingsBranchesTable } from '@coop/myra/components';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 const Branches = () => {

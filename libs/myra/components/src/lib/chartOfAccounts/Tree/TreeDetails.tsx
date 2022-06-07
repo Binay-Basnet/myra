@@ -21,7 +21,7 @@ function TreeDetails() {
     },
     {
       code: '20.3',
-      title: 'Cooperative Promotion Fund',
+      title: 'cooperative Promotion Fund',
       type: 'GROUP',
       isExtensible: false,
     },

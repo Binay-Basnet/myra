@@ -1,4 +1,4 @@
-import { useAllAdministrationQuery } from '@saccos/myra/graphql';
+import { useAllAdministrationQuery } from '@coop/myra/graphql';
 interface IOptions {
   label: string;
   value: string;

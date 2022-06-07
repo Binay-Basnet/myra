@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IconType } from 'react-icons';
 import { AiOutlineAppstore } from 'react-icons/ai';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
-import { Icon } from '@saccos/myra/ui';
+import { Icon } from '@coop/myra/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 

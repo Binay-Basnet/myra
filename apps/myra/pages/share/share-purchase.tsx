@@ -9,9 +9,9 @@ import {
   Form,
   FormFooter,
   SharePurchaseHistoryTable,
-} from '@saccos/myra/components';
-import { useGetMemberDataQuery } from '@saccos/myra/graphql';
-import { IPurchaseFormValues } from '@saccos/myra/types';
+} from '@coop/myra/components';
+import { useGetMemberDataQuery } from '@coop/myra/graphql';
+import { IPurchaseFormValues } from '@coop/myra/types';
 import {
   Avatar,
   BaseSelect,
@@ -20,6 +20,7 @@ import {
   Grid,
   GridItem,
   Icon,
+  IconButton,
   MainLayout,
   Navbar,
   SwitchTabs,
@@ -28,7 +29,7 @@ import {
   TextFields,
   TextInput,
   // Button,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
 // TODO! use layout
@@ -98,7 +99,12 @@ const SharePurchase = () => {
           <Text fontSize="r2" fontWeight="600">
             New Share Purchase
           </Text>
-          <CloseIcon />
+          <IconButton
+            variant={'ghost'}
+            aria-label="close"
+            icon={<CloseIcon />}
+            onClick={() => router.back()}
+          />
         </Box>
         <Box display="flex" width="100%">
           <Box w="100%">

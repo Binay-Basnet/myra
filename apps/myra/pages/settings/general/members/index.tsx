@@ -1,9 +1,9 @@
-import { SettingsGeneralMember } from '@saccos/myra/components';
-import { Box, Button, CheckboxGroup, Input, Text } from '@saccos/myra/ui';
+import { SettingsGeneralMember } from '@coop/myra/components';
+import { Box, Button, CheckboxGroup, Input, Text } from '@coop/myra/ui';
 const checkBox = [
   'Individual',
   'Institutional',
-  'Cooperative',
+  'cooperative',
   'Corporative Union',
 ];
 import { AddIcon } from '@chakra-ui/icons';

@@ -5,7 +5,7 @@ import {
   TextFields,
   TextInput as StorybookInput,
   TextInputProps,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 
 interface Iprops extends TextInputProps {
   control: Control<any>;

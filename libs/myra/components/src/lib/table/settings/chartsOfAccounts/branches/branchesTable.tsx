@@ -3,9 +3,9 @@ import {
   PopoverComponent,
   TableListPageHeader,
   TableSearch,
-} from '@saccos/myra/components';
-import { useGetBranchesListQuery } from '@saccos/myra/graphql';
-import { Column, Table } from '@saccos/myra/ui';
+} from '@coop/myra/components';
+import { useGetBranchesListQuery } from '@coop/myra/graphql';
+import { Column, Table } from '@coop/myra/ui';
 
 export const SettingsBranchesTable = () => {
   const { data, isLoading } = useGetBranchesListQuery();

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Checkbox, Grid, Text } from '@saccos/myra/ui';
+import { Box, Checkbox, Grid, Text } from '@coop/myra/ui';
 
 import { GroupContainer } from '../containers';
 import { FormInput } from '../../newFormComponents';

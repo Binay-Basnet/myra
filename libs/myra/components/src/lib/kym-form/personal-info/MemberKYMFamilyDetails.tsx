@@ -2,8 +2,8 @@ import React from 'react';
 import { Control, useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
-import { KymIndMemberInput } from '@saccos/myra/graphql';
-import { Box, Button, GridItem, Icon, Text } from '@saccos/myra/ui';
+import { KymIndMemberInput } from '@coop/myra/graphql';
+import { Box, Button, GridItem, Icon, Text } from '@coop/myra/ui';
 
 import {
   DynamicBoxContainer,

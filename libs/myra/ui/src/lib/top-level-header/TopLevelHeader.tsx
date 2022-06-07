@@ -1,4 +1,4 @@
-import { Box, Avatar } from '@saccos/myra/ui';
+import { Box, Avatar } from '@coop/myra/ui';
 import {
   Image,
   Text,
@@ -15,7 +15,7 @@ import { CgMenuGridO } from 'react-icons/cg';
 import { MdOutlineHelpOutline } from 'react-icons/md';
 import { BiBell } from 'react-icons/bi';
 import { useState } from 'react';
-import { Icon } from '@saccos/myra/ui';
+import { Icon } from '@coop/myra/ui';
 import { AiOutlineSetting } from 'react-icons/ai';
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {

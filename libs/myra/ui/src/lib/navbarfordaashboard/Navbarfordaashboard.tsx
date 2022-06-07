@@ -3,7 +3,7 @@ import { Box, Text, Image, Flex, Spacer, Avatar } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import React from 'react';
-import { useTranslation } from '@saccos/myra/util';
+import { useTranslation } from '@coop/myra/util';
 
 /* eslint-disable-next-line */
 export interface NavbarfordaashboardProps {}

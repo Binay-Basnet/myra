@@ -1,5 +1,5 @@
 import { Control, Controller } from 'react-hook-form';
-import { Box, FileInput, FileInputProps, TextFields } from '@saccos/myra/ui';
+import { Box, FileInput, FileInputProps, TextFields } from '@coop/myra/ui';
 
 interface FormFileInputProps extends FileInputProps {
   control: Control;

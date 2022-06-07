@@ -1,3 +1,6 @@
+export * from './coop-membership-form/KYMBasiccoopDetails';
+export * from './coop-membership-form/KYMEstimatedAmount';
+export * from './coop-membership-form/KYMFinancialTransactionDetails';
 export * from './declaration/KYMDeclaration';
 export * from './declaration/KYMDocumentDeclaration';
 export * from './declaration/KYMLocation';
@@ -10,6 +13,3 @@ export * from './professional-info/MemberKYMHusbandWifeOccupation';
 export * from './professional-info/MemberKYMIncomeSourceDetails';
 export * from './professional-info/MemberKYMMainOccupation';
 export * from './professional-info/MemberKYMProfession';
-export * from './saccos-membership-form/KYMBasicSaccosDetails';
-export * from './saccos-membership-form/KYMEstimatedAmount';
-export * from './saccos-membership-form/KYMFinancialTransactionDetails';

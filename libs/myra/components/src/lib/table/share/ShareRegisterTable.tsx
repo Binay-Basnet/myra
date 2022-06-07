@@ -1,12 +1,11 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
-import { PopoverComponent } from '@saccos/myra/components';
-import { useGetShareRegisterListQuery } from '@saccos/myra/graphql';
-import { Column, Table } from '@saccos/myra/ui';
+import { PopoverComponent } from '@coop/myra/components';
+import { TableListPageHeader } from '@coop/myra/components';
+import { TableSearch } from '@coop/myra/components';
+import { useGetShareRegisterListQuery } from '@coop/myra/graphql';
+import { Column, Table } from '@coop/myra/ui';
 import moment from 'moment';
-
-import { TableListPageHeader } from '../../TableListPageHeader';
-import { TableSearch } from '../../TableSearch';
 
 export const ShareRegisterTable = () => {
   const { data, isLoading } = useGetShareRegisterListQuery();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import { Box, Checkbox, Grid, Text, TextFields } from '@saccos/myra/ui';
+import { Box, Checkbox, Grid, Text, TextFields } from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import {

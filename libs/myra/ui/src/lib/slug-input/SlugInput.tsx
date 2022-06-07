@@ -6,7 +6,7 @@ import {
   InputGroup,
 } from '@chakra-ui/react';
 import { forwardRef } from 'react';
-import { TextFields } from '@saccos/myra/ui';
+import { TextFields } from '@coop/myra/ui';
 export interface SlugInputProps extends InputProps {
   label?: string;
   labelColor?: string;

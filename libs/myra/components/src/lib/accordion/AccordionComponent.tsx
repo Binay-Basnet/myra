@@ -1,4 +1,4 @@
-import { Accordion, AccordionProps as abc } from '@saccos/myra/ui';
+import { Accordion, AccordionProps as abc } from '@coop/myra/ui';
 
 interface accordionProps extends abc {
   id: string;

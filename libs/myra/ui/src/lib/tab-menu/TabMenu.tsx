@@ -6,10 +6,10 @@ import { CgDropOpacity } from 'react-icons/cg';
 import { IoArchiveOutline, IoCubeOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useTranslation } from '@saccos/myra/util';
-import { en } from '@saccos/myra/locales';
+import { useTranslation } from '@coop/myra/util';
+import { en } from '@coop/myra/locales';
 import { IconType } from 'react-icons';
-import { Icon } from '@saccos/myra/ui';
+import { Icon } from '@coop/myra/ui';
 import { ImStack } from 'react-icons/im';
 import { BsArrowLeftRight, BsCardList, BsFileText } from 'react-icons/bs';
 

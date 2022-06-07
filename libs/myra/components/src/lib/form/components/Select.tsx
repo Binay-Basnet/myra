@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 import { Controller, RegisterOptions, useFormContext } from 'react-hook-form';
 import { FormControl, FormErrorMessage, InputProps } from '@chakra-ui/react';
-import { BaseSelect as ChakraSelect, TextFields } from '@saccos/myra/ui';
+import { BaseSelect as ChakraSelect, TextFields } from '@coop/myra/ui';
 
 interface IInputProps extends InputProps {
   name: string;
