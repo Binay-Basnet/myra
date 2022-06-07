@@ -1,5 +1,6 @@
 import React from 'react';
 import { BiFilter } from 'react-icons/bi';
+import { Cell } from 'react-table';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -12,6 +13,7 @@ import {
   Tbody,
   Td,
   Text,
+  Tfoot,
   Th,
   Thead,
   Tr,
@@ -36,6 +38,7 @@ export function Table<T extends Record<string, unknown>>({
   isStatic = false,
   isLoading,
   manualSort = false,
+  showFooters = false,
   ...props
 }: TableProps<T>) {
   const tableInstance = useTable({
@@ -49,8 +52,14 @@ export function Table<T extends Record<string, unknown>>({
 
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance;
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    footerGroups,
+  } = tableInstance;
 
   if (isLoading) {
     return (
@@ -192,25 +201,45 @@ export function Table<T extends Record<string, unknown>>({
                 bg={row.isSelected ? 'primary.0' : 'white'}
                 {...row.getRowProps()}
               >
-                {row.cells.map((cell: any) => (
-                  <Td
-                    maxWidth={cell.column.maxWidth}
-                    minWidth={cell.column.minWidth}
-                    paddingX={cell.column.paddingX}
-                    paddingY={cell.column.paddingY}
-                    width={cell.column.width}
-                    {...cell.getCellProps()}
-                    isNumeric={cell.column.isNumeric}
-                  >
-                    <Text as="div" noOfLines={1}>
-                      {cell.render('Cell')}
-                    </Text>
-                  </Td>
-                ))}
+                {row.cells.map(
+                  (
+                    cell: Cell<T> & {
+                      column: ExtraColumnProps;
+                    }
+                  ) => (
+                    <Td
+                      maxWidth={cell.column.maxWidth}
+                      minWidth={cell.column.minWidth}
+                      paddingX={cell.column.paddingX}
+                      paddingY={cell.column.paddingY}
+                      width={cell.column.width}
+                      isNumeric={cell.column.isNumeric}
+                      {...cell.getCellProps()}
+                    >
+                      <Text as="div" noOfLines={1}>
+                        {cell.render('Cell')}
+                      </Text>
+                    </Td>
+                  )
+                )}
               </Tr>
             );
           })}
         </Tbody>
+
+        {showFooters ? (
+          <Tfoot>
+            {footerGroups.map((footerGroup) => (
+              <Tr key={footerGroup.id}>
+                {footerGroup.headers.map((column) => (
+                  <Th {...column.getFooterProps()}>
+                    {column.render('Footer')}
+                  </Th>
+                ))}
+              </Tr>
+            ))}
+          </Tfoot>
+        ) : null}
       </ChakraTable>
     </TableContainer>
   );
