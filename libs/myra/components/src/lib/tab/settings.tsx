@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { IconType } from 'react-icons';
-import { AiOutlineAppstore } from 'react-icons/ai';
+import {
+  IoApps,
+  IoArrowDownOutline,
+  IoGridOutline,
+  IoPerson,
+} from 'react-icons/io5';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 import { Icon } from '@coop/myra/ui';
 import Link from 'next/link';
@@ -9,22 +14,22 @@ import { useRouter } from 'next/router';
 const demotabs: { title: string; icon: IconType; link: string }[] = [
   {
     title: 'General',
-    icon: AiOutlineAppstore,
+    icon: IoGridOutline,
     link: '/settings/general/organization',
   },
   {
     title: 'Users',
-    icon: AiOutlineAppstore,
+    icon: IoPerson,
     link: '/settings/users',
   },
   {
     title: 'Import',
-    icon: AiOutlineAppstore,
+    icon: IoArrowDownOutline,
     link: '/settings/import',
   },
   {
     title: 'Subscriptions',
-    icon: AiOutlineAppstore,
+    icon: IoApps,
     link: '/settings/subscriptions',
   },
 ];
@@ -96,6 +101,8 @@ export const SettingsLayout = () => {
                   color={isActive ? 'gray.800' : 'gray.0'}
                   display="flex"
                   justifyContent="flex-start"
+                  alignItems="center"
+                  gap="s12"
                 >
                   <Icon
                     as={icon}
@@ -104,7 +111,6 @@ export const SettingsLayout = () => {
                   />
 
                   <Text
-                    mx="2"
                     color={isActive ? 'gray.800' : 'gray.0'}
                     fontWeight={isActive ? 'InterSemiBold' : 'InterMedium'}
                   >
