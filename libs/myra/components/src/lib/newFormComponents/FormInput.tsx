@@ -22,6 +22,7 @@ export const FormInput = <T,>({
           <TextInput
             placeholder={placeholder}
             name={name}
+            type={type}
             onChange={onChange}
             {...rest}
           />

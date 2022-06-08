@@ -101,7 +101,7 @@ const AddMember = () => {
           pt="20px"
           bg="gray.100"
           width="100%"
-          zIndex="200"
+          zIndex="10"
         >
           <Container minW="container.xl" height="fit-content">
             <Box
@@ -256,7 +256,7 @@ const AddMember = () => {
             pt="20px"
             bg="gray.100"
             width={1248}
-            zIndex="200"
+            // zIndex="200"
           >
             <Container minW="container.xl" height="fit-content">
               <Box
