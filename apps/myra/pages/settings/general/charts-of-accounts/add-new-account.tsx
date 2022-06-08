@@ -224,7 +224,7 @@ const AddNewAccount = () => {
                   <AmountInput label="Opening Balance" />
                 </FormControl>
                 <FormControl w="50%">
-                  <TextInput label=" Bank GL Code" />
+                  <TextInput label=" Bank GL Code" placeholder="GL Code" />
                 </FormControl>
               </Box>
             </Box>
