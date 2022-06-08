@@ -117,9 +117,13 @@ export function Table<T extends Record<string, unknown>>({
                             column.isNumeric ? 'flex-end' : 'flex-start'
                           }
                         >
-                          <span {...column.getSortByToggleProps()}>
-                            {column.render('Header')}
-                          </span>
+                          {isStatic ? (
+                            <span>{column.render('Header')}</span>
+                          ) : (
+                            <span {...column.getSortByToggleProps()}>
+                              {column.render('Header')}
+                            </span>
+                          )}
 
                           {column.isSorted ? (
                             <Flex
@@ -243,11 +247,21 @@ export function Table<T extends Record<string, unknown>>({
             <Tfoot>
               {footerGroups.map((footerGroup) => (
                 <Tr key={footerGroup.id}>
-                  {footerGroup.headers.map((column) => (
-                    <Th {...column.getFooterProps()}>
-                      {column.render('Footer')}
-                    </Th>
-                  ))}
+                  {footerGroup.headers.map(
+                    (column: HeaderGroup<T> & ExtraColumnProps) => (
+                      <Th
+                        maxWidth={column.maxWidth}
+                        minWidth={column.minWidth}
+                        paddingX={column.paddingX}
+                        paddingY={column.paddingY}
+                        width={column.width}
+                        isNumeric={column.isNumeric}
+                        {...column.getFooterProps()}
+                      >
+                        {column.render('Footer')}
+                      </Th>
+                    )
+                  )}
                 </Tr>
               ))}
             </Tfoot>

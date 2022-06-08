@@ -16,7 +16,7 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       {
         Header: 'SN',
         accessor: 'node.id',
-        maxWidth: 10,
+        width: '2',
         Cell: ({ row }) => {
           return <span>{Number(row?.id) + 1}</span>;
         },
@@ -25,6 +25,7 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       {
         Header: 'Date',
         accessor: 'node.transactionDate',
+        width: '10%',
         Cell: ({ value }) => {
           return <span>{moment(value).format('YYYY-MM-DD')}</span>;
         },
@@ -32,7 +33,7 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       {
         Header: 'No. of Share',
         accessor: 'node.noOfShare',
-        maxWidth: 48,
+        isNumeric: true,
         Footer: (props) => {
           return (
             <div>
@@ -61,12 +62,13 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
         id: 'share-dr',
         Header: 'Share Dr',
         accessor: 'node.shareStatus',
+        isNumeric: true,
 
         Cell: ({ row }) => {
           return (
             <span>
               {row?.original?.node?.transactionDirection === 'RETURN'
-                ? row?.original?.node?.shareAmount
+                ? row?.original?.node?.shareAmount.toFixed(2)
                 : '-'}
             </span>
           );
@@ -76,12 +78,12 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
         id: 'share-cr',
         Header: 'Share Cr',
         accessor: 'node.shareStatus',
-
+        isNumeric: true,
         Cell: ({ row }) => {
           return (
             <span>
               {row?.original?.node?.transactionDirection === 'PURCHASE'
-                ? row?.original?.node?.shareAmount
+                ? row?.original?.node?.shareAmount.toFixed(2)
                 : '-'}
             </span>
           );
@@ -90,6 +92,22 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       {
         Header: 'Balance',
         accessor: 'node.balance',
+        isNumeric: true,
+        Cell: ({ value }) => {
+          return <span>{value.toFixed(2)}</span>;
+        },
+        Footer: (props) => {
+          return (
+            <div>
+              {props.rows
+                .reduce(
+                  (sum, row) => Number(row.original.node.balance) + sum,
+                  0
+                )
+                .toFixed(2)}
+            </div>
+          );
+        },
       },
     ],
     []
@@ -103,6 +121,7 @@ export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
       data={rowData ?? []}
       columns={columns}
       sort={true}
+      showFooters={true}
     />
   );
 };

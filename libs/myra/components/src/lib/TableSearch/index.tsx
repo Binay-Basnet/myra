@@ -30,8 +30,8 @@ export const TableSearch = ({ pagination }: any) => {
         <SmallPagination
           limit={20}
           total={100}
-          startCursor={pagination.startCursor}
-          endCursor={pagination.endCursor}
+          startCursor={pagination?.startCursor}
+          endCursor={pagination?.endCursor}
         />
         <Box
           flex={1}

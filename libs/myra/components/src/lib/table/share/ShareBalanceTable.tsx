@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
-import { PopoverComponent } from '@coop/myra/components';
-import { TableSearch } from '@coop/myra/components';
-import { TableListPageHeader } from '@coop/myra/components';
+import {
+  PopoverComponent,
+  TableListPageHeader,
+  TableSearch,
+} from '@coop/myra/components';
 import { useGetShareBalanceListQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 
@@ -50,6 +52,7 @@ export const ShareBalanceTable = () => {
         Header: 'Share Count',
         accessor: 'node.shareCount',
         maxWidth: 48,
+        isNumeric: true,
       },
       {
         Header: 'Balance',
@@ -57,6 +60,7 @@ export const ShareBalanceTable = () => {
         Cell: ({ value, row }) => {
           return <span>{Number(value).toFixed(2)}</span>;
         },
+        isNumeric: true,
       },
 
       {

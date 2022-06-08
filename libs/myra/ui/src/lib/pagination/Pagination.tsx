@@ -43,6 +43,7 @@ export function Pagination({
           <Box width="90px">
             <Select
               instanceId="pagination-select"
+              menuPlacement="top"
               isSearchable={false}
               value={{ label: pageSize, value: pageSize }}
               onChange={(newValue: { value: string }) => {
