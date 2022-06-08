@@ -21,7 +21,7 @@ export function RadioGroup(props: RadioGroupProps) {
         {radioList.map((item, index) => {
           return (
             // TODO string index
-            <Radio {...rest} id={String(index)} value={item}>
+            <Radio {...rest} key={index} id={`${item}${index}`} value={item}>
               {item}
             </Radio>
           );

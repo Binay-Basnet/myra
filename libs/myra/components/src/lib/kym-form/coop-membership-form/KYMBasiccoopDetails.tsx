@@ -12,19 +12,19 @@ import {
   Select,
   Text,
   TextFields,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormRadioGroup, FormSelect } from '../../newFormComponents';
 
-export const KYMBasicSaccosDetails = ({ control }: any) => {
+export const KYMBasiccoopDetails = ({ control }: any) => {
   const {
     fields: familyMemberFields,
     append: familyMemberAppend,
     remove: familyMemberRemove,
   } = useFieldArray({
     control,
-    name: 'familyMemberInThisCooperative',
+    name: 'familyMemberInThiscooperative',
   });
 
   return (
@@ -44,8 +44,8 @@ export const KYMBasicSaccosDetails = ({ control }: any) => {
 
       <FormRadioGroup
         control={control}
-        label="Member of Another Cooperative"
-        name={'isMemberOfAnotherCooperative'}
+        label="Member of Another cooperative"
+        name={'isMemberOfAnothercooperative'}
         radioList={['Yes', 'No']}
       />
 
@@ -55,11 +55,11 @@ export const KYMBasicSaccosDetails = ({ control }: any) => {
           <GridItem colSpan={2}>
             <Controller
               control={control}
-              name="nameAddressCooperative"
+              name="nameAddresscooperative"
               render={({ field: { onChange } }) => (
                 <Input
                   type="text"
-                  placeholder="Name and Address Cooperative"
+                  placeholder="Name and Address cooperative"
                   onChange={onChange}
                   bg="white"
                 />
@@ -132,7 +132,7 @@ export const FamilyMember = ({
       <GridItem colSpan={1}>
         <Controller
           control={control}
-          name={`familyMemberInThisCooperative.${index}.relationshipId`}
+          name={`familyMemberInThiscooperative.${index}.relationshipId`}
           render={({ field: { onChange } }) => (
             <Select
               onChange={onChange}
@@ -148,7 +148,7 @@ export const FamilyMember = ({
       <GridItem colSpan={2}>
         <Controller
           control={control}
-          name={`familyMemberInThisCooperative.${index}.memberId`}
+          name={`familyMemberInThiscooperative.${index}.memberId`}
           render={({ field: { onChange } }) => (
             <Input
               type="text"

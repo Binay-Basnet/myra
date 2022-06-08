@@ -6,10 +6,10 @@ import { CgDropOpacity } from 'react-icons/cg';
 import { IoArchiveOutline, IoCubeOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useTranslation } from '@saccos/myra/util';
-import { en } from '@saccos/myra/locales';
+import { useTranslation } from '@coop/myra/util';
+import { en } from '@coop/myra/locales';
 import { IconType } from 'react-icons';
-import { Icon } from '@saccos/myra/ui';
+import { Icon } from '@coop/myra/ui';
 import { ImStack } from 'react-icons/im';
 import { BsArrowLeftRight, BsCardList, BsFileText } from 'react-icons/bs';
 
@@ -107,7 +107,7 @@ export function TabMenu() {
           {demotabs.map(({ title, icon, link }, index) => {
             const isActive = router.asPath.includes(t[title].toLowerCase());
             return (
-              <Link href={link}>
+              <Link href={link} key={index}>
                 <Tab
                   // isDisabled
                   borderRadius="br3 br3 0 0"
@@ -120,7 +120,6 @@ export function TabMenu() {
                   fontSize="r1"
                   height="50px"
                   color={isActive ? 'gray.800' : 'gray.0'}
-                  key={index}
                   display="flex"
                   justifyContent="flex-start"
                 >

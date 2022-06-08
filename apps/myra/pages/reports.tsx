@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { MainLayout } from '@saccos/myra/ui';
+import { MainLayout } from '@coop/myra/ui';
 
 const Reports = () => {
   return <div style={{ marginTop: '150px' }}>Reports share share</div>;

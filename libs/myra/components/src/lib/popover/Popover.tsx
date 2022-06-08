@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 import {
+  Button,
   Grid,
   GridItem,
   Popover,
@@ -10,8 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
-  Button,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 
 type popoverType = {
   title: string[];
@@ -32,8 +32,8 @@ export const PopoverComponent = ({ title }: popoverType) => {
         <PopoverCloseButton />
         <PopoverBody px="s6" py="s8">
           <Grid>
-            {title.map((item) => (
-              <GridItem px="s8" py="s8">
+            {title.map((item, index) => (
+              <GridItem px="s8" py="s8" key={`${item}${index}`}>
                 <Button variant="ghost">
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                     {item}

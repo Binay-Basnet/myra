@@ -7,7 +7,7 @@ import {
   SearchIcon,
 } from '@chakra-ui/icons';
 import { InputGroup, InputLeftElement } from '@chakra-ui/react';
-import { CoaAccountListTable } from '@saccos/myra/components';
+import { CoaAccountListTable } from '@coop/myra/components';
 import {
   Box,
   Button,
@@ -16,7 +16,7 @@ import {
   IconButton,
   Input,
   Text,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 

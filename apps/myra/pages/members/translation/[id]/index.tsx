@@ -1,15 +1,8 @@
 import React, { ReactElement } from 'react';
 import { GrClose } from 'react-icons/gr';
-import { useGetMemberTranslationQuery } from '@saccos/myra/graphql';
-import {
-  Box,
-  Button,
-  Container,
-  Input,
-  MainLayout,
-  Text,
-} from '@saccos/myra/ui';
-import { useTranslation } from '@saccos/myra/util';
+import { useGetMemberTranslationQuery } from '@coop/myra/graphql';
+import { Box, Button, Container, Input, MainLayout, Text } from '@coop/myra/ui';
+import { useTranslation } from '@coop/myra/util';
 import { useRouter } from 'next/router';
 
 const Translation = () => {

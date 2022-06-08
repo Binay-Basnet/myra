@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IconType } from 'react-icons';
 import { AiOutlineAppstore } from 'react-icons/ai';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
-import { Icon } from '@saccos/myra/ui';
+import { Icon } from '@coop/myra/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -39,7 +39,6 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
 export const SettingsLayout = () => {
   const [tabIndex, setTabIndex] = useState(1);
   const route = useRouter();
-  console.log('route', route);
   const currentIndex =
     NAVBAR_TAB_OBJECT[
       Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
@@ -82,7 +81,7 @@ export const SettingsLayout = () => {
                 ? true
                 : route.asPath.includes(title.toLowerCase());
             return (
-              <Link href={link}>
+              <Link href={link} key={index}>
                 <Tab
                   // isDisabled
                   borderRadius="br3 br3 0 0"
@@ -95,7 +94,6 @@ export const SettingsLayout = () => {
                   fontSize="r1"
                   height="50px"
                   color={isActive ? 'gray.800' : 'gray.0'}
-                  key={index}
                   display="flex"
                   justifyContent="flex-start"
                 >

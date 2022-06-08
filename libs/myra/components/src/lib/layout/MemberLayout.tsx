@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
 import { IoMdPerson } from 'react-icons/io';
 import { IconType } from 'react-icons/lib';
+import { MdCorporateFare } from 'react-icons/md';
 import { AddIcon } from '@chakra-ui/icons';
 import { Grid } from '@chakra-ui/react';
 import {
   useGetMemberTypesQuery,
   useGetNewIdMutation,
-} from '@saccos/myra/graphql';
-import { Box, Button, Divider, Icon, Modal, Text } from '@saccos/myra/ui';
+} from '@coop/myra/graphql';
+import {
+  Box,
+  Button,
+  Divider,
+  GridItem,
+  Icon,
+  Modal,
+  Text,
+} from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '../tab/TabforMemberPage';
@@ -27,15 +36,6 @@ const memberColumns = [
     link: '/members/reports',
   },
 ];
-// width="full"
-// size="lg"
-// justifyContent="start"
-// leftIcon={<AddIcon h="11px" />}
-// onClick={() => {
-//   newId
-//     .mutateAsync({})
-//     .then((res) => router.push(`/members/addMember/${res?.newId}`));
-// }}
 
 interface memberTypeButtonProps {
   icon: IconType;
@@ -46,50 +46,64 @@ interface memberTypeButtonProps {
 }
 
 const MemberTypeButton = (props: memberTypeButtonProps) => {
-  const { icon, title, subtitle, disabled, onClick } = props;
+  const [isActive, setIsActive] = useState(false);
+  const { icon, title, subtitle, onClick } = props;
   return (
-    <Button
-      display="flex"
-      flexDirection="column"
-      variant="outline"
-      width={300}
+    <Box
+      as="button"
+      lineHeight="1.2"
+      minWidth={300}
       h={168}
-      disabled={disabled}
+      border="1px"
+      px="8px"
+      borderRadius="6px"
+      fontSize="14px"
+      fontWeight="semibold"
       onClick={onClick}
+      boxShadow={'none'}
+      color="#4b4f56"
+      _hover={{ bg: '#ebedf0', color: 'primary.500' }}
+      _active={{
+        bg: '#dddfe2',
+        transform: 'scale(0.98)',
+        borderColor: 'primary.500',
+      }}
+      onTouchMoveCapture={() => setIsActive(true)}
     >
-      <Icon size="xl" as={icon} color="primary.500" />
-      <br />
+      <Icon size="xl" as={icon} />
+      <br />{' '}
       <Text fontSize="r2" fontWeight="medium">
-        {title}
+        {title}{' '}
       </Text>
-      <br />
-      <Text fontSize="s3" textAlign="center">
-        {subtitle}
+      <br />{' '}
+      <Text fontSize="s3" textAlign="center" px="2px">
+        {subtitle}{' '}
       </Text>
-    </Button>
+    </Box>
   );
 };
 
 const memberTypesArray = {
-  INSTITUTION: {
-    icon: AiFillBank,
-    title: 'Institution',
-    subtitle: 'Create KYM form for individual members',
-  },
   INDIVIDUAL: {
     icon: IoMdPerson,
     title: 'Individual',
     subtitle: 'Create KYM form for institute members',
   },
-  COOPERATIVE: {
+  INSTITUTION: {
     icon: AiFillBank,
-    title: 'Cooperative',
-    subtitle: 'Create KYM form for cooperative members',
+    title: 'Institution',
+    subtitle: 'Create KYM form for individual members',
+  },
+
+  COOPERATIVE: {
+    icon: MdCorporateFare,
+    title: 'cooperative',
+    subtitle: 'Create KYM form for CoOperative members',
   },
   COOPERATIVE_UNION: {
     icon: AiFillBank,
     title: 'Cooperative Union',
-    subtitle: 'Create KYM form for cooperative union members',
+    subtitle: 'Create KYM form for cooperative union',
   },
 };
 
@@ -107,6 +121,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
   const onCloseModal = () => {
     setOpenModal(false);
   };
+  console.log('memberTypes', memberTypes);
 
   return (
     <Box display="flex">
@@ -143,20 +158,28 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
           }
         >
           <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-            {memberTypes?.map((item) => (
-              <MemberTypeButton
-                key={item?.id}
-                icon={memberTypesArray[item?.type]?.icon}
-                title={memberTypesArray[item?.type]?.title}
-                subtitle={memberTypesArray[item?.type]?.subtitle}
-                disabled={item?.type !== 'INDIVIDUAL'}
-                onClick={() => {
-                  newId
-                    .mutateAsync({})
-                    .then((res) => router.push(`/members/add/${res?.newId}`));
-                }}
-              />
-            ))}
+            {memberTypes?.map((item) => {
+              if (!item?.type) {
+                return null;
+              }
+              return (
+                <GridItem key={item?.id}>
+                  <MemberTypeButton
+                    icon={memberTypesArray[item.type]?.icon}
+                    title={memberTypesArray[item.type]?.title}
+                    subtitle={memberTypesArray[item.type]?.subtitle}
+                    disabled={item?.type !== 'INDIVIDUAL'}
+                    onClick={() => {
+                      newId
+                        .mutateAsync({})
+                        .then((res) =>
+                          router.push(`/members/add/${res?.newId}`)
+                        );
+                    }}
+                  />
+                </GridItem>
+              );
+            })}
           </Grid>
         </Modal>
         <Divider my="s16" />

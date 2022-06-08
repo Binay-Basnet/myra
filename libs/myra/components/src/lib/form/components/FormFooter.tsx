@@ -1,8 +1,12 @@
 import React from 'react';
 import { BiSave } from 'react-icons/bi';
-import { Box, Button, Icon, Text } from '@saccos/myra/ui';
+import { Box, Button, Icon, Text } from '@coop/myra/ui';
 
-export const FormFooter = ({ onClick }) => {
+interface formFooter {
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+export const FormFooter = (props: formFooter) => {
+  const { onClick } = props;
   return (
     <Box
       display="flex"

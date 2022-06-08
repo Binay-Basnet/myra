@@ -5,7 +5,7 @@ import {
   EmailInput as StorybookInput,
   EmailInputProps as StorybookInputProps,
   TextFields,
-} from '@saccos/myra/ui';
+} from '@coop/myra/ui';
 
 interface Iprops extends StorybookInputProps {
   control: Control<any>;

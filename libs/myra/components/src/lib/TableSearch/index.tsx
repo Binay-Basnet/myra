@@ -12,7 +12,7 @@ import {
   InputGroup,
   InputLeftElement,
 } from '@chakra-ui/react';
-import { Box, Button, Icon, Text } from '@saccos/myra/ui';
+import { Box, Button, Icon, Text } from '@coop/myra/ui';
 
 export const TableSearch = () => {
   return (

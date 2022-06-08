@@ -16,7 +16,7 @@ export function MainLayout(props: MainLayoutProps) {
         <TopLevelHeader />
         <TabMenu />
       </Box>
-      <Box mt="120px">{children}</Box>
+      <Box mt="110px">{children}</Box>
     </div>
   );
 }

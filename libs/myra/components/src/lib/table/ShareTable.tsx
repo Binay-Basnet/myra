@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { Avatar, Flex, IconButton } from '@chakra-ui/react';
-import { Column } from '@saccos/myra/ui';
+import { Column } from '@coop/myra/ui';
 
 import { MemberTable } from './MemberTable';
 
