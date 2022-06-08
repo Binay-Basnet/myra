@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
 import { IoMdPerson } from 'react-icons/io';
 import { IconType } from 'react-icons/lib';
@@ -41,12 +41,10 @@ interface memberTypeButtonProps {
   icon: IconType;
   title: string;
   subtitle: string;
-  disabled: boolean;
-  onClick: () => void;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
 const MemberTypeButton = (props: memberTypeButtonProps) => {
-  const [isActive, setIsActive] = useState(false);
   const { icon, title, subtitle, onClick } = props;
   return (
     <Box
@@ -57,8 +55,6 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
       border="1px"
       px="8px"
       borderRadius="6px"
-      fontSize="14px"
-      fontWeight="semibold"
       onClick={onClick}
       boxShadow={'none'}
       color="#4b4f56"
@@ -68,7 +64,6 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
         transform: 'scale(0.98)',
         borderColor: 'primary.500',
       }}
-      onTouchMoveCapture={() => setIsActive(true)}
     >
       <Icon size="xl" as={icon} />
       <br />{' '}
@@ -76,7 +71,7 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
         {title}{' '}
       </Text>
       <br />{' '}
-      <Text fontSize="s3" textAlign="center" px="2px">
+      <Text fontSize="s3" fontWeight="regular" textAlign="center" px="2px">
         {subtitle}{' '}
       </Text>
     </Box>
@@ -168,7 +163,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                     icon={memberTypesArray[item.type]?.icon}
                     title={memberTypesArray[item.type]?.title}
                     subtitle={memberTypesArray[item.type]?.subtitle}
-                    disabled={item?.type !== 'INDIVIDUAL'}
+                    // disabled={item?.type !== 'INDIVIDUAL'}
                     onClick={() => {
                       newId
                         .mutateAsync({})

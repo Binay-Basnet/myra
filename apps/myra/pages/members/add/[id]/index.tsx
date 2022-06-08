@@ -34,8 +34,6 @@ import {
   Divider,
   IconButton,
   MainLayout,
-  Navbar,
-  TabMenu,
   Text,
   TextFields,
 } from '@coop/myra/ui';
