@@ -2,8 +2,7 @@ import { Control } from 'react-hook-form';
 import { useAllAdministrationQuery } from '@coop/myra/graphql';
 import { Box, Grid, GridItem } from '@coop/myra/ui';
 
-import { FormSelect } from '../../../newFormComponents';
-import { FormTextInput } from '../../../newFormComponents';
+import { FormSelect, FormTextInput } from '../../../newFormComponents';
 
 const options = [
   { label: 'Option 1', value: '1' },
@@ -83,7 +82,7 @@ export const AddressOrganization = ({ control }: Props) => {
         <GridItem>
           {' '}
           <FormSelect
-            label="VDC / Municipality"
+            label="Local Level"
             options={options}
             control={control}
             name="organizationVDC"

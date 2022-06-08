@@ -31,8 +31,8 @@ export const MainContactPersonOrganization = ({ control }: Props) => {
         <GridItem>
           {' '}
           <FormTextInput
-            label="Title / Position"
-            placeholder="Title / Position"
+            label="Designation"
+            placeholder="Designation"
             control={control}
             name={'mainContactPersonTitle'}
           />
