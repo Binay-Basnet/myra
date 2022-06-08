@@ -34,8 +34,11 @@ const Header = () => {
     </>
   );
 };
-
-const accountList = ['Bank Voucher', 'Account', 'Cash'];
+const accountList = [
+  { key: 'bank-voucher', value: 'Bank Voucher' },
+  { key: 'account', value: 'Account' },
+  { key: 'cash', value: 'Cash' },
+];
 
 const ShareReturn = () => {
   const methods = useForm<IPurchaseFormValues>();
