@@ -11,9 +11,7 @@ const SettingsFormLayout = ({ children }: ISettingsLayout) => (
   <>
     <SettingsLayout />
     <Box py="s16" px="s40">
-      <Box width="100%" bg="white" borderRadius="br3">
-        {children}
-      </Box>
+      {children}
     </Box>
   </>
 );

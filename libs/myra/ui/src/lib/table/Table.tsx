@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BiFilter } from 'react-icons/bi';
 import { Cell } from 'react-table';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
@@ -47,7 +47,7 @@ export function Table<T extends Record<string, unknown>>({
 }: TableProps<T>) {
   const router = useRouter();
 
-  const tableSize = String(router.query['size'] ?? size);
+  const [tableSize, setTableSize] = useState(size);
 
   const tableInstance = useTable({
     columns,
@@ -99,7 +99,8 @@ export function Table<T extends Record<string, unknown>>({
       <TableSearch
         placeholder={searchPlaceholder}
         pagination={pagination}
-        size={tableSize as 'default' | 'compact'}
+        size={tableSize}
+        setSize={setTableSize}
       />
       <TableContainer>
         <ChakraTable

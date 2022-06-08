@@ -23,6 +23,7 @@ const baseStyle: PartsStyleObject<typeof parts> = {
   },
   td: {
     textAlign: 'start',
+    transition: 'padding 0.2s ease',
   },
   caption: {
     mt: 4,
