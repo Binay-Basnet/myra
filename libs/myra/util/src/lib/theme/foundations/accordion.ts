@@ -8,8 +8,6 @@ const baseStyleContainer: SystemStyleObject = {
   bg: 'gray.0',
   borderRadius: 'br2',
   border: '1px solid #E0E5EB',
-  // px: 's16',
-  // py: 's16',
   _focus: {
     boxShadow: 'none',
     bg: 'background.500',

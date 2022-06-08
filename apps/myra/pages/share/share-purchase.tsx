@@ -110,14 +110,12 @@ const SharePurchase = () => {
           <Box w="100%">
             <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
               <TextInput
+                mb="20px"
                 w="50%"
                 label=" Member Search"
                 placeholder="Enter Member ID"
                 onChange={(e) => setMemberIdQuery(e.target.value)}
               />
-
-              <br />
-              <br />
 
               {data && (
                 <Box

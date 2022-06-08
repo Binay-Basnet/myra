@@ -7,6 +7,7 @@ import {
   AmountInput,
   Box,
   Button,
+  Container,
   Divider,
   Grid,
   GridItem,
@@ -17,7 +18,7 @@ import {
 } from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
+import SettingsFormLayout from '../../../../components/SettingsLayout/SettingsFormLayout';
 
 const list = ['Yes', 'No'];
 const accountList = ['Cash', 'Journal', 'Bank'];
@@ -32,7 +33,7 @@ const AddNewAccount = () => {
   };
 
   return (
-    <Box width="full" borderBottom="1px" borderBottomColor="border.layout">
+    <Container minW="container.xl" height="fit-content" p="0" pb="55px">
       <Box
         height="60px"
         display="flex"
@@ -340,12 +341,12 @@ const AddNewAccount = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
 export default AddNewAccount;
 
 AddNewAccount.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return <SettingsFormLayout>{page}</SettingsFormLayout>;
 };

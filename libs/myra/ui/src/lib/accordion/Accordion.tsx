@@ -1,91 +1,60 @@
 import {
-  Accordion as ChakraAccordian,
+  Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
   AccordionProps as ChakraAccordianProps,
-  AccordionItemProps as ChakraAccordianItemProps,
-  AccordionButtonProps as ChakraAccordianButtonProps,
-  AccordionPanelProps as ChakraAccordianPanelProps,
-  Button,
-  Checkbox,
 } from '@chakra-ui/react';
-import { Box, Text } from '@coop/myra/ui';
-import { AddIcon } from '@chakra-ui/icons';
+import Box from '../box/Box';
 
-/* eslint-disable-next-line */
-export interface AccordionProps extends ChakraAccordianProps {
-  id: string;
-  title: string;
-  allowToggle: boolean;
-  allowMultiple?: boolean;
-  children: React.ReactNode;
-}
-
-const AccordionItemComponent = ({
-  children,
-  ...rest
-}: ChakraAccordianItemProps) => {
-  return <AccordionItem {...rest}>{children}</AccordionItem>;
-};
-
-const AccordionButtonComponent = ({
-  children,
-  ...rest
-}: ChakraAccordianButtonProps) => {
-  return <AccordionButton {...rest}>{children}</AccordionButton>;
-};
-
-const AccordionPanelComponent = ({
-  children,
-  ...rest
-}: ChakraAccordianPanelProps) => {
+export function ChakraAccordian(props: ChakraAccordianProps) {
+  const { ...rest } = props;
   return (
-    <AccordionPanel {...rest}>
-      {children}
-      <Box
-        mt="10px"
-        display="flex"
-        justifyContent="space-between"
-        alignContent="center"
-        borderTop="1px solid #E6E6E6"
-      >
-        <Button color="primary.500" variant="ghost" leftIcon={<AddIcon />}>
-          Add New Option
-        </Button>
-
-        <Checkbox>Show “Other” option</Checkbox>
-      </Box>
-    </AccordionPanel>
-  );
-};
-
-export function Accordion(props: AccordionProps) {
-  const { children, id, allowMultiple, allowToggle, title, ...rest } = props;
-  return (
-    <ChakraAccordian
-      allowMultiple={allowMultiple}
-      allowToggle={allowToggle}
-      {...rest}
-    >
-      <AccordionItemComponent id={id}>
+    <Accordion {...rest}>
+      <AccordionItem>
         <h2>
-          <AccordionButtonComponent>
+          <AccordionButton>
             <Box flex="1" textAlign="left">
-              <Text fontWeight="SemiBold" color="gray.800">
-                {title}
-              </Text>
+              Section 1 title
             </Box>
             <AccordionIcon />
-          </AccordionButtonComponent>
+          </AccordionButton>
         </h2>
-        <AccordionPanelComponent bg="white" pb={4}>
-          {children}
-        </AccordionPanelComponent>
-      </AccordionItemComponent>
-    </ChakraAccordian>
+        <AccordionPanel pb={4}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </AccordionPanel>
+      </AccordionItem>
+
+      <AccordionItem>
+        <h2>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              Section 2 title
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+        </h2>
+        <AccordionPanel pb={4}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </AccordionPanel>
+      </AccordionItem>
+    </Accordion>
   );
 }
+
+export {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+};
 
 export default Accordion;
