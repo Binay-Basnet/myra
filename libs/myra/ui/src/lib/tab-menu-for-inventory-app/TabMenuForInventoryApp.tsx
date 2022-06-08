@@ -1,8 +1,7 @@
 import { IconType } from 'react-icons';
-import { AiOutlineAppstore } from 'react-icons/ai';
-import { FaUser } from 'react-icons/fa';
-import { ImStack } from 'react-icons/im';
-import { IoCubeOutline } from 'react-icons/io5';
+import { AiFillTag, AiOutlineAppstore } from 'react-icons/ai';
+import { FaShapes, FaUserFriends } from 'react-icons/fa';
+import { IoLockClosed } from 'react-icons/io5';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 import { Icon } from '@coop/myra/ui';
 import Link from 'next/link';
@@ -14,9 +13,8 @@ export interface TabMenuInventoryProps {}
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/inventory/items': 0,
   '/inventory/item-group': 1,
-
-  '/inventory/units-of-measure': 2,
-  '/inventory/vendor': 3,
+  '/inventory/vendor': 2,
+  '/inventory/units-of-measure': 3,
 };
 
 const demotabs: {
@@ -27,28 +25,27 @@ const demotabs: {
 }[] = [
   {
     title: 'Items',
-    icon: AiOutlineAppstore,
+    icon: IoLockClosed,
     link: '/inventory/items',
     name: 'items',
   },
   {
     title: 'Item Group',
-    icon: FaUser,
+    icon: FaShapes,
     link: '/inventory/item-group',
     name: 'item-group',
   },
-
-  {
-    title: 'Units',
-    icon: ImStack,
-    link: '/inventory/units-of-measure',
-    name: 'units-of-measure',
-  },
   {
     title: 'Vendors',
-    icon: IoCubeOutline,
+    icon: FaUserFriends,
     link: '/inventory/vendor',
     name: 'vendor',
+  },
+  {
+    title: 'Units',
+    icon: AiFillTag,
+    link: '/inventory/units-of-measure',
+    name: 'units-of-measure',
   },
 ];
 
@@ -112,7 +109,7 @@ export function TabMenuForInventoryApp() {
                   <Text
                     mx="2"
                     color={isActive ? 'gray.800' : 'gray.0'}
-                    fontWeight={isActive ? 'InterSemiBold' : 'InterMedium'}
+                    fontWeight={isActive ? '600' : '500'}
                   >
                     {title}
                   </Text>

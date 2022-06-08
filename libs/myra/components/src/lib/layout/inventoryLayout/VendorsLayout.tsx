@@ -38,7 +38,7 @@ export const InventoryVendorsLayout = ({
             router.push(router.pathname + '/add');
           }}
         >
-          Add Item
+          Add Vendors
         </Button>
         <Divider my="s16" />
         <TabColumn list={inventoryColumns} />
