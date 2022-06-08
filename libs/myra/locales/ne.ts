@@ -22,7 +22,7 @@ const ne = {
   yourDashboard: 'तपाईंको ड्यासबोर्ड',
   yourApplication: 'तपाईंको आवेदन',
   corebankingSystems: 'मुख्य बैंकिङ प्रणाली',
-  businessAnalytics: 'व्यापार विश्लेषण',
+  inventoryManagement: 'invetory व्यवस्थापन',
   loanManagementSystem: 'ऋण व्यवस्थापन प्रणाली',
   accountingSystem: 'लेखा प्रणाली',
   otherApplications: 'अन्य अनुप्रयोगहरू',

@@ -7,7 +7,7 @@ import {
   Container,
   IconButton,
   Input,
-  MainLayout,
+  MainLayoutInventory,
   Text,
 } from '@coop/myra/ui';
 import router from 'next/router';
@@ -95,5 +95,5 @@ const AddNewItemGroupPage = () => {
 export default AddNewItemGroupPage;
 
 AddNewItemGroupPage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return <MainLayoutInventory>{page}</MainLayoutInventory>;
 };

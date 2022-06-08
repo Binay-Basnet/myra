@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import {
   InventoryItemGroupTable,
-  InventoryPageLayout,
+  InventoryItemsGroupLayout,
 } from '@coop/myra/components';
-import { MainLayout } from '@coop/myra/ui';
+import { MainLayoutInventory } from '@coop/myra/ui';
 
 const InventoryItemGroupPage = () => {
   return <InventoryItemGroupTable />;
@@ -11,9 +11,9 @@ const InventoryItemGroupPage = () => {
 
 InventoryItemGroupPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <MainLayout>
-      <InventoryPageLayout>{page}</InventoryPageLayout>{' '}
-    </MainLayout>
+    <MainLayoutInventory>
+      <InventoryItemsGroupLayout>{page}</InventoryItemsGroupLayout>{' '}
+    </MainLayoutInventory>
   );
 };
 export default InventoryItemGroupPage;
