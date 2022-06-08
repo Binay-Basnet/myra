@@ -109,6 +109,8 @@ export interface BaseTableProps<T extends Record<string, unknown>> {
     startCursor: string;
     endCursor: string;
   };
+
+  searchPlaceholder?: string;
 }
 
 export type TableProps<T extends Record<string, unknown>> = BaseTableProps<T> &

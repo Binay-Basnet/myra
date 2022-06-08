@@ -7,7 +7,6 @@ import format from 'date-fns/format';
 import { useRouter } from 'next/router';
 
 import { TableListPageHeader } from '../TableListPageHeader';
-import { TableSearch } from '../TableSearch';
 
 export const MemberTable = () => {
   const router = useRouter();
@@ -111,13 +110,6 @@ export const MemberTable = () => {
   return (
     <>
       <TableListPageHeader heading={'Members'} tabItems={memberRows} />
-      <TableSearch
-        pagination={{
-          total: 1200,
-          endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
-          startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
-        }}
-      />
 
       <Table
         isLoading={isLoading}

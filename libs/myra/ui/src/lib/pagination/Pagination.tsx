@@ -61,6 +61,14 @@ export function Pagination({
                       last: newValue?.value,
                     },
                   });
+                } else {
+                  router.push({
+                    query: {
+                      ...router.query,
+                      first: newValue?.value,
+                      after: startCursor,
+                    },
+                  });
                 }
               }}
               options={pageSizeOptions.map((size) => ({

@@ -1,10 +1,6 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
-import {
-  PopoverComponent,
-  TableListPageHeader,
-  TableSearch,
-} from '@coop/myra/components';
+import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetShareBalanceListQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 
@@ -74,7 +70,7 @@ export const ShareBalanceTable = () => {
   return (
     <>
       <TableListPageHeader heading={'Share Balance'} />
-      <TableSearch />
+
       <Table
         isLoading={isLoading}
         data={rowData ?? []}

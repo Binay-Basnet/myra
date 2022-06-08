@@ -1,10 +1,6 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
-import {
-  PopoverComponent,
-  TableListPageHeader,
-  TableSearch,
-} from '@coop/myra/components';
+import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetShareRegisterListQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 import format from 'date-fns/format';
@@ -133,7 +129,7 @@ export const ShareRegisterTable = () => {
   return (
     <>
       <TableListPageHeader heading={'Share Register'} tabItems={shareRows} />
-      <TableSearch />
+
       <Table
         isLoading={isLoading}
         data={rowData ?? []}

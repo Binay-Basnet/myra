@@ -18,7 +18,8 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { Pagination } from '@coop/myra/ui';
+import { Pagination, TableSearch } from '@coop/myra/ui';
+import { useRouter } from 'next/router';
 
 import ListFilterPopover from './components/ListFilterPopover';
 import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
@@ -41,14 +42,20 @@ export function Table<T extends Record<string, unknown>>({
   manualSort = false,
   showFooters = false,
   pagination,
+  searchPlaceholder,
   ...props
 }: TableProps<T>) {
+  const router = useRouter();
+
+  const tableSize = String(router.query['size'] ?? size);
+
   const tableInstance = useTable({
     columns,
     data,
     hasRowSelection,
     isStatic,
     manualSort,
+
     ...props,
   });
 
@@ -89,9 +96,14 @@ export function Table<T extends Record<string, unknown>>({
 
   return (
     <>
+      <TableSearch
+        placeholder={searchPlaceholder}
+        pagination={pagination}
+        size={tableSize as 'default' | 'compact'}
+      />
       <TableContainer>
         <ChakraTable
-          size={size}
+          size={tableSize}
           overflowX="hidden"
           width="100%"
           {...getTableProps()}
@@ -232,7 +244,7 @@ export function Table<T extends Record<string, unknown>>({
                         isNumeric={cell.column.isNumeric}
                         {...cell.getCellProps()}
                       >
-                        <Text as="div" noOfLines={1}>
+                        <Text as="div" noOfLines={1} whiteSpace="break-spaces">
                           {cell.render('Cell')}
                         </Text>
                       </Td>

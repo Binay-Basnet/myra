@@ -5,7 +5,6 @@ import { useGetInventoryItemsQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
-import { TableSearch } from '../../TableSearch';
 
 export const InventoryItemTable = () => {
   const { data, isLoading } = useGetInventoryItemsQuery();
@@ -77,7 +76,6 @@ export const InventoryItemTable = () => {
   return (
     <>
       <TableListPageHeader heading={'Items'} />
-      <TableSearch />
 
       <Table
         isLoading={isLoading}
