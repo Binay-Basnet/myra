@@ -5,8 +5,11 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
-import { Form, ShareReturnHistoryTable } from '@coop/myra/components';
-import { FormFooter } from '@coop/myra/components';
+import {
+  Form,
+  FormFooter,
+  ShareReturnHistoryTable,
+} from '@coop/myra/components';
 import { IPurchaseFormValues } from '@coop/myra/types';
 import {
   Avatar,
@@ -227,7 +230,7 @@ const ShareReturn = () => {
                   >
                     Share History
                   </Text>
-                  <ShareReturnHistoryTable memberId='="klkjkj' />
+                  <ShareReturnHistoryTable id='="klkjkj' />
                 </Box>
               </Box>
             </Box>

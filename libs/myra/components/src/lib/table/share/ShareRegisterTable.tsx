@@ -80,7 +80,7 @@ export const ShareRegisterTable = () => {
         isNumeric: true,
 
         Cell: ({ value, row }) => {
-          return <span>{value ? value.toFixed(2) : '-'}</span>;
+          return <span>{value ? value : '-'}</span>;
         },
       },
       {
@@ -89,7 +89,7 @@ export const ShareRegisterTable = () => {
         isNumeric: true,
         accessor: 'node.shareCr',
         Cell: ({ value, row }) => {
-          return <span>{value ? value.toFixed(2) : '-'}</span>;
+          return <span>{value ? value : '-'}</span>;
         },
       },
       {

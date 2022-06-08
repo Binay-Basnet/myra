@@ -28,68 +28,41 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       {
         Header: 'Date',
         accessor: 'node.transactionDate',
-        width: '10%',
         Cell: ({ value }) => {
           return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
       },
-      {
-        Header: 'No. of Share',
-        accessor: 'node.noOfShare',
-        isNumeric: true,
-        Footer: (props) => {
-          return (
-            <div>
-              {props.rows.reduce(
-                (sum, row) => Number(row.original.node.noOfShare) + sum,
-                0
-              )}
-            </div>
-          );
-        },
-      },
+
       {
         Header: 'Share Number',
-        accessor: 'node.shareAmount',
-        maxWidth: 48,
-        Cell: ({ row }) => {
+        accessor: 'node.shareStartNumber',
+
+        Cell: ({ value, row }) => {
           return (
             <span>
-              {row?.original?.node?.shareStartNumber} {'to '}
-              {row?.original?.node?.shareEndNumber}
+              {value} to {row?.original?.node?.shareEndNumber}
             </span>
           );
         },
       },
+
       {
         id: 'share-dr',
         Header: 'Share Dr',
-        accessor: 'node.shareStatus',
+        accessor: 'node.shareDr',
         isNumeric: true,
 
-        Cell: ({ row }) => {
-          return (
-            <span>
-              {row?.original?.node?.transactionDirection === 'RETURN'
-                ? row?.original?.node?.shareAmount.toFixed(2)
-                : '-'}
-            </span>
-          );
+        Cell: ({ value, row }) => {
+          return <span>{value ? value : '-'}</span>;
         },
       },
       {
         id: 'share-cr',
         Header: 'Share Cr',
-        accessor: 'node.shareStatus',
         isNumeric: true,
-        Cell: ({ row }) => {
-          return (
-            <span>
-              {row?.original?.node?.transactionDirection === 'PURCHASE'
-                ? row?.original?.node?.shareAmount.toFixed(2)
-                : '-'}
-            </span>
-          );
+        accessor: 'node.shareCr',
+        Cell: ({ value, row }) => {
+          return <span>{value ? value : '-'}</span>;
         },
       },
       {
