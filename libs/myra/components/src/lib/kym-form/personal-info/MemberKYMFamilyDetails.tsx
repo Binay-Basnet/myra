@@ -48,7 +48,7 @@ const AddFamilyMember = ({
             placeholder="Enter Relation"
           />
         </GridItem>
-        <GridItem colSpan={2}>
+        <GridItem colSpan={1}>
           <FormInput
             control={control}
             type="text"
@@ -56,6 +56,16 @@ const AddFamilyMember = ({
             name={`familyDetails.${index}.fullName`}
             label="FullName"
             placeholder="Enter Full Name"
+          />
+        </GridItem>
+
+        <GridItem colSpan={1}>
+          <FormInput
+            control={control}
+            type="date"
+            bg="white"
+            name={`familyDetails.${index}.dob`}
+            label="Date Of Birth"
           />
         </GridItem>
       </InputGroupContainer>

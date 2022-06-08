@@ -20,8 +20,16 @@ import { useRouter } from 'next/router';
 
 import SettingsFormLayout from '../../../../components/SettingsLayout/SettingsFormLayout';
 
-const list = ['Yes', 'No'];
-const accountList = ['Cash', 'Journal', 'Bank'];
+const list = [
+  { key: 'yes', value: 'Yes' },
+  { key: 'no', value: 'No' },
+];
+
+const accountList = [
+  { key: 'cash', value: 'Cash' },
+  { key: 'bank', value: 'Bank' },
+  { key: 'journal', value: 'Journal' },
+];
 
 const AddNewAccount = () => {
   const { control } = useForm();

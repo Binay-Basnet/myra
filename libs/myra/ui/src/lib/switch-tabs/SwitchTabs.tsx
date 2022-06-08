@@ -13,7 +13,10 @@ import {
 /* eslint-disable-next-line */
 export interface SwitchTabsProps
   extends Omit<ChakraSwitchTabsProps, 'children'> {
-  list: string[];
+  list: {
+    key: string;
+    value: string;
+  }[];
   onclick?: (data: string | number) => void;
 }
 
@@ -48,6 +51,7 @@ const TabElement = chakra(Tab, {
 export function SwitchTabs(props: SwitchTabsProps) {
   const { list, onclick } = props;
   const [activeTab, setActivetab] = useState<number | null>(0);
+
   return (
     <ChakraSwitchTabs size="sm" variant="unstyled">
       <TabList
@@ -61,7 +65,7 @@ export function SwitchTabs(props: SwitchTabsProps) {
             onClick={() => {
               setActivetab(index);
               {
-                onclick && onclick(item);
+                onclick && onclick(item.key);
               }
             }}
           >
@@ -75,7 +79,7 @@ export function SwitchTabs(props: SwitchTabsProps) {
               variant="switch"
               color={activeTab === index ? 'gray.800' : 'gray.600'}
             >
-              {item}
+              {item.value}
             </Text>
           </TabElement>
         ))}
