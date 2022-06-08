@@ -3,7 +3,7 @@ import { Avatar, Flex } from '@chakra-ui/react';
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/myra/graphql';
 import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/myra/ui';
-import moment from 'moment';
+import format from 'date-fns/format';
 import { useRouter } from 'next/router';
 
 import { TableListPageHeader } from '../TableListPageHeader';
@@ -77,7 +77,7 @@ export const MemberTable = () => {
         Header: 'Date Joined',
         accessor: 'node.createdAt',
         Cell: ({ value }) => {
-          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
       },
       {

@@ -7,7 +7,7 @@ import {
 } from '@coop/myra/components';
 import { useGetShareRegisterListQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
-import moment from 'moment';
+import format from 'date-fns/format';
 
 export const ShareRegisterTable = () => {
   const { data, isLoading } = useGetShareRegisterListQuery();
@@ -22,7 +22,7 @@ export const ShareRegisterTable = () => {
         Header: 'Date',
         accessor: 'node.transactionDate',
         Cell: ({ value, row }) => {
-          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
       },
 
@@ -76,40 +76,24 @@ export const ShareRegisterTable = () => {
           );
         },
       },
-      {
-        Header: 'Share Count',
-        accessor: 'node.noOfShare',
-        isNumeric: true,
-      },
+
       {
         id: 'share-dr',
         Header: 'Share Dr',
-        accessor: 'node.transactionDirection',
+        accessor: 'node.shareDr',
         isNumeric: true,
 
         Cell: ({ value, row }) => {
-          return (
-            <span>
-              {value === 'PURCHASE'
-                ? row.original.node.shareAmount.toFixed(2)
-                : '-'}
-            </span>
-          );
+          return <span>{value ? value.toFixed(2) : '-'}</span>;
         },
       },
       {
         id: 'share-cr',
         Header: 'Share Cr',
         isNumeric: true,
-        accessor: 'node.transactionDirection',
+        accessor: 'node.shareCr',
         Cell: ({ value, row }) => {
-          return (
-            <span>
-              {value === 'RETURN'
-                ? row.original.node.shareAmount.toFixed(2)
-                : '-'}
-            </span>
-          );
+          return <span>{value ? value.toFixed(2) : '-'}</span>;
         },
       },
       {

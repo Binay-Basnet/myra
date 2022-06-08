@@ -26,7 +26,7 @@ export const ShareBalanceTable = () => {
       {
         Header: 'Name',
         accessor: 'node.member.personalInformation.name.firstName',
-        width: '80%',
+        width: '60%',
 
         Cell: ({ value, row }) => {
           return (

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useGetShareHistoryQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
-import moment from 'moment';
+import format from 'date-fns/format';
 
 type shareHistoryProps = {
   id: string;
@@ -12,7 +12,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
     memberId: id,
   });
   const data = shareHistoryTableData?.share?.register?.edges;
-  const rowData = useMemo(() => data, [data]);
+  const rowData = useMemo(() => data ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -30,7 +30,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         accessor: 'node.transactionDate',
         width: '10%',
         Cell: ({ value }) => {
-          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
       },
       {
@@ -123,7 +123,6 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       isLoading={isLoading}
       data={rowData ?? []}
       columns={columns}
-      sort={true}
       showFooters={true}
     />
   );

@@ -2105,7 +2105,7 @@ export type SettingsQuery = {
 };
 
 export type ShareBalance = {
-  balance: Scalars['Float'];
+  balance: Scalars['Int'];
   id: Scalars['String'];
   member: Member;
   shareCount: Scalars['Int'];
@@ -2184,11 +2184,11 @@ export type ShareQueryRegisterArgs = {
 };
 
 export type ShareRegister = {
-  balance: Scalars['Float'];
+  balance: Scalars['Int'];
   id: Scalars['String'];
   member: Member;
-  noOfShare: Scalars['Int'];
-  shareAmount: Scalars['Float'];
+  shareCr?: Maybe<Scalars['Int']>;
+  shareDr?: Maybe<Scalars['Int']>;
   shareEndNumber: Scalars['Int'];
   shareStartNumber: Scalars['Int'];
   shareStatus: Share_Status;
@@ -2417,7 +2417,7 @@ export type GetShareBalanceListQuery = { share: { balance?: { edges: Array<{ nod
 export type GetShareRegisterListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, shareStartNumber: number, shareEndNumber: number, shareAmount: number, noOfShare: number, member: { personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null } } }> } | null } };
+export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, member: { personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null } } }> } | null } };
 
 export type GetMemberDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -2431,7 +2431,7 @@ export type GetShareHistoryQueryVariables = Exact<{
 }>;
 
 
-export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, noOfShare: number, shareStartNumber: number, shareEndNumber: number, shareAmount: number, balance: number, member: { id: string } } }> } | null } };
+export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, balance: number, member: { id: string } } }> } | null } };
 
 
 export const GetNewIdDocument = `
@@ -2881,8 +2881,8 @@ export const GetShareRegisterListDocument = `
           balance
           shareStartNumber
           shareEndNumber
-          shareAmount
-          noOfShare
+          shareCr
+          shareDr
         }
       }
     }
@@ -2983,10 +2983,10 @@ export const GetShareHistoryDocument = `
           shareStatus
           transactionDate
           transactionDirection
-          noOfShare
           shareStartNumber
           shareEndNumber
-          shareAmount
+          shareCr
+          shareDr
           balance
         }
       }

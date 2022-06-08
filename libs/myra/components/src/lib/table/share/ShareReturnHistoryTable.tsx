@@ -1,26 +1,22 @@
 import { useMemo } from 'react';
 import { useGetShareHistoryQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
-import moment from 'moment';
+import format from 'date-fns/format';
 
-type shareHistoryProps = {
+type memberIdProp = {
   id: string;
 };
 
-export const ShareReturnHistoryTable = ({ id }: shareHistoryProps) => {
-  const { data: shareHistoryTableData, isLoading } = useGetShareHistoryQuery({
-    memberId: id,
-  });
-
-  const data = shareHistoryTableData?.share?.register?.edges;
-  const rowData = useMemo(() => data, [data]);
+export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
+  const { data, isLoading } = useGetShareHistoryQuery({ memberId: id });
+  const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         Header: 'SN',
         accessor: 'node.id',
-        maxWidth: 4,
+        width: '2',
         Cell: ({ row }) => {
           return <span>{Number(row?.id) + 1}</span>;
         },
@@ -29,15 +25,25 @@ export const ShareReturnHistoryTable = ({ id }: shareHistoryProps) => {
       {
         Header: 'Date',
         accessor: 'node.transactionDate',
-        width: '80%',
+        width: '10%',
         Cell: ({ value }) => {
-          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
       },
       {
         Header: 'No. of Share',
         accessor: 'node.noOfShare',
-        maxWidth: 48,
+        isNumeric: true,
+        Footer: (props) => {
+          return (
+            <div>
+              {props.rows.reduce(
+                (sum, row) => Number(row.original.node.noOfShare) + sum,
+                0
+              )}
+            </div>
+          );
+        },
       },
       {
         Header: 'Share Number',
@@ -56,12 +62,13 @@ export const ShareReturnHistoryTable = ({ id }: shareHistoryProps) => {
         id: 'share-dr',
         Header: 'Share Dr',
         accessor: 'node.shareStatus',
+        isNumeric: true,
 
         Cell: ({ row }) => {
           return (
             <span>
               {row?.original?.node?.transactionDirection === 'RETURN'
-                ? (row?.original?.node?.shareAmount).toFixed(2)
+                ? row?.original?.node?.shareAmount.toFixed(2)
                 : '-'}
             </span>
           );
@@ -70,13 +77,13 @@ export const ShareReturnHistoryTable = ({ id }: shareHistoryProps) => {
       {
         id: 'share-cr',
         Header: 'Share Cr',
-        accessor: 'shareCr',
-
+        accessor: 'node.shareStatus',
+        isNumeric: true,
         Cell: ({ row }) => {
           return (
             <span>
               {row?.original?.node?.transactionDirection === 'PURCHASE'
-                ? (row?.original?.node?.shareAmount).toFixed(2)
+                ? row?.original?.node?.shareAmount.toFixed(2)
                 : '-'}
             </span>
           );
@@ -85,13 +92,20 @@ export const ShareReturnHistoryTable = ({ id }: shareHistoryProps) => {
       {
         Header: 'Balance',
         accessor: 'node.balance',
-        Cell: ({ row }) => {
+        isNumeric: true,
+        Cell: ({ value }) => {
+          return <span>{value.toFixed(2)}</span>;
+        },
+        Footer: (props) => {
           return (
-            <span>
-              {row?.original?.node?.transactionDirection === 'PURCHASE'
-                ? (row?.original?.node?.balance).toFixed(2)
-                : '-'}
-            </span>
+            <div>
+              {props.rows
+                .reduce(
+                  (sum, row) => Number(row.original.node.balance) + sum,
+                  0
+                )
+                .toFixed(2)}
+            </div>
           );
         },
       },
@@ -101,10 +115,11 @@ export const ShareReturnHistoryTable = ({ id }: shareHistoryProps) => {
 
   return (
     <Table
+      isStatic={true}
       isLoading={isLoading}
       data={rowData ?? []}
       columns={columns}
-      sort={true}
+      showFooters={true}
     />
   );
 };
