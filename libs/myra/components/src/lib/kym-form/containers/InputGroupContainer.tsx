@@ -9,7 +9,7 @@ export const InputGroupContainer = ({ children, ...rest }: IGroupContainer) => {
   return (
     <Grid
       templateColumns="repeat(3, 1fr)"
-      rowGap="s32"
+      rowGap="s16"
       columnGap="s20"
       {...rest}
     >

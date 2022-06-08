@@ -98,12 +98,14 @@ export type TableSearchProps = {
     total: number | string;
   };
   size: 'default' | 'compact';
+  setSize: (size: 'default' | 'compact') => void;
 };
 
 export function TableSearch({
   placeholder,
   pagination,
   size,
+  setSize,
 }: TableSearchProps) {
   const router = useRouter();
 
@@ -200,18 +202,15 @@ export function TableSearch({
           alignItems="center"
           justifyContent="center"
           gap="s8"
-          onClick={() =>
-            router.push({
-              query: {
-                size:
-                  size === 'default'
-                    ? 'compact'
-                    : size === 'compact'
-                    ? 'default'
-                    : 'default',
-              },
-            })
-          }
+          onClick={() => {
+            setSize(
+              size === 'default'
+                ? 'compact'
+                : size === 'compact'
+                ? 'default'
+                : 'default'
+            );
+          }}
         >
           <Icon as={GiHamburgerMenu} size="sm" color="primary.500" />
           <Text textTransform="capitalize">{size}</Text>

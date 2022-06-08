@@ -1,5 +1,5 @@
 import { Control } from 'react-hook-form';
-import { Box, Grid, GridItem, TextInput } from '@coop/myra/ui';
+import { Box, Grid, GridItem } from '@coop/myra/ui';
 
 import { FormTextInput } from '../../../newFormComponents';
 
@@ -11,20 +11,20 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
   return (
     <Box>
       <Grid templateColumns="repeat(3, 1fr)" gap="s16">
-        <GridItem>
-          <FormTextInput
-            label="Regd No"
-            placeholder="Regd No"
-            control={control}
-            name={'RegstrationNo'}
-          />
-        </GridItem>
         <GridItem colSpan={2}>
           <FormTextInput
             label="Regd Office"
             placeholder="Regd Office"
             control={control}
             name="regOffice"
+          />
+        </GridItem>
+        <GridItem>
+          <FormTextInput
+            label="Regd No"
+            placeholder="Regd No"
+            control={control}
+            name={'RegstrationNo'}
           />
         </GridItem>
       </Grid>

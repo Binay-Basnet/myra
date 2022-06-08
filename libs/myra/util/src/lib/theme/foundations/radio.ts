@@ -58,8 +58,8 @@ const baseStyle: PartsStyleFunction<typeof parts> = (props) => ({
 
 const sizes: Record<string, PartsStyleObject<typeof parts>> = {
   md: {
-    control: { w: 4, h: 4 },
-    label: { fontSize: 'md' },
+    control: { w: 5, h: 5 },
+    label: { fontSize: 'r1' },
   },
   lg: {
     control: { w: 5, h: 5 },

@@ -41,16 +41,20 @@ const AddNewAccount = () => {
   };
 
   return (
-    <Container minW="container.xl" height="fit-content" p="0" pb="55px">
+    <Container
+      minW="container.xl"
+      height="fit-content"
+      p="0"
+      pb="55px"
+      background="white"
+    >
       <Box
         height="60px"
         display="flex"
         justifyContent="space-between"
         alignItems={'center'}
         px="5"
-        background="white"
         borderBottom="1px solid #E6E6E6"
-        borderTopRadius={5}
       >
         <Text fontSize="r2" fontWeight="600">
           Add New Account
@@ -91,8 +95,8 @@ const AddNewAccount = () => {
           <GridItem>
             <TextInput
               id="accountName"
-              label="Account Name"
-              placeholder="Account Name"
+              label="Under"
+              placeholder="Staff Bonus Fund"
             />
           </GridItem>
 
@@ -155,27 +159,30 @@ const AddNewAccount = () => {
       <Box
         display="flex"
         flexDirection="column"
+        gap="s16"
         p="5"
         background="white"
         borderBottom="1px solid #E6E6E6"
         borderTopRadius={5}
       >
         <Box mb="5px">
-          <Text mb="5px">Type of Account</Text>
+          <Text fontSize="s2" mb="s4">
+            Type of Account
+          </Text>
           <SwitchTabs onclick={switchTabsFxn} list={accountList} />
         </Box>
 
         {selectedTab === 'Cash' && (
-          <Box display="flex" justifyContent="flex-start">
-            <FormControl w="35%">
+          <Grid templateColumns="repeat(3,1fr)" gap={5}>
+            <GridItem>
               <AmountInput label="Opening Balance" />
-            </FormControl>
-          </Box>
+            </GridItem>
+          </Grid>
         )}
 
         {selectedTab === 'Journal' && (
           <Box display="flex" justifyContent="flex-start">
-            <Box w="70%">
+            <Box w="50%">
               <Box display="flex" gap={5} justifyContent="space-around">
                 <FormControl>
                   <AmountInput label="Opening Balance" />
@@ -217,7 +224,7 @@ const AddNewAccount = () => {
                   <AmountInput label="Opening Balance" />
                 </FormControl>
                 <FormControl w="50%">
-                  <TextInput label=" Bank GL Code" />
+                  <TextInput label=" Bank GL Code" placeholder="GL Code" />
                 </FormControl>
               </Box>
             </Box>
