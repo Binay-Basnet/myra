@@ -1,9 +1,9 @@
 import { Control } from 'react-hook-form';
-import { Box, Grid, GridItem, PhoneNumber, TextInput } from '@coop/myra/ui';
+import { Box, Grid, GridItem } from '@coop/myra/ui';
 
-import { FormEmailInput } from '../../../newFormComponents/FormEmailInput';
 import { FormPhoneNumber } from '../../../newFormComponents/FormPhoneNumber';
 import { FormTextInput } from '../../../newFormComponents/FormTextInput';
+
 type Props = {
   control: Control<any>;
 };
@@ -24,7 +24,7 @@ export const MainContactPersonOrganization = ({ control }: Props) => {
           <FormPhoneNumber
             label="Contact No"
             name={'mainContactPersonNumber'}
-            placeholder="Enter Contact No"
+            placeholder="Contact Person Phone"
             control={control}
           />
         </GridItem>

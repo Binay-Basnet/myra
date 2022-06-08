@@ -1,16 +1,10 @@
 import { Control } from 'react-hook-form';
-import {
-  Box,
-  EmailInput,
-  Grid,
-  GridItem,
-  PhoneNumber,
-  TextInput,
-} from '@coop/myra/ui';
+import { Box, Grid, GridItem } from '@coop/myra/ui';
 
 import { FormEmailInput } from '../../../newFormComponents/FormEmailInput';
 import { FormPhoneNumber } from '../../../newFormComponents/FormPhoneNumber';
 import { FormTextInput } from '../../../newFormComponents/FormTextInput';
+
 type Props = {
   control: Control<any>;
 };
@@ -31,6 +25,7 @@ export const ContactDetailsOrganization = ({ control }: Props) => {
         <GridItem>
           <FormEmailInput
             label="Email Address"
+            placeholder="Email Address"
             name={'Email Address'}
             control={control}
           />
@@ -39,7 +34,7 @@ export const ContactDetailsOrganization = ({ control }: Props) => {
           {' '}
           <FormTextInput
             label="Website"
-            placeholder="Enter Website"
+            placeholder="Website Address"
             name={'website'}
             control={control}
           />
