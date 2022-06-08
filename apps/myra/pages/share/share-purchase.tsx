@@ -14,15 +14,14 @@ import { useGetMemberDataQuery } from '@coop/myra/graphql';
 import { IPurchaseFormValues } from '@coop/myra/types';
 import {
   Avatar,
-  BaseSelect,
   Box,
   Container,
   Grid,
   GridItem,
   Icon,
-  IconButton,
   MainLayout,
   Navbar,
+  Select,
   SwitchTabs,
   TabMenu,
   Text,
@@ -48,13 +47,19 @@ const SharePurchase = () => {
   const methods = useForm<IPurchaseFormValues>();
   const { getValues } = methods;
   const router = useRouter();
-  const { data } = useGetMemberDataQuery({ id: '123123' });
-  const [selectedTab, setSelectedTab] = useState<string | null>('Cash');
+
+  const [selectedTab, setSelectedTab] = useState<string | null>('Bank Voucher');
 
   const [memberIdQuery, setMemberIdQuery] = useState<string | null>('');
   const [noOfShares, setNoOfShares] = useState<number | null>();
   const [adminFees, setAdminFees] = useState<number | null>(34000.0);
   const [printingFees, setPrintingFees] = useState<number | null>(540.0);
+
+  const { data: memberData } = useGetMemberDataQuery({
+    id: memberIdQuery ? memberIdQuery : null,
+  });
+
+  const data = memberData?.members?.individual?.get?.data?.member;
 
   const switchTabsFxn = (datas: string) => {
     setSelectedTab(datas);
@@ -99,27 +104,20 @@ const SharePurchase = () => {
           <Text fontSize="r2" fontWeight="600">
             New Share Purchase
           </Text>
-          <IconButton
-            variant={'ghost'}
-            aria-label="close"
-            icon={<CloseIcon />}
-            onClick={() => router.back()}
-          />
+          <CloseIcon cursor="pointer" onClick={() => router.back()} />
         </Box>
         <Box display="flex" width="100%">
           <Box w="100%">
             <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
               <TextInput
+                mb="20px"
                 w="50%"
-                label=" Member ID"
+                label=" Member Search"
                 placeholder="Enter Member ID"
                 onChange={(e) => setMemberIdQuery(e.target.value)}
               />
 
-              <br />
-              <br />
-
-              {memberIdQuery && (
+              {data && (
                 <Box
                   border="1px solid"
                   borderColor="border.layout"
@@ -137,10 +135,7 @@ const SharePurchase = () => {
                           <Avatar
                             src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
                             size="lg"
-                            name={
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.name?.firstName
-                            }
+                            name={data?.personalInformation?.name?.firstName}
                           />
                         </Box>
                         <Box>
@@ -148,18 +143,9 @@ const SharePurchase = () => {
                             color="neutralColorLight.Gray-80"
                             variant="profileHeader"
                           >
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.name?.firstName
-                            }{' '}
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.name?.middleName
-                            }{' '}
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.name?.lastName
-                            }
+                            {data?.personalInformation?.name?.firstName}{' '}
+                            {data?.personalInformation?.name?.middleName}{' '}
+                            {data?.personalInformation?.name?.lastName}
                           </TextFields>
                           <Text
                             color="neutralColorLight.Gray-80"
@@ -167,10 +153,7 @@ const SharePurchase = () => {
                             fontWeight="Regular"
                           >
                             ID:
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.panNumber
-                            }
+                            {data?.personalInformation?.panNumber}
                           </Text>
 
                           <Text
@@ -179,10 +162,7 @@ const SharePurchase = () => {
                             fontSize="s3"
                           >
                             Member Since:
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.personalInformation?.dateOfBirth
-                            }
+                            {data?.personalInformation?.dateOfBirth}
                           </Text>
 
                           <Text
@@ -191,10 +171,7 @@ const SharePurchase = () => {
                             fontSize="s3"
                           >
                             Branch:
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.address?.temporary?.state
-                            }
+                            {data?.address?.temporary?.state}
                           </Text>
                         </Box>
                       </GridItem>
@@ -217,10 +194,7 @@ const SharePurchase = () => {
                             variant="profileBody"
                             fontSize="12px"
                           >
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.contact?.mobile
-                            }
+                            {data?.contact?.mobile}
                           </TextFields>
                         </Box>
 
@@ -246,15 +220,9 @@ const SharePurchase = () => {
                             variant="profileBody"
                             fontSize="12px"
                           >
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.address?.permanent?.district
-                            }
+                            {data?.address?.permanent?.district}
                             {','}
-                            {
-                              data?.members?.individual?.get?.data?.member
-                                ?.address?.permanent?.state
-                            }
+                            {data?.address?.permanent?.state}
                           </TextFields>
                         </Box>
                       </GridItem>
@@ -289,7 +257,7 @@ const SharePurchase = () => {
                     >
                       Share History
                     </Text>
-                    <SharePurchaseHistoryTable memberId={memberIdQuery} />
+                    <SharePurchaseHistoryTable id={memberIdQuery} />
                   </Box>
                 </Box>
               )}
@@ -299,6 +267,7 @@ const SharePurchase = () => {
               display="flex"
               flexDirection="column"
               p="5"
+              pb="28px"
               background="white"
               borderBottom="1px solid #E6E6E6"
               borderTopRadius={5}
@@ -318,7 +287,12 @@ const SharePurchase = () => {
 
                 {noOfShares ? (
                   <GridItem>
-                    <Box borderRadius="br2" p="s16" bg="background.500">
+                    <Box
+                      borderRadius="br2"
+                      px="s16"
+                      py="s24"
+                      bg="background.500"
+                    >
                       <Grid templateRows="repeat(4,1fr)">
                         <GridItem>
                           <Box display="flex" justifyContent="space-between">
@@ -335,7 +309,7 @@ const SharePurchase = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              {noOfShares * 1000}
+                              Rs. {noOfShares * 100}
                             </Text>
                           </Box>
                         </GridItem>
@@ -350,6 +324,8 @@ const SharePurchase = () => {
                               color="neutralLightColor.Gray-60"
                               fontWeight="Medium"
                               fontSize="s3"
+                              display="flex"
+                              alignItems="center"
                             >
                               Administration Fees
                             </Text>
@@ -373,6 +349,8 @@ const SharePurchase = () => {
                               color="neutralLightColor.Gray-60"
                               fontWeight="Medium"
                               fontSize="s3"
+                              display="flex"
+                              alignItems="center"
                             >
                               Printing Fees
                             </Text>
@@ -390,7 +368,7 @@ const SharePurchase = () => {
                           </Box>
                         </GridItem>
 
-                        <GridItem>
+                        <GridItem mt="22px">
                           <Box display="flex" justifyContent="space-between">
                             <Text
                               color="neutralLightColor.Gray-80"
@@ -405,7 +383,7 @@ const SharePurchase = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              {noOfShares * 1000 + adminFees + printingFees}
+                              Rs. {noOfShares * 1000 + adminFees + printingFees}
                             </Text>
                           </Box>
                         </GridItem>
@@ -439,37 +417,80 @@ const SharePurchase = () => {
               <SwitchTabs onclick={switchTabsFxn} list={accountList} />
 
               <br />
-              <Text>Select Account</Text>
-              <BaseSelect
-                w="25%"
-                placeholder="Select Account"
-                options={[
-                  {
-                    label: 'Option 1',
-                    value: 'option-1',
-                  },
-                  {
-                    label: 'Option 2',
-                    value: 'option-2',
-                  },
-                  {
-                    label: 'Option 3',
-                    value: 'option-3',
-                  },
-                ]}
-                variant="outline"
-              />
-              <br />
-              <Box p={2} w="25%" bg="background.500">
-                <Text>Available balance</Text>
-                <Text
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                  color="neutralColorLight.Gray-70"
-                >
-                  Rs. 12,342
-                </Text>
-              </Box>
+
+              {selectedTab === 'Account' && (
+                <Box w="25%">
+                  <Select
+                    label="Select Account"
+                    placeholder="Select Account"
+                    options={[
+                      {
+                        label: 'Option 1',
+                        value: 'option-1',
+                      },
+                      {
+                        label: 'Option 2',
+                        value: 'option-2',
+                      },
+                      {
+                        label: 'Option 3',
+                        value: 'option-3',
+                      },
+                    ]}
+                  />
+                  <br />
+                  <Box p={2} bg="background.500">
+                    <Text>Available balance</Text>
+                    <Text
+                      fontWeight="SemiBold"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                    >
+                      Rs. 12,342
+                    </Text>
+                  </Box>
+                </Box>
+              )}
+              {selectedTab === 'Bank Voucher' && (
+                <Box w="25%">
+                  <Select
+                    label="Select Bank"
+                    placeholder="Select Bank"
+                    options={[
+                      {
+                        label: 'Option 1',
+                        value: 'option-1',
+                      },
+                      {
+                        label: 'Option 2',
+                        value: 'option-2',
+                      },
+                      {
+                        label: 'Option 3',
+                        value: 'option-3',
+                      },
+                    ]}
+                  />
+                  <br />
+                  <TextInput
+                    type="text"
+                    name="name"
+                    placeholder="Enter Voucher Number"
+                    label="Enter Voucher Number"
+                  />
+                </Box>
+              )}
+
+              {selectedTab === 'Cash' && (
+                <Box w="25%">
+                  <TextInput
+                    type="text"
+                    name="name"
+                    placeholder="Enter Cash Amount"
+                    label="Enter Cash Amount"
+                  />
+                </Box>
+              )}
             </Box>
           </Box>
         </Box>

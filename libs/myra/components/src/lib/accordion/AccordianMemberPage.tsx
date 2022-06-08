@@ -2,7 +2,6 @@ import React from 'react';
 import { AiFillCaretRight, AiOutlineCaretDown } from 'react-icons/ai';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { BsCheckCircleFill } from 'react-icons/bs';
-import { TiTickOutline } from 'react-icons/ti';
 import {
   Accordion,
   AccordionButton,
@@ -67,7 +66,6 @@ const Decleration: string[] = [
 //   },
 // });
 export function AccorrdianAddMember({ formStatus }) {
-  console.log('hello', formStatus);
   return (
     <Accordion allowMultiple allowToggle mb="0">
       <AccordionItem border="none">

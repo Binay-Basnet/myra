@@ -22,7 +22,7 @@ const en = {
   yourDashboard: 'Your Dashboard',
   yourApplication: 'YOUR APPLICATION',
   corebankingSystems: 'Core Banking Systems',
-  businessAnalytics: 'Business Analytics',
+  inventoryManagement: 'Inventory Management',
   loanManagementSystem: 'Loan Management System',
   accountingSystem: 'Accounting System',
   otherApplications: 'OTHER APPLICATIONS',
@@ -140,7 +140,7 @@ const en = {
   // Inventory Page TODO ( Update Translations )
   inventoryItems: 'Items',
   inventoryItemGroup: 'Item Group',
-  inventoryUnitOfMeasure: 'Unit of Measure',
+  inventoryUnitOfMeasure: 'Unit of Measurement List',
   inventoryVendor: 'Vendor',
 };
 

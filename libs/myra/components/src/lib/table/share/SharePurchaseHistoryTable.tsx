@@ -3,13 +3,16 @@ import { useGetShareHistoryQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 import moment from 'moment';
 
-type memberIdProp = {
-  memberId: string;
+type shareHistoryProps = {
+  id: string;
 };
 
-export const SharePurchaseHistoryTable = ({ memberId }: memberIdProp) => {
-  const { data, isLoading } = useGetShareHistoryQuery({ memberId });
-  const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
+export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
+  const { data: shareHistoryTableData, isLoading } = useGetShareHistoryQuery({
+    memberId: id,
+  });
+  const data = shareHistoryTableData?.share?.register?.edges;
+  const rowData = useMemo(() => data, [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
