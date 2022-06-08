@@ -28,7 +28,6 @@ import {
   Text,
   TextFields,
   TextInput,
-  // Button,
 } from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
@@ -435,7 +434,7 @@ const ShareReturn = () => {
               <Text
                 color="neutralColorLight.Gray-60"
                 fontSize="r2"
-                fontWeight="SemiBold"
+                fontWeight="600"
                 mb="8px"
               >
                 Payment Information
@@ -443,7 +442,7 @@ const ShareReturn = () => {
               <Text
                 color="neutralColorLight.Gray-60"
                 fontSize="s3"
-                fontWeight="Medium"
+                fontWeight="500"
                 mb="8px"
               >
                 Payment Mode
@@ -451,7 +450,13 @@ const ShareReturn = () => {
 
               <br />
 
-              <SwitchTabs onclick={switchTabsFxn} list={accountList} />
+              <SwitchTabs
+                onclick={switchTabsFxn}
+                list={accountList.map((value) => ({
+                  key: value,
+                  value: value,
+                }))}
+              />
 
               <br />
               {selectedTab === 'Account' && (
