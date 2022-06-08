@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import {
-  InventoryPageLayout,
+  InventoryUnitsLayout,
   InventoryUseOfMeasureTable,
 } from '@coop/myra/components';
-import { MainLayout } from '@coop/myra/ui';
+import { MainLayoutInventory } from '@coop/myra/ui';
 
 const InventoryUnitsOfMeasure = () => {
   return <InventoryUseOfMeasureTable />;
@@ -11,9 +11,9 @@ const InventoryUnitsOfMeasure = () => {
 
 InventoryUnitsOfMeasure.getLayout = function getLayout(page: ReactElement) {
   return (
-    <MainLayout>
-      <InventoryPageLayout>{page}</InventoryPageLayout>{' '}
-    </MainLayout>
+    <MainLayoutInventory>
+      <InventoryUnitsLayout>{page}</InventoryUnitsLayout>{' '}
+    </MainLayoutInventory>
   );
 };
 export default InventoryUnitsOfMeasure;

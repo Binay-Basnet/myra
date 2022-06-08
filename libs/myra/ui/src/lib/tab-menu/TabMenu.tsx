@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
+import { IconType } from 'react-icons';
 import { AiOutlineAppstore } from 'react-icons/ai';
-import { FaUser } from 'react-icons/fa';
+import { BsArrowLeftRight, BsCardList, BsFileText } from 'react-icons/bs';
 import { CgDropOpacity } from 'react-icons/cg';
+import { FaUser } from 'react-icons/fa';
+import { ImStack } from 'react-icons/im';
 import { IoArchiveOutline, IoCubeOutline } from 'react-icons/io5';
+import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
+import { en } from '@coop/myra/locales';
+import { Icon } from '@coop/myra/ui';
+import { useTranslation } from '@coop/myra/util';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useTranslation } from '@coop/myra/util';
-import { en } from '@coop/myra/locales';
-import { IconType } from 'react-icons';
-import { Icon } from '@coop/myra/ui';
-import { ImStack } from 'react-icons/im';
-import { BsArrowLeftRight, BsCardList, BsFileText } from 'react-icons/bs';
 
 /* eslint-disable-next-line */
 export interface TabMenuProps {}
@@ -21,11 +21,10 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/members': 1,
   '/share': 2,
   '/accounts': 3,
-  '/inventory': 4,
-  '/transactions': 5,
-  '/loan': 6,
-  '/reports': 7,
-  '/utilities': 8,
+  '/transactions': 4,
+  '/loan': 5,
+  '/reports': 6,
+  '/utilities': 7,
 };
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
@@ -49,11 +48,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
     icon: ImStack,
     link: '/accounts/list',
   },
-  {
-    title: 'navbarInventory',
-    icon: IoArchiveOutline,
-    link: '/inventory/items',
-  },
+
   {
     title: 'navbarTransactions',
     icon: BsCardList,

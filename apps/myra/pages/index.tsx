@@ -23,23 +23,13 @@ const Dashboard = () => {
         <Box>
           <Flex>
             <Box>
-              <Text
-                fontSize="20px"
-                fontWeight="500"
-                fontFamily="Inter"
-                color="#07073F"
-              >
+              <Text fontSize="20px" fontWeight="500" color="#07073F">
                 Hello Bishal Mahat
               </Text>
             </Box>
             <Spacer />
             <Box>
-              <Text
-                fontFamily="Inter"
-                color="#006837"
-                fontSize="16px"
-                fontWeight="700"
-              >
+              <Text color="#006837" fontSize="16px" fontWeight="700">
                 20 Magh,2078
               </Text>
             </Box>
@@ -47,12 +37,7 @@ const Dashboard = () => {
         </Box>
         <Box mt="61">
           <Box>
-            <Text
-              fontFamily="Inter"
-              fontSize="13px"
-              fontWeight="600"
-              color="#636972"
-            >
+            <Text fontSize="13px" fontWeight="600" color="#636972">
               {t.yourApplication}
             </Text>
           </Box>
@@ -86,50 +71,42 @@ const Dashboard = () => {
                       </Flex>
                     </Box>
                   </Box>
-                  <Box mt="24px" mr="34.75px" ml="34.75px" mb="53px">
-                    <Text
-                      fontFamily="Inter"
-                      fontSize="14px"
-                      fontWeight="500"
-                      color="#232323"
-                    >
+                  <Box display="flex" justifyContent={'center'}>
+                    <Text fontSize="14px" fontWeight="500" color="#232323">
                       {t.corebankingSystems}
                     </Text>
                   </Box>
                 </Box>
               </Link>
-              <Box w="215.5px" h="215.5px" rounded="lg" bg="#FFFFFF">
-                <Box
-                  mt="32px"
-                  mb="24px"
-                  mr="64.25px"
-                  ml="64.25px"
-                  w="87px"
-                  h="87px"
-                  borderRadius="50%"
-                  bg="#FFAA5C"
-                >
-                  <Box>
-                    <Flex justifyContent="center" alignItems="center">
-                      <Img
-                        src="/dashboardhome/Business Anylytics.png"
-                        alt="business analytics"
-                        m="13.59px  16.31px 13.59px 16.31px"
-                      />
-                    </Flex>
+              <Link href="/inventory/items" passHref>
+                <Box w="215" h="215" rounded="lg" bg="#FFFFFF" cursor="pointer">
+                  <Box
+                    mt="32px"
+                    mb="24px"
+                    mr="64.25px"
+                    ml="64.25px"
+                    w="87px"
+                    h="87px"
+                    borderRadius="50%"
+                    bg="#FFAA5C"
+                  >
+                    <Box>
+                      <Flex justifyContent="center" alignItems="center">
+                        <Img
+                          src="/dashboardhome/Business Anylytics.png"
+                          alt="business analytics"
+                          m="13.59px  16.31px 13.59px 16.31px"
+                        />
+                      </Flex>
+                    </Box>
+                  </Box>
+                  <Box display="flex" justifyContent={'center'}>
+                    <Text fontSize="14px" fontWeight="500" color="#232323">
+                      {t.inventoryManagement}
+                    </Text>
                   </Box>
                 </Box>
-                <Box mt="24px" ml="44.75px" mr="44.75" mb="53px">
-                  <Text
-                    fontFamily="Inter"
-                    fontSize="14px"
-                    fontWeight="500"
-                    color="#232323"
-                  >
-                    {t.businessAnalytics}
-                  </Text>
-                </Box>
-              </Box>
+              </Link>
               <Box w="215.5px" h="215.5px" rounded="lg" bg="#FFFFFF">
                 <Box
                   mt="32px"
@@ -153,7 +130,6 @@ const Dashboard = () => {
                 </Box>
                 <Box mt="24px" mr="20.25px" ml="20.25px" mb="53px">
                   <Text
-                    fontFamily="Inter"
                     fontSize="14px"
                     fontWeight="500"
                     color="#232323"
@@ -186,7 +162,6 @@ const Dashboard = () => {
                 </Box>
                 <Box mt="24px" mr="34.75px" ml="34.75px" mb="53px">
                   <Text
-                    fontFamily="Inter"
                     fontSize="14px"
                     fontWeight="500"
                     color="#232323"
@@ -252,7 +227,7 @@ const Dashboard = () => {
         </Box>
         <Box mt="32px">
           <Flex>
-            <Text fontFamily="Inter" fontSize="12px" fontWeight="600">
+            <Text fontSize="12px" fontWeight="600">
               {t.otherApplications}
             </Text>
           </Flex>
@@ -282,7 +257,6 @@ const Dashboard = () => {
               </Box>
               <Box mt="24px" mr="16px" ml="16px" mb="23px">
                 <Text
-                  fontFamily="Inter"
                   fontSize="14px"
                   fontWeight="500"
                   color="#232323"
@@ -315,7 +289,6 @@ const Dashboard = () => {
               </Box>
               <Box mt="24px" mr="16px" ml="16px" mb="23px">
                 <Text
-                  fontFamily="Inter"
                   fontSize="14px"
                   fontWeight="500"
                   color="#232323"
@@ -348,7 +321,6 @@ const Dashboard = () => {
               </Box>
               <Box mt="24px" mr="16px" ml="16px" mb="23px">
                 <Text
-                  fontFamily="Inter"
                   fontSize="14px"
                   fontWeight="500"
                   color="#232323"
@@ -381,7 +353,6 @@ const Dashboard = () => {
               </Box>
               <Box mt="24px" mr="16px" ml="16px" mb="23px">
                 <Text
-                  fontFamily="Inter"
                   fontSize="14px"
                   fontWeight="500"
                   color="#232323"
@@ -418,7 +389,6 @@ const Dashboard = () => {
               </Box>
               <Box mt="24px" mr="16px" ml="16px" mb="23px">
                 <Text
-                  fontFamily="Inter"
                   fontSize="14px"
                   fontWeight="500"
                   color="#232323"
@@ -451,7 +421,6 @@ const Dashboard = () => {
               </Box>
               <Box mt="24px" mr="16px" ml="16px" mb="23px">
                 <Text
-                  fontFamily="Inter"
                   fontSize="14px"
                   fontWeight="500"
                   color="#232323"
@@ -484,7 +453,6 @@ const Dashboard = () => {
               </Box>
               <Box mt="24px" mr="16px" ml="16px" mb="23px">
                 <Text
-                  fontFamily="Inter"
                   fontSize="14px"
                   fontWeight="500"
                   color="#232323"
@@ -517,7 +485,6 @@ const Dashboard = () => {
               </Box>
               <Box mt="24px" mr="16px" ml="16px" mb="23px">
                 <Text
-                  fontFamily="Inter"
                   fontSize="14px"
                   fontWeight="500"
                   color="#232323"
