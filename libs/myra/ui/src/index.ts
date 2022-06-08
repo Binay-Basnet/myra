@@ -1,3 +1,6 @@
+export * from './lib/table-search/TableSearch';
+export * from './lib/small-pagination/SmallPagination';
+export * from './lib/pagination/Pagination';
 export * from './lib/accordion/Accordion';
 export * from './lib/amount-input/AmountInput';
 export * from './lib/amount-input/AmountInput';

@@ -5,8 +5,11 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
-import { Form, SharePurchaseHistoryTable } from '@coop/myra/components';
-import { FormFooter } from '@coop/myra/components';
+import {
+  Form,
+  FormFooter,
+  SharePurchaseHistoryTable,
+} from '@coop/myra/components';
 import { IPurchaseFormValues } from '@coop/myra/types';
 import {
   Avatar,
@@ -35,11 +38,7 @@ const Header = () => {
   );
 };
 
-const accountList = [
-  { key: 'bank-voucher', value: 'Bank Voucher' },
-  { key: 'account', value: 'Account' },
-  { key: 'cash', value: 'Cash' },
-];
+const accountList = ['Bank Voucher', 'Account', 'Cash'];
 
 const SharePurchase = () => {
   const methods = useForm<IPurchaseFormValues>();
@@ -233,7 +232,7 @@ const SharePurchase = () => {
                   >
                     Share History
                   </Text>
-                  <SharePurchaseHistoryTable memberId="kkkkk" />
+                  <SharePurchaseHistoryTable id="kkkkk" />
                 </Box>
               </Box>
             </Box>

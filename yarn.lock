@@ -9857,7 +9857,7 @@ date-fns@^1.27.2:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
   integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
 
-date-fns@^2.16.1:
+date-fns@^2.16.1, date-fns@^2.28.0:
   version "2.28.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.28.0.tgz#9570d656f5fc13143e50c975a3b6bbeb46cd08b2"
   integrity sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==
@@ -15301,11 +15301,6 @@ module-alias@^2.2.2:
   resolved "https://registry.npmjs.org/module-alias/-/module-alias-2.2.2.tgz"
   integrity sha512-A/78XjoX2EmNvppVWEhM2oGk3x4lLxnkEA4jTbaK97QKSDjkIoOsKQlfylt/d3kKKi596Qy3NP5XrXJ6fZIC9Q==
 
-moment@^2.29.3:
-  version "2.29.3"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
-  integrity sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
-
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/move-concurrently/-/move-concurrently-1.0.1.tgz"
@@ -18849,6 +18844,13 @@ store2@^2.12.0:
   version "2.13.2"
   resolved "https://registry.npmjs.org/store2/-/store2-2.13.2.tgz"
   integrity sha512-CMtO2Uneg3SAz/d6fZ/6qbqqQHi2ynq6/KzMD/26gTkiEShCcpqFfTHgOxsE0egAq6SX3FmN4CeSqn8BzXQkJg==
+
+storybook-addon-next-router@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/storybook-addon-next-router/-/storybook-addon-next-router-4.0.0.tgz#d0719e6e27cbd2c374d23fad821157f2b053b045"
+  integrity sha512-zaEo/RI9IXzxlaiWeFBMBkjxYabLZGFibD82xH9AcKYcN/5yZq7VKo+NckMuTVu2WBaCUR4jA/O+ftcrQEvvfA==
+  dependencies:
+    tslib "^2.3.0"
 
 stream-browserify@^2.0.1:
   version "2.0.2"

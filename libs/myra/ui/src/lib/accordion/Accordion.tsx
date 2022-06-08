@@ -1,11 +1,12 @@
 import {
   Accordion,
-  AccordionItem,
   AccordionButton,
-  AccordionPanel,
   AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   AccordionProps as ChakraAccordianProps,
 } from '@chakra-ui/react';
+
 import Box from '../box/Box';
 
 export function ChakraAccordian(props: ChakraAccordianProps) {
@@ -51,10 +52,12 @@ export function ChakraAccordian(props: ChakraAccordianProps) {
 
 export {
   Accordion,
-  AccordionItem,
   AccordionButton,
-  AccordionPanel,
   AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
 };
+
+export type { ChakraAccordianProps };
 
 export default Accordion;

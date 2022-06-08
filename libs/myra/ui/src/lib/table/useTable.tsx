@@ -28,7 +28,7 @@ export function useTable<T extends Record<string, unknown>>({
   disableSortAll,
   disableFilterAll,
   ...props
-}: TableProps<T>) {
+}: Omit<TableProps<T>, 'pagination'>) {
   const defaultColumn: Partial<Column<T>> = useMemo(
     () => ({
       disableFilters: disableFilterAll,

@@ -30,7 +30,7 @@ type TableDummyDataType = {
 
 const columns: Column<TableDummyDataType>[] = [
   {
-    Header: 'Member #',
+    Header: 'Member Id',
     accessor: 'member_id',
     width: 0,
 
