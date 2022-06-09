@@ -1,11 +1,19 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import { Box, Checkbox, Grid, Text, TextFields } from '@coop/myra/ui';
+import {
+  Box,
+  Checkbox,
+  Grid,
+  Text,
+  TextFields,
+  SwitchTabs,
+  GridItem,
+} from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import {
   FormInput,
-  FormRadioGroup,
+  // FormRadioGroup,
   FormSelect,
   FormTextArea,
 } from '../../newFormComponents';
@@ -15,6 +23,16 @@ interface IKYMDeclaration {
 }
 
 const details = ['Citizen', 'Permanent Resident', 'Resident'];
+const booleanList = [
+  {
+    key: 'yes',
+    value: 'Yes',
+  },
+  {
+    key: 'no',
+    value: 'No',
+  },
+];
 
 export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
   return (
@@ -49,37 +67,60 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
           />
         </Grid>
       </Box>
-
-      <FormRadioGroup
+      <SwitchTabs
+        label="Are you or any of your family politically exposed person?"
+        list={booleanList}
+      />
+      {/* <FormRadioGroup
         control={control}
         name={'isPoliticallyExposed'}
         radioList={['Yes', 'No']}
         label=" Are you or any of your family politically exposed person?"
-      />
+      /> */}
 
-      <FormRadioGroup
+      <SwitchTabs label="Do you have a beneficial owner?" list={booleanList} />
+
+      {/* <FormRadioGroup
         control={control}
         name={'hasBeneficialOwner'}
         radioList={['Yes', 'No']}
         label="Do you have a beneficial owner?"
+      /> */}
+
+      {/* <InputGroupContainer> */}
+      <Grid gap={2} templateColumns="repeat(3,1fr)">
+        <GridItem colSpan={1}>
+          <FormSelect
+            control={control}
+            name={'beneficialRelationShipId'}
+            options={[{ label: 'Father', value: 'father' }]}
+            placeholder="Relationship"
+            label="If yes, please write name and relationship "
+          />
+        </GridItem>
+
+        <GridItem mt="20px" colSpan={2}>
+          <FormInput
+            control={control}
+            type="text"
+            name="fullName"
+            placeholder="Full Name"
+          />
+        </GridItem>
+      </Grid>
+      {/* </InputGroupContainer> */}
+
+      <SwitchTabs
+        label="Declaration of convicted/Non-convicted for any crimes in Past"
+        list={booleanList}
       />
 
-      <InputGroupContainer>
-        <FormSelect
-          control={control}
-          name={'beneficialRelationShipId'}
-          options={[{ label: 'Father', value: 'father' }]}
-          placeholder="Relationship"
-          label="If yes, please write name and relationship "
-        />
-      </InputGroupContainer>
-
-      <FormRadioGroup
+      {/* <FormRadioGroup
         control={control}
         name={'isConvicted'}
         radioList={['Yes', 'No']}
         label="Declaration of convicted/Non-convicted for any crimes in Past"
-      />
+      /> */}
 
       <InputGroupContainer>
         <Box display="flex" flexDirection="column">
@@ -92,12 +133,17 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
         </Box>
       </InputGroupContainer>
 
-      <FormRadioGroup
+      <SwitchTabs
+        label="Do you hold residential permit of foreign country?"
+        list={booleanList}
+      />
+
+      {/* <FormRadioGroup
         control={control}
         name={'hasForeignResidentialPermit'}
         radioList={['Yes', 'No']}
         label="Do you hold residential permit of foreign country?"
-      />
+      /> */}
 
       <Box display="flex" flexDirection="column">
         <Text fontSize="s3" mb="s16">
