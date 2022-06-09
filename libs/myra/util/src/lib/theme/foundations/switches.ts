@@ -27,7 +27,7 @@ const baseStyleTrack: SystemStyleFunction = (props) => {
     transitionDuration: 'fast',
     bg: mode('gray.400', 'whiteAlpha.400')(props),
     _focus: {
-      boxShadow: 'outline',
+      boxShadow: 'none',
     },
     _disabled: {
       opacity: 0.4,

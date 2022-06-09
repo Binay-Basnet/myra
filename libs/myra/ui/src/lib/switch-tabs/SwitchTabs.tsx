@@ -9,6 +9,7 @@ import {
   TabsProps as ChakraSwitchTabsProps,
   Text,
 } from '@chakra-ui/react';
+
 import TextFields from '../text-fields/TextFields';
 
 /* eslint-disable-next-line */
@@ -18,8 +19,11 @@ export interface SwitchTabsProps
     key: string;
     value: string;
   }[];
-  onclick?: (data: string | number) => void;
+  onClick?: (data: string | number) => void;
   label?: string;
+  activeTab?: number;
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+  id?: string;
 }
 
 const TabElement = chakra(Tab, {
@@ -51,11 +55,15 @@ const TabElement = chakra(Tab, {
 });
 
 export function SwitchTabs(props: SwitchTabsProps) {
-  const { list, onclick, label } = props;
-  const [activeTab, setActivetab] = useState<number | null>(0);
+  const { list, onClick, label, setActiveTab, activeTab, id } = props;
 
   return (
-    <ChakraSwitchTabs size="sm" variant="unstyled">
+    <ChakraSwitchTabs
+      size="sm"
+      variant="unstyled"
+      defaultIndex={activeTab}
+      id={id}
+    >
       {label && <TextFields mb="s16">{label}</TextFields>}
       <TabList
         borderRadius="br2"
@@ -66,10 +74,8 @@ export function SwitchTabs(props: SwitchTabsProps) {
         {list.map((item, index) => (
           <TabElement
             onClick={() => {
-              setActivetab(index);
-              {
-                onclick && onclick(item.key);
-              }
+              setActiveTab(index);
+              onClick && onClick(item.key);
             }}
           >
             <Icon

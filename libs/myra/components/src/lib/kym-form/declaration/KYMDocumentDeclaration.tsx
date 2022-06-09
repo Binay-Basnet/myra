@@ -12,21 +12,25 @@ export const KYMDocumentDeclaration = ({ control }: any) => {
       </Text>
       <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
         <FormFileInput
+          size="lg"
           label="Passport Size Photo"
           control={control}
           name="passportSizePhoto"
         />
         <FormFileInput
+          size="lg"
           label="Signature"
           control={control}
           name="signaturePhoto"
         />
         <FormFileInput
+          size="lg"
           label="Citizenship Photo"
           control={control}
           name="citizenshipPhoto"
         />
         <FormFileInput
+          size="lg"
           label="Fingerprint Photo"
           control={control}
           name="fingerprintPhoto"

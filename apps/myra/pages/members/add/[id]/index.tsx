@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
+import { BiSave } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
 import {
   AccorrdianAddMember,
@@ -31,16 +32,15 @@ import {
   Button,
   Checkbox,
   Container,
+  Icon,
   IconButton,
   MainLayout,
   Text,
   TextFields,
-  Icon,
 } from '@coop/myra/ui';
 import { getKymSection, useTranslation } from '@coop/myra/util';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
-import { BiSave } from 'react-icons/bi';
 
 const AddMember = () => {
   const { t } = useTranslation();
@@ -49,13 +49,14 @@ const AddMember = () => {
   const router = useRouter();
   const id = String(router?.query?.id);
   const { mutate } = useSetMemberDataMutation({
-    onSuccess: () => {
-      setError('firstName', { type: 'custom', message: 'gg' });
-      setError('middleName', { type: 'custom', message: 'kkkk' });
+    onSuccess: (res) => {
+      setError('firstName', {
+        type: 'custom',
+        message: res?.members?.individual?.add?.error?.error?.firstName[0],
+      });
     },
     onError: () => {
       setError('firstName', { type: 'custom', message: 'gg' });
-      setError('middleName', { type: 'custom', message: 'kkkk' });
     },
   });
   const kymFormStatusQuery = useGetKymFormStatusQuery({ id });

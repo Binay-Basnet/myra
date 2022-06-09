@@ -26,6 +26,7 @@ export const MemberKYMIdentificationDetails = ({ control }: any) => {
       <Box display="flex">
         {identificationDetails.map((item, index) => (
           <Checkbox
+            id="identificationDetailsPersonal"
             mr={5}
             key={index}
             onChange={() => {

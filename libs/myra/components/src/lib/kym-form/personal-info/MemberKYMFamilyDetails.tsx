@@ -39,13 +39,21 @@ const AddFamilyMember = ({
 
       <InputGroupContainer>
         <GridItem colSpan={1}>
-          <FormInput
+          <FormSelect
             control={control}
-            type="text"
-            bg="white"
             name={`familyDetails.${index}.relationshipId`}
-            label="Relation"
-            placeholder="Enter Relation"
+            label="Relationship"
+            placeholder="Select Relationship"
+            options={[
+              { value: 'father', label: 'Father' },
+              { value: 'mother', label: 'Mother' },
+              { value: 'brother', label: 'Brother' },
+              { value: 'sister', label: 'Sister' },
+              { value: 'son', label: 'Son' },
+              { value: 'daughter', label: 'Daughter' },
+              { value: 'grandfather', label: 'Grandfather' },
+              { value: 'grandmother', label: 'Grandmother' },
+            ]}
           />
         </GridItem>
         <GridItem colSpan={1}>
