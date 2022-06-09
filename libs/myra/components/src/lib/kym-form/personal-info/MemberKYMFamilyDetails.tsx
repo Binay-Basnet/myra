@@ -56,7 +56,7 @@ const AddFamilyMember = ({
             ]}
           />
         </GridItem>
-        <GridItem colSpan={1}>
+        <GridItem colSpan={2}>
           <FormInput
             control={control}
             type="text"
@@ -67,7 +67,7 @@ const AddFamilyMember = ({
           />
         </GridItem>
 
-        <GridItem colSpan={1}>
+        {/* <GridItem colSpan={1}>
           <FormInput
             control={control}
             type="date"
@@ -75,7 +75,7 @@ const AddFamilyMember = ({
             name={`familyDetails.${index}.dob`}
             label="Date Of Birth"
           />
-        </GridItem>
+        </GridItem> */}
       </InputGroupContainer>
     </DynamicBoxContainer>
   );
