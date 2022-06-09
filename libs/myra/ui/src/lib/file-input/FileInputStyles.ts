@@ -13,19 +13,19 @@ const baseStyle = {
 };
 
 const focusedStyle = {
-  borderColor: '2px dashed #006837',
+  borderColor: '#006837',
   bg: '#F5F9F7',
   color: '#006837',
 };
 
 const acceptStyle = {
-  borderColor: '2px dashed #006837',
+  borderColor: '#006837',
   bg: '#F5F9F7',
   color: '#006837',
 };
 
 const rejectStyle = {
-  borderColor: '2px dashed #FF4538',
+  borderColor: '#FF4538',
   bg: '#FFECEB',
 };
 

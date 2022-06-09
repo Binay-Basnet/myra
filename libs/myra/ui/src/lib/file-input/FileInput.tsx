@@ -205,7 +205,12 @@ export const FileInputPreview = ({
         </Box>
         {size === 'lg' && (
           <Box>
-            <TextFields variant="bodyRegular" fontWeight="500" color="gray.800">
+            <TextFields
+              variant="bodyRegular"
+              fontWeight="500"
+              color="gray.800"
+              noOfLines={1}
+            >
               {file.name}
             </TextFields>
             <TextFields variant="formLabel" color="gray.600">
