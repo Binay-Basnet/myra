@@ -37,24 +37,32 @@ import {
   Text,
   TextFields,
 } from '@coop/myra/ui';
-import { useTranslation } from '@coop/myra/util';
+import { getKymSection, useTranslation } from '@coop/myra/util';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 
-// import { useSetMemberDataMutation } from '../../../../generated/graphql';
-
 const AddMember = () => {
   const { t } = useTranslation();
+  const [kymCurrentSection, setKymCurrentSection] = React.useState();
   // const methods = useForm<IFormValues>();
   const router = useRouter();
   const id = String(router?.query?.id);
-  const { mutate } = useSetMemberDataMutation();
+  const { mutate } = useSetMemberDataMutation({
+    onSuccess: () => {
+      setError('firstName', { type: 'custom', message: 'gg' });
+      setError('middleName', { type: 'custom', message: 'kkkk' });
+    },
+    onError: () => {
+      setError('firstName', { type: 'custom', message: 'gg' });
+      setError('middleName', { type: 'custom', message: 'kkkk' });
+    },
+  });
   const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
   const kymFormStatus =
     kymFormStatusQuery?.data?.members?.individual?.formState?.data
       ?.sectionStatus;
 
-  const { control, handleSubmit, getValues, watch } =
+  const { control, handleSubmit, getValues, watch, setError } =
     useForm<KymIndMemberInput>({
       defaultValues: {
         familyDetails: [{ relationshipId: '', fullName: '' }],
@@ -99,6 +107,10 @@ const AddMember = () => {
       onSubmit={handleSubmit((data) => {
         console.log('data', data);
       })}
+      onFocus={(e) => {
+        console.log('event', e.target.id);
+        setKymCurrentSection(getKymSection(e.target.id));
+      }}
     >
       <Box
         position="fixed"
@@ -137,7 +149,10 @@ const AddMember = () => {
         </Box>
         <Box display="flex" width="100%">
           <Box w={320} p={2} minHeight="100%" bg="white">
-            <AccorrdianAddMember formStatus={kymFormStatus} />
+            <AccorrdianAddMember
+              formStatus={kymFormStatus}
+              kymCurrentSection={kymCurrentSection}
+            />
           </Box>
           <Divider orientation="vertical" />
           <Box w="100%">

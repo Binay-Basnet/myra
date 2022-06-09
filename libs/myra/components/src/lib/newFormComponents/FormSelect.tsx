@@ -21,6 +21,7 @@ export const FormSelect = <T,>({
           onChange={(newValue: { label: string; value: string }) => {
             onChange(newValue.value);
           }}
+          inputId={name}
         />
       )}
     />

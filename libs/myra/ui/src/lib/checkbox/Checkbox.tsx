@@ -2,6 +2,7 @@ import {
   Checkbox as ChakraCheckbox,
   CheckboxProps as ChakraCheckboxProps,
 } from '@chakra-ui/react';
+
 import TextFields from '../text-fields/TextFields';
 
 /* eslint-disable-next-line */
