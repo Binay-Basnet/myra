@@ -9,9 +9,9 @@ import {
   Icon,
   Input,
   Select,
+  SwitchTabs,
   Text,
   TextFields,
-  SwitchTabs,
 } from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
@@ -35,7 +35,7 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
     remove: familyMemberRemove,
   } = useFieldArray({
     control,
-    name: 'familyMemberInThiscooperative',
+    name: 'familyMemberInThisCooperative',
   });
 
   return (
@@ -146,7 +146,7 @@ export const FamilyMember = ({
       <GridItem colSpan={1}>
         <Controller
           control={control}
-          name={`familyMemberInThiscooperative.${index}.relationshipId`}
+          name={`familyMemberInThisCooperative.${index}.relationshipId`}
           render={({ field: { onChange } }) => (
             <Select
               onChange={onChange}
@@ -162,7 +162,7 @@ export const FamilyMember = ({
       <GridItem colSpan={2}>
         <Controller
           control={control}
-          name={`familyMemberInThiscooperative.${index}.memberId`}
+          name={`familyMemberInThisCooperative.${index}.memberId`}
           render={({ field: { onChange } }) => (
             <Input
               type="text"
