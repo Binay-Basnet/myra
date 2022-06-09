@@ -414,7 +414,7 @@ const SharePurchase = () => {
               <br />
 
               <SwitchTabs
-                onclick={switchTabsFxn}
+                onClick={switchTabsFxn}
                 list={accountList.map((value) => ({
                   key: value,
                   value: value,
