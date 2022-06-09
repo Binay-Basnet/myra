@@ -1,16 +1,24 @@
 import { ChakraStylesConfig } from 'chakra-react-select';
 
 export const chakraStyles: ChakraStylesConfig = {
+  inputContainer: () => ({
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '-4px',
+  }),
   menu: (provided) => ({
     ...provided,
-    // mt: '0',
+    mt: '0',
     maxHeight: '200px',
     boxShadow: 'E1',
   }),
   menuList: (provided) => ({
     ...provided,
+    width: '100%',
     maxHeight: '200px',
     paddingY: '0',
+    minWidth: 'none',
   }),
   option: (provided, state) => ({
     ...provided,
@@ -27,7 +35,7 @@ export const chakraStyles: ChakraStylesConfig = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    fontSize: 's3',
+    fontSize: 'r1',
     _hover: {
       bg: 'highlight.500',
     },
@@ -50,29 +58,24 @@ export const chakraStyles: ChakraStylesConfig = {
     color: state.hasValue
       ? 'neutralColorLight.Gray-80'
       : 'neutralColorLight.Gray-50',
-    fontSize: 's3',
+    fontSize: 'r1',
   }),
   placeholder: (provided) => ({
     ...provided,
     color: 'neutralColorLight.Gray-50',
-    fontSize: 's3',
+    fontSize: 'r1',
     noOfLines: 1,
   }),
 
   input: (provided) => ({
     ...provided,
     p: '0',
-    mt: '-2',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   }),
   singleValue: (provided) => ({
     ...provided,
-    padding: '0',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   }),
 
   indicatorSeparator: () => ({

@@ -1,11 +1,9 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
-import { PopoverComponent } from '@coop/myra/components';
-import { TableListPageHeader } from '@coop/myra/components';
-import { TableSearch } from '@coop/myra/components';
+import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetShareRegisterListQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
-import moment from 'moment';
+import format from 'date-fns/format';
 
 export const ShareRegisterTable = () => {
   const { data, isLoading } = useGetShareRegisterListQuery();
@@ -20,16 +18,7 @@ export const ShareRegisterTable = () => {
         Header: 'Date',
         accessor: 'node.transactionDate',
         Cell: ({ value, row }) => {
-          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
-        },
-      },
-
-      {
-        Header: 'Member ID',
-        accessor: 'node.id',
-        maxWidth: 4,
-        Cell: ({ value, row }) => {
-          return <span>{value.slice(0, 5).toUpperCase()}</span>;
+          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
       },
 
@@ -37,6 +26,15 @@ export const ShareRegisterTable = () => {
         Header: 'Type',
         accessor: 'node.transactionDirection',
       },
+      {
+        Header: 'Member ID',
+        accessor: 'node.id',
+        maxWidth: 4,
+        Cell: ({ value }) => {
+          return <span>{value.slice(0, 5).toUpperCase()}</span>;
+        },
+      },
+
       {
         Header: 'Name',
         accessor: 'node.member.personalInformation.name.firstName',
@@ -65,7 +63,7 @@ export const ShareRegisterTable = () => {
       {
         Header: 'To - From',
         accessor: 'node.shareStartNumber',
-
+        width: '10%',
         Cell: ({ value, row }) => {
           return (
             <span>
@@ -74,43 +72,36 @@ export const ShareRegisterTable = () => {
           );
         },
       },
-      {
-        Header: 'Share Count',
-        accessor: 'node.noOfShare',
-      },
+
       {
         id: 'share-dr',
         Header: 'Share Dr',
-        accessor: 'node.transactionDirection',
+        accessor: 'node.shareDr',
+        isNumeric: true,
+
         Cell: ({ value, row }) => {
           return (
-            <span>
-              {value === 'PURCHASE'
-                ? row.original.node.shareAmount.toFixed(2)
-                : '-'}
-            </span>
+            <span>{value ? `Rs. ${value.toLocaleString('en-IN')}` : '-'}</span>
           );
         },
       },
       {
         id: 'share-cr',
         Header: 'Share Cr',
-        accessor: 'node.transactionDirection',
+        isNumeric: true,
+        accessor: 'node.shareCr',
         Cell: ({ value, row }) => {
           return (
-            <span>
-              {value === 'RETURN'
-                ? row.original.node.shareAmount.toFixed(2)
-                : '-'}
-            </span>
+            <span>{value ? `Rs. ${value.toLocaleString('en-IN')}` : '-'}</span>
           );
         },
       },
       {
         Header: 'Balance',
         accessor: 'node.balance',
+        isNumeric: true,
         Cell: ({ value, row }) => {
-          return <span>{Number(value).toFixed(2)}</span>;
+          return <span>Rs.{Number(value).toLocaleString('en-IN')}</span>;
         },
       },
       {
@@ -142,7 +133,7 @@ export const ShareRegisterTable = () => {
   return (
     <>
       <TableListPageHeader heading={'Share Register'} tabItems={shareRows} />
-      <TableSearch />
+
       <Table
         isLoading={isLoading}
         data={rowData ?? []}

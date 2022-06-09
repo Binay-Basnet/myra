@@ -10,8 +10,8 @@ export const FormFooter = (props: formFooter) => {
   return (
     <Box
       bottom={0}
-      display="flex"
       bg="gray.0"
+      display="flex"
       justifyContent="space-between"
       px="s20"
       py="s16"

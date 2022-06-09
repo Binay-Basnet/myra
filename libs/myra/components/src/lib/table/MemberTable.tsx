@@ -2,29 +2,33 @@ import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/myra/graphql';
-import { Column, Table } from '@coop/myra/ui';
-import moment from 'moment';
+import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/myra/ui';
+import format from 'date-fns/format';
 import { useRouter } from 'next/router';
 
 import { TableListPageHeader } from '../TableListPageHeader';
-import { TableSearch } from '../TableSearch';
 
 export const MemberTable = () => {
   const router = useRouter();
   const { data, isLoading } = useGetMemberListQuery({
     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+    first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+    last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+    after: router.query['after'] as string,
+    before: router.query['before'] as string,
   });
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
-  const popoverTitle = [' View Member Profile', 'Edit Member', 'Make Inactive'];
+  const popoverTitle = ['View Member Profile', 'Edit Member', 'Make Inactive'];
 
-  const columns: Column<typeof rowData[0]>[] = useMemo(
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         Header: 'Member ID',
         accessor: 'node.id',
         maxWidth: 4,
+        disableSortBy: false,
       },
 
       {
@@ -70,13 +74,14 @@ export const MemberTable = () => {
         Header: 'Date Joined',
         accessor: 'node.createdAt',
         Cell: ({ value }) => {
-          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
       },
       {
         Header: '',
         accessor: 'actions',
         Cell: () => <PopoverComponent title={popoverTitle} />,
+        disableFilters: true,
       },
     ],
     []
@@ -102,13 +107,20 @@ export const MemberTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'Member List'} tabItems={memberRows} />
-      <TableSearch />
+      <TableListPageHeader heading={'Members'} tabItems={memberRows} />
+
       <Table
         isLoading={isLoading}
         data={rowData}
         columns={columns}
         sort={true}
+        disableSortAll={true}
+        filter={true}
+        pagination={{
+          total: 1200,
+          endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
+          startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
+        }}
       />
     </>
   );

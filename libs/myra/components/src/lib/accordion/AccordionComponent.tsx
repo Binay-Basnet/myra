@@ -1,6 +1,9 @@
-import { Accordion, AccordionProps as abc } from '@coop/myra/ui';
+import {
+  Accordion,
+  ChakraAccordianProps as AccordionProps,
+} from '@coop/myra/ui';
 
-interface accordionProps extends abc {
+interface accordionProps extends AccordionProps {
   id: string;
   title: string;
   children: React.ReactNode;

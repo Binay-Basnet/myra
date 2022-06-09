@@ -87,7 +87,7 @@ export function TabMenu() {
   return (
     <Box
       height="50px"
-      p="0 s16"
+      pl="s16"
       background="secondary.700"
       alignItems="center"
       display="flex"
@@ -107,7 +107,9 @@ export function TabMenu() {
                   // isDisabled
                   borderRadius="br3 br3 0 0"
                   _focus={{}}
-                  p="s4 s16"
+                  px="s16"
+                  py="s4"
+                  gap={'s8'}
                   _selected={{
                     background: '#EEF2F7',
                     color: 'gray.800',

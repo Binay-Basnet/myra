@@ -22,7 +22,7 @@ export const CoaAccountListTable = () => {
         maxWidth: 4,
       },
       {
-        Header: 'AccountName',
+        Header: 'Account Group',
         accessor: 'firstName',
         width: '80%',
       },

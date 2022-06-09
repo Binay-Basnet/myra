@@ -37,25 +37,33 @@ import {
   TextFields,
   Icon,
 } from '@coop/myra/ui';
-import { useTranslation } from '@coop/myra/util';
+import { getKymSection, useTranslation } from '@coop/myra/util';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 import { BiSave } from 'react-icons/bi';
 
-// import { useSetMemberDataMutation } from '../../../../generated/graphql';
-
 const AddMember = () => {
   const { t } = useTranslation();
+  const [kymCurrentSection, setKymCurrentSection] = React.useState();
   // const methods = useForm<IFormValues>();
   const router = useRouter();
   const id = String(router?.query?.id);
-  const { mutate } = useSetMemberDataMutation();
+  const { mutate } = useSetMemberDataMutation({
+    onSuccess: () => {
+      setError('firstName', { type: 'custom', message: 'gg' });
+      setError('middleName', { type: 'custom', message: 'kkkk' });
+    },
+    onError: () => {
+      setError('firstName', { type: 'custom', message: 'gg' });
+      setError('middleName', { type: 'custom', message: 'kkkk' });
+    },
+  });
   const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
   const kymFormStatus =
     kymFormStatusQuery?.data?.members?.individual?.formState?.data
       ?.sectionStatus;
 
-  const { control, handleSubmit, getValues, watch } =
+  const { control, handleSubmit, getValues, watch, setError } =
     useForm<KymIndMemberInput>({
       defaultValues: {
         familyDetails: [{ relationshipId: '', fullName: '' }],
@@ -137,6 +145,10 @@ const AddMember = () => {
           onSubmit={handleSubmit((data) => {
             console.log('data', data);
           })}
+          onFocus={(e) => {
+            console.log('event', e.target.id);
+            setKymCurrentSection(getKymSection(e.target.id));
+          }}
         >
           {/* main */}
           <Box pb="s40" display="flex" width="100%">
@@ -149,7 +161,10 @@ const AddMember = () => {
                 minHeight="100%"
                 bg="white"
               >
-                <AccorrdianAddMember formStatus={kymFormStatus} />
+                <AccorrdianAddMember
+                  formStatus={kymFormStatus}
+                  kymCurrentSection={kymCurrentSection}
+                />
               </Box>
 
               <Box background="white" ml={320} p="s20" pb="s40">

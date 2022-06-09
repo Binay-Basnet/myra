@@ -77,6 +77,7 @@ export function TabMenuForInventoryApp() {
       <Tabs
         index={currentIndex}
         size="md"
+        gap={'s8'}
         variant="enclosed"
         // onChange={(index) => setTabIndex(index)}
       >

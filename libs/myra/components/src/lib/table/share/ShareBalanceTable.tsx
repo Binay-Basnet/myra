@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
-import { PopoverComponent } from '@coop/myra/components';
-import { TableSearch } from '@coop/myra/components';
-import { TableListPageHeader } from '@coop/myra/components';
+import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetShareBalanceListQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 
@@ -16,7 +14,7 @@ export const ShareBalanceTable = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'Member #',
+        Header: 'Member Id',
         accessor: 'node.id',
         maxWidth: 4,
       },
@@ -24,7 +22,7 @@ export const ShareBalanceTable = () => {
       {
         Header: 'Name',
         accessor: 'node.member.personalInformation.name.firstName',
-        width: '80%',
+        width: '60%',
 
         Cell: ({ value, row }) => {
           return (
@@ -50,13 +48,15 @@ export const ShareBalanceTable = () => {
         Header: 'Share Count',
         accessor: 'node.shareCount',
         maxWidth: 48,
+        isNumeric: true,
       },
       {
         Header: 'Balance',
         accessor: 'node.balance',
         Cell: ({ value, row }) => {
-          return <span>{Number(value).toFixed(2)}</span>;
+          return <span> Rs. {Number(value).toLocaleString('en-IN')}</span>;
         },
+        isNumeric: true,
       },
 
       {
@@ -70,7 +70,7 @@ export const ShareBalanceTable = () => {
   return (
     <>
       <TableListPageHeader heading={'Share Balance'} />
-      <TableSearch />
+
       <Table
         isLoading={isLoading}
         data={rowData ?? []}

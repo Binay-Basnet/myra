@@ -5,7 +5,6 @@ import { useGetInventoryUnitOfMeasureQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
-import { TableSearch } from '../../TableSearch';
 
 export const InventoryUseOfMeasureTable = () => {
   const { data, isLoading } = useGetInventoryUnitOfMeasureQuery();
@@ -47,7 +46,7 @@ export const InventoryUseOfMeasureTable = () => {
   return (
     <>
       <TableListPageHeader heading={'Units of Measure'} />
-      <TableSearch />
+
       <Table
         isLoading={isLoading}
         data={rowItems}

@@ -188,8 +188,8 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
           control={control}
           type="text"
           name={'landlordName'}
-          label="Landlords Name"
-          placeholder="Landlords Name"
+          label="Landlord's Name"
+          placeholder="Landlord's Name"
         />
         <FormInput
           control={control}

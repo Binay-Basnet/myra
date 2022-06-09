@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { useGetShareHistoryQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
-import moment from 'moment';
+import format from 'date-fns/format';
+// import { amountConverter } from '../../../../../util/src/utilFunctions/amountFunc';
 
 type shareHistoryProps = {
   id: string;
@@ -12,14 +13,14 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
     memberId: id,
   });
   const data = shareHistoryTableData?.share?.register?.edges;
-  const rowData = useMemo(() => data, [data]);
+  const rowData = useMemo(() => data ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         Header: 'SN',
         accessor: 'node.id',
-        maxWidth: 4,
+        width: '2',
         Cell: ({ row }) => {
           return <span>{Number(row?.id) + 1}</span>;
         },
@@ -28,68 +29,65 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       {
         Header: 'Date',
         accessor: 'node.transactionDate',
-        width: '80%',
         Cell: ({ value }) => {
-          return <span>{moment(value).format('YYYY-MM-DD')}</span>;
+          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
       },
-      {
-        Header: 'No. of Share',
-        accessor: 'node.noOfShare',
-        maxWidth: 48,
-      },
+
       {
         Header: 'Share Number',
-        accessor: 'node.shareAmount',
-        maxWidth: 48,
-        Cell: ({ row }) => {
+        accessor: 'node.shareStartNumber',
+
+        Cell: ({ value, row }) => {
           return (
             <span>
-              {row?.original?.node?.shareStartNumber} {'to '}
-              {row?.original?.node?.shareEndNumber}
+              {value} to {row?.original?.node?.shareEndNumber}
             </span>
           );
         },
       },
+
       {
         id: 'share-dr',
         Header: 'Share Dr',
-        accessor: 'node.shareStatus',
+        accessor: 'node.shareDr',
+        isNumeric: true,
 
-        Cell: ({ row }) => {
+        Cell: ({ value, row }) => {
           return (
-            <span>
-              {row?.original?.node?.transactionDirection === 'RETURN'
-                ? (row?.original?.node?.shareAmount).toFixed(2)
-                : '-'}
-            </span>
+            <span> {value ? `Rs. ${value.toLocaleString('en-IN')}` : '-'}</span>
           );
         },
       },
       {
         id: 'share-cr',
         Header: 'Share Cr',
-        accessor: 'shareCr',
-        Cell: ({ row }) => {
+        isNumeric: true,
+        accessor: 'node.shareCr',
+        Cell: ({ value, row }) => {
           return (
-            <span>
-              {row?.original?.node?.transactionDirection === 'PURCHASE'
-                ? (row?.original?.node?.shareAmount).toFixed(2)
-                : '-'}
-            </span>
+            <span> {value ? `Rs. ${value.toLocaleString('en-IN')}` : '-'}</span>
           );
         },
       },
       {
         Header: 'Balance',
         accessor: 'node.balance',
-        Cell: ({ row }) => {
+        isNumeric: true,
+        Cell: ({ value }) => {
+          return <span>Rs.{value.toLocaleString('en-IN')}</span>;
+        },
+        Footer: (props) => {
           return (
-            <span>
-              {row?.original?.node?.transactionDirection === 'PURCHASE'
-                ? (row?.original?.node?.balance).toFixed(2)
-                : '-'}
-            </span>
+            <div>
+              Rs.
+              {props.rows
+                .reduce(
+                  (sum, row) => Number(row.original.node.balance) + sum,
+                  0
+                )
+                .toLocaleString('en-IN')}
+            </div>
           );
         },
       },
@@ -99,10 +97,12 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
 
   return (
     <Table
+      isStatic={true}
+      size="compact"
       isLoading={isLoading}
       data={rowData ?? []}
       columns={columns}
-      sort={true}
+      showFooters={true}
     />
   );
 };

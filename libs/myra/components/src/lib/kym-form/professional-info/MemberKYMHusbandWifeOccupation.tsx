@@ -61,8 +61,8 @@ const HusbandWifeOccupation = ({
           control={control}
           type="text"
           name={`spouseOccupation.${index}.idNumber`}
-          label="Pan/Vat number"
-          placeholder="Pan/Vat number"
+          label="Pan / VAT No"
+          placeholder="Pan/Vat Number"
           bg="white"
         />
         <FormInput
@@ -76,8 +76,9 @@ const HusbandWifeOccupation = ({
         <FormInput
           control={control}
           type="number"
+          textAlign={'right'}
           name={`spouseOccupation.${index}.estimatedAnnualIncome`}
-          label="Annual Income"
+          label="Estimated Annual Income"
           bg="white"
           placeholder="0.00"
         />

@@ -1,6 +1,23 @@
+import { useState } from 'react';
+import { AiOutlineSetting } from 'react-icons/ai';
+import { BiBell } from 'react-icons/bi';
+import { CgMenuGridO } from 'react-icons/cg';
+import { IoSearchSharp } from 'react-icons/io5';
+import { MdOutlineHelpOutline } from 'react-icons/md';
+import { RiHistoryFill } from 'react-icons/ri';
 import {
-  Box,
+  IconButton,
+  Image,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  Text,
+} from '@chakra-ui/react';
+import {
   Avatar,
+  Box,
+  Button,
   Icon,
   Popover,
   PopoverBody,
@@ -9,23 +26,9 @@ import {
   Select,
   SwitchTabs,
 } from '@coop/myra/ui';
-import {
-  Image,
-  Text,
-  IconButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-} from '@chakra-ui/react';
-import { RiHistoryFill } from 'react-icons/ri';
+import { format } from 'date-fns';
 import Link from 'next/link';
-import { IoSearchSharp } from 'react-icons/io5';
-import { CgMenuGridO } from 'react-icons/cg';
-import { MdOutlineHelpOutline } from 'react-icons/md';
-import { BiBell } from 'react-icons/bi';
-import { useState, useRef } from 'react';
-import { AiOutlineSetting } from 'react-icons/ai';
+
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
   imageSrc?: string;
@@ -40,6 +43,9 @@ const calendarList = [
   { key: 'ad', value: 'AD' },
   { key: 'bs', value: 'BS' },
 ];
+
+const currentDate = format(new Date(), 'yyyy-MM-dd');
+const closingDate = format(new Date(), 'yyyy-MM-dd');
 
 export function TopLevelHeader(props: TopLevelHeaderProps) {
   const [isClose, setIsClose] = useState(true);
@@ -105,11 +111,15 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             _hover={{ backgroundColor: 'secondary.800' }}
           />
           <InputGroup
+            ml={'s16'}
+            borderRadius={'6px'}
+            border="none"
             onFocus={() => {
               setIsClose(false);
             }}
             onBlur={() => setIsClose(true)}
             flex={1}
+            borderColor="secondary.700"
             bg={isClose ? 'secondary.800' : 'gray.0'}
             color={isClose ? 'gray.0' : 'gray.500'}
             _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
@@ -120,7 +130,6 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               children={<IoSearchSharp />}
             />
             <Input
-              borderRadius={'none'}
               type="search"
               placeholder="खोज्नुहोस्"
               color={'gray.500'}
@@ -145,7 +154,76 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           justifyContent={'flex-end'}
           alignItems="center"
         >
+          <Popover placement="bottom-end" arrowPadding={0} gutter={3}>
+            {({ isOpen }) => (
+              <>
+                <PopoverTrigger>
+                  <Box
+                    bg={isOpen ? 'secondary.900' : 'secondary.700'}
+                    _hover={{ backgroundColor: 'secondary.900' }}
+                    px="s12"
+                    py="s10"
+                  >
+                    <Text
+                      p="s10 s12"
+                      fontSize={'s3'}
+                      fontWeight="500"
+                      color="gray.0"
+                    >
+                      {' '}
+                      Date: {currentDate}
+                    </Text>
+                  </Box>
+                </PopoverTrigger>
+                <PopoverContent
+                  bg="gray.0"
+                  w="260px"
+                  border="2px"
+                  borderColor="#E0E5EB"
+                  boxShadow={'none'}
+                  outline={'none'}
+                  _focus={{ boxShadow: 'none' }}
+                >
+                  {currentDate !== closingDate && (
+                    <PopoverBody border="1px" borderColor="#E0E5EB">
+                      <Text fontSize={'r1'} fontWeight="400" color="danger.500">
+                        The transaction date is not same as the calendar date
+                      </Text>
+                    </PopoverBody>
+                  )}
+                  <PopoverBody border="1px" borderColor="#E0E5EB">
+                    <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+                      Transaction Date
+                    </Text>
+                    <Text fontSize={'s3'} fontWeight="500" color="gray.800">
+                      {closingDate}
+                    </Text>
+                  </PopoverBody>
+                  <PopoverBody border="1px" borderColor="#E0E5EB">
+                    <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+                      Calender Date
+                    </Text>
+                    <Text fontSize={'s3'} fontWeight="500" color="gray.800">
+                      {currentDate}
+                    </Text>
+                  </PopoverBody>
+                  <PopoverBody p="s8">
+                    <Button
+                      variant="solid"
+                      display="flex"
+                      justifyContent={'center'}
+                      w="100%"
+                    >
+                      Close Day
+                    </Button>
+                  </PopoverBody>
+                </PopoverContent>
+              </>
+            )}
+          </Popover>
+
           <IconButton
+            ml="s16"
             icon={<Icon size="md" as={BiBell} />}
             aria-label="help"
             variant={'ghost'}

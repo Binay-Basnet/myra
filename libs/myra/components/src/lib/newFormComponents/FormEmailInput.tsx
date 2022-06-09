@@ -1,4 +1,3 @@
-import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 import {
   Box,
@@ -32,6 +31,7 @@ export const FormEmailInput = ({
             onChange={onChange}
             bg="white"
             fontSize={14}
+            id={name}
           />
         )}
       />

@@ -28,7 +28,6 @@ import {
   Text,
   TextFields,
   TextInput,
-  // Button,
 } from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
@@ -108,19 +107,17 @@ const ShareReturn = () => {
         </Box>
         <Box display="flex" width="100%">
           <Box w="100%">
-            <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
+            <Box background="white" p={5}>
               <TextInput
                 w="50%"
-                label=" Member Search"
+                label="Search Member"
                 placeholder="Enter Member ID"
                 onChange={(e) => setMemberIdQuery(e.target.value)}
               />
 
-              <br />
-              <br />
-
               {data && (
                 <Box
+                  mt="s16"
                   border="1px solid"
                   borderColor="border.layout"
                   borderTopLeftRadius="br2"
@@ -302,19 +299,28 @@ const ShareReturn = () => {
                       <GridItem>
                         <Box
                           display="flex"
-                          justifyContent="space-around"
                           borderRadius="br2"
+                          gap="s60"
                           p="s16"
                           bg="background.500"
                         >
                           <Box>
-                            <TextFields>Remaining Share</TextFields>
-                            <TextFields>{allShare ? 0 : 20}</TextFields>
+                            <Text fontWeight="400" fontSize="s2">
+                              Remaining Share
+                            </Text>
+                            <Text fontWeight="600" fontSize="r1">
+                              {allShare ? 0 : 20}
+                            </Text>
                           </Box>
 
                           <Box>
-                            <TextFields>Remaining Share Value </TextFields>
-                            <TextFields>{allShare ? 0 : 2000}</TextFields>
+                            <Text fontWeight="400" fontSize="s2">
+                              Remaining Share Value
+                            </Text>
+                            <Text fontWeight="600" fontSize="r1">
+                              {' '}
+                              {allShare ? 0 : 2000}
+                            </Text>
                           </Box>
                         </Box>
                       </GridItem>
@@ -409,7 +415,7 @@ const ShareReturn = () => {
                           <Box display="flex" justifyContent="space-between">
                             <Text
                               color="neutralLightColor.Gray-80"
-                              fontWeight="SemiBold"
+                              fontWeight="600"
                               fontSize="s3"
                             >
                               Total Amount
@@ -435,7 +441,7 @@ const ShareReturn = () => {
               <Text
                 color="neutralColorLight.Gray-60"
                 fontSize="r2"
-                fontWeight="SemiBold"
+                fontWeight="600"
                 mb="8px"
               >
                 Payment Information
@@ -443,7 +449,7 @@ const ShareReturn = () => {
               <Text
                 color="neutralColorLight.Gray-60"
                 fontSize="s3"
-                fontWeight="Medium"
+                fontWeight="500"
                 mb="8px"
               >
                 Payment Mode
@@ -451,44 +457,52 @@ const ShareReturn = () => {
 
               <br />
 
-              <SwitchTabs onclick={switchTabsFxn} list={accountList} />
+              <SwitchTabs
+                onclick={switchTabsFxn}
+                list={accountList.map((value) => ({
+                  key: value,
+                  value: value,
+                }))}
+              />
 
               <br />
               {selectedTab === 'Account' && (
-                <Box w="25%">
+                <Box w="25%" display="flex" flexDirection="column" gap="s16">
                   <Select
                     label="Select Account"
-                    placeholder="Select Account"
+                    placeholder="Saving Account"
                     options={[
                       {
-                        label: 'Option 1',
+                        label: 'Nabil Bank',
                         value: 'option-1',
                       },
                       {
-                        label: 'Option 2',
+                        label: 'Civil Bank',
                         value: 'option-2',
                       },
                       {
-                        label: 'Option 3',
+                        label: 'Sky Bank',
                         value: 'option-3',
                       },
                     ]}
                   />
-                  <br />
-                  <Box p={2} bg="background.500">
-                    <Text>Available balance</Text>
-                    <Text
-                      fontWeight="SemiBold"
-                      fontSize="r1"
-                      color="neutralColorLight.Gray-70"
-                    >
+                  <Box
+                    px="s16"
+                    py="s8"
+                    bg="background.500"
+                    color="neutralColorLight.Gray-70"
+                  >
+                    <Text fontWeight="400" fontSize="s2">
+                      Available balance
+                    </Text>
+                    <Text fontWeight="600" fontSize="r1">
                       Rs. 12,342
                     </Text>
                   </Box>
                 </Box>
               )}
               {selectedTab === 'Bank Voucher' && (
-                <Box w="25%">
+                <Box w="25%" display="flex" flexDirection="column" gap="s16">
                   <Select
                     label="Select Bank"
                     placeholder="Select Bank"
@@ -507,13 +521,14 @@ const ShareReturn = () => {
                       },
                     ]}
                   />
-                  <br />
-                  <TextInput
-                    type="text"
-                    name="name"
-                    placeholder="Enter Voucher Number"
-                    label="Enter Voucher Number"
-                  />
+                  <Box>
+                    <TextInput
+                      type="text"
+                      name="name"
+                      placeholder="Enter Voucher Number"
+                      label="Enter Voucher Number"
+                    />
+                  </Box>
                 </Box>
               )}
 
@@ -532,7 +547,7 @@ const ShareReturn = () => {
         </Box>
         <br />
       </Container>
-      <Container minW="container.md" height="fit-content" p="0">
+      <Container minW="container.xl" height="fit-content" p="0">
         <FormFooter onClick={() => router.push('/share/balance')} />
       </Container>
     </Form>

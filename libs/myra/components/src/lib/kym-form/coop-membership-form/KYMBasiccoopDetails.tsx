@@ -68,11 +68,11 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
           <GridItem colSpan={2}>
             <Controller
               control={control}
-              name="nameAddresscooperative"
+              name="nameAddressCooperative"
               render={({ field: { onChange } }) => (
                 <Input
                   type="text"
-                  placeholder="Name and Address cooperative"
+                  placeholder="Name and Address Cooperative"
                   onChange={onChange}
                   bg="white"
                 />

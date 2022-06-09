@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
-    color: '#37474F',
+    color: 'gray.600',
     height: '48px',
     fontSize: '14px',
     fontWeight: '500',
@@ -16,13 +16,7 @@ const TabCol = chakra(Tab, {
     _focus: {
       boxShadow: 'none',
     },
-    _selected: {
-      color: '#37474F',
-      bg: '#FFFFFF',
-      borderLeft: '3px solid',
-      borderLeftColor: 'primary.500',
-      fontWeight: '600',
-    },
+    _selected: { color: '#37474F', bg: 'gray.200' },
   },
 });
 

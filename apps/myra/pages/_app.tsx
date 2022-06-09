@@ -15,22 +15,22 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
-  const fiveMinutesInMs = 5 * 60 * 1000;
+const fiveMinutesInMs = 5 * 60 * 1000;
 
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-        retry: false,
-        cacheTime: fiveMinutesInMs,
-        staleTime: fiveMinutesInMs,
-      },
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      cacheTime: fiveMinutesInMs,
+      staleTime: fiveMinutesInMs,
     },
-  });
+  },
+});
 
+function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => page);
   return (
     <Provider store={store}>

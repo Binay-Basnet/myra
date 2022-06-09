@@ -2105,7 +2105,7 @@ export type SettingsQuery = {
 };
 
 export type ShareBalance = {
-  balance: Scalars['Float'];
+  balance: Scalars['Int'];
   id: Scalars['String'];
   member: Member;
   shareCount: Scalars['Int'];
@@ -2184,11 +2184,11 @@ export type ShareQueryRegisterArgs = {
 };
 
 export type ShareRegister = {
-  balance: Scalars['Float'];
+  balance: Scalars['Int'];
   id: Scalars['String'];
   member: Member;
-  noOfShare: Scalars['Int'];
-  shareAmount: Scalars['Float'];
+  shareCr?: Maybe<Scalars['Int']>;
+  shareDr?: Maybe<Scalars['Int']>;
   shareEndNumber: Scalars['Int'];
   shareStartNumber: Scalars['Int'];
   shareStatus: Share_Status;
@@ -2371,10 +2371,14 @@ export type GetInventoryUnitOfMeasureQuery = { inventory: { unitOfMeasure?: { li
 
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
+  first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  after?: InputMaybe<Scalars['Cursor']>;
+  last?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { edges?: Array<{ cursor: string, node?: { id: string, memberId?: string | null, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, memberId?: string | null, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2413,7 +2417,7 @@ export type GetShareBalanceListQuery = { share: { balance?: { edges: Array<{ nod
 export type GetShareRegisterListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, shareStartNumber: number, shareEndNumber: number, shareAmount: number, noOfShare: number, member: { personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null } } }> } | null } };
+export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, member: { personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null } } }> } | null } };
 
 export type GetMemberDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -2427,7 +2431,7 @@ export type GetShareHistoryQueryVariables = Exact<{
 }>;
 
 
-export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, noOfShare: number, shareStartNumber: number, shareEndNumber: number, shareAmount: number, balance: number, member: { id: string } } }> } | null } };
+export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, balance: number, member: { id: string } } }> } | null } };
 
 
 export const GetNewIdDocument = `
@@ -2615,12 +2619,13 @@ export const useGetInventoryUnitOfMeasureQuery = <
       options
     );
 export const GetMemberListDocument = `
-    query getMemberList($objState: ObjState) {
+    query getMemberList($objState: ObjState, $first: Int, $before: Cursor, $after: Cursor, $last: Int) {
   members {
     list(
-      pagination: {first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA"}
+      pagination: {first: $first, before: $before, after: $after, last: $last}
       filter: {objState: $objState}
     ) {
+      totalCount
       edges {
         node {
           id
@@ -2876,8 +2881,8 @@ export const GetShareRegisterListDocument = `
           balance
           shareStartNumber
           shareEndNumber
-          shareAmount
-          noOfShare
+          shareCr
+          shareDr
         }
       }
     }
@@ -2978,10 +2983,10 @@ export const GetShareHistoryDocument = `
           shareStatus
           transactionDate
           transactionDirection
-          noOfShare
           shareStartNumber
           shareEndNumber
-          shareAmount
+          shareCr
+          shareDr
           balance
         }
       }

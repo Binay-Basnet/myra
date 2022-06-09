@@ -2,7 +2,16 @@ import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
-import { Box, Button, GridItem, Icon, Text } from '@coop/myra/ui';
+import {
+  Box,
+  Button,
+  Icon,
+  Text,
+  Switch,
+  Select,
+  Grid,
+  GridItem,
+} from '@coop/myra/ui';
 
 import {
   DynamicBoxContainer,
@@ -64,8 +73,8 @@ const MainOccupation = ({
           bg="white"
           type="text"
           name={`mainOccupation.${index}.idNumber`}
-          label="Pan/Vat number"
-          placeholder="Pan/Vat number"
+          label="Pan / VAT No"
+          placeholder="Pan/VAT Number"
         />
         <FormInput
           control={control}
@@ -79,8 +88,9 @@ const MainOccupation = ({
           bg="white"
           control={control}
           type="number"
+          textAlign={'right'}
           name={`mainOccupation.${index}.estimatedAnnualIncome`}
-          label="Annual Income"
+          label="Estimated Annual Income"
           placeholder="0.00"
         />
       </InputGroupContainer>
@@ -125,6 +135,62 @@ export const MemberKYMMainOccupation = ({ control, watch }: any) => {
           Add Occupation
         </Button>
       </DynamicBoxGroupContainer>
+      <Box display="flex" flexDirection="row">
+        <Switch />
+        <Text
+          ml="s20"
+          fontSize="r1"
+          fontWeight="Medium"
+          color="neutralColorLight.Gray-70"
+        >
+          Enable for Foreign Employment
+        </Text>
+      </Box>
+
+      <Grid mb="s16" templateColumns="repeat(3, 1fr)" gap="s16">
+        <GridItem>
+          <Select
+            id="country"
+            label="Name of Country"
+            placeholder="Select Country"
+            options={[
+              {
+                label: 'Nepal',
+                value: 'Nepal',
+              },
+              {
+                label: 'India',
+                value: 'India',
+              },
+              {
+                label: 'China',
+                value: 'China',
+              },
+            ]}
+          />
+        </GridItem>
+        <GridItem>
+          <FormInput
+            bg="white"
+            control={control}
+            type="text"
+            name={`orgName`}
+            label="Type of Visa"
+            placeholder="Enter Type of Visa"
+          />
+        </GridItem>
+        <GridItem>
+          <FormInput
+            bg="white"
+            control={control}
+            type="number"
+            textAlign={'right'}
+            name={`orgName`}
+            label="Estimated Annual Income"
+            placeholder="0.00"
+          />
+        </GridItem>
+      </Grid>
     </GroupContainer>
   );
 };

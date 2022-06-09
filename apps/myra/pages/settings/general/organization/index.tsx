@@ -83,7 +83,7 @@ const Organization = () => {
               <Box mt={'s16'}>
                 {' '}
                 <Text color={'gray.700'} fontSize="s3" fontWeight={'500'}>
-                  Type of Member
+                  Type of Organization
                 </Text>
                 <Box mt="s16">
                   {/* <RadioGroup radioList={radiolist}> </RadioGroup> */}

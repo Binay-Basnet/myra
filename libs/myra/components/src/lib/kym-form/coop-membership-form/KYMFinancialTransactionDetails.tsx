@@ -10,7 +10,12 @@ export const KYMFinancialTransactionDetails = ({ control }: any) => {
       <Text fontSize="r1" fontWeight="SemiBold">
         FINANCIAL TRANSACTION DETAILS
       </Text>
+
       <Box display="flex" flexDirection="column" gap="s16">
+        <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+          Details of the amount initially deposited in the instituion or
+          deposited till now
+        </Text>
         <InputGroupContainer>
           <FormInput
             control={control}
