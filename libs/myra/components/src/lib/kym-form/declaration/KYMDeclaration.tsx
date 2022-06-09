@@ -1,13 +1,14 @@
 import React from 'react';
+import { useState } from 'react';
 import { Control } from 'react-hook-form';
 import {
   Box,
   Checkbox,
   Grid,
+  GridItem,
+  SwitchTabs,
   Text,
   TextFields,
-  SwitchTabs,
-  GridItem,
 } from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
@@ -35,6 +36,8 @@ const booleanList = [
 ];
 
 export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
+  const [activeTab, setActiveTab] = useState(0);
+
   return (
     <GroupContainer>
       <Box display="flex" flexDirection="column" gap="s16">
@@ -68,8 +71,11 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
         </Grid>
       </Box>
       <SwitchTabs
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
         label="Are you or any of your family politically exposed person?"
         list={booleanList}
+        id="politicallyExposedPerson"
       />
       {/* <FormRadioGroup
         control={control}
@@ -78,7 +84,13 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
         label=" Are you or any of your family politically exposed person?"
       /> */}
 
-      <SwitchTabs label="Do you have a beneficial owner?" list={booleanList} />
+      <SwitchTabs
+        label="Do you have a beneficial owner?"
+        list={booleanList}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        id="beneficialOwner"
+      />
 
       {/* <FormRadioGroup
         control={control}
@@ -111,8 +123,11 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
       {/* </InputGroupContainer> */}
 
       <SwitchTabs
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
         label="Declaration of convicted/Non-convicted for any crimes in Past"
         list={booleanList}
+        id="declarationOfConvicted"
       />
 
       {/* <FormRadioGroup
@@ -127,6 +142,7 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
           <FormTextArea
             name="convictionDetails"
             control={control}
+            id="convictionDetails"
             label="Please specify"
             placeholder="Enter Details"
           />
@@ -134,8 +150,11 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
       </InputGroupContainer>
 
       <SwitchTabs
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
         label="Do you hold residential permit of foreign country?"
         list={booleanList}
+        id="residentForeign"
       />
 
       {/* <FormRadioGroup

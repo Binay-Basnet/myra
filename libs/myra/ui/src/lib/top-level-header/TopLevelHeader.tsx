@@ -388,7 +388,12 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         >
                           Calendar
                         </Text>
-                        <SwitchTabs size="sm" list={calendarList} />
+                        <SwitchTabs
+                          activeTab={activeTab}
+                          setActiveTab={setActiveTab}
+                          size="sm"
+                          list={calendarList}
+                        />
                       </Box>
 
                       <Box

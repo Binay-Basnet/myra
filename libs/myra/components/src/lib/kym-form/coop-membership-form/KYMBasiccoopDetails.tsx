@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { Controller, useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import {
@@ -9,9 +10,9 @@ import {
   Icon,
   Input,
   Select,
+  SwitchTabs,
   Text,
   TextFields,
-  SwitchTabs,
 } from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
@@ -37,6 +38,7 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
     control,
     name: 'familyMemberInThiscooperative',
   });
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <GroupContainer>
@@ -53,7 +55,13 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
         />
       </InputGroupContainer>
 
-      <SwitchTabs label="Member of Another cooperative" list={booleanList} />
+      <SwitchTabs
+        label="Member of Another cooperative"
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        list={booleanList}
+        id="memberOfAnotherCooperative"
+      />
 
       {/* <FormRadioGroup
         control={control}
@@ -100,8 +108,11 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
 
       <Box display="flex" flexDirection="column" gap="s8">
         <SwitchTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
           label="Family Member in this institution"
           list={booleanList}
+          id="familyMemberInThisInstitution"
         />
         {/* <RadioGroup direction="row" radioList={['Yes', 'No']} /> */}
       </Box>

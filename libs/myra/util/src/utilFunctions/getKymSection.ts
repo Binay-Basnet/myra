@@ -15,8 +15,9 @@ const contact = ['phoneNumber', 'mobileNumber', 'email'];
 const profession = ['profession'];
 const mainOccupation = ['mainOccupation'];
 const spouceOccupation = ['spouseOccupation'];
-const incomeSource = ['incomeSourceDetails'];
+const incomeSource = ['incomeSourceDetails', 'incomeSourceDetails'];
 const identificationDetails = [
+  'identificationDetailsPersonal',
   'citizenshipNo',
   'citizenshipPlaceOfIssue',
   'citizenshipIssueDate',
@@ -47,10 +48,17 @@ const temporaryAddress = [
 const incaseRented = ['landlordName', 'landlordContact'];
 const familyDetails = ['maritalStatus', 'familyDetails'];
 const COOPmembership = ['purposeId'];
-const familyInCoop = ['nameAddressCooperative', 'memberNo'];
+const anotherCoop = [
+  'memberOfAnotherCooperative',
+  'nameAddressCooperative',
+  'memberNo',
+];
+const familyInCoop = ['familyMemberInThisInstitution'];
 const FinancialTransaction = ['share', 'savings', 'loan', 'other'];
 const estimatedWithdrawal = [
+  'estimatedAnnualAccountTransactionAmount',
   'estimatedWithdrawal',
+  'annualIncomeCheckbox',
   'estimatedAnnualDepositAmount',
   'estimatedAnnualLoanAmount',
 ];
@@ -60,6 +68,10 @@ const declerationNextToKin = [
   'localKinContact',
   'localKinAddress',
 ];
+const politicalExposure = ['politicallyExposedPerson'];
+const benificialOwner = ['beneficialOwner', 'beneficialRelationShipId'];
+const convicted = ['declarationOfConvicted', 'convictionDetails'];
+const foreign = ['residentForeign'];
 
 export const getKymSection = (id: string) => {
   if (basicInfo.includes(id)) {
@@ -113,7 +125,19 @@ export const getKymSection = (id: string) => {
       subSection: 'Main Purpose of Becoming a Member',
     };
   }
-  if (familyInCoop.includes(id)) {
+  if (anotherCoop.includes(id.split('-')[0])) {
+    return {
+      section: 'COOPmembership',
+      subSection: 'Member of Another cooperative',
+    };
+  }
+  if (anotherCoop.includes(id)) {
+    return {
+      section: 'COOPmembership',
+      subSection: 'Member of Another cooperative',
+    };
+  }
+  if (familyInCoop.includes(id.split('-')[0])) {
     return {
       section: 'COOPmembership',
       subSection: 'Family Member in this institution',
@@ -136,6 +160,30 @@ export const getKymSection = (id: string) => {
     return {
       section: 'declaration',
       subSection: 'Next to Kin',
+    };
+  }
+  if (politicalExposure.includes(id.split('-')[0])) {
+    return {
+      section: 'declaration',
+      subSection: 'Family members in politics',
+    };
+  }
+  if (benificialOwner.includes(id.split('-')[0])) {
+    return {
+      section: 'declaration',
+      subSection: 'Beneficial Owner',
+    };
+  }
+  if (convicted.includes(id.split('-')[0])) {
+    return {
+      section: 'declaration',
+      subSection: 'Convicted/Non-convicted Status',
+    };
+  }
+  if (foreign.includes(id.split('-')[0])) {
+    return {
+      section: 'declaration',
+      subSection: 'Residential permit of foreign country?',
     };
   }
 
