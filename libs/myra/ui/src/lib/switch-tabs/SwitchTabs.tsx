@@ -22,7 +22,7 @@ export interface SwitchTabsProps
   onClick?: (data: string | number) => void;
   label?: string;
   activeTab?: number;
-  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+  setActiveTab?: React.Dispatch<React.SetStateAction<number>>;
   id?: string;
 }
 

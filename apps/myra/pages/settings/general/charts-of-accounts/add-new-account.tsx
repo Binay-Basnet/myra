@@ -172,7 +172,7 @@ const AddNewAccount = () => {
             <Text fontSize="s2" mb="s4">
               Type of Account
             </Text>
-            <SwitchTabs onclick={switchTabsFxn} list={accountList} />
+            <SwitchTabs onClick={switchTabsFxn} list={accountList} />
           </Box>
 
           {selectedTab === 'cash' && (
