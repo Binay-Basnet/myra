@@ -22,7 +22,7 @@ export const MemberTable = () => {
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
-  const popoverTitle = [' View Member Profile', 'Edit Member', 'Make Inactive'];
+  const popoverTitle = ['View Member Profile', 'Edit Member', 'Make Inactive'];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [

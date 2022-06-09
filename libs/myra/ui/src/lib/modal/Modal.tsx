@@ -1,11 +1,11 @@
 import {
   Modal as ChakraModal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   ModalProps as ChakraModalProps,
 } from '@chakra-ui/react';
 import { Button, Divider } from '@coop/myra/ui';
@@ -50,7 +50,7 @@ export function Modal(props: ModalProps) {
           </>
         )}
 
-        <ModalCloseButton />
+        <ModalCloseButton _focus={{ bg: 'none' }} />
         <ModalBody>{children}</ModalBody>
         <Divider />
         <ModalFooter>

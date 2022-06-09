@@ -20,7 +20,7 @@ const en = {
 
   // home page
   yourDashboard: 'Your Dashboard',
-  yourApplication: 'YOUR APPLICATION',
+  yourApplication: 'YOUR APPLICATIONS',
   corebankingSystems: 'Core Banking Systems',
   inventoryManagement: 'Inventory Management',
   loanManagementSystem: 'Loan Management System',

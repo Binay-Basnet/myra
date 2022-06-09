@@ -2,12 +2,9 @@ import React, { useRef } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 import {
-  Button,
-  Grid,
-  GridItem,
+  Box,
   Popover,
   PopoverBody,
-  PopoverCloseButton,
   PopoverContent,
   PopoverTrigger,
   Text,
@@ -28,20 +25,29 @@ export const PopoverComponent = ({ title }: popoverType) => {
           icon={<BsThreeDots />}
         />
       </PopoverTrigger>
-      <PopoverContent minWidth="180px" w="180px" color="white">
-        <PopoverCloseButton />
-        <PopoverBody px="s6" py="s8">
-          <Grid>
+      <PopoverContent
+        minWidth="180px"
+        w="180px"
+        color="white"
+        _focus={{ boxShadow: 'none' }}
+      >
+        <PopoverBody px="0" py="s8">
+          <Box display="flex" flexDirection="column" alignItems="start">
             {title.map((item, index) => (
-              <GridItem px="s8" py="s8" key={`${item}${index}`}>
-                <Button variant="ghost">
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    {item}
-                  </Text>
-                </Button>
-              </GridItem>
+              <Box
+                px="s16"
+                py="s10"
+                width="100%"
+                _hover={{ bg: 'gray.100' }}
+                cursor="pointer"
+                key={`${item}${index}`}
+              >
+                <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                  {item}
+                </Text>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </PopoverBody>
       </PopoverContent>
     </Popover>

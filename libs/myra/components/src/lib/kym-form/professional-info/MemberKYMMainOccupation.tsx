@@ -64,8 +64,8 @@ const MainOccupation = ({
           bg="white"
           type="text"
           name={`mainOccupation.${index}.idNumber`}
-          label="Pan/Vat number"
-          placeholder="Pan/Vat number"
+          label="Pan / VAT No"
+          placeholder="Pan/VAT Number"
         />
         <FormInput
           control={control}
@@ -79,8 +79,9 @@ const MainOccupation = ({
           bg="white"
           control={control}
           type="number"
+          textAlign={'right'}
           name={`mainOccupation.${index}.estimatedAnnualIncome`}
-          label="Annual Income"
+          label="Estimated Annual Income"
           placeholder="0.00"
         />
       </InputGroupContainer>

@@ -248,7 +248,7 @@ export function TableSearch({
             <Grid>
               <GridItem
                 px="s16"
-                py="s10"
+                py="s8"
                 _hover={{ bg: 'gray.100' }}
                 cursor="pointer"
               >
