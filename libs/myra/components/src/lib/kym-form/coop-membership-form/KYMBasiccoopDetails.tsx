@@ -75,6 +75,7 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
                   placeholder="Name and Address Cooperative"
                   onChange={onChange}
                   bg="white"
+                  id="nameAddressCooperative"
                 />
               )}
             />
@@ -89,6 +90,7 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
                   placeholder="Member No"
                   onChange={onChange}
                   bg="white"
+                  id="memberNo"
                 />
               )}
             />
