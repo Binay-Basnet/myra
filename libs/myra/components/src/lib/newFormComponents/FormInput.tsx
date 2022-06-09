@@ -16,8 +16,11 @@ export const FormInput = <T,>({
   const { errors } = useFormState({
     control,
   });
-
-  const error = errors[name];
+  console.log('errors', errors);
+  // let error;
+  // if (name in errors) {
+  //   error = errors[name];
+  // }
   return (
     <Box>
       <Controller
@@ -34,7 +37,7 @@ export const FormInput = <T,>({
           />
         )}
       />
-      {error ? error.message : null}
+      {/* {error ? error?.message : null} */}
     </Box>
   );
 };

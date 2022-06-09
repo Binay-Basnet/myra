@@ -360,7 +360,6 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           Language
                         </Text>
                         <SwitchTabs
-                          size="sm"
                           list={languageList}
                           activeTab={activeTab}
                           setActiveTab={setActiveTab}
@@ -391,7 +390,6 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         <SwitchTabs
                           activeTab={activeTab}
                           setActiveTab={setActiveTab}
-                          size="sm"
                           list={calendarList}
                         />
                       </Box>

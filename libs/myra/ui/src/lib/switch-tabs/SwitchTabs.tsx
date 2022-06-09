@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { BsDot } from 'react-icons/bs';
 import {
   chakra,
@@ -6,15 +5,13 @@ import {
   Tab,
   TabList,
   Tabs as ChakraSwitchTabs,
-  TabsProps as ChakraSwitchTabsProps,
   Text,
 } from '@chakra-ui/react';
 
 import TextFields from '../text-fields/TextFields';
 
 /* eslint-disable-next-line */
-export interface SwitchTabsProps
-  extends Omit<ChakraSwitchTabsProps, 'children'> {
+export interface SwitchTabsProps {
   list: {
     key: string;
     value: string;
@@ -74,7 +71,7 @@ export function SwitchTabs(props: SwitchTabsProps) {
         {list.map((item, index) => (
           <TabElement
             onClick={() => {
-              setActiveTab(index);
+              setActiveTab && setActiveTab(index);
               onClick && onClick(item.key);
             }}
           >
