@@ -2723,7 +2723,7 @@ export type SetMemberDataMutationVariables = Exact<{
 }>;
 
 
-export type SetMemberDataMutation = { members: { individual?: { add?: { recordId: string } | null } | null } };
+export type SetMemberDataMutation = { members: { individual?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2835,6 +2835,11 @@ export const SetMemberDataDocument = `
     individual(id: $id) {
       add(data: $data) {
         recordId
+        error {
+          ... on KymIndAddInvalidDataError {
+            error
+          }
+        }
       }
     }
   }

@@ -36,7 +36,7 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
     remove: familyMemberRemove,
   } = useFieldArray({
     control,
-    name: 'familyMemberInThiscooperative',
+    name: 'familyMemberInThisCooperative',
   });
   const [activeTab, setActiveTab] = useState(0);
 
@@ -159,7 +159,7 @@ export const FamilyMember = ({
       <GridItem colSpan={1}>
         <Controller
           control={control}
-          name={`familyMemberInThiscooperative.${index}.relationshipId`}
+          name={`familyMemberInThisCooperative.${index}.relationshipId`}
           render={({ field: { onChange } }) => (
             <Select
               onChange={onChange}
@@ -175,7 +175,7 @@ export const FamilyMember = ({
       <GridItem colSpan={2}>
         <Controller
           control={control}
-          name={`familyMemberInThiscooperative.${index}.memberId`}
+          name={`familyMemberInThisCooperative.${index}.memberId`}
           render={({ field: { onChange } }) => (
             <Input
               type="text"
