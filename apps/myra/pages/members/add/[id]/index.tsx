@@ -44,7 +44,10 @@ import { useRouter } from 'next/router';
 
 const AddMember = () => {
   const { t } = useTranslation();
-  const [kymCurrentSection, setKymCurrentSection] = React.useState();
+  const [kymCurrentSection, setKymCurrentSection] = React.useState<{
+    section: string;
+    subSection: string;
+  }>();
   // const methods = useForm<IFormValues>();
   const router = useRouter();
   const id = String(router?.query?.id);
@@ -147,8 +150,8 @@ const AddMember = () => {
             console.log('data', data);
           })}
           onFocus={(e) => {
-            console.log('event', e.target.id);
-            setKymCurrentSection(getKymSection(e.target.id));
+            const kymSection = getKymSection(e.target.id);
+            setKymCurrentSection(kymSection);
           }}
         >
           {/* main */}
