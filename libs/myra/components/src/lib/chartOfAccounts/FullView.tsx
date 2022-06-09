@@ -1,17 +1,15 @@
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
-// import { AddIcon } from '@chakra-ui/icons';
+import { useGetChartOfAccountsQuery } from '@coop/myra/graphql';
 import {
+  Box,
   Accordion,
   AccordionButton,
   AccordionItem,
   AccordionPanel,
   Text,
-} from '@chakra-ui/react';
-import { useGetChartOfAccountsQuery } from '@coop/myra/graphql';
-import { Box } from '@coop/myra/ui';
+} from '@coop/myra/ui';
 
 import Tree from './Tree';
-// import { AccordionComponent } from '../accordion/AccordionComponent';
 
 export const FullView = () => {
   const { data } = useGetChartOfAccountsQuery();

@@ -23,6 +23,7 @@ const baseStyle: PartsStyleObject<typeof parts> = {
   },
   td: {
     textAlign: 'start',
+    transition: 'padding 0.2s ease',
   },
   caption: {
     mt: 4,
@@ -61,6 +62,7 @@ const variantSimple: PartsStyleFunction<typeof parts> = (props) => {
       tr: {
         '&:last-of-type': {
           th: { borderBottomWidth: 0 },
+          td: { borderBottomWidth: 0 },
         },
       },
     },

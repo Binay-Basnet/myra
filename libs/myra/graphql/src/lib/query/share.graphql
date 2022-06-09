@@ -1,131 +1,132 @@
 query getShareBalanceList {
-  share {
-    balance {
-      edges {
-        node {
-          id
-          balance
-          shareCount
-          member {
-            personalInformation {
-              name {
-                firstName
-                lastName
-              }
+    share {
+        balance {
+            edges {
+                node {
+                    id
+                    balance
+                    shareCount
+                    member {
+                        personalInformation {
+                            name {
+                                firstName
+                                lastName
+                            }
+                        }
+                    }
+                }
             }
-          }
+            pageInfo {
+                endCursor
+                startCursor
+            }
         }
-      }
-      pageInfo {
-        endCursor
-        startCursor
-      }
     }
-  }
 }
 
 query getShareRegisterList {
-  share {
-    register {
-      edges {
-        node {
-          transactionDate
-          transactionDirection
-          id
-          member {
-            personalInformation {
-              name {
-                firstName
-                lastName
-              }
+    share {
+        register {
+            edges {
+                node {
+                    transactionDate
+                    transactionDirection
+                    id
+                    member {
+                        personalInformation {
+                            name {
+                                firstName
+                                lastName
+                            }
+                        }
+                    }
+                    balance
+                    shareStartNumber
+                    shareEndNumber
+                    shareCr
+                    shareDr
+
+                }
             }
-          }
-          balance
-          shareStartNumber
-          shareEndNumber
-          shareAmount
-          noOfShare
         }
-      }
     }
-  }
 }
 
 query getMemberData($id: ID!) {
-  members {
-    individual {
-      get(id: $id) {
-        data {
-          member {
-            id
-            address {
-              permanent {
-                state
-                district
-                vdc
-                wardNo
-                locality
-              }
-              temporary {
-                state
-                district
-                vdc
-                wardNo
-                locality
-              }
+    members {
+        individual {
+            get(id: $id) {
+                data {
+                    member {
+                        id
+                        address {
+                            permanent {
+                                state
+                                district
+                                vdc
+                                wardNo
+                                locality
+                            }
+                            temporary {
+                                state
+                                district
+                                vdc
+                                wardNo
+                                locality
+                            }
+                        }
+                        contact {
+                            mobile
+                            office
+                            residence
+                        }
+                        personalInformation {
+                            name {
+                                firstName
+                                middleName
+                                lastName
+                            }
+                            gender
+                            title
+                            dateOfBirth
+                            nationality
+                            citizenship {
+                                number
+                                issuePlace
+                                issueDate
+                            }
+                            occupation
+                            panNumber
+                        }
+                    }
+                }
             }
-            contact {
-              mobile
-              office
-              residence
-            }
-            personalInformation {
-              name {
-                firstName
-                middleName
-                lastName
-              }
-              gender
-              title
-              dateOfBirth
-              nationality
-              citizenship {
-                number
-                issuePlace
-                issueDate
-              }
-              occupation
-              panNumber
-            }
-          }
         }
-      }
     }
-  }
 }
 
 query getShareHistory($memberId: String!) {
-  share {
-    register(
-      paginate: { first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA" }
-      filter: { memberId: $memberId }
-    ) {
-      edges {
-        node {
-          id
-          member {
-            id
-          }
-          shareStatus
-          transactionDate
-          transactionDirection
-          noOfShare
-          shareStartNumber
-          shareEndNumber
-          shareAmount
-          balance
+    share {
+        register(
+            paginate: { first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA" }
+            filter: { memberId: $memberId }
+        ) {
+            edges {
+                node {
+                    id
+                    member {
+                        id
+                    }
+                    shareStatus
+                    transactionDate
+                    transactionDirection
+                    shareStartNumber
+                    shareEndNumber
+                    shareCr
+                    shareDr
+                    balance
+                }
+            }
         }
-      }
     }
-  }
 }

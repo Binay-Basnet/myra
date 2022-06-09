@@ -27,7 +27,6 @@ import {
   Text,
   TextFields,
   TextInput,
-  // Button,
 } from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
@@ -110,14 +109,12 @@ const SharePurchase = () => {
           <Box w="100%">
             <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
               <TextInput
+                mb="20px"
                 w="50%"
                 label=" Member Search"
                 placeholder="Enter Member ID"
                 onChange={(e) => setMemberIdQuery(e.target.value)}
               />
-
-              <br />
-              <br />
 
               {data && (
                 <Box
@@ -400,15 +397,15 @@ const SharePurchase = () => {
               <Text
                 color="neutralColorLight.Gray-60"
                 fontSize="r2"
-                fontWeight="SemiBold"
+                fontWeight="600"
                 mb="8px"
               >
                 Payment Information
               </Text>
               <Text
-                color="neutralColorLight.Gray-60"
+                color="neutralColorLight.Gray-80"
                 fontSize="s3"
-                fontWeight="Medium"
+                fontWeight="500"
                 mb="8px"
               >
                 Payment Mode
@@ -416,7 +413,13 @@ const SharePurchase = () => {
 
               <br />
 
-              <SwitchTabs onclick={switchTabsFxn} list={accountList} />
+              <SwitchTabs
+                onclick={switchTabsFxn}
+                list={accountList.map((value) => ({
+                  key: value,
+                  value: value,
+                }))}
+              />
 
               <br />
 
@@ -441,20 +444,23 @@ const SharePurchase = () => {
                     ]}
                   />
                   <br />
-                  <Box p={2} bg="background.500">
-                    <Text>Available balance</Text>
-                    <Text
-                      fontWeight="SemiBold"
-                      fontSize="r1"
-                      color="neutralColorLight.Gray-70"
-                    >
+                  <Box
+                    px="s16"
+                    py="s8"
+                    bg="background.500"
+                    color="neutralColorLight.Gray-70"
+                  >
+                    <Text fontWeight="400" fontSize="s2">
+                      Available balance
+                    </Text>
+                    <Text fontWeight="600" fontSize="r1">
                       Rs. 12,342
                     </Text>
                   </Box>
                 </Box>
               )}
               {selectedTab === 'Bank Voucher' && (
-                <Box w="25%">
+                <Box w="25%" display="flex" flexDirection="column" gap="s16">
                   <Select
                     label="Select Bank"
                     placeholder="Select Bank"
@@ -474,12 +480,14 @@ const SharePurchase = () => {
                     ]}
                   />
                   <br />
-                  <TextInput
-                    type="text"
-                    name="name"
-                    placeholder="Enter Voucher Number"
-                    label="Enter Voucher Number"
-                  />
+                  <Box>
+                    <TextInput
+                      type="text"
+                      name="name"
+                      placeholder="Enter Voucher Number"
+                      label="Enter Voucher Number"
+                    />
+                  </Box>
                 </Box>
               )}
 

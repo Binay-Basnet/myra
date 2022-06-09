@@ -5,7 +5,6 @@ import { useGetInventoryVendorQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
-import { TableSearch } from '../../TableSearch';
 
 export const InventoryVendorTable = () => {
   const { data, isLoading } = useGetInventoryVendorQuery();
@@ -54,7 +53,6 @@ export const InventoryVendorTable = () => {
   return (
     <>
       <TableListPageHeader heading={'Vendor'} />
-      <TableSearch />
 
       <Table
         isLoading={isLoading}

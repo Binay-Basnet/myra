@@ -4,6 +4,7 @@ import {
   DefaultFilterTypes,
   FilterProps,
   FilterType,
+  FooterProps,
   Renderer,
 } from 'react-table';
 
@@ -46,16 +47,28 @@ export type ExtraColumnProps = Partial<{
 export type Column<T extends Maybe<Record<string, unknown>>> = BaseColumn<T> &
   ExtraColumnProps & {
     id?: string;
+
+    // Disable Sort for each column.
     disableSortBy?: boolean;
+
+    // Disable Filter for each column.
     disableFilters?: boolean;
+
+    // Filter Function
     filter?:
       | FilterType<NonNullable<T>>
       | DefaultFilterTypes
       | 'numberAll'
       | Omit<string, DefaultFilterTypes | 'numberAll'>;
 
+    // Filter Custom Component
     Filter?: Renderer<FilterColumnProps<NonNullable<T>>>;
+
+    // Custom Cell Component
     Cell?: Renderer<CellProps<NonNullable<T>>>;
+
+    // Custom Footer Component
+    Footer?: Renderer<FooterProps<NonNullable<T>>>;
   };
 
 export type FilterTableProps =
@@ -80,10 +93,6 @@ export type SortTableProps =
 
 export type Maybe<T> = T | null;
 
-export type PartialNull<T> = {
-  [P in keyof T]?: T[P] | null;
-};
-
 export interface BaseTableProps<T extends Record<string, unknown>> {
   data: Maybe<Array<Maybe<T>>>;
   columns: Maybe<Array<Maybe<Column<Maybe<T>>>>>;
@@ -94,10 +103,20 @@ export interface BaseTableProps<T extends Record<string, unknown>> {
   name?: string;
   manualSort?: boolean;
   isStatic?: boolean;
+
+  pagination?: {
+    total: number | string;
+    startCursor: string;
+    endCursor: string;
+  };
+
+  searchPlaceholder?: string;
 }
 
 export type TableProps<T extends Record<string, unknown>> = BaseTableProps<T> &
   SortTableProps &
-  FilterTableProps;
+  FilterTableProps & {
+    showFooters?: boolean;
+  };
 
 export type { Cell, HeaderGroup } from 'react-table';

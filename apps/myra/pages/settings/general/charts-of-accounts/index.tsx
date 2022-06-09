@@ -17,24 +17,27 @@ const ChartsOfAccounts = () => {
   return (
     <Box width="full">
       <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems={'center'}
-        px="5"
         background="white"
-        borderBottom="1px solid #E6E6E6"
-        borderTopRadius={5}
+        display="flex"
+        px="s16"
+        justifyContent="space-between"
+        borderBottom="1px solid"
+        borderBottomColor="#E6E6E6"
+        borderTopRadius="br3"
+        height="60px"
       >
-        <Text fontSize="r2" fontWeight="600">
-          Charts Of Accounts
-        </Text>
-        <Box>
+        <Box background="white" display="flex" gap="s48">
+          <Text fontSize="r2" fontWeight="600" my="auto">
+            Charts Of Accounts
+          </Text>
+
           <ChakraTab
             onclick={switchTabsFxn}
             tabList={['Full View', 'Account List']}
           />
         </Box>
-        <Box>
+
+        <Box my="auto">
           <Button
             onClick={() =>
               router.push(

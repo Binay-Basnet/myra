@@ -7,6 +7,7 @@ import {
   AmountInput,
   Box,
   Button,
+  Container,
   Divider,
   Grid,
   GridItem,
@@ -17,10 +18,18 @@ import {
 } from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
+import SettingsFormLayout from '../../../../components/SettingsLayout/SettingsFormLayout';
 
-const list = ['Yes', 'No'];
-const accountList = ['Cash', 'Journal', 'Bank'];
+const list = [
+  { key: 'yes', value: 'Yes' },
+  { key: 'no', value: 'No' },
+];
+
+const accountList = [
+  { key: 'cash', value: 'Cash' },
+  { key: 'bank', value: 'Bank' },
+  { key: 'journal', value: 'Journal' },
+];
 
 const AddNewAccount = () => {
   const { control } = useForm();
@@ -32,16 +41,20 @@ const AddNewAccount = () => {
   };
 
   return (
-    <Box width="full" borderBottom="1px" borderBottomColor="border.layout">
+    <Container
+      minW="container.xl"
+      height="fit-content"
+      p="0"
+      pb="55px"
+      background="white"
+    >
       <Box
         height="60px"
         display="flex"
         justifyContent="space-between"
         alignItems={'center'}
         px="5"
-        background="white"
         borderBottom="1px solid #E6E6E6"
-        borderTopRadius={5}
       >
         <Text fontSize="r2" fontWeight="600">
           Add New Account
@@ -82,8 +95,8 @@ const AddNewAccount = () => {
           <GridItem>
             <TextInput
               id="accountName"
-              label="Account Name"
-              placeholder="Account Name"
+              label="Under"
+              placeholder="Staff Bonus Fund"
             />
           </GridItem>
 
@@ -146,27 +159,30 @@ const AddNewAccount = () => {
       <Box
         display="flex"
         flexDirection="column"
+        gap="s16"
         p="5"
         background="white"
         borderBottom="1px solid #E6E6E6"
         borderTopRadius={5}
       >
         <Box mb="5px">
-          <Text mb="5px">Type of Account</Text>
+          <Text fontSize="s2" mb="s4">
+            Type of Account
+          </Text>
           <SwitchTabs onclick={switchTabsFxn} list={accountList} />
         </Box>
 
         {selectedTab === 'Cash' && (
-          <Box display="flex" justifyContent="flex-start">
-            <FormControl w="35%">
+          <Grid templateColumns="repeat(3,1fr)" gap={5}>
+            <GridItem>
               <AmountInput label="Opening Balance" />
-            </FormControl>
-          </Box>
+            </GridItem>
+          </Grid>
         )}
 
         {selectedTab === 'Journal' && (
           <Box display="flex" justifyContent="flex-start">
-            <Box w="70%">
+            <Box w="50%">
               <Box display="flex" gap={5} justifyContent="space-around">
                 <FormControl>
                   <AmountInput label="Opening Balance" />
@@ -208,7 +224,7 @@ const AddNewAccount = () => {
                   <AmountInput label="Opening Balance" />
                 </FormControl>
                 <FormControl w="50%">
-                  <TextInput label=" Bank GL Code" />
+                  <TextInput label=" Bank GL Code" placeholder="GL Code" />
                 </FormControl>
               </Box>
             </Box>
@@ -340,12 +356,12 @@ const AddNewAccount = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
 export default AddNewAccount;
 
 AddNewAccount.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return <SettingsFormLayout>{page}</SettingsFormLayout>;
 };

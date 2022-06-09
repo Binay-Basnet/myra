@@ -1,9 +1,5 @@
 import { useMemo } from 'react';
-import {
-  PopoverComponent,
-  TableListPageHeader,
-  TableSearch,
-} from '@coop/myra/components';
+import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetBranchesListQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 
@@ -58,7 +54,7 @@ export const SettingsBranchesTable = () => {
   return (
     <>
       <TableListPageHeader heading={'Branches'} />
-      <TableSearch />
+
       <Table
         isLoading={isLoading}
         data={rowData ?? []}

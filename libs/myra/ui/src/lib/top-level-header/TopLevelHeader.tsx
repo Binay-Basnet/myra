@@ -1,4 +1,14 @@
-import { Box, Avatar } from '@coop/myra/ui';
+import {
+  Box,
+  Avatar,
+  Icon,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Select,
+  SwitchTabs,
+} from '@coop/myra/ui';
 import {
   Image,
   Text,
@@ -14,13 +24,22 @@ import { IoSearchSharp } from 'react-icons/io5';
 import { CgMenuGridO } from 'react-icons/cg';
 import { MdOutlineHelpOutline } from 'react-icons/md';
 import { BiBell } from 'react-icons/bi';
-import { useState } from 'react';
-import { Icon } from '@coop/myra/ui';
+import { useState, useRef } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
   imageSrc?: string;
 }
+
+const languageList = [
+  { key: 'en', value: 'EN' },
+  { key: 'ne', value: 'ने' },
+];
+
+const calendarList = [
+  { key: 'ad', value: 'AD' },
+  { key: 'bs', value: 'BS' },
+];
 
 export function TopLevelHeader(props: TopLevelHeaderProps) {
   const [isClose, setIsClose] = useState(true);
@@ -162,16 +181,168 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             borderRadius={'br1'}
           />
 
-          <Box
-            w="40px"
-            h="40px"
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            _hover={{ backgroundColor: 'secondary.900' }}
-          >
-            <Avatar src={'/avatar.png'} size="sm" />{' '}
-          </Box>
+          <Popover placement="bottom-end">
+            {({ isOpen }) => (
+              <>
+                <PopoverTrigger>
+                  <Box
+                    w="40px"
+                    h="40px"
+                    display={'flex'}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                    bg={isOpen ? 'secondary.900' : 'secondary.700'}
+                    _hover={{ backgroundColor: 'secondary.900' }}
+                  >
+                    <Avatar src={'/avatar.png'} size="sm" />
+                  </Box>
+                </PopoverTrigger>
+                <PopoverContent
+                  bg="gray.0"
+                  w="260px"
+                  border="2px"
+                  borderColor="#E0E5EB"
+                  boxShadow={'none'}
+                  outline={'none'}
+                  _focus={{ boxShadow: 'none' }}
+                  color="white"
+                  zIndex="2000"
+                >
+                  <PopoverBody px="s8" paddingTop="s8">
+                    <Box display="flex" flexDirection="column">
+                      <Box
+                        p="12px"
+                        display="flex"
+                        flexDirection="row"
+                        borderBottom="1px solid #E6E6E6"
+                      >
+                        <Avatar src={'/avatar.png'} size="sm" />
+                        <Box
+                          ml="14px"
+                          display="flex"
+                          flexDirection="column"
+                          justifyContent="space-between"
+                        >
+                          <Text
+                            fontWeight="SemiBold"
+                            fontSize="s2"
+                            color="primary.500"
+                          >
+                            Anish Bhusal
+                          </Text>
+                          <Text
+                            fontWeight="Regular"
+                            fontSize="s2"
+                            color="gray.500"
+                          >
+                            Teller
+                          </Text>
+                        </Box>
+                      </Box>
+
+                      <Box p="12px" borderBottom="1px solid #E6E6E6">
+                        <Select
+                          label="Branch"
+                          placeholder="Lalitpur"
+                          options={[
+                            {
+                              label: 'Lalitpur',
+                              value: 'lalitpur',
+                            },
+                            {
+                              label: 'Option 2',
+                              value: 'option-2',
+                            },
+                            {
+                              label: 'Option 3',
+                              value: 'option-3',
+                            },
+                          ]}
+                        />
+                      </Box>
+
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="space-between"
+                        p="12px"
+                        borderBottom="1px solid #E6E6E6"
+                      >
+                        <Text
+                          mb="4px"
+                          fontWeight="Medium"
+                          fontSize="s3"
+                          color="neutralColorLight.Gray-80"
+                        >
+                          Language
+                        </Text>
+                        <SwitchTabs size="sm" list={languageList} />
+                      </Box>
+
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="space-between"
+                        p="12px"
+                        borderBottom="1px solid #E6E6E6"
+                      >
+                        <Text
+                          mb="4px"
+                          fontWeight="Medium"
+                          fontSize="s3"
+                          color="neutralColorLight.Gray-80"
+                        >
+                          Calendar
+                        </Text>
+                        <SwitchTabs size="sm" list={calendarList} />
+                      </Box>
+
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="space-between"
+                        paddingTop="12px"
+                      >
+                        <Box
+                          _hover={{
+                            bg: 'background.500',
+                          }}
+                          px="s8"
+                          py="s8"
+                        >
+                          <Text
+                            textAlign="start"
+                            mb="4px"
+                            fontWeight="Regular"
+                            fontSize="r1"
+                            color="neutralColorLight.Gray-80"
+                          >
+                            Profile Settings
+                          </Text>
+                        </Box>
+
+                        <Box
+                          _hover={{
+                            bg: 'background.500',
+                          }}
+                          px="s8"
+                          py="s8"
+                        >
+                          <Text
+                            fontWeight="Regular"
+                            fontSize="r1"
+                            color="neutralColorLight.Gray-80"
+                          >
+                            Logout
+                          </Text>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </PopoverBody>
+                </PopoverContent>
+              </>
+            )}
+          </Popover>
         </Box>
       </Box>
     </Box>

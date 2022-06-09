@@ -1,0 +1,19 @@
+import React from 'react';
+import { Box } from '@coop/myra/ui';
+
+import SettingsLayout from '.';
+
+interface ISettingsLayout {
+  children: React.ReactNode;
+}
+
+const SettingsFormLayout = ({ children }: ISettingsLayout) => (
+  <>
+    <SettingsLayout />
+    <Box py="s16" px="s40">
+      {children}
+    </Box>
+  </>
+);
+
+export default SettingsFormLayout;

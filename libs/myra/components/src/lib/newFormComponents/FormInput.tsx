@@ -25,9 +25,10 @@ export const FormInput = <T,>({
         name={name}
         render={({ field: { onChange } }) => (
           <TextInput
+            id={name}
             placeholder={placeholder}
             name={name}
-            id={name}
+            type={type}
             onChange={onChange}
             {...rest}
           />

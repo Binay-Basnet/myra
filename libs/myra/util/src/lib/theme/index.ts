@@ -21,6 +21,7 @@ export const theme = extendTheme({
         fontSize: 'md',
         background: '#EEF2F7',
         lineHeight: 'tall',
+        scrollBehavior: 'smooth',
       },
     }),
   },
