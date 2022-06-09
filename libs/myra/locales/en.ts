@@ -70,7 +70,7 @@ const en = {
   searchMembers: 'Search Members',
 
   // member add form page
-  membersFormAddNewMembers: 'Add New Members',
+  membersFormAddNewMembers: 'Add New Member',
   memberPersonalInformation: 'Personal Information',
   memberFirstName: 'First Name',
   memberMiddleName: 'Middle Name',

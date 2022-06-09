@@ -9,6 +9,7 @@ export const FormFooter = (props: formFooter) => {
   const { onClick } = props;
   return (
     <Box
+      bottom={0}
       display="flex"
       bg="gray.0"
       justifyContent="space-between"

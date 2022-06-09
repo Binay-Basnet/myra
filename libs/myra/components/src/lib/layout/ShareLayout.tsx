@@ -85,6 +85,18 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
               justifyContent="center"
               cursor="pointer"
               onClick={() => router.push('/share/share-purchase')}
+              as="button"
+              lineHeight="1.2"
+              minWidth={300}
+              px="8px"
+              boxShadow={'none'}
+              color="#4b4f56"
+              _hover={{ bg: '#ebedf0', color: 'primary.500' }}
+              _active={{
+                bg: '#dddfe2',
+                transform: 'scale(0.98)',
+                borderColor: 'primary.500',
+              }}
             >
               <Icon
                 mb="10px"
@@ -115,6 +127,18 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
               justifyContent="center"
               cursor="pointer"
               onClick={() => router.push('/share/share-return')}
+              as="button"
+              lineHeight="1.2"
+              minWidth={300}
+              px="8px"
+              boxShadow={'none'}
+              color="#4b4f56"
+              _hover={{ bg: '#ebedf0', color: 'primary.500' }}
+              _active={{
+                bg: '#dddfe2',
+                transform: 'scale(0.98)',
+                borderColor: 'primary.500',
+              }}
             >
               <Icon
                 mb="10px"
