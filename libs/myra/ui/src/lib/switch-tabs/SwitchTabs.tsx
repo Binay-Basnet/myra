@@ -23,6 +23,7 @@ export interface SwitchTabsProps
   label?: string;
   activeTab?: number;
   setActiveTab: React.Dispatch<React.SetStateAction<number>>;
+  id?: string;
 }
 
 const TabElement = chakra(Tab, {
@@ -54,10 +55,15 @@ const TabElement = chakra(Tab, {
 });
 
 export function SwitchTabs(props: SwitchTabsProps) {
-  const { list, onClick, label, setActiveTab, activeTab } = props;
+  const { list, onClick, label, setActiveTab, activeTab, id } = props;
 
   return (
-    <ChakraSwitchTabs size="sm" variant="unstyled" defaultIndex={activeTab}>
+    <ChakraSwitchTabs
+      size="sm"
+      variant="unstyled"
+      defaultIndex={activeTab}
+      id={id}
+    >
       {label && <TextFields mb="s16">{label}</TextFields>}
       <TabList
         borderRadius="br2"

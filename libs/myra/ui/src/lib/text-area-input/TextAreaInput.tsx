@@ -8,11 +8,12 @@ export interface TextAreaInputProps extends TextareaProps {
   label?: string;
   labelColor?: string;
   placeholder?: string;
+  id?: string;
 }
 
 export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>(
   (props, ref) => {
-    const { labelColor, label, placeholder, ...rest } = props;
+    const { labelColor, label, placeholder, id, ...rest } = props;
     return (
       <>
         <TextFields variant="formLabel" color={labelColor}>
@@ -27,6 +28,7 @@ export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>(
           p="s12"
           fontSize={'s2'}
           focusBorderColor="primary.500"
+          id={id}
         ></Textarea>
       </>
     );

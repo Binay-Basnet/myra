@@ -7,14 +7,19 @@ interface IFormInputProps extends TextAreaInputProps {
   name: string;
 }
 
-export const FormTextArea = ({ control, name, ...rest }: IFormInputProps) => {
+export const FormTextArea = ({
+  control,
+  name,
+  id,
+  ...rest
+}: IFormInputProps) => {
   return (
     <Box>
       <Controller
         control={control}
         name={name}
         render={({ field: { onChange } }) => (
-          <TextAreaInput onChange={onChange} {...rest} />
+          <TextAreaInput id={name} onChange={onChange} {...rest} />
         )}
       />
     </Box>

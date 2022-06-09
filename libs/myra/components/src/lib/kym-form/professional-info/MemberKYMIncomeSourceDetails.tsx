@@ -79,7 +79,7 @@ export const MemberKYMIncomeSourceDetails = ({ control }: any) => {
           </Text>
           <Box display="flex" flexDirection="column" gap="s8">
             {annualFamilyIncome.map((item, index) => (
-              <Checkbox key={index}>
+              <Checkbox key={index} id="incomeSourceDetails">
                 <Text fontSize="s3">{item}</Text>
               </Checkbox>
             ))}
