@@ -167,32 +167,15 @@ export type AdministrationQueryWardsArgs = {
   provinceId: Scalars['Int'];
 };
 
-export type AllDocuments = {
-  data: Array<DocumentOption>;
-  hasOtherField: Scalars['Boolean'];
-  maxSize: Scalars['String'];
-};
-
-export type AllDocumentsInput = {
-  data?: InputMaybe<Array<DocumentInput>>;
-  hasOtherField: Scalars['Boolean'];
-  maxSize: Scalars['String'];
-};
-
-export type AllOptions = {
-  data: Array<Option>;
-  hasOtherField: Scalars['Boolean'];
-};
-
-export type AllOptionsInput = {
-  data?: InputMaybe<Array<OptionInput>>;
-  hasOtherField: Scalars['Boolean'];
-};
-
 export enum Arrange {
   Ascending = 'ASCENDING',
   Descending = 'DESCENDING'
 }
+
+export type Bad_Request = {
+  code: Scalars['String'];
+  message: Scalars['String'];
+};
 
 export type Base = {
   createdAt: Scalars['Time'];
@@ -368,16 +351,6 @@ export enum DashboardTodayType {
   Withdraws = 'WITHDRAWS'
 }
 
-export type Declaration = {
-  id: Scalars['ID'];
-  name: Scalars['String'];
-};
-
-export type DeclarationInput = {
-  id: Scalars['ID'];
-  name: Scalars['String'];
-};
-
 export type District = {
   id: Scalars['Int'];
   municipalities: Array<Municipality>;
@@ -388,18 +361,6 @@ export type District = {
 export type Document = {
   photo?: Maybe<Scalars['String']>;
   signature?: Maybe<Scalars['String']>;
-};
-
-export type DocumentInput = {
-  enabled?: InputMaybe<Scalars['Boolean']>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-};
-
-export type DocumentOption = {
-  enabled: Scalars['Boolean'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
 };
 
 export type EBankingAccountQuery = {
@@ -542,6 +503,252 @@ export type EBankingGrievanceQueryHistoryArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
 };
 
+export type EBankingKymCooperativeMembership = {
+  estimatedAnnualDepositAmount?: Maybe<Scalars['Float']>;
+  estimatedAnnualLoanAmount?: Maybe<Scalars['Float']>;
+  estimatedAnnualTransactionAmount?: Maybe<Scalars['Float']>;
+  estimatedAnnualTransactionFrequencyId?: Maybe<Scalars['ID']>;
+  familyMemberInThisCooperative?: Maybe<Array<Maybe<KymFamilyMemberDetailsInThisCooperativeFormState>>>;
+  isMemberOfAnotherCooperative?: Maybe<Scalars['Boolean']>;
+  loan?: Maybe<Scalars['Float']>;
+  memberNumberInAnotherCooperative?: Maybe<Scalars['String']>;
+  nameAndAddressOfAnotherCooperative?: Maybe<Scalars['String']>;
+  other?: Maybe<Scalars['Float']>;
+  purposeId?: Maybe<Scalars['ID']>;
+  savings?: Maybe<Scalars['Float']>;
+  share?: Maybe<Scalars['Int']>;
+};
+
+export type EBankingKymCooperativeMembershipInput = {
+  estimatedAnnualDepositAmount?: InputMaybe<Scalars['Float']>;
+  estimatedAnnualLoanAmount?: InputMaybe<Scalars['Float']>;
+  estimatedAnnualTransactionAmount?: InputMaybe<Scalars['Float']>;
+  estimatedAnnualTransactionFrequencyId?: InputMaybe<Scalars['ID']>;
+  familyMemberInThisCooperative?: InputMaybe<Array<InputMaybe<KymFamilyMemberDetailsInThisCooperative>>>;
+  isMemberOfAnotherCooperative?: InputMaybe<Scalars['Boolean']>;
+  loan?: InputMaybe<Scalars['Float']>;
+  memberNumberInAnotherCooperative?: InputMaybe<Scalars['String']>;
+  nameAndAddressOfAnotherCooperative?: InputMaybe<Scalars['String']>;
+  other?: InputMaybe<Scalars['Float']>;
+  purposeId?: InputMaybe<Scalars['ID']>;
+  savings?: InputMaybe<Scalars['Float']>;
+  share?: InputMaybe<Scalars['Int']>;
+};
+
+export type EBankingKymCooperativeMembershipResult = {
+  error?: Maybe<EBankingKymIndAddError>;
+  query?: Maybe<EBankingQuery>;
+  record?: Maybe<EBankingKymCooperativeMembership>;
+  recordId: Scalars['ID'];
+};
+
+export type EBankingKymDeclaration = {
+  beneficialFullName?: Maybe<Scalars['String']>;
+  beneficialRelationshipId?: Maybe<Scalars['ID']>;
+  convictionDetails?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<KymDocumentsFormState>>>;
+  foreignResidencyType?: Maybe<Scalars['ID']>;
+  hasBeneficialOwner?: Maybe<Scalars['Boolean']>;
+  hasForeignResidentialPermit?: Maybe<Scalars['Boolean']>;
+  isConvicted?: Maybe<Scalars['Boolean']>;
+  isPoliticallyExposed?: Maybe<Scalars['Boolean']>;
+  localKinAddress?: Maybe<Scalars['String']>;
+  localKinContact?: Maybe<Scalars['String']>;
+  localKinName?: Maybe<Scalars['String']>;
+  localKinRelationshipId?: Maybe<Scalars['ID']>;
+};
+
+export type EBankingKymDeclarationInput = {
+  beneficialFullName?: InputMaybe<Scalars['String']>;
+  beneficialRelationshipId?: InputMaybe<Scalars['ID']>;
+  convictionDetails?: InputMaybe<Scalars['String']>;
+  documents?: InputMaybe<Array<InputMaybe<KymDocuments>>>;
+  foreignResidencyType?: InputMaybe<Scalars['ID']>;
+  hasBeneficialOwner?: InputMaybe<Scalars['Boolean']>;
+  hasForeignResidentialPermit?: InputMaybe<Scalars['Boolean']>;
+  isConvicted?: InputMaybe<Scalars['Boolean']>;
+  isPoliticallyExposed?: InputMaybe<Scalars['Boolean']>;
+  localKinAddress?: InputMaybe<Scalars['String']>;
+  localKinContact?: InputMaybe<Scalars['String']>;
+  localKinName?: InputMaybe<Scalars['String']>;
+  localKinRelationshipId?: InputMaybe<Scalars['ID']>;
+};
+
+export type EBankingKymDeclarationResult = {
+  error?: Maybe<EBankingKymIndAddError>;
+  query?: Maybe<EBankingQuery>;
+  record?: Maybe<EBankingKymDeclaration>;
+  recordId: Scalars['ID'];
+};
+
+export type EBankingKymIndAddError = EBankingKymInvalidDataError;
+
+export type EBankingKymInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type EBankingKymMutation = {
+  add?: Maybe<EBankingKymSectionMutation>;
+  newKymId: Scalars['ID'];
+};
+
+
+export type EBankingKymMutationAddArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type EBankingKymMutationNewKymIdArgs = {
+  cooperativeId: Scalars['ID'];
+  memberId: Scalars['ID'];
+};
+
+export type EBankingKymPersonalInformation = {
+  dateOfBirth?: Maybe<Scalars['String']>;
+  educationQualificationId?: Maybe<Scalars['ID']>;
+  email?: Maybe<Scalars['String']>;
+  ethnicityId?: Maybe<Scalars['ID']>;
+  familyDetails?: Maybe<Array<Maybe<KymFamilyDetailsFormState>>>;
+  firstName?: Maybe<Scalars['String']>;
+  genderId?: Maybe<Scalars['ID']>;
+  identification?: Maybe<Array<Maybe<KymIdentificationFormState>>>;
+  isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
+  landlordContact?: Maybe<Scalars['String']>;
+  landlordName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  latitude?: Maybe<Scalars['String']>;
+  livingInRentedHouse?: Maybe<Scalars['Boolean']>;
+  longitude?: Maybe<Scalars['String']>;
+  maritalStatusId?: Maybe<Scalars['ID']>;
+  middleName?: Maybe<Scalars['String']>;
+  mobileNumber?: Maybe<Scalars['Int']>;
+  nationalityId?: Maybe<Scalars['ID']>;
+  permanentDistrictId?: Maybe<Scalars['ID']>;
+  permanentLocalityId?: Maybe<Scalars['ID']>;
+  permanentMunicipalityId?: Maybe<Scalars['ID']>;
+  permanentStateId?: Maybe<Scalars['ID']>;
+  permanentTole?: Maybe<Scalars['String']>;
+  permanentWardId?: Maybe<Scalars['ID']>;
+  phoneNumber?: Maybe<Scalars['Int']>;
+  religionId?: Maybe<Scalars['ID']>;
+  temporaryDistrictId?: Maybe<Scalars['ID']>;
+  temporaryLocalityId?: Maybe<Scalars['ID']>;
+  temporaryMunicipalityId?: Maybe<Scalars['ID']>;
+  temporaryStateId?: Maybe<Scalars['ID']>;
+  temporaryTole?: Maybe<Scalars['String']>;
+  temporaryWardId?: Maybe<Scalars['ID']>;
+};
+
+export type EBankingKymPersonalInformationInput = {
+  dateOfBirth?: InputMaybe<Scalars['String']>;
+  educationQualificationId?: InputMaybe<Scalars['ID']>;
+  email?: InputMaybe<Scalars['String']>;
+  ethnicityId?: InputMaybe<Scalars['ID']>;
+  familyDetails?: InputMaybe<Array<InputMaybe<KymFamilyDetails>>>;
+  firstName?: InputMaybe<Scalars['String']>;
+  genderId?: InputMaybe<Scalars['ID']>;
+  identification?: InputMaybe<Array<InputMaybe<KymIdentification>>>;
+  isPermanentAndTemporaryAddressSame?: InputMaybe<Scalars['Boolean']>;
+  landlordContact?: InputMaybe<Scalars['String']>;
+  landlordName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  latitude?: InputMaybe<Scalars['String']>;
+  livingInRentedHouse?: InputMaybe<Scalars['Boolean']>;
+  longitude?: InputMaybe<Scalars['String']>;
+  maritalStatusId?: InputMaybe<Scalars['ID']>;
+  middleName?: InputMaybe<Scalars['String']>;
+  mobileNumber?: InputMaybe<Scalars['Int']>;
+  nationalityId?: InputMaybe<Scalars['ID']>;
+  permanentDistrictId?: InputMaybe<Scalars['ID']>;
+  permanentLocalityId?: InputMaybe<Scalars['ID']>;
+  permanentMunicipalityId?: InputMaybe<Scalars['ID']>;
+  permanentStateId?: InputMaybe<Scalars['ID']>;
+  permanentTole?: InputMaybe<Scalars['String']>;
+  permanentWardId?: InputMaybe<Scalars['ID']>;
+  phoneNumber?: InputMaybe<Scalars['Int']>;
+  religionId?: InputMaybe<Scalars['ID']>;
+  temporaryDistrictId?: InputMaybe<Scalars['ID']>;
+  temporaryLocalityId?: InputMaybe<Scalars['ID']>;
+  temporaryMunicipalityId?: InputMaybe<Scalars['ID']>;
+  temporaryStateId?: InputMaybe<Scalars['ID']>;
+  temporaryTole?: InputMaybe<Scalars['String']>;
+  temporaryWardId?: InputMaybe<Scalars['ID']>;
+};
+
+export type EBankingKymPersonalInformationResult = {
+  error?: Maybe<EBankingKymIndAddError>;
+  query?: Maybe<EBankingQuery>;
+  record?: Maybe<EBankingKymPersonalInformation>;
+  recordId: Scalars['ID'];
+};
+
+export type EBankingKymProfessionalInformation = {
+  annualIncomeSourceId?: Maybe<Scalars['ID']>;
+  incomeSourceDetails?: Maybe<Array<Maybe<KymIncomeSourceDetailsFormState>>>;
+  mainOccupation?: Maybe<Array<Maybe<KymOccupationDetailsFormState>>>;
+  spouseOccupation?: Maybe<Array<Maybe<KymOccupationDetailsFormState>>>;
+};
+
+export type EBankingKymProfessionalInformationInput = {
+  annualIncomeSourceId?: InputMaybe<Scalars['ID']>;
+  incomeSourceDetails?: InputMaybe<Array<InputMaybe<KymIncomeSourceDetails>>>;
+  mainOccupation?: InputMaybe<Array<InputMaybe<KymOccupationDetails>>>;
+  spouseOccupation?: InputMaybe<Array<InputMaybe<KymOccupationDetails>>>;
+};
+
+export type EBankingKymProfessionalInformationResult = {
+  error?: Maybe<EBankingKymIndAddError>;
+  query?: Maybe<EBankingQuery>;
+  record?: Maybe<EBankingKymProfessionalInformation>;
+  recordId: Scalars['ID'];
+};
+
+export type EBankingKymQuery = {
+  formState: EBankingKymSectionResult;
+};
+
+
+export type EBankingKymQueryFormStateArgs = {
+  id: Scalars['ID'];
+  section: EBankingKymSection;
+};
+
+export enum EBankingKymSection {
+  CooperativeMembership = 'Cooperative_Membership',
+  Declaration = 'Declaration',
+  PersonalInformation = 'Personal_Information',
+  ProfessionalInformation = 'Professional_Information'
+}
+
+export type EBankingKymSectionMutation = {
+  cooperativeMembership?: Maybe<EBankingKymCooperativeMembershipResult>;
+  declaration?: Maybe<EBankingKymDeclarationResult>;
+  personalInformation?: Maybe<EBankingKymPersonalInformationResult>;
+  professionalInformation?: Maybe<EBankingKymProfessionalInformationResult>;
+};
+
+
+export type EBankingKymSectionMutationCooperativeMembershipArgs = {
+  data?: InputMaybe<EBankingKymCooperativeMembershipInput>;
+};
+
+
+export type EBankingKymSectionMutationDeclarationArgs = {
+  data?: InputMaybe<EBankingKymDeclarationInput>;
+};
+
+
+export type EBankingKymSectionMutationPersonalInformationArgs = {
+  data?: InputMaybe<EBankingKymPersonalInformationInput>;
+};
+
+
+export type EBankingKymSectionMutationProfessionalInformationArgs = {
+  data?: InputMaybe<EBankingKymProfessionalInformationInput>;
+};
+
+export type EBankingKymSectionResult = EBankingKymCooperativeMembership | EBankingKymDeclaration | EBankingKymPersonalInformation | EBankingKymProfessionalInformation;
+
 export type EBankingLoanHistory = {
   activeLoanStatus?: Maybe<EBankingActiveLoanStatus>;
   amount: Scalars['Float'];
@@ -563,6 +770,10 @@ export type EBankingLoanQueryHistoryArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
 };
 
+export type EBankingMutation = {
+  kym?: Maybe<EBankingKymMutation>;
+};
+
 export type EBankingNotificationQuery = {
   announcements?: Maybe<EBankingAnnouncementQuery>;
   appNotifications?: Maybe<EBankingAppNotificationQuery>;
@@ -572,6 +783,7 @@ export type EBankingQuery = {
   account?: Maybe<EBankingAccountQuery>;
   cooperativeServices?: Maybe<EBankingCooperativeServiceQuery>;
   home: EBankingCombined;
+  kym?: Maybe<EBankingKymQuery>;
   me?: Maybe<Member>;
   notification?: Maybe<EBankingNotificationQuery>;
   services?: Maybe<Array<Maybe<Services>>>;
@@ -646,6 +858,21 @@ export type ExampleInput = {
 export type ExampleMutation = {
   level1: Level1;
 };
+
+export enum Field_Types {
+  Amount = 'AMOUNT',
+  Date = 'DATE',
+  District = 'DISTRICT',
+  Email = 'EMAIL',
+  LocalLevel = 'LOCAL_LEVEL',
+  Multiple = 'MULTIPLE',
+  NumberInput = 'NUMBER_INPUT',
+  PhoneNumber = 'PHONE_NUMBER',
+  Province = 'PROVINCE',
+  Single = 'SINGLE',
+  TextBox = 'TEXT_BOX',
+  TextInput = 'TEXT_INPUT'
+}
 
 export type FamilyDetails = {
   fatherName?: Maybe<Scalars['String']>;
@@ -754,16 +981,16 @@ export type GeneralOrganizationSettingsQueryGetOrganizationArgs = {
 };
 
 export type GeneralSettingsMutation = {
+  KYM?: Maybe<KymMutation>;
   branch?: Maybe<GeneralBranchSettingsMutation>;
   chartsOfAccount?: Maybe<GeneralChartsOfAccountSettingsMutation>;
-  kym?: Maybe<KymMutation>;
   organization?: Maybe<GeneralOrganizationSettingsMutation>;
 };
 
 export type GeneralSettingsQuery = {
+  KYM?: Maybe<KymQuery>;
   branch?: Maybe<GeneralBranchSettingsQuery>;
   chartsOfAccount?: Maybe<GeneralChartsOfAccountSettingsQuery>;
-  kym?: Maybe<KymQuery>;
   organization?: Maybe<GeneralOrganizationSettingsQuery>;
 };
 
@@ -1088,6 +1315,303 @@ export type InventoryQuery = {
   vendors?: Maybe<InvVendorsQuery>;
 };
 
+export type KymAllowed = {
+  allowed: Scalars['Boolean'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type KymAllowedError = KymAllowedInvalidDataError;
+
+export type KymAllowedInput = {
+  allowed: Scalars['Boolean'];
+  id: Scalars['ID'];
+};
+
+export type KymAllowedInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type KymAllowedResult = {
+  error?: Maybe<KymAllowedError>;
+  query?: Maybe<KymQuery>;
+  record?: Maybe<KymAllowed>;
+  recordId: Scalars['ID'];
+};
+
+export type KymCategory = {
+  categoryType: Kym_Category_Type;
+  data?: Maybe<Array<KymOption>>;
+  dependsOn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  enabled?: Maybe<Scalars['Boolean']>;
+  hasOtherField: Scalars['Boolean'];
+  id: Scalars['ID'];
+  isCustom?: Maybe<Scalars['Boolean']>;
+  isIdetificationDoc?: Maybe<Scalars['Boolean']>;
+  maxSize?: Maybe<Scalars['Int']>;
+  name: Scalars['String'];
+};
+
+export type KymCategoryError = Bad_Request;
+
+export type KymCategoryInput = {
+  categoryType: Kym_Category_Type;
+  data?: InputMaybe<Array<InputMaybe<KymOptionInput>>>;
+  enabled: Scalars['Boolean'];
+  hasOtherField: Scalars['Boolean'];
+  name: Scalars['String'];
+};
+
+export type KymCategoryMutation = {
+  add?: Maybe<KymCategoryMutationResult>;
+  update?: Maybe<KymCategoryMutationResult>;
+};
+
+
+export type KymCategoryMutationAddArgs = {
+  data: KymCategoryInput;
+};
+
+
+export type KymCategoryMutationUpdateArgs = {
+  data: KymCategoryUpdateInput;
+  id: Scalars['ID'];
+};
+
+export type KymCategoryMutationResult = {
+  error?: Maybe<KymCategoryUpdateError>;
+  query?: Maybe<KymCategoryQuery>;
+  record?: Maybe<KymCategory>;
+  recordId: Scalars['ID'];
+};
+
+export type KymCategoryQuery = {
+  list?: Maybe<KymListCategoryResult>;
+};
+
+
+export type KymCategoryQueryListArgs = {
+  filter?: InputMaybe<ListKymCategoryFilter>;
+};
+
+export type KymCategoryResult = {
+  error?: Maybe<KymCategoryError>;
+  query?: Maybe<KymQuery>;
+  record?: Maybe<KymCategory>;
+  recordId: Scalars['ID'];
+};
+
+export type KymCategoryUpdateError = Bad_Request;
+
+export type KymCategoryUpdateInput = {
+  categoryType?: InputMaybe<Kym_Category_Type>;
+  enabled?: InputMaybe<Scalars['Boolean']>;
+  hasOtherField?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type KymConditionalOptionResult = {
+  error?: Maybe<KymOptionError>;
+  query?: Maybe<KymGeneralSettingsQuery>;
+  record?: Maybe<KymCategory>;
+  recordId: Scalars['ID'];
+};
+
+export type KymCustomCategoryResult = {
+  error?: Maybe<KymCategoryError>;
+  query?: Maybe<KymQuery>;
+  record?: Maybe<KymCategory>;
+  recordId: Scalars['ID'];
+};
+
+export type KymDeclaration = {
+  content: Scalars['String'];
+  id: Scalars['ID'];
+};
+
+export type KymDeclarationError = Bad_Request;
+
+export type KymDeclarationInput = {
+  content: Scalars['String'];
+};
+
+export type KymDeclarationMutation = {
+  update: KymDeclarationResult;
+};
+
+
+export type KymDeclarationMutationUpdateArgs = {
+  data: KymDeclarationInput;
+};
+
+export type KymDeclarationResult = {
+  error?: Maybe<KymDeclarationError>;
+  query?: Maybe<KymQuery>;
+  record?: Maybe<KymDeclaration>;
+  recordId: Scalars['ID'];
+};
+
+export type KymGeneralSettingsMutation = {
+  addRiskLevel: KymMemberRiskResult;
+  switchAllowed: KymAllowedResult;
+  updateRiskLevel: KymMemberRiskResult;
+};
+
+
+export type KymGeneralSettingsMutationAddRiskLevelArgs = {
+  data: KymMemberRiskInput;
+};
+
+
+export type KymGeneralSettingsMutationSwitchAllowedArgs = {
+  input: KymAllowedInput;
+};
+
+
+export type KymGeneralSettingsMutationUpdateRiskLevelArgs = {
+  data: KymMemberRiskInput;
+};
+
+export type KymGeneralSettingsQuery = {
+  allowed: Array<KymAllowed>;
+  riskLevel: Array<Maybe<KymMemberRisk>>;
+};
+
+export type KymIndividualSettingsMutation = {
+  category: KymCategoryMutation;
+  condition: KymConditionalOptionResult;
+  declaration: KymDeclarationMutation;
+  maxSize: KymMaxSizeResult;
+  option: KymOptionMutation;
+};
+
+
+export type KymIndividualSettingsMutationConditionArgs = {
+  categoryId: Scalars['ID'];
+  dependsOn: Array<InputMaybe<Scalars['ID']>>;
+};
+
+
+export type KymIndividualSettingsMutationMaxSizeArgs = {
+  categoryId: Scalars['ID'];
+};
+
+export type KymIndividualSettingsQuery = {
+  category: KymCategoryQuery;
+  declaration: KymDeclaration;
+};
+
+export type KymListCategoryError = Bad_Request;
+
+export type KymListCategoryResult = {
+  data?: Maybe<Array<Maybe<KymCategory>>>;
+  error?: Maybe<KymListCategoryError>;
+};
+
+export type KymMaxSizeError = Bad_Request;
+
+export type KymMaxSizeResult = {
+  error?: Maybe<KymMaxSizeError>;
+  query?: Maybe<KymGeneralSettingsQuery>;
+  record?: Maybe<KymCategory>;
+  recordId: Scalars['ID'];
+};
+
+export type KymMemberRisk = {
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  years: Scalars['Float'];
+};
+
+export type KymMemberRiskError = KymMemberRiskInvalidDataError;
+
+export type KymMemberRiskInput = {
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  years: Scalars['Float'];
+};
+
+export type KymMemberRiskInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type KymMemberRiskResult = {
+  error?: Maybe<KymMemberRiskError>;
+  query?: Maybe<KymQuery>;
+  record?: Maybe<KymMemberRisk>;
+  recordId: Scalars['ID'];
+};
+
+export type KymMutation = {
+  general: KymGeneralSettingsMutation;
+  individual: KymIndividualSettingsMutation;
+};
+
+export type KymOption = {
+  enabled: Scalars['Boolean'];
+  fieldType?: Maybe<Field_Types>;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type KymOptionDeleteResult = {
+  error?: Maybe<KymOptionError>;
+  query?: Maybe<KymQuery>;
+  recordId: Scalars['ID'];
+};
+
+export type KymOptionError = Bad_Request;
+
+export type KymOptionInput = {
+  enabled: Scalars['Boolean'];
+  fieldType?: InputMaybe<Field_Types>;
+  id?: InputMaybe<Scalars['ID']>;
+  name: Scalars['String'];
+};
+
+export type KymOptionMutation = {
+  arrange: KymOptionResult;
+  delete: KymOptionDeleteResult;
+  update: KymOptionResult;
+};
+
+
+export type KymOptionMutationArrangeArgs = {
+  from: Scalars['Int'];
+  optionId: Scalars['ID'];
+  to: Scalars['Int'];
+};
+
+
+export type KymOptionMutationDeleteArgs = {
+  optionId: Scalars['ID'];
+};
+
+
+export type KymOptionMutationUpdateArgs = {
+  categoryId: Scalars['ID'];
+  data: KymOptionInput;
+};
+
+export type KymOptionResult = {
+  error?: Maybe<KymOptionError>;
+  query: KymQuery;
+  record?: Maybe<KymOption>;
+  recordId: Scalars['ID'];
+};
+
+export type KymQuery = {
+  general: KymGeneralSettingsQuery;
+  individual: KymIndividualSettingsQuery;
+};
+
+export enum Kym_Category_Type {
+  Group = 'GROUP',
+  Multi = 'MULTI',
+  Single = 'SINGLE',
+  Upload = 'UPLOAD'
+}
+
 export type KymAdditionalFields = {
   name?: InputMaybe<Scalars['String']>;
   value?: InputMaybe<Scalars['String']>;
@@ -1241,7 +1765,7 @@ export type KymIndFormData = {
   genderId?: Maybe<Scalars['ID']>;
   hasBeneficialOwner?: Maybe<Scalars['Boolean']>;
   hasForeignResidentialPermit?: Maybe<Scalars['Boolean']>;
-  identification?: Maybe<Array<Maybe<KymFamilyDetailsFormState>>>;
+  identification?: Maybe<Array<Maybe<KymIdentificationFormState>>>;
   incomeSourceDetails?: Maybe<Array<Maybe<KymIncomeSourceDetailsFormState>>>;
   isConvicted?: Maybe<Scalars['Boolean']>;
   isMemberOfAnotherCooperative?: Maybe<Scalars['Boolean']>;
@@ -1306,7 +1830,7 @@ export type KymIndMemberInput = {
   ethnicityId?: InputMaybe<Scalars['ID']>;
   familyDetails?: InputMaybe<Array<InputMaybe<KymFamilyDetails>>>;
   familyMemberInThisCooperative?: InputMaybe<Array<InputMaybe<KymFamilyMemberDetailsInThisCooperative>>>;
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName: Scalars['String'];
   foreignResidentialPermitDetails?: InputMaybe<Array<InputMaybe<KymIdentification>>>;
   genderId?: InputMaybe<Scalars['ID']>;
   hasBeneficialOwner?: InputMaybe<Scalars['Boolean']>;
@@ -1523,141 +2047,6 @@ export enum KymMemberTypesEnum {
   Institution = 'INSTITUTION'
 }
 
-export type KymMutation = {
-  contact: AllOptions;
-  declaration: Declaration;
-  educationQualification: AllOptions;
-  estimatedWithdrawInfo: AllOptions;
-  ethnicity: AllOptions;
-  familyRelationship: AllOptions;
-  fileDocumentNeeded: AllDocuments;
-  financialTransactionDetails: AllOptions;
-  foreignEmploymentOption: AllOptions;
-  gender: AllOptions;
-  identificationDocuments: AllOptions;
-  incomeSourceDetail: AllOptions;
-  incomeSourceOption: AllOptions;
-  maritalStatus: AllOptions;
-  nationality: AllOptions;
-  nextToKin: AllOptions;
-  occupation: AllOptions;
-  occupationDetails: AllOptions;
-  otherCooperativeDetails: AllOptions;
-  purposeOfBecomingASaccosMember: AllOptions;
-  religion: AllOptions;
-  riskLevel: AllOptions;
-};
-
-
-export type KymMutationContactArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationDeclarationArgs = {
-  data?: InputMaybe<DeclarationInput>;
-};
-
-
-export type KymMutationEducationQualificationArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationEstimatedWithdrawInfoArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationEthnicityArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationFamilyRelationshipArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationFileDocumentNeededArgs = {
-  data?: InputMaybe<AllDocumentsInput>;
-};
-
-
-export type KymMutationFinancialTransactionDetailsArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationForeignEmploymentOptionArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationGenderArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationIdentificationDocumentsArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationIncomeSourceDetailArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationIncomeSourceOptionArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationMaritalStatusArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationNationalityArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationNextToKinArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationOccupationArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationOccupationDetailsArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationOtherCooperativeDetailsArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationPurposeOfBecomingASaccosMemberArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationReligionArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
-
-export type KymMutationRiskLevelArgs = {
-  data?: InputMaybe<AllOptionsInput>;
-};
-
 export type KymOccupationDetails = {
   additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
   address?: InputMaybe<Scalars['String']>;
@@ -1676,31 +2065,6 @@ export type KymOccupationDetailsFormState = {
   orgName?: Maybe<Scalars['String']>;
 };
 
-export type KymQuery = {
-  contact: AllOptions;
-  declaration: Declaration;
-  educationQualification: AllOptions;
-  estimatedWithdrawInfo: AllOptions;
-  ethnicity: AllOptions;
-  familyRelationship: AllOptions;
-  fileDocumentNeeded: AllDocuments;
-  financialTransactionDetails: AllOptions;
-  foreignEmploymentOption: AllOptions;
-  gender: AllOptions;
-  identificationDocuments: AllOptions;
-  incomeSourceDetail: AllOptions;
-  incomeSourceOption: AllOptions;
-  maritalStatus: AllOptions;
-  nationality: AllOptions;
-  nextToKin: AllOptions;
-  occupation: AllOptions;
-  occupationDetails: AllOptions;
-  otherCooperativeDetails: AllOptions;
-  purposeOfBecomingASaccosMember: AllOptions;
-  religion: AllOptions;
-  riskLevel: AllOptions;
-};
-
 export type Level1 = {
   level2: Level2;
 };
@@ -1717,6 +2081,14 @@ export type Level2 = {
 
 export type Level2AddArgs = {
   data: ExampleInput;
+};
+
+export type ListKymCategoryFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  isCustom?: InputMaybe<Scalars['Boolean']>;
+  isIdetificationDoc?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export type Member = Base & {
@@ -1795,6 +2167,7 @@ export type Municipality = {
 };
 
 export type Mutation = {
+  eBanking: EBankingMutation;
   example: ExampleMutation;
   inventory: InventoryMutation;
   members: MemberMutation;
@@ -1837,18 +2210,6 @@ export enum ObjState {
   Draft = 'DRAFT',
   Validated = 'VALIDATED'
 }
-
-export type Option = {
-  enabled: Scalars['Boolean'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
-};
-
-export type OptionInput = {
-  enabled?: InputMaybe<Scalars['Boolean']>;
-  id: Scalars['ID'];
-  name: Scalars['String'];
-};
 
 export type OrConditions = {
   andConditions: Array<Condition>;
@@ -2065,6 +2426,7 @@ export type Query = {
   eBanking: EBankingQuery;
   inventory: InventoryQuery;
   members: MemberQuery;
+  routesAndCodes: RoutesAndCodesQuery;
   settings: SettingsQuery;
   share: ShareQuery;
 };
@@ -2077,6 +2439,25 @@ export type Result = {
   id: Scalars['Int'];
   name: Scalars['String'];
   nameNp: Scalars['String'];
+};
+
+export type RoutesAndCodes = {
+  code?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type RoutesAndCodesFilter = {
+  code?: InputMaybe<Scalars['Int']>;
+  slug?: InputMaybe<Scalars['String']>;
+};
+
+export type RoutesAndCodesQuery = {
+  list: Array<RoutesAndCodes>;
+};
+
+
+export type RoutesAndCodesQueryListArgs = {
+  filter?: InputMaybe<RoutesAndCodesFilter>;
 };
 
 export enum Share_Status {

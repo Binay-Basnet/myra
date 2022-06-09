@@ -54,7 +54,8 @@ const coopmembership: string[] = [
 ];
 const Decleration: string[] = [
   'Next to Kin',
-  'Family members in politics,"Beneficial Owner',
+  'Family members in politics',
+  'Beneficial Owner',
   'Convicted/Non-convicted Status',
   'Residential permit of foreign country?',
 ];
@@ -74,6 +75,7 @@ const Decleration: string[] = [
 // });
 export function AccorrdianAddMember({ formStatus, kymCurrentSection }) {
   const section = kymCurrentSection?.section;
+  const subsection = kymCurrentSection?.subSection;
   const [isOpenPersonal, setIsOpenPersonal] = React.useState(false);
   const [isOpenProfessional, setIsOpenProfessional] = React.useState(false);
   const [isOpenCoopMemberShip, setIsOpenCoopMembership] = React.useState(false);
@@ -82,6 +84,8 @@ export function AccorrdianAddMember({ formStatus, kymCurrentSection }) {
   React.useEffect(() => {
     setIsOpenPersonal(section === 'personalDetails');
     setIsOpenProfessional(section === 'professionalDetails');
+    setIsOpenCoopMembership(section === 'COOPmembership');
+    setIsOpenDeclaration(section === 'declaration');
   }, [kymCurrentSection]);
 
   return (
@@ -106,20 +110,31 @@ export function AccorrdianAddMember({ formStatus, kymCurrentSection }) {
       </Box>
       <br />
       <Collapse in={isOpenPersonal}>
-        {PersonalInformation.map((item, index) => (
-          <Box key={`${item}${index}`} display="flex">
-            <Text mb="s16" pl="s16" fontSize="r1" fontWeight="400">
-              {item}
-            </Text>
-            &nbsp; &nbsp;
-            {formStatus?.personal?.completed.includes(
-              personalInfoEnum[item]
-            ) && <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />}
-            {formStatus?.personal?.error.includes(personalInfoEnum[item]) && (
-              <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />
-            )}
-          </Box>
-        ))}
+        <Box display={'flex'} flexDirection="column" mb="s16">
+          {PersonalInformation.map((item, index) => (
+            <Box
+              key={`${item}${index}`}
+              display="flex"
+              alignItems={'center'}
+              px={subsection === item ? 's16' : '0'}
+              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              py="s8"
+            >
+              <Text pl="s16" fontSize="r1" fontWeight="400">
+                {item}
+              </Text>
+              &nbsp; &nbsp;
+              {formStatus?.personal?.completed.includes(
+                personalInfoEnum[item]
+              ) && (
+                <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
+              )}
+              {formStatus?.personal?.error.includes(personalInfoEnum[item]) && (
+                <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />
+              )}
+            </Box>
+          ))}
+        </Box>
       </Collapse>
 
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -142,17 +157,22 @@ export function AccorrdianAddMember({ formStatus, kymCurrentSection }) {
       </Box>
       <br />
       <Collapse in={isOpenProfessional}>
-        {ProfessionalDetails.map((item, index) => (
-          <Text
-            key={`${item}${index}`}
-            mb="s16"
-            pl="s16"
-            fontSize="r1"
-            fontWeight="400"
-          >
-            {item}
-          </Text>
-        ))}
+        <Box display={'flex'} flexDirection="column" mb="s16">
+          {ProfessionalDetails.map((item, index) => (
+            <Box
+              key={`${item}${index}`}
+              display="flex"
+              alignItems={'center'}
+              px={subsection === item ? 's16' : '0'}
+              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              py="s8"
+            >
+              <Text mb="s16" pl="s16" fontSize="r1" fontWeight="400">
+                {item}
+              </Text>
+            </Box>
+          ))}
+        </Box>
       </Collapse>
 
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -175,17 +195,22 @@ export function AccorrdianAddMember({ formStatus, kymCurrentSection }) {
       </Box>
       <br />
       <Collapse in={isOpenCoopMemberShip}>
-        {coopmembership.map((item, index) => (
-          <Text
-            key={`${item}${index}`}
-            mb="s16"
-            pl="s16"
-            fontSize="r1"
-            fontWeight="400"
-          >
-            {item}
-          </Text>
-        ))}
+        <Box display={'flex'} flexDirection="column" mb="s16">
+          {coopmembership.map((item, index) => (
+            <Box
+              key={`${item}${index}`}
+              display="flex"
+              alignItems={'center'}
+              px={subsection === item ? 's16' : '0'}
+              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              py="s8"
+            >
+              <Text mb="s16" pl="s16" fontSize="r1" fontWeight="400">
+                {item}
+              </Text>
+            </Box>
+          ))}
+        </Box>
       </Collapse>
 
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -208,17 +233,22 @@ export function AccorrdianAddMember({ formStatus, kymCurrentSection }) {
       </Box>
       <br />
       <Collapse in={isOpenDeclaration}>
-        {Decleration.map((item, index) => (
-          <Text
-            key={`${item}${index}`}
-            mb="s16"
-            pl="s16"
-            fontSize="r1"
-            fontWeight="400"
-          >
-            {item}
-          </Text>
-        ))}
+        <Box display={'flex'} flexDirection="column" mb="s16">
+          {Decleration.map((item, index) => (
+            <Box
+              key={`${item}${index}`}
+              display="flex"
+              alignItems={'center'}
+              px={subsection === item ? 's16' : '0'}
+              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              py="s8"
+            >
+              <Text mb="s16" pl="s16" fontSize="r1" fontWeight="400">
+                {item}
+              </Text>
+            </Box>
+          ))}
+        </Box>
       </Collapse>
     </Box>
   );
