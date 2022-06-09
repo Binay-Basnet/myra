@@ -381,6 +381,7 @@ export const KYCIndividualPersonal = () => {
         )}
       </AccordionItem>
       {/* ============================================= part 4 ============================================================ */}
+      {/* ===============================================================part4===================================================== */}
       <AccordionItem mt="s16">
         {({ isExpanded }) => (
           <>
@@ -389,6 +390,93 @@ export const KYCIndividualPersonal = () => {
                 <Text fontSize={'r1'} fontWeight="600">
                   {' '}
                   Section 4 : Documents and Declarations
+                </Text>
+              </Box>
+              {isExpanded ? (
+                <>
+                  <Button
+                    variant="ghost"
+                    size={'md'}
+                    shade="primary"
+                    leftIcon={<AddIcon />}
+                    mr="s8"
+                  >
+                    Add New Field
+                  </Button>
+                  <IoChevronUpOutline fontSize="18px" />
+                </>
+              ) : (
+                <IoChevronDownOutline fontSize="18px" />
+              )}
+            </AccordionButton>
+
+            <AccordionPanel pb={2}>
+              <Accordion allowMultiple allowToggle mb="0" px="s12" pb="s12">
+                {' '}
+                {PersonalInformation.map((item, index) => (
+                  // <Text key={`${item}${index}`}>{item}</Text>
+                  <AccordionItem key={`${item}${index}`} mt="s12">
+                    {({ isExpanded }) => (
+                      <>
+                        <AccordionButton
+                          bg={isExpanded ? '#E0E5EB' : ''}
+                          h="60px"
+                        >
+                          <Box flex="1" textAlign="left">
+                            <Text fontSize={'r1'} fontWeight="500">
+                              {' '}
+                              {item}
+                            </Text>
+                          </Box>
+                          {isExpanded ? (
+                            <IoChevronUpOutline fontSize="18px" />
+                          ) : (
+                            <IoChevronDownOutline fontSize="18px" />
+                          )}
+                        </AccordionButton>
+                        <AccordionPanel
+                          pb={'0'}
+                          border={'1px'}
+                          borderColor={'border.layout'}
+                        >
+                          {Gender()}
+                        </AccordionPanel>
+                        <AccordionPanel pb="0">
+                          <Box
+                            display="flex"
+                            alignItems={'center'}
+                            justifyContent="space-between"
+                            h="60px"
+                          >
+                            <Button
+                              variant="ghost"
+                              size={'md'}
+                              shade="primary"
+                              leftIcon={<AddIcon />}
+                            >
+                              Add New Option
+                            </Button>
+                            <Checkbox children="Show “Other” option" />
+                          </Box>
+                        </AccordionPanel>
+                      </>
+                    )}
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </AccordionPanel>
+          </>
+        )}
+      </AccordionItem>
+      {/* ============================================= part 5 ============================================================ */}
+      <AccordionItem mt="s16">
+        {({ isExpanded }) => (
+          <>
+            <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
+              <Box flex="1" textAlign="left">
+                <Text fontSize={'r1'} fontWeight="600">
+                  {' '}
+                  Section 5 : Custom Fields
                 </Text>
               </Box>
               {isExpanded ? (

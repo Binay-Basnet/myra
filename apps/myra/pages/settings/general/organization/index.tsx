@@ -146,6 +146,10 @@ const Organization = () => {
                   name="organizationLogo"
                   size="lg"
                 />
+                <Box mt="s60" display={'flex'} justifyContent="flex-end">
+                  {' '}
+                  <Button size={'md'}>Save Changes</Button>
+                </Box>
               </Box>
             </Box>
           </Box>
