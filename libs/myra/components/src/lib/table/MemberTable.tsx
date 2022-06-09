@@ -18,8 +18,6 @@ export const MemberTable = () => {
     before: router.query['before'] as string,
   });
 
-  console.log(isLoading);
-
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
   const popoverTitle = ['View Member Profile', 'Edit Member', 'Make Inactive'];

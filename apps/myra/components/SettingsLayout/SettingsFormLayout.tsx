@@ -10,7 +10,7 @@ interface ISettingsLayout {
 const SettingsFormLayout = ({ children }: ISettingsLayout) => (
   <>
     <SettingsLayout />
-    <Box py="s16" px="s40">
+    <Box paddingTop="s16" px="s40">
       {children}
     </Box>
   </>

@@ -61,13 +61,13 @@ export const ShareRegisterTable = () => {
       },
 
       {
-        Header: 'From - To',
+        Header: 'To - From',
         accessor: 'node.shareStartNumber',
-
+        width: '10%',
         Cell: ({ value, row }) => {
           return (
             <span>
-              {value} to {row?.original?.node?.shareEndNumber}
+              {value} - {row?.original?.node?.shareEndNumber}
             </span>
           );
         },
@@ -80,7 +80,9 @@ export const ShareRegisterTable = () => {
         isNumeric: true,
 
         Cell: ({ value, row }) => {
-          return <span>{value ? value : '-'}</span>;
+          return (
+            <span>{value ? `Rs. ${value.toLocaleString('en-IN')}` : '-'}</span>
+          );
         },
       },
       {
@@ -89,7 +91,9 @@ export const ShareRegisterTable = () => {
         isNumeric: true,
         accessor: 'node.shareCr',
         Cell: ({ value, row }) => {
-          return <span>{value ? value : '-'}</span>;
+          return (
+            <span>{value ? `Rs. ${value.toLocaleString('en-IN')}` : '-'}</span>
+          );
         },
       },
       {
@@ -97,7 +101,7 @@ export const ShareRegisterTable = () => {
         accessor: 'node.balance',
         isNumeric: true,
         Cell: ({ value, row }) => {
-          return <span>{Number(value).toFixed(2)}</span>;
+          return <span>Rs.{Number(value).toLocaleString('en-IN')}</span>;
         },
       },
       {

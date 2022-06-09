@@ -35,6 +35,6 @@ export * from './table/settings/chartsOfAccounts/branches/branchesTable';
 export * from './table/settings/chartsOfAccounts/CoaAccountListTable';
 export * from './table/share';
 export * from './table/ShareTable';
-export * from './table/ShareTable';
 export * from './TableListPageHeader';
 export * from './TableSearch';
+export * from './table/kymDetail/index';

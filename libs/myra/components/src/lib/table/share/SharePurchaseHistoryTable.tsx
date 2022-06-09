@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useGetShareHistoryQuery } from '@coop/myra/graphql';
 import { Column, Table } from '@coop/myra/ui';
 import format from 'date-fns/format';
+// import { amountConverter } from '../../../../../util/src/utilFunctions/amountFunc';
 
 type shareHistoryProps = {
   id: string;
@@ -53,7 +54,9 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         isNumeric: true,
 
         Cell: ({ value, row }) => {
-          return <span>{value ? value : '-'}</span>;
+          return (
+            <span> {value ? `Rs. ${value.toLocaleString('en-IN')}` : '-'}</span>
+          );
         },
       },
       {
@@ -62,7 +65,9 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         isNumeric: true,
         accessor: 'node.shareCr',
         Cell: ({ value, row }) => {
-          return <span>{value ? value : '-'}</span>;
+          return (
+            <span> {value ? `Rs. ${value.toLocaleString('en-IN')}` : '-'}</span>
+          );
         },
       },
       {
@@ -70,17 +75,18 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         accessor: 'node.balance',
         isNumeric: true,
         Cell: ({ value }) => {
-          return <span>{value.toFixed(2)}</span>;
+          return <span>Rs.{value.toLocaleString('en-IN')}</span>;
         },
         Footer: (props) => {
           return (
             <div>
+              Rs.
               {props.rows
                 .reduce(
                   (sum, row) => Number(row.original.node.balance) + sum,
                   0
                 )
-                .toFixed(2)}
+                .toLocaleString('en-IN')}
             </div>
           );
         },

@@ -107,11 +107,11 @@ const SharePurchase = () => {
         </Box>
         <Box display="flex" width="100%">
           <Box w="100%">
-            <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
+            <Box background="white" p={5}>
               <TextInput
                 mb="20px"
                 w="50%"
-                label=" Member Search"
+                label=" Select Member"
                 placeholder="Enter Member ID"
                 onChange={(e) => setMemberIdQuery(e.target.value)}
               />
@@ -507,7 +507,7 @@ const SharePurchase = () => {
         <br />
       </Container>
 
-      <Container minW="container.md" height="fit-content" p="0">
+      <Container minW="container.xl" height="fit-content" p="0">
         <FormFooter onClick={() => router.push('/share/balance')} />
       </Container>
     </Form>

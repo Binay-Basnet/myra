@@ -96,12 +96,14 @@ export function Table<T extends Record<string, unknown>>({
 
   return (
     <>
-      <TableSearch
-        placeholder={searchPlaceholder}
-        pagination={pagination}
-        size={tableSize}
-        setSize={setTableSize}
-      />
+      {!isStatic && (
+        <TableSearch
+          placeholder={searchPlaceholder}
+          pagination={pagination}
+          size={tableSize}
+          setSize={setTableSize}
+        />
+      )}
       <TableContainer>
         <ChakraTable
           size={tableSize}

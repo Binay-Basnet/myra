@@ -54,7 +54,7 @@ export const ShareBalanceTable = () => {
         Header: 'Balance',
         accessor: 'node.balance',
         Cell: ({ value, row }) => {
-          return <span>{Number(value).toFixed(2)}</span>;
+          return <span> Rs. {Number(value).toLocaleString('en-IN')}</span>;
         },
         isNumeric: true,
       },

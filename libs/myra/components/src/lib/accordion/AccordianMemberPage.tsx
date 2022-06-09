@@ -1,23 +1,9 @@
 import React from 'react';
-import {
-  AiFillCaretRight,
-  AiOutlineCaretDown,
-  AiOutlineCaretRight,
-} from 'react-icons/ai';
+import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { BsCheckCircleFill } from 'react-icons/bs';
-import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Button,
-  Collapse,
-  Icon,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
+import { KymIndAddSectionStatus } from '@coop/myra/graphql';
 
 const PersonalInformation: string[] = [
   'Basic Information',
@@ -73,8 +59,17 @@ const Decleration: string[] = [
 //     _selected: { color: '#37474F', bg: '#E2E8EE', fontWeight: '500' },
 //   },
 // });
-export function AccorrdianAddMember({ formStatus, kymCurrentSection }) {
-  const section = kymCurrentSection?.section;
+
+interface AccordianProps {
+  formStatus: KymIndAddSectionStatus;
+  kymCurrentSection: {
+    section: string;
+    subSection: string;
+  };
+}
+
+export function AccorrdianAddMember(props: AccordianProps) {
+  const { formStatus, kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
   const [isOpenPersonal, setIsOpenPersonal] = React.useState(false);
   const [isOpenProfessional, setIsOpenProfessional] = React.useState(false);
@@ -82,6 +77,7 @@ export function AccorrdianAddMember({ formStatus, kymCurrentSection }) {
   const [isOpenDeclaration, setIsOpenDeclaration] = React.useState(false);
 
   React.useEffect(() => {
+    const section = kymCurrentSection?.section;
     setIsOpenPersonal(section === 'personalDetails');
     setIsOpenProfessional(section === 'professionalDetails');
     setIsOpenCoopMembership(section === 'COOPmembership');
