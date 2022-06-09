@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BiBell } from 'react-icons/bi';
 import { CgMenuGridO } from 'react-icons/cg';
@@ -28,6 +28,7 @@ import {
 } from '@coop/myra/ui';
 import { format } from 'date-fns';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
@@ -48,7 +49,11 @@ const currentDate = format(new Date(), 'yyyy-MM-dd');
 const closingDate = format(new Date(), 'yyyy-MM-dd');
 
 export function TopLevelHeader(props: TopLevelHeaderProps) {
+  const router = useRouter();
   const [isClose, setIsClose] = useState(true);
+  const locale = router?.locale;
+  const [activeTab, setActiveTab] = useState<number>(locale === 'ne' ? 1 : 0);
+
   return (
     <Box
       h="60px"
@@ -354,7 +359,18 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         >
                           Language
                         </Text>
-                        <SwitchTabs size="sm" list={languageList} />
+                        <SwitchTabs
+                          size="sm"
+                          list={languageList}
+                          activeTab={activeTab}
+                          setActiveTab={setActiveTab}
+                          onClick={() => {
+                            const locale = activeTab === 1 ? 'en' : 'ne';
+                            router.push(`/${router.asPath}`, undefined, {
+                              locale,
+                            });
+                          }}
+                        />
                       </Box>
 
                       <Box
