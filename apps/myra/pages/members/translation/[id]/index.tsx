@@ -1,9 +1,18 @@
 import React, { ReactElement } from 'react';
 import { GrClose } from 'react-icons/gr';
 import { useGetMemberTranslationQuery } from '@coop/myra/graphql';
-import { Box, Button, Container, Input, MainLayout, Text } from '@coop/myra/ui';
+import {
+  Box,
+  Button,
+  Container,
+  Input,
+  MainLayout,
+  Text,
+  Icon,
+} from '@coop/myra/ui';
 import { useTranslation } from '@coop/myra/util';
 import { useRouter } from 'next/router';
+import { AiOutlineEye } from 'react-icons/ai';
 
 const Translation = () => {
   const { t } = useTranslation();
@@ -24,7 +33,7 @@ const Translation = () => {
         px="5"
         background="white"
         borderBottom="1px solid #E6E6E6"
-        borderTopRadius={5}
+        borderTopRadius="br3"
         boxShadow="xl"
       >
         <Text fontSize="r2" fontWeight="SemiBold">
@@ -81,8 +90,26 @@ const Translation = () => {
         borderTopRadius={5}
       >
         <Text>Form Details saved to draft</Text>
-        <Box>
-          <Button variant="ghost">Save Draft</Button>
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="flex-end"
+          alignSelf="center"
+        >
+          <Box display="flex" justifyContent="flex-end" alignSelf="center">
+            <Button type="submit" variant="ghost">
+              <Icon as={AiOutlineEye} color="primary.500" />
+              <Text
+                alignSelf="center"
+                color="primary.500"
+                fontWeight="Medium"
+                fontSize="s2"
+                ml="5px"
+              >
+                Preview
+              </Text>
+            </Button>
+          </Box>
           &nbsp;
           <Button onClick={() => router.push(`/members/details/${id}`)}>
             Complete

@@ -9,7 +9,7 @@ import {
   KYMDocumentDeclaration,
   KYMEstimatedAmount,
   KYMFinancialTransactionDetails,
-  KYMLocation,
+  // KYMLocation,
   MemberKYMAddress,
   MemberKYMBasicInfo,
   MemberKYMContactDetails,
@@ -31,15 +31,16 @@ import {
   Button,
   Checkbox,
   Container,
-  Divider,
   IconButton,
   MainLayout,
   Text,
   TextFields,
+  Icon,
 } from '@coop/myra/ui';
 import { useTranslation } from '@coop/myra/util';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
+import { BiSave } from 'react-icons/bi';
 
 // import { useSetMemberDataMutation } from '../../../../generated/graphql';
 
@@ -112,7 +113,7 @@ const AddMember = () => {
               px="5"
               background="white"
               borderBottom="1px solid #E6E6E6"
-              borderTopRadius={5}
+              borderTopRadius="br3"
             >
               <Text fontSize="r2" fontWeight="SemiBold">
                 {t.membersFormAddNewMembers}
@@ -201,7 +202,7 @@ const AddMember = () => {
                     </Text>
                     <ContainerWithDivider>
                       <KYMDeclaration control={control} />
-                      <KYMLocation control={control} />
+                      {/* <KYMLocation control={control} /> */}
                       <KYMDocumentDeclaration control={control} />
                     </ContainerWithDivider>
                   </SectionContainer>
@@ -238,17 +239,33 @@ const AddMember = () => {
             boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
           >
             <Text>Form Details saved to draft</Text>
-            <Box>
-              <Button type="submit" variant="ghost">
-                Save Draft
-              </Button>
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="flex-end"
+              alignSelf="center"
+            >
+              <Box display="flex" justifyContent="flex-end" alignSelf="center">
+                <Button type="submit" variant="ghost">
+                  <Icon as={BiSave} color="primary.500" />
+                  <Text
+                    alignSelf="center"
+                    color="primary.500"
+                    fontWeight="Medium"
+                    fontSize="s2"
+                    ml="5px"
+                  >
+                    Save Draft
+                  </Text>
+                </Button>
+              </Box>
               &nbsp;
               <Button onClick={() => router.push(`/members/translation/${id}`)}>
                 Next
               </Button>
             </Box>
           </Box>
-        </form>{' '}
+        </form>
         <Box position="relative" width="100%" h="80px">
           <Box
             position="fixed"
@@ -256,7 +273,6 @@ const AddMember = () => {
             pt="20px"
             bg="gray.100"
             width={1248}
-            // zIndex="200"
           >
             <Container minW="container.xl" height="fit-content">
               <Box

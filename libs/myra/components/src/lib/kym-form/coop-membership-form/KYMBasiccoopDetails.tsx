@@ -8,14 +8,25 @@ import {
   GridItem,
   Icon,
   Input,
-  RadioGroup,
   Select,
   Text,
   TextFields,
+  SwitchTabs,
 } from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
-import { FormRadioGroup, FormSelect } from '../../newFormComponents';
+import { FormSelect } from '../../newFormComponents';
+
+const booleanList = [
+  {
+    key: 'yes',
+    value: 'Yes',
+  },
+  {
+    key: 'no',
+    value: 'No',
+  },
+];
 
 export const KYMBasiccoopDetails = ({ control }: any) => {
   const {
@@ -42,12 +53,14 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
         />
       </InputGroupContainer>
 
-      <FormRadioGroup
+      <SwitchTabs label="Member of Another cooperative" list={booleanList} />
+
+      {/* <FormRadioGroup
         control={control}
         label="Member of Another cooperative"
         name={'isMemberOfAnothercooperative'}
         radioList={['Yes', 'No']}
-      />
+      /> */}
 
       <Box display="flex" flexDirection="column" gap="s4">
         <TextFields variant="formLabel">Membership Details</TextFields>
@@ -84,10 +97,11 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
       </Box>
 
       <Box display="flex" flexDirection="column" gap="s8">
-        <TextFields variant="formLabel">
-          Family Member in this institution
-        </TextFields>
-        <RadioGroup direction="row" radioList={['Yes', 'No']} />
+        <SwitchTabs
+          label="Family Member in this institution"
+          list={booleanList}
+        />
+        {/* <RadioGroup direction="row" radioList={['Yes', 'No']} /> */}
       </Box>
 
       <Box display="flex" flexDirection="column" gap="s4">
