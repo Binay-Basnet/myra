@@ -25,6 +25,7 @@ export const FormCheckboxGroup = ({
           <Box display="flex" flexWrap="wrap" columnGap="s48" rowGap="s16">
             {list.map((item, index) => (
               <Checkbox
+                id={name}
                 key={index}
                 onChange={() => {
                   if (!value) {
@@ -42,6 +43,7 @@ export const FormCheckboxGroup = ({
             {showOther ? (
               <Box display="flex" gap="s4">
                 <Checkbox
+                  id={name}
                   onChange={() => {
                     if (!value) {
                       onChange(['Other']);
@@ -57,6 +59,7 @@ export const FormCheckboxGroup = ({
                   {' '}
                 </Checkbox>
                 <Input
+                  id={name}
                   placeholder="Other"
                   isDisabled={!value?.includes('Other')}
                 />

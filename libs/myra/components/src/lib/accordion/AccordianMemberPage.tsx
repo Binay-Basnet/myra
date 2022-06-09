@@ -1,5 +1,9 @@
 import React from 'react';
-import { AiFillCaretRight, AiOutlineCaretDown } from 'react-icons/ai';
+import {
+  AiFillCaretRight,
+  AiOutlineCaretDown,
+  AiOutlineCaretRight,
+} from 'react-icons/ai';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import {
@@ -8,8 +12,11 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Button,
+  Collapse,
   Icon,
   Text,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 const PersonalInformation: string[] = [
@@ -65,157 +72,154 @@ const Decleration: string[] = [
 //     _selected: { color: '#37474F', bg: '#E2E8EE', fontWeight: '500' },
 //   },
 // });
-export function AccorrdianAddMember({ formStatus }) {
+export function AccorrdianAddMember({ formStatus, kymCurrentSection }) {
+  const section = kymCurrentSection?.section;
+  const [isOpenPersonal, setIsOpenPersonal] = React.useState(false);
+  const [isOpenProfessional, setIsOpenProfessional] = React.useState(false);
+  const [isOpenCoopMemberShip, setIsOpenCoopMembership] = React.useState(false);
+  const [isOpenDeclaration, setIsOpenDeclaration] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsOpenPersonal(section === 'personalDetails');
+    setIsOpenProfessional(section === 'professionalDetails');
+  }, [kymCurrentSection]);
+
   return (
-    <Accordion allowMultiple allowToggle mb="0">
-      <AccordionItem border="none">
-        {({ isExpanded }) => (
-          <>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <Text fontSize={'r1'} fontWeight="600">
-                  {' '}
-                  1. Personal Details
-                </Text>
-              </Box>
-              {isExpanded ? (
-                <AiOutlineCaretDown fontSize="12px" />
-              ) : (
-                <AiFillCaretRight fontSize="12px" />
-              )}
-            </AccordionButton>
-
-            <AccordionPanel pb={2} border="none">
-              {' '}
-              {PersonalInformation.map((item, index) => (
-                // <Text key={`${item}${index}`}>{item}</Text>
-                <Box key={`${item}${index}`} display="flex">
-                  <Text mb="s16" pl="s16" fontSize="r1" fontWeight="400">
-                    {item}
-                  </Text>
-                  &nbsp; &nbsp;
-                  {formStatus?.personal?.completed.includes(
-                    personalInfoEnum[item]
-                  ) && (
-                    <Icon
-                      size="xs"
-                      as={BsCheckCircleFill}
-                      color="primary.500"
-                    />
-                  )}
-                  {formStatus?.personal?.error.includes(
-                    personalInfoEnum[item]
-                  ) && (
-                    <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />
-                  )}
-                </Box>
-              ))}
-            </AccordionPanel>
-          </>
+    <Box p={1}>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Text fontSize={'r1'} fontWeight="600">
+          1. Personal Details
+        </Text>
+        {!isOpenPersonal ? (
+          <AiOutlineCaretRight
+            fontSize="12px"
+            onClick={() => setIsOpenPersonal(true)}
+            cursor="pointer"
+          />
+        ) : (
+          <AiOutlineCaretDown
+            fontSize="12px"
+            onClick={() => setIsOpenPersonal(false)}
+            cursor="pointer"
+          />
         )}
-      </AccordionItem>
-      <AccordionItem border="none" mt="s12">
-        {({ isExpanded }) => (
-          <>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <Text fontSize={'r1'} fontWeight="600">
-                  {' '}
-                  2. Professional Details
-                </Text>
-              </Box>
-              {isExpanded ? (
-                <AiOutlineCaretDown fontSize="12px" />
-              ) : (
-                <AiFillCaretRight fontSize="12px" />
-              )}
-            </AccordionButton>
+      </Box>
+      <br />
+      <Collapse in={isOpenPersonal}>
+        {PersonalInformation.map((item, index) => (
+          <Box key={`${item}${index}`} display="flex">
+            <Text mb="s16" pl="s16" fontSize="r1" fontWeight="400">
+              {item}
+            </Text>
+            &nbsp; &nbsp;
+            {formStatus?.personal?.completed.includes(
+              personalInfoEnum[item]
+            ) && <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />}
+            {formStatus?.personal?.error.includes(personalInfoEnum[item]) && (
+              <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />
+            )}
+          </Box>
+        ))}
+      </Collapse>
 
-            <AccordionPanel pb={2}>
-              {' '}
-              {ProfessionalDetails.map((item, index) => (
-                <Text
-                  key={`${item}${index}`}
-                  mb="s16"
-                  pl="s16"
-                  fontSize="r1"
-                  fontWeight="400"
-                >
-                  {item}
-                </Text>
-              ))}
-            </AccordionPanel>
-          </>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Text fontSize={'r1'} fontWeight="600">
+          2. Professional Details
+        </Text>
+        {!isOpenProfessional ? (
+          <AiOutlineCaretRight
+            fontSize="12px"
+            onClick={() => setIsOpenProfessional(true)}
+            cursor="pointer"
+          />
+        ) : (
+          <AiOutlineCaretDown
+            fontSize="12px"
+            onClick={() => setIsOpenProfessional(false)}
+            cursor="pointer"
+          />
         )}
-      </AccordionItem>
-      <AccordionItem border="none" mt="s12">
-        {({ isExpanded }) => (
-          <>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <Text fontSize={'r1'} fontWeight="600">
-                  {' '}
-                  3. COOP Membership
-                </Text>
-              </Box>
-              {isExpanded ? (
-                <AiOutlineCaretDown fontSize="12px" />
-              ) : (
-                <AiFillCaretRight fontSize="12px" />
-              )}
-            </AccordionButton>
+      </Box>
+      <br />
+      <Collapse in={isOpenProfessional}>
+        {ProfessionalDetails.map((item, index) => (
+          <Text
+            key={`${item}${index}`}
+            mb="s16"
+            pl="s16"
+            fontSize="r1"
+            fontWeight="400"
+          >
+            {item}
+          </Text>
+        ))}
+      </Collapse>
 
-            <AccordionPanel pb={2}>
-              {' '}
-              {coopmembership.map((item, index) => (
-                <Text
-                  key={`${item}${index}`}
-                  mb="s16"
-                  pl="s16"
-                  fontSize="r1"
-                  fontWeight="400"
-                >
-                  {item}
-                </Text>
-              ))}
-            </AccordionPanel>
-          </>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Text fontSize={'r1'} fontWeight="600">
+          3. COOP Membership
+        </Text>
+        {!isOpenCoopMemberShip ? (
+          <AiOutlineCaretRight
+            fontSize="12px"
+            onClick={() => setIsOpenCoopMembership(true)}
+            cursor="pointer"
+          />
+        ) : (
+          <AiOutlineCaretDown
+            fontSize="12px"
+            onClick={() => setIsOpenCoopMembership(false)}
+            cursor="pointer"
+          />
         )}
-      </AccordionItem>
-      <AccordionItem border="none" mt="s12">
-        {({ isExpanded }) => (
-          <>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <Text fontSize={'r1'} fontWeight="600">
-                  {' '}
-                  4. Decleration
-                </Text>
-              </Box>
-              {isExpanded ? (
-                <AiOutlineCaretDown fontSize="12px" />
-              ) : (
-                <AiFillCaretRight fontSize="12px" />
-              )}
-            </AccordionButton>
+      </Box>
+      <br />
+      <Collapse in={isOpenCoopMemberShip}>
+        {coopmembership.map((item, index) => (
+          <Text
+            key={`${item}${index}`}
+            mb="s16"
+            pl="s16"
+            fontSize="r1"
+            fontWeight="400"
+          >
+            {item}
+          </Text>
+        ))}
+      </Collapse>
 
-            <AccordionPanel pb={2}>
-              {' '}
-              {Decleration.map((item, index) => (
-                <Text
-                  key={`${item}${index}`}
-                  mb="s16"
-                  pl="s16"
-                  fontSize="r1"
-                  fontWeight="400"
-                >
-                  {item}
-                </Text>
-              ))}
-            </AccordionPanel>
-          </>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Text fontSize={'r1'} fontWeight="600">
+          4. Declaration
+        </Text>
+        {!isOpenDeclaration ? (
+          <AiOutlineCaretRight
+            fontSize="12px"
+            onClick={() => setIsOpenDeclaration(true)}
+            cursor="pointer"
+          />
+        ) : (
+          <AiOutlineCaretDown
+            fontSize="12px"
+            onClick={() => setIsOpenDeclaration(false)}
+            cursor="pointer"
+          />
         )}
-      </AccordionItem>
-    </Accordion>
+      </Box>
+      <br />
+      <Collapse in={isOpenDeclaration}>
+        {Decleration.map((item, index) => (
+          <Text
+            key={`${item}${index}`}
+            mb="s16"
+            pl="s16"
+            fontSize="r1"
+            fontWeight="400"
+          >
+            {item}
+          </Text>
+        ))}
+      </Collapse>
+    </Box>
   );
 }

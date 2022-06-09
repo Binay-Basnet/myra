@@ -4,5 +4,6 @@ export * from './lib/myra-util';
 export * from './lib/theme';
 export * from './redux/counterSlice';
 export * from './redux/store';
+export * from './utilFunctions/getKymSection';
 export * from './utilFunctions/translation';
 export * from './validationSchema/memberForm';
