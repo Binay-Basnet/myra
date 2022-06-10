@@ -95,7 +95,10 @@ export const MemberKYMHusbandWifeOccupation = ({ control, watch }: any) => {
   } = useFieldArray({ control, name: 'spouseOccupation' });
 
   return (
-    <GroupContainer>
+    <GroupContainer
+      id="Main Occupation of Husaband/Wife"
+      scrollMarginTop={'200px'}
+    >
       <Text fontSize="r1" fontWeight="SemiBold">
         MAIN OCCUPATION OF HUSBAND/WIFE
       </Text>

@@ -9,7 +9,11 @@ import {
 } from '@chakra-ui/react';
 import { Navbarfordaashboard } from '@coop/myra/ui';
 import { useTranslation } from '@coop/myra/util';
+import NepaliDate from 'nepali-date-converter';
 import Link from 'next/link';
+
+const newDate = new NepaliDate();
+const date = newDate.format('ddd, DD MMMM YYYY');
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -30,7 +34,7 @@ const Dashboard = () => {
             <Spacer />
             <Box>
               <Text color="#006837" fontSize="16px" fontWeight="700">
-                20 Magh,2078
+                {date}
               </Text>
             </Box>
           </Flex>
