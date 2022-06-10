@@ -6,7 +6,10 @@ import { FormInput } from '../../newFormComponents';
 
 export const KYMFinancialTransactionDetails = ({ control }: any) => {
   return (
-    <GroupContainer>
+    <GroupContainer
+      id="Financial Transaction Details"
+      scrollMarginTop={'200px'}
+    >
       <Text fontSize="r1" fontWeight="SemiBold">
         FINANCIAL TRANSACTION DETAILS
       </Text>

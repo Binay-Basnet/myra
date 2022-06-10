@@ -5,7 +5,7 @@ import {
   KymIndMemberInput,
   useAllAdministrationQuery,
 } from '@coop/myra/graphql';
-import { Button, Icon, Text } from '@coop/myra/ui';
+import { Box, Button, Icon, Text } from '@coop/myra/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormInput, FormSelect, FormSwitch } from '../../newFormComponents';
@@ -66,72 +66,93 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
 
   return (
     <GroupContainer>
-      <Text fontSize="r1" fontWeight="SemiBold">
-        PERMANENT ADDRESS
-      </Text>
-      <InputGroupContainer>
-        <FormSelect
-          control={control}
-          name="permanentStateId"
-          label="State"
-          placeholder="Select State"
-          options={province}
-        />
-        <FormSelect
-          control={control}
-          name="permanentDistrictId"
-          label="District"
-          placeholder="Select District"
-          options={districtList.map((d) => ({
-            label: d.name,
-            value: d.id,
-          }))}
-        />
-        <FormSelect
-          control={control}
-          name="permanentLocalityId"
-          label="VDC / Municipality"
-          placeholder="Select VDC / Municipality"
-          options={localityList.map((d) => ({
-            label: d.name,
-            value: d.id,
-          }))}
-        />
-        <FormInput
-          control={control}
-          type="number"
-          name="permanentWardId"
-          label="Ward No"
-          placeholder="Enter Ward No"
-        />
-        <FormInput
-          control={control}
-          type="text"
-          name="permanentTole"
-          label="Locality"
-          placeholder="Enter Locality"
-        />
-      </InputGroupContainer>
-
-      <Button
-        alignSelf="start"
-        mt="-16px"
-        leftIcon={<Icon size="md" as={FaMap} />}
+      <Box
+        id="Permanent Address"
+        gap="s32"
+        display={'flex'}
+        flexDirection="column"
+        scrollMarginTop={'200px'}
       >
-        Pin on Map
-      </Button>
+        <Text fontSize="r1" fontWeight="SemiBold">
+          PERMANENT ADDRESS
+        </Text>
+        <Box
+          id="Permanent Address"
+          gap="s32"
+          display={'flex'}
+          flexDirection="column"
+        >
+          <InputGroupContainer>
+            <FormSelect
+              control={control}
+              name="permanentStateId"
+              label="State"
+              placeholder="Select State"
+              options={province}
+            />
+            <FormSelect
+              control={control}
+              name="permanentDistrictId"
+              label="District"
+              placeholder="Select District"
+              options={districtList.map((d) => ({
+                label: d.name,
+                value: d.id,
+              }))}
+            />
+            <FormSelect
+              control={control}
+              name="permanentLocalityId"
+              label="VDC / Municipality"
+              placeholder="Select VDC / Municipality"
+              options={localityList.map((d) => ({
+                label: d.name,
+                value: d.id,
+              }))}
+            />
+            <FormInput
+              control={control}
+              type="number"
+              name="permanentWardId"
+              label="Ward No"
+              placeholder="Enter Ward No"
+            />
+            <FormInput
+              control={control}
+              type="text"
+              name="permanentTole"
+              label="Locality"
+              placeholder="Enter Locality"
+            />
+          </InputGroupContainer>
 
-      <Text fontSize="r1" fontWeight="SemiBold">
-        TEMPORARY ADDRESS
-      </Text>
+          <Button
+            alignSelf="start"
+            mt="-16px"
+            leftIcon={<Icon size="md" as={FaMap} />}
+          >
+            Pin on Map
+          </Button>
+        </Box>
+      </Box>
 
-      <FormSwitch
-        control={control}
-        name="isPermanentAndTemporaryAddressSame"
-        label="Temporary Address same as permanent"
-        // onChange={(e) => setTemporaryAddress(e.target.value)}
-      />
-      {!temporaryAddress && (
+      <Box
+        id="Temporary Address"
+        gap="s32"
+        display={'flex'}
+        flexDirection="column"
+        scrollMarginTop={'200px'}
+      >
+        <Text fontSize="r1" fontWeight="SemiBold">
+          TEMPORARY ADDRESS
+        </Text>
+
+        <FormSwitch
+          control={control}
+          name="isPermanentAndTemporaryAddressSame"
+          label="Temporary Address same as permanent"
+        />
+
         <InputGroupContainer>
           <FormSelect
             control={control}
@@ -175,34 +196,41 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
             placeholder="Enter Locality"
           />
         </InputGroupContainer>
-      )}
-
-      <Button
-        mt="-16px"
-        alignSelf="start"
-        leftIcon={<Icon size="md" as={FaMap} />}
+        <Button
+          mt="-16px"
+          alignSelf="start"
+          leftIcon={<Icon size="md" as={FaMap} />}
+        >
+          Pin on Map
+        </Button>
+      </Box>
+      <Box
+        id="Incase of residing in Rented House"
+        gap="s32"
+        display={'flex'}
+        flexDirection="column"
+        scrollMarginTop={'200px'}
       >
-        Pin on Map
-      </Button>
-      <Text fontSize="r1" fontWeight="SemiBold">
-        INCASE RESIDING IN RENTED HOUSE
-      </Text>
-      <InputGroupContainer>
-        <FormInput
-          control={control}
-          type="text"
-          name={'landlordName'}
-          label="Landlord's Name"
-          placeholder="Landlord's Name"
-        />
-        <FormInput
-          control={control}
-          type="text"
-          name={'landlordContact'}
-          label="Contact No"
-          placeholder="Contact No"
-        />
-      </InputGroupContainer>
+        <Text fontSize="r1" fontWeight="SemiBold">
+          INCASE RESIDING IN RENTED HOUSE
+        </Text>
+        <InputGroupContainer>
+          <FormInput
+            control={control}
+            type="text"
+            name={'landlordName'}
+            label="Landlord's Name"
+            placeholder="Landlord's Name"
+          />
+          <FormInput
+            control={control}
+            type="text"
+            name={'landlordContact'}
+            label="Contact No"
+            placeholder="Contact No"
+          />
+        </InputGroupContainer>
+      </Box>
     </GroupContainer>
   );
 };

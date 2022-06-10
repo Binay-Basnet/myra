@@ -21,7 +21,7 @@ const occupationDetails = [
 
 export const MemberKYMProfession = ({ control }: IMemberKYMProfession) => {
   return (
-    <GroupContainer>
+    <GroupContainer id="Profession" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         PROFESSION
       </Text>

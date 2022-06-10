@@ -5,12 +5,12 @@ import { CloseIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
-  Icon,
-  Text,
-  Switch,
-  Select,
   Grid,
   GridItem,
+  Icon,
+  Select,
+  Switch,
+  Text,
 } from '@coop/myra/ui';
 
 import {
@@ -106,7 +106,7 @@ export const MemberKYMMainOccupation = ({ control, watch }: any) => {
   } = useFieldArray({ control, name: 'mainOccupation' });
 
   return (
-    <GroupContainer>
+    <GroupContainer id="Main Profession" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         MAIN OCCUPATION
       </Text>

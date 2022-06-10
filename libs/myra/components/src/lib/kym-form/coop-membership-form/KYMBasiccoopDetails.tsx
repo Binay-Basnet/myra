@@ -48,7 +48,10 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
 
   return (
     <GroupContainer>
-      <InputGroupContainer>
+      <InputGroupContainer
+        id="Main Purpose of Becoming a Member"
+        scrollMarginTop={'200px'}
+      >
         <FormSelect
           control={control}
           name="purposeId"
@@ -60,59 +63,71 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
           ]}
         />
       </InputGroupContainer>
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap="s32"
+        id="Member of Another cooperative"
+        scrollMarginTop={'200px'}
+      >
+        <SwitchTabs
+          label="Member of Another cooperative"
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          list={booleanList}
+          id="memberOfAnotherCooperative"
+        />
 
-      <SwitchTabs
-        label="Member of Another cooperative"
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        list={booleanList}
-        id="memberOfAnotherCooperative"
-      />
-
-      {/* <FormRadioGroup
+        {/* <FormRadioGroup
         control={control}
         label="Member of Another cooperative"
         name={'isMemberOfAnothercooperative'}
         radioList={['Yes', 'No']}
       /> */}
 
-      <Box display="flex" flexDirection="column" gap="s4">
-        <TextFields variant="formLabel">Membership Details</TextFields>
-        <InputGroupContainer>
-          <GridItem colSpan={2}>
-            <Controller
-              control={control}
-              name="nameAddressCooperative"
-              render={({ field: { onChange } }) => (
-                <Input
-                  type="text"
-                  placeholder="Name and Address Cooperative"
-                  onChange={onChange}
-                  bg="white"
-                  id="nameAddressCooperative"
-                />
-              )}
-            />
-          </GridItem>
-          <GridItem colSpan={1}>
-            <Controller
-              control={control}
-              name="memberNo"
-              render={({ field: { onChange } }) => (
-                <Input
-                  type="text"
-                  placeholder="Member No"
-                  onChange={onChange}
-                  bg="white"
-                  id="memberNo"
-                />
-              )}
-            />
-          </GridItem>
-        </InputGroupContainer>
+        <Box display="flex" flexDirection="column" gap="s4">
+          <TextFields variant="formLabel">Membership Details</TextFields>
+          <InputGroupContainer>
+            <GridItem colSpan={2}>
+              <Controller
+                control={control}
+                name="nameAddressCooperative"
+                render={({ field: { onChange } }) => (
+                  <Input
+                    type="text"
+                    placeholder="Name and Address Cooperative"
+                    onChange={onChange}
+                    bg="white"
+                    id="nameAddressCooperative"
+                  />
+                )}
+              />
+            </GridItem>
+            <GridItem colSpan={1}>
+              <Controller
+                control={control}
+                name="memberNo"
+                render={({ field: { onChange } }) => (
+                  <Input
+                    type="text"
+                    placeholder="Member No"
+                    onChange={onChange}
+                    bg="white"
+                    id="memberNo"
+                  />
+                )}
+              />
+            </GridItem>
+          </InputGroupContainer>
+        </Box>
       </Box>
-
-      <Box display="flex" flexDirection="column" gap="s8">
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap="s8"
+        id="Family Member in this institution"
+        scrollMarginTop={'200px'}
+      >
         <SwitchTabs
           activeTab={activeTab}
           setActiveTab={setActiveTab}

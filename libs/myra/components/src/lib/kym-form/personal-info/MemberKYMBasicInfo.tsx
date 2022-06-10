@@ -12,7 +12,7 @@ interface IMemberKYMBasicInfo {
 
 export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
   return (
-    <GroupContainer>
+    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"
