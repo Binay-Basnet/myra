@@ -65,7 +65,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
     link: '/reports',
   },
   {
-    title: 'utilites',
+    title: 'utilities',
     icon: CgDropOpacity,
     link: '/utilities',
   },
