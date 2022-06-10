@@ -47,14 +47,13 @@ export const ShareBalanceTable = () => {
       {
         Header: 'Share Count',
         accessor: 'node.shareCount',
-        maxWidth: 48,
         isNumeric: true,
       },
       {
-        Header: 'Balance',
+        Header: 'Share Amount',
         accessor: 'node.balance',
         Cell: ({ value, row }) => {
-          return <span> Rs. {Number(value).toLocaleString('en-IN')}</span>;
+          return <span>{Number(value).toLocaleString('en-IN')}</span>;
         },
         isNumeric: true,
       },
