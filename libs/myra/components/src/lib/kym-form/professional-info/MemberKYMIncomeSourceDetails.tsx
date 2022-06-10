@@ -67,7 +67,7 @@ export const MemberKYMIncomeSourceDetails = ({ control }: any) => {
     remove: incomeSourceRemove,
   } = useFieldArray({ control, name: 'incomeSourceDetails' });
   return (
-    <GroupContainer>
+    <GroupContainer id="Income Source Details" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         INCOME SOURCE DETAILS
       </Text>

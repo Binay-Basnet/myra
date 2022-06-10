@@ -65,66 +65,74 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
 
   return (
     <GroupContainer>
-      <Text fontSize="r1" fontWeight="SemiBold">
-        PERMANENT ADDRESS
-      </Text>
       <Box
         id="Permanent Address"
         gap="s32"
         display={'flex'}
         flexDirection="column"
+        scrollMarginTop={'200px'}
       >
-        <InputGroupContainer>
-          <FormSelect
-            control={control}
-            name="permanentStateId"
-            label="State"
-            placeholder="Select State"
-            options={province}
-          />
-          <FormSelect
-            control={control}
-            name="permanentDistrictId"
-            label="District"
-            placeholder="Select District"
-            options={districtList.map((d) => ({
-              label: d.name,
-              value: d.id,
-            }))}
-          />
-          <FormSelect
-            control={control}
-            name="permanentLocalityId"
-            label="VDC / Municipality"
-            placeholder="Select VDC / Municipality"
-            options={localityList.map((d) => ({
-              label: d.name,
-              value: d.id,
-            }))}
-          />
-          <FormInput
-            control={control}
-            type="number"
-            name="permanentWardId"
-            label="Ward No"
-            placeholder="Enter Ward No"
-          />
-          <FormInput
-            control={control}
-            type="text"
-            name="permanentTole"
-            label="Locality"
-            placeholder="Enter Locality"
-          />
-        </InputGroupContainer>
-
-        <Button
-          alignSelf="start"
-          mt="-16px"
-          leftIcon={<Icon size="md" as={FaMap} />}
+        <Text fontSize="r1" fontWeight="SemiBold">
+          PERMANENT ADDRESS
+        </Text>
+        <Box
+          id="Permanent Address"
+          gap="s32"
+          display={'flex'}
+          flexDirection="column"
         >
-          Pin on Map
-        </Button>
+          <InputGroupContainer>
+            <FormSelect
+              control={control}
+              name="permanentStateId"
+              label="State"
+              placeholder="Select State"
+              options={province}
+            />
+            <FormSelect
+              control={control}
+              name="permanentDistrictId"
+              label="District"
+              placeholder="Select District"
+              options={districtList.map((d) => ({
+                label: d.name,
+                value: d.id,
+              }))}
+            />
+            <FormSelect
+              control={control}
+              name="permanentLocalityId"
+              label="VDC / Municipality"
+              placeholder="Select VDC / Municipality"
+              options={localityList.map((d) => ({
+                label: d.name,
+                value: d.id,
+              }))}
+            />
+            <FormInput
+              control={control}
+              type="number"
+              name="permanentWardId"
+              label="Ward No"
+              placeholder="Enter Ward No"
+            />
+            <FormInput
+              control={control}
+              type="text"
+              name="permanentTole"
+              label="Locality"
+              placeholder="Enter Locality"
+            />
+          </InputGroupContainer>
+
+          <Button
+            alignSelf="start"
+            mt="-16px"
+            leftIcon={<Icon size="md" as={FaMap} />}
+          >
+            Pin on Map
+          </Button>
+        </Box>
       </Box>
 
       <Box
@@ -132,6 +140,7 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
         gap="s32"
         display={'flex'}
         flexDirection="column"
+        scrollMarginTop={'200px'}
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           TEMPORARY ADDRESS
@@ -199,6 +208,7 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
         gap="s32"
         display={'flex'}
         flexDirection="column"
+        scrollMarginTop={'200px'}
       >
         <Text fontSize="r1" fontWeight="SemiBold">
           INCASE RESIDING IN RENTED HOUSE

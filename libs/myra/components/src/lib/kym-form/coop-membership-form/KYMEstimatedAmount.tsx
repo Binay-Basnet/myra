@@ -8,7 +8,10 @@ const annualFamilyIncome = ['Upto 50', 'Upto 100', 'Upto 500', 'Above 500'];
 
 export const KYMEstimatedAmount = ({ control }: any) => {
   return (
-    <GroupContainer>
+    <GroupContainer
+      id="Estimated Withdraw/Deposit Amount in the Institureion"
+      scrollMarginTop={'200px'}
+    >
       <Text fontSize="r1" fontWeight="SemiBold">
         ESTIMATED WITHDRAW / DEPOSIT AMOUNT IN THE INSTITUTION
       </Text>

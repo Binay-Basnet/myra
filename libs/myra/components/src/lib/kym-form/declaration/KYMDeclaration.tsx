@@ -40,7 +40,13 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
 
   return (
     <GroupContainer>
-      <Box display="flex" flexDirection="column" gap="s16">
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap="s16"
+        id="Next to Kin"
+        scrollMarginTop={'200px'}
+      >
         <TextFields variant="formLabel">Next To Kin / Local Contact</TextFields>
         <Grid templateColumns="repeat(3, 1fr)" gap="s16">
           <FormInput
@@ -70,27 +76,30 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
           />
         </Grid>
       </Box>
-      <SwitchTabs
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        label="Are you or any of your family politically exposed person?"
-        list={booleanList}
-        id="politicallyExposedPerson"
-      />
-      {/* <FormRadioGroup
+      <Box id="Family members in politics" scrollMarginTop={'200px'}>
+        <SwitchTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          label="Are you or any of your family politically exposed person?"
+          list={booleanList}
+          id="politicallyExposedPerson"
+        />
+        {/* <FormRadioGroup
         control={control}
         name={'isPoliticallyExposed'}
         radioList={['Yes', 'No']}
         label=" Are you or any of your family politically exposed person?"
       /> */}
-
-      <SwitchTabs
-        label="Do you have a beneficial owner?"
-        list={booleanList}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        id="beneficialOwner"
-      />
+      </Box>
+      <Box id="Beneficial Owner" scrollMarginTop={'200px'}>
+        <SwitchTabs
+          label="Do you have a beneficial owner?"
+          list={booleanList}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          id="beneficialOwner"
+        />
+      </Box>
 
       {/* <FormRadioGroup
         control={control}
@@ -121,41 +130,52 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
         </GridItem>
       </Grid>
       {/* </InputGroupContainer> */}
+      <Box
+        id="Convicted/Non-convicted Status"
+        scrollMarginTop={'200px'}
+        display="flex"
+        flexDirection="column"
+        gap="s32"
+      >
+        <SwitchTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          label="Declaration of convicted/Non-convicted for any crimes in Past"
+          list={booleanList}
+          id="declarationOfConvicted"
+        />
 
-      <SwitchTabs
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        label="Declaration of convicted/Non-convicted for any crimes in Past"
-        list={booleanList}
-        id="declarationOfConvicted"
-      />
-
-      {/* <FormRadioGroup
+        {/* <FormRadioGroup
         control={control}
         name={'isConvicted'}
         radioList={['Yes', 'No']}
         label="Declaration of convicted/Non-convicted for any crimes in Past"
       /> */}
 
-      <InputGroupContainer>
-        <Box display="flex" flexDirection="column">
-          <FormTextArea
-            name="convictionDetails"
-            control={control}
-            id="convictionDetails"
-            label="Please specify"
-            placeholder="Enter Details"
-          />
-        </Box>
-      </InputGroupContainer>
-
-      <SwitchTabs
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        label="Do you hold residential permit of foreign country?"
-        list={booleanList}
-        id="residentForeign"
-      />
+        <InputGroupContainer>
+          <Box display="flex" flexDirection="column">
+            <FormTextArea
+              name="convictionDetails"
+              control={control}
+              id="convictionDetails"
+              label="Please specify"
+              placeholder="Enter Details"
+            />
+          </Box>
+        </InputGroupContainer>
+      </Box>
+      <Box
+        id="Residential permit of foreign country?"
+        scrollMarginTop={'200px'}
+      >
+        <SwitchTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          label="Do you hold residential permit of foreign country?"
+          list={booleanList}
+          id="residentForeign"
+        />
+      </Box>
 
       {/* <FormRadioGroup
         control={control}
