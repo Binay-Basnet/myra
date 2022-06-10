@@ -87,7 +87,6 @@ const AddNewAccount = () => {
           >
             <GridItem colSpan={2}>
               <FormInput
-                control={control}
                 type="text"
                 name="name"
                 label="Account Name"
