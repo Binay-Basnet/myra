@@ -107,7 +107,7 @@ const SharePurchase = () => {
         </Box>
         <Box display="flex" width="100%">
           <Box w="100%">
-            <Box background="white" p={5}>
+            <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
               <TextInput
                 mb="20px"
                 w="50%"
@@ -140,7 +140,8 @@ const SharePurchase = () => {
                         <Box>
                           <TextFields
                             color="neutralColorLight.Gray-80"
-                            variant="profileHeader"
+                            fontWeight="Medium"
+                            fontSize="s3"
                           >
                             {data?.personalInformation?.name?.firstName}{' '}
                             {data?.personalInformation?.name?.middleName}{' '}
@@ -190,8 +191,9 @@ const SharePurchase = () => {
                           />
                           <TextFields
                             ml="10px"
-                            variant="profileBody"
-                            fontSize="12px"
+                            color="neutralColorLight.Gray-80"
+                            fontSize="s3"
+                            fontWeight="Regular"
                           >
                             {data?.contact?.mobile}
                           </TextFields>
@@ -201,8 +203,9 @@ const SharePurchase = () => {
                           <Icon size="sm" as={GrMail} color="primary.500" />
                           <TextFields
                             ml="10px"
-                            variant="profileBody"
-                            fontSize="12px"
+                            color="neutralColorLight.Gray-80"
+                            fontSize="s3"
+                            fontWeight="Regular"
                           >
                             ajitnepal65@gmail.com
                           </TextFields>
@@ -216,8 +219,9 @@ const SharePurchase = () => {
                           />
                           <TextFields
                             ml="10px"
-                            variant="profileBody"
-                            fontSize="12px"
+                            color="neutralColorLight.Gray-80"
+                            fontSize="s3"
+                            fontWeight="Regular"
                           >
                             {data?.address?.permanent?.district}
                             {','}
@@ -226,7 +230,7 @@ const SharePurchase = () => {
                         </Box>
                       </GridItem>
 
-                      <GridItem display="flex" justifyContent="center">
+                      <GridItem display="flex" mt="s20" justifyContent="center">
                         {/* <Button variant="link"> */}
                         <Text
                           fontWeight="Medium"
@@ -308,7 +312,7 @@ const SharePurchase = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              Rs. {noOfShares * 100}
+                              {noOfShares * 100}
                             </Text>
                           </Box>
                         </GridItem>

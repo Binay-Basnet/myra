@@ -107,7 +107,7 @@ const ShareReturn = () => {
         </Box>
         <Box display="flex" width="100%">
           <Box w="100%">
-            <Box background="white" p={5}>
+            <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
               <TextInput
                 w="50%"
                 label="Search Member"
@@ -128,6 +128,9 @@ const ShareReturn = () => {
                       templateRows="repeat(1,1fr)"
                       templateColumns="repeat(5,1fr)"
                       gap={2}
+                      mt="s20"
+                      mb="s20"
+                      ml="s16"
                     >
                       <GridItem display="flex" alignSelf="center" colSpan={2}>
                         <Box m="10px">
@@ -140,7 +143,8 @@ const ShareReturn = () => {
                         <Box>
                           <TextFields
                             color="neutralColorLight.Gray-80"
-                            variant="profileHeader"
+                            fontWeight="Medium"
+                            fontSize="s3"
                           >
                             {data?.personalInformation?.name?.firstName}{' '}
                             {data?.personalInformation?.name?.middleName}{' '}
@@ -188,8 +192,9 @@ const ShareReturn = () => {
                           />
                           <TextFields
                             ml="10px"
-                            variant="profileBody"
-                            fontSize="12px"
+                            color="neutralColorLight.Gray-80"
+                            fontSize="s3"
+                            fontWeight="Regular"
                           >
                             {data?.contact?.mobile}
                           </TextFields>
@@ -199,8 +204,9 @@ const ShareReturn = () => {
                           <Icon size="sm" as={GrMail} color="primary.500" />
                           <TextFields
                             ml="10px"
-                            variant="profileBody"
-                            fontSize="12px"
+                            color="neutralColorLight.Gray-80"
+                            fontSize="s3"
+                            fontWeight="Regular"
                           >
                             ajitnepal65@gmail.com
                           </TextFields>
@@ -214,8 +220,9 @@ const ShareReturn = () => {
                           />
                           <TextFields
                             ml="10px"
-                            variant="profileBody"
-                            fontSize="12px"
+                            color="neutralColorLight.Gray-80"
+                            fontSize="s3"
+                            fontWeight="Regular"
                           >
                             {data?.address?.permanent?.district}
                             {','}
@@ -224,7 +231,11 @@ const ShareReturn = () => {
                         </Box>
                       </GridItem>
 
-                      <GridItem display="flex" justifyContent="center">
+                      <GridItem
+                        display="flex"
+                        justifyContent="flex-end"
+                        mr="s32"
+                      >
                         {/* <Button variant="link"> */}
                         <Text
                           fontWeight="Medium"
@@ -352,7 +363,7 @@ const ShareReturn = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              Rs. {noOfShares * 100}
+                              {noOfShares * 100}
                             </Text>
                           </Box>
                         </GridItem>
