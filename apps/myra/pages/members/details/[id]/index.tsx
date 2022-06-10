@@ -570,6 +570,7 @@ const Details = () => {
 
           <Box>
             <Button
+              mr="10px"
               variant="ghost"
               leftIcon={<Icon size="md" as={AiOutlinePrinter} />}
             >
