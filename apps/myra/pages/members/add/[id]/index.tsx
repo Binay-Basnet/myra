@@ -155,7 +155,7 @@ const AddMember = () => {
           }}
         >
           {/* main */}
-          <Box pb="s40" display="flex" width="100%">
+          <Box display="flex" width="100%">
             <Box display="flex">
               <Box
                 w={320}
@@ -171,7 +171,7 @@ const AddMember = () => {
                 />
               </Box>
 
-              <Box background="white" ml={320} p="s20" pb="s40">
+              <Box background="white" ml={320} px="s20" pb="120px">
                 <SectionContainer>
                   <SectionContainer>
                     <Text fontSize="r3" fontWeight="600">
@@ -285,14 +285,8 @@ const AddMember = () => {
             </Box>
           </Box>
         </form>
-        <Box position="relative" width="100%" h="80px">
-          <Box
-            position="fixed"
-            margin="0px auto"
-            pt="20px"
-            bg="gray.100"
-            width={1248}
-          >
+        <Box position="relative" width="100%">
+          <Box position="fixed" margin="0px auto" bg="gray.100" w="fit-content">
             <Container minW="container.xl" height="fit-content">
               <Box
                 height="60px"

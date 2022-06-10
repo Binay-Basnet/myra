@@ -23,7 +23,7 @@ const personalInfoEnum = {
   'Temporary Address': 'TEMPORARY_ADDRESS',
   'Incase of residing in Rented House': 'REANTED_HOUSE',
   'Family Details': 'FAMILY_DETAILS',
-};
+} as const;
 
 const ProfessionalDetails: string[] = [
   'Profession',
@@ -85,28 +85,28 @@ export function AccorrdianAddMember(props: AccordianProps) {
   }, [kymCurrentSection]);
 
   return (
-    <Box p={1}>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+    <Box p={'1'}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        minH="50px"
+        alignItems="center"
+        cursor="pointer"
+        onClick={() => setIsOpenPersonal(!isOpenPersonal)}
+        _hover={{ bg: '#EEF2F7' }}
+      >
         <Text fontSize={'r1'} fontWeight="600">
           1. Personal Details
         </Text>
         {!isOpenPersonal ? (
-          <AiOutlineCaretRight
-            fontSize="12px"
-            onClick={() => setIsOpenPersonal(true)}
-            cursor="pointer"
-          />
+          <AiOutlineCaretRight fontSize="12px" />
         ) : (
-          <AiOutlineCaretDown
-            fontSize="12px"
-            onClick={() => setIsOpenPersonal(false)}
-            cursor="pointer"
-          />
+          <AiOutlineCaretDown fontSize="12px" />
         )}
       </Box>
-      <br />
-      <Collapse in={isOpenPersonal}>
-        <Box display={'flex'} flexDirection="column" mb="s16">
+
+      <Collapse in={isOpenPersonal} style={{ marginTop: '0px' }}>
+        <Box display={'flex'} flexDirection="column">
           {PersonalInformation.map((item, index) => (
             <Box
               key={`${item}${index}`}
@@ -116,12 +116,14 @@ export function AccorrdianAddMember(props: AccordianProps) {
               bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
               py="s8"
             >
-              <Text pl="s16" fontSize="r1" fontWeight="400">
-                {item}
-              </Text>
+              <a href={`#${item}`}>
+                <Text pl="s16" fontSize="r1" fontWeight="400">
+                  {item}
+                </Text>
+              </a>
               &nbsp; &nbsp;
-              {formStatus?.personal?.completed.includes(
-                personalInfoEnum[item]
+              {formStatus?.personal?.completed?.includes(
+                personalInfoEnum?.[item]
               ) && (
                 <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
               )}
@@ -133,25 +135,25 @@ export function AccorrdianAddMember(props: AccordianProps) {
         </Box>
       </Collapse>
 
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        cursor="pointer"
+        onClick={() => setIsOpenProfessional(!isOpenProfessional)}
+        _hover={{ bg: '#EEF2F7' }}
+        minH="50px"
+      >
         <Text fontSize={'r1'} fontWeight="600">
           2. Professional Details
         </Text>
         {!isOpenProfessional ? (
-          <AiOutlineCaretRight
-            fontSize="12px"
-            onClick={() => setIsOpenProfessional(true)}
-            cursor="pointer"
-          />
+          <AiOutlineCaretRight fontSize="12px" />
         ) : (
-          <AiOutlineCaretDown
-            fontSize="12px"
-            onClick={() => setIsOpenProfessional(false)}
-            cursor="pointer"
-          />
+          <AiOutlineCaretDown fontSize="12px" />
         )}
       </Box>
-      <br />
+
       <Collapse in={isOpenProfessional}>
         <Box display={'flex'} flexDirection="column" mb="s16">
           {ProfessionalDetails.map((item, index) => (
@@ -163,33 +165,35 @@ export function AccorrdianAddMember(props: AccordianProps) {
               bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
               py="s8"
             >
-              <Text mb="s16" pl="s16" fontSize="r1" fontWeight="400">
-                {item}
-              </Text>
+              <a href={`#${item}`}>
+                <Text pl="s16" fontSize="r1" fontWeight="400">
+                  {item}
+                </Text>
+              </a>
             </Box>
           ))}
         </Box>
       </Collapse>
 
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        onClick={() => setIsOpenCoopMembership(!isOpenCoopMemberShip)}
+        cursor="pointer"
+        _hover={{ bg: '#EEF2F7' }}
+        minH="50px"
+      >
         <Text fontSize={'r1'} fontWeight="600">
           3. COOP Membership
         </Text>
         {!isOpenCoopMemberShip ? (
-          <AiOutlineCaretRight
-            fontSize="12px"
-            onClick={() => setIsOpenCoopMembership(true)}
-            cursor="pointer"
-          />
+          <AiOutlineCaretRight fontSize="12px" />
         ) : (
-          <AiOutlineCaretDown
-            fontSize="12px"
-            onClick={() => setIsOpenCoopMembership(false)}
-            cursor="pointer"
-          />
+          <AiOutlineCaretDown fontSize="12px" />
         )}
       </Box>
-      <br />
+
       <Collapse in={isOpenCoopMemberShip}>
         <Box display={'flex'} flexDirection="column" mb="s16">
           {coopmembership.map((item, index) => (
@@ -201,33 +205,35 @@ export function AccorrdianAddMember(props: AccordianProps) {
               bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
               py="s8"
             >
-              <Text mb="s16" pl="s16" fontSize="r1" fontWeight="400">
-                {item}
-              </Text>
+              <a href={`#${item}`}>
+                <Text pl="s16" fontSize="r1" fontWeight="400">
+                  {item}
+                </Text>
+              </a>
             </Box>
           ))}
         </Box>
       </Collapse>
 
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        onClick={() => setIsOpenDeclaration(!isOpenDeclaration)}
+        cursor="pointer"
+        _hover={{ bg: '#EEF2F7' }}
+        minH="50px"
+      >
         <Text fontSize={'r1'} fontWeight="600">
           4. Declaration
         </Text>
         {!isOpenDeclaration ? (
-          <AiOutlineCaretRight
-            fontSize="12px"
-            onClick={() => setIsOpenDeclaration(true)}
-            cursor="pointer"
-          />
+          <AiOutlineCaretRight fontSize="12px" />
         ) : (
-          <AiOutlineCaretDown
-            fontSize="12px"
-            onClick={() => setIsOpenDeclaration(false)}
-            cursor="pointer"
-          />
+          <AiOutlineCaretDown fontSize="12px" />
         )}
       </Box>
-      <br />
+
       <Collapse in={isOpenDeclaration}>
         <Box display={'flex'} flexDirection="column" mb="s16">
           {Decleration.map((item, index) => (
@@ -239,9 +245,11 @@ export function AccorrdianAddMember(props: AccordianProps) {
               bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
               py="s8"
             >
-              <Text mb="s16" pl="s16" fontSize="r1" fontWeight="400">
-                {item}
-              </Text>
+              <a href={`#${item}`}>
+                <Text pl="s16" fontSize="r1" fontWeight="400">
+                  {item}
+                </Text>
+              </a>
             </Box>
           ))}
         </Box>
