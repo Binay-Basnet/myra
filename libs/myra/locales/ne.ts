@@ -115,7 +115,7 @@ const ne = {
   saveMember: 'सदस्य दर्ता गर्नुहोस्',
 
   // Share Page
-  share: 'Share',
+  share: 'साझेदारी',
   shareActive: 'Active',
   shareSubmitted: 'Submitted',
   shareDraft: 'Draft',
@@ -141,6 +141,15 @@ const ne = {
   inventoryItemGroup: 'Item Group',
   inventoryUnitOfMeasure: 'Unit of Measure',
   inventoryVendor: 'Vendor',
+
+  //Accounts Page
+  accounts: 'खाताहरू',
+
+  //Report Page
+  reports: 'प्रतिवेदन',
+
+  //Utilities Page
+  utilities: 'उपयोगिताहरू',
 };
 
 export default ne;

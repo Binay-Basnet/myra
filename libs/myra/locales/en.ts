@@ -142,6 +142,15 @@ const en = {
   inventoryItemGroup: 'Item Group',
   inventoryUnitOfMeasure: 'Unit of Measurement List',
   inventoryVendor: 'Vendor',
+
+  //Accounts Page
+  accounts: 'Accounts',
+
+  //Report Page
+  reports: 'Reports',
+
+  //Utilities Page
+  utilities: 'Utilities',
 };
 
 export default en;

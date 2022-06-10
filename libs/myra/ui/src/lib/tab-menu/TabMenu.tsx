@@ -34,38 +34,38 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
     link: '/',
   },
   {
-    title: 'navbarMembers',
+    title: 'members',
     icon: FaUser,
     link: '/members/list',
   },
   {
-    title: 'navbarShare',
+    title: 'share',
     icon: IoCubeOutline,
     link: '/share/balance',
   },
   {
-    title: 'navbarAccounts',
+    title: 'accounts',
     icon: ImStack,
     link: '/accounts/list',
   },
 
   {
-    title: 'navbarTransactions',
+    title: 'transactions',
     icon: BsCardList,
     link: '/transactions',
   },
   {
-    title: 'navbarLoan',
+    title: 'loan',
     icon: BsArrowLeftRight,
     link: '/loan',
   },
   {
-    title: 'navbarReports',
+    title: 'reports',
     icon: BsFileText,
     link: '/reports',
   },
   {
-    title: 'navbarUtilities',
+    title: 'utilites',
     icon: CgDropOpacity,
     link: '/utilities',
   },
@@ -101,8 +101,8 @@ export function TabMenu() {
       >
         <TabList>
           {demotabs.map(({ title, icon, link }, index) => {
-            const isActive = router.asPath.includes(t[title].toLowerCase());
-            console.log('title', title);
+            const isActive = router.asPath.includes(title.toLowerCase());
+            console.log('title', title, isActive);
             return (
               <Link href={link} key={index}>
                 <Tab
