@@ -3,15 +3,7 @@ import { Control, useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 import { KymIndMemberInput } from '@coop/myra/graphql';
-import {
-  Box,
-  Button,
-  GridItem,
-  Icon,
-  Input,
-  Text,
-  TextFields,
-} from '@coop/myra/ui';
+import { Box, Button, GridItem, Icon, Text } from '@coop/myra/ui';
 
 import {
   DynamicBoxContainer,
@@ -75,7 +67,7 @@ const AddFamilyMember = ({
           />
         </GridItem>
 
-        <GridItem colSpan={1}>
+        {/* <GridItem colSpan={1}>
           <TextFields
             mb="s4"
             variant="formLabel"
@@ -91,8 +83,8 @@ const AddFamilyMember = ({
             borderRadius="br2"
             placeholder="Enter date of birth"
             bg="white"
-          />
-        </GridItem>
+          /> */}
+        {/* </GridItem> */}
       </InputGroupContainer>
     </DynamicBoxContainer>
   );

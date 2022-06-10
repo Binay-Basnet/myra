@@ -1,13 +1,13 @@
-import { TextFields } from '@coop/myra/ui';
+import { useState } from 'react';
 import {
   Box,
+  Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement,
   InputProps,
-  Input,
+  InputRightElement,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { TextFields } from '@coop/myra/ui';
 /* eslint-disable-next-line */
 export interface FormInputProps extends InputProps {
   rightElement?: React.ReactNode;
