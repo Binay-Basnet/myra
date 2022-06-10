@@ -51,7 +51,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
 
         Cell: ({ value, row }) => {
           return (
-            <span>{value ? `Rs. ${value.toLocaleString('en-IN')}` : '-'}</span>
+            <span>{value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
           );
         },
       },
@@ -62,7 +62,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
         accessor: 'node.shareCr',
         Cell: ({ value, row }) => {
           return (
-            <span> {value ? `Rs. ${value.toLocaleString('en-IN')}` : '-'}</span>
+            <span> {value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
           );
         },
       },
@@ -71,12 +71,12 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
         accessor: 'node.balance',
         isNumeric: true,
         Cell: ({ value }) => {
-          return <span>Rs. {value.toLocaleString('en-IN')}</span>;
+          return <span>{value.toLocaleString('en-IN')}</span>;
         },
         Footer: (props) => {
           return (
             <div>
-              Rs.
+              Rs.{' '}
               {props.rows
                 .reduce(
                   (sum, row) => Number(row.original.node.balance) + sum,
