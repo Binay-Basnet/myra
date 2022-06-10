@@ -13,7 +13,7 @@ interface IMemberContactDetails {
 
 export const MemberKYMContactDetails = ({ control }: IMemberContactDetails) => {
   return (
-    <GroupContainer>
+    <GroupContainer id="Contact Details">
       <Text
         fontSize="r1"
         fontWeight="semibold"

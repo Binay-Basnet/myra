@@ -104,7 +104,7 @@ export const MemberKYMFamilyDetails = ({
   } = useFieldArray({ control, name: 'familyDetails' });
 
   return (
-    <GroupContainer>
+    <GroupContainer id="Family Details">
       <Text fontSize="r1" fontWeight="SemiBold">
         FAMILY DETAILS
       </Text>
