@@ -270,7 +270,7 @@ const AddMember = () => {
                   justifyContent="flex-end"
                   alignSelf="center"
                 >
-                  <Button type="submit" variant="ghost">
+                  <Button mr="10px" type="submit" variant="ghost">
                     <Icon as={BiSave} color="primary.500" />
                     <Text
                       alignSelf="center"

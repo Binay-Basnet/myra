@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Control, UseFormWatch } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
 import {
@@ -17,6 +17,7 @@ interface IMemberKYMAddress {
 
 export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
   const { data } = useAllAdministrationQuery();
+  const [temporaryAddress, setTemporaryAddress] = useState(false);
 
   const province = useMemo(() => {
     return (

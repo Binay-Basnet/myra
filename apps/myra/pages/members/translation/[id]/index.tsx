@@ -105,7 +105,7 @@ const Translation = () => {
             alignSelf="center"
           >
             <Box display="flex" justifyContent="flex-end" alignSelf="center">
-              <Button type="submit" variant="ghost">
+              <Button mr="10px" type="submit" variant="ghost">
                 <Icon as={AiOutlineEye} color="primary.500" />
                 <Text
                   alignSelf="center"
