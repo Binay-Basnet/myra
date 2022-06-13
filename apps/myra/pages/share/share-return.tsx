@@ -10,8 +10,8 @@ import {
   FormFooter,
   ShareReturnHistoryTable,
 } from '@coop/myra/components';
-import { useGetMemberDataQuery } from '@coop/shared/data-access';
 import { IPurchaseFormValues } from '@coop/myra/types';
+import { useGetMemberDataQuery } from '@coop/shared/data-access';
 import {
   Avatar,
   Box,
