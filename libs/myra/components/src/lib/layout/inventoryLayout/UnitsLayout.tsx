@@ -1,7 +1,17 @@
 import React from 'react';
+import { useState } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { AddIcon } from '@chakra-ui/icons';
-import { Box, Button, Divider, Icon, Text } from '@coop/myra/ui';
+import {
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Input,
+  Modal,
+  Switch,
+  Text,
+} from '@coop/myra/ui';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
@@ -21,6 +31,10 @@ export const InventoryUnitsLayout = ({
   children,
 }: IInventoryPageLayoutProps) => {
   const router = useRouter();
+  const [openModal, setOpenModal] = useState(false);
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <Box display="flex">
@@ -35,11 +49,71 @@ export const InventoryUnitsLayout = ({
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
           onClick={() => {
-            router.push(router.pathname + '/add');
+            // router.push(router.pathname + '/add');
+            setOpenModal(true);
           }}
         >
           Add Item
         </Button>
+        <Modal
+          open={openModal}
+          onClose={onCloseModal}
+          isCentered={true}
+          title={
+            <Text fontSize="r2" color="gray.800" fontWeight="SemiBold">
+              Add New Unit of Measurement
+            </Text>
+          }
+        >
+          <Box display="flex" flexDirection={'column'} gap="s24" p="s16">
+            <Box display="flex" flexDirection={'column'} gap="s4">
+              <Text fontSize="r2" color="gray.800" fontWeight="500">
+                Name
+              </Text>
+              <Input
+                type="text"
+                h="44px"
+                w="100%"
+                variant="outline"
+                placeholder="NIBL Bank"
+              />
+            </Box>
+            <Box display="flex" flexDirection={'column'} gap="s4">
+              <Text fontSize="r2" color="gray.800" fontWeight="500">
+                Short Name
+              </Text>
+              <Input
+                type="text"
+                h="44px"
+                w="100%"
+                variant="outline"
+                placeholder="NIBL Bank"
+              />
+            </Box>
+            <Box display="flex" flexDirection={'column'} gap="s4">
+              <Text fontSize="r2" color="gray.800" fontWeight="500">
+                Description
+              </Text>
+              <Input
+                type="text"
+                h="44px"
+                w="100%"
+                variant="outline"
+                placeholder="NIBL Bank"
+              />
+            </Box>
+            <Box display={'flex'} flexDirection={'row'} gap="s16">
+              <Switch />
+              <Text fontSize="r1" color="gray.700" fontWeight="600">
+                Accept fraction
+              </Text>
+            </Box>
+          </Box>
+          <Box p="s12">
+            {' '}
+            <Button size="lg">Add Unit of Measurement</Button>
+          </Box>
+        </Modal>
         <Divider my="s16" />
         <TabColumn list={inventoryColumns} />
         <Divider my="s16" />
