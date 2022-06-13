@@ -1,5 +1,5 @@
 import { Control } from 'react-hook-form';
-import { Box, Grid, GridItem } from '@coop/myra/ui';
+import { Box, Grid, GridItem } from '@coop/shared/ui';
 
 import { FormEmailInput } from '../../../newFormComponents/FormEmailInput';
 import { FormPhoneNumber } from '../../../newFormComponents/FormPhoneNumber';

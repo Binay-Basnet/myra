@@ -2,7 +2,7 @@ import React from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { HamburgerIcon, SearchIcon } from '@chakra-ui/icons';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
-import { Box, Button, Icon, SmallPagination, Text } from '@coop/myra/ui';
+import { Box, Button, Icon, SmallPagination, Text } from '@coop/shared/ui';
 
 export const TableSearch = ({ pagination }: any) => {
   return (

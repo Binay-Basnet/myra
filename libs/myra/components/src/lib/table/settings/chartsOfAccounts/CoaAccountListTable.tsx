@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
-import { Column, Table } from '@coop/myra/ui';
+import { Column, Table } from '@coop/shared/ui';
 
 type MemberData = {
   id: string;

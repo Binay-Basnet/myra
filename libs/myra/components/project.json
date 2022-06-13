@@ -6,20 +6,14 @@
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/myra/components/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/myra/components/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/myra/components"
-      ],
+      "outputs": ["coverage/libs/myra/components"],
       "options": {
         "jestConfig": "libs/myra/components/jest.config.js",
         "passWithNoTests": true

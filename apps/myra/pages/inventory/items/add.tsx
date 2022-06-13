@@ -9,7 +9,7 @@ import {
   Input,
   MainLayoutInventory,
   Text,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 import router from 'next/router';
 
 const AddNewItemPage = () => {

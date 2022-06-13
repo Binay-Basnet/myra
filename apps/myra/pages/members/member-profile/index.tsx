@@ -8,7 +8,7 @@ import {
   GridItem,
   Button,
   Icon,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 import { MemberPagesLayout } from '@coop/myra/components';
 import { FaRegEdit } from 'react-icons/fa';
 

@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/kym-form/feature-institution",
+  "sourceRoot": "libs/cbs/kym-form/feature-institution/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/kym-form/feature-institution/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/kym-form/feature-institution"],
+      "options": {
+        "jestConfig": "libs/cbs/kym-form/feature-institution/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

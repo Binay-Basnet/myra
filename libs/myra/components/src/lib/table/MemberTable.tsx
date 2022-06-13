@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
 import { PopoverComponent } from '@coop/myra/components';
-import { ObjState, useGetMemberListQuery } from '@coop/myra/graphql';
-import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/myra/ui';
+import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
+import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/shared/ui';
 import format from 'date-fns/format';
 import { useRouter } from 'next/router';
 

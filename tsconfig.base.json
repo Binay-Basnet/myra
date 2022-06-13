@@ -18,13 +18,22 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@coop/cbs/kym-form/feature-individual": [
+        "libs/cbs/kym-form/feature-individual/src/index.ts"
+      ],
+      "@coop/cbs/kym-form/institution": [
+        "libs/cbs/kym-form/feature-institution/src/index.ts"
+      ],
+      "@coop/cbs/kym-form/ui-containers": [
+        "libs/cbs/kym-form/ui-containers/src/index.ts"
+      ],
       "@coop/myra/components": ["libs/myra/components/src/index.ts"],
-      "@coop/myra/graphql": ["libs/myra/graphql/src/index.ts"],
       "@coop/myra/jsonData": ["libs/myra/jsonData/index.ts"],
       "@coop/myra/locales": ["libs/myra/locales/index.ts"],
       "@coop/myra/types": ["libs/myra/types/index.ts"],
-      "@coop/myra/ui": ["libs/myra/ui/src/index.ts"],
-      "@coop/myra/util": ["libs/myra/util/src/index.ts"]
+      "@coop/shared/data-access": ["libs/shared/data-access/src/index.ts"],
+      "@coop/shared/ui": ["libs/shared/ui/src/index.ts"],
+      "@coop/shared/utils": ["libs/shared/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

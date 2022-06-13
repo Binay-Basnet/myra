@@ -4,7 +4,7 @@ import {
   PhoneNumber as StorybookInput,
   PhoneNumberProps as StorybookInputProps,
   TextFields,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 
 interface Iprops extends StorybookInputProps {
   control: Control<any>;

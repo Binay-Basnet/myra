@@ -1,6 +1,6 @@
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
-import { Box, RadioGroup, RadioGroupProps, TextFields } from '@coop/myra/ui';
+import { Box, RadioGroup, RadioGroupProps, TextFields } from '@coop/shared/ui';
 
 interface IFormSelectProps extends RadioGroupProps {
   control: Control;

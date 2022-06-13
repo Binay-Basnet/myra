@@ -1,6 +1,6 @@
 import React from 'react';
 import { BiSave } from 'react-icons/bi';
-import { Box, Button, Icon, Text } from '@coop/myra/ui';
+import { Box, Button, Icon, Text } from '@coop/shared/ui';
 
 interface formFooter {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;

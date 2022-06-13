@@ -10,7 +10,7 @@
     "storybook:myra-ui": "nx run myra-ui:storybook",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./libs/myra/util/src/lib/theme/index.ts",
-    "graphql:codegen": "graphql-codegen --config libs/myra/graphql/codegen.yml -r dotenv/config",
+    "graphql:codegen": "graphql-codegen --config libs/shared/data-access/codegen.yml -r dotenv/config",
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext ts --ext tsx --ext js",

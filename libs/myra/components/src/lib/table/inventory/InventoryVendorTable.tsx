@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
-import { useGetInventoryVendorQuery } from '@coop/myra/graphql';
-import { Column, Table } from '@coop/myra/ui';
+import { useGetInventoryVendorQuery } from '@coop/shared/data-access';
+import { Column, Table } from '@coop/shared/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 

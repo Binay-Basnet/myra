@@ -17,7 +17,7 @@ import {
   AccordionItem,
   AccordionPanel,
 } from '@chakra-ui/react';
-import { Box, Button, Checkbox, Icon, Switch, Text } from '@coop/myra/ui';
+import { Box, Button, Checkbox, Icon, Switch, Text } from '@coop/shared/ui';
 
 const genderDetails = ['Male', 'Female', 'Transgender'];
 

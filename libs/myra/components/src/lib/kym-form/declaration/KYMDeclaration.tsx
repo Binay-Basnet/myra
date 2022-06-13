@@ -9,7 +9,7 @@ import {
   SwitchTabs,
   Text,
   TextFields,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import {

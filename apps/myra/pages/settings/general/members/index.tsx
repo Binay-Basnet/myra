@@ -1,5 +1,5 @@
 import { SettingsGeneralMember } from '@coop/myra/components';
-import { Box, Button, CheckboxGroup, Input, Text } from '@coop/myra/ui';
+import { Box, Button, CheckboxGroup, Input, Text } from '@coop/shared/ui';
 const checkBox = [
   'Individual',
   'Institutional',

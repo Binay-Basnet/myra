@@ -1,6 +1,6 @@
 import { chakra, Tab, TabList, Tabs } from '@chakra-ui/react';
 import { en } from '@coop/myra/locales';
-import { useTranslation } from '@coop/myra/util';
+import { useTranslation } from '@coop/shared/utils';
 import { useRouter } from 'next/router';
 
 const TabElement = chakra(Tab, {

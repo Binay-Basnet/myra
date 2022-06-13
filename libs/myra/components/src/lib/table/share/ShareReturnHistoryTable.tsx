@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useGetShareHistoryQuery } from '@coop/myra/graphql';
-import { Column, Table } from '@coop/myra/ui';
+import { useGetShareHistoryQuery } from '@coop/shared/data-access';
+import { Column, Table } from '@coop/shared/ui';
 import format from 'date-fns/format';
 
 type memberIdProp = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@coop/myra/ui';
+import { Grid } from '@coop/shared/ui';
 
 import { DataSchema } from '../form/Form';
 import { FormGenerator } from '../form/FormGenerator';

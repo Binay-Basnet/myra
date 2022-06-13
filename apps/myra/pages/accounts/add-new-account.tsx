@@ -9,10 +9,10 @@ import {
   IconButton,
   MainLayout,
   Text,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 import router from 'next/router';
 
-const AddNewItemPage = () => {
+const AddNewAccount = () => {
   const { control } = useForm();
 
   return (
@@ -99,8 +99,8 @@ const AddNewItemPage = () => {
   );
 };
 
-export default AddNewItemPage;
+export default AddNewAccount;
 
-AddNewItemPage.getLayout = function getLayout(page: ReactElement) {
+AddNewAccount.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
-import { Box, TextAreaInput, TextAreaInputProps } from '@coop/myra/ui';
+import { Box, TextAreaInput, TextAreaInputProps } from '@coop/shared/ui';
 
 interface IFormInputProps extends TextAreaInputProps {
   control: Control;

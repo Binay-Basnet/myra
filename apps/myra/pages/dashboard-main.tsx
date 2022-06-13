@@ -10,9 +10,9 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
-import { useGetNewIdMutation } from '@coop/myra/graphql';
-import { Navbarfordaashboard } from '@coop/myra/ui';
-import { useTranslation } from '@coop/myra/util';
+import { useGetNewIdMutation } from '@coop/shared/data-access';
+import { Navbarfordaashboard } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 import { useRouter } from 'next/router';
 
 const data = [

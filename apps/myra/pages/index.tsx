@@ -7,8 +7,8 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
-import { Navbarfordaashboard } from '@coop/myra/ui';
-import { useTranslation } from '@coop/myra/util';
+import { Navbarfordaashboard } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 import NepaliDate from 'nepali-date-converter';
 import Link from 'next/link';
 

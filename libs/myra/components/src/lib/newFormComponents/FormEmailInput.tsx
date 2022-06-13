@@ -4,7 +4,7 @@ import {
   EmailInput as StorybookInput,
   EmailInputProps as StorybookInputProps,
   TextFields,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 
 interface Iprops extends StorybookInputProps {
   control: Control<any>;

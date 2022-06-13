@@ -1,11 +1,17 @@
 import React from 'react';
-import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
-import { AiFillCloseCircle } from 'react-icons/ai';
+import {
+  AiFillCloseCircle,
+  AiOutlineCaretDown,
+  AiOutlineCaretRight,
+} from 'react-icons/ai';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
-import { KymIndAddSectionStatus } from '@coop/myra/graphql';
+import {
+  KymIndAddSectionStatus,
+  KymIndPersonalSection,
+} from '@coop/shared/data-access';
 
-const PersonalInformation: string[] = [
+const PersonalInformation = [
   'Basic Information',
   'Contact Details',
   'Identification Details',
@@ -15,15 +21,18 @@ const PersonalInformation: string[] = [
   'Family Details',
 ];
 
-const personalInfoEnum = {
-  'Basic Information': 'BASIC_INFORMATION',
-  'Contact Details': 'CONTACT_DETAILS',
-  'Identification Details': 'IDENTIFICATION_DETAILS',
-  'Permanent Address': 'PERMANENT_ADDRESS',
-  'Temporary Address': 'TEMPORARY_ADDRESS',
-  'Incase of residing in Rented House': 'REANTED_HOUSE',
-  'Family Details': 'FAMILY_DETAILS',
-} as const;
+const personalInfoEnum: Record<
+  typeof PersonalInformation[number],
+  KymIndPersonalSection
+> = {
+  'Basic Information': KymIndPersonalSection.BasicInformation,
+  'Contact Details': KymIndPersonalSection.ContactDetails,
+  'Identification Details': KymIndPersonalSection.IdentificationDetails,
+  'Permanent Address': KymIndPersonalSection.PermanentAddress,
+  'Temporary Address': KymIndPersonalSection.TemporaryAddress,
+  'Incase of residing in Rented House': KymIndPersonalSection.RentedHouse,
+  'Family Details': KymIndPersonalSection.FamilyDetails,
+};
 
 const ProfessionalDetails: string[] = [
   'Profession',
@@ -45,24 +54,10 @@ const Decleration: string[] = [
   'Convicted/Non-convicted Status',
   'Residential permit of foreign country?',
 ];
-// const Text = chakra(Tab, {
-//   baseStyle: {
-//     color: '#474F5C',
-//     height: '40px',
-//     fontSize: '14px',
-//     fontWeight: '400',
-//     textAlign: 'left',
-//     display: 'flex',
-//     justifyContent: 'flex-start',
-//     alignItems: 'center',
-//     border: 'none',
-//     _selected: { color: '#37474F', bg: '#E2E8EE', fontWeight: '500' },
-//   },
-// });
 
 interface AccordianProps {
-  formStatus: KymIndAddSectionStatus;
-  kymCurrentSection: {
+  formStatus?: KymIndAddSectionStatus | null;
+  kymCurrentSection?: {
     section: string;
     subSection: string;
   };
@@ -123,13 +118,13 @@ export function AccorrdianAddMember(props: AccordianProps) {
               </a>
               &nbsp; &nbsp;
               {formStatus?.personal?.completed?.includes(
-                personalInfoEnum?.[item]
+                personalInfoEnum[item]
               ) && (
                 <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
               )}
-              {formStatus?.personal?.error.includes(personalInfoEnum[item]) && (
-                <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />
-              )}
+              {formStatus?.personal?.error?.includes(
+                personalInfoEnum[item]
+              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />}
             </Box>
           ))}
         </Box>

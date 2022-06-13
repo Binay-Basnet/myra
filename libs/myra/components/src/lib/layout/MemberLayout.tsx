@@ -8,7 +8,7 @@ import { Grid } from '@chakra-ui/react';
 import {
   useGetMemberTypesQuery,
   useGetNewIdMutation,
-} from '@coop/myra/graphql';
+} from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -17,7 +17,7 @@ import {
   Icon,
   Modal,
   Text,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '../tab/TabforMemberPage';

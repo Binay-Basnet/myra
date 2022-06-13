@@ -1,4 +1,4 @@
-import { Box } from '@coop/myra/ui';
+import { Box } from '@coop/shared/ui';
 
 import { CoaAccountListTable } from '../table/settings/chartsOfAccounts/CoaAccountListTable';
 

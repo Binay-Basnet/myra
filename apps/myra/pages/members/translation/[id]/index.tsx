@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { GrClose } from 'react-icons/gr';
-import { useGetMemberTranslationQuery } from '@coop/myra/graphql';
+import { useGetMemberTranslationQuery } from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -9,8 +9,8 @@ import {
   MainLayout,
   Text,
   Icon,
-} from '@coop/myra/ui';
-import { useTranslation } from '@coop/myra/util';
+} from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 import { useRouter } from 'next/router';
 import { AiOutlineEye } from 'react-icons/ai';
 

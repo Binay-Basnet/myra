@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/kym-form/ui-containers",
+  "sourceRoot": "libs/cbs/kym-form/ui-containers/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/kym-form/ui-containers/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/kym-form/ui-containers"],
+      "options": {
+        "jestConfig": "libs/cbs/kym-form/ui-containers/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

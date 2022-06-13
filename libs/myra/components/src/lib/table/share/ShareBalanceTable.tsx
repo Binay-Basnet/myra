@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
-import { useGetShareBalanceListQuery } from '@coop/myra/graphql';
-import { Column, Table } from '@coop/myra/ui';
+import { useGetShareBalanceListQuery } from '@coop/shared/data-access';
+import { Column, Table } from '@coop/shared/ui';
 
 export const ShareBalanceTable = () => {
   const { data, isLoading } = useGetShareBalanceListQuery();

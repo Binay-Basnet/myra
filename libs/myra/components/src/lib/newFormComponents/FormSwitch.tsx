@@ -1,5 +1,5 @@
 import { Control, Controller } from 'react-hook-form';
-import { Box, Switch, SwitchProps, Text } from '@coop/myra/ui';
+import { Box, Switch, SwitchProps, Text } from '@coop/shared/ui';
 
 interface IFormSelectProps extends SwitchProps {
   control: Control;

@@ -14,7 +14,7 @@ import {
   Text,
   TextFields,
   Avatar,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormSelect } from '../../newFormComponents';

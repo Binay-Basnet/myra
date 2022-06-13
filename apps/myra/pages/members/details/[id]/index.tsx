@@ -10,7 +10,7 @@ import {
   MainLayout,
   Text,
   GridItem,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 

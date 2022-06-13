@@ -1,6 +1,6 @@
 import { Control } from 'react-hook-form';
-import { useAllAdministrationQuery } from '@coop/myra/graphql';
-import { Box, Grid, GridItem } from '@coop/myra/ui';
+import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import { Box, Grid, GridItem } from '@coop/shared/ui';
 
 import { FormSelect, FormTextInput } from '../../../newFormComponents';
 

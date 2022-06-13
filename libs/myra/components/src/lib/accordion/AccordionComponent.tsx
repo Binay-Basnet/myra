@@ -1,7 +1,7 @@
 import {
   Accordion,
   ChakraAccordianProps as AccordionProps,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 
 interface accordionProps extends AccordionProps {
   id: string;

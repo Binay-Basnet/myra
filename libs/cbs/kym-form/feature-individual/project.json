@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/kym-form/feature-individual",
+  "sourceRoot": "libs/cbs/kym-form/feature-individual/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/kym-form/feature-individual/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/kym-form/feature-individual"],
+      "options": {
+        "jestConfig": "libs/cbs/kym-form/feature-individual/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ import {
   InventoryVendorsLayout,
   InventoryVendorTable,
 } from '@coop/myra/components';
-import { MainLayoutInventory } from '@coop/myra/ui';
+import { MainLayoutInventory } from '@coop/shared/ui';
 
 const InventoryVendor = () => {
   return <InventoryVendorTable />;

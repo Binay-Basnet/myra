@@ -1,6 +1,6 @@
 import { chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 import { en } from '@coop/myra/locales';
-import { useTranslation } from '@coop/myra/util';
+import { useTranslation } from '@coop/shared/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 

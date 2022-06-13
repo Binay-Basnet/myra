@@ -2,7 +2,7 @@ import type { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { ChakraProvider } from '@chakra-ui/react';
-import { store, theme } from '@coop/myra/util';
+import { store, theme } from '@coop/shared/utils';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';

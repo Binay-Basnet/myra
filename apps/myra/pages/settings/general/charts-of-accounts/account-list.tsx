@@ -16,7 +16,7 @@ import {
   IconButton,
   Input,
   Text,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 

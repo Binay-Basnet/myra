@@ -1,6 +1,6 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import { Text } from '@coop/myra/ui';
+import { Text } from '@coop/shared/ui';
 
 import { GroupContainer } from '../containers';
 import { FormCheckboxGroup } from '../../newFormComponents/FormCheckboxGroup';

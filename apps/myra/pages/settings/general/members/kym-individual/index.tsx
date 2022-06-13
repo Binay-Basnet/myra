@@ -1,6 +1,6 @@
 import { SettingsGeneralMember } from '@coop/myra/components';
 import { KYCIndividualPersonal } from '@coop/myra/components';
-import { Box, Text } from '@coop/myra/ui';
+import { Box, Text } from '@coop/shared/ui';
 
 import GeneralLayout from '../../../../../components/SettingsLayout/GeneralLayout';
 const KYMIndividual = () => {

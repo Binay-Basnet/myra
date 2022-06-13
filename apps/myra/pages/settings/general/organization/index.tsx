@@ -10,7 +10,7 @@ import {
   RadioOrganization,
   RegistrationDetailsOrganization,
 } from '@coop/myra/components';
-import { Box, Button, Icon, Text } from '@coop/myra/ui';
+import { Box, Button, Icon, Text } from '@coop/shared/ui';
 
 import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 

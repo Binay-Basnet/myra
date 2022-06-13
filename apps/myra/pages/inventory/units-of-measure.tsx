@@ -3,7 +3,7 @@ import {
   InventoryUnitsLayout,
   InventoryUseOfMeasureTable,
 } from '@coop/myra/components';
-import { MainLayoutInventory } from '@coop/myra/ui';
+import { MainLayoutInventory } from '@coop/shared/ui';
 
 const InventoryUnitsOfMeasure = () => {
   return <InventoryUseOfMeasureTable />;

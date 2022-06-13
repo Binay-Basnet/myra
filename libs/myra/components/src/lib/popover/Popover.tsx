@@ -8,7 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 
 type popoverType = {
   title: string[];

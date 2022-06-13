@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react';
-import { Input as ChakraInput } from '@coop/myra/ui';
+import { Input as ChakraInput } from '@coop/shared/ui';
 
 import type { IInputProps } from '../types';
 

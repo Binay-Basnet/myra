@@ -11,7 +11,7 @@ import {
   Select,
   Switch,
   Text,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 
 import {
   DynamicBoxContainer,

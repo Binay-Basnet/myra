@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
-import { useGetShareRegisterListQuery } from '@coop/myra/graphql';
-import { Column, Table } from '@coop/myra/ui';
+import { useGetShareRegisterListQuery } from '@coop/shared/data-access';
+import { Column, Table } from '@coop/shared/ui';
 import format from 'date-fns/format';
 
 export const ShareRegisterTable = () => {

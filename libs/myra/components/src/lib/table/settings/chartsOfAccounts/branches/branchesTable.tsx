@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
-import { useGetBranchesListQuery } from '@coop/myra/graphql';
-import { Column, Table } from '@coop/myra/ui';
+import { useGetBranchesListQuery } from '@coop/shared/data-access';
+import { Column, Table } from '@coop/shared/ui';
 
 export const SettingsBranchesTable = () => {
   const { data, isLoading } = useGetBranchesListQuery();

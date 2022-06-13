@@ -5,7 +5,7 @@ import {
   TextFields,
   TextInput as StorybookInput,
   TextInputProps,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 
 interface Iprops extends TextInputProps {
   control: Control<any>;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Text } from '@coop/myra/ui';
+import { Grid, Text } from '@coop/shared/ui';
 
 import { GroupContainer } from '../containers';
 import { FormFileInput } from '../../newFormComponents/FormFileInput';

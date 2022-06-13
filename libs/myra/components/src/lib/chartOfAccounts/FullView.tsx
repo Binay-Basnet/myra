@@ -1,5 +1,5 @@
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
-import { useGetChartOfAccountsQuery } from '@coop/myra/graphql';
+import { useGetChartOfAccountsQuery } from '@coop/shared/data-access';
 import {
   Box,
   Accordion,
@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionPanel,
   Text,
-} from '@coop/myra/ui';
+} from '@coop/shared/ui';
 
 import Tree from './Tree';
 

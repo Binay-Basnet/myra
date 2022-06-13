@@ -1,7 +1,7 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import { KymIndMemberInput } from '@coop/myra/graphql';
-import { Text } from '@coop/myra/ui';
+import { KymIndMemberInput } from '@coop/shared/data-access';
+import { Text } from '@coop/shared/ui';
 
 import { GroupContainer, InputGroupContainer } from '../containers';
 import { FormEmailInput } from '../../newFormComponents/FormEmailInput';

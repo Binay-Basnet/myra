@@ -2,7 +2,7 @@ import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
-import { Box, Button, Checkbox, GridItem, Icon, Text } from '@coop/myra/ui';
+import { Box, Button, Checkbox, GridItem, Icon, Text } from '@coop/shared/ui';
 
 import {
   DynamicBoxContainer,

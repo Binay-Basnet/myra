@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { MainLayout } from '@coop/myra/ui';
+import { MainLayout } from '@coop/shared/ui';
 
 const Transactions = () => {
   return <div style={{ marginTop: '150px' }}>Transactions share share</div>;
