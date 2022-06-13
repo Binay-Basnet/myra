@@ -150,6 +150,13 @@ const ne = {
 
   //Utilities Page
   utilities: 'उपयोगिताहरू',
+
+  //member detail
+  memberOverview: 'Overview',
+  memberAccount: 'Account',
+  memberShare: 'Share',
+  memberDeposit: 'Deposit',
+  memberReports: 'Reports',
 };
 
 export default ne;

@@ -151,6 +151,13 @@ const en = {
 
   //Utilities Page
   utilities: 'Utilities',
+
+  //member detail
+  memberOverview: 'Overview',
+  memberAccount: 'Account',
+  memberShare: 'Share',
+  memberDeposit: 'Deposit',
+  memberReports: 'Reports',
 };
 
 export default en;
