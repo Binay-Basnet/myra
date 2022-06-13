@@ -7,7 +7,7 @@
     "build": "nx build",
     "test": "nx test",
     "start:myra": "concurrently \"nx serve myra\" \"yarn graphql:codegen\"",
-    "storybook:myra-ui": "nx run myra-ui:storybook",
+    "storybook:ui": "nx run shared-ui:storybook",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./libs/myra/util/src/lib/theme/index.ts",
     "graphql:codegen": "graphql-codegen --config libs/shared/data-access/codegen.yml -r dotenv/config",
