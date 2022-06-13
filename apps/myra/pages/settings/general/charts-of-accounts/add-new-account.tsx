@@ -33,7 +33,6 @@ const accountList = [
 ];
 
 const AddNewAccount = () => {
-  const { control } = useForm();
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<string | null>('Cash');
 

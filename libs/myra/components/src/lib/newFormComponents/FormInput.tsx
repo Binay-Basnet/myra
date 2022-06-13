@@ -10,7 +10,6 @@ export function FormInput<T>({
   placeholder,
   name,
   type,
-  control,
   ...rest
 }: IFormInputProps<T>) {
   const methods = useFormContext();
@@ -25,7 +24,7 @@ export function FormInput<T>({
   return (
     <Box>
       <Controller
-        control={formControl ?? control}
+        control={formControl}
         name={name}
         render={({ field: { onChange } }) => (
           <TextInput
