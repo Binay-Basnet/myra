@@ -24,7 +24,7 @@ export const InventoryItemsGroupLayout = ({
 
   return (
     <Box display="flex">
-      <Box width="275px" p="s24" flexShrink={0}>
+      <Box width="275px" p="s24" flexShrink={0} position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
           Item Groups{' '}
         </Text>
@@ -57,7 +57,13 @@ export const InventoryItemsGroupLayout = ({
           Inventory Settings
         </Button>
       </Box>
-      <Box p="s16" width="100%" borderRadius="br3">
+      <Box
+        p="s16"
+        width="calc(100% - 275px)"
+        borderRadius="br3"
+        position="relative"
+        left="275px"
+      >
         <Box bg="white" borderRadius="br3">
           {children}
         </Box>

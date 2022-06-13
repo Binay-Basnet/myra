@@ -1,4 +1,4 @@
-import React, { useState, MouseEventHandler } from 'react';
+import React, { useState } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BiDownArrowCircle, BiUpArrowCircle } from 'react-icons/bi';
 import { AddIcon } from '@chakra-ui/icons';
@@ -6,7 +6,6 @@ import { Box, Button, Divider, Icon, Modal, Text } from '@coop/shared/ui';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '../tab/TabforMemberPage';
-import { IconType } from 'react-icons/lib/cjs';
 
 interface IMemberPageLayout {
   children: React.ReactNode;
@@ -27,76 +26,6 @@ const shareColumns = [
   },
 ];
 
-const shareButtonList = [
-  {
-    icon: 'BiDownArrowCircle',
-    title: 'Share Purchase',
-    subtitle: 'Lorem Ipsum',
-    path: '/share-purchase',
-  },
-  {
-    icon: 'BiUpArrowCircle',
-    title: 'Share Return',
-    subtitle: 'Lorem Ipsum',
-    path: '/share-return',
-  },
-];
-
-// interface shareTypeButtonProps {
-//   icon: IconType;
-//   title: string;
-//   subtitle: string;
-//   onClick?: MouseEventHandler<HTMLDivElement>;
-// }
-
-// const ShareTypeButton = ({
-//   icon,
-//   title,
-//   subtitle,
-//   onClick,
-// }: shareTypeButtonProps) => {
-//   return (
-//     <Box
-//       p="s24"
-//       w="300px"
-//       h="150px"
-//       border="1px solid"
-//       borderColor="border.element"
-//       borderRadius="br3"
-//       display="flex"
-//       flexDirection="column"
-//       justifyContent="center"
-//       cursor="pointer"
-//       onClick={onClick}
-//       as="button"
-//       lineHeight="1.2"
-//       minWidth={300}
-//       px="8px"
-//       boxShadow={'none'}
-//       color="#4b4f56"
-//       _hover={{ bg: '#ebedf0', color: 'primary.500' }}
-//       _active={{
-//         bg: '#dddfe2',
-//         transform: 'scale(0.98)',
-//         borderColor: 'primary.500',
-//       }}
-//     >
-//       <Icon mb="10px" alignSelf="center" w="30px" h="30px" as={icon} />
-//       <Text
-//         alignSelf="center"
-//         fontSize="r2"
-//         color="neutralColorLight.Gray-80"
-//         fontWeight="Medium"
-//       >
-//         {title}
-//       </Text>
-//       <Text mt="10px" fontSize="s2" alignSelf="center">
-//         {subtitle}
-//       </Text>
-//     </Box>
-//   );
-// };
-
 export const SharePageLayout = ({ children }: IMemberPageLayout) => {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
@@ -111,7 +40,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
 
   return (
     <Box display="flex">
-      <Box width="275px" p="s24" flexShrink={0}>
+      <Box width="275px" p="s24" flexShrink={0} position="fixed" zIndex={1}>
         <Text fontSize="l1" fontWeight="600" color="gray.800">
           Share
         </Text>
@@ -144,14 +73,6 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
           }
         >
           <Box display="flex" justifyContent="space-around">
-            {/* {shareButtonList.map((item) => (
-              <ShareTypeButton
-                icon={item.icon}
-                title={item.title}
-                subtitle={item.subtitle}
-                onClick={() => router.push(`/share/${item.path}`)}
-              />
-            ))} */}
             <Box
               p="s24"
               w="300px"
@@ -264,7 +185,13 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
           Share Settings
         </Button>
       </Box>
-      <Box p="s16" width="100%" borderRadius="br3">
+      <Box
+        p="s16"
+        position="relative"
+        borderRadius="br3"
+        width="calc(100% - 275px)"
+        left="275px"
+      >
         <Box bg="white" borderRadius="br3">
           {children}
         </Box>
