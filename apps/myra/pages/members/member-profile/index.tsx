@@ -13,11 +13,9 @@ import {
   Container,
   Grid,
   GridItem,
-  // Button,
   Icon,
   MainLayout,
   Text,
-  Avatar,
   Modal,
 } from '@coop/shared/ui';
 import { Img } from '@chakra-ui/react';
@@ -245,7 +243,7 @@ const AccountCards = ({ cardItem }) => {
   );
 };
 
-const DocumentCard = ({ img, title, previewLink }) => {
+const DocumentCard = ({ img, title }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const onOpenModal = () => {
@@ -265,17 +263,33 @@ const DocumentCard = ({ img, title, previewLink }) => {
       borderColor="border.layout"
       borderRadius="br3"
     >
-      <Avatar size="sm" src={img} />
-      <Text fontSize="r1" fontWeight="Medium" color="neutralColorLight.Gray-80">
-        {title}
-      </Text>
+      <Box display="flex">
+        <Img
+          mr="s8"
+          borderRadius="br2"
+          h="36px"
+          w="36px"
+          src={img}
+          alt={title}
+        />
+        <Text
+          alignSelf="center"
+          fontSize="r1"
+          fontWeight="Medium"
+          color="neutralColorLight.Gray-80"
+        >
+          {title}
+        </Text>
+      </Box>
 
       <Icon
-        size="md"
+        size="lg"
         as={AiOutlineEye}
         onClick={() => {
           onOpenModal();
         }}
+        cursor="pointer"
+        color="neutralColorLight.Gray-60"
       />
 
       <Modal
@@ -292,7 +306,7 @@ const DocumentCard = ({ img, title, previewLink }) => {
           </Text>
         }
       >
-        test
+        <Img h="50%" w="50%" src={img} alt={title} />
       </Modal>
     </Box>
   );
@@ -303,17 +317,16 @@ const MemberProfile = () => {
   const handleToggle = () => setOpenCollapse(!openCollapse);
   return (
     <>
-      <Container minW="container.xl" height="fit-content" p="0" pb="55px">
+      <Container minW="container.xl" height="fit-content" p="0">
         <Grid
-          gap={5}
+          gap={3}
           bg="background.500"
-          templateRows="repeat(10,1fr)"
+          templateRows="repeat(1,1fr)"
           templateColumns="repeat(10,1fr)"
         >
           <GridItem
             bg="gray.0"
             display="flex"
-            rowSpan={1}
             colSpan={10}
             borderRadius="br3"
             p="s16"
@@ -326,11 +339,11 @@ const MemberProfile = () => {
           <GridItem
             p="s16"
             bg="gray.0"
-            rowSpan={10}
+            rowSpan={6}
             colSpan={2}
             borderRadius="br3"
           >
-            <Box height="100px">
+            <Box>
               <Box borderRadius="br3">
                 <Img
                   src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
@@ -370,19 +383,24 @@ const MemberProfile = () => {
             </Box>
           </GridItem>
 
-          <GridItem rowSpan={4} colSpan={6}>
-            <Grid gap={5} templateColumns="repeat(6,1fr)">
+          <GridItem colSpan={7}>
+            <Grid gap={3} templateColumns="repeat(6,1fr)">
               <GridItem borderRadius="br3" colSpan={4}>
                 <Box
+                  borderRadius="br3"
                   display="flex"
                   bg="gray.0"
                   flexDirection="column"
                   justifyContent="center"
                   alignContent="center"
                 >
-                  <Collapse startingHeight={300} in={openCollapse}>
-                    <Box p="10px" height="100px">
-                      <Box display="flex" justifyContent="space-between">
+                  <Collapse startingHeight={332} in={openCollapse}>
+                    <Box p="s16">
+                      <Box
+                        mb="s32"
+                        display="flex"
+                        justifyContent="space-between"
+                      >
                         <Text
                           fontWeight="SemiBold"
                           fontSize="r1"
@@ -401,7 +419,7 @@ const MemberProfile = () => {
                           display="flex"
                           justifyContent="space-between"
                         >
-                          <Box>
+                          <Box mb="s8">
                             <Text
                               color="neutralColorLight.Gray-80"
                               fontWeight="Regular"
@@ -423,8 +441,8 @@ const MemberProfile = () => {
                       ))}
                     </Box>
                   </Collapse>
-                  <Box onClick={handleToggle} as="button">
-                    {openCollapse ? (
+                  <Box mb="s16" onClick={handleToggle} as="button">
+                    {!openCollapse ? (
                       <Text
                         color="primary.500"
                         fontWeight="Medium"
@@ -456,9 +474,10 @@ const MemberProfile = () => {
                   </Box>
                 </Box>
               </GridItem>
-              <GridItem h="100%" colSpan={2}>
-                <Box bg="gray.0" p="s16" borderRadius="br3">
-                  <Box h="100%" display="flex" justifyContent="space-between">
+
+              <GridItem colSpan={2}>
+                <Box w="350px" bg="gray.0" p="s16" borderRadius="br3">
+                  <Box mb="s16" display="flex" justifyContent="space-between">
                     <Text
                       fontWeight="SemiBold"
                       fontSize="r1"
@@ -482,7 +501,6 @@ const MemberProfile = () => {
                         key={index}
                         img={item.img}
                         title={item.title}
-                        previewLink={item.previewLink}
                       />
                     ))}
                   </Box>
@@ -491,14 +509,8 @@ const MemberProfile = () => {
             </Grid>
           </GridItem>
 
-          <GridItem
-            p="s16"
-            bg="gray.0"
-            rowSpan={7}
-            colSpan={6}
-            borderRadius="br3"
-          >
-            <Box height="100px">
+          <GridItem p="s16" bg="gray.0" colSpan={8} borderRadius="br3">
+            <Box>
               <Text
                 fontWeight="SemiBold"
                 fontSize="r1"
@@ -520,10 +532,10 @@ const MemberProfile = () => {
             p="s16"
             bg="gray.0"
             rowSpan={4}
-            colSpan={6}
+            colSpan={8}
             borderRadius="br3"
           >
-            <Box height="100px">
+            <Box>
               <Text
                 fontWeight="SemiBold"
                 fontSize="r1"
