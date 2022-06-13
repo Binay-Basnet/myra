@@ -4,6 +4,8 @@
     "cbs-kym-form-feature-individual": "libs/cbs/kym-form/feature-individual",
     "cbs-kym-form-feature-institution": "libs/cbs/kym-form/feature-institution",
     "cbs-kym-form-ui-containers": "libs/cbs/kym-form/ui-containers",
+    "cbs-settings-feature-member": "libs/cbs/settings/feature-member",
+    "cbs-settings-ui-layout": "libs/cbs/settings/ui-layout",
     "myra": "apps/myra",
     "myra-components": "libs/myra/components",
     "myra-e2e": "apps/myra-e2e",

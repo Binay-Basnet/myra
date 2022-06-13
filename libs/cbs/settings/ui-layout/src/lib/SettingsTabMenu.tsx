@@ -1,3 +1,4 @@
+import React from 'react';
 import { IconType } from 'react-icons';
 import {
   IoApps,
@@ -10,7 +11,7 @@ import { Icon } from '@coop/shared/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const demotabs: { title: string; icon: IconType; link: string }[] = [
+const demoTabs: { title: string; icon: IconType; link: string }[] = [
   {
     title: 'General',
     icon: IoGridOutline,
@@ -40,7 +41,7 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/settings/subscriptions': 3,
 };
 
-export const SettingsLayout = () => {
+export const SettingsTabMenu = () => {
   const route = useRouter();
   const currentIndex =
     NAVBAR_TAB_OBJECT[
@@ -59,21 +60,19 @@ export const SettingsLayout = () => {
       display="flex"
     >
       <Box w="10%" px="s16">
-        {' '}
         <Text
           fontWeight={'600'}
           fontSize="16px"
           color={'gray.0'}
           letterSpacing="wide"
         >
-          {' '}
           Settings
         </Text>
       </Box>
 
       <Tabs index={currentIndex} size="md" variant="enclosed">
         <TabList>
-          {demotabs.map(({ title, icon, link }, index) => {
+          {demoTabs.map(({ title, icon, link }, index) => {
             const isActive =
               route.asPath === '/settings/general/organization' && index === 0
                 ? true

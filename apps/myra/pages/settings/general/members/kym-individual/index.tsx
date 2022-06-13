@@ -1,8 +1,13 @@
-import { SettingsGeneralMember } from '@coop/myra/components';
-import { KYCIndividualPersonal } from '@coop/myra/components';
+import {
+  SettingsGeneralLayout,
+  SettingsLayout,
+} from '@coop/cbs/settings/ui-layout';
+import {
+  KYCIndividualPersonal,
+  SettingsGeneralMember,
+} from '@coop/myra/components';
 import { Box, Text } from '@coop/shared/ui';
 
-import GeneralLayout from '../../../../../components/SettingsLayout/GeneralLayout';
 const KYMIndividual = () => {
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
@@ -61,5 +66,9 @@ const KYMIndividual = () => {
 
 export default KYMIndividual;
 KYMIndividual.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
+  );
 };

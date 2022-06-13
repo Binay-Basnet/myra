@@ -1,7 +1,10 @@
+import {
+  SettingsGeneralLayout,
+  SettingsLayout,
+} from '@coop/cbs/settings/ui-layout';
 import { SettingsGeneralMember } from '@coop/myra/components';
 import { Box, Text } from '@coop/shared/ui';
 
-import GeneralLayout from '../../../../../components/SettingsLayout/GeneralLayout';
 const KYMCoperative = () => {
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
@@ -38,5 +41,9 @@ const KYMCoperative = () => {
 
 export default KYMCoperative;
 KYMCoperative.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
+  );
 };
