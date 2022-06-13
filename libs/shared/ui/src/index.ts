@@ -1,4 +1,4 @@
-export * from './lib/abc/Abc';
+export * from './lib/collapse/Collapse';
 export * from './lib/table-search/TableSearch';
 export * from './lib/small-pagination/SmallPagination';
 export * from './lib/pagination/Pagination';
