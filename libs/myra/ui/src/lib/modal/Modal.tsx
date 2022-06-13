@@ -52,7 +52,7 @@ export function Modal(props: ModalProps) {
 
         <ModalCloseButton _focus={{ bg: 'none' }} />
         <ModalBody>{children}</ModalBody>
-        <Divider />
+        {/* <Divider /> */}
         <ModalFooter>
           {footerSecondaryProps && (
             <Button variant="outline" mr={2} onClick={onClose}>
