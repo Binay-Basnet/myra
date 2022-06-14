@@ -1,8 +1,8 @@
-import { Control, Controller, Path } from 'react-hook-form';
-import { Select, SelectProps } from '@coop/shared/ui';
+import { Control, Controller, Path, useFormContext } from 'react-hook-form';
+import { Box, Select, SelectProps } from '@coop/shared/ui';
 
 interface IFormSelectProps<T> extends SelectProps {
-  control: Control<T>;
+  control?: Control<T>;
   name: Path<T>;
 }
 
@@ -11,19 +11,29 @@ export const FormSelect = <T,>({
   name,
   ...rest
 }: IFormSelectProps<T>) => {
+  const methods = useFormContext();
+  const {
+    formState: { errors },
+    control: formControl,
+  } = methods;
+
+  const error = errors[name];
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field: { onChange } }) => (
-        <Select
-          {...rest}
-          onChange={(newValue: { label: string; value: string }) => {
-            onChange(newValue.value);
-          }}
-          inputId={name}
-        />
-      )}
-    />
+    <Box>
+      <Controller
+        control={formControl}
+        name={name}
+        render={({ field: { onChange } }) => (
+          <Select
+            {...rest}
+            onChange={(newValue: { label: string; value: string }) => {
+              onChange(newValue.value);
+            }}
+            inputId={name}
+          />
+        )}
+      />
+      {error ? error?.message : null}
+    </Box>
   );
 };

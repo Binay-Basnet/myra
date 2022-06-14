@@ -1,4 +1,4 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, useFormContext } from 'react-hook-form';
 import {
   Box,
   PhoneNumber as StorybookInput,
@@ -7,7 +7,7 @@ import {
 } from '@coop/shared/ui';
 
 interface Iprops extends StorybookInputProps {
-  control: Control<any>;
+  control?: Control<any>;
   name: string;
 }
 
@@ -18,11 +18,19 @@ export const FormPhoneNumber = ({
   label,
   type,
 }: Iprops) => {
+  const methods = useFormContext();
+
+  const {
+    formState: { errors },
+    control: formControl,
+  } = methods;
+
+  const error = errors[name];
   return (
     <Box display="flex" flexDirection="column">
       <TextFields fontSize="s3">{label}</TextFields>
       <Controller
-        control={control}
+        control={formControl}
         name={name}
         render={({ field: { onChange } }) => (
           <StorybookInput
@@ -35,6 +43,7 @@ export const FormPhoneNumber = ({
           />
         )}
       />
+      {error ? error?.message : null}
     </Box>
   );
 };
