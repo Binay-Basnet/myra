@@ -229,9 +229,11 @@ const SharePurchase = () => {
                           </TextFields>
                         </Box>
                       </GridItem>
-
-                      <GridItem display="flex" mt="s20" justifyContent="center">
-                        {/* <Button variant="link"> */}
+                      <GridItem
+                        display="flex"
+                        justifyContent="flex-end"
+                        mr="s32"
+                      >
                         <Text
                           fontWeight="Medium"
                           color="primary.500"
@@ -240,7 +242,6 @@ const SharePurchase = () => {
                         >
                           View Profile
                         </Text>
-                        {/* </Button> */}
                         <Icon
                           size="sm"
                           as={RiShareBoxFill}
@@ -249,7 +250,6 @@ const SharePurchase = () => {
                       </GridItem>
                     </Grid>
                   </Box>
-                  <br />
 
                   <Box p="2px">
                     <Text
@@ -275,10 +275,15 @@ const SharePurchase = () => {
               borderBottom="1px solid #E6E6E6"
               borderTopRadius={5}
             >
-              <Text>Share Information</Text>
-              <br />
+              <Text
+                fontWeight="SemiBold"
+                fontSize="r1"
+                color="neutralColorLight.Gray-60"
+              >
+                Share Information
+              </Text>
 
-              <Grid gap={5} templateColumns="repeat(2,1fr)">
+              <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
                 <GridItem>
                   <TextInput
                     id="noOfShares"
@@ -410,12 +415,10 @@ const SharePurchase = () => {
                 color="neutralColorLight.Gray-80"
                 fontSize="s3"
                 fontWeight="500"
-                mb="8px"
+                mb="s16"
               >
                 Payment Mode
               </Text>
-
-              <br />
 
               <SwitchTabs
                 onClick={switchTabsFxn}
@@ -425,10 +428,8 @@ const SharePurchase = () => {
                 }))}
               />
 
-              <br />
-
               {selectedTab === 'Account' && (
-                <Box w="25%">
+                <Box mt="s16" mb="s16" w="25%">
                   <Select
                     label="Select Account"
                     placeholder="Select Account"
@@ -447,12 +448,13 @@ const SharePurchase = () => {
                       },
                     ]}
                   />
-                  <br />
+
                   <Box
                     px="s16"
                     py="s8"
                     bg="background.500"
                     color="neutralColorLight.Gray-70"
+                    mt="s16"
                   >
                     <Text fontWeight="400" fontSize="s2">
                       Available balance
@@ -464,7 +466,14 @@ const SharePurchase = () => {
                 </Box>
               )}
               {selectedTab === 'Bank Voucher' && (
-                <Box w="25%" display="flex" flexDirection="column" gap="s16">
+                <Box
+                  w="25%"
+                  mt="s16"
+                  mb="s16"
+                  display="flex"
+                  flexDirection="column"
+                  gap="s16"
+                >
                   <Select
                     label="Select Bank"
                     placeholder="Select Bank"
@@ -483,7 +492,7 @@ const SharePurchase = () => {
                       },
                     ]}
                   />
-                  <br />
+
                   <Box>
                     <TextInput
                       type="text"
@@ -496,7 +505,7 @@ const SharePurchase = () => {
               )}
 
               {selectedTab === 'Cash' && (
-                <Box w="25%">
+                <Box mt="s16" w="25%">
                   <TextInput
                     type="text"
                     name="name"
@@ -508,11 +517,9 @@ const SharePurchase = () => {
             </Box>
           </Box>
         </Box>
-        <br />
-      </Container>
-
-      <Container minW="container.xl" height="fit-content" p="0">
-        <FormFooter onClick={() => router.push('/share/balance')} />
+        <Box position="relative" width="100%">
+          <FormFooter onClick={() => router.push('/share/balance')} />
+        </Box>
       </Container>
     </Form>
   );
