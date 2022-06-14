@@ -42,11 +42,10 @@ interface memberTypeButtonProps {
   title: string;
   subtitle: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  disabled: boolean;
 }
 
 const MemberTypeButton = (props: memberTypeButtonProps) => {
-  const { icon, title, subtitle, onClick, disabled } = props;
+  const { icon, title, subtitle, onClick } = props;
   return (
     <Box
       as="button"
@@ -58,15 +57,15 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
       borderRadius="6px"
       onClick={onClick}
       boxShadow={'none'}
-      color={disabled ? 'gray.500' : '#4b4f56'}
+      color={'#4b4f56'}
       _hover={{
-        bg: disabled ? '' : '#ebedf0',
-        color: disabled ? '' : 'primary.500',
+        bg: '#ebedf0',
+        color: 'primary.500',
       }}
       _active={{
-        bg: disabled ? '' : '#dddfe2',
-        transform: disabled ? '' : 'scale(0.98)',
-        borderColor: disabled ? '' : 'primary.500',
+        bg: '#dddfe2',
+        transform: 'scale(0.98)',
+        borderColor: 'primary.500',
       }}
     >
       <Icon size="xl" as={icon} />
@@ -166,13 +165,38 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                     icon={memberTypesArray[item.type]?.icon}
                     title={memberTypesArray[item.type]?.title}
                     subtitle={memberTypesArray[item.type]?.subtitle}
-                    disabled={item?.type !== 'INDIVIDUAL'}
                     onClick={() => {
                       item?.type === 'INDIVIDUAL' &&
                         newId
                           .mutateAsync({})
                           .then((res) =>
-                            router.push(`/members/add/${res?.newId}`)
+                            router.push(`/members/individual/add/${res?.newId}`)
+                          );
+
+                      item?.type === 'INSTITUTION' &&
+                        newId
+                          .mutateAsync({})
+                          .then((res) =>
+                            router.push(
+                              `/members/institution/add/${res?.newId}`
+                            )
+                          );
+
+                      item?.type === 'COOPERATIVE' &&
+                        newId
+                          .mutateAsync({})
+                          .then((res) =>
+                            router.push(
+                              `/members/cooperative/add/${res?.newId}`
+                            )
+                          );
+                      item?.type === 'COOPERATIVE_UNION' &&
+                        newId
+                          .mutateAsync({})
+                          .then((res) =>
+                            router.push(
+                              `/members/cooperative-unioin/add/${res?.newId}`
+                            )
                           );
                     }}
                   />
