@@ -1,6 +1,6 @@
 import React from 'react';
 import { BiSave } from 'react-icons/bi';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Text } from '@coop/shared/ui';
 
 interface formFooter {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -9,6 +9,9 @@ export const FormFooter = (props: formFooter) => {
   const { onClick } = props;
   return (
     <Box
+      position="fixed"
+      minW="container.xl"
+      width={1248}
       bottom={0}
       bg="gray.0"
       display="flex"

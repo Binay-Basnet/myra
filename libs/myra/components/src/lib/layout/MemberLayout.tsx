@@ -120,7 +120,6 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
   const onCloseModal = () => {
     setOpenModal(false);
   };
-  console.log('memberTypes', memberTypes);
 
   return (
     <Box display="flex">

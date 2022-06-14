@@ -109,6 +109,7 @@ const ShareReturn = () => {
           <Box w="100%">
             <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
               <TextInput
+                mb="20px"
                 w="50%"
                 label="Search Member"
                 placeholder="Enter Member ID"
@@ -236,7 +237,6 @@ const ShareReturn = () => {
                         justifyContent="flex-end"
                         mr="s32"
                       >
-                        {/* <Button variant="link"> */}
                         <Text
                           fontWeight="Medium"
                           color="primary.500"
@@ -245,7 +245,6 @@ const ShareReturn = () => {
                         >
                           View Profile
                         </Text>
-                        {/* </Button> */}
                         <Icon
                           size="sm"
                           as={RiShareBoxFill}
@@ -254,7 +253,6 @@ const ShareReturn = () => {
                       </GridItem>
                     </Grid>
                   </Box>
-                  <br />
 
                   <Box p="2px">
                     <Text
@@ -275,13 +273,20 @@ const ShareReturn = () => {
               display="flex"
               flexDirection="column"
               p="5"
+              pb="28px"
               background="white"
               borderBottom="1px solid #E6E6E6"
               borderTopRadius={5}
             >
-              <TextFields variant="tableHeader">Share Information</TextFields>
+              <Text
+                fontWeight="SemiBold"
+                fontSize="r1"
+                color="neutralColorLight.Gray-60"
+              >
+                Share Information
+              </Text>
 
-              <Grid mt="20px" gap={5} templateColumns="repeat(2,1fr)">
+              <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
                 <GridItem>
                   <Grid
                     templateRows={
@@ -461,12 +466,10 @@ const ShareReturn = () => {
                 color="neutralColorLight.Gray-60"
                 fontSize="s3"
                 fontWeight="500"
-                mb="8px"
+                mb="s16"
               >
                 Payment Mode
               </Text>
-
-              <br />
 
               <SwitchTabs
                 onClick={switchTabsFxn}
@@ -476,9 +479,15 @@ const ShareReturn = () => {
                 }))}
               />
 
-              <br />
               {selectedTab === 'Account' && (
-                <Box w="25%" display="flex" flexDirection="column" gap="s16">
+                <Box
+                  mt="s16"
+                  mb="s16"
+                  w="25%"
+                  display="flex"
+                  flexDirection="column"
+                  gap="s16"
+                >
                   <Select
                     label="Select Account"
                     placeholder="Saving Account"
@@ -502,6 +511,7 @@ const ShareReturn = () => {
                     py="s8"
                     bg="background.500"
                     color="neutralColorLight.Gray-70"
+                    mt="s16"
                   >
                     <Text fontWeight="400" fontSize="s2">
                       Available balance
@@ -513,7 +523,14 @@ const ShareReturn = () => {
                 </Box>
               )}
               {selectedTab === 'Bank Voucher' && (
-                <Box w="25%" display="flex" flexDirection="column" gap="s16">
+                <Box
+                  mt="s16"
+                  mb="s16"
+                  w="25%"
+                  display="flex"
+                  flexDirection="column"
+                  gap="s16"
+                >
                   <Select
                     label="Select Bank"
                     placeholder="Select Bank"
@@ -544,7 +561,7 @@ const ShareReturn = () => {
               )}
 
               {selectedTab === 'Cash' && (
-                <Box w="25%">
+                <Box mt="s16" w="25%">
                   <TextInput
                     type="text"
                     name="name"
@@ -556,10 +573,9 @@ const ShareReturn = () => {
             </Box>
           </Box>
         </Box>
-        <br />
-      </Container>
-      <Container minW="container.xl" height="fit-content" p="0">
-        <FormFooter onClick={() => router.push('/share/balance')} />
+        <Box position="relative" width="100%">
+          <FormFooter onClick={() => router.push('/share/balance')} />
+        </Box>
       </Container>
     </Form>
   );
