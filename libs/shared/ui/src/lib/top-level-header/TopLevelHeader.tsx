@@ -52,7 +52,10 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
   const router = useRouter();
   const [isClose, setIsClose] = useState(true);
   const locale = router?.locale;
-  const [activeTab, setActiveTab] = useState<number>(locale === 'ne' ? 1 : 0);
+  const [langActiveTab, setLangActiveTab] = useState<number>(
+    locale === 'ne' ? 1 : 0
+  );
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <Box
@@ -361,10 +364,10 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         </Text>
                         <SwitchTabs
                           list={languageList}
-                          activeTab={activeTab}
-                          setActiveTab={setActiveTab}
+                          activeTab={langActiveTab}
+                          setActiveTab={setLangActiveTab}
                           onClick={() => {
-                            const locale = activeTab === 1 ? 'en' : 'ne';
+                            const locale = langActiveTab === 1 ? 'en' : 'ne';
                             router.push(`/${router.asPath}`, undefined, {
                               locale,
                             });

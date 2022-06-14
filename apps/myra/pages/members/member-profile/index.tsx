@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from 'react';
+import Image from 'next/image';
 import {
   AiOutlineDown,
   AiOutlineRight,
@@ -18,7 +19,10 @@ import {
   Text,
   Modal,
 } from '@coop/shared/ui';
-import { Img } from '@chakra-ui/react';
+import citizenship from '../../../assets/svgs/citizenship.jpeg';
+import fingerprint from '../../../assets/svgs/fingerprint.jpg';
+import signature from '../../../assets/svgs/signature.jpg';
+import passport from '../../../assets/svgs/passport.jpg';
 
 const memberProfileColumns = [
   {
@@ -174,24 +178,20 @@ const savingAccountDetails = [
 
 const documentDetails = [
   {
-    img: 'https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png',
+    img: citizenship,
     title: 'Citizenship Document',
-    previewLink: '/members/list',
   },
   {
-    img: 'https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png',
+    img: fingerprint,
     title: 'Fingerprint',
-    previewLink: '/members/list',
   },
   {
-    img: 'https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png',
+    img: signature,
     title: 'Signature ',
-    previewLink: '/members/list',
   },
   {
-    img: 'https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png',
+    img: citizenship,
     title: 'View KYM Form',
-    previewLink: '/members/list',
   },
 ];
 
@@ -263,16 +263,10 @@ const DocumentCard = ({ img, title }) => {
       borderColor="border.layout"
       borderRadius="br3"
     >
-      <Box display="flex">
-        <Img
-          mr="s8"
-          borderRadius="br2"
-          h="36px"
-          w="36px"
-          src={img}
-          alt={title}
-        />
+      <Box borderRadius="br2" display="flex">
+        <Image height="36px" width="36px" src={img} alt={title} />
         <Text
+          ml="s8"
           alignSelf="center"
           fontSize="r1"
           fontWeight="Medium"
@@ -306,7 +300,7 @@ const DocumentCard = ({ img, title }) => {
           </Text>
         }
       >
-        <Img h="50%" w="50%" src={img} alt={title} />
+        <Image height={400} width={550} src={img} alt={title} />
       </Modal>
     </Box>
   );
@@ -321,7 +315,7 @@ const MemberProfile = () => {
         <Grid
           gap={3}
           bg="background.500"
-          templateRows="repeat(1,1fr)"
+          templateRows="repeat(1,5fr)"
           templateColumns="repeat(10,1fr)"
         >
           <GridItem
@@ -340,15 +334,13 @@ const MemberProfile = () => {
             p="s16"
             bg="gray.0"
             rowSpan={6}
-            colSpan={2}
+            colSpan={1}
             borderRadius="br3"
+            w="300px"
           >
             <Box>
               <Box borderRadius="br3">
-                <Img
-                  src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
-                  alt="chart"
-                />
+                <Image height={250} width={200} src={passport} alt="chart" />
               </Box>
               <Box mt="s24" ml="s8">
                 <Text
@@ -383,8 +375,8 @@ const MemberProfile = () => {
             </Box>
           </GridItem>
 
-          <GridItem colSpan={7}>
-            <Grid gap={3} templateColumns="repeat(6,1fr)">
+          <GridItem colSpan={9}>
+            <Grid gap={3} templateColumns="repeat(5,1fr)">
               <GridItem borderRadius="br3" colSpan={4}>
                 <Box
                   borderRadius="br3"
@@ -475,7 +467,7 @@ const MemberProfile = () => {
                 </Box>
               </GridItem>
 
-              <GridItem colSpan={2}>
+              <GridItem colSpan={1}>
                 <Box w="350px" bg="gray.0" p="s16" borderRadius="br3">
                   <Box mb="s16" display="flex" justifyContent="space-between">
                     <Text
@@ -509,7 +501,7 @@ const MemberProfile = () => {
             </Grid>
           </GridItem>
 
-          <GridItem p="s16" bg="gray.0" colSpan={8} borderRadius="br3">
+          <GridItem p="s16" bg="gray.0" colSpan={9} borderRadius="br3">
             <Box>
               <Text
                 fontWeight="SemiBold"
@@ -532,7 +524,7 @@ const MemberProfile = () => {
             p="s16"
             bg="gray.0"
             rowSpan={4}
-            colSpan={8}
+            colSpan={9}
             borderRadius="br3"
           >
             <Box>

@@ -34,7 +34,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
 
   return (
     <Box display="flex">
-      <Box width="275px" p="s24" flexShrink={0}>
+      <Box width="275px" p="s24" flexShrink={0} position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
           Account
         </Text>
@@ -67,7 +67,13 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
           Account Settings
         </Button>
       </Box>
-      <Box p="s16" width="100%" borderRadius="br3">
+      <Box
+        p="s16"
+        borderRadius="br3"
+        width="calc(100% - 275px)"
+        left="275px"
+        position="relative"
+      >
         <Box bg="white" borderRadius="br3">
           {children}
         </Box>

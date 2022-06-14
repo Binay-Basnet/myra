@@ -10,10 +10,21 @@ interface ISettingsLayout {
 
 const GeneralLayout = ({ children }: ISettingsLayout) => (
   <>
-    <SettingsLayout />
+    <Box position="fixed" zIndex={1} width="100%">
+      <SettingsLayout />
+    </Box>
     <Box display={'flex'} p="s16" flexDirection={'row'} gap="s16">
-      <Layout />
-      <Box width="100%" bg="white" borderRadius="br3">
+      <Box position="fixed" top={100}>
+        <Layout />
+      </Box>
+      <Box
+        width="calc(100% - 275px)"
+        bg="white"
+        borderRadius="br3"
+        position="relative"
+        left="275px"
+        top={100}
+      >
         {children}
       </Box>
     </Box>
