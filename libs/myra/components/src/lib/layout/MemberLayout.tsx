@@ -195,7 +195,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                           .mutateAsync({})
                           .then((res) =>
                             router.push(
-                              `/members/cooperative-unioin/add/${res?.newId}`
+                              `/members/cooperative-union/add/${res?.newId}`
                             )
                           );
                     }}
