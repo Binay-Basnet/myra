@@ -1,26 +1,26 @@
 import React, { ReactElement } from 'react';
 import { AiOutlinePrinter } from 'react-icons/ai';
+import { BiEdit } from 'react-icons/bi';
+import {
+  FamilyMemberTable,
+  IncomeSourceTable,
+  MainOccupationTable,
+} from '@coop/myra/components';
 import {
   Box,
   Button,
   Container,
   Divider,
   Grid,
+  GridItem,
   Icon,
   MainLayout,
   Text,
-  GridItem,
 } from '@coop/shared/ui';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import logo from '../../../../assets/svgs/namunaLogo.svg';
-import { BiEdit } from 'react-icons/bi';
-import {
-  FamilyMemberTable,
-  MainOccupationTable,
-  IncomeSourceTable,
-} from '@coop/myra/components';
 
 const TextComponent = ({ label, value }) => {
   return (

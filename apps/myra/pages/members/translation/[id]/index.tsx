@@ -1,18 +1,18 @@
 import React, { ReactElement } from 'react';
+import { AiOutlineEye } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
 import { useGetMemberTranslationQuery } from '@coop/shared/data-access';
 import {
   Box,
   Button,
   Container,
+  Icon,
   Input,
   MainLayout,
   Text,
-  Icon,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 import { useRouter } from 'next/router';
-import { AiOutlineEye } from 'react-icons/ai';
 
 const Translation = () => {
   const { t } = useTranslation();

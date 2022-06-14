@@ -246,7 +246,7 @@ export function KYMIndividualPage() {
 
             {/* footer */}
             <Box
-              minW="container.xl"
+              minWidth="container.xl"
               height="60px"
               display="flex"
               justifyContent="space-between"
