@@ -18,7 +18,6 @@ export const FormFooter = (props: formFooter) => {
       justifyContent="space-between"
       px="s20"
       py="s16"
-      boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
       borderTopLeftRadius="br3"
       borderTopRightRadius="br3"
     >
