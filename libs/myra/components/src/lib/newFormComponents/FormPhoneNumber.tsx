@@ -6,18 +6,18 @@ import {
   TextFields,
 } from '@coop/shared/ui';
 
-interface Iprops extends StorybookInputProps {
-  control?: Control<any>;
+interface Iprops<T> extends StorybookInputProps {
+  control?: Control<T>;
   name: string;
 }
 
-export const FormPhoneNumber = ({
+export function FormPhoneNumber<T>({
   control,
   placeholder,
   name,
   label,
   type,
-}: Iprops) => {
+}: Iprops<T>) {
   const methods = useFormContext();
 
   const {
@@ -46,4 +46,4 @@ export const FormPhoneNumber = ({
       {error ? error?.message : null}
     </Box>
   );
-};
+}

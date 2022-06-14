@@ -44,7 +44,21 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
       ?.sectionStatus;
 
   const methods = useForm<KymInsFormData>({});
-  const { mutate } = useSetInstitutionDataMutation();
+  const { mutate } = useSetInstitutionDataMutation({
+    onSuccess: (res) => {
+      setError('institutionName', {
+        type: 'custom',
+        message:
+          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
+      });
+    },
+    onError: () => {
+      setError('institutionName', {
+        type: 'custom',
+        message: 'it is what it is',
+      });
+    },
+  });
   const { control, handleSubmit, getValues, watch, setError } = methods;
   return (
     <>
