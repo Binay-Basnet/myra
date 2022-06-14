@@ -210,6 +210,26 @@ export type Base = {
   objState: ObjState;
 };
 
+export type BasicInfo = {
+  id: Scalars['ID'];
+  memberSince: Scalars['String'];
+  name: Scalars['String'];
+  picture?: Maybe<Scalars['String']>;
+};
+
+export type BasicInfoInput = {
+  memberSince?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  picture?: InputMaybe<Scalars['String']>;
+};
+
+export type BasicInfoResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MemberProfileQuery>;
+  record?: Maybe<BasicInfo>;
+  recordId: Scalars['ID'];
+};
+
 export type Branch = {
   address: Scalars['String'];
   branchCode: Scalars['Int'];
@@ -569,6 +589,48 @@ export type EBankingAppNotificationQueryListArgs = {
   filter?: InputMaybe<NotificationFilter>;
 };
 
+export type EBankingApplyLoanInput = {
+  amount?: InputMaybe<Scalars['Float']>;
+  branch?: InputMaybe<BranchInput>;
+  purpose?: InputMaybe<Scalars['String']>;
+};
+
+export type EBankingApplyLoanResult = {
+  error?: Maybe<EBankingCooperativeServiceError>;
+  query?: Maybe<EBankingCooperativeServiceQuery>;
+  record?: Maybe<EBankingLoanHistory>;
+  recordID: Scalars['ID'];
+};
+
+export type EBankingChequeBlockInput = {
+  chequeNumber?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']>;
+};
+
+export type EBankingChequeMutation = {
+  block?: Maybe<EBankingChequeResult>;
+  request?: Maybe<EBankingChequeResult>;
+  withdrawViaCollector?: Maybe<EBankingChequeResult>;
+};
+
+
+export type EBankingChequeMutationBlockArgs = {
+  data?: InputMaybe<EBankingChequeBlockInput>;
+  memberID: Scalars['String'];
+};
+
+
+export type EBankingChequeMutationRequestArgs = {
+  data?: InputMaybe<EBankingChequeRequestInput>;
+  memberID: Scalars['String'];
+};
+
+
+export type EBankingChequeMutationWithdrawViaCollectorArgs = {
+  data?: InputMaybe<EBankingChequeWithdrawViaCollectorInput>;
+  memberID: Scalars['String'];
+};
+
 export type EBankingChequeQuery = {
   options: Array<EBankingCooperativeServiceOption>;
   pastRequests: Array<ChequePastRequest>;
@@ -579,6 +641,30 @@ export type EBankingChequeQueryPastRequestsArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
 };
 
+export type EBankingChequeRequestInput = {
+  branch?: InputMaybe<BranchInput>;
+  collector?: InputMaybe<Scalars['ID']>;
+  type: EBankingChequeRequestType;
+};
+
+export enum EBankingChequeRequestType {
+  SelfPickup = 'Self_Pickup',
+  ThroughAgent = 'Through_agent'
+}
+
+export type EBankingChequeResult = {
+  error?: Maybe<EBankingCooperativeServiceError>;
+  query?: Maybe<EBankingCooperativeServiceQuery>;
+  record?: Maybe<ChequePastRequest>;
+  recordID: Scalars['ID'];
+};
+
+export type EBankingChequeWithdrawViaCollectorInput = {
+  amount?: InputMaybe<Scalars['Float']>;
+  branch?: InputMaybe<Scalars['ID']>;
+  collector?: InputMaybe<Scalars['ID']>;
+};
+
 export type EBankingCombined = {
   accounts: Array<Maybe<Account>>;
   recentTransactions: Array<Maybe<Transactions>>;
@@ -586,8 +672,58 @@ export type EBankingCombined = {
   share: EbankingShare;
 };
 
+export type EBankingComplaintHistory = {
+  applicationNumber: Scalars['Int'];
+  detailedAccount?: Maybe<Scalars['String']>;
+  feedbackDate: Scalars['Date'];
+  id: Scalars['ID'];
+  peopleInvolved?: Maybe<Scalars['String']>;
+  proposedSolution?: Maybe<Scalars['String']>;
+  status: EBankingServiceStatus;
+  violatedPolicies?: Maybe<Scalars['String']>;
+};
+
+export type EBankingComplaintMutation = {
+  register?: Maybe<EBankingComplaintRegisterResult>;
+};
+
+
+export type EBankingComplaintMutationRegisterArgs = {
+  data?: InputMaybe<EBankingRegisterComplaintInput>;
+  memberID: Scalars['String'];
+};
+
+export type EBankingComplaintQuery = {
+  history: Array<EBankingComplaintHistory>;
+  options: Array<EBankingCooperativeServiceOption>;
+};
+
+
+export type EBankingComplaintQueryHistoryArgs = {
+  filter?: InputMaybe<EBankingCooperativeServiceFilter>;
+};
+
+export type EBankingComplaintRegisterResult = {
+  error?: Maybe<EBankingCooperativeServiceError>;
+  query?: Maybe<EBankingCooperativeServiceQuery>;
+  record?: Maybe<EBankingComplaintHistory>;
+  recordID: Scalars['ID'];
+};
+
+export type EBankingCooperativeServiceError = EBankingCooperativeServiceInvalidDataError;
+
 export type EBankingCooperativeServiceFilter = {
   status?: InputMaybe<EBankingServiceStatus>;
+};
+
+export type EBankingCooperativeServiceInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type EBankingCooperativeServiceMutation = {
+  cheque?: Maybe<EBankingChequeMutation>;
+  complaint?: Maybe<EBankingComplaintMutation>;
+  loan?: Maybe<EBankingLoanMutation>;
 };
 
 export type EBankingCooperativeServiceOption = {
@@ -598,8 +734,8 @@ export type EBankingCooperativeServiceOption = {
 
 export type EBankingCooperativeServiceQuery = {
   cheque?: Maybe<EBankingChequeQuery>;
+  complaint?: Maybe<EBankingComplaintQuery>;
   downloads?: Maybe<EBankingDownloadsQuery>;
-  grievance?: Maybe<EBankingGrievanceQuery>;
   loan?: Maybe<EBankingLoanQuery>;
   organizationInfo: Organization;
 };
@@ -630,27 +766,6 @@ export type EBankingDownloadsQuery = {
 
 export type EBankingDownloadsQueryFilesArgs = {
   filter?: InputMaybe<EBankingDownloadsFilter>;
-};
-
-export type EBankingGrievanceHistory = {
-  applicationNumber: Scalars['Int'];
-  detailedAccount?: Maybe<Scalars['String']>;
-  feedbackDate: Scalars['Date'];
-  id: Scalars['ID'];
-  peopleInvolved?: Maybe<Scalars['String']>;
-  proposedSolution?: Maybe<Scalars['String']>;
-  status: EBankingServiceStatus;
-  violatedPolicies?: Maybe<Scalars['String']>;
-};
-
-export type EBankingGrievanceQuery = {
-  history: Array<EBankingGrievanceHistory>;
-  options: Array<EBankingCooperativeServiceOption>;
-};
-
-
-export type EBankingGrievanceQueryHistoryArgs = {
-  filter?: InputMaybe<EBankingCooperativeServiceFilter>;
 };
 
 export type EBankingKymCooperativeMembership = {
@@ -910,6 +1025,16 @@ export type EBankingLoanHistory = {
   type: Scalars['String'];
 };
 
+export type EBankingLoanMutation = {
+  apply?: Maybe<EBankingApplyLoanResult>;
+};
+
+
+export type EBankingLoanMutationApplyArgs = {
+  data?: InputMaybe<EBankingApplyLoanInput>;
+  memberID: Scalars['String'];
+};
+
 export type EBankingLoanQuery = {
   history: Array<EBankingLoanHistory>;
   options: Array<EBankingCooperativeServiceOption>;
@@ -921,6 +1046,7 @@ export type EBankingLoanQueryHistoryArgs = {
 };
 
 export type EBankingMutation = {
+  cooperativeServices?: Maybe<EBankingCooperativeServiceMutation>;
   kym?: Maybe<EBankingKymMutation>;
 };
 
@@ -939,6 +1065,14 @@ export type EBankingQuery = {
   services?: Maybe<Array<Maybe<Services>>>;
   share?: Maybe<EBankingShareQuery>;
   transaction?: Maybe<EBankingTransactionQuery>;
+};
+
+export type EBankingRegisterComplaintInput = {
+  date?: InputMaybe<Scalars['Date']>;
+  detailedAccount?: InputMaybe<Scalars['String']>;
+  peopleInvolved?: InputMaybe<Scalars['String']>;
+  policiesViolated?: InputMaybe<Scalars['String']>;
+  proposedSolution?: InputMaybe<Scalars['String']>;
 };
 
 export enum EBankingServiceStatus {
@@ -2980,7 +3114,7 @@ export type KymInsAddLus = KymInsAccountLus | KymInsDeclarationLus | KymInsDirec
 
 export type KymInsAddResult = {
   error?: Maybe<KymIndAddError>;
-  query?: Maybe<KymIndQuery>;
+  query?: Maybe<KymInsQuery>;
   record?: Maybe<KymInsRecord>;
   recordId: Scalars['ID'];
 };
@@ -3065,6 +3199,10 @@ export type KymInsFormData = {
   website?: Maybe<Scalars['String']>;
 };
 
+export type KymInsFormStateQuery = {
+  data?: Maybe<KymInsFormStatus>;
+};
+
 export type KymInsFormStatus = {
   formData?: Maybe<KymInsFormData>;
   lastUpdated: KymInsAddLus;
@@ -3121,14 +3259,14 @@ export type KymInsInput = {
   numberOfEmployee?: InputMaybe<Scalars['Int']>;
   operatingOfficeAddress?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
-  postBoxNo?: InputMaybe<Scalars['Int']>;
+  postBoxNo?: InputMaybe<Scalars['String']>;
   registeredAddress?: InputMaybe<Scalars['String']>;
   registeredAddressIfChanged?: InputMaybe<Scalars['String']>;
   registeredNumber?: InputMaybe<Scalars['String']>;
   registrationDate?: InputMaybe<Scalars['Date']>;
   sisterConcernDetails?: InputMaybe<Array<InputMaybe<SisterConcernDetails>>>;
   specialInstruction?: InputMaybe<Scalars['String']>;
-  vatOrPanNo?: InputMaybe<Scalars['Int']>;
+  vatOrPanNo?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;
 };
 
@@ -3142,7 +3280,7 @@ export type KymInsMutationAddArgs = {
 };
 
 export type KymInsQuery = {
-  formState?: Maybe<KymInsFormStatus>;
+  formState?: Maybe<KymInsFormStateQuery>;
   get?: Maybe<Member>;
 };
 
@@ -3334,6 +3472,7 @@ export type MemberMutation = {
   individual?: Maybe<KymIndMutation>;
   institution?: Maybe<KymInsMutation>;
   memberPDF: Scalars['String'];
+  profile: MemberProfileMutation;
 };
 
 
@@ -3367,6 +3506,46 @@ export type MemberMutationMemberPdfArgs = {
   id: Scalars['ID'];
 };
 
+export type MemberProfileMutation = {
+  overview: MemberProfileOverviewMutation;
+  updateBasic: BasicInfoResult;
+};
+
+
+export type MemberProfileMutationUpdateBasicArgs = {
+  data: BasicInfoInput;
+  id: Scalars['ID'];
+};
+
+export type MemberProfileOverviewMutation = {
+  addDocument: ProfileDocumentResult;
+  updatePersonalInformation: ProfilePersonalInformationResult;
+};
+
+
+export type MemberProfileOverviewMutationAddDocumentArgs = {
+  data: ProfileDocumentInput;
+  id: Scalars['ID'];
+};
+
+
+export type MemberProfileOverviewMutationUpdatePersonalInformationArgs = {
+  data: ProfilePersonalInformationInput;
+  id: Scalars['ID'];
+};
+
+export type MemberProfileOverviewQuery = {
+  documents: Array<Maybe<ProfileDocument>>;
+  loanAccount: Array<Maybe<ProfileAccount>>;
+  personalInformation: ProfilePersonalInformation;
+  savingsAccount: Array<Maybe<ProfileAccount>>;
+};
+
+export type MemberProfileQuery = {
+  basic: BasicInfo;
+  overview: MemberProfileOverviewQuery;
+};
+
 export type MemberQuery = {
   cooperative?: Maybe<KymCooperativeQuery>;
   cooperativeUnion?: Maybe<KymCoopUnionQuery>;
@@ -3374,6 +3553,7 @@ export type MemberQuery = {
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
   memberTypes: Array<Maybe<KymMemberTypes>>;
+  profile: MemberProfileQuery;
 };
 
 
@@ -3658,6 +3838,69 @@ export type PersonalInformation = {
 export type PersonalInformationInNepali = {
   name?: Maybe<Name>;
   occupation?: Maybe<Scalars['String']>;
+};
+
+export type ProfileAccount = {
+  account_id?: Maybe<Scalars['String']>;
+  amount: Scalars['Float'];
+  id: Scalars['ID'];
+  interest_rate: Scalars['Float'];
+  name?: Maybe<Scalars['String']>;
+};
+
+export type ProfileDocument = {
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+export type ProfileDocumentInput = {
+  name?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
+export type ProfileDocumentResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MemberProfileQuery>;
+  record?: Maybe<ProfileDocument>;
+  recordId: Scalars['ID'];
+};
+
+export type ProfilePersonalInformation = {
+  address?: Maybe<Scalars['String']>;
+  contact_number?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['String']>;
+  education_qualification?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  fatherName?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['String']>;
+  grandFatherName?: Maybe<Scalars['String']>;
+  marital_status?: Maybe<Scalars['String']>;
+  motherName?: Maybe<Scalars['String']>;
+  occupation?: Maybe<Scalars['String']>;
+  religion?: Maybe<Scalars['String']>;
+};
+
+export type ProfilePersonalInformationInput = {
+  address?: InputMaybe<Scalars['String']>;
+  contact_number?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['String']>;
+  education_qualification?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  fatherName?: InputMaybe<Scalars['String']>;
+  gender?: InputMaybe<Scalars['String']>;
+  grandFatherName?: InputMaybe<Scalars['String']>;
+  marital_status?: InputMaybe<Scalars['String']>;
+  motherName?: InputMaybe<Scalars['String']>;
+  occupation?: InputMaybe<Scalars['String']>;
+  religion?: InputMaybe<Scalars['String']>;
+};
+
+export type ProfilePersonalInformationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MemberProfileQuery>;
+  record?: Maybe<ProfilePersonalInformation>;
+  recordId: Scalars['ID'];
 };
 
 export type Province = {
@@ -3998,10 +4241,25 @@ export type SetMemberDataMutationVariables = Exact<{
 
 export type SetMemberDataMutation = { members: { individual?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
+export type SetInstitutionDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymInsInput;
+}>;
+
+
+export type SetInstitutionDataMutation = { members: { institution?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string }> }> }> } };
+
+export type GetKymFormStatusInstitutionQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetKymFormStatusInstitutionQuery = { members: { institution?: { formState?: { data?: { sectionStatus?: { information?: { completed?: Array<KymInsInformationSection | null> | null, error?: Array<KymInsInformationSection | null> | null } | null, transaction?: { completed?: Array<KymInsTransactionSection | null> | null, error?: Array<KymInsTransactionSection | null> | null } | null, directorDetails?: { completed?: Array<KymInsDirectorDetailsSection | null> | null, error?: Array<KymInsDirectorDetailsSection | null> | null } | null, account?: { completed?: Array<KymInsAccountSection | null> | null, error?: Array<KymInsAccountSection | null> | null } | null, declaration?: { completed?: Array<KymInsDeclarationSection | null> | null, error?: Array<KymInsDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
 
 export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4127,6 +4385,31 @@ export const useSetMemberDataMutation = <
       useAxios<SetMemberDataMutation, SetMemberDataMutationVariables>(SetMemberDataDocument),
       options
     );
+export const SetInstitutionDataDocument = `
+    mutation setInstitutionData($id: ID!, $data: KymInsInput!) {
+  members {
+    institution(id: $id) {
+      add(data: $data) {
+        recordId
+        error {
+          ... on KymIndAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetInstitutionDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetInstitutionDataMutation, TError, SetInstitutionDataMutationVariables, TContext>) =>
+    useMutation<SetInstitutionDataMutation, TError, SetInstitutionDataMutationVariables, TContext>(
+      ['setInstitutionData'],
+      useAxios<SetInstitutionDataMutation, SetInstitutionDataMutationVariables>(SetInstitutionDataDocument),
+      options
+    );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -4155,6 +4438,52 @@ export const useAllAdministrationQuery = <
     useQuery<AllAdministrationQuery, TError, TData>(
       variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
       useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
+      options
+    );
+export const GetKymFormStatusInstitutionDocument = `
+    query getKymFormStatusInstitution($id: ID!) {
+  members {
+    institution {
+      formState(id: $id) {
+        data {
+          sectionStatus {
+            information {
+              completed
+              error
+            }
+            transaction {
+              completed
+              error
+            }
+            directorDetails {
+              completed
+              error
+            }
+            account {
+              completed
+              error
+            }
+            declaration {
+              completed
+              error
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetKymFormStatusInstitutionQuery = <
+      TData = GetKymFormStatusInstitutionQuery,
+      TError = unknown
+    >(
+      variables: GetKymFormStatusInstitutionQueryVariables,
+      options?: UseQueryOptions<GetKymFormStatusInstitutionQuery, TError, TData>
+    ) =>
+    useQuery<GetKymFormStatusInstitutionQuery, TError, TData>(
+      ['getKymFormStatusInstitution', variables],
+      useAxios<GetKymFormStatusInstitutionQuery, GetKymFormStatusInstitutionQueryVariables>(GetKymFormStatusInstitutionDocument).bind(null, variables),
       options
     );
 export const GetInventoryItemsDocument = `

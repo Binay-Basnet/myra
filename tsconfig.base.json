@@ -33,6 +33,9 @@
       "@coop/cbs/settings/ui-layout": [
         "libs/cbs/settings/ui-layout/src/index.ts"
       ],
+      "@coop/cbs/members/profile": [
+        "libs/cbs/members/feature-profile/src/index.ts"
+      ],
       "@coop/myra/components": ["libs/myra/components/src/index.ts"],
       "@coop/myra/jsonData": ["libs/myra/jsonData/index.ts"],
       "@coop/myra/locales": ["libs/myra/locales/index.ts"],

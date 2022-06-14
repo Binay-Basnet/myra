@@ -1,0 +1,32 @@
+query getKymFormStatusInstitution($id: ID!) {
+  members {
+    institution {
+      formState(id: $id) {
+        data {
+          sectionStatus {
+            information {
+              completed
+              error
+            }
+            transaction {
+              completed
+              error
+            }
+            directorDetails {
+              completed
+              error
+            }
+            account {
+              completed
+              error
+            }
+            declaration {
+              completed
+              error
+            }
+          }
+        }
+      }
+    }
+  }
+}

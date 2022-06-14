@@ -157,7 +157,7 @@ export function KYMIndividualPage() {
             }}
           >
             {/* main */}
-            <Box pb="s40" display="flex" width="100%">
+            <Box display="flex" width="100%">
               <Box display="flex">
                 <Box
                   w={320}
@@ -173,7 +173,7 @@ export function KYMIndividualPage() {
                   />
                 </Box>
 
-                <Box background="white" ml={320} p="s20" pb="s40">
+                <Box background="white" ml={320} px="s20" pb="120px">
                   <SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
@@ -271,7 +271,7 @@ export function KYMIndividualPage() {
                   justifyContent="flex-end"
                   alignSelf="center"
                 >
-                  <Button mr="10px" type="submit" variant="ghost">
+                  <Button type="submit" variant="ghost">
                     <Icon as={BiSave} color="primary.500" />
                     <Text
                       alignSelf="center"
@@ -294,38 +294,6 @@ export function KYMIndividualPage() {
             </Box>
           </form>
         </FormProvider>
-        <Box position="relative" width="100%" h="80px">
-          <Box
-            position="fixed"
-            margin="0px auto"
-            pt="20px"
-            bg="gray.100"
-            width={1248}
-          >
-            <Container minW="container.xl" height="fit-content">
-              <Box
-                height="60px"
-                display="flex"
-                justifyContent="space-between"
-                alignItems={'center'}
-                px="5"
-                background="white"
-                borderBottom="1px solid #E6E6E6"
-                borderTopRadius={5}
-              >
-                <Text fontSize="r2" fontWeight="SemiBold">
-                  {t.membersFormAddNewMembers}
-                </Text>
-                <IconButton
-                  variant={'ghost'}
-                  aria-label="close"
-                  icon={<GrClose />}
-                  onClick={() => router.back()}
-                />
-              </Box>
-            </Container>
-          </Box>
-        </Box>
       </Container>
     </>
   );

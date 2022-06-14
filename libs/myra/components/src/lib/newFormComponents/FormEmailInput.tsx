@@ -1,4 +1,4 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 import {
   Box,
   EmailInput as StorybookInput,
@@ -7,7 +7,7 @@ import {
 } from '@coop/shared/ui';
 
 interface Iprops extends StorybookInputProps {
-  control: Control<any>;
+  control?: Control<any>;
   name: string;
 }
 
@@ -18,6 +18,14 @@ export const FormEmailInput = ({
   label,
   type,
 }: Iprops) => {
+  const methods = useFormContext();
+
+  const {
+    formState: { errors },
+    control: formControl,
+  } = methods;
+
+  const error = errors[name];
   return (
     <Box display="flex" flexDirection="column">
       <TextFields fontSize="s3">{label}</TextFields>
@@ -35,6 +43,7 @@ export const FormEmailInput = ({
           />
         )}
       />
+      {error ? error?.message : null}
     </Box>
   );
 };
