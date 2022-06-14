@@ -2,14 +2,16 @@ import React from 'react';
 import { useState } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { AddIcon } from '@chakra-ui/icons';
-import { Box,
+import {
+  Box,
   Button,
   Divider,
   Icon,
   Input,
   Modal,
   Switch,
-  Text, } from '@coop/shared/ui';
+  Text,
+} from '@coop/shared/ui';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
@@ -36,7 +38,7 @@ export const InventoryUnitsLayout = ({
 
   return (
     <Box display="flex">
-      <Box width="275px" p="s24" flexShrink={0}>
+      <Box width="275px" p="s24" flexShrink={0} position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
           Units of Measurement
         </Text>
@@ -129,7 +131,13 @@ export const InventoryUnitsLayout = ({
           Inventory Settings
         </Button>
       </Box>
-      <Box p="s16" width="100%" borderRadius="br3">
+      <Box
+        p="s16"
+        width="calc(100% - 275px)"
+        borderRadius="br3"
+        position="relative"
+        left="275px"
+      >
         <Box bg="white" borderRadius="br3">
           {children}
         </Box>

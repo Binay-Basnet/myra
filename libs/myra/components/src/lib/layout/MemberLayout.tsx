@@ -124,7 +124,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
 
   return (
     <Box display="flex">
-      <Box width="275px" p="s24" flexShrink={0}>
+      <Box width="275px" p="s24" position="fixed" flexShrink={0}>
         <Text fontSize="l1" fontWeight="600" color="gray.800">
           Member
         </Text>
@@ -200,8 +200,14 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
         </Button>
       </Box>
 
-      <Box p="s16" width="100%" overflowX="hidden">
-        <Box bg="white" borderRadius="br3" width="100%">
+      <Box
+        p="s16"
+        width="calc(100% - 275px)"
+        overflowX="hidden"
+        position="relative"
+        left="275px"
+      >
+        <Box bg="white" borderRadius="br3">
           {children}
         </Box>
       </Box>
