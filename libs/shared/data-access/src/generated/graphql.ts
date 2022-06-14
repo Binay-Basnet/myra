@@ -4228,6 +4228,14 @@ export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;
 };
 
+export type SetCooperativeUnionDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymCoopUnionFormInput;
+}>;
+
+
+export type SetCooperativeUnionDataMutation = { members: { cooperativeUnion?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+
 export type GetNewIdMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4346,6 +4354,31 @@ export type GetShareHistoryQueryVariables = Exact<{
 export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, balance: number, member: { id: string } } }> } | null } };
 
 
+export const SetCooperativeUnionDataDocument = `
+    mutation setCooperativeUnionData($id: ID!, $data: KymCoopUnionFormInput!) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(data: $data) {
+        recordId
+        error {
+          ... on KymCoopUnionAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetCooperativeUnionDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetCooperativeUnionDataMutation, TError, SetCooperativeUnionDataMutationVariables, TContext>) =>
+    useMutation<SetCooperativeUnionDataMutation, TError, SetCooperativeUnionDataMutationVariables, TContext>(
+      ['setCooperativeUnionData'],
+      useAxios<SetCooperativeUnionDataMutation, SetCooperativeUnionDataMutationVariables>(SetCooperativeUnionDataDocument),
+      options
+    );
 export const GetNewIdDocument = `
     mutation getNewId {
   newId
