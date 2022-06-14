@@ -210,6 +210,26 @@ export type Base = {
   objState: ObjState;
 };
 
+export type BasicInfo = {
+  id: Scalars['ID'];
+  memberSince: Scalars['String'];
+  name: Scalars['String'];
+  picture?: Maybe<Scalars['String']>;
+};
+
+export type BasicInfoInput = {
+  memberSince?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  picture?: InputMaybe<Scalars['String']>;
+};
+
+export type BasicInfoResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MemberProfileQuery>;
+  record?: Maybe<BasicInfo>;
+  recordId: Scalars['ID'];
+};
+
 export type Branch = {
   address: Scalars['String'];
   branchCode: Scalars['Int'];
@@ -3452,6 +3472,7 @@ export type MemberMutation = {
   individual?: Maybe<KymIndMutation>;
   institution?: Maybe<KymInsMutation>;
   memberPDF: Scalars['String'];
+  profile: MemberProfileMutation;
 };
 
 
@@ -3485,6 +3506,46 @@ export type MemberMutationMemberPdfArgs = {
   id: Scalars['ID'];
 };
 
+export type MemberProfileMutation = {
+  overview: MemberProfileOverviewMutation;
+  updateBasic: BasicInfoResult;
+};
+
+
+export type MemberProfileMutationUpdateBasicArgs = {
+  data: BasicInfoInput;
+  id: Scalars['ID'];
+};
+
+export type MemberProfileOverviewMutation = {
+  addDocument: ProfileDocumentResult;
+  updatePersonalInformation: ProfilePersonalInformationResult;
+};
+
+
+export type MemberProfileOverviewMutationAddDocumentArgs = {
+  data: ProfileDocumentInput;
+  id: Scalars['ID'];
+};
+
+
+export type MemberProfileOverviewMutationUpdatePersonalInformationArgs = {
+  data: ProfilePersonalInformationInput;
+  id: Scalars['ID'];
+};
+
+export type MemberProfileOverviewQuery = {
+  documents: Array<Maybe<ProfileDocument>>;
+  loanAccount: Array<Maybe<ProfileAccount>>;
+  personalInformation: ProfilePersonalInformation;
+  savingsAccount: Array<Maybe<ProfileAccount>>;
+};
+
+export type MemberProfileQuery = {
+  basic: BasicInfo;
+  overview: MemberProfileOverviewQuery;
+};
+
 export type MemberQuery = {
   cooperative?: Maybe<KymCooperativeQuery>;
   cooperativeUnion?: Maybe<KymCoopUnionQuery>;
@@ -3492,6 +3553,7 @@ export type MemberQuery = {
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
   memberTypes: Array<Maybe<KymMemberTypes>>;
+  profile: MemberProfileQuery;
 };
 
 
@@ -3776,6 +3838,69 @@ export type PersonalInformation = {
 export type PersonalInformationInNepali = {
   name?: Maybe<Name>;
   occupation?: Maybe<Scalars['String']>;
+};
+
+export type ProfileAccount = {
+  account_id?: Maybe<Scalars['String']>;
+  amount: Scalars['Float'];
+  id: Scalars['ID'];
+  interest_rate: Scalars['Float'];
+  name?: Maybe<Scalars['String']>;
+};
+
+export type ProfileDocument = {
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+export type ProfileDocumentInput = {
+  name?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
+export type ProfileDocumentResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MemberProfileQuery>;
+  record?: Maybe<ProfileDocument>;
+  recordId: Scalars['ID'];
+};
+
+export type ProfilePersonalInformation = {
+  address?: Maybe<Scalars['String']>;
+  contact_number?: Maybe<Scalars['String']>;
+  dateOfBirth?: Maybe<Scalars['String']>;
+  education_qualification?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  fatherName?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['String']>;
+  grandFatherName?: Maybe<Scalars['String']>;
+  marital_status?: Maybe<Scalars['String']>;
+  motherName?: Maybe<Scalars['String']>;
+  occupation?: Maybe<Scalars['String']>;
+  religion?: Maybe<Scalars['String']>;
+};
+
+export type ProfilePersonalInformationInput = {
+  address?: InputMaybe<Scalars['String']>;
+  contact_number?: InputMaybe<Scalars['String']>;
+  dateOfBirth?: InputMaybe<Scalars['String']>;
+  education_qualification?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  fatherName?: InputMaybe<Scalars['String']>;
+  gender?: InputMaybe<Scalars['String']>;
+  grandFatherName?: InputMaybe<Scalars['String']>;
+  marital_status?: InputMaybe<Scalars['String']>;
+  motherName?: InputMaybe<Scalars['String']>;
+  occupation?: InputMaybe<Scalars['String']>;
+  religion?: InputMaybe<Scalars['String']>;
+};
+
+export type ProfilePersonalInformationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MemberProfileQuery>;
+  record?: Maybe<ProfilePersonalInformation>;
+  recordId: Scalars['ID'];
 };
 
 export type Province = {
