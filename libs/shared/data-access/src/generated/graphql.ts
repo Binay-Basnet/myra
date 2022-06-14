@@ -4241,6 +4241,22 @@ export type SetMemberDataMutationVariables = Exact<{
 
 export type SetMemberDataMutation = { members: { individual?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
+export type UpdateKymFieldMutationVariables = Exact<{
+  id: Scalars['ID'];
+  enabled?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdateKymFieldMutation = { settings: { general?: { KYM?: { individual: { field: { update: { recordId: string, record?: { id: string, name: string } | null } } } } | null } | null } };
+
+export type DeleteKymFieldMutationVariables = Exact<{
+  optionId: Scalars['ID'];
+}>;
+
+
+export type DeleteKymFieldMutation = { settings: { general?: { KYM?: { individual: { option: { delete: { recordId: string } } } } | null } | null } };
+
 export type SetInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymInsInput;
@@ -4310,6 +4326,14 @@ export type GetKymFormStatusQueryVariables = Exact<{
 
 
 export type GetKymFormStatusQuery = { members: { individual?: { formState?: { data?: { sectionStatus?: { personal?: { completed?: Array<KymIndPersonalSection | null> | null, error?: Array<KymIndPersonalSection | null> | null } | null, professional?: { completed?: Array<KymIndProfessionalSection | null> | null, error?: Array<KymIndProfessionalSection | null> | null } | null, cooperativeMembership?: { completed?: Array<KymIndCooperativeMemberSection | null> | null, error?: Array<KymIndCooperativeMemberSection | null> | null } | null, declaration?: { completed?: Array<KymIndDeclarationSection | null> | null, error?: Array<KymIndDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
+
+export type GetKymIndItemDetailsQueryVariables = Exact<{
+  name?: InputMaybe<Scalars['String']>;
+  isIdentificationDoc?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+
+export type GetKymIndItemDetailsQuery = { settings: { general?: { KYM?: { individual: { field: { list?: { data?: Array<{ id: string, name: string, enabled?: boolean | null, hasOtherField: boolean, dependsOn?: Array<string | null> | null, isCustom?: boolean | null, maxSize?: number | null, fieldType: Kym_Field_Type, data?: Array<{ id: string, name: string, fieldType?: Field_Types | null, enabled: boolean }> | null } | null> | null } | null } } } | null } | null } };
 
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4383,6 +4407,62 @@ export const useSetMemberDataMutation = <
     useMutation<SetMemberDataMutation, TError, SetMemberDataMutationVariables, TContext>(
       ['setMemberData'],
       useAxios<SetMemberDataMutation, SetMemberDataMutationVariables>(SetMemberDataDocument),
+      options
+    );
+export const UpdateKymFieldDocument = `
+    mutation updateKYMField($id: ID!, $enabled: Boolean, $name: String) {
+  settings {
+    general {
+      KYM {
+        individual {
+          field {
+            update(id: $id, data: {name: $name, enabled: $enabled}) {
+              record {
+                id
+                name
+              }
+              recordId
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useUpdateKymFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateKymFieldMutation, TError, UpdateKymFieldMutationVariables, TContext>) =>
+    useMutation<UpdateKymFieldMutation, TError, UpdateKymFieldMutationVariables, TContext>(
+      ['updateKYMField'],
+      useAxios<UpdateKymFieldMutation, UpdateKymFieldMutationVariables>(UpdateKymFieldDocument),
+      options
+    );
+export const DeleteKymFieldDocument = `
+    mutation deleteKYMField($optionId: ID!) {
+  settings {
+    general {
+      KYM {
+        individual {
+          option {
+            delete(optionId: $optionId) {
+              recordId
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteKymFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteKymFieldMutation, TError, DeleteKymFieldMutationVariables, TContext>) =>
+    useMutation<DeleteKymFieldMutation, TError, DeleteKymFieldMutationVariables, TContext>(
+      ['deleteKYMField'],
+      useAxios<DeleteKymFieldMutation, DeleteKymFieldMutationVariables>(DeleteKymFieldDocument),
       options
     );
 export const SetInstitutionDataDocument = `
@@ -4744,6 +4824,50 @@ export const useGetKymFormStatusQuery = <
     useQuery<GetKymFormStatusQuery, TError, TData>(
       ['getKymFormStatus', variables],
       useAxios<GetKymFormStatusQuery, GetKymFormStatusQueryVariables>(GetKymFormStatusDocument).bind(null, variables),
+      options
+    );
+export const GetKymIndItemDetailsDocument = `
+    query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
+  settings {
+    general {
+      KYM {
+        individual {
+          field {
+            list(filter: {name: $name, isIdetificationDoc: $isIdentificationDoc}) {
+              data {
+                id
+                name
+                enabled
+                data {
+                  id
+                  name
+                  fieldType
+                  enabled
+                }
+                hasOtherField
+                dependsOn
+                isCustom
+                maxSize
+                fieldType
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetKymIndItemDetailsQuery = <
+      TData = GetKymIndItemDetailsQuery,
+      TError = unknown
+    >(
+      variables?: GetKymIndItemDetailsQueryVariables,
+      options?: UseQueryOptions<GetKymIndItemDetailsQuery, TError, TData>
+    ) =>
+    useQuery<GetKymIndItemDetailsQuery, TError, TData>(
+      variables === undefined ? ['getKYMIndItemDetails'] : ['getKYMIndItemDetails', variables],
+      useAxios<GetKymIndItemDetailsQuery, GetKymIndItemDetailsQueryVariables>(GetKymIndItemDetailsDocument).bind(null, variables),
       options
     );
 export const GetBranchesListDocument = `

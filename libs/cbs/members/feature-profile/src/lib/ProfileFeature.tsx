@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { AiOutlineDown, AiOutlineRight, AiOutlineUp } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
+import Image from 'next/image';
+
 import { TabColumn } from '@coop/myra/components';
 import { Box, Collapse, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
+
 import { AccountCards } from '../components/AccountCards';
-import { LoanCard } from '../components/LoanCard';
 import { DocumentCard } from '../components/DocumentCard';
+import { LoanCard } from '../components/LoanCard';
 
 const memberProfileColumns = [
   {
@@ -183,264 +185,250 @@ export const ProfileFeature = () => {
   const [openCollapse, setOpenCollapse] = useState(false);
   const handleToggle = () => setOpenCollapse(!openCollapse);
   return (
-    <>
-      <Box w="100%" height="fit-content" p="0">
-        <Grid
-          gap={3}
-          bg="background.500"
-          templateRows="repeat(1,5fr)"
-          templateColumns="repeat(10,1fr)"
+    <Box w="100%" height="fit-content" p="0">
+      <Grid
+        gap={3}
+        bg="background.500"
+        templateRows="repeat(1,5fr)"
+        templateColumns="repeat(10,1fr)"
+      >
+        <GridItem
+          bg="gray.0"
+          display="flex"
+          colSpan={10}
+          borderRadius="br3"
+          p="s16"
         >
-          <GridItem
-            bg="gray.0"
-            display="flex"
-            colSpan={10}
-            borderRadius="br3"
-            p="s16"
-          >
-            <Text>Member List</Text>
-            <Icon mx="12px" my="5px" size="sm" as={AiOutlineRight} />
-            <Text>Ajit Nepal</Text>
-          </GridItem>
+          <Text>Member List</Text>
+          <Icon mx="12px" my="5px" size="sm" as={AiOutlineRight} />
+          <Text>Ajit Nepal</Text>
+        </GridItem>
 
-          <GridItem
-            p="s16"
-            bg="gray.0"
-            rowSpan={6}
-            colSpan={1}
-            borderRadius="br3"
-            w="300px"
-          >
-            <Box>
-              <Box borderRadius="br3">
-                <Image
-                  height={250}
-                  width={200}
-                  src={'/passport.jpg'}
-                  alt="chart"
-                />
-              </Box>
-              <Box mt="s24" ml="s8">
-                <Text
-                  fontSize="s3"
-                  fontWeight="Medium"
-                  color="neutralColorLight.Gray-70"
-                >
-                  ID: 23524364456
-                </Text>
-
-                <Text
-                  fontSize="r3"
-                  fontWeight="SemiBold"
-                  color="neutralColorLight.Gray-80"
-                >
-                  Ajit Nepal
-                </Text>
-
-                <Text
-                  mt="s8"
-                  fontSize="s3"
-                  fontWeight="Regular"
-                  color="neutralColorLight.Gray-60"
-                >
-                  Member since 2077/03/45
-                </Text>
-              </Box>
-
-              <Box mt="s24">
-                <TabColumn list={memberProfileColumns} />
-              </Box>
+        <GridItem
+          p="s16"
+          bg="gray.0"
+          rowSpan={6}
+          colSpan={1}
+          borderRadius="br3"
+          w="300px"
+        >
+          <Box>
+            <Box borderRadius="br3">
+              <Image
+                height={250}
+                width={200}
+                src={'/passport.jpg'}
+                alt="chart"
+              />
             </Box>
-          </GridItem>
+            <Box mt="s24" ml="s8">
+              <Text
+                fontSize="s3"
+                fontWeight="Medium"
+                color="neutralColorLight.Gray-70"
+              >
+                ID: 23524364456
+              </Text>
 
-          <GridItem colSpan={9}>
-            <Grid gap={3} templateColumns="repeat(5,1fr)">
-              <GridItem borderRadius="br3" colSpan={4}>
-                <Box
-                  borderRadius="br3"
-                  display="flex"
-                  bg="gray.0"
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignContent="center"
-                >
-                  <Collapse startingHeight={320} in={openCollapse}>
-                    <Box p="s16">
+              <Text
+                fontSize="r3"
+                fontWeight="SemiBold"
+                color="neutralColorLight.Gray-80"
+              >
+                Ajit Nepal
+              </Text>
+
+              <Text
+                mt="s8"
+                fontSize="s3"
+                fontWeight="Regular"
+                color="neutralColorLight.Gray-60"
+              >
+                Member since 2077/03/45
+              </Text>
+            </Box>
+
+            <Box mt="s24">
+              <TabColumn list={memberProfileColumns} />
+            </Box>
+          </Box>
+        </GridItem>
+
+        <GridItem colSpan={9}>
+          <Grid gap={3} templateColumns="repeat(5,1fr)">
+            <GridItem borderRadius="br3" colSpan={4}>
+              <Box
+                borderRadius="br3"
+                display="flex"
+                bg="gray.0"
+                flexDirection="column"
+                justifyContent="center"
+                alignContent="center"
+              >
+                <Collapse startingHeight={320} in={openCollapse}>
+                  <Box p="s16">
+                    <Box mb="s32" display="flex" justifyContent="space-between">
+                      <Text
+                        fontWeight="SemiBold"
+                        fontSize="r1"
+                        color="neutralColorLight.Gray-80"
+                      >
+                        Personal Information
+                      </Text>
+                      <Box as="button">
+                        <Icon mr="5px" h="12px" w="12px" as={FaRegEdit} />
+                        Edit
+                      </Box>
+                    </Box>
+                    {personalInfoDetails.map((item, index) => (
                       <Box
-                        mb="s32"
+                        key={index}
                         display="flex"
                         justifyContent="space-between"
                       >
-                        <Text
-                          fontWeight="SemiBold"
-                          fontSize="r1"
-                          color="neutralColorLight.Gray-80"
-                        >
-                          Personal Information
-                        </Text>
-                        <Box as="button">
-                          <Icon mr="5px" h="12px" w="12px" as={FaRegEdit} />
-                          Edit
+                        <Box mb="s8">
+                          <Text
+                            color="neutralColorLight.Gray-80"
+                            fontWeight="Regular"
+                            fontSize="s3"
+                          >
+                            {item.label}
+                          </Text>
+                        </Box>
+                        <Box textAlign="start">
+                          <Text
+                            color="neutralColorLight.Gray-80"
+                            fontWeight="Medium"
+                            fontSize="s3"
+                          >
+                            {item.value}
+                          </Text>
                         </Box>
                       </Box>
-                      {personalInfoDetails.map((item, index) => (
-                        <Box
-                          key={index}
-                          display="flex"
-                          justifyContent="space-between"
-                        >
-                          <Box mb="s8">
-                            <Text
-                              color="neutralColorLight.Gray-80"
-                              fontWeight="Regular"
-                              fontSize="s3"
-                            >
-                              {item.label}
-                            </Text>
-                          </Box>
-                          <Box textAlign="start">
-                            <Text
-                              color="neutralColorLight.Gray-80"
-                              fontWeight="Medium"
-                              fontSize="s3"
-                            >
-                              {item.value}
-                            </Text>
-                          </Box>
-                        </Box>
-                      ))}
-                    </Box>
-                  </Collapse>
-                  <Box mb="s16" onClick={handleToggle} as="button">
-                    {!openCollapse ? (
-                      <Text
-                        color="primary.500"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
-                        See More
-                        <Icon
-                          ml="5px"
-                          size="sm"
-                          color="primary.500"
-                          as={AiOutlineDown}
-                        />
-                      </Text>
-                    ) : (
-                      <Text
-                        color="primary.500"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
-                        See Less
-                        <Icon
-                          ml="5px"
-                          size="sm"
-                          color="primary.500"
-                          as={AiOutlineUp}
-                        />
-                      </Text>
-                    )}
-                  </Box>
-                </Box>
-              </GridItem>
-
-              <GridItem colSpan={1}>
-                <Box w="350px" h="100%" bg="gray.0" p="s16" borderRadius="br3">
-                  <Box mb="s16" display="flex" justifyContent="space-between">
-                    <Text
-                      fontWeight="SemiBold"
-                      fontSize="r1"
-                      color="neutralColorLight.Gray-80"
-                    >
-                      Documents
-                    </Text>
-                    <Box as="button">
-                      <Icon mr="5px" h="12px" w="12px" as={FaRegEdit} />
-                      Edit
-                    </Box>
-                  </Box>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="space-between"
-                    gap={4}
-                  >
-                    {documentDetails.map((item, index) => (
-                      <DocumentCard
-                        key={index}
-                        img={item.img}
-                        title={item.title}
-                      />
                     ))}
                   </Box>
+                </Collapse>
+                <Box mb="s16" onClick={handleToggle} as="button">
+                  {!openCollapse ? (
+                    <Text color="primary.500" fontWeight="Medium" fontSize="s3">
+                      See More
+                      <Icon
+                        ml="5px"
+                        size="sm"
+                        color="primary.500"
+                        as={AiOutlineDown}
+                      />
+                    </Text>
+                  ) : (
+                    <Text color="primary.500" fontWeight="Medium" fontSize="s3">
+                      See Less
+                      <Icon
+                        ml="5px"
+                        size="sm"
+                        color="primary.500"
+                        as={AiOutlineUp}
+                      />
+                    </Text>
+                  )}
                 </Box>
-              </GridItem>
-            </Grid>
-          </GridItem>
+              </Box>
+            </GridItem>
 
-          <GridItem p="s16" bg="gray.0" colSpan={9} borderRadius="br3">
-            <Box>
-              <Text
-                fontWeight="SemiBold"
-                fontSize="r1"
-                color="neutralColorLight.Gray-80"
-              >
-                Saving Account
-              </Text>
-              <Grid mt="s16" gap={3} templateColumns="repeat(2,1fr)">
-                {savingAccountDetails.map((item, index) => (
-                  <GridItem key={index}>
-                    <AccountCards {...item} />
-                  </GridItem>
-                ))}
-              </Grid>
-            </Box>
-          </GridItem>
-
-          <GridItem
-            p="s16"
-            bg="gray.0"
-            rowSpan={4}
-            colSpan={9}
-            borderRadius="br3"
-          >
-            <Box>
-              <Text
-                fontWeight="SemiBold"
-                fontSize="r1"
-                color="neutralColorLight.Gray-80"
-              >
-                Loan Account
-              </Text>
-              {!loanAccountDetails ? (
-                <Grid mt="s16" gap={3} templateColumns="repeat(2,1fr)">
-                  {loanAccountDetails.map((item, index) => (
-                    <GridItem key={index}>
-                      <LoanCard {...item} />
-                    </GridItem>
-                  ))}
-                </Grid>
-              ) : (
+            <GridItem colSpan={1}>
+              <Box w="350px" h="100%" bg="gray.0" p="s16" borderRadius="br3">
+                <Box mb="s16" display="flex" justifyContent="space-between">
+                  <Text
+                    fontWeight="SemiBold"
+                    fontSize="r1"
+                    color="neutralColorLight.Gray-80"
+                  >
+                    Documents
+                  </Text>
+                  <Box as="button">
+                    <Icon mr="5px" h="12px" w="12px" as={FaRegEdit} />
+                    Edit
+                  </Box>
+                </Box>
                 <Box
                   display="flex"
                   flexDirection="column"
-                  justifyContent="center"
-                  alignItems="center"
+                  justifyContent="space-between"
+                  gap={4}
                 >
-                  <Text fontSize="s1" fontWeight="Regular" color="gray.600">
-                    There is no Loan Account at them Moment.
-                  </Text>
-                  <Text fontSize="s1" fontWeight="Medium" color="gray.600">
-                    Click to Refresh
-                  </Text>
+                  {documentDetails.map((item, index) => (
+                    <DocumentCard
+                      key={index}
+                      img={item.img}
+                      title={item.title}
+                    />
+                  ))}
                 </Box>
-              )}
-            </Box>
-          </GridItem>
-        </Grid>
-      </Box>
-    </>
+              </Box>
+            </GridItem>
+          </Grid>
+        </GridItem>
+
+        <GridItem p="s16" bg="gray.0" colSpan={9} borderRadius="br3">
+          <Box>
+            <Text
+              fontWeight="SemiBold"
+              fontSize="r1"
+              color="neutralColorLight.Gray-80"
+            >
+              Saving Account
+            </Text>
+            <Grid mt="s16" gap={3} templateColumns="repeat(2,1fr)">
+              {savingAccountDetails.map((item, index) => (
+                <GridItem key={index}>
+                  <AccountCards {...item} />
+                </GridItem>
+              ))}
+            </Grid>
+          </Box>
+        </GridItem>
+
+        <GridItem
+          p="s16"
+          bg="gray.0"
+          rowSpan={4}
+          colSpan={9}
+          borderRadius="br3"
+        >
+          <Box>
+            <Text
+              fontWeight="SemiBold"
+              fontSize="r1"
+              color="neutralColorLight.Gray-80"
+            >
+              Loan Account
+            </Text>
+            {loanAccountDetails ? (
+              <Grid mt="s16" gap={3} templateColumns="repeat(2,1fr)">
+                {loanAccountDetails.map((item, index) => (
+                  <GridItem key={index}>
+                    <LoanCard {...item} />
+                  </GridItem>
+                ))}
+              </Grid>
+            ) : (
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Text fontSize="s1" fontWeight="Regular" color="gray.600">
+                  There is no Loan Account at them Moment.
+                </Text>
+                <Text fontSize="s1" fontWeight="Medium" color="gray.600">
+                  Click to Refresh
+                </Text>
+              </Box>
+            )}
+          </Box>
+        </GridItem>
+      </Grid>
+    </Box>
   );
 };
 

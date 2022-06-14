@@ -1,1 +1,2 @@
-export * from './lib/cbs-settings-feature-member';
+export * from './lib/KYMIndividualSettingsPage';
+export { KYMSettingsAccordionBtn } from 'libs/cbs/settings/feature-member/src/components/KYMSettingsAccordionBtn';

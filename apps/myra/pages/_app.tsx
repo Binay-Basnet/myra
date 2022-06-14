@@ -1,11 +1,13 @@
 import type { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
-import { ChakraProvider } from '@chakra-ui/react';
-import { store, theme } from '@coop/shared/utils';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { ChakraProvider } from '@chakra-ui/react';
+
+import { store, theme } from '@coop/shared/utils';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -41,6 +43,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
           </Head>
           <main className="app">{getLayout(<Component {...pageProps} />)}</main>
         </ChakraProvider>
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </Provider>
   );

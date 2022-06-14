@@ -1,11 +1,9 @@
+import { KYMIndividualSettingsPage } from '@coop/cbs/settings/feature-member';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
-import {
-  KYCIndividualPersonal,
-  SettingsGeneralMember,
-} from '@coop/myra/components';
+import { SettingsGeneralMember } from '@coop/myra/components';
 import { Box, Text } from '@coop/shared/ui';
 
 const KYMIndividual = () => {
@@ -56,7 +54,7 @@ const KYMIndividual = () => {
             </Text>
           </Box>
           <Box mt="s16">
-            <KYCIndividualPersonal />
+            <KYMIndividualSettingsPage />
           </Box>
         </Box>
       </Box>
