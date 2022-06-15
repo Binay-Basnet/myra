@@ -17,28 +17,28 @@ export const DocumentDeclarationInstitution = () => {
       </Text>
       <Grid templateColumns={'repeat(2, 1fr)'} gap="s32">
         <FormFileInput
-          name="cooperativeDocuments0"
+          name="cooperativeDocuments"
           label="AGM Decision Document"
           size="lg"
         />
         <FormFileInput
-          name="cooperativeDocuments0"
+          name="cooperativeDocuments"
           label="Registered Certificate"
           size="lg"
         />
         <FormFileInput name="cooperativeDocuments0" label="MOA/AOA" size="lg" />
         <FormFileInput
-          name="cooperativeDocuments0"
+          name="cooperativeDocuments"
           label="PAN Certificate"
           size="lg"
         />
         <FormFileInput
-          name="cooperativeDocuments0"
+          name="cooperativeDocuments"
           label="Tax Clearance"
           size="lg"
         />
         <FormFileInput
-          name="cooperativeDocuments0"
+          name="cooperativeDocuments"
           label="Latest Audit Report"
           size="lg"
         />

@@ -42,7 +42,9 @@ export const AccountHolderDeclarationInstitution = () => {
         </Box>
       </Grid>
       <Box display="flex" gap="s16" alignItems="start">
-        <Checkbox fontSize="s3">{''}</Checkbox>
+        <Checkbox fontSize="s3" id="weAgree">
+          {''}
+        </Checkbox>
         <TextFields variant="formInput" mt="-6px">
           I/We hereby confirm that the information provede by me/us in this form
           and documents provided to the Bank are true and corrent. I/We further

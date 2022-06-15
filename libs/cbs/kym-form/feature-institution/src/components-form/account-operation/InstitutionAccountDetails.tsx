@@ -52,11 +52,15 @@ const AddAccountDetails = ({
             { value: 'treasurer', label: 'Treasurer' },
           ]}
         />
-        <Box w="124px">
-          <FormFileInput
-            name={`accountOperatorsDetails.${index}.specimenSignature`}
-            label="Specimen Signature"
-          />
+        <Box display="flex" flexDirection={'column'} gap="s4">
+          <Text fontSize={'s3'} fontWeight="500">
+            Specimen Signature
+          </Text>
+          <Box w="124px" display="flex" flexDirection={'column'} gap="s4">
+            <FormFileInput
+              name={`accountOperatorsDetails.${index}.specimenSignature`}
+            />
+          </Box>
         </Box>
       </InputGroupContainer>
     </DynamicBoxContainer>
@@ -68,7 +72,7 @@ export const InstitutionKYMAccountDetail = () => {
     fields: accountFields,
     append: accountAppend,
     remove: accountRemove,
-  } = useFieldArray({ name: 'sisterConcernDetails' });
+  } = useFieldArray({ name: 'accountOperatorsDetails' });
 
   return (
     <GroupContainer id="Family Details" scrollMarginTop={'200px'}>

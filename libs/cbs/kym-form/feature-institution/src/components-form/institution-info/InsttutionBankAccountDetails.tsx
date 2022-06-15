@@ -17,7 +17,7 @@ export const BankAccountDetailsInstitution = () => {
       </Text>
       <InputGroupContainer>
         <FormSelect
-          name="bankName"
+          name="bank"
           label="Name of Bank"
           placeholder="Select Bank"
           options={[
