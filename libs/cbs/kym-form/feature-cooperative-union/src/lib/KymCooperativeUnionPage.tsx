@@ -44,20 +44,7 @@ export function KYMCooperativeUnionPage() {
   // const methods = useForm<IFormValues>();
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { mutate } = useSetCooperativeUnionDataMutation({
-    onSuccess: (res) => {
-      setError('nameOfInstitution', {
-        type: 'custom',
-        message:
-          res?.members?.cooperativeUnion?.add?.error?.error?.[
-            'nameOfInstitution'
-          ][0],
-      });
-    },
-    onError: () => {
-      setError('nameOfInstitution', { type: 'custom', message: 'shet' });
-    },
-  });
+  const { mutate } = useSetCooperativeUnionDataMutation({});
   const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
   const kymFormStatus =
     kymFormStatusQuery?.data?.members?.individual?.formState?.data
@@ -84,7 +71,7 @@ export function KYMCooperativeUnionPage() {
           highestQualification: '',
           contactNumber: '',
           email: '',
-          citizenshipOrPassportOrLisenceNo: '',
+          citizenshipOrPassportOrLisenceNo: 0,
           subjectOfTraining: '',
           dateOfTraining: '',
           trainingOrganization: '',
@@ -137,6 +124,7 @@ export function KYMCooperativeUnionPage() {
         <FormProvider {...methods}>
           <form
             onChange={debounce(() => {
+              console.log('hello', getValues());
               mutate({ id, data: getValues() });
             }, 3000)}
             onSubmit={handleSubmit((data) => {

@@ -21,7 +21,7 @@ import {
 } from '@coop/shared/data-access';
 import { Box, Button, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
 
-const AddDirector = ({ watch, index }) => {
+const AddDirector = ({ watch, index, control }) => {
   const { data } = useAllAdministrationQuery();
   const [temporaryAddress, setTemporaryAddress] = useState(false);
 
@@ -153,6 +153,7 @@ const AddDirector = ({ watch, index }) => {
         </Text>
 
         <FormSwitch
+          control={control}
           name="isPermanentAndTemporaryAddressSame"
           label="Temporary Address same as permanent"
         />
@@ -223,13 +224,13 @@ const AddDirector = ({ watch, index }) => {
           placeholder="Enter Mobile No"
         />
         <FormInput
-          type="number"
+          type="text"
           name={`boardOfDirectorsDetails.${index}.email`}
           label="Email"
           placeholder="Enter Email"
         />
         <FormInput
-          type="number"
+          type="string"
           name={`boardOfDirectorsDetails.${index}.citizenshipOrPassportOrLisenceNo`}
           label="Citizenship/Passport/Driving License No."
           placeholder="Enter No"
@@ -240,7 +241,7 @@ const AddDirector = ({ watch, index }) => {
       </Text>
       <InputGroupContainer>
         <FormInput
-          type="number"
+          type="text"
           name={`boardOfDirectorsDetails.${index}.subjectOfTraining`}
           label="Subject of Training"
           placeholder="Enter Subject of Training"
@@ -290,7 +291,7 @@ export const BoardDirectorInfo = ({ watch, control }) => {
       {directorFields.map((item, index) => {
         return (
           <Box key={item.id}>
-            <AddDirector watch={watch} index={index} />
+            <AddDirector watch={watch} index={index} control={control} />
           </Box>
         );
       })}
