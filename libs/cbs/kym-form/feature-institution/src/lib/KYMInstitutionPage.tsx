@@ -6,6 +6,7 @@ import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import { AccorrdianAddInstitution } from '@coop/myra/components';
 import {
   KymInsFormData,
   useGetKymFormStatusInstitutionQuery,
@@ -21,14 +22,19 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 
 import {
+  AccountHolderDeclarationInstitution,
+  AccountOperationInstitution,
   BankAccountDetailsInstitution,
   BasicDetailsInstitution,
   ContactDetailsInstitution,
+  DocumentDeclarationInstitution,
+  InstitutionKYMAccountDetail,
+  InstitutionKYMSisterConcernDetails,
   RegisteredDetailsInstitution,
   TransactionProfileInstitution,
 } from '../components-form';
@@ -36,6 +42,10 @@ import {
 export interface KYMInstitutionPageProps {}
 
 export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
+  const [kymCurrentSection, setKymCurrentSection] = React.useState<{
+    section: string;
+    subSection: string;
+  }>();
   const router = useRouter();
   const id = String(router?.query?.['id']);
   const kymFormStatusQuery = useGetKymFormStatusInstitutionQuery({ id });
@@ -98,16 +108,17 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
       <Container minW="container.xl" height="fit-content">
         <FormProvider {...methods}>
           <form
-          // onChange={debounce(() => {
-          //   mutate({ id, data: getValues() });
-          // }, 3000)}
-          // onSubmit={handleSubmit((data) => {
-          //   console.log('data', data);
-          // })}
-          // onFocus={(e) => {
-          //   const kymSection = getKymSection(e.target.id);
-          //   setKymCurrentSection(kymSection);
-          // }}
+            onChange={debounce(() => {
+              mutate({ id, data: getValues() });
+            }, 3000)}
+            onSubmit={handleSubmit((data) => {
+              console.log('data', data);
+            })}
+            onFocus={(e) => {
+              const kymSection = getKymSectionInstitution(e.target.id);
+              console.log('kymSection', e.target.id);
+              setKymCurrentSection(kymSection);
+            }}
           >
             {/* main */}
             <Box display="flex" width="100%">
@@ -120,10 +131,13 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                   minHeight="100%"
                   bg="white"
                 >
-                  <Text> Hello </Text>
+                  <AccorrdianAddInstitution
+                    formStatus={kymFormStatus}
+                    kymCurrentSection={kymCurrentSection}
+                  />
                 </Box>
 
-                <Box background="white" ml={320} p="s20">
+                <Box background="white" ml={320} p="s20" pb="120px">
                   <SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
@@ -134,6 +148,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                         <RegisteredDetailsInstitution />
                         <ContactDetailsInstitution />
                         <BankAccountDetailsInstitution />
+                        <InstitutionKYMSisterConcernDetails />
                       </ContainerWithDivider>
                     </SectionContainer>
 
@@ -161,7 +176,8 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                         4. Account Operations
                       </Text>
                       <ContainerWithDivider>
-                        Happy Dashain{' '}
+                        <InstitutionKYMAccountDetail />
+                        <AccountOperationInstitution />
                       </ContainerWithDivider>
                     </SectionContainer>
                     <SectionContainer>
@@ -169,7 +185,8 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                         5. Declaration
                       </Text>
                       <ContainerWithDivider>
-                        Happy Dashain{' '}
+                        <DocumentDeclarationInstitution />
+                        <AccountHolderDeclarationInstitution />
                       </ContainerWithDivider>
                     </SectionContainer>
                   </SectionContainer>

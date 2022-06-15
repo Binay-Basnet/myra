@@ -3,7 +3,8 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormRadioGroup } from '@coop/myra/components';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+// import { InstitutionExpectedMonthlyTurnover } from '@coop/shared/data-access';
+import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 
 const radioList1 = [
   'Less than 5 Lakhs',
@@ -20,38 +21,43 @@ const radioList2 = [
 export const TransactionProfileInstitution = () => {
   return (
     <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
-      <InputGroupContainer>
-        <FormInput
-          // control={control}
-          type="text"
-          name="natureOfTransaction"
-          label="Nature of Transaction"
-          placeholder="Enter Nature of Transaction"
-        />
-        <FormInput
-          type="number"
-          name="annualTurnover"
-          label="Annual Turnover"
-          textAlign={'right'}
-          placeholder="0.00"
-        />
+      <>
+        {/* {console.log('hello world', InstitutionExpectedMonthlyTurnover)} */}
 
-        <FormInput
-          type="number"
-          name="initialDepositAmountr"
-          label="Initial Deposit Amount"
-          textAlign={'right'}
-          placeholder="0.00"
-        />
-        <Box mt="s16">
-          <FormRadioGroup
-            name="expectedMonthlyTurnover"
-            label="Expected Monthly Turnover"
-            radioList={radioList1}
-            orientation="vertical"
+        <InputGroupContainer>
+          <FormInput
+            // control={control}
+            type="text"
+            name="natureOfTransaction"
+            label="Nature of Transaction"
+            placeholder="Enter Nature of Transaction"
           />
-        </Box>
-        <GridItem colSpan={2} display="flex">
+          <FormInput
+            type="number"
+            name="annualTurnover"
+            label="Annual Turnover"
+            textAlign={'right'}
+            placeholder="0.00"
+          />
+
+          <FormInput
+            type="number"
+            name="initialDepositAmount"
+            label="Initial Deposit Amount"
+            textAlign={'right'}
+            placeholder="0.00"
+          />
+        </InputGroupContainer>
+        <Grid templateColumns="repeat(2, 1fr)">
+          <Box mt="s16">
+            <FormRadioGroup
+              name="expectedMonthlyTurnover"
+              label="Expected Monthly Turnover"
+              radioList={radioList1}
+              orientation="vertical"
+            />
+          </Box>
+
           <Box mt="s16">
             <FormRadioGroup
               name="expectedMonthlyTransaction"
@@ -60,8 +66,8 @@ export const TransactionProfileInstitution = () => {
               orientation="vertical"
             />
           </Box>
-        </GridItem>
-      </InputGroupContainer>
+        </Grid>
+      </>
     </GroupContainer>
   );
 };

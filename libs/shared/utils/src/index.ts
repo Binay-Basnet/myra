@@ -6,5 +6,6 @@ export * from './locales';
 export * from './redux/counterSlice';
 export * from './redux/store';
 export * from './utilFunctions/getKymSection';
+export * from './utilFunctions/getKymsectionsInstitutions';
 export * from './utilFunctions/translation';
 export * from './validationSchema/memberForm';
