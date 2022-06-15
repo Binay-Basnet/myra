@@ -6,6 +6,7 @@ import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import { AccorrdianAddInstitution } from '@coop/myra/components';
 import {
   KymInsFormData,
   useGetKymFormStatusInstitutionQuery,
@@ -26,9 +27,14 @@ import debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 
 import {
+  AccountHolderDeclarationInstitution,
+  AccountOperationInstitution,
   BankAccountDetailsInstitution,
   BasicDetailsInstitution,
   ContactDetailsInstitution,
+  DocumentDeclarationInstitution,
+  InstitutionKYMAccountDetail,
+  InstitutionKYMSisterConcernDetails,
   RegisteredDetailsInstitution,
   TransactionProfileInstitution,
 } from '../components-form';
@@ -106,10 +112,10 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                   minHeight="100%"
                   bg="white"
                 >
-                  <Text> Hello </Text>
+                  <AccorrdianAddInstitution />
                 </Box>
 
-                <Box background="white" ml={320} p="s20">
+                <Box background="white" ml={320} p="s20" pb="120px">
                   <SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
@@ -120,6 +126,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                         <RegisteredDetailsInstitution />
                         <ContactDetailsInstitution />
                         <BankAccountDetailsInstitution />
+                        <InstitutionKYMSisterConcernDetails />
                       </ContainerWithDivider>
                     </SectionContainer>
 
@@ -147,7 +154,8 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                         4. Account Operations
                       </Text>
                       <ContainerWithDivider>
-                        Happy Dashain{' '}
+                        <InstitutionKYMAccountDetail />
+                        <AccountOperationInstitution />
                       </ContainerWithDivider>
                     </SectionContainer>
                     <SectionContainer>
@@ -155,7 +163,8 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                         5. Declaration
                       </Text>
                       <ContainerWithDivider>
-                        Happy Dashain{' '}
+                        <DocumentDeclarationInstitution />
+                        <AccountHolderDeclarationInstitution />
                       </ContainerWithDivider>
                     </SectionContainer>
                   </SectionContainer>
