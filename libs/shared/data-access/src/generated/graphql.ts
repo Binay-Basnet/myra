@@ -4134,6 +4134,22 @@ export type SetMemberDataMutation = {
   };
 };
 
+export type SetKymCooperativeDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymCooperativeFormInput;
+}>;
+
+export type SetKymCooperativeDataMutation = {
+  members: {
+    cooperative?: {
+      add?: {
+        recordId: string;
+        error?: { error?: Record<string, Array<string>> | null } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymInsInput;
