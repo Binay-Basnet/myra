@@ -431,7 +431,7 @@ export const ProfileFeature = () => {
                   <Text fontSize="s1" fontWeight="Regular" color="gray.600">
                     There is no Loan Account at them Moment.
                   </Text>
-                  <Text fontSize="s1" fontWeight="Medium" color="gray.600">
+                  <Text fontSize="r1" fontWeight="Medium" color="primary.500">
                     Click to Refresh
                   </Text>
                 </Box>
