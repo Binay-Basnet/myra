@@ -70,7 +70,7 @@ const AddDirector = ({ watch, index }) => {
     [currentTemptDistrictId]
   );
   return (
-    <>
+    <DynamicBoxGroupContainer>
       <InputGroupContainer>
         <FormInput
           type="text"
@@ -272,19 +272,38 @@ const AddDirector = ({ watch, index }) => {
           name={`boardOfDirectorsDetails.${index}.identityDocumentPhoto`}
         />
       </Grid>
-    </>
+    </DynamicBoxGroupContainer>
   );
 };
 
-export const BoardDirectorInfo = ({ watch }) => {
+export const BoardDirectorInfo = ({ watch, control }) => {
+  const {
+    fields: directorFields,
+    append: directorAppend,
+    remove: directorRemove,
+  } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
   return (
     <GroupContainer id="Family Details" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         Board of director details
       </Text>
-      <DynamicBoxGroupContainer>
-        <AddDirector watch={watch} />
-      </DynamicBoxGroupContainer>
+      {directorFields.map((item, index) => {
+        return (
+          <Box key={item.id}>
+            <AddDirector watch={watch} index={index} />
+          </Box>
+        );
+      })}
+      <Button
+        alignSelf="start"
+        leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+        variant="outline"
+        onClick={() => {
+          directorAppend({});
+        }}
+      >
+        Add Director
+      </Button>
     </GroupContainer>
   );
 };

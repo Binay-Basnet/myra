@@ -185,52 +185,9 @@ export function KYMCooperativeUnionPage() {
                         2. Details of Board Directors
                       </Text>
                       <ContainerWithDivider>
-                        <BoardDirectorInfo watch={watch} />
-                        {/* <MemberKYMProfession control={control} /> */}
-                        {/* <MemberKYMMainOccupation
-                          control={control}
-                          watch={watch}
-                        /> */}
-                        {/* <MemberKYMHusbandWifeOccupation
-                          control={control}
-                          watch={watch}
-                        /> */}
-                        {/* <MemberKYMIncomeSourceDetails control={control} /> */}
+                        <BoardDirectorInfo watch={watch} control={control} />
                       </ContainerWithDivider>
                     </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        3. COOP membership
-                      </Text>
-                      <ContainerWithDivider>
-                        {/* <KYMBasiccoopDetails control={control} /> */}
-                        {/* <KYMFinancialTransactionDetails control={control} /> */}
-                        {/* <KYMEstimatedAmount control={control} /> */}
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        4. Declaration
-                      </Text>
-                      <ContainerWithDivider>
-                        {/* <KYMDeclaration control={control} /> */}
-                        {/* <KYMLocation control={control} /> */}
-                        {/* <KYMDocumentDeclaration control={control} /> */}
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <Box display="flex" gap="s16" alignItems="start">
-                      <Checkbox fontSize="s3">{''}</Checkbox>
-                      <TextFields variant="formInput" mt="-6px">
-                        I hereby declare that the information provided by me/us
-                        in this form and documents provided to the co-operative
-                        are true and correct. All transaction in this account
-                        are from legitimate source. If found otherwise, I shall
-                        bear the consequences thereof.
-                      </TextFields>
-                    </Box>
                   </SectionContainer>
                 </Box>
               </Box>
