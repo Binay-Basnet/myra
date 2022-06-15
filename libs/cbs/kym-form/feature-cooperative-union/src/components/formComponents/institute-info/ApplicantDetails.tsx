@@ -36,13 +36,13 @@ export const ApplicantDetails = () => {
           size="md"
           label="Signature"
           // control={control}
-          name="passportSizePhoto"
+          name="applicantSign"
         />
         <FormFileInput
           size="md"
           label="Stamp"
           // control={control}
-          name="signaturePhoto"
+          name="applicantStamp"
         />
       </Grid>
     </>

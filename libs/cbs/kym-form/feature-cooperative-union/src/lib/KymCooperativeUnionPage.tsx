@@ -26,6 +26,7 @@ import {
   CurrentMemberDetails,
   BankAccountDetails,
   ApplicantDetails,
+  BoardDirectorInfo,
 } from '../components';
 import {
   SectionContainer,
@@ -45,14 +46,16 @@ export function KYMCooperativeUnionPage() {
   const id = String(router?.query?.['id']);
   const { mutate } = useSetCooperativeUnionDataMutation({
     onSuccess: (res) => {
-      setError('firstName', {
+      setError('nameOfInstitution', {
         type: 'custom',
         message:
-          res?.members?.cooperativeUnion?.add?.error?.error?.['firstName'][0],
+          res?.members?.cooperativeUnion?.add?.error?.error?.[
+            'nameOfInstitution'
+          ][0],
       });
     },
     onError: () => {
-      setError('firstName', { type: 'custom', message: 'shet' });
+      setError('nameOfInstitution', { type: 'custom', message: 'shet' });
     },
   });
   const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
@@ -60,7 +63,37 @@ export function KYMCooperativeUnionPage() {
     kymFormStatusQuery?.data?.members?.individual?.formState?.data
       ?.sectionStatus;
 
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      boardOfDirectorsDetails: [
+        {
+          fullName: '',
+          designation: '',
+          permanentStateId: '',
+          permanentDistrictId: '',
+          permanentVdcOrMunicId: '',
+          permanentWardId: '',
+          permanentLocality: '',
+          isPermanentAndTemporaryAddressSame: false,
+          temporaryStateId: '',
+          temporaryDistrictId: '',
+          temporaryVdcOrMunicId: '',
+          temporaryWardId: '',
+          temporaryLocality: '',
+          dateOfMembership: '',
+          highestQualification: '',
+          contactNumber: '',
+          email: '',
+          citizenshipOrPassportOrLisenceNo: '',
+          subjectOfTraining: '',
+          dateOfTraining: '',
+          trainingOrganization: '',
+          photograph: '',
+          identityDocumentPhoto: '',
+        },
+      ],
+    },
+  });
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
   return (
@@ -149,54 +182,12 @@ export function KYMCooperativeUnionPage() {
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        2. Professional Information
+                        2. Details of Board Directors
                       </Text>
                       <ContainerWithDivider>
-                        {/* <MemberKYMProfession control={control} /> */}
-                        {/* <MemberKYMMainOccupation
-                          control={control}
-                          watch={watch}
-                        /> */}
-                        {/* <MemberKYMHusbandWifeOccupation
-                          control={control}
-                          watch={watch}
-                        /> */}
-                        {/* <MemberKYMIncomeSourceDetails control={control} /> */}
+                        <BoardDirectorInfo watch={watch} control={control} />
                       </ContainerWithDivider>
                     </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        3. COOP membership
-                      </Text>
-                      <ContainerWithDivider>
-                        {/* <KYMBasiccoopDetails control={control} /> */}
-                        {/* <KYMFinancialTransactionDetails control={control} /> */}
-                        {/* <KYMEstimatedAmount control={control} /> */}
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        4. Declaration
-                      </Text>
-                      <ContainerWithDivider>
-                        {/* <KYMDeclaration control={control} /> */}
-                        {/* <KYMLocation control={control} /> */}
-                        {/* <KYMDocumentDeclaration control={control} /> */}
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <Box display="flex" gap="s16" alignItems="start">
-                      <Checkbox fontSize="s3">{''}</Checkbox>
-                      <TextFields variant="formInput" mt="-6px">
-                        I hereby declare that the information provided by me/us
-                        in this form and documents provided to the co-operative
-                        are true and correct. All transaction in this account
-                        are from legitimate source. If found otherwise, I shall
-                        bear the consequences thereof.
-                      </TextFields>
-                    </Box>
                   </SectionContainer>
                 </Box>
               </Box>

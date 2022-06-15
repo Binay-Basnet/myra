@@ -1,3 +1,4 @@
+export * from './formComponents/board-directors-details/BoardDirectorInfo';
 export * from './formComponents/institute-info/ApplicantDetails';
 export * from './formComponents/institute-info/BankAccountDetails';
 export * from './formComponents/institute-info/ContactDetails';
