@@ -8,42 +8,33 @@ import { Text } from '@coop/shared/ui';
 
 export const KymCoopContactDetails = () => {
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer id="Contact Details" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        BASIC INFORMATION
+        Contact Details
       </Text>
       <InputGroupContainer>
         <FormInput
-          // control={control}
           type="text"
-          name={'nameOfOrganization'}
-          label="Name of Organization"
-          placeholder="Enter Name of Organization"
+          name="email"
+          label="Official Email"
+          placeholder="Enter Email Address"
         />
         <FormInput
-          control={control}
           type="text"
-          name="regdNumber"
-          label="Regisration No"
-          placeholder="Enter Registered Number"
+          name="website"
+          label="Website Link"
+          placeholder="Enter Website URL"
         />
 
         <FormInput
-          control={control}
           type="text"
-          name="regdOffice"
-          label="Registration office"
-          placeholder="Enter Registered Address"
-        />
-        <FormInput
-          control={control}
-          type="date"
-          name="regdDate"
-          label="Registration Date"
+          name="contactNumber"
+          label="Phone no."
+          placeholder="Enter Phone Number"
         />
       </InputGroupContainer>
     </GroupContainer>

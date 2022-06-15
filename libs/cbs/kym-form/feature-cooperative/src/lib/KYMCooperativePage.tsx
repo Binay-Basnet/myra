@@ -1,7 +1,7 @@
 /* eslint-disable-next-line */
-import { useTranslation, getKymSection } from '@coop/shared/utils';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useTranslation, getKymSection } from '@coop/shared/utils';
 import {
   useSetKymCooperativeDataMutation,
   useGetKymFormStatusQuery,
@@ -25,10 +25,15 @@ import {
   KymCoopRegdAddress,
   KymCoopOpAddress,
   KymCoopContactDetails,
+  KymCoopDate,
   KymCoopCurrentMembers,
   KymCoopRepresentative,
   KymCoopAddCoopDetails,
   KymCoopNoEmployee,
+  KymEquityLiabilities,
+  KymCoopAssets,
+  KymAccountHolderDeclaration,
+  KymCoopDocumentDeclarationForm,
 } from '../components/form';
 import {
   SectionContainer,
@@ -175,33 +180,39 @@ export function KYMCooperativePage() {
                       </Text>
                       <ContainerWithDivider>
                         <KymCoopBasicInfo />
-                        <KymCoopRegdAddress />
-                        <KymCoopOpAddress />
+                        <KymCoopRegdAddress watch={watch} />
+                        <KymCoopOpAddress watch={watch} />
                         <KymCoopContactDetails />
                         <KymCoopCurrentMembers />
+                        <KymCoopDate />
                         <KymCoopRepresentative />
                         <KymCoopAddCoopDetails />
                         <KymCoopNoEmployee />
                       </ContainerWithDivider>
                     </SectionContainer>
 
-                    {/* <SectionContainer>
+                    <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
                         2. Economic Details
                       </Text>
                       <ContainerWithDivider>
-                        <MemberKYMProfession control={control} />
-                        <MemberKYMMainOccupation
-                          control={control}
-                          watch={watch}
-                        />
-                        <MemberKYMHusbandWifeOccupation
-                          control={control}
-                          watch={watch}
-                        />
-                        <MemberKYMIncomeSourceDetails control={control} />
+                        <KymEquityLiabilities watch={watch} />
+                        <KymCoopAssets watch={watch} />
                       </ContainerWithDivider>
                     </SectionContainer>
+
+                    <SectionContainer>
+                      <Text fontSize="r3" fontWeight="600">
+                        5. Declaration
+                      </Text>
+                      <ContainerWithDivider>
+                        <KymAccountHolderDeclaration />
+                        <KymCoopDocumentDeclarationForm />
+                      </ContainerWithDivider>
+                    </SectionContainer>
+
+                    {/* 
+                   
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
@@ -237,11 +248,16 @@ export function KYMCooperativePage() {
                     <Box display="flex" gap="s16" alignItems="start">
                       <Checkbox fontSize="s3">{''}</Checkbox>
                       <TextFields variant="formInput" mt="-6px">
-                        I hereby declare that the information provided by me/us
-                        in this form and documents provided to the co-operative
-                        are true and correct. All transaction in this account
-                        are from legitimate source. If found otherwise, I shall
-                        bear the consequences thereof.
+                        I/We hereby confirm that the information provede by
+                        me/us in this form and documents provided to the Bank
+                        are true and corrent. I/We further confirm that I/We
+                        have read and understood to the Bank's terms and
+                        conditions governing account opening/operations and
+                        shall abide and be bound by present/future rules Nepal
+                        Rastra Bank, Himalayan Bank Limited and Laws of the
+                        country. In the event I/We fail to abide by the terms
+                        and conditions, I/We shall bear the damage and/or
+                        penalties resulting as a consequence thereof.
                       </TextFields>
                     </Box>
                   </SectionContainer>

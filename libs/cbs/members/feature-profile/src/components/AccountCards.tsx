@@ -17,6 +17,7 @@ export const AccountCards = (cardItem: accountCardProps) => {
       borderColor="border.layout"
       display="flex"
       justifyContent="space-between"
+      alignContent="center"
     >
       <Box>
         <Text color="primary.500" fontWeight="SemiBold" fontSize="r1">

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, useFormContext } from 'react-hook-form';
 import { Box, RadioGroup, RadioGroupProps, TextFields } from '@coop/shared/ui';
 
 interface IFormSelectProps extends RadioGroupProps {
-  control: Control;
+  control?: Control;
   name: string;
   label?: string;
 }
@@ -14,6 +14,14 @@ export const FormRadioGroup = ({
   label,
   ...rest
 }: IFormSelectProps) => {
+  const methods = useFormContext();
+
+  const {
+    formState: { errors },
+    control: formControl,
+  } = methods;
+
+  const error = errors[name];
   return (
     <Controller
       control={control}
@@ -27,6 +35,7 @@ export const FormRadioGroup = ({
               onChange(e.target.value.toLowerCase() === 'yes');
             }}
           />
+          {error ? error?.message : null}
         </Box>
       )}
     />

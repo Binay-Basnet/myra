@@ -8,42 +8,26 @@ import { Text } from '@coop/shared/ui';
 
 export const KymCoopRepresentative = () => {
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer id="Representative" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        BASIC INFORMATION
+        Representative
       </Text>
       <InputGroupContainer>
         <FormInput
-          // control={control}
           type="text"
-          name={'nameOfOrganization'}
-          label="Name of Organization"
-          placeholder="Enter Name of Organization"
+          name="representativeFullName"
+          label="Name"
+          placeholder="Enter Name"
         />
         <FormInput
-          control={control}
           type="text"
-          name="regdNumber"
-          label="Regisration No"
-          placeholder="Enter Registered Number"
-        />
-
-        <FormInput
-          control={control}
-          type="text"
-          name="regdOffice"
-          label="Registration office"
-          placeholder="Enter Registered Address"
-        />
-        <FormInput
-          control={control}
-          type="date"
-          name="regdDate"
-          label="Registration Date"
+          name="representativeDesignatiton"
+          label="Designation"
+          placeholder="Enter Designation"
         />
       </InputGroupContainer>
     </GroupContainer>

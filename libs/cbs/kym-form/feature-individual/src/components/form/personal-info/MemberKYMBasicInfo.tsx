@@ -26,7 +26,7 @@ export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
         <FormInput
           // control={control}
           type="text"
-          name={'firstName'}
+          name="firstName"
           label="First Name"
           placeholder="Enter first name"
         />

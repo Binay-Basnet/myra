@@ -212,10 +212,10 @@ export const ProfileFeature = () => {
             w="300px"
           >
             <Box>
-              <Box borderRadius="br3">
+              <Box display="flex" justifyContent="center" borderRadius="br3">
                 <Image
-                  height={250}
-                  width={200}
+                  height={268}
+                  width={268}
                   src={'/passport.jpg'}
                   alt="chart"
                 />
@@ -264,7 +264,7 @@ export const ProfileFeature = () => {
                   justifyContent="center"
                   alignContent="center"
                 >
-                  <Collapse startingHeight={320} in={openCollapse}>
+                  <Collapse startingHeight={315} in={openCollapse}>
                     <Box p="s16">
                       <Box
                         mb="s32"
@@ -283,35 +283,42 @@ export const ProfileFeature = () => {
                           Edit
                         </Box>
                       </Box>
-                      {personalInfoDetails.map((item, index) => (
-                        <Box
-                          key={index}
-                          display="flex"
-                          justifyContent="space-between"
-                        >
-                          <Box mb="s8">
-                            <Text
-                              color="neutralColorLight.Gray-80"
-                              fontWeight="Regular"
-                              fontSize="s3"
-                            >
-                              {item.label}
-                            </Text>
-                          </Box>
-                          <Box textAlign="start">
-                            <Text
-                              color="neutralColorLight.Gray-80"
-                              fontWeight="Medium"
-                              fontSize="s3"
-                            >
-                              {item.value}
-                            </Text>
-                          </Box>
-                        </Box>
-                      ))}
+                      <Grid templateColumns="repeat(2,1fr)">
+                        <GridItem>
+                          <Grid templateColumns="repeat(1,1fr)">
+                            {personalInfoDetails.map((item, index) => (
+                              <GridItem key={index}>
+                                <Text
+                                  color="neutralColorLight.Gray-80"
+                                  fontWeight="Regular"
+                                  fontSize="s3"
+                                >
+                                  {item.label}
+                                </Text>
+                              </GridItem>
+                            ))}
+                          </Grid>
+                        </GridItem>
+
+                        <GridItem>
+                          <Grid templateColumns="repeat(1,1fr)">
+                            {personalInfoDetails.map((item, index) => (
+                              <GridItem key={index}>
+                                <Text
+                                  color="neutralColorLight.Gray-80"
+                                  fontWeight="Medium"
+                                  fontSize="s3"
+                                >
+                                  {item.value}
+                                </Text>
+                              </GridItem>
+                            ))}
+                          </Grid>
+                        </GridItem>
+                      </Grid>
                     </Box>
                   </Collapse>
-                  <Box mb="s16" onClick={handleToggle} as="button">
+                  <Box mb="s16" mt="s16" onClick={handleToggle} as="button">
                     {!openCollapse ? (
                       <Text
                         color="primary.500"
@@ -413,7 +420,7 @@ export const ProfileFeature = () => {
               >
                 Loan Account
               </Text>
-              {!loanAccountDetails ? (
+              {loanAccountDetails ? (
                 <Grid mt="s16" gap={3} templateColumns="repeat(2,1fr)">
                   {loanAccountDetails.map((item, index) => (
                     <GridItem key={index}>

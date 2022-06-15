@@ -2,7 +2,7 @@ import { Control, Controller } from 'react-hook-form';
 import { Box, FileInput, FileInputProps, TextFields } from '@coop/shared/ui';
 
 interface FormFileInputProps extends FileInputProps {
-  control: Control;
+  control?: Control;
   name: string;
   label?: string;
 }

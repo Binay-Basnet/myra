@@ -16,16 +16,15 @@ export const KymCoopBasicInfo = () => {
       >
         BASIC INFORMATION
       </Text>
+      <FormInput
+        w="65%"
+        type="text"
+        name={'nameOfOrganization'}
+        label="Name of Organization"
+        placeholder="Enter Name of Organization"
+      />
       <InputGroupContainer>
         <FormInput
-          // control={control}
-          type="text"
-          name={'nameOfOrganization'}
-          label="Name of Organization"
-          placeholder="Enter Name of Organization"
-        />
-        <FormInput
-          control={control}
           type="text"
           name="regdNumber"
           label="Regisration No"
@@ -33,18 +32,12 @@ export const KymCoopBasicInfo = () => {
         />
 
         <FormInput
-          control={control}
           type="text"
           name="regdOffice"
           label="Registration office"
           placeholder="Enter Registered Address"
         />
-        <FormInput
-          control={control}
-          type="date"
-          name="regdDate"
-          label="Registration Date"
-        />
+        <FormInput type="date" name="regdDate" label="Registration Date" />
       </InputGroupContainer>
     </GroupContainer>
   );

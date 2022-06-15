@@ -1,12 +1,43 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/myra/components';
-import { Text } from '@coop/shared/ui';
+import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import { FormInput, FormSelect } from '@coop/myra/components';
+import { Text, Button, Icon } from '@coop/shared/ui';
+import { FaMap } from 'react-icons/fa';
 
-export const KymCoopRegdAddress = () => {
+export const KymCoopRegdAddress = ({ watch }: any) => {
+  const { data } = useAllAdministrationQuery();
+
+  const province = useMemo(() => {
+    return (
+      data?.administration?.all?.map((d) => ({
+        label: d.name,
+        value: d.id,
+      })) ?? []
+    );
+  }, [data?.administration?.all]);
+
+  // FOR PERMANENT ADDRESS
+  const currentProvinceId = watch('regdProvinceId');
+  const currentDistrictId = watch('regdDistrictId');
+
+  const districtList = useMemo(
+    () =>
+      data?.administration.all.find((d) => d.id === currentProvinceId)
+        ?.districts ?? [],
+    [currentProvinceId]
+  );
+
+  const muncipalityList = useMemo(
+    () =>
+      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
+      [],
+    [currentDistrictId]
+  );
+
   return (
     <GroupContainer id="Registered Address" scrollMarginTop={'200px'}>
       <Text
@@ -17,34 +48,51 @@ export const KymCoopRegdAddress = () => {
         Registered Address
       </Text>
       <InputGroupContainer>
-        <FormInput
-          type="text"
+        <FormSelect
           name="regdProvinceId"
           label="Province"
-          placeholder="Enter Name of Organization"
+          placeholder="Select State"
+          options={province}
         />
-        <FormInput
-          control={control}
-          type="text"
-          name="regdNumber"
-          label="Regisration No"
-          placeholder="Enter Registered Number"
+        <FormSelect
+          name="regdDistrictId"
+          label="District"
+          placeholder="Select District"
+          options={districtList.map((d) => ({
+            label: d.name,
+            value: d.id,
+          }))}
+        />
+        <FormSelect
+          name="regdMunicipalityId"
+          label="Muncipality"
+          placeholder="Select Municipality"
+          options={muncipalityList.map((d) => ({
+            label: d.name,
+            value: d.id,
+          }))}
         />
 
         <FormInput
-          control={control}
           type="text"
-          name="regdOffice"
-          label="Registration office"
-          placeholder="Enter Registered Address"
+          name="regdWardId"
+          label="Ward No"
+          placeholder="Enter Ward No"
         />
         <FormInput
-          control={control}
-          type="date"
-          name="regdDate"
-          label="Registration Date"
+          type="text"
+          name="regdLocality"
+          label="Locality"
+          placeholder="Enter Locality"
         />
       </InputGroupContainer>
+      <Button
+        alignSelf="start"
+        mt="-16px"
+        leftIcon={<Icon size="md" as={FaMap} />}
+      >
+        Pin on Map
+      </Button>
     </GroupContainer>
   );
 };

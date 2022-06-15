@@ -37,6 +37,7 @@ export const DocumentCard = ({ img, title }) => {
       </Box>
 
       <Icon
+        alignSelf="center"
         size="lg"
         as={AiOutlineEye}
         onClick={() => {

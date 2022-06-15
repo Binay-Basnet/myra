@@ -17,6 +17,7 @@ export const LoanCard = (cardItem: loanCardProps) => {
       borderColor="border.layout"
       display="flex"
       justifyContent="space-between"
+      alignContent="center"
     >
       <Box>
         <Text color="primary.500" fontWeight="SemiBold" fontSize="r1">
