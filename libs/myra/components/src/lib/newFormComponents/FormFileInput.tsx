@@ -1,4 +1,4 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, useFormContext } from 'react-hook-form';
 import { Box, FileInput, FileInputProps, TextFields } from '@coop/shared/ui';
 
 interface FormFileInputProps extends FileInputProps {
@@ -13,6 +13,14 @@ export const FormFileInput = ({
   label,
   ...rest
 }: FormFileInputProps) => {
+  const methods = useFormContext();
+
+  const {
+    formState: { errors },
+    control: formControl,
+  } = methods;
+
+  const error = errors[name];
   return (
     <Box>
       {label && (
@@ -22,12 +30,13 @@ export const FormFileInput = ({
       )}
 
       <Controller
-        control={control}
+        control={formControl}
         name={name}
         render={({ field: { onChange } }) => (
           <FileInput {...rest} onChange={onChange} />
         )}
       />
+      {error ? error?.message : null}
     </Box>
   );
 };
