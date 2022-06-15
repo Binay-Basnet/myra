@@ -64,9 +64,10 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
   const [isOpenDeclaration, setIsOpenDeclaration] = React.useState(false);
   const [isOpenAccountOperations, setIsOpenAccountOperations] =
     React.useState(false);
-
+  console.log('curent section', kymCurrentSection);
   React.useEffect(() => {
     const section = kymCurrentSection?.section;
+
     setIsOpenOrganizational(section === 'organizationInfo');
     setIsOpenTransaction(section === 'transactionProfile');
     setIsOpenDetails(section === 'details');

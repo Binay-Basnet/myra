@@ -22,7 +22,7 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 
@@ -42,6 +42,10 @@ import {
 export interface KYMInstitutionPageProps {}
 
 export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
+  const [kymCurrentSection, setKymCurrentSection] = React.useState<{
+    section: string;
+    subSection: string;
+  }>();
   const router = useRouter();
   const id = String(router?.query?.['id']);
   const kymFormStatusQuery = useGetKymFormStatusInstitutionQuery({ id });
@@ -104,16 +108,17 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
       <Container minW="container.xl" height="fit-content">
         <FormProvider {...methods}>
           <form
-          // onChange={debounce(() => {
-          //   mutate({ id, data: getValues() });
-          // }, 3000)}
-          // onSubmit={handleSubmit((data) => {
-          //   console.log('data', data);
-          // })}
-          // onFocus={(e) => {
-          //   const kymSection = getKymSection(e.target.id);
-          //   setKymCurrentSection(kymSection);
-          // }}
+            onChange={debounce(() => {
+              mutate({ id, data: getValues() });
+            }, 3000)}
+            onSubmit={handleSubmit((data) => {
+              console.log('data', data);
+            })}
+            onFocus={(e) => {
+              const kymSection = getKymSectionInstitution(e.target.id);
+              console.log('kymSection', e.target.id);
+              setKymCurrentSection(kymSection);
+            }}
           >
             {/* main */}
             <Box display="flex" width="100%">
@@ -126,7 +131,10 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                   minHeight="100%"
                   bg="white"
                 >
-                  <AccorrdianAddInstitution />
+                  <AccorrdianAddInstitution
+                    formStatus={kymFormStatus}
+                    kymCurrentSection={kymCurrentSection}
+                  />
                 </Box>
 
                 <Box background="white" ml={320} p="s20" pb="120px">

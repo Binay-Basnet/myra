@@ -3,6 +3,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormRadioGroup } from '@coop/myra/components';
+// import { InstitutionExpectedMonthlyTurnover } from '@coop/shared/data-access';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 
 const radioList1 = [
@@ -21,6 +22,8 @@ export const TransactionProfileInstitution = () => {
   return (
     <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
       <>
+        {/* {console.log('hello world', InstitutionExpectedMonthlyTurnover)} */}
+
         <InputGroupContainer>
           <FormInput
             // control={control}
@@ -39,7 +42,7 @@ export const TransactionProfileInstitution = () => {
 
           <FormInput
             type="number"
-            name="initialDepositAmountr"
+            name="initialDepositAmount"
             label="Initial Deposit Amount"
             textAlign={'right'}
             placeholder="0.00"

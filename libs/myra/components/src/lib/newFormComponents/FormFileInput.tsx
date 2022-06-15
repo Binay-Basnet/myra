@@ -5,6 +5,7 @@ interface FormFileInputProps extends FileInputProps {
   control?: Control;
   name: string;
   label?: string;
+  id?: string;
 }
 
 export const FormFileInput = ({

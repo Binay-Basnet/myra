@@ -27,7 +27,7 @@ export const RegisteredDetailsInstitution = () => {
 
         <FormInput
           type="text"
-          name="changedRegiseredAddress"
+          name="registeredAddressIfChanged"
           label="Registered Address (if changed)"
           placeholder="Registered Address"
         />
@@ -35,7 +35,7 @@ export const RegisteredDetailsInstitution = () => {
 
         <FormInput
           type="number"
-          name="registrationNUMBER"
+          name="registeredNumber"
           label="Registered Number"
           placeholder="Enter Registered Number"
         />

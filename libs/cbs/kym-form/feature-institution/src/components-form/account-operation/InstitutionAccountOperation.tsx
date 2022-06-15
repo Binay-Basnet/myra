@@ -13,11 +13,11 @@ import {
 import { Box, Checkbox, GridItem, SwitchTabs, Text } from '@coop/shared/ui';
 const booleanList = [
   {
-    key: 'single',
+    key: 'Single',
     value: 'Single',
   },
   {
-    key: 'joint',
+    key: 'Joint',
     value: 'Joint',
   },
 ];
@@ -38,9 +38,9 @@ export const AccountOperationInstitution = () => {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           list={booleanList}
-          id="politicallyExposedPerson"
+          id="accountType"
         />
-        <Checkbox name="isCompanyStampCompulsory">
+        <Checkbox name="isCompanyStampCompulsory" id="isCompanyStampCompulsory">
           {' '}
           Company Stamp Compulsory
         </Checkbox>
