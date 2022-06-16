@@ -19,6 +19,17 @@ export type Scalars = {
   Date: string;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
+  /**
+   * # For Localization of every data from backend
+   * ```javascript
+   * {
+   *    local: "localized data based on user lang setting",
+   *    en: "data in english",
+   *    np: "data in nepali"
+   * }
+   * ```
+   */
+  Localized: any;
   Map: Record<string, string>;
   Time: string;
 };
@@ -27,6 +38,12 @@ export enum Account_Type {
   Loan = 'LOAN',
   Saving = 'SAVING'
 }
+
+export type AbbsTransaction = {
+  abbsStatus?: Maybe<Scalars['Boolean']>;
+  payableAccountId?: Maybe<Account>;
+  receivableAccountId?: Maybe<Account>;
+};
 
 export type Account = {
   accountNumber: Scalars['String'];
@@ -164,6 +181,14 @@ export type AdministrationQueryWardsArgs = {
   provinceId: Scalars['Int'];
 };
 
+export type AdministrativeAddress = {
+  district: District;
+  locality?: Maybe<Scalars['String']>;
+  municipality: Municipality;
+  province: Province;
+  wardNo: Scalars['Int'];
+};
+
 export type AffiliatedDirectorDetails = {
   addressOfInstitution?: InputMaybe<Scalars['String']>;
   designation?: InputMaybe<Scalars['String']>;
@@ -211,12 +236,19 @@ export type Base = {
 };
 
 export type Branch = {
-  address: Scalars['String'];
+  abbsTransaction?: Maybe<AbbsTransaction>;
+  address: BranchAddress;
   branchCode: Scalars['Int'];
+  branchStatus?: Maybe<Scalars['Boolean']>;
+  category?: Maybe<BranchCategory>;
   contactNumber: Scalars['String'];
-  district: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
+  estDate?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
-  manager: BranchManager;
+  manager: Member;
+  name?: Maybe<Scalars['String']>;
+  plTransferId?: Maybe<Account>;
+  tdsTransaferId?: Maybe<Account>;
 };
 
 export type BranchAddError = BranchAddInvalidDataError;
@@ -232,6 +264,24 @@ export type BranchAddResult = {
   recordId: Scalars['ID'];
 };
 
+export type BranchAddress = {
+  districtId?: Maybe<Scalars['ID']>;
+  latitude?: Maybe<Scalars['String']>;
+  locality?: Maybe<Scalars['String']>;
+  longitude?: Maybe<Scalars['String']>;
+  provinceId?: Maybe<Scalars['ID']>;
+  vdcId?: Maybe<Scalars['ID']>;
+  wardNo?: Maybe<Scalars['String']>;
+};
+
+export enum BranchCategory {
+  BranchOffice = 'BRANCH_OFFICE',
+  ContactOffice = 'CONTACT_OFFICE',
+  HeadOffice = 'HEAD_OFFICE',
+  RegionalOffice = 'REGIONAL_OFFICE',
+  ServiceCenter = 'SERVICE_CENTER'
+}
+
 export type BranchConnection = {
   edges: Array<BranchEdge>;
   pageInfo: PageInfo;
@@ -244,16 +294,26 @@ export type BranchEdge = {
 };
 
 export type BranchInput = {
-  address?: InputMaybe<Scalars['String']>;
+  abbsStatus?: InputMaybe<Scalars['Boolean']>;
   branchCode?: InputMaybe<Scalars['Int']>;
-  contatctNumber?: InputMaybe<Scalars['String']>;
-  district?: InputMaybe<Scalars['String']>;
-  manager?: InputMaybe<Scalars['String']>;
-};
-
-export type BranchManager = {
-  id?: Maybe<Scalars['ID']>;
-  name: Scalars['String'];
+  branchStatus?: InputMaybe<Scalars['Boolean']>;
+  category?: InputMaybe<BranchCategory>;
+  districtId?: InputMaybe<Scalars['ID']>;
+  email?: InputMaybe<Scalars['String']>;
+  estDate?: InputMaybe<Scalars['Date']>;
+  latitude?: InputMaybe<Scalars['String']>;
+  locality?: InputMaybe<Scalars['String']>;
+  longitude?: InputMaybe<Scalars['String']>;
+  managerId?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  payableAccountId?: InputMaybe<Scalars['String']>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  plTransferId?: InputMaybe<Scalars['String']>;
+  provinceId?: InputMaybe<Scalars['ID']>;
+  receivableAccountId?: InputMaybe<Scalars['String']>;
+  tdsTransaferId?: InputMaybe<Scalars['String']>;
+  vdcId?: InputMaybe<Scalars['ID']>;
+  wardNo?: InputMaybe<Scalars['String']>;
 };
 
 export type BranchSearchFilter = {
@@ -1121,6 +1181,10 @@ export type ExampleInput = {
 
 export type ExampleMutation = {
   level1: Level1;
+};
+
+export type ExampleQuery = {
+  localization: LocalizationExample;
 };
 
 export enum Field_Types {
@@ -2118,6 +2182,24 @@ export type KymCoopUnionDeclarationStatus = {
   error?: Maybe<Array<Maybe<KymCoopUnionDeclarationSection>>>;
 };
 
+export type KymCoopUnionDetailsOfMembers = {
+  noOfFemaleMemberCurrent?: InputMaybe<Scalars['Int']>;
+  noOfFemaleMemberTarget?: InputMaybe<Scalars['Int']>;
+  noOfInstituionalMemberCurrent?: InputMaybe<Scalars['Int']>;
+  noOfInstituionalMemberTarget?: InputMaybe<Scalars['Int']>;
+  noOfMaleMemberCurrent?: InputMaybe<Scalars['Int']>;
+  noOfMaleMemberTarget?: InputMaybe<Scalars['Int']>;
+};
+
+export type KymCoopUnionDetailsOfMembersFormState = {
+  noOfFemaleMemberCurrent?: Maybe<Scalars['Int']>;
+  noOfFemaleMemberTarget?: Maybe<Scalars['Int']>;
+  noOfInstituionalMemberCurrent?: Maybe<Scalars['Int']>;
+  noOfInstituionalMemberTarget?: Maybe<Scalars['Int']>;
+  noOfMaleMemberCurrent?: Maybe<Scalars['Int']>;
+  noOfMaleMemberTarget?: Maybe<Scalars['Int']>;
+};
+
 export type KymCoopUnionDocumentFormState = {
   documentUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
   id: Scalars['ID'];
@@ -2168,6 +2250,7 @@ export type KymCoopUnionFormData = {
   currentLiabilitiesCurrent?: Maybe<Scalars['Float']>;
   currentLiabilitiesTarget?: Maybe<Scalars['Float']>;
   deferredTaxExpense?: Maybe<Scalars['Float']>;
+  detailsOfMember?: Maybe<KymCoopUnionDetailsOfMembersFormState>;
   directExpense?: Maybe<Scalars['Float']>;
   documents?: Maybe<Array<Maybe<KymCoopUnionDocumentFormState>>>;
   fax?: Maybe<Scalars['Int']>;
@@ -2242,6 +2325,7 @@ export type KymCoopUnionFormInput = {
   currentLiabilitiesCurrent?: InputMaybe<Scalars['Float']>;
   currentLiabilitiesTarget?: InputMaybe<Scalars['Float']>;
   deferredTaxExpense?: InputMaybe<Scalars['Float']>;
+  detailsOfMember?: InputMaybe<KymCoopUnionDetailsOfMembers>;
   directExpense?: InputMaybe<Scalars['Float']>;
   documents?: InputMaybe<Array<InputMaybe<KymCoopUnionDocumentsInput>>>;
   fax?: InputMaybe<Scalars['Int']>;
@@ -2266,9 +2350,6 @@ export type KymCoopUnionFormInput = {
   natureOfBusiness?: InputMaybe<Scalars['String']>;
   noOfBranches?: InputMaybe<Scalars['Int']>;
   noOfEmployee?: InputMaybe<Scalars['Int']>;
-  noOfFemaleMember?: InputMaybe<Scalars['Int']>;
-  noOfInstituionalMember?: InputMaybe<Scalars['Int']>;
-  noOfMaleMember?: InputMaybe<Scalars['Int']>;
   nonCurrentAssetsCurrent?: InputMaybe<Scalars['Float']>;
   nonCurrentAssetsTarget?: InputMaybe<Scalars['Float']>;
   nonCurrentLiabilitiesCurrent?: InputMaybe<Scalars['Float']>;
@@ -2295,7 +2376,6 @@ export type KymCoopUnionFormInput = {
   shareCapitalTarget?: InputMaybe<Scalars['Float']>;
   totalAssetsCurrent?: InputMaybe<Scalars['Float']>;
   totalAssetsTarget?: InputMaybe<Scalars['Float']>;
-  totalCurrentMmeber?: InputMaybe<Scalars['Int']>;
   totalEquityAndLiabilitiesCurrent?: InputMaybe<Scalars['Float']>;
   totalEquityAndLiabilitiesTarget?: InputMaybe<Scalars['Float']>;
   totalExpense?: InputMaybe<Scalars['Float']>;
@@ -3175,7 +3255,7 @@ export type KymInsFormData = {
   registrationDate?: Maybe<Scalars['Date']>;
   sisterConcernDetails?: Maybe<Array<Maybe<SisterConcernDetailsFormState>>>;
   specialInstruction?: Maybe<Scalars['String']>;
-  vatOrPanNo?: Maybe<Scalars['Int']>;
+  vatOrPanNo?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
 
@@ -3316,13 +3396,12 @@ export type KymLocalizedMemberList = Base & {
   documents?: Maybe<Document>;
   family?: Maybe<KymLocalizedFamilyDetails>;
   id: Scalars['ID'];
-  memberId?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   nominee?: Maybe<KymLocalizedNominee>;
   objState: ObjState;
   personalInformation?: Maybe<KymLocalizedPersonalInformation>;
-  searchText?: Maybe<Scalars['String']>;
 };
 
 export type KymLocalizedNominee = {
@@ -3416,6 +3495,10 @@ export type ListKymFieldFilter = {
   isIdetificationDoc?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
+};
+
+export type LocalizationExample = {
+  name?: Maybe<Scalars['Localized']>;
 };
 
 export type Member = Base & {
@@ -3789,6 +3872,7 @@ export type Query = {
   administration: AdministrationQuery;
   dashboard: DashboardQuery;
   eBanking: EBankingQuery;
+  example: ExampleQuery;
   inventory: InventoryQuery;
   members: MemberQuery;
   routesAndCodes: RoutesAndCodesQuery;
@@ -4210,6 +4294,21 @@ export type AddFileSizeMutationVariables = Exact<{
 
 export type AddFileSizeMutation = { settings: { general?: { KYM?: { individual: { maxSize: { recordId: string } } } | null } | null } };
 
+export type AddCustomFieldMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AddCustomFieldMutation = { settings: { general?: { KYM?: { individual: { field: { add: { record?: { id: string, name: string, enabled?: boolean | null, fieldType: Kym_Field_Type, isCustom?: boolean | null, hasOtherField: boolean, options?: Array<{ id: string, name: string, fieldType?: Field_Types | null, enabled: boolean }> | null } | null } } } } | null } | null } };
+
+export type UpdateCustomFieldMutationVariables = Exact<{
+  fieldId: Scalars['ID'];
+  fieldName?: InputMaybe<Scalars['String']>;
+  fieldType?: InputMaybe<Kym_Field_Type>;
+  fieldEnabled?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+
+export type UpdateCustomFieldMutation = { settings: { general?: { KYM?: { individual: { field: { update: { recordId: string, record?: { id: string, name: string, enabled?: boolean | null } | null } } } } | null } | null } };
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4285,15 +4384,10 @@ export type GetKymDeclarationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetKymDeclarationQuery = { settings: { general?: { KYM?: { individual: { declaration: { id: string, content: string } } } | null } | null } };
 
-export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, address: string, district: string, contactNumber: string, manager: { id?: string | null, name: string } } }> } | null } | null } | null } };
-
-export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetChartOfAccountsQuery = { settings: { general?: { chartsOfAccount?: { class?: { data: Array<{ id: string, name: string }> } | null } | null } | null } };
+export type GetCustomFieldsQuery = { settings: { general?: { KYM?: { individual: { field: { list?: { data?: Array<{ id: string, name: string, enabled?: boolean | null, fieldType: Kym_Field_Type, isCustom?: boolean | null, hasOtherField: boolean, options?: Array<{ id: string, name: string, fieldType?: Field_Types | null, enabled: boolean }> | null } | null> | null } | null } } } | null } | null } };
 
 export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4662,6 +4756,79 @@ export const useAddFileSizeMutation = <
     useMutation<AddFileSizeMutation, TError, AddFileSizeMutationVariables, TContext>(
       ['addFileSize'],
       useAxios<AddFileSizeMutation, AddFileSizeMutationVariables>(AddFileSizeDocument),
+      options
+    );
+export const AddCustomFieldDocument = `
+    mutation addCustomField {
+  settings {
+    general {
+      KYM {
+        individual {
+          field {
+            add(data: {name: "", fieldType: SINGLE, hasOtherField: false, enabled: false}) {
+              record {
+                id
+                name
+                enabled
+                fieldType
+                isCustom
+                hasOtherField
+                options {
+                  id
+                  name
+                  fieldType
+                  enabled
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useAddCustomFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<AddCustomFieldMutation, TError, AddCustomFieldMutationVariables, TContext>) =>
+    useMutation<AddCustomFieldMutation, TError, AddCustomFieldMutationVariables, TContext>(
+      ['addCustomField'],
+      useAxios<AddCustomFieldMutation, AddCustomFieldMutationVariables>(AddCustomFieldDocument),
+      options
+    );
+export const UpdateCustomFieldDocument = `
+    mutation updateCustomField($fieldId: ID!, $fieldName: String, $fieldType: KYM_FIELD_TYPE, $fieldEnabled: Boolean) {
+  settings {
+    general {
+      KYM {
+        individual {
+          field {
+            update(
+              id: $fieldId
+              data: {name: $fieldName, fieldType: $fieldType, enabled: $fieldEnabled}
+            ) {
+              recordId
+              record {
+                id
+                name
+                enabled
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useUpdateCustomFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCustomFieldMutation, TError, UpdateCustomFieldMutationVariables, TContext>) =>
+    useMutation<UpdateCustomFieldMutation, TError, UpdateCustomFieldMutationVariables, TContext>(
+      ['updateCustomField'],
+      useAxios<UpdateCustomFieldMutation, UpdateCustomFieldMutationVariables>(UpdateCustomFieldDocument),
       options
     );
 export const AllAdministrationDocument = `
@@ -5072,22 +5239,28 @@ export const useGetKymDeclarationQuery = <
       useAxios<GetKymDeclarationQuery, GetKymDeclarationQueryVariables>(GetKymDeclarationDocument).bind(null, variables),
       options
     );
-export const GetBranchesListDocument = `
-    query getBranchesList {
+export const GetCustomFieldsDocument = `
+    query getCustomFields {
   settings {
     general {
-      branch {
-        list {
-          edges {
-            node {
-              branchCode
-              address
-              manager {
+      KYM {
+        individual {
+          field {
+            list(filter: {isCustom: true}) {
+              data {
                 id
                 name
+                enabled
+                fieldType
+                isCustom
+                hasOtherField
+                options {
+                  id
+                  name
+                  fieldType
+                  enabled
+                }
               }
-              district
-              contactNumber
             }
           }
         }
@@ -5096,44 +5269,16 @@ export const GetBranchesListDocument = `
   }
 }
     `;
-export const useGetBranchesListQuery = <
-      TData = GetBranchesListQuery,
+export const useGetCustomFieldsQuery = <
+      TData = GetCustomFieldsQuery,
       TError = unknown
     >(
-      variables?: GetBranchesListQueryVariables,
-      options?: UseQueryOptions<GetBranchesListQuery, TError, TData>
+      variables?: GetCustomFieldsQueryVariables,
+      options?: UseQueryOptions<GetCustomFieldsQuery, TError, TData>
     ) =>
-    useQuery<GetBranchesListQuery, TError, TData>(
-      variables === undefined ? ['getBranchesList'] : ['getBranchesList', variables],
-      useAxios<GetBranchesListQuery, GetBranchesListQueryVariables>(GetBranchesListDocument).bind(null, variables),
-      options
-    );
-export const GetChartOfAccountsDocument = `
-    query getChartOfAccounts {
-  settings {
-    general {
-      chartsOfAccount {
-        class {
-          data {
-            id
-            name
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetChartOfAccountsQuery = <
-      TData = GetChartOfAccountsQuery,
-      TError = unknown
-    >(
-      variables?: GetChartOfAccountsQueryVariables,
-      options?: UseQueryOptions<GetChartOfAccountsQuery, TError, TData>
-    ) =>
-    useQuery<GetChartOfAccountsQuery, TError, TData>(
-      variables === undefined ? ['getChartOfAccounts'] : ['getChartOfAccounts', variables],
-      useAxios<GetChartOfAccountsQuery, GetChartOfAccountsQueryVariables>(GetChartOfAccountsDocument).bind(null, variables),
+    useQuery<GetCustomFieldsQuery, TError, TData>(
+      variables === undefined ? ['getCustomFields'] : ['getCustomFields', variables],
+      useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
       options
     );
 export const GetShareBalanceListDocument = `

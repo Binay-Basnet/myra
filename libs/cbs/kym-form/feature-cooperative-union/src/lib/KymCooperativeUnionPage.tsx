@@ -12,8 +12,6 @@ import {
   Container,
   Text,
   IconButton,
-  Checkbox,
-  TextFields,
   Button,
   Icon,
 } from '@coop/shared/ui';
@@ -157,7 +155,7 @@ export function KYMCooperativeUnionPage() {
             onChange={debounce(() => {
               console.log('hello', getValues());
               mutate({ id, data: getValues() });
-            }, 3000)}
+            }, 800)}
             onSubmit={handleSubmit((data) => {
               console.log('data', data);
             })}

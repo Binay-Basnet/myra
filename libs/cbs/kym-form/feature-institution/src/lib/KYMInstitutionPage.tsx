@@ -1,7 +1,10 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
+import { useRouter } from 'next/router';
+import debounce from 'lodash/debounce';
+
 import {
   ContainerWithDivider,
   SectionContainer,
@@ -15,16 +18,12 @@ import {
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   Icon,
   IconButton,
   Text,
-  TextFields,
 } from '@coop/shared/ui';
-import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
-import debounce from 'lodash/debounce';
-import { useRouter } from 'next/router';
+import { getKymSectionInstitution } from '@coop/shared/utils';
 
 import {
   AccountHolderDeclarationInstitution,
@@ -40,6 +39,7 @@ import {
   RegisteredDetailsInstitution,
   TransactionProfileInstitution,
 } from '../components-form';
+
 /* eslint-disable-next-line */
 export interface KYMInstitutionPageProps {}
 
@@ -112,7 +112,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
           <form
             onChange={debounce(() => {
               mutate({ id, data: getValues() });
-            }, 3000)}
+            }, 800)}
             onSubmit={handleSubmit((data) => {
               console.log('data', data);
             })}
