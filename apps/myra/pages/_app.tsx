@@ -1,6 +1,7 @@
 import type { ReactElement, ReactNode } from 'react';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Login } from '@coop/myra/components';
@@ -59,6 +60,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
             <Login />
           )}
         </ChakraProvider>
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </Provider>
   );

@@ -8,10 +8,6 @@ const baseStyleContainer: SystemStyleObject = {
   bg: 'gray.0',
   borderRadius: 'br2',
   border: '1px solid #E0E5EB',
-  _focus: {
-    boxShadow: 'none',
-    bg: 'background.500',
-  },
   _last: {
     borderBottomWidth: '1px',
   },
@@ -22,6 +18,12 @@ const baseStyleButton: SystemStyleObject = {
   transitionDuration: 'normal',
   boxShadow: 'none',
   fontSize: '1rem',
+  _focusVisible: {
+    boxShadow: 'none',
+  },
+  _focus: {
+    boxShadow: 'none',
+  },
   _expanded: {
     boxShadow: 'none',
     bg: 'background.500',

@@ -17,6 +17,7 @@ import {
   AccordionItem,
   AccordionPanel,
 } from '@chakra-ui/react';
+
 import { Box, Button, Checkbox, Icon, Switch, Text } from '@coop/shared/ui';
 
 const genderDetails = ['Male', 'Female', 'Transgender'];
@@ -39,6 +40,8 @@ const GRID2X3 = () => {
 };
 
 const Gender = () => {
+  c;
+
   const [genderInfo, setGenderInfo] = useState(genderDetails);
   const handleDragEnd = (result: DropResult) => {
     const items = Array.from(genderInfo);
@@ -145,7 +148,6 @@ export const KYCIndividualPersonal = () => {
 
             <AccordionPanel pb={2}>
               <Accordion allowMultiple allowToggle mb="0" px="s12" pb="s12">
-                {' '}
                 {PersonalInformation.map((item, index) => (
                   // <Text key={`${item}${index}`}>{item}</Text>
                   <AccordionItem key={`${item}${index}`} mt="s12">
@@ -237,7 +239,6 @@ export const KYCIndividualPersonal = () => {
 
             <AccordionPanel pb={2}>
               <Accordion allowMultiple allowToggle mb="0" px="s12" pb="s12">
-                {' '}
                 {PersonalInformation.map((item, index) => (
                   // <Text key={`${item}${index}`}>{item}</Text>
                   <AccordionItem key={`${item}${index}`} mt="s12">

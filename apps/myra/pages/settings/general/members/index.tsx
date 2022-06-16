@@ -1,15 +1,20 @@
+import { AddIcon } from '@chakra-ui/icons';
+import {
+  SettingsGeneralLayout,
+  SettingsLayout,
+} from '@coop/cbs/settings/ui-layout';
 import { SettingsGeneralMember } from '@coop/myra/components';
 import { Box, Button, CheckboxGroup, Input, Text } from '@coop/shared/ui';
+
 const checkBox = [
   'Individual',
   'Institutional',
   'cooperative',
   'Corporative Union',
 ];
-import { AddIcon } from '@chakra-ui/icons';
+
 const riskArray = ['General Risk', 'Medium Risk', 'High Risk'];
 
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 const Members = () => {
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
@@ -201,5 +206,9 @@ const Members = () => {
 
 export default Members;
 Members.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
+  );
 };
