@@ -12,7 +12,7 @@ import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 
 export const ContactDetailsInstitution = () => {
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer id="Contact Details" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"
@@ -24,21 +24,21 @@ export const ContactDetailsInstitution = () => {
         <FormPhoneNumber
           // control={control}
 
-          name={'phoneNumber'}
+          name={'phone'}
           label="Phone"
           placeholder="Enter Phone Number"
         />
 
-        <FormInput
+        {/* <FormInput
           type="text"
           name="Nature of Business"
           label="Nature of Business"
           placeholder="Enter Middle name"
-        />
+        /> */}
 
         <FormInput
           type="number"
-          name="faxNumber"
+          name="fax"
           label="Fax"
           placeholder="Enter Fax"
         />
@@ -58,14 +58,15 @@ export const ContactDetailsInstitution = () => {
 
         <FormInput
           type="number"
-          name="postBoxNumber"
+          name="postBoxNo"
           label="Post Box. No. "
           placeholder="Enter Post Box No"
         />
+        <Box></Box>
         <Box mt="44px">
           <FormInput
             type="number"
-            name="numberOfEmployees"
+            name="numberOfEmployee"
             label="Number of Employees"
             placeholder="Enter Number of Employees"
           />
@@ -73,7 +74,7 @@ export const ContactDetailsInstitution = () => {
         <Box mt="44px">
           <FormInput
             type="date"
-            name="postBoxNumber"
+            name="dateOfLastAGM"
             label="AGM Details (Date of Last AGM)"
             placeholder="DD-MM-YYYY"
           />

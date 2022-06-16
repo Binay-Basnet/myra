@@ -112,3 +112,18 @@ mutation addKYMField(
         }
     }
 }
+
+mutation setKymCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
+  members {
+    cooperative(id: $id) {
+      add(data: $data) {
+        recordId
+        error {
+          ... on KymCooperativeAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}

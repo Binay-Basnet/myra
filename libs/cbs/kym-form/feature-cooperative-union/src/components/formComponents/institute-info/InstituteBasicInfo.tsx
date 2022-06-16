@@ -3,31 +3,31 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/myra/components';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { GridItem, Text } from '@coop/shared/ui';
 
-export const DetailsOfSisterConcern = () => {
+export const InstituteBasicInfo = () => {
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer id="Basic Institutute Info" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Details of sister concern{' '}
+        Basic Information
       </Text>
       <InputGroupContainer>
         <GridItem colSpan={2}>
           <FormInput
             // control={control}
             type="text"
-            name={'name'}
+            name="nameOfInstitution"
             label="Name of Institution"
             placeholder="Name of Institution"
           />
         </GridItem>
         <FormSelect
-          name="organizationType"
-          label="Organization Type"
+          name="institutionType"
+          label="Institution Type"
           placeholder="Select Organization Type"
           options={[
             { label: 'Male', value: 'Male' },
@@ -37,40 +37,40 @@ export const DetailsOfSisterConcern = () => {
         />
         <FormInput
           type="text"
-          name="Nature of Business"
+          name="natureOfBusiness"
           label="Nature of Business"
           placeholder="Nature of Business"
         />
 
         <FormInput
           type="date"
-          name="registrationDate"
+          name="regdDate"
           label="Registration Date"
           placeholder="DD-MM-YYYY"
         />
         <FormInput
-          type="text"
-          name="vatNo"
+          type="number"
+          name="vatOrPan"
           label="VAT/Pan No."
           placeholder="Enter VAT/Pan No"
         />
         <FormInput
           type="text"
-          name="operatingofficeAddress"
+          name="oprOfficeAddress"
           label="Operating Office Address"
           placeholder="Enter Address"
         />
 
         <FormInput
           type="text"
-          name="branchesNo"
+          name="noOfBranches"
           label="No of Branches"
           placeholder="Enter No of Branches"
         />
 
         <FormInput
           type="text"
-          name="branchesAddress"
+          name="branchOfficeAddress"
           label="Branch Office Address"
           placeholder="Branch Office Address"
         />

@@ -7,7 +7,7 @@ import { Box, GridItem, Text } from '@coop/shared/ui';
 
 export const BankAccountDetailsInstitution = () => {
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer id="Bank Account Details" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"
@@ -17,7 +17,7 @@ export const BankAccountDetailsInstitution = () => {
       </Text>
       <InputGroupContainer>
         <FormSelect
-          name="bankName"
+          name="bank"
           label="Name of Bank"
           placeholder="Select Bank"
           options={[

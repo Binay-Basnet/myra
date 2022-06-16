@@ -4103,6 +4103,14 @@ export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;
 };
 
+export type SetCooperativeUnionDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymCoopUnionFormInput;
+}>;
+
+
+export type SetCooperativeUnionDataMutation = { members: { cooperativeUnion?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+
 export type GetNewIdMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4141,6 +4149,14 @@ export type AddKymFieldMutationVariables = Exact<{
 
 
 export type AddKymFieldMutation = { settings: { general?: { KYM?: { individual: { field: { add: { record?: { id: string, options?: Array<{ id: string, name: string, enabled: boolean, fieldType?: Field_Types | null }> | null } | null } } } } | null } | null } };
+
+export type SetKymCooperativeDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymCooperativeFormInput;
+}>;
+
+
+export type SetKymCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
 export type SetInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -4304,6 +4320,31 @@ export type GetShareHistoryQueryVariables = Exact<{
 export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, balance: number, member: { id: string } } }> } | null } };
 
 
+export const SetCooperativeUnionDataDocument = `
+    mutation setCooperativeUnionData($id: ID!, $data: KymCoopUnionFormInput!) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(data: $data) {
+        recordId
+        error {
+          ... on KymCoopUnionAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetCooperativeUnionDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetCooperativeUnionDataMutation, TError, SetCooperativeUnionDataMutationVariables, TContext>) =>
+    useMutation<SetCooperativeUnionDataMutation, TError, SetCooperativeUnionDataMutationVariables, TContext>(
+      ['setCooperativeUnionData'],
+      useAxios<SetCooperativeUnionDataMutation, SetCooperativeUnionDataMutationVariables>(SetCooperativeUnionDataDocument),
+      options
+    );
 export const GetNewIdDocument = `
     mutation getNewId {
   newId
@@ -4433,6 +4474,31 @@ export const useAddKymFieldMutation = <
     useMutation<AddKymFieldMutation, TError, AddKymFieldMutationVariables, TContext>(
       ['addKYMField'],
       useAxios<AddKymFieldMutation, AddKymFieldMutationVariables>(AddKymFieldDocument),
+      options
+    );
+export const SetKymCooperativeDataDocument = `
+    mutation setKymCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
+  members {
+    cooperative(id: $id) {
+      add(data: $data) {
+        recordId
+        error {
+          ... on KymCooperativeAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetKymCooperativeDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetKymCooperativeDataMutation, TError, SetKymCooperativeDataMutationVariables, TContext>) =>
+    useMutation<SetKymCooperativeDataMutation, TError, SetKymCooperativeDataMutationVariables, TContext>(
+      ['setKymCooperativeData'],
+      useAxios<SetKymCooperativeDataMutation, SetKymCooperativeDataMutationVariables>(SetKymCooperativeDataDocument),
       options
     );
 export const SetInstitutionDataDocument = `

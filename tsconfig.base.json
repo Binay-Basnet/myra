@@ -18,6 +18,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@coop/cbs/kym-form/cooperative": [
+        "libs/cbs/kym-form/feature-cooperative/src/index.ts"
+      ],
+      "@coop/cbs/kym-form/cooperative-union": [
+        "libs/cbs/kym-form/feature-cooperative-union/src/index.ts"
+      ],
       "@coop/cbs/kym-form/feature-individual": [
         "libs/cbs/kym-form/feature-individual/src/index.ts"
       ],
