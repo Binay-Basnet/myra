@@ -9,6 +9,7 @@ export * from './form/Form';
 export * from './kym-form';
 export * from './kym-form/containers';
 export * from './layout';
+export * from './login/Login';
 export * from './newFormComponents';
 export * from './newFormComponents/FormFileInput';
 export * from './newFormComponents/FormPhoneNumber';
