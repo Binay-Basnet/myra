@@ -6,6 +6,7 @@ import {
   InputLeftElement,
   InputRightElement,
 } from '@chakra-ui/react';
+
 import { Box, Button } from '@coop/shared/ui';
 
 export const Login = () => {
@@ -24,7 +25,7 @@ export const Login = () => {
     setPassword(e.target.value);
   };
   const handleSubmit = () => {
-    if (userName === 'neosis' && password === 'neosis@123') {
+    if (userName === 'neosys' && password === 'neosys@123') {
       localStorage.setItem('isLoggedIn', 'true');
       typeof window !== 'undefined' && window.location.reload();
     }
