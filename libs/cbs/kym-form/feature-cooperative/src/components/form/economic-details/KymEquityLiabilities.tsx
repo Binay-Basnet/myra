@@ -31,10 +31,8 @@ export const KymEquityLiabilities = ({ watch }: any) => {
     nonCurrentLiabilities,
   ]);
 
-  console.log(totalEquityAndLiabilities);
-
   return (
-    <Box display="flex" flexDirection="column">
+    <Box id="Equity and Liabilities" display="flex" flexDirection="column">
       <Grid
         columnGap={40}
         alignItems="center"

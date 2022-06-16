@@ -1,11 +1,18 @@
+import {
+  SettingsGeneralLayout,
+  SettingsLayout,
+} from '@coop/cbs/settings/ui-layout';
 import { SettingsBranchesTable } from '@coop/myra/components';
 
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 const Branches = () => {
   return <SettingsBranchesTable />;
 };
 
 export default Branches;
 Branches.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
+  );
 };

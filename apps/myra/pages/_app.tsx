@@ -45,7 +45,6 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   //   );
   // }, [isLoggedIn]);
   const getLayout = Component.getLayout || ((page) => page);
-  console.log('hello', isLoggedIn);
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>

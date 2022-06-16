@@ -7,11 +7,11 @@ import { FormInput } from '@coop/myra/components';
 
 export const KymCoopDate = () => {
   return (
-    <GroupContainer scrollMarginTop={'200px'}>
+    <GroupContainer id="Cooperative Date" scrollMarginTop={'200px'}>
       <InputGroupContainer>
         <FormInput type="date" name="lastAuditDate" label="Last Audit Date" />
 
-        <FormInput type="date" name="lastAuditDate" label="Last AGM Date" />
+        <FormInput type="date" name="lastAgmDate" label="Last AGM Date" />
       </InputGroupContainer>
     </GroupContainer>
   );

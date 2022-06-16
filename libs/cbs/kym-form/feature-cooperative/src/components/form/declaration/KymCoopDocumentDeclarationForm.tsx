@@ -5,7 +5,7 @@ import { Grid, Text } from '@coop/shared/ui';
 
 export const KymCoopDocumentDeclarationForm = () => {
   return (
-    <GroupContainer>
+    <GroupContainer id="Document Declaration">
       <Text fontSize="r1" fontWeight="SemiBold">
         DOCUMENT DECLARATION
       </Text>

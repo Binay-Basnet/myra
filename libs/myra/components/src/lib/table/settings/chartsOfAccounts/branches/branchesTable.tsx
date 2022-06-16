@@ -30,13 +30,13 @@ export const SettingsBranchesTable = () => {
 
       {
         Header: 'District',
-        accessor: 'node.address.provinceId',
+        accessor: 'node.address.districtId',
       },
-      {
-        Header: 'Manager',
-        accessor: 'node.manager.personalInformation.name.firstName',
-        width: '25%',
-      },
+      // {
+      //   Header: 'Manager',
+      //   accessor: 'node.manager.personalInformation.name.firstName',
+      //   width: '25%',
+      // },
 
       {
         Header: 'Contact Number',

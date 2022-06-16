@@ -4187,6 +4187,14 @@ export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;
 };
 
+export type SetCooperativeDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymCooperativeFormInput;
+}>;
+
+
+export type SetCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+
 export type SetCooperativeUnionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCoopUnionFormInput;
@@ -4392,7 +4400,7 @@ export type GetCustomFieldsQuery = { settings: { general?: { KYM?: { individual:
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, contactNumber: string, address: { provinceId?: string | null, districtId?: string | null }, manager: { id: string, personalInformation?: { name?: { firstName?: string | null } | null } | null } } }> } | null } | null } | null } };
+export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, contactNumber: string, address: { provinceId?: string | null, districtId?: string | null, vdcId?: string | null, wardNo?: string | null, locality?: string | null, latitude?: string | null, longitude?: string | null }, manager: { id: string } } }> } | null } | null } | null } };
 
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4424,6 +4432,31 @@ export type GetShareHistoryQueryVariables = Exact<{
 export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, balance: number, member: { id: string } } }> } | null } };
 
 
+export const SetCooperativeDataDocument = `
+    mutation setCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
+  members {
+    cooperative(id: $id) {
+      add(data: $data) {
+        recordId
+        error {
+          ... on KymCooperativeAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetCooperativeDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetCooperativeDataMutation, TError, SetCooperativeDataMutationVariables, TContext>) =>
+    useMutation<SetCooperativeDataMutation, TError, SetCooperativeDataMutationVariables, TContext>(
+      ['setCooperativeData'],
+      useAxios<SetCooperativeDataMutation, SetCooperativeDataMutationVariables>(SetCooperativeDataDocument),
+      options
+    );
 export const SetCooperativeUnionDataDocument = `
     mutation setCooperativeUnionData($id: ID!, $data: KymCoopUnionFormInput!) {
   members {
@@ -5303,14 +5336,14 @@ export const GetBranchesListDocument = `
               address {
                 provinceId
                 districtId
+                vdcId
+                wardNo
+                locality
+                latitude
+                longitude
               }
               manager {
                 id
-                personalInformation {
-                  name {
-                    firstName
-                  }
-                }
               }
               contactNumber
             }
