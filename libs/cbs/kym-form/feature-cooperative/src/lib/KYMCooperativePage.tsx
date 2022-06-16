@@ -1,7 +1,7 @@
 /* eslint-disable-next-line */
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useTranslation, getKymSection } from '@coop/shared/utils';
+import { useTranslation, getKymCoopSection } from '@coop/shared/utils';
 import {
   useSetKymCooperativeDataMutation,
   useGetKymFormStatusQuery,
@@ -34,13 +34,15 @@ import {
   KymCoopAssets,
   KymAccountHolderDeclaration,
   KymCoopDocumentDeclarationForm,
+  KymCoopBoardDirectorDetail,
+  KymCoopAccountOperatorDetail,
 } from '../components/form';
 import {
   SectionContainer,
   ContainerWithDivider,
 } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
-import { AccorrdianAddMember } from '@coop/myra/components';
+import { AccordionKymCoopForm } from '@coop/myra/components';
 
 export function KYMCooperativePage() {
   const { t } = useTranslation();
@@ -107,7 +109,7 @@ export function KYMCooperativePage() {
               console.log('data', data);
             })}
             onFocus={(e) => {
-              const kymSection = getKymSection(e.target.id);
+              const kymSection = getKymCoopSection(e.target.id);
               setKymCurrentSection(kymSection);
             }}
           >
@@ -122,7 +124,7 @@ export function KYMCooperativePage() {
                   minHeight="100%"
                   bg="white"
                 >
-                  <AccorrdianAddMember
+                  <AccordionKymCoopForm
                     formStatus={kymFormStatus}
                     kymCurrentSection={kymCurrentSection}
                   />
@@ -146,7 +148,6 @@ export function KYMCooperativePage() {
                         <KymCoopNoEmployee />
                       </ContainerWithDivider>
                     </SectionContainer>
-
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
                         2. Economic Details
@@ -159,6 +160,28 @@ export function KYMCooperativePage() {
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
+                        3. Details of Board Directors
+                      </Text>
+                      <ContainerWithDivider>
+                        <KymCoopBoardDirectorDetail
+                          watch={watch}
+                          control={control}
+                        />
+                      </ContainerWithDivider>
+                    </SectionContainer>
+                    <SectionContainer>
+                      <Text fontSize="r3" fontWeight="600">
+                        4. Details of Account Operators
+                      </Text>
+                      <ContainerWithDivider>
+                        <KymCoopAccountOperatorDetail
+                          watch={watch}
+                          control={control}
+                        />
+                      </ContainerWithDivider>
+                    </SectionContainer>
+                    <SectionContainer>
+                      <Text fontSize="r3" fontWeight="600">
                         5. Declaration
                       </Text>
                       <ContainerWithDivider>
@@ -166,41 +189,6 @@ export function KYMCooperativePage() {
                         <KymCoopDocumentDeclarationForm />
                       </ContainerWithDivider>
                     </SectionContainer>
-
-                    {/*
-
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        3. Details of Board Directors
-                      </Text>
-                      <ContainerWithDivider>
-                        <KYMBasiccoopDetails control={control} />
-                        <KYMFinancialTransactionDetails control={control} />
-                        <KYMEstimatedAmount control={control} />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        4. Details of Account Operators
-                      </Text>
-                      <ContainerWithDivider>
-                        <KYMDeclaration control={control} />
-                        <KYMDocumentDeclaration control={control} />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        5. Declaration
-                      </Text>
-                      <ContainerWithDivider>
-                        <KYMDeclaration control={control} />
-                        <KYMDocumentDeclaration control={control} />
-                      </ContainerWithDivider>
-                    </SectionContainer> */}
-
                     <Box display="flex" gap="s16" alignItems="start">
                       <Checkbox fontSize="s3">{''}</Checkbox>
                       <TextFields variant="formInput" mt="-6px">

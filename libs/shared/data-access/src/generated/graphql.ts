@@ -39,6 +39,12 @@ export enum Account_Type {
   Saving = 'SAVING'
 }
 
+export type AbbsTransaction = {
+  abbsStatus?: Maybe<Scalars['Boolean']>;
+  payableAccountId?: Maybe<Account>;
+  receivableAccountId?: Maybe<Account>;
+};
+
 export type Account = {
   accountNumber: Scalars['String'];
   accountType: Account_Type;
@@ -230,12 +236,19 @@ export type Base = {
 };
 
 export type Branch = {
-  address: Scalars['String'];
+  abbsTransaction?: Maybe<AbbsTransaction>;
+  address: BranchAddress;
   branchCode: Scalars['Int'];
+  branchStatus?: Maybe<Scalars['Boolean']>;
+  category?: Maybe<BranchCategory>;
   contactNumber: Scalars['String'];
-  district: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
+  estDate?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
-  manager: BranchManager;
+  manager: Member;
+  name?: Maybe<Scalars['String']>;
+  plTransferId?: Maybe<Account>;
+  tdsTransaferId?: Maybe<Account>;
 };
 
 export type BranchAddError = BranchAddInvalidDataError;
@@ -251,6 +264,24 @@ export type BranchAddResult = {
   recordId: Scalars['ID'];
 };
 
+export type BranchAddress = {
+  districtId?: Maybe<Scalars['ID']>;
+  latitude?: Maybe<Scalars['String']>;
+  locality?: Maybe<Scalars['String']>;
+  longitude?: Maybe<Scalars['String']>;
+  provinceId?: Maybe<Scalars['ID']>;
+  vdcId?: Maybe<Scalars['ID']>;
+  wardNo?: Maybe<Scalars['String']>;
+};
+
+export enum BranchCategory {
+  BranchOffice = 'BRANCH_OFFICE',
+  ContactOffice = 'CONTACT_OFFICE',
+  HeadOffice = 'HEAD_OFFICE',
+  RegionalOffice = 'REGIONAL_OFFICE',
+  ServiceCenter = 'SERVICE_CENTER'
+}
+
 export type BranchConnection = {
   edges: Array<BranchEdge>;
   pageInfo: PageInfo;
@@ -263,16 +294,26 @@ export type BranchEdge = {
 };
 
 export type BranchInput = {
-  address?: InputMaybe<Scalars['String']>;
+  abbsStatus?: InputMaybe<Scalars['Boolean']>;
   branchCode?: InputMaybe<Scalars['Int']>;
-  contatctNumber?: InputMaybe<Scalars['String']>;
-  district?: InputMaybe<Scalars['String']>;
-  manager?: InputMaybe<Scalars['String']>;
-};
-
-export type BranchManager = {
-  id?: Maybe<Scalars['ID']>;
-  name: Scalars['String'];
+  branchStatus?: InputMaybe<Scalars['Boolean']>;
+  category?: InputMaybe<BranchCategory>;
+  districtId?: InputMaybe<Scalars['ID']>;
+  email?: InputMaybe<Scalars['String']>;
+  estDate?: InputMaybe<Scalars['Date']>;
+  latitude?: InputMaybe<Scalars['String']>;
+  locality?: InputMaybe<Scalars['String']>;
+  longitude?: InputMaybe<Scalars['String']>;
+  managerId?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  payableAccountId?: InputMaybe<Scalars['String']>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  plTransferId?: InputMaybe<Scalars['String']>;
+  provinceId?: InputMaybe<Scalars['ID']>;
+  receivableAccountId?: InputMaybe<Scalars['String']>;
+  tdsTransaferId?: InputMaybe<Scalars['String']>;
+  vdcId?: InputMaybe<Scalars['ID']>;
+  wardNo?: InputMaybe<Scalars['String']>;
 };
 
 export type BranchSearchFilter = {
@@ -4146,6 +4187,14 @@ export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;
 };
 
+export type SetCooperativeDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymCooperativeFormInput;
+}>;
+
+
+export type SetCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+
 export type SetCooperativeUnionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCoopUnionFormInput;
@@ -4331,7 +4380,7 @@ export type GetKymDeclarationQuery = { settings: { general?: { KYM?: { individua
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, address: string, district: string, contactNumber: string, manager: { id?: string | null, name: string } } }> } | null } | null } | null } };
+export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, contactNumber: string, address: { provinceId?: string | null, districtId?: string | null, vdcId?: string | null, wardNo?: string | null, locality?: string | null, latitude?: string | null, longitude?: string | null }, manager: { id: string } } }> } | null } | null } | null } };
 
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4363,6 +4412,31 @@ export type GetShareHistoryQueryVariables = Exact<{
 export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, balance: number, member: { id: string } } }> } | null } };
 
 
+export const SetCooperativeDataDocument = `
+    mutation setCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
+  members {
+    cooperative(id: $id) {
+      add(data: $data) {
+        recordId
+        error {
+          ... on KymCooperativeAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetCooperativeDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetCooperativeDataMutation, TError, SetCooperativeDataMutationVariables, TContext>) =>
+    useMutation<SetCooperativeDataMutation, TError, SetCooperativeDataMutationVariables, TContext>(
+      ['setCooperativeData'],
+      useAxios<SetCooperativeDataMutation, SetCooperativeDataMutationVariables>(SetCooperativeDataDocument),
+      options
+    );
 export const SetCooperativeUnionDataDocument = `
     mutation setCooperativeUnionData($id: ID!, $data: KymCoopUnionFormInput!) {
   members {
@@ -5124,12 +5198,18 @@ export const GetBranchesListDocument = `
           edges {
             node {
               branchCode
-              address
+              address {
+                provinceId
+                districtId
+                vdcId
+                wardNo
+                locality
+                latitude
+                longitude
+              }
               manager {
                 id
-                name
               }
-              district
               contactNumber
             }
           }
