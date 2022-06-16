@@ -1,4 +1,4 @@
-query getKYMDeclaration{
+query getKYMDeclaration {
     settings {
         general {
             KYM {
@@ -6,7 +6,35 @@ query getKYMDeclaration{
                     declaration {
                         id
                         content
+                    }
+                }
+            }
+        }
+    }
+}
 
+query getCustomFields {
+    settings {
+        general {
+            KYM {
+                individual {
+                    field {
+                        list(filter: { isCustom: true }) {
+                            data {
+                                id
+                                name
+                                enabled
+                                fieldType
+                                isCustom
+                                hasOtherField
+                                options {
+                                    id
+                                    name
+                                    fieldType
+                                    enabled
+                                }
+                            }
+                        }
                     }
                 }
             }

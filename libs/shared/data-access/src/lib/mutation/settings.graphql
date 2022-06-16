@@ -111,3 +111,68 @@ mutation addFileSize($fieldId: ID!, $maxSize: Int!) {
         }
     }
 }
+
+mutation addCustomField {
+    settings {
+        general {
+            KYM {
+                individual {
+                    field {
+                        add(
+                            data: {
+                                name: ""
+                                fieldType: SINGLE
+                                hasOtherField: false
+                                enabled: false
+                            }
+                        ) {
+                            record {
+                                id
+                                name
+                                enabled
+                                fieldType
+                                isCustom
+                                hasOtherField
+                                options {
+                                    id
+                                    name
+                                    fieldType
+                                    enabled
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+mutation updateCustomField(
+    $fieldId: ID!
+    $fieldName: String
+    $fieldType: KYM_FIELD_TYPE
+    $fieldEnabled: Boolean
+) {
+    settings {
+        general {
+            KYM {
+                individual {
+                    field {
+                        update(
+                            id: $fieldId
+                            data: { name: $fieldName, fieldType: $fieldType, enabled: $fieldEnabled }
+                        ) {
+                            recordId
+                            record {
+                                id
+                                name
+                                enabled
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

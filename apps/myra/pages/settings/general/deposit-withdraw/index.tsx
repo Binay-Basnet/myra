@@ -1,4 +1,7 @@
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
+import {
+  SettingsGeneralLayout,
+  SettingsLayout,
+} from '@coop/cbs/settings/ui-layout';
 
 const DepositWithdraw = () => {
   return <> Deposit Withdraw</>;
@@ -6,5 +9,9 @@ const DepositWithdraw = () => {
 
 export default DepositWithdraw;
 DepositWithdraw.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
+  );
 };

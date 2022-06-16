@@ -121,7 +121,9 @@ export const KYMSingleItem = ({
       optionName: methods.getValues().name,
       optionFieldType: methods.getValues().fieldType,
     });
-  }, 3000);
+  }, 800);
+
+  console.log(methods.getValues().fieldType);
 
   useEffect(() => {
     methods.getValues().name === '' && setIsEditable(true);
@@ -192,7 +194,8 @@ export const KYMSingleItem = ({
             >
               {field.fieldType !== 'GROUP' &&
               field.fieldType !== 'UPLOAD' ? null : isEditable ||
-                methods.getValues().name === '' ? (
+                methods.getValues().name === '' ||
+                !methods.getValues().fieldType ? (
                 <FormSelect
                   form="fieldType"
                   name="fieldType"

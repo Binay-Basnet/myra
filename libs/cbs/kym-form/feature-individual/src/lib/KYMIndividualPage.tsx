@@ -147,7 +147,7 @@ export function KYMIndividualPage() {
           <form
             onChange={debounce(() => {
               mutate({ id, data: getValues() });
-            }, 3000)}
+            }, 800)}
             onSubmit={handleSubmit((data) => {
               console.log('data', data);
             })}

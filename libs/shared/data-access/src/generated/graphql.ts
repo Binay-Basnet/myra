@@ -4302,6 +4302,21 @@ export type AddFileSizeMutationVariables = Exact<{
 
 export type AddFileSizeMutation = { settings: { general?: { KYM?: { individual: { maxSize: { recordId: string } } } | null } | null } };
 
+export type AddCustomFieldMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AddCustomFieldMutation = { settings: { general?: { KYM?: { individual: { field: { add: { record?: { id: string, name: string, enabled?: boolean | null, fieldType: Kym_Field_Type, isCustom?: boolean | null, hasOtherField: boolean, options?: Array<{ id: string, name: string, fieldType?: Field_Types | null, enabled: boolean }> | null } | null } } } } | null } | null } };
+
+export type UpdateCustomFieldMutationVariables = Exact<{
+  fieldId: Scalars['ID'];
+  fieldName?: InputMaybe<Scalars['String']>;
+  fieldType?: InputMaybe<Kym_Field_Type>;
+  fieldEnabled?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+
+export type UpdateCustomFieldMutation = { settings: { general?: { KYM?: { individual: { field: { update: { recordId: string, record?: { id: string, name: string, enabled?: boolean | null } | null } } } } | null } | null } };
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4376,6 +4391,11 @@ export type GetKymDeclarationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetKymDeclarationQuery = { settings: { general?: { KYM?: { individual: { declaration: { id: string, content: string } } } | null } | null } };
+
+export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCustomFieldsQuery = { settings: { general?: { KYM?: { individual: { field: { list?: { data?: Array<{ id: string, name: string, enabled?: boolean | null, fieldType: Kym_Field_Type, isCustom?: boolean | null, hasOtherField: boolean, options?: Array<{ id: string, name: string, fieldType?: Field_Types | null, enabled: boolean }> | null } | null> | null } | null } } } | null } | null } };
 
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4779,6 +4799,79 @@ export const useAddFileSizeMutation = <
     useMutation<AddFileSizeMutation, TError, AddFileSizeMutationVariables, TContext>(
       ['addFileSize'],
       useAxios<AddFileSizeMutation, AddFileSizeMutationVariables>(AddFileSizeDocument),
+      options
+    );
+export const AddCustomFieldDocument = `
+    mutation addCustomField {
+  settings {
+    general {
+      KYM {
+        individual {
+          field {
+            add(data: {name: "", fieldType: SINGLE, hasOtherField: false, enabled: false}) {
+              record {
+                id
+                name
+                enabled
+                fieldType
+                isCustom
+                hasOtherField
+                options {
+                  id
+                  name
+                  fieldType
+                  enabled
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useAddCustomFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<AddCustomFieldMutation, TError, AddCustomFieldMutationVariables, TContext>) =>
+    useMutation<AddCustomFieldMutation, TError, AddCustomFieldMutationVariables, TContext>(
+      ['addCustomField'],
+      useAxios<AddCustomFieldMutation, AddCustomFieldMutationVariables>(AddCustomFieldDocument),
+      options
+    );
+export const UpdateCustomFieldDocument = `
+    mutation updateCustomField($fieldId: ID!, $fieldName: String, $fieldType: KYM_FIELD_TYPE, $fieldEnabled: Boolean) {
+  settings {
+    general {
+      KYM {
+        individual {
+          field {
+            update(
+              id: $fieldId
+              data: {name: $fieldName, fieldType: $fieldType, enabled: $fieldEnabled}
+            ) {
+              recordId
+              record {
+                id
+                name
+                enabled
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useUpdateCustomFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCustomFieldMutation, TError, UpdateCustomFieldMutationVariables, TContext>) =>
+    useMutation<UpdateCustomFieldMutation, TError, UpdateCustomFieldMutationVariables, TContext>(
+      ['updateCustomField'],
+      useAxios<UpdateCustomFieldMutation, UpdateCustomFieldMutationVariables>(UpdateCustomFieldDocument),
       options
     );
 export const AllAdministrationDocument = `
@@ -5187,6 +5280,48 @@ export const useGetKymDeclarationQuery = <
     useQuery<GetKymDeclarationQuery, TError, TData>(
       variables === undefined ? ['getKYMDeclaration'] : ['getKYMDeclaration', variables],
       useAxios<GetKymDeclarationQuery, GetKymDeclarationQueryVariables>(GetKymDeclarationDocument).bind(null, variables),
+      options
+    );
+export const GetCustomFieldsDocument = `
+    query getCustomFields {
+  settings {
+    general {
+      KYM {
+        individual {
+          field {
+            list(filter: {isCustom: true}) {
+              data {
+                id
+                name
+                enabled
+                fieldType
+                isCustom
+                hasOtherField
+                options {
+                  id
+                  name
+                  fieldType
+                  enabled
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCustomFieldsQuery = <
+      TData = GetCustomFieldsQuery,
+      TError = unknown
+    >(
+      variables?: GetCustomFieldsQueryVariables,
+      options?: UseQueryOptions<GetCustomFieldsQuery, TError, TData>
+    ) =>
+    useQuery<GetCustomFieldsQuery, TError, TData>(
+      variables === undefined ? ['getCustomFields'] : ['getCustomFields', variables],
+      useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
       options
     );
 export const GetBranchesListDocument = `
