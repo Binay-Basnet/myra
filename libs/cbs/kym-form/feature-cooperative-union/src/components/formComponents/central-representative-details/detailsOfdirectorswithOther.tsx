@@ -87,7 +87,10 @@ export const AddRepresentative = ({ watch, control }) => {
     <Box display="flex" alignItems="center">
       {/* <DynamicBoxGroupContainer> */}
 
-      <DynamicBoxGroupContainer>
+      <DynamicBoxGroupContainer
+        id="Details of directors affiliated with other Firms"
+        scrollMarginTop={'200px'}
+      >
         <SectionContainer>
           <AccordianContainer>
             <InputGroupContainer>

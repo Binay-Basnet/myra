@@ -29,13 +29,6 @@ export const ContactDetails = () => {
         />
 
         <FormInput
-          type="text"
-          name="NatureOfBusiness"
-          label="Nature of Business"
-          placeholder="Enter Middle name"
-        />
-
-        <FormInput
           type="number"
           name="fax"
           label="Fax"
@@ -61,6 +54,7 @@ export const ContactDetails = () => {
           label="Post Box. No. "
           placeholder="Enter Post Box No"
         />
+        <Box></Box>
         <Box mt="44px">
           <FormInput
             type="number"

@@ -360,7 +360,14 @@ export const BoardDirectorInfo = ({ watch, control }) => {
       </Text>
       {directorFields.map((item, index) => {
         return (
-          <Box key={item.id} display="flex" flexDirection={'column'} gap="s16">
+          <Box
+            key={item.id}
+            display="flex"
+            flexDirection={'column'}
+            gap="s16"
+            id="Details of Proprietor, Partners, Directors."
+            scrollMarginTop={'200px'}
+          >
             <AddDirector
               watch={watch}
               index={index}

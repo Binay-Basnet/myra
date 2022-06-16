@@ -373,7 +373,14 @@ export const AccountOperatorInfo = ({ watch, control }) => {
       </Text>
       {accountFields.map((item, index) => {
         return (
-          <Box key={item.id} display="flex" flexDirection={'column'} gap="s16">
+          <Box
+            key={item.id}
+            display="flex"
+            flexDirection={'column'}
+            gap="s16"
+            id="Details of Account Operators"
+            scrollMarginTop={'200px'}
+          >
             <AddDirector
               watch={watch}
               index={index}

@@ -1,3 +1,4 @@
+export * from './accordion/AccordianCoopUnionKym';
 export * from './accordion/AccordianInstitutionKym';
 export * from './accordion/AccordianMemberPage';
 export * from './accordion/AccordionComponent';
