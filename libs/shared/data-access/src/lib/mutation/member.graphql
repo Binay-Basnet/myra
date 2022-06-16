@@ -72,3 +72,43 @@ mutation deleteKYMField($optionId: ID!) {
         }
     }
 }
+
+mutation addKYMField(
+    $name: String!
+    $enabled: Boolean!
+    $hasOtherField: Boolean!
+    $fieldType: KYM_FIELD_TYPE!
+) {
+    settings {
+        general {
+            KYM {
+                individual {
+                    field {
+                        add(
+                            data: {
+                                name: $name
+                                enabled: $enabled
+                                hasOtherField: $hasOtherField
+                                fieldType: $fieldType
+                                data: {
+                                    name: $name
+                                    enabled: $enabled
+                                }
+                            }
+                        ) {
+                            record {
+                                id
+                                options {
+                                    id
+                                    name
+                                    enabled
+                                    fieldType
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -6,7 +6,11 @@ import { KYMDragGroup } from '../KYMDragGroup';
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 
 interface IKYMInnerAccordionProps {
-  subField: string;
+  subField: {
+    key: string;
+    label: string;
+    component?: (props: any) => JSX.Element;
+  };
   index: number;
 }
 
@@ -18,8 +22,15 @@ export const KYMInnerAccordion = ({
     <AccordionItem key={`${subField}${index}`}>
       {({ isExpanded }) => (
         <>
-          <KYMSettingsAccordionBtn isExpanded={isExpanded} title={subField} />
-          <KYMDragGroup isExpanded={isExpanded} fieldName={subField} />
+          <KYMSettingsAccordionBtn
+            isExpanded={isExpanded}
+            title={subField.label}
+          />
+          {subField.component ? (
+            subField.component({ isExpanded })
+          ) : (
+            <KYMDragGroup isExpanded={isExpanded} fieldName={subField.key} />
+          )}
         </>
       )}
     </AccordionItem>

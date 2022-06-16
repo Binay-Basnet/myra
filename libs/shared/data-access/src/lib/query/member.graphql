@@ -92,18 +92,20 @@ query getKymFormStatus($id: ID!) {
     }
 }
 
-query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean){
+query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
     settings {
         general {
             KYM {
                 individual {
                     field {
-                        list(filter: {name: $name, isIdetificationDoc: $isIdentificationDoc }) {
+                        list(
+                            filter: { name: $name, isIdetificationDoc: $isIdentificationDoc }
+                        ) {
                             data {
                                 id
                                 name
                                 enabled
-                                data {
+                                options {
                                     id
                                     name
                                     fieldType
@@ -122,36 +124,3 @@ query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean){
         }
     }
 }
-
-
-query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean){
-    settings {
-        general {
-            KYM {
-                individual {
-                    field {
-                        list(filter: {name: $name, isIdetificationDoc: $isIdentificationDoc }) {
-                            data {
-                                id
-                                name
-                                enabled
-                                data {
-                                    id
-                                    name
-                                    fieldType
-                                    enabled
-                                }
-                                hasOtherField
-                                dependsOn
-                                isCustom
-                                maxSize
-                                fieldType
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-

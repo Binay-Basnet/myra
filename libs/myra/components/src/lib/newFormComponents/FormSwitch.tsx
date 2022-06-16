@@ -23,8 +23,6 @@ export const FormSwitch = ({
 
   const error = errors[name];
 
-  console.log(error);
-
   return (
     <Controller
       control={formControl}
@@ -36,7 +34,6 @@ export const FormSwitch = ({
             isChecked={value}
             {...rest}
             onChange={(e) => {
-              console.log(e.target.checked);
               onChange(e.target.checked);
             }}
           />
