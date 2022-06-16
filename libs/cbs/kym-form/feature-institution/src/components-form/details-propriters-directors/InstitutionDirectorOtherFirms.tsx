@@ -12,17 +12,17 @@ import { FormInput, FormSelect } from '@coop/myra/components';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
 
-interface IAddSisterConcern {
+interface IAddDirector {
   index: number;
-  removeSister: () => void;
+  removeDirector: () => void;
 }
 
-const AddSister = ({ index, removeSister }: IAddSisterConcern) => {
+const AddDirector = ({ index, removeDirector }: IAddDirector) => {
   return (
     <DynamicBoxContainer>
       <CloseIcon
         cursor="pointer"
-        onClick={removeSister}
+        onClick={removeDirector}
         color="gray.500"
         _hover={{
           color: 'gray.900',
@@ -34,57 +34,70 @@ const AddSister = ({ index, removeSister }: IAddSisterConcern) => {
         <FormInput
           type="text"
           bg="white"
-          name={`sisterConcernDetails.${index}.name`}
-          label="Name of Sister Concern"
-          placeholder="Enter Name of Sister Concern"
+          name={`detailsOfDirectorsWithAffiliation.${index}.nameOfDirector`}
+          label="Name of Director"
+          placeholder="Enter Name of Director"
         />
         <FormInput
           type="text"
           bg="white"
-          name={`sisterConcernDetails.${index}.natureOfBusiness`}
-          label="Nature of Business"
-          placeholder="Nature of Business"
-        />
-        <FormInput
-          type="text"
-          bg="white"
-          name={`sisterConcernDetails.${index}.address`}
-          label="Address"
-          placeholder="Address"
-        />
-        <FormInput
-          type="text"
-          bg="white"
-          name={`sisterConcernDetails.${index}.phoneNo`}
-          label="Phone No."
-          placeholder="Enter Phone Number"
+          name={`detailsOfDirectorsWithAffiliation.${index}.nameOfInstitution`}
+          label="Name of Institution"
+          placeholder="Enter Name of Institution"
         />
       </Grid>
+      <InputGroupContainer mt="s16">
+        <FormInput
+          type="text"
+          bg="white"
+          name={`detailsOfDirectorsWithAffiliation.${index}.addressOfInstitution`}
+          label="Address of Institution"
+          placeholder="Enter Address of Institution"
+        />
+        <FormInput
+          type="text"
+          bg="white"
+          name={`detailsOfDirectorsWithAffiliation.${index}.designation`}
+          label="Designation"
+          placeholder="Enter Designation"
+        />
+        <FormInput
+          type="number"
+          textAlign={'right'}
+          bg="white"
+          name={`detailsOfDirectorsWithAffiliation.${index}.yearlyIncome`}
+          label="Yearly Income"
+          placeholder="0.00"
+        />
+      </InputGroupContainer>
     </DynamicBoxContainer>
   );
 };
 
-export const InstitutionKYMSisterConcernDetails = () => {
+export const InstitutionKYMDirectorWithAffiliation = () => {
   const {
-    fields: sisterFields,
-    append: sisterAppend,
-    remove: sisterRemove,
-  } = useFieldArray({ name: 'sisterConcernDetails' });
+    fields: directorFields,
+    append: directorAppend,
+    remove: directorRemove,
+  } = useFieldArray({ name: 'detailsOfDirectorsWithAffiliation' });
 
   return (
-    <GroupContainer id="Details of sister concern" scrollMarginTop={'200px'}>
+    <GroupContainer
+      id="Details of directors affiliated with other Firms"
+      scrollMarginTop={'200px'}
+    >
       <Text fontSize="r1" fontWeight="SemiBold">
-        Details of sister concern
+        Details of directors affiliated with other Firms
       </Text>
 
       <div>
         <DynamicBoxGroupContainer>
-          {sisterFields.map((item, index) => {
+          {directorFields.map((item, index) => {
             return (
               <Box key={item.id}>
-                <AddSister
+                <AddDirector
                   index={index}
-                  removeSister={() => sisterRemove(index)}
+                  removeDirector={() => directorRemove(index)}
                 />
               </Box>
             );
@@ -94,7 +107,7 @@ export const InstitutionKYMSisterConcernDetails = () => {
             leftIcon={<Icon size="md" as={AiOutlinePlus} />}
             variant="outline"
             onClick={() => {
-              sisterAppend({});
+              directorAppend({});
             }}
           >
             New Detail

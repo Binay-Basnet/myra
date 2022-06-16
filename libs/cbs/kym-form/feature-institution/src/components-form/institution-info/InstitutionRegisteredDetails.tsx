@@ -8,7 +8,7 @@ import { Box, Button, Icon, Text } from '@coop/shared/ui';
 
 export const RegisteredDetailsInstitution = () => {
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer id="Registered Details" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"

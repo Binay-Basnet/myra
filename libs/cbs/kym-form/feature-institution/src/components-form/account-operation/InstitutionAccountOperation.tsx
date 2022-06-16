@@ -25,7 +25,10 @@ const booleanList = [
 export const AccountOperationInstitution = () => {
   const [activeTab, setActiveTab] = useState(0);
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer
+      id="Account Operation Instruction"
+      scrollMarginTop={'200px'}
+    >
       <Text
         fontSize="r1"
         fontWeight="semibold"

@@ -31,9 +31,11 @@ import {
   AccountOperationInstitution,
   BankAccountDetailsInstitution,
   BasicDetailsInstitution,
+  BoardDirectorInfo,
   ContactDetailsInstitution,
   DocumentDeclarationInstitution,
   InstitutionKYMAccountDetail,
+  InstitutionKYMDirectorWithAffiliation,
   InstitutionKYMSisterConcernDetails,
   RegisteredDetailsInstitution,
   TransactionProfileInstitution,
@@ -167,7 +169,8 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                         3. Details of Proprietor, partners, Directors
                       </Text>
                       <ContainerWithDivider>
-                        Happy New Year
+                        <BoardDirectorInfo watch={watch} control={control} />
+                        <InstitutionKYMDirectorWithAffiliation />
                       </ContainerWithDivider>
                     </SectionContainer>
 

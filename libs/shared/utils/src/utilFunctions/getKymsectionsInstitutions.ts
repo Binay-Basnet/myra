@@ -40,14 +40,18 @@ const monthlyTransactions = [
   'Above 25 Lakhs2',
 ];
 const sisterConcern = ['sisterConcernDetails'];
+
 const BankAccDetails = ['bank', 'accountNumber', 'accountName'];
+const directorDetails = ['boardOfDirectorsDetails'];
+const directoswithAffiliation = ['detailsOfDirectorsWithAffiliation'];
+
 const accountOperator = ['accountOperatorsDetails'];
 const accountInstruction = [
-  'accountType--tab-0',
+  'accountType',
   'specialInstruction',
   'isCompanyStampCompulsory',
 ];
-const accontDecleration = ['Account Operation Instruction', 'weAgree'];
+const accontDecleration = ['accountHolderName', 'weAgree'];
 export const getKymSectionInstitution = (id: string) => {
   if (InstitutionalInfo.includes(id)) {
     return {
@@ -101,6 +105,19 @@ export const getKymSectionInstitution = (id: string) => {
     return {
       section: 'transactionProfile',
       subSection: 'Expected Monthly Transaction',
+    };
+  }
+  if (directorDetails.includes(id.split('.')[0])) {
+    return {
+      section: 'details',
+      subSection: 'Details of Proprietor, Partners, Directors.',
+    };
+  }
+
+  if (directoswithAffiliation.includes(id.split('.')[0])) {
+    return {
+      section: 'details',
+      subSection: 'Details of directors affiliated with other Firms',
     };
   }
   if (accountOperator.includes(id.split('.')[0])) {

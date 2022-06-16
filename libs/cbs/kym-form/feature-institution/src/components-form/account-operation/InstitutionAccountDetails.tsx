@@ -75,9 +75,9 @@ export const InstitutionKYMAccountDetail = () => {
   } = useFieldArray({ name: 'accountOperatorsDetails' });
 
   return (
-    <GroupContainer id="Family Details" scrollMarginTop={'200px'}>
+    <GroupContainer id="Details of Account Operators" scrollMarginTop="200px">
       <Text fontSize="r1" fontWeight="SemiBold">
-        Details of AccountDetails concern
+        Details of Account Operators
       </Text>
 
       <div>
@@ -100,7 +100,7 @@ export const InstitutionKYMAccountDetail = () => {
               accountAppend({});
             }}
           >
-            New Operators
+            New Operator
           </Button>
         </DynamicBoxGroupContainer>
       </div>

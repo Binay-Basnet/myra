@@ -20,11 +20,11 @@ const radioList2 = [
 
 export const TransactionProfileInstitution = () => {
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer>
       <>
         {/* {console.log('hello world', InstitutionExpectedMonthlyTurnover)} */}
 
-        <InputGroupContainer>
+        <InputGroupContainer id="Transaction Profile" scrollMarginTop={'200px'}>
           <FormInput
             // control={control}
             type="text"
@@ -49,7 +49,11 @@ export const TransactionProfileInstitution = () => {
           />
         </InputGroupContainer>
         <Grid templateColumns="repeat(2, 1fr)">
-          <Box mt="s16">
+          <Box
+            mt="s16"
+            id="Expected Monthly Turnover"
+            scrollMarginTop={'200px'}
+          >
             <FormRadioGroup
               name="expectedMonthlyTurnover"
               label="Expected Monthly Turnover"
@@ -58,7 +62,11 @@ export const TransactionProfileInstitution = () => {
             />
           </Box>
 
-          <Box mt="s16">
+          <Box
+            mt="s16"
+            id="Expected Monthly Transaction"
+            scrollMarginTop={'200px'}
+          >
             <FormRadioGroup
               name="expectedMonthlyTransaction"
               label="Expected Monthly Transaction"
