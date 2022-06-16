@@ -4,6 +4,7 @@ import {
   Radio,
   RadioProps as ChakraRadioProps,
   Stack,
+  Text,
 } from '@chakra-ui/react';
 
 export interface RadioGroupProps extends ChakraRadioProps {
@@ -11,12 +12,13 @@ export interface RadioGroupProps extends ChakraRadioProps {
   radioList: string[];
   spacing?: number;
   direction?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
+  labelFontSize?: string;
 }
 
 export function RadioGroup(props: RadioGroupProps) {
-  const { radioList, spacing, direction, ...rest } = props;
+  const { radioList, spacing, direction, labelFontSize, ...rest } = props;
   return (
-    <ChakraRadioGroup>
+    <ChakraRadioGroup fontSize={13}>
       <Stack spacing={spacing} direction={direction}>
         {radioList.map((item, index) => {
           return (
@@ -28,7 +30,7 @@ export function RadioGroup(props: RadioGroupProps) {
               value={item}
               spacing="s8"
             >
-              {item}
+              <Text fontSize={labelFontSize}>{item}</Text>
             </Radio>
           );
         })}

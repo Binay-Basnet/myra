@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetBranchesListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
@@ -13,6 +14,7 @@ export const SettingsBranchesTable = () => {
 
   const popoverTitle = ['View Detail', 'View Branch Profile'];
 
+  // TODO (Update this, API HAS BEEN CHANGED)
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -22,17 +24,17 @@ export const SettingsBranchesTable = () => {
 
       {
         Header: 'Address',
-        accessor: 'node.address',
+        accessor: 'node.address.provinceId',
         maxWidth: 4,
       },
 
       {
         Header: 'District',
-        accessor: 'node.district',
+        accessor: 'node.address.provinceId',
       },
       {
         Header: 'Manager',
-        accessor: 'node.manager.name',
+        accessor: 'node.manager.personalInformation.name.firstName',
         width: '25%',
       },
 

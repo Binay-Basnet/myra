@@ -1,37 +1,44 @@
 query getBranchesList {
-  settings {
-    general {
-      branch {
-        list {
-          edges {
-            node {
-              branchCode
-              address
-              manager {
-                id
-                name
-              }
-              district
-              contactNumber
+    settings {
+        general {
+            branch {
+                list {
+                    edges {
+                        node {
+                            branchCode
+                            address {
+                                provinceId
+                                districtId
+                            }
+                            manager {
+                                id
+                                personalInformation {
+                                    name {
+                                        firstName
+                                    }
+                                }
+                            }
+
+                            contactNumber
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
 }
 
 query getChartOfAccounts {
-  settings {
-    general {
-      chartsOfAccount {
-        class {
-          data {
-            id
-            name
-          }
+    settings {
+        general {
+            chartsOfAccount {
+                class {
+                    data {
+                        id
+                        name
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
