@@ -167,8 +167,8 @@ export function KYMCooperativePage() {
                       </ContainerWithDivider>
                     </SectionContainer>
 
-                    {/* 
-                   
+                    {/*
+
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
@@ -272,39 +272,57 @@ export function KYMCooperativePage() {
             </Box>
           </form>
         </FormProvider>
-        <Box position="relative" width="100%" h="80px">
-          <Box
-            position="fixed"
-            margin="0px auto"
-            pt="20px"
-            bg="gray.100"
-            width={1248}
-          >
-            <Container minW="container.xl" height="fit-content">
-              <Box
-                height="60px"
-                display="flex"
-                justifyContent="space-between"
-                alignItems={'center'}
-                px="5"
-                background="white"
-                borderBottom="1px solid #E6E6E6"
-                borderTopRadius={5}
-              >
-                <Text fontSize="r2" fontWeight="SemiBold">
-                  {t.membersFormAddNewMembers}
-                </Text>
-                <IconButton
-                  variant={'ghost'}
-                  aria-label="close"
-                  icon={<GrClose />}
-                  onClick={() => router.back()}
-                />
-              </Box>
-            </Container>
-          </Box>
-        </Box>
       </Container>
+      <Box position="relative" h="80px" margin="0px auto">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100">
+          <Container minW="container.xl" height="fit-content">
+            <Box
+              display="flex"
+              height="60px"
+              justifyContent="space-between"
+              alignItems="center"
+              background="white"
+              borderTopLeftRadius="br3"
+              borderTopRightRadius="br3"
+              px="5"
+              boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
+            >
+              <Text>Form Details saved to draft</Text>
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="flex-end"
+                alignSelf="center"
+              >
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignSelf="center"
+                >
+                  <Button type="submit" variant="ghost">
+                    <Icon as={BiSave} color="primary.500" />
+                    <Text
+                      alignSelf="center"
+                      color="primary.500"
+                      fontWeight="Medium"
+                      fontSize="s2"
+                      ml="5px"
+                    >
+                      Save Draft
+                    </Text>
+                  </Button>
+                </Box>
+                &nbsp;
+                <Button
+                  onClick={() => router.push(`/members/translation/${id}`)}
+                >
+                  Next
+                </Button>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
+      </Box>
     </>
   );
 }
