@@ -33,6 +33,12 @@
       "@coop/cbs/kym-form/ui-containers": [
         "libs/cbs/kym-form/ui-containers/src/index.ts"
       ],
+      "@coop/cbs/settings/feature-member": [
+        "libs/cbs/settings/feature-member/src/index.ts"
+      ],
+      "@coop/cbs/settings/ui-layout": [
+        "libs/cbs/settings/ui-layout/src/index.ts"
+      ],
       "@coop/cbs/members/profile": [
         "libs/cbs/members/feature-profile/src/index.ts"
       ],

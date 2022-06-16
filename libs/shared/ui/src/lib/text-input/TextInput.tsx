@@ -15,20 +15,23 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     const { labelColor, label, placeholder, ...rest } = props;
     return (
       <>
-        <TextFields
-          mb="s4"
-          variant="formLabel"
-          whiteSpace="nowrap"
-          color={labelColor ?? 'gray.700'}
-        >
-          {label}
-        </TextFields>
+        {label && (
+          <TextFields
+            mb="s4"
+            variant="formLabel"
+            whiteSpace="nowrap"
+            color={labelColor ?? 'gray.700'}
+          >
+            {label}
+          </TextFields>
+        )}
+
         <Input
           flexGrow={0}
           variant={'outline'}
           type="text"
           borderRadius="br2"
-          placeholder={placeholder ?? 'Enter your Name'}
+          placeholder={placeholder ?? 'Enter'}
           ref={ref}
           {...rest}
         />

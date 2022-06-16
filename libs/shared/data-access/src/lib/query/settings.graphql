@@ -1,0 +1,15 @@
+query getKYMDeclaration{
+    settings {
+        general {
+            KYM {
+                individual {
+                    declaration {
+                        id
+                        content
+
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
+
+import { ProfileFeature } from '@coop/cbs/members/profile';
 import { MemberPagesLayout } from '@coop/myra/components';
 import { MainLayout } from '@coop/shared/ui';
-import { ProfileFeature } from '@coop/cbs/members/profile';
 
 const MemberProfile = () => {
   return <ProfileFeature />;

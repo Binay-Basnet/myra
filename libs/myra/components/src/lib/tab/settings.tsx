@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { IconType } from 'react-icons';
 import {
   IoApps,
@@ -42,7 +41,6 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
 };
 
 export const SettingsLayout = () => {
-  const [tabIndex, setTabIndex] = useState(1);
   const route = useRouter();
   const currentIndex =
     NAVBAR_TAB_OBJECT[
@@ -73,12 +71,7 @@ export const SettingsLayout = () => {
         </Text>
       </Box>
 
-      <Tabs
-        index={currentIndex}
-        size="md"
-        variant="enclosed"
-        onChange={(index) => setTabIndex(index)}
-      >
+      <Tabs index={currentIndex} size="md" variant="enclosed">
         <TabList>
           {demotabs.map(({ title, icon, link }, index) => {
             const isActive =
