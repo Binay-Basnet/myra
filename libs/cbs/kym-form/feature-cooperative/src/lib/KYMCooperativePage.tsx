@@ -54,10 +54,10 @@ export function KYMCooperativePage() {
   const router = useRouter();
   const id = String(router?.query?.['id']);
   const { mutate } = useSetKymCooperativeDataMutation({});
-  const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
-  const kymFormStatus =
-    kymFormStatusQuery?.data?.members?.individual?.formState?.data
-      ?.sectionStatus;
+  // const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
+  // const kymFormStatus =
+  //   kymFormStatusQuery?.data?.members?.individual?.formState?.data
+  //     ?.sectionStatus;
 
   const methods = useForm<KymCooperativeFormInput>({});
 
@@ -124,10 +124,7 @@ export function KYMCooperativePage() {
                   minHeight="100%"
                   bg="white"
                 >
-                  <AccordionKymCoopForm
-                    formStatus={kymFormStatus}
-                    kymCurrentSection={kymCurrentSection}
-                  />
+                  <AccordionKymCoopForm kymCurrentSection={kymCurrentSection} />
                 </Box>
 
                 <Box background="white" ml={320} p="s20" pb="s40">

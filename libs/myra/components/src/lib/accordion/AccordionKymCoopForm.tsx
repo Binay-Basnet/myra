@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AiFillCloseCircle,
   AiOutlineCaretDown,
@@ -6,6 +6,7 @@ import {
 } from 'react-icons/ai';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
+
 import {
   KymCooperativeAddSectionStatus,
   KymCooperativeInstitutionInformationSection,
@@ -54,7 +55,7 @@ const Declaration: string[] = [
 ];
 
 interface AccordianProps {
-  formStatus?: KymCooperativeAddSectionStatus | null;
+  // formStatus?: KymCooperativeAddSectionStatus | null;
   kymCurrentSection?: {
     section: string;
     subSection: string;
@@ -62,7 +63,7 @@ interface AccordianProps {
 }
 
 export function AccordionKymCoopForm(props: AccordianProps) {
-  const { formStatus, kymCurrentSection } = props;
+  const { kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
   const [isOpenOrganization, setIsOpenOrganization] = useState(false);
   const [isOpenEconomic, setIsOpenEconomic] = useState(false);
@@ -117,14 +118,14 @@ export function AccordionKymCoopForm(props: AccordianProps) {
                 </Text>
               </a>
               &nbsp; &nbsp;
-              {formStatus?.personal?.completed?.includes(
+              {/* {formStatus?.personal?.completed?.includes(
                 organizationInfoEnum[item]
               ) && (
                 <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
               )}
               {formStatus?.personal?.error?.includes(
                 organizationInfoEnum[item]
-              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />}
+              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />} */}
             </Box>
           ))}
         </Box>

@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetBranchesListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
@@ -22,17 +23,17 @@ export const SettingsBranchesTable = () => {
 
       {
         Header: 'Address',
-        accessor: 'node.address',
+        accessor: 'node.address.provinceId',
         maxWidth: 4,
       },
 
       {
         Header: 'District',
-        accessor: 'node.district',
+        accessor: 'node.address.districtId',
       },
       {
         Header: 'Manager',
-        accessor: 'node.manager.name',
+        accessor: 'node.manager.id',
         width: '25%',
       },
 
