@@ -1,5 +1,6 @@
 export * from './accordion/AccordianInstitutionKym';
 export * from './accordion/AccordianMemberPage';
+export * from './accordion/AccordionKymCoopForm';
 export * from './accordion/AccordionComponent';
 export * from './addMemberForms';
 export * from './chartOfAccounts';
