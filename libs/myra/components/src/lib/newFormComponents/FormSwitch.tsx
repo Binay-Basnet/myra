@@ -1,8 +1,9 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, useFormContext } from 'react-hook-form';
+
 import { Box, Switch, SwitchProps, Text } from '@coop/shared/ui';
 
 interface IFormSelectProps extends SwitchProps {
-  control: Control;
+  control?: Control;
   name: string;
   label?: string;
 }
@@ -13,21 +14,30 @@ export const FormSwitch = ({
   label,
   ...rest
 }: IFormSelectProps) => {
+  const methods = useFormContext();
+
+  const {
+    formState: { errors },
+    control: formControl,
+  } = methods;
+
+  const error = errors[name];
+
   return (
     <Controller
-      control={control}
+      control={formControl}
       name={name}
-      render={({ field: { onChange } }) => (
+      render={({ field: { onChange, value } }) => (
         <Box display="flex" flexDirection="row" alignItems="center">
           <Switch
-            mr={5}
+            mr={label && 5}
+            isChecked={value}
             {...rest}
             onChange={(e) => {
-              console.log(e.target.checked);
               onChange(e.target.checked);
             }}
           />
-          <Text fontSize="r1">{label}</Text>
+          {label && <Text fontSize="r1">{label}</Text>}
         </Box>
       )}
     />

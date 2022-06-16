@@ -16,13 +16,14 @@
       "warn",
       {
         "groups": [
-          [
-            "^react",
-            "^@?\\w"
-          ],
           // Packages 'react' related packages come first.
           [
-            "^@/sacoos"
+            "^react",
+            "^next",
+            "^@?\\w"
+          ],
+          [
+            "^@coop"
           ],
           [
             "^\\./?$",

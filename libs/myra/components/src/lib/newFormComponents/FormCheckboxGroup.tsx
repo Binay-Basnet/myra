@@ -1,5 +1,6 @@
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
+
 import { Box, Checkbox, Input, Text } from '@coop/shared/ui';
 
 interface IFormCheckboxGroupProps {
@@ -22,11 +23,18 @@ export const FormCheckboxGroup = ({
       name={name}
       render={({ field: { onChange, value } }) => {
         return (
-          <Box display="flex" flexWrap="wrap" columnGap="s48" rowGap="s16">
+          <Box
+            display="flex"
+            flexDirection="column"
+            flexWrap="wrap"
+            columnGap="s48"
+            rowGap="s16"
+          >
             {list.map((item, index) => (
               <Checkbox
                 id={name}
                 key={index}
+                isChecked={value?.includes(item)}
                 onChange={() => {
                   if (!value) {
                     onChange([item]);
@@ -37,7 +45,7 @@ export const FormCheckboxGroup = ({
                   }
                 }}
               >
-                <Text fontSize="s3">{item}</Text>
+                <Text fontSize="r1">{item}</Text>
               </Checkbox>
             ))}
             {showOther ? (

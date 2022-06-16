@@ -209,7 +209,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
         <TabColumn list={memberColumns} />
         <Divider my="s16" />
         <Button
-          onClick={() => router.push('/members/settings')}
+          onClick={() => router.push('/settings/general/members')}
           variant="ghost"
           color="#37474F"
           height="s48"

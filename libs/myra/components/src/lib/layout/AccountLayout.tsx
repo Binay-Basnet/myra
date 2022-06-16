@@ -1,8 +1,9 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
-import { AddIcon } from '@chakra-ui/icons';
-import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
 import { useRouter } from 'next/router';
+import { AddIcon } from '@chakra-ui/icons';
+
+import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
 
 import { TabColumn } from '../tab/TabforMemberPage';
 
@@ -54,7 +55,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
         <TabColumn list={accountColumns} />
         <Divider my="s16" />
         <Button
-          onClick={() => router.push('/members/settings')}
+          onClick={() => router.push('/settings/general/charts-of-accounts')}
           variant="ghost"
           color="#37474F"
           height="s48"

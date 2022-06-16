@@ -1,93 +1,126 @@
 query getMemberList(
-  $objState: ObjState
-  $first: Int
-  $before: Cursor
-  $after: Cursor
-  $last: Int
+    $objState: ObjState
+    $first: Int
+    $before: Cursor
+    $after: Cursor
+    $last: Int
 ) {
-  members {
-    list(
-      pagination: { first: $first, before: $before, after: $after, last: $last }
-      filter: { objState: $objState }
-    ) {
-      totalCount
-      edges {
-        node {
-          id
-          memberId
-          personalInformation {
-            name {
-              firstName
-              lastName
+    members {
+        list(
+            pagination: { first: $first, before: $before, after: $after, last: $last }
+            filter: { objState: $objState }
+        ) {
+            totalCount
+            edges {
+                node {
+                    id
+                    memberId
+                    personalInformation {
+                        name {
+                            firstName
+                            lastName
+                        }
+                    }
+                    address {
+                        permanent {
+                            district
+                            state
+                        }
+                    }
+                    contact {
+                        mobile
+                    }
+                    createdAt
+                }
+                cursor
             }
-          }
-          address {
-            permanent {
-              district
-              state
+            pageInfo {
+                startCursor
+                endCursor
             }
-          }
-          contact {
-            mobile
-          }
-          createdAt
         }
-        cursor
-      }
-      pageInfo {
-        startCursor
-        endCursor
-      }
     }
-  }
 }
 
 query getMemberTypes {
-  members {
-    memberTypes {
-      id
-      type
+    members {
+        memberTypes {
+            id
+            type
+        }
     }
-  }
 }
 
 query getMemberTranslation($id: ID!) {
-  members {
-    individual {
-      translate(id: $id) {
-        id
-        data
-        translatedValue
-      }
+    members {
+        individual {
+            translate(id: $id) {
+                id
+                data
+                translatedValue
+            }
+        }
     }
-  }
 }
 
 query getKymFormStatus($id: ID!) {
-  members {
-    individual {
-      formState(id: $id) {
-        data {
-          sectionStatus {
-            personal {
-              completed
-              error
+    members {
+        individual {
+            formState(id: $id) {
+                data {
+                    sectionStatus {
+                        personal {
+                            completed
+                            error
+                        }
+                        professional {
+                            completed
+                            error
+                        }
+                        cooperativeMembership {
+                            completed
+                            error
+                        }
+                        declaration {
+                            completed
+                            error
+                        }
+                    }
+                }
             }
-            professional {
-              completed
-              error
-            }
-            cooperativeMembership {
-              completed
-              error
-            }
-            declaration {
-              completed
-              error
-            }
-          }
         }
-      }
     }
-  }
+}
+
+query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
+    settings {
+        general {
+            KYM {
+                individual {
+                    field {
+                        list(
+                            filter: { name: $name, isIdetificationDoc: $isIdentificationDoc }
+                        ) {
+                            data {
+                                id
+                                name
+                                enabled
+                                options {
+                                    id
+                                    name
+                                    fieldType
+                                    enabled
+                                }
+                                hasOtherField
+                                dependsOn
+                                isCustom
+                                maxSize
+                                fieldType
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

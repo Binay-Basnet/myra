@@ -48,6 +48,7 @@ export const chakraStyles: ChakraStylesConfig = {
     bg: 'white',
     borderRadius: 'br2',
     px: 's12',
+    height: '44px',
   }),
   valueContainer: (provided, state) => ({
     ...provided,
