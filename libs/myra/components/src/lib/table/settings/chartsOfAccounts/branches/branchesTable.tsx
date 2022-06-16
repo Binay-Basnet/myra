@@ -14,6 +14,7 @@ export const SettingsBranchesTable = () => {
 
   const popoverTitle = ['View Detail', 'View Branch Profile'];
 
+  // TODO (Update this, API HAS BEEN CHANGED)
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -31,11 +32,11 @@ export const SettingsBranchesTable = () => {
         Header: 'District',
         accessor: 'node.address.districtId',
       },
-      {
-        Header: 'Manager',
-        accessor: 'node.manager.id',
-        width: '25%',
-      },
+      // {
+      //   Header: 'Manager',
+      //   accessor: 'node.manager.personalInformation.name.firstName',
+      //   width: '25%',
+      // },
 
       {
         Header: 'Contact Number',

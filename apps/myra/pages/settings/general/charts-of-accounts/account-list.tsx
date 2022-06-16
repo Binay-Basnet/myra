@@ -7,6 +7,11 @@ import {
   SearchIcon,
 } from '@chakra-ui/icons';
 import { InputGroup, InputLeftElement } from '@chakra-ui/react';
+
+import {
+  SettingsGeneralLayout,
+  SettingsLayout,
+} from '@coop/cbs/settings/ui-layout';
 import { CoaAccountListTable } from '@coop/myra/components';
 import {
   Box,
@@ -17,8 +22,6 @@ import {
   Input,
   Text,
 } from '@coop/shared/ui';
-
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const ChartsOfAccounts = () => {
   return (
@@ -117,5 +120,9 @@ const ChartsOfAccounts = () => {
 
 export default ChartsOfAccounts;
 ChartsOfAccounts.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
+  );
 };

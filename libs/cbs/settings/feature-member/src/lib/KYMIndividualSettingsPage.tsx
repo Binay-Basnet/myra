@@ -16,7 +16,7 @@ interface FieldType {
 const UPDATED_KYM_FIELDS: FieldType[] = [
   {
     key: 'personal_information',
-    label: 'Personal Information',
+    label: 'Section 1: Personal Information',
     children: [
       {
         key: 'gender',
@@ -76,7 +76,7 @@ const UPDATED_KYM_FIELDS: FieldType[] = [
   },
   {
     key: 'Professional Information',
-    label: 'Professional Information',
+    label: 'Section 2: Professional Information',
     children: [
       {
         label: 'Occupation',
@@ -103,7 +103,7 @@ const UPDATED_KYM_FIELDS: FieldType[] = [
   },
   {
     key: 'Cooperative Member',
-    label: 'Cooperative Member',
+    label: 'Section 3: Cooperative Member',
     children: [
       {
         label: 'Purpose of becoming a member of this cooperative',
@@ -124,8 +124,8 @@ const UPDATED_KYM_FIELDS: FieldType[] = [
     ],
   },
   {
-    key: 'Declaration',
-    label: 'declaration',
+    key: 'declaration',
+    label: 'Section 4: Declaration',
     children: [
       {
         label: 'Next to Kin Information',
@@ -145,6 +145,10 @@ const UPDATED_KYM_FIELDS: FieldType[] = [
         component: KYMDeclaration,
       },
     ],
+  },
+  {
+    key: 'custom',
+    label: 'Section 5: Custom Fields',
   },
 ];
 

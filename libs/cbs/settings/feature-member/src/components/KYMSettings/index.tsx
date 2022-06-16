@@ -3,6 +3,7 @@ import React from 'react';
 import { Accordion, AccordionItem, AccordionPanel } from '@coop/shared/ui';
 
 import { KYMBottomPanel } from '../KYMBottomPanel';
+import { KYMCustomSection } from '../KYMCustomField/KYMCustomField';
 import { KYMInnerAccordion } from '../KYMInnerAccordion';
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 
@@ -19,7 +20,7 @@ interface IKYMSettingsProps {
 }
 
 export const KYMSettings = ({ fields, isSection }: IKYMSettingsProps) => {
-  return (
+  return fields.key !== 'custom' ? (
     <Accordion
       allowMultiple
       allowToggle
@@ -59,5 +60,7 @@ export const KYMSettings = ({ fields, isSection }: IKYMSettingsProps) => {
         )}
       </AccordionItem>
     </Accordion>
+  ) : (
+    <KYMCustomSection fields={fields} />
   );
 };

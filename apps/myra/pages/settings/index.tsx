@@ -1,4 +1,7 @@
-import GeneralLayout from '../../components/SettingsLayout';
+import {
+  SettingsGeneralLayout,
+  SettingsLayout,
+} from '@coop/cbs/settings/ui-layout';
 
 const Settings = () => {
   return <></>;
@@ -6,5 +9,9 @@ const Settings = () => {
 
 export default Settings;
 Settings.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
+  );
 };

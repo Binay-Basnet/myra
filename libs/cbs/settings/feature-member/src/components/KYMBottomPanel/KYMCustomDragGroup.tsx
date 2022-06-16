@@ -8,7 +8,6 @@ import {
 import { IoClose } from 'react-icons/io5';
 import { AddIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
-import { debounce } from 'lodash';
 
 import {
   Field_Types,
@@ -17,7 +16,6 @@ import {
   useAddKymOptionMutation,
   useArrangeKymFieldMutation,
   useDeleteKymFieldMutation,
-  useGetKymIndItemDetailsQuery,
   useToggleOtherOptionMutation,
 } from '@coop/shared/data-access';
 import {
@@ -27,22 +25,23 @@ import {
   Checkbox,
   Icon,
   Text,
-  TextInput,
 } from '@coop/shared/ui';
 
 import { KYMSingleItem } from '../KYMSingleItem';
 
 interface IKYMDraggableItemProps {
-  fieldName: string;
+  fieldOption: any;
+  field: any;
   isExpanded: boolean;
 }
 
-export const KYMDragGroup = ({
-  fieldName,
+export const KYMCustomDragGroup = ({
+  fieldOption,
+  field,
   isExpanded,
 }: IKYMDraggableItemProps) => {
-  const [fieldItems, setFieldItems] = useState<KymOption[]>([]);
-  const [hasOtherField, setHasOtherField] = useState(false);
+  const [fieldItems, setFieldItems] = useState<KymOption[]>(fieldOption);
+  const [hasOtherField, setHasOtherField] = useState(field.hasOtherField);
 
   const { mutateAsync: kymOptionDelete } = useDeleteKymFieldMutation();
   const { mutateAsync: kymOptionArrange } = useArrangeKymFieldMutation();
@@ -54,31 +53,9 @@ export const KYMDragGroup = ({
       const option =
         response.settings.general?.KYM?.individual.option.update.record;
 
-      option && setFieldItems((prev) => [...prev, option]);
+      option && setFieldItems((prev) => (prev ? [...prev, option] : [option]));
     },
   });
-
-  const { isLoading, data } = useGetKymIndItemDetailsQuery(
-    {
-      name: fieldName === 'identification_documents' ? null : fieldName,
-      isIdentificationDoc: fieldName === 'identification_documents',
-    },
-    {
-      enabled: isExpanded,
-      onSuccess: (response) => {
-        const field =
-          response?.settings?.general?.KYM?.individual?.field?.list?.data?.[0];
-
-        if (field?.options) {
-          setFieldItems(field.options);
-          setHasOtherField(field.hasOtherField);
-        }
-      },
-    }
-  );
-
-  const field =
-    data?.settings?.general?.KYM?.individual?.field?.list?.data?.[0];
 
   const handleDragEnd = async (result: DropResult) => {
     const items = Array.from(fieldItems);
@@ -95,28 +72,23 @@ export const KYMDragGroup = ({
     }
   };
 
-  if (isLoading) {
-    return (
-      <AccordionPanel pb={0} display="flex" flexDirection="column" gap="s16">
-        <Skeleton height="40px" borderRadius="br1" />
-        <Skeleton height="40px" borderRadius="br1" />
-      </AccordionPanel>
-    );
-  }
-
   return (
-    <>
-      <AccordionPanel pb={'0'}>
+    <Box>
+      <AccordionPanel p="0">
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="gender">
             {(provided) => (
               <Box
                 display="flex"
                 flexDirection="column"
+                borderTop={fieldItems && fieldItems.length ? '1px' : undefined}
+                borderTopColor={
+                  fieldItems && fieldItems.length ? 'border.layout' : undefined
+                }
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {fieldItems.map((item, index) => {
+                {fieldItems?.map((item, index) => {
                   return field ? (
                     <Draggable
                       key={item.id}
@@ -129,6 +101,7 @@ export const KYMDragGroup = ({
                           justifyContent={'space-between'}
                           alignItems="center"
                           my="s8"
+                          px="s12"
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                         >
@@ -164,7 +137,7 @@ export const KYMDragGroup = ({
                   <Text
                     fontSize="r1"
                     my="s12"
-                    ml="82px"
+                    ml="94px"
                     fontWeight="400"
                     color={'gray.800'}
                   >
@@ -182,7 +155,6 @@ export const KYMDragGroup = ({
           </Droppable>
         </DragDropContext>
       </AccordionPanel>
-
       <AccordionPanel p="0" borderTop={'1px'} borderTopColor={'border.layout'}>
         <Box
           display="flex"
@@ -197,66 +169,33 @@ export const KYMDragGroup = ({
             shade="primary"
             leftIcon={<AddIcon />}
             onClick={async () => {
-              field &&
-                (await mutateAsync({
-                  fieldId: field.id,
-                  optionName: '',
-                  optionEnabled: false,
-                  optionFieldType:
-                    field.fieldType === 'GROUP' ? Field_Types.TextInput : null,
-                }));
+              await mutateAsync({
+                fieldId: field?.id ?? null,
+                optionName: '',
+                optionEnabled: false,
+                optionFieldType:
+                  field.fieldType === 'GROUP' ? Field_Types.TextInput : null,
+              });
             }}
             _hover={{ bg: 'transparent' }}
           >
             Add New Option
           </Button>
-          {field?.fieldType !== 'UPLOAD' && (
-            <Checkbox
-              children="Show “Other” option"
-              isChecked={hasOtherField}
-              onChange={async (e) => {
-                setHasOtherField(e.target.checked);
-                field &&
-                  (await toggleOtherOption({
-                    groupId: field.id,
-                    hasOtherField: e.target.checked,
-                  }));
-              }}
-            />
-          )}
+
+          <Checkbox
+            children="Show “Other” option"
+            isChecked={hasOtherField}
+            onChange={async (e) => {
+              setHasOtherField(e.target.checked);
+              field &&
+                (await toggleOtherOption({
+                  groupId: field.id,
+                  hasOtherField: e.target.checked,
+                }));
+            }}
+          />
         </Box>
       </AccordionPanel>
-
-      {field?.fieldType === 'UPLOAD' && (
-        <AccordionPanel
-          p="0"
-          borderTop={'1px'}
-          borderTopColor={'border.layout'}
-        >
-          <Box
-            display="flex"
-            alignItems={'center'}
-            justifyContent="space-between"
-            p="s16"
-          >
-            <Box>
-              <Text fontSize="r1" color="gray.800" mb="s4">
-                Max File Upload Size (in KB)
-              </Text>
-              <TextInput
-                defaultValue={field?.maxSize ?? undefined}
-                onChange={debounce(async (e) => {
-                  await addFileSize({
-                    fieldId: field.id,
-                    maxSize: +e.target.value,
-                  });
-                }, 800)}
-                placeholder="File Size"
-              />
-            </Box>
-          </Box>
-        </AccordionPanel>
-      )}
-    </>
+    </Box>
   );
 };
