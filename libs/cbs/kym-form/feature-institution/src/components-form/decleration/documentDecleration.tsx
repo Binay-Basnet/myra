@@ -7,7 +7,7 @@ import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 
 export const DocumentDeclarationInstitution = () => {
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer id="Documents Declaration" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"

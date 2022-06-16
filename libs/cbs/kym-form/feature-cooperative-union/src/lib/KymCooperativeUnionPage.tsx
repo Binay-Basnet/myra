@@ -27,6 +27,9 @@ import {
   BankAccountDetails,
   ApplicantDetails,
   BoardDirectorInfo,
+  AccountOperatorInfo,
+  AddRepresentative,
+  CurrentMembers,
 } from '../components';
 import {
   SectionContainer,
@@ -77,6 +80,34 @@ export function KYMCooperativeUnionPage() {
           trainingOrganization: '',
           photograph: '',
           identityDocumentPhoto: '',
+        },
+      ],
+      accountOperatorsDetails: [
+        {
+          fullName: '',
+          designation: '',
+          permanentStateId: '',
+          permanentDistrictId: '',
+          permanentVdcOrMunicId: '',
+          permanentWardId: '',
+          permanentLocality: '',
+          isPermanentAndTemporaryAddressSame: false,
+          temporaryStateId: '',
+          temporaryDistrictId: '',
+          temporaryVdcOrMunicId: '',
+          temporaryWardId: '',
+          temporaryLocality: '',
+          dateOfMembership: '',
+          highestQualification: '',
+          contactNumber: '',
+          email: '',
+          citizenshipOrPassportOrLisenceNo: 0,
+          subjectOfTraining: '',
+          dateOfTraining: '',
+          trainingOrganization: '',
+          photograph: '',
+          identityDocumentPhoto: '',
+          signature: '',
         },
       ],
     },
@@ -174,6 +205,30 @@ export function KYMCooperativeUnionPage() {
                       </Text>
                       <ContainerWithDivider>
                         <BoardDirectorInfo watch={watch} control={control} />
+                      </ContainerWithDivider>
+                    </SectionContainer>
+                    <SectionContainer>
+                      <Text fontSize="r3" fontWeight="600">
+                        3. Details of Account Operators
+                      </Text>
+                      <ContainerWithDivider>
+                        <AccountOperatorInfo watch={watch} control={control} />
+                      </ContainerWithDivider>
+                    </SectionContainer>
+                    <SectionContainer>
+                      <Text fontSize="r3" fontWeight="600">
+                        4. Details of Central Representative{' '}
+                      </Text>
+                      <ContainerWithDivider>
+                        <AddRepresentative watch={watch} control={control} />
+                      </ContainerWithDivider>
+                    </SectionContainer>
+                    <SectionContainer>
+                      <Text fontSize="r3" fontWeight="600">
+                        5. Details of member
+                      </Text>
+                      <ContainerWithDivider>
+                        <CurrentMembers />
                       </ContainerWithDivider>
                     </SectionContainer>
                   </SectionContainer>

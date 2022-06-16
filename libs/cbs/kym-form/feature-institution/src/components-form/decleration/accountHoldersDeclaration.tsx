@@ -14,7 +14,7 @@ import {
 
 export const AccountHolderDeclarationInstitution = () => {
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer id="Account Holder Declaration" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"

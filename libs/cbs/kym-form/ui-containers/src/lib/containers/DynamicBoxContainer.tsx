@@ -1,11 +1,11 @@
 import React from 'react';
-import { Box } from '@coop/shared/ui';
+import { Box, BoxProps } from '@coop/shared/ui';
 
-interface IGroupContainer {
+interface IGroupContainer extends BoxProps {
   children: React.ReactNode;
 }
 
-export const DynamicBoxContainer = ({ children }: IGroupContainer) => {
+export const DynamicBoxContainer = ({ children, ...rest }: IGroupContainer) => {
   return (
     <Box
       display="flex"
@@ -13,6 +13,7 @@ export const DynamicBoxContainer = ({ children }: IGroupContainer) => {
       flexDirection="column"
       p="s20"
       bg="background.500"
+      {...rest}
     >
       {children}
     </Box>

@@ -1,13 +1,16 @@
 import React from 'react';
-import { Box } from '@coop/shared/ui';
+import { Box, BoxProps } from '@coop/shared/ui';
 
-interface ISectionContainerProps {
+interface ISectionContainerProps extends BoxProps {
   children: React.ReactNode;
 }
 
-export const SectionContainer = ({ children }: ISectionContainerProps) => {
+export const SectionContainer = ({
+  children,
+  ...rest
+}: ISectionContainerProps) => {
   return (
-    <Box display="flex" flexDirection="column" gap="s48">
+    <Box display="flex" flexDirection="column" gap="s48" {...rest}>
       {children}
     </Box>
   );

@@ -1,6 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { Control, useFieldArray } from 'react-hook-form';
-import { AiOutlinePlus } from 'react-icons/ai';
+import {
+  AiFillCloseCircle,
+  AiOutlineCaretDown,
+  AiOutlineCaretRight,
+  AiOutlinePlus,
+} from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -33,7 +38,7 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-const AddDirector = ({ watch, index, control, removeDirector }) => {
+const AddDirector = ({ watch, index, control, removeAccount }) => {
   const { data } = useAllAdministrationQuery();
 
   const [temporaryAddress, setTemporaryAddress] = useState(false);
@@ -97,7 +102,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
           cursor={'pointer'}
           onClick={() => setIsOpen(!isOpen)}
         >
-          <Text fontSize="r1">{`Director ${index + 1}`}</Text>
+          <Text fontSize="r1">{`Account Operator ${index + 1}`}</Text>
           <Box>
             {isOpen ? (
               <IconButton
@@ -123,7 +128,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             aria-label="close"
             icon={<CloseIcon />}
             ml="s16"
-            onClick={removeDirector}
+            onClick={removeAccount}
           />
         )}
       </Box>
@@ -136,13 +141,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               <InputGroupContainer>
                 <FormInput
                   type="text"
-                  name={`boardOfDirectorsDetails.${index}.fullName`}
+                  name={`accountOperatorsDetails.${index}.fullName`}
                   label="Full Name"
                   placeholder="Enter Full Name"
                 />
                 <FormInput
                   type="text"
-                  name={`boardOfDirectorsDetails.${index}.designation`}
+                  name={`accountOperatorsDetails.${index}.designation`}
                   label="Designation"
                   placeholder="Enter Designation"
                 />
@@ -161,13 +166,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             > */}
               <InputGroupContainer>
                 <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.permanentStateId`}
+                  name={`accountOperatorsDetails.${index}.permanentStateId`}
                   label="State"
                   placeholder="Select State"
                   options={province}
                 />
                 <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.permanentDistrictId`}
+                  name={`accountOperatorsDetails.${index}.permanentDistrictId`}
                   label="District"
                   placeholder="Select District"
                   options={districtList.map((d) => ({
@@ -176,7 +181,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                   }))}
                 />
                 <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.permanentVdcOrMunicId`}
+                  name={`accountOperatorsDetails.${index}.permanentVdcOrMunicId`}
                   label="VDC / Municipality"
                   placeholder="Select VDC / Municipality"
                   options={localityList.map((d) => ({
@@ -186,13 +191,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                 />
                 <FormInput
                   type="number"
-                  name={`boardOfDirectorsDetails.${index}.permanentWardId`}
+                  name={`accountOperatorsDetails.${index}.permanentWardId`}
                   label="Ward No"
                   placeholder="Enter Ward No"
                 />
                 <FormInput
                   type="text"
-                  name={`boardOfDirectorsDetails.${index}.permanentLocality`}
+                  name={`accountOperatorsDetails.${index}.permanentLocality`}
                   label="Locality"
                   placeholder="Enter Locality"
                 />
@@ -226,13 +231,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
 
               <InputGroupContainer>
                 <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.temporaryStateId`}
+                  name={`accountOperatorsDetails.${index}.temporaryStateId`}
                   label="State"
                   placeholder="Select State"
                   options={province}
                 />
                 <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.temporaryDistrictId`}
+                  name={`accountOperatorsDetails.${index}.temporaryDistrictId`}
                   label="District"
                   placeholder="Select District"
                   options={districtTempList.map((d) => ({
@@ -241,7 +246,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                   }))}
                 />
                 <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.temporaryVdcOrMunicId`}
+                  name={`accountOperatorsDetails.${index}.temporaryVdcOrMunicId`}
                   label="VDC / Muncipality"
                   placeholder="Select VDC / Muncipality"
                   options={localityTempList.map((d) => ({
@@ -251,13 +256,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                 />
                 <FormInput
                   type="number"
-                  name={`boardOfDirectorsDetails.${index}.temporaryWardId`}
+                  name={`accountOperatorsDetails.${index}.temporaryWardId`}
                   label="Ward No"
                   placeholder="Enter Ward No"
                 />
                 <FormInput
                   type="text"
-                  name={`boardOfDirectorsDetails.${index}.temporaryLocality`}
+                  name={`accountOperatorsDetails.${index}.temporaryLocality`}
                   label="Locality"
                   placeholder="Enter Locality"
                 />
@@ -273,31 +278,31 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             <InputGroupContainer>
               <FormInput
                 type="date"
-                name={`boardOfDirectorsDetails.${index}.dateOfMembership`}
+                name={`accountOperatorsDetails.${index}.dateOfMembership`}
                 label="Date of membership"
                 placeholder="DD-MM-YYYY"
               />
               <FormInput
                 type="text"
-                name={`boardOfDirectorsDetails.${index}.highestQualification`}
+                name={`accountOperatorsDetails.${index}.highestQualification`}
                 label="Highest Qualification"
                 placeholder="Enter higest qualification"
               />
               <FormInput
                 type="number"
-                name={`boardOfDirectorsDetails.${index}.contactNumber`}
+                name={`accountOperatorsDetails.${index}.contactNumber`}
                 label="Mobile No"
                 placeholder="Enter Mobile No"
               />
               <FormInput
                 type="text"
-                name={`boardOfDirectorsDetails.${index}.email`}
+                name={`accountOperatorsDetails.${index}.email`}
                 label="Email"
                 placeholder="Enter Email"
               />
               <FormInput
                 type="string"
-                name={`boardOfDirectorsDetails.${index}.citizenshipOrPassportOrLisenceNo`}
+                name={`accountOperatorsDetails.${index}.citizenshipOrPassportOrLisenceNo`}
                 label="Citizenship/Passport/Driving License No."
                 placeholder="Enter No"
               />
@@ -308,19 +313,19 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             <InputGroupContainer>
               <FormInput
                 type="text"
-                name={`boardOfDirectorsDetails.${index}.subjectOfTraining`}
+                name={`accountOperatorsDetails.${index}.subjectOfTraining`}
                 label="Subject of Training"
                 placeholder="Enter Subject of Training"
               />
               <FormInput
                 type="date"
-                name={`boardOfDirectorsDetails.${index}.dateOfTraining`}
+                name={`accountOperatorsDetails.${index}.dateOfTraining`}
                 label="Date of training"
                 placeholder="Enter date of Training"
               />
               <FormInput
                 type="number"
-                name={`boardOfDirectorsDetails.${index}.trainingOrganization`}
+                name={`accountOperatorsDetails.${index}.trainingOrganization`}
                 label="Training Organization"
                 placeholder="Enter Training Organization"
               />
@@ -330,15 +335,23 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                 size="lg"
                 label="Photograph"
                 // control={control}
-                name={`boardOfDirectorsDetails.${index}.photograph`}
+                name={`accountOperatorsDetails.${index}.photograph`}
               />
               <FormFileInput
                 size="lg"
                 label="Photograph of identity proof document"
                 // control={control}
-                name={`boardOfDirectorsDetails.${index}.identityDocumentPhoto`}
+                name={`accountOperatorsDetails.${index}.identityDocumentPhoto`}
               />
             </Grid>
+            <InputGroupContainer>
+              <Box w="124px">
+                <FormFileInput
+                  name={`accountOperatorsDetails.${index}.signature`}
+                  label="Specimen Signature"
+                />
+              </Box>
+            </InputGroupContainer>
           </SectionContainer>
         </DynamicBoxGroupContainer>
       </Collapse>
@@ -347,25 +360,25 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
   );
 };
 
-export const BoardDirectorInfo = ({ watch, control }) => {
+export const AccountOperatorInfo = ({ watch, control }) => {
   const {
-    fields: directorFields,
-    append: directorAppend,
-    remove: directorRemove,
-  } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
+    fields: accountFields,
+    append: accountAppend,
+    remove: accountRemove,
+  } = useFieldArray({ control, name: 'accountOperatorsDetails' });
   return (
     <GroupContainer id="Family Details" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         Board of director details
       </Text>
-      {directorFields.map((item, index) => {
+      {accountFields.map((item, index) => {
         return (
           <Box key={item.id} display="flex" flexDirection={'column'} gap="s16">
             <AddDirector
               watch={watch}
               index={index}
               control={control}
-              removeDirector={() => directorRemove(index)}
+              removeAccount={() => accountRemove(index)}
             />
           </Box>
         );
@@ -375,10 +388,10 @@ export const BoardDirectorInfo = ({ watch, control }) => {
         leftIcon={<Icon size="md" as={AiOutlinePlus} />}
         variant="outline"
         onClick={() => {
-          directorAppend({});
+          accountAppend({});
         }}
       >
-        Add Director
+        Add Operator
       </Button>
     </GroupContainer>
   );
