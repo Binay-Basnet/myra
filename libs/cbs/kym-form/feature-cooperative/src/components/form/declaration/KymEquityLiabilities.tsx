@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Text, Box, Divider, GridItem, Grid } from '@chakra-ui/react';
+import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 import { FormInput } from '@coop/myra/components';
 
 export const KymEquityLiabilities = ({ watch }: any) => {
@@ -85,11 +85,10 @@ export const KymEquityLiabilities = ({ watch }: any) => {
 
         <GridItem>
           <FormInput
-            isNumeric={true}
             textAlign="right"
             type="text"
             name="shareCapital"
-            placeholder={0.0}
+            placeholder="0.00"
           />
         </GridItem>
       </Grid>
@@ -112,11 +111,10 @@ export const KymEquityLiabilities = ({ watch }: any) => {
 
         <GridItem>
           <FormInput
-            isNumeric={true}
             textAlign="right"
             type="text"
             name="reserveAndSurplus"
-            placeholder={0.0}
+            placeholder="0.00"
           />
         </GridItem>
       </Grid>
@@ -139,11 +137,10 @@ export const KymEquityLiabilities = ({ watch }: any) => {
 
         <GridItem>
           <FormInput
-            isNumeric={true}
             textAlign="right"
             type="text"
             name="savingDeposit"
-            placeholder={0.0}
+            placeholder="0.00"
           />
         </GridItem>
       </Grid>
@@ -166,11 +163,10 @@ export const KymEquityLiabilities = ({ watch }: any) => {
 
         <GridItem>
           <FormInput
-            isNumeric={true}
             textAlign="right"
             type="text"
             name="loanAccount"
-            placeholder={0.0}
+            placeholder="0.00"
           />
         </GridItem>
       </Grid>
@@ -193,11 +189,10 @@ export const KymEquityLiabilities = ({ watch }: any) => {
 
         <GridItem>
           <FormInput
-            isNumeric={true}
             textAlign="right"
             type="text"
             name="capitalGrant"
-            placeholder={0.0}
+            placeholder="0.00"
           />
         </GridItem>
       </Grid>
@@ -220,11 +215,10 @@ export const KymEquityLiabilities = ({ watch }: any) => {
 
         <GridItem>
           <FormInput
-            isNumeric={true}
             textAlign="right"
             type="text"
             name="currentLiabilities"
-            placeholder={0.0}
+            placeholder="0.00"
           />
         </GridItem>
       </Grid>
@@ -247,11 +241,10 @@ export const KymEquityLiabilities = ({ watch }: any) => {
 
         <GridItem>
           <FormInput
-            isNumeric={true}
             textAlign="right"
             type="text"
             name="nonCurrentLiabilities"
-            placeholder={0.0}
+            placeholder="0.00"
           />
         </GridItem>
       </Grid>
@@ -290,11 +283,7 @@ export const KymEquityLiabilities = ({ watch }: any) => {
                 ? 0.0
                 : totalEquityAndLiabilities
             }
-            placeholder={
-              totalEquityAndLiabilities === NaN
-                ? 0.0
-                : totalEquityAndLiabilities
-            }
+            placeholder="Enter Total Equity and liabilities"
           />
         </GridItem>
       </Grid>

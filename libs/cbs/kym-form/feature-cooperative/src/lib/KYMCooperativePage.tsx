@@ -51,57 +51,13 @@ export function KYMCooperativePage() {
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { mutate } = useSetKymCooperativeDataMutation({
-    onSuccess: (res) => {
-      setError('firstName', {
-        type: 'custom',
-        message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      });
-    },
-    onError: () => {
-      setError('firstName', { type: 'custom', message: 'gg' });
-    },
-  });
+  const { mutate } = useSetKymCooperativeDataMutation({});
   const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
   const kymFormStatus =
     kymFormStatusQuery?.data?.members?.individual?.formState?.data
       ?.sectionStatus;
 
-  const methods = useForm<KymCooperativeFormInput>({
-    defaultValues: {
-      familyDetails: [{ relationshipId: '', fullName: '' }],
-      mainOccupation: [
-        {
-          occupation: '',
-          orgName: '',
-          idNumber: '',
-          address: '',
-          estimatedAnnualIncome: 0,
-        },
-      ],
-      spouseOccupation: [
-        {
-          occupation: '',
-          orgName: '',
-          idNumber: '',
-          address: '',
-          estimatedAnnualIncome: 0,
-        },
-      ],
-      incomeSourceDetails: [
-        {
-          source: '',
-          amount: 0,
-        },
-      ],
-      familyMemberInThisCooperative: [
-        {
-          relationshipId: '',
-          memberId: '',
-        },
-      ],
-    },
-  });
+  const methods = useForm<KymCooperativeFormInput>({});
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
   return (
