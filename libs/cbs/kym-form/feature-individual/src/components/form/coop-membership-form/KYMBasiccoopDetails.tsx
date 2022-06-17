@@ -6,11 +6,12 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
+import { Radio } from '@chakra-ui/react';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormSelect } from '@coop/myra/components';
+import { FormRadioGroup, FormSelect } from '@coop/myra/components';
 import {
   Avatar,
   Box,
@@ -19,6 +20,7 @@ import {
   GridItem,
   Icon,
   Input,
+  RadioGroup,
   Select,
   SwitchTabs,
   Text,
@@ -49,6 +51,14 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
 
   return (
     <GroupContainer>
+      <Text
+        fontWeight="Regular"
+        fontSize="s3"
+        color="neutralColorLight.gray-80"
+      >
+        Member Identity Level
+      </Text>
+      <RadioGroup radioList={['General', 'Mid', 'Vip']} labelFontSize="s3" />
       <InputGroupContainer
         id="Main Purpose of Becoming a Member"
         scrollMarginTop={'200px'}

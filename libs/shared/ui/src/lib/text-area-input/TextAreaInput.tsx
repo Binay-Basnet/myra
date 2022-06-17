@@ -26,9 +26,10 @@ export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>(
           mt="s4"
           h={'auto'}
           p="s12"
-          fontSize={'s2'}
+          fontSize={'r1'}
           focusBorderColor="primary.500"
           id={id}
+          {...rest}
         ></Textarea>
       </>
     );

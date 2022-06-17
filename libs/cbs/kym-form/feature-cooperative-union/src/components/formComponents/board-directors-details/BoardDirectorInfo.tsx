@@ -4,6 +4,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   AccordianContainer,
   DynamicBoxContainer,

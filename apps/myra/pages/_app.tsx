@@ -1,13 +1,15 @@
 import type { ReactElement, ReactNode } from 'react';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
-import { ChakraProvider } from '@chakra-ui/react';
-import { Login } from '@coop/myra/components';
-import { store, theme } from '@coop/shared/utils';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { ChakraProvider } from '@chakra-ui/react';
+
+import { Login } from '@coop/myra/components';
+import { store, theme } from '@coop/shared/utils';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -43,7 +45,6 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   //   );
   // }, [isLoggedIn]);
   const getLayout = Component.getLayout || ((page) => page);
-  console.log('hello', isLoggedIn);
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
@@ -59,6 +60,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
             <Login />
           )}
         </ChakraProvider>
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </Provider>
   );

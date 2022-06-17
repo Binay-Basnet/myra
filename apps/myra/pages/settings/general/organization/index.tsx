@@ -1,6 +1,11 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
+
+import {
+  SettingsGeneralLayout,
+  SettingsLayout,
+} from '@coop/cbs/settings/ui-layout';
 import {
   AddressOrganization,
   ContactDetailsOrganization,
@@ -11,8 +16,6 @@ import {
   RegistrationDetailsOrganization,
 } from '@coop/myra/components';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
-
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const Organization = () => {
   const { control, handleSubmit, getValues } = useForm();
@@ -165,5 +168,9 @@ const Organization = () => {
 export default Organization;
 
 Organization.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
+  );
 };

@@ -1,6 +1,7 @@
 export * from './accordion/AccordianCoopUnionKym';
 export * from './accordion/AccordianInstitutionKym';
 export * from './accordion/AccordianMemberPage';
+export * from './accordion/AccordionKymCoopForm';
 export * from './accordion/AccordionComponent';
 export * from './addMemberForms';
 export * from './chartOfAccounts';
@@ -15,7 +16,6 @@ export * from './newFormComponents';
 export * from './newFormComponents/FormFileInput';
 export * from './newFormComponents/FormPhoneNumber';
 export * from './popover/Popover';
-export * from './setings/general/members/KYCIndividual';
 export * from './setings/general/organizations/AddressOrganization';
 export * from './setings/general/organizations/Contact Details';
 export * from './setings/general/organizations/MainContactPerson';

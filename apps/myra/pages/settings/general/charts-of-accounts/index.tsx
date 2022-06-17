@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
+
+import {
+  SettingsGeneralLayout,
+  SettingsLayout,
+} from '@coop/cbs/settings/ui-layout';
 import { AccountList, FullView } from '@coop/myra/components';
 import { Box, Button, ChakraTab, Text } from '@coop/shared/ui';
-import { useRouter } from 'next/router';
-
-import GeneralLayout from '../../../../components/SettingsLayout/GeneralLayout';
 
 const ChartsOfAccounts = () => {
   const router = useRouter();
@@ -61,5 +64,9 @@ const ChartsOfAccounts = () => {
 
 export default ChartsOfAccounts;
 ChartsOfAccounts.getLayout = function getLayout(page) {
-  return <GeneralLayout>{page}</GeneralLayout>;
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
+  );
 };

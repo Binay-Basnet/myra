@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
+
 import {
   GroupContainer,
   InputGroupContainer,
@@ -99,6 +100,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             type="number"
             name="detailsOfMember.noOfMaleMemberCurrent"
             placeholder="Enter No. of Male Members"
+            defaultValue={0}
           />
         </GridItem>
         <GridItem>
@@ -107,6 +109,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             type="number"
             name="detailsOfMember.noOfMaleMemberTarget"
             placeholder="Enter No. of Male Members"
+            defaultValue={0}
           />
         </GridItem>
       </Grid>
@@ -133,6 +136,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             type="number"
             name="detailsOfMember.noOfFemaleMemberCurrent"
             placeholder="Enter No. of Female Members"
+            defaultValue={0}
           />
         </GridItem>
         <GridItem>
@@ -141,6 +145,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             type="number"
             name="detailsOfMember.noOfFemaleMemberTarget"
             placeholder="Enter No. of Female Members"
+            defaultValue={0}
           />
         </GridItem>
       </Grid>
@@ -167,6 +172,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             type="number"
             name="detailsOfMember.noOfInstituionalMemberCurrent"
             placeholder="Enter No. of institutional members"
+            defaultValue={0}
           />
         </GridItem>
         <GridItem>
@@ -175,6 +181,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             type="number"
             name="detailsOfMember.noOfInstituionalMemberTarget"
             placeholder="Enter No. of institutional members"
+            defaultValue={0}
           />
         </GridItem>
       </Grid>
