@@ -30,8 +30,8 @@ export const BasicDetailsInstitution = () => {
           label="Organization Type"
           placeholder="Select Organization Type"
           options={[
-            { label: 'Male', value: 'Male' },
-            { label: 'Female', value: 'Female' },
+            { label: 'Banking', value: 'Male' },
+            { label: 'Ngo', value: 'Female' },
             { label: 'Other', value: 'Other' },
           ]}
         />
