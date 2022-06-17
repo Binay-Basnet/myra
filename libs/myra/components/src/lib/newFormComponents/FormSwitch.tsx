@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import { Control, Controller, Path, useFormContext } from 'react-hook-form';
-=======
 import { Control, Controller, useFormContext } from 'react-hook-form';
 
->>>>>>> 6f918eb096f36e6d7c12333c3b76667b95ad8568
 import { Box, Switch, SwitchProps, Text } from '@coop/shared/ui';
 
 interface IFormSelectProps extends SwitchProps {
@@ -38,19 +34,10 @@ export const FormSwitch = ({
             isChecked={value}
             {...rest}
             onChange={(e) => {
-<<<<<<< HEAD
-              // console.log('SwitchTab', e.target.checked);
-              onChange(e.target.checked);
-            }}
-          />
-          <Text fontSize="r1">{label}</Text>
-          {error ? error?.message : null}
-=======
               onChange(e.target.checked);
             }}
           />
           {label && <Text fontSize="r1">{label}</Text>}
->>>>>>> 6f918eb096f36e6d7c12333c3b76667b95ad8568
         </Box>
       )}
     />
