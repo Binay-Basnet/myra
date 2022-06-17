@@ -1,0 +1,43 @@
+import React from 'react';
+import { useFieldArray } from 'react-hook-form';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { AddDirector } from '../../accordion-component/KymCoopDirectorAccordion';
+
+export const KymCoopBoardDirectorDetail = ({ watch, control }) => {
+  const {
+    fields: directorFields,
+    append: directorAppend,
+    remove: directorRemove,
+  } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
+  return (
+    <GroupContainer id="Board Of Director Details" scrollMarginTop={'200px'}>
+      <Text fontSize="r1" fontWeight="SemiBold">
+        Board of director details
+      </Text>
+      {directorFields.map((item, index) => {
+        return (
+          <Box key={item.id} display="flex" flexDirection={'column'} gap="s16">
+            <AddDirector
+              watch={watch}
+              index={index}
+              control={control}
+              removeDirector={() => directorRemove(index)}
+            />
+          </Box>
+        );
+      })}
+      <Button
+        alignSelf="start"
+        leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+        variant="outline"
+        onClick={() => {
+          directorAppend({});
+        }}
+      >
+        Add Director
+      </Button>
+    </GroupContainer>
+  );
+};

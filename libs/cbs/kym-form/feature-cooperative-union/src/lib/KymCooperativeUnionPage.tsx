@@ -15,8 +15,6 @@ import {
   Container,
   Text,
   IconButton,
-  Checkbox,
-  TextFields,
   Button,
   Icon,
 } from '@coop/shared/ui';
@@ -220,7 +218,7 @@ export function KYMCooperativeUnionPage() {
           <form
             onChange={debounce(() => {
               mutate({ id, data: getValues() });
-            }, 3000)}
+            }, 800)}
             onSubmit={handleSubmit((data) => {
               console.log('data', data);
             })}
@@ -319,21 +317,21 @@ export function KYMCooperativeUnionPage() {
                 </Box>
               </Box>
             </Box>
-            {/* </Box> */}
-
-            {/* footer */}
+          </form>
+        </FormProvider>
+      </Container>
+      <Box position="relative" h="80px" margin="0px auto">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100">
+          <Container minW="container.xl" height="fit-content">
             <Box
-              minWidth="container.xl"
-              height="60px"
               display="flex"
+              height="60px"
               justifyContent="space-between"
               alignItems="center"
-              px="5"
               background="white"
               borderTopLeftRadius="br3"
               borderTopRightRadius="br3"
-              bottom="0"
-              position="fixed"
+              px="5"
               boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
             >
               <Text>Form Details saved to draft</Text>
@@ -365,9 +363,9 @@ export function KYMCooperativeUnionPage() {
                 <Button>Next</Button>
               </Box>
             </Box>
-          </form>
-        </FormProvider>
-      </Container>
+          </Container>
+        </Box>
+      </Box>
     </>
   );
 }

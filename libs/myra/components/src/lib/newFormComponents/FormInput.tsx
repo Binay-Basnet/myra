@@ -1,7 +1,12 @@
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
-import { Box, TextInput, TextInputProps } from '@coop/shared/ui';
 
-interface IFormInputProps<T> extends TextInputProps {
+import {
+  Box,
+  FormInput as BaseFormInput,
+  FormInputProps,
+} from '@coop/shared/ui';
+
+interface IFormInputProps<T> extends FormInputProps {
   control?: Control<T>;
   name: Path<T>;
 }
@@ -26,12 +31,13 @@ export function FormInput<T>({
       <Controller
         control={formControl}
         name={name}
-        render={({ field: { onChange } }) => (
-          <TextInput
+        render={({ field: { onChange, value } }) => (
+          <BaseFormInput
             id={name}
-            placeholder={placeholder}
+            placeholder={placeholder ?? 'Enter'}
             name={name}
             type={type}
+            value={value}
             onChange={onChange}
             {...rest}
           />

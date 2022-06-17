@@ -1,9 +1,17 @@
-import UsersLayout from '../../../components/SettingsLayout/UsersLayout';
+import {
+  SettingsGeneralLayout,
+  SettingsLayout,
+} from '@coop/cbs/settings/ui-layout';
+
 const Users = () => {
   return <> Users</>;
 };
 
 export default Users;
 Users.getLayout = function getLayout(page) {
-  return <UsersLayout>{page}</UsersLayout>;
+  return (
+    <SettingsLayout>
+      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+    </SettingsLayout>
+  );
 };

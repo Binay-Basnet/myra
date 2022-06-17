@@ -6,12 +6,18 @@ query getBranchesList {
           edges {
             node {
               branchCode
-              address
+              address {
+                provinceId
+                districtId
+                vdcId
+                wardNo
+                locality
+                latitude
+                longitude
+              }
               manager {
                 id
-                name
               }
-              district
               contactNumber
             }
           }

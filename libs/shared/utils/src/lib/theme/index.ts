@@ -23,6 +23,9 @@ export const theme = extendTheme({
         lineHeight: 'tall',
         scrollBehavior: 'smooth',
       },
+      ':not(.chakra-dont-set-collapse) > .chakra-collapse': {
+        overflow: 'initial !important',
+      },
     }),
   },
   ...foundations,

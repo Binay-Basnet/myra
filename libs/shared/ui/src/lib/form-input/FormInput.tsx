@@ -7,7 +7,9 @@ import {
   InputProps,
   InputRightElement,
 } from '@chakra-ui/react';
+
 import { TextFields } from '@coop/shared/ui';
+
 /* eslint-disable-next-line */
 export interface FormInputProps extends InputProps {
   rightElement?: React.ReactNode;
@@ -32,16 +34,17 @@ export function FormInput(props: FormInputProps) {
     ...rest
   } = props;
   return (
-    <Box w="auto">
-      <TextFields variant="formLabel" color="gray.700">
-        {label}
-      </TextFields>
+    <Box w="auto" display="flex" flexDirection="column" gap="4px">
+      {label && (
+        <TextFields variant="formLabel" color="gray.700">
+          {label}
+        </TextFields>
+      )}
 
       <InputGroup
-        mt="8px"
         h="44px"
         boxShadow={isOn ? 'E1' : ''}
-        borderColor={isError ? 'danger.500' : 'gray.50'}
+        borderColor={isError ? 'danger.500' : 'gray.300'}
         borderRadius="br2"
       >
         {leftElement && (
@@ -49,15 +52,15 @@ export function FormInput(props: FormInputProps) {
         )}
 
         <Input
+          variant={'outline'}
+          h="100%"
+          borderRadius="br2"
+          color={'gray.700'}
           onFocus={() => setIsOn(true)}
           onBlur={() => setIsOn(false)}
+          _focus={{ borderColor: 'primary.500' }}
+          _hover={{ borderColor: 'primary.500' }}
           {...rest}
-          h="100%"
-          fontSize="r2"
-          fontWeight="400"
-          color={'gray.700'}
-          // _focus={{ borderColor: 'primary.500' }}
-          // _hover={{ borderColor: 'primary.500' }}
         />
         {rightElement && (
           <InputRightElement pointerEvents="none" children={rightElement} />
@@ -65,11 +68,13 @@ export function FormInput(props: FormInputProps) {
       </InputGroup>
 
       {!isError ? (
-        <TextFields mt="4px" variant="formHelper" color="gray.70">
-          {textHelper}
-        </TextFields>
+        textHelper ? (
+          <TextFields variant="formHelper" color="gray.800">
+            {textHelper}
+          </TextFields>
+        ) : null
       ) : (
-        <TextFields mt="4px" variant="formHelper" color="danger.500">
+        <TextFields variant="formHelper" color="danger.500">
           {textError}
         </TextFields>
       )}

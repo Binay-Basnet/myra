@@ -172,7 +172,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
         <TabColumn list={shareColumns} />
         <Divider my="s16" />
         <Button
-          onClick={() => router.push('/members/settings')}
+          onClick={() => router.push('/settings/general/share')}
           variant="ghost"
           color="#37474F"
           height="s48"
