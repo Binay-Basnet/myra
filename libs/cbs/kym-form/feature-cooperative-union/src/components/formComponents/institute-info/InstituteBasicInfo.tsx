@@ -7,7 +7,7 @@ import { GridItem, Text } from '@coop/shared/ui';
 
 export const InstituteBasicInfo = () => {
   return (
-    <GroupContainer id="Basic Institutute Info" scrollMarginTop={'200px'}>
+    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"
@@ -30,8 +30,8 @@ export const InstituteBasicInfo = () => {
           label="Institution Type"
           placeholder="Select Organization Type"
           options={[
-            { label: 'Male', value: 'Male' },
-            { label: 'Female', value: 'Female' },
+            { label: 'Banking', value: 'Male' },
+            { label: 'NGO', value: 'Female' },
             { label: 'Other', value: 'Other' },
           ]}
         />

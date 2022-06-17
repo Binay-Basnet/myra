@@ -19,21 +19,15 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
     'detailsOfMember.noOfInstituionalMemberTarget'
   );
 
-  const totalmembersCurrent = useMemo(() => {
-    return (
-      Number(malememberCurrent) +
-      Number(femalememberCurrent) +
-      Number(institutionalmemberCurrent)
-    );
-  }, [malememberCurrent, femalememberCurrent, institutionalmemberCurrent]);
+  const totalmembersCurrent =
+    Number(malememberCurrent) +
+    Number(femalememberCurrent) +
+    Number(institutionalmemberCurrent);
 
-  const totalmembersTarget = useMemo(() => {
-    return (
-      Number(maleMemberTarget) +
-      Number(femaleTarget) +
-      Number(institutionalMemberTarget)
-    );
-  }, [maleMemberTarget, femaleTarget, institutionalMemberTarget]);
+  const totalmembersTarget =
+    Number(maleMemberTarget) +
+    Number(femaleTarget) +
+    Number(institutionalMemberTarget);
 
   return (
     <Box
