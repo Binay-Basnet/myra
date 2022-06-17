@@ -50,8 +50,12 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentStateId');
-  const currentDistrictId = watch('permanentDistrictId');
+  const currentProvinceId = watch(
+    `boardOfDirectorsDetails.${index}.permanentStateId`
+  );
+  const currentDistrictId = watch(
+    `boardOfDirectorsDetails.${index}.permanentDistrictId`
+  );
 
   const districtList = useMemo(
     () =>
@@ -68,8 +72,12 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
   );
 
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryStateId');
-  const currentTemptDistrictId = watch('temporaryDistrictId');
+  const currentTempProvinceId = watch(
+    `boardOfDirectorsDetails.${index}.temporaryStateId`
+  );
+  const currentTemptDistrictId = watch(
+    `boardOfDirectorsDetails.${index}.temporaryDistrictId`
+  );
 
   const districtTempList = useMemo(
     () =>
