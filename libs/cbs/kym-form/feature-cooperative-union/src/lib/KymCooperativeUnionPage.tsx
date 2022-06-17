@@ -89,16 +89,6 @@ export function KYMCooperativeUnionPage() {
           identityDocumentPhoto: '',
         },
       ],
-      detailsOfMember: [
-        {
-          noOfMaleMemberCurrent: 0,
-          noOfMaleMemberTarget: 0,
-          noOfFemaleMemberCurrent: 0,
-          noOfFemaleMemberTarget: 0,
-          noOfInstituionalMemberCurrent: 0,
-          noOfInstituionalMemberTarget: 0,
-        },
-      ],
       accountOperatorsDetails: [
         {
           fullName: '',
@@ -217,6 +207,7 @@ export function KYMCooperativeUnionPage() {
         <FormProvider {...methods}>
           <form
             onChange={debounce(() => {
+              console.log('hello', getValues());
               mutate({ id, data: getValues() });
             }, 800)}
             onSubmit={handleSubmit((data) => {
