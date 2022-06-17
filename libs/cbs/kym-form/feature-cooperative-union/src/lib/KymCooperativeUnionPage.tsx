@@ -1,5 +1,8 @@
 /* eslint-disable-next-line */
-import { useTranslation, getKymSection } from '@coop/shared/utils';
+import {
+  useTranslation,
+  getKymSectionCoOperativeUnion,
+} from '@coop/shared/utils';
 import React from 'react';
 import { useRouter } from 'next/router';
 import {
@@ -28,13 +31,19 @@ import {
   AccountOperatorInfo,
   AddRepresentative,
   CurrentMembers,
+  KymAssestsAndtarget,
+  KymEquilities,
+  IncomeDetails,
+  ExpenseDetails,
+  KymMemberdetailsCOOP,
+  DocumentDeclarationInstitutionCOOPUnion,
 } from '../components';
 import {
   SectionContainer,
   ContainerWithDivider,
 } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
-import { AccorrdianAddMember } from '@coop/myra/components';
+import { AccorrdianAddCOOPUnion } from '@coop/myra/components';
 
 export function KYMCooperativeUnionPage() {
   const { t } = useTranslation();
@@ -46,10 +55,10 @@ export function KYMCooperativeUnionPage() {
   const router = useRouter();
   const id = String(router?.query?.['id']);
   const { mutate } = useSetCooperativeUnionDataMutation({});
-  const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
-  const kymFormStatus =
-    kymFormStatusQuery?.data?.members?.individual?.formState?.data
-      ?.sectionStatus;
+  // const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
+  // const kymFormStatus =
+  //   kymFormStatusQuery?.data?.members?.individual?.formState?.data
+  //     ?.sectionStatus;
 
   const methods = useForm({
     defaultValues: {
@@ -80,6 +89,16 @@ export function KYMCooperativeUnionPage() {
           identityDocumentPhoto: '',
         },
       ],
+      detailsOfMember: [
+        {
+          noOfMaleMemberCurrent: 0,
+          noOfMaleMemberTarget: 0,
+          noOfFemaleMemberCurrent: 0,
+          noOfFemaleMemberTarget: 0,
+          noOfInstituionalMemberCurrent: 0,
+          noOfInstituionalMemberTarget: 0,
+        },
+      ],
       accountOperatorsDetails: [
         {
           fullName: '',
@@ -108,6 +127,51 @@ export function KYMCooperativeUnionPage() {
           signature: '',
         },
       ],
+      cashAndCashEquivalentCurrent: 0,
+      cashAndCashEquivalentTarget: 0,
+      bankCurrent: 0,
+      bankTarget: 0,
+      investmentsCurrent: 0,
+      investmentsTarget: 0,
+      loanCurrent: 0,
+      loanTarget: 0,
+      nonCurrentAssetsCurrent: 0,
+      nonCurrentAssetsTarget: 0,
+      otherNonCurrentAssetsCurrent: 0,
+      otherNonCurrentAssetsTarget: 0,
+      totalAssetsCurrent: 0,
+      totalAssetsTarget: 0,
+      shareCapitalCurrent: 0,
+      shareCapitalTarget: 0,
+      reserveAndSurplusCurrent: 0,
+      reserveAndSurplusTarget: 0,
+      savingDepositCurrent: 0,
+      savingDepositTarget: 0,
+      loanAccountCurrent: 0,
+      loanAccountTarget: 0,
+      capitalGrantCurrent: 0,
+      capitalGrantTarget: 0,
+      currentLiabilitiesCurrent: 0,
+      currentLiabilitiesTarget: 0,
+      nonCurrentLiabilitiesCurrent: 0,
+      nonCurrentLiabilitiesTarget: 0,
+      totalEquityAndLiabilitiesCurrent: 0,
+      totalEquityAndLiabilitiesTarget: 0,
+      incomeFromFinancialInvestment: 0,
+      incomeFromNonFinancialInvestment: 0,
+      incomeFromInvestment: 0,
+      incomeFromServiceOperation: 0,
+      incomeFromSales: 0,
+      otherIncome: 0,
+      miscellnousIncome: 0,
+      totalIncome: 0,
+      purchase: 0,
+      directExpense: 0,
+      administrativeExpense: 0,
+      financialCost: 0,
+      riskManangementCost: 0,
+      deferredTaxExpense: 0,
+      totalExpense: 0,
     },
   });
 
@@ -153,14 +217,14 @@ export function KYMCooperativeUnionPage() {
         <FormProvider {...methods}>
           <form
             onChange={debounce(() => {
-              console.log('hello', getValues());
               mutate({ id, data: getValues() });
             }, 800)}
             onSubmit={handleSubmit((data) => {
               console.log('data', data);
             })}
             onFocus={(e) => {
-              const kymSection = getKymSection(e.target.id);
+              const kymSection = getKymSectionCoOperativeUnion(e.target.id);
+
               setKymCurrentSection(kymSection);
             }}
           >
@@ -175,8 +239,8 @@ export function KYMCooperativeUnionPage() {
                   minHeight="100%"
                   bg="white"
                 >
-                  <AccorrdianAddMember
-                    formStatus={kymFormStatus}
+                  <AccorrdianAddCOOPUnion
+                    // formStatus={kymFormStatus}
                     kymCurrentSection={kymCurrentSection}
                   />
                 </Box>
@@ -191,7 +255,7 @@ export function KYMCooperativeUnionPage() {
                         <InstituteBasicInfo />
                         <RegisteredDetails />
                         <ContactDetails />
-                        <CurrentMemberDetails />
+                        {/* <CurrentMemberDetails /> */}
                         <BankAccountDetails />
                         <ApplicantDetails />
                       </ContainerWithDivider>
@@ -226,7 +290,27 @@ export function KYMCooperativeUnionPage() {
                         5. Details of member
                       </Text>
                       <ContainerWithDivider>
-                        <CurrentMembers />
+                        {/* <CurrentMembers /> */}
+                        <KymMemberdetailsCOOP watch={watch} />
+                      </ContainerWithDivider>
+                    </SectionContainer>
+                    <SectionContainer>
+                      <Text fontSize="r3" fontWeight="600">
+                        6. Economic Details
+                      </Text>
+                      <ContainerWithDivider>
+                        <KymAssestsAndtarget watch={watch} />
+                        <KymEquilities watch={watch} />
+                        <IncomeDetails watch={watch} />
+                        <ExpenseDetails watch={watch} />
+                      </ContainerWithDivider>
+                    </SectionContainer>
+                    <SectionContainer>
+                      <Text fontSize="r3" fontWeight="600">
+                        7. Declaration
+                      </Text>
+                      <ContainerWithDivider>
+                        <DocumentDeclarationInstitutionCOOPUnion />
                       </ContainerWithDivider>
                     </SectionContainer>
                   </SectionContainer>
@@ -276,11 +360,7 @@ export function KYMCooperativeUnionPage() {
                   </Button>
                 </Box>
                 &nbsp;
-                <Button
-                  onClick={() => router.push(`/members/translation/${id}`)}
-                >
-                  Next
-                </Button>
+                <Button>Next</Button>
               </Box>
             </Box>
           </Container>

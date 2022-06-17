@@ -7,7 +7,7 @@ import { Text } from '@coop/shared/ui';
 
 export const BankAccountDetails = () => {
   return (
-    <GroupContainer id="Bank account Details" scrollMarginTop={'200px'}>
+    <GroupContainer id="Bank Account Details" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"
