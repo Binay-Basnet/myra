@@ -48,7 +48,6 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
       })) ?? []
     );
   }, [data?.administration?.all]);
-  console.log('province', province);
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch(
@@ -64,7 +63,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
         ?.districts ?? [],
     [currentProvinceId]
   );
-  console.log('district', districtList);
+
   const localityList = useMemo(
     () =>
       districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
@@ -73,8 +72,12 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
   );
 
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryStateId');
-  const currentTemptDistrictId = watch('temporaryDistrictId');
+  const currentTempProvinceId = watch(
+    `boardOfDirectorsDetails.${index}.temporaryStateId`
+  );
+  const currentTemptDistrictId = watch(
+    `boardOfDirectorsDetails.${index}.temporaryDistrictId`
+  );
 
   const districtTempList = useMemo(
     () =>
