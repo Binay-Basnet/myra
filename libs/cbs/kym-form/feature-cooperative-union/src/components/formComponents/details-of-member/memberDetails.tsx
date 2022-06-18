@@ -96,7 +96,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
         </GridItem>
         <GridItem>
           <FormInput
-            textAlign="right"
+            textAlign="left"
             type="number"
             name="detailsOfMember.noOfMaleMemberCurrent"
             placeholder="Enter No. of Male Members"
@@ -105,7 +105,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
         </GridItem>
         <GridItem>
           <FormInput
-            textAlign="right"
+            textAlign="left"
             type="number"
             name="detailsOfMember.noOfMaleMemberTarget"
             placeholder="Enter No. of Male Members"
@@ -132,7 +132,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
         </GridItem>
         <GridItem>
           <FormInput
-            textAlign="right"
+            textAlign="left"
             type="number"
             name="detailsOfMember.noOfFemaleMemberCurrent"
             placeholder="Enter No. of Female Members"
@@ -141,7 +141,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
         </GridItem>
         <GridItem>
           <FormInput
-            textAlign="right"
+            textAlign="left"
             type="number"
             name="detailsOfMember.noOfFemaleMemberTarget"
             placeholder="Enter No. of Female Members"
@@ -168,7 +168,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
         </GridItem>
         <GridItem>
           <FormInput
-            textAlign="right"
+            textAlign="left"
             type="number"
             name="detailsOfMember.noOfInstituionalMemberCurrent"
             placeholder="Enter No. of institutional members"
@@ -177,7 +177,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
         </GridItem>
         <GridItem>
           <FormInput
-            textAlign="right"
+            textAlign="left"
             type="number"
             name="detailsOfMember.noOfInstituionalMemberTarget"
             placeholder="Enter No. of institutional members"
@@ -211,7 +211,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             bg="neutralColorLight.Gray-20"
             border="1px solid"
             borderColor="disabled.disabled"
-            textAlign="right"
+            textAlign="left"
             type="text"
             name="totalAssetsCurrent"
             value={isNaN(totalmembersCurrent) ? '-' : totalmembersCurrent}
@@ -224,7 +224,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             bg="neutralColorLight.Gray-20"
             border="1px solid"
             borderColor="disabled.disabled"
-            textAlign="right"
+            textAlign="left"
             type="text"
             name="totalAssetsTarget"
             value={isNaN(totalmembersTarget) ? '-' : totalmembersTarget}

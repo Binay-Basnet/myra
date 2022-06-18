@@ -9,6 +9,7 @@ import {
 import { FaMap } from 'react-icons/fa';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   AccordianContainer,
   DynamicBoxContainer,
@@ -54,8 +55,20 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentStateId');
-  const currentDistrictId = watch('permanentDistrictId');
+  const currentProvinceId = watch(
+    `accountOperatorsDetails.${index}.temporaryStateId`
+  );
+  const currentDistrictId = watch(
+    `accountOperatorsDetails.${index}.permanentLocality`
+  );
+
+  // FOR TEMPORARY ADDRESS
+  const currentTempProvinceId = watch(
+    `accountOperatorsDetails.${index}.temporaryStateId`
+  );
+  const currentTemptDistrictId = watch(
+    `accountOperatorsDetails.${index}.temporaryDistrictId`
+  );
 
   const districtList = useMemo(
     () =>
@@ -70,10 +83,6 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
       [],
     [currentDistrictId]
   );
-
-  // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryStateId');
-  const currentTemptDistrictId = watch('temporaryDistrictId');
 
   const districtTempList = useMemo(
     () =>

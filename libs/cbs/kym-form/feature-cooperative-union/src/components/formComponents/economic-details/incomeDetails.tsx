@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
+
 import { FormInput } from '@coop/myra/components';
 
 export const IncomeDetails = ({ watch }: any) => {
@@ -27,35 +28,38 @@ export const IncomeDetails = ({ watch }: any) => {
   //     currentAssets,
   //     nonCurrentAssets,
   //   ]);
-  const incomeFromFinancialInvestments = watch('incomeFromFinancialInvestment');
-  const incomeFromNonFinancialInvestment = watch(
-    'incomeFromNonFinancialInvestment'
-  );
-  const incomeFromInvestment = watch('incomeFromInvestment');
-  const servicesIncome = watch('incomeFromServiceOperation');
-  const salesIncome = watch('incomeFromSales');
-  const otherIncome = watch('otherIncome');
-  const miscIncome = watch('miscellnousIncome');
+  const incomeFromFinancialInvestments = isNaN(
+    watch('incomeFromFinancialInvestment')
+  )
+    ? 0
+    : watch('incomeFromFinancialInvestment');
+  const incomeFromNonFinancialInvestment = isNaN(
+    watch('incomeFromNonFinancialInvestment')
+  )
+    ? 0
+    : watch('incomeFromNonFinancialInvestment');
+  const incomeFromInvestment = isNaN(watch('incomeFromInvestment'))
+    ? 0
+    : watch('incomeFromInvestment');
+  const servicesIncome = isNaN(watch('incomeFromServiceOperation'))
+    ? 0
+    : watch('incomeFromServiceOperation');
+  const salesIncome = isNaN(watch('incomeFromSales'))
+    ? 0
+    : watch('incomeFromSales');
+  const otherIncome = isNaN(watch('otherIncome')) ? 0 : watch('otherIncome');
+  const miscIncome = isNaN(watch('miscellnousIncome'))
+    ? 0
+    : watch('miscellnousIncome');
 
-  const totalIncome = useMemo(() => {
-    return (
-      Number(incomeFromFinancialInvestments) +
-      Number(incomeFromNonFinancialInvestment) +
-      Number(incomeFromInvestment) +
-      Number(servicesIncome) +
-      Number(salesIncome) +
-      Number(otherIncome) +
-      Number(miscIncome)
-    );
-  }, [
-    incomeFromFinancialInvestments,
-    incomeFromNonFinancialInvestment,
-    incomeFromInvestment,
-    servicesIncome,
-    salesIncome,
-    otherIncome,
-    miscIncome,
-  ]);
+  const totalIncome =
+    Number(incomeFromFinancialInvestments) +
+    Number(incomeFromNonFinancialInvestment) +
+    Number(incomeFromInvestment) +
+    Number(servicesIncome) +
+    Number(salesIncome) +
+    Number(otherIncome) +
+    Number(miscIncome);
 
   return (
     <Box

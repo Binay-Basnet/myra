@@ -40,6 +40,22 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
   const [temporaryAddress, setTemporaryAddress] = useState(false);
   const [isOpen, setIsOpen] = React.useState(true);
 
+  // FOR PERMANENT ADDRESS
+  const currentProvinceId = watch(
+    `boardOfDirectorsDetails.${index}.permanentStateId`
+  );
+  const currentDistrictId = watch(
+    `boardOfDirectorsDetails.${index}.permanentDistrictId`
+  );
+
+  // FOR TEMPORARY ADDRESS
+  const currentTempProvinceId = watch(
+    `boardOfDirectorsDetails.${index}.temporaryStateId`
+  );
+  const currentTemptDistrictId = watch(
+    `boardOfDirectorsDetails.${index}.temporaryDistrictId`
+  );
+
   const province = useMemo(() => {
     return (
       data?.administration?.all?.map((d) => ({
@@ -48,14 +64,6 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
       })) ?? []
     );
   }, [data?.administration?.all]);
-
-  // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch(
-    `boardOfDirectorsDetails.${index}.permanentStateId`
-  );
-  const currentDistrictId = watch(
-    `boardOfDirectorsDetails.${index}.permanentDistrictId`
-  );
 
   const districtList = useMemo(
     () =>
@@ -71,25 +79,17 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
     [currentDistrictId]
   );
 
-  // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch(
-    `boardOfDirectorsDetails.${index}.temporaryStateId`
-  );
-  const currentTemptDistrictId = watch(
-    `boardOfDirectorsDetails.${index}.temporaryDistrictId`
-  );
-
   const districtTempList = useMemo(
     () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
+      data?.administration.all.find((d) => d.id === currentTempProvinceId)
         ?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+      districtList.find((d) => d.id === currentTemptDistrictId)
+        ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
   return (

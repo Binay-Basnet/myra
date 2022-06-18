@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
+
 import {
   GroupContainer,
   InputGroupContainer,
@@ -56,58 +57,70 @@ export const KymEquilities = ({ watch }: any) => {
   //   nonCurrentAssetsTarget,
   // ]);
 
-  const ShareCurrent = watch('shareCapitalCurrent');
-  const ShareTarget = watch('shareCapitalTarget');
-  const reserveCurrent = watch('reserveAndSurplusCurrent');
-  const reserveTarget = watch('reserveAndSurplusTarget');
-  const savingDepositCurrent = watch('savingDepositCurrent');
-  const savingDepositTarget = watch('savingDepositTarget');
-  const loanAccountCurrent = watch('loanAccountCurrent');
-  const loanAccountTarget = watch('loanAccountTarget');
-  const capitalGrantCurrent = watch('capitalGrantCurrent');
-  const capitalGrantTarget = watch('capitalGrantTarget');
-  const currentLiabilitiesCurrent = watch('currentLiabilitiesCurrent');
-  const currentLiabilitiesTarget = watch('currentLiabilitiesTarget');
-  const nonCurrentLiabilitiesCurrent = watch('nonCurrentLiabilitiesCurrent');
-  const nonCurrentLiabilitiesTarget = watch('nonCurrentLiabilitiesTarget');
-  const totalequitycurrent = useMemo(() => {
-    return (
-      Number(ShareCurrent) +
-      Number(reserveCurrent) +
-      Number(savingDepositCurrent) +
-      Number(loanAccountCurrent) +
-      Number(capitalGrantCurrent) +
-      Number(currentLiabilitiesCurrent) +
-      Number(nonCurrentLiabilitiesCurrent)
-    );
-  }, [
-    ShareCurrent,
-    reserveCurrent,
-    savingDepositCurrent,
-    loanAccountCurrent,
-    capitalGrantCurrent,
-    currentLiabilitiesCurrent,
-    nonCurrentLiabilitiesCurrent,
-  ]);
-  const totalequityTarget = useMemo(() => {
-    return (
-      Number(ShareTarget) +
-      Number(reserveTarget) +
-      Number(savingDepositTarget) +
-      Number(loanAccountTarget) +
-      Number(capitalGrantTarget) +
-      Number(currentLiabilitiesTarget) +
-      Number(nonCurrentLiabilitiesTarget)
-    );
-  }, [
-    ShareTarget,
-    reserveTarget,
-    savingDepositTarget,
-    loanAccountTarget,
-    capitalGrantTarget,
-    currentLiabilitiesTarget,
-    nonCurrentLiabilitiesTarget,
-  ]);
+  const ShareCurrent = isNaN(watch('shareCapitalCurrent'))
+    ? 0
+    : watch('shareCapitalCurrent');
+  const ShareTarget = isNaN(watch('shareCapitalTarget'))
+    ? 0
+    : watch('shareCapitalTarget');
+  const reserveCurrent = isNaN(watch('reserveAndSurplusCurrent'))
+    ? 0
+    : watch('reserveAndSurplusCurrent');
+  const reserveTarget = isNaN(watch('reserveAndSurplusTarget'))
+    ? 0
+    : watch('reserveAndSurplusTarget');
+  const savingDepositCurrent = isNaN(watch('savingDepositCurrent'))
+    ? 0
+    : watch('savingDepositCurrent');
+  const savingDepositTarget = isNaN(watch('savingDepositTarget'))
+    ? 0
+    : watch('savingDepositTarget');
+  const loanAccountCurrent = isNaN(watch('loanAccountCurrent'))
+    ? 0
+    : watch('loanAccountCurrent');
+  const loanAccountTarget = isNaN(watch('loanAccountTarget'))
+    ? 0
+    : watch('loanAccountTarget');
+  const capitalGrantCurrent = isNaN(watch('capitalGrantCurrent'))
+    ? 0
+    : watch('capitalGrantCurrent');
+  const capitalGrantTarget = isNaN(watch('capitalGrantTarget'))
+    ? 0
+    : watch('capitalGrantTarget');
+  const currentLiabilitiesCurrent = isNaN(watch('currentLiabilitiesCurrent'))
+    ? 0
+    : watch('currentLiabilitiesCurrent');
+  const currentLiabilitiesTarget = isNaN(watch('currentLiabilitiesTarget'))
+    ? 0
+    : watch('currentLiabilitiesTarget');
+  const nonCurrentLiabilitiesCurrent = isNaN(
+    watch('nonCurrentLiabilitiesCurrent')
+  )
+    ? 0
+    : watch('nonCurrentLiabilitiesCurrent');
+  const nonCurrentLiabilitiesTarget = isNaN(
+    watch('nonCurrentLiabilitiesTarget')
+  )
+    ? 0
+    : watch('nonCurrentLiabilitiesTarget');
+  const totalequitycurrent =
+    Number(ShareCurrent) +
+    Number(reserveCurrent) +
+    Number(savingDepositCurrent) +
+    Number(loanAccountCurrent) +
+    Number(capitalGrantCurrent) +
+    Number(currentLiabilitiesCurrent) +
+    Number(nonCurrentLiabilitiesCurrent);
+
+  const totalequityTarget =
+    Number(ShareTarget) +
+    Number(reserveTarget) +
+    Number(savingDepositTarget) +
+    Number(loanAccountTarget) +
+    Number(capitalGrantTarget) +
+    Number(currentLiabilitiesTarget) +
+    Number(nonCurrentLiabilitiesTarget);
+
   console.log('first', totalequityTarget);
   return (
     <Box
