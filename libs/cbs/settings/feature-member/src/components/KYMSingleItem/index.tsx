@@ -3,7 +3,7 @@ import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import { FormProvider, useForm } from 'react-hook-form';
 import { debounce } from 'lodash';
 
-import { FormInput, FormSelect, FormSwitch } from '@coop/myra/components';
+import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Field_Types,
   KymField,

@@ -8,7 +8,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/myra/components';
+import { FormInput, FormSelect } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
 

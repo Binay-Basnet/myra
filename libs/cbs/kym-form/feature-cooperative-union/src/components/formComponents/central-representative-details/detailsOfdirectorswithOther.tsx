@@ -18,7 +18,7 @@ import {
   FormRadioGroup,
   FormSelect,
   FormSwitch,
-} from '@coop/myra/components';
+} from '@coop/shared/form';
 import {
   KymIndMemberInput,
   useAllAdministrationQuery,

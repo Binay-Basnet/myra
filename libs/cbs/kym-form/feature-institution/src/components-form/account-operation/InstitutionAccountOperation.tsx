@@ -9,7 +9,7 @@ import {
   FormInput,
   FormSelect,
   FormTextArea,
-} from '@coop/myra/components';
+} from '@coop/shared/form';
 import { Box, Checkbox, GridItem, SwitchTabs, Text } from '@coop/shared/ui';
 const booleanList = [
   {

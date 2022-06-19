@@ -1,8 +1,8 @@
 import { Control } from 'react-hook-form';
-import { Box, Grid, GridItem } from '@coop/shared/ui';
 
-import { FormPhoneNumber } from '../../../newFormComponents/FormPhoneNumber';
-import { FormTextInput } from '../../../newFormComponents/FormTextInput';
+import { FormPhoneNumber } from '@coop/shared/form';
+import { FormInput } from '@coop/shared/form';
+import { Box, Grid, GridItem } from '@coop/shared/ui';
 
 type Props = {
   control: Control<any>;
@@ -13,7 +13,7 @@ export const MainContactPersonOrganization = ({ control }: Props) => {
       <Grid templateColumns="repeat(3, 1fr)" gap="s16">
         <GridItem>
           {' '}
-          <FormTextInput
+          <FormInput
             label="Name"
             placeholder="Enter name"
             name={'mainContactPersonName'}
@@ -30,7 +30,7 @@ export const MainContactPersonOrganization = ({ control }: Props) => {
         </GridItem>
         <GridItem>
           {' '}
-          <FormTextInput
+          <FormInput
             label="Designation"
             placeholder="Designation"
             control={control}

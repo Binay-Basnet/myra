@@ -6,7 +6,7 @@ import {
   FormEmailInput,
   FormInput,
   FormPhoneNumber,
-} from '@coop/myra/components';
+} from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 
 export const CurrentMemberDetails = () => {

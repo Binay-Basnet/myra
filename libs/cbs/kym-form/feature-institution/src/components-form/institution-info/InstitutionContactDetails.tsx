@@ -7,7 +7,7 @@ import {
   FormInput,
   FormPhoneNumber,
   FormSelect,
-} from '@coop/myra/components';
+} from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 
 export const ContactDetailsInstitution = () => {

@@ -13,7 +13,7 @@ import {
   FormInput,
   FormSelect,
   FormSwitch,
-} from '@coop/myra/components';
+} from '@coop/shared/form';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   Box,

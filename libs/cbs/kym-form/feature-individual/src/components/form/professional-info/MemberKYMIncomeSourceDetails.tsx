@@ -2,13 +2,14 @@ import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 import { Box, Button, Checkbox, GridItem, Icon, Text } from '@coop/shared/ui';
 
 const annualFamilyIncome = [
@@ -81,10 +82,9 @@ export const MemberKYMIncomeSourceDetails = ({ control }: any) => {
               <Checkbox
                 onChange={(e) => console.log(e.target.value)}
                 key={index}
+                label={item}
                 id="incomeSourceDetails"
-              >
-                <Text fontSize="s3">{item}</Text>
-              </Checkbox>
+              />
             ))}
           </Box>
         </Box>

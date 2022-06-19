@@ -55,7 +55,8 @@ export const chakraStyles: ChakraStylesConfig = {
     p: 's12',
     display: 'flex',
     alignItems: 'center',
-    height: '40px',
+    height: '44px',
+    marginTop: '-1px',
     color: state.hasValue
       ? 'neutralColorLight.Gray-80'
       : 'neutralColorLight.Gray-50',

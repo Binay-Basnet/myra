@@ -11,7 +11,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormRadioGroup, FormSelect } from '@coop/myra/components';
+import { FormRadioGroup, FormSelect } from '@coop/shared/form';
 import {
   Avatar,
   Box,
