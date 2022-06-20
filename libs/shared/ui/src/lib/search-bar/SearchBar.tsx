@@ -4,41 +4,43 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  InputProps,
   InputRightElement,
   Text,
 } from '@chakra-ui/react';
-
 /* eslint-disable-next-line */
-export interface SearchBarProps {}
+export interface SearchBarProps extends InputProps {}
 
 export function SearchBar(props: SearchBarProps) {
-  const [isClose, setIsClose] = useState(true);
+  const [isBlur, setisBlur] = useState(true);
   return (
     <InputGroup
-      onFocus={() => {
-        setIsClose(false);
-      }}
-      onBlur={() => setIsClose(true)}
+      ml={'s16'}
+      borderRadius={'6px'}
+      border="none"
       flex={1}
-      bg={isClose ? 'secondary.800' : 'gray.0'}
-      color={isClose ? 'gray.0' : 'gray.500'}
-      _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
+      borderColor="secondary.700"
+      color={isBlur ? 'gray.0' : 'gray.500'}
     >
       <InputLeftElement
         pointerEvents="none"
         color={'currentColor'}
         children={<IoSearchSharp />}
+        _hover={{ color: 'gray.800' }}
       />
       <Input
-        // focusBorderColor="primary.300"
-        border={'2px solid'}
-        // borderColor={isClose ? 'gray.50' : 'primary.500'}
-        type="search"
+        type="text"
         placeholder="खोज्नुहोस्"
         color={'gray.500'}
         fontSize="r1"
+        bg={isBlur ? 'secondary.800' : 'gray.0'}
+        onFocus={() => {
+          setisBlur(false);
+        }}
+        onBlur={() => setisBlur(true)}
+        _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
       />
-      {isClose && (
+      {isBlur && (
         <InputRightElement
           pointerEvents="none"
           color={'currentcolor'}

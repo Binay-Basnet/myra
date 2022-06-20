@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
-import { BiDownArrowCircle, BiUpArrowCircle } from 'react-icons/bi';
-import { AddIcon } from '@chakra-ui/icons';
-import { Box, Button, Divider, Icon, Modal, Text } from '@coop/shared/ui';
+import {
+  BsFillArrowDownCircleFill,
+  BsFillArrowUpCircleFill,
+} from 'react-icons/bs';
 import { useRouter } from 'next/router';
+import { AddIcon } from '@chakra-ui/icons';
+
+import { Box, Button, Divider, Icon, Modal, Text } from '@coop/shared/ui';
 
 import { TabColumn } from '../tab/TabforMemberPage';
 
@@ -72,7 +76,13 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
             </Text>
           }
         >
-          <Box display="flex" justifyContent="space-around">
+          <Box
+            display="flex"
+            justifyContent="space-around"
+            alignItems={'center'}
+            p="s24"
+            gap="s16"
+          >
             <Box
               p="s24"
               w="300px"
@@ -105,7 +115,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
                 alignSelf="center"
                 w="30px"
                 h="30px"
-                as={BiDownArrowCircle}
+                as={BsFillArrowDownCircleFill}
               />
               <Text
                 alignSelf="center"
@@ -151,7 +161,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
                 alignSelf="center"
                 w="30px"
                 h="30px"
-                as={BiUpArrowCircle}
+                as={BsFillArrowUpCircleFill}
               />
               <Text
                 alignSelf="center"

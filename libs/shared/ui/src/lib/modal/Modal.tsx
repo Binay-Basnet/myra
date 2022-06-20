@@ -8,6 +8,7 @@ import {
   ModalOverlay,
   ModalProps as ChakraModalProps,
 } from '@chakra-ui/react';
+
 import { Button, Divider } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
@@ -53,24 +54,28 @@ export function Modal(props: ModalProps) {
         <ModalCloseButton _focus={{ bg: 'none' }} />
         <ModalBody>{children}</ModalBody>
         {/* <Divider /> */}
-        <ModalFooter>
-          {footerSecondaryProps && (
-            <Button variant="outline" mr={2} onClick={onClose}>
-              {footerSecondaryProps}
-            </Button>
-          )}
+        {footerPrimary1Props ||
+          footerPrimary1Props ||
+          (footerSecondaryProps && (
+            <ModalFooter>
+              {footerSecondaryProps && (
+                <Button variant="outline" mr={2} onClick={onClose}>
+                  {footerSecondaryProps}
+                </Button>
+              )}
 
-          {footerPrimary1Props && (
-            <Button colorScheme="primary" onClick={onClickPrimary}>
-              {footerPrimary1Props}
-            </Button>
-          )}
-          {footerPrimary2Props && (
-            <Button colorScheme="danger" onClick={onClickPrimary}>
-              {footerPrimary2Props}
-            </Button>
-          )}
-        </ModalFooter>
+              {footerPrimary1Props && (
+                <Button colorScheme="primary" onClick={onClickPrimary}>
+                  {footerPrimary1Props}
+                </Button>
+              )}
+              {footerPrimary2Props && (
+                <Button colorScheme="danger" onClick={onClickPrimary}>
+                  {footerPrimary2Props}
+                </Button>
+              )}
+            </ModalFooter>
+          ))}
       </ModalContent>
     </ChakraModal>
   );
