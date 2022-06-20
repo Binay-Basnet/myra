@@ -8,6 +8,7 @@ import {
 } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   AccordianContainer,
   DynamicBoxContainer,
@@ -139,13 +140,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             <InputGroupContainer>
               <FormInput
                 type="text"
-                name={`boardOfDirectorsDetails.${index}.fullName`}
+                name={`detailsOfDirectors.${index}.fullName`}
                 label="Full Name"
                 placeholder="Enter Full Name"
               />
               <FormInput
                 type="text"
-                name={`boardOfDirectorsDetails.${index}.designation`}
+                name={`detailsOfDirectors.${index}.designation`}
                 label="Designation"
                 placeholder="Enter Designation"
               />
@@ -164,13 +165,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             > */}
             <InputGroupContainer>
               <FormSelect
-                name={`boardOfDirectorsDetails.${index}.permanentStateId`}
+                name={`detailsOfDirectors.${index}.permanentState`}
                 label="State"
                 placeholder="Select State"
                 options={province}
               />
               <FormSelect
-                name={`boardOfDirectorsDetails.${index}.permanentDistrictId`}
+                name={`detailsOfDirectors.${index}.permanentDistrict`}
                 label="District"
                 placeholder="Select District"
                 options={districtList.map((d) => ({
@@ -179,7 +180,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                 }))}
               />
               <FormSelect
-                name={`boardOfDirectorsDetails.${index}.permanentVdcOrMunicId`}
+                name={`detailsOfDirectors.${index}.permanentMunicipality`}
                 label="VDC / Municipality"
                 placeholder="Select VDC / Municipality"
                 options={localityList.map((d) => ({
@@ -189,13 +190,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               />
               <FormInput
                 type="number"
-                name={`boardOfDirectorsDetails.${index}.permanentWardId`}
+                name={`detailsOfDirectors.${index}.permanentWardNo`}
                 label="Ward No"
                 placeholder="Enter Ward No"
               />
               <FormInput
                 type="text"
-                name={`boardOfDirectorsDetails.${index}.permanentLocality`}
+                name={`detailsOfDirectors.${index}.permanentLocality`}
                 label="Locality"
                 placeholder="Enter Locality"
               />
@@ -226,13 +227,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
 
             <InputGroupContainer>
               <FormSelect
-                name={`boardOfDirectorsDetails.${index}.temporaryStateId`}
+                name={`detailsOfDirectors.${index}.temporaryState`}
                 label="State"
                 placeholder="Select State"
                 options={province}
               />
               <FormSelect
-                name={`boardOfDirectorsDetails.${index}.temporaryDistrictId`}
+                name={`detailsOfDirectors.${index}.temporaryDistrict`}
                 label="District"
                 placeholder="Select District"
                 options={districtTempList.map((d) => ({
@@ -241,7 +242,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                 }))}
               />
               <FormSelect
-                name={`boardOfDirectorsDetails.${index}.temporaryVdcOrMunicId`}
+                name={`detailsOfDirectors.${index}.temporaryMunicipality`}
                 label="VDC / Muncipality"
                 placeholder="Select VDC / Muncipality"
                 options={localityTempList.map((d) => ({
@@ -251,13 +252,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               />
               <FormInput
                 type="number"
-                name={`boardOfDirectorsDetails.${index}.temporaryWardId`}
+                name={`detailsOfDirectors.${index}.temporaryWardNo`}
                 label="Ward No"
                 placeholder="Enter Ward No"
               />
               <FormInput
                 type="text"
-                name={`boardOfDirectorsDetails.${index}.temporaryLocality`}
+                name={`detailsOfDirectors.${index}.temporaryLocality`}
                 label="Locality"
                 placeholder="Enter Locality"
               />
@@ -273,70 +274,70 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
           <InputGroupContainer>
             <FormInput
               type="date"
-              name={`boardOfDirectorsDetails.${index}.dateOfMembership`}
+              name={`detailsOfDirectors.${index}.dateOfMembership`}
               label="Date of membership"
               placeholder="DD-MM-YYYY"
             />
             <FormInput
               type="text"
-              name={`boardOfDirectorsDetails.${index}.highestQualification`}
+              name={`detailsOfDirectors.${index}.highestQualification`}
               label="Highest Qualification"
               placeholder="Enter higest qualification"
             />
             <FormInput
               type="number"
-              name={`boardOfDirectorsDetails.${index}.contactNumber`}
+              name={`detailsOfDirectors.${index}.mobileNo`}
               label="Mobile No"
               placeholder="Enter Mobile No"
             />
             <FormInput
               type="text"
-              name={`boardOfDirectorsDetails.${index}.email`}
+              name={`detailsOfDirectors.${index}.emailAddress`}
               label="Email"
               placeholder="Enter Email"
             />
             <FormInput
               type="string"
-              name={`boardOfDirectorsDetails.${index}.citizenshipOrPassportOrLisenceNo`}
+              name={`detailsOfDirectors.${index}.documentNo`}
               label="Citizenship/Passport/Driving License No."
               placeholder="Enter No"
             />
           </InputGroupContainer>
-          <Text fontSize="r1" fontWeight="SemiBold">
+          {/* <Text fontSize="r1" fontWeight="SemiBold">
             Training related to Co-operatives
           </Text>
           <InputGroupContainer>
             <FormInput
               type="text"
-              name={`boardOfDirectorsDetails.${index}.subjectOfTraining`}
+              name={`detailsOfDirectors.${index}.subjectOfTraining`}
               label="Subject of Training"
               placeholder="Enter Subject of Training"
             />
             <FormInput
               type="date"
-              name={`boardOfDirectorsDetails.${index}.dateOfTraining`}
+              name={`detailsOfDirectors.${index}.dateOfTraining`}
               label="Date of training"
               placeholder="Enter date of Training"
             />
             <FormInput
               type="number"
-              name={`boardOfDirectorsDetails.${index}.trainingOrganization`}
+              name={`detailsOfDirectors.${index}.trainingOrganization`}
               label="Training Organization"
               placeholder="Enter Training Organization"
             />
-          </InputGroupContainer>
+          </InputGroupContainer> */}
           <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
             <FormFileInput
               size="lg"
               label="Photograph"
               // control={control}
-              name={`boardOfDirectorsDetails.${index}.photograph`}
+              name={`detailsOfDirectors.${index}.photograph`}
             />
             <FormFileInput
               size="lg"
               label="Photograph of identity proof document"
               // control={control}
-              name={`boardOfDirectorsDetails.${index}.identityDocumentPhoto`}
+              name={`detailsOfDirectors.${index}.documentPhotograph`}
             />
           </Grid>
         </SectionContainer>
@@ -351,7 +352,7 @@ export const BoardDirectorInfo = ({ watch, control }) => {
     fields: directorFields,
     append: directorAppend,
     remove: directorRemove,
-  } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
+  } = useFieldArray({ control, name: 'detailsOfDirectors' });
   return (
     <GroupContainer
       id="Details of Proprietor, Partners, Directors."

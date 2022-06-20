@@ -56,10 +56,10 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch(
-    `accountOperatorsDetails.${index}.temporaryStateId`
+    `accountOperatorsDetails.${index}.permanentStateId`
   );
   const currentDistrictId = watch(
-    `accountOperatorsDetails.${index}.permanentLocality`
+    `accountOperatorsDetails.${index}.permanentDistrictId`
   );
 
   // FOR TEMPORARY ADDRESS
@@ -86,15 +86,15 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
 
   const districtTempList = useMemo(
     () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
+      data?.administration.all.find((d) => d.id === currentTempProvinceId)
         ?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
+        ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
   return (
