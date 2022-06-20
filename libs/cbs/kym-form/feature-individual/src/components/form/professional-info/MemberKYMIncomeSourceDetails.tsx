@@ -9,7 +9,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/shared/form';
+import { FormAmountInput, FormInput } from '@coop/shared/form';
 import { Box, Button, Checkbox, GridItem, Icon, Text } from '@coop/shared/ui';
 
 const annualFamilyIncome = [
@@ -35,7 +35,7 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
       />
 
       <InputGroupContainer>
-        <GridItem colSpan={1}>
+        <GridItem colSpan={2}>
           <FormInput
             control={control}
             type="text"
@@ -45,14 +45,13 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
             placeholder="Enter Income Source"
           />
         </GridItem>
-        <GridItem colSpan={2}>
-          <FormInput
+        <GridItem colSpan={1}>
+          <FormAmountInput
             control={control}
-            type="number"
             bg="white"
             name={`incomeSourceDetails.${index}.amount`}
             label="Amount"
-            placeholder="Enter Amount"
+            placeholder="0.00"
           />
         </GridItem>
       </InputGroupContainer>
