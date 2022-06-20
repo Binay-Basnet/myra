@@ -83,7 +83,6 @@ export function TabMenu() {
         router.pathname.includes(string)
       ) ?? '/dashboard'
     ];
-  console.log('router', router.pathname, currentIndex);
 
   return (
     <Box
@@ -102,7 +101,6 @@ export function TabMenu() {
         <TabList>
           {demotabs.map(({ title, icon, link }, index) => {
             const isActive = router.asPath.includes(title.toLowerCase());
-            console.log('title', title, isActive);
             return (
               <Link href={link} key={index}>
                 <Tab

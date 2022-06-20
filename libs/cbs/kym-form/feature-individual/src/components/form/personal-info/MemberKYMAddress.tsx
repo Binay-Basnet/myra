@@ -18,6 +18,9 @@ interface IMemberKYMAddress {
 }
 
 export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
+  const isPermanentAndTemporaryAddressSame = watch(
+    'isPermanentAndTemporaryAddressSame'
+  );
   const { data } = useAllAdministrationQuery();
   const [temporaryAddress, setTemporaryAddress] = useState(false);
 
@@ -155,56 +158,60 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
           label="Temporary Address same as permanent"
         />
 
-        <InputGroupContainer>
-          <FormSelect
-            control={control}
-            name="temporaryStateId"
-            label="State"
-            placeholder="Select State"
-            options={province}
-          />
-          <FormSelect
-            control={control}
-            name="temporaryDistrictId"
-            label="District"
-            placeholder="Select District"
-            options={districtTempList.map((d) => ({
-              label: d.name,
-              value: d.id,
-            }))}
-          />
-          <FormSelect
-            control={control}
-            name="temporaryLocalityId"
-            label="VDC / Muncipality"
-            placeholder="Select VDC / Muncipality"
-            options={localityTempList.map((d) => ({
-              label: d.name,
-              value: d.id,
-            }))}
-          />
-          <FormInput
-            control={control}
-            type="number"
-            name="temporaryWardId"
-            label="Ward No"
-            placeholder="Enter Ward No"
-          />
-          <FormInput
-            control={control}
-            type="text"
-            name="temporaryTole"
-            label="Locality"
-            placeholder="Enter Locality"
-          />
-        </InputGroupContainer>
-        <Button
-          mt="-16px"
-          alignSelf="start"
-          leftIcon={<Icon size="md" as={FaMap} />}
-        >
-          Pin on Map
-        </Button>
+        {!isPermanentAndTemporaryAddressSame && (
+          <>
+            <InputGroupContainer>
+              <FormSelect
+                control={control}
+                name="temporaryStateId"
+                label="State"
+                placeholder="Select State"
+                options={province}
+              />
+              <FormSelect
+                control={control}
+                name="temporaryDistrictId"
+                label="District"
+                placeholder="Select District"
+                options={districtTempList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormSelect
+                control={control}
+                name="temporaryLocalityId"
+                label="VDC / Muncipality"
+                placeholder="Select VDC / Muncipality"
+                options={localityTempList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormInput
+                control={control}
+                type="number"
+                name="temporaryWardId"
+                label="Ward No"
+                placeholder="Enter Ward No"
+              />
+              <FormInput
+                control={control}
+                type="text"
+                name="temporaryTole"
+                label="Locality"
+                placeholder="Enter Locality"
+              />
+            </InputGroupContainer>
+            <Button
+              mt="-16px"
+              alignSelf="start"
+              leftIcon={<Icon size="md" as={FaMap} />}
+            >
+              Pin on Map
+            </Button>
+          </>
+        )}
       </Box>
       <Box
         id="Incase of residing in Rented House"

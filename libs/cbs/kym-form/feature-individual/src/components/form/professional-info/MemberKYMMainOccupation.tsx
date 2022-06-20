@@ -135,6 +135,11 @@ export const MemberKYMMainOccupation = ({ control, watch }: any) => {
         </Button>
       </DynamicBoxGroupContainer>
       <Box display="flex" flexDirection="row">
+        {/* <FormSwitch
+          control={control}
+          name="isPermanentAndTemporaryAddressSame"
+          label="Enable for Foreign Employment"
+        /> */}
         <Switch />
         <Text
           ml="s20"

@@ -20,6 +20,7 @@ export const FormFooter = (props: formFooter) => {
       py="s16"
       borderTopLeftRadius="br3"
       borderTopRightRadius="br3"
+      borderTop="1px solid #E6E6E6"
     >
       <Text
         alignSelf="center"

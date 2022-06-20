@@ -13,7 +13,7 @@ import TextFields from '../text-fields/TextFields';
 /* eslint-disable-next-line */
 export interface SwitchTabsProps {
   list: {
-    key: string;
+    label: string;
     value: string;
   }[];
   onClick?: (data: string | number) => void;
@@ -72,7 +72,7 @@ export function SwitchTabs(props: SwitchTabsProps) {
           <TabElement
             onClick={() => {
               setActiveTab && setActiveTab(index);
-              onClick && onClick(item.key);
+              onClick && onClick(item.value);
             }}
           >
             <Icon
@@ -85,7 +85,7 @@ export function SwitchTabs(props: SwitchTabsProps) {
               variant="switch"
               color={activeTab === index ? 'gray.800' : 'gray.600'}
             >
-              {item.value}
+              {item.label}
             </Text>
           </TabElement>
         ))}

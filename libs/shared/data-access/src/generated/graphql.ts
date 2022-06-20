@@ -4317,6 +4317,22 @@ export type UpdateCustomFieldMutationVariables = Exact<{
 
 export type UpdateCustomFieldMutation = { settings: { general?: { KYM?: { individual: { field: { update: { recordId: string, record?: { id: string, name: string, enabled?: boolean | null } | null } } } } | null } | null } };
 
+export type SetSharePurchaseMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: SharePurchaseInput;
+}>;
+
+
+export type SetSharePurchaseMutation = { share: { purchase: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } } };
+
+export type SetShareReturnMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: ShareReturnInput;
+}>;
+
+
+export type SetShareReturnMutation = { share: { return: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } } };
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4872,6 +4888,52 @@ export const useUpdateCustomFieldMutation = <
     useMutation<UpdateCustomFieldMutation, TError, UpdateCustomFieldMutationVariables, TContext>(
       ['updateCustomField'],
       useAxios<UpdateCustomFieldMutation, UpdateCustomFieldMutationVariables>(UpdateCustomFieldDocument),
+      options
+    );
+export const SetSharePurchaseDocument = `
+    mutation setSharePurchase($id: ID!, $data: SharePurchaseInput!) {
+  share {
+    purchase(id: $id, data: $data) {
+      recordId
+      error {
+        ... on InvalidDataError {
+          error
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSharePurchaseMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetSharePurchaseMutation, TError, SetSharePurchaseMutationVariables, TContext>) =>
+    useMutation<SetSharePurchaseMutation, TError, SetSharePurchaseMutationVariables, TContext>(
+      ['setSharePurchase'],
+      useAxios<SetSharePurchaseMutation, SetSharePurchaseMutationVariables>(SetSharePurchaseDocument),
+      options
+    );
+export const SetShareReturnDocument = `
+    mutation setShareReturn($id: ID!, $data: ShareReturnInput!) {
+  share {
+    return(id: $id, data: $data) {
+      recordId
+      error {
+        ... on InvalidDataError {
+          error
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetShareReturnMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetShareReturnMutation, TError, SetShareReturnMutationVariables, TContext>) =>
+    useMutation<SetShareReturnMutation, TError, SetShareReturnMutationVariables, TContext>(
+      ['setShareReturn'],
+      useAxios<SetShareReturnMutation, SetShareReturnMutationVariables>(SetShareReturnDocument),
       options
     );
 export const AllAdministrationDocument = `
