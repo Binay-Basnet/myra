@@ -219,7 +219,6 @@ export function KYMCooperativeUnionPage() {
               setKymCurrentSection(kymSection);
             }}
           >
-            {/* main */}
             <Box display="flex" width="100%">
               <Box display="flex">
                 <Box
@@ -231,7 +230,6 @@ export function KYMCooperativeUnionPage() {
                   bg="white"
                 >
                   <AccorrdianAddCOOPUnion
-                    // formStatus={kymFormStatus}
                     kymCurrentSection={kymCurrentSection}
                   />
                 </Box>
@@ -246,7 +244,6 @@ export function KYMCooperativeUnionPage() {
                         <InstituteBasicInfo />
                         <RegisteredDetails />
                         <ContactDetails />
-                        {/* <CurrentMemberDetails /> */}
                         <BankAccountDetails />
                         <ApplicantDetails />
                       </ContainerWithDivider>
@@ -281,7 +278,6 @@ export function KYMCooperativeUnionPage() {
                         5. Details of member
                       </Text>
                       <ContainerWithDivider>
-                        {/* <CurrentMembers /> */}
                         <KymMemberdetailsCOOP watch={watch} />
                       </ContainerWithDivider>
                     </SectionContainer>
