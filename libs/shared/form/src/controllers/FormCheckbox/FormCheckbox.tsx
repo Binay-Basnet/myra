@@ -23,6 +23,8 @@ export const FormCheckbox = <T,>({ name, ...rest }: IFormCheckboxProps<T>) => {
         <Checkbox
           isInvalid={!!errors[name].message}
           id={name}
+          onChange={onChange}
+          isChecked={value}
           {...fieldProps}
           {...rest}
         />

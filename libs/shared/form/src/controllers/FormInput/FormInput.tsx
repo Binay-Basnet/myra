@@ -20,14 +20,18 @@ export const FormInput = <T,>({ name, ...rest }: IFormInputProps<T>) => {
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, value, ...fieldProps } }) => (
-        <Input
-          id={name}
-          errorText={errors[name]?.message}
-          {...fieldProps}
-          {...rest}
-        />
-      )}
+      render={({ field: { onChange, value, ...fieldProps } }) => {
+        return (
+          <Input
+            id={name}
+            errorText={errors[name]?.message}
+            onChange={onChange}
+            value={value}
+            {...rest}
+            {...fieldProps}
+          />
+        );
+      }}
     />
   );
 };

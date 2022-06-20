@@ -28,6 +28,8 @@ export const FormPhoneNumber = <T,>({
         <Input
           id={name}
           type="tel"
+          onChange={onChange}
+          value={value}
           leftElement={<Icon as={HiPhone} size="sm" />}
           errorText={errors[name]?.message}
           {...fieldProps}
