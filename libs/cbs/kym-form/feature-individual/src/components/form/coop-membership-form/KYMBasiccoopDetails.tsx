@@ -7,6 +7,7 @@ import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
 import { Radio } from '@chakra-ui/react';
+
 import {
   GroupContainer,
   InputGroupContainer,
@@ -31,10 +32,12 @@ const booleanList = [
   {
     key: 'yes',
     value: 'Yes',
+    label: 'Yes',
   },
   {
     key: 'no',
     value: 'No',
+    label: 'No',
   },
 ];
 

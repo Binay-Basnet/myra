@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   GroupContainer,
   InputGroupContainer,
@@ -27,7 +28,7 @@ export const KYMFinancialTransactionDetails = ({ control }: any) => {
             type="number"
             name="share"
             textAlign="right"
-            label="Ordinary Share"
+            label="Share"
             placeholder="0.00"
           />
           <FormInput

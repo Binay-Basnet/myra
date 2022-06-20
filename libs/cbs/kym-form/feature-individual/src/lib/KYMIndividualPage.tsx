@@ -101,6 +101,7 @@ export function KYMIndividualPage() {
           memberId: '',
         },
       ],
+      nationalityId: 'Nepali',
     },
   });
 

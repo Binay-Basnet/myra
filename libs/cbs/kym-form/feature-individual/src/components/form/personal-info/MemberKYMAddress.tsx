@@ -1,15 +1,16 @@
 import { useMemo, useState } from 'react';
 import { Control, UseFormWatch } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
+
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   KymIndMemberInput,
   useAllAdministrationQuery,
 } from '@coop/shared/data-access';
+import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 
 interface IMemberKYMAddress {
@@ -91,8 +92,8 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
             <FormSelect
               control={control}
               name="permanentStateId"
-              label="State"
-              placeholder="Select State"
+              label="Province"
+              placeholder="Select Province"
               options={province}
             />
             <FormSelect
@@ -108,8 +109,8 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
             <FormSelect
               control={control}
               name="permanentLocalityId"
-              label="VDC / Municipality"
-              placeholder="Select VDC / Municipality"
+              label="Local Government"
+              placeholder="Select Local Government"
               options={localityList.map((d) => ({
                 label: d.name,
                 value: d.id,
@@ -128,6 +129,13 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
               name="permanentTole"
               label="Locality"
               placeholder="Enter Locality"
+            />
+            <FormInput
+              control={control}
+              type="text"
+              name="permanentHouseNo"
+              label="House No"
+              placeholder="Enter House No"
             />
           </InputGroupContainer>
 
@@ -164,8 +172,8 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
               <FormSelect
                 control={control}
                 name="temporaryStateId"
-                label="State"
-                placeholder="Select State"
+                label="Province"
+                placeholder="Select Province"
                 options={province}
               />
               <FormSelect
@@ -181,8 +189,8 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
               <FormSelect
                 control={control}
                 name="temporaryLocalityId"
-                label="VDC / Muncipality"
-                placeholder="Select VDC / Muncipality"
+                label="Local Government"
+                placeholder="Select Local Government"
                 options={localityTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -201,6 +209,13 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
                 name="temporaryTole"
                 label="Locality"
                 placeholder="Enter Locality"
+              />
+              <FormInput
+                control={control}
+                type="text"
+                name="temporaryHouseNo"
+                label="House No"
+                placeholder="Enter House No"
               />
             </InputGroupContainer>
             <Button

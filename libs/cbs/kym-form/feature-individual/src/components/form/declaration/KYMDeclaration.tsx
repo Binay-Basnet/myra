@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Control } from 'react-hook-form';
+
 import {
   GroupContainer,
   InputGroupContainer,
@@ -10,6 +11,7 @@ import {
   Checkbox,
   Grid,
   GridItem,
+  RadioGroup,
   SwitchTabs,
   Text,
   TextFields,
@@ -24,10 +26,12 @@ const booleanList = [
   {
     key: 'yes',
     value: 'Yes',
+    label: 'Yes',
   },
   {
     key: 'no',
     value: 'No',
+    label: 'No',
   },
 ];
 
@@ -43,36 +47,54 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
         id="Next to Kin"
         scrollMarginTop={'200px'}
       >
-        <TextFields variant="formLabel">Next To Kin / Local Contact</TextFields>
-        <Grid templateColumns="repeat(3, 1fr)" gap="s16">
-          <FormInput
-            control={control}
-            type="text"
-            name="localKinRelationshipId"
-            placeholder="Relationship"
+        <TextFields variant="formLabel" fontWeight={600}>
+          Nominee
+        </TextFields>
+        <Box id="Beneficial Owner" scrollMarginTop={'200px'}>
+          <SwitchTabs
+            label="Do you have a beneficial owner?"
+            list={booleanList}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            id="beneficialOwner"
           />
-          <FormInput
-            control={control}
-            type="text"
-            name="localKinName"
-            placeholder="Name"
-          />
-          <div />
-          <FormInput
-            control={control}
-            type="text"
-            name="localKinContact"
-            placeholder="Contact No"
-          />
-          <FormInput
-            control={control}
-            type="text"
-            name="localKinAddress"
-            placeholder="Address"
-          />
+        </Box>
+
+        {/* <InputGroupContainer> */}
+        <Grid
+          gap={2}
+          templateColumns="repeat(3,1fr)"
+          alignItems="last baseline"
+        >
+          <GridItem colSpan={1}>
+            <FormSelect
+              control={control}
+              name={'beneficialRelationShipId'}
+              options={[{ label: 'Father', value: 'father' }]}
+              placeholder="Relationship"
+              label="If yes, please write name and relationship "
+            />
+          </GridItem>
+
+          <GridItem mt="20px" colSpan={2}>
+            <FormInput
+              control={control}
+              type="text"
+              name="fullName"
+              placeholder="Full Name"
+            />
+          </GridItem>
         </Grid>
+        {/* </InputGroupContainer> */}
       </Box>
-      <Box id="Family members in politics" scrollMarginTop={'200px'}>
+
+      <Box
+        id="Family members in politics"
+        scrollMarginTop={'200px'}
+        display="flex"
+        flexDirection="column"
+        gap="s32"
+      >
         <SwitchTabs
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -80,21 +102,18 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
           list={booleanList}
           id="politicallyExposedPerson"
         />
-        {/* <FormRadioGroup
-        control={control}
-        name={'isPoliticallyExposed'}
-        radioList={['Yes', 'No']}
-        label=" Are you or any of your family politically exposed person?"
-      /> */}
-      </Box>
-      <Box id="Beneficial Owner" scrollMarginTop={'200px'}>
-        <SwitchTabs
-          label="Do you have a beneficial owner?"
-          list={booleanList}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          id="beneficialOwner"
-        />
+
+        <InputGroupContainer>
+          <Box display="flex" flexDirection="column">
+            <FormTextArea
+              name="convictionDetails"
+              control={control}
+              id="convictionDetails"
+              label="Please specify"
+              placeholder="Enter Details"
+            />
+          </Box>
+        </InputGroupContainer>
       </Box>
 
       {/* <FormRadioGroup
@@ -104,28 +123,6 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
         label="Do you have a beneficial owner?"
       /> */}
 
-      {/* <InputGroupContainer> */}
-      <Grid gap={2} templateColumns="repeat(3,1fr)">
-        <GridItem colSpan={1}>
-          <FormSelect
-            control={control}
-            name={'beneficialRelationShipId'}
-            options={[{ label: 'Father', value: 'father' }]}
-            placeholder="Relationship"
-            label="If yes, please write name and relationship "
-          />
-        </GridItem>
-
-        <GridItem mt="20px" colSpan={2}>
-          <FormInput
-            control={control}
-            type="text"
-            name="fullName"
-            placeholder="Full Name"
-          />
-        </GridItem>
-      </Grid>
-      {/* </InputGroupContainer> */}
       <Box
         id="Convicted/Non-convicted Status"
         scrollMarginTop={'200px'}
@@ -184,13 +181,14 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
         <Text fontSize="s3" mb="s16">
           Specify following details
         </Text>
-        <Box display="flex" flexDirection="column" gap="s8">
-          {details.map((item, index) => (
+        {/* <Box display="flex" flexDirection="column" gap="s8"> */}
+        {/* {details.map((item, index) => (
             <Checkbox key={index}>
               <Text fontSize="s3">{item}</Text>
             </Checkbox>
-          ))}
-        </Box>
+          ))} */}
+        <RadioGroup radioList={details} labelFontSize="s3" />
+        {/* </Box> */}
       </Box>
     </GroupContainer>
   );

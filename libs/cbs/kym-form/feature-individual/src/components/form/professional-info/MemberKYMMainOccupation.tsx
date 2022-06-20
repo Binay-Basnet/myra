@@ -2,6 +2,7 @@ import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
@@ -174,13 +175,33 @@ export const MemberKYMMainOccupation = ({ control, watch }: any) => {
           />
         </GridItem>
         <GridItem>
-          <FormInput
+          {/* <FormInput
             bg="white"
             control={control}
             type="text"
             name={`orgName`}
             label="Type of Visa"
             placeholder="Enter Type of Visa"
+          /> */}
+          <FormSelect
+            control={control}
+            name="typeOfVisa"
+            label="Type of Visa"
+            placeholder="Enter Type of Visa"
+            options={[
+              {
+                label: 'Nepal',
+                value: 'Nepal',
+              },
+              {
+                label: 'India',
+                value: 'India',
+              },
+              {
+                label: 'China',
+                value: 'China',
+              },
+            ]}
           />
         </GridItem>
         <GridItem>
