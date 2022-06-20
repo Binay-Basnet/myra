@@ -33,7 +33,7 @@ const memberColumns = [
   },
   {
     title: 'balanceReport',
-    link: '/members/reports',
+    link: '/members/report',
   },
 ];
 
@@ -225,13 +225,12 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
       </Box>
 
       <Box
-        p="s16"
         width="calc(100% - 275px)"
         overflowX="hidden"
         position="relative"
         left="275px"
       >
-        <Box bg="white" borderRadius="br3">
+        <Box bg="white" minHeight="100vh">
           {children}
         </Box>
       </Box>

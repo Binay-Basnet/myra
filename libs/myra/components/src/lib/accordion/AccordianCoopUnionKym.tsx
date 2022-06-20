@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-  AiFillCloseCircle,
-  AiOutlineCaretDown,
-  AiOutlineCaretRight,
-} from 'react-icons/ai';
-import { BsCheckCircleFill } from 'react-icons/bs';
-import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
+import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
+import { Box, Collapse, Text } from '@chakra-ui/react';
+
 import { KymInsAddSectionStatus } from '@coop/shared/data-access';
 
 const OrganizationInformation = [
@@ -63,7 +59,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
   }, [kymCurrentSection]);
 
   return (
-    <Box p={'1'} overflow="auto" h="700px">
+    <Box p={'1'} overflow="auto" h="700px" mt="60px">
       <Box
         display="flex"
         justifyContent="space-between"

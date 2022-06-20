@@ -5,10 +5,7 @@ import {
 } from '@coop/shared/utils';
 import React from 'react';
 import { useRouter } from 'next/router';
-import {
-  useGetKymFormStatusQuery,
-  useSetCooperativeUnionDataMutation,
-} from '@coop/shared/data-access';
+import { useSetCooperativeUnionDataMutation } from '@coop/shared/data-access';
 import { useForm, FormProvider } from 'react-hook-form';
 import {
   Box,
@@ -24,13 +21,11 @@ import {
   InstituteBasicInfo,
   RegisteredDetails,
   ContactDetails,
-  CurrentMemberDetails,
   BankAccountDetails,
   ApplicantDetails,
   BoardDirectorInfo,
   AccountOperatorInfo,
   AddRepresentative,
-  CurrentMembers,
   KymAssestsAndtarget,
   KymEquilities,
   IncomeDetails,
@@ -169,11 +164,10 @@ export function KYMCooperativeUnionPage() {
   return (
     <>
       {/* // Top Bar */}
-      <Box position="relative" h="80px" margin="0px auto">
+      <Box position="relative" margin="0px auto">
         <Box
           position="fixed"
           margin="0px auto"
-          pt="20px"
           bg="gray.100"
           width="100%"
           zIndex="10"
@@ -187,7 +181,6 @@ export function KYMCooperativeUnionPage() {
               px="5"
               background="white"
               borderBottom="1px solid #E6E6E6"
-              borderTopRadius="br3"
             >
               <Text fontSize="r2" fontWeight="SemiBold">
                 {t.membersFormAddNewMembers}
@@ -234,7 +227,15 @@ export function KYMCooperativeUnionPage() {
                   />
                 </Box>
 
-                <Box background="white" ml={320} px="s20" pb="120px">
+                <Box
+                  background="white"
+                  ml={320}
+                  px="s20"
+                  mt="60px"
+                  pt="s20"
+                  pb="120px"
+                >
+                  {' '}
                   <SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
@@ -307,7 +308,7 @@ export function KYMCooperativeUnionPage() {
           </form>
         </FormProvider>
       </Container>
-      <Box position="relative" h="80px" margin="0px auto">
+      <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100">
           <Container minW="container.xl" height="fit-content">
             <Box

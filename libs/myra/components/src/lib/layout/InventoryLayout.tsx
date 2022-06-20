@@ -1,8 +1,9 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
-import { AddIcon } from '@chakra-ui/icons';
-import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
 import { useRouter } from 'next/router';
+import { AddIcon } from '@chakra-ui/icons';
+
+import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
 
 import { TabColumn } from '../tab/TabforMemberPage';
 
@@ -70,8 +71,13 @@ export const InventoryPageLayout = ({
           Inventory Settings
         </Button>
       </Box>
-      <Box p="s16" width="100%" borderRadius="br3">
-        <Box bg="white" borderRadius="br3">
+      <Box
+        width="calc(100% - 275px)"
+        overflowX="hidden"
+        position="relative"
+        left="275px"
+      >
+        <Box bg="white" minHeight="100vh">
           {children}
         </Box>
       </Box>
