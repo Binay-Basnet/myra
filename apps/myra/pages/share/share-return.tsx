@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import { Form, FormFooter } from '@coop/myra/components';
-import { IPurchaseFormValues } from '@coop/myra/types';
 import {
   Payment_Mode,
+  SharePurchaseInput,
   ShareReturnInput,
   useSetShareReturnMutation,
 } from '@coop/shared/data-access';
@@ -75,7 +75,7 @@ const ShareReturn = () => {
   };
 
   return (
-    <Form<IPurchaseFormValues>
+    <Form<SharePurchaseInput>
       methods={methods}
       onChange={() => {
         console.log('getValues', getValues());

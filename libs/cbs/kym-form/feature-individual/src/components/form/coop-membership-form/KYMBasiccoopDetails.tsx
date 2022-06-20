@@ -29,11 +29,11 @@ import {
 
 const booleanList = [
   {
-    key: 'yes',
+    label: 'yes',
     value: 'Yes',
   },
   {
-    key: 'no',
+    label: 'no',
     value: 'No',
   },
 ];

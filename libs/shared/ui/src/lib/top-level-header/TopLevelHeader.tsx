@@ -37,13 +37,13 @@ export interface TopLevelHeaderProps {
 }
 
 const languageList = [
-  { key: 'en', value: 'EN' },
-  { key: 'ne', value: 'ने' },
+  { label: 'en', value: 'EN' },
+  { label: 'ne', value: 'ने' },
 ];
 
 const calendarList = [
-  { key: 'ad', value: 'AD' },
-  { key: 'bs', value: 'BS' },
+  { label: 'ad', value: 'AD' },
+  { label: 'bs', value: 'BS' },
 ];
 
 const currentDate = format(new Date(), 'yyyy-MM-dd');

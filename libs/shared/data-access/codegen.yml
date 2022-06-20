@@ -20,7 +20,7 @@ generates:
         InvalidData: Record<string, Array<string>>
         Map: Record<string, string>
         Date: string
-        Localization: Record<"local"|"en"|"np",string>
+        Localized: Record<"local"|"en"|"np",string>
       skipTypename: true
       inlineFragmentTypes: combine
       fetcher:

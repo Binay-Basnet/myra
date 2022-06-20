@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
+import { useRouter } from 'next/router';
+
 import { useGetMemberTranslationQuery } from '@coop/shared/data-access';
 import {
   Box,
@@ -12,7 +14,6 @@ import {
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-import { useRouter } from 'next/router';
 
 const Translation = () => {
   const { t } = useTranslation();
@@ -20,8 +21,7 @@ const Translation = () => {
   const router = useRouter();
   const id = String(router?.query?.id);
   const translatedData = useGetMemberTranslationQuery({ id });
-  const translationDataArray =
-    translatedData?.data?.members?.individual?.translate;
+  const translationDataArray = translatedData?.data?.members?.translate.data;
 
   return (
     <>

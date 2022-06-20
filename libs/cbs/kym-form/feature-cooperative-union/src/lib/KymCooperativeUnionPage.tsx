@@ -201,6 +201,8 @@ export function KYMCooperativeUnionPage() {
           <form
             onChange={debounce(() => {
               console.log('hello', getValues());
+              // TODO (FIX THIS ERROR)
+              // @ts-ignore
               mutate({ id, data: getValues() });
             }, 800)}
             onSubmit={handleSubmit((data) => {

@@ -1,23 +1,19 @@
 import { useState } from 'react';
+
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormCheckboxGroup,
-  FormFileInput,
-  FormInput,
-  FormSelect,
-  FormTextArea,
-} from '@coop/shared/form';
-import { Box, Checkbox, GridItem, SwitchTabs, Text } from '@coop/shared/ui';
+import { FormFileInput, FormTextArea } from '@coop/shared/form';
+import { Box, Checkbox, SwitchTabs, Text } from '@coop/shared/ui';
+
 const booleanList = [
   {
-    key: 'Single',
+    label: 'Single',
     value: 'Single',
   },
   {
-    key: 'Joint',
+    label: 'Joint',
     value: 'Joint',
   },
 ];
