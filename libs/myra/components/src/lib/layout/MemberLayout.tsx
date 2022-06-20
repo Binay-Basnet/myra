@@ -3,8 +3,10 @@ import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
 import { IoMdPerson } from 'react-icons/io';
 import { IconType } from 'react-icons/lib';
 import { MdCorporateFare } from 'react-icons/md';
+import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 import { Grid } from '@chakra-ui/react';
+
 import {
   useGetMemberTypesQuery,
   useGetNewIdMutation,
@@ -18,10 +20,8 @@ import {
   Modal,
   Text,
 } from '@coop/shared/ui';
-import { useRouter } from 'next/router';
 
 import { TabColumn } from '../tab/TabforMemberPage';
-
 interface IMemberPageLayout {
   children: React.ReactNode;
 }
@@ -109,7 +109,8 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
   const router = useRouter();
   const newId = useGetNewIdMutation();
   const memberTypesQuery = useGetMemberTypesQuery();
-  const memberTypes = memberTypesQuery?.data?.members?.memberTypes;
+  console.log('hello', memberTypesQuery);
+  const memberTypes = memberTypesQuery?.data?.members?.memberTypes?.data;
   const [openModal, setOpenModal] = useState(false);
 
   const onOpenModal = () => {

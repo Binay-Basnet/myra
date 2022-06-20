@@ -1,12 +1,12 @@
-mutation setCooperativeUnionData($id: ID!, $data: KymCoopUnionFormInput!) {
+mutation setCooperativeUnionData(
+  $id: ID!
+  $data: CoopUnionInstitutionInformationInput
+) {
   members {
     cooperativeUnion(id: $id) {
-      add(data: $data) {
-        recordId
-        error {
-          ... on KymCoopUnionAddInvalidDataError {
-            error
-          }
+      add(id: $id) {
+        institutionInformation(data: $data) {
+          recordId
         }
       }
     }
