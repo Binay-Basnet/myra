@@ -22,14 +22,14 @@ import { useRouter } from 'next/router';
 import SettingsFormLayout from '../../../../components/SettingsLayout/SettingsFormLayout';
 
 const list = [
-  { key: 'yes', value: 'Yes' },
-  { key: 'no', value: 'No' },
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
 ];
 
 const accountList = [
-  { key: 'cash', value: 'Cash' },
-  { key: 'bank', value: 'Bank' },
-  { key: 'journal', value: 'Journal' },
+  { label: 'Cash', value: 'cash' },
+  { label: 'Bank', value: 'bank' },
+  { label: 'Journal', value: 'journal' },
 ];
 
 const AddNewAccount = () => {

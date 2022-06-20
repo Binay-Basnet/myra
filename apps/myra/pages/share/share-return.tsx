@@ -9,6 +9,7 @@ import {
   Form,
   FormFooter,
   ShareReturnHistoryTable,
+  FormSelect,
 } from '@coop/myra/components';
 import { IPurchaseFormValues } from '@coop/myra/types';
 import { useGetMemberDataQuery } from '@coop/shared/data-access';
@@ -28,6 +29,7 @@ import {
   Text,
   TextFields,
   TextInput,
+  FormInput,
 } from '@coop/shared/ui';
 import { useRouter } from 'next/router';
 
@@ -40,13 +42,16 @@ const Header = () => {
     </>
   );
 };
-
-const accountList = ['Bank Voucher', 'Account', 'Cash'];
+const accountList = [
+  { label: 'Bank Voucher', value: 'BankVoucher' },
+  { label: 'Account', value: 'Account' },
+  { label: 'Cash', value: 'Cash' },
+];
 
 const ShareReturn = () => {
   const router = useRouter();
   const methods = useForm<IPurchaseFormValues>();
-  const { getValues } = methods;
+  const { getValues, watch } = methods;
 
   const [selectedTab, setSelectedTab] = useState<string | null>('Bank Voucher');
   const [memberIdQuery, setMemberIdQuery] = useState<string | null>('');
@@ -108,10 +113,11 @@ const ShareReturn = () => {
         <Box display="flex" width="100%">
           <Box w="100%">
             <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
-              <TextInput
+              <FormInput
                 mb="20px"
                 w="50%"
-                label="Search Member"
+                name="memberId"
+                label=" Select Member"
                 placeholder="Enter Member ID"
                 onChange={(e) => setMemberIdQuery(e.target.value)}
               />
@@ -295,9 +301,10 @@ const ShareReturn = () => {
                     gap={3}
                   >
                     <GridItem>
-                      <TextInput
+                      <FormInput
                         id="noOfShares"
-                        label="No of Shares to Return"
+                        name="shareCount"
+                        label="No of Shares"
                         placeholder="No of Shares"
                         onChange={(e) => setNoOfShares(Number(e.target.value))}
                       />
@@ -388,8 +395,8 @@ const ShareReturn = () => {
                             >
                               Administration Fees
                             </Text>
-                            <TextInput
-                              w="50%"
+                            <FormInput
+                              name="extraFee"
                               id="administrationFees"
                               label=""
                               placeholder="34000.00"
@@ -470,16 +477,16 @@ const ShareReturn = () => {
               >
                 Payment Mode
               </Text>
-
               <SwitchTabs
+                // name="paymentMode"
                 onClick={switchTabsFxn}
                 list={accountList.map((value) => ({
-                  key: value,
-                  value: value,
+                  label: value.label,
+                  value: value.value,
                 }))}
               />
 
-              {selectedTab === 'Account' && (
+              {selectedTab === 'account' && (
                 <Box
                   mt="s16"
                   mb="s16"
@@ -522,7 +529,7 @@ const ShareReturn = () => {
                   </Box>
                 </Box>
               )}
-              {selectedTab === 'Bank Voucher' && (
+              {selectedTab === 'bankVoucher' && (
                 <Box
                   mt="s16"
                   mb="s16"
@@ -531,7 +538,8 @@ const ShareReturn = () => {
                   flexDirection="column"
                   gap="s16"
                 >
-                  <Select
+                  <FormSelect
+                    name="bankId"
                     label="Select Bank"
                     placeholder="Select Bank"
                     options={[
@@ -550,9 +558,9 @@ const ShareReturn = () => {
                     ]}
                   />
                   <Box>
-                    <TextInput
+                    <FormInput
                       type="text"
-                      name="name"
+                      name="voucherNumber"
                       placeholder="Enter Voucher Number"
                       label="Enter Voucher Number"
                     />
@@ -560,7 +568,7 @@ const ShareReturn = () => {
                 </Box>
               )}
 
-              {selectedTab === 'Cash' && (
+              {selectedTab === 'cash' && (
                 <Box mt="s16" w="25%">
                   <TextInput
                     type="text"
