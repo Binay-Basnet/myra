@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
+
 import { FormInput } from '@coop/shared/form';
 
 export const ExpenseDetails = ({ watch }: any) => {
@@ -27,26 +28,25 @@ export const ExpenseDetails = ({ watch }: any) => {
   //     currentAssets,
   //     nonCurrentAssets,
   //   ]);
-  const purchase = watch('purchase');
-  const DirectExpense = watch('directExpense');
-  const administrativeExpense = watch('administrativeExpense');
-  const financialCost = watch('financialCost');
-  const deferredTaxExpense = watch('deferredTaxExpense');
-  const totalExpense = useMemo(() => {
-    return (
-      Number(purchase) +
-      Number(DirectExpense) +
-      Number(administrativeExpense) +
-      Number(financialCost) +
-      Number(deferredTaxExpense)
-    );
-  }, [
-    purchase,
-    DirectExpense,
-    administrativeExpense,
-    financialCost,
-    deferredTaxExpense,
-  ]);
+  const purchase = isNaN(watch('purchase')) ? 0 : watch('purchase');
+  const DirectExpense = isNaN(watch('directExpense'))
+    ? 0
+    : watch('directExpense');
+  const administrativeExpense = isNaN(watch('administrativeExpense'))
+    ? 0
+    : watch('administrativeExpense');
+  const financialCost = isNaN(watch('financialCost'))
+    ? 0
+    : watch('financialCost');
+  const deferredTaxExpense = isNaN(watch('deferredTaxExpense'))
+    ? 0
+    : watch('deferredTaxExpense');
+  const totalExpense =
+    Number(purchase) +
+    Number(DirectExpense) +
+    Number(administrativeExpense) +
+    Number(financialCost) +
+    Number(deferredTaxExpense);
 
   return (
     <Box

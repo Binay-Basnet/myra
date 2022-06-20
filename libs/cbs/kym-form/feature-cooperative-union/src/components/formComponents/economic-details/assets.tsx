@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
+
 import {
   GroupContainer,
   InputGroupContainer,
@@ -8,53 +9,53 @@ import { FormInput } from '@coop/shared/form';
 
 export const KymAssestsAndtarget = ({ watch }: any) => {
   const cashCurrent = watch('cashAndCashEquivalentCurrent');
+  const cashCurrent2 = isNaN(cashCurrent) == true ? 0 : cashCurrent;
   const bankCurrent = watch('bankCurrent');
+  const bankCurrent2 = isNaN(bankCurrent) == true ? 0 : bankCurrent;
   const investemntCurrent = watch('investmentsCurrent');
+  const investmentCurrent2 =
+    isNaN(investemntCurrent) == true ? 0 : investemntCurrent;
   const loanCurrent = watch('loanCurrent');
+  const loanCurrent2 = isNaN(loanCurrent) == true ? 0 : loanCurrent;
   const nonCurrentAssetsCurrent = watch('nonCurrentAssetsCurrent');
+  const nonCurrentAssetsCurrent2 =
+    isNaN(nonCurrentAssetsCurrent) === true ? 0 : nonCurrentAssetsCurrent;
   const otherNonCurrentAssetsCurrent = watch('otherNonCurrentAssetsCurrent');
+  const otherNonCurrentAssetsCurrent2 =
+    isNaN(otherNonCurrentAssetsCurrent) === true
+      ? 0
+      : otherNonCurrentAssetsCurrent;
 
-  const totalassestscurrent = useMemo(() => {
-    return (
-      Number(cashCurrent) +
-      Number(bankCurrent) +
-      Number(investemntCurrent) +
-      Number(loanCurrent) +
-      Number(nonCurrentAssetsCurrent) +
-      Number(otherNonCurrentAssetsCurrent)
-    );
-  }, [
-    cashCurrent,
-    bankCurrent,
-    investemntCurrent,
-    loanCurrent,
-    nonCurrentAssetsCurrent,
-    otherNonCurrentAssetsCurrent,
-  ]);
-  const cashTarget = watch('cashAndCashEquivalentTarget');
-  const bankTarget = watch('bankTarget');
-  const investmentsTarget = watch('investmentsTarget');
-  const loanTarget = watch('loanTarget');
-  const currentAssetsTarget = watch('nonCurrentAssetsTarget');
-  const nonCurrentAssetsTarget = watch('otherNonCurrentAssetsTarget');
+  const totalassestscurrent =
+    Number(cashCurrent2) +
+    Number(bankCurrent2) +
+    Number(investmentCurrent2) +
+    Number(loanCurrent2) +
+    Number(nonCurrentAssetsCurrent2) +
+    Number(otherNonCurrentAssetsCurrent2);
 
-  const totalassestsTARGET = useMemo(() => {
-    return (
-      Number(cashTarget) +
-      Number(bankTarget) +
-      Number(investmentsTarget) +
-      Number(loanTarget) +
-      Number(currentAssetsTarget) +
-      Number(nonCurrentAssetsTarget)
-    );
-  }, [
-    cashTarget,
-    bankTarget,
-    investmentsTarget,
-    loanTarget,
-    currentAssetsTarget,
-    nonCurrentAssetsTarget,
-  ]);
+  const cashTarget = isNaN(watch('cashAndCashEquivalentTarget'))
+    ? 0
+    : watch('cashAndCashEquivalentTarget');
+  const bankTarget = isNaN(watch('bankTarget')) ? 0 : watch('bankTarget');
+  const investmentsTarget = isNaN(watch('investmentsTarget'))
+    ? 0
+    : watch('investmentsTarget');
+  const loanTarget = isNaN(watch('loanTarget')) ? 0 : watch('loanTarget');
+  const currentAssetsTarget = isNaN(watch('nonCurrentAssetsTarget'))
+    ? 0
+    : watch('nonCurrentAssetsTarget');
+  const nonCurrentAssetsTarget = isNaN(watch('otherNonCurrentAssetsTarget'))
+    ? 0
+    : watch('otherNonCurrentAssetsTarget');
+
+  const totalassestsTARGET =
+    Number(cashTarget) +
+    Number(bankTarget) +
+    Number(investmentsTarget) +
+    Number(loanTarget) +
+    Number(currentAssetsTarget) +
+    Number(nonCurrentAssetsTarget);
 
   return (
     <Box

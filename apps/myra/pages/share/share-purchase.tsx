@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
+import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import { FormSelect, FormInput } from '@coop/shared/form';
 import { FormFooter, SharePurchaseHistoryTable } from '@coop/myra/components';
+
 import {
-  useGetMemberDataQuery,
   SharePurchaseInput,
+  useGetMemberDataQuery,
   useSetSharePurchaseMutation,
   Payment_Mode,
 } from '@coop/shared/data-access';
@@ -17,6 +19,7 @@ import {
   Avatar,
   Box,
   Container,
+  FormInput,
   Grid,
   GridItem,
   Icon,
@@ -28,7 +31,6 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
-import { useRouter } from 'next/router';
 
 // TODO! use layout
 const Header = () => {
