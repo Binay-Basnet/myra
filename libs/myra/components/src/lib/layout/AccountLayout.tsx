@@ -69,13 +69,12 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
         </Button>
       </Box>
       <Box
-        p="s16"
-        borderRadius="br3"
         width="calc(100% - 275px)"
-        left="275px"
+        overflowX="hidden"
         position="relative"
+        left="275px"
       >
-        <Box bg="white" borderRadius="br3">
+        <Box bg="white" minHeight="100vh">
           {children}
         </Box>
       </Box>

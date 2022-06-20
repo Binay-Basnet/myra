@@ -1,17 +1,16 @@
-import { useState } from 'react';
 import { IconType } from 'react-icons';
 import { AiOutlineAppstore } from 'react-icons/ai';
-import { BsArrowLeftRight, BsCardList, BsFileText } from 'react-icons/bs';
-import { CgDropOpacity } from 'react-icons/cg';
-import { FaUser } from 'react-icons/fa';
+import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
 import { ImStack } from 'react-icons/im';
-import { IoCubeOutline } from 'react-icons/io5';
-import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
-import { Icon } from '@coop/shared/ui';
-import { en } from '@coop/shared/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { IoIosList } from 'react-icons/io';
+import { IoCubeOutline, IoPerson } from 'react-icons/io5';
+import { MdOutlineWaterDrop } from 'react-icons/md';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
+
+import { Icon } from '@coop/shared/ui';
+import { en, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface TabMenuProps {}
@@ -35,7 +34,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   },
   {
     title: 'members',
-    icon: FaUser,
+    icon: IoPerson,
     link: '/members/list',
   },
   {
@@ -51,7 +50,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
 
   {
     title: 'transactions',
-    icon: BsCardList,
+    icon: IoIosList,
     link: '/transactions',
   },
   {
@@ -66,14 +65,13 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   },
   {
     title: 'utilities',
-    icon: CgDropOpacity,
+    icon: MdOutlineWaterDrop,
     link: '/utilities',
   },
 ];
 
 // ! TODO create theme and tests
 export function TabMenu() {
-  const [tabIndex, setTabIndex] = useState(1);
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -87,38 +85,32 @@ export function TabMenu() {
   return (
     <Box
       height="50px"
-      pl="s16"
+      px="s16"
+      pt="s4"
+      pb="5px"
       background="secondary.700"
       alignItems="center"
       display="flex"
     >
-      <Tabs
-        index={currentIndex}
-        size="md"
-        variant="enclosed"
-        onChange={(index) => setTabIndex(index)}
-      >
-        <TabList>
+      <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
+        <TabList border="none" height="100%">
           {demotabs.map(({ title, icon, link }, index) => {
             const isActive = router.asPath.includes(title.toLowerCase());
             return (
               <Link href={link} key={index}>
                 <Tab
-                  // isDisabled
-                  borderRadius="br3 br3 0 0"
                   _focus={{}}
                   px="s16"
                   py="s4"
-                  gap={'s8'}
-                  _selected={{
-                    background: '#EEF2F7',
-                    color: 'gray.800',
-                  }}
-                  fontSize="r1"
-                  height="50px"
-                  color={isActive ? 'gray.800' : 'gray.0'}
                   display="flex"
-                  justifyContent="flex-start"
+                  alignItems="center"
+                  gap="s8"
+                  border="none"
+                  _selected={{
+                    bg: 'background.500',
+                    color: 'gray.800',
+                    borderRadius: 'br2',
+                  }}
                 >
                   <Icon
                     as={icon}
@@ -127,9 +119,10 @@ export function TabMenu() {
                   />
 
                   <Text
-                    mx="2"
+                    fontSize="r1"
+                    lineHeight="0"
                     color={isActive ? 'gray.800' : 'gray.0'}
-                    fontWeight={isActive ? 'InterSemiBold' : 'InterMedium'}
+                    fontWeight={isActive ? '600' : '500'}
                   >
                     {t[title]}
                   </Text>

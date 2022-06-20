@@ -1,35 +1,26 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { GrMail } from 'react-icons/gr';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
-import { FormSelect, FormInput } from '@coop/shared/form';
-import { FormFooter, SharePurchaseHistoryTable } from '@coop/myra/components';
 
+import { FormFooter } from '@coop/myra/components';
 import {
-  SharePurchaseInput,
-  useGetMemberDataQuery,
-  useSetSharePurchaseMutation,
   Payment_Mode,
+  SharePurchaseInput,
+  useSetSharePurchaseMutation,
 } from '@coop/shared/data-access';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import {
-  Avatar,
   Box,
   Container,
-  FormInput,
   Grid,
   GridItem,
-  Icon,
   MainLayout,
   Navbar,
   Select,
   SwitchTabs,
   TabMenu,
   Text,
-  TextFields,
 } from '@coop/shared/ui';
 
 // TODO! use layout
@@ -63,11 +54,11 @@ const SharePurchase = () => {
 
   const [adminFees, setAdminFees] = useState(34000.0);
   const [printingFees, setPrintingFees] = useState(540.0);
-  const { data: memberData } = useGetMemberDataQuery({
-    id: memberIdQuery ? memberIdQuery : null,
-  });
-
-  const data = memberData?.members?.individual?.get?.data?.member;
+  // const { data: memberData } = useGetMemberDataQuery({
+  //   id: memberIdQuery ? memberIdQuery : null,
+  // });
+  //
+  // const data = memberData?.members?.individual?.get?.data?.member;
 
   const switchTabsFxn = (datas: Payment_Mode) => {
     setSelectedPaymentMode(datas);
@@ -93,13 +84,7 @@ const SharePurchase = () => {
         >
           <Header />
         </Box>
-        <Container
-          minW="container.xl"
-          height="fit-content"
-          mt="130"
-          p="0"
-          pb="55px"
-        >
+        <Container minW="container.xl" p="0">
           <Box
             height="60px"
             display="flex"
@@ -108,7 +93,6 @@ const SharePurchase = () => {
             px="5"
             background="white"
             borderBottom="1px solid #E6E6E6"
-            borderTopRadius={5}
           >
             <Text fontSize="r2" fontWeight="600">
               New Share Purchase
@@ -116,7 +100,7 @@ const SharePurchase = () => {
             <CloseIcon cursor="pointer" onClick={() => router.back()} />
           </Box>
           <Box display="flex" width="100%">
-            <Box w="100%">
+            <Box w="100%" minHeight="100vh">
               <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
                 <Box w="50%">
                   <FormSelect
@@ -140,7 +124,7 @@ const SharePurchase = () => {
                   />
                 </Box>
 
-                {data && (
+                {/* {data && (
                   <Box
                     mt="s16"
                     border="1px solid"
@@ -291,7 +275,7 @@ const SharePurchase = () => {
                       <SharePurchaseHistoryTable id={memberIdQuery} />
                     </Box>
                   </Box>
-                )}
+                )}*/}
               </Box>
 
               <Box

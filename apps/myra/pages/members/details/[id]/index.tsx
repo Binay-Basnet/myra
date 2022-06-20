@@ -1,6 +1,9 @@
 import React, { ReactElement } from 'react';
 import { AiOutlinePrinter } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+
 import {
   FamilyMemberTable,
   IncomeSourceTable,
@@ -17,8 +20,6 @@ import {
   MainLayout,
   Text,
 } from '@coop/shared/ui';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 import logo from '../../../../assets/svgs/namunaLogo.svg';
 
@@ -549,7 +550,6 @@ const Details = () => {
           px="s20"
           py="s16"
           boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
-          borderTopRadius="br3"
         >
           <Box display="flex">
             <Button
