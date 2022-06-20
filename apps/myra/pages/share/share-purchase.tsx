@@ -5,15 +5,13 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
-import {
-  FormFooter,
-  SharePurchaseHistoryTable,
-  FormSelect,
-} from '@coop/myra/components';
+import { FormSelect, FormInput } from '@coop/shared/form';
+import { FormFooter, SharePurchaseHistoryTable } from '@coop/myra/components';
 import {
   useGetMemberDataQuery,
   SharePurchaseInput,
   useSetSharePurchaseMutation,
+  Payment_Mode,
 } from '@coop/shared/data-access';
 import {
   Avatar,
@@ -29,7 +27,6 @@ import {
   TabMenu,
   Text,
   TextFields,
-  FormInput,
 } from '@coop/shared/ui';
 import { useRouter } from 'next/router';
 
@@ -44,35 +41,42 @@ const Header = () => {
 };
 
 const accountList = [
-  { label: 'Bank Voucher', value: 'BankVoucher' },
-  { label: 'Account', value: 'Account' },
-  { label: 'Cash', value: 'Cash' },
+  { label: 'Bank Voucher', value: Payment_Mode.BankVoucher },
+  { label: 'Account', value: Payment_Mode.Account },
+  { label: 'Cash', value: Payment_Mode.Cash },
 ];
 
 const SharePurchase = () => {
-  const methods = useForm<SharePurchaseInput>();
   const router = useRouter();
   const { mutate } = useSetSharePurchaseMutation();
+  const methods = useForm<SharePurchaseInput>();
+  const { getValues, watch } = methods;
 
-  const { getValues } = methods;
+  const memberIdQuery = watch('memberId');
+  const noOfShares = watch('shareCount');
 
-  // const memberIdQuery = watch('memberId');
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState<Payment_Mode>(
+    Payment_Mode.BankVoucher
+  );
 
-  const [selectedTab, setSelectedTab] = useState('BankVoucher');
-
-  const [memberIdQuery, setMemberIdQuery] = useState<string | null>('');
-  const [noOfShares, setNoOfShares] = useState<number | null>();
   const [adminFees, setAdminFees] = useState(34000.0);
   const [printingFees, setPrintingFees] = useState(540.0);
-
   const { data: memberData } = useGetMemberDataQuery({
     id: memberIdQuery ? memberIdQuery : null,
   });
 
   const data = memberData?.members?.individual?.get?.data?.member;
 
-  const switchTabsFxn = (datas: string) => {
-    setSelectedTab(datas);
+  const switchTabsFxn = (datas: Payment_Mode) => {
+    setSelectedPaymentMode(datas);
+  };
+
+  const submitForm = () => {
+    const formData = {
+      ...getValues(),
+      paymentMode: selectedPaymentMode,
+    };
+    mutate({ id: '12', data: formData });
   };
 
   return (
@@ -117,7 +121,6 @@ const SharePurchase = () => {
                     name="memberId"
                     label="Select Member"
                     placeholder="Enter Member ID"
-                    onChange={(e) => console.log(e)}
                     options={[
                       {
                         label: '123',
@@ -134,14 +137,6 @@ const SharePurchase = () => {
                     ]}
                   />
                 </Box>
-                {/* <FormInput
-                  mb="20px"
-                  w="50%"
-                  name="memberId"
-                  label=" Select Member"
-                  placeholder="Enter Member ID"
-                  onChange={(e) => setMemberIdQuery(e.target.value)}
-                /> */}
 
                 {data && (
                   <Box
@@ -321,7 +316,6 @@ const SharePurchase = () => {
                       name="shareCount"
                       label="No of Shares"
                       placeholder="No of Shares"
-                      onChange={(e) => setNoOfShares(Number(e.target.value))}
                     />
                   </GridItem>
 
@@ -395,6 +389,7 @@ const SharePurchase = () => {
                                 Printing Fees
                               </Text>
                               <FormInput
+                                name="extraFee"
                                 id="printingFees"
                                 label=""
                                 placeholder="54.00"
@@ -461,7 +456,7 @@ const SharePurchase = () => {
                   }))}
                 />
 
-                {selectedTab === 'Account' && (
+                {selectedPaymentMode === 'Account' && (
                   <Box mt="s16" mb="s16" w="25%">
                     <Select
                       name="accountId"
@@ -499,7 +494,7 @@ const SharePurchase = () => {
                     </Box>
                   </Box>
                 )}
-                {selectedTab === 'BankVoucher' && (
+                {selectedPaymentMode === 'BankVoucher' && (
                   <Box
                     w="25%"
                     mt="s16"
@@ -539,7 +534,7 @@ const SharePurchase = () => {
                   </Box>
                 )}
 
-                {selectedTab === 'Cash' && (
+                {selectedPaymentMode === 'Cash' && (
                   <Box mt="s16" w="25%">
                     <FormInput
                       type="text"
@@ -553,10 +548,7 @@ const SharePurchase = () => {
             </Box>
           </Box>
           <Box position="relative" width="100%">
-            <FormFooter
-              // onClick={() => mutate({ id: '1', data: getValues() })}
-              onClick={() => console.log(getValues())}
-            />
+            <FormFooter onClick={submitForm} />
           </Box>
         </Container>
       </form>
