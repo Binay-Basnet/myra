@@ -1,0 +1,12 @@
+mutation setShareReturn($id: ID!, $data: ShareReturnInput!) {
+  share {
+    return(id: $id, data: $data) {
+      recordId
+      error {
+        ... on InvalidDataError {
+          error
+        }
+      }
+    }
+  }
+}

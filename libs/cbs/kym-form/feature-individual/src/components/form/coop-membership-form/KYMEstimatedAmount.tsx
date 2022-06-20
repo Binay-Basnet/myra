@@ -3,7 +3,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 import { Box, Checkbox, Text } from '@coop/shared/ui';
 
 const annualFamilyIncome = ['Upto 50', 'Upto 100', 'Upto 500', 'Above 500'];

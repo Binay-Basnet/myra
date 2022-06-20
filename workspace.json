@@ -14,6 +14,7 @@
     "myra-e2e": "apps/myra-e2e",
     "myra-ui-e2e": "apps/myra-ui-e2e",
     "shared-data-access": "libs/shared/data-access",
+    "shared-form": "libs/shared/form",
     "shared-ui": "libs/shared/ui",
     "shared-utils": "libs/shared/utils"
   }

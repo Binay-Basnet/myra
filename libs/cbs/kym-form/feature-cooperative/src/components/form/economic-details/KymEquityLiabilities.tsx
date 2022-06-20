@@ -1,35 +1,23 @@
-import { useMemo } from 'react';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 
 export const KymEquityLiabilities = ({ watch }: any) => {
   const shareCapital = watch('shareCapital');
   const reserveAndSurplus = watch('reserveAndSurplus');
   const savingDeposit = watch('savingDeposit');
   const loanAccount = watch('loanAccount');
-  const capitalGrant = watch('noncapitalGrant');
+  const capitalGrant = watch('capitalGrant');
   const currentLiabilities = watch('currentLiabilities');
   const nonCurrentLiabilities = watch('nonCurrentLiabilities');
 
-  const totalEquityAndLiabilities = useMemo(() => {
-    return (
-      Number(shareCapital) +
-      Number(reserveAndSurplus) +
-      Number(savingDeposit) +
-      Number(loanAccount) +
-      Number(capitalGrant) +
-      Number(currentLiabilities) +
-      Number(nonCurrentLiabilities)
-    );
-  }, [
-    shareCapital,
-    reserveAndSurplus,
-    savingDeposit,
-    loanAccount,
-    capitalGrant,
-    currentLiabilities,
-    nonCurrentLiabilities,
-  ]);
+  const totalEquityAndLiabilities =
+    Number(shareCapital) +
+    Number(reserveAndSurplus) +
+    Number(savingDeposit) +
+    Number(loanAccount) +
+    Number(capitalGrant) +
+    Number(currentLiabilities) +
+    Number(nonCurrentLiabilities);
 
   return (
     <Box id="Equity and Liabilities" display="flex" flexDirection="column">
@@ -277,8 +265,8 @@ export const KymEquityLiabilities = ({ watch }: any) => {
             type="text"
             name="totalEquityAndLiabilities"
             value={
-              totalEquityAndLiabilities === NaN
-                ? 0.0
+              isNaN(totalEquityAndLiabilities)
+                ? '0.00'
                 : totalEquityAndLiabilities
             }
             placeholder="Enter Total Equity and liabilities"

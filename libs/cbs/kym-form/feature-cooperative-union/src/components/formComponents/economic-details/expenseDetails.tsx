@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 
 export const ExpenseDetails = ({ watch }: any) => {
   //   const cashEquivalent = watch('cashAndCashEquivalent');

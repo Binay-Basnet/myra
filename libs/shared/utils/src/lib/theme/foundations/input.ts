@@ -14,164 +14,73 @@ const baseStyle: PartsStyleObject<typeof parts> = {
     position: 'relative',
     appearance: 'none',
     transitionProperty: 'common',
-    borderRadius: 'br2',
     transitionDuration: 'normal',
   },
 };
 
 const size: Record<string, SystemStyleObject> = {
-  lg: {
-    fontSize: 'lg',
-    px: 4,
-    h: 12,
-  },
-
-  md: {
+  default: {
+    borderRadius: 'br2',
     fontSize: 'r1',
+    fontWeight: '400',
+    lineHeight: '1.5',
     px: 's12',
     h: '44px',
-  },
-
-  sm: {
-    fontSize: 'sm',
-    px: 3,
-    h: 8,
-  },
-
-  xs: {
-    fontSize: 'xs',
-    px: 2,
-    h: 6,
   },
 };
 
 const sizes: Record<string, PartsStyleObject<typeof parts>> = {
-  lg: {
-    field: size?.['lg'],
-    addon: size?.['lg'],
-  },
-  md: {
-    field: size?.['md'],
-    addon: size?.['md'],
-  },
-  sm: {
-    field: size?.['sm'],
-    addon: size?.['sm'],
-  },
-  xs: {
-    field: size?.['xs'],
-    addon: size?.['xs'],
+  default: {
+    field: size['default'],
+    addon: size['default'],
   },
 };
 
-function getDefaults(props: Record<string, any>) {
-  const { focusBorderColor: fc, errorBorderColor: ec } = props;
-  return {
-    focusBorderColor: fc || mode('primary.500', 'primary.300')(props),
-    errorBorderColor: ec || mode('red.500', 'red.300')(props),
-  };
-}
-
 const variantOutline: PartsStyleFunction<typeof parts> = (props) => {
   const { theme } = props;
-  const { focusBorderColor: fc, errorBorderColor: ec } = getDefaults(props);
+  // const { focusBorderColor: fc, errorBorderColor: ec } = getDefaults(props);
 
   return {
     field: {
       border: '1px solid',
-      borderColor: 'inherit',
-      bg: 'inherit',
+      borderColor: 'gray.300',
+      bg: 'gray.0',
       _hover: {
-        borderColor: mode('gray.300', 'whiteAlpha.400')(props),
+        borderColor: mode('gray.500', 'whiteAlpha.400')(props),
       },
+      _active: {
+        borderColor: mode('primary.500', 'primary.400')(props),
+      },
+
       _readOnly: {
         boxShadow: 'none !important',
         userSelect: 'all',
       },
       _disabled: {
-        opacity: 0.4,
+        opacity: 1,
+        borderColor: mode('gray.500', 'whiteAlpha.400')(props),
+        bg: 'gray.100',
         cursor: 'not-allowed',
       },
       _invalid: {
-        borderColor: getColor(theme, ec),
-        boxShadow: `0 0 0 1px ${getColor(theme, ec)}`,
+        borderColor: 'danger.500',
+        boxShadow: 'none',
       },
       _focus: {
         zIndex: 1,
-        borderColor: getColor(theme, fc),
-
-        boxShadow: `0 0 0 0.5px ${getColor(theme, fc)}`,
+        borderColor: mode('primary.500', 'primary.400')(props),
+        boxShadow: `0 0 0 2px ${getColor(theme, 'primary.300')}`,
       },
-    },
-  };
-};
-
-const variantFilled: PartsStyleFunction<typeof parts> = (props) => {
-  const { theme } = props;
-  const { focusBorderColor: fc, errorBorderColor: ec } = getDefaults(props);
-
-  return {
-    field: {
-      border: '2px solid',
-      borderColor: 'transparent',
-
-      _hover: {
-        bg: mode('gray.200', 'whiteAlpha.100')(props),
-      },
-      _readOnly: {
-        boxShadow: 'none !important',
-        userSelect: 'all',
-      },
-      _disabled: {
-        opacity: 0.4,
-        cursor: 'not-allowed',
-      },
-      _invalid: {
-        borderColor: getColor(theme, ec),
-      },
-      _focus: {
-        bg: 'transparent',
-        borderColor: getColor(theme, fc),
+      _focusVisible: {
+        zIndex: 1,
+        borderColor: mode('primary.500', 'primary.400')(props),
+        boxShadow: `0 0 0 2px ${getColor(theme, 'primary.300')}`,
       },
     },
     addon: {
-      border: '2px solid',
-      borderColor: 'transparent',
-      bg: mode('gray.100', 'whiteAlpha.50')(props),
-    },
-  };
-};
-
-const variantFlushed: PartsStyleFunction<typeof parts> = (props) => {
-  const { theme } = props;
-  const { focusBorderColor: fc, errorBorderColor: ec } = getDefaults(props);
-
-  return {
-    field: {
-      borderBottom: '1px solid',
-      borderColor: 'inherit',
-      borderRadius: 0,
-      px: 0,
-      bg: 'transparent',
-      _readOnly: {
-        boxShadow: 'none !important',
-        userSelect: 'all',
-      },
-      _invalid: {
-        borderColor: getColor(theme, ec),
-        boxShadow: `0px 1px 0px 0px ${getColor(theme, ec)}`,
-      },
-      _focus: {
-        borderColor: getColor(theme, fc),
-        boxShadow: `0px 1px 0px 0px ${getColor(theme, fc)}`,
-      },
-    },
-    addon: {
-      borderBottom: '2px solid',
-      borderColor: 'inherit',
-      borderRadius: 0,
-      px: 0,
-      bg: 'transparent',
+      border: '1px solid',
+      borderColor: mode('inherit', 'whiteAlpha.50')(props),
+      bg: mode('gray.100', 'whiteAlpha.300')(props),
     },
   };
 };
@@ -187,17 +96,15 @@ const variantUnstyled: PartsStyleObject<typeof parts> = {
     px: 0,
     height: 'auto',
   },
-};
+}
 
 const variants = {
   outline: variantOutline,
-  filled: variantFilled,
-  flushed: variantFlushed,
   unstyled: variantUnstyled,
 };
 
 const defaultProps = {
-  size: 'md',
+  size: 'default',
   variant: 'outline',
 };
 

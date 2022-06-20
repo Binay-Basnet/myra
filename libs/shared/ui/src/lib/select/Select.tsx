@@ -1,8 +1,9 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { ActionMeta, Props, Select as ChakraSelect } from 'chakra-react-select';
 
 import { components } from './SelectComponents';
 import { chakraStyles } from './SelectStyles';
+import TextFields from '../text-fields/TextFields';
 
 export interface SelectOption {
   label: string;
@@ -12,25 +13,28 @@ export interface SelectOption {
 export interface SelectProps extends Omit<Props, 'size' | 'onChange'> {
   label?: string;
   options: SelectOption[];
+  helperText?: string;
+  errorText?: string;
   // // TODO Change this any.
   onChange?:
     | ((value: SelectOption | null, meta: ActionMeta<SelectOption>) => void)
     | any;
 }
 
-export function Select({ label, isMulti, options, ...rest }: SelectProps) {
+export function Select({
+  label,
+  isMulti,
+  options,
+  errorText,
+  helperText,
+  ...rest
+}: SelectProps) {
   return (
-    <Flex direction="column">
+    <Flex direction="column" gap="s4">
       {label && (
-        <Text
-          fontSize="s3"
-          color="neutralColorLight.Gray-70"
-          fontWeight="500"
-          mb="s4"
-          textTransform="capitalize"
-        >
+        <TextFields variant="formLabel" color="gray.700">
           {label}
-        </Text>
+        </TextFields>
       )}
 
       <ChakraSelect
@@ -46,6 +50,16 @@ export function Select({ label, isMulti, options, ...rest }: SelectProps) {
         components={components}
         {...rest}
       />
+
+      {errorText ? (
+        <TextFields variant="formHelper" color="danger.500">
+          {errorText}
+        </TextFields>
+      ) : helperText ? (
+        <TextFields variant="formHelper" color="gray.700">
+          {helperText}
+        </TextFields>
+      ) : null}
     </Flex>
   );
 }

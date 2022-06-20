@@ -13,7 +13,7 @@ import {
   FormInput,
   FormSelect,
   FormSwitch,
-} from '@coop/myra/components';
+} from '@coop/shared/form';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   Box,
@@ -44,8 +44,12 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentStateId');
-  const currentDistrictId = watch('permanentDistrictId');
+  const currentProvinceId = watch(
+    `accountOperatorsDetails.${index}.permanentStateId`
+  );
+  const currentDistrictId = watch(
+    `accountOperatorsDetails.${index}.permanentDistrictId`
+  );
 
   const districtList = useMemo(
     () =>
@@ -62,8 +66,12 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
   );
 
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryStateId');
-  const currentTemptDistrictId = watch('temporaryDistrictId');
+  const currentTempProvinceId = watch(
+    `accountOperatorsDetails.${index}.temporaryStateId`
+  );
+  const currentTemptDistrictId = watch(
+    `accountOperatorsDetails.${index}.temporaryDistrictId`
+  );
 
   const districtTempList = useMemo(
     () =>

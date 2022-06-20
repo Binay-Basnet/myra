@@ -1,0 +1,12 @@
+mutation setSharePurchase($id: ID!, $data: SharePurchaseInput!) {
+  share {
+    purchase(id: $id, data: $data) {
+      recordId
+      error {
+        ... on InvalidDataError {
+          error
+        }
+      }
+    }
+  }
+}

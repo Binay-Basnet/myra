@@ -8,7 +8,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/myra/components';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -135,6 +135,11 @@ export const MemberKYMMainOccupation = ({ control, watch }: any) => {
         </Button>
       </DynamicBoxGroupContainer>
       <Box display="flex" flexDirection="row">
+        {/* <FormSwitch
+          control={control}
+          name="isPermanentAndTemporaryAddressSame"
+          label="Enable for Foreign Employment"
+        /> */}
         <Switch />
         <Text
           ml="s20"

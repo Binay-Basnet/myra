@@ -2,7 +2,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormFileInput, FormInput } from '@coop/myra/components';
+import { FormFileInput, FormInput } from '@coop/shared/form';
 import {
   Box,
   Checkbox,

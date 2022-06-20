@@ -1,6 +1,6 @@
 import React from 'react';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormFileInput } from '@coop/myra/components';
+import { FormInput, FormFileInput } from '@coop/shared/form';
 import { Text, Box } from '@coop/shared/ui';
 import { Grid, GridItem } from '@chakra-ui/react';
 

@@ -5,7 +5,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 
 export const KymAssestsAndtarget = ({ watch }: any) => {
   const cashCurrent = watch('cashAndCashEquivalentCurrent');

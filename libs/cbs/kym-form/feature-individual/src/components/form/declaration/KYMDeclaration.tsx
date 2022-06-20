@@ -4,7 +4,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormTextArea } from '@coop/myra/components';
+import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
   Box,
   Checkbox,

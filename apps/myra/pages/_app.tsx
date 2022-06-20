@@ -1,5 +1,5 @@
 import type { ReactElement, ReactNode } from 'react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
@@ -35,15 +35,15 @@ const queryClient = new QueryClient({
 });
 
 function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(
-    (typeof window !== 'undefined' && localStorage.getItem('isLoggedIn')) ||
-      false
-  );
-  // React.useEffect(() => {
-  //   setIsLoggedIn(
-  //     typeof window !== 'undefined' && localStorage.getItem('isLoggedIn')
-  //   );
-  // }, [isLoggedIn]);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+    typeof window !== 'undefined' &&
+      setIsLoggedIn(Boolean(isLoggedIn || false));
+  }, []);
+
   const getLayout = Component.getLayout || ((page) => page);
   return (
     <Provider store={store}>
@@ -52,12 +52,14 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
           <Head>
             <title>Myra | Cloud Cooperative Platform</title>
           </Head>
-          {isLoggedIn === 'true' ? (
+          {isLoggedIn === true ? (
             <main className="app">
               {getLayout(<Component {...pageProps} />)}
             </main>
           ) : (
-            <Login />
+            <main className="app">
+              <Login />
+            </main>
           )}
         </ChakraProvider>
         <ReactQueryDevtools />

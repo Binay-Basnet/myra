@@ -4,7 +4,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormEmailInput, FormPhoneNumber } from '@coop/myra/components';
+import { FormEmailInput, FormPhoneNumber } from '@coop/shared/form';
 import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 

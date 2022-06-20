@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { GrClose } from 'react-icons/gr';
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 import {
   Box,
   Button,

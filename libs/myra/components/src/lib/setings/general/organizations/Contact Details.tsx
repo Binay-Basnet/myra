@@ -1,9 +1,9 @@
 import { Control } from 'react-hook-form';
-import { Box, Grid, GridItem } from '@coop/shared/ui';
 
-import { FormEmailInput } from '../../../newFormComponents/FormEmailInput';
-import { FormPhoneNumber } from '../../../newFormComponents/FormPhoneNumber';
-import { FormTextInput } from '../../../newFormComponents/FormTextInput';
+import { FormEmailInput } from '@coop/shared/form';
+import { FormPhoneNumber } from '@coop/shared/form';
+import { FormInput } from '@coop/shared/form';
+import { Box, Grid, GridItem } from '@coop/shared/ui';
 
 type Props = {
   control: Control<any>;
@@ -32,7 +32,7 @@ export const ContactDetailsOrganization = ({ control }: Props) => {
         </GridItem>
         <GridItem>
           {' '}
-          <FormTextInput
+          <FormInput
             label="Website"
             placeholder="Website Address"
             name={'website'}

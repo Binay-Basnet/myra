@@ -1,6 +1,5 @@
-import { useMemo } from 'react';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 
 export const KymCoopAssets = ({ watch }: any) => {
   const cashEquivalent = watch('cashAndCashEquivalent');
@@ -10,23 +9,13 @@ export const KymCoopAssets = ({ watch }: any) => {
   const currentAssets = watch('nonCurrentAssets');
   const nonCurrentAssets = watch('otherNonCurrentAssets');
 
-  const totalAssets = useMemo(() => {
-    return (
-      Number(cashEquivalent) +
-      Number(bank) +
-      Number(investments) +
-      Number(loan) +
-      Number(currentAssets) +
-      Number(nonCurrentAssets)
-    );
-  }, [
-    cashEquivalent,
-    bank,
-    investments,
-    loan,
-    currentAssets,
-    nonCurrentAssets,
-  ]);
+  const totalAssets =
+    Number(cashEquivalent) +
+    Number(bank) +
+    Number(investments) +
+    Number(loan) +
+    Number(currentAssets) +
+    Number(nonCurrentAssets);
 
   return (
     <Box id="Assets" display="flex" flexDirection="column">
@@ -248,7 +237,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             textAlign="right"
             type="text"
             name="totalAssets"
-            value={totalAssets}
+            value={isNaN(totalAssets) ? '0.00' : totalAssets}
             placeholder="Total assets"
           />
         </GridItem>

@@ -3,7 +3,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 
 export const KymCoopContactDetails = () => {

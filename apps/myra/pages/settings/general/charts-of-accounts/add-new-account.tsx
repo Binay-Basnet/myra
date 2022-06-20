@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { CloseIcon } from '@chakra-ui/icons';
 import { FormControl } from '@chakra-ui/react';
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 import { KymIndMemberInput } from '@coop/shared/data-access';
 import {
   AmountInput,
@@ -22,14 +22,14 @@ import { useRouter } from 'next/router';
 import SettingsFormLayout from '../../../../components/SettingsLayout/SettingsFormLayout';
 
 const list = [
-  { key: 'yes', value: 'Yes' },
-  { key: 'no', value: 'No' },
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
 ];
 
 const accountList = [
-  { key: 'cash', value: 'Cash' },
-  { key: 'bank', value: 'Bank' },
-  { key: 'journal', value: 'Journal' },
+  { label: 'Cash', value: 'cash' },
+  { label: 'Bank', value: 'bank' },
+  { label: 'Journal', value: 'journal' },
 ];
 
 const AddNewAccount = () => {

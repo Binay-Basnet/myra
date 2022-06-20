@@ -9,12 +9,11 @@ import {
 import {
   AddressOrganization,
   ContactDetailsOrganization,
-  FormFileInput,
-  FormTextInput,
   MainContactPersonOrganization,
   RadioOrganization,
   RegistrationDetailsOrganization,
 } from '@coop/myra/components';
+import { FormFileInput, FormInput } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 
 const Organization = () => {
@@ -66,7 +65,7 @@ const Organization = () => {
               <Box py={'s24'}>
                 <Text fontWeight="600">BASIC DETAILS</Text>
                 <Box mt="s24" w="100%">
-                  <FormTextInput
+                  <FormInput
                     label="Organization Name"
                     placeholder="Enter name"
                     control={control}

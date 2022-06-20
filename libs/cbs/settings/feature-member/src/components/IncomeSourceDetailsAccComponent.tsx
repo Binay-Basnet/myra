@@ -5,12 +5,11 @@ import {
   Droppable,
   DropResult,
 } from 'react-beautiful-dnd';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { IoClose } from 'react-icons/io5';
 import { AddIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
 
-import { FormCheckboxGroup } from '@coop/myra/components';
 import {
   Field_Types,
   KymOption,
@@ -21,6 +20,7 @@ import {
   useGetKymIndItemDetailsQuery,
   useToggleOtherOptionMutation,
 } from '@coop/shared/data-access';
+import { FormCheckboxGroup } from '@coop/shared/form';
 import {
   AccordionPanel,
   Box,
@@ -32,7 +32,11 @@ import {
 
 import { KYMSingleItem } from './KYMSingleItem';
 
-export const IncomeSourceDetailsAccComponent = ({ isExpanded }: any) => {
+export const IncomeSourceDetailsAccComponent = ({
+  isExpanded,
+}: {
+  isExpanded: boolean;
+}) => {
   const [fieldItems, setFieldItems] = useState<KymOption[]>([]);
 
   const [hasOtherField, setHasOtherField] = useState(false);
@@ -78,17 +82,13 @@ export const IncomeSourceDetailsAccComponent = ({ isExpanded }: any) => {
   const field =
     data?.settings?.general?.KYM?.individual?.field?.list?.data?.[0];
 
-  const nameDependOn =
-    familyIncome?.settings?.general?.KYM?.individual?.field?.list?.data?.[0]?.options?.map(
-      (d) => (field?.dependsOn?.includes(d.id) ? d.name : false)
-    );
-
-  const { control, reset, getValues } = useForm<any>({
+  const methods = useForm<any>({
     defaultValues: {
-      dependsOn: nameDependOn?.filter(Boolean),
+      dependsOn: field?.dependsOn,
     },
   });
 
+  const { control, reset, getValues } = methods;
   const handleDragEnd = async (result: DropResult) => {
     const items = Array.from(fieldItems);
     const [reorderedItem] = items.splice(result.source.index, 1);
@@ -105,7 +105,7 @@ export const IncomeSourceDetailsAccComponent = ({ isExpanded }: any) => {
   };
 
   useEffect(() => {
-    reset({ dependsOn: nameDependOn?.filter(Boolean) });
+    reset({ dependsOn: field?.dependsOn });
   }, [isLoading]);
 
   if (isLoading) {
@@ -250,12 +250,7 @@ export const IncomeSourceDetailsAccComponent = ({ isExpanded }: any) => {
 
         <form
           onChange={async () => {
-            const idArray =
-              familyIncome?.settings?.general?.KYM?.individual?.field?.list?.data?.[0]?.options?.map(
-                (d) => (getValues().dependsOn.includes(d.name) ? d.id : '')
-              ) ?? [];
-
-            const ids = idArray.filter(Boolean);
+            const ids = methods.getValues().dependsOn;
 
             field &&
               (await addConditionOption({
@@ -264,15 +259,18 @@ export const IncomeSourceDetailsAccComponent = ({ isExpanded }: any) => {
               }));
           }}
         >
-          <FormCheckboxGroup
-            control={control}
-            name="dependsOn"
-            list={[
-              ...(familyIncome?.settings?.general?.KYM?.individual?.field?.list?.data?.[0]?.options?.map(
-                (d) => d.name
-              ) ?? []),
-            ]}
-          />
+          <FormProvider {...methods}>
+            <FormCheckboxGroup
+              control={control}
+              name="dependsOn"
+              orientation="column"
+              list={[
+                ...(familyIncome?.settings?.general?.KYM?.individual?.field?.list?.data?.[0]?.options?.map(
+                  (d) => ({ label: d.name, value: d.id })
+                ) ?? []),
+              ]}
+            />
+          </FormProvider>
         </form>
       </AccordionPanel>
     </>

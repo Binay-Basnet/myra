@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Checkbox as ChakraCheckbox,
   CheckboxProps as ChakraCheckboxProps,
@@ -7,14 +8,16 @@ import TextFields from '../text-fields/TextFields';
 
 /* eslint-disable-next-line */
 export interface CheckboxProps extends ChakraCheckboxProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  label?: string;
 }
 
 export function Checkbox(props: CheckboxProps) {
-  const { children, ...rest } = props;
+  const { children, label, ...rest } = props;
+
   return (
     <ChakraCheckbox {...rest}>
-      <TextFields variant="formInput">{children}</TextFields>
+      {label ? <TextFields variant="formInput">{label}</TextFields> : children}
     </ChakraCheckbox>
   );
 }
