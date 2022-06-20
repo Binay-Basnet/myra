@@ -4,7 +4,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { FormInput, FormSelect } from '@coop/myra/components';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text, Button, Icon } from '@coop/shared/ui';
 import { FaMap } from 'react-icons/fa';
 

@@ -1,7 +1,7 @@
 import { Control } from 'react-hook-form';
 import { Box, Grid, GridItem } from '@coop/shared/ui';
 
-import { FormTextInput } from '../../../newFormComponents';
+import { FormInput } from '@coop/shared/form';
 
 type Props = {
   control: Control<any>;
@@ -12,7 +12,7 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
     <Box>
       <Grid templateColumns="repeat(3, 1fr)" gap="s16">
         <GridItem colSpan={2}>
-          <FormTextInput
+          <FormInput
             label="Regd Office"
             placeholder="Regd Office"
             control={control}
@@ -20,7 +20,7 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
           />
         </GridItem>
         <GridItem>
-          <FormTextInput
+          <FormInput
             label="Regd No"
             placeholder="Regd No"
             control={control}
@@ -29,7 +29,7 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
         </GridItem>
       </Grid>
       <Box mt="s16">
-        <FormTextInput
+        <FormInput
           label="Regd Address"
           placeholder="Regd Address"
           control={control}
@@ -38,7 +38,7 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
       </Box>
       <Grid templateColumns="repeat(3, 1fr)" gap="s16" mt={'s16'}>
         <GridItem>
-          <FormTextInput
+          <FormInput
             label="PAN/VAT No"
             placeholder="PAN/VAT No"
             control={control}

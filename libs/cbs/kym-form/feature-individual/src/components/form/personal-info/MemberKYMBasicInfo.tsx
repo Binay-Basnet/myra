@@ -1,11 +1,12 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
+
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/myra/components';
 import { KymIndMemberInput } from '@coop/shared/data-access';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 
 interface IMemberKYMBasicInfo {

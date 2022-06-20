@@ -17,7 +17,6 @@ export * from './lib/divider/Divider';
 export * from './lib/email-input/EmailInput';
 export * from './lib/email-input/EmailInput';
 export * from './lib/file-input/FileInput';
-export * from './lib/form-input/FormInput';
 export * from './lib/grid/Grid';
 export * from './lib/grid-item/GridItem';
 export * from './lib/icon/Icon';

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 import { Box, Checkbox, Grid, Text } from '@coop/shared/ui';
 
 const identificationDetails = [
@@ -28,6 +29,7 @@ export const MemberKYMIdentificationDetails = ({ control }: any) => {
             id="identificationDetailsPersonal"
             mr={5}
             key={index}
+            label={item}
             onChange={() => {
               if (currentShownDetails.includes(item)) {
                 setCurrentDetailsShown((prev) =>
@@ -37,9 +39,7 @@ export const MemberKYMIdentificationDetails = ({ control }: any) => {
                 setCurrentDetailsShown((prev) => [...prev, item]);
               }
             }}
-          >
-            <Text fontSize="s3">{item}</Text>
-          </Checkbox>
+          />
         ))}
       </Box>
 

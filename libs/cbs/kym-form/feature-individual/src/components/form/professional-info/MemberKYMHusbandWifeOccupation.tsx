@@ -8,7 +8,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/myra/components';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
 
 const HusbandWifeOccupation = ({

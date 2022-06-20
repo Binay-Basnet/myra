@@ -1,5 +1,5 @@
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
-import { FormInput } from '@coop/myra/components';
+import { FormInput } from '@coop/shared/form';
 
 export const KymCoopAssets = ({ watch }: any) => {
   const cashEquivalent = watch('cashAndCashEquivalent');

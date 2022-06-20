@@ -1,8 +1,8 @@
 import { Control } from 'react-hook-form';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { Box, Grid, GridItem } from '@coop/shared/ui';
 
-import { FormSelect, FormTextInput } from '../../../newFormComponents';
+import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import { FormSelect, FormInput } from '@coop/shared/form';
+import { Box, Grid, GridItem } from '@coop/shared/ui';
 
 const options = [
   { label: 'Option 1', value: '1' },
@@ -64,9 +64,6 @@ export const AddressOrganization = ({ control }: Props) => {
             label="province"
             options={options}
             control={control}
-            onChange={(e) => {
-              console.log('event', e);
-            }}
             name="organizationProvince"
           />
         </GridItem>
@@ -90,7 +87,7 @@ export const AddressOrganization = ({ control }: Props) => {
         </GridItem>
         <GridItem>
           {' '}
-          <FormTextInput
+          <FormInput
             label="Ward No"
             placeholder="Enter Ward"
             control={control}
@@ -99,7 +96,7 @@ export const AddressOrganization = ({ control }: Props) => {
         </GridItem>
         <GridItem>
           {' '}
-          <FormTextInput
+          <FormInput
             label="Locality"
             placeholder="Locality"
             control={control}

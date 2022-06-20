@@ -2,7 +2,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormFileInput } from '@coop/myra/components';
+import { FormFileInput } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 
 export const DocumentDeclarationInstitution = () => {

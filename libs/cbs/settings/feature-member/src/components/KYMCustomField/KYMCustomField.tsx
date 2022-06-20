@@ -6,13 +6,13 @@ import { useQueryClient } from 'react-query';
 import { Skeleton } from '@chakra-ui/react';
 import { debounce } from 'lodash';
 
-import { FormInput, FormSelect } from '@coop/myra/components';
 import {
   Kym_Field_Type,
   useAddCustomFieldMutation,
   useGetCustomFieldsQuery,
   useUpdateCustomFieldMutation,
 } from '@coop/shared/data-access';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Accordion,
   AccordionButton,
@@ -231,7 +231,7 @@ export const KYMCustomField = ({
               <FormInput
                 name="name"
                 placeholder="Name of Field"
-                textHelper="This name will appear in the KYM Form"
+                helperText="This name will appear in the KYM Form"
               />
             </Box>
             <Box px="s12" w="50%">

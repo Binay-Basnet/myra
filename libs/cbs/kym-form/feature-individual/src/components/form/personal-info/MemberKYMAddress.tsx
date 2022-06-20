@@ -5,7 +5,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormSwitch } from '@coop/myra/components';
+import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   KymIndMemberInput,
   useAllAdministrationQuery,

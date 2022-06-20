@@ -1,0 +1,23 @@
+{
+  "root": "libs/shared/form",
+  "sourceRoot": "libs/shared/form/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/form/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/form"],
+      "options": {
+        "jestConfig": "libs/shared/form/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

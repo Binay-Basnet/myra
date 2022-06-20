@@ -1,12 +1,10 @@
 import React from 'react';
 import { Control } from 'react-hook-form';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckboxGroup } from '@coop/myra/components';
-import { Text } from '@coop/shared/ui';
 
-interface IMemberKYMProfession {
-  control: Control<any>;
-}
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { KymIndProfessionalStatus } from '@coop/shared/data-access';
+import { FormCheckboxGroup } from '@coop/shared/form';
+import { Text } from '@coop/shared/ui';
 
 const occupationDetails = [
   'Agriculture',
@@ -18,7 +16,7 @@ const occupationDetails = [
   'Foreign Employment',
 ];
 
-export const MemberKYMProfession = ({ control }: IMemberKYMProfession) => {
+export const MemberKYMProfession = () => {
   return (
     <GroupContainer id="Profession" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
@@ -26,22 +24,13 @@ export const MemberKYMProfession = ({ control }: IMemberKYMProfession) => {
       </Text>
 
       <FormCheckboxGroup
-        control={control}
         name={'profession'}
         showOther
-        list={occupationDetails}
+        list={occupationDetails.map((detail) => ({
+          label: detail,
+          value: detail,
+        }))}
       />
-
-      {/* <Box display="flex" flexWrap="wrap" columnGap="s48" rowGap="s16">
-        {occupationDetails.map((item, index) => (
-          <Checkbox key={index}>
-            <Text fontSize="s3">{item}</Text>
-          </Checkbox>
-        ))}
-        <Checkbox>
-          <Input type="text" placeholder="other" />
-        </Checkbox>
-      </Box>*/}
     </GroupContainer>
   );
 };

@@ -2,7 +2,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormRadioGroup } from '@coop/myra/components';
+import { FormInput, FormRadioGroup } from '@coop/shared/form';
 // import { InstitutionExpectedMonthlyTurnover } from '@coop/shared/data-access';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 

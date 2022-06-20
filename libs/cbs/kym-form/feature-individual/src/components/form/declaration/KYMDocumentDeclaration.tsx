@@ -1,6 +1,6 @@
 import React from 'react';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormFileInput } from '@coop/myra/components';
+import { FormFileInput } from '@coop/shared/form';
 import { Grid, Text } from '@coop/shared/ui';
 
 export const KYMDocumentDeclaration = ({ control }: any) => {

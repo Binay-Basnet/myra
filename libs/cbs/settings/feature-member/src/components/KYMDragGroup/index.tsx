@@ -201,7 +201,7 @@ export const KYMDragGroup = ({
                 (await mutateAsync({
                   fieldId: field.id,
                   optionName: '',
-                  optionEnabled: false,
+                  optionEnabled: true,
                   optionFieldType:
                     field.fieldType === 'GROUP' ? Field_Types.TextInput : null,
                 }));

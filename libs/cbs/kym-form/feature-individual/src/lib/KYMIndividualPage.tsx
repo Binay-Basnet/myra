@@ -193,7 +193,7 @@ export function KYMIndividualPage() {
                         2. Professional Information
                       </Text>
                       <ContainerWithDivider>
-                        <MemberKYMProfession control={control} />
+                        <MemberKYMProfession />
                         <MemberKYMMainOccupation
                           control={control}
                           watch={watch}
