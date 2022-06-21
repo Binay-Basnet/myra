@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Control } from 'react-hook-form';
 
 import {
@@ -14,11 +14,9 @@ import {
 } from '@coop/shared/form';
 import {
   Box,
-  Checkbox,
   Grid,
   GridItem,
   RadioGroup,
-  SwitchTabs,
   Text,
   TextFields,
 } from '@coop/shared/ui';
@@ -30,11 +28,11 @@ interface IKYMDeclaration {
 const details = ['Citizen', 'Permanent Resident', 'Resident'];
 const booleanList = [
   {
-    label: 'yes',
+    label: 'Yes',
     value: 'Yes',
   },
   {
-    label: 'no',
+    label: 'No',
     value: 'No',
   },
 ];
