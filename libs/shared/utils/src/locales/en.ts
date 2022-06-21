@@ -1,4 +1,4 @@
-const en = {
+const en: Record<string, string> = {
   home: 'Home',
   dashboard: 'Dashboard',
 

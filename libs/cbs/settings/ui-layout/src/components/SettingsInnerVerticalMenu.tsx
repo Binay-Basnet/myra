@@ -3,11 +3,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
-// TODO! ( REMOVE THIS COMPONENT )
-
 const TabCol = chakra(Tab, {
   baseStyle: {
-    color: 'gray.600',
+    color: '#37474F',
     height: '48px',
     fontSize: '14px',
     fontWeight: '500',
@@ -15,10 +13,14 @@ const TabCol = chakra(Tab, {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    _selected: {
+      color: 'gray.800',
+      bg: '#EEF2F7',
+      fontWeight: '600',
+    },
     _focus: {
       boxShadow: 'none',
     },
-    _selected: { color: '#37474F', bg: 'gray.200' },
   },
 });
 
@@ -29,11 +31,14 @@ interface IVerticalSidebarProps {
   }[];
 }
 
-export const VerticalSideBar = ({ tablinks }: IVerticalSidebarProps) => {
-  const route = useRouter();
+export const SettingsInnerVerticalMenu = ({
+  tablinks,
+}: IVerticalSidebarProps) => {
+  const router = useRouter();
+
   const currentIndex = useMemo(
-    () => tablinks.findIndex((link) => route.pathname.includes(link.to)),
-    [route.pathname]
+    () => tablinks.findIndex((link) => router.pathname === link.to),
+    [router.pathname]
   );
 
   return (
@@ -41,8 +46,8 @@ export const VerticalSideBar = ({ tablinks }: IVerticalSidebarProps) => {
       <Tabs variant="unstyled" index={currentIndex}>
         {tablinks.map(({ title, to }, index) => {
           return (
-            <Link href={to} key={`${title}${index}`}>
-              <TabCol>
+            <Link href={to}>
+              <TabCol key={`${title}${index}`}>
                 <Text>{title}</Text>
               </TabCol>
             </Link>

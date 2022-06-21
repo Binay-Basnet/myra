@@ -6,10 +6,11 @@ import {
   IoGridOutline,
   IoPerson,
 } from 'react-icons/io5';
-import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
-import { Icon } from '@coop/shared/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
+
+import { Icon } from '@coop/shared/ui';
 
 const demoTabs: { title: string; icon: IconType; link: string }[] = [
   {
@@ -53,13 +54,16 @@ export const SettingsTabMenu = () => {
   return (
     <Box
       height="50px"
-      p="0 s16"
+      px="s16"
+      pt="s4"
+      pb="5px"
       background="secondary.700"
       alignItems="center"
       justifyContent={'flex-start'}
       display="flex"
+      gap="s8"
     >
-      <Box w="10%" px="s16">
+      <Box w="200px">
         <Text
           fontWeight={'600'}
           fontSize="16px"
@@ -70,8 +74,8 @@ export const SettingsTabMenu = () => {
         </Text>
       </Box>
 
-      <Tabs index={currentIndex} size="md" variant="enclosed">
-        <TabList>
+      <Tabs index={currentIndex} height="100%" size="md" variant="enclosed">
+        <TabList border="none" height="100%">
           {demoTabs.map(({ title, icon, link }, index) => {
             const isActive =
               route.asPath === '/settings/general/organization' && index === 0
@@ -80,21 +84,18 @@ export const SettingsTabMenu = () => {
             return (
               <Link href={link} key={index}>
                 <Tab
-                  // isDisabled
-                  borderRadius="br3 br3 0 0"
-                  // _focus={{ borderColor: 'primary.500' }}
-                  p="s4 s16"
-                  _selected={{
-                    background: '#EEF2F7',
-                    color: 'gray.800',
-                  }}
-                  fontSize="r1"
-                  height="50px"
-                  color={isActive ? 'gray.800' : 'gray.0'}
+                  _focus={{}}
+                  px="s16"
+                  py="s4"
                   display="flex"
-                  justifyContent="flex-start"
                   alignItems="center"
-                  gap="s12"
+                  gap="s8"
+                  border="none"
+                  _selected={{
+                    bg: 'background.500',
+                    color: 'gray.800',
+                    borderRadius: 'br2',
+                  }}
                 >
                   <Icon
                     as={icon}
@@ -103,8 +104,10 @@ export const SettingsTabMenu = () => {
                   />
 
                   <Text
+                    fontSize="r1"
+                    lineHeight="0"
                     color={isActive ? 'gray.800' : 'gray.0'}
-                    fontWeight={isActive ? 'InterSemiBold' : 'InterMedium'}
+                    fontWeight={isActive ? '600' : '500'}
                   >
                     {title}
                   </Text>

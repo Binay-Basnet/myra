@@ -1,4 +1,4 @@
-const ne = {
+const ne: Record<string, string> = {
   home: 'गृहपृष्ठ',
   dashboard: 'ड्यासबोर्ड',
 

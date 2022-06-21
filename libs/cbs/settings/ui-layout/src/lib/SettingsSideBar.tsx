@@ -41,16 +41,16 @@ const tabList: TabList[] = [
 export const SettingSideBar = () => {
   return (
     <Box
-      w="13%"
+      position="fixed"
+      w="275px"
       display="flex"
       flexDirection="column"
       gap="s16"
+      p="s24"
       flexShrink={0}
       minWidth="250px"
-      pt="s8"
-      pl="s8"
     >
-      <Text fontSize="r3" fontWeight="600">
+      <Text fontSize="l1" fontWeight="600" color="gray.800">
         General
       </Text>
       <Divider borderColor="border.layout" />
