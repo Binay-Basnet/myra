@@ -101,6 +101,7 @@ export function KYMIndividualPage() {
           memberId: '',
         },
       ],
+      nationalityId: 'Nepali',
     },
   });
 
@@ -256,7 +257,13 @@ export function KYMIndividualPage() {
         </FormProvider>
       </Container>
       <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100">
+        <Box
+          bottom="0"
+          position="fixed"
+          width="100%"
+          bg="gray.100"
+          paddingTop="17px"
+        >
           <Container minW="container.xl" height="fit-content">
             <Box
               display="flex"
@@ -264,12 +271,18 @@ export function KYMIndividualPage() {
               justifyContent="space-between"
               alignItems="center"
               background="white"
-              borderTopLeftRadius="br3"
-              borderTopRightRadius="br3"
               px="5"
-              boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
+              borderTop="1px"
+              borderColor="border.layout"
             >
-              <Text>Form Details saved to draft</Text>
+              <Box display="flex" gap="s8">
+                <Text as="i" fontSize="r1">
+                  Form Details saved to draft
+                </Text>
+                <Text as="i" fontSize="r1">
+                  09:41 AM
+                </Text>
+              </Box>
               <Box
                 display="flex"
                 flexDirection="row"
@@ -281,7 +294,7 @@ export function KYMIndividualPage() {
                   justifyContent="flex-end"
                   alignSelf="center"
                 >
-                  <Button type="submit" variant="ghost">
+                  <Button type="submit" variant="ghost" minW="160px">
                     <Icon as={BiSave} color="primary.500" />
                     <Text
                       alignSelf="center"
@@ -296,6 +309,7 @@ export function KYMIndividualPage() {
                 </Box>
                 &nbsp;
                 <Button
+                  minW="160px"
                   onClick={() => router.push(`/members/translation/${id}`)}
                 >
                   Next

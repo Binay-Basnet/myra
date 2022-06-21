@@ -10,14 +10,22 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormAmountInput, FormInput } from '@coop/shared/form';
-import { Box, Button, Checkbox, GridItem, Icon, Text } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  Checkbox,
+  GridItem,
+  Icon,
+  RadioGroup,
+  Text,
+} from '@coop/shared/ui';
 
 const annualFamilyIncome = [
   'Upto 4 lakhs',
-  '4 lakhs to 1 million',
-  '1 million to 2.5 million',
-  '2.5 million to 5 million',
-  'More than 5 million',
+  '4 Lakhs to 10 Lakhs',
+  '10 Lakhs to 25 Lakhs',
+  '25 Lakhs to 50 Lakhs',
+  'More than 50 Lakhs',
 ];
 
 const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
@@ -76,16 +84,8 @@ export const MemberKYMIncomeSourceDetails = ({ control }: any) => {
           <Text fontSize="s3" mb={3}>
             Annual Family Income
           </Text>
-          <Box display="flex" flexDirection="column" gap="s8">
-            {annualFamilyIncome.map((item, index) => (
-              <Checkbox
-                onChange={(e) => console.log(e.target.value)}
-                key={index}
-                label={item}
-                id="incomeSourceDetails"
-              />
-            ))}
-          </Box>
+
+          <RadioGroup radioList={annualFamilyIncome} labelFontSize="s3" />
         </Box>
         <div>
           <Text fontSize="s3" mb="s4">
