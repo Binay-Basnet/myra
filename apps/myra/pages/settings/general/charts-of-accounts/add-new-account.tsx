@@ -19,27 +19,31 @@ import {
   Text,
   TextInput,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import SettingsFormLayout from '../../../../components/SettingsLayout/SettingsFormLayout';
 
-const list = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
-];
-
-const accountList = [
-  { label: 'Cash', value: 'cash' },
-  { label: 'Bank', value: 'bank' },
-  { label: 'Journal', value: 'journal' },
-];
-
 const AddNewAccount = () => {
+  const { t } = useTranslation();
   const router = useRouter();
-  const [selectedTab, setSelectedTab] = useState<string | null>('Cash');
+  const [selectedTab, setSelectedTab] = useState('Cash');
 
   const switchTabsFxn = (data: string) => {
     setSelectedTab(data);
   };
+
+  console.log(selectedTab);
+
+  const list = [
+    { label: t['yes'], value: 'yes' },
+    { label: t['no'], value: 'no' },
+  ];
+
+  const accountList = [
+    { label: t['settingsCoaListCash'], value: 'cash' },
+    { label: t['settingsCoaListBank'], value: 'bank' },
+    { label: t['settingsCoaListJournal'], value: 'journal' },
+  ];
 
   const methods = useForm<KymIndMemberInput>();
   return (
@@ -62,11 +66,11 @@ const AddNewAccount = () => {
               borderBottom="1px solid #E6E6E6"
             >
               <Text fontSize="r2" fontWeight="600">
-                Add New Account
+                {t['settingsCoaAddNewAccount']}
               </Text>
               <Box>
                 <Button mr="20px" onClick={() => router.push('/members/list')}>
-                  Save Account
+                  {t['settingsCoaAddSaveAccount']}
                 </Button>
                 <CloseIcon
                   cursor="pointer"
@@ -93,16 +97,16 @@ const AddNewAccount = () => {
                   <FormInput
                     type="text"
                     name="name"
-                    label="Account Name"
-                    placeholder="Enter Account Name"
+                    label={t['settingsCoaAccountName']}
+                    placeholder={t['settingsCoaEnterAccountName']}
                   />
                 </GridItem>
 
                 <GridItem>
                   <TextInput
                     id="accountName"
-                    label="Under"
-                    placeholder="Staff Bonus Fund"
+                    label={t['settingsCoaUnder']}
+                    placeholder={t['settingsCoaStaffBonusFund']}
                   />
                 </GridItem>
 
@@ -110,7 +114,7 @@ const AddNewAccount = () => {
                   <FormControl>
                     <Select
                       id="type"
-                      label="Account Type"
+                      label={t['settingsCoaFormAccountType']}
                       options={[
                         {
                           label: 'Liabilities',
@@ -131,9 +135,9 @@ const AddNewAccount = () => {
                 <GridItem>
                   <FormControl>
                     <TextInput
-                      label="Account Code"
+                      label={t['settingsCoaFormAccountCode']}
                       id="type"
-                      placeholder="Account Code"
+                      placeholder={t['settingsCoaFormAccountCode']}
                     />
                   </FormControl>
                 </GridItem>
@@ -141,7 +145,7 @@ const AddNewAccount = () => {
                   <FormControl>
                     <Select
                       id="type"
-                      label="Currency"
+                      label={t['settingsCoaCurrency']}
                       options={[
                         {
                           label: 'NPR',
@@ -173,7 +177,7 @@ const AddNewAccount = () => {
             >
               <Box mb="5px">
                 <Text fontSize="s2" mb="s4">
-                  Type of Account
+                  {t['settingsCoaFormTypeOfAccount']}
                 </Text>
                 <SwitchTabs options={accountList} />
               </Box>
@@ -181,7 +185,7 @@ const AddNewAccount = () => {
               {selectedTab === 'cash' && (
                 <Grid templateColumns="repeat(3,1fr)" gap={5}>
                   <GridItem>
-                    <AmountInput label="Opening Balance" />
+                    <AmountInput label={t['settingsCoaOpeningBalance']} />
                   </GridItem>
                 </Grid>
               )}
@@ -191,12 +195,12 @@ const AddNewAccount = () => {
                   <Box w="50%">
                     <Box display="flex" gap={5} justifyContent="space-around">
                       <FormControl>
-                        <AmountInput label="Opening Balance" />
+                        <AmountInput label={t['settingsCoaOpeningBalance']} />
                       </FormControl>
                       <FormControl>
                         <TextInput
-                          label="Journal Code"
-                          placeholder="Accout Number"
+                          label={t['settingsCoaJournalCode']}
+                          placeholder={t['settingsCoaAccoutNumber']}
                         />
                       </FormControl>
                     </Box>
@@ -210,7 +214,7 @@ const AddNewAccount = () => {
                     <FormControl>
                       <Select
                         id="type"
-                        label="Bank"
+                        label={t['settingsCoaBank']}
                         options={[
                           {
                             label: 'Credit Terms',
@@ -235,12 +239,12 @@ const AddNewAccount = () => {
                       justifyContent="space-around"
                     >
                       <FormControl w="50%">
-                        <AmountInput label="Opening Balance" />
+                        <AmountInput label={t['settingsCoaOpeningBalance']} />
                       </FormControl>
                       <FormControl w="50%">
                         <TextInput
-                          label=" Bank GL Code"
-                          placeholder="GL Code"
+                          label={t['settingsCoaBankGLCode']}
+                          placeholder={t['settingsCoaGLCode']}
                         />
                       </FormControl>
                     </Box>
@@ -249,8 +253,8 @@ const AddNewAccount = () => {
                     <FormControl>
                       <TextInput
                         id="type"
-                        label="Bank Account Number"
-                        placeholder="Bank Account Number"
+                        label={t['settingsCoaBankAccountNumber']}
+                        placeholder={t['settingsCoaBankAccountNumber']}
                       />
                     </FormControl>
                   </Box>
@@ -269,11 +273,10 @@ const AddNewAccount = () => {
               <Box display="grid" gridTemplateColumns="repeat(2, 2fr)">
                 <Box>
                   <Text color="Gray.700" fontWeight="medium" fontSize="s3">
-                    Ledger Account
+                    {t['settingsCoaLedgerAccount']}
                   </Text>
                   <Text color="Gray.700" fontWeight="regular" fontSize="s3">
-                    You can perform transaction in this account. However, you
-                    cannot create any more accounts under this heading
+                    {t['settingsCoaYouCan']}
                   </Text>
                 </Box>
 
@@ -286,7 +289,7 @@ const AddNewAccount = () => {
               <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                 <Box>
                   <Text color="Gray.700" fontWeight="medium" fontSize="s3">
-                    B/S Account
+                    {t['settingsCoaBSAccount']}
                   </Text>
                 </Box>
 
@@ -299,7 +302,7 @@ const AddNewAccount = () => {
               <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                 <Box>
                   <Text color="Gray.700" fontWeight="medium" fontSize="s3">
-                    Summation Account
+                    {t['settingsCoaSummationAccount']}
                   </Text>
                 </Box>
 
@@ -312,7 +315,7 @@ const AddNewAccount = () => {
               <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                 <Box>
                   <Text color="Gray.700" fontWeight="medium" fontSize="s3">
-                    IBT A/C
+                    {t['settingsCoaIBTAC']}
                   </Text>
                 </Box>
 
@@ -325,7 +328,7 @@ const AddNewAccount = () => {
               <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                 <Box>
                   <Text color="Gray.700" fontWeight="medium" fontSize="s3">
-                    Intransit A/C
+                    {t['settingsCoaIntransitAC']}
                   </Text>
                 </Box>
 
@@ -338,7 +341,7 @@ const AddNewAccount = () => {
               <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                 <Box>
                   <Text color="Gray.700" fontWeight="medium" fontSize="s3">
-                    P/L Account
+                    {t['settingsCoaPLAccount']}
                   </Text>
                 </Box>
 
@@ -351,7 +354,7 @@ const AddNewAccount = () => {
               <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                 <Box>
                   <Text color="Gray.700" fontWeight="medium" fontSize="s3">
-                    Allow Free Entry
+                    {t['settingsCoaAllowFreeEntry']}
                   </Text>
                 </Box>
 
@@ -364,7 +367,7 @@ const AddNewAccount = () => {
               <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                 <Box>
                   <Text color="Gray.700" fontWeight="medium" fontSize="s3">
-                    Allow Transaction
+                    {t['settingsCoaAllowTransaction']}
                   </Text>
                 </Box>
 

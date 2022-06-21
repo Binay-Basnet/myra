@@ -8,10 +8,12 @@ import {
 } from '@coop/cbs/settings/ui-layout';
 import { AccountList, FullView } from '@coop/myra/components';
 import { Box, Button, ChakraTab, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const ChartsOfAccounts = () => {
+  const { t } = useTranslation();
   const router = useRouter();
-  const [selectedTab, setSelectedTab] = useState<string | null>('Full View');
+  const [selectedTab, setSelectedTab] = useState(t['settingsCoaFullView']);
 
   const switchTabsFxn = (data: string) => {
     setSelectedTab(data);
@@ -30,12 +32,12 @@ const ChartsOfAccounts = () => {
       >
         <Box background="white" display="flex" gap="s48">
           <Text fontSize="r2" fontWeight="600" my="auto">
-            Charts Of Accounts
+            {t['settingsCoa']}
           </Text>
 
           <ChakraTab
             onclick={switchTabsFxn}
-            tabList={['Full View', 'Account List']}
+            tabList={[t['settingsCoaFullView'], t['settingsCoaAccountList']]}
           />
         </Box>
 
@@ -49,13 +51,13 @@ const ChartsOfAccounts = () => {
             leftIcon={<AddIcon />}
             mr="5"
           >
-            New Account
+            {t['settingsCoaNewAccount']}
           </Button>
         </Box>
       </Box>
       <Box>
-        {selectedTab === 'Full View' && <FullView />}
-        {selectedTab === 'Account List' && <AccountList />}
+        {selectedTab === t['settingsCoaFullView'] && <FullView />}
+        {selectedTab === t['settingsCoaAccountList'] && <AccountList />}
       </Box>
     </Box>
   );

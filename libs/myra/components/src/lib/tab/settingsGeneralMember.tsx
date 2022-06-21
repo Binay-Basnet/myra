@@ -10,23 +10,23 @@ type TabList = {
 
 const tabList: TabList[] = [
   {
-    title: 'General',
+    title: 'settingsSideGeneral',
     to: '/settings/general/members',
   },
   {
-    title: 'KYM Form - Individual',
+    title: 'settingsSideIndividual',
     to: '/settings/general/members/kym-individual',
   },
   {
-    title: 'KYM Form - Institutional',
+    title: 'settingsSideInstitutional',
     to: '/settings/general/members/kym-institutional',
   },
   {
-    title: 'KYM Form - CoOperative',
+    title: 'settingsSideCoop',
     to: '/settings/general/members/kym-cooperative',
   },
   {
-    title: 'KYM Form - CoOperative Union',
+    title: 'settingsSideCoopUnion',
     to: '/settings/general/members/kym-cooperative-union',
   },
 ];
