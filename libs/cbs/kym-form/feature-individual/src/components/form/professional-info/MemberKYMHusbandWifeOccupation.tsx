@@ -4,21 +4,12 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import {
-  DynamicBoxContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Checkbox,
-  GridItem,
-  Icon,
-  Text,
-  TextFields,
-} from '@coop/shared/ui';
+import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
+import { Box, Button, GridItem, Icon, Text, TextFields } from '@coop/shared/ui';
 
 const HusbandWifeOccupation = ({
   control,
@@ -27,6 +18,8 @@ const HusbandWifeOccupation = ({
   watch,
 }: any) => {
   const profession = watch('profession');
+
+  const isOwner = watch(`spouseOccupation.${index}.isOwner`);
 
   return (
     <Box
@@ -101,36 +94,39 @@ const HusbandWifeOccupation = ({
         </InputGroupContainer>
       </Box>
 
-      <Checkbox fontSize="s3">
+      <Box display="flex" gap="9px" alignItems="center">
+        <FormCheckbox name={`spouseOccupation.${index}.isOwner`} />
         <TextFields variant="formLabel">Are you owner?</TextFields>
-      </Checkbox>
+      </Box>
 
-      <InputGroupContainer>
-        <FormInput
-          bg="white"
-          control={control}
-          type="date"
-          name={`spouseOccupation.${index}.establishedDate`}
-          label="Established Date"
-          placeholder="Established Date"
-        />
-        <FormInput
-          bg="white"
-          control={control}
-          type="number"
-          name={`spouseOccupation.${index}.registrationNo`}
-          label="Registration No."
-          placeholder="Registration No."
-        />
-        <FormInput
-          bg="white"
-          control={control}
-          type="number"
-          name={`spouseOccupation.${index}.contactNo`}
-          label="Contact No."
-          placeholder="Contact No."
-        />
-      </InputGroupContainer>
+      {isOwner && (
+        <InputGroupContainer>
+          <FormInput
+            bg="white"
+            control={control}
+            type="date"
+            name={`spouseOccupation.${index}.establishedDate`}
+            label="Established Date"
+            placeholder="Established Date"
+          />
+          <FormInput
+            bg="white"
+            control={control}
+            type="number"
+            name={`spouseOccupation.${index}.registrationNo`}
+            label="Registration No."
+            placeholder="Registration No."
+          />
+          <FormInput
+            bg="white"
+            control={control}
+            type="number"
+            name={`spouseOccupation.${index}.contactNo`}
+            label="Contact No."
+            placeholder="Contact No."
+          />
+        </InputGroupContainer>
+      )}
     </Box>
   );
 };
