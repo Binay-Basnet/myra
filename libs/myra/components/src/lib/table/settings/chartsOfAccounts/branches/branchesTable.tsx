@@ -3,8 +3,12 @@ import { useMemo } from 'react';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetBranchesListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
+import { useRouter } from 'next/router';
 
 export const SettingsBranchesTable = () => {
+  const { t } = useTranslation();
+  const route = useRouter();
   const { data, isLoading } = useGetBranchesListQuery();
 
   const rowData = useMemo(
@@ -12,34 +16,37 @@ export const SettingsBranchesTable = () => {
     [data]
   );
 
-  const popoverTitle = ['View Detail', 'View Branch Profile'];
+  const popoverTitle = [
+    'settingsBranchViewDetail',
+    'settingsBranchViewBranchProfile',
+  ];
 
   // TODO (Update this, API HAS BEEN CHANGED)
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'Branch Code',
+        Header: t['settingsBranchBranchCode'],
         accessor: 'node.branchCode',
       },
 
       {
-        Header: 'Address',
+        Header: t['settingsBranchAddress'],
         accessor: 'node.address.provinceId',
         maxWidth: 4,
       },
 
       {
-        Header: 'District',
+        Header: t['settingsBranchDistrict'],
         accessor: 'node.address.districtId',
       },
-      // {
-      //   Header: 'Manager',
-      //   accessor: 'node.manager.personalInformation.name.firstName',
-      //   width: '25%',
-      // },
+      {
+        Header: t['settingsBranchManager'],
+        accessor: 'node.manager.id',
+        width: '25%',
+      },
 
       {
-        Header: 'Contact Number',
+        Header: t['settingsBranchContactNumber'],
         accessor: 'node.contactNumber',
         maxWidth: 48,
       },
@@ -50,12 +57,12 @@ export const SettingsBranchesTable = () => {
         Cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
-    []
+    [route.locale]
   );
 
   return (
     <>
-      <TableListPageHeader heading={'Branches'} />
+      <TableListPageHeader heading={'settingsBranch'} />
 
       <Table
         isLoading={isLoading}

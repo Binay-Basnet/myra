@@ -6,10 +6,9 @@ import {
 } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
-
 import { Box, Button, Divider, Icon, Modal, Text } from '@coop/shared/ui';
-
 import { TabColumn } from '../tab/TabforMemberPage';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IMemberPageLayout {
   children: React.ReactNode;
@@ -32,6 +31,7 @@ const shareColumns = [
 
 export const SharePageLayout = ({ children }: IMemberPageLayout) => {
   const router = useRouter();
+  const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
 
   const onOpenModal = () => {
@@ -46,7 +46,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
     <Box display="flex">
       <Box width="275px" p="s24" flexShrink={0} position="fixed" zIndex={1}>
         <Text fontSize="l1" fontWeight="600" color="gray.800">
-          Share
+          {t['shareLayout']}
         </Text>
         <Divider my="s16" />
 
@@ -59,7 +59,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
             onOpenModal();
           }}
         >
-          New Share
+          {t['shareLayoutNewShare']}
         </Button>
 
         <Modal
@@ -72,7 +72,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
               color="neutralColorLight.Gray-80"
               fontWeight="SemiBold"
             >
-              Select Share Type
+              {t['shareLayoutSelectShareType']}
             </Text>
           }
         >
@@ -123,7 +123,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
                 color="neutralColorLight.Gray-80"
                 fontWeight="Medium"
               >
-                Share Purchase
+                {t['shareLayoutSharePurchase']}
               </Text>
               <Text mt="10px" fontSize="s2" alignSelf="center">
                 Lorem Ipsum
@@ -169,7 +169,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
                 color="neutralColorLight.Gray-80"
                 fontWeight="Medium"
               >
-                Share Return
+                {t['shareLayoutShareReturn']}
               </Text>
               <Text mt="10px" fontSize="s2" alignSelf="center">
                 Lorem Ipsum
@@ -192,7 +192,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          Share Settings
+          {t['shareLayoutShareSettings']}
         </Button>
       </Box>
       <Box

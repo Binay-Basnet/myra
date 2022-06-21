@@ -4,8 +4,10 @@ import {
 } from '@coop/cbs/settings/ui-layout';
 import { SettingsGeneralMember } from '@coop/myra/components';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const KYMCoperativeUnion = () => {
+  const { t } = useTranslation();
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
       <Box
@@ -21,7 +23,7 @@ const KYMCoperativeUnion = () => {
           fontWeight="600"
           color="neutralColorLight.Gray-80"
         >
-          Members
+          {t['settingsKymCoopUnionMembers']}
         </Text>
       </Box>
       <Box display={'flex'} flexDirection="row" h="fit-content">

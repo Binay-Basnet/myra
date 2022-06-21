@@ -2,10 +2,9 @@ import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
-
 import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
-
 import { TabColumn } from '../tab/TabforMemberPage';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IAccountPageLayoutProps {
   children: React.ReactNode;
@@ -31,13 +30,14 @@ const accountColumns = [
 ];
 
 export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   return (
     <Box display="flex">
       <Box width="275px" p="s24" flexShrink={0} position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
-          Account
+          {t['accountLayout']}
         </Text>
         <Divider my="s16" />
         <Button
@@ -49,7 +49,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
             router.push('/accounts/add-new-account');
           }}
         >
-          New Account
+          {t['accountLayoutNewAccount']}
         </Button>
         <Divider my="s16" />
         <TabColumn list={accountColumns} />
@@ -65,7 +65,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          Account Settings
+          {t['accountLayoutAccountSettings']}
         </Button>
       </Box>
       <Box

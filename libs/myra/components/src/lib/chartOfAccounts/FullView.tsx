@@ -14,7 +14,7 @@ import Tree from './Tree';
 export const FullView = () => {
   const { data } = useGetChartOfAccountsQuery();
   const memberTypes = data?.settings?.general?.chartsOfAccount?.class?.data;
-  console.log(memberTypes);
+
   return (
     <Box
       p="10px"

@@ -30,7 +30,7 @@ export type Scalars = {
    * }
    * ```
    */
-  Localized: Record<"local"|"en"|"np",string>;
+  Localized: any;
   Map: Record<string, string>;
   Time: string;
 };
@@ -5047,7 +5047,7 @@ export type UpdateKymFieldMutationVariables = Exact<{
 }>;
 
 
-export type UpdateKymFieldMutation = { settings: { general?: { KYM?: { individual: { field: { update: { recordId: string, record?: { id: string, name: Record<"local"|"en"|"np",string> } | null } } } } | null } | null } };
+export type UpdateKymFieldMutation = { settings: { general?: { KYM?: { individual: { field: { update: { recordId: string, record?: { id: string, name: any } | null } } } } | null } | null } };
 
 export type DeleteKymFieldMutationVariables = Exact<{
   optionId: Scalars['ID'];
@@ -5064,7 +5064,7 @@ export type AddKymFieldMutationVariables = Exact<{
 }>;
 
 
-export type AddKymFieldMutation = { settings: { general?: { KYM?: { individual: { field: { add: { record?: { id: string, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType?: Field_Types | null }> | null } | null } } } } | null } | null } };
+export type AddKymFieldMutation = { settings: { general?: { KYM?: { individual: { field: { add: { record?: { id: string, options?: Array<{ id: string, name: any, enabled: boolean, fieldType?: Field_Types | null }> | null } | null } } } } | null } | null } };
 
 export type SetKymCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -5091,7 +5091,7 @@ export type AddKymOptionMutationVariables = Exact<{
 }>;
 
 
-export type AddKymOptionMutation = { settings: { general?: { KYM?: { individual: { option: { update: { recordId: string, record?: { id: string, name: Record<"local"|"en"|"np",string>, fieldType?: Field_Types | null, enabled: boolean } | null } } } } | null } | null } };
+export type AddKymOptionMutation = { settings: { general?: { KYM?: { individual: { option: { update: { recordId: string, record?: { id: string, name: any, fieldType?: Field_Types | null, enabled: boolean } | null } } } } | null } | null } };
 
 export type ArrangeKymFieldMutationVariables = Exact<{
   optionId: Scalars['ID'];
@@ -5108,7 +5108,7 @@ export type ToggleOtherOptionMutationVariables = Exact<{
 }>;
 
 
-export type ToggleOtherOptionMutation = { settings: { general?: { KYM?: { individual: { field: { update: { record?: { name: Record<"local"|"en"|"np",string>, hasOtherField: boolean } | null } } } } | null } | null } };
+export type ToggleOtherOptionMutation = { settings: { general?: { KYM?: { individual: { field: { update: { record?: { name: any, hasOtherField: boolean } | null } } } } | null } | null } };
 
 export type AddConditionFieldMutationVariables = Exact<{
   fieldId: Scalars['ID'];
@@ -5129,7 +5129,7 @@ export type AddFileSizeMutation = { settings: { general?: { KYM?: { individual: 
 export type AddCustomFieldMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AddCustomFieldMutation = { settings: { general?: { KYM?: { individual: { field: { add: { record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled?: boolean | null, fieldType: Kym_Field_Type, isCustom?: boolean | null, hasOtherField: boolean, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType?: Field_Types | null, enabled: boolean }> | null } | null } } } } | null } | null } };
+export type AddCustomFieldMutation = { settings: { general?: { KYM?: { individual: { field: { add: { record?: { id: string, name: any, enabled?: boolean | null, fieldType: Kym_Field_Type, isCustom?: boolean | null, hasOtherField: boolean, options?: Array<{ id: string, name: any, fieldType?: Field_Types | null, enabled: boolean }> | null } | null } } } } | null } | null } };
 
 export type UpdateCustomFieldMutationVariables = Exact<{
   fieldId: Scalars['ID'];
@@ -5139,7 +5139,7 @@ export type UpdateCustomFieldMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCustomFieldMutation = { settings: { general?: { KYM?: { individual: { field: { update: { recordId: string, record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled?: boolean | null } | null } } } } | null } | null } };
+export type UpdateCustomFieldMutation = { settings: { general?: { KYM?: { individual: { field: { update: { recordId: string, record?: { id: string, name: any, enabled?: boolean | null } | null } } } } | null } | null } };
 
 export type SetSharePurchaseMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -5225,14 +5225,14 @@ export type GetKymIndItemDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetKymIndItemDetailsQuery = { settings: { general?: { KYM?: { individual: { field: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled?: boolean | null, hasOtherField: boolean, dependsOn?: Array<string | null> | null, isCustom?: boolean | null, maxSize?: number | null, fieldType: Kym_Field_Type, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType?: Field_Types | null, enabled: boolean }> | null } | null> | null } | null } } } | null } | null } };
+export type GetKymIndItemDetailsQuery = { settings: { general?: { KYM?: { individual: { field: { list?: { data?: Array<{ id: string, name: any, enabled?: boolean | null, hasOtherField: boolean, dependsOn?: Array<string | null> | null, isCustom?: boolean | null, maxSize?: number | null, fieldType: Kym_Field_Type, options?: Array<{ id: string, name: any, fieldType?: Field_Types | null, enabled: boolean }> | null } | null> | null } | null } } } | null } | null } };
 
 export type GetMemberIndividualDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, memberId: string, name?: Record<"local"|"en"|"np",string> | null, contactNo?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, vdc?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id: string, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, vdc?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, temporaryAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, vdc?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
+export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, memberId: string, name?: any | null, contactNo?: string | null, dateJoined?: string | null, address?: { state?: any | null, district?: any | null, vdc?: any | null, wardNo?: string | null, locality?: any | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id: string, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: any | null, district?: any | null, vdc?: any | null, wardNo?: string | null, locality?: any | null } | null, temporaryAddress?: { state?: any | null, district?: any | null, vdc?: any | null, wardNo?: string | null, locality?: any | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
 
 export type GetKymDeclarationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5242,7 +5242,7 @@ export type GetKymDeclarationQuery = { settings: { general?: { KYM?: { individua
 export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomFieldsQuery = { settings: { general?: { KYM?: { individual: { field: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled?: boolean | null, fieldType: Kym_Field_Type, isCustom?: boolean | null, hasOtherField: boolean, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType?: Field_Types | null, enabled: boolean }> | null } | null> | null } | null } } } | null } | null } };
+export type GetCustomFieldsQuery = { settings: { general?: { KYM?: { individual: { field: { list?: { data?: Array<{ id: string, name: any, enabled?: boolean | null, fieldType: Kym_Field_Type, isCustom?: boolean | null, hasOtherField: boolean, options?: Array<{ id: string, name: any, fieldType?: Field_Types | null, enabled: boolean }> | null } | null> | null } | null } } } | null } | null } };
 
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5257,12 +5257,12 @@ export type GetChartOfAccountsQuery = { settings: { general?: { chartsOfAccount?
 export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetShareBalanceListQuery = { share: { balance?: { edges: Array<{ node: { id: string, balance: number, shareCount: number, member: { name?: Record<"local"|"en"|"np",string> | null } } }>, pageInfo: { endCursor?: string | null, startCursor?: string | null } } | null } };
+export type GetShareBalanceListQuery = { share: { balance?: { edges: Array<{ node: { id: string, balance: number, shareCount: number, member: { name?: any | null } } }>, pageInfo: { endCursor?: string | null, startCursor?: string | null } } | null } };
 
 export type GetShareRegisterListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, member: { name?: Record<"local"|"en"|"np",string> | null } } }> } | null } };
+export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, member: { name?: any | null } } }> } | null } };
 
 export type GetShareHistoryQueryVariables = Exact<{
   memberId: Scalars['String'];

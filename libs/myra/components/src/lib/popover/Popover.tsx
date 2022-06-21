@@ -9,6 +9,8 @@ import {
   PopoverTrigger,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
+import { useRouter } from 'next/router';
 
 type popoverType = {
   title: string[];
@@ -16,6 +18,8 @@ type popoverType = {
 
 export const PopoverComponent = ({ title }: popoverType) => {
   const initialFocusRef = useRef<HTMLButtonElement | null>(null);
+  const { t } = useTranslation();
+  const router = useRouter();
   return (
     <Popover placement="bottom-start" initialFocusRef={initialFocusRef}>
       <PopoverTrigger>
@@ -43,7 +47,7 @@ export const PopoverComponent = ({ title }: popoverType) => {
                 key={`${item}${index}`}
               >
                 <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                  {item}
+                  {t[item]}
                 </Text>
               </Box>
             ))}
