@@ -86,6 +86,9 @@ export function KYMCooperativeUnionPage() {
 
             <Box background="white" ml={320} px="s20" pb="120px">
               <SectionContainer>
+                <Text fontSize="r3" fontWeight="600">
+                  1. Institution Information
+                </Text>
                 <InstituteInfo setSection={setSection} />
                 <DirectorDetails setSection={setSection} />
                 <AccountOperatorDetails setSection={setSection} />
