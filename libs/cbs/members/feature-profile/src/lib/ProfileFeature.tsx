@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { AiOutlineDown, AiOutlineRight, AiOutlineUp } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
+import Image from 'next/image';
+
 import { TabColumn } from '@coop/myra/components';
 import { Box, Collapse, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
+
 import { AccountCards } from '../components/AccountCards';
-import { LoanCard } from '../components/LoanCard';
 import { DocumentCard } from '../components/DocumentCard';
-import { useGetMemberDataQuery } from '@coop/shared/data-access';
+import { LoanCard } from '../components/LoanCard';
+// import { useGetMemberDataQuery } from '@coop/shared/data-access';
 
 const memberProfileColumns = [
   {
@@ -184,11 +186,11 @@ export const ProfileFeature = () => {
   const [openCollapse, setOpenCollapse] = useState(false);
   const handleToggle = () => setOpenCollapse(!openCollapse);
 
-  const { data: memberData } = useGetMemberDataQuery({
-    id: '12',
-  });
-  const data = memberData?.members?.individual?.get?.data?.member;
-  console.log(data);
+  // const { data: memberData } = useGetMemberDataQuery({
+  //   id: '12',
+  // });
+  // const data = memberData?.members?.individual?.get?.data?.member;
+  // console.log(data);
   return (
     <Box margin="0px auto">
       <Box w="100%" height="fit-content" p="0">
