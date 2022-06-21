@@ -125,16 +125,15 @@ query getMemberIndividualData($id: ID!) {
     details(id: $id) {
       data {
         id
-        memberId
         name
         address {
           state
           district
-          vdc
+          localLevel
           wardNo
           locality
         }
-        contactNo
+        contact
         dateJoined
         profile {
           ... on IndividualMember {
@@ -163,14 +162,14 @@ query getMemberIndividualData($id: ID!) {
               permanentAddress {
                 state
                 district
-                vdc
+                localLevel
                 wardNo
                 locality
               }
               temporaryAddress {
                 state
                 district
-                vdc
+                localLevel
                 wardNo
                 locality
               }
