@@ -26,7 +26,7 @@ export const MemberTable = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'Member ID',
+        Header: 'memberID',
         accessor: 'node.id',
         maxWidth: 4,
         disableSortBy: false,
@@ -105,7 +105,10 @@ export const MemberTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'Members'} tabItems={memberRows} />
+      <TableListPageHeader
+        heading={'memberLayoutMembers'}
+        tabItems={memberRows}
+      />
 
       <Table
         isLoading={isLoading}

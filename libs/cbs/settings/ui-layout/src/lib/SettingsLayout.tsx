@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, TopLevelHeader } from '@coop/shared/ui';
-
 import { SettingsTabMenu } from './SettingsTabMenu';
 
 interface ISettingsLayoutProps {

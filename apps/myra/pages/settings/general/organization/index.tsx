@@ -16,8 +16,10 @@ import {
 } from '@coop/myra/components';
 import { FormFileInput, FormInput } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const Organization = () => {
+  const { t } = useTranslation();
   const { control, handleSubmit, getValues } = useForm();
   const methods = useForm();
 
@@ -38,7 +40,7 @@ const Organization = () => {
         >
           <Box bg="#EEF2F7" p="s16">
             <Text fontSize={'r1'} fontWeight="600">
-              Initial Setup
+              {t['settingsOrganization']}
             </Text>
           </Box>
         </Box>
@@ -58,18 +60,20 @@ const Organization = () => {
               flexDirection={'column'}
             >
               <Box py={'s24'}>
-                <Text fontWeight="600">BASIC DETAILS</Text>
+                <Text fontWeight="600">
+                  {t['settingsOrganizationBasicDetails']}
+                </Text>
                 <Box mt="s24" w="100%">
                   <FormInput
-                    label="Organization Name"
-                    placeholder="Enter name"
+                    label={t['settingsOrganizationOrganizationName']}
+                    placeholder={t['settingsOrganizationEntername']}
                     control={control}
                     name="organizationName"
                     type="text"
                   />
                 </Box>
                 <Text mt={'s16'} fontSize="s3" fontWeight="500">
-                  Organization Logo
+                  {t['settingsOrganizationOrganizationLogo']}
                 </Text>
                 <Box mt="s16" w={'110px'}>
                   {/* =====================TODO ADD FILE DROPBOX =====================================================*/}
@@ -82,7 +86,7 @@ const Organization = () => {
                 <Box mt={'s16'}>
                   {' '}
                   <Text color={'gray.700'} fontSize="s3" fontWeight={'500'}>
-                    Type of Organization
+                    {t['settingsOrganizationTypeOfOrganization']}
                   </Text>
                   <Box mt="s16">
                     {/* <RadioGroup radioList={radiolist}> </RadioGroup> */}
@@ -92,7 +96,7 @@ const Organization = () => {
                 <Box mt="s16" py="s24">
                   <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
                     {' '}
-                    CONTACT DETAILS
+                    {t['settingsOrganizationContactDetails']}
                   </Text>
                   <Box mt="s16">
                     <ContactDetailsOrganization control={control} />
@@ -101,7 +105,7 @@ const Organization = () => {
                 <Box mt="s16" py="s24">
                   <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
                     {' '}
-                    MAIN CONTACT PERSON
+                    {t['settingsOrganizationMainContactPerson']}
                   </Text>
                   <Box mt="s16">
                     <MainContactPersonOrganization control={control} />
@@ -110,7 +114,7 @@ const Organization = () => {
                 <Box mt="s16" py="s24">
                   <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
                     {' '}
-                    ADDRESS
+                    {t['settingsOrganizationAddress']}
                   </Text>
                   <Box mt="s16">
                     <AddressOrganization control={control} />
@@ -121,13 +125,13 @@ const Organization = () => {
                   mt={'s16'}
                   type="submit"
                 >
-                  Pin on Map
+                  {t['settingsOrganizationPinOnMap']}
                 </Button>
               </Box>
               <Box mt="s16" py="s24">
                 <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
                   {' '}
-                  REGISTRATION DETAILS
+                  {t['settingsOrganizationRegistrationDetails']}
                 </Text>
                 <Box mt="s16">
                   <RegistrationDetailsOrganization control={control} />
@@ -136,7 +140,7 @@ const Organization = () => {
               <Box mt="s16" py="s24">
                 <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
                   {' '}
-                  DOCUMENTS
+                  {t['settingsOrganizationDocumnents']}
                 </Text>
                 <Box w="100%" mt="s16" h="500px">
                   {/* ==========================TODO ADD DROPDOWN HERE ===================== */}
@@ -147,7 +151,9 @@ const Organization = () => {
                   />
                   <Box mt="s60" display={'flex'} justifyContent="flex-end">
                     {' '}
-                    <Button size={'md'}>Save Changes</Button>
+                    <Button size={'md'}>
+                      {t['settingsOrganizationSaveChanges']}
+                    </Button>
                   </Box>
                 </Box>
               </Box>

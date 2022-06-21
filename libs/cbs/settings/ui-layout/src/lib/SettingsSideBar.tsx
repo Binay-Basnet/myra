@@ -9,31 +9,31 @@ type TabList = {
 
 const tabList: TabList[] = [
   {
-    title: 'Organization',
+    title: 'settingsSideBarOrganization',
     to: '/settings/general/organization',
   },
   {
-    title: 'Branches',
+    title: 'settingsSideBarBranches',
     to: '/settings/general/branches',
   },
   {
-    title: 'Charts of Accounts',
+    title: 'settingsSideBarChartsOfAccounts',
     to: '/settings/general/charts-of-accounts',
   },
   {
-    title: 'Members',
+    title: 'settingsSideBarMembers',
     to: '/settings/general/members',
   },
   {
-    title: 'Share',
+    title: 'settingsSideBarShare',
     to: '/settings/general/share',
   },
   {
-    title: 'Deposit / Withdraw',
+    title: 'settingsSideBarDepositWithdraw',
     to: '/settings/general/deposit-withdraw',
   },
   {
-    title: 'Loan',
+    title: 'settingsSideBarLoan',
     to: '/settings/general/loan',
   },
 ];

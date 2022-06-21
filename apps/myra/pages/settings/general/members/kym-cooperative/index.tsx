@@ -5,8 +5,10 @@ import {
   SettingsMemberLayout,
 } from '@coop/cbs/settings/ui-layout';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const KYMCoperative = () => {
+  const { t } = useTranslation();
   return (
     <Box display={'flex'} flexDirection="row" h="fit-content">
       <Box flex={1} p="s16">

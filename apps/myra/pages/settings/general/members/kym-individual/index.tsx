@@ -5,8 +5,10 @@ import {
   SettingsMemberLayout,
 } from '@coop/cbs/settings/ui-layout';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const KYMIndividual = () => {
+  const { t } = useTranslation();
   return (
     <Box display={'flex'} flexDirection="row" h="fit-content">
       <Box flex={1} p="s16">
@@ -21,10 +23,10 @@ const KYMIndividual = () => {
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            KYM Form - Individual
+            {t['settingsKymIndFormIndividual']}
           </Text>
           <Text pt={'s2'} fontSize="r1" fontWeight="400" color="gray.400">
-            Settings to change options and fields in KYM form for individuals
+            {t['settingsKymIndSettingsChange']}
           </Text>
         </Box>
         <Box mt="s16">
