@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { useGetIndIdentificationDocOptionQuery } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Checkbox, Grid, Text } from '@coop/shared/ui';
 
@@ -12,8 +14,19 @@ const identificationDetails = [
   'National ID',
 ];
 
-export const MemberKYMIdentificationDetails = ({ control }: any) => {
+export const MemberKYMIdentificationDetails = () => {
+  const { register } = useFormContext();
+  const { data: identificationDocsData } =
+    useGetIndIdentificationDocOptionQuery();
+
+  const identificationDocs = useMemo(
+    () =>
+      identificationDocsData?.members?.individual?.options?.list?.data ?? [],
+    [identificationDocsData]
+  );
   const [currentShownDetails, setCurrentDetailsShown] = useState<string[]>([]);
+
+  console.log();
 
   return (
     <GroupContainer id="Identification Details" scrollMarginTop={'200px'}>
@@ -24,179 +37,69 @@ export const MemberKYMIdentificationDetails = ({ control }: any) => {
         Choose identification details
       </Text>
       <Box display="flex">
-        {identificationDetails.map((item, index) => (
+        {identificationDocs.map((item, index) => (
           <Checkbox
             id="identificationDetailsPersonal"
             mr={5}
             key={index}
-            label={item}
+            label={String(item?.name.local)}
             onChange={() => {
-              if (currentShownDetails.includes(item)) {
+              if (!item?.id) return;
+
+              if (currentShownDetails.includes(item.id)) {
                 setCurrentDetailsShown((prev) =>
-                  prev.filter((data) => data !== item)
+                  prev.filter((data) => data !== item.id)
                 );
               } else {
-                setCurrentDetailsShown((prev) => [...prev, item]);
+                item?.name.local &&
+                  setCurrentDetailsShown((prev) => [...prev, item.id]);
               }
             }}
           />
         ))}
       </Box>
 
-      <GroupContainer>
-        {currentShownDetails.includes('Citizenship') && (
-          <Box display="flex" flexDirection="column" gap="s24">
-            <Text
-              fontSize="r1"
-              fontWeight="medium"
-              color="neutralColorLight.Gray-70"
-            >
-              Citizenship
-            </Text>
-            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-              <FormInput
-                control={control}
-                type="number"
-                name="citizenshipNo"
-                label="Citizenship No"
-                placeholder="Citizenship No"
-              />
-              <FormInput
-                control={control}
-                type="text"
-                name="citizenshipPlaceOfIssue"
-                label="Place Of Issue"
-                placeholder="Place of Issue"
-              />
-              <FormInput
-                control={control}
-                type="date"
-                name="citizenshipIssueDate"
-                label="Issue date"
-                placeholder="DD-MM-YYYY"
-              />
-            </Grid>
-          </Box>
-        )}
-        {currentShownDetails.includes('Driving License') && (
-          <Box display="flex" flexDirection="column" gap="s24">
-            <Text
-              fontSize="r1"
-              fontWeight="medium"
-              color="neutralColorLight.Gray-70"
-            >
-              Driving License
-            </Text>
-            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-              <FormInput
-                control={control}
-                type="number"
-                name="divingLicenseNo"
-                label="Driving License No"
-                placeholder="Driving License No"
-              />
-              <FormInput
-                control={control}
-                type="text"
-                name="divingLicensePlaceOfIssue"
-                label="Place of Issue"
-                placeholder="Place of Issue"
-              />
-              <FormInput
-                control={control}
-                type="date"
-                name="divingLicenseIssuedDate"
-                label="Issue Date"
-                placeholder="Issue Date"
-              />
-            </Grid>
-          </Box>
-        )}
+      {currentShownDetails.length !== 0 ? (
+        <GroupContainer>
+          {identificationDocs
+            .filter((docs) => docs && currentShownDetails.includes(docs?.id))
+            .map((field, fieldIndex) => {
+              register(`identification.${fieldIndex}.id`, {
+                value: field?.id,
+              });
+              return (
+                <Box display="flex" flexDirection="column" gap="s24">
+                  <Text
+                    fontSize="r1"
+                    fontWeight="medium"
+                    color="neutralColorLight.Gray-70"
+                  >
+                    {field?.name.local}
+                  </Text>
+                  <Grid templateColumns="repeat(3, 1fr)" gap="s20">
+                    {field?.options?.map((option, optionIndex) => {
+                      register(
+                        `identification.${fieldIndex}.fields.${optionIndex}.id`,
+                        {
+                          value: option.id,
+                        }
+                      );
 
-        {currentShownDetails.includes('Passport') && (
-          <Box display="flex" flexDirection="column" gap="s24">
-            <Text
-              fontSize="r1"
-              fontWeight="medium"
-              color="neutralColorLight.Gray-70"
-            >
-              Passport
-            </Text>
-            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-              <FormInput
-                control={control}
-                type="number"
-                name="passportNumber"
-                label="Passport Number"
-                placeholder="Passport Number"
-              />
-              <FormInput
-                control={control}
-                type="text"
-                name="passportPlaceOfIssue"
-                label="Place of Issue"
-                placeholder="Place of Issue"
-              />
-              <FormInput
-                control={control}
-                type="date"
-                name="passportIssueDate"
-                label="Issue Date"
-                placeholder="Issue Date"
-              />
-            </Grid>
-          </Box>
-        )}
-
-        {currentShownDetails.includes('Voters Card') && (
-          <Box display="flex" flexDirection="column" gap="s24">
-            <Text
-              fontSize="r1"
-              fontWeight="medium"
-              color="neutralColorLight.Gray-70"
-            >
-              Voters Card
-            </Text>
-            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-              <FormInput
-                control={control}
-                type="number"
-                name="voterCardNo"
-                label="Voter Card No"
-                placeholder="Voter Card No"
-              />
-              <FormInput
-                control={control}
-                type="text"
-                name="pollingStation"
-                label="Polling Station"
-                placeholder="Polling Station"
-              />
-            </Grid>
-          </Box>
-        )}
-
-        {currentShownDetails.includes('National ID') && (
-          <Box display="flex" flexDirection="column" gap="s24">
-            <Text
-              fontSize="r1"
-              fontWeight="medium"
-              color="neutralColorLight.Gray-70"
-            >
-              National Id
-            </Text>
-            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-              <FormInput
-                control={control}
-                type="number"
-                name="nationalId"
-                label="National Id"
-                placeholder="National Id"
-              />
-            </Grid>
-          </Box>
-        )}
-      </GroupContainer>
+                      return (
+                        <FormInput
+                          type="number"
+                          name={`identification.${fieldIndex}.fields.${optionIndex}.value`}
+                          label={String(option?.name?.local)}
+                          placeholder={String(option?.name?.local)}
+                        />
+                      );
+                    })}
+                  </Grid>
+                </Box>
+              );
+            })}
+        </GroupContainer>
+      ) : null}
     </GroupContainer>
   );
 };

@@ -91,4 +91,13 @@ export const chakraStyles: ChakraStylesConfig = {
     px: 's12',
     color: state.isFocused ? 'primary.500' : 'neutralColorLight.Gray-50',
   }),
+  loadingIndicator: () => ({
+    display: 'none',
+  }),
+  loadingMessage: () => ({
+    fontSize: 'r1',
+  }),
+  noOptionsMessage: () => ({
+    fontSize: 'r1',
+  }),
 };

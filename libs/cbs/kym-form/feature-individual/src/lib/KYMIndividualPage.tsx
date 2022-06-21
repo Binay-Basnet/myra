@@ -144,7 +144,7 @@ export function KYMIndividualPage() {
         <FormProvider {...methods}>
           <form
             onChange={debounce(() => {
-              mutate({ id, data: getValues() });
+              console.log(getValues());
             }, 800)}
             onSubmit={handleSubmit((data) => {
               console.log('data', data);
@@ -152,8 +152,6 @@ export function KYMIndividualPage() {
             onFocus={(e) => {
               const kymSection = getKymSection(e.target.id);
               setKymCurrentSection(kymSection);
-
-              console.log(e.target);
             }}
           >
             {/* main */}
@@ -187,9 +185,9 @@ export function KYMIndividualPage() {
                         1. Personal Information
                       </Text>
                       <ContainerWithDivider>
-                        <MemberKYMBasicInfo control={control} />
-                        <MemberKYMContactDetails control={control} />
-                        <MemberKYMIdentificationDetails control={control} />
+                        <MemberKYMBasicInfo />
+                        <MemberKYMContactDetails />
+                        <MemberKYMIdentificationDetails />
                         <MemberKYMAddress control={control} watch={watch} />
                         <MemberKYMFamilyDetails control={control} />
                       </ContainerWithDivider>

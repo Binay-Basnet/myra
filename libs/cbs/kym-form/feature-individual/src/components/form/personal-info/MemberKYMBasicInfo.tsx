@@ -1,19 +1,36 @@
 import React from 'react';
-import { Control } from 'react-hook-form';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { KymIndMemberInput } from '@coop/shared/data-access';
+import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 
-interface IMemberKYMBasicInfo {
-  control: Control<KymIndMemberInput>;
-}
+import { getFieldOption } from '../../../utils/getFieldOption';
 
-export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
+export const MemberKYMBasicInfo = () => {
+  const { data: genderFields, isLoading: genderLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'gender',
+    });
+
+  const { data: ethnicityFields, isLoading: ethnicityLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'ethnicity',
+    });
+
+  const { data: educationFields, isLoading: educationLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'education_qualification',
+    });
+
+  const { data: religionFields, isLoading: religionLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'religion',
+    });
+
   return (
     <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
       <Text
@@ -25,87 +42,63 @@ export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
       </Text>
       <InputGroupContainer>
         <FormInput
-          // control={control}
           type="text"
           name="firstName"
           label="First Name"
           placeholder="Enter first name"
         />
         <FormInput
-          control={control}
           type="text"
           name="middleName"
           label="Middle Name"
           placeholder="Enter Middle name"
         />
         <FormInput
-          control={control}
           type="text"
           name="lastName"
           label="Last Name"
           placeholder="Enter Last name"
         />
         <FormSelect
-          control={control}
           name="genderId"
           label="Gender"
           placeholder="Select Gender"
-          options={[
-            { label: 'Male', value: 'Male' },
-            { label: 'Female', value: 'Female' },
-            { label: 'Other', value: 'Other' },
-          ]}
+          isLoading={genderLoading}
+          options={getFieldOption(genderFields)}
         />
         <FormInput
-          control={control}
           type="date"
           name="dateOfBirth"
           label="Date of Birth(BS)"
           placeholder="Enter date of birth"
         />
         <FormSelect
-          control={control}
           name="ethnicityId"
           label="Ethnicity"
           placeholder="Select Ethnicity"
-          options={[
-            { label: 'Bramins', value: 'bramins' },
-            { label: 'Chetris', value: 'chetris' },
-            { label: 'Newar', value: 'newar' },
-          ]}
+          isLoading={ethnicityLoading}
+          options={getFieldOption(ethnicityFields)}
         />
 
         <FormInput
-          control={control}
           type="text"
           name="nationalityId"
           label="Nationality"
           placeholder="Enter Nationality"
         />
         <FormSelect
-          control={control}
           name={'educationQualificationId'}
           label="Educational Qualification"
           placeholder="Select Educational Qualification"
-          options={[
-            { label: 'SEE', value: 'see' },
-            { label: '+2', value: 'twelve' },
-            { label: 'Graduate', value: 'graduate' },
-            { label: 'Post Graduate', value: 'postGraduate' },
-            { label: 'Doctorate', value: 'doctorate' },
-          ]}
+          isLoading={educationLoading}
+          options={getFieldOption(educationFields)}
         />
         <FormSelect
-          control={control}
           name="religionId"
           label="Religion"
           placeholder="Select Religion"
-          options={[
-            { label: 'Hindu', value: 'hindu' },
-            { label: 'Buddhist', value: 'buddhist' },
-            { label: 'Muslims', value: 'muslims' },
-            { label: 'Christain', value: 'christain' },
-          ]}
+          isLoading={religionLoading}
+          options={getFieldOption(religionFields)}
         />
       </InputGroupContainer>
     </GroupContainer>
