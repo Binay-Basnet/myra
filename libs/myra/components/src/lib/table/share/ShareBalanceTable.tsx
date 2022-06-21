@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Avatar, Flex } from '@chakra-ui/react';
+
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetShareBalanceListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
@@ -8,6 +8,8 @@ export const ShareBalanceTable = () => {
   const { data, isLoading } = useGetShareBalanceListQuery();
 
   const rowData = useMemo(() => data?.share.balance?.edges ?? [], [data]);
+
+  console.log(rowData);
 
   const popoverTitle = ['View Member Profile'];
 
@@ -21,27 +23,8 @@ export const ShareBalanceTable = () => {
 
       {
         Header: 'Name',
-        accessor: 'node.member.personalInformation.name.firstName',
+        accessor: 'node.member.name.local',
         width: '60%',
-
-        Cell: ({ value, row }) => {
-          return (
-            <Flex alignItems="center" gap="2">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <span>
-                {value}{' '}
-                {
-                  row?.original?.node?.member?.personalInformation?.name
-                    ?.lastName
-                }
-              </span>
-            </Flex>
-          );
-        },
       },
 
       {

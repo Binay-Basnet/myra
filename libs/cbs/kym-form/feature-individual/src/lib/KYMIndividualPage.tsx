@@ -49,7 +49,7 @@ export function KYMIndividualPage() {
     section: string;
     subSection: string;
   }>();
-  // const methods = useForm<IFormValues>();
+
   const router = useRouter();
   const id = String(router?.query?.['id']);
   const { mutate } = useSetMemberDataMutation({
@@ -109,11 +109,10 @@ export function KYMIndividualPage() {
   return (
     <>
       {/* // Top Bar */}
-      <Box position="relative" h="80px" margin="0px auto">
+      <Box position="relative" margin="0px auto">
         <Box
           position="fixed"
           margin="0px auto"
-          pt="20px"
           bg="gray.100"
           width="100%"
           zIndex="10"
@@ -127,7 +126,6 @@ export function KYMIndividualPage() {
               px="5"
               background="white"
               borderBottom="1px solid #E6E6E6"
-              borderTopRadius="br3"
             >
               <Text fontSize="r2" fontWeight="SemiBold">
                 {t.membersFormAddNewMembers}
@@ -158,7 +156,7 @@ export function KYMIndividualPage() {
             }}
           >
             {/* main */}
-            <Box display="flex" width="100%">
+            <Box pb="s40" display="flex" width="100%">
               <Box display="flex">
                 <Box
                   w={320}
@@ -174,7 +172,14 @@ export function KYMIndividualPage() {
                   />
                 </Box>
 
-                <Box background="white" ml={320} px="s20" pb="120px">
+                <Box
+                  background="white"
+                  ml={320}
+                  px="s20"
+                  mt="60px"
+                  pt="s20"
+                  pb="120px"
+                >
                   <SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
@@ -249,7 +254,7 @@ export function KYMIndividualPage() {
           </form>
         </FormProvider>
       </Container>
-      <Box position="relative" h="80px" margin="0px auto">
+      <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100">
           <Container minW="container.xl" height="fit-content">
             <Box

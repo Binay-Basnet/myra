@@ -7,6 +7,7 @@ import { Box, Collapse, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
 import { AccountCards } from '../components/AccountCards';
 import { LoanCard } from '../components/LoanCard';
 import { DocumentCard } from '../components/DocumentCard';
+import { useGetMemberDataQuery } from '@coop/shared/data-access';
 
 const memberProfileColumns = [
   {
@@ -182,8 +183,14 @@ const documentDetails = [
 export const ProfileFeature = () => {
   const [openCollapse, setOpenCollapse] = useState(false);
   const handleToggle = () => setOpenCollapse(!openCollapse);
+
+  const { data: memberData } = useGetMemberDataQuery({
+    id: '12',
+  });
+  const data = memberData?.members?.individual?.get?.data?.member;
+  console.log(data);
   return (
-    <>
+    <Box margin="0px auto">
       <Box w="100%" height="fit-content" p="0">
         <Grid
           gap={3}
@@ -197,6 +204,9 @@ export const ProfileFeature = () => {
             colSpan={10}
             borderRadius="br3"
             p="s16"
+            pt="20px"
+            width="100%"
+            zIndex="10"
           >
             <Text>Member List</Text>
             <Icon mx="12px" my="5px" size="sm" as={AiOutlineRight} />
@@ -264,7 +274,7 @@ export const ProfileFeature = () => {
                   justifyContent="center"
                   alignContent="center"
                 >
-                  <Collapse startingHeight={315} in={openCollapse}>
+                  <Collapse startingHeight={350} in={openCollapse}>
                     <Box p="s16">
                       <Box
                         mb="s32"
@@ -283,35 +293,31 @@ export const ProfileFeature = () => {
                           Edit
                         </Box>
                       </Box>
-                      <Grid templateColumns="repeat(2,1fr)">
-                        <GridItem>
-                          <Grid templateColumns="repeat(1,1fr)">
-                            {personalInfoDetails.map((item, index) => (
-                              <GridItem key={index}>
-                                <Text
-                                  color="neutralColorLight.Gray-80"
-                                  fontWeight="Regular"
-                                  fontSize="s3"
-                                >
-                                  {item.label}
-                                </Text>
-                              </GridItem>
-                            ))}
-                          </Grid>
-                        </GridItem>
 
+                      <Grid>
                         <GridItem>
-                          <Grid templateColumns="repeat(1,1fr)">
+                          <Grid templateColumns="repeat(2,1fr)">
                             {personalInfoDetails.map((item, index) => (
-                              <GridItem key={index}>
-                                <Text
-                                  color="neutralColorLight.Gray-80"
-                                  fontWeight="Medium"
-                                  fontSize="s3"
-                                >
-                                  {item.value}
-                                </Text>
-                              </GridItem>
+                              <>
+                                <GridItem key={index}>
+                                  <Text
+                                    color="neutralColorLight.Gray-80"
+                                    fontWeight="Regular"
+                                    fontSize="s3"
+                                  >
+                                    {item.label}
+                                  </Text>
+                                </GridItem>
+                                <GridItem key={index}>
+                                  <Text
+                                    color="neutralColorLight.Gray-80"
+                                    fontWeight="Medium"
+                                    fontSize="s3"
+                                  >
+                                    {item.value}
+                                  </Text>
+                                </GridItem>
+                              </>
                             ))}
                           </Grid>
                         </GridItem>
@@ -447,7 +453,7 @@ export const ProfileFeature = () => {
           </GridItem>
         </Grid>
       </Box>
-    </>
+    </Box>
   );
 };
 

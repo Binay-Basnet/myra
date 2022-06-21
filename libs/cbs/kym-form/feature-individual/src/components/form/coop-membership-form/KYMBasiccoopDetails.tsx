@@ -6,13 +6,12 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
-import { Radio } from '@chakra-ui/react';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormRadioGroup, FormSelect } from '@coop/shared/form';
+import { FormSelect } from '@coop/shared/form';
 import {
   Avatar,
   Box,
@@ -30,14 +29,12 @@ import {
 
 const booleanList = [
   {
-    key: 'yes',
+    label: 'yes',
     value: 'Yes',
-    label: 'Yes',
   },
   {
-    key: 'no',
+    label: 'no',
     value: 'No',
-    label: 'No',
   },
 ];
 
@@ -158,7 +155,6 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
           mt="s16"
           border="1px solid"
           borderColor="border.layout"
-          borderTopRadius="br3"
           display="flex"
           flexDirection="column"
         >

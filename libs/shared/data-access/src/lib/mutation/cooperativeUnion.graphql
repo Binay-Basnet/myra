@@ -1,12 +1,96 @@
-mutation setCooperativeUnionData($id: ID!, $data: KymCoopUnionFormInput!) {
+mutation setCooperativeUnionInstitutionData(
+  $id: ID!
+  $data: CoopUnionInstitutionInformationInput
+) {
   members {
     cooperativeUnion(id: $id) {
-      add(data: $data) {
-        recordId
-        error {
-          ... on KymCoopUnionAddInvalidDataError {
-            error
-          }
+      add(id: $id) {
+        institutionInformation(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setCooperativeUnionBoardOfDirectorData(
+  $id: ID!
+  $data: CoopUnionBODDetailsInput
+) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        boardOfDirectorsDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setAccountOperatorDetailsData(
+  $id: ID!
+  $data: CoopUnionAccountOperatorDetailsInput
+) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        accoountOperatorsDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setCentralRepresentationDetailsData(
+  $id: ID!
+  $data: CoopUnionCentralRepresentativeDetailsInput
+) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        centralRepresentativeDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setMemberDetailsData($id: ID!, $data: CoopUnionMemberDetailsInput) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        memberDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setEconomicDetailsData(
+  $id: ID!
+  $data: CoopUnionEconomicDetailsInput
+) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        economicDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setDeclarationData($id: ID!, $data: CoopUnionDeclarationInput) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        declaration(data: $data) {
+          recordId
         }
       }
     }

@@ -25,14 +25,12 @@ interface IKYMDeclaration {
 const details = ['Citizen', 'Permanent Resident', 'Resident'];
 const booleanList = [
   {
-    key: 'yes',
+    label: 'yes',
     value: 'Yes',
-    label: 'Yes',
   },
   {
-    key: 'no',
+    label: 'no',
     value: 'No',
-    label: 'No',
   },
 ];
 
