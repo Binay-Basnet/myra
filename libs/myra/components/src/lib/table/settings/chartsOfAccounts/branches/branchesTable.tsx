@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
-import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
+import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
+import { PopoverComponent } from '@coop/myra/components';
 import { useGetBranchesListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -62,7 +63,7 @@ export const SettingsBranchesTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'settingsBranch'} />
+      <SettingsPageHeader heading={'settingsBranch'} />
 
       <Table
         isLoading={isLoading}

@@ -1,4 +1,4 @@
-const en = {
+const en: Record<string, string> = {
   home: 'Home',
   dashboard: 'Dashboard',
   yes: 'Yes',
@@ -314,7 +314,7 @@ const en = {
   settingsCoaListJournal: 'Journal',
 
   // settings general members individual
-  settingsMember: 'Members',
+  settingsMember: 'Member Settings',
   settingsIndividual: 'Individuals',
   settingsInstitutional: 'Institutionals',
   settingsCooperative: 'Cooperative',
@@ -372,6 +372,21 @@ const en = {
   settingsKymIndFormIndividual: 'KYM Form - Individual',
   settingsKymIndSettingsChange:
     'Settings to change options and fields in KYM form for individuals',
+
+  // MEMBER SETTINGS INSTITUTION
+  settingsKymInsForm: 'KYM Form - Institutional',
+  settingsKymInsSettingsChange:
+    'Settings to change options and fields in KYM form for institutions',
+
+  // MEMBER SETTINGS COOPERATIVE UNION
+  settingsKymCoopUnionForm: 'KYM Form - Cooperative Union',
+  settingsKymCoopUnionSettingsChange:
+    'Settings to change options and fields in KYM form for Cooperative Union',
+
+  // MEMBER SETTINGS COOPERATIVE
+  settingsKymCoopForm: 'KYM Form - Cooperative',
+  settingsKymCoopSettingsChange:
+    'Settings to change options and fields in KYM form for Cooperativ',
 
   settingsKymInstMembers: 'Members',
   settingsKymCoopMembers: 'Members',
