@@ -1,29 +1,30 @@
 import React from 'react';
 
 import { Box } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
 
 const tabList = [
   {
-    title: 'General',
+    title: 'settingsSideGeneral',
     to: '/settings/general/members',
   },
   {
-    title: 'KYM Form - Individual',
+    title: 'settingsSideIndividual',
     to: '/settings/general/members/kym-individual',
   },
   {
-    title: 'KYM Form - Institutional',
+    title: 'settingsSideInstitutional',
     to: '/settings/general/members/kym-institutional',
   },
   {
-    title: 'KYM Form - CoOperative',
+    title: 'settingsSideCoop',
     to: '/settings/general/members/kym-cooperative',
   },
   {
-    title: 'KYM Form - CoOperative Union',
+    title: 'settingsSideCoopUnion',
     to: '/settings/general/members/kym-cooperative-union',
   },
 ];
@@ -33,9 +34,11 @@ interface SettingsMemberLayout {
 }
 
 export const SettingsMemberLayout = ({ children }: SettingsMemberLayout) => {
+  const { t } = useTranslation();
+
   return (
     <>
-      <SettingsPageHeader heading="Member Settings" />
+      <SettingsPageHeader heading={t['settingsMember']} />
       <Box
         w="300px"
         px="s8"

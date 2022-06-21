@@ -23,10 +23,10 @@ const KYMInstitutional = () => {
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            KYM Form - Institutional
+            {t['settingsKymInsForm']}
           </Text>
           <Text pt={'s2'} fontSize="r1" fontWeight="400" color="gray.400">
-            Settings to change options and fields in KYM form for institution
+            {t['settingsKymInsSettingsChange']}
           </Text>
         </Box>
         <Box mt="s16">

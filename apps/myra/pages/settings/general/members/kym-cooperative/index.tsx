@@ -23,10 +23,10 @@ const KYMCoperative = () => {
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            KYM Form - Cooperative
+            {t['settingsKymCoopForm']}
           </Text>
           <Text pt={'s2'} fontSize="r1" fontWeight="400" color="gray.400">
-            Settings to change options and fields in KYM form for Cooperative
+            {t['settingsKymCoopSettingsChange']}
           </Text>
         </Box>
         <Box mt="s16">
