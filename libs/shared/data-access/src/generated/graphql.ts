@@ -4971,13 +4971,61 @@ export type SetCooperativeDataMutationVariables = Exact<{
 
 export type SetCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
-export type SetCooperativeUnionDataMutationVariables = Exact<{
+export type SetCooperativeUnionInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<CoopUnionInstitutionInformationInput>;
 }>;
 
 
-export type SetCooperativeUnionDataMutation = { members: { cooperativeUnion?: { add?: { institutionInformation?: { recordId: string } | null } | null } | null } };
+export type SetCooperativeUnionInstitutionDataMutation = { members: { cooperativeUnion?: { add?: { institutionInformation?: { recordId: string } | null } | null } | null } };
+
+export type SetCooperativeUnionBoardOfDirectorDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<CoopUnionBodDetailsInput>;
+}>;
+
+
+export type SetCooperativeUnionBoardOfDirectorDataMutation = { members: { cooperativeUnion?: { add?: { boardOfDirectorsDetails?: { recordId: string } | null } | null } | null } };
+
+export type SetAccountOperatorDetailsDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<CoopUnionAccountOperatorDetailsInput>;
+}>;
+
+
+export type SetAccountOperatorDetailsDataMutation = { members: { cooperativeUnion?: { add?: { accoountOperatorsDetails?: { recordId: string } | null } | null } | null } };
+
+export type SetCentralRepresentationDetailsDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<CoopUnionCentralRepresentativeDetailsInput>;
+}>;
+
+
+export type SetCentralRepresentationDetailsDataMutation = { members: { cooperativeUnion?: { add?: { centralRepresentativeDetails?: { recordId: string } | null } | null } | null } };
+
+export type SetMemberDetailsDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<CoopUnionMemberDetailsInput>;
+}>;
+
+
+export type SetMemberDetailsDataMutation = { members: { cooperativeUnion?: { add?: { memberDetails?: { recordId: string } | null } | null } | null } };
+
+export type SetEconomicDetailsDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<CoopUnionEconomicDetailsInput>;
+}>;
+
+
+export type SetEconomicDetailsDataMutation = { members: { cooperativeUnion?: { add?: { economicDetails?: { recordId: string } | null } | null } | null } };
+
+export type SetDeclarationDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<CoopUnionDeclarationInput>;
+}>;
+
+
+export type SetDeclarationDataMutation = { members: { cooperativeUnion?: { add?: { declaration?: { recordId: string } | null } | null } | null } };
 
 export type GetNewIdMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -5242,8 +5290,8 @@ export const useSetCooperativeDataMutation = <
       useAxios<SetCooperativeDataMutation, SetCooperativeDataMutationVariables>(SetCooperativeDataDocument),
       options
     );
-export const SetCooperativeUnionDataDocument = `
-    mutation setCooperativeUnionData($id: ID!, $data: CoopUnionInstitutionInformationInput) {
+export const SetCooperativeUnionInstitutionDataDocument = `
+    mutation setCooperativeUnionInstitutionData($id: ID!, $data: CoopUnionInstitutionInformationInput) {
   members {
     cooperativeUnion(id: $id) {
       add(id: $id) {
@@ -5255,13 +5303,145 @@ export const SetCooperativeUnionDataDocument = `
   }
 }
     `;
-export const useSetCooperativeUnionDataMutation = <
+export const useSetCooperativeUnionInstitutionDataMutation = <
       TError = unknown,
       TContext = unknown
-    >(options?: UseMutationOptions<SetCooperativeUnionDataMutation, TError, SetCooperativeUnionDataMutationVariables, TContext>) =>
-    useMutation<SetCooperativeUnionDataMutation, TError, SetCooperativeUnionDataMutationVariables, TContext>(
-      ['setCooperativeUnionData'],
-      useAxios<SetCooperativeUnionDataMutation, SetCooperativeUnionDataMutationVariables>(SetCooperativeUnionDataDocument),
+    >(options?: UseMutationOptions<SetCooperativeUnionInstitutionDataMutation, TError, SetCooperativeUnionInstitutionDataMutationVariables, TContext>) =>
+    useMutation<SetCooperativeUnionInstitutionDataMutation, TError, SetCooperativeUnionInstitutionDataMutationVariables, TContext>(
+      ['setCooperativeUnionInstitutionData'],
+      useAxios<SetCooperativeUnionInstitutionDataMutation, SetCooperativeUnionInstitutionDataMutationVariables>(SetCooperativeUnionInstitutionDataDocument),
+      options
+    );
+export const SetCooperativeUnionBoardOfDirectorDataDocument = `
+    mutation setCooperativeUnionBoardOfDirectorData($id: ID!, $data: CoopUnionBODDetailsInput) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        boardOfDirectorsDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetCooperativeUnionBoardOfDirectorDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetCooperativeUnionBoardOfDirectorDataMutation, TError, SetCooperativeUnionBoardOfDirectorDataMutationVariables, TContext>) =>
+    useMutation<SetCooperativeUnionBoardOfDirectorDataMutation, TError, SetCooperativeUnionBoardOfDirectorDataMutationVariables, TContext>(
+      ['setCooperativeUnionBoardOfDirectorData'],
+      useAxios<SetCooperativeUnionBoardOfDirectorDataMutation, SetCooperativeUnionBoardOfDirectorDataMutationVariables>(SetCooperativeUnionBoardOfDirectorDataDocument),
+      options
+    );
+export const SetAccountOperatorDetailsDataDocument = `
+    mutation setAccountOperatorDetailsData($id: ID!, $data: CoopUnionAccountOperatorDetailsInput) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        accoountOperatorsDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetAccountOperatorDetailsDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetAccountOperatorDetailsDataMutation, TError, SetAccountOperatorDetailsDataMutationVariables, TContext>) =>
+    useMutation<SetAccountOperatorDetailsDataMutation, TError, SetAccountOperatorDetailsDataMutationVariables, TContext>(
+      ['setAccountOperatorDetailsData'],
+      useAxios<SetAccountOperatorDetailsDataMutation, SetAccountOperatorDetailsDataMutationVariables>(SetAccountOperatorDetailsDataDocument),
+      options
+    );
+export const SetCentralRepresentationDetailsDataDocument = `
+    mutation setCentralRepresentationDetailsData($id: ID!, $data: CoopUnionCentralRepresentativeDetailsInput) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        centralRepresentativeDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetCentralRepresentationDetailsDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetCentralRepresentationDetailsDataMutation, TError, SetCentralRepresentationDetailsDataMutationVariables, TContext>) =>
+    useMutation<SetCentralRepresentationDetailsDataMutation, TError, SetCentralRepresentationDetailsDataMutationVariables, TContext>(
+      ['setCentralRepresentationDetailsData'],
+      useAxios<SetCentralRepresentationDetailsDataMutation, SetCentralRepresentationDetailsDataMutationVariables>(SetCentralRepresentationDetailsDataDocument),
+      options
+    );
+export const SetMemberDetailsDataDocument = `
+    mutation setMemberDetailsData($id: ID!, $data: CoopUnionMemberDetailsInput) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        memberDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetMemberDetailsDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetMemberDetailsDataMutation, TError, SetMemberDetailsDataMutationVariables, TContext>) =>
+    useMutation<SetMemberDetailsDataMutation, TError, SetMemberDetailsDataMutationVariables, TContext>(
+      ['setMemberDetailsData'],
+      useAxios<SetMemberDetailsDataMutation, SetMemberDetailsDataMutationVariables>(SetMemberDetailsDataDocument),
+      options
+    );
+export const SetEconomicDetailsDataDocument = `
+    mutation setEconomicDetailsData($id: ID!, $data: CoopUnionEconomicDetailsInput) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        economicDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetEconomicDetailsDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetEconomicDetailsDataMutation, TError, SetEconomicDetailsDataMutationVariables, TContext>) =>
+    useMutation<SetEconomicDetailsDataMutation, TError, SetEconomicDetailsDataMutationVariables, TContext>(
+      ['setEconomicDetailsData'],
+      useAxios<SetEconomicDetailsDataMutation, SetEconomicDetailsDataMutationVariables>(SetEconomicDetailsDataDocument),
+      options
+    );
+export const SetDeclarationDataDocument = `
+    mutation setDeclarationData($id: ID!, $data: CoopUnionDeclarationInput) {
+  members {
+    cooperativeUnion(id: $id) {
+      add(id: $id) {
+        declaration(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetDeclarationDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetDeclarationDataMutation, TError, SetDeclarationDataMutationVariables, TContext>) =>
+    useMutation<SetDeclarationDataMutation, TError, SetDeclarationDataMutationVariables, TContext>(
+      ['setDeclarationData'],
+      useAxios<SetDeclarationDataMutation, SetDeclarationDataMutationVariables>(SetDeclarationDataDocument),
       options
     );
 export const GetNewIdDocument = `

@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
@@ -7,28 +6,23 @@ import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useSetCooperativeUnionInstitutionDataMutation } from '@coop/shared/data-access';
+import { useSetMemberDetailsDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
-import { ApplicantDetails } from './ApplicantDetails';
-import { BankAccountDetails } from './BankAccountDetails';
-import { ContactDetails } from './ContactDetails';
-import { InstituteBasicInfo } from './InstituteBasicInfo';
-import { RegisteredDetails } from './RegisteredDetails';
+import { KymMemberdetailsCOOP } from './memberDetails';
 
-interface interfaceInfoProps {
+interface memberDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const InstituteInfo = (props: interfaceInfoProps) => {
+export const MemberDetails = (props: memberDetailsProps) => {
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { mutate } = useSetCooperativeUnionInstitutionDataMutation({});
+  const { mutate } = useSetMemberDetailsDataMutation({});
   const methods = useForm({});
-  const { control, handleSubmit, getValues, watch, setError } = methods;
-
+  const { handleSubmit, getValues, watch } = methods;
   return (
     <FormProvider {...methods}>
       <form
@@ -47,14 +41,10 @@ export const InstituteInfo = (props: interfaceInfoProps) => {
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            1. Institution Information
+            5. Details of member
           </Text>
           <ContainerWithDivider>
-            <InstituteBasicInfo />
-            <RegisteredDetails />
-            <ContactDetails />
-            <BankAccountDetails />
-            <ApplicantDetails />
+            <KymMemberdetailsCOOP watch={watch} />
           </ContainerWithDivider>
         </SectionContainer>
       </form>
