@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Control } from 'react-hook-form';
+
 import {
   GroupContainer,
   InputGroupContainer,
@@ -22,11 +23,11 @@ interface IKYMDeclaration {
 const details = ['Citizen', 'Permanent Resident', 'Resident'];
 const booleanList = [
   {
-    key: 'yes',
+    label: 'yes',
     value: 'Yes',
   },
   {
-    key: 'no',
+    label: 'no',
     value: 'No',
   },
 ];

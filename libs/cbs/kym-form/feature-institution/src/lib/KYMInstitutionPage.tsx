@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
-
+import { useRouter } from 'next/router';
+import debounce from 'lodash/debounce';
 
 import {
   ContainerWithDivider,
@@ -17,16 +18,12 @@ import {
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   Icon,
   IconButton,
   Text,
-  TextFields,
 } from '@coop/shared/ui';
-import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
-import debounce from 'lodash/debounce';
-import { useRouter } from 'next/router';
+import { getKymSectionInstitution } from '@coop/shared/utils';
 
 import {
   AccountHolderDeclarationInstitution,
@@ -77,11 +74,10 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
   const { control, handleSubmit, getValues, watch, setError } = methods;
   return (
     <>
-      <Box position="relative" h="80px" margin="0px auto">
+      <Box position="relative" margin="0px auto">
         <Box
           position="fixed"
           margin="0px auto"
-          pt="20px"
           bg="gray.100"
           width="100%"
           zIndex="10"
@@ -95,7 +91,6 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
               px="5"
               background="white"
               borderBottom="1px solid #E6E6E6"
-              borderTopRadius="br3"
             >
               <Text fontSize="r2" fontWeight="SemiBold">
                 Add New Member
@@ -126,7 +121,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
             }}
           >
             {/* main */}
-            <Box display="flex" width="100%">
+            <Box pb="s40" display="flex" width="100%">
               <Box display="flex">
                 <Box
                   w={320}
@@ -142,7 +137,14 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                   />
                 </Box>
 
-                <Box background="white" ml={320} p="s20" pb="120px">
+                <Box
+                  background="white"
+                  ml={320}
+                  px="s20"
+                  mt="60px"
+                  pt="s20"
+                  pb="120px"
+                >
                   <SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
@@ -202,7 +204,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
           </form>
         </FormProvider>
       </Container>
-      <Box position="relative" h="80px" margin="0px auto">
+      <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100">
           <Container minW="container.xl" height="fit-content">
             <Box

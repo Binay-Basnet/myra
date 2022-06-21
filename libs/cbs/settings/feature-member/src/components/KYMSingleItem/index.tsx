@@ -3,13 +3,13 @@ import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import { FormProvider, useForm } from 'react-hook-form';
 import { debounce } from 'lodash';
 
-import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Field_Types,
   KymField,
   KymOption,
   useAddKymOptionMutation,
 } from '@coop/shared/data-access';
+import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Icon, Text } from '@coop/shared/ui';
 
 interface IKYMSingleItemProps {
@@ -108,7 +108,7 @@ export const KYMSingleItem = ({
   }>({
     defaultValues: {
       enabled: item.enabled,
-      name: item.name,
+      name: item.name.local,
       fieldType: item.fieldType,
     },
   });

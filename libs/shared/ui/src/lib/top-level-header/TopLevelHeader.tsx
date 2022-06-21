@@ -5,6 +5,8 @@ import { CgMenuGridO } from 'react-icons/cg';
 import { IoSearchSharp } from 'react-icons/io5';
 import { MdOutlineHelpOutline } from 'react-icons/md';
 import { RiHistoryFill } from 'react-icons/ri';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
   IconButton,
   Image,
@@ -14,6 +16,8 @@ import {
   InputRightElement,
   Text,
 } from '@chakra-ui/react';
+import { format } from 'date-fns';
+
 import {
   Avatar,
   Box,
@@ -26,9 +30,6 @@ import {
   Select,
   SwitchTabs,
 } from '@coop/shared/ui';
-import { format } from 'date-fns';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
@@ -36,13 +37,13 @@ export interface TopLevelHeaderProps {
 }
 
 const languageList = [
-  { key: 'en', value: 'EN' },
-  { key: 'ne', value: 'ने' },
+  { label: 'en', value: 'EN' },
+  { label: 'ne', value: 'ने' },
 ];
 
 const calendarList = [
-  { key: 'ad', value: 'AD' },
-  { key: 'bs', value: 'BS' },
+  { label: 'ad', value: 'AD' },
+  { label: 'bs', value: 'BS' },
 ];
 
 const currentDate = format(new Date(), 'yyyy-MM-dd');
@@ -167,6 +168,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               <>
                 <PopoverTrigger>
                   <Box
+                    as="button"
                     bg={isOpen ? 'secondary.900' : 'secondary.700'}
                     _hover={{ backgroundColor: 'secondary.900' }}
                     px="s12"
@@ -274,6 +276,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                   <Box
                     w="40px"
                     h="40px"
+                    as="button"
                     display={'flex'}
                     justifyContent={'center'}
                     alignItems={'center'}

@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
+import format from 'date-fns/format';
+
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetShareRegisterListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
-import format from 'date-fns/format';
 
 export const ShareRegisterTable = () => {
   const { data, isLoading } = useGetShareRegisterListQuery();
@@ -16,6 +17,7 @@ export const ShareRegisterTable = () => {
     () => [
       {
         Header: 'Date',
+        width: '20%',
         accessor: 'node.transactionDate',
         Cell: ({ value, row }) => {
           return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
@@ -37,7 +39,7 @@ export const ShareRegisterTable = () => {
 
       {
         Header: 'Name',
-        accessor: 'node.member.personalInformation.name.firstName',
+        accessor: 'node.member.name.local',
         width: '80%',
 
         Cell: ({ value, row }) => {
@@ -48,13 +50,7 @@ export const ShareRegisterTable = () => {
                 size="sm"
                 src="https://bit.ly/dan-abramov"
               />
-              <span>
-                {value}{' '}
-                {
-                  row?.original?.node?.member?.personalInformation?.name
-                    ?.lastName
-                }
-              </span>
+              <span>{value}</span>
             </Flex>
           );
         },
@@ -63,7 +59,7 @@ export const ShareRegisterTable = () => {
       {
         Header: 'To - From',
         accessor: 'node.shareStartNumber',
-        width: '10%',
+        width: '20%',
         Cell: ({ value, row }) => {
           return (
             <span>

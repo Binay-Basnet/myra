@@ -1,37 +1,29 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { GrMail } from 'react-icons/gr';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
+import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
+
+import { Form, FormFooter } from '@coop/myra/components';
 import {
-  Form,
-  FormFooter,
-  ShareReturnHistoryTable,
-  FormSelect,
-} from '@coop/myra/components';
-import { IPurchaseFormValues } from '@coop/myra/types';
-import { useGetMemberDataQuery } from '@coop/shared/data-access';
+  Payment_Mode,
+  SharePurchaseInput,
+  ShareReturnInput,
+  useSetShareReturnMutation,
+} from '@coop/shared/data-access';
+import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import {
-  Avatar,
   Box,
-  Checkbox,
   Container,
   Grid,
   GridItem,
-  Icon,
   MainLayout,
   Navbar,
   Select,
   SwitchTabs,
   TabMenu,
   Text,
-  TextFields,
   TextInput,
-  FormInput,
 } from '@coop/shared/ui';
-import { useRouter } from 'next/router';
 
 // TODO! use Layout
 const Header = () => {
@@ -42,35 +34,48 @@ const Header = () => {
     </>
   );
 };
+
 const accountList = [
-  { label: 'Bank Voucher', value: 'BankVoucher' },
-  { label: 'Account', value: 'Account' },
-  { label: 'Cash', value: 'Cash' },
+  { label: 'Bank Voucher', value: Payment_Mode.BankVoucher },
+  { label: 'Account', value: Payment_Mode.Account },
+  { label: 'Cash', value: Payment_Mode.Cash },
 ];
 
 const ShareReturn = () => {
   const router = useRouter();
-  const methods = useForm<IPurchaseFormValues>();
+  const { mutate } = useSetShareReturnMutation();
+  const methods = useForm<ShareReturnInput>();
   const { getValues, watch } = methods;
 
-  const [selectedTab, setSelectedTab] = useState<string | null>('Bank Voucher');
-  const [memberIdQuery, setMemberIdQuery] = useState<string | null>('');
-  const [noOfShares, setNoOfShares] = useState<number | null>();
-  const [adminFees, setAdminFees] = useState<number | null>(34000.0);
-  const [printingFees, setPrintingFees] = useState<number | null>(540.0);
-  const [allShare, setAllShare] = useState<boolean>(false);
+  const memberIdQuery = watch('memberId');
+  const noOfShares = watch('noOfReturnedShares');
+  const allShares = watch('selectAllShares');
 
-  const { data: memberData } = useGetMemberDataQuery({
-    id: memberIdQuery ? memberIdQuery : null,
-  });
-  const data = memberData?.members?.individual?.get?.data?.member;
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState<Payment_Mode>(
+    Payment_Mode.BankVoucher
+  );
+  const [adminFees, setAdminFees] = useState(34000.0);
+  const [printingFees, setPrintingFees] = useState(540.0);
 
-  const switchTabsFxn = (datas: string) => {
-    setSelectedTab(datas);
+  // const { data: memberData } = useGetMemberDataQuery({
+  //   id: memberIdQuery ? memberIdQuery : null,
+  // });
+  // const data = memberData?.members?.individual?.get?.data?.member;
+
+  const switchTabsFxn = (datas: Payment_Mode) => {
+    setSelectedPaymentMode(datas);
+  };
+
+  const submitForm = () => {
+    const formData = {
+      ...getValues(),
+      paymentMode: selectedPaymentMode,
+    };
+    mutate({ id: '12', data: formData });
   };
 
   return (
-    <Form<IPurchaseFormValues>
+    <Form<SharePurchaseInput>
       methods={methods}
       onChange={() => {
         console.log('getValues', getValues());
@@ -88,13 +93,7 @@ const ShareReturn = () => {
       >
         <Header />
       </Box>
-      <Container
-        minW="container.xl"
-        height="fit-content"
-        mt="130"
-        p="0"
-        pb="55px"
-      >
+      <Container minW="container.xl" height="fit-content">
         <Box
           height="60px"
           display="flex"
@@ -103,7 +102,6 @@ const ShareReturn = () => {
           px="5"
           background="white"
           borderBottom="1px solid #E6E6E6"
-          borderTopRadius={5}
         >
           <Text fontSize="r2" fontWeight="600">
             New Share Return
@@ -119,10 +117,9 @@ const ShareReturn = () => {
                 name="memberId"
                 label=" Select Member"
                 placeholder="Enter Member ID"
-                onChange={(e) => setMemberIdQuery(e.target.value)}
               />
 
-              {data && (
+              {/*  {data && (
                 <Box
                   mt="s16"
                   border="1px solid"
@@ -272,7 +269,7 @@ const ShareReturn = () => {
                     <ShareReturnHistoryTable id={memberIdQuery} />
                   </Box>
                 </Box>
-              )}
+              )}*/}
             </Box>
 
             <Box
@@ -303,20 +300,18 @@ const ShareReturn = () => {
                     <GridItem>
                       <FormInput
                         id="noOfShares"
-                        name="shareCount"
+                        name="noOfReturnedShares"
                         label="No of Shares"
                         placeholder="No of Shares"
-                        onChange={(e) => setNoOfShares(Number(e.target.value))}
                       />
                     </GridItem>
 
                     <GridItem>
-                      <Checkbox
-                        onChange={() => setAllShare(!allShare)}
+                      <FormCheckbox
+                        name="selectAllShares"
+                        label="Select All Shares"
                         mt="20px"
-                      >
-                        Select All Shares
-                      </Checkbox>
+                      />
                     </GridItem>
                     {noOfShares ? (
                       <GridItem>
@@ -332,7 +327,7 @@ const ShareReturn = () => {
                               Remaining Share
                             </Text>
                             <Text fontWeight="600" fontSize="r1">
-                              {allShare ? 0 : 20}
+                              {allShares ? 0 : 20}
                             </Text>
                           </Box>
 
@@ -342,7 +337,7 @@ const ShareReturn = () => {
                             </Text>
                             <Text fontWeight="600" fontSize="r1">
                               {' '}
-                              {allShare ? 0 : 2000}
+                              {allShares ? 0 : 2000}
                             </Text>
                           </Box>
                         </Box>
@@ -409,6 +404,7 @@ const ShareReturn = () => {
                           </Box>
                         </GridItem>
 
+                        {/* todo */}
                         <GridItem>
                           <Box display="flex" justifyContent="space-between">
                             <Text
@@ -420,9 +416,9 @@ const ShareReturn = () => {
                             >
                               Printing Fees
                             </Text>
-                            <TextInput
-                              w="50%"
-                              id="printingFees"
+                            <FormInput
+                              name="extraFee"
+                              id="administrationFees"
                               label=""
                               placeholder="54.00"
                               bg="gray.0"
@@ -478,7 +474,6 @@ const ShareReturn = () => {
                 Payment Mode
               </Text>
               <SwitchTabs
-                // name="paymentMode"
                 onClick={switchTabsFxn}
                 list={accountList.map((value) => ({
                   label: value.label,
@@ -486,7 +481,7 @@ const ShareReturn = () => {
                 }))}
               />
 
-              {selectedTab === 'account' && (
+              {selectedPaymentMode === Payment_Mode.Account && (
                 <Box
                   mt="s16"
                   mb="s16"
@@ -496,6 +491,7 @@ const ShareReturn = () => {
                   gap="s16"
                 >
                   <Select
+                    name="accountId"
                     label="Select Account"
                     placeholder="Saving Account"
                     options={[
@@ -529,7 +525,7 @@ const ShareReturn = () => {
                   </Box>
                 </Box>
               )}
-              {selectedTab === 'bankVoucher' && (
+              {selectedPaymentMode === Payment_Mode.BankVoucher && (
                 <Box
                   mt="s16"
                   mb="s16"
@@ -568,8 +564,8 @@ const ShareReturn = () => {
                 </Box>
               )}
 
-              {selectedTab === 'cash' && (
-                <Box mt="s16" w="25%">
+              {selectedPaymentMode === Payment_Mode.Cash && (
+                <Box mt="s16" mb="s16" w="25%">
                   <TextInput
                     type="text"
                     name="name"
@@ -582,7 +578,7 @@ const ShareReturn = () => {
           </Box>
         </Box>
         <Box position="relative" width="100%">
-          <FormFooter onClick={() => router.push('/share/balance')} />
+          <FormFooter onClick={submitForm} />
         </Box>
       </Container>
     </Form>
