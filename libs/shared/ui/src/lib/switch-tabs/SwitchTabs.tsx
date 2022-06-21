@@ -1,96 +1,102 @@
 import { BsDot } from 'react-icons/bs';
 import {
-  chakra,
+  Box,
+  Flex,
   Icon,
-  Tab,
-  TabList,
-  Tabs as ChakraSwitchTabs,
-  Text,
+  useRadio,
+  useRadioGroup,
+  UseRadioProps,
 } from '@chakra-ui/react';
 
 import TextFields from '../text-fields/TextFields';
 
-/* eslint-disable-next-line */
+const SwitchTab = (props: UseRadioProps & { children: React.ReactNode }) => {
+  const { getInputProps, getCheckboxProps } = useRadio(props);
+
+  const input = getInputProps();
+  const checkbox = getCheckboxProps();
+
+  return (
+    <Box as="label">
+      <input {...input} />
+      <Box
+        {...checkbox}
+        cursor="pointer"
+        bg="background.500"
+        borderRight="1px"
+        borderRightColor="border.layout"
+        color="gray.600"
+        _checked={{
+          bg: 'gray.0',
+          color: 'primary.500',
+        }}
+        _disabled={{
+          cursor: 'not-allowed',
+          bg: 'background.500',
+          color: 'gray.300',
+        }}
+        _focus={{
+          boxShadow: 'none',
+        }}
+        display="flex"
+        alignItems="center"
+        py="s12"
+        pr="s16"
+        pl="s8"
+      >
+        <Icon as={BsDot} w="s24" h="s24" />
+        <TextFields variant="switch">{props.children}</TextFields>
+      </Box>
+    </Box>
+  );
+};
+
 export interface SwitchTabsProps {
-  list: {
+  options: {
     label: string;
     value: string;
   }[];
-  onClick?: (data: string | number) => void;
-  label?: string;
-  activeTab?: number;
-  setActiveTab?: React.Dispatch<React.SetStateAction<number>>;
-  id?: string;
+  value: string;
+  name: string;
+  onChange: (nextValue: string) => void;
 }
 
-const TabElement = chakra(Tab, {
-  baseStyle: {
-    border: '2px solid',
-    borderRadius: 'br2',
-    borderColor: 'border.layout',
-    bg: 'background.500',
-    margin: '-2px',
-    _selected: {
-      color: 'neutralColorLight.g-80',
-      boxShadow: 'inset 0px -2px 0px transparent',
-      border: '2px solid',
-      borderColor: 'border.layout',
-      bg: 'gray.0',
-    },
-    _active: {
-      border: '2px solid',
-      bg: 'gray.0',
-    },
-    _focus: {
-      bg: 'gray.0',
-      borderColor: 'border.layout',
-    },
-    _disabled: {
-      _active: { bg: 'none' },
-    },
-  },
-});
+export function SwitchTabs({
+  options,
+  value,
+  name,
+  onChange,
+}: SwitchTabsProps) {
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: name,
+    defaultValue: value,
+    onChange: onChange,
+    isFocusable: true,
+  });
 
-export function SwitchTabs(props: SwitchTabsProps) {
-  const { list, onClick, label, setActiveTab, activeTab, id } = props;
+  const group = getRootProps();
 
   return (
-    <ChakraSwitchTabs
-      size="sm"
-      variant="unstyled"
-      defaultIndex={activeTab}
-      id={id}
+    <Flex
+      {...group}
+      border="1px"
+      borderColor="border.layout"
+      overflow="hidden"
+      borderRight="0"
+      gap="0"
+      borderRadius="br2"
+      width="fit-content"
     >
-      {label && <TextFields mb="s16">{label}</TextFields>}
-      <TabList
-        borderRadius="br2"
-        onChange={(e) => {
-          console.log(e);
-        }}
-      >
-        {list.map((item, index) => (
-          <TabElement
-            onClick={() => {
-              setActiveTab && setActiveTab(index);
-              onClick && onClick(item.value);
-            }}
-          >
-            <Icon
-              w={8}
-              h={8}
-              color={activeTab === index ? 'primary.500' : 'gray.500'}
-              as={BsDot}
-            />
-            <Text
-              variant="switch"
-              color={activeTab === index ? 'gray.800' : 'gray.600'}
-            >
-              {item.label}
-            </Text>
-          </TabElement>
-        ))}
-      </TabList>
-    </ChakraSwitchTabs>
+      {options.map((value) => {
+        const radio = getRadioProps({ value: value.value });
+
+        return (
+          <SwitchTab key={value.value} {...radio}>
+            {value.label}
+          </SwitchTab>
+        );
+      })}
+    </Flex>
   );
 }
 
