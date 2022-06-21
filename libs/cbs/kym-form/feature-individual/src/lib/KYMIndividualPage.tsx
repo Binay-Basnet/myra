@@ -49,7 +49,7 @@ export function KYMIndividualPage() {
     section: string;
     subSection: string;
   }>();
-  // const methods = useForm<IFormValues>();
+
   const router = useRouter();
   const id = String(router?.query?.['id']);
   const { mutate } = useSetMemberDataMutation({

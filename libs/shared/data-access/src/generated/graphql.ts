@@ -5227,6 +5227,13 @@ export type GetKymIndItemDetailsQueryVariables = Exact<{
 
 export type GetKymIndItemDetailsQuery = { settings: { general?: { KYM?: { individual: { field: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled?: boolean | null, hasOtherField: boolean, dependsOn?: Array<string | null> | null, isCustom?: boolean | null, maxSize?: number | null, fieldType: Kym_Field_Type, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType?: Field_Types | null, enabled: boolean }> | null } | null> | null } | null } } } | null } | null } };
 
+export type GetMemberIndividualDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, memberId: string, name?: Record<"local"|"en"|"np",string> | null, contactNo?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, vdc?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id: string, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, vdc?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, temporaryAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, vdc?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
+
 export type GetKymDeclarationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6262,6 +6269,88 @@ export const useGetKymIndItemDetailsQuery = <
     useQuery<GetKymIndItemDetailsQuery, TError, TData>(
       variables === undefined ? ['getKYMIndItemDetails'] : ['getKYMIndItemDetails', variables],
       useAxios<GetKymIndItemDetailsQuery, GetKymIndItemDetailsQueryVariables>(GetKymIndItemDetailsDocument).bind(null, variables),
+      options
+    );
+export const GetMemberIndividualDataDocument = `
+    query getMemberIndividualData($id: ID!) {
+  members {
+    details(id: $id) {
+      data {
+        id
+        memberId
+        name
+        address {
+          state
+          district
+          vdc
+          wardNo
+          locality
+        }
+        contactNo
+        dateJoined
+        profile {
+          ... on IndividualMember {
+            personalInformation {
+              firstName
+              middleName
+              lastName
+              genderId
+              dateOfBirth
+              ethnicityId
+              nationalityId
+              educationQualificationId
+              religionId
+              contact {
+                mobile
+                residence
+                office
+              }
+              identification {
+                id
+                fields {
+                  name
+                  value
+                }
+              }
+              permanentAddress {
+                state
+                district
+                vdc
+                wardNo
+                locality
+              }
+              temporaryAddress {
+                state
+                district
+                vdc
+                wardNo
+                locality
+              }
+              landlordName
+              landlordContact
+              maritalStatusId
+              familyDetails {
+                relationshipId
+                fullName
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberIndividualDataQuery = <
+      TData = GetMemberIndividualDataQuery,
+      TError = unknown
+    >(
+      variables: GetMemberIndividualDataQueryVariables,
+      options?: UseQueryOptions<GetMemberIndividualDataQuery, TError, TData>
+    ) =>
+    useQuery<GetMemberIndividualDataQuery, TError, TData>(
+      ['getMemberIndividualData', variables],
+      useAxios<GetMemberIndividualDataQuery, GetMemberIndividualDataQueryVariables>(GetMemberIndividualDataDocument).bind(null, variables),
       options
     );
 export const GetKymDeclarationDocument = `

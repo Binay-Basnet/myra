@@ -126,3 +126,72 @@ query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
     }
   }
 }
+
+query getMemberIndividualData($id: ID!) {
+  members {
+    details(id: $id) {
+      data {
+        id
+        memberId
+        name
+        address {
+          state
+          district
+          vdc
+          wardNo
+          locality
+        }
+        contactNo
+        dateJoined
+        profile {
+          ... on IndividualMember {
+            personalInformation {
+              firstName
+              middleName
+              lastName
+              genderId
+              dateOfBirth
+              ethnicityId
+              nationalityId
+              educationQualificationId
+              religionId
+              contact {
+                mobile
+                residence
+                office
+              }
+              identification {
+                id
+                fields {
+                  name
+                  value
+                }
+              }
+              permanentAddress {
+                state
+                district
+                vdc
+                wardNo
+                locality
+              }
+              temporaryAddress {
+                state
+                district
+                vdc
+                wardNo
+                locality
+              }
+              landlordName
+              landlordContact
+              maritalStatusId
+              familyDetails {
+                relationshipId
+                fullName
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
