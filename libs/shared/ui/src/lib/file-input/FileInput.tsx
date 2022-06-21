@@ -186,6 +186,7 @@ export const FileInputPreview = ({
       borderColor="border.element"
       borderRadius="br2"
       minWidth="128px"
+      maxWidth="100%"
     >
       <Box display="flex" alignItems="center" gap="s8">
         <Box
@@ -210,6 +211,7 @@ export const FileInputPreview = ({
               fontWeight="500"
               color="gray.800"
               noOfLines={1}
+              maxWidth="150px"
             >
               {file.name}
             </TextFields>

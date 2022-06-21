@@ -175,7 +175,7 @@ const AddNewAccount = () => {
                 <Text fontSize="s2" mb="s4">
                   Type of Account
                 </Text>
-                <SwitchTabs onClick={switchTabsFxn} list={accountList} />
+                <SwitchTabs options={accountList} />
               </Box>
 
               {selectedTab === 'cash' && (
@@ -278,7 +278,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Box justifySelf="flex-end">
-                  <SwitchTabs list={list} />
+                  <SwitchTabs options={list} />
                 </Box>
               </Box>
 
@@ -291,7 +291,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Box justifySelf="flex-end">
-                  <SwitchTabs list={list} />
+                  <SwitchTabs options={list} />
                 </Box>
               </Box>
 
@@ -304,7 +304,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Box justifySelf="flex-end">
-                  <SwitchTabs list={list} />
+                  <SwitchTabs options={list} />
                 </Box>
               </Box>
 
@@ -317,7 +317,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Box justifySelf="flex-end">
-                  <SwitchTabs list={list} />
+                  <SwitchTabs options={list} />
                 </Box>
               </Box>
 
@@ -330,7 +330,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Box justifySelf="flex-end">
-                  <SwitchTabs list={list} />
+                  <SwitchTabs options={list} />
                 </Box>
               </Box>
 
@@ -343,7 +343,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Box justifySelf="flex-end">
-                  <SwitchTabs list={list} />
+                  <SwitchTabs options={list} />
                 </Box>
               </Box>
 
@@ -356,7 +356,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Box justifySelf="flex-end">
-                  <SwitchTabs list={list} />
+                  <SwitchTabs options={list} />
                 </Box>
               </Box>
 
@@ -369,7 +369,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Box justifySelf="flex-end">
-                  <SwitchTabs list={list} />
+                  <SwitchTabs options={list} />
                 </Box>
               </Box>
             </Box>
