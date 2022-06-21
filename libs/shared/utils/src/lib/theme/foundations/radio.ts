@@ -19,8 +19,9 @@ const baseStyleControl: SystemStyleFunction = (props) => {
     _checked: {
       ...(control as any)['_checked'],
       borderRadius: 'full',
-      border: '2px solid',
+      border: '2px solid primary.500',
       bg: 'gray.0',
+      padding: '1px',
       _before: {
         content: `""`,
         display: 'inline-block',
@@ -39,7 +40,7 @@ const baseStyleControl: SystemStyleFunction = (props) => {
         bg: 'gray.0',
       },
       _focus: {
-        borderColor: 'primary.300',
+        outline: 'none',
       },
     },
     _disabled: {

@@ -13,12 +13,14 @@ import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
   Button,
+  Checkbox,
   Grid,
   GridItem,
   Icon,
   Select,
   Switch,
   Text,
+  TextFields,
 } from '@coop/shared/ui';
 
 const MainOccupation = ({
@@ -30,71 +32,112 @@ const MainOccupation = ({
   const profession = watch('profession');
 
   return (
-    <DynamicBoxContainer>
-      <CloseIcon
-        cursor="pointer"
-        onClick={removeMainOccupation}
-        color="gray.500"
-        _hover={{
-          color: 'gray.900',
-        }}
-        aria-label="close"
-        alignSelf="flex-end"
-      />
+    <Box
+      display="flex"
+      borderRadius="br2"
+      flexDirection="column"
+      gap="s16"
+      p="s20"
+      bg="background.500"
+    >
+      <Box display="flex" flexDirection="column">
+        <CloseIcon
+          cursor="pointer"
+          onClick={removeMainOccupation}
+          color="gray.500"
+          _hover={{
+            color: 'gray.900',
+          }}
+          aria-label="close"
+          alignSelf="flex-end"
+        />
 
-      <InputGroupContainer>
-        <GridItem colSpan={1}>
-          <FormSelect
+        <InputGroupContainer>
+          <GridItem colSpan={1}>
+            <FormSelect
+              control={control}
+              name={`mainOccupation.${index}.occupation`}
+              label="Occupation"
+              placeholder="Select Occupation"
+              options={
+                profession?.map((data: string) => ({
+                  label: data,
+                  value: data,
+                })) ?? []
+              }
+            />
+          </GridItem>
+          <GridItem colSpan={2}>
+            <FormInput
+              bg="white"
+              control={control}
+              type="text"
+              name={`mainOccupation.${index}.orgName`}
+              label="Org/Firm Name"
+              placeholder="Org/Firm Name"
+            />
+          </GridItem>
+
+          <FormInput
             control={control}
-            name={`mainOccupation.${index}.occupation`}
-            label="Occupation"
-            placeholder="Select Occupation"
-            options={
-              profession?.map((data: string) => ({
-                label: data,
-                value: data,
-              })) ?? []
-            }
+            bg="white"
+            type="text"
+            name={`mainOccupation.${index}.idNumber`}
+            label="Pan / VAT No"
+            placeholder="Pan/VAT Number"
           />
-        </GridItem>
-        <GridItem colSpan={2}>
+          <FormInput
+            control={control}
+            type="text"
+            bg="white"
+            name={`mainOccupation.${index}.address`}
+            label="Address"
+            placeholder="Enter Address"
+          />
           <FormInput
             bg="white"
             control={control}
-            type="text"
-            name={`mainOccupation.${index}.orgName`}
-            label="Org/Firm Name"
-            placeholder="Org/Firm Name"
+            type="number"
+            textAlign={'right'}
+            name={`mainOccupation.${index}.estimatedAnnualIncome`}
+            label="Estimated Annual Income"
+            placeholder="0.00"
           />
-        </GridItem>
+        </InputGroupContainer>
+      </Box>
 
+      <Checkbox fontSize="s3">
+        <TextFields variant="formLabel">Are you owner?</TextFields>
+      </Checkbox>
+
+      <InputGroupContainer>
         <FormInput
-          control={control}
           bg="white"
-          type="text"
-          name={`mainOccupation.${index}.idNumber`}
-          label="Pan / VAT No"
-          placeholder="Pan/VAT Number"
-        />
-        <FormInput
           control={control}
-          type="text"
-          bg="white"
-          name={`mainOccupation.${index}.address`}
-          label="Address"
-          placeholder="Enter Address"
+          type="date"
+          name={`mainOccupation.${index}.establishedDate`}
+          label="Established Date"
+          placeholder="Established Date"
         />
         <FormInput
           bg="white"
           control={control}
           type="number"
-          textAlign={'right'}
-          name={`mainOccupation.${index}.estimatedAnnualIncome`}
-          label="Estimated Annual Income"
-          placeholder="0.00"
+          name={`mainOccupation.${index}.registrationNo`}
+          label="Registration No."
+          placeholder="Registration No."
+        />
+        <FormInput
+          bg="white"
+          control={control}
+          type="number"
+          name={`mainOccupation.${index}.contactNo`}
+          label="Contact No."
+          placeholder="Contact No."
         />
       </InputGroupContainer>
-    </DynamicBoxContainer>
+      {/* </Box> */}
+    </Box>
   );
 };
 

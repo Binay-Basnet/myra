@@ -61,7 +61,11 @@ export function SwitchTabs(props: SwitchTabsProps) {
       defaultIndex={activeTab}
       id={id}
     >
-      {label && <TextFields mb="s16">{label}</TextFields>}
+      {label && (
+        <TextFields variant="formLabel" mb="s16">
+          {label}
+        </TextFields>
+      )}
       <TabList
         borderRadius="br2"
         onChange={(e) => {
