@@ -110,7 +110,7 @@ const HusbandWifeOccupation = ({
           bg="white"
           control={control}
           type="date"
-          name={`mainOccupation.${index}.establishedDate`}
+          name={`spouseOccupation.${index}.establishedDate`}
           label="Established Date"
           placeholder="Established Date"
         />
@@ -118,7 +118,7 @@ const HusbandWifeOccupation = ({
           bg="white"
           control={control}
           type="number"
-          name={`mainOccupation.${index}.registrationNo`}
+          name={`spouseOccupation.${index}.registrationNo`}
           label="Registration No."
           placeholder="Registration No."
         />
@@ -126,7 +126,7 @@ const HusbandWifeOccupation = ({
           bg="white"
           control={control}
           type="number"
-          name={`mainOccupation.${index}.contactNo`}
+          name={`spouseOccupation.${index}.contactNo`}
           label="Contact No."
           placeholder="Contact No."
         />

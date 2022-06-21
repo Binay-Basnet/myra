@@ -52,16 +52,20 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
           Nominee
         </TextFields>
         <ContainerWithDivider>
-          <Box>
-            <Box id="Beneficial Owner" scrollMarginTop={'200px'}>
-              <SwitchTabs
-                label="Do you have a beneficial owner?"
-                list={booleanList}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                id="beneficialOwner"
-              />
-            </Box>
+          <Box
+            id="Beneficial Owner"
+            scrollMarginTop={'200px'}
+            display="flex"
+            flexDirection="column"
+            gap="s32"
+          >
+            <SwitchTabs
+              label="Do you have a beneficial owner?"
+              list={booleanList}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              id="beneficialOwner"
+            />
             <Grid
               gap={2}
               templateColumns="repeat(3,1fr)"
