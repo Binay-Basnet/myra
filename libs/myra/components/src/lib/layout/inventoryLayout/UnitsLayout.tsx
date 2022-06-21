@@ -1,7 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
+
 import {
   Box,
   Button,
@@ -12,7 +13,6 @@ import {
   Switch,
   Text,
 } from '@coop/shared/ui';
-import { useRouter } from 'next/router';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
 
@@ -132,13 +132,12 @@ export const InventoryUnitsLayout = ({
         </Button>
       </Box>
       <Box
-        p="s16"
         width="calc(100% - 275px)"
-        borderRadius="br3"
+        overflowX="hidden"
         position="relative"
         left="275px"
       >
-        <Box bg="white" borderRadius="br3">
+        <Box bg="white" minHeight="100vh">
           {children}
         </Box>
       </Box>

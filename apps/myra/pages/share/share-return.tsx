@@ -1,40 +1,29 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { GrMail } from 'react-icons/gr';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
+import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
-import { FormSelect, FormInput, FormCheckbox } from '@coop/shared/form';
+
+import { Form, FormFooter } from '@coop/myra/components';
 import {
-  Form,
-  FormFooter,
-  ShareReturnHistoryTable,
-} from '@coop/myra/components';
-import { IPurchaseFormValues } from '@coop/myra/types';
-import {
-  useGetMemberDataQuery,
+  Payment_Mode,
+  SharePurchaseInput,
   ShareReturnInput,
   useSetShareReturnMutation,
-  Payment_Mode,
 } from '@coop/shared/data-access';
+import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import {
-  Avatar,
   Box,
   Container,
   Grid,
   GridItem,
-  Icon,
   MainLayout,
   Navbar,
   Select,
   SwitchTabs,
   TabMenu,
   Text,
-  TextFields,
   TextInput,
 } from '@coop/shared/ui';
-import { useRouter } from 'next/router';
 
 // TODO! use Layout
 const Header = () => {
@@ -68,10 +57,10 @@ const ShareReturn = () => {
   const [adminFees, setAdminFees] = useState(34000.0);
   const [printingFees, setPrintingFees] = useState(540.0);
 
-  const { data: memberData } = useGetMemberDataQuery({
-    id: memberIdQuery ? memberIdQuery : null,
-  });
-  const data = memberData?.members?.individual?.get?.data?.member;
+  // const { data: memberData } = useGetMemberDataQuery({
+  //   id: memberIdQuery ? memberIdQuery : null,
+  // });
+  // const data = memberData?.members?.individual?.get?.data?.member;
 
   const switchTabsFxn = (datas: Payment_Mode) => {
     setSelectedPaymentMode(datas);
@@ -86,7 +75,7 @@ const ShareReturn = () => {
   };
 
   return (
-    <Form<IPurchaseFormValues>
+    <Form<SharePurchaseInput>
       methods={methods}
       onChange={() => {
         console.log('getValues', getValues());
@@ -104,13 +93,7 @@ const ShareReturn = () => {
       >
         <Header />
       </Box>
-      <Container
-        minW="container.xl"
-        height="fit-content"
-        mt="130"
-        p="0"
-        pb="55px"
-      >
+      <Container minW="container.xl" height="fit-content">
         <Box
           height="60px"
           display="flex"
@@ -119,7 +102,6 @@ const ShareReturn = () => {
           px="5"
           background="white"
           borderBottom="1px solid #E6E6E6"
-          borderTopRadius={5}
         >
           <Text fontSize="r2" fontWeight="600">
             New Share Return
@@ -137,7 +119,7 @@ const ShareReturn = () => {
                 placeholder="Enter Member ID"
               />
 
-              {data && (
+              {/*  {data && (
                 <Box
                   mt="s16"
                   border="1px solid"
@@ -287,7 +269,7 @@ const ShareReturn = () => {
                     <ShareReturnHistoryTable id={memberIdQuery} />
                   </Box>
                 </Box>
-              )}
+              )}*/}
             </Box>
 
             <Box

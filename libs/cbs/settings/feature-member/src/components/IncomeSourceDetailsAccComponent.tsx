@@ -266,7 +266,7 @@ export const IncomeSourceDetailsAccComponent = ({
               orientation="column"
               list={[
                 ...(familyIncome?.settings?.general?.KYM?.individual?.field?.list?.data?.[0]?.options?.map(
-                  (d) => ({ label: d.name, value: d.id })
+                  (d) => ({ label: d.name.local, value: d.id })
                 ) ?? []),
               ]}
             />

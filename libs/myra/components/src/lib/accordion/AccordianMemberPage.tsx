@@ -6,6 +6,7 @@ import {
 } from 'react-icons/ai';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
+
 import {
   KymIndAddSectionStatus,
   KymIndPersonalSection,
@@ -80,7 +81,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
   }, [kymCurrentSection]);
 
   return (
-    <Box p={'1'} overflow="auto" h="700px">
+    <Box p={'1'} overflow="auto" h="700px" mt="60px">
       <Box
         display="flex"
         justifyContent="space-between"

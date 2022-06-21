@@ -45,16 +45,18 @@ query getMemberList(
 query getMemberTypes {
   members {
     memberTypes {
-      id
-      type
+      data {
+        id
+        type
+      }
     }
   }
 }
 
 query getMemberTranslation($id: ID!) {
   members {
-    individual {
-      translate(id: $id) {
+    translate(id: $id) {
+      data {
         id
         data
         translatedValue
@@ -99,7 +101,7 @@ query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
         individual {
           field {
             list(
-              filter: { name: $name, isIdetificationDoc: $isIdentificationDoc }
+              filter: { name: $name, isIdentificationDoc: $isIdentificationDoc }
             ) {
               data {
                 id

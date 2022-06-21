@@ -7,12 +7,7 @@ query getShareBalanceList {
           balance
           shareCount
           member {
-            personalInformation {
-              name {
-                firstName
-                lastName
-              }
-            }
+            name
           }
         }
       }
@@ -33,71 +28,13 @@ query getShareRegisterList {
           transactionDirection
           id
           member {
-            personalInformation {
-              name {
-                firstName
-                lastName
-              }
-            }
+            name
           }
           balance
           shareStartNumber
           shareEndNumber
           shareCr
           shareDr
-        }
-      }
-    }
-  }
-}
-
-query getMemberData($id: ID!) {
-  members {
-    individual {
-      get(id: $id) {
-        data {
-          member {
-            id
-            address {
-              permanent {
-                state
-                district
-                vdc
-                wardNo
-                locality
-              }
-              temporary {
-                state
-                district
-                vdc
-                wardNo
-                locality
-              }
-            }
-            contact {
-              mobile
-              office
-              residence
-            }
-            personalInformation {
-              name {
-                firstName
-                middleName
-                lastName
-              }
-              gender
-              title
-              dateOfBirth
-              nationality
-              citizenship {
-                number
-                issuePlace
-                issueDate
-              }
-              occupation
-              panNumber
-            }
-          }
         }
       }
     }

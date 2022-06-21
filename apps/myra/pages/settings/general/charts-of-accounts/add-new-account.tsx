@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import { FormControl } from '@chakra-ui/react';
-import { FormInput } from '@coop/shared/form';
+
 import { KymIndMemberInput } from '@coop/shared/data-access';
+import { FormInput } from '@coop/shared/form';
 import {
   AmountInput,
   Box,
@@ -17,7 +19,6 @@ import {
   Text,
   TextInput,
 } from '@coop/shared/ui';
-import { useRouter } from 'next/router';
 
 import SettingsFormLayout from '../../../../components/SettingsLayout/SettingsFormLayout';
 
@@ -386,7 +387,7 @@ const AddNewAccount = () => {
           px="s20"
           py="s16"
           boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
-          borderTopRadius="br3"
+          
         >
           <Text
             alignSelf="center"

@@ -26,7 +26,6 @@ const ChartsOfAccounts = () => {
         justifyContent="space-between"
         borderBottom="1px solid"
         borderBottomColor="#E6E6E6"
-        borderTopRadius="br3"
         height="60px"
       >
         <Box background="white" display="flex" gap="s48">

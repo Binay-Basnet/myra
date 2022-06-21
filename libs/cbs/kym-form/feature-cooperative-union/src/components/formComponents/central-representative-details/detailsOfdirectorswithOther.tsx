@@ -4,6 +4,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   AccordianContainer,
   DynamicBoxContainer,
@@ -13,16 +14,16 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
+  KymIndMemberInput,
+  useAllAdministrationQuery,
+} from '@coop/shared/data-access';
+import {
   FormFileInput,
   FormInput,
   FormRadioGroup,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import {
-  KymIndMemberInput,
-  useAllAdministrationQuery,
-} from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -49,11 +50,15 @@ export const AddRepresentative = ({ watch, control }) => {
     );
   }, [data?.administration?.all]);
   const directorList = watch('boardOfDirectorsDetails');
-  const direcctorArray = directorList.map((a) => a?.fullName);
+  const direcctorArray = directorList?.map((a) => a?.fullName);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentStateId');
-  const currentDistrictId = watch('permanentDistrictId');
+  const currentProvinceId = watch(
+    'centralRepresentativeDetails.permanentStateId'
+  );
+  const currentDistrictId = watch(
+    'centralRepresentativeDetails.permanentDistrictId'
+  );
 
   const districtList = useMemo(
     () =>
@@ -70,23 +75,27 @@ export const AddRepresentative = ({ watch, control }) => {
   );
 
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryStateId');
-  const currentTemptDistrictId = watch('temporaryDistrictId');
+  const currentTempProvinceId = watch(
+    `centralRepresentativeDetails.temporaryStateId`
+  );
+  const currentTemptDistrictId = watch(
+    'centralRepresentativeDetails.temporaryDistrictId'
+  );
 
   const districtTempList = useMemo(
     () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
+      data?.administration.all.find((d) => d.id === currentTempProvinceId)
         ?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
+        ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
-  const tab = watch('centralRepresentativeDetails.notAmongDirectors');
+  const tab = watch('centralRepresentativeDetails.notAmongDirectors') ?? false;
   return (
     <>
       {!tab && (

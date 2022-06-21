@@ -9,6 +9,7 @@ import {
 import { FaMap } from 'react-icons/fa';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   AccordianContainer,
   DynamicBoxContainer,
@@ -18,15 +19,15 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
+  KymIndMemberInput,
+  useAllAdministrationQuery,
+} from '@coop/shared/data-access';
+import {
   FormFileInput,
   FormInput,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import {
-  KymIndMemberInput,
-  useAllAdministrationQuery,
-} from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -54,8 +55,20 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentStateId');
-  const currentDistrictId = watch('permanentDistrictId');
+  const currentProvinceId = watch(
+    `accountOperatorsDetails.${index}.permanentStateId`
+  );
+  const currentDistrictId = watch(
+    `accountOperatorsDetails.${index}.permanentDistrictId`
+  );
+
+  // FOR TEMPORARY ADDRESS
+  const currentTempProvinceId = watch(
+    `accountOperatorsDetails.${index}.temporaryStateId`
+  );
+  const currentTemptDistrictId = watch(
+    `accountOperatorsDetails.${index}.temporaryDistrictId`
+  );
 
   const districtList = useMemo(
     () =>
@@ -71,21 +84,17 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
     [currentDistrictId]
   );
 
-  // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryStateId');
-  const currentTemptDistrictId = watch('temporaryDistrictId');
-
   const districtTempList = useMemo(
     () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
+      data?.administration.all.find((d) => d.id === currentTempProvinceId)
         ?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
+        ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
   return (
