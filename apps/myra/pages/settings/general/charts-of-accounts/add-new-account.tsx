@@ -376,33 +376,40 @@ const AddNewAccount = () => {
           </form>
         </FormProvider>
       </Container>
-
-      {/* <Container minW="container.xl" height="fit-content" p="0">
-        <Box
-          bottom={0}
-          bg="gray.0"
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          px="s20"
-          py="s16"
-          boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
-          
-        >
-          <Text
-            alignSelf="center"
-            color="gray.600"
-            fontWeight="Regular"
-            fontSize="r1"
+      {/* <Box position="relative" margin="0px auto"> */}
+      <Box
+        bottom="0"
+        position="fixed"
+        width="100%"
+        bg="gray.100"
+        zIndex={10}
+        justifyContent="center"
+      >
+        <Container minW="container.xl" height="fit-content">
+          <Box
+            display="flex"
+            height="60px"
+            justifyContent="space-between"
+            alignItems="center"
+            background="white"
+            borderTopLeftRadius="br3"
+            borderTopRightRadius="br3"
+            px="5"
+            boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
           >
-            Form details saved to draft 09:41 AM
-          </Text>
-
-          <Button onClick={() => router.push('/members/list')}>
-            Save Account
-          </Button>
-        </Box>
-      </Container> */}
+            <Text>Form Details saved to draft</Text>
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="flex-end"
+              alignSelf="center"
+            >
+              <Button>Save</Button>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+      {/* </Box> */}
     </>
   );
 };
