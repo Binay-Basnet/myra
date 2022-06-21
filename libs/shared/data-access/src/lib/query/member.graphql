@@ -1,197 +1,189 @@
 query getMemberList(
-  $objState: ObjState
-  $first: Int
-  $before: Cursor
-  $after: Cursor
-  $last: Int
+    $objState: ObjState
+    $first: Int
+    $before: Cursor
+    $after: Cursor
+    $last: Int
 ) {
-  members {
-    list(
-      pagination: { first: $first, before: $before, after: $after, last: $last }
-      filter: { objState: $objState }
-    ) {
-      totalCount
-      edges {
-        node {
-          id
-          memberId
-          personalInformation {
-            name {
-              firstName
-              lastName
+    members {
+        list(
+            pagination: { first: $first, before: $before, after: $after, last: $last }
+            filter: { objState: $objState }
+        ) {
+            totalCount
+            edges {
+                node {
+                    id
+                    name
+                    address {
+                        state
+                        district
+                        localLevel
+                        wardNo
+                        locality
+                    }
+                    contact
+                    createdAt
+                }
+                cursor
             }
-          }
-          address {
-            permanent {
-              district
-              state
+            pageInfo {
+                startCursor
+                endCursor
             }
-          }
-          contact {
-            mobile
-          }
-          createdAt
         }
-        cursor
-      }
-      pageInfo {
-        startCursor
-        endCursor
-      }
     }
-  }
 }
 
 query getMemberTypes {
-  members {
-    memberTypes {
-      data {
-        id
-        type
-      }
+    members {
+        memberTypes {
+            data {
+                id
+                type
+            }
+        }
     }
-  }
 }
 
 query getMemberTranslation($id: ID!) {
-  members {
-    translate(id: $id) {
-      data {
-        id
-        data
-        translatedValue
-      }
+    members {
+        translate(id: $id) {
+            data {
+                id
+                data
+                translatedValue
+            }
+        }
     }
-  }
 }
 
 query getKymFormStatus($id: ID!) {
-  members {
-    individual {
-      formState(id: $id) {
-        data {
-          sectionStatus {
-            personal {
-              completed
-              error
+    members {
+        individual {
+            formState(id: $id) {
+                data {
+                    sectionStatus {
+                        personal {
+                            completed
+                            error
+                        }
+                        professional {
+                            completed
+                            error
+                        }
+                        cooperativeMembership {
+                            completed
+                            error
+                        }
+                        declaration {
+                            completed
+                            error
+                        }
+                    }
+                }
             }
-            professional {
-              completed
-              error
-            }
-            cooperativeMembership {
-              completed
-              error
-            }
-            declaration {
-              completed
-              error
-            }
-          }
         }
-      }
     }
-  }
 }
 
 query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
-  settings {
-    general {
-      KYM {
-        individual {
-          field {
-            list(
-              filter: { name: $name, isIdentificationDoc: $isIdentificationDoc }
-            ) {
-              data {
-                id
-                name
-                enabled
-                options {
-                  id
-                  name
-                  fieldType
-                  enabled
+    settings {
+        general {
+            KYM {
+                individual {
+                    field {
+                        list(
+                            filter: { name: $name, isIdentificationDoc: $isIdentificationDoc }
+                        ) {
+                            data {
+                                id
+                                name
+                                enabled
+                                options {
+                                    id
+                                    name
+                                    fieldType
+                                    enabled
+                                }
+                                hasOtherField
+                                dependsOn
+                                isCustom
+                                maxSize
+                                fieldType
+                            }
+                        }
+                    }
                 }
-                hasOtherField
-                dependsOn
-                isCustom
-                maxSize
-                fieldType
-              }
             }
-          }
         }
-      }
     }
-  }
 }
 
 query getMemberIndividualData($id: ID!) {
-  members {
-    details(id: $id) {
-      data {
-        id
-        memberId
-        name
-        address {
-          state
-          district
-          vdc
-          wardNo
-          locality
-        }
-        contactNo
-        dateJoined
-        profile {
-          ... on IndividualMember {
-            personalInformation {
-              firstName
-              middleName
-              lastName
-              genderId
-              dateOfBirth
-              ethnicityId
-              nationalityId
-              educationQualificationId
-              religionId
-              contact {
-                mobile
-                residence
-                office
-              }
-              identification {
+    members {
+        details(id: $id) {
+            data {
                 id
-                fields {
-                  name
-                  value
+                name
+                address {
+                    state
+                    district
+                    localLevel
+                    wardNo
+                    locality
                 }
-              }
-              permanentAddress {
-                state
-                district
-                vdc
-                wardNo
-                locality
-              }
-              temporaryAddress {
-                state
-                district
-                vdc
-                wardNo
-                locality
-              }
-              landlordName
-              landlordContact
-              maritalStatusId
-              familyDetails {
-                relationshipId
-                fullName
-              }
+                contact
+                dateJoined
+                profile {
+                    ... on IndividualMember {
+                        personalInformation {
+                            firstName
+                            middleName
+                            lastName
+                            genderId
+                            dateOfBirth
+                            ethnicityId
+                            nationalityId
+                            educationQualificationId
+                            religionId
+                            contact {
+                                mobile
+                                residence
+                                office
+                            }
+                            identification {
+                                id
+                                fields {
+                                    name
+                                    value
+                                }
+                            }
+                            permanentAddress {
+                                state
+                                district
+                                localLevel
+                                wardNo
+                                locality
+                            }
+                            temporaryAddress {
+                                state
+                                district
+                                localLevel
+                                wardNo
+                                locality
+                            }
+                            landlordName
+                            landlordContact
+                            maritalStatusId
+                            familyDetails {
+                                relationshipId
+                                fullName
+                            }
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
 }

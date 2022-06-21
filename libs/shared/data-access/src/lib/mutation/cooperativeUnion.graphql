@@ -35,7 +35,7 @@ mutation setAccountOperatorDetailsData(
   members {
     cooperativeUnion(id: $id) {
       add(id: $id) {
-        accoountOperatorsDetails(data: $data) {
+        accountOperatorsDetails(data: $data) {
           recordId
         }
       }

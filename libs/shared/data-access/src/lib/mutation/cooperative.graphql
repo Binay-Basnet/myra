@@ -3,11 +3,6 @@ mutation setCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
     cooperative(id: $id) {
       add(data: $data) {
         recordId
-        error {
-          ... on KymCooperativeAddInvalidDataError {
-            error
-          }
-        }
       }
     }
   }

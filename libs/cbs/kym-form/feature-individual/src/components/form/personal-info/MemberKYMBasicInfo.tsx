@@ -81,6 +81,7 @@ export const MemberKYMBasicInfo = ({ control }: IMemberKYMBasicInfo) => {
           name="nationalityId"
           label="Nationality"
           placeholder="Enter Nationality"
+          isDisabled={true}
         />
         <FormSelect
           control={control}
