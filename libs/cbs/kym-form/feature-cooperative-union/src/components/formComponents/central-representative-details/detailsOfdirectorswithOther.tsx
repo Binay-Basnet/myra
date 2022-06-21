@@ -14,16 +14,16 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
+  KymIndMemberInput,
+  useAllAdministrationQuery,
+} from '@coop/shared/data-access';
+import {
   FormFileInput,
   FormInput,
   FormRadioGroup,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import {
-  KymIndMemberInput,
-  useAllAdministrationQuery,
-} from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -50,7 +50,7 @@ export const AddRepresentative = ({ watch, control }) => {
     );
   }, [data?.administration?.all]);
   const directorList = watch('boardOfDirectorsDetails');
-  const direcctorArray = directorList.map((a) => a?.fullName);
+  const direcctorArray = directorList?.map((a) => a?.fullName);
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch(

@@ -20,7 +20,7 @@ export function RadioGroup(props: RadioGroupProps) {
   return (
     <ChakraRadioGroup fontSize={13}>
       <Stack spacing={spacing} direction={direction}>
-        {radioList.map((item, index) => {
+        {radioList?.map((item, index) => {
           return (
             // TODO string index
             <Radio

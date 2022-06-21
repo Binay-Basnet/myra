@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
@@ -7,28 +6,26 @@ import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useSetCooperativeUnionInstitutionDataMutation } from '@coop/shared/data-access';
+import { useSetEconomicDetailsDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
-import { ApplicantDetails } from './ApplicantDetails';
-import { BankAccountDetails } from './BankAccountDetails';
-import { ContactDetails } from './ContactDetails';
-import { InstituteBasicInfo } from './InstituteBasicInfo';
-import { RegisteredDetails } from './RegisteredDetails';
+import { KymAssestsAndtarget } from './assets';
+import { KymEquilities } from './equityandliabilities';
+import { ExpenseDetails } from './expenseDetails';
+import { IncomeDetails } from './incomeDetails';
 
-interface interfaceInfoProps {
+interface economicDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const InstituteInfo = (props: interfaceInfoProps) => {
+export const EconomicDetails = (props: economicDetailsProps) => {
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { mutate } = useSetCooperativeUnionInstitutionDataMutation({});
+  const { mutate } = useSetEconomicDetailsDataMutation({});
   const methods = useForm({});
-  const { control, handleSubmit, getValues, watch, setError } = methods;
-
+  const { handleSubmit, getValues, watch } = methods;
   return (
     <FormProvider {...methods}>
       <form
@@ -47,14 +44,13 @@ export const InstituteInfo = (props: interfaceInfoProps) => {
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            1. Institution Information
+            6. Economic Details
           </Text>
           <ContainerWithDivider>
-            <InstituteBasicInfo />
-            <RegisteredDetails />
-            <ContactDetails />
-            <BankAccountDetails />
-            <ApplicantDetails />
+            <KymAssestsAndtarget watch={watch} />
+            <KymEquilities watch={watch} />
+            <IncomeDetails watch={watch} />
+            <ExpenseDetails watch={watch} />
           </ContainerWithDivider>
         </SectionContainer>
       </form>

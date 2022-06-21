@@ -7,28 +7,25 @@ import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useSetCooperativeUnionInstitutionDataMutation } from '@coop/shared/data-access';
+import { useSetCentralRepresentationDetailsDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
-import { ApplicantDetails } from './ApplicantDetails';
-import { BankAccountDetails } from './BankAccountDetails';
-import { ContactDetails } from './ContactDetails';
-import { InstituteBasicInfo } from './InstituteBasicInfo';
-import { RegisteredDetails } from './RegisteredDetails';
+import { AddRepresentative } from './detailsOfdirectorswithOther';
 
-interface interfaceInfoProps {
+interface centralRepresntativeDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const InstituteInfo = (props: interfaceInfoProps) => {
+export const CentralRepresentativeDetails = (
+  props: centralRepresntativeDetailsProps
+) => {
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { mutate } = useSetCooperativeUnionInstitutionDataMutation({});
+  const { mutate } = useSetCentralRepresentationDetailsDataMutation({});
   const methods = useForm({});
   const { control, handleSubmit, getValues, watch, setError } = methods;
-
   return (
     <FormProvider {...methods}>
       <form
@@ -47,14 +44,10 @@ export const InstituteInfo = (props: interfaceInfoProps) => {
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            1. Institution Information
+            4. Details of Central Representative{' '}
           </Text>
           <ContainerWithDivider>
-            <InstituteBasicInfo />
-            <RegisteredDetails />
-            <ContactDetails />
-            <BankAccountDetails />
-            <ApplicantDetails />
+            <AddRepresentative watch={watch} control={control} />
           </ContainerWithDivider>
         </SectionContainer>
       </form>
