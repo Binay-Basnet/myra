@@ -14,22 +14,15 @@ query getMemberList(
       edges {
         node {
           id
-          memberId
-          personalInformation {
-            name {
-              firstName
-              lastName
-            }
-          }
+          name
           address {
-            permanent {
-              district
-              state
-            }
+            state
+            district
+            localLevel
+            wardNo
+            locality
           }
-          contact {
-            mobile
-          }
+          contact
           createdAt
         }
         cursor
