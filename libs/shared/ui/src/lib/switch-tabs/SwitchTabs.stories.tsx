@@ -1,7 +1,8 @@
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
-import { theme } from '@coop/shared/utils';
 import { Meta, Story } from '@storybook/react';
+
+import { theme } from '@coop/shared/utils';
 
 import { SwitchTabs, SwitchTabsProps } from './SwitchTabs';
 
@@ -15,5 +16,19 @@ const Template: Story<SwitchTabsProps> = (args) => <SwitchTabs {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
-  list: ['One', 'Two', 'Three'],
+  options: [
+    {
+      label: 'NP',
+      value: 'np',
+    },
+    {
+      label: 'AD',
+      value: 'ad',
+    },
+    {
+      label: 'BS',
+      value: 'bs',
+    },
+  ],
+  value: 'bs',
 };

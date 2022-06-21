@@ -4,8 +4,8 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormFileInput, FormTextArea } from '@coop/shared/form';
-import { Box, Checkbox, SwitchTabs, Text } from '@coop/shared/ui';
+import { FormFileInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import { Box, Checkbox, Text } from '@coop/shared/ui';
 
 const booleanList = [
   {
@@ -33,12 +33,7 @@ export const AccountOperationInstitution = () => {
         Account Operation Instruction
       </Text>
       <Box display={'flex'} flexDirection="column" gap="s32" mt="-16px">
-        <SwitchTabs
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          list={booleanList}
-          id="accountType"
-        />
+        <FormSwitchTab options={booleanList} name="accountType" />
         <Checkbox name="isCompanyStampCompulsory" id="isCompanyStampCompulsory">
           {' '}
           Company Stamp Compulsory

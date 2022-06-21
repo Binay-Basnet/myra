@@ -5,7 +5,12 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
+import {
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import {
   Box,
   Checkbox,
@@ -74,36 +79,19 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
         </Grid>
       </Box>
       <Box id="Family members in politics" scrollMarginTop={'200px'}>
-        <SwitchTabs
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
+        <FormSwitchTab
           label="Are you or any of your family politically exposed person?"
-          list={booleanList}
-          id="politicallyExposedPerson"
+          options={booleanList}
+          name="politicallyExposedPerson"
         />
-        {/* <FormRadioGroup
-        control={control}
-        name={'isPoliticallyExposed'}
-        radioList={['Yes', 'No']}
-        label=" Are you or any of your family politically exposed person?"
-      /> */}
       </Box>
       <Box id="Beneficial Owner" scrollMarginTop={'200px'}>
-        <SwitchTabs
+        <FormSwitchTab
           label="Do you have a beneficial owner?"
-          list={booleanList}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          id="beneficialOwner"
+          options={booleanList}
+          name="beneficialOwner"
         />
       </Box>
-
-      {/* <FormRadioGroup
-        control={control}
-        name={'hasBeneficialOwner'}
-        radioList={['Yes', 'No']}
-        label="Do you have a beneficial owner?"
-      /> */}
 
       {/* <InputGroupContainer> */}
       <Grid gap={2} templateColumns="repeat(3,1fr)">
@@ -134,12 +122,10 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
         flexDirection="column"
         gap="s32"
       >
-        <SwitchTabs
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
+        <FormSwitchTab
           label="Declaration of convicted/Non-convicted for any crimes in Past"
-          list={booleanList}
-          id="declarationOfConvicted"
+          options={booleanList}
+          name="declarationOfConvicted"
         />
 
         {/* <FormRadioGroup
@@ -166,11 +152,9 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
         scrollMarginTop={'200px'}
       >
         <SwitchTabs
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
           label="Do you hold residential permit of foreign country?"
-          list={booleanList}
-          id="residentForeign"
+          options={booleanList}
+          name="residentForeign"
         />
       </Box>
 

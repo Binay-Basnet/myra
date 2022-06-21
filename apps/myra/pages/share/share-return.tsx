@@ -474,8 +474,10 @@ const ShareReturn = () => {
                 Payment Mode
               </Text>
               <SwitchTabs
-                onClick={switchTabsFxn}
-                list={accountList.map((value) => ({
+                // TODO ( USE FORM SWITCH TAB)
+                // name="paymentMode"
+
+                options={accountList.map((value) => ({
                   label: value.label,
                   value: value.value,
                 }))}
