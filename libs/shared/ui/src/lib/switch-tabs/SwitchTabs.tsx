@@ -1,8 +1,7 @@
-import { BsDot } from 'react-icons/bs';
+import React from 'react';
 import {
   Box,
   Flex,
-  Icon,
   useRadio,
   useRadioGroup,
   UseRadioProps,
@@ -13,12 +12,12 @@ import TextFields from '../text-fields/TextFields';
 const SwitchTab = (props: UseRadioProps & { children: React.ReactNode }) => {
   const { getInputProps, getCheckboxProps } = useRadio(props);
 
-  const input = getInputProps();
+  const { id, ...input } = getInputProps();
   const checkbox = getCheckboxProps();
 
   return (
     <Box as="label">
-      <input {...input} />
+      <input {...input} id={props.name} />
       <Box
         {...checkbox}
         cursor="pointer"
@@ -40,11 +39,16 @@ const SwitchTab = (props: UseRadioProps & { children: React.ReactNode }) => {
         }}
         display="flex"
         alignItems="center"
-        py="s12"
-        pr="s16"
-        pl="s8"
+        py="s10"
+        px="s16"
+        gap="s8"
       >
-        <Icon as={BsDot} w="s24" h="s24" />
+        <Box
+          w="6px"
+          h="6px"
+          rounded="full"
+          bg={props.isChecked ? 'primary.500' : 'gray.500'}
+        ></Box>
         <TextFields variant="switch">{props.children}</TextFields>
       </Box>
     </Box>
@@ -56,9 +60,12 @@ export interface SwitchTabsProps {
     label: string;
     value: string;
   }[];
-  value: string;
-  name: string;
-  onChange: (nextValue: string) => void;
+  label?: string;
+  errorText?: string;
+  helperText?: string;
+  value?: string;
+  name?: string;
+  onChange?: (nextValue: string) => void;
 }
 
 export function SwitchTabs({
@@ -66,37 +73,56 @@ export function SwitchTabs({
   value,
   name,
   onChange,
+  label,
+  errorText,
+  helperText,
 }: SwitchTabsProps) {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: name,
     defaultValue: value,
     onChange: onChange,
-    isFocusable: true,
   });
 
   const group = getRootProps();
 
   return (
-    <Flex
-      {...group}
-      border="1px"
-      borderColor="border.layout"
-      overflow="hidden"
-      borderRight="0"
-      gap="0"
-      borderRadius="br2"
-      width="fit-content"
-    >
-      {options.map((value) => {
-        const radio = getRadioProps({ value: value.value });
+    <Box display="flex" flexDir="column" gap="s4">
+      {label && (
+        <TextFields variant="formLabel" color="gray.700">
+          {label}
+        </TextFields>
+      )}
 
-        return (
-          <SwitchTab key={value.value} {...radio}>
-            {value.label}
-          </SwitchTab>
-        );
-      })}
-    </Flex>
+      <Flex
+        {...group}
+        border="1px"
+        borderColor="border.layout"
+        overflow="hidden"
+        borderRight="0"
+        gap="0"
+        borderRadius="br2"
+        width="fit-content"
+      >
+        {options?.map((value) => {
+          const radio = getRadioProps({ value: value.value });
+
+          return (
+            <SwitchTab name={name} key={value.value} {...radio}>
+              {value.label}
+            </SwitchTab>
+          );
+        })}
+      </Flex>
+      {errorText ? (
+        <TextFields variant="formHelper" color="danger.500">
+          {errorText}
+        </TextFields>
+      ) : helperText ? (
+        <TextFields variant="formHelper" color="gray.700">
+          {helperText}
+        </TextFields>
+      ) : null}
+    </Box>
   );
 }
 

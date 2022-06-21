@@ -131,7 +131,7 @@ export const getKymSection = (id: string) => {
       subSection: 'Member of Another cooperative',
     };
   }
-  if (anotherCoop.includes(id)) {
+  if (anotherCoop.includes(id.split('-')[0])) {
     return {
       section: 'COOPmembership',
       subSection: 'Member of Another cooperative',

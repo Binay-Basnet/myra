@@ -434,9 +434,10 @@ const SharePurchase = () => {
                 </Text>
 
                 <SwitchTabs
+                  // TODO ( USE FORM SWITCH TAB)
                   // name="paymentMode"
-                  onClick={switchTabsFxn}
-                  list={accountList.map((value) => ({
+
+                  options={accountList.map((value) => ({
                     label: value.label,
                     value: value.value,
                   }))}
