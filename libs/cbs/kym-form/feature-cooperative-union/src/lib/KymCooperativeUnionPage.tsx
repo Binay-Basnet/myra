@@ -102,7 +102,7 @@ export function KYMCooperativeUnionPage() {
         </Box>
       </Container>
       <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
             <Box
               display="flex"
