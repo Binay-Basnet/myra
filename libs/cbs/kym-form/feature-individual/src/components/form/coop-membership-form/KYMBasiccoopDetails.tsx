@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Controller, useFieldArray } from 'react-hook-form';
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { GrMail } from 'react-icons/gr';
@@ -11,7 +11,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormSelect } from '@coop/shared/form';
+import { FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Avatar,
   Box,
@@ -22,23 +22,24 @@ import {
   Input,
   RadioGroup,
   Select,
-  SwitchTabs,
   Text,
   TextFields,
 } from '@coop/shared/ui';
 
 const booleanList = [
   {
-    label: 'yes',
-    value: 'Yes',
+    label: 'Yes',
+    value: 'yes',
   },
   {
-    label: 'no',
-    value: 'No',
+    label: 'No',
+    value: 'no',
   },
 ];
 
 export const KYMBasiccoopDetails = ({ control }: any) => {
+  const { watch } = useFormContext();
+
   const {
     fields: familyMemberFields,
     append: familyMemberAppend,
@@ -48,6 +49,8 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
     name: 'familyMemberInThisCooperative',
   });
   const [activeTab, setActiveTab] = useState(0);
+
+  const w = watch('memberOfAnotherCooperative');
 
   return (
     <GroupContainer>
@@ -81,20 +84,11 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
         id="Member of Another cooperative"
         scrollMarginTop={'200px'}
       >
-        <SwitchTabs
+        <FormSwitchTab
           label="Member of Another cooperative"
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          list={booleanList}
-          id="memberOfAnotherCooperative"
+          options={booleanList}
+          name="memberOfAnotherCooperative"
         />
-
-        {/* <FormRadioGroup
-        control={control}
-        label="Member of Another cooperative"
-        name={'isMemberOfAnothercooperative'}
-        radioList={['Yes', 'No']}
-      /> */}
 
         <Box display="flex" flexDirection="column" gap="s4">
           <TextFields variant="formLabel">Membership Details</TextFields>
@@ -139,12 +133,10 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
         id="Family Member in this institution"
         scrollMarginTop={'200px'}
       >
-        <SwitchTabs
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
+        <FormSwitchTab
           label="Family Member in this institution"
-          list={booleanList}
-          id="familyMemberInThisInstitution"
+          options={booleanList}
+          name="familyMemberInThisInstitution"
         />
       </Box>
 

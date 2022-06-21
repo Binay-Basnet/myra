@@ -6,7 +6,12 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
+import {
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import {
   Box,
   Checkbox,
@@ -35,8 +40,6 @@ const booleanList = [
 ];
 
 export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
-  const [activeTab, setActiveTab] = useState(0);
-
   return (
     <GroupContainer>
       <Box
@@ -57,12 +60,10 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
             flexDirection="column"
             gap="s32"
           >
-            <SwitchTabs
+            <FormSwitchTab
               label="Do you have a beneficial owner?"
-              list={booleanList}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              id="beneficialOwner"
+              options={booleanList}
+              name="beneficialOwner"
             />
             <Grid
               gap={2}
@@ -97,12 +98,10 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
             flexDirection="column"
             gap="s32"
           >
-            <SwitchTabs
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
+            <FormSwitchTab
               label="Are you or any of your family politically exposed person?"
-              list={booleanList}
-              id="politicallyExposedPerson"
+              options={booleanList}
+              name="politicallyExposedPerson"
             />
 
             <InputGroupContainer>
@@ -125,20 +124,11 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
             flexDirection="column"
             gap="s32"
           >
-            <SwitchTabs
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
+            <FormSwitchTab
               label="Declaration of convicted/Non-convicted for any crimes in Past"
-              list={booleanList}
-              id="declarationOfConvicted"
+              options={booleanList}
+              name="declarationOfConvicted"
             />
-
-            {/* <FormRadioGroup
-        control={control}
-        name={'isConvicted'}
-        radioList={['Yes', 'No']}
-        label="Declaration of convicted/Non-convicted for any crimes in Past"
-      /> */}
 
             <InputGroupContainer>
               <Box display="flex" flexDirection="column">
@@ -160,12 +150,10 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
             flexDirection="column"
             gap="s32"
           >
-            <SwitchTabs
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
+            <FormSwitchTab
               label="Do you hold residential permit of foreign country?"
-              list={booleanList}
-              id="residentForeign"
+              options={booleanList}
+              name="residentForeign"
             />
 
             <Box display="flex" flexDirection="column">
@@ -177,13 +165,6 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
           </Box>
         </ContainerWithDivider>
       </Box>
-
-      {/* <FormRadioGroup
-        control={control}
-        name={'hasBeneficialOwner'}
-        radioList={['Yes', 'No']}
-        label="Do you have a beneficial owner?"
-      /> */}
     </GroupContainer>
   );
 };

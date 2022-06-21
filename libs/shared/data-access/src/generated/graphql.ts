@@ -143,9 +143,9 @@ export type AddChartsOfAccountResult = {
 
 export type Address = {
   district?: Maybe<Scalars['Localized']>;
+  localLevel?: Maybe<Scalars['Localized']>;
   locality?: Maybe<Scalars['Localized']>;
   state?: Maybe<Scalars['Localized']>;
-  vdc?: Maybe<Scalars['Localized']>;
   wardNo?: Maybe<Scalars['String']>;
 };
 
@@ -713,7 +713,7 @@ export type CooperativeEconomicDetails = {
 };
 
 export type CooperativeMember = {
-  accoountOperatorsDetails?: Maybe<CooperativeAccountOperatorDetails>;
+  accountOperatorsDetails?: Maybe<CooperativeAccountOperatorDetails>;
   boardOfDirectorsDetails?: Maybe<CooperativeBodDetails>;
   declaration?: Maybe<CooperativeDeclaration>;
   economicDetails?: Maybe<CooperativeEconomicDetails>;
@@ -928,7 +928,7 @@ export type CooperativeUnionInstitutionInformation = {
 };
 
 export type CooperativeUnionMember = {
-  accoountOperatorsDetails?: Maybe<CooperativeUnionAccountOperatorDetails>;
+  accountOperatorsDetails?: Maybe<CooperativeUnionAccountOperatorDetails>;
   boardOfDirectorsDetails?: Maybe<CooperativeUnionBodDetails>;
   centralRepresentativeDetails?: Maybe<CooperativeUnionCentralRepresentativeDetails>;
   declaration?: Maybe<CooperativeUnionDeclaration>;
@@ -2576,12 +2576,6 @@ export type KymAdditionalFieldsType = {
   value?: Maybe<Scalars['String']>;
 };
 
-export type KymAddressType = {
-  isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
-  permanent?: Maybe<KymLocalizedAddress>;
-  temporary?: Maybe<KymLocalizedAddress>;
-};
-
 export type KymCoopMembershipDetails = {
   estimatedAnnualDepositAmount?: Maybe<Scalars['Float']>;
   estimatedAnnualLoanAmount?: Maybe<Scalars['Float']>;
@@ -3050,7 +3044,7 @@ export type KymCoopUnionQueryFormStateArgs = {
 };
 
 export type KymCoopUnionSectionMutation = {
-  accoountOperatorsDetails?: Maybe<CoopUnionAccountOperatorDetailsResult>;
+  accountOperatorsDetails?: Maybe<CoopUnionAccountOperatorDetailsResult>;
   boardOfDirectorsDetails?: Maybe<CoopUnionBodDetailsResult>;
   centralRepresentativeDetails?: Maybe<CoopUnionCentralRepresentativeDetailsResult>;
   declaration?: Maybe<CoopUnionDeclarationResult>;
@@ -3060,7 +3054,7 @@ export type KymCoopUnionSectionMutation = {
 };
 
 
-export type KymCoopUnionSectionMutationAccoountOperatorsDetailsArgs = {
+export type KymCoopUnionSectionMutationAccountOperatorsDetailsArgs = {
   data?: InputMaybe<CoopUnionAccountOperatorDetailsInput>;
 };
 
@@ -3169,22 +3163,16 @@ export type KymCooperativeAccountOperatorStatus = {
   error?: Maybe<Array<Maybe<KymCooperativeAccountOperatorSection>>>;
 };
 
-export type KymCooperativeAddError = KymCooperativeAddInvalidDataError;
-
 export type KymCooperativeAddFormStatus = {
   formData?: Maybe<KymCooperativeFormData>;
   lastUpdated: KymCooperativeAddLus;
   sectionStatus?: Maybe<KymCooperativeAddSectionStatus>;
 };
 
-export type KymCooperativeAddInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
-};
-
 export type KymCooperativeAddLus = KymCooperativeAccountOperatorLus | KymCooperativeBodlus | KymCooperativeDeclarationLus | KymCooperativeEconomicDetailsLus | KymCooperativeInstitutionInformationLus;
 
 export type KymCooperativeAddResult = {
-  error?: Maybe<KymCooperativeAddError>;
+  error?: Maybe<MutationError>;
   query?: Maybe<KymCooperativeQuery>;
   record?: Maybe<KymCooperativeGetResult>;
   recordId: Scalars['ID'];
@@ -3306,10 +3294,10 @@ export type KymCooperativeEconomicDetailsStatus = {
 };
 
 export type KymCooperativeFormData = {
-  accoountOperatorsDetails?: Maybe<Array<Maybe<KymCooperativeAccountOperatorDetailsFormState>>>;
   accountHolderSignature?: Maybe<Scalars['String']>;
   accountHolderStamp?: Maybe<Scalars['String']>;
   accountHoldersName?: Maybe<Scalars['String']>;
+  accountOperatorsDetails?: Maybe<Array<Maybe<KymCooperativeAccountOperatorDetailsFormState>>>;
   bank?: Maybe<Scalars['Float']>;
   boardOfDirectorsDetails?: Maybe<Array<Maybe<KymCooperativeBodDetailsFormState>>>;
   capitalGrant?: Maybe<Scalars['Float']>;
@@ -3419,6 +3407,7 @@ export type KymCooperativeFormInput = {
 
 export type KymCooperativeFormStateQuery = {
   data?: Maybe<KymCooperativeAddFormStatus>;
+  error?: Maybe<QueryError>;
 };
 
 export type KymCooperativeGetResult = {
@@ -3457,16 +3446,10 @@ export type KymCooperativeMutationAddArgs = {
 
 export type KymCooperativeQuery = {
   formState?: Maybe<KymCooperativeFormStateQuery>;
-  get?: Maybe<KymCooperativeGetResult>;
 };
 
 
 export type KymCooperativeQueryFormStateArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type KymCooperativeQueryGetArgs = {
   id: Scalars['ID'];
 };
 
@@ -4062,58 +4045,6 @@ export type KymInstitutionDocumentsType = {
   id?: Maybe<Scalars['ID']>;
 };
 
-export type KymLocalizedAddress = {
-  district?: Maybe<Scalars['String']>;
-  locality?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
-  tole?: Maybe<Scalars['String']>;
-  wardNo?: Maybe<Scalars['String']>;
-};
-
-export type KymLocalizedFamilyDetails = {
-  fatherName?: Maybe<Scalars['String']>;
-  grandFatherName?: Maybe<Scalars['String']>;
-  grandMotherName?: Maybe<Scalars['String']>;
-  motherName?: Maybe<Scalars['String']>;
-  spouseName?: Maybe<Scalars['String']>;
-};
-
-export type KymLocalizedMemberList = Base & {
-  address?: Maybe<KymAddressType>;
-  contact?: Maybe<Contact>;
-  createdAt: Scalars['Time'];
-  createdBy: Identity;
-  documents?: Maybe<Document>;
-  family?: Maybe<KymLocalizedFamilyDetails>;
-  id: Scalars['ID'];
-  memberId?: Maybe<Scalars['ID']>;
-  modifiedAt: Scalars['Time'];
-  modifiedBy: Identity;
-  nominee?: Maybe<KymLocalizedNominee>;
-  objState: ObjState;
-  personalInformation?: Maybe<KymLocalizedPersonalInformation>;
-};
-
-export type KymLocalizedNominee = {
-  address?: Maybe<KymAddressType>;
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  memberId?: Maybe<Scalars['String']>;
-  middleName?: Maybe<Scalars['String']>;
-  relation?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-};
-
-export type KymLocalizedPersonalInformation = {
-  dateOfBirth?: Maybe<Scalars['String']>;
-  gender?: Maybe<Scalars['String']>;
-  name?: Maybe<Name>;
-  nationality?: Maybe<Scalars['String']>;
-  occupation?: Maybe<Scalars['String']>;
-  panNumber?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-};
-
 export type KymMemberDataFilter = {
   id?: InputMaybe<Scalars['ID']>;
   objState?: InputMaybe<ObjState>;
@@ -4128,7 +4059,7 @@ export type KymMemberListConnection = {
 
 export type KymMemberListEdges = {
   cursor: Scalars['Cursor'];
-  node?: Maybe<KymLocalizedMemberList>;
+  node?: Maybe<Member>;
 };
 
 export type KymMemberTypes = {
@@ -4222,17 +4153,19 @@ export type MeResult = {
 
 export type Member = Base & {
   address?: Maybe<Address>;
-  contactNo?: Maybe<Scalars['String']>;
+  code: Scalars['String'];
+  contact?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
   dateJoined?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
-  memberId: Scalars['ID'];
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   name?: Maybe<Scalars['Localized']>;
   objState: ObjState;
   profile?: Maybe<MemberProfile>;
+  share?: Maybe<MemberShare>;
+  type?: Maybe<KymMemberTypesEnum>;
 };
 
 export type MemberDetailsResult = {
@@ -4321,6 +4254,11 @@ export type MemberQueryListArgs = {
 
 export type MemberQueryTranslateArgs = {
   id: Scalars['ID'];
+};
+
+export type MemberShare = {
+  history?: Maybe<Array<Maybe<ShareRegister>>>;
+  summary?: Maybe<ShareBalance>;
 };
 
 export type MemberTypeResult = {
@@ -4963,13 +4901,20 @@ export type KymIndFormStateQuery = {
   error?: Maybe<QueryError>;
 };
 
+export type LoginMutationVariables = Exact<{
+  data: LoginInput;
+}>;
+
+
+export type LoginMutation = { auth: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, user: { id: string, modifiedAt: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, createdBy: { id: string, name: string, username: string, password: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, password: string, userType: UserType } } } | null } | null } };
+
 export type SetCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCooperativeFormInput;
 }>;
 
 
-export type SetCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+export type SetCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string } | null } | null } };
 
 export type SetCooperativeUnionInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -4993,7 +4938,7 @@ export type SetAccountOperatorDetailsDataMutationVariables = Exact<{
 }>;
 
 
-export type SetAccountOperatorDetailsDataMutation = { members: { cooperativeUnion?: { add?: { accoountOperatorsDetails?: { recordId: string } | null } | null } | null } };
+export type SetAccountOperatorDetailsDataMutation = { members: { cooperativeUnion?: { add?: { accountOperatorsDetails?: { recordId: string } | null } | null } | null } };
 
 export type SetCentralRepresentationDetailsDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -5072,7 +5017,7 @@ export type SetKymCooperativeDataMutationVariables = Exact<{
 }>;
 
 
-export type SetKymCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+export type SetKymCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string } | null } | null } };
 
 export type SetInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -5198,7 +5143,7 @@ export type GetMemberListQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, memberId?: string | null, createdAt: string, personalInformation?: { name?: { firstName?: string | null, lastName?: string | null } | null } | null, address?: { permanent?: { district?: string | null, state?: string | null } | null } | null, contact?: { mobile?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, createdAt: string, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5232,7 +5177,7 @@ export type GetMemberIndividualDataQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, memberId: string, name?: Record<"local"|"en"|"np",string> | null, contactNo?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, vdc?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id: string, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, vdc?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, temporaryAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, vdc?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
+export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id: string, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, temporaryAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
 
 export type GetKymDeclarationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5272,17 +5217,59 @@ export type GetShareHistoryQueryVariables = Exact<{
 export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, balance: number, member: { id: string } } }> } | null } };
 
 
+export const LoginDocument = `
+    mutation login($data: LoginInput!) {
+  auth {
+    login(data: $data) {
+      recordId
+      record {
+        token {
+          access
+          refresh
+        }
+        user {
+          id
+          createdBy {
+            id
+            name
+            username
+            password
+            userType
+          }
+          modifiedBy {
+            id
+            name
+            username
+            password
+            userType
+          }
+          modifiedAt
+          objState
+          username
+          firstName
+          middleName
+          lastName
+        }
+      }
+    }
+  }
+}
+    `;
+export const useLoginMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>) =>
+    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+      ['login'],
+      useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
+      options
+    );
 export const SetCooperativeDataDocument = `
     mutation setCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
   members {
     cooperative(id: $id) {
       add(data: $data) {
         recordId
-        error {
-          ... on KymCooperativeAddInvalidDataError {
-            error
-          }
-        }
       }
     }
   }
@@ -5346,7 +5333,7 @@ export const SetAccountOperatorDetailsDataDocument = `
   members {
     cooperativeUnion(id: $id) {
       add(id: $id) {
-        accoountOperatorsDetails(data: $data) {
+        accountOperatorsDetails(data: $data) {
           recordId
         }
       }
@@ -5588,11 +5575,6 @@ export const SetKymCooperativeDataDocument = `
     cooperative(id: $id) {
       add(data: $data) {
         recordId
-        error {
-          ... on KymCooperativeAddInvalidDataError {
-            error
-          }
-        }
       }
     }
   }
@@ -6096,22 +6078,15 @@ export const GetMemberListDocument = `
       edges {
         node {
           id
-          memberId
-          personalInformation {
-            name {
-              firstName
-              lastName
-            }
-          }
+          name
           address {
-            permanent {
-              district
-              state
-            }
+            state
+            district
+            localLevel
+            wardNo
+            locality
           }
-          contact {
-            mobile
-          }
+          contact
           createdAt
         }
         cursor
@@ -6277,16 +6252,15 @@ export const GetMemberIndividualDataDocument = `
     details(id: $id) {
       data {
         id
-        memberId
         name
         address {
           state
           district
-          vdc
+          localLevel
           wardNo
           locality
         }
-        contactNo
+        contact
         dateJoined
         profile {
           ... on IndividualMember {
@@ -6315,14 +6289,14 @@ export const GetMemberIndividualDataDocument = `
               permanentAddress {
                 state
                 district
-                vdc
+                localLevel
                 wardNo
                 locality
               }
               temporaryAddress {
                 state
                 district
-                vdc
+                localLevel
                 wardNo
                 locality
               }
