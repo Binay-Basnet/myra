@@ -28,4 +28,4 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: 🃏 Run jest
-        run: yarn nx affected --target=test --base=origin/main
+        run: yarn nx affected --target=test --base=main
