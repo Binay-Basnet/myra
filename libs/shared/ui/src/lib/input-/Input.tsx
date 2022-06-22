@@ -17,6 +17,7 @@ export interface InputProps extends ChakraInputProps {
   helperText?: string;
   errorText?: string;
   label?: string;
+  leftzIndex?: number;
 }
 
 export const Input = (props: InputProps) => {
@@ -27,6 +28,7 @@ export const Input = (props: InputProps) => {
     errorText,
     label,
     fontSize,
+    leftzIndex,
     fontWeight,
     ...rest
   } = props;
@@ -41,7 +43,11 @@ export const Input = (props: InputProps) => {
 
       <InputGroup h="44px" borderRadius="br2">
         {leftElement && (
-          <InputLeftElement pointerEvents="none" children={leftElement} />
+          <InputLeftElement
+            pointerEvents="none"
+            children={leftElement}
+            zIndex={leftzIndex}
+          />
         )}
 
         <ChakraInput isInvalid={!!errorText} {...rest} />

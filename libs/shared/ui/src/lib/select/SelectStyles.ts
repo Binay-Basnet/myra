@@ -12,6 +12,7 @@ export const chakraStyles: ChakraStylesConfig = {
     mt: '0',
     maxHeight: '200px',
     boxShadow: 'E1',
+    zIndex: '5',
   }),
   menuList: (provided) => ({
     ...provided,
