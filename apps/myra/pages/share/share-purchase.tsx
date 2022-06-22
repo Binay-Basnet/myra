@@ -105,10 +105,10 @@ const SharePurchase = () => {
             <Box w="100%" minHeight="100vh">
               <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
                 <Box w="50%">
-                  <FormInput
-                    rightElement={
-                      <Icon as={IoSearch} color="gray.500" fontSize={'s3'} />
-                    }
+                  <FormSelect
+                    // rightElement={
+                    //   <Icon as={IoSearch} color="gray.500" fontSize={'s3'} />
+                    // }
                     name="memberId"
                     label={t['sharePurchaseSelectMember']}
                     placeholder={t['sharePurchaseEnterMemberID']}

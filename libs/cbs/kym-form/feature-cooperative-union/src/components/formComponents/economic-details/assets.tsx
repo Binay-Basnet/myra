@@ -121,7 +121,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            {t['kymCoopUnionEcoCashAndCashEquivalents']}}
+            {t['kymCoopUnionEcoCashAndCashEquivalents']}
           </Text>
         </GridItem>
         <GridItem>
@@ -155,7 +155,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-             {t['kymCoopUnionEcoBank']}}
+            {t['kymCoopUnionEcoBank']}
           </Text>
         </GridItem>
         <GridItem>
