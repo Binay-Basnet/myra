@@ -1,15 +1,15 @@
 import React from 'react';
 import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
 import { Box, Collapse, Text } from '@chakra-ui/react';
-
 import { KymInsAddSectionStatus } from '@coop/shared/data-access';
+import { useTranslation } from '@coop/shared/utils';
 
 const OrganizationInformation = [
-  'Basic Information',
-  'Registered Details',
-  'Contact Details',
-  'Bank Account Details',
-  'Details of sister concern',
+  'kymInsBasicInformation',
+  'kymInsRegisteredDetails',
+  'kymInsContactDetails',
+  'kymInsBankAccountDetails',
+  'kymInsDetailsofsisterconcern',
 ];
 
 // const personalInfoEnum: Record<
@@ -26,21 +26,21 @@ const OrganizationInformation = [
 // };
 
 const TransactionProfile: string[] = [
-  'Transaction Profile',
-  'Expected Monthly Turnover',
-  'Expected Monthly Transaction',
+  'kymInsTransactionProfile',
+  'kymInsExpectedMonthlyTurnover',
+  'kymInsExpectedMonthlyTransaction',
 ];
 const Details: string[] = [
-  'Details of Proprietor, Partners, Directors.',
-  'Details of directors affiliated with other Firms',
+  'kymInsDetailsofProprietorPartnersDirectors',
+  'kymInsDetailsofdirectorsaffiliatedwithotherFirms',
 ];
 const Decleration: string[] = [
-  'Documents Declaration',
-  'Account Holder Declaration',
+  'kymInsDocumentsDeclaration',
+  'kymInsAccountHolderDeclaration',
 ];
 const AccountOperations: string[] = [
-  'Details of Account Operators',
-  'Account Operation Instruction',
+  'kymInsDetailsofAccountOperators',
+  'kymInsAccountOperationInstruction',
 ];
 
 interface AccordianProps {
@@ -52,6 +52,7 @@ interface AccordianProps {
 }
 
 export function AccorrdianAddInstitution(props: AccordianProps) {
+  const { t } = useTranslation();
   const { formStatus, kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
   const [isOpenOrganizational, setIsOpenOrganizational] = React.useState(false);
@@ -60,7 +61,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
   const [isOpenDeclaration, setIsOpenDeclaration] = React.useState(false);
   const [isOpenAccountOperations, setIsOpenAccountOperations] =
     React.useState(false);
-  console.log('curent section', kymCurrentSection);
+
   React.useEffect(() => {
     const section = kymCurrentSection?.section;
 
@@ -83,7 +84,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         _hover={{ bg: '#EEF2F7' }}
       >
         <Text fontSize={'r1'} fontWeight="600">
-          1. Information of Organization
+          {t['kymIns1InformationofInstitution']}
         </Text>
         {!isOpenOrganizational ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -105,7 +106,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
               &nbsp; &nbsp;
@@ -132,7 +133,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          2. Transaction Profile
+          {t['kymIns2TransactionProfile']}
         </Text>
         {!isOpenTransaction ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -154,7 +155,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -172,7 +173,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          3. Details of Proprietor, partners, Directors
+          {t['kymIns3DetailsofProprietorpartnersDirectors']}
         </Text>
         {!isOpenDetails ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -194,7 +195,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -212,7 +213,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          4. Account Operations
+          {t['kymIns4AccountOperations']}
         </Text>
         {!isOpenAccountOperations ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -234,7 +235,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -251,7 +252,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          5. Declaration
+          {t['kymIns5Declaration']}
         </Text>
         {!isOpenDeclaration ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -273,7 +274,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
