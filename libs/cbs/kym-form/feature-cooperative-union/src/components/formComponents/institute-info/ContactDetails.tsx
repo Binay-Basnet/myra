@@ -2,14 +2,12 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormEmailInput,
-  FormInput,
-  FormPhoneNumber,
-} from '@coop/shared/form';
+import { FormEmailInput, FormInput, FormPhoneNumber } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const ContactDetails = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Contact Details" scrollMarginTop={'200px'}>
       <Text
@@ -17,57 +15,55 @@ export const ContactDetails = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Contact Details
+        {t['kymCoopUnionContactDetails']}
       </Text>
       <InputGroupContainer>
         <FormPhoneNumber
-          // control={control}
-
           name="phone"
-          label="Phone"
-          placeholder="Enter Phone Number"
+          label={t['kymCoopUnionPhone']}
+          placeholder={t['kymCoopUnionEnterPhoneNumber']}
         />
 
         <FormInput
           type="number"
           name="fax"
-          label="Fax"
-          placeholder="Enter Fax"
+          label={t['kymCoopUnionFax']}
+          placeholder={t['kymCoopUnionEnterFax']}
         />
 
         <FormEmailInput
           name="contactEmail"
-          label="Email"
-          placeholder="Enter Email Address"
+          label={t['kymCoopUnionEmail']}
+          placeholder={t['kymCoopUnionEnterEmailAddress']}
         />
 
         <FormInput
           type="text"
           name="website"
-          label="Website Link (if any)"
-          placeholder="Enter Website URL"
+          label={t['kymCoopUnionWebsiteLinkAny']}
+          placeholder={t['kymCoopUnionEnterWebsiteURL']}
         />
 
         <FormInput
           type="number"
           name="postBoxNo"
-          label="Post Box. No. "
-          placeholder="Enter Post Box No"
+          label={t['kymCoopUnionPostBoxNo']}
+          placeholder={t['kymCoopUnionEnterPostBoxNo']}
         />
         <Box></Box>
         <Box mt="44px">
           <FormInput
             type="number"
             name="noOfEmployees"
-            label="Number of Employees"
-            placeholder="Enter Number of Employees"
+            label={t['kymCoopUnionNumberOfEmployees']}
+            placeholder={t['kymCoopUnionEnterNumberOfEmployees']}
           />
         </Box>
         <Box mt="44px">
           <FormInput
             type="date"
             name="lastAgmDate"
-            label="AGM Details (Date of Last AGM)"
+            label={t['kymCoopUnionAGMDetailsDate']}
             placeholder="DD-MM-YYYY"
           />
         </Box>

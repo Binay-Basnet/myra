@@ -6,8 +6,10 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymMemberdetailsCOOP = ({ watch }: any) => {
+  const { t } = useTranslation();
   const malememberCurrent = watch('detailsOfMember.noOfMaleMemberCurrent');
   const maleMemberTarget = watch('detailsOfMember.noOfMaleMemberTarget');
   const femalememberCurrent = watch('detailsOfMember.noOfFemaleMemberCurrent');
@@ -49,7 +51,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Member Details
+            {t['kymCoopUnionRepMemberDetails']}
           </Text>
         </GridItem>
 
@@ -60,7 +62,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Current
+            {t['kymCoopUnionRepCurrent']}
           </Text>
         </GridItem>
 
@@ -71,7 +73,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Target for next fiscal year
+            {t['kymCoopUnionRepTarget']}
           </Text>
         </GridItem>
       </Grid>
@@ -91,7 +93,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            No. of Male members
+            {t['kymCoopUnionRepNoofMaleMembers']}
           </Text>
         </GridItem>
         <GridItem>
@@ -99,7 +101,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfMaleMemberCurrent"
-            placeholder="Enter No. of Male Members"
+            placeholder={t['kymCoopUnionRepEnterNofMaleMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -108,7 +110,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfMaleMemberTarget"
-            placeholder="Enter No. of Male Members"
+            placeholder={t['kymCoopUnionRepEnterNofMaleMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -127,7 +129,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            No. of Female members
+            {t['kymCoopUnionRepNoofFemaleMembers']}
           </Text>
         </GridItem>
         <GridItem>
@@ -135,7 +137,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfFemaleMemberCurrent"
-            placeholder="Enter No. of Female Members"
+            placeholder={t['kymCoopUnionRepEnterNoofFemaleMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -144,7 +146,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfFemaleMemberTarget"
-            placeholder="Enter No. of Female Members"
+            placeholder={t['kymCoopUnionRepEnterNoofFemaleMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -163,7 +165,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            No. of Institutional members
+            {t['kymCoopUnionRepNoofInstitutionalMembers']}
           </Text>
         </GridItem>
         <GridItem>
@@ -171,7 +173,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfInstituionalMemberCurrent"
-            placeholder="Enter No. of institutional members"
+            placeholder={t['kymCoopUnionRepEnterNoOfInstitutionalMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -180,7 +182,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfInstituionalMemberTarget"
-            placeholder="Enter No. of institutional members"
+            placeholder={t['kymCoopUnionRepEnterNoOfInstitutionalMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -201,7 +203,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Total Current Members
+            {t['kymCoopUnionRepTotalCurrentMembers']}
           </Text>
         </GridItem>
 
@@ -215,7 +217,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             type="text"
             name="totalAssetsCurrent"
             value={isNaN(totalmembersCurrent) ? '-' : totalmembersCurrent}
-            placeholder="Total assets"
+            placeholder={t['kymCoopUnionRepTotalAssets']}
           />
         </GridItem>
         <GridItem>
@@ -228,7 +230,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             type="text"
             name="totalAssetsTarget"
             value={isNaN(totalmembersTarget) ? '-' : totalmembersTarget}
-            placeholder="Total "
+            placeholder={t['kymCoopUnionRepTotal']}
           />
         </GridItem>
       </Grid>

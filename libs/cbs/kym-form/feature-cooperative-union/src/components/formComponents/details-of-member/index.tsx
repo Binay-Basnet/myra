@@ -9,14 +9,15 @@ import {
 import { useSetMemberDetailsDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
-
 import { KymMemberdetailsCOOP } from './memberDetails';
+import { useTranslation } from '@coop/shared/utils';
 
 interface memberDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const MemberDetails = (props: memberDetailsProps) => {
+  const { t } = useTranslation();
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -41,7 +42,7 @@ export const MemberDetails = (props: memberDetailsProps) => {
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            5. Details of member
+            {t['kymCoopUnionRep5DetailsofMember']}
           </Text>
           <ContainerWithDivider>
             <KymMemberdetailsCOOP watch={watch} />

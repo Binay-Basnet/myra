@@ -4,8 +4,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { GridItem, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const InstituteBasicInfo = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
       <Text
@@ -13,7 +15,7 @@ export const InstituteBasicInfo = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Basic Information
+        {t['kymCoopUnionBasicInformation']}
       </Text>
       <InputGroupContainer>
         <GridItem colSpan={2}>
@@ -21,14 +23,14 @@ export const InstituteBasicInfo = () => {
             // control={control}
             type="text"
             name="nameOfInstitution"
-            label="Name of Institution"
-            placeholder="Name of Institution"
+            label={t['kymCoopUnionNameOfInstitution']}
+            placeholder={t['kymCoopUnionNameOfInstitution']}
           />
         </GridItem>
         <FormSelect
           name="institutionType"
-          label="Institution Type"
-          placeholder="Select Organization Type"
+          label={t['kymCoopUnionInstitutionType']}
+          placeholder={t['kymCoopUnionSelectInstitutionType']}
           options={[
             { label: 'Banking', value: 'Male' },
             { label: 'NGO', value: 'Female' },
@@ -38,41 +40,41 @@ export const InstituteBasicInfo = () => {
         <FormInput
           type="text"
           name="natureOfBusiness"
-          label="Nature of Business"
-          placeholder="Nature of Business"
+          label={t['kymCoopUnionNatureOfBusiness']}
+          placeholder={t['kymCoopUnionNatureOfBusiness']}
         />
 
         <FormInput
           type="date"
           name="regdDate"
-          label="Registration Date"
+          label={t['kymCoopUnionRegistrationDate']}
           placeholder="DD-MM-YYYY"
         />
         <FormInput
           type="number"
           name="vatOrPan"
-          label="VAT/Pan No."
-          placeholder="Enter VAT/Pan No"
+          label={t['kymCoopUnionVATPanNo']}
+          placeholder={t['kymCoopUnionEnterVATPanNo']}
         />
         <FormInput
           type="text"
           name="oprOfficeAddress"
-          label="Operating Office Address"
-          placeholder="Enter Address"
+          label={t['kymCoopUnionOperatingOfficeAddress']}
+          placeholder={t['kymCoopUnionOperatingOfficeAddress']}
         />
 
         <FormInput
           type="text"
           name="noOfBranches"
-          label="No of Branches"
-          placeholder="Enter No of Branches"
+          label={t['kymCoopUnionNoOfBranches']}
+          placeholder={t['kymCoopUnionEnterNoOfBranches']}
         />
 
         <FormInput
           type="text"
           name="branchOfficeAddress"
-          label="Branch Office Address"
-          placeholder="Branch Office Address"
+          label={t['kymCoopUnionBranchOfficeAddress']}
+          placeholder={t['kymCoopUnionBranchOfficeAddress']}
         />
       </InputGroupContainer>
     </GroupContainer>
