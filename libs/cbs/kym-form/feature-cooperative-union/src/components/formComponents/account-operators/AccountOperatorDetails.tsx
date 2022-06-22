@@ -38,8 +38,10 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const AddDirector = ({ watch, index, control, removeAccount }) => {
+  const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
 
   const [temporaryAddress, setTemporaryAddress] = useState(false);
@@ -216,7 +218,7 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                 alignSelf="start"
                 leftIcon={<Icon size="md" as={FaMap} />}
               >
-                Pin on Map
+                {t['pinOnMap']}
               </Button>
               {/* </Box> */}
             </AccordianContainer>
@@ -281,7 +283,7 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                 alignSelf="start"
                 leftIcon={<Icon size="md" as={FaMap} />}
               >
-                Pin on Map
+                {t['pinOnMap']}
               </Button>
             </Box>
             <InputGroupContainer>
@@ -370,6 +372,7 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
 };
 
 export const AccountOperatorInfo = ({ watch, control }) => {
+  const { t } = useTranslation();
   const {
     fields: accountFields,
     append: accountAppend,
@@ -378,7 +381,7 @@ export const AccountOperatorInfo = ({ watch, control }) => {
   return (
     <GroupContainer id="Family Details" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
-        Details of Account Operators
+        {t['kymCoopUnionDetailsOfAccountOperators']}
       </Text>
       {accountFields.map((item, index) => {
         return (
@@ -408,7 +411,7 @@ export const AccountOperatorInfo = ({ watch, control }) => {
           accountAppend({});
         }}
       >
-        Add Operator
+        {t['kymCoopUnionAddOperator']}
       </Button>
     </GroupContainer>
   );

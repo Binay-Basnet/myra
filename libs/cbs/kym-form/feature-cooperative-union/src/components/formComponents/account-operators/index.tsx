@@ -10,14 +10,15 @@ import {
 import { useSetAccountOperatorDetailsDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
-
 import { AccountOperatorInfo } from './AccountOperatorDetails';
+import { useTranslation } from '@coop/shared/utils';
 
 interface directorDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const AccountOperatorDetails = (props: directorDetailsProps) => {
+  const { t } = useTranslation();
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -73,7 +74,7 @@ export const AccountOperatorDetails = (props: directorDetailsProps) => {
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            3. Details of Account Operators
+            {t['kymCoopUnion3DetailsofAccountOperators']}
           </Text>
           <ContainerWithDivider>
             <AccountOperatorInfo watch={watch} control={control} />

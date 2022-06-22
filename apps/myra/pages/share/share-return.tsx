@@ -24,6 +24,7 @@ import {
   Text,
   TextInput,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 // TODO! use Layout
 const Header = () => {
@@ -35,17 +36,18 @@ const Header = () => {
   );
 };
 
-const accountList = [
-  { label: 'Bank Voucher', value: Payment_Mode.BankVoucher },
-  { label: 'Account', value: Payment_Mode.Account },
-  { label: 'Cash', value: Payment_Mode.Cash },
-];
-
 const ShareReturn = () => {
   const router = useRouter();
+  const { t } = useTranslation();
   const { mutate } = useSetShareReturnMutation();
   const methods = useForm<ShareReturnInput>();
   const { getValues, watch } = methods;
+
+  const accountList = [
+    { label: t['sharePurchaseBankVoucher'], value: Payment_Mode.BankVoucher },
+    { label: t['sharePurchaseAccount'], value: Payment_Mode.Account },
+    { label: t['sharePurchaseCash'], value: Payment_Mode.Cash },
+  ];
 
   const memberIdQuery = watch('memberId');
   const noOfShares = watch('noOfReturnedShares');
@@ -61,10 +63,6 @@ const ShareReturn = () => {
   //   id: memberIdQuery ? memberIdQuery : null,
   // });
   // const data = memberData?.members?.individual?.get?.data?.member;
-
-  const switchTabsFxn = (datas: Payment_Mode) => {
-    setSelectedPaymentMode(datas);
-  };
 
   const submitForm = () => {
     const formData = {
@@ -104,7 +102,7 @@ const ShareReturn = () => {
           borderBottom="1px solid #E6E6E6"
         >
           <Text fontSize="r2" fontWeight="600">
-            New Share Return
+            {t['shareReturnNewShareReturn']}
           </Text>
           <CloseIcon cursor="pointer" onClick={() => router.back()} />
         </Box>
@@ -115,8 +113,8 @@ const ShareReturn = () => {
                 mb="20px"
                 w="50%"
                 name="memberId"
-                label=" Select Member"
-                placeholder="Enter Member ID"
+                label={t['shareReturnSelectMember']}
+                placeholder={t['shareReturnEnterMemberID']}
               />
 
               {/*  {data && (
@@ -159,7 +157,7 @@ const ShareReturn = () => {
                             fontSize="s3"
                             fontWeight="Regular"
                           >
-                            ID: {data?.personalInformation?.panNumber}
+                            {t['shareReturnID']}: {data?.personalInformation?.panNumber}
                           </Text>
 
                           <Text
@@ -167,7 +165,7 @@ const ShareReturn = () => {
                             fontWeight="Regular"
                             fontSize="s3"
                           >
-                            Member Since:{' '}
+                            {t['shareReturnMemberSince']}:{' '}
                             {data?.personalInformation?.dateOfBirth}
                           </Text>
 
@@ -176,7 +174,7 @@ const ShareReturn = () => {
                             fontWeight="Regular"
                             fontSize="s3"
                           >
-                            Branch: {data?.address?.temporary?.state}
+                            {t['shareReturnBranch']}: {data?.address?.temporary?.state}
                           </Text>
                         </Box>
                       </GridItem>
@@ -246,7 +244,7 @@ const ShareReturn = () => {
                           fontSize="s2"
                           mr="5px"
                         >
-                          View Profile
+                          {t['shareReturnViewProfile']}
                         </Text>
                         <Icon
                           size="sm"
@@ -264,7 +262,7 @@ const ShareReturn = () => {
                       fontSize="r1"
                       ml="s24"
                     >
-                      Share History
+                      {t['shareReturnShareHistory']}
                     </Text>
                     <ShareReturnHistoryTable id={memberIdQuery} />
                   </Box>
@@ -286,7 +284,7 @@ const ShareReturn = () => {
                 fontSize="r1"
                 color="neutralColorLight.Gray-60"
               >
-                Share Information
+                {t['shareReturnShareInformation']}
               </Text>
 
               <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
@@ -301,15 +299,15 @@ const ShareReturn = () => {
                       <FormInput
                         id="noOfShares"
                         name="noOfReturnedShares"
-                        label="No of Shares"
-                        placeholder="No of Shares"
+                        label={t['shareReturnNoOfShares']}
+                        placeholder={t['shareReturnNoOfShares']}
                       />
                     </GridItem>
 
                     <GridItem>
                       <FormCheckbox
                         name="selectAllShares"
-                        label="Select All Shares"
+                        label={t['shareReturnSelectAllShares']}
                         mt="20px"
                       />
                     </GridItem>
@@ -324,7 +322,7 @@ const ShareReturn = () => {
                         >
                           <Box>
                             <Text fontWeight="400" fontSize="s2">
-                              Remaining Share
+                              {t['shareReturnRemainingShare']}
                             </Text>
                             <Text fontWeight="600" fontSize="r1">
                               {allShares ? 0 : 20}
@@ -333,7 +331,7 @@ const ShareReturn = () => {
 
                           <Box>
                             <Text fontWeight="400" fontSize="s2">
-                              Remaining Share Value
+                              {t['shareReturnRemainingShareValue']}
                             </Text>
                             <Text fontWeight="600" fontSize="r1">
                               {' '}
@@ -362,7 +360,7 @@ const ShareReturn = () => {
                               fontWeight="Medium"
                               fontSize="s3"
                             >
-                              Withdraw Amount
+                              {t['shareReturnWithdrawAmount']}
                             </Text>
 
                             <Text
@@ -388,7 +386,7 @@ const ShareReturn = () => {
                               display="flex"
                               alignItems="center"
                             >
-                              Administration Fees
+                              {t['shareReturnAdministrationFees']}
                             </Text>
                             <FormInput
                               name="extraFee"
@@ -414,7 +412,7 @@ const ShareReturn = () => {
                               display="flex"
                               alignItems="center"
                             >
-                              Printing Fees
+                              {t['shareReturnPrintingFees']}
                             </Text>
                             <FormInput
                               name="extraFee"
@@ -437,7 +435,7 @@ const ShareReturn = () => {
                               fontWeight="600"
                               fontSize="s3"
                             >
-                              Total Amount
+                              {t['shareReturnTotalAmount']}
                             </Text>
 
                             <Text
@@ -445,7 +443,8 @@ const ShareReturn = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              Rs. {noOfShares * 1000 + adminFees + printingFees}
+                              {t['rs']}{' '}
+                              {noOfShares * 1000 + adminFees + printingFees}
                             </Text>
                           </Box>
                         </GridItem>
@@ -463,7 +462,7 @@ const ShareReturn = () => {
                 fontWeight="600"
                 mb="8px"
               >
-                Payment Information
+                {t['shareReturnPaymentInformation']}
               </Text>
               <Text
                 color="neutralColorLight.Gray-60"
@@ -471,16 +470,14 @@ const ShareReturn = () => {
                 fontWeight="500"
                 mb="s16"
               >
-                Payment Mode
+                {t['shareReturnPaymentMode']}
               </Text>
               <SwitchTabs
-                // TODO ( USE FORM SWITCH TAB)
-                // name="paymentMode"
-
                 options={accountList.map((value) => ({
                   label: value.label,
                   value: value.value,
                 }))}
+                onChange={(e: Payment_Mode) => setSelectedPaymentMode(e)}
               />
 
               {selectedPaymentMode === Payment_Mode.Account && (
@@ -494,8 +491,8 @@ const ShareReturn = () => {
                 >
                   <Select
                     name="accountId"
-                    label="Select Account"
-                    placeholder="Saving Account"
+                    label={t['shareReturnSelectAccount']}
+                    placeholder={t['shareReturnSavingAccount']}
                     options={[
                       {
                         label: 'Nabil Bank',
@@ -519,10 +516,10 @@ const ShareReturn = () => {
                     mt="s16"
                   >
                     <Text fontWeight="400" fontSize="s2">
-                      Available balance
+                      {t['shareReturnAvailableBalance']}
                     </Text>
                     <Text fontWeight="600" fontSize="r1">
-                      Rs. 12,342
+                      {t['rs']} 12,342
                     </Text>
                   </Box>
                 </Box>
@@ -538,8 +535,8 @@ const ShareReturn = () => {
                 >
                   <FormSelect
                     name="bankId"
-                    label="Select Bank"
-                    placeholder="Select Bank"
+                    label={t['shareReturnSelectBank']}
+                    placeholder={t['shareReturnSelectBank']}
                     options={[
                       {
                         label: 'Option 1',
@@ -559,8 +556,8 @@ const ShareReturn = () => {
                     <FormInput
                       type="text"
                       name="voucherNumber"
-                      placeholder="Enter Voucher Number"
-                      label="Enter Voucher Number"
+                      placeholder={t['shareReturnEnterVoucherNumber']}
+                      label={t['shareReturnEnterVoucherNumber']}
                     />
                   </Box>
                 </Box>
@@ -571,8 +568,8 @@ const ShareReturn = () => {
                   <TextInput
                     type="text"
                     name="name"
-                    placeholder="Enter Cash Amount"
-                    label="Enter Cash Amount"
+                    placeholder={t['shareReturnEnterCashAmount']}
+                    label={t['shareReturnEnterCashAmount']}
                   />
                 </Box>
               )}
