@@ -1,5 +1,6 @@
+import React from 'react';
 import { IconType } from 'react-icons';
-import { AiFillTag, AiOutlineAppstore } from 'react-icons/ai';
+import { AiFillTag } from 'react-icons/ai';
 import { FaShapes, FaUserFriends } from 'react-icons/fa';
 import { IoLockClosed } from 'react-icons/io5';
 import Link from 'next/link';
@@ -65,42 +66,44 @@ export function TabMenuForInventoryApp() {
   return (
     <Box
       height="50px"
-      p="0 s16"
+      px="s16"
+      pt="s4"
+      pb="5px"
       background="secondary.700"
       alignItems="center"
+      justifyContent={'flex-start'}
       display="flex"
-      px="s16"
+      gap="s8"
     >
-      <Text fontWeight={'600'} fontSize="r2" color={'gray.0'} w="230px">
-        {' '}
-        Inventory{' '}
-      </Text>
-      <Tabs
-        index={currentIndex}
-        size="md"
-        gap={'s8'}
-        variant="enclosed"
-        // onChange={(index) => setTabIndex(index)}
-      >
-        <TabList>
+      <Box w="200px">
+        <Text
+          fontWeight={'600'}
+          fontSize="16px"
+          color={'gray.0'}
+          letterSpacing="wide"
+        >
+          Inventory
+        </Text>
+      </Box>
+      <Tabs index={currentIndex} height="100%" size="md" variant="enclosed">
+        <TabList border="none" height="100%">
           {demotabs.map(({ title, icon, link, name }, index) => {
             const isActive = router?.asPath.includes(name.toLowerCase());
             return (
               <Link href={link} key={index}>
                 <Tab
-                  // isDisabled
-                  borderRadius="br3 br3 0 0"
                   _focus={{}}
-                  p="s4 s16"
-                  _selected={{
-                    background: '#EEF2F7',
-                    color: 'gray.800',
-                  }}
-                  fontSize="r1"
-                  height="50px"
-                  color={isActive ? 'gray.800' : 'gray.0'}
+                  px="s16"
+                  py="s4"
                   display="flex"
-                  justifyContent="flex-start"
+                  alignItems="center"
+                  gap="s8"
+                  border="none"
+                  _selected={{
+                    bg: 'background.500',
+                    color: 'gray.800',
+                    borderRadius: 'br2',
+                  }}
                 >
                   <Icon
                     as={icon}
@@ -109,7 +112,8 @@ export function TabMenuForInventoryApp() {
                   />
 
                   <Text
-                    mx="2"
+                    fontSize="r1"
+                    lineHeight="0"
                     color={isActive ? 'gray.800' : 'gray.0'}
                     fontWeight={isActive ? '600' : '500'}
                   >

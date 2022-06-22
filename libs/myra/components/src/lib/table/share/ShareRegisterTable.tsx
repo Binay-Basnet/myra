@@ -1,14 +1,15 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { Avatar, Flex } from '@chakra-ui/react';
 import format from 'date-fns/format';
+
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetShareRegisterListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-import { useRouter } from 'next/router';
 
 export const ShareRegisterTable = () => {
-  const { data, isLoading } = useGetShareRegisterListQuery();
+  const { data, isFetching } = useGetShareRegisterListQuery();
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -140,7 +141,7 @@ export const ShareRegisterTable = () => {
       />
 
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowData ?? []}
         columns={columns}
         sort={true}

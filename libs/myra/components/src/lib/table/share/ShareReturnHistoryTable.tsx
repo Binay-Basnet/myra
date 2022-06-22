@@ -12,7 +12,7 @@ type memberIdProp = {
 export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
   const router = useRouter();
   const { t } = useTranslation();
-  const { data, isLoading } = useGetShareHistoryQuery({ memberId: id });
+  const { data, isFetching } = useGetShareHistoryQuery({ memberId: id });
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -98,7 +98,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
   return (
     <Table
       isStatic={true}
-      isLoading={isLoading}
+      isLoading={isFetching}
       data={rowData ?? []}
       columns={columns}
       showFooters={true}

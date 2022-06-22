@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetShareBalanceListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-import { useRouter } from 'next/router';
 
 export const ShareBalanceTable = () => {
-  const { data, isLoading } = useGetShareBalanceListQuery();
+  const { data, isFetching } = useGetShareBalanceListQuery();
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -56,7 +56,7 @@ export const ShareBalanceTable = () => {
       <TableListPageHeader heading={'shareBalanceTable'} />
 
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowData ?? []}
         columns={columns}
         sort={true}
