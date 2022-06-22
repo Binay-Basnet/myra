@@ -165,7 +165,7 @@ export const KYMCustomField = ({
 
   const methods = useForm({
     defaultValues: {
-      name: field.name,
+      name: field.name.local,
       fieldType: fieldType,
     },
   });
