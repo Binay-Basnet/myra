@@ -2,14 +2,15 @@ import React from 'react';
 import { Control, useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/shared/form';
 import { KymIndMemberInput } from '@coop/shared/data-access';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
 
 interface IAddFamilyMember {
@@ -137,6 +138,7 @@ export const MemberKYMFamilyDetails = ({
             );
           })}
           <Button
+            id="addFamilyMemberButton"
             alignSelf="start"
             leftIcon={<Icon size="md" as={AiOutlinePlus} />}
             variant="outline"

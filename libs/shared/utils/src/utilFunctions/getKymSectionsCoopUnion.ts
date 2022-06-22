@@ -30,8 +30,11 @@ const BankAccDetails = [
   'applicantName',
   'applicantDesignation',
 ];
-const BoardOfDirectors = ['boardOfDirectorsDetails'];
-const AccountOperatorsDetails = ['accountOperatorsDetails'];
+const BoardOfDirectors = ['boardOfDirectorsDetails', 'directordetailsButton'];
+const AccountOperatorsDetails = [
+  'accountOperatorsDetails',
+  'accountOperatorButton',
+];
 const centralRepresentative = ['centralRepresentativeDetails'];
 const detailMember = ['detailsOfMember'];
 const economicDetails = [
