@@ -3,6 +3,8 @@ const en = {
   dashboard: 'Dashboard',
   yes: 'Yes',
   no: 'No',
+  rs: 'Rs.',
+  sn: 'SN',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
@@ -117,7 +119,7 @@ const en = {
 
   saveMember: 'Save Member',
 
-  // Share Page
+  // SHARE PAGE
   share: 'Share',
   shareActive: 'Active',
   shareSubmitted: 'Submitted',
@@ -126,6 +128,63 @@ const en = {
   shareBalance: 'Share Balance',
   shareReport: 'Share Report',
   shareRegister: 'Share Register',
+
+  // share purchase
+
+  sharePurchaseNewSharePurchase: 'New Share Purchase',
+  sharePurchaseSelectMember: 'Select Member',
+  sharePurchaseEnterMemberID: 'Enter Member ID',
+  sharePurchaseID: 'ID',
+  sharePurchaseMemberSince: 'Member Since',
+  sharePurchaseBranch: 'Branch',
+  sharePurchaseViewProfile: 'View Profile',
+  sharePurchaseShareHistory: 'Share History',
+  sharePurchaseShareInformation: 'Share Information',
+  sharePurchaseNoOfShares: 'No of Shares',
+  sharePurchaseShareAmount: 'Share Amount',
+  sharePurchaseAdministrationFees: 'Administration Fees',
+  sharePurchasePrintingFees: 'Printing Fees',
+  sharePurchaseTotalAmount: 'Total Amount',
+  sharePurchasePaymentInformation: 'Payment Information',
+  sharePurchasePaymentMode: 'Payment Mode',
+  sharePurchaseSelectAccount: 'Select Account',
+  sharePurchaseAvailableBalance: 'Available balance',
+  sharePurchaseSelectBank: 'Select Bank',
+  sharePurchaseEnterVoucherNumber: 'Enter Voucher Number',
+  sharePurchaseEnterCashAmount: 'Enter Cash Amount',
+  sharePurchaseBankVoucher: 'Bank Voucher',
+  sharePurchaseCash: 'Cash',
+  sharePurchaseAccount: 'Account',
+
+  // share return
+  shareReturnNewShareReturn: ' New Share Return',
+  shareReturnSelectMember: 'Select Member',
+  shareReturnEnterMemberID: 'Enter Member ID',
+  shareReturnID: 'ID',
+  shareReturnMemberSince: 'Member Since',
+  shareReturnBranch: 'Branch',
+  shareReturnViewProfile: 'View Profile',
+  shareReturnShareHistory: 'Share History',
+  shareReturnShareInformation: 'Share Information',
+  shareReturnNoOfShares: 'No of Shares',
+  shareReturnSelectAllShares: 'Select All Shares',
+  shareReturnRemainingShare: 'Remaining Share',
+  shareReturnRemainingShareValue: 'Remaining Share Value',
+  shareReturnWithdrawAmount: 'Withdraw Amount',
+  shareReturnAdministrationFees: 'Administration Fees',
+  shareReturnPrintingFees: 'Printing Fees',
+  shareReturnTotalAmount: 'Total Amount',
+  shareReturnPaymentInformation: 'Payment Information',
+  shareReturnPaymentMode: 'Payment Mode',
+  shareReturnSelectAccount: 'Select Account',
+  shareReturnSavingAccount: 'Saving Account',
+  shareReturnAvailableBalance: 'Available balance',
+  shareReturnSelectBank: 'Select Bank',
+  shareReturnEnterVoucherNumber: 'Enter Voucher Number',
+  shareReturnEnterCashAmount: 'Enter Cash Amount',
+  shareReturnBankVoucher: 'Bank Voucher',
+  shareReturnCash: 'Cash',
+  shareReturnAccount: 'Account',
 
   //Account Page TODO ( Update Translations)
 
@@ -216,6 +275,20 @@ const en = {
   shareRegisterTableNameBalance: 'Balance',
   shareRegisterTableViewDetail: 'View Detail',
   shareRegisterTableViewMemberProfile: 'View Member Profile',
+
+  // share return table
+  shareReturnTableDate: 'Date',
+  shareReturnTableShareNumber: 'Share Number',
+  shareReturnTableShareDr: 'Share Dr',
+  shareReturnTableShareCr: 'Share Cr',
+  shareReturnTableBalance: 'Balance',
+
+  // share purchase table
+  sharePurchaseTableDate: 'Date',
+  sharePurchaseTableShareNumber: 'Share Number',
+  sharePurchaseTableShareDr: 'Share Dr',
+  sharePurchaseTableShareCr: 'Share Cr',
+  sharePurchaseTableBalance: 'Balance',
 
   // settings COA table
   settingsCoaAccountCode: 'Account Code',
