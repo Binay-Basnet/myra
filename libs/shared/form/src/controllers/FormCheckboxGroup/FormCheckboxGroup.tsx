@@ -7,7 +7,7 @@ interface IFormCheckboxGroupProps<T extends Record<string, string[]>> {
   name: Path<T>;
   control?: Control<T>;
   label?: string;
-  list: { label: string; value: string }[];
+  list?: { label: string; value: string }[];
   showOther?: boolean;
   orientation?: 'row' | 'column';
 }
@@ -33,7 +33,7 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
             columnGap="s48"
             rowGap="s16"
           >
-            {list.map((item, index) => (
+            {list?.map((item, index) => (
               <Checkbox
                 id={name}
                 key={index}

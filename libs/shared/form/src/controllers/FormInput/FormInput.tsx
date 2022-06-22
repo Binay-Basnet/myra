@@ -4,7 +4,7 @@ import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 import { Input, InputProps } from '@coop/shared/ui';
 
 interface IFormInputProps<T> extends InputProps {
-  name: Path<T>;
+  name: Path<T> | string;
   control?: Control<T>;
 }
 

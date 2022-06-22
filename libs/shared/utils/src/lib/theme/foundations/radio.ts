@@ -73,7 +73,7 @@ const sizes: Record<string, PartsStyleObject<typeof parts>> = {
 };
 
 const defaultProps = {
-  size: 'sm',
+  size: 'md',
   colorScheme: 'primary.500',
 };
 
