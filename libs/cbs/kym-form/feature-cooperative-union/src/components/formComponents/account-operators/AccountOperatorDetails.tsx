@@ -378,7 +378,7 @@ export const AccountOperatorInfo = ({ watch, control }) => {
   return (
     <GroupContainer id="Family Details" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
-        Board of director details
+        Details of Account Operators
       </Text>
       {accountFields.map((item, index) => {
         return (
