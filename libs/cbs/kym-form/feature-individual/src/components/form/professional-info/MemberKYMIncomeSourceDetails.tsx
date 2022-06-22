@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -9,16 +9,11 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormAmountInput, FormInput } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Checkbox,
-  GridItem,
-  Icon,
-  RadioGroup,
-  Text,
-} from '@coop/shared/ui';
+import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import { FormAmountInput, FormInput, FormRadioGroup } from '@coop/shared/form';
+import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
+
+import { getFieldOption } from '../../../utils/getFieldOption';
 
 const annualFamilyIncome = [
   'Upto 4 lakhs',
@@ -67,25 +62,35 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
   );
 };
 
-export const MemberKYMIncomeSourceDetails = ({ control }: any) => {
+export const MemberKYMIncomeSourceDetails = () => {
+  const { data: familyIncomeData, isLoading: familyIncomeLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'family_income',
+    });
+
+  const { control } = useFormContext();
+
   const {
     fields: incomeSourceFields,
     append: incomeSourceAppend,
     remove: incomeSourceRemove,
   } = useFieldArray({ control, name: 'incomeSourceDetails' });
+
   return (
     <GroupContainer id="Income Source Details" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         INCOME SOURCE DETAILS
       </Text>
       <GroupContainer>
-        {/* TODO ->  Add Controller*/}
         <Box display="flex" flexDirection="column">
           <Text fontSize="s3" mb={3}>
             Annual Family Income
           </Text>
 
-          <RadioGroup radioList={annualFamilyIncome} labelFontSize="s3" />
+          <FormRadioGroup
+            name="annualIncomeSourceId"
+            options={getFieldOption(familyIncomeData)}
+          />
         </Box>
         <div>
           <Text fontSize="s3" mb="s4">
@@ -104,6 +109,7 @@ export const MemberKYMIncomeSourceDetails = ({ control }: any) => {
               );
             })}
             <Button
+              id="incomeSourceDetailsButton"
               alignSelf="start"
               leftIcon={<Icon size="md" as={AiOutlinePlus} />}
               variant="outline"

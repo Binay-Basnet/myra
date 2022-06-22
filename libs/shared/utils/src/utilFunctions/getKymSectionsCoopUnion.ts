@@ -30,8 +30,11 @@ const BankAccDetails = [
   'applicantName',
   'applicantDesignation',
 ];
-const BoardOfDirectors = ['boardOfDirectorsDetails'];
-const AccountOperatorsDetails = ['accountOperatorsDetails'];
+const BoardOfDirectors = ['boardOfDirectorsDetails', 'directordetailsButton'];
+const AccountOperatorsDetails = [
+  'accountOperatorsDetails',
+  'accountOperatorButton',
+];
 const centralRepresentative = ['centralRepresentativeDetails'];
 const detailMember = ['detailsOfMember'];
 const economicDetails = [
@@ -122,7 +125,7 @@ export const getKymSectionCoOperativeUnion = (id: string) => {
   if (AccountOperatorsDetails.includes(id.split('.')[0])) {
     return {
       section: 'accountOperators',
-      subSection: 'Details of Proprietor, Partners, Directors.',
+      subSection: 'Details of Account Operators',
     };
   }
   if (centralRepresentative.includes(id.split('.')[0])) {

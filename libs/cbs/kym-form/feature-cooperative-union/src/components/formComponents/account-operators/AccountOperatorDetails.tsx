@@ -403,6 +403,7 @@ export const AccountOperatorInfo = ({ watch, control }) => {
         );
       })}
       <Button
+        id="accountOperatorButton"
         alignSelf="start"
         leftIcon={<Icon size="md" as={AiOutlinePlus} />}
         variant="outline"

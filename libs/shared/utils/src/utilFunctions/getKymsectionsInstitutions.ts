@@ -39,13 +39,19 @@ const monthlyTransactions = [
   'Less than 25 Lakhs1',
   'Above 25 Lakhs2',
 ];
-const sisterConcern = ['sisterConcernDetails'];
+const sisterConcern = ['sisterConcernDetails', 'sisterConcernButton'];
 
 const BankAccDetails = ['bank', 'accountNumber', 'accountName'];
-const directorDetails = ['boardOfDirectorsDetails'];
-const directoswithAffiliation = ['detailsOfDirectorsWithAffiliation'];
+const directorDetails = ['boardOfDirectorsDetails', 'addDirectorButton'];
+const directoswithAffiliation = [
+  'detailsOfDirectorsWithAffiliation',
+  'newDetailButton',
+];
 
-const accountOperator = ['accountOperatorsDetails'];
+const accountOperator = [
+  'accountOperatorsDetails',
+  'accountOperatorDetailsButton',
+];
 const accountInstruction = [
   'accountType',
   'specialInstruction',
