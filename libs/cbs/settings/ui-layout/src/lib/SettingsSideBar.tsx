@@ -9,31 +9,31 @@ type TabList = {
 
 const tabList: TabList[] = [
   {
-    title: 'Organization',
+    title: 'settingsSideBarOrganization',
     to: '/settings/general/organization',
   },
   {
-    title: 'Branches',
+    title: 'settingsSideBarBranches',
     to: '/settings/general/branches',
   },
   {
-    title: 'Charts of Accounts',
+    title: 'settingsSideBarChartsOfAccounts',
     to: '/settings/general/charts-of-accounts',
   },
   {
-    title: 'Members',
+    title: 'settingsSideBarMembers',
     to: '/settings/general/members',
   },
   {
-    title: 'Share',
+    title: 'settingsSideBarShare',
     to: '/settings/general/share',
   },
   {
-    title: 'Deposit / Withdraw',
+    title: 'settingsSideBarDepositWithdraw',
     to: '/settings/general/deposit-withdraw',
   },
   {
-    title: 'Loan',
+    title: 'settingsSideBarLoan',
     to: '/settings/general/loan',
   },
 ];
@@ -41,16 +41,16 @@ const tabList: TabList[] = [
 export const SettingSideBar = () => {
   return (
     <Box
-      w="13%"
+      position="fixed"
+      w="275px"
       display="flex"
       flexDirection="column"
       gap="s16"
+      p="s24"
       flexShrink={0}
       minWidth="250px"
-      pt="s8"
-      pl="s8"
     >
-      <Text fontSize="r3" fontWeight="600">
+      <Text fontSize="l1" fontWeight="600" color="gray.800">
         General
       </Text>
       <Divider borderColor="border.layout" />

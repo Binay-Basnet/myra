@@ -1,6 +1,8 @@
-const ne = {
+const ne: Record<string, string> = {
   home: 'गृहपृष्ठ',
   dashboard: 'ड्यासबोर्ड',
+  yes: 'Yes',
+  no: 'No',
 
   // navbar
   searchMembersNameReportsEtc: 'सदस्यहरूको नाम, रिपोर्टहरू, आदि खोज्नुहोस्',
@@ -157,6 +159,257 @@ const ne = {
   memberShare: 'Share',
   memberDeposit: 'Deposit',
   memberReports: 'Reports',
+
+  //LAYOUT PAGE
+
+  // member layout
+  memberLayout: 'Member',
+  memberLayoutMembers: 'Members',
+  memberLayoutNewMember: 'New Member',
+  memberLayoutMemberSettings: 'Member Settings',
+  memberLayoutSelectMemberType: 'Select Member Type',
+  memberLayoutIndividual: 'Individual',
+  memberLayoutCreateKYMFormForIndividualMembers:
+    'Create KYM form for individual members',
+  memberLayoutInstitution: 'Institution',
+  memberLayoutCreateKYMFormForInstituteMembers:
+    'Create KYM form for institute members',
+  memberLayoutCooperative: 'Cooperative',
+  memberLayoutCreateKYMFormForCoOperativeMembers:
+    'Create KYM form for CoOperative members',
+  memberLayoutCooperativeUnion: 'Cooperative Union',
+  memberLayoutCreateKYMFormForCooperativeUnion:
+    'Create KYM form for cooperative union',
+
+  // share layout
+  shareLayout: 'Share',
+  shareLayoutNewShare: 'New Share',
+  shareLayoutSelectShareType: 'Select Share Type',
+  shareLayoutSharePurchase: 'Share Purchase',
+  shareLayoutShareReturn: 'Share Return',
+  shareLayoutShareSettings: 'Share Settings',
+
+  // account layout
+  accountLayout: 'Account',
+  accountLayoutNewAccount: 'New Account',
+  accountLayoutAccountSettings: 'Account Settings',
+
+  // TABLES
+
+  // share balance table
+  shareBalanceTable: 'Share Balance',
+  shareTableMemberId: 'Member ID',
+  shareTableName: 'Name',
+  shareTableShareCount: 'Share Count',
+  shareTableShareAmount: 'Share Amount',
+
+  //share register table
+  shareRegisterTable: 'Share Register',
+  shareRegisterDate: 'Date',
+  shareRegisterType: 'Type',
+  shareRegisterTableMemberID: 'Member ID',
+  shareRegisterTableName: 'Name',
+  shareRegisterTableNameToFrom: 'To - From',
+  shareRegisterTableNameShareDr: 'Share Dr',
+  shareRegisterTableNameShareCr: 'Share Cr',
+  shareRegisterTableNameBalance: 'Balance',
+  shareRegisterTableViewDetail: 'View Detail',
+  shareRegisterTableViewMemberProfile: 'View Member Profile',
+
+  // settings COA table
+  settingsCoaAccountCode: 'Account Code',
+  settingsCoaAccountGroup: 'Account Group',
+  settingsCoaAccountType: 'Account Type',
+  settingsCoaAccountParentGroup: 'Parent Group',
+
+  //settings branch table
+  settingsBranch: 'Branches',
+  settingsBranchBranchCode: 'Branch Code',
+  settingsBranchAddress: 'Address',
+  settingsBranchDistrict: 'District',
+  settingsBranchManager: 'Manager',
+  settingsBranchContactNumber: 'Contact Number',
+
+  // SETTINGS PAGE
+
+  // settings general organization
+  settingsOrganization: 'Organization',
+  settingsOrganizationInitialSetup: 'Initial Setup',
+  settingsOrganizationOrganizationName: 'Organization Name',
+  settingsOrganizationEntername: 'Enter name',
+  settingsOrganizationOrganizationLogo: 'Organization Logo',
+  settingsOrganizationBasicDetails: 'BASIC DETAILS',
+  settingsOrganizationTypeOfOrganization: ' Type of Organization',
+  settingsOrganizationCooperative: ' Cooperative',
+  settingsOrganizationCooperativeUnion: ' Cooperative Union',
+  settingsOrganizationContactDetails: 'CONTACT DETAILS',
+  settingsOrganizationMainContactPerson: 'MAIN CONTACT PERSON',
+  settingsOrganizationAddress: 'ADDRESS',
+  settingsOrganizationPinOnMap: 'Pin on Map',
+  settingsOrganizationRegistrationDetails: 'REGISTRATION DETAILS',
+  settingsOrganizationDocumnents: 'DOCUMENTS',
+  settingsOrganizationSaveChanges: 'Save Changes',
+
+  settingsOrgContactPhoneNo: 'Phone No',
+  settingsOrgContactEmailAddress: 'Email Address',
+  settingsOrgContactWebsite: 'Website',
+  settingsOrgContactWebsiteAddress: 'Website Address',
+
+  settingsOrgMainName: 'Name',
+  settingsOrgMainEnterName: 'Enter Name',
+  settingsOrgMainContactNo: 'Contact No',
+  settingsOrgMainContactPersonPhone: 'Contact Person Phone',
+  settingsOrgMainDesignation: 'Designation',
+
+  settingsOrgAddressProvince: 'Province',
+  settingsOrgAddressDistrict: 'District',
+  settingsOrgAddressLocalLevel: 'Local Level',
+  settingsOrgAddressWardNo: 'Ward No',
+  settingsOrgAddressEnterWard: 'Enter Ward',
+  settingsOrgAddressLocality: 'Locality',
+
+  settingsOrgRegRegdOffice: 'Regd Office',
+  settingsOrgRegRegdNo: 'Regd No',
+  settingsOrgRegRegdAddress: 'Regd Address',
+  settingsOrgRegPANVATNo: 'PAN/VAT No',
+
+  // settings general charts of accounts
+  settingsCoa: 'Charts Of Accounts',
+  settingsCoaNewAccount: 'New Account',
+  settingsCoaFullView: 'Full View',
+  settingsCoaAccountList: 'Account List',
+
+  settingsCoaAddNewAccount: 'Add New Account',
+  settingsCoaAddSaveAccount: 'Save Account',
+  settingsCoaAccountName: 'Account Name',
+  settingsCoaEnterAccountName: 'Enter Account Name',
+  settingsCoaUnder: 'Under',
+  settingsCoaStaffBonusFund: 'Staff Bonus Fund',
+  settingsCoaFormAccountType: 'Account Type',
+  settingsCoaFormAccountCode: 'Account Code',
+  settingsCoaCurrency: 'Currency',
+  settingsCoaFormTypeOfAccount: 'Type of Account',
+  settingsCoaOpeningBalance: 'Opening Balance',
+  settingsCoaJournalCode: 'Journal Code',
+  settingsCoaAccoutNumber: 'Accout Number',
+  settingsCoaBank: 'Bank',
+  settingsCoaBankGLCode: 'Bank GL Code',
+  settingsCoaGLCode: 'GL Code',
+  settingsCoaBankAccountNumber: 'Bank Account Number',
+  settingsCoaLedgerAccount: 'Ledger Account',
+  settingsCoaYouCan:
+    'You can perform transaction in this account. However, you cannot create any more accounts under this heading',
+  settingsCoaBSAccount: 'B/S Account',
+  settingsCoaSummationAccount: 'Summation Account',
+  settingsCoaIBTAC: 'IBT A/C',
+  settingsCoaIntransitAC: 'Intransit A/C',
+  settingsCoaPLAccount: 'P/L Account',
+  settingsCoaAllowFreeEntry: 'Allow Free Entry',
+  settingsCoaAllowTransaction: 'Allow Transaction',
+  settingsCoaListCash: 'Cash',
+  settingsCoaListBank: 'Bank',
+  settingsCoaListJournal: 'Journal',
+
+  // settings general members individual
+  settingsMember: 'Members',
+  settingsIndividual: 'Individuals',
+  settingsInstitutional: 'Institutionals',
+  settingsCooperative: 'Cooperative',
+  settingsCorporativeUnion: 'Corporative Union',
+  settingsGeneralRisk: 'General Risk',
+  settingsMediumRisk: 'Medium Risk',
+  settingsHighRisk: 'High Risk',
+  settingsGeneral: 'General',
+  settingsTheseSettings:
+    'These settings will be applied across all member related pages',
+  settingsTypesOfNewMember: 'Types of New Member',
+  settingsChooseMember: 'Choose which type of member is allowed',
+  settingsMemberRisk: 'Member Risk Level',
+  settingsMemberRiskLevel: 'Risk Level',
+  settingsMemberYearsTillKYMUpdate: 'Years till KYM Update',
+  settingsMemberAddNewOption: 'Add New Option',
+
+  settingsMemberSection1PersonalInformation: 'Section 1: Personal Information',
+  settingsMemberGender: 'Gender',
+  settingsMemberNationality: 'Nationality',
+  settingsMemberEducationQualification: 'Education Qualification',
+  settingsMemberReligion: 'Religion',
+  settingsMemberEthnicity: 'Ethnicity',
+  settingsMemberContactDetails: 'Contact Details',
+  settingsMemberIdentificationDocuments: 'Identification Documents',
+  settingsMemberCitizenship: 'Citizenship',
+  settingsMemberVoterId: 'Voter Id',
+  settingsMemberDrivingLicense: 'Driving License',
+  settingsMemberMaritalStatus: 'Marital Status',
+  settingsMemberFamilyRelationship: 'Family Relationship',
+  settingsMemberFamilyInformation: 'Family Information',
+
+  settingsMemberSection2ProfessionalInformation:
+    'Section 2: Professional Information',
+  settingsMemberOccupation: 'Occupation',
+  settingsMemberOccupationDetails: 'Occupation Details',
+  settingsMemberFamilyIncome: 'Family Income',
+  settingsMemberIncomeSourceDetails: 'Income Source Details',
+  settingsMemberEstimatedAnnualTransaction: 'Estimated Annual Transaction',
+
+  settingsMemberSection3CooperativeMember: 'Section 3: Cooperative Member',
+  settingsMemberPurposeOfBecomingAMemberOfThisCooperative:
+    'Purpose of becoming a member of this cooperative',
+  settingsMemberOtherCooperativeDetails: 'Other Cooperative Details',
+  settingsMemberFinancialTransactionDetails: 'Financial Transaction Details',
+  settingsMemberSection4Declaration: 'Section 4: Declaration',
+  settingsMemberNextToKinInformation: 'Next to Kin Information',
+  settingsMemberForeignEmploymentOptions: 'Foreign Employment Options',
+  settingsMemberFileUploads: 'File Uploads',
+  settingsMemberDeclaration: 'Declaration',
+  settingsMemberSection5CustomFields: 'Section 5: Custom Fields',
+
+  settingsKymIndMembers: 'Members',
+  settingsKymIndFormIndividual: 'KYM Form - Individual',
+  settingsKymIndSettingsChange:
+    'Settings to change options and fields in KYM form for individuals',
+
+  // MEMBER SETTINGS INSTITUTION
+  settingsKymInsForm: 'KYM Form - Institutional',
+  settingsKymInsSettingsChange:
+    'Settings to change options and fields in KYM form for institutions',
+
+  // MEMBER SETTINGS COOPERATIVE UNION
+  settingsKymCoopUnionForm: 'KYM Form - Cooperative Union',
+  settingsKymCoopUnionSettingsChange:
+    'Settings to change options and fields in KYM form for Cooperative Union',
+
+  // MEMBER SETTINGS COOPERATIVE
+  settingsKymCoopForm: 'KYM Form - Cooperative',
+  settingsKymCoopSettingsChange:
+    'Settings to change options and fields in KYM form for Cooperativ',
+
+  settingsKymInstMembers: 'Members',
+  settingsKymCoopMembers: 'Members',
+  settingsKymCoopUnionMembers: 'Members',
+
+  //settings general member sidebar
+  settingsSideGeneral: 'General',
+  settingsSideIndividual: 'KYM Form - Individual',
+  settingsSideInstitutional: 'KYM Form - Institutional',
+  settingsSideCoop: 'KYM Form - CoOperative',
+  settingsSideCoopUnion: 'KYM Form - CoOperative Union',
+
+  // settings side bar
+  settingsSideBarOrganization: 'Organization',
+  settingsSideBarBranches: 'Branches',
+  settingsSideBarChartsOfAccounts: 'Charts of Accounts',
+  settingsSideBarMembers: 'Members',
+  settingsSideBarShare: 'Share',
+  settingsSideBarDepositWithdraw: 'Deposit / Withdraw',
+  settingsSideBarLoan: 'Loan',
+
+  //settings tab menu
+  settingsTabMenu: 'Settings',
+  settingsTabMenuGeneral: 'General',
+  settingsTabMenuUsers: 'Users',
+  settingsTabMenuImport: 'Import',
+  settingsTabMenuSubscriptions: 'Subscriptions',
 };
 
 export default ne;

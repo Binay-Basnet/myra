@@ -3,6 +3,7 @@ import { Control } from 'react-hook-form';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import { FormSelect, FormInput } from '@coop/shared/form';
 import { Box, Grid, GridItem } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const options = [
   { label: 'Option 1', value: '1' },
@@ -55,13 +56,14 @@ const useAdminsitration = () => {
 };
 
 export const AddressOrganization = ({ control }: Props) => {
+  const { t } = useTranslation();
   return (
     <Box>
       <Grid templateColumns="repeat(3, 1fr)" gap="s16">
         <GridItem>
           {' '}
           <FormSelect
-            label="province"
+            label={t['settingsOrgAddressProvince']}
             options={options}
             control={control}
             name="organizationProvince"
@@ -70,7 +72,7 @@ export const AddressOrganization = ({ control }: Props) => {
         <GridItem>
           {' '}
           <FormSelect
-            label="District"
+            label={t['settingsOrgAddressDistrict']}
             options={options}
             control={control}
             name="organizationDistrict"
@@ -79,7 +81,7 @@ export const AddressOrganization = ({ control }: Props) => {
         <GridItem>
           {' '}
           <FormSelect
-            label="Local Level"
+            label={t['settingsOrgAddressLocalLevel']}
             options={options}
             control={control}
             name="organizationVDC"
@@ -88,8 +90,8 @@ export const AddressOrganization = ({ control }: Props) => {
         <GridItem>
           {' '}
           <FormInput
-            label="Ward No"
-            placeholder="Enter Ward"
+            label={t['settingsOrgAddressWardNo']}
+            placeholder={t['settingsOrgAddressEnterWard']}
             control={control}
             name={'organizationWard'}
           />
@@ -97,8 +99,8 @@ export const AddressOrganization = ({ control }: Props) => {
         <GridItem>
           {' '}
           <FormInput
-            label="Locality"
-            placeholder="Locality"
+            label={t['settingsOrgAddressLocality']}
+            placeholder={t['settingsOrgAddressLocality']}
             control={control}
             name={'organizationLocality'}
           />

@@ -37,13 +37,13 @@ export interface TopLevelHeaderProps {
 }
 
 const languageList = [
-  { label: 'en', value: 'EN' },
-  { label: 'ne', value: 'ने' },
+  { label: 'EN', value: 'en' },
+  { label: 'ने', value: 'ne' },
 ];
 
 const calendarList = [
-  { label: 'ad', value: 'AD' },
-  { label: 'bs', value: 'BS' },
+  { label: 'AD', value: 'AD' },
+  { label: 'BS', value: 'BS' },
 ];
 
 const currentDate = format(new Date(), 'yyyy-MM-dd');
@@ -366,13 +366,11 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           Language
                         </Text>
                         <SwitchTabs
-                          list={languageList}
-                          activeTab={langActiveTab}
-                          setActiveTab={setLangActiveTab}
-                          onClick={() => {
-                            const locale = langActiveTab === 1 ? 'en' : 'ne';
+                          value={router?.locale}
+                          options={languageList}
+                          onChange={(value) => {
                             router.push(`/${router.asPath}`, undefined, {
-                              locale,
+                              locale: value,
                             });
                           }}
                         />
@@ -393,11 +391,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         >
                           Calendar
                         </Text>
-                        <SwitchTabs
-                          activeTab={activeTab}
-                          setActiveTab={setActiveTab}
-                          list={calendarList}
-                        />
+                        <SwitchTabs options={calendarList} />
                       </Box>
 
                       <Box

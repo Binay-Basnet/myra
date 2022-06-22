@@ -5,6 +5,7 @@ import { FaMap } from 'react-icons/fa';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
+  SettingsPageHeader,
 } from '@coop/cbs/settings/ui-layout';
 import {
   AddressOrganization,
@@ -15,66 +16,64 @@ import {
 } from '@coop/myra/components';
 import { FormFileInput, FormInput } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const Organization = () => {
+  const { t } = useTranslation();
   const { control, handleSubmit, getValues } = useForm();
   const methods = useForm();
 
   return (
     // onSubmit={handleSubmit((data) => console.log('data', data))}
-    <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit((data) => console.log('data', data))}
-        onChange={(e) => {
-          console.log('hello', getValues());
-        }}
-      >
-        <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
-          <Box
-            borderBottom="1px"
-            borderBottomColor="border.layout"
-            display={'flex'}
-            alignItems={'center'}
-            h="60px"
-          >
-            <Text
-              fontSize="r2"
-              px="s16"
-              fontWeight="600"
-              color="neutralColorLight.Gray-80"
-            >
-              Organization
+
+    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
+      <SettingsPageHeader heading="Organizations" />
+      <Box display={'flex'} flexDirection="row" h="fit-content">
+        <Box
+          w="300px"
+          position="fixed"
+          px="s8"
+          py="s16"
+          borderRight={'1px'}
+          borderRightColor="border.layout"
+          minHeight="100vh"
+        >
+          <Box bg="#EEF2F7" p="s16">
+            <Text fontSize={'r1'} fontWeight="600">
+              {t['settingsOrganization']}
             </Text>
           </Box>
-          <Box display={'flex'} flexDirection="row" h="fit-content">
-            <Box
-              w="300px"
-              px="s8"
-              py="s16"
-              borderRight={'1px'}
-              borderRightColor="border.layout"
-            >
-              <Box bg="#EEF2F7" p="s16">
-                <Text fontSize={'r1'} fontWeight="600">
-                  Initial Setup
-                </Text>
-              </Box>
-            </Box>
+        </Box>
 
-            <Box px="s16" flex={1} display="flex" flexDirection={'column'}>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={handleSubmit((data) => console.log('data', data))}
+            onChange={(e) => {
+              console.log('hello', getValues());
+            }}
+          >
+            <Box
+              ml="300px"
+              px="s16"
+              flex={1}
+              display="flex"
+              flexDirection={'column'}
+            >
               <Box py={'s24'}>
-                <Text fontWeight="600">BASIC DETAILS</Text>
+                <Text fontWeight="600">
+                  {t['settingsOrganizationBasicDetails']}
+                </Text>
                 <Box mt="s24" w="100%">
                   <FormInput
-                    label="Organization Name"
-                    placeholder="Enter name"
+                    label={t['settingsOrganizationOrganizationName']}
+                    placeholder={t['settingsOrganizationEntername']}
                     control={control}
                     name="organizationName"
                     type="text"
                   />
                 </Box>
                 <Text mt={'s16'} fontSize="s3" fontWeight="500">
-                  Organization Logo
+                  {t['settingsOrganizationOrganizationLogo']}
                 </Text>
                 <Box mt="s16" w={'110px'}>
                   {/* =====================TODO ADD FILE DROPBOX =====================================================*/}
@@ -87,7 +86,7 @@ const Organization = () => {
                 <Box mt={'s16'}>
                   {' '}
                   <Text color={'gray.700'} fontSize="s3" fontWeight={'500'}>
-                    Type of Organization
+                    {t['settingsOrganizationTypeOfOrganization']}
                   </Text>
                   <Box mt="s16">
                     {/* <RadioGroup radioList={radiolist}> </RadioGroup> */}
@@ -97,7 +96,7 @@ const Organization = () => {
                 <Box mt="s16" py="s24">
                   <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
                     {' '}
-                    CONTACT DETAILS
+                    {t['settingsOrganizationContactDetails']}
                   </Text>
                   <Box mt="s16">
                     <ContactDetailsOrganization control={control} />
@@ -106,7 +105,7 @@ const Organization = () => {
                 <Box mt="s16" py="s24">
                   <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
                     {' '}
-                    MAIN CONTACT PERSON
+                    {t['settingsOrganizationMainContactPerson']}
                   </Text>
                   <Box mt="s16">
                     <MainContactPersonOrganization control={control} />
@@ -115,7 +114,7 @@ const Organization = () => {
                 <Box mt="s16" py="s24">
                   <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
                     {' '}
-                    ADDRESS
+                    {t['settingsOrganizationAddress']}
                   </Text>
                   <Box mt="s16">
                     <AddressOrganization control={control} />
@@ -126,13 +125,13 @@ const Organization = () => {
                   mt={'s16'}
                   type="submit"
                 >
-                  Pin on Map
+                  {t['settingsOrganizationPinOnMap']}
                 </Button>
               </Box>
               <Box mt="s16" py="s24">
                 <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
                   {' '}
-                  REGISTRATION DETAILS
+                  {t['settingsOrganizationRegistrationDetails']}
                 </Text>
                 <Box mt="s16">
                   <RegistrationDetailsOrganization control={control} />
@@ -141,7 +140,7 @@ const Organization = () => {
               <Box mt="s16" py="s24">
                 <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
                   {' '}
-                  DOCUMENTS
+                  {t['settingsOrganizationDocumnents']}
                 </Text>
                 <Box w="100%" mt="s16" h="500px">
                   {/* ==========================TODO ADD DROPDOWN HERE ===================== */}
@@ -152,15 +151,17 @@ const Organization = () => {
                   />
                   <Box mt="s60" display={'flex'} justifyContent="flex-end">
                     {' '}
-                    <Button size={'md'}>Save Changes</Button>
+                    <Button size={'md'}>
+                      {t['settingsOrganizationSaveChanges']}
+                    </Button>
                   </Box>
                 </Box>
               </Box>
             </Box>
-          </Box>
-        </Box>
-      </form>
-    </FormProvider>
+          </form>
+        </FormProvider>
+      </Box>
+    </Box>
   );
 };
 

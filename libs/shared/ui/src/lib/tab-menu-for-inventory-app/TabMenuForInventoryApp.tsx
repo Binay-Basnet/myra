@@ -2,10 +2,11 @@ import { IconType } from 'react-icons';
 import { AiFillTag, AiOutlineAppstore } from 'react-icons/ai';
 import { FaShapes, FaUserFriends } from 'react-icons/fa';
 import { IoLockClosed } from 'react-icons/io5';
-import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
-import { Icon } from '@coop/shared/ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
+
+import { Icon } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
 export interface TabMenuInventoryProps {}
@@ -57,7 +58,7 @@ export function TabMenuForInventoryApp() {
   const currentIndex =
     NAVBAR_TAB_OBJECT[
       Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
-        router.pathname.includes(string)
+        router?.pathname.includes(string)
       ) ?? '/inventory/items'
     ];
 
@@ -83,7 +84,7 @@ export function TabMenuForInventoryApp() {
       >
         <TabList>
           {demotabs.map(({ title, icon, link, name }, index) => {
-            const isActive = router.asPath.includes(name.toLowerCase());
+            const isActive = router?.asPath.includes(name.toLowerCase());
             return (
               <Link href={link} key={index}>
                 <Tab

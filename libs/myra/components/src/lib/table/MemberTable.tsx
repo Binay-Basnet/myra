@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { Avatar, Flex } from '@chakra-ui/react';
+import format from 'date-fns/format';
+
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/shared/ui';
-import format from 'date-fns/format';
-import { useRouter } from 'next/router';
 
 import { TableListPageHeader } from '../TableListPageHeader';
 
@@ -25,7 +26,7 @@ export const MemberTable = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'Member ID',
+        Header: 'memberID',
         accessor: 'node.id',
         maxWidth: 4,
         disableSortBy: false,
@@ -33,7 +34,7 @@ export const MemberTable = () => {
 
       {
         Header: 'Name',
-        accessor: 'node.personalInformation.name.firstName',
+        accessor: 'node.name.local',
         width: '80%',
 
         Cell: ({ value, row }) => {
@@ -44,10 +45,7 @@ export const MemberTable = () => {
                 size="sm"
                 src="https://bit.ly/dan-abramov"
               />
-              <span>
-                {value}{' '}
-                {row?.original?.node?.personalInformation?.name?.lastName}
-              </span>
+              <span>{value}</span>
             </Flex>
           );
         },
@@ -55,20 +53,20 @@ export const MemberTable = () => {
 
       {
         Header: 'Address',
-        accessor: 'node.address.permanent.district',
+        accessor: 'node.address.district.local',
         maxWidth: 48,
 
         Cell: ({ value, row }) => {
           return (
             <span>
-              {value}, {row?.original?.node?.address?.permanent?.state}
+              {value}, {row?.original?.node?.address?.state?.local}
             </span>
           );
         },
       },
       {
         Header: 'Phone No.',
-        accessor: 'node.contact.mobile',
+        accessor: 'node.contact',
       },
       {
         Header: 'Date Joined',
@@ -107,7 +105,10 @@ export const MemberTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'Members'} tabItems={memberRows} />
+      <TableListPageHeader
+        heading={'memberLayoutMembers'}
+        tabItems={memberRows}
+      />
 
       <Table
         isLoading={isLoading}

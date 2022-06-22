@@ -2,13 +2,13 @@ import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
-  DynamicBoxContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -18,6 +18,7 @@ import {
   Select,
   Switch,
   Text,
+  TextFields,
 } from '@coop/shared/ui';
 
 const MainOccupation = ({
@@ -28,72 +29,117 @@ const MainOccupation = ({
 }: any) => {
   const profession = watch('profession');
 
-  return (
-    <DynamicBoxContainer>
-      <CloseIcon
-        cursor="pointer"
-        onClick={removeMainOccupation}
-        color="gray.500"
-        _hover={{
-          color: 'gray.900',
-        }}
-        aria-label="close"
-        alignSelf="flex-end"
-      />
+  const isOwner = watch(`mainOccupation.${index}.isOwner`);
 
-      <InputGroupContainer>
-        <GridItem colSpan={1}>
-          <FormSelect
+  return (
+    <Box
+      display="flex"
+      borderRadius="br2"
+      flexDirection="column"
+      gap="s16"
+      p="s20"
+      bg="background.500"
+    >
+      <Box display="flex" flexDirection="column">
+        <CloseIcon
+          cursor="pointer"
+          onClick={removeMainOccupation}
+          color="gray.500"
+          _hover={{
+            color: 'gray.900',
+          }}
+          aria-label="close"
+          alignSelf="flex-end"
+        />
+
+        <InputGroupContainer>
+          <GridItem colSpan={1}>
+            <FormSelect
+              control={control}
+              name={`mainOccupation.${index}.occupation`}
+              label="Occupation"
+              placeholder="Select Occupation"
+              options={
+                profession?.map((data: string) => ({
+                  label: data,
+                  value: data,
+                })) ?? []
+              }
+            />
+          </GridItem>
+          <GridItem colSpan={2}>
+            <FormInput
+              bg="white"
+              control={control}
+              type="text"
+              name={`mainOccupation.${index}.orgName`}
+              label="Org/Firm Name"
+              placeholder="Org/Firm Name"
+            />
+          </GridItem>
+
+          <FormInput
             control={control}
-            name={`mainOccupation.${index}.occupation`}
-            label="Occupation"
-            placeholder="Select Occupation"
-            options={
-              profession?.map((data: string) => ({
-                label: data,
-                value: data,
-              })) ?? []
-            }
+            bg="white"
+            type="text"
+            name={`mainOccupation.${index}.idNumber`}
+            label="Pan / VAT No"
+            placeholder="Pan/VAT Number"
           />
-        </GridItem>
-        <GridItem colSpan={2}>
+          <FormInput
+            control={control}
+            type="text"
+            bg="white"
+            name={`mainOccupation.${index}.address`}
+            label="Address"
+            placeholder="Enter Address"
+          />
           <FormInput
             bg="white"
             control={control}
-            type="text"
-            name={`mainOccupation.${index}.orgName`}
-            label="Org/Firm Name"
-            placeholder="Org/Firm Name"
+            type="number"
+            textAlign={'right'}
+            name={`mainOccupation.${index}.estimatedAnnualIncome`}
+            label="Estimated Annual Income"
+            placeholder="0.00"
           />
-        </GridItem>
+        </InputGroupContainer>
+      </Box>
 
-        <FormInput
-          control={control}
-          bg="white"
-          type="text"
-          name={`mainOccupation.${index}.idNumber`}
-          label="Pan / VAT No"
-          placeholder="Pan/VAT Number"
-        />
-        <FormInput
-          control={control}
-          type="text"
-          bg="white"
-          name={`mainOccupation.${index}.address`}
-          label="Address"
-          placeholder="Enter Address"
-        />
-        <FormInput
-          bg="white"
-          control={control}
-          type="number"
-          textAlign={'right'}
-          name={`mainOccupation.${index}.estimatedAnnualIncome`}
-          label="Estimated Annual Income"
-          placeholder="0.00"
-        />
-      </InputGroupContainer>
-    </DynamicBoxContainer>
+      <Box display="flex" gap="9px" alignItems="center">
+        <FormCheckbox name={`mainOccupation.${index}.isOwner`} />
+        <TextFields variant="formLabel">Are you owner?</TextFields>
+      </Box>
+
+      {isOwner && (
+        <InputGroupContainer>
+          <FormInput
+            bg="white"
+            control={control}
+            type="date"
+            name={`mainOccupation.${index}.establishedDate`}
+            label="Established Date"
+            placeholder="Established Date"
+          />
+          <FormInput
+            bg="white"
+            control={control}
+            type="number"
+            name={`mainOccupation.${index}.registrationNo`}
+            label="Registration No."
+            placeholder="Registration No."
+          />
+          <FormInput
+            bg="white"
+            control={control}
+            type="number"
+            name={`mainOccupation.${index}.contactNo`}
+            label="Contact No."
+            placeholder="Contact No."
+          />
+        </InputGroupContainer>
+      )}
+    </Box>
   );
 };
 
@@ -174,13 +220,33 @@ export const MemberKYMMainOccupation = ({ control, watch }: any) => {
           />
         </GridItem>
         <GridItem>
-          <FormInput
+          {/* <FormInput
             bg="white"
             control={control}
             type="text"
             name={`orgName`}
             label="Type of Visa"
             placeholder="Enter Type of Visa"
+          /> */}
+          <FormSelect
+            control={control}
+            name="typeOfVisa"
+            label="Type of Visa"
+            placeholder="Enter Type of Visa"
+            options={[
+              {
+                label: 'Nepal',
+                value: 'Nepal',
+              },
+              {
+                label: 'India',
+                value: 'India',
+              },
+              {
+                label: 'China',
+                value: 'China',
+              },
+            ]}
           />
         </GridItem>
         <GridItem>

@@ -1,7 +1,9 @@
-import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
+import { useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
+import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
+
+import { useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
@@ -16,8 +18,10 @@ const TabCol = chakra(Tab, {
     _selected: {
       color: 'gray.800',
       bg: '#EEF2F7',
-
       fontWeight: '600',
+    },
+    _focus: {
+      boxShadow: 'none',
     },
   },
 });
@@ -29,9 +33,10 @@ interface IVerticalSidebarProps {
   }[];
 }
 
-export const VerticalSideBarSettings = ({
+export const SettingsInnerVerticalMenu = ({
   tablinks,
 }: IVerticalSidebarProps) => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const currentIndex = useMemo(
@@ -46,7 +51,7 @@ export const VerticalSideBarSettings = ({
           return (
             <Link href={to}>
               <TabCol key={`${title}${index}`}>
-                <Text>{title}</Text>
+                <Text>{t[title]}</Text>
               </TabCol>
             </Link>
           );

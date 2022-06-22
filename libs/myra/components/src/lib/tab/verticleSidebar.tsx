@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
-import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
+
+// TODO! ( REMOVE THIS COMPONENT )
 
 const TabCol = chakra(Tab, {
   baseStyle: {

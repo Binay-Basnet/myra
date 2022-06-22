@@ -1,10 +1,11 @@
 import React from 'react';
+
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Checkbox, Text } from '@coop/shared/ui';
+import { Box, Checkbox, RadioGroup, Text } from '@coop/shared/ui';
 
 const annualFamilyIncome = ['Upto 50', 'Upto 100', 'Upto 500', 'Above 500'];
 
@@ -33,13 +34,14 @@ export const KYMEstimatedAmount = ({ control }: any) => {
         <Text fontSize="s3" mb="s16">
           Estimated no. of Annual Transaction
         </Text>
-        <Box display="flex" flexDirection="column" gap="s8">
+        {/* <Box display="flex" flexDirection="column" gap="s8">
           {annualFamilyIncome.map((item, index) => (
             <Checkbox key={index} id="annualIncomeCheckbox">
               <Text fontSize="s3">{item}</Text>
             </Checkbox>
           ))}
-        </Box>
+        </Box> */}
+        <RadioGroup radioList={annualFamilyIncome} labelFontSize="s3" />
       </Box>
 
       <InputGroupContainer>

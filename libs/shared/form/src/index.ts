@@ -1,3 +1,4 @@
+export * from './controllers/FormSwitchTab/FormSwitchTab';
 export * from './controllers/FormAmounInput/FormAmounInput';
 export * from './controllers/FormCheckbox/FormCheckbox';
 export * from './controllers/FormCheckboxGroup/FormCheckboxGroup';
