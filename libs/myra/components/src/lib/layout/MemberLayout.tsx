@@ -21,6 +21,7 @@ import {
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+
 import { TabColumn } from '../tab/TabforMemberPage';
 interface IMemberPageLayout {
   children: React.ReactNode;
@@ -147,7 +148,6 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
           open={openModal}
           onClose={onCloseModal}
           isCentered={true}
-          footerPrimary2Props={<button>Save</button>}
           title={
             <Text
               fontSize="r2"
