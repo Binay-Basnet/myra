@@ -128,7 +128,7 @@ export function KYMIndividualPage() {
               borderBottom="1px solid #E6E6E6"
             >
               <Text fontSize="r2" fontWeight="SemiBold">
-                {t.membersFormAddNewMembers}
+                {t['membersFormAddNewMembers']}
               </Text>
               <IconButton
                 variant={'ghost'}
@@ -145,7 +145,8 @@ export function KYMIndividualPage() {
         <FormProvider {...methods}>
           <form
             onChange={debounce(() => {
-              console.log(getValues());
+              console.log('individual', getValues());
+              mutate({ id, data: getValues() });
             }, 800)}
             onSubmit={handleSubmit((data) => {
               console.log('data', data);
@@ -189,8 +190,8 @@ export function KYMIndividualPage() {
                         <MemberKYMBasicInfo />
                         <MemberKYMContactDetails />
                         <MemberKYMIdentificationDetails />
-                        <MemberKYMAddress control={control} watch={watch} />
-                        <MemberKYMFamilyDetails control={control} />
+                        <MemberKYMAddress />
+                        <MemberKYMFamilyDetails />
                       </ContainerWithDivider>
                     </SectionContainer>
 
@@ -200,15 +201,9 @@ export function KYMIndividualPage() {
                       </Text>
                       <ContainerWithDivider>
                         <MemberKYMProfession />
-                        <MemberKYMMainOccupation
-                          control={control}
-                          watch={watch}
-                        />
-                        <MemberKYMHusbandWifeOccupation
-                          control={control}
-                          watch={watch}
-                        />
-                        <MemberKYMIncomeSourceDetails control={control} />
+                        <MemberKYMMainOccupation />
+                        <MemberKYMHusbandWifeOccupation />
+                        <MemberKYMIncomeSourceDetails />
                       </ContainerWithDivider>
                     </SectionContainer>
 
@@ -217,9 +212,9 @@ export function KYMIndividualPage() {
                         3. COOP membership
                       </Text>
                       <ContainerWithDivider>
-                        <KYMBasiccoopDetails control={control} />
-                        <KYMFinancialTransactionDetails control={control} />
-                        <KYMEstimatedAmount control={control} />
+                        <KYMBasiccoopDetails />
+                        <KYMFinancialTransactionDetails />
+                        <KYMEstimatedAmount />
                       </ContainerWithDivider>
                     </SectionContainer>
 
@@ -228,9 +223,8 @@ export function KYMIndividualPage() {
                         4. Declaration
                       </Text>
                       <ContainerWithDivider>
-                        <KYMDeclaration control={control} />
-                        {/* <KYMLocation control={control} /> */}
-                        <KYMDocumentDeclaration control={control} />
+                        <KYMDeclaration />
+                        <KYMDocumentDeclaration />
                       </ContainerWithDivider>
                     </SectionContainer>
 

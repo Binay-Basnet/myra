@@ -1,28 +1,34 @@
 import React from 'react';
-import { Control, useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import {
+  KymIndMemberInput,
+  useGetIndividualKymOptionQuery,
+} from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
 
+import { getFieldOption } from '../../../utils/getFieldOption';
+
 interface IAddFamilyMember {
-  control: Control<KymIndMemberInput>;
   index: number;
   removeFamilyMember: () => void;
 }
 
-const AddFamilyMember = ({
-  control,
-  index,
-  removeFamilyMember,
-}: IAddFamilyMember) => {
+const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
+  const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'family_relationship',
+    });
+
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -39,63 +45,47 @@ const AddFamilyMember = ({
       <InputGroupContainer>
         <GridItem colSpan={1}>
           <FormSelect
-            control={control}
             name={`familyDetails.${index}.relationshipId`}
             label="Relationship"
             placeholder="Select Relationship"
-            options={[
-              { value: 'father', label: 'Father' },
-              { value: 'mother', label: 'Mother' },
-              { value: 'brother', label: 'Brother' },
-              { value: 'sister', label: 'Sister' },
-              { value: 'son', label: 'Son' },
-              { value: 'daughter', label: 'Daughter' },
-              { value: 'grandfather', label: 'Grandfather' },
-              { value: 'grandmother', label: 'Grandmother' },
-            ]}
+            isLoading={familyRelationshipLoading}
+            options={getFieldOption(familyRelationShipData)}
           />
         </GridItem>
         <GridItem colSpan={1}>
           <FormInput
-            control={control}
             type="text"
             bg="white"
             name={`familyDetails.${index}.fullName`}
-            label="FullName"
+            label="Full Name"
             placeholder="Enter Full Name"
           />
         </GridItem>
 
-        {/* <GridItem colSpan={1}>
-          <TextFields
-            mb="s4"
-            variant="formLabel"
-            whiteSpace="nowrap"
-            color="gray.700"
-          >
-            Date of Birth
-          </TextFields>
-          <Input
-            flexGrow={0}
-            variant={'outline'}
+        {/*
+        TODO ( UNCOMMENT THIS AFTER BACKEND )
+        <GridItem colSpan={1}>
+          <FormInput
             type="date"
-            borderRadius="br2"
-            placeholder="Enter date of birth"
             bg="white"
-          /> */}
-        {/* </GridItem> */}
+            name={`familyDetails.${index}.dateOfBirth`}
+            label="Date of Birth (BS)"
+            placeholder="Enter Date of Birth"
+          />
+        </GridItem>*/}
       </InputGroupContainer>
     </DynamicBoxContainer>
   );
 };
 
-interface IMemberKYMFamilyDetails {
-  control: Control<KymIndMemberInput | any>;
-}
+export const MemberKYMFamilyDetails = () => {
+  const { control } = useFormContext<KymIndMemberInput>();
 
-export const MemberKYMFamilyDetails = ({
-  control,
-}: IMemberKYMFamilyDetails) => {
+  const { data: maritalStatusData, isLoading: maritalStatusLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'marital_status',
+    });
+
   const {
     fields: familyFields,
     append: familyAppend,
@@ -109,14 +99,11 @@ export const MemberKYMFamilyDetails = ({
       </Text>
       <InputGroupContainer>
         <FormSelect
-          control={control}
           name={'maritalStatus'}
           label="Martial Status"
           placeholder="Select Martial Status"
-          options={[
-            { value: 'married', label: 'Married' },
-            { value: 'unmarried', label: 'Unmarried' },
-          ]}
+          isLoading={maritalStatusLoading}
+          options={getFieldOption(maritalStatusData)}
         />
       </InputGroupContainer>
 
@@ -129,7 +116,6 @@ export const MemberKYMFamilyDetails = ({
             return (
               <Box key={item.id}>
                 <AddFamilyMember
-                  control={control}
                   index={index}
                   removeFamilyMember={() => familyRemove(index)}
                 />

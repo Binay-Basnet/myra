@@ -95,10 +95,12 @@ export const chakraStyles: ChakraStylesConfig = {
   loadingIndicator: () => ({
     display: 'none',
   }),
-  loadingMessage: () => ({
+  loadingMessage: (provided) => ({
+    ...provided,
     fontSize: 'r1',
   }),
-  noOptionsMessage: () => ({
+  noOptionsMessage: (provided) => ({
+    ...provided,
     fontSize: 'r1',
   }),
 };

@@ -12,7 +12,7 @@ export interface SelectOption {
 
 export interface SelectProps extends Omit<Props, 'size' | 'onChange'> {
   label?: string;
-  options: SelectOption[];
+  options: SelectOption[] | undefined;
   helperText?: string;
   errorText?: string;
   // // TODO Change this any.

@@ -5,11 +5,11 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Checkbox, RadioGroup, Text } from '@coop/shared/ui';
+import { Box, RadioGroup, Text } from '@coop/shared/ui';
 
 const annualFamilyIncome = ['Upto 50', 'Upto 100', 'Upto 500', 'Above 500'];
 
-export const KYMEstimatedAmount = ({ control }: any) => {
+export const KYMEstimatedAmount = () => {
   return (
     <GroupContainer
       id="Estimated Withdraw/Deposit Amount in the Institureion"
@@ -21,7 +21,6 @@ export const KYMEstimatedAmount = ({ control }: any) => {
 
       <InputGroupContainer>
         <FormInput
-          control={control}
           type="number"
           name="estimatedAnnualAccountTransactionAmount"
           label="Estimated annual account transaction (Debit/Credit)"
@@ -46,7 +45,6 @@ export const KYMEstimatedAmount = ({ control }: any) => {
 
       <InputGroupContainer>
         <FormInput
-          control={control}
           type="number"
           name="estimatedAnnualDepositAmount"
           label="Estimated Annual Deposit"
@@ -57,7 +55,6 @@ export const KYMEstimatedAmount = ({ control }: any) => {
 
       <InputGroupContainer>
         <FormInput
-          control={control}
           type="number"
           name="estimatedAnnualLoanAmount"
           label="Estimated Annual Loan"

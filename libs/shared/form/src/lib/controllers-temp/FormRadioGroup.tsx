@@ -1,5 +1,6 @@
 import React from 'react';
 import { Control, Controller, useFormContext } from 'react-hook-form';
+
 import { Box, RadioGroup, RadioGroupProps, TextFields } from '@coop/shared/ui';
 
 interface IFormSelectProps extends RadioGroupProps {
@@ -8,17 +9,12 @@ interface IFormSelectProps extends RadioGroupProps {
   label?: string;
 }
 
-export const FormRadioGroup = ({
-  control,
-  name,
-  label,
-  ...rest
-}: IFormSelectProps) => {
+export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
   const methods = useFormContext();
 
   const {
     formState: { errors },
-    control: formControl,
+    control,
   } = methods;
 
   const error = errors[name];
@@ -26,15 +22,10 @@ export const FormRadioGroup = ({
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange } }) => (
+      render={({ field: { onChange, value } }) => (
         <Box display="flex" flexDirection="column" gap="s8">
           <TextFields variant="formLabel">{label}</TextFields>
-          <RadioGroup
-            {...rest}
-            onChange={(e) => {
-              onChange(e.target.value.toLowerCase() === 'yes');
-            }}
-          />
+          <RadioGroup {...rest} value={value} onChange={onChange} />
           {error ? error?.message : null}
         </Box>
       )}
