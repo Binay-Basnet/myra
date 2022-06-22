@@ -2,8 +2,10 @@ import { useMemo } from 'react';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
 import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 export const ExpenseDetails = ({ watch }: any) => {
+  const { t } = useTranslation();
   //   const cashEquivalent = watch('cashAndCashEquivalent');
   //   const bank = watch('bank');
   //   const investments = watch('investments');
@@ -68,7 +70,7 @@ export const ExpenseDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Expense Details
+            {t['kymCoopUnionExpExpenseDetails']}
           </Text>
         </GridItem>
 
@@ -79,7 +81,7 @@ export const ExpenseDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Amount
+            {t['kymCoopUnionExpAmount']}
           </Text>
         </GridItem>
       </Grid>
@@ -99,7 +101,7 @@ export const ExpenseDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Purchase
+            {t['kymCoopUnionExpPurchase']}
           </Text>
         </GridItem>
         <GridItem>
@@ -125,7 +127,7 @@ export const ExpenseDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Direct Expense
+            {t['kymCoopUnionExpDirectExpense']}
           </Text>
         </GridItem>
         <GridItem>
@@ -151,7 +153,7 @@ export const ExpenseDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Administrative expense
+            {t['kymCoopUnionExpAdministrativeExpense']}
           </Text>
         </GridItem>
 
@@ -178,7 +180,7 @@ export const ExpenseDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Financial cost
+            {t['kymCoopUnionExpFinancialCost']}
           </Text>
         </GridItem>
         <GridItem>
@@ -204,7 +206,7 @@ export const ExpenseDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Risk management expense
+            {t['kymCoopUnionExpRiskManagementExpense']}
           </Text>
         </GridItem>
 
@@ -231,7 +233,7 @@ export const ExpenseDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Deffered tax Expense
+            {t['kymCoopUnionExpDefferedTaxExpense']}
           </Text>
         </GridItem>
         <GridItem>
@@ -260,7 +262,7 @@ export const ExpenseDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Total
+            {t['kymCoopUnionExpTotal']}
           </Text>
         </GridItem>
 
@@ -274,7 +276,7 @@ export const ExpenseDetails = ({ watch }: any) => {
             type="text"
             name="totalExpense"
             value={totalExpense}
-            placeholder="Total assets"
+            placeholder={t['kymCoopUnionExpTotalAssets']}
           />
         </GridItem>
       </Grid>

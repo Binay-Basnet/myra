@@ -5,8 +5,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const RegisteredDetails = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Registered Details" scrollMarginTop={'200px'}>
       <Text
@@ -14,41 +16,41 @@ export const RegisteredDetails = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Registered details
+        {t.kymCoopUnionRegisteredDetails}
       </Text>
       <InputGroupContainer>
         <FormInput
           // control={control}
           type="text"
           name={'regdAddress'}
-          label="Enter Registered Address"
-          placeholder="Enter Registered Address"
+          label={t.kymCoopUnionEnterRegisteredAddress}
+          placeholder={t.kymCoopUnionEnterRegisteredAddress}
         />
 
         <FormInput
           type="text"
           name="regdAddressChanged"
-          label="Registered Address (if changed)"
-          placeholder="Registered Address"
+          label={t.kymCoopUnionRegisteredAddressChanged}
+          placeholder={t.kymCoopUnionRegisteredAddress}
         />
         <Box></Box>
 
         <FormInput
           type="number"
           name="regdNo"
-          label="Registered Number"
-          placeholder="Enter Registered Number"
+          label={t.kymCoopUnionRegisteredNumber}
+          placeholder={t.kymCoopUnionEnterRegisteredNumber}
         />
         <FormInput
           type="text"
           name="issuingOffice"
-          label="Issuing Office"
-          placeholder="Enter Issuing Office"
+          label={t.kymCoopUnionIssuingOffice}
+          placeholder={t.kymCoopUnionEnterIssuingOffice}
         />
         <Box></Box>
         <Box>
           <Button alignSelf="start" leftIcon={<Icon size="md" as={FaMap} />}>
-            Pin on Map
+            {t['pinOnMap']}
           </Button>
         </Box>
       </InputGroupContainer>

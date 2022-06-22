@@ -10,8 +10,8 @@ import {
 import { useSetCentralRepresentationDetailsDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
-
 import { AddRepresentative } from './detailsOfdirectorswithOther';
+import { useTranslation } from '@coop/shared/utils';
 
 interface centralRepresntativeDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -26,6 +26,8 @@ export const CentralRepresentativeDetails = (
   const { mutate } = useSetCentralRepresentationDetailsDataMutation({});
   const methods = useForm({});
   const { control, handleSubmit, getValues, watch, setError } = methods;
+  const { t } = useTranslation();
+
   return (
     <FormProvider {...methods}>
       <form
@@ -44,7 +46,7 @@ export const CentralRepresentativeDetails = (
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            4. Details of Central Representative{' '}
+            {t['kymCoopUnionOp4DetailsofCentralRepresentative']}
           </Text>
           <ContainerWithDivider>
             <AddRepresentative watch={watch} control={control} />

@@ -6,8 +6,10 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymEquilities = ({ watch }: any) => {
+  const { t } = useTranslation();
   // const cashCurrent = watch('cashAndCashEquivalentCurrent');
   // const bankCurrent = watch('bankCurrent');
   // const investemntCurrent = watch('investmentsCurrent');
@@ -142,7 +144,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Equity and Liailibities
+            {t['kymCoopUnionEqtEquityandLiailibities']}
           </Text>
         </GridItem>
 
@@ -153,7 +155,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Current
+            {t['kymCoopUnionEqtCurrent']}
           </Text>
         </GridItem>
 
@@ -164,7 +166,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Target for next fiscal year
+            {t['kymCoopUnionEqtTargetfornextfiscalyear']}
           </Text>
         </GridItem>
       </Grid>
@@ -184,7 +186,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Share Capital
+            {t['kymCoopUnionEqtShareCapital']}
           </Text>
         </GridItem>
         <GridItem>
@@ -218,7 +220,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Reserve and surplus
+            {t['kymCoopUnionEqtReserveandSurplus']}
           </Text>
         </GridItem>
         <GridItem>
@@ -252,7 +254,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Saving/Deposit
+            {t['kymCoopUnionEqtSavingDeposit']}
           </Text>
         </GridItem>
         <GridItem>
@@ -286,7 +288,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Loan Account (External Loan)
+            {t['kymCoopUnionEqtLoanAccount']}
           </Text>
         </GridItem>
         <GridItem>
@@ -320,7 +322,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Capital Grant
+            {t['kymCoopUnionEqtCapitalGrant']}
           </Text>
         </GridItem>
         <GridItem>
@@ -354,7 +356,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Current Liabilities and payable
+            {t['kymCoopUnionEqtCurrentLiabilitiesandpayable']}
           </Text>
         </GridItem>
         <GridItem>
@@ -388,7 +390,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Non-current liabilities
+            {t['kymCoopUnionEqtNoncurrentliabilities']}
           </Text>
         </GridItem>
         <GridItem>
@@ -424,7 +426,7 @@ export const KymEquilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Total
+            {t['kymCoopUnionEqtTotal']}
           </Text>
         </GridItem>
 
@@ -438,7 +440,7 @@ export const KymEquilities = ({ watch }: any) => {
             type="text"
             name="totalEquityAndLiabilitiesCurrent"
             value={totalequitycurrent}
-            placeholder="Total assets"
+            placeholder={t['kymCoopUnionEqtTotalassets']}
           />
         </GridItem>
         <GridItem>
@@ -451,7 +453,7 @@ export const KymEquilities = ({ watch }: any) => {
             type="text"
             name="totalEquityAndLiabilitiesTarget"
             value={totalequityTarget}
-            placeholder="Total "
+            placeholder={t['kymCoopUnionEqtTotal']}
           />
         </GridItem>
       </Grid>
