@@ -123,6 +123,7 @@ export const MemberKYMFamilyDetails = () => {
             );
           })}
           <Button
+            id="addFamilyMemberButton"
             alignSelf="start"
             leftIcon={<Icon size="md" as={AiOutlinePlus} />}
             variant="outline"

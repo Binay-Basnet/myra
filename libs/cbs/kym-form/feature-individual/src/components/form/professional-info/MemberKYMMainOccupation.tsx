@@ -181,6 +181,7 @@ export const MemberKYMMainOccupation = () => {
         })}
 
         <Button
+          id="mainOccupationButton"
           alignSelf="start"
           leftIcon={<Icon size="md" as={AiOutlinePlus} />}
           variant="outline"

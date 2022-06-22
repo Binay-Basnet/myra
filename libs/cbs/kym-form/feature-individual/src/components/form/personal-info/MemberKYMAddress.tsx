@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
+import dynamic from 'next/dynamic';
 
 import {
   GroupContainer,
@@ -8,10 +9,24 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Icon, Modal, Text } from '@coop/shared/ui';
+
+const MapContainer = dynamic(() => import('./Map'), {
+  ssr: false,
+});
 
 export const MemberKYMAddress = () => {
   const { control, watch } = useFormContext();
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const onOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const isPermanentAndTemporaryAddressSame = watch(
     'isPermanentAndTemporaryAddressSame'
@@ -63,7 +78,7 @@ export const MemberKYMAddress = () => {
       [],
     [currentTemptDistrictId]
   );
-
+  const position = [51.505, -0.09];
   return (
     <GroupContainer>
       <Box
@@ -131,12 +146,31 @@ export const MemberKYMAddress = () => {
             alignSelf="start"
             mt="-16px"
             leftIcon={<Icon size="md" as={FaMap} />}
+            onClick={() => {
+              onOpenModal();
+            }}
           >
             Pin on Map
           </Button>
+          <Modal
+            open={openModal}
+            onClose={onCloseModal}
+            isCentered={true}
+            size="3xl"
+            title={
+              <Text
+                fontSize="r2"
+                color="neutralColorLight.Gray-80"
+                fontWeight="SemiBold"
+              >
+                Pin on map
+              </Text>
+            }
+          >
+            <MapContainer />
+          </Modal>
         </Box>
       </Box>
-
       <Box
         id="Temporary Address"
         gap="s32"
@@ -227,6 +261,7 @@ export const MemberKYMAddress = () => {
             placeholder="Landlord's Name"
           />
           <FormInput
+            control={control}
             type="text"
             name={'landlordContact'}
             label="Contact No"

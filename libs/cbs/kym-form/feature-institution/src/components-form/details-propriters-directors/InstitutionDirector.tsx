@@ -18,15 +18,15 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
+  KymIndMemberInput,
+  useAllAdministrationQuery,
+} from '@coop/shared/data-access';
+import {
   FormFileInput,
   FormInput,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import {
-  KymIndMemberInput,
-  useAllAdministrationQuery,
-} from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -374,6 +374,7 @@ export const BoardDirectorInfo = ({ watch, control }) => {
         );
       })}
       <Button
+        id="addDirectorButton"
         alignSelf="start"
         leftIcon={<Icon size="md" as={AiOutlinePlus} />}
         variant="outline"

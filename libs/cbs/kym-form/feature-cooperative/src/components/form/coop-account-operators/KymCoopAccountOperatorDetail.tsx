@@ -1,8 +1,10 @@
 import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
+
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
+
 import { AddOperator } from '../../accordion-component/KymCoopAccountOperator';
 
 export const KymCoopAccountOperatorDetail = ({ watch, control }) => {
@@ -29,6 +31,7 @@ export const KymCoopAccountOperatorDetail = ({ watch, control }) => {
         );
       })}
       <Button
+        id="accountOperatorButton"
         alignSelf="start"
         leftIcon={<Icon size="md" as={AiOutlinePlus} />}
         variant="outline"

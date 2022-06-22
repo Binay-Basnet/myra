@@ -347,6 +347,7 @@ export const KYMBasiccoopDetails = () => {
       })}
 
       <Button
+        id="addfamilyCoopButton"
         alignSelf="start"
         mt="s8"
         leftIcon={<Icon size="md" as={AiOutlinePlus} />}
@@ -421,6 +422,7 @@ export const FamilyMember = ({
         />
       </GridItem>
       <Button
+        id="findmemberButton"
         mt="23px"
         variant="outline"
         leftIcon={<Icon size="md" as={AiOutlineSearch} />}
