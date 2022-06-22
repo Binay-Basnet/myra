@@ -1,4 +1,4 @@
-const ne = {
+const ne: Record<string, string> = {
   home: 'गृहपृष्ठ',
   dashboard: 'ड्यासबोर्ड',
   yes: 'Yes',
@@ -441,6 +441,21 @@ const ne = {
   settingsKymIndFormIndividual: 'KYM Form - Individual',
   settingsKymIndSettingsChange:
     'Settings to change options and fields in KYM form for individuals',
+
+  // MEMBER SETTINGS INSTITUTION
+  settingsKymInsForm: 'KYM Form - Institutional',
+  settingsKymInsSettingsChange:
+    'Settings to change options and fields in KYM form for institutions',
+
+  // MEMBER SETTINGS COOPERATIVE UNION
+  settingsKymCoopUnionForm: 'KYM Form - Cooperative Union',
+  settingsKymCoopUnionSettingsChange:
+    'Settings to change options and fields in KYM form for Cooperative Union',
+
+  // MEMBER SETTINGS COOPERATIVE
+  settingsKymCoopForm: 'KYM Form - Cooperative',
+  settingsKymCoopSettingsChange:
+    'Settings to change options and fields in KYM form for Cooperativ',
 
   settingsKymInstMembers: 'Members',
   settingsKymCoopMembers: 'Members',

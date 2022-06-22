@@ -55,7 +55,7 @@ export function Modal(props: ModalProps) {
         <ModalBody>{children}</ModalBody>
         {/* <Divider /> */}
         {footerPrimary1Props ||
-          footerPrimary1Props ||
+          footerPrimary2Props ||
           (footerSecondaryProps && (
             <ModalFooter>
               {footerSecondaryProps && (

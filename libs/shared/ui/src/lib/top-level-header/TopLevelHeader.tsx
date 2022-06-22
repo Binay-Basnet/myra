@@ -366,7 +366,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           Language
                         </Text>
                         <SwitchTabs
-                          value={router.locale}
+                          value={router?.locale}
                           options={languageList}
                           onChange={(value) => {
                             router.push(`/${router.asPath}`, undefined, {

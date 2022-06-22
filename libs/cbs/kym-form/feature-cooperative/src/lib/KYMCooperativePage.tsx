@@ -225,6 +225,7 @@ export function KYMCooperativePage() {
               bottom="0"
               position="fixed"
               boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
+              zIndex={10}
             >
               <Text>Form Details saved to draft</Text>
               <Box

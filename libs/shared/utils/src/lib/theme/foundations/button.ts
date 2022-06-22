@@ -50,10 +50,10 @@ const variantGhost: SystemStyleFunction = (props) => {
     bg: 'transparent',
     // bg: 'gray.200',
     _hover: {
-      bg: mode(`${c}.200`, darkHoverBg)(props),
+      bg: 'gray.200',
     },
     _active: {
-      bg: mode(`${c}.300`, darkActiveBg)(props),
+      bg: 'gray.200',
     },
   };
 };
@@ -66,9 +66,15 @@ const variantOutline: SystemStyleFunction = (props) => {
     // bg: 'none',
 
     border: '1px solid',
-    borderColor: c === 'gray' ? borderColor : 'currentColor',
-    ...variantGhost(props),
+    borderColor: c === 'gray' ? borderColor : `${c}.500`,
+    color: c === 'gray' ? 'gray.500' : `${c}.500`,
+
     _hover: {
+      bg: 'none',
+      borderColor: c === 'gray' ? borderColor : `${c}.700`,
+      color: c === 'gray' ? 'gray.500' : `${c}.700`,
+    },
+    _active: {
       bg: 'none',
     },
   };

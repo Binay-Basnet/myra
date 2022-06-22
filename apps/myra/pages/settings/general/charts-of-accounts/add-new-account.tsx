@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import { FormControl } from '@chakra-ui/react';
 
+import { SettingsLayout } from '@coop/cbs/settings/ui-layout';
 import { KymIndMemberInput } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import {
@@ -21,7 +22,6 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import SettingsFormLayout from '../../../../components/SettingsLayout/SettingsFormLayout';
 
 const AddNewAccount = () => {
   const { t } = useTranslation();
@@ -52,7 +52,7 @@ const AddNewAccount = () => {
         minW="container.xl"
         height="fit-content"
         p="0"
-        pb="55px"
+        pb="120px"
         background="white"
       >
         <FormProvider {...methods}>
@@ -64,6 +64,10 @@ const AddNewAccount = () => {
               alignItems={'center'}
               px="5"
               borderBottom="1px solid #E6E6E6"
+              position="sticky"
+              bg="white"
+              zIndex="10"
+              top="110px"
             >
               <Text fontSize="r2" fontWeight="600">
                 {t['settingsCoaAddNewAccount']}
@@ -88,11 +92,7 @@ const AddNewAccount = () => {
               borderBottom="1px solid #E6E6E6"
               borderTopRadius={5}
             >
-              <Grid
-                gap={5}
-                templateRows="repeat(2, 1fr)"
-                templateColumns="repeat(3,1fr)"
-              >
+              <Grid gap={5} templateColumns="repeat(3,1fr)">
                 <GridItem colSpan={2}>
                   <FormInput
                     type="text"
@@ -101,7 +101,6 @@ const AddNewAccount = () => {
                     placeholder={t['settingsCoaEnterAccountName']}
                   />
                 </GridItem>
-
                 <GridItem>
                   <TextInput
                     id="accountName"
@@ -380,32 +379,44 @@ const AddNewAccount = () => {
         </FormProvider>
       </Container>
 
-      {/* <Container minW="container.xl" height="fit-content" p="0">
-        <Box
-          bottom={0}
-          bg="gray.0"
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          px="s20"
-          py="s16"
-          boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
-          
-        >
-          <Text
-            alignSelf="center"
-            color="gray.600"
-            fontWeight="Regular"
-            fontSize="r1"
+      <Box
+        position={'relative'}
+        display="flex"
+        justifyContent={'center'}
+        alignItems={'center'}
+        bottom={'0'}
+        w="100%"
+        zIndex={10}
+        height="fit-content"
+        // bottom={0}
+      >
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container
+            minW="container.xl"
+            display="flex"
+            height="60px"
+            justifyContent="space-between"
+            alignItems="center"
+            background="white"
+            borderTopLeftRadius="br3"
+            borderTopRightRadius="br3"
+            px="5"
+            borderTop="3px solid #E0E5EB"
           >
-            Form details saved to draft 09:41 AM
-          </Text>
-
-          <Button onClick={() => router.push('/members/list')}>
-            Save Account
-          </Button>
+            <Text color="gray.500" fontSize="s3" fontWeight={'400'}>
+              Form details saved to draft 09:41 AM
+            </Text>
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="flex-end"
+              alignSelf="center"
+            >
+              <Button>Save Account</Button>
+            </Box>
+          </Container>
         </Box>
-      </Container> */}
+      </Box>
     </>
   );
 };
@@ -413,5 +424,5 @@ const AddNewAccount = () => {
 export default AddNewAccount;
 
 AddNewAccount.getLayout = function getLayout(page) {
-  return <SettingsFormLayout>{page}</SettingsFormLayout>;
+  return <SettingsLayout>{page}</SettingsLayout>;
 };

@@ -78,7 +78,7 @@ export function TabMenu() {
   const currentIndex =
     NAVBAR_TAB_OBJECT[
       Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
-        router.pathname.includes(string)
+        router?.pathname.includes(string)
       ) ?? '/dashboard'
     ];
 
@@ -95,7 +95,7 @@ export function TabMenu() {
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
         <TabList border="none" height="100%">
           {demotabs.map(({ title, icon, link }, index) => {
-            const isActive = router.asPath.includes(title.toLowerCase());
+            const isActive = router?.asPath.includes(title.toLowerCase());
             return (
               <Link href={link} key={index}>
                 <Tab

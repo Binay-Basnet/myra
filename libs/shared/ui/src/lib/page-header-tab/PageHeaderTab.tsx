@@ -1,7 +1,7 @@
-import { chakra, Tab, TabList, Tabs } from '@chakra-ui/react';
-import { en } from '@coop/shared/utils';
-import { useTranslation } from '@coop/shared/utils';
 import { useRouter } from 'next/router';
+import { chakra, Tab, TabList, Tabs } from '@chakra-ui/react';
+
+import { en, useTranslation } from '@coop/shared/utils';
 
 const TabElement = chakra(Tab, {
   baseStyle: {
@@ -23,7 +23,7 @@ const TabElement = chakra(Tab, {
   },
 });
 
-export const TabRow = ({
+export const PageHeaderTab = ({
   list,
 }: {
   list: {
@@ -61,3 +61,5 @@ export const TabRow = ({
     </Tabs>
   );
 };
+
+export default PageHeaderTab;

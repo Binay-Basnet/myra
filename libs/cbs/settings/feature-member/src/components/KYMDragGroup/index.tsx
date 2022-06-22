@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -11,7 +11,6 @@ import { Skeleton } from '@chakra-ui/react';
 import { debounce } from 'lodash';
 
 import {
-  Field_Types,
   KymOption,
   useAddFileSizeMutation,
   useAddKymOptionMutation,
@@ -41,7 +40,9 @@ export const KYMDragGroup = ({
   fieldName,
   isExpanded,
 }: IKYMDraggableItemProps) => {
-  const [fieldItems, setFieldItems] = useState<KymOption[]>([]);
+  const id = useId();
+
+  const [fieldItems, setFieldItems] = useState<Partial<KymOption>[]>([]);
   const [hasOtherField, setHasOtherField] = useState(false);
 
   const { mutateAsync: kymOptionDelete } = useDeleteKymFieldMutation();
@@ -87,11 +88,13 @@ export const KYMDragGroup = ({
     if (result.destination) {
       items.splice(result.destination.index, 0, reorderedItem);
       setFieldItems(items);
-      await kymOptionArrange({
-        optionId: reorderedItem.id,
-        from: result.source.index,
-        to: result.destination.index,
-      });
+      if (reorderedItem.id) {
+        await kymOptionArrange({
+          optionId: reorderedItem.id,
+          from: result.source.index,
+          to: result.destination.index,
+        });
+      }
     }
   };
 
@@ -118,11 +121,7 @@ export const KYMDragGroup = ({
               >
                 {fieldItems.map((item, index) => {
                   return field ? (
-                    <Draggable
-                      key={item.id}
-                      draggableId={item.id}
-                      index={index}
-                    >
+                    <Draggable key={item.id} draggableId={id} index={index}>
                       {(provided) => (
                         <Box
                           display={'flex'}
@@ -133,6 +132,7 @@ export const KYMDragGroup = ({
                           {...provided.draggableProps}
                         >
                           <KYMSingleItem
+                            setFieldItems={setFieldItems}
                             field={field}
                             item={item}
                             dragHandleProps={provided.dragHandleProps}
@@ -144,9 +144,11 @@ export const KYMDragGroup = ({
                                   (fieldItem) => fieldItem.id !== item.id
                                 )
                               );
-                              await kymOptionDelete({
-                                optionId: item.id,
-                              });
+                              if (item.id) {
+                                await kymOptionDelete({
+                                  optionId: item.id,
+                                });
+                              }
                             }}
                             as={IoClose}
                             size="md"
@@ -196,15 +198,23 @@ export const KYMDragGroup = ({
             size={'md'}
             shade="primary"
             leftIcon={<AddIcon />}
-            onClick={async () => {
-              field &&
-                (await mutateAsync({
-                  fieldId: field.id,
+            onClick={() => {
+              setFieldItems((prev) => [
+                ...prev,
+                {
+                  enabled: true,
                   optionName: '',
-                  optionEnabled: true,
-                  optionFieldType:
-                    field.fieldType === 'GROUP' ? Field_Types.TextInput : null,
-                }));
+                },
+              ]);
+
+              // field &&
+              //   (await mutateAsync({
+              //     fieldId: field.id,
+              //     optionName: '',
+              //     optionEnabled: true,
+              //     optionFieldType:
+              //       field.fieldType === 'GROUP' ? Field_Types.TextInput : null,
+              //   }));
             }}
             _hover={{ bg: 'transparent' }}
           >
