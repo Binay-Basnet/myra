@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
+import format from 'date-fns/format';
+
 import { useGetShareHistoryQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
-import format from 'date-fns/format';
 // import { amountConverter } from '../../../../../util/src/utilFunctions/amountFunc';
 
 type shareHistoryProps = {
@@ -9,7 +10,7 @@ type shareHistoryProps = {
 };
 
 export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
-  const { data: shareHistoryTableData, isLoading } = useGetShareHistoryQuery({
+  const { data: shareHistoryTableData, isFetching } = useGetShareHistoryQuery({
     memberId: id,
   });
   const data = shareHistoryTableData?.share?.register?.edges;
@@ -99,7 +100,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
     <Table
       isStatic={true}
       size="compact"
-      isLoading={isLoading}
+      isLoading={isFetching}
       data={rowData ?? []}
       columns={columns}
       showFooters={true}

@@ -1,14 +1,15 @@
 import { useMemo } from 'react';
+import format from 'date-fns/format';
+
 import { useGetShareHistoryQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
-import format from 'date-fns/format';
 
 type memberIdProp = {
   id: string;
 };
 
 export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
-  const { data, isLoading } = useGetShareHistoryQuery({ memberId: id });
+  const { data, isFetching } = useGetShareHistoryQuery({ memberId: id });
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -94,7 +95,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
   return (
     <Table
       isStatic={true}
-      isLoading={isLoading}
+      isLoading={isFetching}
       data={rowData ?? []}
       columns={columns}
       showFooters={true}
