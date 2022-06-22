@@ -2,8 +2,10 @@ import { useMemo } from 'react';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
 import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 export const IncomeDetails = ({ watch }: any) => {
+  const { t } = useTranslation();
   //   const cashEquivalent = watch('cashAndCashEquivalent');
   //   const bank = watch('bank');
   //   const investments = watch('investments');
@@ -81,7 +83,7 @@ export const IncomeDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Income Details
+            {t['kymCoopUnionIncIncomeDetails']}
           </Text>
         </GridItem>
 
@@ -92,7 +94,7 @@ export const IncomeDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Amount
+            {t['kymCoopUnionIncAmount']}
           </Text>
         </GridItem>
       </Grid>
@@ -112,7 +114,7 @@ export const IncomeDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Income from financial investment
+            {t['kymCoopUnionIncIncomeFromFinancialInvestment']}
           </Text>
         </GridItem>
         <GridItem>
@@ -138,7 +140,7 @@ export const IncomeDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Income from non financial investment
+            {t['kymCoopUnionIncIncomeFromNonFinancialInvestment']}
           </Text>
         </GridItem>
         <GridItem>
@@ -164,7 +166,7 @@ export const IncomeDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Income from investment
+            {t['kymCoopUnionIncIncomeFromInvestment']}
           </Text>
         </GridItem>
 
@@ -191,7 +193,7 @@ export const IncomeDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Income from service operations
+            {t['kymCoopUnionIncIncomeFromServiceOperations']}
           </Text>
         </GridItem>
         <GridItem>
@@ -217,7 +219,7 @@ export const IncomeDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Income from sales
+            {t['kymCoopUnionIncIncomeFromSales']}
           </Text>
         </GridItem>
 
@@ -244,7 +246,7 @@ export const IncomeDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Other income
+            {t['kymCoopUnionIncOtherIncome']}
           </Text>
         </GridItem>
         <GridItem>
@@ -271,7 +273,7 @@ export const IncomeDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Miscellanous income
+            {t['kymCoopUnionIncMiscellanousIncome']}
           </Text>
         </GridItem>
         <GridItem>
@@ -300,7 +302,7 @@ export const IncomeDetails = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Total
+            {t['kymCoopUnionIncTotal']}
           </Text>
         </GridItem>
 
@@ -314,7 +316,7 @@ export const IncomeDetails = ({ watch }: any) => {
             type="text"
             name="totalIncome"
             value={totalIncome}
-            placeholder="Total income"
+            placeholder={t['kymCoopUnionIncTotalIncome']}
           />
         </GridItem>
       </Grid>

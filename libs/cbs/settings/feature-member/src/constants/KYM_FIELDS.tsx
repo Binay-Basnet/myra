@@ -109,7 +109,7 @@ export const KYM_FIELDS: FieldType[] = [
         key: 'other_cooperative_details',
       },
       {
-        label: 'settingsMemberFinancialTransactionDetailss',
+        label: 'settingsMemberFinancialTransactionDetails',
         key: 'financial_transaction_details',
       },
     ],

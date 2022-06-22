@@ -21,23 +21,23 @@ export const CoaAccountListTable = () => {
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
-        Header: t['settingsCoaAccountCode'],
+        Header: t['settingsCoaTableAccountCode'],
         accessor: 'id',
         maxWidth: 4,
       },
       {
-        Header: t['settingsCoaAccountGroup'],
+        Header: t['settingsCoaTableAccountName'],
         accessor: 'firstName',
         width: '80%',
       },
       {
-        Header: t['settingsCoaAccountType'],
+        Header: t['settingsCoaTableAccountClass'],
         accessor: 'title',
         width: '40%',
       },
 
       {
-        Header: t['settingsCoaAccountParentGroup'],
+        Header: t['settingsCoaTableAccountParentGroup'],
         accessor: 'gender',
         width: '40%',
       },

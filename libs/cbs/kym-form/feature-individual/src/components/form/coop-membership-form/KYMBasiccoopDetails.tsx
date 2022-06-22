@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import { BsFillTelephoneFill } from 'react-icons/bs';
@@ -11,7 +11,13 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import {
+  FormInput,
+  FormRadioGroup,
+  FormSelect,
+  FormSwitchTab,
+} from '@coop/shared/form';
 import {
   Avatar,
   Box,
@@ -20,11 +26,11 @@ import {
   GridItem,
   Icon,
   Input,
-  RadioGroup,
-  Select,
   Text,
   TextFields,
 } from '@coop/shared/ui';
+
+import { getFieldOption } from '../../../utils/getFieldOption';
 
 const booleanList = [
   {
@@ -37,8 +43,18 @@ const booleanList = [
   },
 ];
 
-export const KYMBasiccoopDetails = ({ control }: any) => {
-  const { watch } = useFormContext();
+export const KYMBasiccoopDetails = () => {
+  const { watch, control } = useFormContext();
+
+  const { data: purposeData, isLoading: purposeLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'purpose_of_becoming_member',
+    });
+
+  const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'family_relationship',
+    });
 
   const {
     fields: familyMemberFields,
@@ -48,33 +64,50 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
     control,
     name: 'familyMemberInThisCooperative',
   });
-  const [activeTab, setActiveTab] = useState(0);
 
   const w = watch('memberOfAnotherCooperative');
 
   return (
     <GroupContainer>
-      <Text
-        fontWeight="Regular"
-        fontSize="s3"
-        color="neutralColorLight.gray-80"
-      >
-        Member Identity Level
-      </Text>
-      <RadioGroup radioList={['General', 'Mid', 'Vip']} labelFontSize="s3" />
+      <Box>
+        <Text
+          fontWeight="Regular"
+          fontSize="s3"
+          color="neutralColorLight.gray-80"
+          pb="s16"
+        >
+          Member Identity Level
+        </Text>
+        <FormRadioGroup
+          name="memberIdentityLevel"
+          options={[
+            {
+              label: 'General',
+              value: 'general',
+            },
+            {
+              label: 'MID',
+              value: 'mid',
+            },
+            {
+              label: 'VIP',
+              value: 'vip',
+            },
+          ]}
+          labelFontSize="s3"
+        />
+      </Box>
+
       <InputGroupContainer
         id="Main Purpose of Becoming a Member"
         scrollMarginTop={'200px'}
       >
         <FormSelect
-          control={control}
           name="purposeId"
           label="Main purpose of becoming a member"
           placeholder="Select purpose of becoming a member"
-          options={[
-            { label: 'Fun', value: 'fun' },
-            { label: 'For Interest', value: 'interest' },
-          ]}
+          isLoading={purposeLoading}
+          options={getFieldOption(purposeData)}
         />
       </InputGroupContainer>
       <Box
@@ -91,36 +124,19 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
         />
 
         <Box display="flex" flexDirection="column" gap="s4">
-          <TextFields variant="formLabel">Membership Details</TextFields>
           <InputGroupContainer>
             <GridItem colSpan={2}>
-              <Controller
-                control={control}
+              <FormInput
+                label="Membership Details"
                 name="nameAddressCooperative"
-                render={({ field: { onChange } }) => (
-                  <Input
-                    type="text"
-                    placeholder="Name and Address Cooperative"
-                    onChange={onChange}
-                    bg="white"
-                    id="nameAddressCooperative"
-                  />
-                )}
+                placeholder="Name and Address Cooperative"
               />
             </GridItem>
             <GridItem colSpan={1}>
-              <Controller
-                control={control}
+              <FormInput
+                label="&nbsp;"
                 name="memberNo"
-                render={({ field: { onChange } }) => (
-                  <Input
-                    type="text"
-                    placeholder="Member No"
-                    onChange={onChange}
-                    bg="white"
-                    id="memberNo"
-                  />
-                )}
+                placeholder="Member No"
               />
             </GridItem>
           </InputGroupContainer>
@@ -307,22 +323,12 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
             </GridItem>
           </Grid>
           <Box px="s16" py="s32" w="50%">
-            <Text fontSize={'s3'} fontWeight="Medium" color="gray.700">
-              Relationship
-            </Text>
-            <Controller
-              control={control}
+            <FormSelect
               name={`familyMemberInThisCooperative.relationshipId`}
-              render={({ field: { onChange } }) => (
-                <Select
-                  onChange={onChange}
-                  placeholder="Relationship"
-                  options={[
-                    { label: 'Mother', value: 'mother' },
-                    { label: 'Father', value: 'father' },
-                  ]}
-                />
-              )}
+              label="Relationship"
+              placeholder="Select Relationship"
+              isLoading={familyRelationshipLoading}
+              options={getFieldOption(familyRelationShipData)}
             />
           </Box>
         </Box>
@@ -341,6 +347,7 @@ export const KYMBasiccoopDetails = ({ control }: any) => {
       })}
 
       <Button
+        id="addfamilyCoopButton"
         alignSelf="start"
         mt="s8"
         leftIcon={<Icon size="md" as={AiOutlinePlus} />}
@@ -415,6 +422,7 @@ export const FamilyMember = ({
         />
       </GridItem>
       <Button
+        id="findmemberButton"
         mt="23px"
         variant="outline"
         leftIcon={<Icon size="md" as={AiOutlineSearch} />}

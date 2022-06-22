@@ -13,9 +13,13 @@ const basicInfo = [
 const contact = ['phoneNumber', 'mobileNumber', 'email'];
 
 const profession = ['profession'];
-const mainOccupation = ['mainOccupation'];
-const spouceOccupation = ['spouseOccupation'];
-const incomeSource = ['incomeSourceDetails', 'incomeSourceDetails'];
+const mainOccupation = ['mainOccupation', 'mainOccupationButton'];
+const spouceOccupation = ['spouseOccupation', 'spouseOccupationButton'];
+const incomeSource = [
+  'incomeSourceDetails',
+  'incomeSourceDetails',
+  'incomeSourceDetailsButton',
+];
 const identificationDetails = [
   'identificationDetailsPersonal',
   'citizenshipNo',
@@ -46,14 +50,22 @@ const temporaryAddress = [
   'temporaryTole',
 ];
 const incaseRented = ['landlordName', 'landlordContact'];
-const familyDetails = ['maritalStatus', 'familyDetails'];
+const familyDetails = [
+  'maritalStatus',
+  'familyDetails',
+  'addFamilyMemberButton',
+];
 const COOPmembership = ['purposeId'];
 const anotherCoop = [
   'memberOfAnotherCooperative',
   'nameAddressCooperative',
   'memberNo',
 ];
-const familyInCoop = ['familyMemberInThisInstitution'];
+const familyInCoop = [
+  'familyMemberInThisInstitution',
+  'addfamilyCoopButton',
+  'findmemberButton',
+];
 const FinancialTransaction = ['share', 'savings', 'loan', 'other'];
 const estimatedWithdrawal = [
   'estimatedAnnualAccountTransactionAmount',

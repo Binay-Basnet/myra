@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { GrClose } from 'react-icons/gr';
+import router from 'next/router';
+
 import { FormInput } from '@coop/shared/form';
 import {
   Box,
@@ -10,7 +12,6 @@ import {
   MainLayout,
   Text,
 } from '@coop/shared/ui';
-import router from 'next/router';
 
 const AddNewAccount = () => {
   const methods = useForm();

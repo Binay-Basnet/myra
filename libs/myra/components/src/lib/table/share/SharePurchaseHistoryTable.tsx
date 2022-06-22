@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { useGetShareHistoryQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import format from 'date-fns/format';
+import { useRouter } from 'next/router';
+import { useTranslation } from '@coop/shared/utils';
 // import { amountConverter } from '../../../../../util/src/utilFunctions/amountFunc';
 
 type shareHistoryProps = {
@@ -9,6 +11,8 @@ type shareHistoryProps = {
 };
 
 export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
+  const router = useRouter();
+  const { t } = useTranslation();
   const { data: shareHistoryTableData, isLoading } = useGetShareHistoryQuery({
     memberId: id,
   });
@@ -18,7 +22,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'SN',
+        Header: t['sn'],
         accessor: 'node.id',
         width: '2',
         Cell: ({ row }) => {
@@ -27,7 +31,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       },
 
       {
-        Header: 'Date',
+        Header: t['sharePurchaseTableDate'],
         accessor: 'node.transactionDate',
         Cell: ({ value }) => {
           return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
@@ -35,7 +39,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       },
 
       {
-        Header: 'Share Number',
+        Header: t['sharePurchaseTableShareNumber'],
         accessor: 'node.shareStartNumber',
 
         Cell: ({ value, row }) => {
@@ -49,7 +53,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
 
       {
         id: 'share-dr',
-        Header: 'Share Dr',
+        Header: t['sharePurchaseTableShareDr'],
         accessor: 'node.shareDr',
         isNumeric: true,
 
@@ -61,7 +65,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       },
       {
         id: 'share-cr',
-        Header: 'Share Cr',
+        Header: t['sharePurchaseTableShareCr'],
         isNumeric: true,
         accessor: 'node.shareCr',
         Cell: ({ value, row }) => {
@@ -71,7 +75,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         },
       },
       {
-        Header: 'Balance',
+        Header: t['sharePurchaseTableBalance'],
         accessor: 'node.balance',
         isNumeric: true,
         Cell: ({ value }) => {
@@ -92,7 +96,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         },
       },
     ],
-    []
+    [router.locale]
   );
 
   return (

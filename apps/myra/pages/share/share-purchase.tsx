@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { IoSearch } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -15,6 +16,7 @@ import {
   Container,
   Grid,
   GridItem,
+  Icon,
   MainLayout,
   Navbar,
   Select,
@@ -22,6 +24,7 @@ import {
   TabMenu,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 // TODO! use layout
 const Header = () => {
@@ -33,17 +36,18 @@ const Header = () => {
   );
 };
 
-const accountList = [
-  { label: 'Bank Voucher', value: Payment_Mode.BankVoucher },
-  { label: 'Account', value: Payment_Mode.Account },
-  { label: 'Cash', value: Payment_Mode.Cash },
-];
-
 const SharePurchase = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { mutate } = useSetSharePurchaseMutation();
   const methods = useForm<SharePurchaseInput>();
   const { getValues, watch } = methods;
+
+  const accountList = [
+    { label: t['sharePurchaseBankVoucher'], value: Payment_Mode.BankVoucher },
+    { label: t['sharePurchaseAccount'], value: Payment_Mode.Account },
+    { label: t['sharePurchaseCash'], value: Payment_Mode.Cash },
+  ];
 
   const memberIdQuery = watch('memberId');
   const noOfShares = watch('shareCount');
@@ -60,10 +64,6 @@ const SharePurchase = () => {
   //
   // const data = memberData?.members?.individual?.get?.data?.member;
 
-  const switchTabsFxn = (datas: Payment_Mode) => {
-    setSelectedPaymentMode(datas);
-  };
-
   const submitForm = () => {
     const formData = {
       ...getValues(),
@@ -71,6 +71,8 @@ const SharePurchase = () => {
     };
     mutate({ id: '12', data: formData });
   };
+
+  console.log(selectedPaymentMode);
 
   return (
     <FormProvider {...methods}>
@@ -95,7 +97,7 @@ const SharePurchase = () => {
             borderBottom="1px solid #E6E6E6"
           >
             <Text fontSize="r2" fontWeight="600">
-              New Share Purchase
+              {t['sharePurchaseNewSharePurchase']}
             </Text>
             <CloseIcon cursor="pointer" onClick={() => router.back()} />
           </Box>
@@ -104,9 +106,12 @@ const SharePurchase = () => {
               <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
                 <Box w="50%">
                   <FormSelect
+                    // rightElement={
+                    //   <Icon as={IoSearch} color="gray.500" fontSize={'s3'} />
+                    // }
                     name="memberId"
-                    label="Select Member"
-                    placeholder="Enter Member ID"
+                    label={t['sharePurchaseSelectMember']}
+                    placeholder={t['sharePurchaseEnterMemberID']}
                     options={[
                       {
                         label: '123',
@@ -164,7 +169,7 @@ const SharePurchase = () => {
                               fontSize="s3"
                               fontWeight="Regular"
                             >
-                              ID:
+                              {t['sharePurchaseID']}:
                               {data?.personalInformation?.panNumber}
                             </Text>
 
@@ -173,7 +178,7 @@ const SharePurchase = () => {
                               fontWeight="Regular"
                               fontSize="s3"
                             >
-                              Member Since:
+                              {t['sharePurchaseMemberSince']}:
                               {data?.personalInformation?.dateOfBirth}
                             </Text>
 
@@ -182,7 +187,7 @@ const SharePurchase = () => {
                               fontWeight="Regular"
                               fontSize="s3"
                             >
-                              Branch:
+                              {t['sharePurchaseBranch']}:
                               {data?.address?.temporary?.state}
                             </Text>
                           </Box>
@@ -252,7 +257,7 @@ const SharePurchase = () => {
                             fontSize="s2"
                             mr="5px"
                           >
-                            View Profile
+                             {t['sharePurchaseViewProfile']}
                           </Text>
                           <Icon
                             size="sm"
@@ -270,7 +275,7 @@ const SharePurchase = () => {
                         fontSize="r1"
                         ml="s24"
                       >
-                        Share History
+                         {t['sharePurchaseShareHistory']}
                       </Text>
                       <SharePurchaseHistoryTable id={memberIdQuery} />
                     </Box>
@@ -292,7 +297,7 @@ const SharePurchase = () => {
                   fontSize="r1"
                   color="neutralColorLight.Gray-60"
                 >
-                  Share Information
+                  {t['sharePurchaseShareInformation']}
                 </Text>
 
                 <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
@@ -300,8 +305,8 @@ const SharePurchase = () => {
                     <FormInput
                       id="noOfShares"
                       name="shareCount"
-                      label="No of Shares"
-                      placeholder="No of Shares"
+                      label={t['sharePurchaseNoOfShares']}
+                      placeholder={t['sharePurchaseNoOfShares']}
                     />
                   </GridItem>
 
@@ -321,7 +326,7 @@ const SharePurchase = () => {
                                 fontWeight="Medium"
                                 fontSize="s3"
                               >
-                                Share Amount
+                                {t['sharePurchaseShareAmount']}
                               </Text>
 
                               <Text
@@ -347,7 +352,7 @@ const SharePurchase = () => {
                                 display="flex"
                                 alignItems="center"
                               >
-                                Administration Fees
+                                {t['sharePurchaseAdministrationFees']}
                               </Text>
                               <FormInput
                                 name="extraFee"
@@ -372,7 +377,7 @@ const SharePurchase = () => {
                                 display="flex"
                                 alignItems="center"
                               >
-                                Printing Fees
+                                {t['sharePurchasePrintingFees']}
                               </Text>
                               <FormInput
                                 name="extraFee"
@@ -395,7 +400,7 @@ const SharePurchase = () => {
                                 fontWeight="SemiBold"
                                 fontSize="s3"
                               >
-                                Total Amount
+                                {t['sharePurchaseTotalAmount']}
                               </Text>
 
                               <Text
@@ -403,7 +408,7 @@ const SharePurchase = () => {
                                 fontWeight="SemiBold"
                                 fontSize="r1"
                               >
-                                Rs.{' '}
+                                {t['rs']}{' '}
                                 {noOfShares * 1000 + adminFees + printingFees}
                               </Text>
                             </Box>
@@ -422,7 +427,7 @@ const SharePurchase = () => {
                   fontWeight="600"
                   mb="8px"
                 >
-                  Payment Information
+                  {t['sharePurchasePaymentInformation']}
                 </Text>
                 <Text
                   color="neutralColorLight.Gray-80"
@@ -430,25 +435,24 @@ const SharePurchase = () => {
                   fontWeight="500"
                   mb="s16"
                 >
-                  Payment Mode
+                  {t['sharePurchasePaymentMode']}
                 </Text>
 
                 <SwitchTabs
                   // TODO ( USE FORM SWITCH TAB)
-                  // name="paymentMode"
-
                   options={accountList.map((value) => ({
                     label: value.label,
                     value: value.value,
                   }))}
+                  onChange={(e: Payment_Mode) => setSelectedPaymentMode(e)}
                 />
 
-                {selectedPaymentMode === 'Account' && (
+                {selectedPaymentMode === Payment_Mode.Account && (
                   <Box mt="s16" mb="s16" w="25%">
                     <Select
                       name="accountId"
-                      label="Select Account"
-                      placeholder="Select Account"
+                      label={t['sharePurchaseSelectAccount']}
+                      placeholder={t['sharePurchaseSelectAccount']}
                       options={[
                         {
                           label: 'Option 1',
@@ -473,7 +477,7 @@ const SharePurchase = () => {
                       mt="s16"
                     >
                       <Text fontWeight="400" fontSize="s2">
-                        Available balance
+                        {t['sharePurchaseAvailableBalance']}
                       </Text>
                       <Text fontWeight="600" fontSize="r1">
                         Rs. 12,342
@@ -481,7 +485,7 @@ const SharePurchase = () => {
                     </Box>
                   </Box>
                 )}
-                {selectedPaymentMode === 'BankVoucher' && (
+                {selectedPaymentMode === Payment_Mode.BankVoucher && (
                   <Box
                     w="25%"
                     mt="s16"
@@ -492,8 +496,8 @@ const SharePurchase = () => {
                   >
                     <FormSelect
                       name="bankId"
-                      label="Select Bank"
-                      placeholder="Select Bank"
+                      label={t['sharePurchaseSelectBank']}
+                      placeholder={t['sharePurchaseSelectBank']}
                       options={[
                         {
                           label: 'Option 1',
@@ -514,20 +518,20 @@ const SharePurchase = () => {
                       <FormInput
                         type="text"
                         name="voucherNumber"
-                        placeholder="Enter Voucher Number"
-                        label="Enter Voucher Number"
+                        placeholder={t['sharePurchaseEnterVoucherNumber']}
+                        label={t['sharePurchaseEnterVoucherNumber']}
                       />
                     </Box>
                   </Box>
                 )}
 
-                {selectedPaymentMode === 'Cash' && (
+                {selectedPaymentMode === Payment_Mode.Cash && (
                   <Box mt="s16" w="25%">
                     <FormInput
                       type="text"
                       name="name"
-                      placeholder="Enter Cash Amount"
-                      label="Enter Cash Amount"
+                      placeholder={t['sharePurchaseEnterCashAmount']}
+                      label={t['sharePurchaseEnterCashAmount']}
                     />
                   </Box>
                 )}

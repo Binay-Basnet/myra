@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import {
   Avatar,
   Box,
@@ -10,10 +11,10 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
+
 import { useGetNewIdMutation } from '@coop/shared/data-access';
 import { Navbarfordaashboard } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-import { useRouter } from 'next/router';
 
 const data = [
   {

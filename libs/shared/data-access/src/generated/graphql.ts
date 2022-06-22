@@ -5134,6 +5134,18 @@ export type GetInventoryUnitOfMeasureQueryVariables = Exact<{ [key: string]: nev
 
 export type GetInventoryUnitOfMeasureQuery = { inventory: { unitOfMeasure?: { list?: { edges: Array<{ node: { name: string, shortName: string, acceptFraction: boolean } } | null> } | null } | null } };
 
+export type GetIndividualKymOptionQueryVariables = Exact<{
+  fieldName?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetIndividualKymOptionQuery = { members: { individual?: { options: { list?: { data?: Array<{ options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType?: Field_Types | null, enabled: boolean }> | null } | null> | null } | null } } | null } };
+
+export type GetIndIdentificationDocOptionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetIndIdentificationDocOptionQuery = { members: { individual?: { options: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType?: Field_Types | null, enabled: boolean }> | null } | null> | null } | null } } | null } };
+
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   first?: InputMaybe<Scalars['Int']>;
@@ -6065,6 +6077,72 @@ export const useGetInventoryUnitOfMeasureQuery = <
     useQuery<GetInventoryUnitOfMeasureQuery, TError, TData>(
       variables === undefined ? ['getInventoryUnitOfMeasure'] : ['getInventoryUnitOfMeasure', variables],
       useAxios<GetInventoryUnitOfMeasureQuery, GetInventoryUnitOfMeasureQueryVariables>(GetInventoryUnitOfMeasureDocument).bind(null, variables),
+      options
+    );
+export const GetIndividualKymOptionDocument = `
+    query getIndividualKYMOption($fieldName: String) {
+  members {
+    individual {
+      options {
+        list(filter: {name: $fieldName}) {
+          data {
+            options {
+              id
+              name
+              fieldType
+              enabled
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymOptionQuery = <
+      TData = GetIndividualKymOptionQuery,
+      TError = unknown
+    >(
+      variables?: GetIndividualKymOptionQueryVariables,
+      options?: UseQueryOptions<GetIndividualKymOptionQuery, TError, TData>
+    ) =>
+    useQuery<GetIndividualKymOptionQuery, TError, TData>(
+      variables === undefined ? ['getIndividualKYMOption'] : ['getIndividualKYMOption', variables],
+      useAxios<GetIndividualKymOptionQuery, GetIndividualKymOptionQueryVariables>(GetIndividualKymOptionDocument).bind(null, variables),
+      options
+    );
+export const GetIndIdentificationDocOptionDocument = `
+    query getIndIdentificationDocOption {
+  members {
+    individual {
+      options {
+        list(filter: {isIdentificationDoc: true}) {
+          data {
+            id
+            name
+            options {
+              id
+              name
+              fieldType
+              enabled
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndIdentificationDocOptionQuery = <
+      TData = GetIndIdentificationDocOptionQuery,
+      TError = unknown
+    >(
+      variables?: GetIndIdentificationDocOptionQueryVariables,
+      options?: UseQueryOptions<GetIndIdentificationDocOptionQuery, TError, TData>
+    ) =>
+    useQuery<GetIndIdentificationDocOptionQuery, TError, TData>(
+      variables === undefined ? ['getIndIdentificationDocOption'] : ['getIndIdentificationDocOption', variables],
+      useAxios<GetIndIdentificationDocOptionQuery, GetIndIdentificationDocOptionQueryVariables>(GetIndIdentificationDocOptionDocument).bind(null, variables),
       options
     );
 export const GetMemberListDocument = `

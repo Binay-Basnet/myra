@@ -16,12 +16,14 @@ import { BankAccountDetails } from './BankAccountDetails';
 import { ContactDetails } from './ContactDetails';
 import { InstituteBasicInfo } from './InstituteBasicInfo';
 import { RegisteredDetails } from './RegisteredDetails';
+import { useTranslation } from '@coop/shared/utils';
 
 interface interfaceInfoProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const InstituteInfo = (props: interfaceInfoProps) => {
+  const { t } = useTranslation();
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -47,7 +49,7 @@ export const InstituteInfo = (props: interfaceInfoProps) => {
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            1. Institution Information
+            {t.kymCoopUnionInstitutionInformation}
           </Text>
           <ContainerWithDivider>
             <InstituteBasicInfo />

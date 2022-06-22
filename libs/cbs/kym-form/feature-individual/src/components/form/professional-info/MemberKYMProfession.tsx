@@ -1,10 +1,12 @@
 import React from 'react';
-import { Control } from 'react-hook-form';
+import { Skeleton } from '@chakra-ui/react';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { KymIndProfessionalStatus } from '@coop/shared/data-access';
+import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
+
+import { getFieldOption } from '../../../utils/getFieldOption';
 
 const occupationDetails = [
   'Agriculture',
@@ -17,20 +19,26 @@ const occupationDetails = [
 ];
 
 export const MemberKYMProfession = () => {
+  const { data: occupationData, isLoading: occupationLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'occupation',
+    });
+
   return (
     <GroupContainer id="Profession" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         PROFESSION
       </Text>
 
-      <FormCheckboxGroup
-        name={'profession'}
-        showOther
-        list={occupationDetails.map((detail) => ({
-          label: detail,
-          value: detail,
-        }))}
-      />
+      {occupationLoading ? (
+        <Skeleton height="40px" />
+      ) : (
+        <FormCheckboxGroup
+          name={'profession'}
+          showOther
+          list={getFieldOption(occupationData)}
+        />
+      )}
     </GroupContainer>
   );
 };

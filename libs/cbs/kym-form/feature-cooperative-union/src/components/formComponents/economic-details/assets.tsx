@@ -6,8 +6,10 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymAssestsAndtarget = ({ watch }: any) => {
+  const { t } = useTranslation();
   const cashCurrent = watch('cashAndCashEquivalentCurrent');
   const cashCurrent2 = isNaN(cashCurrent) == true ? 0 : cashCurrent;
   const bankCurrent = watch('bankCurrent');
@@ -77,7 +79,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Assets
+            {t['kymCoopUnionEcoAssets']}
           </Text>
         </GridItem>
 
@@ -88,7 +90,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Current
+            {t['kymCoopUnionEcoCurrent']}
           </Text>
         </GridItem>
 
@@ -99,7 +101,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Target for next fiscal year
+            {t['kymCoopUnionEcoTarget']}
           </Text>
         </GridItem>
       </Grid>
@@ -119,7 +121,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Cash and cash equivalents
+            {t['kymCoopUnionEcoCashAndCashEquivalents']}
           </Text>
         </GridItem>
         <GridItem>
@@ -153,7 +155,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Bank
+            {t['kymCoopUnionEcoBank']}
           </Text>
         </GridItem>
         <GridItem>
@@ -187,7 +189,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Investments
+            {t['kymCoopUnionEcoInvestments']}
           </Text>
         </GridItem>
         <GridItem>
@@ -221,7 +223,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Loan (investment)
+            {t['kymCoopUnionEcoLoanInv']}
           </Text>
         </GridItem>
         <GridItem>
@@ -255,7 +257,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Non current assets
+            {t['kymCoopUnionEcoNonCurrentAssets']}
           </Text>
         </GridItem>
         <GridItem>
@@ -289,7 +291,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            other non current assets
+            {t['kymCoopUnionEcootherNonCurrentAssets']}
           </Text>
         </GridItem>
         <GridItem>
@@ -325,7 +327,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Total
+            {t['kymCoopUnionRepTotal']}
           </Text>
         </GridItem>
 
@@ -339,7 +341,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             type="text"
             name="totalAssetsCurrent"
             value={totalassestscurrent}
-            placeholder="Total assets"
+            placeholder={t['kymCoopUnionEcoTotalAssets']}
           />
         </GridItem>
         <GridItem>
@@ -352,7 +354,7 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
             type="text"
             name="totalAssetsTarget"
             value={totalassestsTARGET}
-            placeholder="Total "
+            placeholder={t['kymCoopUnionEcoTotal']}
           />
         </GridItem>
       </Grid>

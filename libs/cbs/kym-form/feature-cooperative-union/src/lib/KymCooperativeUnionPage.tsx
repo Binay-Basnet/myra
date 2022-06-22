@@ -87,7 +87,7 @@ export function KYMCooperativeUnionPage() {
             <Box background="white" ml={320} px="s20" pb="120px">
               <SectionContainer>
                 <Text fontSize="r3" fontWeight="600">
-                  1. Institution Information
+                  {t.kymCoopUnionInstitutionInformation}
                 </Text>
                 <InstituteInfo setSection={setSection} />
                 <DirectorDetails setSection={setSection} />
@@ -115,7 +115,7 @@ export function KYMCooperativeUnionPage() {
               px="5"
               boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
             >
-              <Text>Form Details saved to draft</Text>
+              <Text>{t['formDetails']}</Text>
               <Box
                 display="flex"
                 flexDirection="row"
@@ -136,12 +136,12 @@ export function KYMCooperativeUnionPage() {
                       fontSize="s2"
                       ml="5px"
                     >
-                      Save Draft
+                      {t['saveDraft']}
                     </Text>
                   </Button>
                 </Box>
                 &nbsp;
-                <Button>Next</Button>
+                <Button>{t['next']}</Button>
               </Box>
             </Box>
           </Container>

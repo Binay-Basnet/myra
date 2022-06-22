@@ -24,7 +24,7 @@ export const FormSelect = <T,>({
       control={formControl}
       name={name}
       render={({ field: { onChange, value } }) => {
-        const foundValue = options.find((option) => option.value === value);
+        const foundValue = options?.find((option) => option.value === value);
 
         return (
           <Select
