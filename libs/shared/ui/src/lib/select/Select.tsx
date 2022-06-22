@@ -43,7 +43,7 @@ export function Select({
         isMulti={isMulti}
         isClearable={false}
         hideSelectedOptions={false}
-        options={options.sort((a, b) =>
+        options={options?.sort((a, b) =>
           a.label.localeCompare(b.label, undefined, { numeric: true })
         )}
         chakraStyles={chakraStyles}

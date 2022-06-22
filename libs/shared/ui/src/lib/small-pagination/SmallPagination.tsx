@@ -1,6 +1,6 @@
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
-import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { Box } from '@chakra-ui/react';
 
 import Icon from '../icon/Icon';
 import IconButton from '../icon-button/IconButton';
@@ -22,7 +22,7 @@ export function SmallPagination({
 }: SmallPaginationProps) {
   const router = useRouter();
 
-  const page = Number(router.query['page'] ?? 1);
+  const page = Number(router?.query['page'] ?? 1);
 
   const lowerLimit = (Number(page) - 1) * limit + 1;
   const upperLimit = page * limit - Number(total) >= 0 ? total : page * limit;

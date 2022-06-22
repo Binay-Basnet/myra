@@ -1,5 +1,5 @@
-import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { Box } from '@chakra-ui/react';
 
 import Select from '../select/Select';
 import SmallPagination from '../small-pagination/SmallPagination';
@@ -24,7 +24,7 @@ export function Pagination({
   const router = useRouter();
 
   const pageSize = Number(
-    router.query['first'] ?? router.query['last'] ?? DEFAULT_PAGE_SIZE
+    router?.query['first'] ?? router?.query['last'] ?? DEFAULT_PAGE_SIZE
   );
 
   return (
@@ -71,7 +71,7 @@ export function Pagination({
                   });
                 }
               }}
-              options={pageSizeOptions.map((size) => ({
+              options={pageSizeOptions?.map((size) => ({
                 label: String(size),
                 value: size,
               }))}
