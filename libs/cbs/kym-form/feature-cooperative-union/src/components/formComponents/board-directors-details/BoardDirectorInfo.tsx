@@ -14,10 +14,6 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  KymIndMemberInput,
-  useAllAdministrationQuery,
-} from '@coop/shared/data-access';
-import {
   FormFileInput,
   FormInput,
   FormSelect,
