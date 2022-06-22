@@ -48,7 +48,7 @@ const AddNewAccount = () => {
         minW="container.xl"
         height="fit-content"
         p="0"
-        pb="55px"
+        pb="120px"
         background="white"
       >
         <FormProvider {...methods}>
@@ -65,9 +65,6 @@ const AddNewAccount = () => {
                 Add New Account
               </Text>
               <Box>
-                <Button mr="20px" onClick={() => router.push('/members/list')}>
-                  Save Account
-                </Button>
                 <CloseIcon
                   cursor="pointer"
                   onClick={() => router.back()}
@@ -84,11 +81,7 @@ const AddNewAccount = () => {
               borderBottom="1px solid #E6E6E6"
               borderTopRadius={5}
             >
-              <Grid
-                gap={5}
-                templateRows="repeat(2, 1fr)"
-                templateColumns="repeat(3,1fr)"
-              >
+              <Grid gap={5} templateColumns="repeat(3,1fr)">
                 <GridItem colSpan={2}>
                   <FormInput
                     type="text"
@@ -97,7 +90,6 @@ const AddNewAccount = () => {
                     placeholder="Enter Account Name"
                   />
                 </GridItem>
-
                 <GridItem>
                   <TextInput
                     id="accountName"
@@ -105,29 +97,25 @@ const AddNewAccount = () => {
                     placeholder="Staff Bonus Fund"
                   />
                 </GridItem>
+                <Select
+                  id="type"
+                  label="Account Type"
+                  options={[
+                    {
+                      label: 'Liabilities',
+                      value: 'Liabilities',
+                    },
+                    {
+                      label: 'Option 2',
+                      value: 'option-2',
+                    },
+                    {
+                      label: 'Option 3',
+                      value: 'option-3',
+                    },
+                  ]}
+                />
 
-                <GridItem>
-                  <FormControl>
-                    <Select
-                      id="type"
-                      label="Account Type"
-                      options={[
-                        {
-                          label: 'Liabilities',
-                          value: 'Liabilities',
-                        },
-                        {
-                          label: 'Option 2',
-                          value: 'option-2',
-                        },
-                        {
-                          label: 'Option 3',
-                          value: 'option-3',
-                        },
-                      ]}
-                    />
-                  </FormControl>
-                </GridItem>
                 <GridItem>
                   <FormControl>
                     <TextInput
@@ -376,17 +364,21 @@ const AddNewAccount = () => {
           </form>
         </FormProvider>
       </Container>
-      {/* <Box position="relative" margin="0px auto"> */}
+
       <Box
-        bottom="0"
-        position="fixed"
-        width="100%"
-        bg="gray.100"
+        position={'relative'}
+        display="flex"
+        justifyContent={'center'}
+        alignItems={'center'}
+        bottom={'0'}
+        w="100%"
         zIndex={10}
-        justifyContent="center"
+        height="fit-content"
+        // bottom={0}
       >
-        <Container minW="container.xl" height="fit-content">
-          <Box
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container
+            minW="container.xl"
             display="flex"
             height="60px"
             justifyContent="space-between"
@@ -395,21 +387,22 @@ const AddNewAccount = () => {
             borderTopLeftRadius="br3"
             borderTopRightRadius="br3"
             px="5"
-            boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
+            borderTop="3px solid #E0E5EB"
           >
-            <Text>Form Details saved to draft</Text>
+            <Text color="gray.500" fontSize="s3" fontWeight={'400'}>
+              Form details saved to draft 09:41 AM
+            </Text>
             <Box
               display="flex"
               flexDirection="row"
               justifyContent="flex-end"
               alignSelf="center"
             >
-              <Button>Save</Button>
+              <Button>Save Account</Button>
             </Box>
-          </Box>
-        </Container>
+          </Container>
+        </Box>
       </Box>
-      {/* </Box> */}
     </>
   );
 };
