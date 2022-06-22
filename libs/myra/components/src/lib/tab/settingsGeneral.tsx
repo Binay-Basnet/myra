@@ -1,6 +1,7 @@
-import {Box, Divider, Text} from '@chakra-ui/react';
+import { Box, Divider, Text } from '@chakra-ui/react';
 
-import {VerticalSideBar} from '../index';
+import { VerticalSideBar } from '../index';
+// TODO! ( REMOVE THIS COMPONENT )
 
 type TabList = {
   title: string;
@@ -53,8 +54,8 @@ export const SettingsGeneral = () => {
       <Text fontSize="r3" fontWeight="600">
         General
       </Text>
-      <Divider borderColor="border.layout"/>
-      <VerticalSideBar tablinks={tabList}/>
+      <Divider borderColor="border.layout" />
+      <VerticalSideBar tablinks={tabList} />
     </Box>
   );
 };

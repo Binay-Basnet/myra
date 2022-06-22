@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 import { Column, Table } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 type MemberData = {
   id: string;
@@ -14,26 +16,28 @@ type MemberData = {
 };
 
 export const CoaAccountListTable = () => {
+  const { t } = useTranslation();
+  const router = useRouter();
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
-        Header: 'Account Code',
+        Header: t['settingsCoaAccountCode'],
         accessor: 'id',
         maxWidth: 4,
       },
       {
-        Header: 'Account Group',
+        Header: t['settingsCoaAccountGroup'],
         accessor: 'firstName',
         width: '80%',
       },
       {
-        Header: 'Account Type',
+        Header: t['settingsCoaAccountType'],
         accessor: 'title',
         width: '40%',
       },
 
       {
-        Header: 'Parent Group',
+        Header: t['settingsCoaAccountParentGroup'],
         accessor: 'gender',
         width: '40%',
       },
@@ -49,7 +53,7 @@ export const CoaAccountListTable = () => {
         ),
       },
     ],
-    []
+    [router.locale]
   );
 
   return (

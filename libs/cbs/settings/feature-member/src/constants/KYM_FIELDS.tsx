@@ -11,131 +11,127 @@ interface FieldType {
 export const KYM_FIELDS: FieldType[] = [
   {
     key: 'personal_information',
-    label: 'Section 1: Personal Information',
+    label: 'settingsMemberSection1PersonalInformation',
     children: [
       {
         key: 'gender',
-        label: 'Gender',
+        label: 'settingsMemberGender',
       },
       {
         key: 'nationality',
-        label: 'Nationality',
+        label: 'settingsMemberNationality',
       },
       {
         key: 'education_qualification',
-        label: 'Education Qualification',
+        label: 'settingsMemberEducationQualification',
       },
       {
         key: 'religion',
-        label: 'Religion',
+        label: 'settingsMemberReligion',
       },
       {
         key: 'ethnicity',
-        label: 'Ethnicity',
+        label: 'settingsMemberEthnicity',
       },
       {
         key: 'contact_details',
-        label: 'Contact Details',
+        label: 'settingsMemberContactDetails',
       },
       {
         key: 'identification_documents',
-        label: 'Identification Documents',
+        label: 'settingsMemberIdentificationDocuments',
         children: [
           {
             key: 'citizenship',
-            label: 'Citizenship',
+            label: 'settingsMemberCitizenship',
           },
           {
             key: 'voter_id',
-            label: 'Voter Id',
+            label: 'settingsMemberVoterId',
           },
           {
             key: 'driving_license',
-            label: 'Driving License',
+            label: 'settingsMemberDrivingLicense',
           },
         ],
       },
       {
         key: 'marital_status',
-        label: 'Marital Status',
+        label: 'settingsMemberMaritalStatus',
       },
       {
         key: 'family_relationship',
-        label: 'Family Relationship',
+        label: 'settingsMemberFamilyRelationship',
       },
       {
         key: 'family_information',
-        label: 'Family Information',
+        label: 'settingsMemberFamilyInformation',
       },
     ],
   },
   {
     key: 'Professional Information',
-    label: 'Section 2: Professional Information',
+    label: 'settingsMemberSection2ProfessionalInformation',
     children: [
       {
-        label: 'Occupation',
+        label: 'settingsMemberOccupation',
         key: 'occupation',
       },
       {
-        label: 'Occupation Details',
+        label: 'settingsMemberOccupationDetails',
         key: 'occupation_details',
       },
       {
-        label: 'Family Income',
+        label: 'settingsMemberFamilyIncome',
         key: 'family_income',
       },
       {
-        label: 'Income Source Details',
+        label: 'settingsMemberIncomeSourceDetails',
         key: 'income_source_details',
         component: IncomeSourceDetailsAccComponent,
       },
       {
-        label: 'Estimated Annual Transaction',
+        label: 'settingsMemberEstimatedAnnualTransaction',
         key: 'est_annual_transaction',
       },
     ],
   },
   {
     key: 'Cooperative Member',
-    label: 'Section 3: Cooperative Member',
+    label: 'settingsMemberSection3CooperativeMember',
     children: [
       {
-        label: 'Purpose of becoming a member of this cooperative',
+        label: 'settingsMemberPurposeOfBecomingAMemberOfThisCooperative',
         key: 'purpose_of_becoming_member',
       },
       {
-        label: 'Other Cooperative Details',
+        label: 'settingsMemberOtherCooperativeDetails',
         key: 'other_cooperative_details',
       },
       {
-        label: 'Other Cooperative Details',
-        key: 'other_cooperative_details',
-      },
-      {
-        label: 'Financial Transaction Details',
+        label: 'settingsMemberFinancialTransactionDetails',
         key: 'financial_transaction_details',
       },
     ],
   },
   {
     key: 'declaration',
-    label: 'Section 4: Declaration',
+    label: 'settingsMemberSection4Declaration',
     children: [
       {
-        label: 'Next to Kin Information',
+        label: 'settingsMemberNextToKinInformation',
         key: 'next_to_kin',
       },
       {
-        label: 'Foreign Employment Options',
+        label: 'settingsMemberForeignEmploymentOptions',
         key: 'foreign_employment_options',
       },
       {
-        label: 'File Uploads',
+        label: 'settingsMemberFileUploads',
         key: 'file_uploads',
       },
       {
-        label: 'Declaration',
+        label: 'settingsMemberDeclaration',
         key: 'declaration',
         component: KYMDeclaration,
       },
@@ -143,6 +139,6 @@ export const KYM_FIELDS: FieldType[] = [
   },
   {
     key: 'custom',
-    label: 'Section 5: Custom Fields',
+    label: 'settingsMemberSection5CustomFields',
   },
 ];

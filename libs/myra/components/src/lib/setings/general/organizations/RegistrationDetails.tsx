@@ -1,28 +1,29 @@
 import { Control } from 'react-hook-form';
 import { Box, Grid, GridItem } from '@coop/shared/ui';
-
 import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type Props = {
   control: Control<any>;
 };
 
 export const RegistrationDetailsOrganization = ({ control }: Props) => {
+  const { t } = useTranslation();
   return (
     <Box>
       <Grid templateColumns="repeat(3, 1fr)" gap="s16">
         <GridItem colSpan={2}>
           <FormInput
-            label="Regd Office"
-            placeholder="Regd Office"
+            label={t['settingsOrgRegRegdOffice']}
+            placeholder={t['settingsOrgRegRegdOffice']}
             control={control}
             name="regOffice"
           />
         </GridItem>
         <GridItem>
           <FormInput
-            label="Regd No"
-            placeholder="Regd No"
+            label={t['settingsOrgRegRegdNo']}
+            placeholder={t['settingsOrgRegRegdNo']}
             control={control}
             name={'RegstrationNo'}
           />
@@ -30,8 +31,8 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
       </Grid>
       <Box mt="s16">
         <FormInput
-          label="Regd Address"
-          placeholder="Regd Address"
+          label={t['settingsOrgRegRegdAddress']}
+          placeholder={t['settingsOrgRegRegdAddress']}
           control={control}
           name="regAddress"
         />
@@ -39,8 +40,8 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
       <Grid templateColumns="repeat(3, 1fr)" gap="s16" mt={'s16'}>
         <GridItem>
           <FormInput
-            label="PAN/VAT No"
-            placeholder="PAN/VAT No"
+            label={t['settingsOrgRegPANVATNo']}
+            placeholder={t['settingsOrgRegPANVATNo']}
             control={control}
             name="pan/VatNo"
           />

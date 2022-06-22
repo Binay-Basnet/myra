@@ -20,6 +20,7 @@ import {
   Modal,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../tab/TabforMemberPage';
 interface IMemberPageLayout {
@@ -46,6 +47,7 @@ interface memberTypeButtonProps {
 
 const MemberTypeButton = (props: memberTypeButtonProps) => {
   const { icon, title, subtitle, onClick } = props;
+  const { t } = useTranslation();
   return (
     <Box
       as="button"
@@ -71,11 +73,11 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
       <Icon size="xl" as={icon} />
       <br />{' '}
       <Text fontSize="r2" fontWeight="medium">
-        {title}{' '}
+        {t[title]}{' '}
       </Text>
       <br />{' '}
       <Text fontSize="s3" fontWeight="regular" textAlign="center" px="2px">
-        {subtitle}{' '}
+        {t[subtitle]}{' '}
       </Text>
     </Box>
   );
@@ -84,24 +86,24 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
 const memberTypesArray = {
   INDIVIDUAL: {
     icon: IoMdPerson,
-    title: 'Individual',
-    subtitle: 'Create KYM form for institute members',
+    title: 'memberLayoutIndividual',
+    subtitle: 'memberLayoutCreateKYMFormForIndividualMembers',
   },
   INSTITUTION: {
     icon: AiFillBank,
-    title: 'Institution',
-    subtitle: 'Create KYM form for individual members',
+    title: 'memberLayoutInstitution',
+    subtitle: 'memberLayoutCreateKYMFormForInstituteMembers',
   },
 
   COOPERATIVE: {
     icon: MdCorporateFare,
-    title: 'cooperative',
-    subtitle: 'Create KYM form for CoOperative members',
+    title: 'memberLayoutCooperative',
+    subtitle: 'memberLayoutCreateKYMFormForCoOperativeMembers',
   },
   COOPERATIVE_UNION: {
     icon: AiFillBank,
-    title: 'Cooperative Union',
-    subtitle: 'Create KYM form for cooperative union',
+    title: 'memberLayoutCooperativeUnion',
+    subtitle: 'memberLayoutCreateKYMFormForCooperativeUnion',
   },
 };
 
@@ -109,7 +111,8 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
   const router = useRouter();
   const newId = useGetNewIdMutation();
   const memberTypesQuery = useGetMemberTypesQuery();
-  console.log('hello', memberTypesQuery);
+  const { t } = useTranslation();
+
   const memberTypes = memberTypesQuery?.data?.members?.memberTypes?.data;
   const [openModal, setOpenModal] = useState(false);
 
@@ -125,7 +128,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
     <Box display="flex">
       <Box width="275px" p="s24" position="fixed" flexShrink={0}>
         <Text fontSize="l1" fontWeight="600" color="gray.800">
-          Member
+          {t['memberLayout']}
         </Text>
         <Divider my="s16" />
 
@@ -138,7 +141,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
             onOpenModal();
           }}
         >
-          New Member
+          {t['memberLayoutNewMember']}
         </Button>
 
         <Modal
@@ -151,60 +154,64 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
               color="neutralColorLight.Gray-80"
               fontWeight="SemiBold"
             >
-              Select Member Type
+              {t['memberLayoutSelectMemberType']}
             </Text>
           }
         >
-          <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-            {memberTypes?.map((item) => {
-              if (!item?.type) {
-                return null;
-              }
-              return (
-                <GridItem key={item?.id}>
-                  <MemberTypeButton
-                    icon={memberTypesArray[item.type]?.icon}
-                    title={memberTypesArray[item.type]?.title}
-                    subtitle={memberTypesArray[item.type]?.subtitle}
-                    onClick={() => {
-                      item?.type === 'INDIVIDUAL' &&
-                        newId
-                          .mutateAsync({})
-                          .then((res) =>
-                            router.push(`/members/individual/add/${res?.newId}`)
-                          );
+          <Box py="s16">
+            <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+              {memberTypes?.map((item) => {
+                if (!item?.type) {
+                  return null;
+                }
+                return (
+                  <GridItem key={item?.id}>
+                    <MemberTypeButton
+                      icon={memberTypesArray[item.type]?.icon}
+                      title={memberTypesArray[item.type]?.title}
+                      subtitle={memberTypesArray[item.type]?.subtitle}
+                      onClick={() => {
+                        item?.type === 'INDIVIDUAL' &&
+                          newId
+                            .mutateAsync({})
+                            .then((res) =>
+                              router.push(
+                                `/members/individual/add/${res?.newId}`
+                              )
+                            );
 
-                      item?.type === 'INSTITUTION' &&
-                        newId
-                          .mutateAsync({})
-                          .then((res) =>
-                            router.push(
-                              `/members/institution/add/${res?.newId}`
-                            )
-                          );
+                        item?.type === 'INSTITUTION' &&
+                          newId
+                            .mutateAsync({})
+                            .then((res) =>
+                              router.push(
+                                `/members/institution/add/${res?.newId}`
+                              )
+                            );
 
-                      item?.type === 'COOPERATIVE' &&
-                        newId
-                          .mutateAsync({})
-                          .then((res) =>
-                            router.push(
-                              `/members/cooperative/add/${res?.newId}`
-                            )
-                          );
-                      item?.type === 'COOPERATIVE_UNION' &&
-                        newId
-                          .mutateAsync({})
-                          .then((res) =>
-                            router.push(
-                              `/members/cooperative-union/add/${res?.newId}`
-                            )
-                          );
-                    }}
-                  />
-                </GridItem>
-              );
-            })}
-          </Grid>
+                        item?.type === 'COOPERATIVE' &&
+                          newId
+                            .mutateAsync({})
+                            .then((res) =>
+                              router.push(
+                                `/members/cooperative/add/${res?.newId}`
+                              )
+                            );
+                        item?.type === 'COOPERATIVE_UNION' &&
+                          newId
+                            .mutateAsync({})
+                            .then((res) =>
+                              router.push(
+                                `/members/cooperative-union/add/${res?.newId}`
+                              )
+                            );
+                      }}
+                    />
+                  </GridItem>
+                );
+              })}
+            </Grid>
+          </Box>
         </Modal>
         <Divider my="s16" />
         <TabColumn list={memberColumns} />
@@ -220,7 +227,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          Member Settings
+          {t['memberLayoutMemberSettings']}
         </Button>
       </Box>
 

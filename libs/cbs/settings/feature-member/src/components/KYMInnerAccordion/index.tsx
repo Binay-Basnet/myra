@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { AccordionItem } from '@coop/shared/ui';
-
 import { KYMDragGroup } from '../KYMDragGroup';
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 

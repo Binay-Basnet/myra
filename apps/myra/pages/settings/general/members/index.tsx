@@ -1,49 +1,31 @@
 import { AddIcon } from '@chakra-ui/icons';
+
 import {
   SettingsGeneralLayout,
   SettingsLayout,
+  SettingsMemberLayout,
 } from '@coop/cbs/settings/ui-layout';
-import { SettingsGeneralMember } from '@coop/myra/components';
 import { Box, Button, CheckboxGroup, Input, Text } from '@coop/shared/ui';
-
-const checkBox = [
-  'Individual',
-  'Institutional',
-  'cooperative',
-  'Corporative Union',
-];
-
-const riskArray = ['General Risk', 'Medium Risk', 'High Risk'];
+import { useTranslation } from '@coop/shared/utils';
 
 const Members = () => {
+  const { t } = useTranslation();
+
+  const checkBox = [
+    t['settingsIndividual'],
+    t['settingsInstitutional'],
+    t['settingsCooperative'],
+    t['settingsCorporativeUnion'],
+  ];
+
+  const riskArray = [
+    t['settingsGeneralRisk'],
+    t['settingsMediumRisk'],
+    t['settingsHighRisk'],
+  ];
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
-      <Box
-        borderBottom="1px"
-        borderBottomColor="border.layout"
-        display={'flex'}
-        alignItems={'center'}
-        h="60px"
-      >
-        <Text
-          fontSize="r2"
-          px="s16"
-          fontWeight="600"
-          color="neutralColorLight.Gray-80"
-        >
-          Members
-        </Text>
-      </Box>
       <Box display={'flex'} flexDirection="row" h="fit-content">
-        <Box
-          w="300px"
-          px="s8"
-          py="s16"
-          borderRight={'1px'}
-          borderRightColor="border.layout"
-        >
-          <SettingsGeneralMember />
-        </Box>
         <Box p="s16" flex={1}>
           <Box
             borderBottom={'1px'}
@@ -56,10 +38,10 @@ const Members = () => {
               fontWeight="600"
               color="neutralColorLight.Gray-80"
             >
-              General
+              {t['settingsGeneral']}
             </Text>
             <Text pt={'s2'} fontSize="r1" fontWeight="400" color="gray.400">
-              These settings will be applied across all member related pages
+              {t['settingsTheseSettings']}
             </Text>
           </Box>
           <Box mt="s12">
@@ -75,10 +57,11 @@ const Members = () => {
                 fontWeight="600"
                 color="neutralColorLight.Gray-80"
               >
-                Types of New Member
+                {t['settingsTypesOfNewMember']}
               </Text>
               <Text pt={'s2'} fontSize="s3" fontWeight="400" color="gray.400">
-                Choose which type of member is allowed
+                {t['settingsChooseMember']}
+                {t['']}
               </Text>
             </Box>
             <Box
@@ -111,7 +94,7 @@ const Members = () => {
                 fontWeight="600"
                 color="neutralColorLight.Gray-80"
               >
-                Member Risk Level
+                {t['settingsMemberRisk']}
               </Text>
             </Box>
             <Box
@@ -136,7 +119,7 @@ const Members = () => {
                   lineHeight={1.5}
                 >
                   {' '}
-                  Risk Level
+                  {t['settingsMemberRiskLevel']}
                 </Text>
                 <Text
                   fontSize="r1"
@@ -146,7 +129,7 @@ const Members = () => {
                   w="25%"
                 >
                   {' '}
-                  Years till KYM Update
+                  {t['settingsMemberYearsTillKYMUpdate']}
                 </Text>
               </Box>
               {riskArray.map((item, index) => (
@@ -194,7 +177,7 @@ const Members = () => {
                 shade="primary"
                 leftIcon={<AddIcon />}
               >
-                Add New Option
+                {t['settingsMemberAddNewOption']}
               </Button>
             </Box>
           </Box>
@@ -208,7 +191,9 @@ export default Members;
 Members.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+      <SettingsGeneralLayout>
+        <SettingsMemberLayout>{page}</SettingsMemberLayout>
+      </SettingsGeneralLayout>
     </SettingsLayout>
   );
 };

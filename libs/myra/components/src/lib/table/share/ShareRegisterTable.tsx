@@ -1,22 +1,28 @@
 import { useMemo } from 'react';
 import { Avatar, Flex } from '@chakra-ui/react';
 import format from 'date-fns/format';
-
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { useGetShareRegisterListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
+import { useRouter } from 'next/router';
 
 export const ShareRegisterTable = () => {
   const { data, isLoading } = useGetShareRegisterListQuery();
+  const { t } = useTranslation();
+  const router = useRouter();
 
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
 
-  const popoverTitle = ['View Detail', 'View Member Profile'];
+  const popoverTitle = [
+    'shareRegisterTableViewDetail',
+    'shareRegisterTableViewMemberProfile',
+  ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'Date',
+        Header: t['shareRegisterDate'],
         width: '20%',
         accessor: 'node.transactionDate',
         Cell: ({ value, row }) => {
@@ -25,11 +31,11 @@ export const ShareRegisterTable = () => {
       },
 
       {
-        Header: 'Type',
+        Header: t['shareRegisterType'],
         accessor: 'node.transactionDirection',
       },
       {
-        Header: 'Member ID',
+        Header: t['shareRegisterTableMemberID'],
         accessor: 'node.id',
         maxWidth: 4,
         Cell: ({ value }) => {
@@ -38,7 +44,7 @@ export const ShareRegisterTable = () => {
       },
 
       {
-        Header: 'Name',
+        Header: t['shareRegisterTableName'],
         accessor: 'node.member.name.local',
         width: '80%',
 
@@ -57,7 +63,7 @@ export const ShareRegisterTable = () => {
       },
 
       {
-        Header: 'To - From',
+        Header: t['shareRegisterTableNameToFrom'],
         accessor: 'node.shareStartNumber',
         width: '20%',
         Cell: ({ value, row }) => {
@@ -71,7 +77,7 @@ export const ShareRegisterTable = () => {
 
       {
         id: 'share-dr',
-        Header: 'Share Dr',
+        Header: t['shareRegisterTableNameShareDr'],
         accessor: 'node.shareDr',
         isNumeric: true,
 
@@ -83,7 +89,7 @@ export const ShareRegisterTable = () => {
       },
       {
         id: 'share-cr',
-        Header: 'Share Cr',
+        Header: t['shareRegisterTableNameShareCr'],
         isNumeric: true,
         accessor: 'node.shareCr',
         Cell: ({ value, row }) => {
@@ -93,7 +99,7 @@ export const ShareRegisterTable = () => {
         },
       },
       {
-        Header: 'Balance',
+        Header: t['shareRegisterTableNameBalance'],
         accessor: 'node.balance',
         isNumeric: true,
         Cell: ({ value, row }) => {
@@ -105,7 +111,7 @@ export const ShareRegisterTable = () => {
         Cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
-    []
+    [router.locale]
   );
 
   const shareRows = useMemo(
@@ -128,7 +134,10 @@ export const ShareRegisterTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'Share Register'} tabItems={shareRows} />
+      <TableListPageHeader
+        heading={'shareRegisterTable'}
+        tabItems={shareRows}
+      />
 
       <Table
         isLoading={isLoading}

@@ -13,9 +13,10 @@ import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Icon, Text } from '@coop/shared/ui';
 
 interface IKYMSingleItemProps {
-  item: KymOption;
+  item: Partial<KymOption>;
   field: KymField;
   dragHandleProps: DraggableProvidedDragHandleProps | undefined;
+  setFieldItems: React.Dispatch<React.SetStateAction<Partial<KymOption>[]>>;
 }
 
 const GRID2X3 = () => {
@@ -96,10 +97,22 @@ export const KYMSingleItem = ({
   item,
   dragHandleProps,
   field,
+  setFieldItems,
 }: IKYMSingleItemProps) => {
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditable, setIsEditable] = useState(!item.id);
 
-  const { mutateAsync: kymOptionUpdate } = useAddKymOptionMutation();
+  const { mutateAsync: kymOptionUpdate } = useAddKymOptionMutation({
+    onSuccess: (response) => {
+      const newItem =
+        response.settings.general?.KYM?.individual.option.update.record;
+
+      if (newItem) {
+        setFieldItems((prev) =>
+          prev.map((option) => (!option.id ? newItem : option))
+        );
+      }
+    },
+  });
 
   const methods = useForm<{
     enabled: boolean;
@@ -108,22 +121,22 @@ export const KYMSingleItem = ({
   }>({
     defaultValues: {
       enabled: item.enabled,
-      name: item.name.local,
+      name: item?.name?.local,
       fieldType: item.fieldType,
     },
   });
 
   const onSubmit = debounce(async () => {
-    await kymOptionUpdate({
-      fieldId: field.id,
-      optionId: item.id,
-      optionEnabled: methods.getValues().enabled,
-      optionName: methods.getValues().name,
-      optionFieldType: methods.getValues().fieldType,
-    });
+    if (item.id) {
+      await kymOptionUpdate({
+        fieldId: field.id,
+        optionId: item.id,
+        optionEnabled: methods.getValues().enabled,
+        optionName: methods.getValues().name,
+        optionFieldType: methods.getValues().fieldType,
+      });
+    }
   }, 800);
-
-  console.log(methods.getValues().fieldType);
 
   useEffect(() => {
     methods.getValues().name === '' && setIsEditable(true);
@@ -145,20 +158,24 @@ export const KYMSingleItem = ({
         justifyContent="flex-start"
         alignItems="center"
         gap="s20"
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
           setIsEditable(false);
+          await kymOptionUpdate({
+            fieldId: field.id,
+            optionEnabled: methods.getValues().enabled,
+            optionName: methods.getValues().name,
+            optionFieldType: methods.getValues().fieldType,
+          });
         }}
       >
-        {methods.getValues().name !== '' && (
+        {item?.id && (
           <Box {...dragHandleProps}>
             <Icon size="md" as={GRID2X3} />
           </Box>
         )}
 
-        {methods.getValues().name !== '' && (
-          <FormSwitch name="enabled" size="md" />
-        )}
+        {item?.id && <FormSwitch name="enabled" size="md" />}
 
         <Box
           width="100%"
@@ -169,7 +186,7 @@ export const KYMSingleItem = ({
         >
           <>
             <Box width={field.fieldType !== 'GROUP' ? '100%' : '66%'}>
-              {isEditable || methods.getValues().name === '' ? (
+              {isEditable || !item.id ? (
                 <FormInput type="text" name="name" />
               ) : (
                 <Text

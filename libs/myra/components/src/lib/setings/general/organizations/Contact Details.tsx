@@ -4,12 +4,14 @@ import { FormEmailInput } from '@coop/shared/form';
 import { FormPhoneNumber } from '@coop/shared/form';
 import { FormInput } from '@coop/shared/form';
 import { Box, Grid, GridItem } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 type Props = {
   control: Control<any>;
 };
 
 export const ContactDetailsOrganization = ({ control }: Props) => {
+  const { t } = useTranslation();
   return (
     <Box>
       <Grid templateColumns="repeat(3, 1fr)" gap="s16">
@@ -18,14 +20,14 @@ export const ContactDetailsOrganization = ({ control }: Props) => {
           <FormPhoneNumber
             control={control}
             name={'contactNumber'}
-            label={'Phone No'}
-            placeholder={'Phone No'}
+            label={t['settingsOrgContactPhoneNo']}
+            placeholder={t['settingsOrgContactPhoneNo']}
           />
         </GridItem>
         <GridItem>
           <FormEmailInput
-            label="Email Address"
-            placeholder="Email Address"
+            label={t['settingsOrgContactEmailAddress']}
+            placeholder={t['settingsOrgContactEmailAddress']}
             name={'Email Address'}
             control={control}
           />
@@ -33,8 +35,8 @@ export const ContactDetailsOrganization = ({ control }: Props) => {
         <GridItem>
           {' '}
           <FormInput
-            label="Website"
-            placeholder="Website Address"
+            label={t['settingsOrgContactWebsite']}
+            placeholder={t['settingsOrgContactWebsiteAddress']}
             name={'website'}
             control={control}
           />

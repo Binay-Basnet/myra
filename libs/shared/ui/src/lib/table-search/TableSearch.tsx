@@ -1,5 +1,6 @@
 import React from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { useRouter } from 'next/router';
 import {
   Box,
   Input,
@@ -8,6 +9,7 @@ import {
   Popover,
   Text,
 } from '@chakra-ui/react';
+
 import {
   DEFAULT_PAGE_SIZE,
   Grid,
@@ -17,7 +19,6 @@ import {
   PopoverTrigger,
   TextFields,
 } from '@coop/shared/ui';
-import { useRouter } from 'next/router';
 
 import Button from '../button/Button';
 import Icon from '../icon/Icon';
@@ -110,7 +111,7 @@ export function TableSearch({
   const router = useRouter();
 
   const pageSize = Number(
-    router.query['first'] ?? router.query['last'] ?? DEFAULT_PAGE_SIZE
+    router?.query['first'] ?? router?.query['last'] ?? DEFAULT_PAGE_SIZE
   );
 
   return (
