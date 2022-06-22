@@ -5,6 +5,7 @@ import { FaMap } from 'react-icons/fa';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
+  SettingsPageHeader,
 } from '@coop/cbs/settings/ui-layout';
 import {
   AddressOrganization,
@@ -24,46 +25,40 @@ const Organization = () => {
 
   return (
     // onSubmit={handleSubmit((data) => console.log('data', data))}
-    <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit((data) => console.log('data', data))}
-        onChange={(e) => {
-          console.log('hello', getValues());
-        }}
-      >
-        <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
-          <Box
-            borderBottom="1px"
-            borderBottomColor="border.layout"
-            display={'flex'}
-            alignItems={'center'}
-            h="60px"
-          >
-            <Text
-              fontSize="r2"
-              px="s16"
-              fontWeight="600"
-              color="neutralColorLight.Gray-80"
-            >
+
+    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
+      <SettingsPageHeader heading="Organizations" />
+      <Box display={'flex'} flexDirection="row" h="fit-content">
+        <Box
+          w="300px"
+          position="fixed"
+          px="s8"
+          py="s16"
+          borderRight={'1px'}
+          borderRightColor="border.layout"
+          minHeight="100vh"
+        >
+          <Box bg="#EEF2F7" p="s16">
+            <Text fontSize={'r1'} fontWeight="600">
               {t['settingsOrganization']}
             </Text>
           </Box>
-          <Box display={'flex'} flexDirection="row" h="fit-content">
-            <Box
-              w="300px"
-              px="s8"
-              py="s16"
-              borderRight={'1px'}
-              borderRightColor="border.layout"
-            >
-              <Box bg="#EEF2F7" p="s16">
-                <Text fontSize={'r1'} fontWeight="600">
-                  {t['settingsOrganizationInitialSetup']}
-                </Text>
-              </Box>
-            </Box>
+        </Box>
 
-            <Box px="s16" flex={1} display="flex" flexDirection={'column'}>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={handleSubmit((data) => console.log('data', data))}
+            onChange={(e) => {
+              console.log('hello', getValues());
+            }}
+          >
+            <Box
+              ml="300px"
+              px="s16"
+              flex={1}
+              display="flex"
+              flexDirection={'column'}
+            >
               <Box py={'s24'}>
                 <Text fontWeight="600">
                   {t['settingsOrganizationBasicDetails']}
@@ -163,10 +158,10 @@ const Organization = () => {
                 </Box>
               </Box>
             </Box>
-          </Box>
-        </Box>
-      </form>
-    </FormProvider>
+          </form>
+        </FormProvider>
+      </Box>
+    </Box>
   );
 };
 

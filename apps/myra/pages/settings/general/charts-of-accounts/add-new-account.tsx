@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import { FormControl } from '@chakra-ui/react';
 
+import { SettingsLayout } from '@coop/cbs/settings/ui-layout';
 import { KymIndMemberInput } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import {
@@ -21,7 +22,6 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import SettingsFormLayout from '../../../../components/SettingsLayout/SettingsFormLayout';
 
 const AddNewAccount = () => {
   const { t } = useTranslation();
@@ -64,6 +64,10 @@ const AddNewAccount = () => {
               alignItems={'center'}
               px="5"
               borderBottom="1px solid #E6E6E6"
+              position="sticky"
+              bg="white"
+              zIndex="10"
+              top="110px"
             >
               <Text fontSize="r2" fontWeight="600">
                 {t['settingsCoaAddNewAccount']}
@@ -413,5 +417,5 @@ const AddNewAccount = () => {
 export default AddNewAccount;
 
 AddNewAccount.getLayout = function getLayout(page) {
-  return <SettingsFormLayout>{page}</SettingsFormLayout>;
+  return <SettingsLayout>{page}</SettingsLayout>;
 };

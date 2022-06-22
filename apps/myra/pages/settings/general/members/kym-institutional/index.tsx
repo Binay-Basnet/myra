@@ -1,40 +1,36 @@
+import { KYMIndividualSettingsPage } from '@coop/cbs/settings/feature-member';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
+  SettingsMemberLayout,
 } from '@coop/cbs/settings/ui-layout';
-import { SettingsGeneralMember } from '@coop/myra/components';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const KYMInstitutional = () => {
   const { t } = useTranslation();
   return (
-    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
-      <Box
-        borderBottom="1px"
-        borderBottomColor="border.layout"
-        display={'flex'}
-        alignItems={'center'}
-        h="60px"
-      >
-        <Text
-          fontSize="r2"
-          px="s16"
-          fontWeight="600"
-          color="neutralColorLight.Gray-80"
-        >
-          {t['settingsKymInstMembers']}
-        </Text>
-      </Box>
-      <Box display={'flex'} flexDirection="row" h="fit-content">
+    <Box display={'flex'} flexDirection="row" h="fit-content">
+      <Box flex={1} p="s16">
         <Box
-          w="300px"
-          px="s8"
-          py="s16"
-          borderRight={'1px'}
-          borderRightColor="border.layout"
+          borderBottom={'1px'}
+          borderBottomColor="border.layout"
+          py="s8"
+          w="100%"
         >
-          <SettingsGeneralMember />
+          <Text
+            fontSize="r2"
+            fontWeight="600"
+            color="neutralColorLight.Gray-80"
+          >
+            {t['settingsKymInsForm']}
+          </Text>
+          <Text pt={'s2'} fontSize="r1" fontWeight="400" color="gray.400">
+            {t['settingsKymInsSettingsChange']}
+          </Text>
+        </Box>
+        <Box mt="s16">
+          <KYMIndividualSettingsPage />
         </Box>
       </Box>
     </Box>
@@ -45,7 +41,9 @@ export default KYMInstitutional;
 KYMInstitutional.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+      <SettingsGeneralLayout>
+        <SettingsMemberLayout>{page}</SettingsMemberLayout>
+      </SettingsGeneralLayout>
     </SettingsLayout>
   );
 };

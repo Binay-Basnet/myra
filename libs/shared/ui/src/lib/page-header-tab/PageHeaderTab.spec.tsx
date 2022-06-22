@@ -1,14 +1,14 @@
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 import { render } from '@testing-library/react';
 
-import MainLayout from './MainLayout';
+import PageHeaderTab from './PageHeaderTab';
 import { createMockRouter } from '../table-search/TableSearch.spec';
 
-describe('MainLayout', () => {
+describe('PageHeaderTab', () => {
   it('should render successfully', () => {
     const { baseElement } = render(
       <RouterContext.Provider value={createMockRouter({ query: { id: '22' } })}>
-        <MainLayout> Hello Test </MainLayout>{' '}
+        <PageHeaderTab list={[{ key: '13', title: '134' }]} />{' '}
       </RouterContext.Provider>
     );
     expect(baseElement).toBeTruthy();
