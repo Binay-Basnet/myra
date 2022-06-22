@@ -405,7 +405,8 @@ const en: Record<string, string> = {
   settingsSideBarChartsOfAccounts: 'Charts of Accounts',
   settingsSideBarMembers: 'Members',
   settingsSideBarShare: 'Share',
-  settingsSideBarDepositWithdraw: 'Deposit / Withdraw',
+  settingsSideBarDeposit: 'Deposit',
+  settingsSideBarDepositProducts: 'Deposit Products',
   settingsSideBarLoan: 'Loan',
 
   //settings tab menu
@@ -414,6 +415,18 @@ const en: Record<string, string> = {
   settingsTabMenuUsers: 'Users',
   settingsTabMenuImport: 'Import',
   settingsTabMenuSubscriptions: 'Subscriptions',
+
+  //settings deposit
+  settingsDeposit: 'Deposit Settings',
+  settingsDepositTds: 'TDS',
+  settingsDepositIROSetup: 'IRO Setup',
+  settingsDepositTdsAgainst: 'TDS against Interest mapping',
+  settingsDepositMemberType: 'Member Type',
+  settingsDepositTdsPercent: 'TDS (in %)',
+  settingsDepositIndividual: 'Individual',
+  settingsDepositInstitutional: 'Institutional',
+  settingsDepositCooperative: 'Cooperative',
+  settingsDepositCooperativeUnion: 'Cooperative Union',
 };
 
 export default en;
