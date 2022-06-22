@@ -125,7 +125,7 @@ export const getKymSectionCoOperativeUnion = (id: string) => {
   if (AccountOperatorsDetails.includes(id.split('.')[0])) {
     return {
       section: 'accountOperators',
-      subSection: 'Details of Proprietor, Partners, Directors.',
+      subSection: 'Details of Account Operators',
     };
   }
   if (centralRepresentative.includes(id.split('.')[0])) {
