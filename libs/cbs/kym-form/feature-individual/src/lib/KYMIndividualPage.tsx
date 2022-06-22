@@ -152,6 +152,7 @@ export function KYMIndividualPage() {
             })}
             onFocus={(e) => {
               const kymSection = getKymSection(e.target.id);
+
               setKymCurrentSection(kymSection);
             }}
           >
