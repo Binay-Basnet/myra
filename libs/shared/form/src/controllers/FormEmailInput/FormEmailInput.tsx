@@ -30,7 +30,7 @@ export const FormEmailInput = <T,>({
           type="email"
           onChange={onChange}
           value={value}
-          leftElement={<Icon as={MdEmail} size="sm" />}
+          leftElement={<Icon as={MdEmail} size="sm" zIndex={-1} />}
           errorText={errors[name]?.message}
           {...fieldProps}
           {...rest}

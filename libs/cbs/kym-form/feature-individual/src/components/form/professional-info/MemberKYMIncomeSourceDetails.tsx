@@ -104,6 +104,7 @@ export const MemberKYMIncomeSourceDetails = ({ control }: any) => {
               );
             })}
             <Button
+              id="incomeSourceDetailsButton"
               alignSelf="start"
               leftIcon={<Icon size="md" as={AiOutlinePlus} />}
               variant="outline"

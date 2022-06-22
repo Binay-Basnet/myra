@@ -61,8 +61,11 @@ const assets = [
 
 // Details of Board Directors
 
-const boardOfDirectorrDetails = ['boardOfDirectorsDetails'];
-const accountOperatorDetail = ['accountOperatorsDetails'];
+const boardOfDirectorrDetails = ['boardOfDirectorsDetails', 'directorButton'];
+const accountOperatorDetail = [
+  'accountOperatorsDetails',
+  'accountOperatorButton',
+];
 
 const accountHolderDeclaration = [
   'passportSizePhoto',

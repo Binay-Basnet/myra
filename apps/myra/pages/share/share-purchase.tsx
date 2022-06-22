@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { IoSearch } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -15,6 +16,7 @@ import {
   Container,
   Grid,
   GridItem,
+  Icon,
   MainLayout,
   Navbar,
   Select,
@@ -103,24 +105,27 @@ const SharePurchase = () => {
             <Box w="100%" minHeight="100vh">
               <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
                 <Box w="50%">
-                  <FormSelect
+                  <FormInput
+                    rightElement={
+                      <Icon as={IoSearch} color="gray.500" fontSize={'s3'} />
+                    }
                     name="memberId"
                     label="Select Member"
                     placeholder="Enter Member ID"
-                    options={[
-                      {
-                        label: '123',
-                        value: '123',
-                      },
-                      {
-                        label: '456',
-                        value: '456',
-                      },
-                      {
-                        label: '789',
-                        value: '789',
-                      },
-                    ]}
+                    // options={[
+                    //   {
+                    //     label: '123',
+                    //     value: '123',
+                    //   },
+                    //   {
+                    //     label: '456',
+                    //     value: '456',
+                    //   },
+                    //   {
+                    //     label: '789',
+                    //     value: '789',
+                    //   },
+                    // ]}
                   />
                 </Box>
 

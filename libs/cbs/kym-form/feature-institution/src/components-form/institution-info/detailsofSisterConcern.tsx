@@ -2,6 +2,7 @@ import React from 'react';
 import { Control, useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
@@ -90,6 +91,7 @@ export const InstitutionKYMSisterConcernDetails = () => {
             );
           })}
           <Button
+            id="sisterConcernButton"
             alignSelf="start"
             leftIcon={<Icon size="md" as={AiOutlinePlus} />}
             variant="outline"

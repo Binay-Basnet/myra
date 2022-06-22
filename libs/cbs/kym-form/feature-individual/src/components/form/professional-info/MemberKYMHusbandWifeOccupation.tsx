@@ -164,6 +164,7 @@ export const MemberKYMHusbandWifeOccupation = ({ control, watch }: any) => {
         })}
 
         <Button
+          id="spouseOccupationButton"
           alignSelf="start"
           leftIcon={<Icon size="md" as={AiOutlinePlus} />}
           variant="outline"

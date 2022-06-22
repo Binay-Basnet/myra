@@ -170,6 +170,7 @@ export const MemberKYMMainOccupation = ({ control, watch }: any) => {
         })}
 
         <Button
+          id="mainOccupationButton"
           alignSelf="start"
           leftIcon={<Icon size="md" as={AiOutlinePlus} />}
           variant="outline"

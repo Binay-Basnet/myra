@@ -21,6 +21,7 @@ import {
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+
 import { TabColumn } from '../tab/TabforMemberPage';
 interface IMemberPageLayout {
   children: React.ReactNode;
@@ -157,56 +158,60 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
             </Text>
           }
         >
-          <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-            {memberTypes?.map((item) => {
-              if (!item?.type) {
-                return null;
-              }
-              return (
-                <GridItem key={item?.id}>
-                  <MemberTypeButton
-                    icon={memberTypesArray[item.type]?.icon}
-                    title={memberTypesArray[item.type]?.title}
-                    subtitle={memberTypesArray[item.type]?.subtitle}
-                    onClick={() => {
-                      item?.type === 'INDIVIDUAL' &&
-                        newId
-                          .mutateAsync({})
-                          .then((res) =>
-                            router.push(`/members/individual/add/${res?.newId}`)
-                          );
+          <Box py="s16">
+            <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+              {memberTypes?.map((item) => {
+                if (!item?.type) {
+                  return null;
+                }
+                return (
+                  <GridItem key={item?.id}>
+                    <MemberTypeButton
+                      icon={memberTypesArray[item.type]?.icon}
+                      title={memberTypesArray[item.type]?.title}
+                      subtitle={memberTypesArray[item.type]?.subtitle}
+                      onClick={() => {
+                        item?.type === 'INDIVIDUAL' &&
+                          newId
+                            .mutateAsync({})
+                            .then((res) =>
+                              router.push(
+                                `/members/individual/add/${res?.newId}`
+                              )
+                            );
 
-                      item?.type === 'INSTITUTION' &&
-                        newId
-                          .mutateAsync({})
-                          .then((res) =>
-                            router.push(
-                              `/members/institution/add/${res?.newId}`
-                            )
-                          );
+                        item?.type === 'INSTITUTION' &&
+                          newId
+                            .mutateAsync({})
+                            .then((res) =>
+                              router.push(
+                                `/members/institution/add/${res?.newId}`
+                              )
+                            );
 
-                      item?.type === 'COOPERATIVE' &&
-                        newId
-                          .mutateAsync({})
-                          .then((res) =>
-                            router.push(
-                              `/members/cooperative/add/${res?.newId}`
-                            )
-                          );
-                      item?.type === 'COOPERATIVE_UNION' &&
-                        newId
-                          .mutateAsync({})
-                          .then((res) =>
-                            router.push(
-                              `/members/cooperative-union/add/${res?.newId}`
-                            )
-                          );
-                    }}
-                  />
-                </GridItem>
-              );
-            })}
-          </Grid>
+                        item?.type === 'COOPERATIVE' &&
+                          newId
+                            .mutateAsync({})
+                            .then((res) =>
+                              router.push(
+                                `/members/cooperative/add/${res?.newId}`
+                              )
+                            );
+                        item?.type === 'COOPERATIVE_UNION' &&
+                          newId
+                            .mutateAsync({})
+                            .then((res) =>
+                              router.push(
+                                `/members/cooperative-union/add/${res?.newId}`
+                              )
+                            );
+                      }}
+                    />
+                  </GridItem>
+                );
+              })}
+            </Grid>
+          </Box>
         </Modal>
         <Divider my="s16" />
         <TabColumn list={memberColumns} />
