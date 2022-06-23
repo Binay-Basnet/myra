@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { BiFilter } from 'react-icons/bi';
 import { Cell } from 'react-table';
-import { useRouter } from 'next/router';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -46,8 +45,6 @@ export function Table<T extends Record<string, unknown>>({
   searchPlaceholder,
   ...props
 }: TableProps<T>) {
-  const router = useRouter();
-
   const [tableSize, setTableSize] = useState(size);
 
   const tableInstance = useTable({
@@ -60,8 +57,6 @@ export function Table<T extends Record<string, unknown>>({
     ...props,
   });
 
-  console.log(data);
-
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
   const {
@@ -71,17 +66,8 @@ export function Table<T extends Record<string, unknown>>({
     rows,
     prepareRow,
     footerGroups,
+    filteredRows,
   } = tableInstance;
-
-  // if (data?.length === 0) {
-  //   return (
-  //     <Flex justifyContent="center" height="300px" alignItems="center">
-  //       <Text fontSize="r3" color="gray.500">
-  //         No Data Found
-  //       </Text>
-  //     </Flex>
-  //   );
-  // }
 
   return (
     <Box
@@ -128,10 +114,34 @@ export function Table<T extends Record<string, unknown>>({
           setSize={setTableSize}
         />
       )}
-      <TableContainer position="relative">
+
+      {!data ||
+        data?.length === 0 ||
+        (filteredRows.length === 0 && (
+          <Box
+            position="absolute"
+            width="100%"
+            height="100%"
+            display="flex"
+            justifyContent="center"
+            pt="100px"
+          >
+            <Flex justifyContent="center" height="300px" alignItems="center">
+              <Text fontSize="r3" color="gray.500">
+                No Data Found
+              </Text>
+            </Flex>
+          </Box>
+        ))}
+
+      <TableContainer
+        overflowX="visible"
+        overflowY="visible"
+        position="relative"
+      >
         <ChakraTable
           size={tableSize}
-          overflowX="hidden"
+          overflow="visible"
           width="100%"
           {...getTableProps()}
         >
@@ -246,6 +256,7 @@ export function Table<T extends Record<string, unknown>>({
               </Tr>
             ))}
           </Thead>
+
           <Tbody {...getTableBodyProps()}>
             {/*// TODO ( WILL CHANGE THIS ANY LATER )*/}
             {rows.map((row) => {
@@ -307,7 +318,7 @@ export function Table<T extends Record<string, unknown>>({
           ) : null}
         </ChakraTable>
       </TableContainer>
-      {pagination && (
+      {pagination && data && data?.length !== 0 && (
         <Pagination
           total={pagination.total}
           startCursor={pagination.startCursor}
