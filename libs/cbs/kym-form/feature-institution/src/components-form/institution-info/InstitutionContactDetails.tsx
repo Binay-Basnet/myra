@@ -9,8 +9,10 @@ import {
   FormSelect,
 } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const ContactDetailsInstitution = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Contact Details" scrollMarginTop={'200px'}>
       <Text
@@ -18,15 +20,15 @@ export const ContactDetailsInstitution = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Contact Details
+        {t['kymInsContactDetails']}
       </Text>
       <InputGroupContainer>
         <FormPhoneNumber
           // control={control}
 
           name={'phone'}
-          label="Phone"
-          placeholder="Enter Phone Number"
+          label={t['kymInsPhone']}
+          placeholder={t['kymInsEnterPhoneNumber']}
         />
 
         {/* <FormInput
@@ -39,43 +41,43 @@ export const ContactDetailsInstitution = () => {
         <FormInput
           type="number"
           name="fax"
-          label="Fax"
-          placeholder="Enter Fax"
+          label={t['kymInsFax']}
+          placeholder={t['kymInsEnterFax']}
         />
 
         <FormEmailInput
           name="email"
-          label="Email"
-          placeholder="Enter Email Address"
+          label={t['kymInsEmail']}
+          placeholder={t['kymInsEnterEmailAddress']}
         />
 
         <FormInput
           type="text"
           name="website"
-          label="Website Link (if any)"
-          placeholder="Enter Website URL"
+          label={t['kymInsWebsiteLinkany']}
+          placeholder={t['kymInsEnterWebsiteURL']}
         />
 
         <FormInput
           type="number"
           name="postBoxNo"
-          label="Post Box. No. "
-          placeholder="Enter Post Box No"
+          label={t['kymInsPostBoxNo']}
+          placeholder={t['kymInsEnterPostBoxNo']}
         />
         <Box></Box>
         <Box mt="44px">
           <FormInput
             type="number"
             name="numberOfEmployee"
-            label="Number of Employees"
-            placeholder="Enter Number of Employees"
+            label={t['kymInsNumberofEmployees']}
+            placeholder={t['kymInsEnterNumberofEmployees']}
           />
         </Box>
         <Box mt="44px">
           <FormInput
             type="date"
             name="dateOfLastAGM"
-            label="AGM Details (Date of Last AGM)"
+            label={t['kymInsAGMDetailsDate']}
             placeholder="DD-MM-YYYY"
           />
         </Box>

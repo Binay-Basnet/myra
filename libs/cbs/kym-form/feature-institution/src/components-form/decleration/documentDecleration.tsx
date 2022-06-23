@@ -4,8 +4,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const DocumentDeclarationInstitution = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Documents Declaration" scrollMarginTop={'200px'}>
       <Text
@@ -13,33 +15,33 @@ export const DocumentDeclarationInstitution = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Documents Declaration
+        {t['kymInsDocumentsDeclaration']}
       </Text>
       <Grid templateColumns={'repeat(2, 1fr)'} gap="s32">
         <FormFileInput
           name="cooperativeDocuments"
-          label="AGM Decision Document"
+          label={t['kymInsAGMDecisionDocument']}
           size="lg"
         />
         <FormFileInput
           name="cooperativeDocuments"
-          label="Registered Certificate"
+          label={t['kymInsRegisteredCertificate']}
           size="lg"
         />
         <FormFileInput name="cooperativeDocuments0" label="MOA/AOA" size="lg" />
         <FormFileInput
           name="cooperativeDocuments"
-          label="PAN Certificate"
+          label={t['kymInsPANCertificate']}
           size="lg"
         />
         <FormFileInput
           name="cooperativeDocuments"
-          label="Tax Clearance"
+          label={t['kymInsTaxClearance']}
           size="lg"
         />
         <FormFileInput
           name="cooperativeDocuments"
-          label="Latest Audit Report"
+          label={t['kymInsLatestAuditReport']}
           size="lg"
         />
       </Grid>

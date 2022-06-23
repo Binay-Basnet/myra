@@ -3,26 +3,33 @@ import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
 import { KymInsAddSectionStatus } from '@coop/shared/data-access';
+import { useTranslation } from '@coop/shared/utils';
 
 const OrganizationInformation = [
-  'Basic Information',
-  'Registered Details',
-  'Contact Details',
-  'Bank Account Details',
+  'kymCoopUnionAccBasicInformation',
+  'kymCoopUnionAccRegisteredDetails',
+  'kymCoopUnionAccContactDetails',
+  'kymCoopUnionAccBankAccountDetails',
 ];
-const DirectorDetails = ['Details of Proprietor, Partners, Directors.'];
-const AccountOperators = ['Details of Account Operators'];
+const DirectorDetails = ['kymCoopUnionAccDetailsofProprietor'];
+const AccountOperators = ['kymCoopUnionAccDetailsofAccountOperators'];
 const CentralRepresentative = [
-  'Details of directors affiliated with other Firms',
+  'kymCoopUnionAccDetailsofdirectorsaffiliatedwithotherFirms',
 ];
-const memberDetails = ['Current Members', 'Target for next fiscal year'];
+const memberDetails = [
+  'kymCoopUnionAccCurrentMembers',
+  'kymCoopUnionAccTargetfornextfiscalyear',
+];
 const EconomicDetails = [
-  'Assets',
-  'Equity and Liailibities',
-  'Income Details',
-  'Expense Details',
+  'kymCoopUnionAccAssets',
+  'kymCoopUnionAccEquityandLiailibities',
+  'kymCoopUnionAccIncomeDetails',
+  'kymCoopUnionAccExpenseDetails',
 ];
-const Declaration = ['Documents Declaration', 'Account Holder Declaration'];
+const Declaration = [
+  'kymCoopUnionAccDocumentsDeclaration',
+  'kymCoopUnionAccAccountHolderDeclaration',
+];
 
 interface AccordianProps {
   formStatus?: KymInsAddSectionStatus | null;
@@ -33,6 +40,7 @@ interface AccordianProps {
 }
 
 export function AccorrdianAddCOOPUnion(props: AccordianProps) {
+  const { t } = useTranslation();
   const { formStatus, kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
   const [isOpenOrganizational, setIsOpenOrganizational] = React.useState(false);
@@ -45,7 +53,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
   const [isOpenDeclaration, setIsOpenDeclaration] = React.useState(false);
   const [isopenCentralRepresentatives, setIsopenCentralRepresentatives] =
     React.useState(false);
-  console.log('curent section', kymCurrentSection);
+
   React.useEffect(() => {
     const section = kymCurrentSection?.section;
 
@@ -70,7 +78,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         _hover={{ bg: '#EEF2F7' }}
       >
         <Text fontSize={'r1'} fontWeight="600">
-          1. Institution Information
+          {t['kymCoopUnionAcc1InstitutionInformation']}
         </Text>
         {!isOpenOrganizational ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -92,7 +100,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
               &nbsp; &nbsp;
@@ -119,7 +127,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          2. Details of directors/boardmembers/partners
+          {t['kymCoopUnionAcc2Detailsofdirectorsboardmemberspartners']}
         </Text>
         {!isopenDirector ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -141,7 +149,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -159,7 +167,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          3. Account Operators
+          {t['kymCoopUnionAcc3AccountOperators']}
         </Text>
         {!isopenAccountOperators ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -181,7 +189,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -201,7 +209,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          4. Details of Central Representative
+          {t['kymCoopUnionAcc4DetailsofCentralRepresentative']}
         </Text>
         {!isopenCentralRepresentatives ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -223,7 +231,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -240,7 +248,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          5. Details of member
+          {t['kymCoopUnionAcc5Detailsofmember']}
         </Text>
         {!isOpenmemberDetails ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -262,7 +270,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -279,7 +287,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          6. Economic Details
+          {t['kymCoopUnionAcc6EconomicDetails']}
         </Text>
         {!isOpenEconmoicDetails ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -301,7 +309,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -318,7 +326,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          7. Declaration
+          {t['kymCoopUnionAcc7Declaration']}
         </Text>
         {!isOpenDeclaration ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -340,7 +348,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>

@@ -12,6 +12,7 @@ import {
 import { FormInput, FormSelect } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IAddDirector {
   index: number;
@@ -19,6 +20,7 @@ interface IAddDirector {
 }
 
 const AddDirector = ({ index, removeDirector }: IAddDirector) => {
+  const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -36,15 +38,15 @@ const AddDirector = ({ index, removeDirector }: IAddDirector) => {
           type="text"
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.nameOfDirector`}
-          label="Name of Director"
-          placeholder="Enter Name of Director"
+          label={t['kymInsNameofDirector']}
+          placeholder={t['kymInsEnterNameofDirector']}
         />
         <FormInput
           type="text"
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.nameOfInstitution`}
-          label="Name of Institution"
-          placeholder="Enter Name of Institution"
+          label={t['kymInsNameofInstitution']}
+          placeholder={t['kymInsEnterNameofInstitution']}
         />
       </Grid>
       <InputGroupContainer mt="s16">
@@ -52,22 +54,22 @@ const AddDirector = ({ index, removeDirector }: IAddDirector) => {
           type="text"
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.addressOfInstitution`}
-          label="Address of Institution"
-          placeholder="Enter Address of Institution"
+          label={t['kymInsAddressofInstitution']}
+          placeholder={t['kymInsEnterAddressofInstitution']}
         />
         <FormInput
           type="text"
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.designation`}
-          label="Designation"
-          placeholder="Enter Designation"
+          label={t['kymInsDesignation']}
+          placeholder={t['kymInsEnterDesignation']}
         />
         <FormInput
           type="number"
           textAlign={'right'}
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.yearlyIncome`}
-          label="Yearly Income"
+          label={t['kymInsYearlyIncome']}
           placeholder="0.00"
         />
       </InputGroupContainer>
@@ -76,6 +78,7 @@ const AddDirector = ({ index, removeDirector }: IAddDirector) => {
 };
 
 export const InstitutionKYMDirectorWithAffiliation = () => {
+  const { t } = useTranslation();
   const {
     fields: directorFields,
     append: directorAppend,
@@ -88,7 +91,7 @@ export const InstitutionKYMDirectorWithAffiliation = () => {
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">
-        Details of directors affiliated with other Firms
+        {t['kymInsDetailsofdirectorsaffiliatedwithotherFirms']}
       </Text>
 
       <div>
@@ -112,7 +115,7 @@ export const InstitutionKYMDirectorWithAffiliation = () => {
               directorAppend({});
             }}
           >
-            New Detail
+            {t['kymInsNewDetail']}
           </Button>
         </DynamicBoxGroupContainer>
       </div>
