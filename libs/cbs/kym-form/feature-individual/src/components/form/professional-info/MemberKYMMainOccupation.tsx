@@ -9,7 +9,12 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
-import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
+import {
+  FormCheckbox,
+  FormInput,
+  FormSelect,
+  FormSwitch,
+} from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -17,7 +22,6 @@ import {
   GridItem,
   Icon,
   Select,
-  Switch,
   Text,
   TextFields,
 } from '@coop/shared/ui';
@@ -193,20 +197,20 @@ export const MemberKYMMainOccupation = () => {
         </Button>
       </DynamicBoxGroupContainer>
       <Box display="flex" flexDirection="row">
-        {/* <FormSwitch
+        <FormSwitch
           control={control}
           name="isPermanentAndTemporaryAddressSame"
           label="Enable for Foreign Employment"
-        /> */}
-        <Switch />
-        <Text
+        />
+        {/* <Switch /> */}
+        {/* <Text
           ml="s20"
           fontSize="r1"
           fontWeight="Medium"
           color="neutralColorLight.Gray-70"
         >
           Enable for Foreign Employment
-        </Text>
+        </Text> */}
       </Box>
 
       <Grid mb="s16" templateColumns="repeat(3, 1fr)" gap="s16">

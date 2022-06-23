@@ -90,6 +90,11 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
       [],
     [currentTemptDistrictId]
   );
+
+  const isPermanentAndTemporaryAddressSame = watch(
+    'isPermanentAndTemporaryAddressSame'
+  );
+
   return (
     <>
       <Box display="flex" alignItems="center">
