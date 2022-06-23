@@ -31,7 +31,7 @@ const Map = (props: MapProps) => {
     <MapContainer
       center={[coordinates?.latitude, coordinates?.longitude]}
       zoom={13}
-      scrollWheelZoom={false}
+      scrollWheelZoom={true}
       style={{ height: 450, width: '100%' }}
     >
       <MapContent position={position} setPosition={setPosition} />
@@ -48,21 +48,26 @@ const MapContent = (props: MapProps) => {
   // });
 
   React.useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const latitude = position?.coords?.latitude;
-        const longitude = position?.coords?.longitude;
-        map.setView({
-          lat: latitude,
-          lng: longitude,
+    if (position.latitude === 0 && position.longitude === 0) {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const latitude = position?.coords?.latitude;
+          const longitude = position?.coords?.longitude;
+          map.setView({
+            lat: latitude,
+            lng: longitude,
+          });
+          setPosition({ latitude, longitude });
         });
-        setPosition({ latitude, longitude });
+      }
+    } else {
+      map.setView({
+        lat: position?.latitude,
+        lng: position?.longitude,
       });
     }
   }, [map]);
   useMapEvent('click', (e) => {
-    console.log('e', e);
-
     setPosition({
       latitude: e?.latlng?.lat,
       longitude: e?.latlng?.lng,

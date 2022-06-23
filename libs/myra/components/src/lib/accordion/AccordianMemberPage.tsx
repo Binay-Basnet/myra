@@ -5,12 +5,12 @@ import {
   AiOutlineCaretRight,
 } from 'react-icons/ai';
 import { BsCheckCircleFill } from 'react-icons/bs';
-import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
 
 import {
   KymIndAddSectionStatus,
   KymIndPersonalSection,
 } from '@coop/shared/data-access';
+import { Box, Collapse, Icon, Text } from '@coop/shared/ui';
 
 const PersonalInformation = [
   'Basic Information',
