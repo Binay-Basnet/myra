@@ -12,6 +12,7 @@ import {
 import { FormInput, FormSelect } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IAddSisterConcern {
   index: number;
@@ -19,6 +20,7 @@ interface IAddSisterConcern {
 }
 
 const AddSister = ({ index, removeSister }: IAddSisterConcern) => {
+  const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -36,29 +38,29 @@ const AddSister = ({ index, removeSister }: IAddSisterConcern) => {
           type="text"
           bg="white"
           name={`sisterConcernDetails.${index}.name`}
-          label="Name of Sister Concern"
-          placeholder="Enter Name of Sister Concern"
+          label={t['kymInsNameofSisterConcern']}
+          placeholder={t['kymInsEnterNameofSisterConcern']}
         />
         <FormInput
           type="text"
           bg="white"
           name={`sisterConcernDetails.${index}.natureOfBusiness`}
-          label="Nature of Business"
-          placeholder="Nature of Business"
+          label={t['kymInsNatureofBusiness']}
+          placeholder={t['kymInsNatureofBusiness']}
         />
         <FormInput
           type="text"
           bg="white"
           name={`sisterConcernDetails.${index}.address`}
-          label="Address"
-          placeholder="Address"
+          label={t['kymInsAddress']}
+          placeholder={t['kymInsAddress']}
         />
         <FormInput
           type="text"
           bg="white"
           name={`sisterConcernDetails.${index}.phoneNo`}
-          label="Phone No."
-          placeholder="Enter Phone Number"
+          label={t['kymInsPhoneNo']}
+          placeholder={t['kymInsEnterPhoneNumber']}
         />
       </Grid>
     </DynamicBoxContainer>
@@ -66,6 +68,7 @@ const AddSister = ({ index, removeSister }: IAddSisterConcern) => {
 };
 
 export const InstitutionKYMSisterConcernDetails = () => {
+  const { t } = useTranslation();
   const {
     fields: sisterFields,
     append: sisterAppend,
@@ -75,7 +78,7 @@ export const InstitutionKYMSisterConcernDetails = () => {
   return (
     <GroupContainer id="Details of sister concern" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
-        Details of sister concern
+        {t['kymInsDetailsofsisterconcern']}
       </Text>
 
       <div>
@@ -99,7 +102,7 @@ export const InstitutionKYMSisterConcernDetails = () => {
               sisterAppend({});
             }}
           >
-            New Detail
+            {t['kymInsNewDetail']}
           </Button>
         </DynamicBoxGroupContainer>
       </div>

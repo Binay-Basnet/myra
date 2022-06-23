@@ -37,8 +37,10 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const AddDirector = ({ watch, index, control, removeDirector }) => {
+  const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
 
   const [temporaryAddress, setTemporaryAddress] = useState(false);
@@ -141,21 +143,21 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               <FormInput
                 type="text"
                 name={`detailsOfDirectors.${index}.fullName`}
-                label="Full Name"
-                placeholder="Enter Full Name"
+                label={t['kymInsFullName']}
+                placeholder={t['kymInsEnterFullName']}
               />
               <FormInput
                 type="text"
                 name={`detailsOfDirectors.${index}.designation`}
-                label="Designation"
-                placeholder="Enter Designation"
+                label={t['kymInsDesignation']}
+                placeholder={t['kymInsEnterDesignation']}
               />
             </InputGroupContainer>
           </AccordianContainer>
 
           <AccordianContainer>
             <Text fontSize="r1" fontWeight="SemiBold">
-              Permanent Address
+              {t['kymInsPermanentAddress']}
             </Text>
             {/* <Box
               id="Permanent Address"
@@ -166,14 +168,14 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             <InputGroupContainer>
               <FormSelect
                 name={`detailsOfDirectors.${index}.permanentState`}
-                label="State"
-                placeholder="Select State"
+                label={t['kymInsState']}
+                placeholder={t['kymInsSelectState']}
                 options={province}
               />
               <FormSelect
                 name={`detailsOfDirectors.${index}.permanentDistrict`}
-                label="District"
-                placeholder="Select District"
+                label={t['kymInsDistrict']}
+                placeholder={t['kymInsSelectDistrict']}
                 options={districtList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -181,8 +183,8 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               />
               <FormSelect
                 name={`detailsOfDirectors.${index}.permanentMunicipality`}
-                label="VDC / Municipality"
-                placeholder="Select VDC / Municipality"
+                label={t['kymInsVDCMunicipality']}
+                placeholder={t['kymInsSelectVDCMunicipality']}
                 options={localityList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -191,19 +193,19 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               <FormInput
                 type="number"
                 name={`detailsOfDirectors.${index}.permanentWardNo`}
-                label="Ward No"
-                placeholder="Enter Ward No"
+                label={t['kymInsWardNo']}
+                placeholder={t['kymInsEnterWardNo']}
               />
               <FormInput
                 type="text"
                 name={`detailsOfDirectors.${index}.permanentLocality`}
-                label="Locality"
-                placeholder="Enter Locality"
+                label={t['kymInsLocality']}
+                placeholder={t['kymInsEnterLocality']}
               />
             </InputGroupContainer>
 
             <Button alignSelf="start" leftIcon={<Icon size="md" as={FaMap} />}>
-              Pin on Map
+              {t['pinOnMap']}
             </Button>
             {/* </Box> */}
           </AccordianContainer>
@@ -216,26 +218,26 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             scrollMarginTop={'200px'}
           >
             <Text fontSize="r1" fontWeight="SemiBold">
-              Temporary Address
+              {t['kymInsTemporaryAddress']}
             </Text>
 
             <FormSwitch
               control={control}
               name="isPermanentAndTemporaryAddressSame"
-              label="Temporary Address same as permanent"
+              label={t['kymInsTemporaryAddressPermanent']}
             />
 
             <InputGroupContainer>
               <FormSelect
                 name={`detailsOfDirectors.${index}.temporaryState`}
-                label="State"
-                placeholder="Select State"
+                label={t['kymInsState']}
+                placeholder={t['kymInsSelectState']}
                 options={province}
               />
               <FormSelect
                 name={`detailsOfDirectors.${index}.temporaryDistrict`}
-                label="District"
-                placeholder="Select District"
+                label={t['kymInsDistrict']}
+                placeholder={t['kymInsSelectDistrict']}
                 options={districtTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -243,8 +245,8 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               />
               <FormSelect
                 name={`detailsOfDirectors.${index}.temporaryMunicipality`}
-                label="VDC / Muncipality"
-                placeholder="Select VDC / Muncipality"
+                label={t['kymInsVDCMunicipality']}
+                placeholder={t['kymInsSelectVDCMunicipality']}
                 options={localityTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -253,14 +255,14 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               <FormInput
                 type="number"
                 name={`detailsOfDirectors.${index}.temporaryWardNo`}
-                label="Ward No"
-                placeholder="Enter Ward No"
+                label={t['kymInsWardNo']}
+                placeholder={t['kymInsEnterWardNo']}
               />
               <FormInput
                 type="text"
                 name={`detailsOfDirectors.${index}.temporaryLocality`}
-                label="Locality"
-                placeholder="Enter Locality"
+                label={t['kymInsLocality']}
+                placeholder={t['kymInsEnterLocality']}
               />
             </InputGroupContainer>
             <Button
@@ -268,39 +270,39 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               alignSelf="start"
               leftIcon={<Icon size="md" as={FaMap} />}
             >
-              Pin on Map
+              {t['pinOnMap']}
             </Button>
           </Box>
           <InputGroupContainer>
             <FormInput
               type="date"
               name={`detailsOfDirectors.${index}.dateOfMembership`}
-              label="Date of membership"
+              label={t['kymInsDateOfMembership']}
               placeholder="DD-MM-YYYY"
             />
             <FormInput
               type="text"
               name={`detailsOfDirectors.${index}.highestQualification`}
-              label="Highest Qualification"
-              placeholder="Enter higest qualification"
+              label={t['kymInsHighestQualification']}
+              placeholder={t['kymInsEnterHigestQualification']}
             />
             <FormInput
               type="number"
               name={`detailsOfDirectors.${index}.mobileNo`}
-              label="Mobile No"
-              placeholder="Enter Mobile No"
+              label={t['kymInsMobileNo']}
+              placeholder={t['kymInsEnterMobileNo']}
             />
             <FormInput
               type="text"
               name={`detailsOfDirectors.${index}.emailAddress`}
-              label="Email"
-              placeholder="Enter Email"
+              label={t['kymInsEmail']}
+              placeholder={t['kymInsEnterEmail']}
             />
             <FormInput
               type="string"
               name={`detailsOfDirectors.${index}.documentNo`}
-              label="Citizenship/Passport/Driving License No."
-              placeholder="Enter No"
+              label={t['kymInsCitizenshipPassportDrivingLicenseNo']}
+              placeholder={t['kymInsEnterNo']}
             />
           </InputGroupContainer>
           {/* <Text fontSize="r1" fontWeight="SemiBold">
@@ -329,13 +331,13 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
           <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
             <FormFileInput
               size="lg"
-              label="Photograph"
+              label={t['kymInsPhotograph']}
               // control={control}
               name={`detailsOfDirectors.${index}.photograph`}
             />
             <FormFileInput
               size="lg"
-              label="Photograph of identity proof document"
+              label={t['kymInsPhotographOfIdentityProofDocument']}
               // control={control}
               name={`detailsOfDirectors.${index}.documentPhotograph`}
             />
@@ -348,6 +350,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
 };
 
 export const BoardDirectorInfo = ({ watch, control }) => {
+  const { t } = useTranslation();
   const {
     fields: directorFields,
     append: directorAppend,
@@ -359,7 +362,7 @@ export const BoardDirectorInfo = ({ watch, control }) => {
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">
-        Details of Proprietor, Partners, Directors.
+        {t['kymInsDetailsofProprietorPartnersDirectors']}
       </Text>
       {directorFields.map((item, index) => {
         return (
@@ -382,7 +385,7 @@ export const BoardDirectorInfo = ({ watch, control }) => {
           directorAppend({});
         }}
       >
-        Add Director
+        {t['kymInsAddDirector']}
       </Button>
     </GroupContainer>
   );

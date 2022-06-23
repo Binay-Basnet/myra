@@ -13,7 +13,7 @@ type shareHistoryProps = {
 export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
   const router = useRouter();
   const { t } = useTranslation();
-  const { data: shareHistoryTableData, isLoading } = useGetShareHistoryQuery({
+  const { data: shareHistoryTableData, isFetching } = useGetShareHistoryQuery({
     memberId: id,
   });
   const data = shareHistoryTableData?.share?.register?.edges;
@@ -103,7 +103,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
     <Table
       isStatic={true}
       size="compact"
-      isLoading={isLoading}
+      isLoading={isFetching}
       data={rowData ?? []}
       columns={columns}
       showFooters={true}

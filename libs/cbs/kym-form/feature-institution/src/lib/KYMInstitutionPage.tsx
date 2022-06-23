@@ -4,6 +4,7 @@ import { BiSave } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   ContainerWithDivider,
@@ -44,6 +45,7 @@ import {
 export interface KYMInstitutionPageProps {}
 
 export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
+  const { t } = useTranslation();
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
     subSection: string;
@@ -93,7 +95,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
               borderBottom="1px solid #E6E6E6"
             >
               <Text fontSize="r2" fontWeight="SemiBold">
-                Add New Member
+                {t['kymInsAddNewMember']}
               </Text>
               <IconButton
                 variant={'ghost'}
@@ -148,7 +150,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                   <SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        1. Information of Institution
+                        {t['kymIns1InformationofInstitution']}
                       </Text>
                       <ContainerWithDivider>
                         <BasicDetailsInstitution />
@@ -161,7 +163,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        2. Transaction Profile
+                        {t['kymIns2TransactionProfile']}
                       </Text>
                       <ContainerWithDivider>
                         {' '}
@@ -171,7 +173,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        3. Details of Proprietor, partners, Directors
+                        {t['kymIns3DetailsofProprietorpartnersDirectors']}
                       </Text>
                       <ContainerWithDivider>
                         <BoardDirectorInfo watch={watch} control={control} />
@@ -181,7 +183,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        4. Account Operations
+                        {t['kymIns4AccountOperations']}
                       </Text>
                       <ContainerWithDivider>
                         <InstitutionKYMAccountDetail />
@@ -190,7 +192,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                     </SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        5. Declaration
+                        {t['kymIns5Declaration']}
                       </Text>
                       <ContainerWithDivider>
                         <DocumentDeclarationInstitution />
@@ -218,7 +220,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
               px="5"
               boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
             >
-              <Text>Form Details saved to draft</Text>
+              <Text>{t['formDetails']}</Text>
               <Box
                 display="flex"
                 flexDirection="row"
@@ -239,7 +241,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                       fontSize="s2"
                       ml="5px"
                     >
-                      Save Draft
+                      {t['saveDraft']}
                     </Text>
                   </Button>
                 </Box>
@@ -247,7 +249,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                 <Button
                   onClick={() => router.push(`/members/translation/${id}`)}
                 >
-                  Next
+                  {t['next']}
                 </Button>
               </Box>
             </Box>

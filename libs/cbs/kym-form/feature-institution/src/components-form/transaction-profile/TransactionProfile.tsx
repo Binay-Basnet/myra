@@ -5,6 +5,7 @@ import {
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
 // import { InstitutionExpectedMonthlyTurnover } from '@coop/shared/data-access';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const radioList1 = [
   'Less than 5 Lakhs',
@@ -19,6 +20,7 @@ const radioList2 = [
 ];
 
 export const TransactionProfileInstitution = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer>
       <>
@@ -29,13 +31,13 @@ export const TransactionProfileInstitution = () => {
             // control={control}
             type="text"
             name="natureOfTransaction"
-            label="Nature of Transaction"
-            placeholder="Enter Nature of Transaction"
+            label={t['kymInsNatureofTransaction']}
+            placeholder={t['kymInsEnterNatureofTransaction']}
           />
           <FormInput
             type="number"
             name="annualTurnover"
-            label="Annual Turnover"
+            label={t['kymInsAnnualTurnover']}
             textAlign={'right'}
             placeholder="0.00"
           />
@@ -43,7 +45,7 @@ export const TransactionProfileInstitution = () => {
           <FormInput
             type="number"
             name="initialDepositAmount"
-            label="Initial Deposit Amount"
+            label={t['kymInsInitialDepositAmount']}
             textAlign={'right'}
             placeholder="0.00"
           />
@@ -56,7 +58,7 @@ export const TransactionProfileInstitution = () => {
           >
             <FormRadioGroup
               name="expectedMonthlyTurnover"
-              label="Expected Monthly Turnover"
+              label={t['kymInsExpectedMonthlyTurnover']}
               radioList={radioList1}
               orientation="vertical"
             />
@@ -69,7 +71,7 @@ export const TransactionProfileInstitution = () => {
           >
             <FormRadioGroup
               name="expectedMonthlyTransaction"
-              label="Expected Monthly Transaction"
+              label={t['kymInsExpectedMonthlyTransaction']}
               radioList={radioList2}
               orientation="vertical"
             />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BiFilter } from 'react-icons/bi';
 import { Cell } from 'react-table';
+import { useRouter } from 'next/router';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -18,8 +19,8 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+
 import { Pagination, TableSearch } from '@coop/shared/ui';
-import { useRouter } from 'next/router';
 
 import ListFilterPopover from './components/ListFilterPopover';
 import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
@@ -59,6 +60,8 @@ export function Table<T extends Record<string, unknown>>({
     ...props,
   });
 
+  console.log(data);
+
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
   const {
@@ -70,32 +73,53 @@ export function Table<T extends Record<string, unknown>>({
     footerGroups,
   } = tableInstance;
 
-  if (isLoading) {
-    return (
-      <Flex justifyContent="center" height="300px" alignItems="center">
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="primary.500"
-          size="xl"
-        />
-      </Flex>
-    );
-  }
-
-  if (data?.length === 0) {
-    return (
-      <Flex justifyContent="center" height="300px" alignItems="center">
-        <Text fontSize="r3" color="gray.500">
-          No Data Found
-        </Text>
-      </Flex>
-    );
-  }
+  // if (data?.length === 0) {
+  //   return (
+  //     <Flex justifyContent="center" height="300px" alignItems="center">
+  //       <Text fontSize="r3" color="gray.500">
+  //         No Data Found
+  //       </Text>
+  //     </Flex>
+  //   );
+  // }
 
   return (
-    <>
+    <Box
+      position="relative"
+      _before={
+        isLoading
+          ? {
+              bg: 'white',
+              content: '""',
+              position: 'absolute',
+              opacity: '0.6',
+              width: '100%',
+              height: '100%',
+              zIndex: '10',
+            }
+          : {}
+      }
+    >
+      {isLoading && (
+        <Box
+          position="absolute"
+          width="100%"
+          height="100%"
+          zIndex={10}
+          display="flex"
+          justifyContent="center"
+          pt="100px"
+        >
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="primary.500"
+            size="xl"
+          />
+        </Box>
+      )}
+
       {!isStatic && (
         <TableSearch
           placeholder={searchPlaceholder}
@@ -104,7 +128,7 @@ export function Table<T extends Record<string, unknown>>({
           setSize={setTableSize}
         />
       )}
-      <TableContainer>
+      <TableContainer position="relative">
         <ChakraTable
           size={tableSize}
           overflowX="hidden"
@@ -291,7 +315,7 @@ export function Table<T extends Record<string, unknown>>({
           pageSizeOptions={[10, 50, 100]}
         />
       )}
-    </>
+    </Box>
   );
 }
 

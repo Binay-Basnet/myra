@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
+
 import { useGetInventoryVendorQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 
 export const InventoryVendorTable = () => {
-  const { data, isLoading } = useGetInventoryVendorQuery();
+  const { data, isFetching } = useGetInventoryVendorQuery();
 
   const rowItems = data?.inventory.vendors?.list?.edges ?? [];
 
@@ -55,7 +56,7 @@ export const InventoryVendorTable = () => {
       <TableListPageHeader heading={'Vendor'} />
 
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowItems}
         columns={columns}
         sort={true}

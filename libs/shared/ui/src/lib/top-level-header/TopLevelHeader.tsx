@@ -289,23 +289,27 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                 <PopoverContent
                   bg="gray.0"
                   w="260px"
-                  border="2px"
-                  borderColor="#E0E5EB"
-                  boxShadow={'none'}
+                  border="none"
+                  boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
                   outline={'none'}
-                  _focus={{ boxShadow: 'none' }}
+                  _focus={{
+                    boxShadow:
+                      '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
+                  }}
                   color="white"
                   zIndex="2000"
                 >
-                  <PopoverBody px="s8" paddingTop="s8">
+                  <PopoverBody p="0">
                     <Box display="flex" flexDirection="column">
                       <Box
-                        p="12px"
+                        px="s12"
+                        py="s16"
                         display="flex"
                         flexDirection="row"
+                        alignItems="center"
                         borderBottom="1px solid #E6E6E6"
                       >
-                        <Avatar src={'/avatar.png'} size="sm" />
+                        <Avatar src={'/avatar.png'} w="s32" h="s32" />
                         <Box
                           ml="14px"
                           display="flex"
@@ -329,7 +333,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         </Box>
                       </Box>
 
-                      <Box p="12px" borderBottom="1px solid #E6E6E6">
+                      <Box p="s8" borderBottom="1px solid #E6E6E6">
                         <Select
                           label="Branch"
                           placeholder="Lalitpur"
@@ -354,7 +358,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         display="flex"
                         flexDirection="column"
                         justifyContent="space-between"
-                        p="12px"
+                        p="s8"
                         borderBottom="1px solid #E6E6E6"
                       >
                         <Text
@@ -380,7 +384,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         display="flex"
                         flexDirection="column"
                         justifyContent="space-between"
-                        p="12px"
+                        p="s8"
                         borderBottom="1px solid #E6E6E6"
                       >
                         <Text
@@ -391,25 +395,26 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         >
                           Calendar
                         </Text>
-                        <SwitchTabs options={calendarList} />
+                        <SwitchTabs value="AD" options={calendarList} />
                       </Box>
 
                       <Box
                         display="flex"
                         flexDirection="column"
                         justifyContent="space-between"
-                        paddingTop="12px"
+                        py="s8"
                       >
                         <Box
                           _hover={{
                             bg: 'background.500',
                           }}
-                          px="s8"
-                          py="s8"
+                          h="40px"
+                          px="s16"
+                          display="flex"
+                          alignItems="center"
                         >
                           <Text
                             textAlign="start"
-                            mb="4px"
                             fontWeight="Regular"
                             fontSize="r1"
                             color="neutralColorLight.Gray-80"
@@ -422,8 +427,10 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           _hover={{
                             bg: 'background.500',
                           }}
-                          px="s8"
-                          py="s8"
+                          h="40px"
+                          px="s16"
+                          display="flex"
+                          alignItems="center"
                         >
                           <Text
                             fontWeight="Regular"

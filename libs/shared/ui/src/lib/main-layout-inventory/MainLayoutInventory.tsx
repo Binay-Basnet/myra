@@ -16,7 +16,7 @@ export function MainLayoutInventory(props: MainLayoutInventoryProps) {
         <TopLevelHeader />
         <TabMenuForInventoryApp />
       </Box>
-      <Box mt="120px">{children}</Box>
+      <Box mt="110px">{children}</Box>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import {
 import { FormFileInput, FormInput, FormSelect } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IAddAccountDetailsConcern {
   index: number;
@@ -22,6 +23,7 @@ const AddAccountDetails = ({
   index,
   removeAccountDetails,
 }: IAddAccountDetailsConcern) => {
+  const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -39,13 +41,13 @@ const AddAccountDetails = ({
           type="text"
           bg="white"
           name={`accountOperatorsDetails.${index}.fullName`}
-          label="Full Name"
-          placeholder="Enter Full Name"
+          label={t['kymInsFullName']}
+          placeholder={t['kymInsEnterFullName']}
         />
         <FormSelect
           name={`accountOperatorsDetails.${index}.designation`}
-          label="Designation"
-          placeholder="Select position"
+          label={t['kymInsDesignation']}
+          placeholder={t['kymInsSelectposition']}
           options={[
             { value: 'precident', label: 'President' },
             { value: 'viceprecident', label: 'Vice-President' },
@@ -55,7 +57,7 @@ const AddAccountDetails = ({
         />
         <Box display="flex" flexDirection={'column'} gap="s4">
           <Text fontSize={'s3'} fontWeight="500">
-            Specimen Signature
+            {t['kymInsSpecimenSignature']}
           </Text>
           <Box w="124px" display="flex" flexDirection={'column'} gap="s4">
             <FormFileInput
@@ -69,6 +71,7 @@ const AddAccountDetails = ({
 };
 
 export const InstitutionKYMAccountDetail = () => {
+  const { t } = useTranslation();
   const {
     fields: accountFields,
     append: accountAppend,
@@ -78,7 +81,7 @@ export const InstitutionKYMAccountDetail = () => {
   return (
     <GroupContainer id="Details of Account Operators" scrollMarginTop="200px">
       <Text fontSize="r1" fontWeight="SemiBold">
-        Details of Account Operators
+        {t['kymInsDetailsofAccountOperators']}
       </Text>
 
       <div>
@@ -102,7 +105,7 @@ export const InstitutionKYMAccountDetail = () => {
               accountAppend({});
             }}
           >
-            New Operator
+            {t['kymInsNewOperator']}
           </Button>
         </DynamicBoxGroupContainer>
       </div>

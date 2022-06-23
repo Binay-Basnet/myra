@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
+
 import { useGetInventoryItemGroupQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 
 export const InventoryItemGroupTable = () => {
-  const { data, isLoading } = useGetInventoryItemGroupQuery();
+  const { data, isFetching } = useGetInventoryItemGroupQuery();
 
   const rowItems = data?.inventory.itemsGroup?.list?.edges ?? [];
 
@@ -50,7 +51,7 @@ export const InventoryItemGroupTable = () => {
 
       <Table
         data={rowItems}
-        isLoading={isLoading}
+        isLoading={isFetching}
         columns={columns}
         sort={true}
       />
