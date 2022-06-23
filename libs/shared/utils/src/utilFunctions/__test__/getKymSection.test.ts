@@ -6,6 +6,14 @@ describe('getKymSection should function as expected', () => {
       section: 'personalDetails',
       subSection: 'Temporary Address',
     });
+    expect(getKymSection('temporaryLocalityId')).toEqual({
+      section: 'personalDetails',
+      subSection: 'Temporary Address',
+    });
+    expect(getKymSection('temporaryLocalityId')).toEqual({
+      section: 'personalDetails',
+      subSection: 'Temporary Address',
+    });
   });
   test('gives undefined when random unexpected id is received', () => {
     expect(getKymSection('randomId')).toEqual(undefined);
