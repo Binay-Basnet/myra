@@ -159,6 +159,8 @@ const MainOccupation = ({
 export const MemberKYMMainOccupation = () => {
   const { control, watch } = useFormContext();
 
+  const isForeignEmployee = watch('isForeignEmployee');
+
   const {
     fields: mainOccupationFields,
     append: mainOccupationAppend,
@@ -199,44 +201,36 @@ export const MemberKYMMainOccupation = () => {
       <Box display="flex" flexDirection="row">
         <FormSwitch
           control={control}
-          name="isPermanentAndTemporaryAddressSame"
+          name="isForeignEmployee"
           label="Enable for Foreign Employment"
         />
-        {/* <Switch /> */}
-        {/* <Text
-          ml="s20"
-          fontSize="r1"
-          fontWeight="Medium"
-          color="neutralColorLight.Gray-70"
-        >
-          Enable for Foreign Employment
-        </Text> */}
       </Box>
 
-      <Grid mb="s16" templateColumns="repeat(3, 1fr)" gap="s16">
-        <GridItem>
-          <Select
-            id="country"
-            label="Name of Country"
-            placeholder="Select Country"
-            options={[
-              {
-                label: 'Nepal',
-                value: 'Nepal',
-              },
-              {
-                label: 'India',
-                value: 'India',
-              },
-              {
-                label: 'China',
-                value: 'China',
-              },
-            ]}
-          />
-        </GridItem>
-        <GridItem>
-          {/* <FormInput
+      {isForeignEmployee && (
+        <Grid mb="s16" templateColumns="repeat(3, 1fr)" gap="s16">
+          <GridItem>
+            <Select
+              id="country"
+              label="Name of Country"
+              placeholder="Select Country"
+              options={[
+                {
+                  label: 'Nepal',
+                  value: 'Nepal',
+                },
+                {
+                  label: 'India',
+                  value: 'India',
+                },
+                {
+                  label: 'China',
+                  value: 'China',
+                },
+              ]}
+            />
+          </GridItem>
+          <GridItem>
+            {/* <FormInput
             bg="white"
             control={control}
             type="text"
@@ -244,39 +238,40 @@ export const MemberKYMMainOccupation = () => {
             label="Type of Visa"
             placeholder="Enter Type of Visa"
           /> */}
-          <FormSelect
-            control={control}
-            name="typeOfVisa"
-            label="Type of Visa"
-            placeholder="Enter Type of Visa"
-            options={[
-              {
-                label: 'Nepal',
-                value: 'Nepal',
-              },
-              {
-                label: 'India',
-                value: 'India',
-              },
-              {
-                label: 'China',
-                value: 'China',
-              },
-            ]}
-          />
-        </GridItem>
-        <GridItem>
-          <FormInput
-            bg="white"
-            control={control}
-            type="number"
-            textAlign={'right'}
-            name={`orgName`}
-            label="Estimated Annual Income"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
+            <FormSelect
+              control={control}
+              name="typeOfVisa"
+              label="Type of Visa"
+              placeholder="Enter Type of Visa"
+              options={[
+                {
+                  label: 'Nepal',
+                  value: 'Nepal',
+                },
+                {
+                  label: 'India',
+                  value: 'India',
+                },
+                {
+                  label: 'China',
+                  value: 'China',
+                },
+              ]}
+            />
+          </GridItem>
+          <GridItem>
+            <FormInput
+              bg="white"
+              control={control}
+              type="number"
+              textAlign={'right'}
+              name={`orgName`}
+              label="Estimated Annual Income"
+              placeholder="0.00"
+            />
+          </GridItem>
+        </Grid>
+      )}
     </GroupContainer>
   );
 };

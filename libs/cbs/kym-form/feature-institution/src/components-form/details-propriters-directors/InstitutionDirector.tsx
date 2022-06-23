@@ -232,6 +232,8 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               label={t['kymInsTemporaryAddressPermanent']}
             />
 
+            {/* {!isPermanentAndTemporaryAddressSame && (
+              <> */}
             <InputGroupContainer>
               <FormSelect
                 name={`detailsOfDirectors.${index}.temporaryState`}
@@ -277,6 +279,8 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             >
               {t['pinOnMap']}
             </Button>
+            {/* </>
+            )} */}
           </Box>
           <InputGroupContainer>
             <FormInput
