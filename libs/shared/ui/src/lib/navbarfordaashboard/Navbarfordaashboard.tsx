@@ -40,7 +40,7 @@ function ActiveLink(props: { children: React.ReactNode; href: string }) {
   const style = {
     marginRight: 10,
     height: '60px',
-    width: '100px',
+    width: '130px',
     boxShadow: router?.asPath === href ? ' inset 0px -4px 0px #8CC63F' : 'none',
   };
 
@@ -85,7 +85,7 @@ export function Navbarfordaashboard() {
             {t.home}
           </ActiveLink>
           <ActiveLink href="/dashboard-main">
-            <Icon as={IoGrid} mr="s12" />
+            <Icon as={IoGrid} mr="s12" ml="s4" />
             {t.dashboard}
           </ActiveLink>
         </Box>
