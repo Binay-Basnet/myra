@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ShareSettingsFeeAndCharges } from '@coop/cbs/settings/share';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
@@ -7,7 +8,7 @@ import {
 } from '@coop/cbs/settings/ui-layout';
 
 const ShareFeeAndCharges = () => {
-  return <div>Share Fee And Charges</div>;
+  return <ShareSettingsFeeAndCharges />;
 };
 
 export default ShareFeeAndCharges;

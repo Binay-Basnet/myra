@@ -829,6 +829,14 @@ const en = {
   shareBookPayablesSubtitle:
     'Choose the organization’s fund account to allocate share dividends',
   shareNameOfTheFund: 'Name of the Fund (Charts of Accounts)',
+
+  // Settings Share Fee And Charges
+  shareCertificateCharge: 'Share Certificate Charge',
+  shareCertificateChargeSubtitle: 'Basic Charge for share issues and return',
+  shareMinShareQuantity: 'Min Share Quantity',
+  shareMaxShareQuantity: 'Max Share Quantity',
+  shareType: 'Type',
+  shareCharge: 'Charge',
 };
 
 export default en;
