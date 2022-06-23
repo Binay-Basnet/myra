@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
+
 import { useGetInventoryUnitOfMeasureQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 
 export const InventoryUseOfMeasureTable = () => {
-  const { data, isLoading } = useGetInventoryUnitOfMeasureQuery();
+  const { data, isFetching } = useGetInventoryUnitOfMeasureQuery();
 
   const rowItems = data?.inventory.unitOfMeasure?.list?.edges ?? [];
 
@@ -48,7 +49,7 @@ export const InventoryUseOfMeasureTable = () => {
       <TableListPageHeader heading={'Units of Measure'} />
 
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowItems}
         columns={columns}
         sort={true}

@@ -4,8 +4,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const BankAccountDetails = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Bank Account Details" scrollMarginTop={'200px'}>
       <Text
@@ -13,13 +15,13 @@ export const BankAccountDetails = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Bank Account Details
+        {t.kymCoopUnionBankAccountDetails}
       </Text>
       <InputGroupContainer>
         <FormSelect
           name="nameOfBank"
-          label="Name of Bank"
-          placeholder="Select Bank"
+          label={t.kymCoopUnionNameOfBank}
+          placeholder={t.kymCoopUnionSelectBank}
           options={[
             { label: 'NIC AISA BANK ', value: 'NICA' },
             { label: 'JYOTI BIKAS BANK LIMITED', value: 'JBBL' },
@@ -29,15 +31,15 @@ export const BankAccountDetails = () => {
         <FormInput
           type="text"
           name="accountNumber"
-          label="Account Number"
-          placeholder="Enter Account Number"
+          label={t.kymCoopUnionAccountNumber}
+          placeholder={t.kymCoopUnionEnterAccountNumber}
         />
 
         <FormInput
           type="text"
           name="accountName"
-          label="Account Name"
-          placeholder="Enter Account Name"
+          label={t.kymCoopUnionAccountName}
+          placeholder={t.kymCoopUnionEnterAccountName}
         />
       </InputGroupContainer>
     </GroupContainer>

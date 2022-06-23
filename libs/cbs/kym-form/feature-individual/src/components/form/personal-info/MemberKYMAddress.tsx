@@ -1,24 +1,50 @@
 import { useMemo, useState } from 'react';
-import { Control, UseFormWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
+import { GrClose } from 'react-icons/gr';
+import dynamic from 'next/dynamic';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  KymIndMemberInput,
-  useAllAdministrationQuery,
-} from '@coop/shared/data-access';
+import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Icon, IconButton, Modal, Text } from '@coop/shared/ui';
 
-interface IMemberKYMAddress {
-  control: Control<KymIndMemberInput | any>;
-  watch: UseFormWatch<KymIndMemberInput | any>;
-}
+const Map = dynamic(() => import('./Map'), {
+  ssr: false,
+});
 
-export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
+export const MemberKYMAddress = () => {
+  const { control, watch } = useFormContext();
+
+  const [openModal, setOpenModal] = useState(false);
+  const [permanentAddressPosition, setPermanentAddressPosition] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  const setPermanentAddressPositionValues = (prop: {
+    latitude: number;
+    longitude: number;
+  }) => {
+    const { latitude, longitude } = prop;
+    setPermanentAddressPosition({
+      ...permanentAddressPosition,
+      latitude,
+      longitude,
+    });
+  };
+
+  const onOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
+
   const isPermanentAndTemporaryAddressSame = watch(
     'isPermanentAndTemporaryAddressSame'
   );
@@ -69,7 +95,7 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
       [],
     [currentTemptDistrictId]
   );
-
+  console.log('hello', permanentAddressPosition);
   return (
     <GroupContainer>
       <Box
@@ -90,14 +116,12 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
         >
           <InputGroupContainer>
             <FormSelect
-              control={control}
               name="permanentStateId"
               label="Province"
               placeholder="Select Province"
               options={province}
             />
             <FormSelect
-              control={control}
               name="permanentDistrictId"
               label="District"
               placeholder="Select District"
@@ -107,7 +131,6 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
               }))}
             />
             <FormSelect
-              control={control}
               name="permanentLocalityId"
               label="Local Government"
               placeholder="Select Local Government"
@@ -117,21 +140,18 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
               }))}
             />
             <FormInput
-              control={control}
               type="number"
               name="permanentWardId"
               label="Ward No"
               placeholder="Enter Ward No"
             />
             <FormInput
-              control={control}
               type="text"
               name="permanentTole"
               label="Locality"
               placeholder="Enter Locality"
             />
             <FormInput
-              control={control}
               type="text"
               name="permanentHouseNo"
               label="House No"
@@ -143,12 +163,69 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
             alignSelf="start"
             mt="-16px"
             leftIcon={<Icon size="md" as={FaMap} />}
+            onClick={() => {
+              onOpenModal();
+            }}
           >
             Pin on Map
           </Button>
+          <Modal
+            open={openModal}
+            onClose={onCloseModal}
+            isCentered={true}
+            size="3xl"
+            title={
+              <Text
+                fontSize="r2"
+                color="neutralColorLight.Gray-80"
+                fontWeight="SemiBold"
+              >
+                Pin on map
+              </Text>
+            }
+            footerPrimary1Props={
+              <Box px={5} display="flex" justifyContent="flex-end" h={50}>
+                <Button onClick={() => setOpenModal(false)}>Save</Button>
+              </Box>
+            }
+          >
+            <Map
+              position={permanentAddressPosition}
+              setPosition={setPermanentAddressPositionValues}
+            />
+          </Modal>
         </Box>
+        {permanentAddressPosition.longitude !== 0 &&
+          permanentAddressPosition.latitude !== 0 && (
+            <Box
+              p={2}
+              display="flex"
+              border="1px"
+              borderColor="gray.200"
+              width={455}
+              h={70}
+              borderRadius={5}
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Box display="flex" flexDirection="column">
+                <Text fontSize="r2">Manbawan, Lalitpur</Text>
+                <Text fontSize="s2" color="gray.600">
+                  {permanentAddressPosition?.latitude},{' '}
+                  {permanentAddressPosition?.longitude}
+                </Text>
+              </Box>
+              <IconButton
+                variant={'ghost'}
+                aria-label="close"
+                icon={<GrClose />}
+                onClick={() =>
+                  setPermanentAddressPosition({ longitude: 0, latitude: 0 })
+                }
+              />
+            </Box>
+          )}
       </Box>
-
       <Box
         id="Temporary Address"
         gap="s32"
@@ -161,7 +238,6 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
         </Text>
 
         <FormSwitch
-          control={control}
           name="isPermanentAndTemporaryAddressSame"
           label="Temporary Address same as permanent"
         />
@@ -170,14 +246,12 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
           <>
             <InputGroupContainer>
               <FormSelect
-                control={control}
                 name="temporaryStateId"
                 label="Province"
                 placeholder="Select Province"
                 options={province}
               />
               <FormSelect
-                control={control}
                 name="temporaryDistrictId"
                 label="District"
                 placeholder="Select District"
@@ -187,7 +261,6 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
                 }))}
               />
               <FormSelect
-                control={control}
                 name="temporaryLocalityId"
                 label="Local Government"
                 placeholder="Select Local Government"
@@ -197,21 +270,18 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
                 }))}
               />
               <FormInput
-                control={control}
                 type="number"
                 name="temporaryWardId"
                 label="Ward No"
                 placeholder="Enter Ward No"
               />
               <FormInput
-                control={control}
                 type="text"
                 name="temporaryTole"
                 label="Locality"
                 placeholder="Enter Locality"
               />
               <FormInput
-                control={control}
                 type="text"
                 name="temporaryHouseNo"
                 label="House No"
@@ -240,7 +310,6 @@ export const MemberKYMAddress = ({ control, watch }: IMemberKYMAddress) => {
         </Text>
         <InputGroupContainer>
           <FormInput
-            control={control}
             type="text"
             name={'landlordName'}
             label="Landlord's Name"

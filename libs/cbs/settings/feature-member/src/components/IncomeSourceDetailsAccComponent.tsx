@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -37,7 +37,8 @@ export const IncomeSourceDetailsAccComponent = ({
 }: {
   isExpanded: boolean;
 }) => {
-  const [fieldItems, setFieldItems] = useState<KymOption[]>([]);
+  const id = useId();
+  const [fieldItems, setFieldItems] = useState<Partial<KymOption>[]>([]);
 
   const [hasOtherField, setHasOtherField] = useState(false);
 
@@ -96,11 +97,13 @@ export const IncomeSourceDetailsAccComponent = ({
     if (result.destination) {
       items.splice(result.destination.index, 0, reorderedItem);
       setFieldItems(items);
-      await kymOptionArrange({
-        optionId: reorderedItem.id,
-        from: result.source.index,
-        to: result.destination.index,
-      });
+      if (reorderedItem?.id) {
+        await kymOptionArrange({
+          optionId: reorderedItem.id,
+          from: result.source.index,
+          to: result.destination.index,
+        });
+      }
     }
   };
 
@@ -131,11 +134,7 @@ export const IncomeSourceDetailsAccComponent = ({
               >
                 {fieldItems.map((item, index) => {
                   return field ? (
-                    <Draggable
-                      key={item.id}
-                      draggableId={item.id}
-                      index={index}
-                    >
+                    <Draggable key={item.id} draggableId={id} index={index}>
                       {(provided) => (
                         <Box
                           display={'flex'}
@@ -146,6 +145,7 @@ export const IncomeSourceDetailsAccComponent = ({
                           {...provided.draggableProps}
                         >
                           <KYMSingleItem
+                            setFieldItems={setFieldItems}
                             field={field}
                             item={item}
                             dragHandleProps={provided.dragHandleProps}
@@ -157,9 +157,11 @@ export const IncomeSourceDetailsAccComponent = ({
                                   (fieldItem) => fieldItem.id !== item.id
                                 )
                               );
-                              await kymOptionDelete({
-                                optionId: item.id,
-                              });
+                              if (item?.id) {
+                                await kymOptionDelete({
+                                  optionId: item.id,
+                                });
+                              }
                             }}
                             as={IoClose}
                             size="md"

@@ -2,19 +2,23 @@ import { useMemo } from 'react';
 import { useGetShareHistoryQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import format from 'date-fns/format';
+import { useTranslation } from '@coop/shared/utils';
+import { useRouter } from 'next/router';
 
 type memberIdProp = {
   id: string;
 };
 
 export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
-  const { data, isLoading } = useGetShareHistoryQuery({ memberId: id });
+  const router = useRouter();
+  const { t } = useTranslation();
+  const { data, isFetching } = useGetShareHistoryQuery({ memberId: id });
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'SN',
+        Header: t['sn'],
         accessor: 'node.id',
         width: '2',
         Cell: ({ row }) => {
@@ -23,7 +27,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
       },
 
       {
-        Header: 'Date',
+        Header: t['shareReturnTableDate'],
         accessor: 'node.transactionDate',
         Cell: ({ value }) => {
           return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
@@ -31,7 +35,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
       },
 
       {
-        Header: 'Share Number',
+        Header: t['shareReturnTableShareNumber'],
         accessor: 'node.shareStartNumber',
 
         Cell: ({ value, row }) => {
@@ -45,7 +49,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
 
       {
         id: 'share-dr',
-        Header: 'Share Dr',
+        Header: t['shareReturnTableShareDr'],
         accessor: 'node.shareDr',
         isNumeric: true,
 
@@ -57,7 +61,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
       },
       {
         id: 'share-cr',
-        Header: 'Share Cr',
+        Header: t['shareReturnTableShareCr'],
         isNumeric: true,
         accessor: 'node.shareCr',
         Cell: ({ value, row }) => {
@@ -67,7 +71,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
         },
       },
       {
-        Header: 'Balance',
+        Header: t['shareReturnTableBalance'],
         accessor: 'node.balance',
         isNumeric: true,
         Cell: ({ value }) => {
@@ -88,13 +92,13 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
         },
       },
     ],
-    []
+    [router.locale]
   );
 
   return (
     <Table
       isStatic={true}
-      isLoading={isLoading}
+      isLoading={isFetching}
       data={rowData ?? []}
       columns={columns}
       showFooters={true}

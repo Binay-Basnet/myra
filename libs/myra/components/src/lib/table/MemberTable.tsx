@@ -11,7 +11,7 @@ import { TableListPageHeader } from '../TableListPageHeader';
 
 export const MemberTable = () => {
   const router = useRouter();
-  const { data, isLoading } = useGetMemberListQuery({
+  const { data, isFetching } = useGetMemberListQuery({
     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
     first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
     last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
@@ -111,7 +111,7 @@ export const MemberTable = () => {
       />
 
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowData}
         columns={columns}
         sort={true}

@@ -6,6 +6,7 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { Box, Checkbox, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const booleanList = [
   {
@@ -19,6 +20,7 @@ const booleanList = [
 ];
 
 export const AccountOperationInstitution = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(0);
   return (
     <GroupContainer
@@ -30,19 +32,26 @@ export const AccountOperationInstitution = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Account Operation Instruction
+        {t['kymInsAccountOperationInstruction']}
       </Text>
       <Box display={'flex'} flexDirection="column" gap="s32" mt="-16px">
         <FormSwitchTab options={booleanList} name="accountType" />
         <Checkbox name="isCompanyStampCompulsory" id="isCompanyStampCompulsory">
           {' '}
-          Company Stamp Compulsory
+          {t['kymInsCompanyStampCompulsory']}
         </Checkbox>
         <InputGroupContainer>
-          <FormTextArea name="specialInstruction" label="Enter Instruction" />
+          <FormTextArea
+            name="specialInstruction"
+            label={t['kymInsEnterInstruction']}
+          />
         </InputGroupContainer>
         <Box w="124px">
-          <FormFileInput name="companyStamp" label="Company Stamp" size="md" />
+          <FormFileInput
+            name="companyStamp"
+            label={t['kymInsCompanyStamp']}
+            size="md"
+          />
         </Box>
       </Box>
     </GroupContainer>

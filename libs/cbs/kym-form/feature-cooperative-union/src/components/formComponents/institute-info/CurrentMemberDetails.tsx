@@ -2,14 +2,12 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormEmailInput,
-  FormInput,
-  FormPhoneNumber,
-} from '@coop/shared/form';
+import { FormEmailInput, FormInput, FormPhoneNumber } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const CurrentMemberDetails = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Current Member Details" scrollMarginTop={'200px'}>
       <Text
@@ -17,32 +15,32 @@ export const CurrentMemberDetails = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Current Members
+        {t['kymCoopUnionCurrentMembers']}
       </Text>
       <InputGroupContainer>
         <FormInput
           type="number"
           name="noOfMaleMember"
-          label="No. of Male members"
-          placeholder="Enter no of Male Members"
+          label={t['kymCoopUnionNoofMalemembers']}
+          placeholder={t['kymCoopUnionEnternoofMaleMembers']}
         />
         <FormInput
           type="number"
           name="noOfFemaleMember"
-          label="No. of Female members"
-          placeholder="Enter no of Female Members"
+          label={t['kymCoopUnionNoofFemalemembers']}
+          placeholder={t['kymCoopUnionEnternoofFemaleMembers']}
         />
         <FormInput
           type="number"
           name="noOfInstitutionalMember"
-          label="No. of Institutional members"
-          placeholder="Enter no of Institutuional Members"
+          label={t['kymCoopUnionNoofInstitutionalmembers']}
+          placeholder={t['kymCoopUnionEnternoofInstitutuionalMembers']}
         />
         <FormInput
           type="number"
           name="totalCurrentMmeber"
-          label="Total current members"
-          placeholder="Enter total current members"
+          label={t['kymCoopUnionTotalcurrentmembers']}
+          placeholder={t['kymCoopUnionEntertotalcurrentmembers']}
         />
       </InputGroupContainer>
     </GroupContainer>

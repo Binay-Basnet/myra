@@ -10,14 +10,15 @@ import {
 import { useSetCooperativeUnionBoardOfDirectorDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
-
 import { BoardDirectorInfo } from './BoardDirectorInfo';
+import { useTranslation } from '@coop/shared/utils';
 
 interface directorDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const DirectorDetails = (props: directorDetailsProps) => {
+  const { t } = useTranslation();
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -66,13 +67,12 @@ export const DirectorDetails = (props: directorDetailsProps) => {
         })}
         onFocus={(e) => {
           const kymSection = getKymSectionCoOperativeUnion(e.target.id);
-
           setSection(kymSection);
         }}
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            2. Details of Board Directors
+            {t['kymCoopUnionDetailsOfBoardDirectors']}
           </Text>
           <ContainerWithDivider>
             <BoardDirectorInfo watch={watch} control={control} />

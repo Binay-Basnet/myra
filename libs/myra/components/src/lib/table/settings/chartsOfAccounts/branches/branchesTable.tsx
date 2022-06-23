@@ -1,16 +1,16 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { PopoverComponent } from '@coop/myra/components';
 import { useGetBranchesListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-import { useRouter } from 'next/router';
 
 export const SettingsBranchesTable = () => {
   const { t } = useTranslation();
   const route = useRouter();
-  const { data, isLoading } = useGetBranchesListQuery();
+  const { data, isFetching } = useGetBranchesListQuery();
 
   const rowData = useMemo(
     () => data?.settings?.general?.branch?.list?.edges ?? [],
@@ -66,7 +66,7 @@ export const SettingsBranchesTable = () => {
       <SettingsPageHeader heading={'settingsBranch'} />
 
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowData ?? []}
         columns={columns}
         sort={true}

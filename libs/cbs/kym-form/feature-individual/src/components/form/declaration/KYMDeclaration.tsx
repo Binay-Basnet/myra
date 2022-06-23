@@ -6,20 +6,17 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
 import {
   FormInput,
+  FormRadioGroup,
   FormSelect,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import {
-  Box,
-  Grid,
-  GridItem,
-  RadioGroup,
-  Text,
-  TextFields,
-} from '@coop/shared/ui';
+import { Box, Grid, GridItem, Text, TextFields } from '@coop/shared/ui';
+
+import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IKYMDeclaration {
   control: Control<any>;
@@ -37,7 +34,18 @@ const booleanList = [
   },
 ];
 
-export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
+export const KYMDeclaration = () => {
+  const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
+    useGetIndividualKymOptionQuery({
+      fieldName: 'family_relationship',
+    });
+  const {
+    data: foreignEmploymentOptions,
+    isLoading: foreignEmploymentOptionsLoading,
+  } = useGetIndividualKymOptionQuery({
+    fieldName: 'foreign_employment_options',
+  });
+
   return (
     <GroupContainer>
       <Box
@@ -70,9 +78,9 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
             >
               <GridItem colSpan={1}>
                 <FormSelect
-                  control={control}
                   name={'beneficialRelationShipId'}
-                  options={[{ label: 'Father', value: 'father' }]}
+                  isLoading={familyRelationshipLoading}
+                  options={getFieldOption(familyRelationShipData)}
                   placeholder="Relationship"
                   label="If yes, please write name and relationship "
                 />
@@ -80,7 +88,6 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
 
               <GridItem mt="20px" colSpan={2}>
                 <FormInput
-                  control={control}
                   type="text"
                   name="fullName"
                   placeholder="Full Name"
@@ -106,7 +113,6 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
               <Box display="flex" flexDirection="column">
                 <FormTextArea
                   name="convictionDetails"
-                  control={control}
                   id="convictionDetails"
                   label="Please specify"
                   placeholder="Enter Details"
@@ -132,7 +138,6 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
               <Box display="flex" flexDirection="column">
                 <FormTextArea
                   name="convictionDetails"
-                  control={control}
                   id="convictionDetails"
                   label="Please specify"
                   placeholder="Enter Details"
@@ -158,7 +163,12 @@ export const KYMDeclaration = ({ control }: IKYMDeclaration) => {
               <Text fontSize="s3" mb="s16">
                 Specify following details
               </Text>
-              <RadioGroup radioList={details} labelFontSize="s3" />
+              {/* TODO CHANGE THIS NAME */}
+              <FormRadioGroup
+                name="foreignEmployment"
+                options={getFieldOption(foreignEmploymentOptions)}
+                labelFontSize="s3"
+              />
             </Box>
           </Box>
         </ContainerWithDivider>

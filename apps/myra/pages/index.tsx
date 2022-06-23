@@ -10,8 +10,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import NepaliDate from 'nepali-date-converter';
-
 import { Icon, Input } from '@coop/shared/ui';
+
 import { Navbarfordaashboard } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

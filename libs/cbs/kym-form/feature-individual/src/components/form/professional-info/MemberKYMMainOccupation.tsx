@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -8,6 +8,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
 import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
@@ -21,6 +22,8 @@ import {
   TextFields,
 } from '@coop/shared/ui';
 
+import { getFieldOption } from '../../../utils/getFieldOption';
+
 const MainOccupation = ({
   control,
   index,
@@ -30,6 +33,10 @@ const MainOccupation = ({
   const profession = watch('profession');
 
   const isOwner = watch(`mainOccupation.${index}.isOwner`);
+
+  const { data: occupationData } = useGetIndividualKymOptionQuery({
+    fieldName: 'occupation',
+  });
 
   return (
     <Box
@@ -61,7 +68,9 @@ const MainOccupation = ({
               placeholder="Select Occupation"
               options={
                 profession?.map((data: string) => ({
-                  label: data,
+                  label: getFieldOption(occupationData)?.find(
+                    (prev) => prev.value === data
+                  )?.label,
                   value: data,
                 })) ?? []
               }
@@ -143,7 +152,9 @@ const MainOccupation = ({
   );
 };
 
-export const MemberKYMMainOccupation = ({ control, watch }: any) => {
+export const MemberKYMMainOccupation = () => {
+  const { control, watch } = useFormContext();
+
   const {
     fields: mainOccupationFields,
     append: mainOccupationAppend,

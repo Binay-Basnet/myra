@@ -1,3 +1,4 @@
+export * from './lib/SettingsDepositLayout';
 export * from './lib/SettingsGeneralLayout';
 export * from './lib/SettingsLayout';
 export * from './lib/SettingsMemberLayout';

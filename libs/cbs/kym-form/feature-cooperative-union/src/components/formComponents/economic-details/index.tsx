@@ -14,12 +14,14 @@ import { KymAssestsAndtarget } from './assets';
 import { KymEquilities } from './equityandliabilities';
 import { ExpenseDetails } from './expenseDetails';
 import { IncomeDetails } from './incomeDetails';
+import { useTranslation } from '@coop/shared/utils';
 
 interface economicDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const EconomicDetails = (props: economicDetailsProps) => {
+  const { t } = useTranslation();
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -44,7 +46,7 @@ export const EconomicDetails = (props: economicDetailsProps) => {
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            6. Economic Details
+            {t['kymCoopUnionEco6EconomicDetails']}
           </Text>
           <ContainerWithDivider>
             <KymAssestsAndtarget watch={watch} />

@@ -34,8 +34,10 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const AddRepresentative = ({ watch, control }) => {
+  const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
 
   const [temporaryAddress, setTemporaryAddress] = useState(false);
@@ -133,21 +135,21 @@ export const AddRepresentative = ({ watch, control }) => {
                   <FormInput
                     type="text"
                     name={`centralRepresentativeDetails.fullName`}
-                    label="Full Name"
-                    placeholder="Enter Full Name"
+                    label={t['kymCoopUnionDirFullName']}
+                    placeholder={t['kymCoopUnionDirEnterFullName']}
                   />
                   <FormInput
                     type="text"
                     name={`centralRepresentativeDetails.designation`}
-                    label="Designation"
-                    placeholder="Enter Designation"
+                    label={t['kymCoopUnionDirDesignation']}
+                    placeholder={t['kymCoopUnionDirEnterDesignation']}
                   />
                 </InputGroupContainer>
               </AccordianContainer>
 
               <AccordianContainer>
                 <Text fontSize="r1" fontWeight="SemiBold">
-                  Permanent Address
+                  {t['kymCoopUnionDirPermanentAddress']}
                 </Text>
                 {/* <Box
               id="Permanent Address"
@@ -158,14 +160,14 @@ export const AddRepresentative = ({ watch, control }) => {
                 <InputGroupContainer>
                   <FormSelect
                     name={`centralRepresentativeDetails.permanentStateId`}
-                    label="State"
-                    placeholder="Select State"
+                    label={t['kymCoopUnionDirState']}
+                    placeholder={t['kymCoopUnionDirSelectState']}
                     options={province}
                   />
                   <FormSelect
                     name={`centralRepresentativeDetails.permanentDistrictId`}
-                    label="District"
-                    placeholder="Select District"
+                    label={t['kymCoopUnionDirDistrict']}
+                    placeholder={t['kymCoopUnionDirSelectDistrict']}
                     options={districtList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -173,8 +175,8 @@ export const AddRepresentative = ({ watch, control }) => {
                   />
                   <FormSelect
                     name={`centralRepresentativeDetails.permanentVdcOrMunicId`}
-                    label="VDC / Municipality"
-                    placeholder="Select VDC / Municipality"
+                    label={t['kymCoopUnionDirVDCMunicipality']}
+                    placeholder={t['kymCoopUnionDirSelectVDCMunicipality']}
                     options={localityList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -183,14 +185,14 @@ export const AddRepresentative = ({ watch, control }) => {
                   <FormInput
                     type="number"
                     name={`centralRepresentativeDetails.permanentWardId`}
-                    label="Ward No"
-                    placeholder="Enter Ward No"
+                    label={t['kymCoopUnionDirWardNo']}
+                    placeholder={t['kymCoopUnionDirEnterWardNo']}
                   />
                   <FormInput
                     type="text"
                     name={`centralRepresentativeDetails.permanentLocality`}
-                    label="Locality"
-                    placeholder="Enter Locality"
+                    label={t['kymCoopUnionDirLocality']}
+                    placeholder={t['kymCoopUnionDirEnterLocality']}
                   />
                 </InputGroupContainer>
 
@@ -198,7 +200,7 @@ export const AddRepresentative = ({ watch, control }) => {
                   alignSelf="start"
                   leftIcon={<Icon size="md" as={FaMap} />}
                 >
-                  Pin on Map
+                  {t['pinOnMap']}
                 </Button>
                 {/* </Box> */}
               </AccordianContainer>
@@ -211,26 +213,26 @@ export const AddRepresentative = ({ watch, control }) => {
                 scrollMarginTop={'200px'}
               >
                 <Text fontSize="r1" fontWeight="SemiBold">
-                  Temporary Address
+                  {t['kymCoopUnionDirTemporaryAddress']}
                 </Text>
 
                 <FormSwitch
                   control={control}
                   name="isPermanentAndTemporaryAddressSame"
-                  label="Temporary Address same as permanent"
+                  label={t['kymCoopUnionDirTemporaryAddressPermanent']}
                 />
 
                 <InputGroupContainer>
                   <FormSelect
                     name={`centralRepresentativeDetails.temporaryStateId`}
-                    label="State"
-                    placeholder="Select State"
+                    label={t['kymCoopUnionDirState']}
+                    placeholder={t['kymCoopUnionDirSelectState']}
                     options={province}
                   />
                   <FormSelect
                     name={`centralRepresentativeDetails.temporaryDistrictId`}
-                    label="District"
-                    placeholder="Select District"
+                    label={t['kymCoopUnionDirDistrict']}
+                    placeholder={t['kymCoopUnionDirSelectDistrict']}
                     options={districtTempList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -238,8 +240,8 @@ export const AddRepresentative = ({ watch, control }) => {
                   />
                   <FormSelect
                     name={`centralRepresentativeDetails.temporaryVdcOrMunicId`}
-                    label="VDC / Muncipality"
-                    placeholder="Select VDC / Muncipality"
+                    label={t['kymCoopUnionDirVDCMunicipality']}
+                    placeholder={t['kymCoopUnionDirSelectVDCMunicipality']}
                     options={localityTempList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -248,14 +250,14 @@ export const AddRepresentative = ({ watch, control }) => {
                   <FormInput
                     type="number"
                     name={`centralRepresentativeDetails.temporaryWardId`}
-                    label="Ward No"
-                    placeholder="Enter Ward No"
+                    label={t['kymCoopUnionDirWardNo']}
+                    placeholder={t['kymCoopUnionDirEnterWardNo']}
                   />
                   <FormInput
                     type="text"
                     name={`centralRepresentativeDetails.temporaryLocality`}
-                    label="Locality"
-                    placeholder="Enter Locality"
+                    label={t['kymCoopUnionDirLocality']}
+                    placeholder={t['kymCoopUnionDirEnterLocality']}
                   />
                 </InputGroupContainer>
                 <Button
@@ -263,62 +265,64 @@ export const AddRepresentative = ({ watch, control }) => {
                   alignSelf="start"
                   leftIcon={<Icon size="md" as={FaMap} />}
                 >
-                  Pin on Map
+                  {t['pinOnMap']}
                 </Button>
               </Box>
               <InputGroupContainer>
                 <FormInput
                   type="date"
                   name={`centralRepresentativeDetails.dateOfMembership`}
-                  label="Date of membership"
+                  label={t['kymCoopUnionDirDateofMembership']}
                   placeholder="DD-MM-YYYY"
                 />
                 <FormInput
                   type="text"
                   name={`centralRepresentativeDetails.highestQualification`}
-                  label="Highest Qualification"
-                  placeholder="Enter higest qualification"
+                  label={t['kymCoopUnionDirHighestQualification']}
+                  placeholder={t['kymCoopUnionDirEnterHigestQualification']}
                 />
                 <FormInput
                   type="number"
                   name={`centralRepresentativeDetails.contactNumber`}
-                  label="Mobile No"
-                  placeholder="Enter Mobile No"
+                  label={t['kymCoopUnionDirMobileNo']}
+                  placeholder={t['kymCoopUnionDirEnterMobileNo']}
                 />
                 <FormInput
                   type="text"
                   name={`centralRepresentativeDetails.email`}
-                  label="Email"
-                  placeholder="Enter Email"
+                  label={t['kymCoopUnionDirEmail']}
+                  placeholder={t['kymCoopUnionDirEnterEmail']}
                 />
                 <FormInput
                   type="string"
                   name={`centralRepresentativeDetails.citizenshipOrPassportOrLisenceNo`}
-                  label="Citizenship/Passport/Driving License No."
-                  placeholder="Enter No"
+                  label={
+                    t['kymCoopUnionDirCitizenshipPassportDrivingLicenseNo']
+                  }
+                  placeholder={t['keyCoopUnionDirEnterNo']}
                 />
               </InputGroupContainer>
               <Text fontSize="r1" fontWeight="SemiBold">
-                Training related to Co-operatives
+                {t['kymCoopUnionDirTrainingRelatedtoCoop']}
               </Text>
               <InputGroupContainer>
                 <FormInput
                   type="text"
                   name={`centralRepresentativeDetails.subjectOfTraining`}
-                  label="Subject of Training"
-                  placeholder="Enter Subject of Training"
+                  label={t['kymCoopUnionDirSubjectOfTraining']}
+                  placeholder={t['kymCoopUnionDirEnterSubjectOfTraining']}
                 />
                 <FormInput
                   type="date"
                   name={`centralRepresentativeDetails.dateOfTraining`}
-                  label="Date of training"
-                  placeholder="Enter date of Training"
+                  label={t['kymCoopUnionDirDateOfTraining']}
+                  placeholder={t['kymCoopUnionDirEnterDateOfTraining']}
                 />
                 <FormInput
                   type="number"
                   name={`centralRepresentativeDetails.trainingOrganization`}
-                  label="Training Organization"
-                  placeholder="Enter Training Organization"
+                  label={t['kymCoopUnionDirTrainingOrganization']}
+                  placeholder={t['kymCoopUnionDirEnterTrainingOrganization']}
                 />
               </InputGroupContainer>
               <Grid
@@ -329,14 +333,14 @@ export const AddRepresentative = ({ watch, control }) => {
                 <Box w="124px">
                   <FormFileInput
                     size="md"
-                    label="Photograph"
+                    label={t['kymCoopUnionDirPhotograph']}
                     // control={control}
                     name={`centralRepresentativeDetails.photograph`}
                   />
                 </Box>
                 <Box display={'flex'} flexDirection="column" gap={'s8'}>
                   <Text fontSize={'s3'} fontWeight="500">
-                    Photograph of identity proof document
+                    {t['kymCoopUnionDirPhotographOfIdentityProofDocument']}
                   </Text>
                   <Box w="124px">
                     <FormFileInput
@@ -351,7 +355,7 @@ export const AddRepresentative = ({ watch, control }) => {
                 <Box w="124px">
                   <FormFileInput
                     name={`centralRepresentativeDetails.signature`}
-                    label="Specimen Signature"
+                    label={t['kymCoopUnionDirSpecimenSignature']}
                   />
                 </Box>
               </InputGroupContainer>

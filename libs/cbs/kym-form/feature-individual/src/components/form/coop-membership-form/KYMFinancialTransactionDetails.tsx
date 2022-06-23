@@ -4,10 +4,18 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 
-export const KYMFinancialTransactionDetails = ({ control }: any) => {
+export const KYMFinancialTransactionDetails = () => {
+  const {
+    data: financialTransactionDetailsData,
+    isLoading: financialTransactionLoading,
+  } = useGetIndividualKymOptionQuery({
+    fieldName: 'financial_transaction_details',
+  });
+
   return (
     <GroupContainer
       id="Financial Transaction Details"
@@ -23,38 +31,17 @@ export const KYMFinancialTransactionDetails = ({ control }: any) => {
           deposited till now
         </Text>
         <InputGroupContainer>
-          <FormInput
-            control={control}
-            type="number"
-            name="share"
-            textAlign="right"
-            label="Share"
-            placeholder="0.00"
-          />
-          <FormInput
-            control={control}
-            type="number"
-            name="savings"
-            label="Savings"
-            textAlign="right"
-            placeholder="0.00"
-          />
-          <FormInput
-            control={control}
-            type="number"
-            name="loan"
-            label="Loan"
-            textAlign="right"
-            placeholder="0.00"
-          />
-          <FormInput
-            control={control}
-            type="number"
-            name="other"
-            label="Other"
-            textAlign="right"
-            placeholder="0.00"
-          />
+          {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
+            (option) => (
+              <FormInput
+                type="number"
+                name={String(option?.name?.local)}
+                textAlign="right"
+                label={option?.name.local}
+                placeholder="0.00"
+              />
+            )
+          )}
         </InputGroupContainer>
       </Box>
     </GroupContainer>

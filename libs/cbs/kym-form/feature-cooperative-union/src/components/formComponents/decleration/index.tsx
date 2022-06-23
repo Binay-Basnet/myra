@@ -11,12 +11,14 @@ import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
 import { DocumentDeclarationInstitutionCOOPUnion } from './COOPUnionDeclaration';
+import { useTranslation } from '@coop/shared/utils';
 
 interface declarationProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const Declaration = (props: declarationProps) => {
+  const { t } = useTranslation();
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -41,7 +43,7 @@ export const Declaration = (props: declarationProps) => {
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            7. Declaration
+            {t['kymCoopUnionDec7Declaration']}
           </Text>
           <ContainerWithDivider>
             <DocumentDeclarationInstitutionCOOPUnion />

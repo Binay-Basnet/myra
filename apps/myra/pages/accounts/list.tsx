@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+
 import { AccountPagesLayout, ShareTable } from '@coop/myra/components';
 import { MainLayout } from '@coop/shared/ui';
 
