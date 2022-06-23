@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+
 import { MemberPagesLayout, MemberTable } from '@coop/myra/components';
 import { Box, MainLayout } from '@coop/shared/ui';
 

@@ -11,8 +11,10 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const AccountHolderDeclarationInstitution = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Account Holder Declaration" scrollMarginTop={'200px'}>
       <Text
@@ -20,25 +22,29 @@ export const AccountHolderDeclarationInstitution = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Account Holder Declaration
+        {t['kymInAccountHolderDeclarations']}
       </Text>
       <InputGroupContainer>
         <FormInput
           name="accountHolderName"
-          label="Account Holder Name"
-          placeholder="Enter Account Holder's Name"
+          label={t['kymInsAccountHolderName']}
+          placeholder={t['kymInsEnterAccountHolderName']}
         />
       </InputGroupContainer>
       <Grid templateColumns={'repeat(2, 1fr)'} gap="s32">
         <Box w="124px">
           <FormFileInput
             name="accountHolderSignature"
-            label="Signature"
+            label={t['kymInsSignature']}
             size="md"
           />
         </Box>
         <Box w="124px">
-          <FormFileInput name="accountHolderStamp" label="Stamp" size="md" />
+          <FormFileInput
+            name="accountHolderStamp"
+            label={t['kymInsStamp']}
+            size="md"
+          />
         </Box>
       </Grid>
       <Box display="flex" gap="s16" alignItems="start">

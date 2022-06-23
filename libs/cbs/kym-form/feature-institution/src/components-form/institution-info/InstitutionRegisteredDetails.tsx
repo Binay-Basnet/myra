@@ -5,8 +5,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const RegisteredDetailsInstitution = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Registered Details" scrollMarginTop={'200px'}>
       <Text
@@ -14,41 +16,41 @@ export const RegisteredDetailsInstitution = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Registered details
+        {t['kymInsRegisteredDetails']}
       </Text>
       <InputGroupContainer>
         <FormInput
           // control={control}
           type="text"
           name={'registeredAddress'}
-          label="Enter Registered Address"
-          placeholder="Enter Registered Address"
+          label={t['kymInsEnterRegisteredAddress']}
+          placeholder={t['kymInsEnterRegisteredAddress']}
         />
 
         <FormInput
           type="text"
           name="registeredAddressIfChanged"
-          label="Registered Address (if changed)"
-          placeholder="Registered Address"
+          label={t['kymInsRegisteredAddresschanged']}
+          placeholder={t['kymInsRegisteredAddress']}
         />
         <Box></Box>
 
         <FormInput
           type="number"
           name="registeredNumber"
-          label="Registered Number"
-          placeholder="Enter Registered Number"
+          label={t['kymInsRegisteredNumber']}
+          placeholder={t['kymInsEnterRegisteredNumber']}
         />
         <FormInput
           type="text"
           name="issuingOffice"
-          label="Issuing Office"
-          placeholder="Enter Issuing Office"
+          label={t['kymInsIssuingOffice']}
+          placeholder={t['kymInsEnterIssuingOffice']}
         />
         <Box></Box>
         <Box>
           <Button alignSelf="start" leftIcon={<Icon size="md" as={FaMap} />}>
-            Pin on Map
+            {t['pinOnMap']}
           </Button>
         </Box>
       </InputGroupContainer>
