@@ -50,7 +50,7 @@ export const Input = (props: InputProps) => {
           />
         )}
 
-        <ChakraInput isInvalid={!!errorText} {...rest} />
+        <ChakraInput h="100%" isInvalid={!!errorText} {...rest} />
         {rightElement && (
           <InputRightElement pointerEvents="none" children={rightElement} />
         )}
