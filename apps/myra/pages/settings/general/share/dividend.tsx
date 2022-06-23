@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ShareSettingsDividendPage } from '@coop/cbs/settings/share';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
@@ -7,7 +8,7 @@ import {
 } from '@coop/cbs/settings/ui-layout';
 
 const ShareDividend = () => {
-  return <div>Share Dividend</div>;
+  return <ShareSettingsDividendPage />;
 };
 
 export default ShareDividend;

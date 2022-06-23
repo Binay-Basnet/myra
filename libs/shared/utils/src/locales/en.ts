@@ -790,6 +790,45 @@ const en = {
   shareAccountMapping: 'Account Mapping',
   shareAccountBonusShareDebited: 'Where is the bonus share debited',
   shareAccountName: 'Account Name',
+
+  //Setting Share Divident
+  shareDividentDistributionCondition: 'Distribution Condition',
+  shareAddDifferentShareDividentRate:
+    'Add different share dividend rate for members based on their joined date',
+
+  shareDividentDaily: 'Daily',
+  shareDividentMonthly: 'Monthly',
+  shareDividentQuarterly: 'Quarterly',
+
+  share1stQuarter: '1st Quarter',
+  share2ndQuarter: '2nd Quarter',
+  share3rdQuarter: '3rd Quarter',
+  share4thQuarter: '4th Quarter',
+
+  shareDividentTransferTreatment: 'Dividend Transfer Treatment',
+  shareDividentTransferTreatmentSubtitle:
+    'Manage how the share dividend are allocated to the members',
+  shareDividentTransferTreatmentShareAndAccount: 'Share And Account',
+  shareDividentTransferTreatmentAccountTransfer: 'Account Transfer',
+  shareDividentTransferTreatmentBookPayable: 'Book Payable',
+
+  shareAndAccount: 'Share And Account',
+  shareAndAccountSubtitle:
+    'Share dividend converted to shares and fractional dividend to account',
+
+  shareAllocation: 'Share Allocation',
+  shareAccountAllocation: 'Account Allocation',
+  shareChooseAccount: 'Choose Account',
+  shareSelectAccount: 'Select Account',
+
+  shareAccountTransfer: 'Account Transfer',
+  shareAccountTransferSubtitle:
+    'Choose the account of member to allocate share dividends',
+
+  shareBookPayables: 'Book Payables',
+  shareBookPayablesSubtitle:
+    'Choose the organization’s fund account to allocate share dividends',
+  shareNameOfTheFund: 'Name of the Fund (Charts of Accounts)',
 };
 
 export default en;
