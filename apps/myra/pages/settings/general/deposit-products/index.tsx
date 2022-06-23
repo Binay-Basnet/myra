@@ -1,10 +1,11 @@
+import { SettingsDepositProductsForm } from '@coop/cbs/settings/deposit-products';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 
 const DepositProducts = () => {
-  return <> DepositProducts</>;
+  return <SettingsDepositProductsForm />;
 };
 
 export default DepositProducts;

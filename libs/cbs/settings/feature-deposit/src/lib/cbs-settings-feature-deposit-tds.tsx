@@ -26,13 +26,9 @@ export function CbsSettingsFeatureDepositTDS(
             py="s8"
             w="100%"
           >
-            <Text
-              fontSize="r2"
-              fontWeight="600"
-              color="neutralColorLight.Gray-80"
-            >
+            <TextFields variant="pageHeader" color="neutralColorLight.Gray-80">
               {t['settingsDepositTds']}
-            </Text>
+            </TextFields>
           </Box>
           <Box mt="s12">
             <Box
