@@ -9,5 +9,4 @@ export * from './utilFunctions/getKymCoopSection';
 export * from './utilFunctions/getKymSection';
 export * from './utilFunctions/getKymSectionsCoopUnion';
 export * from './utilFunctions/getKymsectionsInstitutions';
-export * from './utilFunctions/translation';
 export * from './validationSchema/memberForm';

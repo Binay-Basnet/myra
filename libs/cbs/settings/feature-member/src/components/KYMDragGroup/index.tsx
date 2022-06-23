@@ -85,6 +85,8 @@ export const KYMDragGroup = ({
     const items = Array.from(fieldItems);
     const [reorderedItem] = items.splice(result.source.index, 1);
 
+    console.log(reorderedItem);
+
     if (result.destination) {
       items.splice(result.destination.index, 0, reorderedItem);
       setFieldItems(items);
@@ -121,7 +123,11 @@ export const KYMDragGroup = ({
               >
                 {fieldItems.map((item, index) => {
                   return field ? (
-                    <Draggable key={item.id} draggableId={id} index={index}>
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id ?? 'no-id'}
+                      index={index}
+                    >
                       {(provided) => (
                         <Box
                           display={'flex'}

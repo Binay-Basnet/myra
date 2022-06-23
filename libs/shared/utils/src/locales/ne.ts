@@ -937,6 +937,126 @@ const ne: Record<string, string> = {
   kymInsUnionPhotographOfIdentityProofDocument:
     'Photograph of identity proof document',
   kymInsAddDirector: 'Add Director',
+
+  // Settings Share
+  shareSettings: 'Share Settings',
+
+  settingsShareGeneral: 'General',
+  settingsShareBonus: 'Share Bonus',
+  settingsShareMigration: 'Share Migration',
+  settingsShareDivident: 'Share Dividend',
+  settingsShareFeeAndCharges: 'Fee and Charges',
+  settingsShareTransfer: 'Share Transfer',
+
+  // Settings Share General
+
+  shareTypesOfShare: 'Types of Share',
+  shareChooseTypeOfShare: 'Choose which type of share is allowed',
+  shareTransactable: 'Transactable',
+  shareNonTransactable: 'Non-Transactable',
+  shareIssueQuantity: 'Share Issue Quantity',
+  shareMultiplicityFactor: 'Share Multiplicity Factor',
+  shareTransactableMinimumQuantityOfShareThatCanBeIssued:
+    'Transactable Minimum Quantity of Share that can be issued',
+  shareMaximumQuantityOfShareThatCanBeIssued:
+    'Maximum Quantity of Share that can be issued',
+  shareRate: 'Share Rate',
+  shareTransactableShare: 'Transactable Share',
+  shareNonTransactableShare: 'Non-Transactable Share',
+  shareIssueAuthority: 'Share Issue Authority',
+  shareIssueAuthoritySubtitle: 'Who can issue the share',
+  shareHeadOffice: 'Head Office',
+  shareRegionalOffice: 'Regional Office',
+  shareServiceCenterBranch: 'Share Center /  Branch',
+  shareContactOffice: 'Contact Office (Samparka Karyalaya)',
+  shareOther: 'Other',
+  shareKitta: 'Share Kitta',
+  shareKittaSubtitle: 'Who can issue the share',
+  shareTypeOfShare: 'Type of Share',
+  shareNumberOfAuthorizedPaidUpShare: 'Numebr of Authorized Paid-up Share',
+  shareNumberOfIssuedShare: 'Number of Issued Share',
+  shareCertificateNumber: 'Share Certificate Number',
+  shareCertificateNumberSubtitle: 'Who can issue the share',
+  shareStartNumber: 'Start Number',
+  shareEndNumber: 'End Number',
+  shareIncrementer: 'Incrementer',
+  shareNumberOfDigits: 'Number of Digits',
+  sharePreview: 'Preview',
+
+  // Settings Share Bonus
+  shareBonusWhoPaysTheTax: 'Who Pays the tax',
+  shareBonusChooseWhoPaysTheTax: 'Choose who pays the tax',
+  shareBonusCooperative: 'Cooperative',
+  shareBonusMember: 'Member',
+
+  shareBonusTaxRate: 'Tax Rate',
+  shareBonusAddRateOfTax: 'Add Rate of Tax (Temporal) for Bonus Share (in %)',
+  shareBonusRateTaxRatePlaceholder: '22.23 %',
+
+  shareAccountMapping: 'Account Mapping',
+  shareAccountBonusShareDebited: 'Where is the bonus share debited',
+  shareAccountName: 'Account Name',
+
+  //Setting Share Divident
+  shareDividentDistributionCondition: 'Distribution Condition',
+  shareAddDifferentShareDividentRate:
+    'Add different share dividend rate for members based on their joined date',
+
+  shareDividentDaily: 'Daily',
+  shareDividentMonthly: 'Monthly',
+  shareDividentQuarterly: 'Quarterly',
+
+  share1stQuarter: '1st Quarter',
+  share2ndQuarter: '2nd Quarter',
+  share3rdQuarter: '3rd Quarter',
+  share4thQuarter: '4th Quarter',
+
+  shareDividentTransferTreatment: 'Dividend Transfer Treatment',
+  shareDividentTransferTreatmentSubtitle:
+    'Manage how the share dividend are allocated to the members',
+  shareDividentTransferTreatmentShareAndAccount: 'Share And Account',
+  shareDividentTransferTreatmentAccountTransfer: 'Account Transfer',
+  shareDividentTransferTreatmentBookPayable: 'Book Payable',
+
+  shareAndAccount: 'Share And Account',
+  shareAndAccountSubtitle:
+    'Share dividend converted to shares and fractional dividend to account',
+
+  shareAllocation: 'Share Allocation',
+  shareAccountAllocation: 'Account Allocation',
+  shareChooseAccount: 'Choose Account',
+  shareSelectAccount: 'Select Account',
+
+  shareAccountTransfer: 'Account Transfer',
+  shareAccountTransferSubtitle:
+    'Choose the account of member to allocate share dividends',
+
+  shareBookPayables: 'Book Payables',
+  shareBookPayablesSubtitle:
+    'Choose the organization’s fund account to allocate share dividends',
+  shareNameOfTheFund: 'Name of the Fund (Charts of Accounts)',
+
+  // Settings Share Fee And Charges
+  shareCertificateCharge: 'Share Certificate Charge',
+  shareCertificateChargeSubtitle: 'Basic Charge for share issues and return',
+  shareMinShareQuantity: 'Min Share Quantity',
+  shareMaxShareQuantity: 'Max Share Quantity',
+  shareType: 'Type',
+  shareCharge: 'Charge',
+
+  // Share Transfer
+  shareTransferSubtitle: 'Manage how the share transfer',
+  shareTransferMemberToMember: 'Member to Member',
+  shareTransferShareRefund: 'Share Refund (Cash / Bank payment format)',
+
+  shareToFundLedgerMapping: 'Share To Fund / Ledger Mapping',
+  shareToFundLedgerMappingSubtitle:
+    'Account from which shares are paid to and paid from',
+  shareFundName: 'Fund Name',
+
+  shareToAccount: 'Share To Account  /',
+  shareToAccountSubtitle: 'Account from which shares are paid to and paid from',
+  shareTransferAccountName: 'Account Name',
 };
 
 export default ne;
