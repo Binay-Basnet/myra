@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/settings/feature-share",
+  "sourceRoot": "libs/cbs/settings/feature-share/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/settings/feature-share/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/settings/feature-share"],
+      "options": {
+        "jestConfig": "libs/cbs/settings/feature-share/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

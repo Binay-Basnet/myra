@@ -41,7 +41,7 @@ export const Input = (props: InputProps) => {
         </TextFields>
       )}
 
-      <InputGroup h="44px" borderRadius="br2">
+      <InputGroup borderRadius="br2">
         {leftElement && (
           <InputLeftElement
             pointerEvents="none"
