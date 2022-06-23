@@ -35,7 +35,11 @@ export const MemberTable = () => {
       {
         Header: 'Name',
         accessor: 'node.name.local',
-        width: '80%',
+
+        width: '60%',
+
+        disableSortBy: false,
+        disableFilters: false,
 
         Cell: ({ value, row }) => {
           return (
@@ -54,7 +58,7 @@ export const MemberTable = () => {
       {
         Header: 'Address',
         accessor: 'node.address.district.local',
-        maxWidth: 48,
+        width: '20%',
 
         Cell: ({ value, row }) => {
           return (
@@ -67,10 +71,15 @@ export const MemberTable = () => {
       {
         Header: 'Phone No.',
         accessor: 'node.contact',
+
+        width: '10%',
       },
       {
         Header: 'Date Joined',
         accessor: 'node.createdAt',
+        disableSortBy: false,
+        disableFilters: false,
+
         Cell: ({ value }) => {
           return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
@@ -117,6 +126,7 @@ export const MemberTable = () => {
         sort={true}
         disableSortAll={true}
         filter={true}
+        disableFilterAll={true}
         pagination={{
           total: 1200,
           endCursor: data?.members?.list.pageInfo?.startCursor ?? '',

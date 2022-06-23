@@ -24,8 +24,9 @@ export const ShareRegisterTable = () => {
     () => [
       {
         Header: t['shareRegisterDate'],
-        width: '20%',
+        maxWidth: 40,
         accessor: 'node.transactionDate',
+        disableFilters: false,
         Cell: ({ value, row }) => {
           return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
@@ -49,6 +50,8 @@ export const ShareRegisterTable = () => {
         accessor: 'node.member.name.local',
         width: '80%',
 
+        disableFilters: false,
+
         Cell: ({ value, row }) => {
           return (
             <Flex alignItems="center" gap="2">
@@ -67,6 +70,8 @@ export const ShareRegisterTable = () => {
         Header: t['shareRegisterTableNameToFrom'],
         accessor: 'node.shareStartNumber',
         width: '20%',
+        disableSortBy: true,
+
         Cell: ({ value, row }) => {
           return (
             <span>
@@ -82,6 +87,10 @@ export const ShareRegisterTable = () => {
         accessor: 'node.shareDr',
         isNumeric: true,
 
+        disableFilters: false,
+        filter: 'numberAll',
+        filterType: 'amount',
+
         Cell: ({ value, row }) => {
           return (
             <span>{value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
@@ -93,6 +102,11 @@ export const ShareRegisterTable = () => {
         Header: t['shareRegisterTableNameShareCr'],
         isNumeric: true,
         accessor: 'node.shareCr',
+
+        disableFilters: false,
+        filter: 'numberAll',
+        filterType: 'amount',
+
         Cell: ({ value, row }) => {
           return (
             <span>{value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
@@ -102,6 +116,7 @@ export const ShareRegisterTable = () => {
       {
         Header: t['shareRegisterTableNameBalance'],
         accessor: 'node.balance',
+        disableSortBy: true,
         isNumeric: true,
         Cell: ({ value, row }) => {
           return <span>{Number(value).toLocaleString('en-IN')}</span>;
@@ -145,6 +160,8 @@ export const ShareRegisterTable = () => {
         data={rowData ?? []}
         columns={columns}
         sort={true}
+        filter={true}
+        disableFilterAll={true}
       />
     </>
   );
