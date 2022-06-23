@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
 import { GrClose } from 'react-icons/gr';
 import dynamic from 'next/dynamic';
+import axios from 'axios';
 
 import {
   GroupContainer,
@@ -24,6 +25,35 @@ export const MemberKYMAddress = () => {
     latitude: 0,
     longitude: 0,
   });
+  const [permanentAddress, setPermanentAddress] = useState('');
+  const getAddress = (lat: number, lon: number) =>
+    axios.get(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+    );
+  useEffect(() => {
+    const getPermanentAddress = async () => {
+      try {
+        const data = await getAddress(
+          permanentAddressPosition?.latitude,
+          permanentAddressPosition?.longitude
+        );
+        const address = data?.data?.address;
+        console.log('address', address);
+        setPermanentAddress(
+          `${address?.amenity ? address?.amenity + ', ' : ''}${
+            address?.road ? address?.road + ', ' : ''
+          }${address?.neighbourhood ? address?.neighbourhood + ', ' : ''}${
+            address?.suburb ? address?.suburb + ', ' : ''
+          }${address?.town ? address?.town + ', ' : ''}${
+            address?.city ? address?.city + ', ' : ''
+          }${address?.country ? address?.country + ', ' : ''}`
+        );
+      } catch (e) {
+        console.error('Error:', e);
+      }
+    };
+    getPermanentAddress();
+  }, [permanentAddressPosition?.latitude, permanentAddressPosition?.longitude]);
 
   const setPermanentAddressPositionValues = (prop: {
     latitude: number;
@@ -209,7 +239,7 @@ export const MemberKYMAddress = () => {
               alignItems="center"
             >
               <Box display="flex" flexDirection="column">
-                <Text fontSize="r2">Manbawan, Lalitpur</Text>
+                <Text fontSize="r2">{permanentAddress}</Text>
                 <Text fontSize="s2" color="gray.600">
                   {permanentAddressPosition?.latitude},{' '}
                   {permanentAddressPosition?.longitude}

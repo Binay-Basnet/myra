@@ -60,8 +60,9 @@ const MapContent = (props: MapProps) => {
       });
     }
   }, [map]);
-
   useMapEvent('click', (e) => {
+    console.log('e', e);
+
     setPosition({
       latitude: e?.latlng?.lat,
       longitude: e?.latlng?.lng,
