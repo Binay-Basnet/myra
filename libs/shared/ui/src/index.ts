@@ -1,3 +1,4 @@
+export * from './lib/form-footer/FormFooter';
 export * from './lib/accordion/Accordion';
 export * from './lib/amount-input/AmountInput';
 export * from './lib/amount-input/AmountInput';

@@ -17,6 +17,7 @@ import {
   TextFields,
   Button,
   Icon,
+  FormFooter,
 } from '@coop/shared/ui';
 import { GrClose } from 'react-icons/gr';
 import debounce from 'lodash/debounce';
@@ -249,7 +250,7 @@ export function KYMIndividualPage() {
           </form>
         </FormProvider>
       </Container>
-      <Box position="relative" margin="0px auto">
+      {/* <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
             <Box
@@ -276,24 +277,6 @@ export function KYMIndividualPage() {
                 justifyContent="flex-end"
                 alignSelf="center"
               >
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignSelf="center"
-                >
-                  <Button type="submit" variant="ghost" minW="160px">
-                    <Icon as={BiSave} color="primary.500" />
-                    <Text
-                      alignSelf="center"
-                      color="primary.500"
-                      fontWeight="Medium"
-                      fontSize="s2"
-                      ml="5px"
-                    >
-                      Save Draft
-                    </Text>
-                  </Button>
-                </Box>
                 &nbsp;
                 <Button
                   minW="160px"
@@ -303,6 +286,46 @@ export function KYMIndividualPage() {
                 </Button>
               </Box>
             </Box>
+          </Container>
+        </Box>
+      </Box> */}
+      <Box position="relative" margin="0px auto">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container minW="container.xl" height="fit-content">
+            <FormFooter
+              status={
+                <Box display="flex" gap="s8">
+                  <Text as="i" fontSize="r1">
+                    Form Details saved to draft
+                  </Text>
+                  <Text as="i" fontSize="r1">
+                    09:41 AM
+                  </Text>
+                </Box>
+              }
+              draftButton={
+                <Button type="submit" variant="ghost" minW="160px">
+                  <Icon as={BiSave} color="primary.500" />
+                  <Text
+                    alignSelf="center"
+                    color="primary.500"
+                    fontWeight="Medium"
+                    fontSize="s2"
+                    ml="5px"
+                  >
+                    Save Draft
+                  </Text>
+                </Button>
+              }
+              mainButton={
+                <Button
+                  minW="160px"
+                  onClick={() => router.push(`/members/translation/${id}`)}
+                >
+                  Next
+                </Button>
+              }
+            />
           </Container>
         </Box>
       </Box>

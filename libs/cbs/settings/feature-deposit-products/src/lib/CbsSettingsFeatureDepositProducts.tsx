@@ -1,30 +1,29 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { Avatar, Flex } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 import format from 'date-fns/format';
 
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
-import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/shared/ui';
-
-import { DepostiTableHeader } from '../components/DepositTableHeader/';
+import {
+  Avatar,
+  Box,
+  Button,
+  Column,
+  DEFAULT_PAGE_SIZE,
+  Table,
+  Text,
+} from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface SettingsDepositProductsProps {}
 
 export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
-  // const router = useRouter();
-  // const methods = useForm({});
-
-  // const { control, handleSubmit, getValues, watch, setError } = methods;
-
-  // return (
-  //   <Container height="fit-content" minW="container.xl">
-  //     Deposit Products
-  //   </Container>
-  // );
-
   const router = useRouter();
+
+  const { t } = useTranslation();
+
   const { data, isLoading } = useGetMemberListQuery({
     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
     first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
@@ -53,14 +52,14 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
 
         Cell: ({ value, row }) => {
           return (
-            <Flex alignItems="center" gap="2">
+            <Box display="flex" alignItems="center" gap="2">
               <Avatar
                 name="Dan Abrahmov"
                 size="sm"
                 src="https://bit.ly/dan-abramov"
               />
               <span>{value}</span>
-            </Flex>
+            </Box>
           );
         },
       },
@@ -99,30 +98,30 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
     []
   );
 
-  const memberRows = useMemo(
-    () => [
-      {
-        title: 'memberNavActive',
-        key: 'APPROVED',
-      },
-      {
-        title: 'memberNavInactive',
-        key: 'VALIDATED',
-      },
-      {
-        title: 'memberNavDraft',
-        key: 'DRAFT',
-      },
-    ],
-    []
-  );
-
   return (
     <>
-      <DepostiTableHeader
-        heading={'Deposit Products'}
-        // tabItems={memberRows}
-      />
+      <Box borderBottom="1px solid #E6E6E6" p="8px 16px">
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          h="100%"
+        >
+          <Text fontSize="r2" fontWeight="600" color="gray.800">
+            {t['settingsDepositProducts']}
+          </Text>
+          <Button
+            size="lg"
+            justifyContent="start"
+            leftIcon={<AddIcon h="11px" />}
+            onClick={() =>
+              router.push('/settings/general/deposit-products/add')
+            }
+          >
+            {t['settingsDepositProductNew']}
+          </Button>
+        </Box>
+      </Box>
 
       <Table
         isLoading={isLoading}

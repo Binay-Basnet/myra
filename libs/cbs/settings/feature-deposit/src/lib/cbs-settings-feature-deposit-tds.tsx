@@ -59,7 +59,12 @@ export function CbsSettingsFeatureDepositTDS(
                       columnGap="s8"
                       justifyContent="space-between"
                     >
-                      <Text fontSize="s3" fontWeight={500} p="10px 12px">
+                      <Text
+                        fontSize="s3"
+                        fontWeight={500}
+                        p="10px 12px"
+                        flexBasis="65%"
+                      >
                         {t['settingsDepositMemberType']}
                       </Text>
                       <Text
@@ -67,24 +72,26 @@ export function CbsSettingsFeatureDepositTDS(
                         fontWeight={500}
                         textAlign="left"
                         py="10px"
+                        flexBasis="35%"
                       >
                         {t['settingsDepositTdsPercent']}
                       </Text>
                     </Box>
-                    <Box
-                      display="flex"
-                      columnGap="s8"
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <TextFields variant="bodyRegular" p="7.5px 12px">
+                    <Box display="flex" columnGap="s8" alignItems="center">
+                      <TextFields
+                        variant="bodyRegular"
+                        p="7.5px 12px"
+                        flexBasis="65%"
+                      >
                         {t['settingsDepositIndividual']}
                       </TextFields>
-                      <FormInput
-                        name="individual"
-                        type="text"
-                        control={control}
-                      />
+                      <Box flexBasis="35%">
+                        <FormInput
+                          name="individual"
+                          type="text"
+                          control={control}
+                        />
+                      </Box>
                     </Box>
                     <Box
                       display="flex"
@@ -92,14 +99,20 @@ export function CbsSettingsFeatureDepositTDS(
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <TextFields variant="bodyRegular" p="7.5px 12px">
+                      <TextFields
+                        variant="bodyRegular"
+                        p="7.5px 12px"
+                        flexBasis="65%"
+                      >
                         {t['settingsDepositInstitutional']}
                       </TextFields>
-                      <FormInput
-                        name="institutional"
-                        type="text"
-                        control={control}
-                      />
+                      <Box flexBasis="35%">
+                        <FormInput
+                          name="institutional"
+                          type="text"
+                          control={control}
+                        />
+                      </Box>
                     </Box>
                     <Box
                       display="flex"
@@ -107,14 +120,20 @@ export function CbsSettingsFeatureDepositTDS(
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <TextFields variant="bodyRegular" p="7.5px 12px">
+                      <TextFields
+                        variant="bodyRegular"
+                        p="7.5px 12px"
+                        flexBasis="65%"
+                      >
                         {t['settingsDepositCooperative']}
                       </TextFields>
-                      <FormInput
-                        name="cooperative"
-                        type="text"
-                        control={control}
-                      />
+                      <Box flexBasis="35%">
+                        <FormInput
+                          name="cooperative"
+                          type="text"
+                          control={control}
+                        />
+                      </Box>
                     </Box>
                     <Box
                       display="flex"
@@ -122,14 +141,20 @@ export function CbsSettingsFeatureDepositTDS(
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <TextFields variant="bodyRegular" p="7.5px 12px">
+                      <TextFields
+                        variant="bodyRegular"
+                        p="7.5px 12px"
+                        flexBasis="65%"
+                      >
                         {t['settingsDepositCooperativeUnion']}
                       </TextFields>
-                      <FormInput
-                        name="cooperative-union"
-                        type="text"
-                        control={control}
-                      />
+                      <Box flexBasis="35%">
+                        <FormInput
+                          name="cooperativeUnion"
+                          type="text"
+                          control={control}
+                        />
+                      </Box>
                     </Box>
                   </Box>
                 </form>
