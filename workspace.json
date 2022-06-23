@@ -8,6 +8,7 @@
     "cbs-kym-form-ui-containers": "libs/cbs/kym-form/ui-containers",
     "cbs-members-feature-profile": "libs/cbs/members/feature-profile",
     "cbs-settings-feature-member": "libs/cbs/settings/feature-member",
+    "cbs-settings-feature-share": "libs/cbs/settings/feature-share",
     "cbs-settings-ui-layout": "libs/cbs/settings/ui-layout",
     "myra": "apps/myra",
     "myra-components": "libs/myra/components",

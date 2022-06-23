@@ -1,4 +1,4 @@
-const ne: Record<string, string> = {
+const ne = {
   home: 'गृहपृष्ठ',
   dashboard: 'ड्यासबोर्ड',
   yes: 'Yes',
@@ -743,6 +743,16 @@ const ne: Record<string, string> = {
   kymCoopUnionDecTaxClearance: 'Tax Clearance',
   kymCoopUnionDecLatestAuditReport: 'Latest Audit Report',
   kymCoopUnionDecMinuteofCentralRep: 'Minute of Central Rep',
+
+  // Settings Share
+  shareSettings: 'Share Settings',
+
+  settingsShareGeneral: 'General',
+  settingsShareBonus: 'Share Bonus',
+  settingsShareMigration: 'Share Migration',
+  settingsShareDivident: 'Share Dividend',
+  settingsShareFeeAndCharges: 'Fee and Charges',
+  settingsShareTransfer: 'Share Transfer',
 };
 
 export default ne;

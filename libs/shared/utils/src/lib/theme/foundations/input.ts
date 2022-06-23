@@ -27,12 +27,24 @@ const size: Record<string, SystemStyleObject> = {
     px: 's12',
     h: '44px',
   },
+  sm: {
+    borderRadius: 'br2',
+    fontSize: 'r1',
+    fontWeight: '400',
+    lineHeight: '1.5',
+    px: 's12',
+    h: '36px',
+  },
 };
 
 const sizes: Record<string, PartsStyleObject<typeof parts>> = {
   default: {
     field: size['default'],
     addon: size['default'],
+  },
+  sm: {
+    field: size['sm'],
+    addon: size['sm'],
   },
 };
 
@@ -96,7 +108,7 @@ const variantUnstyled: PartsStyleObject<typeof parts> = {
     px: 0,
     height: 'auto',
   },
-}
+};
 
 const variants = {
   outline: variantOutline,

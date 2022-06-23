@@ -1,19 +1,18 @@
 import React from 'react';
 
-import { ShareSettingsGeneralPage } from '@coop/cbs/settings/share';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
   SettingsShareLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const ShareGeneral = () => {
-  return <ShareSettingsGeneralPage />;
+const ShareBonus = () => {
+  return <div>Share Bonus</div>;
 };
 
-export default ShareGeneral;
+export default ShareBonus;
 
-ShareGeneral.getLayout = function getLayout(page) {
+ShareBonus.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
       <SettingsGeneralLayout>

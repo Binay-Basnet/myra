@@ -1,4 +1,4 @@
-const en: Record<string, string> = {
+const en = {
   home: 'Home',
   dashboard: 'Dashboard',
   yes: 'Yes',
@@ -749,6 +749,17 @@ const en: Record<string, string> = {
   kymCoopUnionDecTaxClearance: 'Tax Clearance',
   kymCoopUnionDecLatestAuditReport: 'Latest Audit Report',
   kymCoopUnionDecMinuteofCentralRep: 'Minute of Central Rep',
+
+  // Settings Share
+  shareSettings: 'Share Settings',
+
+  // SIDEBAR
+  settingsShareGeneral: 'General',
+  settingsShareBonus: 'Share Bonus',
+  settingsShareMigration: 'Share Migration',
+  settingsShareDivident: 'Share Dividend',
+  settingsShareFeeAndCharges: 'Fee and Charges',
+  settingsShareTransfer: 'Share Transfer',
 };
 
 export default en;
