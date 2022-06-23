@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Box } from '@coop/shared/ui';
 
 import SettingsLayout from '.';

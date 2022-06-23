@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+
 import { KYMInstitutionPage } from '@coop/cbs/kym-form/institution';
 import { MainLayout } from '@coop/shared/ui';
 

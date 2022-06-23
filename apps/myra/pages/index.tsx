@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
   Box,
   Container,
@@ -7,10 +8,10 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
+import NepaliDate from 'nepali-date-converter';
+
 import { Navbarfordaashboard } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-import NepaliDate from 'nepali-date-converter';
-import Link from 'next/link';
 
 const newDate = new NepaliDate();
 const date = newDate.format('ddd, DD MMMM YYYY');

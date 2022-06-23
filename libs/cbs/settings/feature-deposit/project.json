@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/settings/feature-deposit",
+  "sourceRoot": "libs/cbs/settings/feature-deposit/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/settings/feature-deposit/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/settings/feature-deposit"],
+      "options": {
+        "jestConfig": "libs/cbs/settings/feature-deposit/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
