@@ -121,7 +121,7 @@ const MainOccupation = ({
 
       <Box display="flex" gap="9px" alignItems="center">
         <FormCheckbox name={`mainOccupation.${index}.isOwner`} />
-        <TextFields variant="formLabel">Are you owner?</TextFields>
+        <TextFields variant="formLabel">I own this business.</TextFields>
       </Box>
 
       {isOwner && (

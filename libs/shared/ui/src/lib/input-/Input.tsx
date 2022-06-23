@@ -41,7 +41,7 @@ export const Input = (props: InputProps) => {
         </TextFields>
       )}
 
-      <InputGroup borderRadius="br2">
+      <InputGroup borderRadius="br2" h="44px">
         {leftElement && (
           <InputLeftElement
             pointerEvents="none"
@@ -50,7 +50,7 @@ export const Input = (props: InputProps) => {
           />
         )}
 
-        <ChakraInput isInvalid={!!errorText} {...rest} />
+        <ChakraInput h="100%" isInvalid={!!errorText} {...rest} />
         {rightElement && (
           <InputRightElement pointerEvents="none" children={rightElement} />
         )}
