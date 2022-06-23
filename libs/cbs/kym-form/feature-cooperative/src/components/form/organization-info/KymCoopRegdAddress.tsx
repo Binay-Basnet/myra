@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { FaMap } from 'react-icons/fa';
 import {
   GroupContainer,
   InputGroupContainer,
@@ -6,9 +7,10 @@ import {
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text, Button, Icon } from '@coop/shared/ui';
-import { FaMap } from 'react-icons/fa';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopRegdAddress = ({ watch }: any) => {
+  const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
 
   const province = useMemo(() => {
@@ -45,19 +47,19 @@ export const KymCoopRegdAddress = ({ watch }: any) => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Registered Address
+        {t['kymCoopRegisteredAddress']}
       </Text>
       <InputGroupContainer>
         <FormSelect
           name="regdProvinceId"
-          label="Province"
-          placeholder="Select State"
+          label={t['kymCoopProvince']}
+          placeholder={t['kymCoopSelectState']}
           options={province}
         />
         <FormSelect
           name="regdDistrictId"
-          label="District"
-          placeholder="Select District"
+          label={t['kymCoopDistrict']}
+          placeholder={t['kymCoopSelectDistrict']}
           options={districtList.map((d) => ({
             label: d.name,
             value: d.id,
@@ -65,8 +67,8 @@ export const KymCoopRegdAddress = ({ watch }: any) => {
         />
         <FormSelect
           name="regdMunicipalityId"
-          label="Muncipality"
-          placeholder="Select Municipality"
+          label={t['kymCoopMunicipality']}
+          placeholder={t['kymCoopSelectMunicipality']}
           options={muncipalityList.map((d) => ({
             label: d.name,
             value: d.id,
@@ -76,14 +78,14 @@ export const KymCoopRegdAddress = ({ watch }: any) => {
         <FormInput
           type="text"
           name="regdWardId"
-          label="Ward No"
-          placeholder="Enter Ward No"
+          label={t['kymCoopWardNo']}
+          placeholder={t['kymCoopEnterWardNo']}
         />
         <FormInput
           type="text"
           name="regdLocality"
-          label="Locality"
-          placeholder="Enter Locality"
+          label={t['kymCoopLocality']}
+          placeholder={t['kymCoopEnterLocality']}
         />
       </InputGroupContainer>
       <Button
@@ -91,7 +93,7 @@ export const KymCoopRegdAddress = ({ watch }: any) => {
         mt="-16px"
         leftIcon={<Icon size="md" as={FaMap} />}
       >
-        Pin on Map
+        {t['pinOnMap']}
       </Button>
     </GroupContainer>
   );

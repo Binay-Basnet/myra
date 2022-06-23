@@ -11,6 +11,7 @@ import {
 import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
 import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon, Text, TextFields } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -27,6 +28,7 @@ const HusbandWifeOccupation = ({
   const { data: occupationData } = useGetIndividualKymOptionQuery({
     fieldName: 'occupation',
   });
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -53,8 +55,8 @@ const HusbandWifeOccupation = ({
             <FormSelect
               control={control}
               name={`spouseOccupation.${index}.occupation`}
-              label="Occupation"
-              placeholder="Select Occupation"
+              label={t['kymIndOccupation']}
+              placeholder={t['kymIndSelectOccupation']}
               options={
                 profession?.map((data: string) => ({
                   label: getFieldOption(occupationData)?.find(
@@ -70,8 +72,8 @@ const HusbandWifeOccupation = ({
               control={control}
               type="text"
               name={`spouseOccupation.${index}.orgName`}
-              label="Org/Firm Name"
-              placeholder="Org/Firm Name"
+              label={t['kymIndOrgFirmName']}
+              placeholder={t['kymIndOrgFirmName']}
               bg="white"
             />
           </GridItem>
@@ -79,16 +81,16 @@ const HusbandWifeOccupation = ({
             control={control}
             type="text"
             name={`spouseOccupation.${index}.idNumber`}
-            label="Pan / VAT No"
-            placeholder="Pan/Vat Number"
+            label={t['kymIndPanVATNo']}
+            placeholder={t['kymIndPanVATNumber']}
             bg="white"
           />
           <FormInput
             control={control}
             type="text"
             name={`spouseOccupation.${index}.address`}
-            label="Address"
-            placeholder="Enter Address"
+            label={t['kymIndAddress']}
+            placeholder={t['kymIndEnterAddress']}
             bg="white"
           />
           <FormInput
@@ -96,7 +98,7 @@ const HusbandWifeOccupation = ({
             type="number"
             textAlign={'right'}
             name={`spouseOccupation.${index}.estimatedAnnualIncome`}
-            label="Estimated Annual Income"
+            label={t['kymIndEstimatedAnnualIncome']}
             bg="white"
             placeholder="0.00"
           />
@@ -105,7 +107,7 @@ const HusbandWifeOccupation = ({
 
       <Box display="flex" gap="9px" alignItems="center">
         <FormCheckbox name={`spouseOccupation.${index}.isOwner`} />
-        <TextFields variant="formLabel">Are you owner?</TextFields>
+        <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
       </Box>
 
       {isOwner && (
@@ -115,24 +117,24 @@ const HusbandWifeOccupation = ({
             control={control}
             type="date"
             name={`spouseOccupation.${index}.establishedDate`}
-            label="Established Date"
-            placeholder="Established Date"
+            label={t['kymIndEstablishedDate']}
+            placeholder={t['kymIndEstablishedDate']}
           />
           <FormInput
             bg="white"
             control={control}
             type="number"
             name={`spouseOccupation.${index}.registrationNo`}
-            label="Registration No."
-            placeholder="Registration No."
+            label={t['kymIndRegistrationNo']}
+            placeholder={t['kymIndRegistrationNo']}
           />
           <FormInput
             bg="white"
             control={control}
             type="number"
             name={`spouseOccupation.${index}.contactNo`}
-            label="Contact No."
-            placeholder="Contact No."
+            label={t['kymIndContactNo']}
+            placeholder={t['kymIndContactNo']}
           />
         </InputGroupContainer>
       )}
@@ -141,6 +143,7 @@ const HusbandWifeOccupation = ({
 };
 
 export const MemberKYMHusbandWifeOccupation = () => {
+  const { t } = useTranslation();
   const { control, watch } = useFormContext();
 
   const {
@@ -155,7 +158,7 @@ export const MemberKYMHusbandWifeOccupation = () => {
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">
-        MAIN OCCUPATION OF HUSBAND/WIFE
+        {t['kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE']}
       </Text>
 
       <DynamicBoxGroupContainer>
@@ -183,7 +186,7 @@ export const MemberKYMHusbandWifeOccupation = () => {
             husbandWifeOccupationAppend({});
           }}
         >
-          Add Occupation
+          {t['kymIndAddOccupation']}
         </Button>
       </DynamicBoxGroupContainer>
     </GroupContainer>

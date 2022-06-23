@@ -5,8 +5,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopNoEmployee = () => {
+  const { t } = useTranslation();
   const [maleNum, setMaleNum] = useState(0);
   const [femaleNum, setFemaleNum] = useState(0);
 
@@ -22,14 +24,14 @@ export const KymCoopNoEmployee = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Number of Employee
+        {t['kymCoopNumberofEmployee']}
       </Text>
       <InputGroupContainer>
         <FormInput
           type="number"
           textAlign={'right'}
           name="noOfMaleEmployee"
-          label="Male"
+          label={t['kymCoopMale']}
           placeholder="0"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setMaleNum(Number(e.target.value))
@@ -39,7 +41,7 @@ export const KymCoopNoEmployee = () => {
           type="number"
           textAlign={'right'}
           name="noOfFemaleEmloyee"
-          label="Female"
+          label={t['kymCoopFemale']}
           placeholder="0"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setFemaleNum(Number(e.target.value))
@@ -54,7 +56,7 @@ export const KymCoopNoEmployee = () => {
           type="number"
           textAlign={'right'}
           name="totalEmployee"
-          label="Total"
+          label={t['kymCoopTotal']}
           placeholder="0"
           value={totalEmployee}
         />

@@ -4,10 +4,12 @@ import { AiOutlinePlus } from 'react-icons/ai';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { AddDirector } from '../../accordion-component/KymCoopDirectorAccordion';
 
 export const KymCoopBoardDirectorDetail = ({ watch, control }) => {
+  const { t } = useTranslation();
   const {
     fields: directorFields,
     append: directorAppend,
@@ -16,7 +18,7 @@ export const KymCoopBoardDirectorDetail = ({ watch, control }) => {
   return (
     <GroupContainer id="Board Of Director Details" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
-        Board of director details
+        {t['kymCoopBoardofdirectordetails']}
       </Text>
       {directorFields.map((item, index) => {
         return (
@@ -39,7 +41,7 @@ export const KymCoopBoardDirectorDetail = ({ watch, control }) => {
           directorAppend({});
         }}
       >
-        Add Director
+        {t['kymCoopAddDirector']}
       </Button>
     </GroupContainer>
   );

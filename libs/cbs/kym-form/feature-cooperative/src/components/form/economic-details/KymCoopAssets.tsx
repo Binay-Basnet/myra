@@ -1,7 +1,9 @@
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopAssets = ({ watch }: any) => {
+  const { t } = useTranslation();
   const cashEquivalent = watch('cashAndCashEquivalent');
   const bank = watch('bank');
   const investments = watch('investments');
@@ -32,7 +34,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Assets
+            {t['kymCoopAssets']}
           </Text>
         </GridItem>
 
@@ -43,7 +45,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Amount
+            {t['kymCoopAmount']}
           </Text>
         </GridItem>
       </Grid>
@@ -63,7 +65,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Cash and cash equivalents
+            {t['kymCoopCashandcashequivalents']}
           </Text>
         </GridItem>
         <GridItem>
@@ -89,7 +91,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Bank
+            {t['kymCoopBank']}
           </Text>
         </GridItem>
         <GridItem>
@@ -115,7 +117,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Investments
+            {t['kymCoopInvestments']}
           </Text>
         </GridItem>
 
@@ -142,7 +144,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Loan (investment)
+            {t['kymCoopLoan']}
           </Text>
         </GridItem>
         <GridItem>
@@ -168,7 +170,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            Non current assets
+            {t['kymCoopNoncurrentassets']}
           </Text>
         </GridItem>
 
@@ -195,7 +197,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="Regular"
           >
-            other non current assets
+            {t['kymCoopOthernoncurrentassets']}
           </Text>
         </GridItem>
         <GridItem>
@@ -224,7 +226,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Total
+            {t['kymCoopTotal']}
           </Text>
         </GridItem>
 
@@ -238,7 +240,7 @@ export const KymCoopAssets = ({ watch }: any) => {
             type="text"
             name="totalAssets"
             value={isNaN(totalAssets) ? '0.00' : totalAssets}
-            placeholder="Total assets"
+            placeholder={t['kymCoopTotalassets']}
           />
         </GridItem>
       </Grid>

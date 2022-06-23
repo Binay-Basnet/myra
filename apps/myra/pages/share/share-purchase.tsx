@@ -52,9 +52,8 @@ const SharePurchase = () => {
   const memberIdQuery = watch('memberId');
   const noOfShares = watch('shareCount');
 
-  const [selectedPaymentMode, setSelectedPaymentMode] = useState<Payment_Mode>(
-    Payment_Mode.BankVoucher
-  );
+  const [selectedPaymentMode, setSelectedPaymentMode] =
+    useState<Payment_Mode>();
 
   const [adminFees, setAdminFees] = useState(34000.0);
   const [printingFees, setPrintingFees] = useState(540.0);

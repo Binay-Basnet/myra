@@ -4,10 +4,12 @@ import { AiOutlinePlus } from 'react-icons/ai';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { AddOperator } from '../../accordion-component/KymCoopAccountOperator';
 
 export const KymCoopAccountOperatorDetail = ({ watch, control }) => {
+  const { t } = useTranslation();
   const {
     fields: accountFields,
     append: accountAppend,
@@ -16,7 +18,7 @@ export const KymCoopAccountOperatorDetail = ({ watch, control }) => {
   return (
     <GroupContainer id="Account Operator Detail" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
-        Details of Account Operators
+        {t['kymCoopDetailsofAccountOperators']}
       </Text>
       {accountFields.map((item, index) => {
         return (
@@ -39,7 +41,7 @@ export const KymCoopAccountOperatorDetail = ({ watch, control }) => {
           accountAppend({});
         }}
       >
-        Add Operator
+        {t['kymCoopAddOperator']}
       </Button>
     </GroupContainer>
   );

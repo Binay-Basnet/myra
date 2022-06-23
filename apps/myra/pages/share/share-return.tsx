@@ -53,9 +53,8 @@ const ShareReturn = () => {
   const noOfShares = watch('noOfReturnedShares');
   const allShares = watch('selectAllShares');
 
-  const [selectedPaymentMode, setSelectedPaymentMode] = useState<Payment_Mode>(
-    Payment_Mode.BankVoucher
-  );
+  const [selectedPaymentMode, setSelectedPaymentMode] =
+    useState<Payment_Mode>();
   const [adminFees, setAdminFees] = useState(34000.0);
   const [printingFees, setPrintingFees] = useState(540.0);
 
@@ -82,42 +81,43 @@ const ShareReturn = () => {
         console.log('datasss', datasss);
       }}
     >
-      <Box
-        position="fixed"
-        width="100%"
-        top={0}
-        zIndex={2}
-        backdropFilter="saturate(180%) blur(5px)"
-      >
-        <Header />
-      </Box>
-      <Container minW="container.xl" height="fit-content">
+      <form>
         <Box
-          height="60px"
-          display="flex"
-          justifyContent="space-between"
-          alignItems={'center'}
-          px="5"
-          background="white"
-          borderBottom="1px solid #E6E6E6"
+          position="fixed"
+          width="100%"
+          top={0}
+          zIndex={2}
+          backdropFilter="saturate(180%) blur(5px)"
         >
-          <Text fontSize="r2" fontWeight="600">
-            {t['shareReturnNewShareReturn']}
-          </Text>
-          <CloseIcon cursor="pointer" onClick={() => router.back()} />
+          <Header />
         </Box>
-        <Box display="flex" width="100%">
-          <Box w="100%">
-            <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
-              <FormInput
-                mb="20px"
-                w="50%"
-                name="memberId"
-                label={t['shareReturnSelectMember']}
-                placeholder={t['shareReturnEnterMemberID']}
-              />
+        <Container minW="container.xl" p="0">
+          <Box
+            height="60px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems={'center'}
+            px="5"
+            background="white"
+            borderBottom="1px solid #E6E6E6"
+          >
+            <Text fontSize="r2" fontWeight="600">
+              {t['shareReturnNewShareReturn']}
+            </Text>
+            <CloseIcon cursor="pointer" onClick={() => router.back()} />
+          </Box>
+          <Box display="flex" width="100%">
+            <Box w="100%">
+              <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
+                <FormInput
+                  mb="20px"
+                  w="50%"
+                  name="memberId"
+                  label={t['shareReturnSelectMember']}
+                  placeholder={t['shareReturnEnterMemberID']}
+                />
 
-              {/*  {data && (
+                {/*  {data && (
                 <Box
                   mt="s16"
                   border="1px solid"
@@ -268,318 +268,319 @@ const ShareReturn = () => {
                   </Box>
                 </Box>
               )}*/}
-            </Box>
+              </Box>
 
-            <Box
-              display="flex"
-              flexDirection="column"
-              p="5"
-              pb="28px"
-              background="white"
-              borderBottom="1px solid #E6E6E6"
-              borderTopRadius={5}
-            >
-              <Text
-                fontWeight="SemiBold"
-                fontSize="r1"
-                color="neutralColorLight.Gray-60"
+              <Box
+                display="flex"
+                flexDirection="column"
+                p="5"
+                pb="28px"
+                background="white"
+                borderBottom="1px solid #E6E6E6"
+                borderTopRadius={5}
               >
-                {t['shareReturnShareInformation']}
-              </Text>
+                <Text
+                  fontWeight="SemiBold"
+                  fontSize="r1"
+                  color="neutralColorLight.Gray-60"
+                >
+                  {t['shareReturnShareInformation']}
+                </Text>
 
-              <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
-                <GridItem>
-                  <Grid
-                    templateRows={
-                      noOfShares ? 'repeat(3,1fr)' : 'repeat(2,0fr)'
-                    }
-                    gap={3}
-                  >
-                    <GridItem>
-                      <FormInput
-                        id="noOfShares"
-                        name="noOfReturnedShares"
-                        label={t['shareReturnNoOfShares']}
-                        placeholder={t['shareReturnNoOfShares']}
-                      />
-                    </GridItem>
-
-                    <GridItem>
-                      <FormCheckbox
-                        name="selectAllShares"
-                        label={t['shareReturnSelectAllShares']}
-                        mt="20px"
-                      />
-                    </GridItem>
-                    {noOfShares ? (
-                      <GridItem>
-                        <Box
-                          display="flex"
-                          borderRadius="br2"
-                          gap="s60"
-                          p="s16"
-                          bg="background.500"
-                        >
-                          <Box>
-                            <Text fontWeight="400" fontSize="s2">
-                              {t['shareReturnRemainingShare']}
-                            </Text>
-                            <Text fontWeight="600" fontSize="r1">
-                              {allShares ? 0 : 20}
-                            </Text>
-                          </Box>
-
-                          <Box>
-                            <Text fontWeight="400" fontSize="s2">
-                              {t['shareReturnRemainingShareValue']}
-                            </Text>
-                            <Text fontWeight="600" fontSize="r1">
-                              {' '}
-                              {allShares ? 0 : 2000}
-                            </Text>
-                          </Box>
-                        </Box>
-                      </GridItem>
-                    ) : null}
-                  </Grid>
-                </GridItem>
-
-                {noOfShares ? (
+                <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
                   <GridItem>
-                    <Box
-                      h="100%"
-                      borderRadius="br2"
-                      p="s16"
-                      bg="background.500"
+                    <Grid
+                      templateRows={
+                        noOfShares ? 'repeat(3,1fr)' : 'repeat(2,0fr)'
+                      }
+                      gap={3}
                     >
-                      <Grid templateRows="repeat(4,1fr)">
-                        <GridItem>
-                          <Box display="flex" justifyContent="space-between">
-                            <Text
-                              color="neutralLightColor.Gray-60"
-                              fontWeight="Medium"
-                              fontSize="s3"
-                            >
-                              {t['shareReturnWithdrawAmount']}
-                            </Text>
+                      <GridItem>
+                        <FormInput
+                          id="noOfShares"
+                          name="noOfReturnedShares"
+                          label={t['shareReturnNoOfShares']}
+                          placeholder={t['shareReturnNoOfShares']}
+                        />
+                      </GridItem>
 
-                            <Text
-                              color="neutralLightColor.Gray-80"
-                              fontWeight="SemiBold"
-                              fontSize="r1"
-                            >
-                              {noOfShares * 100}
-                            </Text>
-                          </Box>
-                        </GridItem>
-
+                      <GridItem>
+                        <FormCheckbox
+                          name="selectAllShares"
+                          label={t['shareReturnSelectAllShares']}
+                          mt="20px"
+                        />
+                      </GridItem>
+                      {noOfShares ? (
                         <GridItem>
                           <Box
-                            mb="10px"
                             display="flex"
-                            justifyContent="space-between"
+                            borderRadius="br2"
+                            gap="s60"
+                            p="s16"
+                            bg="background.500"
                           >
-                            <Text
-                              color="neutralLightColor.Gray-60"
-                              fontWeight="Medium"
-                              fontSize="s3"
-                              display="flex"
-                              alignItems="center"
-                            >
-                              {t['shareReturnAdministrationFees']}
-                            </Text>
-                            <FormInput
-                              name="extraFee"
-                              id="administrationFees"
-                              label=""
-                              placeholder="34000.00"
-                              bg="gray.0"
-                              textAlign="right"
-                              onChange={(e) =>
-                                setAdminFees(Number(e.target.value))
-                              }
-                            />
+                            <Box>
+                              <Text fontWeight="400" fontSize="s2">
+                                {t['shareReturnRemainingShare']}
+                              </Text>
+                              <Text fontWeight="600" fontSize="r1">
+                                {allShares ? 0 : 20}
+                              </Text>
+                            </Box>
+
+                            <Box>
+                              <Text fontWeight="400" fontSize="s2">
+                                {t['shareReturnRemainingShareValue']}
+                              </Text>
+                              <Text fontWeight="600" fontSize="r1">
+                                {' '}
+                                {allShares ? 0 : 2000}
+                              </Text>
+                            </Box>
                           </Box>
                         </GridItem>
-
-                        {/* todo */}
-                        <GridItem>
-                          <Box display="flex" justifyContent="space-between">
-                            <Text
-                              color="neutralLightColor.Gray-60"
-                              fontWeight="Medium"
-                              fontSize="s3"
-                              display="flex"
-                              alignItems="center"
-                            >
-                              {t['shareReturnPrintingFees']}
-                            </Text>
-                            <FormInput
-                              name="extraFee"
-                              id="administrationFees"
-                              label=""
-                              placeholder="54.00"
-                              bg="gray.0"
-                              textAlign="right"
-                              onChange={(e) =>
-                                setPrintingFees(Number(e.target.value))
-                              }
-                            />
-                          </Box>
-                        </GridItem>
-
-                        <GridItem mt="22px">
-                          <Box display="flex" justifyContent="space-between">
-                            <Text
-                              color="neutralLightColor.Gray-80"
-                              fontWeight="600"
-                              fontSize="s3"
-                            >
-                              {t['shareReturnTotalAmount']}
-                            </Text>
-
-                            <Text
-                              color="neutralLightColor.Gray-80"
-                              fontWeight="SemiBold"
-                              fontSize="r1"
-                            >
-                              {t['rs']}{' '}
-                              {noOfShares * 1000 + adminFees + printingFees}
-                            </Text>
-                          </Box>
-                        </GridItem>
-                      </Grid>
-                    </Box>
+                      ) : null}
+                    </Grid>
                   </GridItem>
-                ) : null}
-              </Grid>
-            </Box>
 
-            <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
-              <Text
-                color="neutralColorLight.Gray-60"
-                fontSize="r2"
-                fontWeight="600"
-                mb="8px"
-              >
-                {t['shareReturnPaymentInformation']}
-              </Text>
-              <Text
-                color="neutralColorLight.Gray-60"
-                fontSize="s3"
-                fontWeight="500"
-                mb="s16"
-              >
-                {t['shareReturnPaymentMode']}
-              </Text>
-              <SwitchTabs
-                options={accountList.map((value) => ({
-                  label: value.label,
-                  value: value.value,
-                }))}
-                onChange={(e: Payment_Mode) => setSelectedPaymentMode(e)}
-              />
+                  {noOfShares ? (
+                    <GridItem>
+                      <Box
+                        h="100%"
+                        borderRadius="br2"
+                        p="s16"
+                        bg="background.500"
+                      >
+                        <Grid templateRows="repeat(4,1fr)">
+                          <GridItem>
+                            <Box display="flex" justifyContent="space-between">
+                              <Text
+                                color="neutralLightColor.Gray-60"
+                                fontWeight="Medium"
+                                fontSize="s3"
+                              >
+                                {t['shareReturnWithdrawAmount']}
+                              </Text>
 
-              {selectedPaymentMode === Payment_Mode.Account && (
-                <Box
-                  mt="s16"
-                  mb="s16"
-                  w="25%"
-                  display="flex"
-                  flexDirection="column"
-                  gap="s16"
+                              <Text
+                                color="neutralLightColor.Gray-80"
+                                fontWeight="SemiBold"
+                                fontSize="r1"
+                              >
+                                {noOfShares * 100}
+                              </Text>
+                            </Box>
+                          </GridItem>
+
+                          <GridItem>
+                            <Box
+                              mb="10px"
+                              display="flex"
+                              justifyContent="space-between"
+                            >
+                              <Text
+                                color="neutralLightColor.Gray-60"
+                                fontWeight="Medium"
+                                fontSize="s3"
+                                display="flex"
+                                alignItems="center"
+                              >
+                                {t['shareReturnAdministrationFees']}
+                              </Text>
+                              <FormInput
+                                name="extraFee"
+                                id="administrationFees"
+                                label=""
+                                placeholder="34000.00"
+                                bg="gray.0"
+                                textAlign="right"
+                                onChange={(e) =>
+                                  setAdminFees(Number(e.target.value))
+                                }
+                              />
+                            </Box>
+                          </GridItem>
+
+                          {/* todo */}
+                          <GridItem>
+                            <Box display="flex" justifyContent="space-between">
+                              <Text
+                                color="neutralLightColor.Gray-60"
+                                fontWeight="Medium"
+                                fontSize="s3"
+                                display="flex"
+                                alignItems="center"
+                              >
+                                {t['shareReturnPrintingFees']}
+                              </Text>
+                              <FormInput
+                                name="extraFee"
+                                id="administrationFees"
+                                label=""
+                                placeholder="54.00"
+                                bg="gray.0"
+                                textAlign="right"
+                                onChange={(e) =>
+                                  setPrintingFees(Number(e.target.value))
+                                }
+                              />
+                            </Box>
+                          </GridItem>
+
+                          <GridItem mt="22px">
+                            <Box display="flex" justifyContent="space-between">
+                              <Text
+                                color="neutralLightColor.Gray-80"
+                                fontWeight="600"
+                                fontSize="s3"
+                              >
+                                {t['shareReturnTotalAmount']}
+                              </Text>
+
+                              <Text
+                                color="neutralLightColor.Gray-80"
+                                fontWeight="SemiBold"
+                                fontSize="r1"
+                              >
+                                {t['rs']}{' '}
+                                {noOfShares * 1000 + adminFees + printingFees}
+                              </Text>
+                            </Box>
+                          </GridItem>
+                        </Grid>
+                      </Box>
+                    </GridItem>
+                  ) : null}
+                </Grid>
+              </Box>
+
+              <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
+                <Text
+                  color="neutralColorLight.Gray-60"
+                  fontSize="r2"
+                  fontWeight="600"
+                  mb="8px"
                 >
-                  <Select
-                    name="accountId"
-                    label={t['shareReturnSelectAccount']}
-                    placeholder={t['shareReturnSavingAccount']}
-                    options={[
-                      {
-                        label: 'Nabil Bank',
-                        value: 'option-1',
-                      },
-                      {
-                        label: 'Civil Bank',
-                        value: 'option-2',
-                      },
-                      {
-                        label: 'Sky Bank',
-                        value: 'option-3',
-                      },
-                    ]}
-                  />
+                  {t['shareReturnPaymentInformation']}
+                </Text>
+                <Text
+                  color="neutralColorLight.Gray-60"
+                  fontSize="s3"
+                  fontWeight="500"
+                  mb="s16"
+                >
+                  {t['shareReturnPaymentMode']}
+                </Text>
+                <SwitchTabs
+                  options={accountList.map((value) => ({
+                    label: value.label,
+                    value: value.value,
+                  }))}
+                  onChange={(e: Payment_Mode) => setSelectedPaymentMode(e)}
+                />
+
+                {selectedPaymentMode === Payment_Mode.Account && (
                   <Box
-                    px="s16"
-                    py="s8"
-                    bg="background.500"
-                    color="neutralColorLight.Gray-70"
                     mt="s16"
+                    mb="s16"
+                    w="25%"
+                    display="flex"
+                    flexDirection="column"
+                    gap="s16"
                   >
-                    <Text fontWeight="400" fontSize="s2">
-                      {t['shareReturnAvailableBalance']}
-                    </Text>
-                    <Text fontWeight="600" fontSize="r1">
-                      {t['rs']} 12,342
-                    </Text>
+                    <Select
+                      name="accountId"
+                      label={t['shareReturnSelectAccount']}
+                      placeholder={t['shareReturnSavingAccount']}
+                      options={[
+                        {
+                          label: 'Nabil Bank',
+                          value: 'option-1',
+                        },
+                        {
+                          label: 'Civil Bank',
+                          value: 'option-2',
+                        },
+                        {
+                          label: 'Sky Bank',
+                          value: 'option-3',
+                        },
+                      ]}
+                    />
+                    <Box
+                      px="s16"
+                      py="s8"
+                      bg="background.500"
+                      color="neutralColorLight.Gray-70"
+                      mt="s16"
+                    >
+                      <Text fontWeight="400" fontSize="s2">
+                        {t['shareReturnAvailableBalance']}
+                      </Text>
+                      <Text fontWeight="600" fontSize="r1">
+                        {t['rs']} 12,342
+                      </Text>
+                    </Box>
                   </Box>
-                </Box>
-              )}
-              {selectedPaymentMode === Payment_Mode.BankVoucher && (
-                <Box
-                  mt="s16"
-                  mb="s16"
-                  w="25%"
-                  display="flex"
-                  flexDirection="column"
-                  gap="s16"
-                >
-                  <FormSelect
-                    name="bankId"
-                    label={t['shareReturnSelectBank']}
-                    placeholder={t['shareReturnSelectBank']}
-                    options={[
-                      {
-                        label: 'Option 1',
-                        value: 'option-1',
-                      },
-                      {
-                        label: 'Option 2',
-                        value: 'option-2',
-                      },
-                      {
-                        label: 'Option 3',
-                        value: 'option-3',
-                      },
-                    ]}
-                  />
-                  <Box>
-                    <FormInput
+                )}
+                {selectedPaymentMode === Payment_Mode.BankVoucher && (
+                  <Box
+                    mt="s16"
+                    mb="s16"
+                    w="25%"
+                    display="flex"
+                    flexDirection="column"
+                    gap="s16"
+                  >
+                    <FormSelect
+                      name="bankId"
+                      label={t['shareReturnSelectBank']}
+                      placeholder={t['shareReturnSelectBank']}
+                      options={[
+                        {
+                          label: 'Option 1',
+                          value: 'option-1',
+                        },
+                        {
+                          label: 'Option 2',
+                          value: 'option-2',
+                        },
+                        {
+                          label: 'Option 3',
+                          value: 'option-3',
+                        },
+                      ]}
+                    />
+                    <Box>
+                      <FormInput
+                        type="text"
+                        name="voucherNumber"
+                        placeholder={t['shareReturnEnterVoucherNumber']}
+                        label={t['shareReturnEnterVoucherNumber']}
+                      />
+                    </Box>
+                  </Box>
+                )}
+
+                {selectedPaymentMode === Payment_Mode.Cash && (
+                  <Box mt="s16" mb="s16" w="25%">
+                    <TextInput
                       type="text"
-                      name="voucherNumber"
-                      placeholder={t['shareReturnEnterVoucherNumber']}
-                      label={t['shareReturnEnterVoucherNumber']}
+                      name="name"
+                      placeholder={t['shareReturnEnterCashAmount']}
+                      label={t['shareReturnEnterCashAmount']}
                     />
                   </Box>
-                </Box>
-              )}
-
-              {selectedPaymentMode === Payment_Mode.Cash && (
-                <Box mt="s16" mb="s16" w="25%">
-                  <TextInput
-                    type="text"
-                    name="name"
-                    placeholder={t['shareReturnEnterCashAmount']}
-                    label={t['shareReturnEnterCashAmount']}
-                  />
-                </Box>
-              )}
+                )}
+              </Box>
             </Box>
           </Box>
-        </Box>
-        <Box position="relative" width="100%">
-          <FormFooter onClick={submitForm} />
-        </Box>
-      </Container>
+          <Box position="relative" width="100%">
+            <FormFooter onClick={submitForm} />
+          </Box>
+        </Container>
+      </form>
     </Form>
   );
 };

@@ -7,6 +7,7 @@ import { FormCheckboxGroup } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
+import { useTranslation } from '@coop/shared/utils';
 
 const occupationDetails = [
   'Agriculture',
@@ -19,6 +20,7 @@ const occupationDetails = [
 ];
 
 export const MemberKYMProfession = () => {
+  const { t } = useTranslation();
   const { data: occupationData, isLoading: occupationLoading } =
     useGetIndividualKymOptionQuery({
       fieldName: 'occupation',
@@ -27,7 +29,7 @@ export const MemberKYMProfession = () => {
   return (
     <GroupContainer id="Profession" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
-        PROFESSION
+        {t['kymIndPROFESSION']}
       </Text>
 
       {occupationLoading ? (
