@@ -5,6 +5,7 @@ import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { useGetIndIdentificationDocOptionQuery } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Checkbox, Grid, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const identificationDetails = [
   'Citizenship',
@@ -15,6 +16,7 @@ const identificationDetails = [
 ];
 
 export const MemberKYMIdentificationDetails = () => {
+  const { t } = useTranslation();
   const { register } = useFormContext();
   const { data: identificationDocsData } =
     useGetIndIdentificationDocOptionQuery();
@@ -26,15 +28,13 @@ export const MemberKYMIdentificationDetails = () => {
   );
   const [currentShownDetails, setCurrentDetailsShown] = useState<string[]>([]);
 
-  console.log();
-
   return (
     <GroupContainer id="Identification Details" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="semibold">
-        IDENTIFICATION DETAILS
+        {t['kymIndIDENTIFICATIONDETAILS']}
       </Text>
       <Text fontSize="r1" fontWeight="medium">
-        Choose identification details
+        {t['kymIndChooseidentificationdetails']}
       </Text>
       <Box display="flex">
         {identificationDocs.map((item, index) => (

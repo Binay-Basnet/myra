@@ -6,24 +6,26 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Box, RadioGroup, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const annualFamilyIncome = ['Upto 50', 'Upto 100', 'Upto 500', 'Above 500'];
 
 export const KYMEstimatedAmount = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer
       id="Estimated Withdraw/Deposit Amount in the Institureion"
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">
-        ESTIMATED WITHDRAW / DEPOSIT AMOUNT IN THE INSTITUTION
+        {t['kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION']}
       </Text>
 
       <InputGroupContainer>
         <FormInput
           type="number"
           name="estimatedAnnualAccountTransactionAmount"
-          label="Estimated annual account transaction (Debit/Credit)"
+          label={t['kynIndEstimatedannualaccounttransaction']}
           placeholder="0.00"
           textAlign="right"
         />
@@ -31,7 +33,7 @@ export const KYMEstimatedAmount = () => {
 
       <Box display="flex" flexDirection="column">
         <Text fontSize="s3" mb="s16">
-          Estimated no. of Annual Transaction
+          {t['kynIndEstimatednoofAnnualTransaction']}
         </Text>
         {/* <Box display="flex" flexDirection="column" gap="s8">
           {annualFamilyIncome.map((item, index) => (
@@ -47,7 +49,7 @@ export const KYMEstimatedAmount = () => {
         <FormInput
           type="number"
           name="estimatedAnnualDepositAmount"
-          label="Estimated Annual Deposit"
+          label={t['kynIndEstimatedAnnualDeposit']}
           placeholder="0.00"
           textAlign="right"
         />
@@ -57,7 +59,7 @@ export const KYMEstimatedAmount = () => {
         <FormInput
           type="number"
           name="estimatedAnnualLoanAmount"
-          label="Estimated Annual Loan"
+          label={t['kynIndEstimatedAnnualLoan']}
           placeholder="0.00"
           textAlign="right"
         />

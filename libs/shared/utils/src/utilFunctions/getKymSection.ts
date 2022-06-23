@@ -87,115 +87,133 @@ const foreign = ['residentForeign'];
 
 export const getKymSection = (id: string) => {
   if (basicInfo.includes(id)) {
-    return { section: 'personalDetails', subSection: 'Basic Information' };
+    return {
+      section: 'personalDetails',
+      subSection: 'kymAccIndBasicInformation',
+    };
   }
   if (contact.includes(id)) {
-    return { section: 'personalDetails', subSection: 'Contact Details' };
+    return {
+      section: 'personalDetails',
+      subSection: 'kymAccIndContactDetails',
+    };
   }
   if (identificationDetails.includes(id)) {
-    return { section: 'personalDetails', subSection: 'Identification Details' };
+    return {
+      section: 'personalDetails',
+      subSection: 'kymAccIndIdentificationDetails',
+    };
   }
   if (permanentAddress.includes(id)) {
-    return { section: 'personalDetails', subSection: 'Permanent Address' };
+    return {
+      section: 'personalDetails',
+      subSection: 'kymAccIndPermanentAddress',
+    };
   }
   if (temporaryAddress.includes(id)) {
-    return { section: 'personalDetails', subSection: 'Temporary Address' };
+    return {
+      section: 'personalDetails',
+      subSection: 'kymAccIndTemporaryAddress',
+    };
   }
   if (incaseRented.includes(id)) {
     return {
       section: 'personalDetails',
-      subSection: 'Incase of residing in Rented House',
+      subSection: 'kymAccIndIncaseofresidinginRentedHouse',
     };
   }
   if (familyDetails.includes(id) || familyDetails.includes(id.split('.')[0])) {
-    return { section: 'personalDetails', subSection: 'Family Details' };
+    return { section: 'personalDetails', subSection: 'kymAccIndFamilyDetails' };
   }
   if (profession.includes(id)) {
-    return { section: 'professionalDetails', subSection: 'Profession' };
+    return {
+      section: 'professionalDetails',
+      subSection: 'kymAccIndProfession',
+    };
   }
   if (mainOccupation.includes(id.split('.')[0])) {
     return {
       section: 'professionalDetails',
-      subSection: 'Main Profession',
+      subSection: 'kymAccIndMainProfession',
     };
   }
   if (spouceOccupation.includes(id.split('.')[0])) {
     return {
       section: 'professionalDetails',
-      subSection: 'Main Occupation of Husaband/Wife',
+      subSection: 'kymAccIndMainOccupationofHusabandWife',
     };
   }
   if (incomeSource.includes(id.split('.')[0])) {
     return {
       section: 'professionalDetails',
-      subSection: 'Income Source Details',
+      subSection: 'kymAccIndIncomeSourceDetails',
     };
   }
   if (COOPmembership.includes(id)) {
     return {
       section: 'COOPmembership',
-      subSection: 'Main Purpose of Becoming a Member',
+      subSection: 'kymAccIndMainPurposeofBecomingMember',
     };
   }
   if (anotherCoop.includes(id.split('-')[0])) {
     return {
       section: 'COOPmembership',
-      subSection: 'Member of Another cooperative',
+      subSection: 'kymAccIndMemberofAnothercooperative',
     };
   }
   if (anotherCoop.includes(id.split('-')[0])) {
     return {
       section: 'COOPmembership',
-      subSection: 'Member of Another cooperative',
+      subSection: 'kymAccIndMemberofAnothercooperative',
     };
   }
   if (familyInCoop.includes(id.split('-')[0])) {
     return {
       section: 'COOPmembership',
-      subSection: 'Family Member in this institution',
+      subSection: 'kymAccIndFamilyMemberinthisinstitution',
     };
   }
   if (FinancialTransaction.includes(id)) {
     return {
       section: 'COOPmembership',
-      subSection: 'Financial Transaction Details',
+      subSection: 'kymAccIndFinancialTransactionDetails',
     };
   }
   if (estimatedWithdrawal.includes(id)) {
     return {
       section: 'COOPmembership',
-      subSection: 'Estimated Withdraw/Deposit Amount in the Institureion',
+      subSection: 'kymAccIndEstimatedWithdrawDepositAmountintheInstitureion',
     };
   }
 
   if (declerationNextToKin.includes(id)) {
     return {
       section: 'declaration',
-      subSection: 'Next to Kin',
+      subSection: 'kymAccIndNexttoKin',
     };
   }
   if (politicalExposure.includes(id.split('-')[0])) {
     return {
       section: 'declaration',
-      subSection: 'Family members in politics',
+      subSection: 'kymAccIndFamilymembersinpolitics',
     };
   }
   if (benificialOwner.includes(id.split('-')[0])) {
     return {
       section: 'declaration',
-      subSection: 'Beneficial Owner',
+      subSection: 'kymAccIndBeneficialOwner',
     };
   }
   if (convicted.includes(id.split('-')[0])) {
     return {
       section: 'declaration',
-      subSection: 'Convicted/Non-convicted Status',
+      subSection: 'kymAccIndConvictedNonconvictedStatus',
     };
   }
   if (foreign.includes(id.split('-')[0])) {
     return {
       section: 'declaration',
-      subSection: 'Residential permit of foreign country?',
+      subSection: 'kymAccIndResidentialpermitofforeigncountry',
     };
   }
 

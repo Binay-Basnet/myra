@@ -12,6 +12,7 @@ import {
 import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
 import { FormAmountInput, FormInput, FormRadioGroup } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -24,6 +25,7 @@ const annualFamilyIncome = [
 ];
 
 const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
+  const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -44,8 +46,8 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
             type="text"
             bg="white"
             name={`incomeSourceDetails.${index}.source`}
-            label="Income Source"
-            placeholder="Enter Income Source"
+            label={t['kymIndIncomeSource']}
+            placeholder={t['kymIndEnterIncomeSource']}
           />
         </GridItem>
         <GridItem colSpan={1}>
@@ -53,7 +55,7 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
             control={control}
             bg="white"
             name={`incomeSourceDetails.${index}.amount`}
-            label="Amount"
+            label={t['kymIndAmount']}
             placeholder="0.00"
           />
         </GridItem>
@@ -63,6 +65,7 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
 };
 
 export const MemberKYMIncomeSourceDetails = () => {
+  const { t } = useTranslation();
   const { data: familyIncomeData, isLoading: familyIncomeLoading } =
     useGetIndividualKymOptionQuery({
       fieldName: 'family_income',
@@ -79,12 +82,12 @@ export const MemberKYMIncomeSourceDetails = () => {
   return (
     <GroupContainer id="Income Source Details" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
-        INCOME SOURCE DETAILS
+        {t['kymIndINCOMESOURCEDETAILS']}
       </Text>
       <GroupContainer>
         <Box display="flex" flexDirection="column">
           <Text fontSize="s3" mb={3}>
-            Annual Family Income
+            {t['kynIndAnnualFamilyIncome']}
           </Text>
 
           <FormRadioGroup
@@ -94,7 +97,7 @@ export const MemberKYMIncomeSourceDetails = () => {
         </Box>
         <div>
           <Text fontSize="s3" mb="s4">
-            Income greater than 4 lakhs in the previous fiscal year
+            {t['kynIndIncomegreater']}
           </Text>
           <DynamicBoxGroupContainer>
             {incomeSourceFields.map((item, index) => {
@@ -115,7 +118,7 @@ export const MemberKYMIncomeSourceDetails = () => {
               variant="outline"
               onClick={() => incomeSourceAppend({})}
             >
-              New Entry
+              {t['kynIndNewEntry']}
             </Button>
           </DynamicBoxGroupContainer>
         </div>

@@ -57,7 +57,7 @@ export function KYMCooperativeUnionPage() {
               borderBottom="1px solid #E6E6E6"
             >
               <Text fontSize="r2" fontWeight="SemiBold">
-                {t.membersFormAddNewMembers}
+                {t['membersFormAddNewMembers']}
               </Text>
               <IconButton
                 variant={'ghost'}
@@ -87,7 +87,7 @@ export function KYMCooperativeUnionPage() {
             <Box background="white" ml={320} px="s20" pb="120px">
               <SectionContainer>
                 <Text fontSize="r3" fontWeight="600">
-                  {t.kymCoopUnionInstitutionInformation}
+                  {t['kymCoopUnionInstitutionInformation']}
                 </Text>
                 <InstituteInfo setSection={setSection} />
                 <DirectorDetails setSection={setSection} />

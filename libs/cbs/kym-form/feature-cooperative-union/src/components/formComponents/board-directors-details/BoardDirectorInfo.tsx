@@ -4,7 +4,6 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
-import { useTranslation } from '@coop/shared/utils';
 
 import {
   AccordianContainer,
@@ -13,13 +12,13 @@ import {
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   FormFileInput,
   FormInput,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -29,10 +28,15 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const AddDirector = ({ watch, index, control, removeDirector }) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
+
+  const isPermanentAndTemporaryAddressSame = watch(
+    `boardOfDirectorsDetails.${index}.isPermanentAndTemporaryAddressSame`
+  );
 
   const [temporaryAddress, setTemporaryAddress] = useState(false);
   const [isOpen, setIsOpen] = React.useState(true);
@@ -226,55 +230,58 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
 
               <FormSwitch
                 control={control}
-                name="isPermanentAndTemporaryAddressSame"
+                name={`boardOfDirectorsDetails.${index}.isPermanentAndTemporaryAddressSame`}
                 label={t['kymCoopUnionTemporaryAddressPermanent']}
               />
-
-              <InputGroupContainer>
-                <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.temporaryStateId`}
-                  label={t['kymCoopUnionState']}
-                  placeholder={t['kymCoopUnionSelectState']}
-                  options={province}
-                />
-                <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.temporaryDistrictId`}
-                  label={t['kymCoopUnionDistrict']}
-                  placeholder={t['kymCoopUnionSelectDistrict']}
-                  options={districtTempList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.temporaryVdcOrMunicId`}
-                  label={t['kymCoopUnionVDCMunicipality']}
-                  placeholder={t['kymCoopUnionSelectVDCMunicipality']}
-                  options={localityTempList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormInput
-                  type="number"
-                  name={`boardOfDirectorsDetails.${index}.temporaryWardId`}
-                  label={t['kymCoopUnionWardNo']}
-                  placeholder={t['kymCoopUnionEnterWardNo']}
-                />
-                <FormInput
-                  type="text"
-                  name={`boardOfDirectorsDetails.${index}.temporaryLocality`}
-                  label={t['kymCoopUnionLocality']}
-                  placeholder={t['kymCoopUnionEnterLocality']}
-                />
-              </InputGroupContainer>
-              <Button
-                mt="-16px"
-                alignSelf="start"
-                leftIcon={<Icon size="md" as={FaMap} />}
-              >
-                {t['pinOnMap']}
-              </Button>
+              {!isPermanentAndTemporaryAddressSame && (
+                <>
+                  <InputGroupContainer>
+                    <FormSelect
+                      name={`boardOfDirectorsDetails.${index}.temporaryStateId`}
+                      label={t['kymCoopUnionState']}
+                      placeholder={t['kymCoopUnionSelectState']}
+                      options={province}
+                    />
+                    <FormSelect
+                      name={`boardOfDirectorsDetails.${index}.temporaryDistrictId`}
+                      label={t['kymCoopUnionDistrict']}
+                      placeholder={t['kymCoopUnionSelectDistrict']}
+                      options={districtTempList.map((d) => ({
+                        label: d.name,
+                        value: d.id,
+                      }))}
+                    />
+                    <FormSelect
+                      name={`boardOfDirectorsDetails.${index}.temporaryVdcOrMunicId`}
+                      label={t['kymCoopUnionVDCMunicipality']}
+                      placeholder={t['kymCoopUnionSelectVDCMunicipality']}
+                      options={localityTempList.map((d) => ({
+                        label: d.name,
+                        value: d.id,
+                      }))}
+                    />
+                    <FormInput
+                      type="number"
+                      name={`boardOfDirectorsDetails.${index}.temporaryWardId`}
+                      label={t['kymCoopUnionWardNo']}
+                      placeholder={t['kymCoopUnionEnterWardNo']}
+                    />
+                    <FormInput
+                      type="text"
+                      name={`boardOfDirectorsDetails.${index}.temporaryLocality`}
+                      label={t['kymCoopUnionLocality']}
+                      placeholder={t['kymCoopUnionEnterLocality']}
+                    />
+                  </InputGroupContainer>
+                  <Button
+                    mt="-16px"
+                    alignSelf="start"
+                    leftIcon={<Icon size="md" as={FaMap} />}
+                  >
+                    {t['pinOnMap']}
+                  </Button>
+                </>
+              )}
             </Box>
             <InputGroupContainer>
               <FormInput

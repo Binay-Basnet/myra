@@ -6,10 +6,12 @@ import format from 'date-fns/format';
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { TableListPageHeader } from '../TableListPageHeader';
 
 export const MemberTable = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { data, isFetching } = useGetMemberListQuery({
     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
@@ -21,19 +23,23 @@ export const MemberTable = () => {
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
-  const popoverTitle = ['View Member Profile', 'Edit Member', 'Make Inactive'];
+  const popoverTitle = [
+    'memberListTableViewMemberProfile',
+    'memberListTableEditMember',
+    'memberListTableMakeInactive',
+  ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'memberID',
+        Header: t['memberListTableMemberID'],
         accessor: 'node.id',
         maxWidth: 4,
         disableSortBy: false,
       },
 
       {
-        Header: 'Name',
+        Header: t['memberListTableName'],
         accessor: 'node.name.local',
 
         width: '60%',
@@ -56,7 +62,7 @@ export const MemberTable = () => {
       },
 
       {
-        Header: 'Address',
+        Header: t['memberListTableAddress'],
         accessor: 'node.address.district.local',
         width: '20%',
 
@@ -69,13 +75,13 @@ export const MemberTable = () => {
         },
       },
       {
-        Header: 'Phone No.',
+        Header: t['memberListTablePhoneNo'],
         accessor: 'node.contact',
 
         width: '10%',
       },
       {
-        Header: 'Date Joined',
+        Header: t['memberListDateJoined'],
         accessor: 'node.createdAt',
         disableSortBy: false,
         disableFilters: false,

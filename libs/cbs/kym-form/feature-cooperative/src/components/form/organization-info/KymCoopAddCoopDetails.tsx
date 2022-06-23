@@ -5,8 +5,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopAddCoopDetails = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer
       id="Additional Coorperative Details"
@@ -17,13 +19,13 @@ export const KymCoopAddCoopDetails = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Additional Coorperative Details
+        {t['kymCoopAdditionalCoorperativeDetails']}
       </Text>
       <InputGroupContainer>
         <FormSelect
           name="economicDetailType"
-          label="Type"
-          placeholder="Select Type"
+          label={t['kymCoopType']}
+          placeholder={t['kymCoopSelectType']}
           options={[
             { label: 'Economy', value: 'economy' },
             { label: 'Maths', value: 'maths' },
@@ -32,8 +34,8 @@ export const KymCoopAddCoopDetails = () => {
         <FormInput
           type="text"
           name="mainServiceProduct:"
-          label="Main Service/Product"
-          placeholder="Enter Main Service/Product"
+          label={t['kymCoopMainServiceProduct']}
+          placeholder={t['kymCoopEnterMainServiceProduct']}
         />
       </InputGroupContainer>
     </GroupContainer>

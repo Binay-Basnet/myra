@@ -5,8 +5,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopCurrentMembers = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Current Members" scrollMarginTop={'200px'}>
       <Text
@@ -14,27 +16,27 @@ export const KymCoopCurrentMembers = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Current Members
+        {t['kymCoopCurrentMembers']}
       </Text>
       <InputGroupContainer>
         <FormInput
           type="text"
           name="noOfMaleMembers"
-          label="No. of Male members"
-          placeholder="Enter number of Male Members"
+          label={t['kymCoopNoofMalemembers']}
+          placeholder={t['kymCoopEnternumberofMaleMembers']}
         />
         <FormInput
           type="text"
           name="noOfFemaleMembers"
-          label="No. of Female members"
-          placeholder="Enter number of Female Members"
+          label={t['kymCoopNoofFemalemembers']}
+          placeholder={t['kymCoopEnternumberofFemaleMembers']}
         />
 
         <FormInput
           type="text"
           name="noOfOtherMembers"
-          label="No. of Other members"
-          placeholder="Enter number of Other members"
+          label={t['kymCoopNoofOthermembers']}
+          placeholder={t['kymCoopEnternumberofOthermembers']}
         />
       </InputGroupContainer>
     </GroupContainer>

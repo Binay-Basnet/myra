@@ -6,6 +6,7 @@ import {
 } from 'react-icons/ai';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   KymIndAddSectionStatus,
@@ -13,47 +14,47 @@ import {
 } from '@coop/shared/data-access';
 
 const PersonalInformation = [
-  'Basic Information',
-  'Contact Details',
-  'Identification Details',
-  'Permanent Address',
-  'Temporary Address',
-  'Incase of residing in Rented House',
-  'Family Details',
+  'kymAccIndBasicInformation',
+  'kymAccIndContactDetails',
+  'kymAccIndIdentificationDetails',
+  'kymAccIndPermanentAddress',
+  'kymAccIndTemporaryAddress',
+  'kymAccIndIncaseofresidinginRentedHouse',
+  'kymAccIndFamilyDetails',
 ];
 
 const personalInfoEnum: Record<
   typeof PersonalInformation[number],
   KymIndPersonalSection
 > = {
-  'Basic Information': KymIndPersonalSection.BasicInformation,
-  'Contact Details': KymIndPersonalSection.ContactDetails,
-  'Identification Details': KymIndPersonalSection.IdentificationDetails,
-  'Permanent Address': KymIndPersonalSection.PermanentAddress,
-  'Temporary Address': KymIndPersonalSection.TemporaryAddress,
-  'Incase of residing in Rented House': KymIndPersonalSection.RentedHouse,
-  'Family Details': KymIndPersonalSection.FamilyDetails,
+  kymAccIndBasicInformation: KymIndPersonalSection.BasicInformation,
+  kymAccIndContactDetails: KymIndPersonalSection.ContactDetails,
+  kymAccIndIdentificationDetails: KymIndPersonalSection.IdentificationDetails,
+  kymAccIndPermanentAddress: KymIndPersonalSection.PermanentAddress,
+  kymAccIndTemporaryAddress: KymIndPersonalSection.TemporaryAddress,
+  kymAccIndIncaseofresidinginRentedHouse: KymIndPersonalSection.RentedHouse,
+  kymAccIndFamilyDetails: KymIndPersonalSection.FamilyDetails,
 };
 
 const ProfessionalDetails: string[] = [
-  'Profession',
-  'Main Profession',
-  'Main Occupation of Husaband/Wife',
-  'Income Source Details',
+  'kymAccIndProfession',
+  'kymAccIndMainProfession',
+  'kymAccIndMainOccupationofHusabandWife',
+  'kymAccIndIncomeSourceDetails',
 ];
 const coopmembership: string[] = [
-  'Main Purpose of Becoming a Member',
-  'Member of Another cooperative',
-  'Family Member in this institution',
-  'Financial Transaction Details',
-  'Estimated Withdraw/Deposit Amount in the Institureion',
+  'kymAccIndMainPurposeofBecomingMember',
+  'kymAccIndMemberofAnothercooperative',
+  'kymAccIndFamilyMemberinthisinstitution',
+  'kymAccIndFinancialTransactionDetails',
+  'kymAccIndEstimatedWithdrawDepositAmountintheInstitureion',
 ];
 const Decleration: string[] = [
-  'Next to Kin',
-  'Family members in politics',
-  'Beneficial Owner',
-  'Convicted/Non-convicted Status',
-  'Residential permit of foreign country?',
+  'kymAccIndNexttoKin',
+  'kymAccIndFamilymembersinpolitics',
+  'kymAccIndBeneficialOwner',
+  'kymAccIndConvictedNonconvictedStatus',
+  'kymAccIndResidentialpermitofforeigncountry',
 ];
 
 interface AccordianProps {
@@ -65,6 +66,7 @@ interface AccordianProps {
 }
 
 export function AccorrdianAddMember(props: AccordianProps) {
+  const { t } = useTranslation();
   const { formStatus, kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
   const [isOpenPersonal, setIsOpenPersonal] = React.useState(false);
@@ -92,7 +94,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         _hover={{ bg: '#EEF2F7' }}
       >
         <Text fontSize={'r1'} fontWeight="600">
-          1. Personal Details
+          {t['kymAccInd1PersonalDetails']}
         </Text>
         {!isOpenPersonal ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -114,7 +116,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
               &nbsp; &nbsp;
@@ -141,7 +143,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          2. Professional Details
+          {t['kymAccInd2ProfessionalDetails']}
         </Text>
         {!isOpenProfessional ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -163,7 +165,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -181,7 +183,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          3. COOP Membership
+          {t['kymAccInd3COOPMembership']}
         </Text>
         {!isOpenCoopMemberShip ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -203,7 +205,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -221,7 +223,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          4. Declaration
+          {t['kymAccInd4Declaration']}
         </Text>
         {!isOpenDeclaration ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -243,7 +245,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>

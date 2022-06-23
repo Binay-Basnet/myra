@@ -1,14 +1,17 @@
 import React, { useMemo } from 'react';
+import { FaMap } from 'react-icons/fa';
+
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Text, Button, Icon } from '@coop/shared/ui';
-import { FaMap } from 'react-icons/fa';
+import { Button, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopOpAddress = ({ watch }: any) => {
+  const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
 
   const province = useMemo(() => {
@@ -45,19 +48,19 @@ export const KymCoopOpAddress = ({ watch }: any) => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Operating Address
+        {t['kymCoopOperatingAddress']}
       </Text>
       <InputGroupContainer>
         <FormSelect
           name="oprProvinceId"
-          label="Province"
-          placeholder="Select State"
+          label={t['kymCoopProvince']}
+          placeholder={t['kymCoopSelectState']}
           options={province}
         />
         <FormSelect
           name="oprDistrictId"
-          label="District"
-          placeholder="Select District"
+          label={t['kymCoopDistrict']}
+          placeholder={t['kymCoopSelectDistrict']}
           options={districtList.map((d) => ({
             label: d.name,
             value: d.id,
@@ -65,8 +68,8 @@ export const KymCoopOpAddress = ({ watch }: any) => {
         />
         <FormSelect
           name="oprMunicipalityId"
-          label="VDC / Municipality"
-          placeholder="Select Municipality"
+          label={t['kymCoopVDCMunicipality']}
+          placeholder={t['kymCoopSelectMunicipality']}
           options={muncipalityList.map((d) => ({
             label: d.name,
             value: d.id,
@@ -76,14 +79,14 @@ export const KymCoopOpAddress = ({ watch }: any) => {
         <FormInput
           type="text"
           name="oprWardId"
-          label="Ward No"
-          placeholder="Enter Ward No"
+          label={t['kymCoopWardNo']}
+          placeholder={t['kymCoopEnterWardNo']}
         />
         <FormInput
           type="text"
           name="oprLocality"
-          label="Locality"
-          placeholder="Enter Locality"
+          label={t['kymCoopLocality']}
+          placeholder={t['kymCoopEnterLocality']}
         />
       </InputGroupContainer>
       <Button
@@ -91,7 +94,7 @@ export const KymCoopOpAddress = ({ watch }: any) => {
         mt="-16px"
         leftIcon={<Icon size="md" as={FaMap} />}
       >
-        Pin on Map
+        {t['pinOnMap']}
       </Button>
     </GroupContainer>
   );

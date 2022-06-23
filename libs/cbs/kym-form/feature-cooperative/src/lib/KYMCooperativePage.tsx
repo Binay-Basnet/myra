@@ -135,7 +135,7 @@ export function KYMCooperativePage() {
                   <SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        1. Information of Organization
+                        {t['kymCoop1InformationofOrganization']}
                       </Text>
                       <ContainerWithDivider>
                         <KymCoopBasicInfo />
@@ -151,7 +151,7 @@ export function KYMCooperativePage() {
                     </SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        2. Economic Details
+                        {t['kymCoop2EconomicDetails']}
                       </Text>
                       <ContainerWithDivider>
                         <KymEquityLiabilities watch={watch} />
@@ -161,7 +161,7 @@ export function KYMCooperativePage() {
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        3. Details of Board Directors
+                        {t['kymCoop3DetailsofBoardDirectors']}
                       </Text>
                       <ContainerWithDivider>
                         <KymCoopBoardDirectorDetail
@@ -172,7 +172,7 @@ export function KYMCooperativePage() {
                     </SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        4. Details of Account Operators
+                        {t['kymCoop4DetailsofAccountOperators']}
                       </Text>
                       <ContainerWithDivider>
                         <KymCoopAccountOperatorDetail
@@ -183,7 +183,7 @@ export function KYMCooperativePage() {
                     </SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        5. Declaration
+                        {t['kymCoop5Declaration']}
                       </Text>
                       <ContainerWithDivider>
                         <KymAccountHolderDeclaration />
@@ -212,7 +212,7 @@ export function KYMCooperativePage() {
             {/* </Box> */}
 
             {/* footer */}
-            <Box
+            {/* <Box
               minWidth="container.xl"
               height="60px"
               display="flex"
@@ -227,7 +227,7 @@ export function KYMCooperativePage() {
               boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
               zIndex={10}
             >
-              <Text>Form Details saved to draft</Text>
+              <Text> {t['formDetails']}</Text>
               <Box
                 display="flex"
                 flexDirection="row"
@@ -248,7 +248,7 @@ export function KYMCooperativePage() {
                       fontSize="s2"
                       ml="5px"
                     >
-                      Save Draft
+                      {t['saveDraft']}
                     </Text>
                   </Button>
                 </Box>
@@ -256,10 +256,10 @@ export function KYMCooperativePage() {
                 <Button
                   onClick={() => router.push(`/members/translation/${id}`)}
                 >
-                  Next
+                  {t['next']}
                 </Button>
               </Box>
-            </Box>
+            </Box> */}
           </form>
         </FormProvider>
       </Container>
@@ -278,7 +278,7 @@ export function KYMCooperativePage() {
               px="5"
               boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
             >
-              <Text>Form Details saved to draft</Text>
+              <Text>{t['formDetails']}</Text>
               <Box
                 display="flex"
                 flexDirection="row"
@@ -299,7 +299,7 @@ export function KYMCooperativePage() {
                       fontSize="s2"
                       ml="5px"
                     >
-                      Save Draft
+                      {t['saveDraft']}
                     </Text>
                   </Button>
                 </Box>
@@ -307,7 +307,7 @@ export function KYMCooperativePage() {
                 <Button
                   onClick={() => router.push(`/members/translation/${id}`)}
                 >
-                  Next
+                  {t['next']}
                 </Button>
               </Box>
             </Box>

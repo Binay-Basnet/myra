@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   GroupContainer,
@@ -11,6 +12,7 @@ import { Text } from '@coop/shared/ui';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 export const MemberKYMBasicInfo = () => {
+  const { t } = useTranslation();
   const { data: genderFields, isLoading: genderLoading } =
     useGetIndividualKymOptionQuery({
       fieldName: 'gender',
@@ -38,44 +40,44 @@ export const MemberKYMBasicInfo = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        BASIC INFORMATION
+        {t['kymIndBASICINFORMATION']}
       </Text>
       <InputGroupContainer>
         <FormInput
           type="text"
           name="firstName"
-          label="First Name"
-          placeholder="Enter first name"
+          label={t['kymIndFirstName']}
+          placeholder={t['kymIndEnterFirstName']}
         />
         <FormInput
           type="text"
           name="middleName"
-          label="Middle Name"
-          placeholder="Enter Middle name"
+          label={t['kymIndMiddleName']}
+          placeholder={t['kymIndEnterMiddlename']}
         />
         <FormInput
           type="text"
           name="lastName"
-          label="Last Name"
-          placeholder="Enter Last name"
+          label={t['kymIndLastName']}
+          placeholder={t['kymIndEnterLastname']}
         />
         <FormSelect
           name="genderId"
-          label="Gender"
-          placeholder="Select Gender"
+          label={t['kymIndGender']}
+          placeholder={t['kymIndSelectGender']}
           isLoading={genderLoading}
           options={getFieldOption(genderFields)}
         />
         <FormInput
           type="date"
           name="dateOfBirth"
-          label="Date of Birth(BS)"
-          placeholder="Enter date of birth"
+          label={t['kymIndDateofBirthBS']}
+          placeholder={t['kymIndEnterdateofbirth']}
         />
         <FormSelect
           name="ethnicityId"
-          label="Ethnicity"
-          placeholder="Select Ethnicity"
+          label={t['kymIndEthnicity']}
+          placeholder={t['kymIndSelectEthnicity']}
           isLoading={ethnicityLoading}
           options={getFieldOption(ethnicityFields)}
         />
@@ -83,21 +85,21 @@ export const MemberKYMBasicInfo = () => {
         <FormInput
           type="text"
           name="nationalityId"
-          label="Nationality"
-          placeholder="Enter Nationality"
+          label={t['kymIndNationality']}
+          placeholder={t['kymIndEnterNationality']}
           isDisabled={true}
         />
         <FormSelect
           name={'educationQualificationId'}
-          label="Educational Qualification"
-          placeholder="Select Educational Qualification"
+          label={t['kymIndEducationalQualification']}
+          placeholder={t['kymIndSelectEducationalQualification']}
           isLoading={educationLoading}
           options={getFieldOption(educationFields)}
         />
         <FormSelect
           name="religionId"
-          label="Religion"
-          placeholder="Select Religion"
+          label={t['kymIndReligion']}
+          placeholder={t['kymIndSelectReligion']}
           isLoading={religionLoading}
           options={getFieldOption(religionFields)}
         />

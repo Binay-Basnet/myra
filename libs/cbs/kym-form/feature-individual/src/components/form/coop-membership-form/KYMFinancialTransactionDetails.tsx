@@ -7,8 +7,10 @@ import {
 import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KYMFinancialTransactionDetails = () => {
+  const { t } = useTranslation();
   const {
     data: financialTransactionDetailsData,
     isLoading: financialTransactionLoading,
@@ -22,13 +24,12 @@ export const KYMFinancialTransactionDetails = () => {
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">
-        FINANCIAL TRANSACTION DETAILS
+        {t['kynIndFINANCIALTRANSACTIONDETAILS']}
       </Text>
 
       <Box display="flex" flexDirection="column" gap="s16">
         <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-          Details of the amount initially deposited in the instituion or
-          deposited till now
+          {t['kynIndDetailsoftheamount']}
         </Text>
         <InputGroupContainer>
           {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(

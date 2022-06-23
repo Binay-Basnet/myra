@@ -4,8 +4,10 @@ import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
 import { FormFileInput } from '@coop/shared/form';
 import { Grid, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KYMDocumentDeclaration = () => {
+  const { t } = useTranslation();
   const { data: fileUploadsData, isLoading: fileUploadsLoading } =
     useGetIndividualKymOptionQuery({
       fieldName: 'file_uploads',
@@ -18,7 +20,7 @@ export const KYMDocumentDeclaration = () => {
   return (
     <GroupContainer>
       <Text fontSize="r1" fontWeight="SemiBold">
-        DOCUMENT DECLARATION
+        {t['kynIndDOCUMENTDECLARATION']}
       </Text>
 
       <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">

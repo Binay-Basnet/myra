@@ -86,53 +86,62 @@ export const getKymCoopSection = (id: string) => {
   if (basicInfo.includes(id)) {
     return {
       section: 'organaizationDetails',
-      subSection: 'Basic Information',
+      subSection: 'kymCoopAccBasicInformation',
     };
   }
   if (registeredAddress.includes(id)) {
     return {
       section: 'organaizationDetails',
-      subSection: 'Registered Address',
+      subSection: 'kymCoopAccRegisteredAddress',
     };
   }
   if (operatingAddress.includes(id)) {
     return {
       section: 'organaizationDetails',
-      subSection: 'Operating Address',
+      subSection: 'kymCoopAccOperatingAddress',
     };
   }
   if (contactDetails.includes(id)) {
-    return { section: 'organaizationDetails', subSection: 'Contact Details' };
+    return {
+      section: 'organaizationDetails',
+      subSection: 'kymCoopAccContactDetails',
+    };
   }
   if (currentMembers.includes(id)) {
-    return { section: 'organaizationDetails', subSection: 'Current Members' };
+    return {
+      section: 'organaizationDetails',
+      subSection: 'kymCoopAccCurrentMembers',
+    };
   }
   if (cooperativeDate.includes(id)) {
-    return { section: 'organaizationDetails', subSection: 'Cooperative Date' };
+    return {
+      section: 'organaizationDetails',
+      subSection: 'kymCoopAccCooperativeDate',
+    };
   }
   if (representative.includes(id)) {
     return {
       section: 'organaizationDetails',
-      subSection: 'Representative',
+      subSection: 'kymCoopAccRepresentative',
     };
   }
   if (coopAddressDetails.includes(id)) {
     return {
       section: 'organaizationDetails',
-      subSection: 'Additional Coorperative Details',
+      subSection: 'kymCoopAccAdditionalCoorperativeDetails',
     };
   }
   if (numOfEmployee.includes(id)) {
     return {
       section: 'organaizationDetails',
-      subSection: 'Number of Employee',
+      subSection: 'kymCoopAccNumberofEmployee',
     };
   }
 
   if (cooperativeDate.includes(id)) {
     return {
       section: 'cooperativeDate',
-      subSection: 'Cooperative Date',
+      subSection: 'kymCoopAccCooperativeDate',
     };
   }
 
@@ -140,13 +149,13 @@ export const getKymCoopSection = (id: string) => {
   if (equityAndLiabilities.includes(id)) {
     return {
       section: 'economicDetails',
-      subSection: 'Equity and Liabilities',
+      subSection: 'kymCoopAccEquityandLiabilities',
     };
   }
   if (assets.includes(id)) {
     return {
       section: 'economicDetails',
-      subSection: 'Assets',
+      subSection: 'kymCoopAccAssets',
     };
   }
 
@@ -154,7 +163,7 @@ export const getKymCoopSection = (id: string) => {
   if (boardOfDirectorrDetails.includes(id.split('.')[0])) {
     return {
       section: 'boardOfDirectorsDetails',
-      subSection: 'Board Of Director Details',
+      subSection: 'kymCoopAccBoardOfDirectorDetails',
     };
   }
 
@@ -162,7 +171,7 @@ export const getKymCoopSection = (id: string) => {
   if (accountOperatorDetail.includes(id.split('.')[0])) {
     return {
       section: 'accountOperatorDetails',
-      subSection: 'Account Operator Detail',
+      subSection: 'kymCoopAccAccountOperatorDetail',
     };
   }
 
@@ -170,13 +179,13 @@ export const getKymCoopSection = (id: string) => {
   if (accountHolderDeclaration.includes(id)) {
     return {
       section: 'declaration',
-      subSection: 'Account Holder Declaration',
+      subSection: 'kymCoopAccAccountHolderDeclaration',
     };
   }
   if (documentDeclaration.includes(id)) {
     return {
       section: 'declaration',
-      subSection: 'Document Declaration',
+      subSection: 'kymCoopAccDocumentDeclaration',
     };
   }
 

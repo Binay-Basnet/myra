@@ -5,8 +5,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopBasicInfo = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
       <Text
@@ -14,30 +16,34 @@ export const KymCoopBasicInfo = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        BASIC INFORMATION
+        {t['kymCoopBASICINFORMATION']}
       </Text>
       <FormInput
         w="65%"
         type="text"
         name={'nameOfOrganization'}
-        label="Name of Organization"
-        placeholder="Enter Name of Organization"
+        label={t['kymCoopNameofOrganization']}
+        placeholder={t['kymCoopEnterNameofOrganization']}
       />
       <InputGroupContainer>
         <FormInput
           type="text"
           name="regdNumber"
-          label="Regisration No"
-          placeholder="Enter Registered Number"
+          label={t['kymCoopRegisrationNo']}
+          placeholder={t['kymCoopEnterRegisteredNumber']}
         />
 
         <FormInput
           type="text"
           name="regdOffice"
-          label="Registration office"
-          placeholder="Enter Registered Address"
+          label={t['kymCoopRegistrationoffice']}
+          placeholder={t['kymCoopEnterRegisteredAddress']}
         />
-        <FormInput type="date" name="regdDate" label="Registration Date" />
+        <FormInput
+          type="date"
+          name="regdDate"
+          label={t['kymCoopRegistrationDate']}
+        />
       </InputGroupContainer>
     </GroupContainer>
   );

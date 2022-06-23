@@ -58,96 +58,97 @@ const accountInstruction = [
   'isCompanyStampCompulsory',
 ];
 const accontDecleration = ['accountHolderName', 'weAgree'];
+
 export const getKymSectionInstitution = (id: string) => {
   if (InstitutionalInfo.includes(id)) {
     return {
       section: 'organizationInfo',
-      subSection: 'Basic Information',
+      subSection: 'kymInsBasicInformation',
     };
   }
   if (Registerdetails.includes(id)) {
     return {
       section: 'organizationInfo',
-      subSection: 'Registered Details',
+      subSection: 'kymInsRegisteredDetails',
     };
   }
   if (contactDetails.includes(id)) {
     return {
       section: 'organizationInfo',
-      subSection: 'Contact Details',
+      subSection: 'kymInsContactDetails',
     };
   }
   if (BankAccDetails.includes(id)) {
     return {
       section: 'organizationInfo',
-      subSection: 'Bank Account Details',
+      subSection: 'kymInsBankAccountDetails',
     };
   }
   if (sisterConcern.includes(id.split('.')[0])) {
     return {
       section: 'organizationInfo',
-      subSection: 'Details of sister concern',
+      subSection: 'kymInsDetailsofsisterconcern',
     };
   }
   if (TransactionDetails.includes(id.split('.')[0])) {
     return {
       section: 'transactionProfile',
-      subSection: 'Transaction Profile',
+      subSection: 'kymInsTransactionProfile',
     };
   }
   if (TransactionDetails.includes(id.split('.')[0])) {
     return {
       section: 'transactionProfile',
-      subSection: 'Transaction Profile',
+      subSection: 'kymInsTransactionProfile',
     };
   }
   if (monthlyTurnover.includes(id.split('.')[0])) {
     return {
       section: 'transactionProfile',
-      subSection: 'Expected Monthly Turnover',
+      subSection: 'kymInsExpectedMonthlyTurnover',
     };
   }
   if (monthlyTransactions.includes(id.split('.')[0])) {
     return {
       section: 'transactionProfile',
-      subSection: 'Expected Monthly Transaction',
+      subSection: 'kymInsExpectedMonthlyTransaction',
     };
   }
   if (directorDetails.includes(id.split('.')[0])) {
     return {
       section: 'details',
-      subSection: 'Details of Proprietor, Partners, Directors.',
+      subSection: 'kymInsDetailsofProprietorPartnersDirectors',
     };
   }
 
   if (directoswithAffiliation.includes(id.split('.')[0])) {
     return {
       section: 'details',
-      subSection: 'Details of directors affiliated with other Firms',
+      subSection: 'kymInsDetailsofdirectorsaffiliatedwithotherFirms',
     };
   }
   if (accountOperator.includes(id.split('.')[0])) {
     return {
       section: 'accountOperations',
-      subSection: 'Details of Account Operators',
+      subSection: 'kymInsDetailsofAccountOperators',
     };
   }
   if (accountOperator.includes(id.split('.')[0])) {
     return {
       section: 'accountOperations',
-      subSection: 'Details of Account Operators',
+      subSection: 'kymInsDetailsofAccountOperators',
     };
   }
   if (accountInstruction.includes(id.split('-')[0])) {
     return {
       section: 'accountOperations',
-      subSection: 'Account Operation Instruction',
+      subSection: 'kymInsAccountOperationInstruction',
     };
   }
   if (accontDecleration.includes(id.split('.')[0])) {
     return {
       section: 'declaration',
-      subSection: 'Account Holder Declaration',
+      subSection: 'kymInsAccountHolderDeclaration',
     };
   }
 

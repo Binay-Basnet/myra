@@ -1,7 +1,9 @@
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymEquityLiabilities = ({ watch }: any) => {
+  const { t } = useTranslation();
   const shareCapital = watch('shareCapital');
   const reserveAndSurplus = watch('reserveAndSurplus');
   const savingDeposit = watch('savingDeposit');
@@ -45,7 +47,7 @@ export const KymEquityLiabilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Amount
+            {t['kymCoopAmount']}
           </Text>
         </GridItem>
       </Grid>
@@ -251,7 +253,7 @@ export const KymEquityLiabilities = ({ watch }: any) => {
             fontSize="s3"
             fontWeight="SemiBold"
           >
-            Total
+            {t['kymCoopTotal']}
           </Text>
         </GridItem>
 
@@ -269,7 +271,7 @@ export const KymEquityLiabilities = ({ watch }: any) => {
                 ? '0.00'
                 : totalEquityAndLiabilities
             }
-            placeholder="Enter Total Equity and liabilities"
+            placeholder={t['kymCoopEnterTotalEquityandliabilities']}
           />
         </GridItem>
       </Grid>
