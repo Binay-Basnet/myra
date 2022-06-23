@@ -6,9 +6,11 @@ import {
 } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
+
 import { Box, Button, Divider, Icon, Modal, Text } from '@coop/shared/ui';
-import { TabColumn } from '../tab/TabforMemberPage';
 import { useTranslation } from '@coop/shared/utils';
+
+import { TabColumn } from '../tab/TabforMemberPage';
 
 interface IMemberPageLayout {
   children: React.ReactNode;
@@ -80,7 +82,8 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
             display="flex"
             justifyContent="space-around"
             alignItems={'center'}
-            p="s24"
+            px="s24"
+            py="s16"
             gap="s16"
           >
             <Box

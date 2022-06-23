@@ -96,7 +96,11 @@ export const KYMCustomDragGroup = ({
               >
                 {fieldItems?.map((item, index) => {
                   return field ? (
-                    <Draggable key={item?.id} draggableId={id} index={index}>
+                    <Draggable
+                      key={item?.id}
+                      draggableId={item.id ?? 'no-id'}
+                      index={index}
+                    >
                       {(provided) => (
                         <Box
                           display={'flex'}

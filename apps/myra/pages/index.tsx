@@ -10,8 +10,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import NepaliDate from 'nepali-date-converter';
-import { Icon, Input } from '@coop/shared/ui';
 
+import { Icon, Input } from '@coop/shared/ui';
 import { Navbarfordaashboard } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -31,7 +31,6 @@ const Dashboard = () => {
           <Flex>
             <Box w="100%">
               <Input
-                h="44px"
                 variant={'unstyled'}
                 leftElement={<Icon as={IoSearch} />}
                 placeholder="Search"
