@@ -38,7 +38,6 @@ export const MemberKYMAddress = () => {
           permanentAddressPosition?.longitude
         );
         const address = data?.data?.address;
-        console.log('address', address);
         setPermanentAddress(
           `${address?.amenity ? address?.amenity + ', ' : ''}${
             address?.road ? address?.road + ', ' : ''
@@ -46,7 +45,7 @@ export const MemberKYMAddress = () => {
             address?.suburb ? address?.suburb + ', ' : ''
           }${address?.town ? address?.town + ', ' : ''}${
             address?.city ? address?.city + ', ' : ''
-          }${address?.country ? address?.country + ', ' : ''}`
+          }${address?.country ? address?.country : ''}`
         );
       } catch (e) {
         console.error('Error:', e);
@@ -125,7 +124,7 @@ export const MemberKYMAddress = () => {
       [],
     [currentTemptDistrictId]
   );
-  console.log('hello', permanentAddressPosition);
+
   return (
     <GroupContainer>
       <Box
