@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ShareSettingsTransfer } from '@coop/cbs/settings/share';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
@@ -7,7 +8,7 @@ import {
 } from '@coop/cbs/settings/ui-layout';
 
 const ShareTransfer = () => {
-  return <div>Share Transfer</div>;
+  return <ShareSettingsTransfer />;
 };
 
 export default ShareTransfer;

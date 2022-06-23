@@ -769,6 +769,25 @@ const ne = {
   shareRate: 'Share Rate',
   shareTransactableShare: 'Transactable Share',
   shareNonTransactableShare: 'Non-Transactable Share',
+  shareIssueAuthority: 'Share Issue Authority',
+  shareIssueAuthoritySubtitle: 'Who can issue the share',
+  shareHeadOffice: 'Head Office',
+  shareRegionalOffice: 'Regional Office',
+  shareServiceCenterBranch: 'Share Center /  Branch',
+  shareContactOffice: 'Contact Office (Samparka Karyalaya)',
+  shareOther: 'Other',
+  shareKitta: 'Share Kitta',
+  shareKittaSubtitle: 'Who can issue the share',
+  shareTypeOfShare: 'Type of Share',
+  shareNumberOfAuthorizedPaidUpShare: 'Numebr of Authorized Paid-up Share',
+  shareNumberOfIssuedShare: 'Number of Issued Share',
+  shareCertificateNumber: 'Share Certificate Number',
+  shareCertificateNumberSubtitle: 'Who can issue the share',
+  shareStartNumber: 'Start Number',
+  shareEndNumber: 'End Number',
+  shareIncrementer: 'Incrementer',
+  shareNumberOfDigits: 'Number of Digits',
+  sharePreview: 'Preview',
 
   // Settings Share Bonus
   shareBonusWhoPaysTheTax: 'Who Pays the tax',
@@ -830,6 +849,20 @@ const ne = {
   shareMaxShareQuantity: 'Max Share Quantity',
   shareType: 'Type',
   shareCharge: 'Charge',
+
+  // Share Transfer
+  shareTransferSubtitle: 'Manage how the share transfer',
+  shareTransferMemberToMember: 'Member to Member',
+  shareTransferShareRefund: 'Share Refund (Cash / Bank payment format)',
+
+  shareToFundLedgerMapping: 'Share To Fund / Ledger Mapping',
+  shareToFundLedgerMappingSubtitle:
+    'Account from which shares are paid to and paid from',
+  shareFundName: 'Fund Name',
+
+  shareToAccount: 'Share To Account  /',
+  shareToAccountSubtitle: 'Account from which shares are paid to and paid from',
+  shareTransferAccountName: 'Account Name',
 };
 
 export default ne;

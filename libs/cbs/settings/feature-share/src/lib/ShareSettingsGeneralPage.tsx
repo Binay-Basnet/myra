@@ -98,19 +98,22 @@ export const ShareSettingsGeneralPage = () => {
       </ShareSettingsCard>
 
       <ShareSettingsCard
-        title="Share Issue Authority"
-        subtitle="Who can issue the share"
+        title={t['shareIssueAuthority']}
+        subtitle={t['shareIssueAuthoritySubtitle']}
       >
         <Box display="flex" flexDir="column" gap="s16">
-          <Checkbox label="Head Office" isChecked />
-          <Checkbox label="Regional Office" />
-          <Checkbox label="Service Center / Branch" />
-          <Checkbox label="Contact Office (Samparka Karyalaya)" />
-          <Checkbox label="Other" />
+          <Checkbox label={t['shareHeadOffice']} isChecked />
+          <Checkbox label={t['shareRegionalOffice']} />
+          <Checkbox label={t['shareServiceCenterBranch']} />
+          <Checkbox label={t['shareContactOffice']} />
+          <Checkbox label={t['shareOther']} />
         </Box>
       </ShareSettingsCard>
 
-      <ShareSettingsCard title="Share Kitta" subtitle="Who can issue the share">
+      <ShareSettingsCard
+        title={t['shareKitta']}
+        subtitle={t['shareKittaSubtitle']}
+      >
         <Box display="flex" flexDir="column" width="100%" gap="s16">
           <Box
             width="100%"
@@ -119,18 +122,18 @@ export const ShareSettingsGeneralPage = () => {
             justifyContent="space-between"
           >
             <Text fontSize="r1" color="gray.800">
-              Type of Share
+              {t['shareTypeOfShare']}
             </Text>
             <Box width="33%">
               <Select
                 size="sm"
                 options={[
                   {
-                    label: 'Transactable',
+                    label: t['shareTransactable'],
                     value: 'transactable',
                   },
                   {
-                    label: 'Non-Transactable',
+                    label: t['shareNonTransactable'],
                     value: 'non-transactable',
                   },
                 ]}
@@ -145,7 +148,7 @@ export const ShareSettingsGeneralPage = () => {
             justifyContent="space-between"
           >
             <Text fontSize="r1" color="gray.800">
-              Number of Authorized Paid-up Share
+              {t['shareNumberOfAuthorizedPaidUpShare']}
             </Text>
             <Box w="33%">
               <Input size="sm" placeholder="10,000" />
@@ -158,7 +161,7 @@ export const ShareSettingsGeneralPage = () => {
             justifyContent="space-between"
           >
             <Text fontSize="r1" color="gray.800">
-              Number of Issued Share
+              {t['shareNumberOfIssuedShare']}
             </Text>
             <Box w="33%">
               <Input size="sm" placeholder="25,000" />
@@ -168,8 +171,8 @@ export const ShareSettingsGeneralPage = () => {
       </ShareSettingsCard>
 
       <ShareSettingsCard
-        title="Share Certificate Number"
-        subtitle="Who can issue the share"
+        title={t['shareCertificateNumber']}
+        subtitle={t['shareCertificateNumberSubtitle']}
       >
         <Box display="flex" flexDir="column" width="100%" gap="s16">
           <Box
@@ -179,7 +182,7 @@ export const ShareSettingsGeneralPage = () => {
             justifyContent="space-between"
           >
             <Text fontSize="r1" color="gray.800">
-              Start Number
+              {t['shareStartNumber']}
             </Text>
             <Box w="33%">
               <Input size="sm" placeholder="00001" />
@@ -192,7 +195,7 @@ export const ShareSettingsGeneralPage = () => {
             justifyContent="space-between"
           >
             <Text fontSize="r1" color="gray.800">
-              End Number
+              {t['shareEndNumber']}
             </Text>
             <Box w="33%">
               <Input size="sm" placeholder="00001" />
@@ -206,7 +209,7 @@ export const ShareSettingsGeneralPage = () => {
             justifyContent="space-between"
           >
             <Text fontSize="r1" color="gray.800">
-              Incrementer
+              {t['shareIncrementer']}
             </Text>
             <Box w="33%">
               <Input size="sm" placeholder="1" />
@@ -219,7 +222,7 @@ export const ShareSettingsGeneralPage = () => {
             justifyContent="space-between"
           >
             <Text fontSize="r1" color="gray.800">
-              Number of Digits
+              {t['shareNumberOfDigits']}
             </Text>
             <Box w="33%">
               <Input size="sm" placeholder="7" />
@@ -238,7 +241,7 @@ export const ShareSettingsGeneralPage = () => {
           bg="background.500"
         >
           <Text p="s12" color="gray.800" fontSize="r1" fontWeight="500">
-            Preview
+            {t['sharePreview']}
           </Text>
           <Text p="s12" color="gray.800" fontSize="r1" fontWeight="400">
             XYZ12346342
