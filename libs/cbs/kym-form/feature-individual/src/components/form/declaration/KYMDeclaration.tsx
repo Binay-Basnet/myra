@@ -92,6 +92,7 @@ export const KYMDeclaration = () => {
                 <FormInput
                   type="text"
                   name="fullName"
+                  label=" "
                   placeholder={t['kynIndFullName']}
                 />
               </GridItem>

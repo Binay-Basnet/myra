@@ -7,16 +7,15 @@ import { useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
-    color: '#37474F',
+    color: 'gray.800',
     height: '48px',
-    fontSize: '14px',
-    fontWeight: '500',
+    fontSize: 'r1',
+    fontWeight: '400',
     width: '100%',
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
     _selected: {
-      color: 'gray.800',
       bg: '#EEF2F7',
       fontWeight: '600',
     },

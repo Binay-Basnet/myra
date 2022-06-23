@@ -29,8 +29,12 @@ const tabList: TabList[] = [
     to: '/settings/general/share',
   },
   {
-    title: 'settingsSideBarDepositWithdraw',
-    to: '/settings/general/deposit-withdraw',
+    title: 'settingsSideBarDeposit',
+    to: '/settings/general/deposit/tds',
+  },
+  {
+    title: 'settingsSideBarDepositProducts',
+    to: '/settings/general/deposit-products',
   },
   {
     title: 'settingsSideBarLoan',

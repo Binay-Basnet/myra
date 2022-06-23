@@ -10,8 +10,9 @@ import {
 import { useSetCooperativeUnionBoardOfDirectorDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
-import { BoardDirectorInfo } from './BoardDirectorInfo';
 import { useTranslation } from '@coop/shared/utils';
+
+import { BoardDirectorInfo } from './BoardDirectorInfo';
 
 interface directorDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;

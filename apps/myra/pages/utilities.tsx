@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+
 import { MainLayout } from '@coop/shared/ui';
 
 const Utilities = () => {

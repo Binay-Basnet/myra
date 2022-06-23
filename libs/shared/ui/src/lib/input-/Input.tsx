@@ -20,19 +20,18 @@ export interface InputProps extends ChakraInputProps {
   leftzIndex?: number;
 }
 
-export const Input = (props: InputProps) => {
-  const {
-    rightElement,
-    leftElement,
-    helperText,
-    errorText,
-    label,
-    fontSize,
-    leftzIndex,
-    fontWeight,
-    ...rest
-  } = props;
-
+export const Input = ({
+  rightElement,
+  leftElement,
+  helperText,
+  errorText,
+  label,
+  fontSize,
+  size = 'default',
+  leftzIndex,
+  fontWeight,
+  ...rest
+}: InputProps) => {
   return (
     <Box w="auto" display="flex" flexDirection="column" gap="s4">
       {label && (
@@ -41,7 +40,10 @@ export const Input = (props: InputProps) => {
         </TextFields>
       )}
 
-      <InputGroup h="44px" borderRadius="br2">
+      <InputGroup
+        borderRadius="br2"
+        height={size === 'default' ? '44px' : '36px'}
+      >
         {leftElement && (
           <InputLeftElement
             pointerEvents="none"
@@ -50,7 +52,7 @@ export const Input = (props: InputProps) => {
           />
         )}
 
-        <ChakraInput isInvalid={!!errorText} {...rest} />
+        <ChakraInput h="100%" isInvalid={!!errorText} {...rest} />
         {rightElement && (
           <InputRightElement pointerEvents="none" children={rightElement} />
         )}

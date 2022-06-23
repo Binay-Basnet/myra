@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { GrClose } from 'react-icons/gr';
+import router from 'next/router';
 import { FormControl, FormLabel } from '@chakra-ui/react';
+
 import {
   Box,
   Button,
@@ -10,7 +12,6 @@ import {
   MainLayoutInventory,
   Text,
 } from '@coop/shared/ui';
-import router from 'next/router';
 
 const AddNewItemGroupPage = () => {
   return (

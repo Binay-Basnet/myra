@@ -9,7 +9,12 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
-import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
+import {
+  FormCheckbox,
+  FormInput,
+  FormSelect,
+  FormSwitch,
+} from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -17,7 +22,6 @@ import {
   GridItem,
   Icon,
   Select,
-  Switch,
   Text,
   TextFields,
 } from '@coop/shared/ui';
@@ -119,7 +123,9 @@ const MainOccupation = ({
 
       <Box display="flex" gap="9px" alignItems="center">
         <FormCheckbox name={`mainOccupation.${index}.isOwner`} />
+        {/* translation todo */}
         <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
+        <TextFields variant="formLabel">I own this business.</TextFields>
       </Box>
 
       {isOwner && (
@@ -157,6 +163,8 @@ const MainOccupation = ({
 export const MemberKYMMainOccupation = () => {
   const { t } = useTranslation();
   const { control, watch } = useFormContext();
+
+  const isForeignEmployee = watch('isForeignEmployee');
 
   const {
     fields: mainOccupationFields,
@@ -196,12 +204,11 @@ export const MemberKYMMainOccupation = () => {
         </Button>
       </DynamicBoxGroupContainer>
       <Box display="flex" flexDirection="row">
-        {/* <FormSwitch
+        <FormSwitch
           control={control}
-          name="isPermanentAndTemporaryAddressSame"
+          name="isForeignEmployee"
           label="Enable for Foreign Employment"
-        /> */}
-        <Switch />
+        />
         <Text
           ml="s20"
           fontSize="r1"

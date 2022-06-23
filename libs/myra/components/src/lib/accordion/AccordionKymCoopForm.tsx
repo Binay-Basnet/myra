@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
-import { Box, Collapse, Text } from '@chakra-ui/react';
 
 import { KymCooperativeInstitutionInformationSection } from '@coop/shared/data-access';
 import { useTranslation } from '@coop/shared/utils';
+import { Box, Collapse, Text } from '@coop/shared/ui';
 
 const OrganizationInformation = [
   'kymCoopAccBasicInformation',

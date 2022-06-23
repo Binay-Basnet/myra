@@ -2,19 +2,20 @@ import React, { useMemo } from 'react';
 import { FaMap } from 'react-icons/fa';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   AccordianContainer,
   DynamicBoxGroupContainer,
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   FormFileInput,
   FormInput,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -32,7 +33,7 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
   const [isOpen, setIsOpen] = React.useState(true);
 
   const isPermanentAndTemporaryAddressSame = watch(
-    'isPermanentAndTemporaryAddressSame'
+    `accountOperatorsDetails.${index}.isPermanentAndTemporaryAddressSame`
   );
 
   const province = useMemo(() => {
@@ -216,11 +217,11 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
 
               <FormSwitch
                 control={control}
-                name="isPermanentAndTemporaryAddressSame"
+                name={`accountOperatorsDetails.${index}.isPermanentAndTemporaryAddressSame`}
                 label={t['kymCoopTemporaryAddressPermanent']}
               />
 
-              {isPermanentAndTemporaryAddressSame && (
+              {!isPermanentAndTemporaryAddressSame && (
                 <>
                   <InputGroupContainer>
                     <FormSelect
