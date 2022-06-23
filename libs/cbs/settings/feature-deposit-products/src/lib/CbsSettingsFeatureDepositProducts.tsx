@@ -57,6 +57,38 @@ const DepositFrequencyOptions = [
     value: 'Yearly',
   },
 ];
+const Days = [
+  {
+    label: 'Sunday',
+    value: 'Sunday',
+  },
+  {
+    label: 'Monday',
+    value: 'Monday',
+  },
+  {
+    label: 'Tuesday',
+    value: 'Tuesday',
+  },
+  {
+    label: 'Wednesday',
+    value: 'Wednesday',
+  },
+  {
+    label: 'Thrusday',
+    value: 'Thrusday',
+  },
+  {
+    label: 'Friday',
+    value: 'Friday',
+  },
+];
+const anyDay = [{ label: 'Any Day', value: 'anyDay' }];
+const daysforMonth = [
+  { label: 'Day', value: 'day' },
+  { label: 'Day of the Week', value: 'dayOfWeek' },
+];
+
 export function SettingsDepositProductsForm(
   props: SettingsDepositProductsFormProps
 ) {
@@ -64,6 +96,10 @@ export function SettingsDepositProductsForm(
   const methods = useForm({});
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
+  const depo = watch('depositFrequency');
+  const anyday = watch('anyDay');
+  const pickDay = watch('pickday');
+
   return (
     <Container height="fit-content" minW="container.xl">
       <Box position="relative" margin="0px auto">
@@ -158,13 +194,9 @@ export function SettingsDepositProductsForm(
                     />
                   </InputGroupContainer>
                 </Box>
-                <Box>
-                  <Text
-                    fontWeight="500"
-                    fontSize={'r1'}
-                    color="gray.700"
-                    mb="s16"
-                  >
+
+                <Box display="flex" flexDirection={'column'} gap="s16">
+                  <Text fontWeight="500" fontSize={'r1'} color="gray.700">
                     Select Applicable Gender
                   </Text>
                   <FormCheckboxGroup
@@ -173,19 +205,94 @@ export function SettingsDepositProductsForm(
                     orientation="column"
                   />
                 </Box>
-                <Box>
-                  <Text
-                    fontWeight="500"
-                    fontSize={'r1'}
-                    color="gray.700"
-                    mb="s16"
-                  >
+                <Box display="flex" flexDirection={'column'} gap="s16">
+                  <Text fontWeight="500" fontSize={'r1'} color="gray.700">
                     Deposit Frequency
                   </Text>
                   <FormSwitchTab
                     options={DepositFrequencyOptions}
-                    name="politicallyExposedPerson"
+                    name="depositFrequency"
                   />
+                  {depo === 'Weekly' && (
+                    <Box
+                      display="flex"
+                      flexDirection={'column'}
+                      gap="s16"
+                      border={'1px solid'}
+                      borderColor="border.layout"
+                      borderRadius={'4px'}
+                      p="s16"
+                    >
+                      <Text fontWeight="500" fontSize={'r1'} color="gray.700">
+                        Weekly
+                      </Text>
+                      {anyday.length === 0 && (
+                        <FormSwitchTab
+                          name={'dayOfWeek'}
+                          options={Days}
+                          label="Day of the week"
+                        />
+                      )}
+                      <FormCheckboxGroup name="anyDay" list={anyDay} />
+                    </Box>
+                  )}
+                  {depo === 'Monthly' && (
+                    <Box
+                      display="flex"
+                      flexDirection={'column'}
+                      gap="s16"
+                      border={'1px solid'}
+                      borderColor="border.layout"
+                      borderRadius={'4px'}
+                      p="s16"
+                    >
+                      <Text fontWeight="500" fontSize={'r1'} color="gray.700">
+                        Monthly
+                      </Text>
+
+                      <FormSwitchTab
+                        name={'pickday'}
+                        options={daysforMonth}
+                        label="Either Pick a day or manually add frequency day or day of the week. "
+                      />
+                      <Box
+                        border={'1px solid'}
+                        borderColor="border.layout"
+                        borderRadius={'4px'}
+                        p="s16"
+                      >
+                        <InputGroupContainer>
+                          <FormInput
+                            type="number"
+                            name="dayOfMonth"
+                            label="Day"
+                            placeholder="Enter Day"
+                          />
+                        </InputGroupContainer>
+                      </Box>
+                      <Box
+                        border={'1px solid'}
+                        borderColor="border.layout"
+                        borderRadius={'4px'}
+                        p="s16"
+                      >
+                        <InputGroupContainer>
+                          <FormInput
+                            type="number"
+                            name="frequencyDay"
+                            label="Frequency Day"
+                          />
+                          <Box></Box>
+                          <FormSelect
+                            options={Days}
+                            name={`dayoftheWeek`}
+                            label="Day of the Week"
+                            placeholder="Day of the Week"
+                          />
+                        </InputGroupContainer>
+                      </Box>
+                    </Box>
+                  )}
                 </Box>
               </ContainerWithDivider>
             </Box>
