@@ -1,3 +1,5 @@
+import { IoSearch } from 'react-icons/io5';
+import Link from 'next/link';
 import {
   Box,
   Container,
@@ -7,10 +9,11 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react';
+import NepaliDate from 'nepali-date-converter';
+import { Icon, Input } from '@coop/shared/ui';
+
 import { Navbarfordaashboard } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-import NepaliDate from 'nepali-date-converter';
-import Link from 'next/link';
 
 const newDate = new NepaliDate();
 const date = newDate.format('ddd, DD MMMM YYYY');
@@ -26,16 +29,19 @@ const Dashboard = () => {
       <Container maxW="904px" height="fit-content" mt="100px" p="0" pb="55px">
         <Box>
           <Flex>
-            <Box>
-              <Text fontSize="20px" fontWeight="500" color="#07073F">
-                Hello Bishal Mahat
-              </Text>
-            </Box>
-            <Spacer />
-            <Box>
-              <Text color="#006837" fontSize="16px" fontWeight="700">
-                {date}
-              </Text>
+            <Box w="100%">
+              <Input
+                h="44px"
+                variant={'unstyled'}
+                leftElement={<Icon as={IoSearch} />}
+                placeholder="Search"
+                rightElement={
+                  <Text fontWeight={'400'} fontSize="r1" pr="s4">
+                    Ctrl+/{' '}
+                  </Text>
+                }
+                bg="white"
+              />
             </Box>
           </Flex>
         </Box>
@@ -45,7 +51,7 @@ const Dashboard = () => {
               {t.yourApplication}
             </Text>
           </Box>
-          <Box mt="24px " alignItems="center">
+          <Box mt="s16 " alignItems="center">
             <HStack spacing="14px">
               <Link href="/members/list" passHref>
                 <Box
@@ -236,7 +242,7 @@ const Dashboard = () => {
             </Text>
           </Flex>
         </Box>
-        <Box mt="24px " alignItems="center">
+        <Box mt="s16" alignItems="center">
           <HStack spacing="14px">
             <Box w="215.5px" h="215.5px" rounded="lg" bg="#FFFFFF">
               <Box

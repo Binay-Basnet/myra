@@ -1,9 +1,11 @@
 /* eslint-disable-next-line */
-import { Box, Text, Image, Flex, Spacer, Avatar } from '@chakra-ui/react';
+import { Box, Text, Image, Flex, Spacer, Avatar, Icon } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+
 import Link from 'next/link';
 import React from 'react';
 import { useTranslation } from '@coop/shared/utils';
+import { IoHomeSharp, IoGrid } from 'react-icons/io5';
 
 /* eslint-disable-next-line */
 export interface NavbarfordaashboardProps {}
@@ -46,8 +48,14 @@ export function Navbarfordaashboard() {
         </Box>
         <Spacer />
         <Box display="flex" alignItems="flex-end" h="60px">
-          <ActiveLink href="/">{t.home}</ActiveLink>
-          <ActiveLink href="/dashboard-main">{t.dashboard}</ActiveLink>
+          <ActiveLink href="/">
+            <Icon as={IoHomeSharp} mr="s12" />
+            {t.home}
+          </ActiveLink>
+          <ActiveLink href="/dashboard-main">
+            <Icon as={IoGrid} mr="s12" />
+            {t.dashboard}
+          </ActiveLink>
         </Box>
         <Spacer />
         <Box>
