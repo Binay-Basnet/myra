@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ShareSettingsBonusPage } from '@coop/cbs/settings/share';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
@@ -7,7 +8,7 @@ import {
 } from '@coop/cbs/settings/ui-layout';
 
 const ShareBonus = () => {
-  return <div>Share Bonus</div>;
+  return <ShareSettingsBonusPage />;
 };
 
 export default ShareBonus;

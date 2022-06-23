@@ -113,6 +113,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           alignItems={'center'}
         >
           <IconButton
+            h="40px"
             icon={<Icon size="md" as={RiHistoryFill} />}
             aria-label="History"
             variant={'ghost'}

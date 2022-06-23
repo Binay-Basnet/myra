@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react';
 import { ActionMeta, Props, Select as ChakraSelect } from 'chakra-react-select';
 
 import { components } from './SelectComponents';
-import { chakraStyles } from './SelectStyles';
+import { chakraDefaultStyles, chakraSmallStyles } from './SelectStyles';
 import TextFields from '../text-fields/TextFields';
 
 export interface SelectOption {
@@ -10,11 +10,12 @@ export interface SelectOption {
   value: string | number;
 }
 
-export interface SelectProps extends Omit<Props, 'size' | 'onChange'> {
+export interface SelectProps extends Omit<Props, 'onChange' | 'size'> {
   label?: string;
   options: SelectOption[] | undefined;
   helperText?: string;
   errorText?: string;
+  size?: 'sm' | 'default';
   // // TODO Change this any.
   onChange?:
     | ((value: SelectOption | null, meta: ActionMeta<SelectOption>) => void)
@@ -27,6 +28,7 @@ export function Select({
   options,
   errorText,
   helperText,
+  size = 'default',
   ...rest
 }: SelectProps) {
   return (
@@ -47,7 +49,9 @@ export function Select({
         //   a.label.localeCompare(b.label, undefined, { numeric: true })
         // )}
         options={options}
-        chakraStyles={chakraStyles}
+        chakraStyles={
+          size === 'default' ? chakraDefaultStyles : chakraSmallStyles
+        }
         components={components}
         {...rest}
       />

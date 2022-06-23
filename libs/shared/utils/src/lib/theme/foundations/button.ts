@@ -190,7 +190,7 @@ const sizes: Record<string, SystemStyleObject> = {
     py: 3,
   },
   md: {
-    h: 10,
+    h: '400px',
     minW: 10,
     fontSize: 'sm',
     px: 3,

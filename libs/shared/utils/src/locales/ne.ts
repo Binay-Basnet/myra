@@ -753,6 +753,36 @@ const ne = {
   settingsShareDivident: 'Share Dividend',
   settingsShareFeeAndCharges: 'Fee and Charges',
   settingsShareTransfer: 'Share Transfer',
+
+  // Settings Share General
+
+  shareTypesOfShare: 'Types of Share',
+  shareChooseTypeOfShare: 'Choose which type of share is allowed',
+  shareTransactable: 'Transactable',
+  shareNonTransactable: 'Non-Transactable',
+  shareIssueQuantity: 'Share Issue Quantity',
+  shareMultiplicityFactor: 'Share Multiplicity Factor',
+  shareTransactableMinimumQuantityOfShareThatCanBeIssued:
+    'Transactable Minimum Quantity of Share that can be issued',
+  shareMaximumQuantityOfShareThatCanBeIssued:
+    'Maximum Quantity of Share that can be issued',
+  shareRate: 'Share Rate',
+  shareTransactableShare: 'Transactable Share',
+  shareNonTransactableShare: 'Non-Transactable Share',
+
+  // Settings Share Bonus
+  shareBonusWhoPaysTheTax: 'Who Pays the tax',
+  shareBonusChooseWhoPaysTheTax: 'Choose who pays the tax',
+  shareBonusCooperative: 'Cooperative',
+  shareBonusMember: 'Member',
+
+  shareBonusTaxRate: 'Tax Rate',
+  shareBonusAddRateOfTax: 'Add Rate of Tax (Temporal) for Bonus Share (in %)',
+  shareBonusRateTaxRatePlaceholder: '22.23 %',
+
+  shareAccountMapping: 'Account Mapping',
+  shareAccountBonusShareDebited: 'Where is the bonus share debited',
+  shareAccountName: 'Account Name',
 };
 
 export default ne;
