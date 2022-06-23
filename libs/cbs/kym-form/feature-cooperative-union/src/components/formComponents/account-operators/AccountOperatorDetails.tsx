@@ -47,6 +47,10 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
   const [temporaryAddress, setTemporaryAddress] = useState(false);
   const [isOpen, setIsOpen] = React.useState(true);
 
+  const isPermanentAndTemporaryAddressSame = watch(
+    `accountOperatorsDetails.${index}.isPermanentAndTemporaryAddressSame`
+  );
+
   const province = useMemo(() => {
     return (
       data?.administration?.all?.map((d) => ({
@@ -236,55 +240,59 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
 
               <FormSwitch
                 control={control}
-                name="isPermanentAndTemporaryAddressSame"
+                name={`accountOperatorsDetails.${index}.isPermanentAndTemporaryAddressSame`}
                 label="Temporary Address same as permanent"
               />
 
-              <InputGroupContainer>
-                <FormSelect
-                  name={`accountOperatorsDetails.${index}.temporaryStateId`}
-                  label="State"
-                  placeholder="Select State"
-                  options={province}
-                />
-                <FormSelect
-                  name={`accountOperatorsDetails.${index}.temporaryDistrictId`}
-                  label="District"
-                  placeholder="Select District"
-                  options={districtTempList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name={`accountOperatorsDetails.${index}.temporaryVdcOrMunicId`}
-                  label="VDC / Muncipality"
-                  placeholder="Select VDC / Muncipality"
-                  options={localityTempList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormInput
-                  type="number"
-                  name={`accountOperatorsDetails.${index}.temporaryWardId`}
-                  label="Ward No"
-                  placeholder="Enter Ward No"
-                />
-                <FormInput
-                  type="text"
-                  name={`accountOperatorsDetails.${index}.temporaryLocality`}
-                  label="Locality"
-                  placeholder="Enter Locality"
-                />
-              </InputGroupContainer>
-              <Button
-                mt="-16px"
-                alignSelf="start"
-                leftIcon={<Icon size="md" as={FaMap} />}
-              >
-                {t['pinOnMap']}
-              </Button>
+              {!isPermanentAndTemporaryAddressSame && (
+                <>
+                  <InputGroupContainer>
+                    <FormSelect
+                      name={`accountOperatorsDetails.${index}.temporaryStateId`}
+                      label="State"
+                      placeholder="Select State"
+                      options={province}
+                    />
+                    <FormSelect
+                      name={`accountOperatorsDetails.${index}.temporaryDistrictId`}
+                      label="District"
+                      placeholder="Select District"
+                      options={districtTempList.map((d) => ({
+                        label: d.name,
+                        value: d.id,
+                      }))}
+                    />
+                    <FormSelect
+                      name={`accountOperatorsDetails.${index}.temporaryVdcOrMunicId`}
+                      label="VDC / Muncipality"
+                      placeholder="Select VDC / Muncipality"
+                      options={localityTempList.map((d) => ({
+                        label: d.name,
+                        value: d.id,
+                      }))}
+                    />
+                    <FormInput
+                      type="number"
+                      name={`accountOperatorsDetails.${index}.temporaryWardId`}
+                      label="Ward No"
+                      placeholder="Enter Ward No"
+                    />
+                    <FormInput
+                      type="text"
+                      name={`accountOperatorsDetails.${index}.temporaryLocality`}
+                      label="Locality"
+                      placeholder="Enter Locality"
+                    />
+                  </InputGroupContainer>
+                  <Button
+                    mt="-16px"
+                    alignSelf="start"
+                    leftIcon={<Icon size="md" as={FaMap} />}
+                  >
+                    {t['pinOnMap']}
+                  </Button>
+                </>
+              )}
             </Box>
             <InputGroupContainer>
               <FormInput

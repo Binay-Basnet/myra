@@ -2,19 +2,20 @@ import React, { useMemo } from 'react';
 import { FaMap } from 'react-icons/fa';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
+
 import {
   AccordianContainer,
   DynamicBoxGroupContainer,
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   FormFileInput,
   FormInput,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -31,7 +32,7 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
   const [isOpen, setIsOpen] = React.useState(true);
 
   const isPermanentAndTemporaryAddressSame = watch(
-    'isPermanentAndTemporaryAddressSame'
+    `boardOfDirectorsDetails.${index}.isPermanentAndTemporaryAddressSame`
   );
 
   const province = useMemo(() => {
@@ -45,10 +46,10 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch(
-    `accountOperatorsDetails.${index}.permanentStateId`
+    `boardOfDirectorsDetails.${index}.permanentStateId`
   );
   const currentDistrictId = watch(
-    `accountOperatorsDetails.${index}.permanentDistrictId`
+    `boardOfDirectorsDetails.${index}.permanentDistrictId`
   );
 
   const districtList = useMemo(
@@ -67,10 +68,10 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
 
   // FOR TEMPORARY ADDRESS
   const currentTempProvinceId = watch(
-    `accountOperatorsDetails.${index}.temporaryStateId`
+    `boardOfDirectorsDetails.${index}.temporaryStateId`
   );
   const currentTemptDistrictId = watch(
-    `accountOperatorsDetails.${index}.temporaryDistrictId`
+    `boardOfDirectorsDetails.${index}.temporaryDistrictId`
   );
 
   const districtTempList = useMemo(
@@ -216,7 +217,7 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
 
               <FormSwitch
                 control={control}
-                name="isPermanentAndTemporaryAddressSame"
+                name={`boardOfDirectorsDetails.${index}.isPermanentAndTemporaryAddressSame`}
                 label="Temporary Address same as permanent"
               />
 
