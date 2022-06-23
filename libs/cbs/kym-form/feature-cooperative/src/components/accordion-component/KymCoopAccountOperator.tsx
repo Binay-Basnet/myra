@@ -25,6 +25,7 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const AddOperator = ({ watch, index, control, removeAccount }) => {
   const { t } = useTranslation();

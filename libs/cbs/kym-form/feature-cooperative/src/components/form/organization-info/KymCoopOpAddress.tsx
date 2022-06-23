@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
+import { FaMap } from 'react-icons/fa';
+
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Text, Button, Icon } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
-import { FaMap } from 'react-icons/fa';
+import { Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopOpAddress = ({ watch }: any) => {
