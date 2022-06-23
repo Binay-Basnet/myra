@@ -3,8 +3,10 @@ import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormFileInput } from '@coop/shared/form';
 import { Text, Box } from '@coop/shared/ui';
 import { Grid, GridItem } from '@chakra-ui/react';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymAccountHolderDeclaration = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Account Holder Declaration" scrollMarginTop={'200px'}>
       <Text
@@ -12,28 +14,32 @@ export const KymAccountHolderDeclaration = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Account Holder Declaration
+        {t['kymCoopAccountHolderDeclaration']}
       </Text>
       <FormInput
         w="35%"
         type="text"
         name="accountHoldersName"
-        label="Account Holder's Name"
-        placeholder="Enter Account Holder's Name"
+        label={t['kymCoopAccountHolderName']}
+        placeholder={t['kymCoopEnterAccountHolderName']}
       />
       <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
         <GridItem>
           <Box w="124px">
             <FormFileInput
               size="md"
-              label="Signature"
+              label={t['kymCoopSignature']}
               name="accountHolderSignature"
             />
           </Box>
         </GridItem>
         <GridItem>
           <Box w="124px">
-            <FormFileInput size="md" label="Stamp" name="accountHolderStamp" />
+            <FormFileInput
+              size="md"
+              label={t['kymCoopStamp']}
+              name="accountHolderStamp"
+            />
           </Box>
         </GridItem>
       </Grid>

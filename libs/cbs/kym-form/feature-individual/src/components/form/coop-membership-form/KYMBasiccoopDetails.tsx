@@ -29,6 +29,7 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -44,6 +45,7 @@ const booleanList = [
 ];
 
 export const KYMBasiccoopDetails = () => {
+  const { t } = useTranslation();
   const { watch, control } = useFormContext();
 
   const { data: purposeData, isLoading: purposeLoading } =
@@ -76,7 +78,7 @@ export const KYMBasiccoopDetails = () => {
           color="neutralColorLight.gray-80"
           pb="s16"
         >
-          Member Identity Level
+          {t['kynIndMemberIdentityLevel']}
         </Text>
         <FormRadioGroup
           name="memberIdentityLevel"
@@ -104,8 +106,8 @@ export const KYMBasiccoopDetails = () => {
       >
         <FormSelect
           name="purposeId"
-          label="Main purpose of becoming a member"
-          placeholder="Select purpose of becoming a member"
+          label={t['kynIndMainpurposeofbecomingmember']}
+          placeholder={t['kynIndSelectpurposeofbecomingmember']}
           isLoading={purposeLoading}
           options={getFieldOption(purposeData)}
         />
@@ -118,7 +120,7 @@ export const KYMBasiccoopDetails = () => {
         scrollMarginTop={'200px'}
       >
         <FormSwitchTab
-          label="Member of Another cooperative"
+          label={t['kynIndMemberofAnothercooperative']}
           options={booleanList}
           name="memberOfAnotherCooperative"
         />
@@ -127,16 +129,16 @@ export const KYMBasiccoopDetails = () => {
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormInput
-                label="Membership Details"
                 name="nameAddressCooperative"
-                placeholder="Name and Address Cooperative"
+                label={t['kynIndMembershipDetails']}
+                placeholder={t['kynIndNameandAddressCooperative']}
               />
             </GridItem>
             <GridItem colSpan={1}>
               <FormInput
                 label="&nbsp;"
                 name="memberNo"
-                placeholder="Member No"
+                placeholder={t['kynIndMemberNo']}
               />
             </GridItem>
           </InputGroupContainer>
@@ -150,14 +152,14 @@ export const KYMBasiccoopDetails = () => {
         scrollMarginTop={'200px'}
       >
         <FormSwitchTab
-          label="Family Member in this institution"
+          label={t['kynIndFamilyMemberinthisinstitution']}
           options={booleanList}
           name="familyMemberInThisInstitution"
         />
       </Box>
 
       <Box display="flex" flexDirection="column" gap="s4">
-        <Text fontSize="s3">Family member in this institution</Text>
+        <Text fontSize="s3">{t['kynIndFamilyMemberinthisinstitution']}</Text>
 
         <Box
           mt="s16"
@@ -201,7 +203,7 @@ export const KYMBasiccoopDetails = () => {
                     fontWeight="Regular"
                   >
                     {/* ID: {data?.personalInformation?.panNumber} */}
-                    ID: 23524364456
+                    {t['id']} : 23524364456
                   </Text>
 
                   <Text
@@ -210,7 +212,7 @@ export const KYMBasiccoopDetails = () => {
                     fontSize="s3"
                   >
                     {/* Member Since: {data?.personalInformation?.dateOfBirth} */}
-                    Member since 2077/03/45
+                    {t['memberSince']} : 2077/03/45
                   </Text>
 
                   <Text
@@ -293,7 +295,7 @@ export const KYMBasiccoopDetails = () => {
                     fontSize="s2"
                     mr="5px"
                   >
-                    View Profile
+                    {t['kynIndViewProfile']}
                   </Text>
                   {/* </Button> */}
                   <Icon size="sm" as={RiShareBoxFill} color="primary.500" />
@@ -309,7 +311,7 @@ export const KYMBasiccoopDetails = () => {
                 fontSize="s3"
                 color="neutralColorLight.gray-80"
               >
-                Citizenship No : 23456873445wds23424
+                {t['kynIndCitizenshipNo']} : 23456873445wds23424
               </Text>
             </GridItem>
             <GridItem>
@@ -318,15 +320,16 @@ export const KYMBasiccoopDetails = () => {
                 fontSize="s3"
                 color="neutralColorLight.gray-80"
               >
-                Present Address : Lalitpur, Lalitpur Municipality -11
+                {t['kynIndPresentAddress']} : Lalitpur, Lalitpur Municipality
+                -11
               </Text>
             </GridItem>
           </Grid>
           <Box px="s16" py="s32" w="50%">
             <FormSelect
               name={`familyMemberInThisCooperative.relationshipId`}
-              label="Relationship"
-              placeholder="Select Relationship"
+              label={t['kymIndRelationship']}
+              placeholder={t['kymIndSelectRelationship']}
               isLoading={familyRelationshipLoading}
               options={getFieldOption(familyRelationShipData)}
             />
@@ -356,7 +359,7 @@ export const KYMBasiccoopDetails = () => {
           familyMemberAppend({});
         }}
       >
-        Add Family Member
+        {t['kynIndAddFamilyMember']}
       </Button>
     </GroupContainer>
   );
@@ -368,11 +371,12 @@ export const FamilyMember = ({
   removeFamilyMember,
   watch,
 }: any) => {
+  const { t } = useTranslation();
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap="s16">
       <GridItem colSpan={1}>
         <Text fontSize={'s3'} fontWeight="Medium" color="gray.700">
-          First Name
+          {t['kynIndFirstName']}
         </Text>
         <Controller
           control={control}
@@ -380,7 +384,7 @@ export const FamilyMember = ({
           render={({ field: { onChange } }) => (
             <Input
               type="text"
-              placeholder="First Name"
+              placeholder={t['kynIndFirstName']}
               onChange={onChange}
               bg="white"
             />
@@ -389,7 +393,7 @@ export const FamilyMember = ({
       </GridItem>
       <GridItem colSpan={1}>
         <Text fontSize={'s3'} fontWeight="Medium" color="gray.700">
-          Citizenship No
+          {t['kynIndCitizenshipNo']}
         </Text>
         <Controller
           control={control}
@@ -397,7 +401,7 @@ export const FamilyMember = ({
           render={({ field: { onChange } }) => (
             <Input
               type="text"
-              placeholder="Enter Citizenship No"
+              placeholder={t['kynIndEnterCitizenshipNo']}
               onChange={onChange}
               bg="white"
             />
@@ -406,7 +410,7 @@ export const FamilyMember = ({
       </GridItem>
       <GridItem colSpan={1}>
         <Text fontSize={'s3'} fontWeight="Medium" color="gray.700">
-          Member ID
+          {t['kynIndMemberID']}
         </Text>
         <Controller
           control={control}
@@ -414,7 +418,7 @@ export const FamilyMember = ({
           render={({ field: { onChange } }) => (
             <Input
               type="text"
-              placeholder="Enter Member ID"
+              placeholder={t['kynIndEnterMemberID']}
               onChange={onChange}
               bg="white"
             />
@@ -427,7 +431,7 @@ export const FamilyMember = ({
         variant="outline"
         leftIcon={<Icon size="md" as={AiOutlineSearch} />}
       >
-        Find Member
+        {t['kynIndFindMember']}
       </Button>
     </Grid>
   );

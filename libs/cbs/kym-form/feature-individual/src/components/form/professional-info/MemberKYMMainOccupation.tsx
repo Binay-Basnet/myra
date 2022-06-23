@@ -21,6 +21,7 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -30,6 +31,7 @@ const MainOccupation = ({
   removeMainOccupation,
   watch,
 }: any) => {
+  const { t } = useTranslation();
   const profession = watch('profession');
 
   const isOwner = watch(`mainOccupation.${index}.isOwner`);
@@ -64,8 +66,8 @@ const MainOccupation = ({
             <FormSelect
               control={control}
               name={`mainOccupation.${index}.occupation`}
-              label="Occupation"
-              placeholder="Select Occupation"
+              label={t['kymIndOccupation']}
+              placeholder={t['kymIndSelectOccupation']}
               options={
                 profession?.map((data: string) => ({
                   label: getFieldOption(occupationData)?.find(
@@ -82,8 +84,8 @@ const MainOccupation = ({
               control={control}
               type="text"
               name={`mainOccupation.${index}.orgName`}
-              label="Org/Firm Name"
-              placeholder="Org/Firm Name"
+              label={t['kymIndOrgFirmName']}
+              placeholder={t['kymIndOrgFirmName']}
             />
           </GridItem>
 
@@ -92,16 +94,16 @@ const MainOccupation = ({
             bg="white"
             type="text"
             name={`mainOccupation.${index}.idNumber`}
-            label="Pan / VAT No"
-            placeholder="Pan/VAT Number"
+            label={t['kymIndPanVATNo']}
+            placeholder={t['kymIndPanVATNumber']}
           />
           <FormInput
             control={control}
             type="text"
             bg="white"
             name={`mainOccupation.${index}.address`}
-            label="Address"
-            placeholder="Enter Address"
+            label={t['kymIndAddress']}
+            placeholder={t['kymIndEnterAddress']}
           />
           <FormInput
             bg="white"
@@ -109,7 +111,7 @@ const MainOccupation = ({
             type="number"
             textAlign={'right'}
             name={`mainOccupation.${index}.estimatedAnnualIncome`}
-            label="Estimated Annual Income"
+            label={t['kymIndEstimatedAnnualIncome']}
             placeholder="0.00"
           />
         </InputGroupContainer>
@@ -117,7 +119,7 @@ const MainOccupation = ({
 
       <Box display="flex" gap="9px" alignItems="center">
         <FormCheckbox name={`mainOccupation.${index}.isOwner`} />
-        <TextFields variant="formLabel">Are you owner?</TextFields>
+        <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
       </Box>
 
       {isOwner && (
@@ -127,24 +129,24 @@ const MainOccupation = ({
             control={control}
             type="date"
             name={`mainOccupation.${index}.establishedDate`}
-            label="Established Date"
-            placeholder="Established Date"
+            label={t['kymIndEstablishedDate']}
+            placeholder={t['kymIndEstablishedDate']}
           />
           <FormInput
             bg="white"
             control={control}
             type="number"
             name={`mainOccupation.${index}.registrationNo`}
-            label="Registration No."
-            placeholder="Registration No."
+            label={t['kymIndRegistrationNo']}
+            placeholder={t['kymIndRegistrationNo']}
           />
           <FormInput
             bg="white"
             control={control}
             type="number"
             name={`mainOccupation.${index}.contactNo`}
-            label="Contact No."
-            placeholder="Contact No."
+            label={t['kymIndContactNo']}
+            placeholder={t['kymIndContactNo']}
           />
         </InputGroupContainer>
       )}
@@ -153,6 +155,7 @@ const MainOccupation = ({
 };
 
 export const MemberKYMMainOccupation = () => {
+  const { t } = useTranslation();
   const { control, watch } = useFormContext();
 
   const {
@@ -164,7 +167,7 @@ export const MemberKYMMainOccupation = () => {
   return (
     <GroupContainer id="Main Profession" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
-        MAIN OCCUPATION
+        {t['kymIndMAINOCCUPATION']}
       </Text>
       <DynamicBoxGroupContainer>
         {mainOccupationFields.map((item, index) => {
@@ -189,7 +192,7 @@ export const MemberKYMMainOccupation = () => {
             mainOccupationAppend({});
           }}
         >
-          Add Occupation
+          {t['kymIndAddOccupation']}
         </Button>
       </DynamicBoxGroupContainer>
       <Box display="flex" flexDirection="row">
@@ -205,7 +208,7 @@ export const MemberKYMMainOccupation = () => {
           fontWeight="Medium"
           color="neutralColorLight.Gray-70"
         >
-          Enable for Foreign Employment
+          {t['kymIndEnableforForeignEmployment']}
         </Text>
       </Box>
 
@@ -213,8 +216,8 @@ export const MemberKYMMainOccupation = () => {
         <GridItem>
           <Select
             id="country"
-            label="Name of Country"
-            placeholder="Select Country"
+            label={t['kymIndNameofCountry']}
+            placeholder={t['kymIndSelectCountry']}
             options={[
               {
                 label: 'Nepal',
@@ -243,8 +246,8 @@ export const MemberKYMMainOccupation = () => {
           <FormSelect
             control={control}
             name="typeOfVisa"
-            label="Type of Visa"
-            placeholder="Enter Type of Visa"
+            label={t['kymIndTypeofVisa']}
+            placeholder={t['kymIndEnterTypeofVisa']}
             options={[
               {
                 label: 'Nepal',
@@ -268,7 +271,7 @@ export const MemberKYMMainOccupation = () => {
             type="number"
             textAlign={'right'}
             name={`orgName`}
-            label="Estimated Annual Income"
+            label={t['kymIndEstimatedAnnualIncome']}
             placeholder="0.00"
           />
         </GridItem>

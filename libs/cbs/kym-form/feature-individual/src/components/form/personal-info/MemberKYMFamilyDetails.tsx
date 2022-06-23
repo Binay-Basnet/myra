@@ -15,6 +15,7 @@ import {
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -24,6 +25,7 @@ interface IAddFamilyMember {
 }
 
 const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
+  const { t } = useTranslation();
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
     useGetIndividualKymOptionQuery({
       fieldName: 'family_relationship',
@@ -46,8 +48,8 @@ const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
         <GridItem colSpan={1}>
           <FormSelect
             name={`familyDetails.${index}.relationshipId`}
-            label="Relationship"
-            placeholder="Select Relationship"
+            label={t['kymIndRelationship']}
+            placeholder={t['kymIndSelectRelationship']}
             isLoading={familyRelationshipLoading}
             options={getFieldOption(familyRelationShipData)}
           />
@@ -57,8 +59,8 @@ const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
             type="text"
             bg="white"
             name={`familyDetails.${index}.fullName`}
-            label="Full Name"
-            placeholder="Enter Full Name"
+            label={t['kymIndFullName']}
+            placeholder={t['kymIndEnterFullName']}
           />
         </GridItem>
 
@@ -79,6 +81,7 @@ const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
 };
 
 export const MemberKYMFamilyDetails = () => {
+  const { t } = useTranslation();
   const { control } = useFormContext<KymIndMemberInput>();
 
   const { data: maritalStatusData, isLoading: maritalStatusLoading } =
@@ -95,13 +98,13 @@ export const MemberKYMFamilyDetails = () => {
   return (
     <GroupContainer id="Family Details" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
-        FAMILY DETAILS
+        {t['kymIndFAMILYDETAILS']}
       </Text>
       <InputGroupContainer>
         <FormSelect
           name={'maritalStatus'}
-          label="Martial Status"
-          placeholder="Select Martial Status"
+          label={t['kymIndMartialStatus']}
+          placeholder={t['kymIndSelectMartialStatus']}
           isLoading={maritalStatusLoading}
           options={getFieldOption(maritalStatusData)}
         />
@@ -109,7 +112,7 @@ export const MemberKYMFamilyDetails = () => {
 
       <div>
         <Text fontSize="s3" mb="s4">
-          Family members
+          {t['kymIndFamilymembers']}
         </Text>
         <DynamicBoxGroupContainer>
           {familyFields.map((item, index) => {
@@ -131,7 +134,7 @@ export const MemberKYMFamilyDetails = () => {
               familyAppend({});
             }}
           >
-            Add Family Member
+            {t['kymIndAddFamilyMember']}
           </Button>
         </DynamicBoxGroupContainer>
       </div>

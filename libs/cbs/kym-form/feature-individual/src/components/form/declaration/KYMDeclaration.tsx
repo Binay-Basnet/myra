@@ -15,6 +15,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text, TextFields } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -35,6 +36,7 @@ const booleanList = [
 ];
 
 export const KYMDeclaration = () => {
+  const { t } = useTranslation();
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
     useGetIndividualKymOptionQuery({
       fieldName: 'family_relationship',
@@ -56,7 +58,7 @@ export const KYMDeclaration = () => {
         scrollMarginTop={'200px'}
       >
         <TextFields variant="bodyRegular" fontWeight={600}>
-          Nominee
+          {t['kynIndNominee']}
         </TextFields>
         <ContainerWithDivider>
           <Box
@@ -67,7 +69,7 @@ export const KYMDeclaration = () => {
             gap="s32"
           >
             <FormSwitchTab
-              label="Do you have a beneficial owner?"
+              label={t['kynIndDoyouhavebeneficialowner']}
               options={booleanList}
               name="beneficialOwner"
             />
@@ -81,8 +83,8 @@ export const KYMDeclaration = () => {
                   name={'beneficialRelationShipId'}
                   isLoading={familyRelationshipLoading}
                   options={getFieldOption(familyRelationShipData)}
-                  placeholder="Relationship"
-                  label="If yes, please write name and relationship "
+                  placeholder={t['kynIndRelationship']}
+                  label={t['kynIndIyespleasewritenameandrelationship']}
                 />
               </GridItem>
 
@@ -90,7 +92,7 @@ export const KYMDeclaration = () => {
                 <FormInput
                   type="text"
                   name="fullName"
-                  placeholder="Full Name"
+                  placeholder={t['kynIndFullName']}
                 />
               </GridItem>
             </Grid>
@@ -104,7 +106,7 @@ export const KYMDeclaration = () => {
             gap="s32"
           >
             <FormSwitchTab
-              label="Are you or any of your family politically exposed person?"
+              label={t['kynIndPoliticallyexposedperson']}
               options={booleanList}
               name="politicallyExposedPerson"
             />
@@ -114,8 +116,8 @@ export const KYMDeclaration = () => {
                 <FormTextArea
                   name="convictionDetails"
                   id="convictionDetails"
-                  label="Please specify"
-                  placeholder="Enter Details"
+                  label={t['kynIndPleasespecify']}
+                  placeholder={t['kynIndEnterDetails']}
                 />
               </Box>
             </InputGroupContainer>
@@ -129,7 +131,7 @@ export const KYMDeclaration = () => {
             gap="s32"
           >
             <FormSwitchTab
-              label="Declaration of convicted/Non-convicted for any crimes in Past"
+              label={t['kynIndDeclarationofconvicted']}
               options={booleanList}
               name="declarationOfConvicted"
             />
@@ -139,8 +141,8 @@ export const KYMDeclaration = () => {
                 <FormTextArea
                   name="convictionDetails"
                   id="convictionDetails"
-                  label="Please specify"
-                  placeholder="Enter Details"
+                  label={t['kynIndPleasespecify']}
+                  placeholder={t['kynIndEnterDetails']}
                 />
               </Box>
             </InputGroupContainer>
@@ -154,14 +156,14 @@ export const KYMDeclaration = () => {
             gap="s32"
           >
             <FormSwitchTab
-              label="Do you hold residential permit of foreign country?"
+              label={t['kynIndForeignCountry']}
               options={booleanList}
               name="residentForeign"
             />
 
             <Box display="flex" flexDirection="column">
               <Text fontSize="s3" mb="s16">
-                Specify following details
+                {t['kynIndSpecifyfollowingdetails']}
               </Text>
               {/* TODO CHANGE THIS NAME */}
               <FormRadioGroup

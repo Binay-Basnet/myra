@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   GroupContainer,
@@ -8,6 +9,7 @@ import { FormEmailInput, FormPhoneNumber } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 
 export const MemberKYMContactDetails = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Contact Details" scrollMarginTop={'200px'}>
       <Text
@@ -15,26 +17,26 @@ export const MemberKYMContactDetails = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        CONTACT DETAILS
+        {t['kymIndCONTACTDETAILS']}
       </Text>
       <InputGroupContainer>
         <FormPhoneNumber
           type="text"
           name="mobileNumber"
-          label="Mobile No"
-          placeholder="Enter Mobile No"
+          label={t['kymIndMobileNo']}
+          placeholder={t['kymIndEnterMobileNo']}
         />
         <FormPhoneNumber
           type="text"
           name="phoneNumber"
-          label="Phone No"
-          placeholder="Enter Phone No"
+          label={t['kymIndPhoneNo']}
+          placeholder={t['kymIndEnterPhoneNo']}
         />
         <FormEmailInput
           type="text"
           name="email"
-          label="Email"
-          placeholder="Enter email"
+          label={t['kymIndEmail']}
+          placeholder={t['kymIndEnterEmail']}
         />
       </InputGroupContainer>
     </GroupContainer>

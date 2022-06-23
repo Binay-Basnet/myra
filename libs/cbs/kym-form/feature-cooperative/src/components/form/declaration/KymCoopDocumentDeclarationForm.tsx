@@ -2,48 +2,54 @@ import React from 'react';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput } from '@coop/shared/form';
 import { Grid, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopDocumentDeclarationForm = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Document Declaration">
       <Text fontSize="r1" fontWeight="SemiBold">
-        DOCUMENT DECLARATION
+        {t['kymCoopDOCUMENTDECLARATION']}
       </Text>
       <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
         <FormFileInput
           size="lg"
-          label="AGM Decision Document"
+          label={t['kymCoopAGMDecisionDocument']}
           name="passportSizePhoto"
         />
         <FormFileInput
           size="lg"
-          label="Registered Certificate"
+          label={t['kymCoopRegisteredCertificate']}
           name="signaturePhoto"
         />
         <FormFileInput size="lg" label="MOA/AOA" name="citizenshipPhoto" />
         <FormFileInput
           size="lg"
-          label="PAN Certificate"
+          label={t['kymCoopPANCertificate']}
           name="fingerprintPhoto"
         />
 
         <FormFileInput
           size="lg"
-          label="Tax Clearance"
+          label={t['kymCoopTaxClearance']}
           name="citizenshipPhoto"
         />
 
         <FormFileInput
           size="lg"
-          label="Latest Audit Report"
+          label={t['kymCoopLatestAuditReport']}
           name="citizenshipPhoto"
         />
 
-        <FormFileInput size="lg" label="Logo" name="citizenshipPhoto" />
+        <FormFileInput
+          size="lg"
+          label={t['kymCoopLogo']}
+          name="citizenshipPhoto"
+        />
 
         <FormFileInput
           size="lg"
-          label="Minute of Central Rep"
+          label={t['kymCoopMinuteofCentralRep']}
           name="citizenshipPhoto"
         />
       </Grid>

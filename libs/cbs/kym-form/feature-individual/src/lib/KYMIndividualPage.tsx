@@ -185,7 +185,7 @@ export function KYMIndividualPage() {
                   <SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        1. Personal Information
+                        {t['kymInd1PersonalInformation']}
                       </Text>
                       <ContainerWithDivider>
                         <MemberKYMBasicInfo />
@@ -198,7 +198,7 @@ export function KYMIndividualPage() {
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        2. Professional Information
+                        {t['kymInd2ProfessionalInformation']}
                       </Text>
                       <ContainerWithDivider>
                         <MemberKYMProfession />
@@ -210,7 +210,7 @@ export function KYMIndividualPage() {
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        3. COOP membership
+                        {t['kymInd3COOPmembership']}
                       </Text>
                       <ContainerWithDivider>
                         <KYMBasiccoopDetails />
@@ -221,7 +221,7 @@ export function KYMIndividualPage() {
 
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
-                        4. Declaration
+                        {t['kymInd4Declaration']}
                       </Text>
                       <ContainerWithDivider>
                         <KYMDeclaration />
@@ -264,7 +264,7 @@ export function KYMIndividualPage() {
             >
               <Box display="flex" gap="s8">
                 <Text as="i" fontSize="r1">
-                  Form Details saved to draft
+                  {t['formDetails']}
                 </Text>
                 <Text as="i" fontSize="r1">
                   09:41 AM
@@ -290,7 +290,7 @@ export function KYMIndividualPage() {
                       fontSize="s2"
                       ml="5px"
                     >
-                      Save Draft
+                      {t['saveDraft']}
                     </Text>
                   </Button>
                 </Box>
@@ -299,7 +299,7 @@ export function KYMIndividualPage() {
                   minW="160px"
                   onClick={() => router.push(`/members/translation/${id}`)}
                 >
-                  Next
+                  {t['next']}
                 </Button>
               </Box>
             </Box>

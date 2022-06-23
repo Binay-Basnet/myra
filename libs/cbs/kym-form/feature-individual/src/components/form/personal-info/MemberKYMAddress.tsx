@@ -10,12 +10,14 @@ import {
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Button, Icon, Modal, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const MapContainer = dynamic(() => import('./Map'), {
   ssr: false,
 });
 
 export const MemberKYMAddress = () => {
+  const { t } = useTranslation();
   const { control, watch } = useFormContext();
 
   const [openModal, setOpenModal] = useState(false);
@@ -89,7 +91,7 @@ export const MemberKYMAddress = () => {
         scrollMarginTop={'200px'}
       >
         <Text fontSize="r1" fontWeight="SemiBold">
-          PERMANENT ADDRESS
+          {t['kymIndPermanentAddress']}
         </Text>
         <Box
           id="Permanent Address"
@@ -100,14 +102,14 @@ export const MemberKYMAddress = () => {
           <InputGroupContainer>
             <FormSelect
               name="permanentStateId"
-              label="Province"
-              placeholder="Select Province"
+              label={t['kymIndProvince']}
+              placeholder={t['kymIndSelectProvince']}
               options={province}
             />
             <FormSelect
               name="permanentDistrictId"
-              label="District"
-              placeholder="Select District"
+              label={t['kymIndDistrict']}
+              placeholder={t['kymIndSelectDistrict']}
               options={districtList.map((d) => ({
                 label: d.name,
                 value: d.id,
@@ -115,8 +117,8 @@ export const MemberKYMAddress = () => {
             />
             <FormSelect
               name="permanentLocalityId"
-              label="Local Government"
-              placeholder="Select Local Government"
+              label={t['kymIndLocalGovernment']}
+              placeholder={t['kymIndSelectLocalGovernment']}
               options={localityList.map((d) => ({
                 label: d.name,
                 value: d.id,
@@ -125,20 +127,20 @@ export const MemberKYMAddress = () => {
             <FormInput
               type="number"
               name="permanentWardId"
-              label="Ward No"
-              placeholder="Enter Ward No"
+              label={t['kymIndWardNo']}
+              placeholder={t['kymIndEnterWardNo']}
             />
             <FormInput
               type="text"
               name="permanentTole"
-              label="Locality"
-              placeholder="Enter Locality"
+              label={t['kymIndLocality']}
+              placeholder={t['kymIndEnterLocality']}
             />
             <FormInput
               type="text"
               name="permanentHouseNo"
-              label="House No"
-              placeholder="Enter House No"
+              label={t['kymIndHouseNo']}
+              placeholder={t['kymIndEnterHouseNo']}
             />
           </InputGroupContainer>
 
@@ -150,7 +152,7 @@ export const MemberKYMAddress = () => {
               onOpenModal();
             }}
           >
-            Pin on Map
+            {t['pinOnMap']}
           </Button>
           <Modal
             open={openModal}
@@ -163,7 +165,7 @@ export const MemberKYMAddress = () => {
                 color="neutralColorLight.Gray-80"
                 fontWeight="SemiBold"
               >
-                Pin on map
+                {t['pinOnMap']}
               </Text>
             }
           >
@@ -179,12 +181,12 @@ export const MemberKYMAddress = () => {
         scrollMarginTop={'200px'}
       >
         <Text fontSize="r1" fontWeight="SemiBold">
-          TEMPORARY ADDRESS
+          {t['kymIndTemporaryAddress']}
         </Text>
 
         <FormSwitch
           name="isPermanentAndTemporaryAddressSame"
-          label="Temporary Address same as permanent"
+          label={t['kymIndTemporaryAddressPermanent']}
         />
 
         {!isPermanentAndTemporaryAddressSame && (
@@ -192,14 +194,14 @@ export const MemberKYMAddress = () => {
             <InputGroupContainer>
               <FormSelect
                 name="temporaryStateId"
-                label="Province"
-                placeholder="Select Province"
+                label={t['kymIndProvince']}
+                placeholder={t['kymIndSelectProvince']}
                 options={province}
               />
               <FormSelect
                 name="temporaryDistrictId"
-                label="District"
-                placeholder="Select District"
+                label={t['kymIndDistrict']}
+                placeholder={t['kymIndSelectDistrict']}
                 options={districtTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -207,8 +209,8 @@ export const MemberKYMAddress = () => {
               />
               <FormSelect
                 name="temporaryLocalityId"
-                label="Local Government"
-                placeholder="Select Local Government"
+                label={t['kymIndLocalGovernment']}
+                placeholder={t['kymIndSelectLocalGovernment']}
                 options={localityTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -217,20 +219,19 @@ export const MemberKYMAddress = () => {
               <FormInput
                 type="number"
                 name="temporaryWardId"
-                label="Ward No"
-                placeholder="Enter Ward No"
+                label={t['kymIndWardNo']}
+                placeholder={t['kymIndEnterWardNo']}
               />
               <FormInput
                 type="text"
                 name="temporaryTole"
-                label="Locality"
-                placeholder="Enter Locality"
+                placeholder={t['kymIndEnterLocality']}
               />
               <FormInput
                 type="text"
                 name="temporaryHouseNo"
-                label="House No"
-                placeholder="Enter House No"
+                label={t['kymIndHouseNo']}
+                placeholder={t['kymIndEnterHouseNo']}
               />
             </InputGroupContainer>
             <Button
@@ -238,7 +239,7 @@ export const MemberKYMAddress = () => {
               alignSelf="start"
               leftIcon={<Icon size="md" as={FaMap} />}
             >
-              Pin on Map
+              {t['pinOnMap']}
             </Button>
           </>
         )}
@@ -251,21 +252,21 @@ export const MemberKYMAddress = () => {
         scrollMarginTop={'200px'}
       >
         <Text fontSize="r1" fontWeight="SemiBold">
-          INCASE RESIDING IN RENTED HOUSE
+          {t['kymIndINCASERESIDINGINRENTEDHOUSE']}
         </Text>
         <InputGroupContainer>
           <FormInput
             type="text"
             name={'landlordName'}
-            label="Landlord's Name"
-            placeholder="Landlord's Name"
+            label={t['kymIndLandlordName']}
+            placeholder={t['kymIndLandlordName']}
           />
           <FormInput
             control={control}
             type="text"
             name={'landlordContact'}
-            label="Contact No"
-            placeholder="Contact No"
+            label={t['kymIndContactNo']}
+            placeholder={t['kymIndContactNo']}
           />
         </InputGroupContainer>
       </Box>

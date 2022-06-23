@@ -3,47 +3,54 @@ import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
 import { KymCooperativeInstitutionInformationSection } from '@coop/shared/data-access';
+import { useTranslation } from '@coop/shared/utils';
 
 const OrganizationInformation = [
-  'Basic Information',
-  'Registered Address',
-  'Operating Address',
-  'Contact Details',
-  'Current Members',
-  'Cooperative Date',
-  'Representative',
-  'Additional Coorperative Details',
-  'Number of Employee',
+  'kymCoopAccBasicInformation',
+  'kymCoopAccRegisteredAddress',
+  'kymCoopAccOperatingAddress',
+  'kymCoopAccContactDetails',
+  'kymCoopAccCurrentMembers',
+  'kymCoopAccCooperativeDate',
+  'kymCoopAccRepresentative',
+  'kymCoopAccAdditionalCoorperativeDetails',
+  'kymCoopAccNumberofEmployee',
 ];
 
-const organizationInfoEnum: Record<
-  typeof OrganizationInformation[number],
-  KymCooperativeInstitutionInformationSection
-> = {
-  'Basic Information':
-    KymCooperativeInstitutionInformationSection.BasicInformation,
-  'Registered Address':
-    KymCooperativeInstitutionInformationSection.RegisteredAddress,
-  'Operating Address':
-    KymCooperativeInstitutionInformationSection.OperatingAddress,
-  'Contact Details': KymCooperativeInstitutionInformationSection.ContactDetails,
-  'Current Members': KymCooperativeInstitutionInformationSection.CurrentMembers,
-  Representative: KymCooperativeInstitutionInformationSection.Representative,
-  'Additional Coorperative Details':
-    KymCooperativeInstitutionInformationSection.AdditionalCooperativeDetails,
-  'Number of Employee':
-    KymCooperativeInstitutionInformationSection.NumberOfEmployee,
-};
+// const organizationInfoEnum: Record<
+//   typeof OrganizationInformation[number],
+//   KymCooperativeInstitutionInformationSection
+// > = {
+//   kymCoopAccBasicInformation:
+//     KymCooperativeInstitutionInformationSection.BasicInformation,
+//   kymCoopAccRegisteredAddress:
+//     KymCooperativeInstitutionInformationSection.RegisteredAddress,
+//   kymCoopAccOperatingAddress:
+//     KymCooperativeInstitutionInformationSection.OperatingAddress,
+//   kymCoopAccContactDetails:
+//     KymCooperativeInstitutionInformationSection.ContactDetails,
+//   kymCoopAccCurrentMembers:
+//     KymCooperativeInstitutionInformationSection.CurrentMembers,
+//   kymCoopAccRepresentative:
+//     KymCooperativeInstitutionInformationSection.Representative,
+//   kymCoopAccAdditionalCoorperativeDetails:
+//     KymCooperativeInstitutionInformationSection.AdditionalCooperativeDetails,
+//   kymCoopAccNumberofEmployee:
+//     KymCooperativeInstitutionInformationSection.NumberOfEmployee,
+// };
 
-const EconomicDetails: string[] = ['Equity and Liabilities', 'Assets'];
+const EconomicDetails: string[] = [
+  'kymCoopAccEquityandLiabilities',
+  'kymCoopAccAssets',
+];
 
-const BoardOfDirectorsDetail: string[] = ['Board Of Director Details'];
+const BoardOfDirectorsDetail: string[] = ['kymCoopAccBoardOfDirectorDetails'];
 
-const AccountOperatorDetail: string[] = ['Account Operator Detail'];
+const AccountOperatorDetail: string[] = ['kymCoopAccAccountOperatorDetail'];
 
 const Declaration: string[] = [
-  'Account Holder Declaration',
-  'Document Declaration',
+  'kymCoopAccAccountHolderDeclaration',
+  'kymCoopAccDocumentDeclaration',
 ];
 
 interface AccordianProps {
@@ -55,6 +62,7 @@ interface AccordianProps {
 }
 
 export function AccordionKymCoopForm(props: AccordianProps) {
+  const { t } = useTranslation();
   const { kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
   const [isOpenOrganization, setIsOpenOrganization] = useState(false);
@@ -84,7 +92,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         _hover={{ bg: '#EEF2F7' }}
       >
         <Text fontSize={'r1'} fontWeight="600">
-          1. Organization Details
+          {t['kymCoopAcc1OrganizationDetails']}
         </Text>
         {!isOpenOrganization ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -106,7 +114,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
               &nbsp; &nbsp;
@@ -133,7 +141,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          2. Economic Details
+          {t['kymCoopAcc2EconomicDetails']}
         </Text>
         {!isOpenEconomic ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -155,7 +163,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -173,7 +181,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          3. Details of Board Directors
+          {t['kymCoopAcc3DetailsofBoardDirectors']}
         </Text>
         {!isOpenBoardOfDirectors ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -195,7 +203,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -213,7 +221,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          4. Details of Account Operators
+          {t['kymCoopAcc4DetailsofAccountOperators']}
         </Text>
         {!isOpenAccountOperator ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -235,7 +243,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>
@@ -253,7 +261,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
-          5. Declaration
+          {t['kymCoopAcc5Declaration']}
         </Text>
         {!isOpenDeclaration ? (
           <AiOutlineCaretRight fontSize="12px" />
@@ -275,7 +283,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {item}
+                  {t[item]}
                 </Text>
               </a>
             </Box>

@@ -95,43 +95,43 @@ export const getKymSectionCoOperativeUnion = (id: string) => {
   if (BasicInfo.includes(id)) {
     return {
       section: 'organizationInfo',
-      subSection: 'Basic Information',
+      subSection: 'kymCoopUnionAccBasicInformation',
     };
   }
   if (registerDetails.includes(id)) {
     return {
       section: 'organizationInfo',
-      subSection: 'Registered Details',
+      subSection: 'kymCoopUnionAccRegisteredDetails',
     };
   }
   if (contactDetails.includes(id)) {
     return {
       section: 'organizationInfo',
-      subSection: 'Contact Details',
+      subSection: 'kymCoopUnionAccContactDetails',
     };
   }
   if (BankAccDetails.includes(id)) {
     return {
       section: 'organizationInfo',
-      subSection: 'Bank Account Details',
+      subSection: 'kymCoopUnionAccBankAccountDetails',
     };
   }
   if (BoardOfDirectors.includes(id.split('.')[0])) {
     return {
       section: 'directorDetails',
-      subSection: 'Details of Proprietor, Partners, Directors.',
+      subSection: 'kymCoopUnionAccDetailsofProprietor',
     };
   }
   if (AccountOperatorsDetails.includes(id.split('.')[0])) {
     return {
       section: 'accountOperators',
-      subSection: 'Details of Account Operators',
+      subSection: 'kymCoopUnionAccDetailsofAccountOperators',
     };
   }
   if (centralRepresentative.includes(id.split('.')[0])) {
     return {
       section: 'centralRepresentatives',
-      subSection: 'Details of directors affiliated with other Firms',
+      subSection: 'kymCoopUnionAccDetailsofdirectorsaffiliatedwithotherFirms',
     };
   }
   if (
@@ -140,44 +140,44 @@ export const getKymSectionCoOperativeUnion = (id: string) => {
   ) {
     return {
       section: 'memberDetails',
-      subSection: 'Current Members',
+      subSection: 'kymCoopUnionAccCurrentMembers',
     };
   }
   if (detailMember.includes(id.split('.')[0])) {
     return {
       section: 'memberDetails',
-      subSection: 'Target for next fiscal year',
+      subSection: 'kymCoopUnionAccTargetfornextfiscalyear',
     };
   }
   if (economicDetails.includes(id)) {
     return {
       section: 'economicDetails',
-      subSection: 'Assets',
+      subSection: 'kymCoopUnionAccAssets',
     };
   }
   if (incomeDetails.includes(id)) {
     return {
       section: 'economicDetails',
-      subSection: 'Equity and Liailibities',
+      subSection: 'kymCoopUnionAccEquityandLiailibities',
     };
   }
 
   if (cashDetails.includes(id)) {
     return {
       section: 'economicDetails',
-      subSection: 'Income Details',
+      subSection: 'kymCoopUnionAccIncomeDetails',
     };
   }
   if (ExpenseDetails.includes(id)) {
     return {
       section: 'economicDetails',
-      subSection: 'Expense Details',
+      subSection: 'kymCoopUnionAccExpenseDetails',
     };
   }
   if (weagree.includes(id)) {
     return {
       section: 'declaration',
-      subSection: 'Account Holder Declaration',
+      subSection: 'kymCoopUnionAccAccountHolderDeclaration',
     };
   }
   return;

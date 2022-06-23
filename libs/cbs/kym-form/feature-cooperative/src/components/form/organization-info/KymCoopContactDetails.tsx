@@ -5,8 +5,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopContactDetails = () => {
+  const { t } = useTranslation();
   return (
     <GroupContainer id="Contact Details" scrollMarginTop={'200px'}>
       <Text
@@ -14,27 +16,27 @@ export const KymCoopContactDetails = () => {
         fontWeight="semibold"
         color="neutralColorLight.Gray-80"
       >
-        Contact Details
+        {t['kymCoopContactDetails']}
       </Text>
       <InputGroupContainer>
         <FormInput
           type="text"
           name="email"
-          label="Official Email"
-          placeholder="Enter Email Address"
+          label={t['kymCoopOfficialEmail']}
+          placeholder={t['kymCoopEnterEmailAddress']}
         />
         <FormInput
           type="text"
           name="website"
-          label="Website Link"
-          placeholder="Enter Website URL"
+          label={t['kymCoopWebsiteLink']}
+          placeholder={t['kymCoopEnterWebsiteURL']}
         />
 
         <FormInput
           type="text"
           name="contactNumber"
-          label="Phone no."
-          placeholder="Enter Phone Number"
+          label={t['kymCoopPhoneno']}
+          placeholder={t['kymCoopEnterPhoneNumber']}
         />
       </InputGroupContainer>
     </GroupContainer>

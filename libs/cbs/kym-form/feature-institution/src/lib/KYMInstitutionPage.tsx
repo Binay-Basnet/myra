@@ -118,7 +118,6 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
             })}
             onFocus={(e) => {
               const kymSection = getKymSectionInstitution(e.target.id);
-              console.log('kymSection', e.target.id);
               setKymCurrentSection(kymSection);
             }}
           >
