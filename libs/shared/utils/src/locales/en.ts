@@ -509,6 +509,8 @@ const en: Record<string, string> = {
   settingsDepositIroName: 'IRO Name',
   settingsDepositIroAddress: 'IRO Address',
   settingsDepositIroCode: 'IRO Code',
+  settingsDepositProducts: 'Deposit Products',
+  settingsDepositProductNew: 'New Deposit Product',
   // KYM FORM
 
   // kym coop union
