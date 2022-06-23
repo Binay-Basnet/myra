@@ -1,18 +1,20 @@
 import React from 'react';
 
-import { Box } from '@coop/shared/ui';
+import { Box, Button } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
 export interface FormFooterProps {
   status: React.ReactNode;
   draftButton: React.ReactNode;
-  mainButton: React.ReactNode;
+  mainButtonLabel?: string;
+  mainButtonHandler: () => void;
 }
 
 export function FormFooter({
   status,
   draftButton,
-  mainButton,
+  mainButtonLabel,
+  mainButtonHandler,
 }: FormFooterProps) {
   return (
     <Box
@@ -28,7 +30,9 @@ export function FormFooter({
       <Box display="flex" gap="s16">
         {draftButton}
 
-        {mainButton}
+        <Button width="160px" onClick={mainButtonHandler}>
+          {mainButtonLabel ?? 'Next'}
+        </Button>
       </Box>
     </Box>
   );

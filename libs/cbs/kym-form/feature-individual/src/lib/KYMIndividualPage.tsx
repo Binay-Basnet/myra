@@ -304,7 +304,7 @@ export function KYMIndividualPage() {
                 </Box>
               }
               draftButton={
-                <Button type="submit" variant="ghost" minW="160px">
+                <Button type="submit" variant="ghost">
                   <Icon as={BiSave} color="primary.500" />
                   <Text
                     alignSelf="center"
@@ -317,13 +317,8 @@ export function KYMIndividualPage() {
                   </Text>
                 </Button>
               }
-              mainButton={
-                <Button
-                  minW="160px"
-                  onClick={() => router.push(`/members/translation/${id}`)}
-                >
-                  Next
-                </Button>
+              mainButtonHandler={() =>
+                router.push(`/members/translation/${id}`)
               }
             />
           </Container>
