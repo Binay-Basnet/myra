@@ -504,6 +504,11 @@ const en: Record<string, string> = {
   settingsDepositInstitutional: 'Institutional',
   settingsDepositCooperative: 'Cooperative',
   settingsDepositCooperativeUnion: 'Cooperative Union',
+  settingsDepositIro: 'IRO',
+  settingsDepositIroSetup: 'Setup your IRO account here',
+  settingsDepositIroName: 'IRO Name',
+  settingsDepositIroAddress: 'IRO Address',
+  settingsDepositIroCode: 'IRO Code',
   // KYM FORM
 
   // kym coop union

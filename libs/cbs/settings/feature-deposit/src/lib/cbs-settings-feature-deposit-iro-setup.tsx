@@ -26,7 +26,7 @@ export function CbsSettingsFeatureDepositIROSetup(
             w="100%"
           >
             <TextFields variant="pageHeader" color="neutralColorLight.Gray-80">
-              IRO
+              {t['settingsDepositIro']}
             </TextFields>
             <Text
               variant="formInput"
@@ -34,7 +34,7 @@ export function CbsSettingsFeatureDepositIROSetup(
               fontWeight="400"
               color="gray.400"
             >
-              Setup your IRO account here
+              {t['settingsDepositIroSetup']}
             </Text>
           </Box>
           <Box mt="s12">
@@ -49,7 +49,7 @@ export function CbsSettingsFeatureDepositIROSetup(
                 variant="tableHeader"
                 color="neutralColorLight.Gray-80"
               >
-                IRO
+                {t['settingsDepositIro']}
               </TextFields>
             </Box>
             <Box p="s12" border={'1px'} borderColor="border.layout" w="100%">
@@ -66,8 +66,8 @@ export function CbsSettingsFeatureDepositIROSetup(
                         name="individual"
                         type="text"
                         control={control}
-                        label="IRO Name"
-                        placeholder="IRO Name"
+                        label={t['settingsDepositIroName']}
+                        placeholder={t['settingsDepositIroName']}
                       />
                     </Box>
                     <Box display="flex" columnGap="s16" alignItems="center">
@@ -75,16 +75,16 @@ export function CbsSettingsFeatureDepositIROSetup(
                         name="iroAddress"
                         type="text"
                         control={control}
-                        label="IRO Address"
-                        placeholder="IRO Address"
+                        label={t['settingsDepositIroAddress']}
+                        placeholder={t['settingsDepositIroAddress']}
                         w="100%"
                       />
                       <FormInput
                         name="iroCode"
                         type="text"
                         control={control}
-                        label="IRO Code"
-                        placeholder="IRO Code"
+                        label={t['settingsDepositIroCode']}
+                        placeholder={t['settingsDepositIroCode']}
                         w="100%"
                       />
                     </Box>
