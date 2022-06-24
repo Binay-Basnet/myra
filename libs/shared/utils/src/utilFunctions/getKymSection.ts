@@ -41,6 +41,7 @@ const permanentAddress = [
   'permanentLocalityId',
   'permanentWardId',
   'permanentTole',
+  'permanentAddressLocation',
 ];
 const temporaryAddress = [
   'temporaryStateId',

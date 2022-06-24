@@ -63,7 +63,7 @@ export const SettingsBranchesTable = () => {
 
   return (
     <>
-      <SettingsPageHeader heading={'settingsBranch'} />
+      <SettingsPageHeader heading={t['settingsBranch']} />
 
       <Table
         isLoading={isFetching}
