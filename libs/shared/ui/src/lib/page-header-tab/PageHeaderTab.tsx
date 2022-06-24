@@ -9,7 +9,7 @@ const TabElement = chakra(Tab, {
     height: '50px',
     fontSize: '14px',
     fontWeight: '600',
-    width: '100px',
+    // width: '100px',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
