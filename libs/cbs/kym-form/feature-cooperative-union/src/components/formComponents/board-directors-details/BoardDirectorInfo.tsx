@@ -230,6 +230,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
 
               <FormSwitch
                 control={control}
+                id="boardOfDirectorsDetails"
                 name={`boardOfDirectorsDetails.${index}.isPermanentAndTemporaryAddressSame`}
                 label={t['kymCoopUnionTemporaryAddressPermanent']}
               />

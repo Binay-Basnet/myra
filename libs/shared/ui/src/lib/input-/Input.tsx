@@ -17,58 +17,65 @@ export interface InputProps extends ChakraInputProps {
   helperText?: string;
   errorText?: string;
   label?: string;
-  leftzIndex?: number;
 }
 
-export const Input = ({
-  rightElement,
-  leftElement,
-  helperText,
-  errorText,
-  label,
-  fontSize,
-  size = 'default',
-  leftzIndex,
-  fontWeight,
-  ...rest
-}: InputProps) => {
-  return (
-    <Box w="auto" display="flex" flexDirection="column" gap="s4">
-      {label && (
-        <TextFields variant="formLabel" color="gray.700">
-          {label}
-        </TextFields>
-      )}
+type ForwardRefInputProps = React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+> &
+  InputProps;
 
-      <InputGroup
-        borderRadius="br2"
-        height={size === 'default' ? '44px' : '36px'}
-      >
-        {leftElement && (
-          <InputLeftElement
-            pointerEvents="none"
-            children={leftElement}
-            zIndex={leftzIndex}
-          />
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      rightElement,
+      leftElement,
+      helperText,
+      errorText,
+      label,
+      fontSize,
+      size = 'default',
+      fontWeight,
+      ...rest
+    }: InputProps,
+    ref
+  ) => {
+    return (
+      <Box w="auto" display="flex" flexDirection="column" gap="s4">
+        {label && (
+          <TextFields variant="formLabel" color="gray.700">
+            {label}
+          </TextFields>
         )}
 
-        <ChakraInput h="100%" isInvalid={!!errorText} {...rest} />
-        {rightElement && (
-          <InputRightElement pointerEvents="none" children={rightElement} />
-        )}
-      </InputGroup>
+        <InputGroup
+          borderRadius="br2"
+          height={size === 'default' ? '44px' : '36px'}
+        >
+          {leftElement && (
+            <InputLeftElement pointerEvents="none" children={leftElement} />
+          )}
 
-      {errorText ? (
-        <TextFields variant="formHelper" color="danger.500">
-          {errorText}
-        </TextFields>
-      ) : helperText ? (
-        <TextFields variant="formHelper" color="gray.700">
-          {helperText}
-        </TextFields>
-      ) : null}
-    </Box>
-  );
-};
+          <ChakraInput ref={ref} h="100%" isInvalid={!!errorText} {...rest} />
+          {rightElement && (
+            <InputRightElement pointerEvents="none" children={rightElement} />
+          )}
+        </InputGroup>
+
+        {errorText ? (
+          <TextFields variant="formHelper" color="danger.500">
+            {errorText}
+          </TextFields>
+        ) : helperText ? (
+          <TextFields variant="formHelper" color="gray.700">
+            {helperText}
+          </TextFields>
+        ) : null}
+      </Box>
+    );
+  }
+);
 
 export default Input;
+
+Input.displayName = 'Input';

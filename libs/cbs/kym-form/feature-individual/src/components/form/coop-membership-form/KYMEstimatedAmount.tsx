@@ -4,7 +4,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/shared/form';
+import { FormInput, FormRadioGroup } from '@coop/shared/form';
 import { Box, RadioGroup, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -32,17 +32,30 @@ export const KYMEstimatedAmount = () => {
       </InputGroupContainer>
 
       <Box display="flex" flexDirection="column">
-        <Text fontSize="s3" mb="s16">
-          {t['kynIndEstimatednoofAnnualTransaction']}
-        </Text>
-        {/* <Box display="flex" flexDirection="column" gap="s8">
-          {annualFamilyIncome.map((item, index) => (
-            <Checkbox key={index} id="annualIncomeCheckbox">
-              <Text fontSize="s3">{item}</Text>
-            </Checkbox>
-          ))}
-        </Box> */}
-        <RadioGroup radioList={annualFamilyIncome} labelFontSize="s3" />
+        <FormRadioGroup
+          label={t['kynIndEstimatednoofAnnualTransaction']}
+          id="estimatedAnnualTransactionFrequencyId"
+          name="estimatedAnnualTransactionFrequencyId"
+          options={[
+            {
+              label: 'Upto 50',
+              value: 'upto50',
+            },
+            {
+              label: 'Upto 100',
+              value: 'upto100',
+            },
+            {
+              label: 'Upto 500',
+              value: 'upto500',
+            },
+            {
+              label: 'above500',
+              value: 'abovce500',
+            },
+          ]}
+          labelFontSize="s3"
+        />
       </Box>
 
       <InputGroupContainer>

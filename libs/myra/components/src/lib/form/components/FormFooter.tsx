@@ -11,7 +11,7 @@ export const FormFooter = (props: formFooter) => {
     <Box
       position="fixed"
       minW="container.xl"
-      width={1248}
+      // width={1248}
       bottom={0}
       bg="gray.0"
       display="flex"

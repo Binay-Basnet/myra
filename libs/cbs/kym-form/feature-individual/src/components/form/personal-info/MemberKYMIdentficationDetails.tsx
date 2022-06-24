@@ -1,19 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { useGetIndIdentificationDocOptionQuery } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Checkbox, Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-const identificationDetails = [
-  'Citizenship',
-  'Driving License',
-  'Passport',
-  'Voters Card',
-  'National ID',
-];
 
 export const MemberKYMIdentificationDetails = () => {
   const { t } = useTranslation();
@@ -87,6 +78,7 @@ export const MemberKYMIdentificationDetails = () => {
 
                       return (
                         <FormInput
+                          id="identificationFields"
                           type="number"
                           name={`identification.${fieldIndex}.fields.${optionIndex}.value`}
                           label={String(option?.name?.local)}

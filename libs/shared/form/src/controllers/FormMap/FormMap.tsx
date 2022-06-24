@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 
-const MapComponent = dynamic(
-  () => import('../../../../map/src/lib/MapComponent'),
-  { ssr: false }
-);
+const MapComponent = dynamic(() => import('@coop/shared/map'), {
+  ssr: false,
+});
 
-/* eslint-disable-next-line */
 export interface FormMapProps<T> {
   name: Path<T>;
   id?: string;
@@ -19,9 +17,25 @@ export function FormMap<T>({ name, id }: FormMapProps<T>) {
   const {
     // formState: { errors },
     control,
+    reset,
+    getValues,
   } = methods;
 
-  return typeof window === undefined ? null : (
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        reset({
+          ...getValues(),
+          [name]: {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          },
+        });
+      });
+    }
+  }, []);
+
+  return (
     <Controller
       name={name}
       control={control}

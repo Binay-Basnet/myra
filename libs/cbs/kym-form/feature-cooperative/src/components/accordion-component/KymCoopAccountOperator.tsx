@@ -218,6 +218,7 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
 
               <FormSwitch
                 control={control}
+                id="accountOperatorsDetails"
                 name={`accountOperatorsDetails.${index}.isPermanentAndTemporaryAddressSame`}
                 label={t['kymCoopTemporaryAddressPermanent']}
               />

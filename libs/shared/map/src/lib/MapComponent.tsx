@@ -20,16 +20,7 @@ interface MapComponentProps {
   setCurrentLoc: (location: MapPosition) => void;
 }
 
-export const MapComponent = ({
-  id,
-  currentLoc,
-  setCurrentLoc,
-}: MapComponentProps) => {
-  // const [currentLoc, setCurrentLoc] = useState({
-  //   latitude: 0,
-  //   longitude: 0,
-  // });
-
+const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasClickedModal, setHasClickedModal] = useState(false);
   const { t } = useTranslation();
@@ -39,15 +30,6 @@ export const MapComponent = ({
   const closeModal = useCallback(() => setIsModalOpen(false), []);
 
   const [address, setAddress] = useState('');
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((loc) =>
-      setCurrentLoc({
-        longitude: loc.coords.longitude,
-        latitude: loc.coords.latitude,
-      })
-    );
-  }, []);
 
   useEffect(() => {
     const getPermanentAddress = async () => {

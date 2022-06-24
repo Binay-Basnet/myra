@@ -146,6 +146,7 @@ export function KYMIndividualPage() {
               console.log('data', data);
             })}
             onFocus={(e) => {
+              console.log('hello', e.target?.id)
               const kymSection = getKymSection(e.target.id);
 
               setKymCurrentSection(kymSection);
