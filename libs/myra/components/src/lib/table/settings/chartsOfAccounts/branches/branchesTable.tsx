@@ -9,7 +9,7 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const SettingsBranchesTable = () => {
   const { t } = useTranslation();
-  const route = useRouter();
+  const router = useRouter();
   const { data, isFetching } = useGetBranchesListQuery();
 
   const rowData = useMemo(
@@ -58,12 +58,16 @@ export const SettingsBranchesTable = () => {
         Cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
-    [route.locale]
+    [router.locale]
   );
 
   return (
     <>
-      <SettingsPageHeader heading={t['settingsBranch']} />
+      <SettingsPageHeader
+        heading={t['settingsBranch']}
+        buttonLabel={t['settingsBranchNew']}
+        buttonHandler={() => router.push('/settings/general/branches/add')}
+      />
 
       <Table
         isLoading={isFetching}

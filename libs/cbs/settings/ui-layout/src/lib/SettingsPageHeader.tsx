@@ -1,7 +1,7 @@
 import React from 'react';
-import { Flex } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 
-import { Box, PageHeaderTab, Text } from '@coop/shared/ui';
+import { Box, Button, PageHeaderTab, Text } from '@coop/shared/ui';
 
 interface ITableListPageHeader {
   heading: string;
@@ -9,38 +9,46 @@ interface ITableListPageHeader {
     title: string;
     key: string;
   }[];
+  buttonLabel?: string;
+  buttonHandler?: () => void;
 }
 
 export const SettingsPageHeader = ({
   tabItems,
   heading,
+  buttonLabel,
+  buttonHandler,
 }: ITableListPageHeader) => {
   return (
     <Box
-      h="60px"
       bg="white"
       zIndex="10"
       w="100%"
       top="110px"
       position="sticky"
       borderBottom="1px solid #E6E6E6"
-      pl="s16"
+      display="flex"
+      alignItems="center"
+      px="s16"
+      py="s8"
+      height="60px"
     >
-      <Flex justify="flex-start" alignItems="center" h="100%">
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          maxH="50px"
-        >
-          <Text fontSize="r2" fontWeight="600" color="gray.800">
-            {heading}
-          </Text>
-        </Box>
+      <Text fontSize="r2" fontWeight="600" color="gray.800">
+        {heading}
+      </Text>
+      {tabItems?.length && (
         <Box ml="48px" display="flex" alignItems="flex-end">
           <PageHeaderTab list={tabItems ?? []} />
         </Box>
-      </Flex>
+      )}
+
+      {buttonLabel && buttonHandler && (
+        <Box display="flex" justifyContent="flex-end" flexGrow={100}>
+          <Button leftIcon={<AddIcon />} onClick={buttonHandler}>
+            {buttonLabel}
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };
