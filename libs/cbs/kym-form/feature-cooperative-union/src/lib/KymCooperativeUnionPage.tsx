@@ -9,6 +9,7 @@ import {
   IconButton,
   Button,
   Icon,
+  FormFooter,
 } from '@coop/shared/ui';
 import { GrClose } from 'react-icons/gr';
 import {
@@ -104,7 +105,7 @@ export function KYMCooperativeUnionPage() {
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
-            <Box
+            {/* <Box
               display="flex"
               height="60px"
               justifyContent="space-between"
@@ -143,7 +144,36 @@ export function KYMCooperativeUnionPage() {
                 &nbsp;
                 <Button>{t['next']}</Button>
               </Box>
-            </Box>
+            </Box> */}
+
+            <FormFooter
+              status={
+                <Box display="flex" gap="s8">
+                  <Text as="i" fontSize="r1">
+                    {t['formDetails']}
+                  </Text>
+                  <Text as="i" fontSize="r1">
+                    09:41 AM
+                  </Text>
+                </Box>
+              }
+              draftButton={
+                <Button type="submit" variant="ghost">
+                  <Icon as={BiSave} color="primary.500" />
+                  <Text
+                    alignSelf="center"
+                    color="primary.500"
+                    fontWeight="Medium"
+                    fontSize="s2"
+                    ml="5px"
+                  >
+                    {t['saveDraft']}
+                  </Text>
+                </Button>
+              }
+              mainButtonLabel={t['next']}
+              mainButtonHandler={() => {}}
+            />
           </Container>
         </Box>
       </Box>

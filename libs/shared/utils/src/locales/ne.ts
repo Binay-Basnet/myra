@@ -11,6 +11,7 @@ const ne: Record<string, string> = {
   id: 'ID',
   memberSince: 'Member since',
   branch: 'Branch',
+  complete: 'Complete',
 
   // navbar
   searchMembersNameReportsEtc: 'सदस्यहरूको नाम, रिपोर्टहरू, आदि खोज्नुहोस्',
