@@ -12,6 +12,7 @@ const en: Record<string, string> = {
   id: 'ID',
   memberSince: 'Member since',
   branch: 'Branch',
+  complete: 'Complete',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',

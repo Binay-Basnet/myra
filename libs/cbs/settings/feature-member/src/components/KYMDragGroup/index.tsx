@@ -202,6 +202,7 @@ export const KYMDragGroup = ({
           <Button
             variant="ghost"
             size={'md'}
+            isDisabled={!!fieldItems.find((item) => !item?.id)}
             shade="primary"
             leftIcon={<AddIcon />}
             onClick={() => {

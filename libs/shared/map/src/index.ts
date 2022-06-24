@@ -1,2 +1,5 @@
+import MapComponent from './lib/MapComponent';
+
 export * from './lib/Map';
-export * from './lib/MapComponent';
+
+export default MapComponent;

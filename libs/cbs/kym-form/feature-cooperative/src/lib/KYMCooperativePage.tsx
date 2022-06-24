@@ -16,6 +16,7 @@ import {
   TextFields,
   Button,
   Icon,
+  FormFooter,
 } from '@coop/shared/ui';
 import { GrClose } from 'react-icons/gr';
 import debounce from 'lodash/debounce';
@@ -83,7 +84,7 @@ export function KYMCooperativePage() {
               borderBottom="1px solid #E6E6E6"
             >
               <Text fontSize="r2" fontWeight="SemiBold">
-                {t.membersFormAddNewMembers}
+                {t['membersFormAddNewMembers']}
               </Text>
               <IconButton
                 variant={'ghost'}
@@ -267,7 +268,7 @@ export function KYMCooperativePage() {
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100">
           <Container minW="container.xl" height="fit-content">
-            <Box
+            {/* <Box
               display="flex"
               height="60px"
               justifyContent="space-between"
@@ -310,7 +311,37 @@ export function KYMCooperativePage() {
                   {t['next']}
                 </Button>
               </Box>
-            </Box>
+            </Box> */}
+            <FormFooter
+              status={
+                <Box display="flex" gap="s8">
+                  <Text as="i" fontSize="r1">
+                    {t['formDetails']}
+                  </Text>
+                  <Text as="i" fontSize="r1">
+                    09:41 AM
+                  </Text>
+                </Box>
+              }
+              draftButton={
+                <Button type="submit" variant="ghost">
+                  <Icon as={BiSave} color="primary.500" />
+                  <Text
+                    alignSelf="center"
+                    color="primary.500"
+                    fontWeight="Medium"
+                    fontSize="s2"
+                    ml="5px"
+                  >
+                    {t['saveDraft']}
+                  </Text>
+                </Button>
+              }
+              mainButtonLabel={t['next']}
+              mainButtonHandler={() =>
+                router.push(`/members/translation/${id}`)
+              }
+            />
           </Container>
         </Box>
       </Box>
