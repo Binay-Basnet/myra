@@ -207,6 +207,7 @@ export const MemberKYMMainOccupation = () => {
       <Box display="flex" flexDirection="row">
         <FormSwitch
           control={control}
+          id="isForeignEmployee"
           name="isForeignEmployee"
           label={t['kymIndEnableforForeignEmployment']}
         />
@@ -215,8 +216,10 @@ export const MemberKYMMainOccupation = () => {
       {isForeignEmployee && (
         <Grid mb="s16" templateColumns="repeat(3, 1fr)" gap="s16">
           <GridItem>
-            <Select
-              id="country"
+            <FormSelect
+              id="nameOfCountry"
+              control={control}
+              name="nameOfCountry"
               label={t['kymIndNameofCountry']}
               placeholder={t['kymIndSelectCountry']}
               options={[
@@ -246,6 +249,7 @@ export const MemberKYMMainOccupation = () => {
           /> */}
             <FormSelect
               control={control}
+              id="typeOfVisa"
               name="typeOfVisa"
               label={t['kymIndTypeofVisa']}
               placeholder={t['kymIndEnterTypeofVisa']}
@@ -272,6 +276,7 @@ export const MemberKYMMainOccupation = () => {
               type="number"
               textAlign={'right'}
               name={`orgName`}
+              id="estimatedAnnualIncome"
               label={t['kymIndEstimatedAnnualIncome']}
               placeholder="0.00"
             />

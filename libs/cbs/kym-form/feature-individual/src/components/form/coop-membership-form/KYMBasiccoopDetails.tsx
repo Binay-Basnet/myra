@@ -71,34 +71,26 @@ export const KYMBasiccoopDetails = () => {
 
   return (
     <GroupContainer>
-      <Box>
-        <Text
-          fontWeight="Regular"
-          fontSize="s3"
-          color="neutralColorLight.gray-80"
-          pb="s16"
-        >
-          {t['kynIndMemberIdentityLevel']}
-        </Text>
-        <FormRadioGroup
-          name="memberIdentityLevel"
-          options={[
-            {
-              label: 'General',
-              value: 'general',
-            },
-            {
-              label: 'MID',
-              value: 'mid',
-            },
-            {
-              label: 'VIP',
-              value: 'vip',
-            },
-          ]}
-          labelFontSize="s3"
-        />
-      </Box>
+      <FormRadioGroup
+        label={t['kynIndMemberIdentityLevel']}
+        id="memberIdentityLevel"
+        name="memberIdentityLevel"
+        options={[
+          {
+            label: 'General',
+            value: 'general',
+          },
+          {
+            label: 'MID',
+            value: 'mid',
+          },
+          {
+            label: 'VIP',
+            value: 'vip',
+          },
+        ]}
+        labelFontSize="s3"
+      />
 
       <InputGroupContainer
         id="Main Purpose of Becoming a Member"
@@ -155,6 +147,7 @@ export const KYMBasiccoopDetails = () => {
           label={t['kynIndFamilyMemberinthisinstitution']}
           options={booleanList}
           name="familyMemberInThisInstitution"
+          id="familyMemberInThisInstitution"
         />
       </Box>
 
@@ -328,6 +321,7 @@ export const KYMBasiccoopDetails = () => {
           <Box px="s16" py="s32" w="50%">
             <FormSelect
               name={`familyMemberInThisCooperative.relationshipId`}
+              id="kymIndRelationship"
               label={t['kymIndRelationship']}
               placeholder={t['kymIndSelectRelationship']}
               isLoading={familyRelationshipLoading}
@@ -384,6 +378,7 @@ export const FamilyMember = ({
           render={({ field: { onChange } }) => (
             <Input
               type="text"
+              id={`familyMemberInThisCooperative.${index}.memberId`}
               placeholder={t['kynIndFirstName']}
               onChange={onChange}
               bg="white"
@@ -402,6 +397,7 @@ export const FamilyMember = ({
             <Input
               type="text"
               placeholder={t['kynIndEnterCitizenshipNo']}
+              id={`familyMemberInThisCooperative.${index}.memberId`}
               onChange={onChange}
               bg="white"
             />
@@ -419,6 +415,7 @@ export const FamilyMember = ({
             <Input
               type="text"
               placeholder={t['kynIndEnterMemberID']}
+              id={`familyMemberInThisCooperative.${index}.memberId`}
               onChange={onChange}
               bg="white"
             />

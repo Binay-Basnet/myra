@@ -13,10 +13,17 @@ const basicInfo = [
 const contact = ['phoneNumber', 'mobileNumber', 'email'];
 
 const profession = ['profession'];
-const mainOccupation = ['mainOccupation', 'mainOccupationButton'];
+const mainOccupation = [
+  'mainOccupation',
+  'mainOccupationButton',
+  'isForeignEmployee',
+  'nameOfCountry',
+  'typeOfVisa',
+  'estimatedAnnualIncome',
+];
 const spouceOccupation = ['spouseOccupation', 'spouseOccupationButton'];
 const incomeSource = [
-  'incomeSourceDetails',
+  'annualIncomeSourceId',
   'incomeSourceDetails',
   'incomeSourceDetailsButton',
 ];
@@ -43,6 +50,7 @@ const permanentAddress = [
   'permanentWardId',
   'permanentTole',
   'permanentAddressLocation',
+  'permanentHouseNo',
 ];
 const temporaryAddress = [
   'isPermanentAndTemporaryAddressSame',
@@ -51,6 +59,7 @@ const temporaryAddress = [
   'temporaryLocalityId',
   'temporaryWardId',
   'temporaryTole',
+  'temporaryHouseNo',
 ];
 const incaseRented = ['landlordName', 'landlordContact'];
 const familyDetails = [
@@ -58,19 +67,21 @@ const familyDetails = [
   'familyDetails',
   'addFamilyMemberButton',
 ];
-const COOPmembership = ['purposeId'];
+const COOPmembership = ['purposeId', 'memberIdentityLevel'];
 const anotherCoop = [
   'memberOfAnotherCooperative',
   'nameAddressCooperative',
   'memberNo',
 ];
 const familyInCoop = [
+  'familyMemberInThisCooperative',
   'familyMemberInThisInstitution',
   'addfamilyCoopButton',
   'findmemberButton',
 ];
-const FinancialTransaction = ['share', 'savings', 'loan', 'other'];
+const FinancialTransaction = ['financialTransaction'];
 const estimatedWithdrawal = [
+  'estimatedAnnualTransactionFrequencyId',
   'estimatedAnnualAccountTransactionAmount',
   'estimatedWithdrawal',
   'annualIncomeCheckbox',
@@ -84,9 +95,13 @@ const declerationNextToKin = [
   'localKinAddress',
 ];
 const politicalExposure = ['politicallyExposedPerson'];
-const benificialOwner = ['beneficialOwner', 'beneficialRelationShipId'];
+const benificialOwner = [
+  'beneficialOwner',
+  'beneficialRelationShipId',
+  'fullName',
+];
 const convicted = ['declarationOfConvicted', 'convictionDetails'];
-const foreign = ['residentForeign'];
+const foreign = ['residentForeign', 'foreignEmployment'];
 
 export const getKymSection = (id: string) => {
   if (basicInfo.includes(id)) {
@@ -170,13 +185,13 @@ export const getKymSection = (id: string) => {
       subSection: 'kymAccIndMemberofAnothercooperative',
     };
   }
-  if (familyInCoop.includes(id.split('-')[0])) {
+  if (familyInCoop.includes(id.split('.')[0])) {
     return {
       section: 'COOPmembership',
       subSection: 'kymAccIndFamilyMemberinthisinstitution',
     };
   }
-  if (FinancialTransaction.includes(id)) {
+  if (FinancialTransaction.includes(id.split('.')[0])) {
     return {
       section: 'COOPmembership',
       subSection: 'kymAccIndFinancialTransactionDetails',

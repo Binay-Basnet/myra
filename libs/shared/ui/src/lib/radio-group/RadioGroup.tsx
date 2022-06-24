@@ -48,7 +48,6 @@ export function RadioGroup(props: RadioGroupProps) {
                 {...rest}
                 isChecked={true}
                 key={option.value}
-                id={`${option.value}`}
                 value={option.value}
                 spacing="s8"
               >

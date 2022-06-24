@@ -35,7 +35,10 @@ const AccountOperatorsDetails = [
   'accountOperatorsDetails',
   'accountOperatorButton',
 ];
-const centralRepresentative = ['centralRepresentativeDetails'];
+const centralRepresentative = [
+  'centralRepresentativeDetails',
+  'isPermanentAndTemporaryAddressSame',
+];
 const detailMember = ['detailsOfMember'];
 const economicDetails = [
   'cashAndCashEquivalentCurrent',

@@ -240,6 +240,7 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
 
               <FormSwitch
                 control={control}
+                id="accountOperatorsDetails"
                 name={`accountOperatorsDetails.${index}.isPermanentAndTemporaryAddressSame`}
                 label="Temporary Address same as permanent"
               />

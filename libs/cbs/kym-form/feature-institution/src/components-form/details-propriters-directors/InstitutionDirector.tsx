@@ -228,6 +228,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
 
             <FormSwitch
               control={control}
+              id="isPermanentAndTemporaryAddressSame"
               name="isPermanentAndTemporaryAddressSame"
               label={t['kymInsTemporaryAddressPermanent']}
             />
