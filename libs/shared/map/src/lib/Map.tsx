@@ -7,10 +7,18 @@ import {
   useMap,
   useMapEvent,
 } from 'react-leaflet';
+import { Marker as MarkerType } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet-defaulticon-compatibility';
+//
+// const MapLeaflet = dynamic(
+//   () => import('react-leaflet/lib/SVGOverlay').then((module) => module.Name),
+//   {
+//     ssr: false,
+//   }
+// );
 
 interface MapProps {
   position: {
@@ -20,16 +28,12 @@ interface MapProps {
   setPosition: (prop: { latitude: number; longitude: number }) => void;
 }
 
-const Map = (props: MapProps) => {
+export const Map = (props: MapProps) => {
   const { position, setPosition } = props;
-  const [coordinates, setCoordinates] = React.useState({
-    latitude: 0,
-    longitude: 0,
-  });
 
   return (
     <MapContainer
-      center={[coordinates?.latitude, coordinates?.longitude]}
+      center={[0, 0]}
       zoom={13}
       scrollWheelZoom={true}
       style={{ height: 450, width: '100%' }}
@@ -42,10 +46,6 @@ const Map = (props: MapProps) => {
 const MapContent = (props: MapProps) => {
   const { position, setPosition } = props;
   const map = useMap();
-  // const [coordinates, setCoordinates] = React.useState({
-  //   latitude: 0,
-  //   longitude: 0,
-  // });
 
   React.useEffect(() => {
     if (position.latitude === 0 && position.longitude === 0) {
@@ -67,21 +67,24 @@ const MapContent = (props: MapProps) => {
       });
     }
   }, [map]);
+
   useMapEvent('click', (e) => {
     setPosition({
       latitude: e?.latlng?.lat,
       longitude: e?.latlng?.lng,
     });
   });
-  const markerRef = React.useRef(null);
+
+  const markerRef = React.useRef<MarkerType>(null);
+
   const eventHandlers = React.useMemo(
     () => ({
       dragend() {
         const marker = markerRef.current;
         if (marker != null) {
           setPosition({
-            latitude: marker?._latlng?.lat,
-            longitude: marker?._latlng?.lng,
+            latitude: marker.getLatLng().lat,
+            longitude: marker.getLatLng().lng,
           });
         }
       },
@@ -91,10 +94,7 @@ const MapContent = (props: MapProps) => {
 
   return (
     <>
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+      <TileLayer url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png" />
       <Marker
         draggable={true}
         eventHandlers={eventHandlers}
