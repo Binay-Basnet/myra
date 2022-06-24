@@ -22,6 +22,7 @@ const incomeSource = [
 ];
 const identificationDetails = [
   'identificationDetailsPersonal',
+  'identificationFields',
   'citizenshipNo',
   'citizenshipPlaceOfIssue',
   'citizenshipIssueDate',
@@ -44,6 +45,7 @@ const permanentAddress = [
   'permanentAddressLocation',
 ];
 const temporaryAddress = [
+  'isPermanentAndTemporaryAddressSame',
   'temporaryStateId',
   'temporaryDistrictId',
   'temporaryLocalityId',

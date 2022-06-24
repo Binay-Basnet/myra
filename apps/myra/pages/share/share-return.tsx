@@ -106,8 +106,8 @@ const ShareReturn = () => {
             </Text>
             <CloseIcon cursor="pointer" onClick={() => router.back()} />
           </Box>
-          <Box display="flex" width="100%">
-            <Box w="100%">
+          <Box mb="50px" display="flex" width="100%">
+            <Box w="100%" minHeight="100vh">
               <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
                 <FormInput
                   mb="20px"

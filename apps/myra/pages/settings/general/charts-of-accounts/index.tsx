@@ -29,6 +29,10 @@ const ChartsOfAccounts = () => {
         borderBottom="1px solid"
         borderBottomColor="#E6E6E6"
         height="60px"
+        w="100%"
+        top="110px"
+        position="sticky"
+        zIndex={10}
       >
         <Box background="white" display="flex" gap="s48">
           <Text fontSize="r2" fontWeight="600" my="auto">
