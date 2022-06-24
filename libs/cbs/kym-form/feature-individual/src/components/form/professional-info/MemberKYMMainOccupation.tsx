@@ -44,6 +44,8 @@ const MainOccupation = ({
     fieldName: 'occupation',
   });
 
+  const isForeignEmployee = watch('isForeignEmployee');
+
   return (
     <Box
       display="flex"
@@ -125,7 +127,6 @@ const MainOccupation = ({
         <FormCheckbox name={`mainOccupation.${index}.isOwner`} />
         {/* translation todo */}
         <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
-        <TextFields variant="formLabel">I own this business.</TextFields>
       </Box>
 
       {isOwner && (
@@ -206,43 +207,39 @@ export const MemberKYMMainOccupation = () => {
       <Box display="flex" flexDirection="row">
         <FormSwitch
           control={control}
+          id="isForeignEmployee"
           name="isForeignEmployee"
-          label="Enable for Foreign Employment"
+          label={t['kymIndEnableforForeignEmployment']}
         />
-        <Text
-          ml="s20"
-          fontSize="r1"
-          fontWeight="Medium"
-          color="neutralColorLight.Gray-70"
-        >
-          {t['kymIndEnableforForeignEmployment']}
-        </Text>
       </Box>
 
-      <Grid mb="s16" templateColumns="repeat(3, 1fr)" gap="s16">
-        <GridItem>
-          <Select
-            id="country"
-            label={t['kymIndNameofCountry']}
-            placeholder={t['kymIndSelectCountry']}
-            options={[
-              {
-                label: 'Nepal',
-                value: 'Nepal',
-              },
-              {
-                label: 'India',
-                value: 'India',
-              },
-              {
-                label: 'China',
-                value: 'China',
-              },
-            ]}
-          />
-        </GridItem>
-        <GridItem>
-          {/* <FormInput
+      {isForeignEmployee && (
+        <Grid mb="s16" templateColumns="repeat(3, 1fr)" gap="s16">
+          <GridItem>
+            <FormSelect
+              id="nameOfCountry"
+              control={control}
+              name="nameOfCountry"
+              label={t['kymIndNameofCountry']}
+              placeholder={t['kymIndSelectCountry']}
+              options={[
+                {
+                  label: 'Nepal',
+                  value: 'Nepal',
+                },
+                {
+                  label: 'India',
+                  value: 'India',
+                },
+                {
+                  label: 'China',
+                  value: 'China',
+                },
+              ]}
+            />
+          </GridItem>
+          <GridItem>
+            {/* <FormInput
             bg="white"
             control={control}
             type="text"
@@ -250,39 +247,42 @@ export const MemberKYMMainOccupation = () => {
             label="Type of Visa"
             placeholder="Enter Type of Visa"
           /> */}
-          <FormSelect
-            control={control}
-            name="typeOfVisa"
-            label={t['kymIndTypeofVisa']}
-            placeholder={t['kymIndEnterTypeofVisa']}
-            options={[
-              {
-                label: 'Nepal',
-                value: 'Nepal',
-              },
-              {
-                label: 'India',
-                value: 'India',
-              },
-              {
-                label: 'China',
-                value: 'China',
-              },
-            ]}
-          />
-        </GridItem>
-        <GridItem>
-          <FormInput
-            bg="white"
-            control={control}
-            type="number"
-            textAlign={'right'}
-            name={`orgName`}
-            label={t['kymIndEstimatedAnnualIncome']}
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
+            <FormSelect
+              control={control}
+              id="typeOfVisa"
+              name="typeOfVisa"
+              label={t['kymIndTypeofVisa']}
+              placeholder={t['kymIndEnterTypeofVisa']}
+              options={[
+                {
+                  label: 'Nepal',
+                  value: 'Nepal',
+                },
+                {
+                  label: 'India',
+                  value: 'India',
+                },
+                {
+                  label: 'China',
+                  value: 'China',
+                },
+              ]}
+            />
+          </GridItem>
+          <GridItem>
+            <FormInput
+              bg="white"
+              control={control}
+              type="number"
+              textAlign={'right'}
+              name={`orgName`}
+              id="estimatedAnnualIncome"
+              label={t['kymIndEstimatedAnnualIncome']}
+              placeholder="0.00"
+            />
+          </GridItem>
+        </Grid>
+      )}
     </GroupContainer>
   );
 };

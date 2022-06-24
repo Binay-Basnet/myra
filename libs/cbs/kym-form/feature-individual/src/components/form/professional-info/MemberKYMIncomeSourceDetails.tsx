@@ -16,14 +16,6 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
-const annualFamilyIncome = [
-  'Upto 4 lakhs',
-  '4 Lakhs to 10 Lakhs',
-  '10 Lakhs to 25 Lakhs',
-  '25 Lakhs to 50 Lakhs',
-  'More than 50 Lakhs',
-];
-
 const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
   const { t } = useTranslation();
   return (
@@ -86,12 +78,10 @@ export const MemberKYMIncomeSourceDetails = () => {
       </Text>
       <GroupContainer>
         <Box display="flex" flexDirection="column">
-          <Text fontSize="s3" mb={3}>
-            {t['kynIndAnnualFamilyIncome']}
-          </Text>
-
           <FormRadioGroup
+            id="annualIncomeSourceId"
             name="annualIncomeSourceId"
+            label={t['kynIndAnnualFamilyIncome']}
             options={getFieldOption(familyIncomeData)}
           />
         </Box>

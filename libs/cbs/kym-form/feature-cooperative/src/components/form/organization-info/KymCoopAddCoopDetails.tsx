@@ -33,7 +33,7 @@ export const KymCoopAddCoopDetails = () => {
         />
         <FormInput
           type="text"
-          name="mainServiceProduct:"
+          name="mainServiceProduct"
           label={t['kymCoopMainServiceProduct']}
           placeholder={t['kymCoopEnterMainServiceProduct']}
         />

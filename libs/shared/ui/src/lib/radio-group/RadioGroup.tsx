@@ -23,8 +23,15 @@ export interface RadioGroupProps extends ChakraRadioProps {
 }
 
 export function RadioGroup(props: RadioGroupProps) {
-  const { radioList, spacing, direction, labelFontSize, options, name, ...rest } =
-    props;
+  const {
+    radioList,
+    spacing,
+    direction,
+    labelFontSize,
+    options,
+    name,
+    ...rest
+  } = props;
 
   return (
     <ChakraRadioGroup value={props.value}>
@@ -49,7 +56,6 @@ export function RadioGroup(props: RadioGroupProps) {
                 {...rest}
                 isChecked={true}
                 key={option.value}
-                id={name ? `${name}.${index}` : `${option.value}`}
                 value={option.value}
                 spacing="s8"
               >

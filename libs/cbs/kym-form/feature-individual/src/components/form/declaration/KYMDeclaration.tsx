@@ -91,6 +91,7 @@ export const KYMDeclaration = () => {
               <GridItem mt="20px" colSpan={2}>
                 <FormInput
                   type="text"
+                  id="fullName"
                   name="fullName"
                   label=" "
                   placeholder={t['kynIndFullName']}
@@ -163,12 +164,11 @@ export const KYMDeclaration = () => {
             />
 
             <Box display="flex" flexDirection="column">
-              <Text fontSize="s3" mb="s16">
-                {t['kynIndSpecifyfollowingdetails']}
-              </Text>
               {/* TODO CHANGE THIS NAME */}
               <FormRadioGroup
+                id="foreignEmployment"
                 name="residentForeignDetails"
+                lanel={t['kynIndSpecifyfollowingdetails']}
                 options={getFieldOption(foreignEmploymentOptions)}
                 labelFontSize="s3"
               />

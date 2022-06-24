@@ -118,6 +118,7 @@ export const AddRepresentative = ({ watch, control }) => {
       )}
       <FormSwitch
         px={'s16'}
+        id="centralRepresentativeDetails"
         name="centralRepresentativeDetails.notAmongDirectors"
         label="Central Representative is not among Directors"
       />
@@ -218,6 +219,7 @@ export const AddRepresentative = ({ watch, control }) => {
 
                 <FormSwitch
                   control={control}
+                  id="isPermanentAndTemporaryAddressSame"
                   name="isPermanentAndTemporaryAddressSame"
                   label={t['kymCoopUnionDirTemporaryAddressPermanent']}
                 />

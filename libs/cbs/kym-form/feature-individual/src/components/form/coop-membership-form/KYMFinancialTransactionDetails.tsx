@@ -35,6 +35,7 @@ export const KYMFinancialTransactionDetails = () => {
           {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
             (option) => (
               <FormInput
+                id={`financialTransaction.${String(option?.name?.local)}`}
                 type="number"
                 name={String(option?.name?.local)}
                 textAlign="right"

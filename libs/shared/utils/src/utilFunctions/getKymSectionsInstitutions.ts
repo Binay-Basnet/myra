@@ -42,7 +42,11 @@ const monthlyTransactions = [
 const sisterConcern = ['sisterConcernDetails', 'sisterConcernButton'];
 
 const BankAccDetails = ['bank', 'accountNumber', 'accountName'];
-const directorDetails = ['boardOfDirectorsDetails', 'addDirectorButton'];
+const directorDetails = [
+  'boardOfDirectorsDetails',
+  'addDirectorButton',
+  'isPermanentAndTemporaryAddressSame',
+];
 const directoswithAffiliation = [
   'detailsOfDirectorsWithAffiliation',
   'newDetailButton',
