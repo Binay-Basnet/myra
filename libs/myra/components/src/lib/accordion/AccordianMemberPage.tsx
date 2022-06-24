@@ -50,9 +50,9 @@ const coopmembership: string[] = [
   'kymAccIndEstimatedWithdrawDepositAmountintheInstitureion',
 ];
 const Decleration: string[] = [
-  'kymAccIndNexttoKin',
-  'kymAccIndFamilymembersinpolitics',
   'kymAccIndBeneficialOwner',
+  // 'kymAccIndNexttoKin',
+  'kymAccIndFamilymembersinpolitics',
   'kymAccIndConvictedNonconvictedStatus',
   'kymAccIndResidentialpermitofforeigncountry',
 ];
@@ -234,7 +234,8 @@ export function AccorrdianAddMember(props: AccordianProps) {
 
       <Collapse in={isOpenDeclaration}>
         <Box display={'flex'} flexDirection="column" mb="s16">
-          {Decleration.map((item, index) => (
+          {Decleration.map((item, index) => {
+            return (
             <Box
               key={`${item}${index}`}
               display="flex"
@@ -249,7 +250,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
                 </Text>
               </a>
             </Box>
-          ))}
+          )})}
         </Box>
       </Collapse>
     </Box>
