@@ -94,7 +94,10 @@ const MapContent = (props: MapProps) => {
 
   return (
     <>
-      <TileLayer url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png" />
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
       <Marker
         draggable={true}
         eventHandlers={eventHandlers}
