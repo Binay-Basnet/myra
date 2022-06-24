@@ -6,12 +6,12 @@ import {
 } from 'react-icons/ai';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
-import { useTranslation } from '@coop/shared/utils';
 
 import {
   KymIndAddSectionStatus,
   KymIndPersonalSection,
 } from '@coop/shared/data-access';
+import { useTranslation } from '@coop/shared/utils';
 
 const PersonalInformation = [
   'kymAccIndBasicInformation',
@@ -83,7 +83,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
   }, [kymCurrentSection]);
 
   return (
-    <Box p={'1'} overflow="auto" h="700px" mt="60px">
+    <Box p={'1'} overflow="auto" h="700px">
       <Box
         display="flex"
         justifyContent="space-between"

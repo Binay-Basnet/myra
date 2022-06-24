@@ -1,0 +1,23 @@
+{
+  "root": "libs/shared/map",
+  "sourceRoot": "libs/shared/map/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/map/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/map"],
+      "options": {
+        "jestConfig": "libs/shared/map/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

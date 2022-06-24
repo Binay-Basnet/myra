@@ -110,36 +110,29 @@ export function KYMIndividualPage() {
   return (
     <>
       {/* // Top Bar */}
-      <Box position="relative" margin="0px auto">
-        <Box
-          position="fixed"
-          margin="0px auto"
-          bg="gray.100"
-          width="100%"
-          zIndex="10"
-        >
-          <Container minW="container.xl" height="fit-content">
-            <Box
-              height="60px"
-              display="flex"
-              justifyContent="space-between"
-              alignItems={'center'}
-              px="5"
-              background="white"
-              borderBottom="1px solid #E6E6E6"
-            >
-              <Text fontSize="r2" fontWeight="SemiBold">
-                {t['membersFormAddNewMembers']}
-              </Text>
-              <IconButton
-                variant={'ghost'}
-                aria-label="close"
-                icon={<GrClose />}
-                onClick={() => router.back()}
-              />
-            </Box>
-          </Container>
-        </Box>
+
+      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Container minW="container.xl" height="fit-content">
+          <Box
+            height="60px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems={'center'}
+            px="5"
+            background="white"
+            borderBottom="1px solid #E6E6E6"
+          >
+            <Text fontSize="r2" fontWeight="SemiBold">
+              {t['membersFormAddNewMembers']}
+            </Text>
+            <IconButton
+              variant={'ghost'}
+              aria-label="close"
+              icon={<GrClose />}
+              onClick={() => router.back()}
+            />
+          </Box>
+        </Container>
       </Box>
 
       <Container minW="container.xl" height="fit-content">
@@ -175,14 +168,7 @@ export function KYMIndividualPage() {
                   />
                 </Box>
 
-                <Box
-                  background="white"
-                  ml={320}
-                  px="s20"
-                  mt="60px"
-                  pt="s20"
-                  pb="120px"
-                >
+                <Box background="white" ml={320} px="s20" pt="s20" pb="120px">
                   <SectionContainer>
                     <SectionContainer>
                       <Text fontSize="r3" fontWeight="600">
