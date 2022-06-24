@@ -21,11 +21,6 @@ interface MapComponentProps {
 }
 
 const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
-  // const [currentLoc, setCurrentLoc] = useState({
-  //   latitude: 0,
-  //   longitude: 0,
-  // });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasClickedModal, setHasClickedModal] = useState(false);
   const { t } = useTranslation();
@@ -35,15 +30,6 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
   const closeModal = useCallback(() => setIsModalOpen(false), []);
 
   const [address, setAddress] = useState('');
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((loc) =>
-      setCurrentLoc({
-        longitude: loc.coords.longitude,
-        latitude: loc.coords.latitude,
-      })
-    );
-  }, []);
 
   useEffect(() => {
     const getPermanentAddress = async () => {

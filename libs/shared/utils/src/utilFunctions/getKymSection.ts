@@ -94,14 +94,17 @@ const declerationNextToKin = [
   'localKinContact',
   'localKinAddress',
 ];
-const politicalExposure = ['politicallyExposedPerson'];
-const benificialOwner = [
-  'beneficialOwner',
-  'beneficialRelationShipId',
-  'fullName',
+const politicalExposure = [
+  'politicallyExposedPerson',
+  'politicallyExposedDetails',
 ];
+const benificialOwner = ['beneficialOwner', 'beneficialRelationShipId'];
 const convicted = ['declarationOfConvicted', 'convictionDetails'];
-const foreign = ['residentForeign', 'foreignEmployment'];
+const foreign = [
+  'residentForeign',
+  'residentForeignDetails',
+  'foreignEmployment',
+];
 
 export const getKymSection = (id: string) => {
   if (basicInfo.includes(id)) {
@@ -228,7 +231,10 @@ export const getKymSection = (id: string) => {
       subSection: 'kymAccIndConvictedNonconvictedStatus',
     };
   }
-  if (foreign.includes(id.split('-')[0])) {
+  if (
+    foreign.includes(id.split('-')[0]) ||
+    foreign.includes(id.split('.')[0])
+  ) {
     return {
       section: 'declaration',
       subSection: 'kymAccIndResidentialpermitofforeigncountry',

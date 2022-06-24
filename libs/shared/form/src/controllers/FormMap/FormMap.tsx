@@ -1,22 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 
 const MapComponent = dynamic(() => import('@coop/shared/map'), {
   ssr: false,
 });
-
-// const MapComponent = dynamic(
-//   () => import('../../../../map/src/lib/MapComponent'),
-//   { ssr: false }
-// );
-//
-// const MapComponent1 = dynamic<any>(
-//   () => import('@coop/shared/map').then((module) => module.MapComponent),
-//   { ssr: false }
-// );
-
-// const MapComponent = dynamic(() => import(''))
 
 export interface FormMapProps<T> {
   name: Path<T>;
@@ -29,7 +17,23 @@ export function FormMap<T>({ name, id }: FormMapProps<T>) {
   const {
     // formState: { errors },
     control,
+    reset,
+    getValues,
   } = methods;
+
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        reset({
+          ...getValues(),
+          [name]: {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          },
+        });
+      });
+    }
+  }, []);
 
   return (
     <Controller
