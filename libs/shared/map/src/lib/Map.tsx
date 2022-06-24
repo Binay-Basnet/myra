@@ -48,22 +48,15 @@ const MapContent = (props: MapProps) => {
   const map = useMap();
 
   React.useEffect(() => {
-    if (position.latitude === 0 && position.longitude === 0) {
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const latitude = position?.coords?.latitude;
-          const longitude = position?.coords?.longitude;
-          map.setView({
-            lat: latitude,
-            lng: longitude,
-          });
-          setPosition({ latitude, longitude });
-        });
-      }
+    if (!position) {
+      map.setView({
+        lat: 27.707477,
+        lng: 85.3147112,
+      });
     } else {
       map.setView({
-        lat: position?.latitude,
-        lng: position?.longitude,
+        lat: position?.latitude ?? 0,
+        lng: position?.longitude ?? 0,
       });
     }
   }, [map]);
@@ -95,14 +88,16 @@ const MapContent = (props: MapProps) => {
   return (
     <>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Marker
-        draggable={true}
-        eventHandlers={eventHandlers}
-        position={[position?.latitude, position?.longitude]}
-        ref={markerRef}
-      >
-        <Popup minWidth={90}>Drag the marker</Popup>
-      </Marker>
+      {position && (
+        <Marker
+          draggable={true}
+          eventHandlers={eventHandlers}
+          position={[position?.latitude, position?.longitude]}
+          ref={markerRef}
+        >
+          <Popup minWidth={90}>Drag the marker</Popup>
+        </Marker>
+      )}
     </>
   );
 };
