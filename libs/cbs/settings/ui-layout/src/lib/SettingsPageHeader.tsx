@@ -32,15 +32,13 @@ export const SettingsPageHeader = ({
       px="s16"
       py="s8"
       height="60px"
+      gap="s48"
     >
       <Text fontSize="r2" fontWeight="600" color="gray.800">
         {heading}
       </Text>
-      {tabItems?.length && (
-        <Box ml="48px" display="flex" alignItems="flex-end">
-          <PageHeaderTab list={tabItems ?? []} />
-        </Box>
-      )}
+
+      <PageHeaderTab list={tabItems ?? []} />
 
       {buttonLabel && buttonHandler && (
         <Box display="flex" justifyContent="flex-end" flexGrow={100}>
