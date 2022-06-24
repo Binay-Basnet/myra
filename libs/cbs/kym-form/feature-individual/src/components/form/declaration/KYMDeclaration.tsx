@@ -115,8 +115,8 @@ export const KYMDeclaration = () => {
             <InputGroupContainer>
               <Box display="flex" flexDirection="column">
                 <FormTextArea
-                  name="convictionDetails"
-                  id="convictionDetails"
+                  name="politicallyExposedDetails"
+                  id="politicallyExposedDetails"
                   label={t['kynIndPleasespecify']}
                   placeholder={t['kynIndEnterDetails']}
                 />
@@ -168,7 +168,7 @@ export const KYMDeclaration = () => {
               </Text>
               {/* TODO CHANGE THIS NAME */}
               <FormRadioGroup
-                name="foreignEmployment"
+                name="residentForeignDetails"
                 options={getFieldOption(foreignEmploymentOptions)}
                 labelFontSize="s3"
               />

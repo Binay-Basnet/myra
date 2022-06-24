@@ -19,10 +19,11 @@ export interface RadioGroupProps extends ChakraRadioProps {
     label: string;
     value: string;
   }[];
+  name?: string;
 }
 
 export function RadioGroup(props: RadioGroupProps) {
-  const { radioList, spacing, direction, labelFontSize, options, ...rest } =
+  const { radioList, spacing, direction, labelFontSize, options, name, ...rest } =
     props;
 
   return (
@@ -43,12 +44,12 @@ export function RadioGroup(props: RadioGroupProps) {
                 </Radio>
               );
             })
-          : options?.map((option) => (
+          : options?.map((option, index) => (
               <Radio
                 {...rest}
                 isChecked={true}
                 key={option.value}
-                id={`${option.value}`}
+                id={name ? `${name}.${index}` : `${option.value}`}
                 value={option.value}
                 spacing="s8"
               >
