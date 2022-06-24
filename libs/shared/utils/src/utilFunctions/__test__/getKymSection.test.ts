@@ -4,15 +4,15 @@ describe('getKymSection should function as expected', () => {
   test('should give correct kym section when expected id is received', () => {
     expect(getKymSection('temporaryLocalityId')).toEqual({
       section: 'personalDetails',
-      subSection: 'Temporary Address',
+      subSection: 'kymAccIndTemporaryAddress',
     });
-    expect(getKymSection('temporaryLocalityId')).toEqual({
+    expect(getKymSection('middleName')).toEqual({
       section: 'personalDetails',
-      subSection: 'Temporary Address',
+      subSection: 'kymAccIndBasicInformation',
     });
-    expect(getKymSection('temporaryLocalityId')).toEqual({
-      section: 'personalDetails',
-      subSection: 'Temporary Address',
+    expect(getKymSection('estimatedAnnualDepositAmount')).toEqual({
+      section: "COOPmembership",
+     subSection: "kymAccIndEstimatedWithdrawDepositAmountintheInstitureion",
     });
   });
   test('gives undefined when random unexpected id is received', () => {

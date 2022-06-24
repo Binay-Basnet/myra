@@ -4,15 +4,15 @@ describe('getKymCoopSection should function as expected', () => {
   test('should give correct kym coop section when expected id is received', () => {
     expect(getKymCoopSection('totalEquityAndLiabilities')).toEqual({
       section: 'economicDetails',
-      subSection: 'Equity and Liabilities',
+      subSection: 'kymCoopAccEquityandLiabilities',
     });
     expect(getKymCoopSection('accountHoldersName')).toEqual({
       section: 'declaration',
-      subSection: 'Document Declaration',
+      subSection: 'kymCoopAccDocumentDeclaration',
     });
     expect(getKymCoopSection('investments')).toEqual({
       section: 'economicDetails',
-      subSection: 'Assets',
+      subSection: 'kymCoopAccAssets',
     });
   });
   test('gives undefined when random unexpected id is received', () => {
