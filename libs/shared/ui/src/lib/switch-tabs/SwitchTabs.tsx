@@ -17,7 +17,7 @@ const SwitchTab = (props: UseRadioProps & { children: React.ReactNode }) => {
 
   return (
     <Box as="label">
-      <input {...input} id={props.name} />
+      <input {...input} id={id ?? props.name} />
       <Box
         {...checkbox}
         cursor="pointer"
@@ -60,6 +60,7 @@ export interface SwitchTabsProps {
     label: string;
     value: string;
   }[];
+  id?: string;
   label?: string;
   errorText?: string;
   helperText?: string;
@@ -74,6 +75,7 @@ export function SwitchTabs({
   name,
   onChange,
   label,
+  id,
   errorText,
   helperText,
 }: SwitchTabsProps) {
@@ -107,7 +109,7 @@ export function SwitchTabs({
           const radio = getRadioProps({ value: value.value });
 
           return (
-            <SwitchTab name={name} key={value.value} {...radio}>
+            <SwitchTab id={id} name={name} key={value.value} {...radio}>
               {value.label}
             </SwitchTab>
           );

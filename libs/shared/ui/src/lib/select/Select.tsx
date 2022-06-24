@@ -48,6 +48,7 @@ export function Select({
         // options={options?.sort((a, b) =>
         //   a.label.localeCompare(b.label, undefined, { numeric: true })
         // )}
+        menuIsOpen={true}
         options={options}
         chakraStyles={
           size === 'default' ? chakraDefaultStyles : chakraSmallStyles

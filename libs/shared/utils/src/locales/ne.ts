@@ -1020,7 +1020,7 @@ const ne: Record<string, string> = {
   kymIndAddress: 'Address',
   kymIndEnterAddress: 'Enter Address',
   kymIndEstimatedAnnualIncome: 'Estimated Annual Income',
-  kymIndAreyouowner: 'Are you owner? I own this business.',
+  kymIndAreyouowner: 'I own this business.',
   kymIndEstablishedDate: 'Established Date',
   kymIndRegistrationNo: 'Registration No.',
   kymIndMAINOCCUPATION: 'MAIN OCCUPATION',

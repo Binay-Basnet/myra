@@ -14,7 +14,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text, TextFields } from '@coop/shared/ui';
+import { Box, Grid, GridItem, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -168,7 +168,7 @@ export const KYMDeclaration = () => {
               <FormRadioGroup
                 id="foreignEmployment"
                 name="residentForeignDetails"
-                lanel={t['kynIndSpecifyfollowingdetails']}
+                label={t['kynIndSpecifyfollowingdetails']}
                 options={getFieldOption(foreignEmploymentOptions)}
                 labelFontSize="s3"
               />

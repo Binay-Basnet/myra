@@ -4,8 +4,9 @@ import { Controller, Path, useFormContext } from 'react-hook-form';
 import { SwitchTabs, SwitchTabsProps } from '@coop/shared/ui';
 
 interface IFormSwitchTabsProps<T>
-  extends Omit<SwitchTabsProps, 'onChange' | 'value'> {
+  extends Omit<SwitchTabsProps, 'onChange' | 'value' | 'id'> {
   name: Path<T>;
+  id?: string;
 }
 
 export const FormSwitchTab = <T,>({

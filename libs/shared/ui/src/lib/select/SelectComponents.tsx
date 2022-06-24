@@ -1,5 +1,5 @@
 import { IoCheckmarkSharp, IoChevronDownSharp } from 'react-icons/io5';
-import { Checkbox, Icon } from '@chakra-ui/react';
+import { Icon } from '@chakra-ui/react';
 import {
   chakraComponents,
   GroupBase,
@@ -21,7 +21,7 @@ export const components: SelectComponentsConfig<
       <chakraComponents.Option {...props}>
         {children}
         {props.isMulti ? (
-          <Checkbox isChecked={props.isSelected} />
+          <input type="checkbox" checked={props.isSelected} />
         ) : props.isSelected ? (
           <Icon
             as={IoCheckmarkSharp}
