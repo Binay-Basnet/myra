@@ -78,7 +78,7 @@ export function CbsSettingsFeatureBranchesNew(
     { label: t['settingsBranchCategoriesBranch'], value: 'BRANCH_OFFICE' },
     { label: t['settingsBranchCategoriesRegional'], value: 'REGIONAL_OFFICE' },
     { label: t['settingsBranchCategoriesService'], value: 'SERVICE_CENTER' },
-    { label: t['settingsBranchCategoriesOffice'], value: 'CONTACT_OFFICE' },
+    { label: t['settingsBranchCategoriesContact'], value: 'CONTACT_OFFICE' },
   ];
 
   return (

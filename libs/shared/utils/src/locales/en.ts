@@ -353,7 +353,7 @@ const en: Record<string, string> = {
   settingsBranchCategoriesBranch: 'Branch Office',
   settingsBranchCategoriesRegional: 'Regional Office',
   settingsBranchCategoriesService: 'Service Center',
-  settingsBranchCategoriesOffice: 'Office',
+  settingsBranchCategoriesOffice: 'Contact Office',
 
   // SETTINGS PAGE
 
