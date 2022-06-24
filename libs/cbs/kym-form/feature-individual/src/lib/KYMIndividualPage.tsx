@@ -314,7 +314,7 @@ export function KYMIndividualPage() {
               status={
                 <Box display="flex" gap="s8">
                   <Text as="i" fontSize="r1">
-                    Form Details saved to draft
+                    {t['formDetails']}
                   </Text>
                   <Text as="i" fontSize="r1">
                     09:41 AM
@@ -331,10 +331,11 @@ export function KYMIndividualPage() {
                     fontSize="s2"
                     ml="5px"
                   >
-                    Save Draft
+                    {t['saveDraft']}
                   </Text>
                 </Button>
               }
+              mainButtonLabel={t['next']}
               mainButtonHandler={() =>
                 router.push(`/members/translation/${id}`)
               }

@@ -22,6 +22,7 @@ import {
   Box,
   Button,
   Container,
+  FormFooter,
   Icon,
   Input,
   MainLayout,
@@ -190,51 +191,34 @@ const Translation = () => {
         </form>
       </FormProvider>
 
-      <Box
-        height="60px"
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        px="5"
-        background="white"
-        mt="10px"
-        borderTop="1px"
-        borderColor="border.layout"
-      >
-        <Box display="flex" gap="s8">
-          <Text as="i" fontSize="r1">
-            Form Details saved to draft
-          </Text>
-          <Text as="i" fontSize="r1">
-            09:41 AM
-          </Text>
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="flex-end"
-          alignSelf="center"
-        >
-          <Box display="flex" justifyContent="flex-end" alignSelf="center">
-            <Button mr="10px" type="submit" variant="ghost">
-              <Icon as={AiOutlineEye} color="primary.500" />
-              <Text
-                alignSelf="center"
-                color="primary.500"
-                fontWeight="Medium"
-                fontSize="s2"
-                ml="5px"
-              >
-                Preview
-              </Text>
-            </Button>
+      <FormFooter
+        status={
+          <Box display="flex" gap="s8">
+            <Text as="i" fontSize="r1">
+              {t['formDetails']}
+            </Text>
+            <Text as="i" fontSize="r1">
+              09:41 AM
+            </Text>
           </Box>
-          &nbsp;
-          <Button onClick={() => router.push(`/members/details/${id}`)}>
-            Complete
+        }
+        draftButton={
+          <Button type="submit" variant="ghost">
+            <Icon as={AiOutlineEye} color="primary.500" />
+            <Text
+              alignSelf="center"
+              color="primary.500"
+              fontWeight="Medium"
+              fontSize="s2"
+              ml="5px"
+            >
+              {t['sharePreview']}
+            </Text>
           </Button>
-        </Box>
-      </Box>
+        }
+        mainButtonLabel={t['complete']}
+        mainButtonHandler={() => router.push(`/members/details/${id}`)}
+      />
     </Container>
   );
 };
