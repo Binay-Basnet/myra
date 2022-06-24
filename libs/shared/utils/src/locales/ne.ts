@@ -351,7 +351,7 @@ const ne: Record<string, string> = {
   settingsBranchCategoriesBranch: 'Branch Office',
   settingsBranchCategoriesRegional: 'Regional Office',
   settingsBranchCategoriesService: 'Service Center',
-  settingsBranchCategoriesOffice: 'Contact Office',
+  settingsBranchCategoriesContact: 'Contact Office',
 
   // SETTINGS PAGE
 
