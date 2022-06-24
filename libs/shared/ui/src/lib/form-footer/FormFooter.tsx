@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Box, Button } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface FormFooterProps {
@@ -16,6 +17,7 @@ export function FormFooter({
   mainButtonLabel,
   mainButtonHandler,
 }: FormFooterProps) {
+  const { t } = useTranslation();
   return (
     <Box
       display="flex"
@@ -31,7 +33,7 @@ export function FormFooter({
         {draftButton}
 
         <Button width="160px" onClick={mainButtonHandler}>
-          {mainButtonLabel ?? 'Next'}
+          {mainButtonLabel ?? t['next']}
         </Button>
       </Box>
     </Box>

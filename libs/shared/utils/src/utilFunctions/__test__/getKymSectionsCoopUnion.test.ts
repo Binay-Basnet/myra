@@ -4,15 +4,15 @@ describe('getKymSection should function as expected', () => {
   test('should give correct kym section when expected id is received', () => {
     expect(getKymSectionCoOperativeUnion('incomeFromSales')).toEqual({
       section: 'economicDetails',
-      subSection: 'Income Details',
+      subSection: 'kymCoopUnionAccIncomeDetails',
     });
     expect(getKymSectionCoOperativeUnion('shareCapitalCurrent')).toEqual({
       section: 'economicDetails',
-      subSection: 'Equity and Liailibities',
+      subSection: 'kymCoopUnionAccEquityandLiailibities',
     });
     expect(getKymSectionCoOperativeUnion('vatOrPan')).toEqual({
       section: 'organizationInfo',
-      subSection: 'Basic Information',
+      subSection: 'kymCoopUnionAccBasicInformation',
     });
   });
   test('gives undefined when random unexpected id is received', () => {
