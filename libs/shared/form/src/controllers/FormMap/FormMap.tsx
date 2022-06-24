@@ -2,12 +2,22 @@ import React from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 
-const MapComponent = dynamic(
-  () => import('../../../../map/src/lib/MapComponent'),
-  { ssr: false }
-);
+const MapComponent = dynamic(() => import('@coop/shared/map'), {
+  ssr: false,
+});
 
-/* eslint-disable-next-line */
+// const MapComponent = dynamic(
+//   () => import('../../../../map/src/lib/MapComponent'),
+//   { ssr: false }
+// );
+//
+// const MapComponent1 = dynamic<any>(
+//   () => import('@coop/shared/map').then((module) => module.MapComponent),
+//   { ssr: false }
+// );
+
+// const MapComponent = dynamic(() => import(''))
+
 export interface FormMapProps<T> {
   name: Path<T>;
   id?: string;
@@ -21,7 +31,7 @@ export function FormMap<T>({ name, id }: FormMapProps<T>) {
     control,
   } = methods;
 
-  return typeof window === undefined ? null : (
+  return (
     <Controller
       name={name}
       control={control}

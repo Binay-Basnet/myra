@@ -20,11 +20,7 @@ interface MapComponentProps {
   setCurrentLoc: (location: MapPosition) => void;
 }
 
-export const MapComponent = ({
-  id,
-  currentLoc,
-  setCurrentLoc,
-}: MapComponentProps) => {
+const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
   // const [currentLoc, setCurrentLoc] = useState({
   //   latitude: 0,
   //   longitude: 0,
