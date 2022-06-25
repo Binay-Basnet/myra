@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 import { GroupBase, Props, Select as ChakraSelect } from 'chakra-react-select';
 
@@ -16,9 +16,9 @@ export interface SelectProps
     Props<SelectOption, boolean, GroupBase<SelectOption>>,
     'size' | 'onChange'
   > {
+  options?: SelectOption[] | undefined;
   helperText?: string;
   errorText?: string;
-  options: SelectOption[];
   label?: string;
   size?: 'sm' | 'default';
   onChange?: ((newValue: SelectOption) => void) | any;
@@ -34,7 +34,13 @@ export function Select({
   value,
   ...rest
 }: SelectProps) {
-  const [sortedOptions, setSortedOptions] = useState(options);
+  const [sortedOptions, setSortedOptions] = useState(options ?? []);
+
+  useEffect(() => {
+    if (isMulti) {
+      setSortedOptions(options ?? []);
+    }
+  }, [JSON.stringify(options)]);
 
   return (
     <Flex direction="column" gap="s4">
@@ -45,19 +51,23 @@ export function Select({
       )}
       <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
         onMenuClose={() => {
-          setSortedOptions((prev) =>
-            (prev as Array<Option>)?.sort((optionA) => {
-              if (
-                (value as Array<Option>)?.find((v) => optionA.value === v.value)
-              ) {
-                return -1;
-              } else {
-                return 1;
-              }
-            })
-          );
+          if (isMulti) {
+            setSortedOptions((prev) =>
+              (prev as Array<Option>)?.sort((optionA) => {
+                if (
+                  (value as Array<Option>)?.find(
+                    (v) => optionA.value === v.value
+                  )
+                ) {
+                  return -1;
+                } else {
+                  return 1;
+                }
+              })
+            );
+          }
         }}
-        options={sortedOptions}
+        options={isMulti ? sortedOptions : options}
         value={value}
         controlShouldRenderValue={!isMulti}
         closeMenuOnSelect={!isMulti}

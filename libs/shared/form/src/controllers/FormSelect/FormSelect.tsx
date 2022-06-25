@@ -25,10 +25,6 @@ export const FormSelect = <T,>({
     watch,
   } = methods;
 
-  const watchfield = watch('state');
-
-  console.log('state', watchfield);
-
   return (
     <Controller
       control={formControl}
