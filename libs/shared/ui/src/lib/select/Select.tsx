@@ -1,36 +1,41 @@
+import { useState } from 'react';
 import { Flex } from '@chakra-ui/react';
-import { ActionMeta, Props, Select as ChakraSelect } from 'chakra-react-select';
+import { GroupBase, Props, Select as ChakraSelect } from 'chakra-react-select';
 
-import { components } from './SelectComponents';
-import { chakraDefaultStyles, chakraSmallStyles } from './SelectStyles';
+import { components as customComponents, Option } from './SelectComponents';
+import { chakraDefaultStyles } from './SelectStyles';
 import TextFields from '../text-fields/TextFields';
 
-export interface SelectOption {
-  label: string;
+interface SelectOption {
+  label: string | number;
   value: string | number;
 }
 
-export interface SelectProps extends Omit<Props, 'onChange' | 'size'> {
-  label?: string;
-  options: SelectOption[] | undefined;
+export interface SelectProps
+  extends Omit<
+    Props<SelectOption, boolean, GroupBase<SelectOption>>,
+    'size' | 'onChange'
+  > {
   helperText?: string;
   errorText?: string;
+  options: SelectOption[];
+  label?: string;
   size?: 'sm' | 'default';
-  // // TODO Change this any.
-  onChange?:
-    | ((value: SelectOption | null, meta: ActionMeta<SelectOption>) => void)
-    | any;
+  onChange?: ((newValue: SelectOption) => void) | any;
 }
 
 export function Select({
-  label,
-  isMulti,
-  options,
+  size,
   errorText,
   helperText,
-  size = 'default',
+  isMulti,
+  label,
+  options,
+  value,
   ...rest
 }: SelectProps) {
+  const [sortedOptions, setSortedOptions] = useState(options);
+
   return (
     <Flex direction="column" gap="s4">
       {label && (
@@ -38,24 +43,31 @@ export function Select({
           {label}
         </TextFields>
       )}
-
-      <ChakraSelect
+      <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
+        onMenuClose={() => {
+          setSortedOptions((prev) =>
+            (prev as Array<Option>)?.sort((optionA) => {
+              if (
+                (value as Array<Option>)?.find((v) => optionA.value === v.value)
+              ) {
+                return -1;
+              } else {
+                return 1;
+              }
+            })
+          );
+        }}
+        options={sortedOptions}
+        value={value}
         controlShouldRenderValue={!isMulti}
         closeMenuOnSelect={!isMulti}
         isMulti={isMulti}
-        isClearable={false}
         hideSelectedOptions={false}
-        // options={options?.sort((a, b) =>
-        //   a.label.localeCompare(b.label, undefined, { numeric: true })
-        // )}
-        options={options}
-        chakraStyles={
-          size === 'default' ? chakraDefaultStyles : chakraSmallStyles
-        }
-        components={components}
+        isClearable={false}
+        chakraStyles={chakraDefaultStyles}
+        components={customComponents}
         {...rest}
       />
-
       {errorText ? (
         <TextFields variant="formHelper" color="danger.500">
           {errorText}
