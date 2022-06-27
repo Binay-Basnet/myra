@@ -16,7 +16,10 @@ import { useTranslation } from '@coop/shared/utils';
 export const AccountHolderDeclarationInstitution = () => {
   const { t } = useTranslation();
   return (
-    <GroupContainer id="Account Holder Declaration" scrollMarginTop={'200px'}>
+    <GroupContainer
+      id="kymInsAccountHolderDeclaration"
+      scrollMarginTop={'200px'}
+    >
       <Text
         fontSize="r1"
         fontWeight="semibold"

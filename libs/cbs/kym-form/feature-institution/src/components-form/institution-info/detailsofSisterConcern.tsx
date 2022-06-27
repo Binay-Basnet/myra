@@ -76,7 +76,7 @@ export const InstitutionKYMSisterConcernDetails = () => {
   } = useFieldArray({ name: 'sisterConcernDetails' });
 
   return (
-    <GroupContainer id="Details of sister concern" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymInsDetailsofsisterconcern" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymInsDetailsofsisterconcern']}
       </Text>

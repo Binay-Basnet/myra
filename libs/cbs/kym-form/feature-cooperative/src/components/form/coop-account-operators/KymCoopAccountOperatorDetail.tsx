@@ -16,7 +16,10 @@ export const KymCoopAccountOperatorDetail = ({ watch, control }) => {
     remove: accountRemove,
   } = useFieldArray({ control, name: 'accountOperatorsDetails' });
   return (
-    <GroupContainer id="Account Operator Detail" scrollMarginTop={'200px'}>
+    <GroupContainer
+      id="kymCoopAccAccountOperatorDetail"
+      scrollMarginTop={'200px'}
+    >
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymCoopDetailsofAccountOperators']}
       </Text>

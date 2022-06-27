@@ -13,9 +13,9 @@ export const KYMDocumentDeclaration = () => {
       fieldName: 'file_uploads',
     });
 
-  console.log(
-    fileUploadsData?.members?.individual?.options?.list?.data?.[0]?.options
-  );
+  // console.log(
+  //   fileUploadsData?.members?.individual?.options?.list?.data?.[0]?.options
+  // );
 
   return (
     <GroupContainer>

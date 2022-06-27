@@ -99,7 +99,10 @@ export const AddRepresentative = ({ watch, control }) => {
   );
   const tab = watch('centralRepresentativeDetails.notAmongDirectors') ?? false;
   return (
-    <>
+    <Box
+      id="kymCoopUnionAccDetailsofdirectorsaffiliatedwithotherFirms"
+      scrollMarginTop={'200px'}
+    >
       {!tab && (
         <Box
           display="flex"
@@ -116,20 +119,19 @@ export const AddRepresentative = ({ watch, control }) => {
           />
         </Box>
       )}
-      <FormSwitch
-        px={'s16'}
-        id="centralRepresentativeDetails"
-        name="centralRepresentativeDetails.notAmongDirectors"
-        label="Central Representative is not among Directors"
-      />
+      <Box>
+        <FormSwitch
+          px={'s16'}
+          id="centralRepresentativeDetails"
+          name="centralRepresentativeDetails.notAmongDirectors"
+          label="Central Representative is not among Directors"
+        />
+      </Box>
       {tab && (
         <Box display="flex" alignItems="center">
           {/* <DynamicBoxGroupContainer> */}
 
-          <DynamicBoxGroupContainer
-            id="Details of directors affiliated with other Firms"
-            scrollMarginTop={'200px'}
-          >
+          <DynamicBoxGroupContainer>
             <SectionContainer>
               <AccordianContainer>
                 <InputGroupContainer>
@@ -365,6 +367,6 @@ export const AddRepresentative = ({ watch, control }) => {
           </DynamicBoxGroupContainer>
         </Box>
       )}
-    </>
+    </Box>
   );
 };

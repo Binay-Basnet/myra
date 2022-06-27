@@ -11,7 +11,7 @@ import { Text } from '@coop/shared/ui';
 export const MemberKYMContactDetails = () => {
   const { t } = useTranslation();
   return (
-    <GroupContainer id="Contact Details" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymAccIndContactDetails" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"

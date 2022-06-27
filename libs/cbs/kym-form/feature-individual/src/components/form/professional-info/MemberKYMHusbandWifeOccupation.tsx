@@ -154,7 +154,7 @@ export const MemberKYMHusbandWifeOccupation = () => {
 
   return (
     <GroupContainer
-      id="Main Occupation of Husaband/Wife"
+      id="kymAccIndMainOccupationofHusabandWife"
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">
