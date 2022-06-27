@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react';
 import { FaMap } from 'react-icons/fa';
+
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
-import { Text, Button, Icon } from '@coop/shared/ui';
+import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
+import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopRegdAddress = ({ watch }: any) => {
@@ -88,13 +89,10 @@ export const KymCoopRegdAddress = ({ watch }: any) => {
           placeholder={t['kymCoopEnterLocality']}
         />
       </InputGroupContainer>
-      <Button
-        alignSelf="start"
-        mt="-16px"
-        leftIcon={<Icon size="md" as={FaMap} />}
-      >
-        {t['pinOnMap']}
-      </Button>
+
+      <Box mt="-16px">
+        <FormMap name="regdLocation" />
+      </Box>
     </GroupContainer>
   );
 };

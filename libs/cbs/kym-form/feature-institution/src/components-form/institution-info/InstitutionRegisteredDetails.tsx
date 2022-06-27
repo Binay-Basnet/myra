@@ -1,9 +1,10 @@
 import { FaMap } from 'react-icons/fa';
+
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/shared/form';
+import { FormInput, FormMap } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -48,12 +49,11 @@ export const RegisteredDetailsInstitution = () => {
           placeholder={t['kymInsEnterIssuingOffice']}
         />
         <Box></Box>
-        <Box>
-          <Button alignSelf="start" leftIcon={<Icon size="md" as={FaMap} />}>
-            {t['pinOnMap']}
-          </Button>
-        </Box>
       </InputGroupContainer>
+
+      <Box mt="-16px">
+        <FormMap name="registeredInstitutionLocation" />
+      </Box>
     </GroupContainer>
   );
 };

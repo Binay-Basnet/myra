@@ -16,6 +16,7 @@ import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   FormFileInput,
   FormInput,
+  FormMap,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
@@ -208,12 +209,11 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                 />
               </InputGroupContainer>
 
-              <Button
-                alignSelf="start"
-                leftIcon={<Icon size="md" as={FaMap} />}
-              >
-                {t['pinOnMap']}
-              </Button>
+              <Box>
+                <FormMap
+                  name={`boardOfDirectorsDetails.${index}.permanentLocation`}
+                />
+              </Box>
               {/* </Box> */}
             </AccordianContainer>
 
@@ -274,13 +274,12 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                       placeholder={t['kymCoopUnionEnterLocality']}
                     />
                   </InputGroupContainer>
-                  <Button
-                    mt="-16px"
-                    alignSelf="start"
-                    leftIcon={<Icon size="md" as={FaMap} />}
-                  >
-                    {t['pinOnMap']}
-                  </Button>
+
+                  <Box mt="-16px">
+                    <FormMap
+                      name={`boardOfDirectorsDetails.${index}.temporaryLocation`}
+                    />
+                  </Box>
                 </>
               )}
             </Box>

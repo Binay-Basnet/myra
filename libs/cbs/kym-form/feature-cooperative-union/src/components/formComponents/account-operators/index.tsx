@@ -10,8 +10,9 @@ import {
 import { useSetAccountOperatorDetailsDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
-import { AccountOperatorInfo } from './AccountOperatorDetails';
 import { useTranslation } from '@coop/shared/utils';
+
+import { AccountOperatorInfo } from './AccountOperatorDetails';
 
 interface directorDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
