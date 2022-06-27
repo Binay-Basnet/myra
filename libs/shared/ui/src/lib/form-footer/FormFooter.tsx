@@ -26,7 +26,7 @@ export function FormFooter({
       background="white"
       px="s16"
       py="s20"
-      borderTop="3px solid"
+      borderTop="1px solid"
       borderColor="border.layout"
     >
       {status}

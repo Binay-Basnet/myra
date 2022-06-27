@@ -26,7 +26,21 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-import { Critera, GridItems, TypesOfMember } from '../components/form';
+import {
+  AccountServicesCharge,
+  BalanceLimit,
+  Critera,
+  DefaultAccountName,
+  DepositFrequency,
+  GridItems,
+  Interest,
+  MaximumTenure,
+  MinimunTenure,
+  PrematuredPenalty,
+  Questions,
+  RequiredDocumentSetup,
+  TypesOfMember,
+} from '../components/form';
 
 /* eslint-disable-next-line */
 export interface SettingsDepositProductsAddProps {}
@@ -100,13 +114,13 @@ export function SettingsDepositProductsAdd(
   const { control, handleSubmit, getValues, watch, setError } = methods;
 
   return (
-    <Container height="fit-content" minW="container.xl">
+    <Container height="fit-content" minW="container.lg">
       <Box position="relative" margin="0px auto">
         <Box
           position="fixed"
           margin="0px auto"
           bg="gray.100"
-          minW="container.xl"
+          minW="container.lg"
           zIndex="10"
         >
           <Box
@@ -130,7 +144,7 @@ export function SettingsDepositProductsAdd(
           </Box>
         </Box>
       </Box>
-      <Container minW="container.xl" height="fit-content" bg="white">
+      <Container minW="container.lg" height="fit-content" bg="white">
         <FormProvider {...methods}>
           <form>
             {/* main */}
@@ -138,12 +152,13 @@ export function SettingsDepositProductsAdd(
               <ContainerWithDivider>
                 <Box background="white" mt="50px">
                   <InputGroupContainer>
-                    <GridItem colSpan={2}>
+                    <GridItem colSpan={2} bg="red">
                       <FormInput
                         name="productName"
                         label="Product Name"
                         placeholder="Enter Product Name"
                       />
+                      {/* <FormSelect name={'duhjisdfsd'} /> */}
                     </GridItem>
                     <FormSelect
                       name={'nameOfDepositProduct'}
@@ -179,6 +194,16 @@ export function SettingsDepositProductsAdd(
                   <Critera watch={watch} />
                   <GridItems watch={watch} />
                 </Box>
+                <DepositFrequency />
+                <MinimunTenure />
+                <MaximumTenure />
+                <BalanceLimit />
+                <Interest />
+                <AccountServicesCharge />
+                <DefaultAccountName />
+                <Questions />
+                <RequiredDocumentSetup />
+                <PrematuredPenalty />
               </ContainerWithDivider>
             </Box>
           </form>

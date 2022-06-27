@@ -65,10 +65,10 @@ export const Critera = ({ watch }: any) => {
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Deposit Frequency</TopText>
+        <TopText>Criteria</TopText>
         <SubText>
-          Select deposit frequency. Further details have to be added during
-          account opening.
+          Selected Checklist will generate fields below. Multi select for
+          different criteria.
         </SubText>
       </TextBoxContainer>
       <InputGroupContainer>

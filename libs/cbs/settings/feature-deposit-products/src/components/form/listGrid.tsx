@@ -112,7 +112,12 @@ export const GridItems = ({ watch }: any) => {
   const cooperativeUnionstatus = watch('criteria.nobCOOPUnion');
   const coperativeStatus = watch('criteria.cooperativeType');
   return (
-    <BoxContainer p="s16" border={'1px solid'} borderColor="border.layout">
+    <BoxContainer
+      p="s16"
+      border={'1px solid'}
+      borderColor="border.layout"
+      borderRadius={'4px'}
+    >
       <InputGroupContainer rowGap={'s32'}>
         {ageCheck && ageCheck.indexOf('age') !== -1 && (
           <BoxContainer>

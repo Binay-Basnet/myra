@@ -97,8 +97,6 @@ const typesOfMember = [
 // ];
 
 export const TypesOfMember = ({ watch }: any) => {
-  const see = watch('typeOfMember');
-  console.log('see', see);
   return (
     <Box display="flex" flexDirection={'column'} gap="s16">
       <Text fontWeight="500" fontSize={'s3'} color="gray.700">
