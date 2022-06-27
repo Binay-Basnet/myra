@@ -58,12 +58,12 @@ const SwitchTab = (props: UseRadioProps & { children: React.ReactNode }) => {
 export interface SwitchTabsProps {
   options: {
     label: string;
-    value: string;
+    value: string | boolean;
   }[];
   label?: string;
   errorText?: string;
   helperText?: string;
-  value?: string;
+  value?: string | boolean;
   name?: string;
   onChange?: (nextValue: string) => void;
 }
@@ -103,11 +103,11 @@ export function SwitchTabs({
         borderRadius="br2"
         width="fit-content"
       >
-        {options?.map((value) => {
-          const radio = getRadioProps({ value: value.value });
+        {options?.map((value, index) => {
+          const radio = getRadioProps({ value: value.value.toString() });
 
           return (
-            <SwitchTab name={name} key={value.value} {...radio}>
+            <SwitchTab name={name} key={`${value}${index}`} {...radio}>
               {value.label}
             </SwitchTab>
           );

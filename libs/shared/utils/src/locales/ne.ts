@@ -375,7 +375,7 @@ const ne: Record<string, string> = {
   settingsCoaEnterAccountName: 'Enter Account Name',
   settingsCoaUnder: 'Under',
   settingsCoaStaffBonusFund: 'Staff Bonus Fund',
-  settingsCoaFormAccountType: 'Account Type',
+  settingsCoaFormAccountClass: 'Account Class',
   settingsCoaFormAccountCode: 'Account Code',
   settingsCoaCurrency: 'Currency',
   settingsCoaFormTypeOfAccount: 'Type of Account',

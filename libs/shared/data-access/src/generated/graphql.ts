@@ -4908,6 +4908,13 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { auth: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, user: { id: string, modifiedAt: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, createdBy: { id: string, name: string, username: string, password: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, password: string, userType: UserType } } } | null } | null } };
 
+export type SetNewCoaMutationVariables = Exact<{
+  data: AddCoaAccountInput;
+}>;
+
+
+export type SetNewCoaMutation = { settings: { general?: { chartsOfAccount?: { account?: { add: { record?: { id: string, name: string, level: number, code: string, currency: string, classId: string, hasSubAccounts: boolean, active: boolean, accountType: CoaTypesOfAccount, openingBalance: number, isLedgerAccount: boolean, isBalanceSheetAccount: boolean, isSummationAccount: boolean, isIbtAccount: boolean, isInTransitAccount: boolean, isProfitAndLossAccount: boolean, allowFreeEntry: boolean, allowTransaction: boolean, parent?: { id: string, name: string, accountNumber: string, isDefault: boolean, amount: number, interestRate: number, accountType: Account_Type, interestBooked: number, interestEarned: number, subscribedDate: string, history?: Array<{ date: string, balance: number }> | null, transactions?: Array<{ id: string, name: string, transactionType: Transaction_Type, date: string, transactionDirection: Transaction_Direction, amount: number }> | null } | null } | null } } | null } | null } | null } };
+
 export type SetCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCooperativeFormInput;
@@ -5274,6 +5281,73 @@ export const useLoginMutation = <
     useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
       ['login'],
       useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
+      options
+    );
+export const SetNewCoaDocument = `
+    mutation setNewCOA($data: AddCOAAccountInput!) {
+  settings {
+    general {
+      chartsOfAccount {
+        account {
+          add(data: $data) {
+            record {
+              id
+              name
+              level
+              parent {
+                id
+                name
+                accountNumber
+                isDefault
+                amount
+                interestRate
+                accountType
+                interestBooked
+                interestEarned
+                subscribedDate
+                history {
+                  date
+                  balance
+                }
+                transactions {
+                  id
+                  name
+                  transactionType
+                  date
+                  transactionDirection
+                  amount
+                }
+              }
+              code
+              currency
+              classId
+              hasSubAccounts
+              active
+              accountType
+              openingBalance
+              isLedgerAccount
+              isBalanceSheetAccount
+              isSummationAccount
+              isIbtAccount
+              isInTransitAccount
+              isProfitAndLossAccount
+              allowFreeEntry
+              allowTransaction
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetNewCoaMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetNewCoaMutation, TError, SetNewCoaMutationVariables, TContext>) =>
+    useMutation<SetNewCoaMutation, TError, SetNewCoaMutationVariables, TContext>(
+      ['setNewCOA'],
+      useAxios<SetNewCoaMutation, SetNewCoaMutationVariables>(SetNewCoaDocument),
       options
     );
 export const SetCooperativeDataDocument = `
