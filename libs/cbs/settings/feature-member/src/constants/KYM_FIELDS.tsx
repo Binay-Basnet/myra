@@ -14,7 +14,7 @@ export const KYM_FIELDS: FieldType[] = [
     label: 'settingsMemberSection1PersonalInformation',
     children: [
       {
-        key: 'gender',
+        key: 'Gender',
         label: 'settingsMemberGender',
       },
       {
@@ -34,7 +34,7 @@ export const KYM_FIELDS: FieldType[] = [
         label: 'settingsMemberEthnicity',
       },
       {
-        key: 'contact_details',
+        key: 'Contact Details',
         label: 'settingsMemberContactDetails',
       },
       {

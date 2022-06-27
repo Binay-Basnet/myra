@@ -1,33 +1,20 @@
-mutation addKYMOption(
-    $fieldId: ID!
-    $optionName: String!
-    $optionId: ID
-    $optionEnabled: Boolean!
-    $optionFieldType: FIELD_TYPES
-) {
+mutation addKYMOption($fieldId: ID!, $data: KYMOptionInput!) {
     settings {
-        general {
-            KYM {
-                individual {
-                    option {
-                        update(
-                            fieldId: $fieldId
-                            data: {
-                                id: $optionId
-                                name: $optionName
-                                enabled: $optionEnabled
-                                fieldType: $optionFieldType
-                            }
-                        ) {
-                            recordId
-                            record {
-                                id
-                                name
-                                fieldType
-                                enabled
-                            }
-                        }
+        kymForm {
+            option {
+                upsert(fieldId: $fieldId, data: $data) {
+                    recordId
+                    record {
+                        id
+                        name
+                        variant
+                        optionType
+                        enabled
                     }
+                    error {
+                        ...MutationError
+                    }
+
                 }
             }
         }
@@ -36,30 +23,22 @@ mutation addKYMOption(
 
 mutation deleteKYMField($optionId: ID!) {
     settings {
-        general {
-            KYM {
-                individual {
-                    option {
-                        delete(optionId: $optionId) {
-                            recordId
-                        }
-                    }
+        kymForm {
+            option {
+                delete(optionId: $optionId) {
+                    recordId
                 }
             }
         }
     }
 }
-
-mutation arrangeKYMField($optionId: ID!, $from: Int!, $to: Int!) {
+#
+mutation arrangeKYMField($optionId: ID!,$to: Int!) {
     settings {
-        general {
-            KYM {
-                individual {
-                    option {
-                        arrange(optionId: $optionId, from: $from, to: $to) {
-                            recordId
-                        }
-                    }
+        kymForm {
+            option {
+                move(optionId: $optionId, to: $to) {
+                    recordId
                 }
             }
         }
@@ -67,16 +46,12 @@ mutation arrangeKYMField($optionId: ID!, $from: Int!, $to: Int!) {
 }
 mutation toggleOtherOption($groupId: ID!, $hasOtherField: Boolean!) {
     settings {
-        general {
-            KYM {
-                individual {
-                    field {
-                        update(id: $groupId, data: { hasOtherField: $hasOtherField }) {
-                            record {
-                                name
-                                hasOtherField
-                            }
-                        }
+        kymForm {
+            field {
+                update(id: $groupId, data: { hasOtherField: $hasOtherField }) {
+                    record {
+                        name
+                        hasOtherField
                     }
                 }
             }
@@ -84,68 +59,62 @@ mutation toggleOtherOption($groupId: ID!, $hasOtherField: Boolean!) {
     }
 }
 
+
+
 mutation addConditionField($fieldId: ID!, $dependsOn: [ID]!) {
     settings {
-        general {
-            KYM {
-                individual {
-                    condition(fieldId: $fieldId, dependsOn: $dependsOn) {
-                        recordId
-                    }
-                }
+        kymForm {
+            condition(fieldId: $fieldId, dependsOn: $dependsOn) {
+                recordId
             }
         }
     }
+
 }
 
 mutation addFileSize($fieldId: ID!, $maxSize: Int!) {
     settings {
-        general {
-            KYM {
-                individual {
-                    maxSize(fieldId: $fieldId, maxSize: $maxSize) {
-                        recordId
-                    }
-                }
+        kymForm {
+            maxSize(fieldId: $fieldId, maxSize: $maxSize) {
+                recordId
             }
         }
     }
-}
 
+}
 mutation addCustomField {
     settings {
-        general {
-            KYM {
-                individual {
-                    field {
-                        add(
-                            data: {
-                                name: ""
-                                fieldType: SINGLE
-                                hasOtherField: false
-                                enabled: false
-                            }
-                        ) {
-                            record {
-                                id
-                                name
-                                enabled
-                                fieldType
-                                isCustom
-                                hasOtherField
-                                options {
-                                    id
-                                    name
-                                    fieldType
-                                    enabled
-                                }
-                            }
+        kymForm {
+            field {
+                add(
+                    data: {
+                        kymType: INDIVIDUAL
+                        name: "121"
+                        fieldType: SINGLE_SELECT
+                        hasOtherField: false
+                        enabled: false
+                    }
+                ) {
+                    record {
+                        id
+                        name
+                        enabled
+                        fieldType
+                        isCustom
+                        hasOtherField
+                        options {
+                            id
+                            name
+                            optionType
+                            enabled
                         }
                     }
                 }
             }
         }
     }
+
+
 }
 
 mutation updateCustomField(
@@ -155,24 +124,21 @@ mutation updateCustomField(
     $fieldEnabled: Boolean
 ) {
     settings {
-        general {
-            KYM {
-                individual {
-                    field {
-                        update(
-                            id: $fieldId
-                            data: { name: $fieldName, fieldType: $fieldType, enabled: $fieldEnabled }
-                        ) {
-                            recordId
-                            record {
-                                id
-                                name
-                                enabled
-                            }
-                        }
+        kymForm {
+            field {
+                update(
+                    id: $fieldId
+                    data: { name: $fieldName, fieldType: $fieldType, enabled: $fieldEnabled }
+                ) {
+                    recordId
+                    record {
+                        id
+                        name
+                        enabled
                     }
                 }
             }
         }
     }
+
 }

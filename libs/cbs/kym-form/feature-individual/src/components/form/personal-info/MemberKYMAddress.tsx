@@ -7,7 +7,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -129,9 +129,9 @@ export const MemberKYMAddress = () => {
             />
           </InputGroupContainer>
 
-          <Box mt="-16px">
-            <FormMap name="permanentAddressLocation" />
-          </Box>
+          {/*<Box mt="-16px">*/}
+          {/*  <FormMap name="permanentAddressLocation" />*/}
+          {/*</Box>*/}
         </Box>
       </Box>
       <Box

@@ -1,40 +1,40 @@
-query getIndividualKYMOption($fieldName: String) {
-    members {
-        individual {
-            options {
-                list(filter: { name: $fieldName }) {
-                    data {
-                        options {
-                            id
-                            name
-                            fieldType
-                            enabled
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-query getIndIdentificationDocOption {
-    members {
-        individual {
-            options {
-                list(filter: { isIdentificationDoc: true }) {
-
-                    data {
-                        id
-                        name
-                        options {
-                            id
-                            name
-                            fieldType
-                            enabled
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+#query getIndividualKYMOption($fieldName: String) {
+#    members {
+#        individual {
+#            options {
+#                list(filter: { name: $fieldName }) {
+#                    data {
+#                        options {
+#                            id
+#                            name
+#                            fieldType
+#                            enabled
+#                        }
+#                    }
+#                }
+#            }
+#        }
+#    }
+#}
+#
+#query getIndIdentificationDocOption {
+#    members {
+#        individual {
+#            options {
+#                list(filter: { isIdentificationDoc: true }) {
+#
+#                    data {
+#                        id
+#                        name
+#                        options {
+#                            id
+#                            name
+#                            fieldType
+#                            enabled
+#                        }
+#                    }
+#                }
+#            }
+#        }
+#    }
+#}

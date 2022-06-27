@@ -1,121 +1,91 @@
 mutation getNewId {
-  newId
+    newId
 }
 
 mutation setMemberData($id: ID!, $data: KymIndMemberInput!) {
-  members {
-    individual(id: $id) {
-      add(data: $data) {
-        recordId
-        error {
-          ... on KymIndAddInvalidDataError {
-            error
-          }
+    members {
+        individual(id: $id) {
+            add(data: $data) {
+                recordId
+                error {
+                    ... on KymIndAddInvalidDataError {
+                        error
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
 
 mutation updateKYMField($id: ID!, $enabled: Boolean, $name: String) {
-  settings {
-    general {
-      KYM {
-        individual {
-          field {
-            update(id: $id, data: { name: $name, enabled: $enabled }) {
-              record {
-                id
-                name
-              }
-              recordId
+    settings {
+        kymForm {
+            field {
+                update(id: $id, data: { enabled: $enabled, name: $name }) {
+                    record {
+                        id
+                        enabled
+                        name
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
-}
-
-mutation updateKYMField($id: ID!, $enabled: Boolean, $name: String) {
-  settings {
-    general {
-      KYM {
-        individual {
-          field {
-            update(id: $id, data: { name: $name, enabled: $enabled }) {
-              record {
-                id
-                name
-              }
-              recordId
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
 mutation deleteKYMField($optionId: ID!) {
-  settings {
-    general {
-      KYM {
-        individual {
-          option {
-            delete(optionId: $optionId) {
-              recordId
+    settings {
+        kymForm {
+            option {
+                delete(optionId: $optionId) {
+                    recordId
+                }
             }
-          }
         }
-      }
     }
-  }
 }
 
-mutation addKYMField(
-  $name: String!
-  $enabled: Boolean!
-  $hasOtherField: Boolean!
-  $fieldType: KYM_FIELD_TYPE!
-) {
-  settings {
-    general {
-      KYM {
-        individual {
-          field {
-            add(
-              data: {
-                name: $name
-                enabled: $enabled
-                hasOtherField: $hasOtherField
-                fieldType: $fieldType
-                data: { name: $name, enabled: $enabled }
-              }
-            ) {
-              record {
-                id
-                options {
-                  id
-                  name
-                  enabled
-                  fieldType
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+#mutation addKYMField(
+#    $name: String!
+#    $enabled: Boolean!
+#    $hasOtherField: Boolean!
+#    $fieldType: KYM_FIELD_TYPE!
+#) {
+#    settings {
+#        kymForm {
+#            field {
+#                add(
+#                    data: {
+#                        kymType: INDIVIDUAL
+#                        name: $name
+#                        enabled: $enabled
+#                        hasOtherField: $hasOtherField
+#                        fieldType: $fieldType
+#                        options: { name: $name, enabled: $enabled, fieldType: $fieldType }
+#                    }
+#                ) {
+#                    record {
+#                        id
+#                        options {
+#                            id
+#                            name
+#                            enabled
+#                            variant
+#                            optionType
+#                        }
+#                    }
+#                }
+#            }
+#        }
+#    }
+#}
 
 mutation setKymCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
-  members {
-    cooperative(id: $id) {
-      add(data: $data) {
-        recordId
-      }
+    members {
+        cooperative(id: $id) {
+            add(data: $data) {
+                recordId
+            }
+        }
     }
-  }
 }

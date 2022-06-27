@@ -67,11 +67,11 @@ export const KYMCustomSection = ({ fields }: IKYMCustomField) => {
 const FIELD_TYPE = [
   {
     label: 'Single Select',
-    value: Kym_Field_Type.Single,
+    value: Kym_Field_Type.SingleSelect,
   },
   {
     label: 'Multi Select',
-    value: Kym_Field_Type.Multi,
+    value: Kym_Field_Type.MultiSelect,
   },
   {
     label: 'Grouped Fields',
@@ -95,8 +95,8 @@ export const KYMCustomFields = ({ isExpanded }: { isExpanded: boolean }) => {
     });
 
   const fields = useMemo(
-    () => data?.settings?.general?.KYM?.individual?.field?.list?.data ?? [],
-    [data?.settings?.general?.KYM?.individual?.field?.list?.data]
+    () => data?.settings?.kymForm?.field?.list?.data ?? [],
+    [data?.settings?.kymForm?.field?.list?.data]
   );
 
   if (isLoading) {
@@ -237,9 +237,9 @@ export const KYMCustomField = ({
             <Box px="s12" w="50%">
               <FormSelect name={'fieldType'} options={FIELD_TYPE} />
               <TextFields variant="formHelper" mt="s4" color="gray.800">
-                {methods.getValues().fieldType === Kym_Field_Type.Single
+                {methods.getValues().fieldType === Kym_Field_Type.SingleSelect
                   ? 'Users can select only one option from the list'
-                  : methods.getValues().fieldType === Kym_Field_Type.Multi
+                  : methods.getValues().fieldType === Kym_Field_Type.MultiSelect
                   ? 'Users can select one or more options'
                   : 'You can add different type fields at once'}
               </TextFields>

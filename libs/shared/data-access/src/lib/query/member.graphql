@@ -89,33 +89,31 @@ query getKymFormStatus($id: ID!) {
 
 query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
     settings {
-        general {
-            KYM {
-                individual {
-                    field {
-                        list(
-                            filter: { name: $name, isIdentificationDoc: $isIdentificationDoc }
-                        ) {
-                            data {
-                                id
-                                name
-                                enabled
-                                options {
-                                    id
-                                    name
-                                    fieldType
-                                    enabled
-                                }
-                                hasOtherField
-                                dependsOn
-                                isCustom
-                                maxSize
-                                fieldType
-                            }
+        kymForm {
+            field {
+                list(
+                    filter: { name: $name, kymType: INDIVIDUAL, isIdentificationDoc: $isIdentificationDoc }
+                ) {
+                    data {
+                        id
+                        name
+                        enabled
+                        options {
+                            id
+                            name
+                            optionType
+                            variant
+                            enabled
                         }
+                        hasOtherField
+                        dependsOn
+                        isCustom
+                        maxSize
+                        fieldType
                     }
                 }
             }
+
         }
     }
 }
