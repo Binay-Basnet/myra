@@ -11,7 +11,7 @@ export const KymCoopAddCoopDetails = () => {
   const { t } = useTranslation();
   return (
     <GroupContainer
-      id="Additional Coorperative Details"
+      id="kymCoopAccAdditionalCoorperativeDetails"
       scrollMarginTop={'200px'}
     >
       <Text

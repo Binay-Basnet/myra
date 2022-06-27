@@ -369,7 +369,7 @@ export const BoardDirectorInfo = ({ watch }) => {
   } = useFieldArray({ name: 'detailsOfDirectors' });
   return (
     <GroupContainer
-      id="Details of Proprietor, Partners, Directors."
+      id="kymInsDetailsofProprietorPartnersDirectors"
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">

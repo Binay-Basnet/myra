@@ -24,7 +24,7 @@ export const AccountOperationInstitution = () => {
   const [activeTab, setActiveTab] = useState(0);
   return (
     <GroupContainer
-      id="Account Operation Instruction"
+      id="kymInsAccountOperationInstruction"
       scrollMarginTop={'200px'}
     >
       <Text

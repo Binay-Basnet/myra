@@ -96,7 +96,7 @@ export const MemberKYMFamilyDetails = () => {
   } = useFieldArray({ control, name: 'familyDetails' });
 
   return (
-    <GroupContainer id="Family Details" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymAccIndFamilyDetails" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymIndFAMILYDETAILS']}
       </Text>

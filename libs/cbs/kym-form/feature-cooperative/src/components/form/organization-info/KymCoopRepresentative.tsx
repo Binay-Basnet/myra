@@ -10,7 +10,7 @@ import { useTranslation } from '@coop/shared/utils';
 export const KymCoopRepresentative = () => {
   const { t } = useTranslation();
   return (
-    <GroupContainer id="Representative" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymCoopAccRepresentative" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"

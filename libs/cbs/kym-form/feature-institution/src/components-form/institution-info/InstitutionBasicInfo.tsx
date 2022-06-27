@@ -9,7 +9,7 @@ import { useTranslation } from '@coop/shared/utils';
 export const BasicDetailsInstitution = () => {
   const { t } = useTranslation();
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymInsBasicInformation" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"

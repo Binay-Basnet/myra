@@ -22,7 +22,11 @@ export const KymEquityLiabilities = ({ watch }: any) => {
     Number(nonCurrentLiabilities);
 
   return (
-    <Box id="Equity and Liabilities" display="flex" flexDirection="column">
+    <Box
+      id="kymCoopAccEquityandLiabilities"
+      display="flex"
+      flexDirection="column"
+    >
       <Grid
         columnGap={40}
         alignItems="center"

@@ -174,7 +174,7 @@ export const MemberKYMMainOccupation = () => {
   } = useFieldArray({ control, name: 'mainOccupation' });
 
   return (
-    <GroupContainer id="Main Profession" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymAccIndMainProfession" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymIndMAINOCCUPATION']}
       </Text>

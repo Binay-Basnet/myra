@@ -368,7 +368,10 @@ export const BoardDirectorInfo = ({ watch, control }) => {
   } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
   const { t } = useTranslation();
   return (
-    <GroupContainer id="Family Details" scrollMarginTop={'200px'}>
+    <GroupContainer
+      id="kymCoopUnionAccDetailsofProprietor"
+      scrollMarginTop={'200px'}
+    >
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymCoopUnionBoardOfDirectorDetails']}
       </Text>

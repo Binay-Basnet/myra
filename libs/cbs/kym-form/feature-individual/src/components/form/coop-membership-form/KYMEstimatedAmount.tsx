@@ -14,7 +14,7 @@ export const KYMEstimatedAmount = () => {
   const { t } = useTranslation();
   return (
     <GroupContainer
-      id="Estimated Withdraw/Deposit Amount in the Institureion"
+      id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">
