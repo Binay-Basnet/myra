@@ -6,7 +6,6 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { Form, FormFooter } from '@coop/myra/components';
 import {
   Payment_Mode,
-  SharePurchaseInput,
   ShareReturnInput,
   useSetShareReturnMutation,
 } from '@coop/shared/data-access';
@@ -18,7 +17,6 @@ import {
   GridItem,
   MainLayout,
   Navbar,
-  Select,
   SwitchTabs,
   TabMenu,
   Text,
@@ -72,7 +70,7 @@ const ShareReturn = () => {
   };
 
   return (
-    <Form<SharePurchaseInput>
+    <Form<ShareReturnInput>
       methods={methods}
       onChange={() => {
         console.log('getValues', getValues());
@@ -489,7 +487,7 @@ const ShareReturn = () => {
                     flexDirection="column"
                     gap="s16"
                   >
-                    <Select
+                    <FormSelect
                       name="accountId"
                       label={t['shareReturnSelectAccount']}
                       placeholder={t['shareReturnSavingAccount']}

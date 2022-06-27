@@ -87,12 +87,12 @@ query getKymFormStatus($id: ID!) {
     }
 }
 
-query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
+query getKYMIndItemDetails( $id: ID,$name: String, $isIdentificationDoc: Boolean) {
     settings {
         kymForm {
             field {
                 list(
-                    filter: { name: $name, kymType: INDIVIDUAL, isIdentificationDoc: $isIdentificationDoc }
+                    filter: {id: $id, name: $name, kymType: INDIVIDUAL, isIdentificationDoc: $isIdentificationDoc }
                 ) {
                     data {
                         id
@@ -113,7 +113,6 @@ query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
                     }
                 }
             }
-
         }
     }
 }

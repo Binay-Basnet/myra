@@ -56,6 +56,7 @@ export const DirectorDetails = (props: directorDetailsProps) => {
     },
   });
   const { control, handleSubmit, getValues, watch } = methods;
+
   return (
     <FormProvider {...methods}>
       <form

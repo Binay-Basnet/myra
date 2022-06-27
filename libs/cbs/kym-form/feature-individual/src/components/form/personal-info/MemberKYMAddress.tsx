@@ -196,13 +196,10 @@ export const MemberKYMAddress = () => {
                 placeholder={t['kymIndEnterHouseNo']}
               />
             </InputGroupContainer>
-            <Button
-              mt="-16px"
-              alignSelf="start"
-              leftIcon={<Icon size="md" as={FaMap} />}
-            >
-              {t['pinOnMap']}
-            </Button>
+
+            <Box mt="-16px">
+              <FormMap name="temporaryAddressLocation" />
+            </Box>
           </>
         )}
       </Box>

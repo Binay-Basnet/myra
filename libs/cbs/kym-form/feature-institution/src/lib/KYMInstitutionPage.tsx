@@ -58,7 +58,57 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
     kymFormStatusQuery?.data?.members?.institution?.formState?.data
       ?.sectionStatus;
 
-  const methods = useForm<KymInsFormData>({});
+  const methods = useForm<KymInsFormData>({
+    defaultValues: {
+      sisterConcernDetails: [
+        {
+          name: '',
+          natureOfBusiness: '',
+          address: '',
+          phoneNo: '',
+        },
+      ],
+      detailsOfDirectorsWithAffiliation: [
+        {
+          addressOfInstitution: '',
+          designation: '',
+          nameOfDirector: '',
+          nameOfInstitution: '',
+          yearlyIncome: 0,
+        },
+      ],
+      accountOperatorsDetails: [
+        {
+          designation: '',
+          fullName: '',
+          specimenSignature: '',
+        },
+      ],
+      detailsOfDirectors: [
+        {
+          fullName: '',
+          designation: '',
+          permanentState: '',
+          permanentDistrict: '',
+          permanentMunicipality: '',
+          permanentWardNo: 0,
+          permanentLocality: '',
+          temporaryState: '',
+          temporaryDistrict: '',
+          temporaryMunicipality: '',
+          temporaryWardNo: 0,
+          temporaryLocality: '',
+          dateOfMembership: '',
+          highestQualification: '',
+          mobileNo: '',
+          emailAddress: '',
+          documentNo: '',
+          photograph: '',
+          documentPhotograph: '',
+        },
+      ],
+    },
+  });
   const { mutate } = useSetInstitutionDataMutation({
     onSuccess: (res) => {
       setError('institutionName', {
@@ -75,6 +125,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
     },
   });
   const { control, handleSubmit, getValues, watch, setError } = methods;
+
   return (
     <>
       <Box position="relative" margin="0px auto">
@@ -112,6 +163,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
         <FormProvider {...methods}>
           <form
             onChange={debounce(() => {
+              console.log('hello', getValues());
               mutate({ id, data: getValues() });
             }, 800)}
             onSubmit={handleSubmit((data) => {
@@ -176,7 +228,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                         {t['kymIns3DetailsofProprietorpartnersDirectors']}
                       </Text>
                       <ContainerWithDivider>
-                        <BoardDirectorInfo watch={watch} control={control} />
+                        <BoardDirectorInfo watch={watch} />
                         <InstitutionKYMDirectorWithAffiliation />
                       </ContainerWithDivider>
                     </SectionContainer>

@@ -30,7 +30,8 @@ import { KYMCustomDragGroup } from '../KYMBottomPanel/KYMCustomDragGroup';
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 
 interface FieldType {
-  key: string;
+  id?: string;
+  key?: string;
   label: string;
   children?: FieldType[];
 }

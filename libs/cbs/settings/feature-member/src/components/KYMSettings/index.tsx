@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { useGetKymIndItemDetailsQuery } from '@coop/shared/data-access';
 import { Accordion, AccordionItem, AccordionPanel } from '@coop/shared/ui';
 
 import { KYMBottomPanel } from '../KYMBottomPanel';
@@ -9,8 +10,10 @@ import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 
 /* eslint-disable-next-line */
 interface FieldType {
-  key: string;
+  id?: string;
+  key?: string;
   label: string;
+  hasChildren?: boolean;
   children?: FieldType[];
 }
 
@@ -19,7 +22,35 @@ interface IKYMSettingsProps {
   isSection?: boolean;
 }
 
-export const KYMSettings = ({ fields, isSection }: IKYMSettingsProps) => {
+export const KYMSettings = ({
+  fields: kymFields,
+  isSection,
+}: IKYMSettingsProps) => {
+  const [fields, setFields] = useState(kymFields);
+
+  const { data, isLoading } = useGetKymIndItemDetailsQuery(
+    { isIdentificationDoc: true },
+    {
+      enabled: fields.children?.length === 0,
+      onSuccess: (response) => {
+        const responseFields =
+          response?.settings?.general?.KYM?.individual?.field?.list?.data;
+
+        if (responseFields && fields.hasChildren) {
+          setFields((prev) => ({
+            ...prev,
+            children: responseFields.map((field) => ({
+              id: field?.id ?? '',
+              label: field?.name.local ?? '',
+            })),
+          }));
+        }
+      },
+    }
+  );
+
+  console.log(fields);
+
   return fields.key !== 'custom' ? (
     <Accordion
       allowMultiple
@@ -55,7 +86,7 @@ export const KYMSettings = ({ fields, isSection }: IKYMSettingsProps) => {
               </Accordion>
             </AccordionPanel>
 
-            {isSection ? <KYMBottomPanel /> : null}
+            {isSection ? <KYMBottomPanel setItems={setFields} /> : null}
           </>
         )}
       </AccordionItem>

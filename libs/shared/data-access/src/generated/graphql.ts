@@ -4997,6 +4997,13 @@ export type KymIndFormStateQuery = {
   error?: Maybe<QueryError>;
 };
 
+export type LoginMutationVariables = Exact<{
+  data: LoginInput;
+}>;
+
+
+export type LoginMutation = { auth: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, user: { id: string, modifiedAt: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, createdBy: { id: string, name: string, username: string, password: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, password: string, userType: UserType } } } | null } | null } };
+
 export type SetCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCooperativeFormInput;
@@ -5252,6 +5259,7 @@ export type GetKymFormStatusQueryVariables = Exact<{
 export type GetKymFormStatusQuery = { members: { individual?: { formState?: { data?: { sectionStatus?: { personal?: { completed?: Array<KymIndPersonalSection | null> | null, error?: Array<KymIndPersonalSection | null> | null } | null, professional?: { completed?: Array<KymIndProfessionalSection | null> | null, error?: Array<KymIndProfessionalSection | null> | null } | null, cooperativeMembership?: { completed?: Array<KymIndCooperativeMemberSection | null> | null, error?: Array<KymIndCooperativeMemberSection | null> | null } | null, declaration?: { completed?: Array<KymIndDeclarationSection | null> | null, error?: Array<KymIndDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
 
 export type GetKymIndItemDetailsQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   isIdentificationDoc?: InputMaybe<Scalars['Boolean']>;
 }>;
