@@ -36,6 +36,9 @@
       "@coop/cbs/members/profile": [
         "libs/cbs/members/feature-profile/src/index.ts"
       ],
+      "@coop/cbs/settings/branches": [
+        "libs/cbs/settings/feature-branches/src/index.ts"
+      ],
       "@coop/cbs/settings/deposit": [
         "libs/cbs/settings/feature-deposit/src/index.ts"
       ],

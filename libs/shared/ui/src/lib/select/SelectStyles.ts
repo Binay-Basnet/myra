@@ -1,6 +1,10 @@
-import { ChakraStylesConfig } from 'chakra-react-select';
+import { ChakraStylesConfig, GroupBase } from 'chakra-react-select';
 
-export const chakraDefaultStyles: ChakraStylesConfig = {
+import { Option } from './SelectComponents';
+
+export const chakraDefaultStyles:
+  | ChakraStylesConfig<Option, boolean, GroupBase<Option>>
+  | undefined = {
   inputContainer: () => ({
     alignItems: 'center',
     display: 'flex',
@@ -102,6 +106,9 @@ export const chakraDefaultStyles: ChakraStylesConfig = {
   noOptionsMessage: (provided) => ({
     ...provided,
     fontSize: 'r1',
+  }),
+  clearIndicator: (provided) => ({
+    ...provided,
   }),
 };
 

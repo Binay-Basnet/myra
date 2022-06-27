@@ -1,11 +1,11 @@
+import { CbsSettingsFeatureBranches } from '@coop/cbs/settings/branches';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
-import { SettingsBranchesTable } from '@coop/myra/components';
 
 const Branches = () => {
-  return <SettingsBranchesTable />;
+  return <CbsSettingsFeatureBranches />;
 };
 
 export default Branches;

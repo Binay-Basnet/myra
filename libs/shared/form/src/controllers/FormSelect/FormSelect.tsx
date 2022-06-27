@@ -7,6 +7,11 @@ interface IFormSelectProps<T> extends SelectProps {
   name: Path<T>;
 }
 
+interface Option {
+  label: string;
+  value: string;
+}
+
 export const FormSelect = <T,>({
   control,
   name,
@@ -17,6 +22,7 @@ export const FormSelect = <T,>({
   const {
     formState: { errors },
     control: formControl,
+    watch,
   } = methods;
 
   return (
@@ -30,12 +36,17 @@ export const FormSelect = <T,>({
           <Select
             errorText={errors[name]?.message}
             options={options}
-            value={foundValue}
-            onChange={(newValue: { label: string; value: string }) => {
-              onChange(newValue.value);
-            }}
+            value={rest.isMulti ? value : foundValue}
             inputId={name}
             {...rest}
+            onChange={(newValue: Option | Option[]) => {
+              if (Array.isArray(newValue)) {
+                onChange(newValue);
+              } else {
+                const { value } = newValue as Option;
+                onChange(value);
+              }
+            }}
           />
         );
       }}

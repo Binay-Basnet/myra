@@ -46,7 +46,7 @@ export function Pagination({
               menuPlacement="top"
               isSearchable={false}
               value={{ label: pageSize, value: pageSize }}
-              onChange={(newValue: { value: string }) => {
+              onChange={(newValue: { value?: string | number }) => {
                 if (router.query['after']) {
                   router.push({
                     query: {

@@ -117,7 +117,7 @@ export function Table<T extends Record<string, unknown>>({
 
       {!data ||
         data?.length === 0 ||
-        (filteredRows.length === 0 && (
+        (filteredRows?.length === 0 && (
           <Box
             position="absolute"
             width="100%"

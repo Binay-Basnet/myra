@@ -1,19 +1,49 @@
-import { IoCheckmarkSharp, IoChevronDownSharp } from 'react-icons/io5';
-import { Checkbox, Icon } from '@chakra-ui/react';
+import {
+  IoCheckmarkSharp,
+  IoChevronDownSharp,
+  IoSearch,
+} from 'react-icons/io5';
+import { Box, Checkbox, Icon, Text } from '@chakra-ui/react';
 import {
   chakraComponents,
   GroupBase,
   SelectComponentsConfig,
 } from 'chakra-react-select';
 
+export interface Option {
+  label: string | number;
+  value: string | number;
+}
+
 export const components: SelectComponentsConfig<
-  unknown,
+  Option,
   boolean,
-  GroupBase<unknown>
+  GroupBase<Option>
 > = {
+  Placeholder: ({ children, ...props }) => {
+    return (
+      <chakraComponents.Placeholder {...props}>
+        {props.isMulti ? (
+          Array.isArray(props.selectProps?.value) ? (
+            <Text color="gray.900">
+              {`${(props.selectProps.value as Option[]).length} items selected`}
+            </Text>
+          ) : (
+            children
+          )
+        ) : (
+          children
+        )}
+      </chakraComponents.Placeholder>
+    );
+  },
   DropdownIndicator: (props) => (
     <chakraComponents.DropdownIndicator {...props}>
-      <Icon as={IoChevronDownSharp} w="20px" h="20px" cursor="pointer" />
+      {props.options.length <= 5 ? (
+        <Icon as={IoChevronDownSharp} w="20px" h="20px" cursor="pointer" />
+      ) : (
+        <Icon as={IoSearch} w="20px" h="20px" cursor="pointer" />
+      )}
     </chakraComponents.DropdownIndicator>
   ),
   Option: ({ children, ...props }) => {
@@ -21,7 +51,20 @@ export const components: SelectComponentsConfig<
       <chakraComponents.Option {...props}>
         {children}
         {props.isMulti ? (
-          <Checkbox isChecked={props.isSelected} />
+          <Box
+            display="flex"
+            onClick={(e) => {
+              props.selectOption({ ...props.data });
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          >
+            <Checkbox
+              ref={props.innerRef}
+              isDisabled={props.isDisabled}
+              isChecked={props.isSelected}
+            />
+          </Box>
         ) : props.isSelected ? (
           <Icon
             as={IoCheckmarkSharp}
@@ -29,6 +72,7 @@ export const components: SelectComponentsConfig<
             h="20px"
             cursor="pointer"
             color="primary.500"
+            className="multi-select-option"
           />
         ) : null}
       </chakraComponents.Option>
