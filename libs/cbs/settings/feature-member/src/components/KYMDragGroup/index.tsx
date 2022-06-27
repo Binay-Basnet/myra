@@ -32,11 +32,13 @@ import {
 import { KYMSingleItem } from '../KYMSingleItem';
 
 interface IKYMDraggableItemProps {
-  fieldName: string;
+  fieldId?: string;
+  fieldName?: string;
   isExpanded: boolean;
 }
 
 export const KYMDragGroup = ({
+  fieldId,
   fieldName,
   isExpanded,
 }: IKYMDraggableItemProps) => {
@@ -61,7 +63,8 @@ export const KYMDragGroup = ({
 
   const { isLoading, data } = useGetKymIndItemDetailsQuery(
     {
-      name: fieldName === 'identification_documents' ? null : fieldName,
+      id: fieldId ?? null,
+      name: fieldName ?? null,
       isIdentificationDoc: fieldName === 'identification_documents',
     },
     {
@@ -84,8 +87,6 @@ export const KYMDragGroup = ({
   const handleDragEnd = async (result: DropResult) => {
     const items = Array.from(fieldItems);
     const [reorderedItem] = items.splice(result.source.index, 1);
-
-    console.log(reorderedItem);
 
     if (result.destination) {
       items.splice(result.destination.index, 0, reorderedItem);

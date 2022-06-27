@@ -5184,6 +5184,7 @@ export type GetKymFormStatusQueryVariables = Exact<{
 export type GetKymFormStatusQuery = { members: { individual?: { formState?: { data?: { sectionStatus?: { personal?: { completed?: Array<KymIndPersonalSection | null> | null, error?: Array<KymIndPersonalSection | null> | null } | null, professional?: { completed?: Array<KymIndProfessionalSection | null> | null, error?: Array<KymIndProfessionalSection | null> | null } | null, cooperativeMembership?: { completed?: Array<KymIndCooperativeMemberSection | null> | null, error?: Array<KymIndCooperativeMemberSection | null> | null } | null, declaration?: { completed?: Array<KymIndDeclarationSection | null> | null, error?: Array<KymIndDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
 
 export type GetKymIndItemDetailsQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   isIdentificationDoc?: InputMaybe<Scalars['Boolean']>;
 }>;
@@ -6355,13 +6356,13 @@ export const useGetKymFormStatusQuery = <
       options
     );
 export const GetKymIndItemDetailsDocument = `
-    query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
+    query getKYMIndItemDetails($id: ID, $name: String, $isIdentificationDoc: Boolean) {
   settings {
     general {
       KYM {
         individual {
           field {
-            list(filter: {name: $name, isIdentificationDoc: $isIdentificationDoc}) {
+            list(filter: {id: $id, name: $name, isIdentificationDoc: $isIdentificationDoc}) {
               data {
                 id
                 name

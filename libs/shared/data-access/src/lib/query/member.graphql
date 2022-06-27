@@ -87,14 +87,22 @@ query getKymFormStatus($id: ID!) {
     }
 }
 
-query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
+query getKYMIndItemDetails(
+    $id: ID
+    $name: String
+    $isIdentificationDoc: Boolean
+) {
     settings {
         general {
             KYM {
                 individual {
                     field {
                         list(
-                            filter: { name: $name, isIdentificationDoc: $isIdentificationDoc }
+                            filter: {
+                                id: $id
+                                name: $name
+                                isIdentificationDoc: $isIdentificationDoc
+                            }
                         ) {
                             data {
                                 id

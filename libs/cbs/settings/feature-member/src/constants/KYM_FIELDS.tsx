@@ -2,8 +2,10 @@ import { IncomeSourceDetailsAccComponent } from '../components/IncomeSourceDetai
 import { KYMDeclaration } from '../components/KYMDeclaration';
 
 interface FieldType {
-  key: string;
+  id?: string;
+  key?: string;
   label: string;
+  hasChildren?: boolean;
   component?: (props: { isExpanded: boolean }) => JSX.Element;
   children?: FieldType[];
 }
@@ -40,19 +42,20 @@ export const KYM_FIELDS: FieldType[] = [
       {
         key: 'identification_documents',
         label: 'settingsMemberIdentificationDocuments',
+        hasChildren: true,
         children: [
-          {
-            key: 'citizenship',
-            label: 'settingsMemberCitizenship',
-          },
-          {
-            key: 'voter_id',
-            label: 'settingsMemberVoterId',
-          },
-          {
-            key: 'driving_license',
-            label: 'settingsMemberDrivingLicense',
-          },
+          // {
+          //   key: 'citizenship',
+          //   label: 'settingsMemberCitizenship',
+          // },
+          // {
+          //   key: 'voter_id',
+          //   label: 'settingsMemberVoterId',
+          // },
+          // {
+          //   key: 'driving_license',
+          //   label: 'settingsMemberDrivingLicense',
+          // },
         ],
       },
       {
