@@ -24,6 +24,7 @@ import {
 import {
   FormFileInput,
   FormInput,
+  FormMap,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
@@ -209,10 +210,11 @@ const AddDirector = ({ watch, index, removeDirector }) => {
               />
             </InputGroupContainer>
 
-            <Button alignSelf="start" leftIcon={<Icon size="md" as={FaMap} />}>
-              {t['pinOnMap']}
-            </Button>
-            {/* </Box> */}
+            <Box>
+              <FormMap
+                name={`boardOfDirectorsDetails.${index}.permanentLocation`}
+              />
+            </Box>
           </AccordianContainer>
 
           <Box

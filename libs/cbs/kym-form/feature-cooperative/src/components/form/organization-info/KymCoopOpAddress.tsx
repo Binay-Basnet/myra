@@ -6,8 +6,8 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
-import { Button, Icon, Text } from '@coop/shared/ui';
+import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
+import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KymCoopOpAddress = ({ watch }: any) => {
@@ -89,13 +89,10 @@ export const KymCoopOpAddress = ({ watch }: any) => {
           placeholder={t['kymCoopEnterLocality']}
         />
       </InputGroupContainer>
-      <Button
-        alignSelf="start"
-        mt="-16px"
-        leftIcon={<Icon size="md" as={FaMap} />}
-      >
-        {t['pinOnMap']}
-      </Button>
+
+      <Box mt="-16px">
+        <FormMap name="kymCoopLocation" />
+      </Box>
     </GroupContainer>
   );
 };

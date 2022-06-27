@@ -9,7 +9,12 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import {
+  FormInput,
+  FormMap,
+  FormSelect,
+  FormSwitchTab,
+} from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -202,12 +207,10 @@ export function CbsSettingsFeatureBranchesNew(
                             placeholder={t['kymIndEnterLocality']}
                           />
                         </InputGroupContainer>
-                        <Button
-                          alignSelf="start"
-                          leftIcon={<Icon size="md" as={FaMap} />}
-                        >
-                          {t['pinOnMap']}
-                        </Button>
+
+                        <Box>
+                          <FormMap name="location" />
+                        </Box>
                       </Box>
                     </Box>
 
