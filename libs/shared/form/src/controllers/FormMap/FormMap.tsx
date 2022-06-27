@@ -34,14 +34,13 @@ export function FormMap<T>({ name, id }: FormMapProps<T>) {
       });
     }
   }, []);
-
   return (
     <Controller
       name={name}
       control={control}
       render={({ field: { onChange, value, ...fieldProps } }) => {
         return (
-          <MapComponent id={id} currentLoc={value} setCurrentLoc={onChange} />
+          <MapComponent id={name} currentLoc={value} setCurrentLoc={onChange} />
         );
       }}
     />

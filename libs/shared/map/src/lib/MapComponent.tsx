@@ -73,6 +73,7 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
           setHasClickedModal(true);
           openModal();
         }}
+        id={id}
       >
         {t['pinOnMap']}
       </Button>
