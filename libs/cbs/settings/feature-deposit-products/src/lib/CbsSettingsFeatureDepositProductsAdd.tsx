@@ -26,6 +26,8 @@ import {
   Text,
 } from '@coop/shared/ui';
 
+import { Critera, GridItems, TypesOfMember } from '../components/form';
+
 /* eslint-disable-next-line */
 export interface SettingsDepositProductsAddProps {}
 
@@ -96,9 +98,6 @@ export function SettingsDepositProductsAdd(
   const methods = useForm({});
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
-  const depo = watch('depositFrequency');
-  const anyday = watch('anyDay');
-  const pickDay = watch('pickday');
 
   return (
     <Container height="fit-content" minW="container.xl">
@@ -175,124 +174,10 @@ export function SettingsDepositProductsAdd(
                     />
                   </InputGroupContainer>
                 </Box>
-                <Box>
-                  <InputGroupContainer>
-                    <Text fontWeight="500" fontSize={'r1'} color="gray.700">
-                      Age Limit
-                    </Text>
-                  </InputGroupContainer>
-                  <InputGroupContainer pt="s16">
-                    <FormInput
-                      label="Minimum Age "
-                      placeholder="Enter Minimum Age"
-                      name="minAge"
-                    />
-                    <FormInput
-                      label="Maximum Age"
-                      placeholder="Enter Maximum Age"
-                      name="maxAge"
-                    />
-                  </InputGroupContainer>
-                </Box>
-
+                <TypesOfMember watch={watch} />
                 <Box display="flex" flexDirection={'column'} gap="s16">
-                  <Text fontWeight="500" fontSize={'r1'} color="gray.700">
-                    Select Applicable Gender
-                  </Text>
-                  <FormCheckboxGroup
-                    name="applicableGender"
-                    list={checkboxlist}
-                    orientation="column"
-                  />
-                </Box>
-                <Box display="flex" flexDirection={'column'} gap="s16">
-                  <Text fontWeight="500" fontSize={'r1'} color="gray.700">
-                    Deposit Frequency
-                  </Text>
-                  <FormSwitchTab
-                    options={DepositFrequencyOptions}
-                    name="depositFrequency"
-                  />
-                  {depo === 'Weekly' && (
-                    <Box
-                      display="flex"
-                      flexDirection={'column'}
-                      gap="s16"
-                      border={'1px solid'}
-                      borderColor="border.layout"
-                      borderRadius={'4px'}
-                      p="s16"
-                    >
-                      <Text fontWeight="500" fontSize={'r1'} color="gray.700">
-                        Weekly
-                      </Text>
-                      {anyday.length === 0 && (
-                        <FormSwitchTab
-                          name={'dayOfWeek'}
-                          options={Days}
-                          label="Day of the week"
-                        />
-                      )}
-                      <FormCheckboxGroup name="anyDay" list={anyDay} />
-                    </Box>
-                  )}
-                  {depo === 'Monthly' && (
-                    <Box
-                      display="flex"
-                      flexDirection={'column'}
-                      gap="s16"
-                      border={'1px solid'}
-                      borderColor="border.layout"
-                      borderRadius={'4px'}
-                      p="s16"
-                    >
-                      <Text fontWeight="500" fontSize={'r1'} color="gray.700">
-                        Monthly
-                      </Text>
-
-                      <FormSwitchTab
-                        name={'pickday'}
-                        options={daysforMonth}
-                        label="Either Pick a day or manually add frequency day or day of the week. "
-                      />
-                      <Box
-                        border={'1px solid'}
-                        borderColor="border.layout"
-                        borderRadius={'4px'}
-                        p="s16"
-                      >
-                        <InputGroupContainer>
-                          <FormInput
-                            type="number"
-                            name="dayOfMonth"
-                            label="Day"
-                            placeholder="Enter Day"
-                          />
-                        </InputGroupContainer>
-                      </Box>
-                      <Box
-                        border={'1px solid'}
-                        borderColor="border.layout"
-                        borderRadius={'4px'}
-                        p="s16"
-                      >
-                        <InputGroupContainer>
-                          <FormInput
-                            type="number"
-                            name="frequencyDay"
-                            label="Frequency Day"
-                          />
-                          <Box></Box>
-                          <FormSelect
-                            options={Days}
-                            name={`dayoftheWeek`}
-                            label="Day of the Week"
-                            placeholder="Day of the Week"
-                          />
-                        </InputGroupContainer>
-                      </Box>
-                    </Box>
-                  )}
+                  <Critera watch={watch} />
+                  <GridItems watch={watch} />
                 </Box>
               </ContainerWithDivider>
             </Box>

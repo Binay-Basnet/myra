@@ -11,9 +11,5 @@ const DepositProducts = () => {
 export default DepositProducts;
 
 DepositProducts.getLayout = function getLayout(page) {
-  return (
-    <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
-    </SettingsLayout>
-  );
+  return <SettingsLayout>{page}</SettingsLayout>;
 };
