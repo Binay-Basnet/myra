@@ -33,8 +33,7 @@ export const KYMSettings = ({
     {
       enabled: fields.children?.length === 0,
       onSuccess: (response) => {
-        const responseFields =
-          response?.settings?.general?.KYM?.individual?.field?.list?.data;
+        const responseFields = response?.settings?.kymForm?.field?.list?.data;
 
         if (responseFields && fields.hasChildren) {
           setFields((prev) => ({
