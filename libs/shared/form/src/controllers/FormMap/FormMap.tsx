@@ -24,15 +24,42 @@ export function FormMap<T>({ name, id }: FormMapProps<T>) {
   useEffect(() => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((pos) => {
-        reset({
-          ...getValues(),
-          [name]: {
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude,
-          },
-        });
+        if (name.includes('.') && name.split('.').length === 3) {
+          const temp = name.split('.');
+
+          const tempNameValues = getValues()[temp[0]]
+            ? getValues()[temp[0]]
+            : {};
+
+          tempNameValues[temp[1]] = {
+            ...tempNameValues[temp[1]],
+            [temp[2]]: {
+              latitude: pos.coords.latitude,
+              longitude: pos.coords.longitude,
+            },
+          };
+          reset({ ...getValues(), [temp[0]]: [...tempNameValues] });
+        } else {
+          reset({
+            ...getValues(),
+            [name]: {
+              latitude: pos.coords.latitude,
+              longitude: pos.coords.longitude,
+            },
+          });
+        }
+
+        // reset({
+        //   ...getValues(),
+        //   [name]: {
+        //     latitude: pos.coords.latitude,
+        //     longitude: pos.coords.longitude,
+        //   },
+        // });
       });
     }
+
+    console.log('FormMap rerendered');
   }, []);
   return (
     <Controller

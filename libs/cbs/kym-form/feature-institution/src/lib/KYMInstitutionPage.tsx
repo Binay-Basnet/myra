@@ -75,6 +75,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
     },
   });
   const { control, handleSubmit, getValues, watch, setError } = methods;
+
   return (
     <>
       <Box position="relative" margin="0px auto">
