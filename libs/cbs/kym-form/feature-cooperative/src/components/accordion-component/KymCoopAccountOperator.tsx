@@ -13,6 +13,7 @@ import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   FormFileInput,
   FormInput,
+  FormMap,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
@@ -197,12 +198,11 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
                 />
               </InputGroupContainer>
 
-              <Button
-                alignSelf="start"
-                leftIcon={<Icon size="md" as={FaMap} />}
-              >
-                {t['pinOnMap']}
-              </Button>
+              <Box>
+                <FormMap
+                  name={`accountOperatorsDetails.${index}.permanentLocation`}
+                />
+              </Box>
             </AccordianContainer>
 
             <Box
@@ -263,13 +263,12 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
                       placeholder={t['kymCoopEnterLocality']}
                     />
                   </InputGroupContainer>
-                  <Button
-                    mt="-16px"
-                    alignSelf="start"
-                    leftIcon={<Icon size="md" as={FaMap} />}
-                  >
-                    {t['pinOnMap']}
-                  </Button>
+
+                  <Box mt="-16px">
+                    <FormMap
+                      name={`accountOperatorsDetails.${index}.temporaryLocation`}
+                    />
+                  </Box>
                 </>
               )}
             </Box>

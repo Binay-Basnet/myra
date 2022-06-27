@@ -24,6 +24,7 @@ import {
 import {
   FormFileInput,
   FormInput,
+  FormMap,
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
@@ -209,10 +210,11 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               />
             </InputGroupContainer>
 
-            <Button alignSelf="start" leftIcon={<Icon size="md" as={FaMap} />}>
-              {t['pinOnMap']}
-            </Button>
-            {/* </Box> */}
+            <Box>
+              <FormMap
+                name={`boardOfDirectorsDetails.${index}.permanentLocation`}
+              />
+            </Box>
           </AccordianContainer>
 
           <Box
@@ -233,55 +235,54 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
               label={t['kymInsTemporaryAddressPermanent']}
             />
 
-            {/* {!isPermanentAndTemporaryAddressSame && (
-              <> */}
-            <InputGroupContainer>
-              <FormSelect
-                name={`boardOfDirectorsDetails.${index}.temporaryState`}
-                label={t['kymInsState']}
-                placeholder={t['kymInsSelectState']}
-                options={province}
-              />
-              <FormSelect
-                name={`boardOfDirectorsDetails.${index}.temporaryDistrict`}
-                label={t['kymInsDistrict']}
-                placeholder={t['kymInsSelectDistrict']}
-                options={districtTempList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                name={`boardOfDirectorsDetails.${index}.temporaryMunicipality`}
-                label={t['kymInsVDCMunicipality']}
-                placeholder={t['kymInsSelectVDCMunicipality']}
-                options={localityTempList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormInput
-                type="number"
-                name={`boardOfDirectorsDetails.${index}.temporaryWardNo`}
-                label={t['kymInsWardNo']}
-                placeholder={t['kymInsEnterWardNo']}
-              />
-              <FormInput
-                type="text"
-                name={`boardOfDirectorsDetails.${index}.temporaryLocality`}
-                label={t['kymInsLocality']}
-                placeholder={t['kymInsEnterLocality']}
-              />
-            </InputGroupContainer>
-            <Button
-              mt="-16px"
-              alignSelf="start"
-              leftIcon={<Icon size="md" as={FaMap} />}
-            >
-              {t['pinOnMap']}
-            </Button>
-            {/* </>
-            )} */}
+            {!isPermanentAndTemporaryAddressSame && (
+              <>
+                <InputGroupContainer>
+                  <FormSelect
+                    name={`boardOfDirectorsDetails.${index}.temporaryState`}
+                    label={t['kymInsState']}
+                    placeholder={t['kymInsSelectState']}
+                    options={province}
+                  />
+                  <FormSelect
+                    name={`boardOfDirectorsDetails.${index}.temporaryDistrict`}
+                    label={t['kymInsDistrict']}
+                    placeholder={t['kymInsSelectDistrict']}
+                    options={districtTempList.map((d) => ({
+                      label: d.name,
+                      value: d.id,
+                    }))}
+                  />
+                  <FormSelect
+                    name={`boardOfDirectorsDetails.${index}.temporaryMunicipality`}
+                    label={t['kymInsVDCMunicipality']}
+                    placeholder={t['kymInsSelectVDCMunicipality']}
+                    options={localityTempList.map((d) => ({
+                      label: d.name,
+                      value: d.id,
+                    }))}
+                  />
+                  <FormInput
+                    type="number"
+                    name={`boardOfDirectorsDetails.${index}.temporaryWardNo`}
+                    label={t['kymInsWardNo']}
+                    placeholder={t['kymInsEnterWardNo']}
+                  />
+                  <FormInput
+                    type="text"
+                    name={`boardOfDirectorsDetails.${index}.temporaryLocality`}
+                    label={t['kymInsLocality']}
+                    placeholder={t['kymInsEnterLocality']}
+                  />
+                </InputGroupContainer>
+
+                <Box mt="-16px">
+                  <FormMap
+                    name={`boardOfDirectorsDetails.${index}.temporaryLocation`}
+                  />
+                </Box>
+              </>
+            )}
           </Box>
           <InputGroupContainer>
             <FormInput
@@ -366,6 +367,8 @@ export const BoardDirectorInfo = ({ watch, control }) => {
     append: directorAppend,
     remove: directorRemove,
   } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
+
+  console.log('board director info');
   return (
     <GroupContainer
       id="Details of Proprietor, Partners, Directors."

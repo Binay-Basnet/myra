@@ -30,6 +30,7 @@ export const FormSwitch = ({
       render={({ field: { onChange, value } }) => (
         <Box display="flex" flexDirection="row" alignItems="center">
           <Switch
+            id={name}
             mr={label && 5}
             isChecked={value}
             {...rest}
