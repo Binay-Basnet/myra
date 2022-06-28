@@ -87,7 +87,7 @@ export const InstitutionKYMDirectorWithAffiliation = () => {
 
   return (
     <GroupContainer
-      id="Details of directors affiliated with other Firms"
+      id="kymInsDetailsofdirectorsaffiliatedwithotherFirms"
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">

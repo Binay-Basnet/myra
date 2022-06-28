@@ -344,13 +344,13 @@ const AddDirector = ({ watch, index, removeDirector }) => {
               size="lg"
               label={t['kymInsPhotograph']}
               // control={control}
-              name={`boardOfDirectorsDetails.${index}.photograph`}
+              name={`detailsOfDirector.${index}.photograph`}
             />
             <FormFileInput
               size="lg"
               label={t['kymInsPhotographOfIdentityProofDocument']}
               // control={control}
-              name={`boardOfDirectorsDetails.${index}.documentPhotograph`}
+              name={`detailsOfDirectors.${index}.documentPhotograph`}
             />
           </Grid>
         </SectionContainer>
@@ -369,7 +369,7 @@ export const BoardDirectorInfo = ({ watch }) => {
   } = useFieldArray({ name: 'detailsOfDirectors' });
   return (
     <GroupContainer
-      id="Details of Proprietor, Partners, Directors."
+      id="kymInsDetailsofProprietorPartnersDirectors"
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">

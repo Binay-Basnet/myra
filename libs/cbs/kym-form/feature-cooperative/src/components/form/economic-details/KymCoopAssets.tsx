@@ -20,7 +20,7 @@ export const KymCoopAssets = ({ watch }: any) => {
     Number(nonCurrentAssets);
 
   return (
-    <Box id="Assets" display="flex" flexDirection="column">
+    <Box id="kymCoopAccAssets" display="flex" flexDirection="column">
       <Grid
         columnGap={40}
         alignItems="center"

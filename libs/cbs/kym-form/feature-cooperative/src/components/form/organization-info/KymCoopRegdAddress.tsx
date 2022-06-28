@@ -42,7 +42,7 @@ export const KymCoopRegdAddress = ({ watch }: any) => {
   );
 
   return (
-    <GroupContainer id="Registered Address" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymCoopAccRegisteredAddress" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"

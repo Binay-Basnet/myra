@@ -1,6 +1,7 @@
 import React, { useId } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react';
+
 import { Input as ChakraInput } from '@coop/shared/ui';
 
 import type { IInputProps } from '../types';
@@ -73,7 +74,7 @@ export function Input<TfieldTypes>(props: IInputProps<TfieldTypes>) {
         )}
         rules={validations}
       />
-      <FormErrorMessage>{error && error?.message}</FormErrorMessage>
+      {/* <FormErrorMessage>{error && error?.message}</FormErrorMessage> */}
     </FormControl>
   );
 }

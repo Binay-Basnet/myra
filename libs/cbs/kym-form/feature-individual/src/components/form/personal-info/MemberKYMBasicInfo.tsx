@@ -34,7 +34,7 @@ export const MemberKYMBasicInfo = () => {
     });
 
   return (
-    <GroupContainer id="Basic Information" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymAccIndBasicInformation" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"

@@ -43,7 +43,7 @@ const sisterConcern = ['sisterConcernDetails', 'sisterConcernButton'];
 
 const BankAccDetails = ['bank', 'accountNumber', 'accountName'];
 const directorDetails = [
-  'boardOfDirectorsDetails',
+  'detailsOfDirector',
   'addDirectorButton',
   'isPermanentAndTemporaryAddressSame',
 ];

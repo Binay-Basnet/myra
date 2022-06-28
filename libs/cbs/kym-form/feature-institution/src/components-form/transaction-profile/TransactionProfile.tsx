@@ -8,16 +8,12 @@ import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const radioList1 = [
-  'Less than 5 Lakhs',
-  'Less than 10 Lakhs',
-  'Above 10 Lakhs',
+  'Less than 20 Lakhs',
+  'Less than 50 Lakhs',
+  'Above 50 Lakhs',
 ];
 
-const radioList2 = [
-  'Less than 10 Lakhs',
-  'Less than 25 Lakhs',
-  'Above 25 Lakhs',
-];
+const radioList2 = ['Less than 10', 'Less than 25', 'Above 25'];
 
 export const TransactionProfileInstitution = () => {
   const { t } = useTranslation();
@@ -26,7 +22,10 @@ export const TransactionProfileInstitution = () => {
       <>
         {/* {console.log('hello world', InstitutionExpectedMonthlyTurnover)} */}
 
-        <InputGroupContainer id="Transaction Profile" scrollMarginTop={'200px'}>
+        <InputGroupContainer
+          id="kymInsTransactionProfile"
+          scrollMarginTop={'200px'}
+        >
           <FormInput
             // control={control}
             type="text"

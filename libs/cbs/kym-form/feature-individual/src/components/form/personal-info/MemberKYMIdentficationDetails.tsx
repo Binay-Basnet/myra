@@ -20,7 +20,10 @@ export const MemberKYMIdentificationDetails = () => {
   const [currentShownDetails, setCurrentDetailsShown] = useState<string[]>([]);
 
   return (
-    <GroupContainer id="Identification Details" scrollMarginTop={'200px'}>
+    <GroupContainer
+      id="kymAccIndIdentificationDetails"
+      scrollMarginTop={'200px'}
+    >
       <Text fontSize="r1" fontWeight="semibold">
         {t['kymIndIDENTIFICATIONDETAILS']}
       </Text>

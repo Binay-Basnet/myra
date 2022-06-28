@@ -236,21 +236,22 @@ export function AccorrdianAddMember(props: AccordianProps) {
         <Box display={'flex'} flexDirection="column" mb="s16">
           {Decleration.map((item, index) => {
             return (
-            <Box
-              key={`${item}${index}`}
-              display="flex"
-              alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
-              py="s8"
-            >
-              <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
-                  {t[item]}
-                </Text>
-              </a>
-            </Box>
-          )})}
+              <Box
+                key={`${item}${index}`}
+                display="flex"
+                alignItems={'center'}
+                px={subsection === item ? 's16' : '0'}
+                bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+                py="s8"
+              >
+                <a href={`#${item}`}>
+                  <Text pl="s16" fontSize="r1" fontWeight="400">
+                    {t[item]}
+                  </Text>
+                </a>
+              </Box>
+            );
+          })}
         </Box>
       </Collapse>
     </Box>

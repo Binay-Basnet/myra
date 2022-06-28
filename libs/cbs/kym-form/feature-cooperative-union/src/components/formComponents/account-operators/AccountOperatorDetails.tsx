@@ -387,7 +387,10 @@ export const AccountOperatorInfo = ({ watch, control }) => {
     remove: accountRemove,
   } = useFieldArray({ control, name: 'accountOperatorsDetails' });
   return (
-    <GroupContainer id="Family Details" scrollMarginTop={'200px'}>
+    <GroupContainer
+      id="kymCoopUnionAccDetailsofAccountOperators"
+      scrollMarginTop={'200px'}
+    >
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymCoopUnionDetailsOfAccountOperators']}
       </Text>

@@ -68,7 +68,7 @@ export const MemberKYMAddress = () => {
   return (
     <GroupContainer>
       <Box
-        id="Permanent Address"
+        id="kymAccIndPermanentAddress"
         gap="s32"
         display={'flex'}
         flexDirection="column"
@@ -134,7 +134,7 @@ export const MemberKYMAddress = () => {
         </Box>
       </Box>
       <Box
-        id="Temporary Address"
+        id="kymAccIndTemporaryAddress"
         gap="s32"
         display={'flex'}
         flexDirection="column"
@@ -203,7 +203,7 @@ export const MemberKYMAddress = () => {
         )}
       </Box>
       <Box
-        id="Incase of residing in Rented House"
+        id="kymAccIndIncaseofresidinginRentedHouse"
         gap="s32"
         display={'flex'}
         flexDirection="column"
