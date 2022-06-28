@@ -344,13 +344,13 @@ const AddDirector = ({ watch, index, removeDirector }) => {
               size="lg"
               label={t['kymInsPhotograph']}
               // control={control}
-              name={`boardOfDirectorsDetails.${index}.photograph`}
+              name={`detailsOfDirector.${index}.photograph`}
             />
             <FormFileInput
               size="lg"
               label={t['kymInsPhotographOfIdentityProofDocument']}
               // control={control}
-              name={`boardOfDirectorsDetails.${index}.documentPhotograph`}
+              name={`detailsOfDirectors.${index}.documentPhotograph`}
             />
           </Grid>
         </SectionContainer>

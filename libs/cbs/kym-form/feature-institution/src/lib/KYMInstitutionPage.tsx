@@ -33,11 +33,13 @@ import {
   BankAccountDetailsInstitution,
   BasicDetailsInstitution,
   BoardDirectorInfo,
+  BranchOfficeAddress,
   ContactDetailsInstitution,
   DocumentDeclarationInstitution,
   InstitutionKYMAccountDetail,
   InstitutionKYMDirectorWithAffiliation,
   InstitutionKYMSisterConcernDetails,
+  OperatorOfficeAddress,
   RegisteredDetailsInstitution,
   TransactionProfileInstitution,
 } from '../components-form';
@@ -207,6 +209,8 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                       <ContainerWithDivider>
                         <BasicDetailsInstitution />
                         <RegisteredDetailsInstitution />
+                        <OperatorOfficeAddress />
+                        <BranchOfficeAddress />
                         <ContactDetailsInstitution />
                         <BankAccountDetailsInstitution />
                         <InstitutionKYMSisterConcernDetails />

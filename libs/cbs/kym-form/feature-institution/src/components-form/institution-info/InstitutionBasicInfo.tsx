@@ -56,25 +56,12 @@ export const BasicDetailsInstitution = () => {
           label={t['kymInsVATPanNo']}
           placeholder={t['kymInsEnterVATPanNo']}
         />
-        <FormInput
-          type="text"
-          name="operatingOfficeAddress"
-          label={t['kymInsOperatingOfficeAddress']}
-          placeholder={t['kymInsEnterAddress']}
-        />
 
         <FormInput
           type="text"
           name="noOfBranches"
           label={t['kymInsNoofBranches']}
           placeholder={t['kymInsEnterNoofBranches']}
-        />
-
-        <FormInput
-          type="text"
-          name="branchOfficeAddress"
-          label={t['kymInsBranchOfficeAddress']}
-          placeholder={t['kymInsBranchOfficeAddress']}
         />
       </InputGroupContainer>
     </GroupContainer>
