@@ -42,7 +42,7 @@ export const Select = (props: IInputProps) => {
         )}
       />
 
-      {/* <FormErrorMessage>{error && error?.message}</FormErrorMessage> */}
+      {/* <FormErrorMessage>{error && *error?.message}</FormErrorMessage> */}
     </FormControl>
   );
 };
