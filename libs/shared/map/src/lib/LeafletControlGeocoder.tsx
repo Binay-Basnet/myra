@@ -3,7 +3,7 @@ import { useMap } from 'react-leaflet';
 import Geocoder from 'leaflet-control-geocoder';
 
 import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
-import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
+// import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
 
 export default function LeafletControlGeocoder(props: {
   setPosition: React.Dispatch<
