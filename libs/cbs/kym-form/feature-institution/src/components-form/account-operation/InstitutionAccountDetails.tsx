@@ -79,7 +79,10 @@ export const InstitutionKYMAccountDetail = () => {
   } = useFieldArray({ name: 'accountOperatorsDetails' });
 
   return (
-    <GroupContainer id="Details of Account Operators" scrollMarginTop="200px">
+    <GroupContainer
+      id="kymInsDetailsofAccountOperators"
+      scrollMarginTop="200px"
+    >
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymInsDetailsofAccountOperators']}
       </Text>

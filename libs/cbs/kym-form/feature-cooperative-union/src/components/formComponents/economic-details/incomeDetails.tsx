@@ -67,7 +67,7 @@ export const IncomeDetails = ({ watch }: any) => {
     <Box
       display="flex"
       flexDirection="column"
-      id="Income Details"
+      id="kymCoopUnionAccIncomeDetails"
       scrollMarginTop={'200px'}
     >
       <Grid

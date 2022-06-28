@@ -1,6 +1,7 @@
 import React, { useId } from 'react';
 import { Controller, RegisterOptions, useFormContext } from 'react-hook-form';
 import { FormControl, FormErrorMessage, InputProps } from '@chakra-ui/react';
+
 import { BaseSelect as ChakraSelect, TextFields } from '@coop/shared/ui';
 
 interface IInputProps extends InputProps {
@@ -41,7 +42,7 @@ export const Select = (props: IInputProps) => {
         )}
       />
 
-      <FormErrorMessage>{error && error?.message}</FormErrorMessage>
+      {/* <FormErrorMessage>{error && *error?.message}</FormErrorMessage> */}
     </FormControl>
   );
 };

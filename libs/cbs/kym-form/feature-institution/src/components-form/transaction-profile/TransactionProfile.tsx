@@ -22,7 +22,10 @@ export const TransactionProfileInstitution = () => {
       <>
         {/* {console.log('hello world', InstitutionExpectedMonthlyTurnover)} */}
 
-        <InputGroupContainer id="Transaction Profile" scrollMarginTop={'200px'}>
+        <InputGroupContainer
+          id="kymInsTransactionProfile"
+          scrollMarginTop={'200px'}
+        >
           <FormInput
             // control={control}
             type="text"

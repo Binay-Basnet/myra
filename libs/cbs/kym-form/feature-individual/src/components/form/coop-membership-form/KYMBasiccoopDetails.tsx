@@ -70,7 +70,7 @@ export const KYMBasiccoopDetails = () => {
   const w = watch('memberOfAnotherCooperative');
 
   return (
-    <GroupContainer>
+    <GroupContainer id="kymAccIndMainPurposeofBecomingMember">
       <FormRadioGroup
         label={t['kynIndMemberIdentityLevel']}
         id="memberIdentityLevel"
@@ -93,7 +93,7 @@ export const KYMBasiccoopDetails = () => {
       />
 
       <InputGroupContainer
-        id="Main Purpose of Becoming a Member"
+        id="kymAccIndMainPurposeofBecomingMember"
         scrollMarginTop={'200px'}
       >
         <FormSelect
@@ -108,7 +108,7 @@ export const KYMBasiccoopDetails = () => {
         display="flex"
         flexDirection="column"
         gap="s32"
-        id="Member of Another cooperative"
+        id="kymAccIndMemberofAnothercooperative"
         scrollMarginTop={'200px'}
       >
         <FormSwitchTab
@@ -140,7 +140,7 @@ export const KYMBasiccoopDetails = () => {
         display="flex"
         flexDirection="column"
         gap="s8"
-        id="Family Member in this institution"
+        id="kymAccIndFamilyMemberinthisinstitution"
         scrollMarginTop={'200px'}
       >
         <FormSwitchTab

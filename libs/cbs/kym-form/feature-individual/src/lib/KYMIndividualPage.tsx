@@ -139,14 +139,12 @@ export function KYMIndividualPage() {
         <FormProvider {...methods}>
           <form
             onChange={debounce(() => {
-              console.log('individual', getValues());
               mutate({ id, data: getValues() });
             }, 800)}
             onSubmit={handleSubmit((data) => {
               console.log('data', data);
             })}
             onFocus={(e) => {
-              console.log('hello', e.target?.id)
               const kymSection = getKymSection(e.target.id);
 
               setKymCurrentSection(kymSection);

@@ -8,7 +8,10 @@ import { useTranslation } from '@coop/shared/utils';
 export const KymAccountHolderDeclaration = () => {
   const { t } = useTranslation();
   return (
-    <GroupContainer id="Account Holder Declaration" scrollMarginTop={'200px'}>
+    <GroupContainer
+      id="kymCoopAccAccountHolderDeclaration"
+      scrollMarginTop={'200px'}
+    >
       <Text
         fontSize="r1"
         fontWeight="semibold"

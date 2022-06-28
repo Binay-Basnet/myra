@@ -72,7 +72,7 @@ export const MemberKYMIncomeSourceDetails = () => {
   } = useFieldArray({ control, name: 'incomeSourceDetails' });
 
   return (
-    <GroupContainer id="Income Source Details" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymAccIndIncomeSourceDetails" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymIndINCOMESOURCEDETAILS']}
       </Text>

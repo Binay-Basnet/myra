@@ -62,7 +62,7 @@ export const KYMDeclaration = () => {
         </TextFields>
         <ContainerWithDivider>
           <Box
-            id="Beneficial Owner"
+            id="kymAccIndBeneficialOwner"
             scrollMarginTop={'200px'}
             display="flex"
             flexDirection="column"
@@ -101,7 +101,7 @@ export const KYMDeclaration = () => {
           </Box>
 
           <Box
-            id="Family members in politics"
+            id="kymAccIndFamilymembersinpolitics"
             scrollMarginTop={'200px'}
             display="flex"
             flexDirection="column"
@@ -126,7 +126,7 @@ export const KYMDeclaration = () => {
           </Box>
 
           <Box
-            id="Convicted/Non-convicted Status"
+            id="kymAccIndConvictedNonconvictedStatus"
             scrollMarginTop={'200px'}
             display="flex"
             flexDirection="column"
@@ -151,7 +151,7 @@ export const KYMDeclaration = () => {
           </Box>
 
           <Box
-            id="Residential permit of foreign country?"
+            id="kymAccIndResidentialpermitofforeigncountry"
             scrollMarginTop={'200px'}
             display="flex"
             flexDirection="column"

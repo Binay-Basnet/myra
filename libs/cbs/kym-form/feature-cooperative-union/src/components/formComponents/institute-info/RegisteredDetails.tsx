@@ -11,7 +11,10 @@ import { useTranslation } from '@coop/shared/utils';
 export const RegisteredDetails = () => {
   const { t } = useTranslation();
   return (
-    <GroupContainer id="Registered Details" scrollMarginTop={'200px'}>
+    <GroupContainer
+      id="kymCoopUnionAccRegisteredDetails"
+      scrollMarginTop={'200px'}
+    >
       <Text
         fontSize="r1"
         fontWeight="semibold"
