@@ -6,9 +6,7 @@ import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
 
 export default function LeafletControlGeocoder(props: {
-  setPosition: React.Dispatch<
-    SetStateAction<{ latitude: number; longitude: number }>
-  >;
+  setPosition: (prop: { latitude: number; longitude: number }) => void;
 }) {
   const { setPosition } = props;
   const map = useMap();
