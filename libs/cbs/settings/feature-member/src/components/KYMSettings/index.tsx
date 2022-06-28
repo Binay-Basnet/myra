@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
-import { useGetKymIndItemDetailsQuery } from '@coop/shared/data-access';
+import {
+  Kym_Field_Parent,
+  useGetKymIndItemDetailsQuery,
+} from '@coop/shared/data-access';
 import { Accordion, AccordionItem, AccordionPanel } from '@coop/shared/ui';
 
 import { KYMBottomPanel } from '../KYMBottomPanel';
@@ -29,7 +32,7 @@ export const KYMSettings = ({
   const [fields, setFields] = useState(kymFields);
 
   const { data, isLoading } = useGetKymIndItemDetailsQuery(
-    { isIdentificationDoc: true },
+    { isIdentificationDoc: Kym_Field_Parent.Identification },
     {
       enabled: fields.children?.length === 0,
       onSuccess: (response) => {

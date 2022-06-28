@@ -65,7 +65,6 @@ export const KYMDragGroup = ({
     {
       id: fieldId ?? null,
       name: fieldName ?? null,
-      isIdentificationDoc: fieldName === 'identification_documents',
     },
     {
       enabled: isExpanded,

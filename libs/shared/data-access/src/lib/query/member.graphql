@@ -87,12 +87,12 @@ query getKymFormStatus($id: ID!) {
     }
 }
 
-query getKYMIndItemDetails( $id: ID,$name: String, $isIdentificationDoc: Boolean) {
+query getKYMIndItemDetails( $id: ID,$name: String, $isIdentificationDoc: KYM_Field_Parent) {
     settings {
         kymForm {
             field {
                 list(
-                    filter: {id: $id, name: $name, kymType: INDIVIDUAL, isIdentificationDoc: $isIdentificationDoc }
+                    filter: {id: $id, name: $name, kymType: INDIVIDUAL, parent: $isIdentificationDoc }
                 ) {
                     data {
                         id
@@ -101,8 +101,7 @@ query getKYMIndItemDetails( $id: ID,$name: String, $isIdentificationDoc: Boolean
                         options {
                             id
                             name
-                            optionType
-                            variant
+                            fieldType
                             enabled
                         }
                         hasOtherField
@@ -184,3 +183,4 @@ query getMemberIndividualData($id: ID!) {
         }
     }
 }
+

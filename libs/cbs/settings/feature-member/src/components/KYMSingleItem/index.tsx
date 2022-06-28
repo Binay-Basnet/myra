@@ -123,7 +123,7 @@ export const KYMSingleItem = ({
     defaultValues: {
       enabled: item.enabled,
       name: item?.name?.local,
-      fieldType: item.optionType,
+      fieldType: item.fieldType,
     },
   });
 
@@ -167,7 +167,6 @@ export const KYMSingleItem = ({
         gap="s20"
         onSubmit={async (e) => {
           e.preventDefault();
-          console.log('Hello World');
           setIsEditable(false);
 
           await kymOptionUpdate({

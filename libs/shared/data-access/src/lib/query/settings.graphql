@@ -25,8 +25,7 @@ query getCustomFields {
                         options {
                             id
                             name
-                            variant
-                            optionType
+                            fieldType
                             enabled
                         }
                     }

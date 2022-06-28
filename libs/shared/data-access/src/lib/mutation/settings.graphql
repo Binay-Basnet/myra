@@ -7,8 +7,7 @@ mutation addKYMOption($fieldId: ID!, $data: KYMOptionInput!) {
                     record {
                         id
                         name
-                        variant
-                        optionType
+                        fieldType
                         enabled
                     }
                     error {
@@ -105,7 +104,7 @@ mutation addCustomField {
                         options {
                             id
                             name
-                            optionType
+                            fieldType
                             enabled
                         }
                     }

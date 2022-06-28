@@ -1,14 +1,13 @@
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FaMap } from 'react-icons/fa';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const MemberKYMAddress = () => {
