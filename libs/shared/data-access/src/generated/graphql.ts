@@ -4637,6 +4637,7 @@ export type ShareBalance = Base & {
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
+  shareNumbers?: Maybe<Array<Maybe<ShareNumber>>>;
 };
 
 export type ShareBalanceConnection = {
@@ -4681,6 +4682,11 @@ export type ShareMutationPurchaseArgs = {
 export type ShareMutationReturnArgs = {
   data: ShareReturnInput;
   id: Scalars['ID'];
+};
+
+export type ShareNumber = {
+  end?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
 };
 
 export type SharePurchaseError = InvalidDataError;

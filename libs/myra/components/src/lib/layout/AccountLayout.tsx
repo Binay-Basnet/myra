@@ -16,16 +16,12 @@ const accountColumns = [
     link: '/accounts/list',
   },
   {
+    title: 'accountClose',
+    link: '/accounts/close',
+  },
+  {
     title: 'accountReport',
     link: '/accounts/report',
-  },
-  {
-    title: 'accountConsolidatedReport',
-    link: '/accounts/consolidatedReport',
-  },
-  {
-    title: 'accountCertificatePrint',
-    link: '/accounts/certificate',
   },
 ];
 
@@ -46,7 +42,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
           onClick={() => {
-            router.push('/accounts/add-new-account');
+            router.push('/accounts/account-open');
           }}
         >
           {t['accountLayoutNewAccount']}

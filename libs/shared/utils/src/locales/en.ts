@@ -202,9 +202,8 @@ const en: Record<string, string> = {
   accountNavDraft: 'Draft',
 
   accountList: 'Account List',
-  accountReport: 'Account Report',
-  accountConsolidatedReport: 'Account Consolidated Report',
-  accountCertificatePrint: 'Account Certificate Print',
+  accountClose: 'Account Close',
+  accountReport: 'Account Reports',
 
   // Inventory Page TODO ( Update Translations )
   inventoryItems: 'Items',
@@ -1452,6 +1451,21 @@ const en: Record<string, string> = {
   shareToAccount: 'Share To Account  /',
   shareToAccountSubtitle: 'Account from which shares are paid to and paid from',
   shareTransferAccountName: 'Account Name',
+
+  // account list
+
+  //account open
+  newAccountOpen: 'New Account Open',
+  accountOpenMemberId: 'Member ID',
+  accProductName: 'Product Name',
+  accSelectProduct: 'Select Product',
+  accInterest: 'Interest',
+  accInterestRate: 'Interest Rate',
+  accSource: 'Source',
+  accInterestSanctionedById: 'Interest Sanctioned By ID',
+  accInterestSanctionedByName: 'Interest Sanctioned By Name',
+  accDepositFrequency: 'Deposit Frequency',
+  accWeekly: 'Weekly',
 };
 
 export default en;
