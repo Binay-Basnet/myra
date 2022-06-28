@@ -1774,6 +1774,7 @@ export type ExampleMutation = {
 
 export type ExampleQuery = {
   localization: LocalizationExample;
+  testDb: TestDbResult;
 };
 
 export enum Field_Types {
@@ -4508,9 +4509,9 @@ export type OrganizationStatistics = {
 };
 
 export enum Payment_Mode {
-  Account = 'Account',
-  BankVoucher = 'BankVoucher',
-  Cash = 'Cash'
+  Account = 'ACCOUNT',
+  BankVoucher = 'BANK_VOUCHER',
+  Cash = 'CASH'
 }
 
 export type PageInfo = {
@@ -4626,11 +4627,16 @@ export type SettingsQuery = {
   general?: Maybe<GeneralSettingsQuery>;
 };
 
-export type ShareBalance = {
+export type ShareBalance = Base & {
   balance: Scalars['Int'];
-  id: Scalars['String'];
+  count: Scalars['Int'];
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  id: Scalars['ID'];
   member: Member;
-  shareCount: Scalars['Int'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
 };
 
 export type ShareBalanceConnection = {
@@ -4648,6 +4654,16 @@ export type ShareBalanceFilter = {
   id?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
   memberSearchText?: InputMaybe<Scalars['String']>;
+};
+
+export type ShareExtraCharges = {
+  name: Scalars['String'];
+  value: Scalars['Float'];
+};
+
+export type ShareExtraChargesInput = {
+  name: Scalars['String'];
+  value: Scalars['Float'];
 };
 
 export type ShareMutation = {
@@ -4672,7 +4688,7 @@ export type SharePurchaseError = InvalidDataError;
 export type SharePurchaseInput = {
   accountId?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['String']>;
-  extraFee?: InputMaybe<Scalars['Float']>;
+  extraFee?: InputMaybe<Array<InputMaybe<ShareExtraChargesInput>>>;
   memberId?: InputMaybe<Scalars['String']>;
   paymentMode?: InputMaybe<Payment_Mode>;
   shareAmount?: InputMaybe<Scalars['Float']>;
@@ -4705,17 +4721,29 @@ export type ShareQueryRegisterArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
-export type ShareRegister = {
+export type ShareRegister = Base & {
+  accountId?: Maybe<Scalars['String']>;
   balance: Scalars['Int'];
-  id: Scalars['String'];
+  bankId?: Maybe<Scalars['String']>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  credit?: Maybe<Scalars['Int']>;
+  debit?: Maybe<Scalars['Int']>;
+  endNumber: Scalars['Int'];
+  extraFee?: Maybe<Array<Maybe<ShareExtraCharges>>>;
+  id: Scalars['ID'];
   member: Member;
-  shareCr?: Maybe<Scalars['Int']>;
-  shareDr?: Maybe<Scalars['Int']>;
-  shareEndNumber: Scalars['Int'];
-  shareStartNumber: Scalars['Int'];
-  shareStatus: Share_Status;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
+  paymentMode: Payment_Mode;
+  shareAmount?: Maybe<Scalars['Float']>;
+  startNumber: Scalars['Int'];
+  status: Share_Status;
+  totalAmount?: Maybe<Scalars['Float']>;
   transactionDate: Scalars['Date'];
   transactionDirection: Share_Transaction_Direction;
+  voucherNumber?: Maybe<Scalars['String']>;
 };
 
 export type ShareRegisterConnection = {
@@ -4735,7 +4763,7 @@ export type ShareRegisterFilter = {
   id?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
   memberSearchText?: InputMaybe<Scalars['String']>;
-  shareStatus?: InputMaybe<Share_Status>;
+  status?: InputMaybe<Share_Status>;
   transactionDirection?: InputMaybe<Share_Transaction_Direction>;
 };
 
@@ -4744,7 +4772,7 @@ export type ShareReturnError = InvalidDataError;
 export type ShareReturnInput = {
   accountId?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['String']>;
-  extraFee?: InputMaybe<Scalars['Float']>;
+  extraFee?: InputMaybe<Array<InputMaybe<ShareExtraChargesInput>>>;
   memberId?: InputMaybe<Scalars['String']>;
   noOfReturnedShares?: InputMaybe<Scalars['Int']>;
   paymentMode?: InputMaybe<Payment_Mode>;
@@ -4795,6 +4823,10 @@ export enum Transaction_Type {
   Transfer = 'TRANSFER',
   Withdraw = 'WITHDRAW'
 }
+
+export type TestDbResult = {
+  name: Scalars['String'];
+};
 
 export enum TextFormat {
   Email = 'EMAIL',
@@ -5093,21 +5125,21 @@ export type UpdateCustomFieldMutationVariables = Exact<{
 
 export type UpdateCustomFieldMutation = { settings: { general?: { KYM?: { individual: { field: { update: { recordId: string, record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled?: boolean | null } | null } } } } | null } | null } };
 
-export type SetSharePurchaseMutationVariables = Exact<{
+export type AddSharePurchaseMutationVariables = Exact<{
   id: Scalars['ID'];
   data: SharePurchaseInput;
 }>;
 
 
-export type SetSharePurchaseMutation = { share: { purchase: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } } };
+export type AddSharePurchaseMutation = { share: { purchase: { recordId: string, record?: { id: string, createdAt: string, modifiedAt: string, status: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance: number, shareAmount?: number | null, totalAmount?: number | null, paymentMode: Payment_Mode, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member: { id: string }, extraFee?: Array<{ name: string, value: number } | null> | null } | null } } };
 
-export type SetShareReturnMutationVariables = Exact<{
+export type AddShareReturnMutationVariables = Exact<{
   id: Scalars['ID'];
   data: ShareReturnInput;
 }>;
 
 
-export type SetShareReturnMutation = { share: { return: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } } };
+export type AddShareReturnMutation = { share: { return: { recordId: string, record?: { id: string, createdAt: string, modifiedAt: string, status: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance: number, shareAmount?: number | null, totalAmount?: number | null, paymentMode: Payment_Mode, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member: { id: string } } | null } } };
 
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5221,19 +5253,19 @@ export type GetChartOfAccountsQuery = { settings: { general?: { chartsOfAccount?
 export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetShareBalanceListQuery = { share: { balance?: { edges: Array<{ node: { id: string, balance: number, shareCount: number, member: { name?: Record<"local"|"en"|"np",string> | null } } }>, pageInfo: { endCursor?: string | null, startCursor?: string | null } } | null } };
+export type GetShareBalanceListQuery = { share: { balance?: { edges: Array<{ node: { id: string, balance: number, count: number, member: { name?: Record<"local"|"en"|"np",string> | null } } }>, pageInfo: { endCursor?: string | null, startCursor?: string | null } } | null } };
 
 export type GetShareRegisterListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, member: { name?: Record<"local"|"en"|"np",string> | null } } }> } | null } };
+export type GetShareRegisterListQuery = { share: { register?: { edges: Array<{ node: { transactionDate: string, transactionDirection: Share_Transaction_Direction, id: string, balance: number, startNumber: number, endNumber: number, credit?: number | null, debit?: number | null, member: { name?: Record<"local"|"en"|"np",string> | null } } }> } | null } };
 
 export type GetShareHistoryQueryVariables = Exact<{
   memberId: Scalars['String'];
 }>;
 
 
-export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, shareStatus: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, shareStartNumber: number, shareEndNumber: number, shareCr?: number | null, shareDr?: number | null, balance: number, member: { id: string } } }> } | null } };
+export type GetShareHistoryQuery = { share: { register?: { edges: Array<{ node: { id: string, transactionDate: string, transactionDirection: Share_Transaction_Direction, startNumber: number, endNumber: number, credit?: number | null, debit?: number | null, balance: number, member: { id: string } } }> } | null } };
 
 
 export const LoginDocument = `
@@ -5911,50 +5943,88 @@ export const useUpdateCustomFieldMutation = <
       useAxios<UpdateCustomFieldMutation, UpdateCustomFieldMutationVariables>(UpdateCustomFieldDocument),
       options
     );
-export const SetSharePurchaseDocument = `
-    mutation setSharePurchase($id: ID!, $data: SharePurchaseInput!) {
+export const AddSharePurchaseDocument = `
+    mutation addSharePurchase($id: ID!, $data: SharePurchaseInput!) {
   share {
     purchase(id: $id, data: $data) {
       recordId
-      error {
-        ... on InvalidDataError {
-          error
+      record {
+        id
+        createdAt
+        modifiedAt
+        member {
+          id
         }
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        balance
+        shareAmount
+        totalAmount
+        extraFee {
+          name
+          value
+        }
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
       }
     }
   }
 }
     `;
-export const useSetSharePurchaseMutation = <
+export const useAddSharePurchaseMutation = <
       TError = unknown,
       TContext = unknown
-    >(options?: UseMutationOptions<SetSharePurchaseMutation, TError, SetSharePurchaseMutationVariables, TContext>) =>
-    useMutation<SetSharePurchaseMutation, TError, SetSharePurchaseMutationVariables, TContext>(
-      ['setSharePurchase'],
-      useAxios<SetSharePurchaseMutation, SetSharePurchaseMutationVariables>(SetSharePurchaseDocument),
+    >(options?: UseMutationOptions<AddSharePurchaseMutation, TError, AddSharePurchaseMutationVariables, TContext>) =>
+    useMutation<AddSharePurchaseMutation, TError, AddSharePurchaseMutationVariables, TContext>(
+      ['addSharePurchase'],
+      useAxios<AddSharePurchaseMutation, AddSharePurchaseMutationVariables>(AddSharePurchaseDocument),
       options
     );
-export const SetShareReturnDocument = `
-    mutation setShareReturn($id: ID!, $data: ShareReturnInput!) {
+export const AddShareReturnDocument = `
+    mutation addShareReturn($id: ID!, $data: ShareReturnInput!) {
   share {
     return(id: $id, data: $data) {
       recordId
-      error {
-        ... on InvalidDataError {
-          error
+      record {
+        id
+        createdAt
+        modifiedAt
+        member {
+          id
         }
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        balance
+        shareAmount
+        totalAmount
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
       }
     }
   }
 }
     `;
-export const useSetShareReturnMutation = <
+export const useAddShareReturnMutation = <
       TError = unknown,
       TContext = unknown
-    >(options?: UseMutationOptions<SetShareReturnMutation, TError, SetShareReturnMutationVariables, TContext>) =>
-    useMutation<SetShareReturnMutation, TError, SetShareReturnMutationVariables, TContext>(
-      ['setShareReturn'],
-      useAxios<SetShareReturnMutation, SetShareReturnMutationVariables>(SetShareReturnDocument),
+    >(options?: UseMutationOptions<AddShareReturnMutation, TError, AddShareReturnMutationVariables, TContext>) =>
+    useMutation<AddShareReturnMutation, TError, AddShareReturnMutationVariables, TContext>(
+      ['addShareReturn'],
+      useAxios<AddShareReturnMutation, AddShareReturnMutationVariables>(AddShareReturnDocument),
       options
     );
 export const AllAdministrationDocument = `
@@ -6627,7 +6697,7 @@ export const GetShareBalanceListDocument = `
         node {
           id
           balance
-          shareCount
+          count
           member {
             name
           }
@@ -6666,10 +6736,10 @@ export const GetShareRegisterListDocument = `
             name
           }
           balance
-          shareStartNumber
-          shareEndNumber
-          shareCr
-          shareDr
+          startNumber
+          endNumber
+          credit
+          debit
         }
       }
     }
@@ -6701,13 +6771,12 @@ export const GetShareHistoryDocument = `
           member {
             id
           }
-          shareStatus
           transactionDate
           transactionDirection
-          shareStartNumber
-          shareEndNumber
-          shareCr
-          shareDr
+          startNumber
+          endNumber
+          credit
+          debit
           balance
         }
       }
