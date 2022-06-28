@@ -60,12 +60,12 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
       onClick={onClick}
       boxShadow={'none'}
       color={'#4b4f56'}
-      _hover={{
-        bg: '#ebedf0',
-        color: 'primary.500',
-      }}
+      // _hover={{
+      //   bg: '#ebedf0',
+      //   color: 'primary.500',
+      // }}
       _active={{
-        bg: '#dddfe2',
+        // bg: '#dddfe2',
         transform: 'scale(0.98)',
         borderColor: 'primary.500',
       }}

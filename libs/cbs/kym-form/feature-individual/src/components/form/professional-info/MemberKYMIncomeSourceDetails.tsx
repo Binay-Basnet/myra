@@ -10,7 +10,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
-import { FormAmountInput, FormInput, FormRadioGroup } from '@coop/shared/form';
+import { FormInput, FormRadioGroup } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -43,7 +43,9 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
           />
         </GridItem>
         <GridItem colSpan={1}>
-          <FormAmountInput
+          <FormInput
+            type="number"
+            textAlign="right"
             control={control}
             bg="white"
             name={`incomeSourceDetails.${index}.amount`}
@@ -72,7 +74,7 @@ export const MemberKYMIncomeSourceDetails = () => {
   } = useFieldArray({ control, name: 'incomeSourceDetails' });
 
   return (
-    <GroupContainer id="Income Source Details" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymAccIndIncomeSourceDetails" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymIndINCOMESOURCEDETAILS']}
       </Text>

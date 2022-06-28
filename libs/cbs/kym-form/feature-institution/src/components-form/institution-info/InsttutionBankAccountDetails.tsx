@@ -9,7 +9,7 @@ import { useTranslation } from '@coop/shared/utils';
 export const BankAccountDetailsInstitution = () => {
   const { t } = useTranslation();
   return (
-    <GroupContainer id="Bank Account Details" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymInsBankAccountDetails" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"

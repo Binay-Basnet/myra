@@ -54,7 +54,7 @@ export const ExpenseDetails = ({ watch }: any) => {
     <Box
       display="flex"
       flexDirection="column"
-      id="Expense Details"
+      id="kymCoopUnionAccExpenseDetails"
       scrollMarginTop={'200px'}
     >
       <Grid

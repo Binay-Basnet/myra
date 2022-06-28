@@ -128,7 +128,7 @@ export const KymEquilities = ({ watch }: any) => {
     <Box
       display="flex"
       flexDirection="column"
-      id="Equity and Liailibities"
+      id="kymCoopUnionAccEquityandLiailibities"
       scrollMarginTop={'200px'}
     >
       <Grid

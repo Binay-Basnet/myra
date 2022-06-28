@@ -27,7 +27,7 @@ export const MemberKYMProfession = () => {
     });
 
   return (
-    <GroupContainer id="Profession" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymAccIndProfession" scrollMarginTop={'200px'}>
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymIndPROFESSION']}
       </Text>

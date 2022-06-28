@@ -16,7 +16,10 @@ export const KymCoopBoardDirectorDetail = ({ watch, control }) => {
     remove: directorRemove,
   } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
   return (
-    <GroupContainer id="Board Of Director Details" scrollMarginTop={'200px'}>
+    <GroupContainer
+      id="kymCoopAccBoardOfDirectorDetails"
+      scrollMarginTop={'200px'}
+    >
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymCoopBoardofdirectordetails']}
       </Text>

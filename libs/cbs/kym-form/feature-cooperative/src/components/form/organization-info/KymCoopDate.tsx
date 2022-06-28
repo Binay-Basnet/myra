@@ -9,7 +9,7 @@ import { useTranslation } from '@coop/shared/utils';
 export const KymCoopDate = () => {
   const { t } = useTranslation();
   return (
-    <GroupContainer id="Cooperative Date" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymCoopAccCooperativeDate" scrollMarginTop={'200px'}>
       <InputGroupContainer>
         <FormInput
           type="date"

@@ -18,7 +18,7 @@ export const KymCoopNoEmployee = () => {
   );
 
   return (
-    <GroupContainer id="Number of Employee" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymCoopAccNumberofEmployee" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"

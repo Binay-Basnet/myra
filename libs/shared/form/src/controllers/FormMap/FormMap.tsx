@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 
@@ -21,46 +21,6 @@ export function FormMap<T>({ name, id }: FormMapProps<T>) {
     getValues,
   } = methods;
 
-  useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        if (name.includes('.') && name.split('.').length === 3) {
-          const temp = name.split('.');
-
-          const tempNameValues = getValues()[temp[0]]
-            ? getValues()[temp[0]]
-            : {};
-
-          tempNameValues[temp[1]] = {
-            ...tempNameValues[temp[1]],
-            [temp[2]]: {
-              latitude: pos.coords.latitude,
-              longitude: pos.coords.longitude,
-            },
-          };
-          reset({ ...getValues(), [temp[0]]: [...tempNameValues] });
-        } else {
-          reset({
-            ...getValues(),
-            [name]: {
-              latitude: pos.coords.latitude,
-              longitude: pos.coords.longitude,
-            },
-          });
-        }
-
-        // reset({
-        //   ...getValues(),
-        //   [name]: {
-        //     latitude: pos.coords.latitude,
-        //     longitude: pos.coords.longitude,
-        //   },
-        // });
-      });
-    }
-
-    console.log('FormMap rerendered');
-  }, []);
   return (
     <Controller
       name={name}

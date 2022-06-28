@@ -81,7 +81,7 @@ export function SwitchTabs({
 }: SwitchTabsProps) {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: name,
-    defaultValue: value,
+    defaultValue: value?.toString(),
     onChange: onChange,
   });
 

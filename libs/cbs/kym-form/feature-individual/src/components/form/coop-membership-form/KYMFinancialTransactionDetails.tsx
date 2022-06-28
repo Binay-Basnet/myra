@@ -20,7 +20,7 @@ export const KYMFinancialTransactionDetails = () => {
 
   return (
     <GroupContainer
-      id="Financial Transaction Details"
+      id="kymAccIndFinancialTransactionDetails"
       scrollMarginTop={'200px'}
     >
       <Text fontSize="r1" fontWeight="SemiBold">
