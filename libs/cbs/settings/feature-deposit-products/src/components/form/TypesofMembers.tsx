@@ -1,30 +1,8 @@
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
-import { useRouter } from 'next/router';
 
 // import debounce from 'lodash/debounce';
-import {
-  ContainerWithDivider,
-  InputGroupContainer,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormCheckboxGroup,
-  FormInput,
-  FormSelect,
-  FormSwitch,
-  FormSwitchTab,
-} from '@coop/shared/form';
-import {
-  Box,
-  Container,
-  Grid,
-  GridItem,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { FormCheckboxGroup } from '@coop/shared/form';
+import { Box, Text } from '@coop/shared/ui';
 
 const typesOfMember = [
   { label: 'Individual', value: 'individual' },
@@ -97,8 +75,6 @@ const typesOfMember = [
 // ];
 
 export const TypesOfMember = ({ watch }: any) => {
-  const see = watch('typeOfMember');
-  console.log('see', see);
   return (
     <Box display="flex" flexDirection={'column'} gap="s16">
       <Text fontWeight="500" fontSize={'s3'} color="gray.700">
