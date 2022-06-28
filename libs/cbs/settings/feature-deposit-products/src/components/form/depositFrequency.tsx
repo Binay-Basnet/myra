@@ -41,7 +41,9 @@ const enableSwitch = [
     value: 'disable',
   },
 ];
-export const DepositFrequency = () => {
+export const DepositFrequency = ({ watch }: any) => {
+  const penalty = watch('enablePenalty');
+  const rebate = watch('enableRebate');
   return (
     <BoxContainer>
       <TextBoxContainer>
@@ -62,48 +64,50 @@ export const DepositFrequency = () => {
         </TextBoxContainer>
         <FormSwitchTab name={'enablePenalty'} options={enableSwitch} />
       </Box>
-      <BoxContainer
-        p="s16"
-        border={'1px solid'}
-        borderColor="border.layout"
-        borderRadius={'4px'}
-      >
-        <InputGroupContainer>
-          <FormInput
-            name="dayFromTheEndPenalty"
-            type="number"
-            label="Day from end date"
-            placeholder="Day from end date"
-          />
-          <FormInput
-            name="minimumAmount"
-            type="number"
-            label="Minimum Amount"
-            placeholder="Minimum Amount"
-          />
-          <FormInput
-            name="flatRatePenalty"
-            type="number"
-            label="Flat-rate Penalty"
-            placeholder="Flat-rate penalty"
-          />
-          <FormInput
-            name="penaltyPercentage"
-            type="number"
-            label="Penalty"
-            textAlign={'right'}
-            placeholder="0.00"
-            rightElement={'%'}
-          />
-          <FormInput
-            name="penaltyAmount"
-            type="number"
-            label="Penalty Amount"
-            placeholder="Penalty Amount"
-            textAlign={'right'}
-          />
-        </InputGroupContainer>
-      </BoxContainer>
+      {penalty && penalty === 'enable' && (
+        <BoxContainer
+          p="s16"
+          border={'1px solid'}
+          borderColor="border.layout"
+          borderRadius={'4px'}
+        >
+          <InputGroupContainer>
+            <FormInput
+              name="dayFromTheEndPenalty"
+              type="number"
+              label="Day from end date"
+              placeholder="Day from end date"
+            />
+            <FormInput
+              name="minimumAmount"
+              type="number"
+              label="Minimum Amount"
+              placeholder="Minimum Amount"
+            />
+            <FormInput
+              name="flatRatePenalty"
+              type="number"
+              label="Flat-rate Penalty"
+              placeholder="Flat-rate penalty"
+            />
+            <FormInput
+              name="penaltyPercentage"
+              type="number"
+              label="Penalty"
+              textAlign={'right'}
+              placeholder="0.00"
+              rightElement={'%'}
+            />
+            <FormInput
+              name="penaltyAmount"
+              type="number"
+              label="Penalty Amount"
+              placeholder="Penalty Amount"
+              textAlign={'right'}
+            />
+          </InputGroupContainer>
+        </BoxContainer>
+      )}
       <Box display={'flex'} justifyContent="space-between">
         <TextBoxContainer>
           <SubHeadingText>Rebate</SubHeadingText>
@@ -111,43 +115,45 @@ export const DepositFrequency = () => {
         </TextBoxContainer>
         <FormSwitchTab name={'enableRebate'} options={enableSwitch} />
       </Box>
-      <BoxContainer
-        p="s16"
-        border={'1px solid'}
-        borderColor="border.layout"
-        borderRadius={'4px'}
-      >
-        <InputGroupContainer>
-          <FormInput
-            name="dayFromTheEndRebate"
-            type="number"
-            label="Day from end date"
-            placeholder="Day from end date"
-          />
-          <FormInput
-            name="rebateAmount"
-            type="number"
-            label="Rebate Amount"
-            placeholder="Rebate Amount"
-          />
+      {rebate && rebate === 'enable' && (
+        <BoxContainer
+          p="s16"
+          border={'1px solid'}
+          borderColor="border.layout"
+          borderRadius={'4px'}
+        >
+          <InputGroupContainer>
+            <FormInput
+              name="dayFromTheEndRebate"
+              type="number"
+              label="Day from end date"
+              placeholder="Day from end date"
+            />
+            <FormInput
+              name="rebateAmount"
+              type="number"
+              label="Rebate Amount"
+              placeholder="Rebate Amount"
+            />
 
-          <FormInput
-            name="percentageRebate"
-            type="number"
-            label="Percentage of Deposited Amount"
-            textAlign={'right'}
-            placeholder="0.00"
-            rightElement={'%'}
-          />
-          <FormInput
-            name="nosOfInstallment"
-            type="number"
-            label="No. of Installment"
-            placeholder="Enter Number of Installments"
-            textAlign={'right'}
-          />
-        </InputGroupContainer>
-      </BoxContainer>
+            <FormInput
+              name="percentageRebate"
+              type="number"
+              label="Percentage of Deposited Amount"
+              textAlign={'right'}
+              placeholder="0.00"
+              rightElement={'%'}
+            />
+            <FormInput
+              name="nosOfInstallment"
+              type="number"
+              label="No. of Installment"
+              placeholder="Enter Number of Installments"
+              textAlign={'right'}
+            />
+          </InputGroupContainer>
+        </BoxContainer>
+      )}
     </BoxContainer>
   );
 };

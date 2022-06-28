@@ -45,64 +45,10 @@ import {
 /* eslint-disable-next-line */
 export interface SettingsDepositProductsAddProps {}
 
-const options = [
-  { label: 'fixed', value: 'fixed' },
-  { label: 'current', value: 'current' },
-];
-const checkboxlist = [
-  { label: 'Male', value: 'male' },
-  { label: 'Female', value: 'Female' },
-  { label: 'Other', value: 'other' },
-];
-
-const DepositFrequencyOptions = [
-  {
-    label: 'Daily',
-    value: 'Daily',
-  },
-  {
-    label: 'Weekly',
-    value: 'Weekly',
-  },
-  {
-    label: 'Monthly',
-    value: 'Monthly',
-  },
-  {
-    label: 'Yearly',
-    value: 'Yearly',
-  },
-];
-const Days = [
-  {
-    label: 'Sunday',
-    value: 'Sunday',
-  },
-  {
-    label: 'Monday',
-    value: 'Monday',
-  },
-  {
-    label: 'Tuesday',
-    value: 'Tuesday',
-  },
-  {
-    label: 'Wednesday',
-    value: 'Wednesday',
-  },
-  {
-    label: 'Thrusday',
-    value: 'Thrusday',
-  },
-  {
-    label: 'Friday',
-    value: 'Friday',
-  },
-];
-const anyDay = [{ label: 'Any Day', value: 'anyDay' }];
-const daysforMonth = [
-  { label: 'Day', value: 'day' },
-  { label: 'Day of the Week', value: 'dayOfWeek' },
+const optionsSaving = [
+  { label: 'Recurring Saving', value: 'recurringSaving' },
+  { label: 'Mandatory', value: 'mandaory' },
+  { label: 'Mandatory', value: 'mandaory' },
 ];
 
 export function SettingsDepositProductsAdd(
@@ -152,7 +98,7 @@ export function SettingsDepositProductsAdd(
               <ContainerWithDivider>
                 <Box background="white" mt="50px">
                   <InputGroupContainer>
-                    <GridItem colSpan={2} bg="red">
+                    <GridItem colSpan={2}>
                       <FormInput
                         name="productName"
                         label="Product Name"
@@ -162,7 +108,7 @@ export function SettingsDepositProductsAdd(
                     </GridItem>
                     <FormSelect
                       name={'nameOfDepositProduct'}
-                      options={options}
+                      options={optionsSaving}
                       label="Nature of Deposit Product"
                     />
                   </InputGroupContainer>
@@ -194,9 +140,9 @@ export function SettingsDepositProductsAdd(
                   <Critera watch={watch} />
                   <GridItems watch={watch} />
                 </Box>
-                <DepositFrequency />
-                <MinimunTenure />
-                <MaximumTenure />
+                <DepositFrequency watch={watch} />
+                <MinimunTenure watch={watch} />
+                <MaximumTenure watch={watch} />
                 <BalanceLimit />
                 <Interest />
                 <AccountServicesCharge />

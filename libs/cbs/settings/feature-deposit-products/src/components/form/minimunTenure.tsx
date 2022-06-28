@@ -41,7 +41,8 @@ const applicableSwitch = [
     value: 'notApplicable',
   },
 ];
-export const MinimunTenure = () => {
+export const MinimunTenure = ({ watch }: any) => {
+  const minimumTenure = watch('enableminimumTenure');
   return (
     <BoxContainer>
       {/* <TextBoxContainer>
@@ -65,31 +66,33 @@ export const MinimunTenure = () => {
           options={applicableSwitch}
         />
       </Box>
-      <BoxContainer
-        p="s16"
-        border={'1px solid'}
-        borderColor="border.layout"
-        display={'flex'}
-        flexDirection="row"
-        justifyContent="space-between"
-        borderRadius={'4px'}
-      >
-        <Box display={'flex'} flexDirection="column" gap="s4">
-          <Text fontSize={'s3'} fontWeight="500">
-            {' '}
-            Unit
-          </Text>
-          <FormSwitchTab name={'minimumTenureUnit'} options={unitOptions} />
-        </Box>
-        <Box w="290px">
-          <FormInput
-            name="minimunTenureNumber"
-            textAlign={'right'}
-            label="Number"
-            placeholder="Enter number"
-          />
-        </Box>
-      </BoxContainer>
+      {minimumTenure && minimumTenure === 'applicable' && (
+        <BoxContainer
+          p="s16"
+          border={'1px solid'}
+          borderColor="border.layout"
+          display={'flex'}
+          flexDirection="row"
+          justifyContent="space-between"
+          borderRadius={'4px'}
+        >
+          <Box display={'flex'} flexDirection="column" gap="s4">
+            <Text fontSize={'s3'} fontWeight="500">
+              {' '}
+              Unit
+            </Text>
+            <FormSwitchTab name={'minimumTenureUnit'} options={unitOptions} />
+          </Box>
+          <Box w="290px">
+            <FormInput
+              name="minimunTenureNumber"
+              textAlign={'right'}
+              label="Number"
+              placeholder="Enter number"
+            />
+          </Box>
+        </BoxContainer>
+      )}
     </BoxContainer>
   );
 };

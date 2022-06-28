@@ -36,7 +36,7 @@ export const RequiredDocumentSetup = () => {
         <Box display="flex" flexDirection="column" gap="s16">
           <TopText>Institutional</TopText>
           <FormCheckboxGroup
-            name="individualRequiredDocuments"
+            name="indstitutionalRequiredDocuments"
             list={instutionList}
             orientation="column"
           />

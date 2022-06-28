@@ -61,7 +61,7 @@ const NOBCoopUnion = [
 const CoperativeType = [{ label: 'Coperative Type', value: 'cooperativeType' }];
 export const Critera = ({ watch }: any) => {
   const memberType = watch('typeOfMember');
-  console.log('membertype', memberType?.indexOf('individual'));
+
   return (
     <BoxContainer>
       <TextBoxContainer>
