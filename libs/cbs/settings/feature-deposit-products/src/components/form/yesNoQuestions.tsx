@@ -14,7 +14,8 @@ const yesNo = [
   { label: 'Yes', value: 'yes' },
   { label: 'No', value: 'no' },
 ];
-export const Questions = () => {
+export const Questions = ({ watch }: any) => {
+  const depositNature = watch('nameOfDepositProduct');
   return (
     <DividerContainer>
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
@@ -25,14 +26,27 @@ export const Questions = () => {
         <SubHeadingText>Alternative Channels</SubHeadingText>
         <FormSwitchTab name={'alternativeChannels'} options={yesNo} />
       </Box>
-      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Allow Loan</SubHeadingText>
-        <FormSwitchTab name={'allowLoan'} options={yesNo} />
-      </Box>
-      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Support Multiple Account</SubHeadingText>
-        <FormSwitchTab name={'supportMultipleAccount'} options={yesNo} />
-      </Box>
+      {(depositNature === 'recurringSaving' ||
+        depositNature === 'termSaving') && (
+        <Box
+          display="flex"
+          flexDirection={'row'}
+          justifyContent="space-between"
+        >
+          <SubHeadingText>Allow Loan</SubHeadingText>
+          <FormSwitchTab name={'allowLoan'} options={yesNo} />
+        </Box>
+      )}
+      {depositNature !== 'mandatory' && (
+        <Box
+          display="flex"
+          flexDirection={'row'}
+          justifyContent="space-between"
+        >
+          <SubHeadingText>Support Multiple Account</SubHeadingText>
+          <FormSwitchTab name={'supportMultipleAccount'} options={yesNo} />
+        </Box>
+      )}
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>Staff Product</SubHeadingText>
         <FormSwitchTab name={'staffProduct'} options={yesNo} />

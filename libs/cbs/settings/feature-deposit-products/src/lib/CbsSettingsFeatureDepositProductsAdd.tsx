@@ -47,8 +47,9 @@ export interface SettingsDepositProductsAddProps {}
 
 const optionsSaving = [
   { label: 'Recurring Saving', value: 'recurringSaving' },
-  { label: 'Mandatory', value: 'mandaory' },
-  { label: 'Mandatory', value: 'mandaory' },
+  { label: 'Mandatory', value: 'mandatory' },
+  { label: 'Voluntary/Optional', value: 'voluntary' },
+  { label: 'Term Saving', value: 'termSaving' },
 ];
 
 export function SettingsDepositProductsAdd(
@@ -58,6 +59,7 @@ export function SettingsDepositProductsAdd(
   const methods = useForm({});
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
+  const depositNature = watch('nameOfDepositProduct');
 
   return (
     <Container height="fit-content" minW="container.lg">
@@ -136,20 +138,29 @@ export function SettingsDepositProductsAdd(
                   </InputGroupContainer>
                 </Box>
                 <TypesOfMember watch={watch} />
-                <Box display="flex" flexDirection={'column'} gap="s16">
-                  <Critera watch={watch} />
-                  <GridItems watch={watch} />
-                </Box>
-                <DepositFrequency watch={watch} />
-                <MinimunTenure watch={watch} />
-                <MaximumTenure watch={watch} />
+                {depositNature !== 'mandatory' && (
+                  <Box display="flex" flexDirection={'column'} gap="s16">
+                    <Critera watch={watch} />
+                    <GridItems watch={watch} />
+                  </Box>
+                )}
+                {depositNature !== 'voluntary' && (
+                  <DepositFrequency watch={watch} />
+                )}
+                {depositNature !== 'voluntary' && (
+                  <MinimunTenure watch={watch} />
+                )}
+                {depositNature !== 'voluntary' && (
+                  <MaximumTenure watch={watch} />
+                )}
                 <BalanceLimit />
                 <Interest />
                 <AccountServicesCharge />
-                <DefaultAccountName />
-                <Questions />
+                {(depositNature === 'recurringSaving' ||
+                  depositNature === 'termSaving') && <DefaultAccountName />}
+                <Questions watch={watch} />
                 <RequiredDocumentSetup />
-                <PrematuredPenalty />
+                {depositNature === 'termSaving' && <PrematuredPenalty />}
               </ContainerWithDivider>
             </Box>
           </form>
