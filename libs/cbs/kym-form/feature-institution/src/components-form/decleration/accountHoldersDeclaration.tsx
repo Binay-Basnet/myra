@@ -87,7 +87,7 @@ export const AccountHolderDeclarationInstitution = () => {
 
       <Box display="flex" flexDirection="column" gap="s16">
         <Text fontSize="r1" fontWeight="SemiBold">
-          Address
+          {t['kymInsAddress']}
         </Text>
         <InputGroupContainer>
           <FormSelect
