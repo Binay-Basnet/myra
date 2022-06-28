@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
-import { GrClose } from 'react-icons/gr';
+import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 import {
@@ -111,7 +111,7 @@ export function CbsSettingsFeatureBranchesNew(
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<GrClose />}
+              icon={<IoCloseOutline />}
               onClick={() => router.back()}
             />
           </Box>

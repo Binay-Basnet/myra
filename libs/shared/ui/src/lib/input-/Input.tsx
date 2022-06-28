@@ -58,7 +58,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
           <ChakraInput ref={ref} h="100%" isInvalid={!!errorText} {...rest} />
           {rightElement && (
-            <InputRightElement pointerEvents="none" children={rightElement} />
+            <InputRightElement
+              pointerEvents="none"
+              children={rightElement}
+              ml="s4"
+            />
           )}
         </InputGroup>
 

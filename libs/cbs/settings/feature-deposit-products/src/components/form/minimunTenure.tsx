@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
@@ -41,15 +42,24 @@ const applicableSwitch = [
     value: 'notApplicable',
   },
 ];
-export const MinimunTenure = ({ watch }: any) => {
+export const MinimunTenure = () => {
+  const [rightElement, setRightElement] = useState('days');
+  const { resetField, watch } = useFormContext();
   const minimumTenure = watch('enableminimumTenure');
+
+  const minimumTenureUnit = watch('minimumTenureUnit');
+
+  useEffect(() => {
+    resetField('minimunTenureNumber');
+    setRightElement(minimumTenureUnit);
+  }, [minimumTenureUnit]);
   return (
     <BoxContainer>
       {/* <TextBoxContainer>
         <TopText>Minimum Tenure</TopText>
         <SubText>
           Note: Week is equal to 7 days, Month is equal to 30 days & year is
-          equal to 365days.
+          equal to 365days.minimumTenureUnit
         </SubText>
       </TextBoxContainer>
       <FormSwitchTab name={'depositFrequency'} options={applicableSwitch} /> */}
@@ -89,6 +99,7 @@ export const MinimunTenure = ({ watch }: any) => {
               textAlign={'right'}
               label="Number"
               placeholder="Enter number"
+              rightElement={<Text>{rightElement}</Text>}
             />
           </Box>
         </BoxContainer>

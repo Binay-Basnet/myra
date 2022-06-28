@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
+import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 // import debounce from 'lodash/debounce';
@@ -86,7 +86,7 @@ export function SettingsDepositProductsAdd(
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<GrClose />}
+              icon={<IoCloseOutline />}
               onClick={() => router.back()}
             />
           </Box>
@@ -147,12 +147,8 @@ export function SettingsDepositProductsAdd(
                 {depositNature !== 'voluntary' && (
                   <DepositFrequency watch={watch} />
                 )}
-                {depositNature !== 'voluntary' && (
-                  <MinimunTenure watch={watch} />
-                )}
-                {depositNature !== 'voluntary' && (
-                  <MaximumTenure watch={watch} />
-                )}
+                {depositNature !== 'voluntary' && <MinimunTenure />}
+                {depositNature !== 'voluntary' && <MaximumTenure />}
                 <BalanceLimit />
                 <Interest />
                 <AccountServicesCharge />
@@ -160,7 +156,7 @@ export function SettingsDepositProductsAdd(
                   depositNature === 'termSaving') && <DefaultAccountName />}
                 <Questions watch={watch} />
                 <RequiredDocumentSetup />
-                {depositNature === 'termSaving' && <PrematuredPenalty />}
+                {depositNature !== 'termSaving' && <PrematuredPenalty />}
               </ContainerWithDivider>
             </Box>
           </form>

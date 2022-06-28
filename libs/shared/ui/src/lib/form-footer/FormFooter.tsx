@@ -24,8 +24,9 @@ export function FormFooter({
       justifyContent="space-between"
       alignItems="center"
       background="white"
-      px="s16"
+      px="s20"
       py="s20"
+      h="60px"
       borderTop="1px solid"
       borderColor="border.layout"
     >

@@ -26,6 +26,26 @@ export const Questions = ({ watch }: any) => {
         <SubHeadingText>Alternative Channels</SubHeadingText>
         <FormSwitchTab name={'alternativeChannels'} options={yesNo} />
       </Box>
+      {depositNature === 'voluntary' && (
+        <Box
+          display="flex"
+          flexDirection={'row'}
+          justifyContent="space-between"
+        >
+          <SubHeadingText>ATM Facility</SubHeadingText>
+          <FormSwitchTab name={'atmFacility'} options={yesNo} />
+        </Box>
+      )}
+      {depositNature === 'voluntary' && (
+        <Box
+          display="flex"
+          flexDirection={'row'}
+          justifyContent="space-between"
+        >
+          <SubHeadingText>Cheque Issue</SubHeadingText>
+          <FormSwitchTab name={'chequeIssue'} options={yesNo} />
+        </Box>
+      )}
       {(depositNature === 'recurringSaving' ||
         depositNature === 'termSaving') && (
         <Box

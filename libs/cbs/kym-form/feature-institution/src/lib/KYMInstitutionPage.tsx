@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
+import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
@@ -102,7 +102,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
               <IconButton
                 variant={'ghost'}
                 aria-label="close"
-                icon={<GrClose />}
+                icon={<IoCloseOutline />}
                 onClick={() => router.back()}
               />
             </Box>

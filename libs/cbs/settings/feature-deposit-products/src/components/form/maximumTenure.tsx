@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
@@ -41,9 +43,16 @@ const applicableSwitch = [
     value: 'notApplicable',
   },
 ];
-export const MaximumTenure = ({ watch }: any) => {
+export const MaximumTenure = () => {
+  const [rightElement, setRightElement] = useState('days');
+  const { resetField, watch } = useFormContext();
   const maximumTenure = watch('enablemaximumTenure');
 
+  const maxTenureUnit = watch('maximumTenureUnit');
+  useEffect(() => {
+    resetField('maximumTenureNumber');
+    setRightElement(maxTenureUnit);
+  }, [maxTenureUnit]);
   return (
     <BoxContainer>
       <Box display={'flex'} justifyContent="space-between">
@@ -82,6 +91,7 @@ export const MaximumTenure = ({ watch }: any) => {
               textAlign={'right'}
               label="Number"
               placeholder="Enter number"
+              rightElement={rightElement}
             />
           </Box>
         </BoxContainer>

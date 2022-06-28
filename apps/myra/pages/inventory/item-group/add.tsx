@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { GrClose } from 'react-icons/gr';
+import { IoCloseOutline } from 'react-icons/io5';
 import router from 'next/router';
 import { FormControl, FormLabel } from '@chakra-ui/react';
 
@@ -38,7 +38,7 @@ const AddNewItemGroupPage = () => {
         <IconButton
           variant={'ghost'}
           aria-label="close"
-          icon={<GrClose />}
+          icon={<IoCloseOutline />}
           onClick={() => router.back()}
         />
       </Box>

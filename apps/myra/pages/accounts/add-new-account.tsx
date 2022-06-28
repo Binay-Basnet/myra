@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { GrClose } from 'react-icons/gr';
+import { IoCloseOutline } from 'react-icons/io5';
 import router from 'next/router';
 
 import { FormInput } from '@coop/shared/form';
@@ -42,7 +42,7 @@ const AddNewAccount = () => {
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<GrClose />}
+              icon={<IoCloseOutline />}
               onClick={() => router.back()}
             />
           </Box>
