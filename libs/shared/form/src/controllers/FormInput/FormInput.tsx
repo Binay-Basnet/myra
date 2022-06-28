@@ -24,7 +24,7 @@ export const FormInput = <T,>({ name, ...rest }: IFormInputProps<T>) => {
         return (
           <Input
             id={name}
-            errorText={errors[name]?.message}
+            errorText={errors[name]?.message as string}
             onChange={onChange}
             value={value}
             {...rest}

@@ -20,7 +20,7 @@ export const FormFileInput = ({ name, label, ...rest }: FormFileInputProps) => {
   const error = errors[name];
 
   return (
-    <Box display="flex" flexDir="column" gap="s4">
+    <>
       {label && (
         <TextFields variant="formLabel" color="gray.700">
           {label}
@@ -35,6 +35,6 @@ export const FormFileInput = ({ name, label, ...rest }: FormFileInputProps) => {
         )}
       />
       {error ? error?.message : null}
-    </Box>
+    </>
   );
 };
