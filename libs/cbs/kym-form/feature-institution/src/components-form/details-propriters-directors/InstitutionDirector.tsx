@@ -1,12 +1,15 @@
 import React, { useMemo, useState } from 'react';
 import { Control, useFieldArray } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import {
   AiFillCloseCircle,
   AiOutlineCaretDown,
   AiOutlineCaretRight,
   AiOutlinePlus,
 } from 'react-icons/ai';
+import { AiOutlineDelete } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
+import { GrRotateRight } from 'react-icons/gr';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import {
@@ -44,6 +47,8 @@ const AddDirector = ({ watch, index, removeDirector }) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
 
+  const { getValues, reset } = useFormContext();
+
   const [temporaryAddress, setTemporaryAddress] = useState(false);
   const [isOpen, setIsOpen] = React.useState(true);
 
@@ -57,8 +62,10 @@ const AddDirector = ({ watch, index, removeDirector }) => {
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentStateId');
-  const currentDistrictId = watch('permanentDistrictId');
+  const currentProvinceId = watch(`detailsOfDirectors.${index}.permanentState`);
+  const currentDistrictId = watch(
+    `detailsOfDirectors.${index}.permanentDistrict`
+  );
 
   const districtList = useMemo(
     () =>
@@ -75,8 +82,12 @@ const AddDirector = ({ watch, index, removeDirector }) => {
   );
 
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryStateId');
-  const currentTemptDistrictId = watch('temporaryDistrictId');
+  const currentTempProvinceId = watch(
+    `detailsOfDirectors.${index}.temporaryState`
+  );
+  const currentTemptDistrictId = watch(
+    `detailsOfDirectors.${index}.temporaryDistrict`
+  );
 
   const districtTempList = useMemo(
     () =>
@@ -93,8 +104,16 @@ const AddDirector = ({ watch, index, removeDirector }) => {
   );
 
   const isPermanentAndTemporaryAddressSame = watch(
-    'isPermanentAndTemporaryAddressSame'
+    `detailsOfDirectors.${index}.isPermanentAndTemporaryAddressSame`
   );
+
+  const resetDirectorForm = () => {
+    const values = getValues();
+
+    values['detailsOfDirectors'][index] = {};
+
+    reset({ detailsOfDirectors: values['detailsOfDirectors'] });
+  };
 
   return (
     <>
@@ -223,6 +242,7 @@ const AddDirector = ({ watch, index, removeDirector }) => {
             display={'flex'}
             flexDirection="column"
             scrollMarginTop={'200px'}
+            p="s10"
           >
             <Text fontSize="r1" fontWeight="SemiBold">
               {t['kymInsTemporaryAddress']}
@@ -230,92 +250,95 @@ const AddDirector = ({ watch, index, removeDirector }) => {
 
             <FormSwitch
               id="isPermanentAndTemporaryAddressSame"
-              name="isPermanentAndTemporaryAddressSame"
+              name={`detailsOfDirectors.${index}.isPermanentAndTemporaryAddressSame`}
               label={t['kymInsTemporaryAddressPermanent']}
             />
 
-            {/* {!isPermanentAndTemporaryAddressSame && (
-              <> */}
+            {!isPermanentAndTemporaryAddressSame && (
+              <>
+                <InputGroupContainer>
+                  <FormSelect
+                    name={`detailsOfDirectors.${index}.temporaryState`}
+                    label={t['kymInsState']}
+                    placeholder={t['kymInsSelectState']}
+                    options={province}
+                  />
+                  <FormSelect
+                    name={`detailsOfDirectors.${index}.temporaryDistrict`}
+                    label={t['kymInsDistrict']}
+                    placeholder={t['kymInsSelectDistrict']}
+                    options={districtTempList.map((d) => ({
+                      label: d.name,
+                      value: d.id,
+                    }))}
+                  />
+                  <FormSelect
+                    name={`detailsOfDirectors.${index}.temporaryMunicipality`}
+                    label={t['kymInsVDCMunicipality']}
+                    placeholder={t['kymInsSelectVDCMunicipality']}
+                    options={localityTempList.map((d) => ({
+                      label: d.name,
+                      value: d.id,
+                    }))}
+                  />
+                  <FormInput
+                    type="number"
+                    name={`detailsOfDirectors.${index}.temporaryWardNo`}
+                    label={t['kymInsWardNo']}
+                    placeholder={t['kymInsEnterWardNo']}
+                  />
+                  <FormInput
+                    type="text"
+                    name={`detailsOfDirectors.${index}.temporaryLocality`}
+                    label={t['kymInsLocality']}
+                    placeholder={t['kymInsEnterLocality']}
+                  />
+                </InputGroupContainer>
+                <Button
+                  mt="-16px"
+                  alignSelf="start"
+                  leftIcon={<Icon size="md" as={FaMap} />}
+                >
+                  {t['pinOnMap']}
+                </Button>
+              </>
+            )}
+          </Box>
+
+          <Box p="s10">
             <InputGroupContainer>
-              <FormSelect
-                name={`detailsOfDirectors.${index}.temporaryState`}
-                label={t['kymInsState']}
-                placeholder={t['kymInsSelectState']}
-                options={province}
-              />
-              <FormSelect
-                name={`detailsOfDirectors.${index}.temporaryDistrict`}
-                label={t['kymInsDistrict']}
-                placeholder={t['kymInsSelectDistrict']}
-                options={districtTempList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                name={`detailsOfDirectors.${index}.temporaryMunicipality`}
-                label={t['kymInsVDCMunicipality']}
-                placeholder={t['kymInsSelectVDCMunicipality']}
-                options={localityTempList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
               <FormInput
-                type="number"
-                name={`detailsOfDirectors.${index}.temporaryWardNo`}
-                label={t['kymInsWardNo']}
-                placeholder={t['kymInsEnterWardNo']}
+                type="date"
+                name={`detailsOfDirectors.${index}.dateOfMembership`}
+                label={t['kymInsDateOfMembership']}
+                placeholder="DD-MM-YYYY"
               />
               <FormInput
                 type="text"
-                name={`detailsOfDirectors.${index}.temporaryLocality`}
-                label={t['kymInsLocality']}
-                placeholder={t['kymInsEnterLocality']}
+                name={`detailsOfDirectors.${index}.highestQualification`}
+                label={t['kymInsHighestQualification']}
+                placeholder={t['kymInsEnterHigestQualification']}
+              />
+              <FormInput
+                type="number"
+                name={`detailsOfDirectors.${index}.mobileNo`}
+                label={t['kymInsMobileNo']}
+                placeholder={t['kymInsEnterMobileNo']}
+              />
+              <FormInput
+                type="text"
+                name={`detailsOfDirectors.${index}.emailAddress`}
+                label={t['kymInsEmail']}
+                placeholder={t['kymInsEnterEmail']}
+              />
+              <FormInput
+                type="string"
+                name={`detailsOfDirectors.${index}.documentNo`}
+                label={t['kymInsCitizenshipPassportDrivingLicenseNo']}
+                placeholder={t['kymInsEnterNo']}
               />
             </InputGroupContainer>
-            <Button
-              mt="-16px"
-              alignSelf="start"
-              leftIcon={<Icon size="md" as={FaMap} />}
-            >
-              {t['pinOnMap']}
-            </Button>
-            {/* </>
-            )} */}
           </Box>
-          <InputGroupContainer>
-            <FormInput
-              type="date"
-              name={`detailsOfDirectors.${index}.dateOfMembership`}
-              label={t['kymInsDateOfMembership']}
-              placeholder="DD-MM-YYYY"
-            />
-            <FormInput
-              type="text"
-              name={`detailsOfDirectors.${index}.highestQualification`}
-              label={t['kymInsHighestQualification']}
-              placeholder={t['kymInsEnterHigestQualification']}
-            />
-            <FormInput
-              type="number"
-              name={`detailsOfDirectors.${index}.mobileNo`}
-              label={t['kymInsMobileNo']}
-              placeholder={t['kymInsEnterMobileNo']}
-            />
-            <FormInput
-              type="text"
-              name={`detailsOfDirectors.${index}.emailAddress`}
-              label={t['kymInsEmail']}
-              placeholder={t['kymInsEnterEmail']}
-            />
-            <FormInput
-              type="string"
-              name={`detailsOfDirectors.${index}.documentNo`}
-              label={t['kymInsCitizenshipPassportDrivingLicenseNo']}
-              placeholder={t['kymInsEnterNo']}
-            />
-          </InputGroupContainer>
           {/* <Text fontSize="r1" fontWeight="SemiBold">
             Training related to Co-operatives
           </Text>
@@ -339,12 +362,17 @@ const AddDirector = ({ watch, index, removeDirector }) => {
               placeholder="Enter Training Organization"
             />
           </InputGroupContainer> */}
-          <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
+          <Grid
+            templateColumns="repeat(2, 1fr)"
+            rowGap="s32"
+            columnGap="s20"
+            p="s10"
+          >
             <FormFileInput
               size="lg"
               label={t['kymInsPhotograph']}
               // control={control}
-              name={`detailsOfDirector.${index}.photograph`}
+              name={`detailsOfDirectors.${index}.photograph`}
             />
             <FormFileInput
               size="lg"
@@ -354,6 +382,29 @@ const AddDirector = ({ watch, index, removeDirector }) => {
             />
           </Grid>
         </SectionContainer>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          p="s10"
+          borderTop="1px solid"
+          borderColor="border.layout"
+        >
+          <Button
+            variant="ghost"
+            leftIcon={<GrRotateRight />}
+            onClick={resetDirectorForm}
+          >
+            {t['kymInsReset']}
+          </Button>
+          <Button
+            variant="outline"
+            shade="danger"
+            leftIcon={<AiOutlineDelete height="11px" />}
+            onClick={removeDirector}
+          >
+            {t['kymInsDelete']}
+          </Button>
+        </Box>
       </Collapse>
       {/* </DynamicBoxGroupContainer> */}
     </>
@@ -377,7 +428,14 @@ export const BoardDirectorInfo = ({ watch }) => {
       </Text>
       {directorFields.map((item, index) => {
         return (
-          <Box key={item.id} display="flex" flexDirection={'column'} gap="s16">
+          <Box
+            key={item.id}
+            display="flex"
+            flexDirection={'column'}
+            gap="s16"
+            border="1px solid"
+            borderColor="border.layout"
+          >
             <AddDirector
               watch={watch}
               index={index}

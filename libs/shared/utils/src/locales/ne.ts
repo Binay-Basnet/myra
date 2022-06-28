@@ -1207,7 +1207,7 @@ const ne: Record<string, string> = {
   kymInsSignature: 'Signature',
   kymInsStamp: 'Stamp',
 
-  kymInsAGMDecisionDocument: 'AGM Decision Document',
+  kymInsAGMDecisionDocument: 'AGM/BOD Decision Document',
   kymInsRegisteredCertificate: 'Registered Certificate',
   kymInsPANCertificate: 'PAN Certificate',
   kymInsTaxClearance: 'Tax Clearance',
@@ -1243,6 +1243,12 @@ const ne: Record<string, string> = {
   kymInsPhotograph: 'Photograph',
   kymInsPhotographOfIdentityProofDocument:
     'Photograph of identity proof document',
+  kymInsReset: 'Reset',
+  kymInsDelete: 'Delete',
+  kymInsContactNo: 'Contact No',
+  kymInsContactNoPlaceholder: 'Enter Contact No',
+  kymInsPanNo: 'PAN No',
+  kymInsPanNoPlaceholder: 'Enter PAN No',
 
   kymInsNatureofTransaction: 'Nature of Transaction',
   kymInsEnterNatureofTransaction: 'Enter Nature of Transaction',
@@ -1254,8 +1260,8 @@ const ne: Record<string, string> = {
   kymInsSelectState: 'Select State',
   kymInsDistrict: 'District',
   kymInsSelectDistrict: 'Select District',
-  kymInsVDCMunicipality: 'VDC / Municipality',
-  kymInsSelectVDCMunicipality: 'Select VDC / Municipality',
+  kymInsVDCMunicipality: 'Local Government',
+  kymInsSelectVDCMunicipality: 'Select Local Government',
   kymInsWardNo: 'Ward No',
   kymInsEnterWardNo: 'Enter Ward No',
   kymInsLocality: 'Locality',
