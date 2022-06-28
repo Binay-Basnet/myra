@@ -42,7 +42,8 @@ const ShareReturn = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const { mutate } = useAddShareReturnMutation();
-  const methods = useForm<ShareReturnInput>();
+  // TODO! CHANGE THIS ANY
+  const methods = useForm<any>();
   const { getValues, watch } = methods;
 
   const accountList = [

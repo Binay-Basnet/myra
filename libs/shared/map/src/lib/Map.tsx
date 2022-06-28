@@ -9,7 +9,8 @@ import {
 } from 'react-leaflet';
 import { Marker as MarkerType } from 'leaflet';
 
-// import LeafletControlGeocoder from './LeafletControlGeocoder';
+import LeafletControlGeocoder from './LeafletControlGeocoder';
+
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet-defaulticon-compatibility';
@@ -89,7 +90,7 @@ const MapContent = (props: MapProps) => {
   return (
     <>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      {/* <LeafletControlGeocoder setPosition={setPosition} /> */}
+      <LeafletControlGeocoder setPosition={setPosition} />
       {position && (
         <Marker
           draggable={true}

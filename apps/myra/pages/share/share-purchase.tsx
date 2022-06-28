@@ -1,13 +1,11 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IoSearch } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import { FormFooter } from '@coop/myra/components';
 import {
   Payment_Mode,
-  SharePurchaseInput,
   useAddSharePurchaseMutation,
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
@@ -16,10 +14,8 @@ import {
   Container,
   Grid,
   GridItem,
-  Icon,
   MainLayout,
   Navbar,
-  Select,
   TabMenu,
   Text,
 } from '@coop/shared/ui';
@@ -39,7 +35,8 @@ const SharePurchase = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const { mutate } = useAddSharePurchaseMutation();
-  const methods = useForm<SharePurchaseInput>();
+  // TODO! Change this!!
+  const methods = useForm<any>();
   const { getValues, watch } = methods;
 
   const accountList = [

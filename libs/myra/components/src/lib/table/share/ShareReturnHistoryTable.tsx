@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
+import format from 'date-fns/format';
+
 import { useGetShareHistoryQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
-import format from 'date-fns/format';
 import { useTranslation } from '@coop/shared/utils';
-import { useRouter } from 'next/router';
 
 type memberIdProp = {
   id: string;
@@ -36,12 +37,12 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
 
       {
         Header: t['shareReturnTableShareNumber'],
-        accessor: 'node.shareStartNumber',
+        accessor: 'node.startNumber',
 
         Cell: ({ value, row }) => {
           return (
             <span>
-              {value} to {row?.original?.node?.shareEndNumber}
+              {value} to {row?.original?.node?.endNumber}
             </span>
           );
         },
@@ -50,7 +51,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
       {
         id: 'share-dr',
         Header: t['shareReturnTableShareDr'],
-        accessor: 'node.shareDr',
+        accessor: 'node.debit',
         isNumeric: true,
 
         Cell: ({ value, row }) => {
@@ -63,7 +64,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
         id: 'share-cr',
         Header: t['shareReturnTableShareCr'],
         isNumeric: true,
-        accessor: 'node.shareCr',
+        accessor: 'node.credit',
         Cell: ({ value, row }) => {
           return (
             <span> {value ? `${value.toLocaleString('en-IN')}` : '-'}</span>

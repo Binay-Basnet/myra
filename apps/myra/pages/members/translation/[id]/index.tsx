@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineEye } from 'react-icons/ai';
-import { GrClose } from 'react-icons/gr';
+import { IoCloseOutline } from 'react-icons/io5';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import {
@@ -77,7 +77,7 @@ const Translation = () => {
             <Text fontSize="r2" fontWeight="SemiBold">
               {t.membersFormAddNewMembers}
             </Text>
-            <GrClose size="14px" color="#91979F" />
+            <IoCloseOutline size="14px" color="#91979F" />
           </Box>
 
           <Box p="s20" mt={1}>
