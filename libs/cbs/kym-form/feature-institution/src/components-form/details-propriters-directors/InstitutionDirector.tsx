@@ -368,7 +368,6 @@ export const BoardDirectorInfo = ({ watch, control }) => {
     remove: directorRemove,
   } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
 
-  console.log('board director info');
   return (
     <GroupContainer
       id="Details of Proprietor, Partners, Directors."
