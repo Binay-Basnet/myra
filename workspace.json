@@ -18,6 +18,8 @@
     "myra-components": "libs/myra/components",
     "myra-e2e": "apps/myra-e2e",
     "myra-ui-e2e": "apps/myra-ui-e2e",
+    "neosys-admin": "apps/neosys-admin",
+    "neosys-admin-e2e": "apps/neosys-admin-e2e",
     "shared-data-access": "libs/shared/data-access",
     "shared-form": "libs/shared/form",
     "shared-map": "libs/shared/map",

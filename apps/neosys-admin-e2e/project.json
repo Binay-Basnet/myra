@@ -1,0 +1,28 @@
+{
+  "root": "apps/neosys-admin-e2e",
+  "sourceRoot": "apps/neosys-admin-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/neosys-admin-e2e/cypress.json",
+        "devServerTarget": "neosys-admin:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "neosys-admin:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/neosys-admin-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["neosys-admin"]
+}
