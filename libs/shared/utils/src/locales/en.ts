@@ -1206,12 +1206,12 @@ const en: Record<string, string> = {
   kymInsNewDetail: 'New Detail',
 
   kymInAccountHolderDeclarations: 'Account Holder Declaration',
-  kymInsAccountHolderName: 'Account Holder Name',
+  kymInsAccountHolderName: "Account Holder's Name",
   kymInsEnterAccountHolderName: "Enter Account Holder's Name",
   kymInsSignature: 'Signature',
   kymInsStamp: 'Stamp',
 
-  kymInsAGMDecisionDocument: 'AGM Decision Document',
+  kymInsAGMDecisionDocument: 'AGM/BOD Decision Document',
   kymInsRegisteredCertificate: 'Registered Certificate',
   kymInsPANCertificate: 'PAN Certificate',
   kymInsTaxClearance: 'Tax Clearance',
@@ -1247,6 +1247,12 @@ const en: Record<string, string> = {
   kymInsPhotograph: 'Photograph',
   kymInsPhotographOfIdentityProofDocument:
     'Photograph of identity proof document',
+  kymInsReset: 'Reset',
+  kymInsDelete: 'Delete',
+  kymInsContactNo: 'Contact No',
+  kymInsContactNoPlaceholder: 'Enter Contact No',
+  kymInsPanNo: 'PAN No',
+  kymInsPanNoPlaceholder: 'Enter PAN No',
 
   kymInsNatureofTransaction: 'Nature of Transaction',
   kymInsEnterNatureofTransaction: 'Enter Nature of Transaction',
@@ -1258,8 +1264,8 @@ const en: Record<string, string> = {
   kymInsSelectState: 'Select State',
   kymInsDistrict: 'District',
   kymInsSelectDistrict: 'Select District',
-  kymInsVDCMunicipality: 'VDC / Municipality',
-  kymInsSelectVDCMunicipality: 'Select VDC / Municipality',
+  kymInsVDCMunicipality: 'Local Government',
+  kymInsSelectVDCMunicipality: 'Select Local Government',
   kymInsWardNo: 'Ward No',
   kymInsEnterWardNo: 'Enter Ward No',
   kymInsLocality: 'Locality',
