@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
-import { MainLayout } from '@coop/shared/ui';
+
 import { CbsAccountOpen } from '@coop/cbs/accounts/account-form';
+import { MainLayout } from '@coop/shared/ui';
 
 const AccountOpen = () => {
   return <CbsAccountOpen />;
