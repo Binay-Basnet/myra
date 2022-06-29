@@ -129,7 +129,7 @@ export const AddRepresentative = ({ watch, control }) => {
           px={'s16'}
           id="centralRepresentativeDetails"
           name="centralRepresentativeDetails.notAmongDirectors"
-          label="Central Representative is not among Directors"
+          label={t['kymCoopUnionCRNotDir']}
         />
       </Box>
       {tab && (
@@ -361,15 +361,41 @@ export const AddRepresentative = ({ watch, control }) => {
                     />
                   </Box>
                 </Box>
+
+                <Box display={'flex'} flexDirection="column" gap={'s8'}>
+                  <Text fontSize={'s3'} fontWeight="500">
+                    {t['kymCoopUnionDirSpecimenSignature']}
+                  </Text>
+                  <Box w="124px">
+                    <FormFileInput
+                      size="md"
+                      // control={control}
+                      name={`centralRepresentativeDetails.signature`}
+                    />
+                  </Box>
+                </Box>
+
+                <Box display={'flex'} flexDirection="column" gap={'s8'}>
+                  <Text fontSize={'s3'} fontWeight="500">
+                    {t['kymCoopUnionCRDecisionDocument']}
+                  </Text>
+                  <Box w="124px">
+                    <FormFileInput
+                      size="md"
+                      // control={control}
+                      name={`centralRepresentativeDetails.crDecisionDocument`}
+                    />
+                  </Box>
+                </Box>
               </Grid>
-              <InputGroupContainer>
+              {/* <InputGroupContainer>
                 <Box w="124px">
                   <FormFileInput
                     name={`centralRepresentativeDetails.signature`}
                     label={t['kymCoopUnionDirSpecimenSignature']}
                   />
                 </Box>
-              </InputGroupContainer>
+              </InputGroupContainer> */}
             </SectionContainer>
           </DynamicBoxGroupContainer>
         </Box>

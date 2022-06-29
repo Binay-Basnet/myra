@@ -744,6 +744,10 @@ const en: Record<string, string> = {
   kymCoopUnionIssuingOffice: 'Issuing Office',
   kymCoopUnionEnterIssuingOffice: 'Enter Issuing Office',
 
+  kymCoopUnionOperatorOfficeAddress: 'Operating Office Address',
+
+  kymCoopUnionOperatorBranchAddress: 'Branch Office Address',
+
   kymCoopUnionContactDetails: 'Contact Details',
   kymCoopUnionPhone: 'Phone',
   kymCoopUnionEnterPhoneNumber: 'Enter Phone Number',
@@ -967,13 +971,21 @@ const en: Record<string, string> = {
 
   kymCoopUnionDec7Declaration: ' 7. Declaration',
   kymCoopUnionDecDocumentsDeclaration: 'Documents Declaration',
-  kymCoopUnionDecAGMDecisionDocument: 'AGM Decision Document',
+  kymCoopUnionDecAGMDecisionDocument: 'AGM/BOD Decision Document',
   kymCoopUnionDecRegisteredCertificate: 'Registered Certificate',
   kymCoopUnionDecMOAAOA: 'MOA/AOA',
   kymCoopUnionDecPANCertificate: 'PAN Certificate',
   kymCoopUnionDecTaxClearance: 'Tax Clearance',
   kymCoopUnionDecLatestAuditReport: 'Latest Audit Report',
   kymCoopUnionDecMinuteofCentralRep: 'Minute of Central Rep',
+  kymCoopUnionTrainingAttended: 'Training Attended',
+
+  kymCoopUnionEmailAddress: 'Email Address',
+  kymCoopUnionEmailAddressPlaceholder: 'Enter Email Address',
+  kymCoopUnionContactNo: 'Contact No',
+  kymCoopUnionContactNoPlaceholder: 'Enter Contact No',
+  kymCoopUnionPANNo: 'PAN No',
+  kymCoopUnionPANNoPlaceholder: 'Enter PAN No',
 
   // kym individual
   kymInd1PersonalInformation: '1. Personal Information',
@@ -1158,6 +1170,8 @@ const en: Record<string, string> = {
     'Enter no of Institutuional Members',
   kymCoopUnionTotalcurrentmembers: 'Total current members',
   kymCoopUnionEntertotalcurrentmembers: 'Enter total current members',
+  kymCoopUnionCRDecisionDocument: 'CR Decision Document',
+  kymCoopUnionCRNotDir: 'Central Representative is not among Directors',
 
   // kym ins
   kymInsBasicInformation: 'Basic Information',
