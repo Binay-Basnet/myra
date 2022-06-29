@@ -13,6 +13,7 @@ const en: Record<string, string> = {
   memberSince: 'Member since',
   branch: 'Branch',
   complete: 'Complete',
+  submit: 'Submit',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
@@ -1490,6 +1491,22 @@ const en: Record<string, string> = {
   accApplicationProcessingFees: 'Application Processing Fees',
   accSupportFees: 'Support Fees',
   accTotalAmount: 'Total Amount',
+  accGoldSavingsAccount: 'Gold Savings Account',
+  accTenure: 'Tenure',
+  accCriteria: 'Criteria',
+  accRequiredDocument: 'Required Document',
+  accPenalty: 'Penalty',
+  accRebate: 'Rebate',
+  accMonthly: 'Monthly',
+  accAddfrequencydayorweek:
+    'Either Pick a day or manually add frequency day or day of the week.',
+  accDay: 'Day',
+  accDayOfWeek: 'Day of the week',
+  accEnterDay: 'Enter Day',
+  accFrequencyDay: 'Frequency Day',
+  accSelectMonth: 'Select Month',
+  accSelectDay: 'Select Day',
+  accYearly: 'Yearly',
 };
 
 export default en;
