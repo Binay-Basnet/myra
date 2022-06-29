@@ -103,7 +103,7 @@ const AddAccountDetails = ({
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentTempProvinceId)
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
         ?.municipalities ?? [],
     [currentTemptDistrictId]
   );

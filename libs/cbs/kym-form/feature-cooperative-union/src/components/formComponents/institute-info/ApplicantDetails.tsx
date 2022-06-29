@@ -66,7 +66,7 @@ export const ApplicantDetails = () => {
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentTemptDistrictId)
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
         ?.municipalities ?? [],
     [currentTemptDistrictId]
   );

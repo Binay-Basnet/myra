@@ -1221,7 +1221,7 @@ const ne: Record<string, string> = {
   kymInsEnterNumberofEmployees: 'Enter Number of Employees',
   kymInsAGMDetailsDate: 'AGM Details (Date of Last AGM)',
   kymInsbranchOfficeAddress: 'Branch Office Address',
-  kymInsOperatorOfficeAddress: 'Operator Office Address',
+  kymInsOperatorOfficeAddress: 'Operating Office Address',
 
   kymInsNameofBank: 'Name of Bank',
   kymInsSelectBank: 'Select Bank',
@@ -1272,8 +1272,7 @@ const ne: Record<string, string> = {
   kymInsMobileNo: 'Mobile No.',
   kymInsEnterMobileNo: 'Enter Mobile No',
   kymInsEnterEmail: 'Enter Email Address',
-  kymInsCitizenshipPassportDrivingLicenseNoIns:
-    'Citizenship/Passport/Driving License No.',
+  kymInsCitizenshipPassportDrivingLicenseNoIns: 'Citizenship No.',
   kymInsEnterNo: 'Enter Number',
   kymInsPhotograph: 'Photograph',
   kymInsPhotographOfIdentityProofDocument:

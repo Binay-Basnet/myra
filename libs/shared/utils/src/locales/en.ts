@@ -1231,7 +1231,7 @@ const en: Record<string, string> = {
   kymInsEnterNumberofEmployees: 'Enter Number of Employees',
   kymInsAGMDetailsDate: 'AGM Details (Date of Last AGM)',
   kymInsbranchOfficeAddress: 'Branch Office Address',
-  kymInsOperatorOfficeAddress: 'Operator Office Address',
+  kymInsOperatorOfficeAddress: 'Operating Office Address',
 
   kymInsNameofBank: 'Name of Bank',
   kymInsSelectBank: 'Select Bank',
@@ -1282,8 +1282,7 @@ const en: Record<string, string> = {
   kymInsMobileNo: 'Mobile No.',
   kymInsEnterMobileNo: 'Enter Mobile No',
   kymInsEnterEmail: 'Enter Email Address',
-  kymInsCitizenshipPassportDrivingLicenseNo:
-    'Citizenship/Passport/Driving License No.',
+  kymInsCitizenshipPassportDrivingLicenseNo: 'Citizenship No.',
   kymInsEnterNo: 'Enter Number',
   kymInsPhotograph: 'Photograph',
   kymInsPhotographOfIdentityProofDocument:
@@ -1301,8 +1300,8 @@ const en: Record<string, string> = {
   kymInsInitialDepositAmount: 'Initial Deposit Amount',
 
   kymInsPermanentAddress: 'Permanent Address',
-  kymInsState: 'State',
-  kymInsSelectState: 'Select State',
+  kymInsState: 'Province',
+  kymInsSelectState: 'Select Province',
   kymInsDistrict: 'District',
   kymInsSelectDistrict: 'Select District',
   kymInsVDCMunicipality: 'Local Government',

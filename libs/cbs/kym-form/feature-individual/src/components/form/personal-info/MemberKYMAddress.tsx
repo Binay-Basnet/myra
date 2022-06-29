@@ -60,7 +60,7 @@ export const MemberKYMAddress = () => {
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentTemptDistrictId)
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
         ?.municipalities ?? [],
     [currentTemptDistrictId]
   );

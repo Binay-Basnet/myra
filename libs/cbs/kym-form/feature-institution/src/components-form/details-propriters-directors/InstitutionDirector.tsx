@@ -98,7 +98,7 @@ const AddDirector = ({ watch, index, removeDirector }) => {
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentTemptDistrictId)
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
         ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
