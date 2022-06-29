@@ -1547,6 +1547,8 @@ const en: Record<string, string> = {
   accSelectMonth: 'Select Month',
   accSelectDay: 'Select Day',
   accYearly: 'Yearly',
+
+  upto: 'Upto',
 };
 
 export default en;

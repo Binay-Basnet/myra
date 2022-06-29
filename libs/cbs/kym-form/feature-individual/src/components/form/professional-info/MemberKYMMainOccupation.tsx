@@ -8,7 +8,10 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import {
+  CustomIdEnum,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/shared/data-access';
 import {
   FormCheckbox,
   FormInput,
@@ -21,7 +24,6 @@ import {
   Grid,
   GridItem,
   Icon,
-  Select,
   Text,
   TextFields,
 } from '@coop/shared/ui';
@@ -40,8 +42,10 @@ const MainOccupation = ({
 
   const isOwner = watch(`mainOccupation.${index}.isOwner`);
 
-  const { data: occupationData } = useGetIndividualKymOptionQuery({
-    fieldName: 'occupation',
+  const { data: occupationData } = useGetIndividualKymOptionsQuery({
+    filter: {
+      customId: CustomIdEnum.Occupation,
+    },
   });
 
   const isForeignEmployee = watch('isForeignEmployee');

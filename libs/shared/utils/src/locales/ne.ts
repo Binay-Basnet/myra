@@ -1526,6 +1526,8 @@ const ne: Record<string, string> = {
   accRequiredDocument: 'Required Document',
   accPenalty: 'Penalty',
   accRebate: 'Rebate',
+
+  upto: 'Upto',
 };
 
 export default ne;

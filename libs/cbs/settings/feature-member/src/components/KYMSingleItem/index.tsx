@@ -99,8 +99,6 @@ export const KYMSingleItem = ({
   field,
   setFieldItems,
 }: IKYMSingleItemProps) => {
-  console.log(item.id);
-
   const [isEditable, setIsEditable] = useState(!item.id);
 
   const { mutateAsync: kymOptionUpdate } = useAddKymOptionMutation({
@@ -135,7 +133,9 @@ export const KYMSingleItem = ({
           id: item.id,
           name: methods.getValues().name,
           enabled: methods.getValues().enabled,
-          fieldType: methods.getValues().fieldType,
+          fieldType: methods.getValues().fieldType?.length
+            ? methods.getValues().fieldType
+            : null,
 
           // variant: KymOptionVariant.Text,
         },
@@ -146,8 +146,6 @@ export const KYMSingleItem = ({
   useEffect(() => {
     methods.getValues().name === '' && setIsEditable(true);
   }, []);
-
-  console.log(field, item);
 
   useEffect(() => {
     // @ts-ignore
@@ -169,14 +167,16 @@ export const KYMSingleItem = ({
           e.preventDefault();
           setIsEditable(false);
 
-          await kymOptionUpdate({
-            fieldId: field.id,
-            data: {
-              name: methods.getValues().name,
-              enabled: methods.getValues().enabled,
-              fieldType: methods.getValues().fieldType,
-            },
-          });
+          if (!item.id) {
+            await kymOptionUpdate({
+              fieldId: field.id,
+              data: {
+                name: methods.getValues().name,
+                enabled: methods.getValues().enabled,
+                fieldType: methods.getValues().fieldType,
+              },
+            });
+          }
         }}
       >
         {item?.id && (

@@ -8,7 +8,10 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import {
+  CustomIdEnum as KYMOptionEnum,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/shared/data-access';
 import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -25,8 +28,8 @@ const HusbandWifeOccupation = ({
 
   const isOwner = watch(`spouseOccupation.${index}.isOwner`);
 
-  const { data: occupationData } = useGetIndividualKymOptionQuery({
-    fieldName: 'occupation',
+  const { data: occupationData } = useGetIndividualKymOptionsQuery({
+    filter: { customId: KYMOptionEnum.Occupation },
   });
   const { t } = useTranslation();
 

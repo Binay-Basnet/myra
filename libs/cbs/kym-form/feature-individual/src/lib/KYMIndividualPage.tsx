@@ -66,42 +66,11 @@ export function KYMIndividualPage() {
   });
   const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
   const kymFormStatus =
-      kymFormStatusQuery?.data?.members?.individual?.formState?.data
-          ?.sectionStatus;
+    kymFormStatusQuery?.data?.members?.individual?.formState?.data
+      ?.sectionStatus;
 
   const methods = useForm<KymIndMemberInput>({
     defaultValues: {
-      familyDetails: [{ relationshipId: '', fullName: '' }],
-      mainOccupation: [
-        {
-          occupation: '',
-          orgName: '',
-          idNumber: '',
-          address: '',
-          estimatedAnnualIncome: 0,
-        },
-      ],
-      spouseOccupation: [
-        {
-          occupation: '',
-          orgName: '',
-          idNumber: '',
-          address: '',
-          estimatedAnnualIncome: 0,
-        },
-      ],
-      incomeSourceDetails: [
-        {
-          source: '',
-          amount: 0,
-        },
-      ],
-      familyMemberInThisCooperative: [
-        {
-          relationshipId: '',
-          memberId: '',
-        },
-      ],
       nationalityId: 'Nepali',
     },
   });
