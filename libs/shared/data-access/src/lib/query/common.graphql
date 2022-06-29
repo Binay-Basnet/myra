@@ -1,0 +1,14 @@
+fragment MutationError on MutationError{
+    ...on BadRequestError{
+        __typename
+        message
+        code
+    }
+    ...on ServerError{
+        __typename
+        message
+        code
+    }
+
+}
+
