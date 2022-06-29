@@ -678,6 +678,32 @@ const ne: Record<string, string> = {
   kymCoopEnterName: 'Enter Name',
   kymCoopDesignation: 'Designation',
   kymCoopEnterDesignation: 'Enter Designation',
+  kymCoopRepresentativePhone: 'Contact No',
+  kymCoopRepresentativeEnterPhone: 'Enter Contact No',
+  kymCoopRepresentativeEmail: 'Email Address',
+  kymCoopRepresentativeEnterEmail: 'Enter Email Address',
+  kymCoopRepresentativePanOrVat: 'PAN No',
+  kymCoopRepresentativeEnterPan: 'Enter Pan Number',
+  kymCoopRepresentativePermanentAddress: 'Permanent Address',
+  kymCoopRepresentativeProvince: 'Province',
+  kymCoopRepresentativeSelectProvince: 'Select Province',
+  kymCoopRepresentativeDistrict: 'District',
+  kymCoopRepresentativeSelectDistrict: 'Select District',
+  kymCoopRepresentativeLocalGovernment: 'Local Government',
+  kymCoopRepresentativeSelectLocalGovernment: 'Select Local Government',
+  kymCoopRepresentativeWardNo: 'Ward No',
+  kymCoopRepresentativeEnterWardNo: 'Enter Ward No',
+  kymCoopRepresentativeLocality: 'Locality',
+  kymCoopRepresentativeEnterLocality: 'Enter Locality',
+  kymCoopRepresentativeHouseNo: 'House No',
+  kymCoopRepresentativeEnterHouseNo: 'Enter House No',
+  kymCoopRepresentativeTemporaryAddress: 'Temporary Address',
+  kymCoopRepresentativeTemporaryAddressPermanent:
+    'Temporary Address same as permanent',
+  kymCoopRepresentativeINCASERESIDINGINRENTEDHOUSE:
+    'INCASE RESIDING IN RENTED HOUSE',
+  kymCoopRepresentativeLandlordName: "Landlord's Name",
+  kymCoopRepresentativeContactNo: 'Contact No',
 
   kymCoopAdditionalCoorperativeDetails: 'Additional Coorperative Details',
   kymCoopType: 'Type',
@@ -713,6 +739,10 @@ const ne: Record<string, string> = {
   kymCoopUnionEnterRegisteredNumber: 'Enter Registered Number',
   kymCoopUnionIssuingOffice: 'Issuing Office',
   kymCoopUnionEnterIssuingOffice: 'Enter Issuing Office',
+
+  kymCoopUnionOperatorOfficeAddress: 'Operating Office Address',
+
+  kymCoopUnionOperatorBranchAddress: 'Branch Office Address',
 
   kymCoopUnionContactDetails: 'Contact Details',
   kymCoopUnionPhone: 'Phone',
@@ -936,13 +966,17 @@ const ne: Record<string, string> = {
 
   kymCoopUnionDec7Declaration: ' 7. Declaration',
   kymCoopUnionDecDocumentsDeclaration: 'Documents Declaration',
-  kymCoopUnionDecAGMDecisionDocument: 'AGM Decision Document',
+  kymCoopUnionDecAGMDecisionDocument: 'AGM/BOD Decision Document',
   kymCoopUnionDecRegisteredCertificate: 'Registered Certificate',
   kymCoopUnionDecMOAAOA: 'MOA/AOA',
   kymCoopUnionDecPANCertificate: 'PAN Certificate',
   kymCoopUnionDecTaxClearance: 'Tax Clearance',
   kymCoopUnionDecLatestAuditReport: 'Latest Audit Report',
   kymCoopUnionDecMinuteofCentralRep: 'Minute of Central Rep',
+  kymCoopUnionTrainingAttended: 'Training Attended',
+
+  kymCoopUnionEmailAddress: 'Email Address',
+  kymCoopUnionEmailAddressPlaceholder: 'Enter Email Address',
 
   // kym individual
   kymInd1PersonalInformation: '1. Personal Information',
@@ -1127,6 +1161,8 @@ const ne: Record<string, string> = {
     'Enter no of Institutuional Members',
   kymCoopUnionTotalcurrentmembers: 'Total current members',
   kymCoopUnionEntertotalcurrentmembers: 'Enter total current members',
+  kymCoopUnionCRDecisionDocument: 'CR Decision Document',
+  kymCoopUnionCRNotDir: 'Central Representative is not among Directors',
 
   // kym ins
   kymInsBasicInformation: 'Basic Information',
@@ -1451,6 +1487,45 @@ const ne: Record<string, string> = {
   shareToAccount: 'Share To Account  /',
   shareToAccountSubtitle: 'Account from which shares are paid to and paid from',
   shareTransferAccountName: 'Account Name',
+
+  // account list
+
+  //account open
+  newAccountOpen: 'New Account Open',
+  accountOpenMemberId: 'Member ID',
+  accProductName: 'Product Name',
+  accSelectProduct: 'Select Product',
+  accInterest: 'Interest',
+  accInterestRate: 'Interest Rate',
+  accSource: 'Source',
+  accInterestSanctionedById: 'Interest Sanctioned By ID',
+  accInterestSanctionedByName: 'Interest Sanctioned By Name',
+  accDepositFrequency: 'Deposit Frequency',
+  accWeekly: 'Weekly',
+  accDayoftheWeek: 'Day of the week',
+  accSunday: 'Sunday',
+  accMonday: 'Monday',
+  accTuesday: 'Tuesday',
+  accWednesday: 'Wednesday',
+  accThursday: 'Thursday',
+  accFriday: 'Friday',
+  accSaturday: 'Saturday',
+  accPhoto: 'Photo',
+  accSignature: 'Signature',
+  accNomineeDocument: 'Nominee Document',
+  accFingerprintPhoto: 'Fingerprint Photo',
+  accFeesChargesSummary: 'Fees & Charges Summary',
+  accAllchargesandfees: 'All charges and fees must be paid to get approved.',
+  accFormCharge: 'Form Charge',
+  accApplicationProcessingFees: 'Application Processing Fees',
+  accSupportFees: 'Support Fees',
+  accTotalAmount: 'Total Amount',
+  accGoldSavingsAccount: 'Gold Savings Account',
+  accTenure: 'Tenure',
+  accCriteria: 'Criteria',
+  accRequiredDocument: 'Required Document',
+  accPenalty: 'Penalty',
+  accRebate: 'Rebate',
 
   upto: 'Upto',
 };

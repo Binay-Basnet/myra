@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput } from '@coop/shared/form';
 import { Grid, Text } from '@coop/shared/ui';

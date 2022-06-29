@@ -31,6 +31,8 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { BoardOfDirectorRelatedTraining } from './TrainingRelatedToCooperatives';
+
 const AddDirector = ({ watch, index, control, removeDirector }) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
@@ -314,30 +316,16 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                 label={t['kymCoopUnionCitizenshipPassportDrivingLicenseNo']}
                 placeholder={t['kymCoopUnionEnterNo']}
               />
-            </InputGroupContainer>
-            <Text fontSize="r1" fontWeight="SemiBold">
-              {t['kymCoopUnionTrainingRelatedToCoop']}
-            </Text>
-            <InputGroupContainer>
               <FormInput
-                type="text"
-                name={`boardOfDirectorsDetails.${index}.subjectOfTraining`}
-                label={t['kymCoopUnionSubjectOfTraining']}
-                placeholder={t['kymCoopUnionEnterSubjectOfTraining']}
-              />
-              <FormInput
-                type="date"
-                name={`boardOfDirectorsDetails.${index}.dateOfTraining`}
-                label={t['kymCoopUnionDateOfTraining']}
-                placeholder={t['kymCoopUnionEnterDateOfTraining']}
-              />
-              <FormInput
-                type="number"
-                name={`boardOfDirectorsDetails.${index}.trainingOrganization`}
-                label={t['kymCoopUnionTrainingOrganization']}
-                placeholder={t['kymCoopUnionEnterTrainingOrganization']}
+                type="string"
+                name={`boardOfDirectorsDetails.${index}.panNo`}
+                label={'PAN No'}
+                placeholder={'Enter PAN No'}
               />
             </InputGroupContainer>
+
+            <BoardOfDirectorRelatedTraining bodIndex={index} />
+
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
               <FormFileInput
                 size="lg"
