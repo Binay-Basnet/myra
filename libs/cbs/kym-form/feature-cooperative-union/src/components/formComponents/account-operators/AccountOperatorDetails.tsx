@@ -183,8 +183,8 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
               <InputGroupContainer>
                 <FormSelect
                   name={`accountOperatorsDetails.${index}.permanentStateId`}
-                  label="State"
-                  placeholder="Select State"
+                  label="Province"
+                  placeholder="Select Province"
                   options={province}
                 />
                 <FormSelect
@@ -198,8 +198,8 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                 />
                 <FormSelect
                   name={`accountOperatorsDetails.${index}.permanentVdcOrMunicId`}
-                  label="VDC / Municipality"
-                  placeholder="Select VDC / Municipality"
+                  label="Local Government"
+                  placeholder="Select Local Government"
                   options={localityList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -216,6 +216,12 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                   name={`accountOperatorsDetails.${index}.permanentLocality`}
                   label="Locality"
                   placeholder="Enter Locality"
+                />
+                <FormInput
+                  type="text"
+                  name={`accountOperatorsDetails.${index}.permanentHouseNo`}
+                  label={t['kymIndHouseNo']}
+                  placeholder={t['kymIndEnterHouseNo']}
                 />
               </InputGroupContainer>
 
@@ -250,8 +256,8 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                   <InputGroupContainer>
                     <FormSelect
                       name={`accountOperatorsDetails.${index}.temporaryStateId`}
-                      label="State"
-                      placeholder="Select State"
+                      label="Province"
+                      placeholder="Select Province"
                       options={province}
                     />
                     <FormSelect
@@ -265,8 +271,8 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                     />
                     <FormSelect
                       name={`accountOperatorsDetails.${index}.temporaryVdcOrMunicId`}
-                      label="VDC / Muncipality"
-                      placeholder="Select VDC / Muncipality"
+                      label="Local Government"
+                      placeholder="Select Local Government"
                       options={localityTempList.map((d) => ({
                         label: d.name,
                         value: d.id,
@@ -283,6 +289,12 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                       name={`accountOperatorsDetails.${index}.temporaryLocality`}
                       label="Locality"
                       placeholder="Enter Locality"
+                    />
+                    <FormInput
+                      type="text"
+                      name={`accountOperatorsDetails.${index}.temporaryHouseNo`}
+                      label={t['kymIndHouseNo']}
+                      placeholder={t['kymIndEnterHouseNo']}
                     />
                   </InputGroupContainer>
 
