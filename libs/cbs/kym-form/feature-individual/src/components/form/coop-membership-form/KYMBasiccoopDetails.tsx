@@ -118,7 +118,7 @@ export const KYMBasiccoopDetails = () => {
         <FormSwitchTab
           label={t['kynIndMemberofAnothercooperative']}
           options={booleanList}
-          name="memberOfAnotherCooperative"
+          name="isMemberOfAnotherCooperative"
         />
 
         <Box display="flex" flexDirection="column" gap="s4">

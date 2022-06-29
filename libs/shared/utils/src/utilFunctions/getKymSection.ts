@@ -69,7 +69,7 @@ const familyDetails = [
 ];
 const COOPmembership = ['purposeId', 'memberIdentityLevel'];
 const anotherCoop = [
-  'memberOfAnotherCooperative',
+  'isMemberOfAnotherCooperative',
   'nameAddressCooperative',
   'memberNo',
 ];
