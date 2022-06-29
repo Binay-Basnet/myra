@@ -10,13 +10,15 @@ import {
 import { useSetCooperativeUnionInstitutionDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { ApplicantDetails } from './ApplicantDetails';
 import { BankAccountDetails } from './BankAccountDetails';
+import { BranchOfficeAddress } from './BranchOfficeAddress';
 import { ContactDetails } from './ContactDetails';
 import { InstituteBasicInfo } from './InstituteBasicInfo';
+import { OperatingOfficeAddress } from './OperatingOfficeAddress';
 import { RegisteredDetails } from './RegisteredDetails';
-import { useTranslation } from '@coop/shared/utils';
 
 interface interfaceInfoProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -49,11 +51,13 @@ export const InstituteInfo = (props: interfaceInfoProps) => {
       >
         <SectionContainer>
           <Text fontSize="r3" fontWeight="600">
-            {t.kymCoopUnionInstitutionInformation}
+            {t['kymCoopUnionInstitutionInformation']}
           </Text>
           <ContainerWithDivider>
             <InstituteBasicInfo />
             <RegisteredDetails />
+            <OperatingOfficeAddress />
+            <BranchOfficeAddress />
             <ContactDetails />
             <BankAccountDetails />
             <ApplicantDetails />

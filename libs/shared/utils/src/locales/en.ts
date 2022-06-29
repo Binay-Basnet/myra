@@ -678,11 +678,37 @@ const en: Record<string, string> = {
   kymCoopLastAuditDate: 'Last Audit Date',
   kymCoopLastAGMDate: 'Last AGM Date',
 
-  kymCoopRepresentative: 'Representative',
+  kymCoopRepresentative: 'Representative Details',
   kymCoopName: 'Name',
   kymCoopEnterName: 'Enter Name',
   kymCoopDesignation: 'Designation',
   kymCoopEnterDesignation: 'Enter Designation',
+  kymCoopRepresentativePhone: 'Contact No',
+  kymCoopRepresentativeEnterPhone: 'Enter Contact No',
+  kymCoopRepresentativeEmail: 'Email Address',
+  kymCoopRepresentativeEnterEmail: 'Enter Email Address',
+  kymCoopRepresentativePanOrVat: 'PAN No',
+  kymCoopRepresentativeEnterPan: 'Enter Pan Number',
+  kymCoopRepresentativePermanentAddress: 'Permanent Address',
+  kymCoopRepresentativeProvince: 'Province',
+  kymCoopRepresentativeSelectProvince: 'Select Province',
+  kymCoopRepresentativeDistrict: 'District',
+  kymCoopRepresentativeSelectDistrict: 'Select District',
+  kymCoopRepresentativeLocalGovernment: 'Local Government',
+  kymCoopRepresentativeSelectLocalGovernment: 'Select Local Government',
+  kymCoopRepresentativeWardNo: 'Ward No',
+  kymCoopRepresentativeEnterWardNo: 'Enter Ward No',
+  kymCoopRepresentativeLocality: 'Locality',
+  kymCoopRepresentativeEnterLocality: 'Enter Locality',
+  kymCoopRepresentativeHouseNo: 'House No',
+  kymCoopRepresentativeEnterHouseNo: 'Enter House No',
+  kymCoopRepresentativeTemporaryAddress: 'Temporary Address',
+  kymCoopRepresentativeTemporaryAddressPermanent:
+    'Temporary Address same as permanent',
+  kymCoopRepresentativeINCASERESIDINGINRENTEDHOUSE:
+    'INCASE RESIDING IN RENTED HOUSE',
+  kymCoopRepresentativeLandlordName: "Landlord's Name",
+  kymCoopRepresentativeContactNo: 'Contact No',
 
   kymCoopAdditionalCoorperativeDetails: 'Additional Coorperative Details',
   kymCoopType: 'Type',
@@ -718,6 +744,10 @@ const en: Record<string, string> = {
   kymCoopUnionEnterRegisteredNumber: 'Enter Registered Number',
   kymCoopUnionIssuingOffice: 'Issuing Office',
   kymCoopUnionEnterIssuingOffice: 'Enter Issuing Office',
+
+  kymCoopUnionOperatorOfficeAddress: 'Operating Office Address',
+
+  kymCoopUnionOperatorBranchAddress: 'Branch Office Address',
 
   kymCoopUnionContactDetails: 'Contact Details',
   kymCoopUnionPhone: 'Phone',
@@ -942,13 +972,21 @@ const en: Record<string, string> = {
 
   kymCoopUnionDec7Declaration: ' 7. Declaration',
   kymCoopUnionDecDocumentsDeclaration: 'Documents Declaration',
-  kymCoopUnionDecAGMDecisionDocument: 'AGM Decision Document',
+  kymCoopUnionDecAGMDecisionDocument: 'AGM/BOD Decision Document',
   kymCoopUnionDecRegisteredCertificate: 'Registered Certificate',
   kymCoopUnionDecMOAAOA: 'MOA/AOA',
   kymCoopUnionDecPANCertificate: 'PAN Certificate',
   kymCoopUnionDecTaxClearance: 'Tax Clearance',
   kymCoopUnionDecLatestAuditReport: 'Latest Audit Report',
   kymCoopUnionDecMinuteofCentralRep: 'Minute of Central Rep',
+  kymCoopUnionTrainingAttended: 'Training Attended',
+
+  kymCoopUnionEmailAddress: 'Email Address',
+  kymCoopUnionEmailAddressPlaceholder: 'Enter Email Address',
+  kymCoopUnionContactNo: 'Contact No',
+  kymCoopUnionContactNoPlaceholder: 'Enter Contact No',
+  kymCoopUnionPANNo: 'PAN No',
+  kymCoopUnionPANNoPlaceholder: 'Enter PAN No',
 
   // kym individual
   kymInd1PersonalInformation: '1. Personal Information',
@@ -1133,6 +1171,8 @@ const en: Record<string, string> = {
     'Enter no of Institutuional Members',
   kymCoopUnionTotalcurrentmembers: 'Total current members',
   kymCoopUnionEntertotalcurrentmembers: 'Enter total current members',
+  kymCoopUnionCRDecisionDocument: 'CR Decision Document',
+  kymCoopUnionCRNotDir: 'Central Representative is not among Directors',
 
   // kym ins
   kymInsBasicInformation: 'Basic Information',
