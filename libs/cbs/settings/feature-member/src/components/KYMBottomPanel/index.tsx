@@ -3,11 +3,35 @@ import { AddIcon } from '@chakra-ui/icons';
 
 import { AccordionPanel, Box, Button, Checkbox } from '@coop/shared/ui';
 
+interface FieldType {
+  id?: string;
+  key?: string;
+  label: string;
+  component?: (props: { isExpanded: boolean }) => JSX.Element;
+  children?: FieldType[];
+}
+
 interface IKYMBottomPanelProps {
-  setItems?: () => void;
+  setItems?: React.Dispatch<React.SetStateAction<FieldType>>;
 }
 
 export const KYMBottomPanel = ({ setItems }: IKYMBottomPanelProps) => {
+  const clickHandler = () => {
+    if (setItems) {
+      // CALL QUERYCLIENT.INVALIDATE_QUERIES TO REFRESH THE DATA AFTER ADDING NEW FIELD !!
+      setItems((prev) => ({
+        ...prev,
+        children: [
+          ...(prev.children ?? []),
+          {
+            key: 'custom_field',
+            label: 'Custom Field',
+          },
+        ],
+      }));
+    }
+  };
+
   return (
     <AccordionPanel p="0" borderTop={'1px'} borderTopColor={'border.layout'}>
       <Box
@@ -22,7 +46,7 @@ export const KYMBottomPanel = ({ setItems }: IKYMBottomPanelProps) => {
           size={'md'}
           shade="primary"
           leftIcon={<AddIcon />}
-          onClick={setItems}
+          onClick={clickHandler}
           _hover={{ bg: 'transparent' }}
         >
           Add New Option

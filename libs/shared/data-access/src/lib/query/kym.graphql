@@ -21,8 +21,7 @@ query getIndIdentificationDocOption {
     members {
         individual {
             options {
-                list(filter: { isIdentificationDoc: true }) {
-
+                list(filter: { parent: IDENTIFICATION }) {
                     data {
                         id
                         name

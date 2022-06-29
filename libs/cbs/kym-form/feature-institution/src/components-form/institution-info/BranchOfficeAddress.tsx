@@ -71,7 +71,7 @@ export const BranchOfficeAddress = () => {
   }, [currentDistrictId]);
 
   return (
-    <GroupContainer id="Branch Office Address" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymInsbranchOfficeAddress" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"
@@ -112,7 +112,7 @@ export const BranchOfficeAddress = () => {
           />
           <FormInput
             type="number"
-            name="branchOfficeWardId"
+            name="branchOfficeWard"
             label={t['kymIndWardNo']}
             placeholder={t['kymIndEnterWardNo']}
           />

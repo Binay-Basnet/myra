@@ -44,7 +44,7 @@ export const OperatorOfficeAddress = () => {
     [currentDistrictId]
   );
   return (
-    <GroupContainer id="Operator Office Address" scrollMarginTop={'200px'}>
+    <GroupContainer id="kymInsOperatorOfficeAddress" scrollMarginTop={'200px'}>
       <Text
         fontSize="r1"
         fontWeight="semibold"
@@ -52,12 +52,7 @@ export const OperatorOfficeAddress = () => {
       >
         {t['kymInsOperatorOfficeAddress']}
       </Text>
-      <Box
-        id="Operator Office Address"
-        gap="s16"
-        display={'flex'}
-        flexDirection="column"
-      >
+      <Box gap="s16" display={'flex'} flexDirection="column">
         <InputGroupContainer>
           <FormSelect
             name="operatorOfficeProvinceId"

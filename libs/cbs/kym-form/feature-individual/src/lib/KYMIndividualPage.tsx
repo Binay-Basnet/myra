@@ -66,8 +66,8 @@ export function KYMIndividualPage() {
   });
   const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
   const kymFormStatus =
-    kymFormStatusQuery?.data?.members?.individual?.formState?.data
-      ?.sectionStatus;
+      kymFormStatusQuery?.data?.members?.individual?.formState?.data
+          ?.sectionStatus;
 
   const methods = useForm<KymIndMemberInput>({
     defaultValues: {
