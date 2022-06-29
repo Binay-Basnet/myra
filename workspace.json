@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "cbs-accounts-feature-account-form": "libs/cbs/accounts/feature-account-form",
     "cbs-kym-form-feature-cooperative": "libs/cbs/kym-form/feature-cooperative",
     "cbs-kym-form-feature-cooperative-union": "libs/cbs/kym-form/feature-cooperative-union",
     "cbs-kym-form-feature-individual": "libs/cbs/kym-form/feature-individual",

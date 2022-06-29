@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
+import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 // import debounce from 'lodash/debounce';
@@ -26,69 +26,30 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-import { Critera, GridItems, TypesOfMember } from '../components/form';
+import {
+  AccountServicesCharge,
+  BalanceLimit,
+  Critera,
+  DefaultAccountName,
+  DepositFrequency,
+  GridItems,
+  Interest,
+  MaximumTenure,
+  MinimunTenure,
+  PrematuredPenalty,
+  Questions,
+  RequiredDocumentSetup,
+  TypesOfMember,
+} from '../components/form';
 
 /* eslint-disable-next-line */
 export interface SettingsDepositProductsAddProps {}
 
-const options = [
-  { label: 'fixed', value: 'fixed' },
-  { label: 'current', value: 'current' },
-];
-const checkboxlist = [
-  { label: 'Male', value: 'male' },
-  { label: 'Female', value: 'Female' },
-  { label: 'Other', value: 'other' },
-];
-
-const DepositFrequencyOptions = [
-  {
-    label: 'Daily',
-    value: 'Daily',
-  },
-  {
-    label: 'Weekly',
-    value: 'Weekly',
-  },
-  {
-    label: 'Monthly',
-    value: 'Monthly',
-  },
-  {
-    label: 'Yearly',
-    value: 'Yearly',
-  },
-];
-const Days = [
-  {
-    label: 'Sunday',
-    value: 'Sunday',
-  },
-  {
-    label: 'Monday',
-    value: 'Monday',
-  },
-  {
-    label: 'Tuesday',
-    value: 'Tuesday',
-  },
-  {
-    label: 'Wednesday',
-    value: 'Wednesday',
-  },
-  {
-    label: 'Thrusday',
-    value: 'Thrusday',
-  },
-  {
-    label: 'Friday',
-    value: 'Friday',
-  },
-];
-const anyDay = [{ label: 'Any Day', value: 'anyDay' }];
-const daysforMonth = [
-  { label: 'Day', value: 'day' },
-  { label: 'Day of the Week', value: 'dayOfWeek' },
+const optionsSaving = [
+  { label: 'Recurring Saving', value: 'recurringSaving' },
+  { label: 'Mandatory', value: 'mandatory' },
+  { label: 'Voluntary/Optional', value: 'voluntary' },
+  { label: 'Term Saving', value: 'termSaving' },
 ];
 
 export function SettingsDepositProductsAdd(
@@ -98,15 +59,16 @@ export function SettingsDepositProductsAdd(
   const methods = useForm({});
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
+  const depositNature = watch('nameOfDepositProduct');
 
   return (
-    <Container height="fit-content" minW="container.xl">
+    <Container height="fit-content" minW="container.lg">
       <Box position="relative" margin="0px auto">
         <Box
           position="fixed"
           margin="0px auto"
           bg="gray.100"
-          minW="container.xl"
+          minW="container.lg"
           zIndex="10"
         >
           <Box
@@ -124,13 +86,13 @@ export function SettingsDepositProductsAdd(
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<GrClose />}
+              icon={<IoCloseOutline />}
               onClick={() => router.back()}
             />
           </Box>
         </Box>
       </Box>
-      <Container minW="container.xl" height="fit-content" bg="white">
+      <Container minW="container.lg" height="fit-content" bg="white">
         <FormProvider {...methods}>
           <form>
             {/* main */}
@@ -144,10 +106,11 @@ export function SettingsDepositProductsAdd(
                         label="Product Name"
                         placeholder="Enter Product Name"
                       />
+                      {/* <FormSelect name={'duhjisdfsd'} /> */}
                     </GridItem>
                     <FormSelect
                       name={'nameOfDepositProduct'}
-                      options={options}
+                      options={optionsSaving}
                       label="Nature of Deposit Product"
                     />
                   </InputGroupContainer>
@@ -175,10 +138,25 @@ export function SettingsDepositProductsAdd(
                   </InputGroupContainer>
                 </Box>
                 <TypesOfMember watch={watch} />
-                <Box display="flex" flexDirection={'column'} gap="s16">
-                  <Critera watch={watch} />
-                  <GridItems watch={watch} />
-                </Box>
+                {depositNature !== 'mandatory' && (
+                  <Box display="flex" flexDirection={'column'} gap="s16">
+                    <Critera watch={watch} />
+                    <GridItems watch={watch} />
+                  </Box>
+                )}
+                {depositNature !== 'voluntary' && (
+                  <DepositFrequency watch={watch} />
+                )}
+                {depositNature !== 'voluntary' && <MinimunTenure />}
+                {depositNature !== 'voluntary' && <MaximumTenure />}
+                <BalanceLimit />
+                <Interest />
+                <AccountServicesCharge />
+                {(depositNature === 'recurringSaving' ||
+                  depositNature === 'termSaving') && <DefaultAccountName />}
+                <Questions watch={watch} />
+                <RequiredDocumentSetup />
+                {depositNature !== 'termSaving' && <PrematuredPenalty />}
               </ContainerWithDivider>
             </Box>
           </form>

@@ -11,6 +11,7 @@ import { Skeleton } from '@chakra-ui/react';
 import { debounce } from 'lodash';
 
 import {
+  CustomIdEnum,
   KymField,
   KymOption,
   useAddFileSizeMutation,
@@ -63,8 +64,9 @@ export const KYMDragGroup = ({
 
   const { isLoading, data } = useGetKymIndItemDetailsQuery(
     {
-      id: fieldId ?? null,
-      name: fieldName ?? null,
+      // id: fieldId ?? null,
+      // name: fieldName ?? null,
+      customId: CustomIdEnum.Gender,
     },
     {
       enabled: isExpanded,

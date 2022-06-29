@@ -31,7 +31,7 @@ export const ShareBalanceTable = () => {
 
       {
         Header: t['shareTableShareCount'],
-        accessor: 'node.shareCount',
+        accessor: 'node.count',
         isNumeric: true,
       },
       {

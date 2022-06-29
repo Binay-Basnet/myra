@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
+import format from 'date-fns/format';
+
 import { useGetShareHistoryQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
-import format from 'date-fns/format';
-import { useRouter } from 'next/router';
 import { useTranslation } from '@coop/shared/utils';
 // import { amountConverter } from '../../../../../util/src/utilFunctions/amountFunc';
 
@@ -40,12 +41,12 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
 
       {
         Header: t['sharePurchaseTableShareNumber'],
-        accessor: 'node.shareStartNumber',
+        accessor: 'node.startNumber',
 
         Cell: ({ value, row }) => {
           return (
             <span>
-              {value} to {row?.original?.node?.shareEndNumber}
+              {value} to {row?.original?.node?.endNumber}
             </span>
           );
         },
@@ -54,7 +55,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       {
         id: 'share-dr',
         Header: t['sharePurchaseTableShareDr'],
-        accessor: 'node.shareDr',
+        accessor: 'node.debit',
         isNumeric: true,
 
         Cell: ({ value, row }) => {
@@ -67,7 +68,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         id: 'share-cr',
         Header: t['sharePurchaseTableShareCr'],
         isNumeric: true,
-        accessor: 'node.shareCr',
+        accessor: 'node.credit',
         Cell: ({ value, row }) => {
           return (
             <span> {value ? `${value.toLocaleString('en-IN')}` : '-'}</span>

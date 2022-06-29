@@ -14,6 +14,13 @@ const Registerdetails = [
   'registeredAddressIfChanged',
   'registeredNumber',
   'issuingOffice',
+  'registeredProvinceId',
+  'registeredDistrictId',
+  'registeredLocalityId',
+  'registeredWardId',
+  'registeredTole',
+  'registeredHouseNo',
+  'registeredInstitutionLocation',
 ];
 const contactDetails = [
   'phone',
@@ -24,26 +31,41 @@ const contactDetails = [
   'numberOfEmployee',
   'dateOfLastAGM',
 ];
+
+const operatorOfficeAddress = [
+  'operatorOfficeProvinceId',
+  'operatorOfficeDistrictId',
+  'operatorOfficeLocalityId',
+  'operatorOfficeWardId',
+  'operatorOfficeTole',
+  'operatorOfficeHouseNo',
+];
+
+const branchOfficeAddress = [
+  'branchOfficeProvinceId',
+  'branchOfficeDistrictId',
+  'branchOfficeLocalityId',
+  'branchOfficeWard',
+  'branchOfficeTole',
+  'branchOfficeHouseNo',
+];
+
 const TransactionDetails = [
   'natureOfTransaction',
   'annualTurnover',
   'initialDepositAmount',
 ];
 const monthlyTurnover = [
-  'Less than 5 Lakhs0',
-  'Less than 10 Lakhs1',
-  'Above 10 Lakhs2',
+  'Less than 20 Lakhs',
+  'Less than 50 Lakhs',
+  'Above 50 Lakhs',
 ];
-const monthlyTransactions = [
-  'Less than 10 Lakhs0',
-  'Less than 25 Lakhs1',
-  'Above 25 Lakhs2',
-];
+const monthlyTransactions = ['Less than 10', 'Less than 25', 'Above 25'];
 const sisterConcern = ['sisterConcernDetails', 'sisterConcernButton'];
 
 const BankAccDetails = ['bank', 'accountNumber', 'accountName'];
 const directorDetails = [
-  'detailsOfDirector',
+  'detailsOfDirectors',
   'addDirectorButton',
   'isPermanentAndTemporaryAddressSame',
 ];
@@ -55,13 +77,25 @@ const directoswithAffiliation = [
 const accountOperator = [
   'accountOperatorsDetails',
   'accountOperatorDetailsButton',
+  'accountOperatorReset',
+  'accountOperatorClose',
 ];
 const accountInstruction = [
   'accountType',
   'specialInstruction',
   'isCompanyStampCompulsory',
 ];
-const accontDecleration = ['accountHolderName', 'weAgree'];
+const accontDecleration = [
+  'accountHolderName',
+  'accountHolderPhone',
+  'accountHolderEmail',
+  'accountHolderProvinceId',
+  'accountHolderDistrictId',
+  'accountHolderMunicipality',
+  'accountHolderWardNo',
+  'accountHolderLocality',
+  'weAgree',
+];
 
 export const getKymSectionInstitution = (id: string) => {
   if (InstitutionalInfo.includes(id)) {
@@ -76,6 +110,21 @@ export const getKymSectionInstitution = (id: string) => {
       subSection: 'kymInsRegisteredDetails',
     };
   }
+
+  if (operatorOfficeAddress.includes(id)) {
+    return {
+      section: 'organizationInfo',
+      subSection: 'kymInsOperatorOfficeAddress',
+    };
+  }
+
+  if (branchOfficeAddress.includes(id)) {
+    return {
+      section: 'organizationInfo',
+      subSection: 'kymInsbranchOfficeAddress',
+    };
+  }
+
   if (contactDetails.includes(id)) {
     return {
       section: 'organizationInfo',

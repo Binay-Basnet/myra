@@ -87,12 +87,23 @@ query getKymFormStatus($id: ID!) {
     }
 }
 
-query getKYMIndItemDetails( $id: ID,$name: String, $isIdentificationDoc: KYM_Field_Parent) {
+query getKYMIndItemDetails(
+    $id: ID
+    $name: String
+    $customId: CustomIdEnum
+    $isIdentificationDoc: KYM_Field_Parent
+) {
     settings {
         kymForm {
             field {
                 list(
-                    filter: {id: $id, name: $name, kymType: INDIVIDUAL, parent: $isIdentificationDoc }
+                    filter: {
+                        id: $id
+                        name: $name
+                        kymType: INDIVIDUAL
+                        customId: $customId
+                        parent: $isIdentificationDoc
+                    }
                 ) {
                     data {
                         id
@@ -183,4 +194,3 @@ query getMemberIndividualData($id: ID!) {
         }
     }
 }
-

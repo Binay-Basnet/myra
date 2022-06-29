@@ -1,68 +1,69 @@
 query getShareBalanceList {
-  share {
-    balance {
-      edges {
-        node {
-          id
-          balance
-          shareCount
-          member {
-            name
-          }
+    share {
+        balance {
+            edges {
+                node {
+                    id
+                    balance
+                    count
+                    member {
+                        name
+                    }
+                }
+            }
+            pageInfo {
+                endCursor
+                startCursor
+            }
         }
-      }
-      pageInfo {
-        endCursor
-        startCursor
-      }
     }
-  }
 }
 
 query getShareRegisterList {
-  share {
-    register {
-      edges {
-        node {
-          transactionDate
-          transactionDirection
-          id
-          member {
-            name
-          }
-          balance
-          shareStartNumber
-          shareEndNumber
-          shareCr
-          shareDr
+    share {
+        register {
+            edges {
+                node {
+                    transactionDate
+                    transactionDirection
+                    id
+                    member {
+                        name
+                    }
+                    balance
+                    startNumber
+                    shareAmount
+                    endNumber
+                    credit
+                    debit
+                }
+            }
         }
-      }
     }
-  }
 }
 
 query getShareHistory($memberId: String!) {
-  share {
-    register(
-      paginate: { first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA" }
-      filter: { memberId: $memberId }
-    ) {
-      edges {
-        node {
-          id
-          member {
-            id
-          }
-          shareStatus
-          transactionDate
-          transactionDirection
-          shareStartNumber
-          shareEndNumber
-          shareCr
-          shareDr
-          balance
+    share {
+        register(
+            paginate: { first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA" }
+            filter: { memberId: $memberId }
+        ) {
+            edges {
+                node {
+                    id
+                    member {
+                        id
+                    }
+
+                    transactionDate
+                    transactionDirection
+                    startNumber
+                    endNumber
+                    credit
+                    debit
+                    balance
+                }
+            }
         }
-      }
     }
-  }
 }

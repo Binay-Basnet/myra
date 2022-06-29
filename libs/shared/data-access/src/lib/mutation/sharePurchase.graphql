@@ -1,11 +1,32 @@
-mutation setSharePurchase($id: ID!, $data: SharePurchaseInput!) {
+mutation addSharePurchase($id: ID!, $data: SharePurchaseInput!) {
   share {
     purchase(id: $id, data: $data) {
       recordId
-      error {
-        ... on InvalidDataError {
-          error
+      record {
+        id
+        createdAt
+        modifiedAt
+        member {
+          id
         }
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        balance
+        shareAmount
+        totalAmount
+        extraFee {
+          name
+          value
+        }
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
       }
     }
   }

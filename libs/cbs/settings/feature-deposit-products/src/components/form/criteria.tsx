@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
+import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 // import debounce from 'lodash/debounce';
@@ -61,14 +61,14 @@ const NOBCoopUnion = [
 const CoperativeType = [{ label: 'Coperative Type', value: 'cooperativeType' }];
 export const Critera = ({ watch }: any) => {
   const memberType = watch('typeOfMember');
-  console.log('membertype', memberType?.indexOf('individual'));
+
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Deposit Frequency</TopText>
+        <TopText>Criteria</TopText>
         <SubText>
-          Select deposit frequency. Further details have to be added during
-          account opening.
+          Selected Checklist will generate fields below. Multi select for
+          different criteria.
         </SubText>
       </TextBoxContainer>
       <InputGroupContainer>
@@ -84,12 +84,7 @@ export const Critera = ({ watch }: any) => {
             list={maritalStatus}
           />
         )}
-        {memberType && memberType?.indexOf('individual') !== -1 && (
-          <FormCheckboxGroup
-            name="criteria.occupationalDetails"
-            list={occupationDetails}
-          />
-        )}
+
         {memberType && memberType?.indexOf('individual') !== -1 && (
           <FormCheckboxGroup
             name="criteria.educationalQualification"
@@ -98,6 +93,12 @@ export const Critera = ({ watch }: any) => {
         )}
         {memberType && memberType?.indexOf('individual') !== -1 && (
           <FormCheckboxGroup name="criteria.ethnicity" list={ethnicity} />
+        )}
+        {memberType && memberType?.indexOf('individual') !== -1 && (
+          <FormCheckboxGroup
+            name="criteria.occupationalDetails"
+            list={occupationDetails}
+          />
         )}
 
         {memberType && memberType?.indexOf('individual') !== -1 && (

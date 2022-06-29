@@ -18,7 +18,7 @@ import {
   Icon,
   FormFooter,
 } from '@coop/shared/ui';
-import { GrClose } from 'react-icons/gr';
+import { IoCloseOutline } from 'react-icons/io5';
 import debounce from 'lodash/debounce';
 import {
   KymCoopBasicInfo,
@@ -89,7 +89,7 @@ export function KYMCooperativePage() {
               <IconButton
                 variant={'ghost'}
                 aria-label="close"
-                icon={<GrClose />}
+                icon={<IoCloseOutline />}
                 onClick={() => router.back()}
               />
             </Box>

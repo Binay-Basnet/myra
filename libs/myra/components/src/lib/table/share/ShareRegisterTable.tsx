@@ -68,14 +68,14 @@ export const ShareRegisterTable = () => {
 
       {
         Header: t['shareRegisterTableNameToFrom'],
-        accessor: 'node.shareStartNumber',
+        accessor: 'node.startNumber',
         width: '20%',
         disableSortBy: true,
 
         Cell: ({ value, row }) => {
           return (
             <span>
-              {value} - {row?.original?.node?.shareEndNumber}
+              {value} - {row?.original?.node?.endNumber}
             </span>
           );
         },
@@ -84,7 +84,7 @@ export const ShareRegisterTable = () => {
       {
         id: 'share-dr',
         Header: t['shareRegisterTableNameShareDr'],
-        accessor: 'node.shareDr',
+        accessor: 'node.debit',
         isNumeric: true,
 
         disableFilters: false,
@@ -101,7 +101,7 @@ export const ShareRegisterTable = () => {
         id: 'share-cr',
         Header: t['shareRegisterTableNameShareCr'],
         isNumeric: true,
-        accessor: 'node.shareCr',
+        accessor: 'node.credit',
 
         disableFilters: false,
         filter: 'numberAll',

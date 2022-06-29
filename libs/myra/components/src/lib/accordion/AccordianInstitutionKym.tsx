@@ -8,6 +8,8 @@ import { useTranslation } from '@coop/shared/utils';
 const OrganizationInformation = [
   'kymInsBasicInformation',
   'kymInsRegisteredDetails',
+  'kymInsOperatorOfficeAddress',
+  'kymInsbranchOfficeAddress',
   'kymInsContactDetails',
   'kymInsBankAccountDetails',
   'kymInsDetailsofsisterconcern',
