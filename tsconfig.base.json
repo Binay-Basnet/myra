@@ -18,6 +18,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@coop/cbs/accounts/account-form": [
+        "libs/cbs/accounts/feature-account-form/src/index.ts"
+      ],
       "@coop/cbs/kym-form/cooperative": [
         "libs/cbs/kym-form/feature-cooperative/src/index.ts"
       ],

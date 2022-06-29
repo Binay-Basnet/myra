@@ -200,9 +200,8 @@ const ne: Record<string, string> = {
   accountNavDraft: 'Draft',
 
   accountList: 'Account List',
-  accountReport: 'Account Report',
-  accountConsolidatedReport: 'Account Consolidated Report',
-  accountCertificatePrint: 'Account Certificate Print',
+  accountClose: 'Account Close',
+  accountReport: 'Account Reports',
 
   // Inventory Page TODO ( Update Translations )
   inventoryItems: 'Items',
