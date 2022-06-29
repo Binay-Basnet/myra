@@ -2,10 +2,10 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
-import { useTranslation } from '@coop/shared/utils';
 
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, Container, IconButton, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface CbsAccountOpenFormProps {}
@@ -96,7 +96,7 @@ export function CbsAccountOpen(props: CbsAccountOpenFormProps) {
             p="s20"
             background="neutralColorLight.Gray-0"
           >
-            <Text fontSize="r1" fontColor="neutralColorLight.Gray-60">
+            <Text fontSize="r1" color="neutralColorLight.Gray-60">
               {t['accInterest']}
             </Text>
             <Box
