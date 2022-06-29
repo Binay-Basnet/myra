@@ -96,15 +96,15 @@ const AddAccountDetails = ({
 
   const districtTempList = useMemo(
     () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
+      data?.administration.all.find((d) => d.id === currentTempProvinceId)
         ?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
+        ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
 
@@ -231,6 +231,12 @@ const AddAccountDetails = ({
                 label={t['kymInsLocality']}
                 placeholder={t['kymInsEnterLocality']}
               />
+              <FormInput
+                type="text"
+                name={`accountOperatorsDetails.${index}.permanentHouseNo`}
+                label={t['kymInsHouseNo']}
+                placeholder={t['kymInsEnterHouseNo']}
+              />
             </InputGroupContainer>
 
             <Box>
@@ -296,6 +302,12 @@ const AddAccountDetails = ({
                     name={`accountOperatorsDetails.${index}.temporaryLocality`}
                     label={t['kymInsLocality']}
                     placeholder={t['kymInsEnterLocality']}
+                  />
+                  <FormInput
+                    type="text"
+                    name={`accountOperatorsDetails.${index}.temporaryHouseNo`}
+                    label={t['kymInsHouseNo']}
+                    placeholder={t['kymInsEnterHouseNo']}
                   />
                 </InputGroupContainer>
                 <Button
