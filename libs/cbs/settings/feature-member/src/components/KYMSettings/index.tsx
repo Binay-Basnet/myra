@@ -14,7 +14,7 @@ import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 
 /* eslint-disable-next-line */
 interface FieldType {
-  customId?: KYMOptionEnum | string;
+  customId?: KYMOptionEnum;
   key?: string;
   label: string;
   hasChildren?: boolean;
