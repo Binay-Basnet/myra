@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import {
+  CustomIdEnum as KYMOptionEnum,
   Kym_Field_Parent,
   useGetKymIndItemDetailsQuery,
 } from '@coop/shared/data-access';
@@ -13,7 +14,7 @@ import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 
 /* eslint-disable-next-line */
 interface FieldType {
-  id?: string;
+  customId?: KYMOptionEnum | string;
   key?: string;
   label: string;
   hasChildren?: boolean;
@@ -50,8 +51,6 @@ export const KYMSettings = ({
       },
     }
   );
-
-  console.log(fields);
 
   return fields.key !== 'custom' ? (
     <Accordion

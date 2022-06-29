@@ -4,14 +4,23 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import {
+  CustomIdEnum as KYMOptionEnum,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/shared/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, RadioGroup, Text } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-const annualFamilyIncome = ['Upto 50', 'Upto 100', 'Upto 500', 'Above 500'];
+import { getFieldOption } from '../../../utils/getFieldOption';
 
 export const KYMEstimatedAmount = () => {
   const { t } = useTranslation();
+  const { data: estimatedAnnualTransactionData } =
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.EstimatedAnnualTransaction },
+    });
+
   return (
     <GroupContainer
       id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
@@ -36,24 +45,10 @@ export const KYMEstimatedAmount = () => {
           label={t['kynIndEstimatednoofAnnualTransaction']}
           id="estimatedAnnualTransactionFrequencyId"
           name="estimatedAnnualTransactionFrequencyId"
-          options={[
-            {
-              label: 'Upto 50',
-              value: 'upto50',
-            },
-            {
-              label: 'Upto 100',
-              value: 'upto100',
-            },
-            {
-              label: 'Upto 500',
-              value: 'upto500',
-            },
-            {
-              label: 'above500',
-              value: 'abovce500',
-            },
-          ]}
+          options={getFieldOption(
+            estimatedAnnualTransactionData,
+            (label) => `${t['upto']} ${label}`
+          )}
           labelFontSize="s3"
         />
       </Box>

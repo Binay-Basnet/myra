@@ -1451,6 +1451,8 @@ const ne: Record<string, string> = {
   shareToAccount: 'Share To Account  /',
   shareToAccountSubtitle: 'Account from which shares are paid to and paid from',
   shareTransferAccountName: 'Account Name',
+
+  upto: 'Upto',
 };
 
 export default ne;

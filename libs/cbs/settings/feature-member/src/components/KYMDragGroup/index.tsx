@@ -11,7 +11,7 @@ import { Skeleton } from '@chakra-ui/react';
 import { debounce } from 'lodash';
 
 import {
-  CustomIdEnum,
+  CustomIdEnum as KYMEnum,
   KymField,
   KymOption,
   useAddFileSizeMutation,
@@ -37,10 +37,12 @@ interface IKYMDraggableItemProps {
   fieldId?: string;
   fieldName?: string;
   isExpanded: boolean;
+  customId?: KYMEnum;
 }
 
 export const KYMDragGroup = ({
   fieldId,
+  customId,
   fieldName,
   isExpanded,
 }: IKYMDraggableItemProps) => {
@@ -64,9 +66,14 @@ export const KYMDragGroup = ({
 
   const { isLoading, data } = useGetKymIndItemDetailsQuery(
     {
-      // id: fieldId ?? null,
-      // name: fieldName ?? null,
-      customId: CustomIdEnum.Gender,
+      id:
+        customId && Object.values(KYMEnum).includes(customId) ? null : fieldId,
+      name:
+        customId && Object.values(KYMEnum).includes(customId)
+          ? null
+          : fieldName,
+      customId:
+        customId && Object.values(KYMEnum).includes(customId) ? customId : null,
     },
     {
       enabled: isExpanded,
@@ -213,6 +220,7 @@ export const KYMDragGroup = ({
               setFieldItems((prev) => [
                 ...prev,
                 {
+                  fieldType: undefined,
                   enabled: true,
                   name: {
                     local: '',

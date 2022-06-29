@@ -1472,6 +1472,8 @@ const en: Record<string, string> = {
   accInterestSanctionedByName: 'Interest Sanctioned By Name',
   accDepositFrequency: 'Deposit Frequency',
   accWeekly: 'Weekly',
+
+  upto: 'Upto',
 };
 
 export default en;
