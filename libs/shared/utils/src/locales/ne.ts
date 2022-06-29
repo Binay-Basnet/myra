@@ -1301,6 +1301,8 @@ const ne: Record<string, string> = {
   kymInsEnterWardNo: 'Enter Ward No',
   kymInsLocality: 'Locality',
   kymInsEnterLocality: 'Enter Locality',
+  kymInsHouseNo: 'House No',
+  kymInsEnterHouseNo: 'Enter House No',
   kymInsTemporaryAddress: 'Temporary Address',
   kymInsTemporaryAddressPermanent: 'Temporary Address same as permanent',
   kymInsUnionDateOfMembership: 'Date of membership',
