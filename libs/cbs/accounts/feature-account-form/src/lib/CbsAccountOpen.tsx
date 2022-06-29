@@ -117,7 +117,7 @@ export function CbsAccountOpen(props: CbsAccountOpenFormProps) {
                 id="noOfShares"
                 name="noOfReturnedShares"
                 label={t['accInterestSanctionedById']}
-                placeholder={0.0}
+                placeholder={'0.0'}
               />
 
               <FormInput
@@ -126,7 +126,7 @@ export function CbsAccountOpen(props: CbsAccountOpenFormProps) {
                 id="noOfShares"
                 name="noOfReturnedShares"
                 label={t['accInterestSanctionedByName']}
-                placeholder={0.0}
+                placeholder={'0.0'}
               />
             </Box>
           </Box>
@@ -141,7 +141,7 @@ export function CbsAccountOpen(props: CbsAccountOpenFormProps) {
             <Text
               fontWeight="SemiBold"
               fontSize="r1"
-              fontColor="neutralColorLight.Gray-60"
+              color="neutralColorLight.Gray-60"
             >
               {t['accDepositFrequency']}
             </Text>
@@ -153,7 +153,7 @@ export function CbsAccountOpen(props: CbsAccountOpenFormProps) {
             >
               <Text
                 fontSize="s3"
-                fontColor="neutralColorLight.Gray-80"
+                color="neutralColorLight.Gray-80"
                 fontWeight="Medium"
               >
                 {t['accWeekly']}
