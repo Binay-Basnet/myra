@@ -18,7 +18,7 @@ export const KYMSettingsAccordionBtn = ({
     <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
       <Box flex="1" textAlign="left">
         <Text fontSize="r1" fontWeight="500" textTransform="capitalize">
-          {t[title]}
+          {t[title] ?? title}
         </Text>
       </Box>
       {isExpanded ? (

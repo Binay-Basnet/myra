@@ -11,6 +11,8 @@ import { Skeleton } from '@chakra-ui/react';
 import { debounce } from 'lodash';
 
 import {
+  CustomIdEnum,
+  KymField,
   KymOption,
   useAddFileSizeMutation,
   useAddKymOptionMutation,
@@ -32,11 +34,13 @@ import {
 import { KYMSingleItem } from '../KYMSingleItem';
 
 interface IKYMDraggableItemProps {
-  fieldName: string;
+  fieldId?: string;
+  fieldName?: string;
   isExpanded: boolean;
 }
 
 export const KYMDragGroup = ({
+  fieldId,
   fieldName,
   isExpanded,
 }: IKYMDraggableItemProps) => {
@@ -52,8 +56,7 @@ export const KYMDragGroup = ({
 
   const { mutateAsync, isLoading: addLoading } = useAddKymOptionMutation({
     onSuccess: (response) => {
-      const option =
-        response.settings.general?.KYM?.individual.option.update.record;
+      const option = response.settings.kymForm.option.upsert.record;
 
       option && setFieldItems((prev) => [...prev, option]);
     },
@@ -61,14 +64,14 @@ export const KYMDragGroup = ({
 
   const { isLoading, data } = useGetKymIndItemDetailsQuery(
     {
-      name: fieldName === 'identification_documents' ? null : fieldName,
-      isIdentificationDoc: fieldName === 'identification_documents',
+      // id: fieldId ?? null,
+      // name: fieldName ?? null,
+      customId: CustomIdEnum.Gender,
     },
     {
       enabled: isExpanded,
       onSuccess: (response) => {
-        const field =
-          response?.settings?.general?.KYM?.individual?.field?.list?.data?.[0];
+        const field = response?.settings?.kymForm.field?.list?.data?.[0];
 
         if (field?.options) {
           setFieldItems(field.options);
@@ -78,14 +81,13 @@ export const KYMDragGroup = ({
     }
   );
 
-  const field =
-    data?.settings?.general?.KYM?.individual?.field?.list?.data?.[0];
+  const field = data?.settings?.kymForm.field?.list?.data?.[0] as KymField;
+
+  console.log(fieldItems);
 
   const handleDragEnd = async (result: DropResult) => {
     const items = Array.from(fieldItems);
     const [reorderedItem] = items.splice(result.source.index, 1);
-
-    console.log(reorderedItem);
 
     if (result.destination) {
       items.splice(result.destination.index, 0, reorderedItem);
@@ -93,7 +95,6 @@ export const KYMDragGroup = ({
       if (reorderedItem.id) {
         await kymOptionArrange({
           optionId: reorderedItem.id,
-          from: result.source.index,
           to: result.destination.index,
         });
       }
@@ -143,6 +144,7 @@ export const KYMDragGroup = ({
                             item={item}
                             dragHandleProps={provided.dragHandleProps}
                           />
+
                           <Icon
                             onClick={async () => {
                               setFieldItems((prev) =>
@@ -165,7 +167,9 @@ export const KYMDragGroup = ({
                         </Box>
                       )}
                     </Draggable>
-                  ) : null;
+                  ) : (
+                    <div>No Items Found!!</div>
+                  );
                 })}
 
                 {hasOtherField && (
@@ -210,7 +214,11 @@ export const KYMDragGroup = ({
                 ...prev,
                 {
                   enabled: true,
-                  optionName: '',
+                  name: {
+                    local: '',
+                    en: '',
+                    np: '',
+                  },
                 },
               ]);
 

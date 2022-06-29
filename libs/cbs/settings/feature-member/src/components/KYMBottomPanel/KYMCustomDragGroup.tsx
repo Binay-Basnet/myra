@@ -10,7 +10,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
 
 import {
-  Field_Types,
+  Kym_Option_Field_Type as Field_Types,
   KymOption,
   useAddFileSizeMutation,
   useAddKymOptionMutation,
@@ -54,8 +54,7 @@ export const KYMCustomDragGroup = ({
 
   const { mutateAsync, isLoading: addLoading } = useAddKymOptionMutation({
     onSuccess: (response) => {
-      const option =
-        response.settings.general?.KYM?.individual.option.update.record;
+      const option = response.settings.kymForm.option.upsert.record;
 
       option && setFieldItems((prev) => (prev ? [...prev, option] : [option]));
     },
@@ -71,7 +70,6 @@ export const KYMCustomDragGroup = ({
       if (reorderedItem?.id) {
         await kymOptionArrange({
           optionId: reorderedItem.id,
-          from: result.source.index,
           to: result.destination.index,
         });
       }

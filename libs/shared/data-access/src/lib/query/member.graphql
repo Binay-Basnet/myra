@@ -87,32 +87,39 @@ query getKymFormStatus($id: ID!) {
     }
 }
 
-query getKYMIndItemDetails($name: String, $isIdentificationDoc: Boolean) {
+query getKYMIndItemDetails(
+    $id: ID
+    $name: String
+    $customId: CustomIdEnum
+    $isIdentificationDoc: KYM_Field_Parent
+) {
     settings {
-        general {
-            KYM {
-                individual {
-                    field {
-                        list(
-                            filter: { name: $name, isIdentificationDoc: $isIdentificationDoc }
-                        ) {
-                            data {
-                                id
-                                name
-                                enabled
-                                options {
-                                    id
-                                    name
-                                    fieldType
-                                    enabled
-                                }
-                                hasOtherField
-                                dependsOn
-                                isCustom
-                                maxSize
-                                fieldType
-                            }
+        kymForm {
+            field {
+                list(
+                    filter: {
+                        id: $id
+                        name: $name
+                        kymType: INDIVIDUAL
+                        customId: $customId
+                        parent: $isIdentificationDoc
+                    }
+                ) {
+                    data {
+                        id
+                        name
+                        enabled
+                        options {
+                            id
+                            name
+                            fieldType
+                            enabled
                         }
+                        hasOtherField
+                        dependsOn
+                        isCustom
+                        maxSize
+                        fieldType
                     }
                 }
             }
