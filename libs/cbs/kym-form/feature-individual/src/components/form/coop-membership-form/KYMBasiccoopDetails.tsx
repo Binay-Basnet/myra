@@ -16,12 +16,7 @@ import {
   useGetIndividualKymOptionQuery,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
-import {
-  FormInput,
-  FormRadioGroup,
-  FormSelect,
-  FormSwitchTab,
-} from '@coop/shared/form';
+import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Avatar,
   Box,
@@ -80,27 +75,6 @@ export const KYMBasiccoopDetails = () => {
 
   return (
     <GroupContainer id="kymAccIndMainPurposeofBecomingMember">
-      <FormRadioGroup
-        label={t['kynIndMemberIdentityLevel']}
-        id="memberIdentityLevel"
-        name="memberIdentityLevel"
-        options={[
-          {
-            label: 'General',
-            value: 'general',
-          },
-          {
-            label: 'MID',
-            value: 'mid',
-          },
-          {
-            label: 'VIP',
-            value: 'vip',
-          },
-        ]}
-        labelFontSize="s3"
-      />
-
       <InputGroupContainer
         id="kymAccIndMainPurposeofBecomingMember"
         scrollMarginTop={'200px'}
@@ -139,21 +113,6 @@ export const KYMBasiccoopDetails = () => {
                 );
               }
             )}
-
-            {/*<GridItem colSpan={2}>*/}
-            {/*  <FormInput*/}
-            {/*    name="nameAddressCooperative"*/}
-            {/*    label={t['kynIndMembershipDetails']}*/}
-            {/*    placeholder={t['kynIndNameandAddressCooperative']}*/}
-            {/*  />*/}
-            {/*</GridItem>*/}
-            {/*<GridItem colSpan={1}>*/}
-            {/*  <FormInput*/}
-            {/*    label="&nbsp;"*/}
-            {/*    name="memberNo"*/}
-            {/*    placeholder={t['kynIndMemberNo']}*/}
-            {/*  />*/}
-            {/*</GridItem>*/}
           </InputGroupContainer>
         </Box>
       </Box>
@@ -167,7 +126,7 @@ export const KYMBasiccoopDetails = () => {
         <FormSwitchTab
           label={t['kynIndFamilyMemberinthisinstitution']}
           options={booleanList}
-          name="familyMemberInThisInstitution"
+          name="familyMemberInThisCooperative"
           id="familyMemberInThisInstitution"
         />
       </Box>
@@ -284,9 +243,6 @@ export const KYMBasiccoopDetails = () => {
                     fontSize="s3"
                     fontWeight="Regular"
                   >
-                    {/* {data?.address?.permanent?.district}
-                    {','}
-                    {data?.address?.permanent?.state} */}
                     Kathmandu, Tokha Municipality-10
                   </TextFields>
                 </Box>
@@ -302,7 +258,6 @@ export const KYMBasiccoopDetails = () => {
                   <Icon h="14px" w="14px" as={CloseIcon} color="gray.500" />
                 </Box>
                 <Box display="flex" alignSelf="flex-end">
-                  {/* <Button variant="link"> */}
                   <Text
                     fontWeight="Medium"
                     color="primary.500"
@@ -311,7 +266,6 @@ export const KYMBasiccoopDetails = () => {
                   >
                     {t['kynIndViewProfile']}
                   </Text>
-                  {/* </Button> */}
                   <Icon size="sm" as={RiShareBoxFill} color="primary.500" />
                 </Box>
               </GridItem>
@@ -341,7 +295,7 @@ export const KYMBasiccoopDetails = () => {
           </Grid>
           <Box px="s16" py="s32" w="50%">
             <FormSelect
-              name={`familyMemberInThisCooperative.relationshipId`}
+              name={`familyMembershipDetails.0.options.0.value`}
               id="kymIndRelationship"
               label={t['kymIndRelationship']}
               placeholder={t['kymIndSelectRelationship']}

@@ -33,23 +33,23 @@ export const MainOccupationInput = ({ option, index, fieldIndex }: any) => {
   const { register, unregister } = useFormContext();
 
   useEffect(() => {
-    register(`mainOccupation.${fieldIndex}.fields.${index}.id`, {
+    register(`mainOccupation.${fieldIndex}.options.${index}.id`, {
       value: option.id,
     });
-    register(`mainOccupation.${fieldIndex}.fields.${index}.value`, {
+    register(`mainOccupation.${fieldIndex}.options.${index}.value`, {
       value: '',
     });
 
     return () => {
-      unregister(`mainOccupation.${fieldIndex}.fields.${index}.id`);
-      unregister(`mainOccupation.${fieldIndex}.fields.${index}.value`);
+      unregister(`mainOccupation.${fieldIndex}.options.${index}.id`);
+      unregister(`mainOccupation.${fieldIndex}.options.${index}.value`);
     };
   }, []);
 
   return (
     <FormInput
       type="text"
-      name={`mainOccupation.0.fields.${index}.value`}
+      name={`mainOccupation.0.options.${index}.value`}
       label={option.name.local}
       placeholder={option.name.local}
     />
@@ -69,12 +69,12 @@ const MainOccupation = ({
 
   const isOwner = watch(`mainOccupation.${fieldIndex}.isOwner`);
 
-
-  const { data: occupationDetailsDefaultFields } = useGetIndividualKymOptionsQuery({
-    filter: {
-      customId: Kym_Field_Custom_Id.Occupation,
-    },
-  });
+  const { data: occupationDetailsDefaultFields } =
+    useGetIndividualKymOptionsQuery({
+      filter: {
+        customId: Kym_Field_Custom_Id.OccupationDetails,
+      },
+    });
 
   const occupationFieldNames =
     occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]

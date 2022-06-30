@@ -41,9 +41,9 @@ export enum Account_Type {
 }
 
 export type AbbsTransaction = {
-  abbsStatus?: Maybe<Scalars['Boolean']>;
-  payableAccountId?: Maybe<Account>;
-  receivableAccountId?: Maybe<Account>;
+  abbsStatus?: Maybe<Status>;
+  payableAccountId?: Maybe<Scalars['String']>;
+  receivableAccountId?: Maybe<Scalars['String']>;
 };
 
 export type Account = {
@@ -142,10 +142,10 @@ export type AddChartsOfAccountResult = {
 };
 
 export type Address = {
-  district?: Maybe<Scalars['Localized']>;
-  localLevel?: Maybe<Scalars['Localized']>;
-  locality?: Maybe<Scalars['Localized']>;
-  state?: Maybe<Scalars['Localized']>;
+  district?: Maybe<Scalars['String']>;
+  localLevel?: Maybe<Scalars['String']>;
+  locality?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
   wardNo?: Maybe<Scalars['String']>;
 };
 
@@ -169,8 +169,8 @@ export type AdministrationQueryDistrictsArgs = {
 
 
 export type AdministrationQueryMunicipalitiesArgs = {
-  districtId: Scalars['Int'];
-  provinceId: Scalars['Int'];
+  districtId?: InputMaybe<Scalars['Int']>;
+  provinceId?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -269,18 +269,18 @@ export type Base = {
 
 export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
-  address: BranchAddress;
-  branchCode: Scalars['Int'];
-  branchStatus?: Maybe<Scalars['Boolean']>;
+  address?: Maybe<Address>;
+  branchCode?: Maybe<Scalars['String']>;
+  branchStatus?: Maybe<Status>;
   category?: Maybe<BranchCategory>;
-  contactNumber: Scalars['String'];
+  contactNumber?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   estDate?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
-  manager: Member;
+  manager?: Maybe<Member>;
   name?: Maybe<Scalars['String']>;
-  plTransferId?: Maybe<Account>;
-  tdsTransaferId?: Maybe<Account>;
+  plTransferId?: Maybe<Scalars['String']>;
+  tdsTransaferId?: Maybe<Scalars['String']>;
 };
 
 export type BranchAddError = BranchAddInvalidDataError;
@@ -294,16 +294,6 @@ export type BranchAddResult = {
   query?: Maybe<GeneralBranchSettingsQuery>;
   record: Branch;
   recordId: Scalars['ID'];
-};
-
-export type BranchAddress = {
-  districtId?: Maybe<Scalars['ID']>;
-  latitude?: Maybe<Scalars['String']>;
-  locality?: Maybe<Scalars['String']>;
-  longitude?: Maybe<Scalars['String']>;
-  provinceId?: Maybe<Scalars['ID']>;
-  vdcId?: Maybe<Scalars['ID']>;
-  wardNo?: Maybe<Scalars['String']>;
 };
 
 export enum BranchCategory {
@@ -325,17 +315,23 @@ export type BranchEdge = {
   node: Branch;
 };
 
+export type BranchGetResult = {
+  data?: Maybe<Branch>;
+  error?: Maybe<QueryError>;
+};
+
 export type BranchInput = {
-  abbsStatus?: InputMaybe<Scalars['Boolean']>;
-  branchCode?: InputMaybe<Scalars['Int']>;
-  branchStatus?: InputMaybe<Scalars['Boolean']>;
+  abbsStatus?: InputMaybe<Status>;
+  branchCode?: InputMaybe<Scalars['String']>;
+  branchStatus?: InputMaybe<Status>;
   category?: InputMaybe<BranchCategory>;
   districtId?: InputMaybe<Scalars['ID']>;
   email?: InputMaybe<Scalars['String']>;
   estDate?: InputMaybe<Scalars['Date']>;
-  latitude?: InputMaybe<Scalars['String']>;
+  latitude?: InputMaybe<Scalars['Float']>;
+  localGovernmentId?: InputMaybe<Scalars['ID']>;
   locality?: InputMaybe<Scalars['String']>;
-  longitude?: InputMaybe<Scalars['String']>;
+  longitude?: InputMaybe<Scalars['Float']>;
   managerId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   payableAccountId?: InputMaybe<Scalars['String']>;
@@ -344,7 +340,6 @@ export type BranchInput = {
   provinceId?: InputMaybe<Scalars['ID']>;
   receivableAccountId?: InputMaybe<Scalars['String']>;
   tdsTransaferId?: InputMaybe<Scalars['String']>;
-  vdcId?: InputMaybe<Scalars['ID']>;
   wardNo?: InputMaybe<Scalars['String']>;
 };
 
@@ -1815,13 +1810,8 @@ export type GeneralBranchSettingsMutationAddArgs = {
 };
 
 export type GeneralBranchSettingsQuery = {
-  getBranch: Branch;
   list?: Maybe<BranchConnection>;
-};
-
-
-export type GeneralBranchSettingsQueryGetBranchArgs = {
-  id: Scalars['ID'];
+  mine?: Maybe<BranchGetResult>;
 };
 
 
@@ -2352,8 +2342,8 @@ export type KymField = Base & {
 };
 
 export type KymFieldData = {
-  fields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
   id?: Maybe<Scalars['String']>;
+  options?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
 };
 
 export type KymFieldDeleteResult = {
@@ -2373,9 +2363,8 @@ export type KymFieldInput = {
 };
 
 export type KymFieldInputData = {
-  fields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
-  group?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
+  options?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
 };
 
 export type KymFieldMutation = {
@@ -3788,11 +3777,13 @@ export type KymIndDeclarationStatus = {
 };
 
 export type KymIndFormData = {
+  additionalContactDetails?: Maybe<KymFieldData>;
   annualIncomeSourceId?: Maybe<Scalars['String']>;
   beneficialFullName?: Maybe<Scalars['String']>;
   beneficialRelationshipId?: Maybe<Scalars['String']>;
   convictedDetails?: Maybe<Scalars['String']>;
   countryId?: Maybe<Scalars['String']>;
+  customFields?: Maybe<Array<Maybe<KymFieldData>>>;
   dateOfBirth?: Maybe<Scalars['String']>;
   declarationAgree?: Maybe<Scalars['Boolean']>;
   documents?: Maybe<Array<Maybe<KymFieldData>>>;
@@ -3832,12 +3823,12 @@ export type KymIndFormData = {
   nationalityId?: Maybe<Scalars['String']>;
   ordinary?: Maybe<Scalars['Float']>;
   other?: Maybe<Scalars['Float']>;
-  otherMembershipDetails?: Maybe<Array<Maybe<KymFieldData>>>;
+  otherMembershipDetails?: Maybe<KymFieldData>;
   otherProfession?: Maybe<Scalars['String']>;
   permanentDistrictId?: Maybe<Scalars['String']>;
-  permanentLatitude?: Maybe<Scalars['Float']>;
+  permanentHouseNo?: Maybe<Scalars['String']>;
   permanentLocalityId?: Maybe<Scalars['String']>;
-  permanentLongitude?: Maybe<Scalars['Float']>;
+  permanentLocation?: Maybe<LocationCoordinate>;
   permanentStateId?: Maybe<Scalars['String']>;
   permanentTole?: Maybe<Scalars['String']>;
   permanentWardId?: Maybe<Scalars['String']>;
@@ -3849,13 +3840,13 @@ export type KymIndFormData = {
   savings?: Maybe<Scalars['Float']>;
   spouseOccupation?: Maybe<Array<Maybe<KymFieldData>>>;
   temporaryDistrictId?: Maybe<Scalars['String']>;
-  temporaryLatitude?: Maybe<Scalars['Float']>;
+  temporaryHouseNo?: Maybe<Scalars['String']>;
   temporaryLocalityId?: Maybe<Scalars['String']>;
-  temporaryLongitude?: Maybe<Scalars['Float']>;
+  temporaryLocation?: Maybe<LocationCoordinate>;
   temporaryStateId?: Maybe<Scalars['String']>;
   temporaryTole?: Maybe<Scalars['String']>;
   temporaryWardId?: Maybe<Scalars['String']>;
-  typeOfVisa?: Maybe<Scalars['String']>;
+  typeOfVisaId?: Maybe<Scalars['String']>;
 };
 
 export type KymIndFormState = {
@@ -3870,11 +3861,13 @@ export type KymIndGetResult = {
 };
 
 export type KymIndMemberInput = {
+  additionalContactDetails?: InputMaybe<KymFieldInputData>;
   annualIncomeSourceId?: InputMaybe<Scalars['String']>;
   beneficialFullName?: InputMaybe<Scalars['String']>;
   beneficialRelationshipId?: InputMaybe<Scalars['String']>;
   convictionDetails?: InputMaybe<Scalars['String']>;
   countryId?: InputMaybe<Scalars['String']>;
+  customFields?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   dateOfBirth?: InputMaybe<Scalars['String']>;
   declarationAgree?: InputMaybe<Scalars['Boolean']>;
   documents?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
@@ -3913,12 +3906,12 @@ export type KymIndMemberInput = {
   nationalityId?: InputMaybe<Scalars['String']>;
   ordinary?: InputMaybe<Scalars['Float']>;
   other?: InputMaybe<Scalars['Float']>;
-  otherMembershipDetails?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
+  otherMembershipDetails?: InputMaybe<KymFieldInputData>;
   otherProfession?: InputMaybe<Scalars['String']>;
   permanentDistrictId?: InputMaybe<Scalars['String']>;
-  permanentLatitude?: InputMaybe<Scalars['Float']>;
+  permanentHouseNo?: InputMaybe<Scalars['String']>;
   permanentLocalityId?: InputMaybe<Scalars['String']>;
-  permanentLongitude?: InputMaybe<Scalars['Float']>;
+  permanentLocation?: InputMaybe<LocationCoordinateInput>;
   permanentStateId?: InputMaybe<Scalars['String']>;
   permanentTole?: InputMaybe<Scalars['String']>;
   permanentWardId?: InputMaybe<Scalars['String']>;
@@ -3930,13 +3923,13 @@ export type KymIndMemberInput = {
   savings?: InputMaybe<Scalars['Float']>;
   spouseOccupation?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   temporaryDistrictId?: InputMaybe<Scalars['String']>;
-  temporaryLatitude?: InputMaybe<Scalars['Float']>;
+  temporaryHouseNo?: InputMaybe<Scalars['String']>;
   temporaryLocalityId?: InputMaybe<Scalars['String']>;
-  temporaryLongitude?: InputMaybe<Scalars['Float']>;
+  temporaryLocation?: InputMaybe<LocationCoordinateInput>;
   temporaryStateId?: InputMaybe<Scalars['String']>;
   temporaryTole?: InputMaybe<Scalars['String']>;
   temporaryWardId?: InputMaybe<Scalars['String']>;
-  typeOfVisa?: InputMaybe<Scalars['String']>;
+  typeOfVisaId?: InputMaybe<Scalars['String']>;
 };
 
 export type KymIndMutation = {
@@ -4255,7 +4248,7 @@ export type KymMemberListEdges = {
 
 export type KymMemberTypes = {
   id: Scalars['ID'];
-  type: KymMemberTypesEnum;
+  type?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
 };
 
 export enum KymMemberTypesEnum {
@@ -4327,6 +4320,16 @@ export type ListKymFieldFilter = {
 
 export type LocalizationExample = {
   name?: Maybe<Scalars['Localized']>;
+};
+
+export type LocationCoordinate = {
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
+};
+
+export type LocationCoordinateInput = {
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
 };
 
 export type LoginInput = {
@@ -4544,12 +4547,12 @@ export type Order = {
 };
 
 export type Organization = Base & {
-  address?: Maybe<OrganizationAddress>;
+  address?: Maybe<Address>;
   basicDetails?: Maybe<OrganizationBasicDetails>;
   contactDetails?: Maybe<OrganizationContactDetails>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
-  documents?: Maybe<OrganizationDocument>;
+  documents?: Maybe<Array<Maybe<Scalars['String']>>>;
   id: Scalars['ID'];
   mainContactPerson?: Maybe<OrganizationMainContactPerson>;
   modifiedAt: Scalars['Time'];
@@ -4562,24 +4565,14 @@ export type Organization = Base & {
 export type OrganizationAddResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<OrganizationSettingsQuery>;
-  record?: Maybe<OrganizationFormData>;
+  record?: Maybe<Organization>;
   recordId: Scalars['ID'];
 };
 
-export type OrganizationAddress = {
-  districtId?: Maybe<Scalars['ID']>;
-  latitude?: Maybe<Scalars['String']>;
-  localityId?: Maybe<Scalars['ID']>;
-  longitude?: Maybe<Scalars['String']>;
-  provinceId?: Maybe<Scalars['ID']>;
-  vdcId?: Maybe<Scalars['ID']>;
-  wardNo?: Maybe<Scalars['ID']>;
-};
-
 export type OrganizationBasicDetails = {
+  TypeOfOrganization?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   logo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  typeOfMember?: Maybe<TypeOfMember>;
 };
 
 export type OrganizationContactDetails = {
@@ -4603,20 +4596,22 @@ export type OrganizationFormData = {
   districtId?: Maybe<Scalars['ID']>;
   documents?: Maybe<Array<Maybe<Scalars['String']>>>;
   email?: Maybe<Scalars['String']>;
-  latitude?: Maybe<Scalars['String']>;
-  localityId?: Maybe<Scalars['ID']>;
+  latitude?: Maybe<Scalars['Float']>;
+  localGovernmentId?: Maybe<Scalars['ID']>;
+  locality?: Maybe<Scalars['String']>;
   logo?: Maybe<Scalars['String']>;
-  longitude?: Maybe<Scalars['String']>;
-  municipalityId?: Maybe<Scalars['ID']>;
+  longitude?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
-  pan?: Maybe<Scalars['String']>;
+  panOrVat?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
   provinceId?: Maybe<Scalars['ID']>;
   regdAddress?: Maybe<Scalars['String']>;
   regdNo?: Maybe<Scalars['String']>;
   regdOffice?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
-  typeOfMember?: Maybe<TypeOfMember>;
+  totalCapital?: Maybe<Scalars['Float']>;
+  totalMembers?: Maybe<Scalars['Int']>;
+  typeOfOrganization?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   wardNo?: Maybe<Scalars['ID']>;
   website?: Maybe<Scalars['String']>;
 };
@@ -4641,20 +4636,22 @@ export type OrganizationInput = {
   districtId?: InputMaybe<Scalars['ID']>;
   documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   email?: InputMaybe<Scalars['String']>;
-  latitude?: InputMaybe<Scalars['String']>;
-  localityId?: InputMaybe<Scalars['ID']>;
+  latitude?: InputMaybe<Scalars['Float']>;
+  localGovernmentId?: InputMaybe<Scalars['ID']>;
+  locality?: InputMaybe<Scalars['String']>;
   logo?: InputMaybe<Scalars['String']>;
-  longitude?: InputMaybe<Scalars['String']>;
-  municipalityId?: InputMaybe<Scalars['ID']>;
+  longitude?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
-  pan?: InputMaybe<Scalars['String']>;
+  panOrVat?: InputMaybe<Scalars['String']>;
   phoneNumber?: InputMaybe<Scalars['String']>;
   provinceId?: InputMaybe<Scalars['ID']>;
   regdAddress?: InputMaybe<Scalars['String']>;
   regdNo?: InputMaybe<Scalars['String']>;
   regdOffice?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
-  typeOfMember?: InputMaybe<TypeOfMember>;
+  totalCapital?: InputMaybe<Scalars['Float']>;
+  totalMembers?: InputMaybe<Scalars['Int']>;
+  typeOfOrganization?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
   wardNo?: InputMaybe<Scalars['ID']>;
   website?: InputMaybe<Scalars['String']>;
 };
@@ -4671,7 +4668,7 @@ export type OrganizationMainContactPerson = {
 };
 
 export type OrganizationRegistrationDetails = {
-  pan?: Maybe<Scalars['String']>;
+  panOrVat?: Maybe<Scalars['String']>;
   regdAddress?: Maybe<Scalars['String']>;
   regdNo?: Maybe<Scalars['String']>;
   regdOffice?: Maybe<Scalars['String']>;
@@ -4704,8 +4701,8 @@ export type OrganizationSettingsQueryListArgs = {
 };
 
 export type OrganizationStatistics = {
-  totalCapital: Scalars['Float'];
-  totalMembers: Scalars['Int'];
+  totalCapital?: Maybe<Scalars['Float']>;
+  totalMembers?: Maybe<Scalars['Int']>;
 };
 
 export enum Payment_Mode {
@@ -5040,6 +5037,11 @@ export type SisterConcernDetailsType = {
   phoneNo?: Maybe<Scalars['String']>;
 };
 
+export enum Status {
+  Active = 'ACTIVE',
+  Inactive = 'INACTIVE'
+}
+
 export enum Transaction_Direction {
   Purchased = 'PURCHASED',
   Sold = 'SOLD'
@@ -5123,11 +5125,9 @@ export type TrendDataFilter = {
   toDate?: InputMaybe<Scalars['Date']>;
 };
 
-export enum TypeOfMember {
+export enum TypeOfOrganization {
   Cooperative = 'COOPERATIVE',
-  CooperativeUnion = 'COOPERATIVE_UNION',
-  Individual = 'INDIVIDUAL',
-  Institutional = 'INSTITUTIONAL'
+  CooperativeUnion = 'COOPERATIVE_UNION'
 }
 
 export type User = Base & {
@@ -5332,6 +5332,11 @@ export type UpdateCustomFieldMutationVariables = Exact<{
 
 export type UpdateCustomFieldMutation = { settings: { kymForm: { field: { update: { recordId?: string | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean } | null } } } } };
 
+export type IpdaMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type IpdaMutation = { settings: { kymForm: { seed: boolean } } };
+
 export type AddSharePurchaseMutationVariables = Exact<{
   id: Scalars['ID'];
   data: SharePurchaseInput;
@@ -5420,12 +5425,12 @@ export type GetMemberListQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, createdAt: string, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, createdAt: string, address?: { state?: string | null, district?: string | null, localLevel?: string | null, wardNo?: string | null, locality?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMemberTypesQuery = { members: { memberTypes: { data?: Array<{ id: string, type: KymMemberTypesEnum } | null> | null } } };
+export type GetMemberTypesQuery = { members: { memberTypes: { data?: Array<{ id: string, type?: Array<KymMemberTypesEnum | null> | null } | null> | null } } };
 
 export type GetMemberTranslationQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -5456,7 +5461,7 @@ export type GetMemberIndividualDataQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id?: string | null, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, temporaryAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
+export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: string | null, district?: string | null, localLevel?: string | null, wardNo?: string | null, locality?: string | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id?: string | null, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: string | null, district?: string | null, localLevel?: string | null, wardNo?: string | null, locality?: string | null } | null, temporaryAddress?: { state?: string | null, district?: string | null, localLevel?: string | null, wardNo?: string | null, locality?: string | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
 
 export type GetKymDeclarationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5467,11 +5472,6 @@ export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCustomFieldsQuery = { settings: { kymForm: { field?: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: Kym_Field_Type, isCustom: boolean, hasOtherField: boolean, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } | null } } };
-
-export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, contactNumber: string, address: { provinceId?: string | null, districtId?: string | null, vdcId?: string | null, wardNo?: string | null, locality?: string | null, latitude?: string | null, longitude?: string | null }, manager: { id: string } } }> } | null } | null } | null } };
 
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6065,6 +6065,24 @@ export const useUpdateCustomFieldMutation = <
     useMutation<UpdateCustomFieldMutation, TError, UpdateCustomFieldMutationVariables, TContext>(
       ['updateCustomField'],
       useAxios<UpdateCustomFieldMutation, UpdateCustomFieldMutationVariables>(UpdateCustomFieldDocument),
+      options
+    );
+export const IpdaDocument = `
+    mutation ipda {
+  settings {
+    kymForm {
+      seed
+    }
+  }
+}
+    `;
+export const useIpdaMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<IpdaMutation, TError, IpdaMutationVariables, TContext>) =>
+    useMutation<IpdaMutation, TError, IpdaMutationVariables, TContext>(
+      ['ipda'],
+      useAxios<IpdaMutation, IpdaMutationVariables>(IpdaDocument),
       options
     );
 export const AddSharePurchaseDocument = `
@@ -6763,48 +6781,6 @@ export const useGetCustomFieldsQuery = <
     useQuery<GetCustomFieldsQuery, TError, TData>(
       variables === undefined ? ['getCustomFields'] : ['getCustomFields', variables],
       useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
-      options
-    );
-export const GetBranchesListDocument = `
-    query getBranchesList {
-  settings {
-    general {
-      branch {
-        list {
-          edges {
-            node {
-              branchCode
-              address {
-                provinceId
-                districtId
-                vdcId
-                wardNo
-                locality
-                latitude
-                longitude
-              }
-              manager {
-                id
-              }
-              contactNumber
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetBranchesListQuery = <
-      TData = GetBranchesListQuery,
-      TError = unknown
-    >(
-      variables?: GetBranchesListQueryVariables,
-      options?: UseQueryOptions<GetBranchesListQuery, TError, TData>
-    ) =>
-    useQuery<GetBranchesListQuery, TError, TData>(
-      variables === undefined ? ['getBranchesList'] : ['getBranchesList', variables],
-      useAxios<GetBranchesListQuery, GetBranchesListQueryVariables>(GetBranchesListDocument).bind(null, variables),
       options
     );
 export const GetChartOfAccountsDocument = `

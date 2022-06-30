@@ -16,29 +16,27 @@ import { FormCheckbox, FormInput } from '@coop/shared/form';
 import { Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { MainOccupationInput } from './MemberKYMMainOccupation';
-
 export const SpouseOccupationInput = ({ option, index, fieldIndex }: any) => {
   const { register, unregister } = useFormContext();
 
   useEffect(() => {
-    register(`spouseOccupation.${fieldIndex}.fields.${index}.id`, {
+    register(`spouseOccupation.${fieldIndex}.options.${index}.id`, {
       value: option.id,
     });
-    register(`spouseOccupation.${fieldIndex}.fields.${index}.value`, {
+    register(`spouseOccupation.${fieldIndex}.options.${index}.value`, {
       value: '',
     });
 
     return () => {
-      unregister(`spouseOccupation.${fieldIndex}.fields.${index}.id`);
-      unregister(`spouseOccupation.${fieldIndex}.fields.${index}.value`);
+      unregister(`spouseOccupation.${fieldIndex}.options.${index}.id`);
+      unregister(`spouseOccupation.${fieldIndex}.options.${index}.value`);
     };
   }, []);
 
   return (
     <FormInput
       type="text"
-      name={`mainOccupation.${fieldIndex}.fields.${index}.value`}
+      name={`mainOccupation.${fieldIndex}.options.${index}.value`}
       label={option.name.local}
       placeholder={option.name.local}
     />
@@ -88,7 +86,7 @@ const HusbandWifeOccupation = ({
           {occupationFieldNames.map((option, index) => {
             return (
               <Fragment key={option.id}>
-                <MainOccupationInput
+                <SpouseOccupationInput
                   fieldIndex={fieldIndex}
                   option={option}
                   index={index}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -10,13 +10,14 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
+  Kym_Field_Custom_Id,
   Kym_Field_Custom_Id as KYMOptionEnum,
   KymIndMemberInput,
-  useGetIndividualKymOptionQuery,
+  KymOption,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -26,12 +27,56 @@ interface IAddFamilyMember {
   removeFamilyMember: () => void;
 }
 
-const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
-  const { t } = useTranslation();
-  const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'family_relationship',
+interface DynamicInputProps {
+  fieldIndex: number;
+  optionIndex: number;
+  option: Partial<KymOption>;
+}
+
+const FamilyMemberInput = ({
+  fieldIndex,
+  optionIndex,
+  option,
+}: DynamicInputProps) => {
+  const { register, unregister } = useFormContext();
+
+  console.log('option', option);
+
+  useEffect(() => {
+    register(`familyDetails.${fieldIndex}.options.${optionIndex}.id`, {
+      value: option.id,
     });
+    register(`familyDetails.${fieldIndex}.options.${optionIndex}.value`, {
+      value: '',
+    });
+
+    return () => {
+      unregister(`familyDetails.${fieldIndex}.options.${optionIndex}.id`);
+      unregister(`familyDetails.${fieldIndex}.options.${optionIndex}.value`);
+    };
+  }, []);
+
+  return (
+    <FormInput
+      type="text"
+      name={`familyDetails.${fieldIndex}.options.${optionIndex}.value`}
+      label={option?.name?.local}
+      placeholder={option?.name?.local}
+    />
+  );
+};
+
+const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
+  /*const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
+          useGetIndividualKymOptionQuery({
+            fieldName: 'family_relationship',
+          });*/
+
+  const { data: familyDetailsFieldsData } = useGetIndividualKymOptionsQuery({
+    filter: {
+      customId: Kym_Field_Custom_Id.FamilyInformation,
+    },
+  });
 
   return (
     <DynamicBoxContainer>
@@ -47,36 +92,15 @@ const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
       />
 
       <InputGroupContainer>
-        <GridItem colSpan={1}>
-          <FormSelect
-            name={`familyDetails.${index}.relationshipId`}
-            label={t['kymIndRelationship']}
-            placeholder={t['kymIndSelectRelationship']}
-            isLoading={familyRelationshipLoading}
-            options={getFieldOption(familyRelationShipData)}
-          />
-        </GridItem>
-        <GridItem colSpan={1}>
-          <FormInput
-            type="text"
-            bg="white"
-            name={`familyDetails.${index}.fullName`}
-            label={t['kymIndFullName']}
-            placeholder={t['kymIndEnterFullName']}
-          />
-        </GridItem>
-
-        {/*
-        TODO ( UNCOMMENT THIS AFTER BACKEND )
-        <GridItem colSpan={1}>
-          <FormInput
-            type="date"
-            bg="white"
-            name={`familyDetails.${index}.dateOfBirth`}
-            label="Date of Birth (BS)"
-            placeholder="Enter Date of Birth"
-          />
-        </GridItem>*/}
+        {familyDetailsFieldsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
+          (option, optionIndex) => (
+            <FamilyMemberInput
+              fieldIndex={index}
+              optionIndex={optionIndex}
+              option={option}
+            />
+          )
+        )}
       </InputGroupContainer>
     </DynamicBoxContainer>
   );
@@ -104,7 +128,7 @@ export const MemberKYMFamilyDetails = () => {
       </Text>
       <InputGroupContainer>
         <FormSelect
-          name={'maritalStatus'}
+          name={'maritalStatusId'}
           label={t['kymIndMartialStatus']}
           placeholder={t['kymIndSelectMartialStatus']}
           isLoading={maritalStatusLoading}

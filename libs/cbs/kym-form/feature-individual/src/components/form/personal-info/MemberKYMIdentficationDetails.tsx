@@ -74,7 +74,7 @@ export const MemberKYMIdentificationDetails = () => {
                   <Grid templateColumns="repeat(3, 1fr)" gap="s20">
                     {field?.options?.map((option, optionIndex) => {
                       register(
-                        `identification.${fieldIndex}.fields.${optionIndex}.id`,
+                        `identification.${fieldIndex}.options.${optionIndex}.id`,
                         {
                           value: option.id,
                         }
@@ -84,7 +84,7 @@ export const MemberKYMIdentificationDetails = () => {
                         <FormInput
                           id="identificationFields"
                           type="number"
-                          name={`identification.${fieldIndex}.fields.${optionIndex}.value`}
+                          name={`identification.${fieldIndex}.options.${optionIndex}.value`}
                           label={String(option?.name?.local)}
                           placeholder={String(option?.name?.local)}
                         />

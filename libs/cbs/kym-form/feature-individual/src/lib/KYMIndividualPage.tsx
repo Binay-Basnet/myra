@@ -7,7 +7,7 @@ import {
   useGetKymFormStatusQuery,
   KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
-  CustomIdEnum,
+  Kym_Field_Custom_Id,
 } from '@coop/shared/data-access';
 import { useForm, FormProvider } from 'react-hook-form';
 import {
@@ -52,9 +52,15 @@ export function KYMIndividualPage() {
   const { data: occupationDetailsDefaultFields } =
     useGetIndividualKymOptionsQuery({
       filter: {
-        customId: CustomIdEnum.OccupationDetails,
+        customId: Kym_Field_Custom_Id.OccupationDetails,
       },
     });
+
+  const { data: familyDetailsFieldsData } = useGetIndividualKymOptionsQuery({
+    filter: {
+      customId: Kym_Field_Custom_Id.FamilyInformation,
+    },
+  });
 
   const occupationFieldNames =
     occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]?.options?.map(
@@ -64,14 +70,21 @@ export function KYMIndividualPage() {
   const { data: incomeSourceDetailsField, isLoading } =
     useGetIndividualKymOptionsQuery({
       filter: {
-        customId: CustomIdEnum.IncomeSourceDetails,
+        customId: Kym_Field_Custom_Id.IncomeSourceDetails,
       },
     });
 
   const incomeSourceDetailFieldNames =
-    occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]?.options?.map(
+    incomeSourceDetailsField?.members.individual?.options.list?.data?.[0]?.options?.map(
       (option) => ({ id: option.id, value: '' })
     ) ?? [];
+
+  const familyDetailsFieldNames =
+    familyDetailsFieldsData?.members.individual?.options.list?.data?.[0]?.options?.map(
+      (option) => ({ id: option.id, value: '' })
+    ) ?? [];
+
+  console.log(familyDetailsFieldNames);
 
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
@@ -100,21 +113,6 @@ export function KYMIndividualPage() {
   const methods = useForm<KymIndMemberInput>({
     defaultValues: {
       nationalityId: 'Nepali',
-      mainOccupation: [
-        {
-          fields: occupationFieldNames,
-        },
-      ],
-      spouseOccupation: [
-        {
-          fields: occupationFieldNames,
-        },
-      ],
-      incomeSourceDetails: [
-        {
-          fields: incomeSourceDetailFieldNames,
-        },
-      ],
     },
   });
 
@@ -124,6 +122,7 @@ export function KYMIndividualPage() {
     const subscription = watch(
       debounce((data) => {
         if (data && id) {
+          console.log(data);
           mutate({ id: id, data });
         }
       }, 800)
@@ -137,17 +136,22 @@ export function KYMIndividualPage() {
       nationalityId: 'Nepali',
       mainOccupation: [
         {
-          fields: occupationFieldNames,
+          options: occupationFieldNames,
         },
       ],
       spouseOccupation: [
         {
-          fields: occupationFieldNames,
+          options: occupationFieldNames,
         },
       ],
       incomeSourceDetails: [
         {
-          fields: incomeSourceDetailFieldNames,
+          options: incomeSourceDetailFieldNames,
+        },
+      ],
+      familyDetails: [
+        {
+          options: familyDetailsFieldNames,
         },
       ],
     });

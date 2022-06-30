@@ -10,7 +10,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  CustomIdEnum as KYMOptionEnum,
+  Kym_Field_Custom_Id as KYMOptionEnum,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
@@ -23,17 +23,17 @@ const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
   const { register, unregister } = useFormContext();
 
   useEffect(() => {
-    register(`incomeSourceDetails.${fieldIndex}.fields.${optionIndex}.id`, {
+    register(`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.id`, {
       value: option.id,
     });
-    register(`incomeSourceDetails.${fieldIndex}.fields.${optionIndex}.value`, {
+    register(`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`, {
       value: '',
     });
 
     return () => {
-      unregister(`incomeSourceDetails.${fieldIndex}.fields.${optionIndex}.id`);
+      unregister(`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.id`);
       unregister(
-        `incomeSourceDetails.${fieldIndex}.fields.${optionIndex}.value`
+        `incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`
       );
     };
   }, []);
@@ -41,15 +41,14 @@ const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
   return (
     <FormInput
       type="text"
-      name={`incomeSourceDetails.${fieldIndex}.fields.${optionIndex}.value`}
+      name={`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`}
       label={option.name.local}
       placeholder={option.name.local}
     />
   );
 };
 
-const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
-  const { t } = useTranslation();
+const IncomeSource = ({ index, removeIncomeSource }: any) => {
   const { data: familyIncomeData, isLoading: familyIncomeLoading } =
     useGetIndividualKymOptionsQuery({
       filter: { customId: KYMOptionEnum.IncomeSourceDetails },
@@ -97,7 +96,7 @@ export const MemberKYMIncomeSourceDetails = () => {
     remove: incomeSourceRemove,
   } = useFieldArray({ control, name: 'incomeSourceDetails' });
 
-  console.log(incomeSourceFields);
+  console.log(incomeSourceFields, 'income');
 
   return (
     <GroupContainer id="kymAccIndIncomeSourceDetails" scrollMarginTop={'200px'}>
