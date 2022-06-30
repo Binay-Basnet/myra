@@ -90,7 +90,7 @@ query getKymFormStatus($id: ID!) {
 query getKYMIndItemDetails(
     $id: ID
     $name: String
-    $customId: CustomIdEnum
+    $customId: KYM_FIELD_CUSTOM_ID
     $isIdentificationDoc: KYM_Field_Parent
 ) {
     settings {

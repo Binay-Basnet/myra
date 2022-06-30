@@ -22,7 +22,7 @@ import { useTranslation } from '@coop/shared/utils';
 export const KymCoopRepresentative = () => {
   const { control, watch } = useFormContext();
   const isPermanentAndTemporaryAddressSame = watch(
-    'isPermanentAndTemporaryAddressSame'
+    'isPermanentAndTemporaryAddressRepresentativeSame'
   );
   const { data } = useAllAdministrationQuery();
   const [temporaryAddress, setTemporaryAddress] = useState(false);
@@ -37,8 +37,8 @@ export const KymCoopRepresentative = () => {
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentStateId');
-  const currentDistrictId = watch('permanentDistrictId');
+  const currentProvinceId = watch('representativePermanentStateID');
+  const currentDistrictId = watch('representativePermanentDistrictId');
 
   const districtList = useMemo(
     () =>
@@ -55,20 +55,20 @@ export const KymCoopRepresentative = () => {
   );
 
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryStateId');
-  const currentTemptDistrictId = watch('temporaryDistrictId');
+  const currentTempProvinceId = watch('representativeTemporaryStateId');
+  const currentTemptDistrictId = watch('representativeTemporaryDistrictId');
 
   const districtTempList = useMemo(
     () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
+      data?.administration.all.find((d) => d.id === currentTempProvinceId)
         ?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+      districtList.find((d) => d.id === currentTemptDistrictId)
+        ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
 
@@ -134,13 +134,13 @@ export const KymCoopRepresentative = () => {
           >
             <InputGroupContainer>
               <FormSelect
-                name="permanentStateId"
+                name="representativePermanentStateID"
                 label={t['kymCoopRepresentativeProvince']}
                 placeholder={t['kymCoopRepresentativeSelectProvince']}
                 options={province}
               />
               <FormSelect
-                name="permanentDistrictId"
+                name="representativePermanentDistrictId"
                 label={t['kymCoopRepresentativeDistrict']}
                 placeholder={t['kymCoopRepresentativeSelectDistrict']}
                 options={districtList.map((d) => ({
@@ -149,7 +149,7 @@ export const KymCoopRepresentative = () => {
                 }))}
               />
               <FormSelect
-                name="permanentLocalityId"
+                name="representativePermanentLocalityId"
                 label={t['kymCoopRepresentativeLocalGovernment']}
                 placeholder={t['kymCoopRepresentativeSelectLocalGovernment']}
                 options={localityList.map((d) => ({
@@ -159,26 +159,26 @@ export const KymCoopRepresentative = () => {
               />
               <FormInput
                 type="number"
-                name="permanentWardId"
+                name="representativePermanentWardId"
                 label={t['kymCoopRepresentativeWardNo']}
                 placeholder={t['kymCoopRepresentativeEnterWardNo']}
               />
               <FormInput
                 type="text"
-                name="permanentTole"
+                name="representativePermanentTole"
                 label={t['kymCoopRepresentativeLocality']}
                 placeholder={t['kymCoopRepresentativeEnterLocality']}
               />
               <FormInput
                 type="text"
-                name="permanentHouseNo"
+                name="representativePermanentHouseNo"
                 label={t['kymCoopRepresentativeHouseNo']}
                 placeholder={t['kymCoopRepresentativeEnterHouseNo']}
               />
             </InputGroupContainer>
 
             <Box mt="-16px">
-              <FormMap name="permanentAddressLocation" />
+              <FormMap name="representativePermanentAddressLocation" />
             </Box>
           </Box>
         </Box>
@@ -194,7 +194,7 @@ export const KymCoopRepresentative = () => {
           </Text>
 
           <FormSwitch
-            name="isPermanentAndTemporaryAddressSame"
+            name="isPermanentAndTemporaryAddressRepresentativeSame"
             label={t['kymCoopRepresentativeTemporaryAddressPermanent']}
           />
 
@@ -202,13 +202,13 @@ export const KymCoopRepresentative = () => {
             <>
               <InputGroupContainer>
                 <FormSelect
-                  name="temporaryStateId"
+                  name="representativeTemporaryStateId"
                   label={t['kymCoopRepresentativeProvince']}
                   placeholder={t['kymCoopRepresentativeSelectProvince']}
                   options={province}
                 />
                 <FormSelect
-                  name="temporaryDistrictId"
+                  name="representativeTemporaryDistrictId"
                   label={t['kymCoopRepresentativeDistrict']}
                   placeholder={t['kymCoopRepresentativeSelectDistrict']}
                   options={districtTempList.map((d) => ({
@@ -217,7 +217,7 @@ export const KymCoopRepresentative = () => {
                   }))}
                 />
                 <FormSelect
-                  name="temporaryLocalityId"
+                  name="representativeTemporaryLocalityId"
                   label={t['kymCoopRepresentativeLocalGovernment']}
                   placeholder={t['kymCoopRepresentativeSelectLocalGovernment']}
                   options={localityTempList.map((d) => ({
@@ -227,26 +227,26 @@ export const KymCoopRepresentative = () => {
                 />
                 <FormInput
                   type="number"
-                  name="temporaryWardId"
+                  name="representativeTemporaryWardId"
                   label={t['kymCoopRepresentativeWardNo']}
                   placeholder={t['kymCoopRepresentativeEnterWardNo']}
                 />
                 <FormInput
                   type="text"
-                  name="temporaryTole"
+                  name="representativeTemporaryTole"
                   label={t['kymCoopRepresentativeLocality']}
                   placeholder={t['kymCoopRepresentativeEnterLocality']}
                 />
                 <FormInput
                   type="text"
-                  name="temporaryHouseNo"
+                  name="representativeTemporaryHouseNo"
                   label={t['kymCoopRepresentativeHouseNo']}
                   placeholder={t['kymCoopRepresentativeEnterHouseNo']}
                 />
               </InputGroupContainer>
 
               <Box mt="-16px">
-                <FormMap name="temporaryAddressLocation" />
+                <FormMap name="representativeTemporaryAddressLocation" />
               </Box>
             </>
           )}

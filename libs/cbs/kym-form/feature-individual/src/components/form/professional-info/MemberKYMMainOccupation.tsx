@@ -9,7 +9,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  CustomIdEnum,
+  Kym_Field_Custom_Id,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import {
@@ -44,7 +44,7 @@ const MainOccupation = ({
 
   const { data: occupationData } = useGetIndividualKymOptionsQuery({
     filter: {
-      customId: CustomIdEnum.Occupation,
+      customId: Kym_Field_Custom_Id.Occupation,
     },
   });
 

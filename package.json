@@ -7,6 +7,8 @@
     "build": "nx build",
     "test": "nx test",
     "start:myra": "concurrently \"nx serve myra\" \"yarn graphql:codegen\"",
+    "start:neosys-admin": "concurrently \"nx serve neosys-admin\" \"yarn graphql:codegen\"",
+    "start:all": "concurrently \"yarn nx run-many --target=serve --projects=myra,neosys-admin\" \"yarn graphql:codegen\"",
     "storybook:myra-ui": "nx run shared-ui:storybook",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./libs/shared/utils/src/lib/theme/index.ts",

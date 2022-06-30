@@ -609,6 +609,7 @@ const ne: Record<string, string> = {
     'Citizenship/Passport/Driving License No',
   kymCoopEnterNo: 'Enter No',
   kymCoopTrainingRelatedToCoop: 'Training related to Co-operatives',
+  kymCoopTrainingRelatedToCoopsubText: 'Training Attended',
   kymCoopSubjectOfTraining: 'Subject of Training',
   kymCoopEnterSubjectOfTraining: 'Enter Subject of Training',
   kymCoopDateOfTraining: 'Date of Training',
@@ -618,6 +619,8 @@ const ne: Record<string, string> = {
   kymCoopPhotograph: 'Photograph',
   kymCoopPhotographOfIdentityProofDocument:
     'Photograph of identity proof document',
+  kymCoopPanOrVatNo: 'PAN No',
+  kymCoopEnterPanOrVat: 'Enter Pan No',
 
   kymCoopAssets: 'Assets',
   kymCoopAmount: 'Amount',

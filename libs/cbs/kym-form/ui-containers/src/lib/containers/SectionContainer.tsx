@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Box, BoxProps } from '@coop/shared/ui';
 
 interface ISectionContainerProps extends BoxProps {
