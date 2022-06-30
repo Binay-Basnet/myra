@@ -1,4 +1,5 @@
 export * from './AccountLayout';
+export * from './HomePageLayout';
 export * from './InventoryLayout';
 export * from './inventoryLayout/itemGroupsLayout';
 export * from './inventoryLayout/ItemsLayout';
