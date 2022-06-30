@@ -120,7 +120,6 @@ export const KYMBasiccoopDetails = () => {
           options={booleanList}
           name="isMemberOfAnotherCooperative"
         />
-
         <Box display="flex" flexDirection="column" gap="s4">
           <InputGroupContainer>
             <GridItem colSpan={2}>
@@ -150,7 +149,7 @@ export const KYMBasiccoopDetails = () => {
         <FormSwitchTab
           label={t['kynIndFamilyMemberinthisinstitution']}
           options={booleanList}
-          name="familyMemberInThisInstitution"
+          name="familyMemberInThisCooperative"
           id="familyMemberInThisInstitution"
         />
       </Box>
