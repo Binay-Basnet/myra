@@ -323,7 +323,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         textAlign="center"
                         alignItems="center"
                         gap="s8"
-                        onClick={() => router.push('/members/list')}
+                        onClick={() => router.push('/inventory/items')}
                       >
                         <Image
                           width={12}
