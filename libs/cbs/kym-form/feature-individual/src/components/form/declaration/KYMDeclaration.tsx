@@ -7,7 +7,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  CustomIdEnum,
+  Kym_Field_Custom_Id,
   useGetIndividualKymOptionQuery,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
@@ -49,7 +49,7 @@ export const KYMDeclaration = () => {
     data: foreignEmploymentOptions,
     isLoading: foreignEmploymentOptionsLoading,
   } = useGetIndividualKymOptionsQuery({
-    filter: { customId: CustomIdEnum.ForeignEmploymentOptions },
+    filter: { customId: Kym_Field_Custom_Id.ForeignEmploymentOptions },
   });
 
   return (

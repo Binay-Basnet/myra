@@ -1,5 +1,8 @@
 import React, { useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { AiOutlineDelete } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
+import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -28,10 +31,12 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { DynamicAddtraining } from './acoountOperatorTraining';
+
 export const AddOperator = ({ watch, index, control, removeAccount }) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
-
+  const { getValues, reset } = useFormContext();
   const [isOpen, setIsOpen] = React.useState(true);
 
   const isPermanentAndTemporaryAddressSame = watch(
@@ -90,6 +95,13 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
       [],
     [currentTemptDistrictId]
   );
+  const resetDirectorForm = () => {
+    const values = getValues();
+
+    values['accountOperatorsDetails'][index] = {};
+
+    reset({ accountOperatorsDetails: values['accountOperatorsDetails'] });
+  };
   return (
     <>
       <Box display="flex" alignItems="center">
@@ -125,6 +137,7 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
         </Box>
         {!isOpen && (
           <IconButton
+            id="accountOperatorCloseIcon"
             size="sm"
             variant={'ghost'}
             aria-label="close"
@@ -303,30 +316,14 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
                 label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
                 placeholder={t['kymCoopEnterNo']}
               />
-            </InputGroupContainer>
-            <Text fontSize="r1" fontWeight="SemiBold">
-              {t['kymCoopTrainingRelatedToCoop']}
-            </Text>
-            <InputGroupContainer>
               <FormInput
-                type="text"
-                name={`accountOperatorsDetails.${index}.subjectOfTraining`}
-                label={t['kymCoopSubjectOfTraining']}
-                placeholder={t['kymCoopEnterSubjectOfTraining']}
-              />
-              <FormInput
-                type="date"
-                name={`accountOperatorsDetails.${index}.dateOfTraining`}
-                label={t['kymCoopDateOfTraining']}
-                placeholder={t['kymCoopEnterDateOfTraining']}
-              />
-              <FormInput
-                type="number"
-                name={`accountOperatorsDetails.${index}.trainingOrganization`}
-                label={t['kymCoopTrainingOrganization']}
-                placeholder={t['kymCoopEnterTrainingOrganization']}
+                type="string"
+                name={`accountOperatorsDetails.${index}.panOrVatNo`}
+                label={t['kymCoopPanOrVatNo']}
+                placeholder={t['kymCoopEnterPanOrVat']}
               />
             </InputGroupContainer>
+            <DynamicAddtraining />
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
               <FormFileInput
                 size="lg"
@@ -348,6 +345,31 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
             </Grid>
           </SectionContainer>
         </DynamicBoxGroupContainer>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          p="s10"
+          borderTop="1px solid"
+          borderColor="border.layout"
+        >
+          <Button
+            id="accountOperatorResetButton"
+            variant="ghost"
+            leftIcon={<GrRotateRight />}
+            onClick={resetDirectorForm}
+          >
+            {t['kymInsReset']}
+          </Button>
+          <Button
+            id="accountOperatorCloseButton"
+            variant="outline"
+            shade="danger"
+            leftIcon={<AiOutlineDelete height="11px" />}
+            onClick={removeAccount}
+          >
+            {t['kymInsDelete']}
+          </Button>
+        </Box>
       </Collapse>
     </>
   );

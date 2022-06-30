@@ -3,7 +3,7 @@ import { Skeleton } from '@chakra-ui/react';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
-  CustomIdEnum as KYMOptionEnum,
+  Kym_Field_Custom_Id as KYMOptionEnum,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';

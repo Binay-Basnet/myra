@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CustomIdEnum as KYMOptionEnum } from '@coop/shared/data-access';
+import { Kym_Field_Custom_Id as KYMOptionEnum } from '@coop/shared/data-access';
 import { AccordionItem } from '@coop/shared/ui';
 
 import { KYMDragGroup } from '../KYMDragGroup';
