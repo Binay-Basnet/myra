@@ -28,7 +28,31 @@ const currentMembers = [
   'noOfFemaleMembers',
   'noOfOtherMembers',
 ];
-const representative = ['representativeFullName', 'representativeDesignatiton'];
+const representative = [
+  'representativeFullName',
+  'representativeDesignatiton',
+  'representativeEmail',
+  'representativeContact',
+  'representativePanOrVatNo',
+  'representativePermanentStateID',
+  'representativePermanentDistrictId',
+  'representativePermanentLocalityId',
+  'representativePermanentWardId',
+  'representativePermanentTole',
+  'representativePermanentHouseNo',
+  'isPermanentAndTemporaryAddressRepresentativeSame',
+  'representativeTemporaryStateId',
+  'representativeTemporaryDistrictId',
+  'representativeTemporaryStateId',
+  'representativeTemporaryDistrictId',
+  'representativeTemporaryLocalityId',
+  'representativeTemporaryWardId',
+  'representativeTemporaryTole',
+  'representativeTemporaryHouseNo',
+  'representativeTemporaryAddressLocation',
+  'representativePermanentAddressLocation',
+  'representativeTemporaryAddressLocation',
+];
 const coopAddressDetails = ['economicDetailType', 'mainServiceProduct'];
 const numOfEmployee = [
   'noOfMaleEmployee',
@@ -61,10 +85,19 @@ const assets = [
 
 // Details of Board Directors
 
-const boardOfDirectorrDetails = ['boardOfDirectorsDetails', 'directorButton'];
+const boardOfDirectorrDetails = [
+  'boardOfDirectorsDetails',
+  'directorButton',
+  'kymCOOPdirectorResetButton',
+  'kymCOOPdirectorRemoveButton',
+  'boardDirectorCloseIcon',
+];
 const accountOperatorDetail = [
   'accountOperatorsDetails',
   'accountOperatorButton',
+  'accountOperatorResetButton',
+  'accountOperatorCloseButton',
+  'accountOperatorCloseIcon',
 ];
 
 const accountHolderDeclaration = [
