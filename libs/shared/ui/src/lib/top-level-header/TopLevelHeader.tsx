@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BiBell } from 'react-icons/bi';
 import { CgMenuGridO } from 'react-icons/cg';
@@ -30,6 +30,7 @@ import {
   Select,
   SwitchTabs,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
@@ -50,20 +51,16 @@ const currentDate = format(new Date(), 'yyyy-MM-dd');
 const closingDate = format(new Date(), 'yyyy-MM-dd');
 
 export function TopLevelHeader(props: TopLevelHeaderProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const [isClose, setIsClose] = useState(true);
-  const locale = router?.locale;
-  const [langActiveTab, setLangActiveTab] = useState<number>(
-    locale === 'ne' ? 1 : 0
-  );
-  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <Box
       h="60px"
       background={'secondary.700'}
       display={'flex'}
-      alignItems={'center'}
+      alignItems={'asdcenter'}
       justifyContent={'flex-start'}
       pr={'s16'}
       cursor={'pointer'}
@@ -261,14 +258,152 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             />
           </Link>
 
-          <IconButton
-            _hover={{ backgroundColor: 'secondary.900' }}
-            icon={<Icon size="lg" as={CgMenuGridO} />}
-            aria-label="menu"
-            variant={'ghost'}
-            color={'white'}
-            borderRadius={'br1'}
-          />
+          <Popover placement="bottom-end">
+            {({ isOpen }) => (
+              <>
+                <PopoverTrigger>
+                  <IconButton
+                    _hover={{ backgroundColor: 'secondary.900' }}
+                    icon={<Icon size="lg" as={CgMenuGridO} />}
+                    aria-label="menu"
+                    variant={'ghost'}
+                    color={'white'}
+                    borderRadius={'br1'}
+                  />
+                </PopoverTrigger>
+                <PopoverContent
+                  bg="gray.0"
+                  w="370px"
+                  h="auto"
+                  px="s12"
+                  py="s24"
+                  border="none"
+                  boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
+                  outline={'none'}
+                  _focus={{
+                    boxShadow:
+                      '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
+                  }}
+                  color="white"
+                  zIndex="10"
+                >
+                  <PopoverBody>
+                    <Box
+                      display="grid"
+                      gridTemplateColumns="repeat(3,1fr)"
+                      gap="s8"
+                    >
+                      <Box
+                        display={'flex'}
+                        flexDirection="column"
+                        textAlign="center"
+                        alignItems="center"
+                        gap="s8"
+                        onClick={() => router.push('/members/list')}
+                      >
+                        <Image
+                          width={12}
+                          height={12}
+                          src="/ppc.svg"
+                          alt="Core Banking System"
+                        />
+                        <Text
+                          fontSize="s3"
+                          fontWeight="Medium"
+                          color="neutralColorLight.Gray-60"
+                          lineHeight="125%"
+                        >
+                          {t['corebankingSystems']}
+                        </Text>
+                      </Box>
+
+                      <Box
+                        display={'flex'}
+                        flexDirection="column"
+                        textAlign="center"
+                        alignItems="center"
+                        gap="s8"
+                        onClick={() => router.push('/members/list')}
+                      >
+                        <Image
+                          width={12}
+                          height={12}
+                          src="/exp.svg"
+                          alt="Inventory System"
+                        />
+                        <Text
+                          fontSize="s3"
+                          fontWeight="Medium"
+                          color="neutralColorLight.Gray-60"
+                          lineHeight="125%"
+                        >
+                          {t['inventoryManagement']}
+                        </Text>
+                      </Box>
+
+                      <Box
+                        display={'flex'}
+                        flexDirection="column"
+                        textAlign="center"
+                        alignItems="center"
+                        gap="s8"
+                        onClick={() => router.push('/inventory/list')}
+                      >
+                        <Image
+                          w={12}
+                          h={12}
+                          src="/theta.svg"
+                          alt="Loan Management System"
+                        />
+                        <Text
+                          fontSize="s3"
+                          fontWeight="Medium"
+                          color="neutralColorLight.Gray-60"
+                          lineHeight="125%"
+                        >
+                          {t['loanManagementSystem']}
+                        </Text>
+                      </Box>
+
+                      <Box
+                        display={'flex'}
+                        flexDirection="column"
+                        textAlign="center"
+                        alignItems="center"
+                        gap="s8"
+                        onClick={() => router.push('/members/list')}
+                      >
+                        <Image
+                          width={12}
+                          height={12}
+                          src="/hpb.svg"
+                          alt="Accounting System"
+                        />
+                        <Text
+                          fontSize="s3"
+                          fontWeight="Medium"
+                          color="neutralColorLight.Gray-60"
+                          lineHeight="125%"
+                        >
+                          {t['accountingSystem']}
+                        </Text>
+                      </Box>
+                    </Box>
+                    <Box textAlign="right" mt="s16">
+                      <Text
+                        fontSize="s3"
+                        fontWeight="Medium"
+                        color="primary.500"
+                        lineHeight="116%"
+                      >
+                        {t['exploreAllApplications']} --&gt;
+                      </Text>
+                    </Box>
+                  </PopoverBody>
+                </PopoverContent>
+              </>
+            )}
+          </Popover>
 
           <Popover placement="bottom-end">
             {({ isOpen }) => (
