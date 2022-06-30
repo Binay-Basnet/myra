@@ -289,7 +289,7 @@ export const KYMBasiccoopDetails = () => {
           </Grid>
           <Box px="s16" py="s32" w="40%">
             <FormSelect
-              name={`familyMemberInThisCooperative.0.options.0.value`}
+              name={`familyRelationship`}
               id="familyMemberInThisCooperative"
               label={t['kymIndRelationship']}
               placeholder={t['kymIndSelectRelationship']}

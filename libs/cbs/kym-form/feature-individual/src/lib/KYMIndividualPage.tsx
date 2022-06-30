@@ -15,7 +15,6 @@ import {
   Container,
   Text,
   IconButton,
-  Checkbox,
   TextFields,
   Button,
   Icon,
@@ -45,6 +44,7 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccorrdianAddMember } from '@coop/myra/components';
+import { FormCheckbox } from '@coop/shared/form';
 
 export function KYMIndividualPage() {
   const { t } = useTranslation();
@@ -259,7 +259,9 @@ export function KYMIndividualPage() {
                     </SectionContainer>
 
                     <Box display="flex" gap="s16" alignItems="start">
-                      <Checkbox fontSize="s3">{''}</Checkbox>
+                      <FormCheckbox name="declarationAgree" fontSize="s3">
+                        {''}
+                      </FormCheckbox>
                       <TextFields variant="formInput" mt="-6px">
                         I hereby declare that the information provided by me/us
                         in this form and documents provided to the co-operative
