@@ -1,11 +1,13 @@
 /* eslint-disable-next-line */
 import { useTranslation, getKymSection } from '@coop/shared/utils';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   useSetMemberDataMutation,
   useGetKymFormStatusQuery,
   KymIndMemberInput,
+  useGetIndividualKymOptionsQuery,
+  CustomIdEnum,
 } from '@coop/shared/data-access';
 import { useForm, FormProvider } from 'react-hook-form';
 import {
@@ -46,6 +48,31 @@ import { AccorrdianAddMember } from '@coop/myra/components';
 
 export function KYMIndividualPage() {
   const { t } = useTranslation();
+
+  const { data: occupationDetailsDefaultFields } =
+    useGetIndividualKymOptionsQuery({
+      filter: {
+        customId: CustomIdEnum.OccupationDetails,
+      },
+    });
+
+  const occupationFieldNames =
+    occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]?.options?.map(
+      (option) => ({ id: option.id, value: '' })
+    ) ?? [];
+
+  const { data: incomeSourceDetailsField, isLoading } =
+    useGetIndividualKymOptionsQuery({
+      filter: {
+        customId: CustomIdEnum.IncomeSourceDetails,
+      },
+    });
+
+  const incomeSourceDetailFieldNames =
+    occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]?.options?.map(
+      (option) => ({ id: option.id, value: '' })
+    ) ?? [];
+
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
     subSection: string;
@@ -53,6 +80,7 @@ export function KYMIndividualPage() {
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
+
   const { mutate } = useSetMemberDataMutation({
     onSuccess: (res) => {
       setError('firstName', {
@@ -72,10 +100,59 @@ export function KYMIndividualPage() {
   const methods = useForm<KymIndMemberInput>({
     defaultValues: {
       nationalityId: 'Nepali',
+      mainOccupation: [
+        {
+          fields: occupationFieldNames,
+        },
+      ],
+      spouseOccupation: [
+        {
+          fields: occupationFieldNames,
+        },
+      ],
+      incomeSourceDetails: [
+        {
+          fields: incomeSourceDetailFieldNames,
+        },
+      ],
     },
   });
 
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const { watch, setError, reset } = methods;
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        if (data && id) {
+          mutate({ id: id, data });
+        }
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
+
+  useEffect(() => {
+    reset({
+      nationalityId: 'Nepali',
+      mainOccupation: [
+        {
+          fields: occupationFieldNames,
+        },
+      ],
+      spouseOccupation: [
+        {
+          fields: occupationFieldNames,
+        },
+      ],
+      incomeSourceDetails: [
+        {
+          fields: incomeSourceDetailFieldNames,
+        },
+      ],
+    });
+  }, [isLoading]);
+
   return (
     <>
       {/* // Top Bar */}
@@ -107,12 +184,6 @@ export function KYMIndividualPage() {
       <Container minW="container.xl" height="fit-content">
         <FormProvider {...methods}>
           <form
-            onChange={debounce(() => {
-              mutate({ id, data: getValues() });
-            }, 800)}
-            onSubmit={handleSubmit((data) => {
-              console.log('data', data);
-            })}
             onFocus={(e) => {
               const kymSection = getKymSection(e.target.id);
 

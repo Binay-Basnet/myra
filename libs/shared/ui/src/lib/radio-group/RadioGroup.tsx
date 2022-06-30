@@ -35,7 +35,7 @@ export function RadioGroup(props: RadioGroupProps) {
 
   return (
     <ChakraRadioGroup value={props.value}>
-      <Stack spacing={spacing} direction={direction} gap="s16">
+      <Stack spacing={spacing} direction={direction} gap="s8">
         {radioList
           ? radioList?.map((item, index) => {
               return (

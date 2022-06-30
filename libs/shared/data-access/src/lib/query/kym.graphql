@@ -30,6 +30,7 @@ query getIndividualKYMOptions($filter: ListKYMFieldFilter) {
                             fieldType
                             enabled
                         }
+
                     }
                 }
             }

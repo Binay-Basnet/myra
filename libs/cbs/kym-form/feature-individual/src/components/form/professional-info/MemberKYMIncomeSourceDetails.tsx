@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -9,15 +9,51 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import {
+  CustomIdEnum as KYMOptionEnum,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/shared/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
+const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
+  const { register, unregister } = useFormContext();
+
+  useEffect(() => {
+    register(`incomeSourceDetails.${fieldIndex}.fields.${optionIndex}.id`, {
+      value: option.id,
+    });
+    register(`incomeSourceDetails.${fieldIndex}.fields.${optionIndex}.value`, {
+      value: '',
+    });
+
+    return () => {
+      unregister(`incomeSourceDetails.${fieldIndex}.fields.${optionIndex}.id`);
+      unregister(
+        `incomeSourceDetails.${fieldIndex}.fields.${optionIndex}.value`
+      );
+    };
+  }, []);
+
+  return (
+    <FormInput
+      type="text"
+      name={`incomeSourceDetails.${fieldIndex}.fields.${optionIndex}.value`}
+      label={option.name.local}
+      placeholder={option.name.local}
+    />
+  );
+};
+
 const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
   const { t } = useTranslation();
+  const { data: familyIncomeData, isLoading: familyIncomeLoading } =
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.IncomeSourceDetails },
+    });
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -32,27 +68,15 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
       />
 
       <InputGroupContainer>
-        <GridItem colSpan={2}>
-          <FormInput
-            control={control}
-            type="text"
-            bg="white"
-            name={`incomeSourceDetails.${index}.source`}
-            label={t['kymIndIncomeSource']}
-            placeholder={t['kymIndEnterIncomeSource']}
-          />
-        </GridItem>
-        <GridItem colSpan={1}>
-          <FormInput
-            type="number"
-            textAlign="right"
-            control={control}
-            bg="white"
-            name={`incomeSourceDetails.${index}.amount`}
-            label={t['kymIndAmount']}
-            placeholder="0.00"
-          />
-        </GridItem>
+        {familyIncomeData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
+          (option, optionIndex) => (
+            <IncomeSourceInput
+              fieldIndex={index}
+              option={option}
+              optionIndex={optionIndex}
+            />
+          )
+        )}
       </InputGroupContainer>
     </DynamicBoxContainer>
   );
@@ -61,8 +85,8 @@ const IncomeSource = ({ control, index, removeIncomeSource }: any) => {
 export const MemberKYMIncomeSourceDetails = () => {
   const { t } = useTranslation();
   const { data: familyIncomeData, isLoading: familyIncomeLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'family_income',
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.FamilyIncomeSource },
     });
 
   const { control } = useFormContext();
@@ -72,6 +96,8 @@ export const MemberKYMIncomeSourceDetails = () => {
     append: incomeSourceAppend,
     remove: incomeSourceRemove,
   } = useFieldArray({ control, name: 'incomeSourceDetails' });
+
+  console.log(incomeSourceFields);
 
   return (
     <GroupContainer id="kymAccIndIncomeSourceDetails" scrollMarginTop={'200px'}>

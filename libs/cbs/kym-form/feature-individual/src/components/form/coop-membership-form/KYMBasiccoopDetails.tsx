@@ -57,6 +57,11 @@ export const KYMBasiccoopDetails = () => {
       filter: { customId: KYMOptionEnum.Purpose },
     });
 
+  const { data: otherCooperative, isLoading: otherCooperativeLoading } =
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.OtherCooperativeDetails },
+    });
+
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
     useGetIndividualKymOptionQuery({
       fieldName: 'family_relationship',
@@ -123,20 +128,32 @@ export const KYMBasiccoopDetails = () => {
 
         <Box display="flex" flexDirection="column" gap="s4">
           <InputGroupContainer>
-            <GridItem colSpan={2}>
-              <FormInput
-                name="nameAddressCooperative"
-                label={t['kynIndMembershipDetails']}
-                placeholder={t['kynIndNameandAddressCooperative']}
-              />
-            </GridItem>
-            <GridItem colSpan={1}>
-              <FormInput
-                label="&nbsp;"
-                name="memberNo"
-                placeholder={t['kynIndMemberNo']}
-              />
-            </GridItem>
+            {otherCooperative?.members?.individual?.options?.list?.data?.[0]?.options?.map(
+              (option) => {
+                return (
+                  <FormInput
+                    name="ediedeidjeidk"
+                    label={option.name.local}
+                    placeholder={option.name.local}
+                  />
+                );
+              }
+            )}
+
+            {/*<GridItem colSpan={2}>*/}
+            {/*  <FormInput*/}
+            {/*    name="nameAddressCooperative"*/}
+            {/*    label={t['kynIndMembershipDetails']}*/}
+            {/*    placeholder={t['kynIndNameandAddressCooperative']}*/}
+            {/*  />*/}
+            {/*</GridItem>*/}
+            {/*<GridItem colSpan={1}>*/}
+            {/*  <FormInput*/}
+            {/*    label="&nbsp;"*/}
+            {/*    name="memberNo"*/}
+            {/*    placeholder={t['kynIndMemberNo']}*/}
+            {/*  />*/}
+            {/*</GridItem>*/}
           </InputGroupContainer>
         </Box>
       </Box>

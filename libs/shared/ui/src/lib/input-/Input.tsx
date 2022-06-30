@@ -11,12 +11,13 @@ import {
 import { TextFields } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
-export interface InputProps extends ChakraInputProps {
+export interface InputProps extends Omit<ChakraInputProps, 'placeholder'> {
   rightElement?: React.ReactNode;
   leftElement?: React.ReactNode;
   helperText?: string;
   errorText?: string;
-  label?: string;
+  label?: string | number;
+  placeholder?: string | number;
 }
 
 type ForwardRefInputProps = React.DetailedHTMLProps<
@@ -34,6 +35,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       errorText,
       label,
       fontSize,
+      placeholder,
       size = 'default',
       fontWeight,
       ...rest
@@ -56,7 +58,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <InputLeftElement pointerEvents="none" children={leftElement} />
           )}
 
-          <ChakraInput ref={ref} h="100%" isInvalid={!!errorText} {...rest} />
+          <ChakraInput
+            ref={ref}
+            h="100%"
+            isInvalid={!!errorText}
+            placeholder={String(placeholder)}
+            {...rest}
+          />
           {rightElement && (
             <InputRightElement
               pointerEvents="none"
