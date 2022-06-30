@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import {
-  CustomIdEnum as KYMOptionEnum,
+  Kym_Field_Custom_Id as KYMOptionEnum,
   Kym_Field_Parent,
   useGetKymIndItemDetailsQuery,
 } from '@coop/shared/data-access';
