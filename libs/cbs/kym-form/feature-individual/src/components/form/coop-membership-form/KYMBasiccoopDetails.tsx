@@ -1,6 +1,6 @@
 import React from 'react';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
+import { Controller, useFormContext } from 'react-hook-form';
+import { AiOutlineSearch } from 'react-icons/ai';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
@@ -13,7 +13,6 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
-  useGetIndividualKymOptionQuery,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
@@ -35,17 +34,17 @@ import { getFieldOption } from '../../../utils/getFieldOption';
 const booleanList = [
   {
     label: 'Yes',
-    value: 'yes',
+    value: true,
   },
   {
     label: 'No',
-    value: 'no',
+    value: false,
   },
 ];
 
 export const KYMBasiccoopDetails = () => {
   const { t } = useTranslation();
-  const { watch, control } = useFormContext();
+  const { watch, control, register } = useFormContext();
 
   const { data: purposeData, isLoading: purposeLoading } =
     useGetIndividualKymOptionsQuery({
@@ -58,18 +57,9 @@ export const KYMBasiccoopDetails = () => {
     });
 
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'family_relationship',
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.Relationship },
     });
-
-  const {
-    fields: familyMemberFields,
-    append: familyMemberAppend,
-    remove: familyMemberRemove,
-  } = useFieldArray({
-    control,
-    name: 'familyMemberInThisCooperative',
-  });
 
   const w = watch('memberOfAnotherCooperative');
 
@@ -103,10 +93,14 @@ export const KYMBasiccoopDetails = () => {
         <Box display="flex" flexDirection="column" gap="s4">
           <InputGroupContainer>
             {otherCooperative?.members?.individual?.options?.list?.data?.[0]?.options?.map(
-              (option) => {
+              (option, optionIndex) => {
+                register(`otherMembershipDetails.options.${optionIndex}.id`, {
+                  value: option.id,
+                });
+
                 return (
                   <FormInput
-                    name="ediedeidjeidk"
+                    name={`otherMembershipDetails.options.${optionIndex}.value`}
                     label={option.name.local}
                     placeholder={option.name.local}
                   />
@@ -293,10 +287,10 @@ export const KYMBasiccoopDetails = () => {
               </Text>
             </GridItem>
           </Grid>
-          <Box px="s16" py="s32" w="50%">
+          <Box px="s16" py="s32" w="40%">
             <FormSelect
-              name={`familyMembershipDetails.0.options.0.value`}
-              id="kymIndRelationship"
+              name={`familyMemberInThisCooperative.0.options.0.value`}
+              id="familyMemberInThisCooperative"
               label={t['kymIndRelationship']}
               placeholder={t['kymIndSelectRelationship']}
               isLoading={familyRelationshipLoading}
@@ -306,40 +300,36 @@ export const KYMBasiccoopDetails = () => {
         </Box>
       </Box>
 
-      {familyMemberFields.map((item, index) => {
-        return (
-          <Box mt="s32" key={item.id}>
-            <FamilyMember
-              control={control}
-              index={index}
-              removeFamilyMember={() => familyMemberRemove(index)}
-            />
-          </Box>
-        );
-      })}
+      <Box display="flex" gap="s20" alignItems="center">
+        <Input
+          type="text"
+          flexGrow="1"
+          id={`familyMemberInThisCooperative.0.memberId`}
+          placeholder={t['kynIndFirstName']}
+          bg="white"
+        />
 
-      <Button
-        id="addfamilyCoopButton"
-        alignSelf="start"
-        mt="s8"
-        leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-        variant="outline"
-        onClick={() => {
-          familyMemberAppend({});
-        }}
-      >
-        {t['kynIndAddFamilyMember']}
-      </Button>
+        <Input
+          type="text"
+          flexGrow="1"
+          id={`familyMemberInThisCooperative.0.memberId`}
+          placeholder={t['kynIndEnterMemberID']}
+          bg="white"
+        />
+        <Button
+          id="findmemberButton"
+          h="44px"
+          variant="outline"
+          leftIcon={<Icon size="md" as={AiOutlineSearch} />}
+        >
+          {t['kynIndFindMember']}
+        </Button>
+      </Box>
     </GroupContainer>
   );
 };
 
-export const FamilyMember = ({
-  control,
-  index,
-  removeFamilyMember,
-  watch,
-}: any) => {
+export const FamilyMember = ({ control, index }: any) => {
   const { t } = useTranslation();
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap="s16">

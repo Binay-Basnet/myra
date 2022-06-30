@@ -74,6 +74,7 @@ const anotherCoop = [
   'memberNo',
 ];
 const familyInCoop = [
+  'kymIndRelationship',
   'familyMemberInThisCooperative',
   'familyMemberInThisInstitution',
   'addfamilyCoopButton',
@@ -81,6 +82,7 @@ const familyInCoop = [
 ];
 const FinancialTransaction = ['financialTransaction'];
 const estimatedWithdrawal = [
+  'estimatedAnnualTransactionAmount',
   'estimatedAnnualTransactionFrequencyId',
   'estimatedAnnualAccountTransactionAmount',
   'estimatedWithdrawal',

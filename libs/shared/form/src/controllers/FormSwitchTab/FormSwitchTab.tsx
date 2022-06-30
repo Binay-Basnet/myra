@@ -24,7 +24,13 @@ export const FormSwitchTab = <T,>({
       render={({ field: { onChange, value, name } }) => (
         <SwitchTabs
           value={value}
-          onChange={onChange}
+          onChange={(nextValue) => {
+            if (nextValue === 'true' || nextValue === 'false') {
+              onChange(Boolean(nextValue));
+            } else {
+              onChange(nextValue);
+            }
+          }}
           id={name}
           name={name}
           {...rest}

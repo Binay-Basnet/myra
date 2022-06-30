@@ -43,7 +43,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     return (
-      <Box w="auto" display="flex" flexDirection="column" gap="s4">
+      <Box w="auto" display="flex" flexDirection="column" flexGrow={1} gap="s4">
         {label && (
           <TextFields variant="formLabel" color="gray.700">
             {label}
