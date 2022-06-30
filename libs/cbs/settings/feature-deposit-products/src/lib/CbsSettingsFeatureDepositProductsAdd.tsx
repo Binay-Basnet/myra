@@ -62,7 +62,7 @@ export function SettingsDepositProductsAdd(
   const depositNature = watch('nameOfDepositProduct');
 
   return (
-    <Container height="fit-content" minW="container.lg">
+    <Container height="fit-content" minW="container.lg" p={0}>
       <Box position="relative" margin="0px auto">
         <Box
           position="fixed"
@@ -86,13 +86,13 @@ export function SettingsDepositProductsAdd(
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<IoCloseOutline />}
+              icon={<IoCloseOutline fontSize={'24px'} />}
               onClick={() => router.back()}
             />
           </Box>
         </Box>
       </Box>
-      <Container minW="container.lg" height="fit-content" bg="white">
+      <Container bg="white" height="fit-content" minW="container.lg" p={0}>
         <FormProvider {...methods}>
           <form>
             {/* main */}
