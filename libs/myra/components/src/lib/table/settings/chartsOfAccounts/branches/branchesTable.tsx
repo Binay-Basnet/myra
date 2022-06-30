@@ -38,7 +38,7 @@ export const SettingsBranchesTable = () => {
 
       {
         Header: t['settingsBranchDistrict'],
-        accessor: 'node.address.districtId',
+        accessor: 'node.address.district',
       },
       {
         Header: t['settingsBranchManager'],
