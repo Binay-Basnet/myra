@@ -31,7 +31,7 @@ const ne: Record<string, string> = {
 
   // home page
   yourDashboard: 'तपाईंको ड्यासबोर्ड',
-  yourApplication: 'तपाईंको आवेदन',
+  yourMyraApplication: 'Your Myra Applications',
   corebankingSystems: 'मुख्य बैंकिङ प्रणाली',
   inventoryManagement: 'invetory व्यवस्थापन',
   loanManagementSystem: 'ऋण व्यवस्थापन प्रणाली',
@@ -235,16 +235,16 @@ const ne: Record<string, string> = {
   memberLayoutSelectMemberType: 'Select Member Type',
   memberLayoutIndividual: 'Individual',
   memberLayoutCreateKYMFormForIndividualMembers:
-    'Create KYM form for individual members',
+    'Create KYM form for Individual Members',
   memberLayoutInstitution: 'Institution',
   memberLayoutCreateKYMFormForInstituteMembers:
-    'Create KYM form for institute members',
+    'Create KYM form for Institution Members',
   memberLayoutCooperative: 'Cooperative',
   memberLayoutCreateKYMFormForCoOperativeMembers:
-    'Create KYM form for CoOperative members',
+    'Create KYM form for Cooperative Members',
   memberLayoutCooperativeUnion: 'Cooperative Union',
   memberLayoutCreateKYMFormForCooperativeUnion:
-    'Create KYM form for cooperative union',
+    'Create KYM form for Corporatives Union Members',
 
   // share layout
   shareLayout: 'Share',
@@ -1526,6 +1526,16 @@ const ne: Record<string, string> = {
   accRequiredDocument: 'Required Document',
   accPenalty: 'Penalty',
   accRebate: 'Rebate',
+  accMonthly: 'Monthly',
+  accAddfrequencydayorweek:
+    'Either Pick a day or manually add frequency day or day of the week.',
+  accDay: 'Day',
+  accDayOfWeek: 'Day of the week',
+  accEnterDay: 'Enter Day',
+  accFrequencyDay: 'Frequency Day',
+  accSelectMonth: 'Select Month',
+  accSelectDay: 'Select Day',
+  accYearly: 'Yearly',
 };
 
 export default ne;
