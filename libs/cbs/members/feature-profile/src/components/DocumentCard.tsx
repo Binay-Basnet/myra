@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { AiOutlineEye } from 'react-icons/ai';
-import { Box, Icon, Text, Modal } from '@coop/shared/ui';
+import Image from 'next/image';
+
+import { Box, Icon, Modal, Text } from '@coop/shared/ui';
 
 export const DocumentCard = ({ img, title }) => {
   const [openModal, setOpenModal] = useState(false);

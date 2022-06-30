@@ -89,7 +89,6 @@ export const KYMBasiccoopDetails = () => {
           options={booleanList}
           name="isMemberOfAnotherCooperative"
         />
-
         <Box display="flex" flexDirection="column" gap="s4">
           <InputGroupContainer>
             {otherCooperative?.members?.individual?.options?.list?.data?.[0]?.options?.map(

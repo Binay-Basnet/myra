@@ -33,7 +33,8 @@ const en: Record<string, string> = {
 
   // home page
   yourDashboard: 'Your Dashboard',
-  yourApplication: 'YOUR APPLICATIONS',
+  yourMyraApplication: 'Your Myra Applications',
+  moreFromMyra: 'More from Myra',
   corebankingSystems: 'Core Banking Systems',
   inventoryManagement: 'Inventory Management',
   loanManagementSystem: 'Loan Management System',
@@ -48,6 +49,7 @@ const en: Record<string, string> = {
     'Alternative Channels and Cross Connectivity',
   reconciliationSoftware: 'Reconciliation Software',
   crm: 'CRM',
+  exploreAllApplications: 'Explore All Applications',
 
   // main dashboard
   quickLinks: 'QUICK LINKS',
@@ -238,16 +240,16 @@ const en: Record<string, string> = {
   memberLayoutSelectMemberType: 'Select Member Type',
   memberLayoutIndividual: 'Individual',
   memberLayoutCreateKYMFormForIndividualMembers:
-    'Create KYM form for individual members',
+    'Create KYM form for Individual Members',
   memberLayoutInstitution: 'Institution',
   memberLayoutCreateKYMFormForInstituteMembers:
-    'Create KYM form for institute members',
+    'Create KYM form for Institution Members',
   memberLayoutCooperative: 'Cooperative',
   memberLayoutCreateKYMFormForCoOperativeMembers:
-    'Create KYM form for CoOperative members',
+    'Create KYM form for Cooperative Members',
   memberLayoutCooperativeUnion: 'Cooperative Union',
   memberLayoutCreateKYMFormForCooperativeUnion:
-    'Create KYM form for cooperative union',
+    'Create KYM form for Corporatives Union Members',
 
   // share layout
   shareLayout: 'Share',
@@ -354,6 +356,8 @@ const en: Record<string, string> = {
   settingsBranchCategoriesRegional: 'Regional Office',
   settingsBranchCategoriesService: 'Service Center',
   settingsBranchCategoriesContact: 'Contact Office',
+  settingsBranchSave: 'Save Account',
+  settingsBranchBranchCodePlaceholder: 'Enter Branch Code',
 
   // SETTINGS PAGE
 

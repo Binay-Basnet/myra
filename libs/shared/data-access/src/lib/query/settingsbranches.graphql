@@ -1,41 +1,42 @@
-#query getBranchesList {
-#    settings {
-#        general {
-#            branch {
-#                list {
-#                    edges {
-#                        node {
-#                            branchCode
-#                            address {
-#                                province
-#                                district
-#                                vdc
-#                                wardNo
-#                                locality
-#                            }
-#                            manager {
-#                                id
-#                            }
-#                            contactNumber
-#                        }
-#                    }
-#                }
-#            }
-#        }
-#    }
-#}
+query getBranchesList {
+  settings {
+    general {
+      branch {
+        list {
+          edges {
+            node {
+              id
+              branchCode
+              address {
+                state
+                district
+                localLevel
+                wardNo
+                locality
+              }
+              manager {
+                id
+              }
+              contactNumber
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 query getChartOfAccounts {
-    settings {
-        general {
-            chartsOfAccount {
-                class {
-                    data {
-                        id
-                        name
-                    }
-                }
-            }
+  settings {
+    general {
+      chartsOfAccount {
+        class {
+          data {
+            id
+            name
+          }
         }
+      }
     }
+  }
 }

@@ -1,14 +1,17 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { FaMap } from 'react-icons/fa';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
+import debounce from 'lodash/debounce';
 
 import {
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import {
+  useAllAdministrationQuery,
+  useSetBranchDataMutation,
+} from '@coop/shared/data-access';
 import {
   FormInput,
   FormMap,
@@ -17,7 +20,6 @@ import {
 } from '@coop/shared/form';
 import {
   Box,
-  Button,
   Container,
   FormFooter,
   GridItem,
@@ -45,6 +47,13 @@ export function CbsSettingsFeatureBranchesNew(
   const abbsStatus = watch('abbsStatus');
 
   const { data } = useAllAdministrationQuery();
+
+  const { mutate } = useSetBranchDataMutation({
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    // onError: () => {},
+  });
 
   const province = useMemo(() => {
     return (
@@ -74,8 +83,8 @@ export function CbsSettingsFeatureBranchesNew(
   );
 
   const booleanList = [
-    { label: t['settingsBranchStatusActive'], value: 'active' },
-    { label: t['settingsBranchStatusInactive'], value: 'inactive' },
+    { label: t['settingsBranchStatusActive'], value: 'ACTIVE' },
+    { label: t['settingsBranchStatusInactive'], value: 'INACTIVE' },
   ];
 
   const branchCategories = [
@@ -111,7 +120,8 @@ export function CbsSettingsFeatureBranchesNew(
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<IoCloseOutline />}
+              // icon={<IoCloseOutline />}
+              icon={<Icon as={IoCloseOutline} w="s20" h="s20" />}
               onClick={() => router.back()}
             />
           </Box>
@@ -119,7 +129,13 @@ export function CbsSettingsFeatureBranchesNew(
 
         <Box bg="white" pb="100px">
           <FormProvider {...methods}>
-            <form>
+            <form
+              onChange={debounce(() => {
+                mutate({
+                  data: getValues(),
+                });
+              }, 500)}
+            >
               <Box px="s20" py="s24">
                 <Box>
                   <ContainerWithDivider>
@@ -129,13 +145,13 @@ export function CbsSettingsFeatureBranchesNew(
                           <FormInput
                             name="name"
                             label={t['settingsBranchName']}
-                            placeholder="Enter Branch Name"
+                            placeholder={t['settingsBranchNameLabel']}
                           />
                         </GridItem>
                         <FormInput
                           name={'branchCode'}
-                          label={t['settingsBranchNameLabel']}
-                          placeholder={t['settingsBranchNameLabel']}
+                          label={t['settingsBranchBranchCode']}
+                          placeholder={t['settingsBranchBranchCodePlaceholder']}
                         />
                       </InputGroupContainer>
 
@@ -186,7 +202,7 @@ export function CbsSettingsFeatureBranchesNew(
                             }))}
                           />
                           <FormSelect
-                            name="localityId"
+                            name="localGovernmentId"
                             label={t['kymIndLocalGovernment']}
                             placeholder={t['kymIndSelectLocalGovernment']}
                             options={localityList.map((d) => ({
@@ -242,7 +258,7 @@ export function CbsSettingsFeatureBranchesNew(
                         name="abbsStatus"
                       />
 
-                      {abbsStatus === 'active' && (
+                      {abbsStatus === 'ACTIVE' && (
                         <InputGroupContainer>
                           <FormSelect
                             label={t['settingsBranchRecievableAccount']}
@@ -318,8 +334,8 @@ export function CbsSettingsFeatureBranchesNew(
                 </Box>
               }
               draftButton={null}
-              mainButtonLabel={t['next']}
-              mainButtonHandler={() => router.push(`/members/translation/`)}
+              mainButtonLabel={t['settingsBranchSave']}
+              mainButtonHandler={() => {}}
             />
           </Container>
         </Box>
