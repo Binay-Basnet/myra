@@ -1,14 +1,8 @@
-import { Control } from 'react-hook-form';
-
 import { FormInput } from '@coop/shared/form';
 import { Box, Grid, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-type Props = {
-  control: Control<any>;
-};
-
-export const RegistrationDetailsOrganization = ({ control }: Props) => {
+export const RegistrationDetailsOrganization = () => {
   const { t } = useTranslation();
   return (
     <Box>
@@ -17,7 +11,6 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
           <FormInput
             label={t['settingsOrgRegRegdOffice']}
             placeholder={t['settingsOrgRegRegdOffice']}
-            control={control}
             name="regdOffice"
           />
         </GridItem>
@@ -25,7 +18,6 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
           <FormInput
             label={t['settingsOrgRegRegdNo']}
             placeholder={t['settingsOrgRegRegdNo']}
-            control={control}
             name={'regdNo'}
           />
         </GridItem>
@@ -34,7 +26,6 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
         <FormInput
           label={t['settingsOrgRegRegdAddress']}
           placeholder={t['settingsOrgRegRegdAddress']}
-          control={control}
           name="regdAddress"
         />
       </Box>
@@ -43,7 +34,6 @@ export const RegistrationDetailsOrganization = ({ control }: Props) => {
           <FormInput
             label={t['settingsOrgRegPANVATNo']}
             placeholder={t['settingsOrgRegPANVATNo']}
-            control={control}
             name="panOrVat"
           />
         </GridItem>

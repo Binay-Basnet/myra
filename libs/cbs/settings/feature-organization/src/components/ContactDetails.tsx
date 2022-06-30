@@ -1,24 +1,16 @@
-import { Control } from 'react-hook-form';
-
 import { FormEmailInput } from '@coop/shared/form';
 import { FormPhoneNumber } from '@coop/shared/form';
 import { FormInput } from '@coop/shared/form';
 import { Box, Grid, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-type Props = {
-  control: Control<any>;
-};
-
-export const ContactDetailsOrganization = ({ control }: Props) => {
+export const ContactDetailsOrganization = () => {
   const { t } = useTranslation();
   return (
     <Box>
       <Grid templateColumns="repeat(3, 1fr)" gap="s16">
         <GridItem>
-          {' '}
           <FormPhoneNumber
-            control={control}
             name={'phoneNumber'}
             label={t['settingsOrgContactPhoneNo']}
             placeholder={t['settingsOrgContactPhoneNo']}
@@ -29,16 +21,13 @@ export const ContactDetailsOrganization = ({ control }: Props) => {
             label={t['settingsOrgContactEmailAddress']}
             placeholder={t['settingsOrgContactEmailAddress']}
             name={'email'}
-            control={control}
           />
         </GridItem>
         <GridItem>
-          {' '}
           <FormInput
             label={t['settingsOrgContactWebsite']}
             placeholder={t['settingsOrgContactWebsiteAddress']}
             name={'website'}
-            control={control}
           />
         </GridItem>
       </Grid>

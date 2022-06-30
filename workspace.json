@@ -12,6 +12,7 @@
     "cbs-settings-feature-deposit": "libs/cbs/settings/feature-deposit",
     "cbs-settings-feature-deposit-products": "libs/cbs/settings/feature-deposit-products",
     "cbs-settings-feature-member": "libs/cbs/settings/feature-member",
+    "cbs-settings-feature-organization": "libs/cbs/settings/feature-organization",
     "cbs-settings-feature-share": "libs/cbs/settings/feature-share",
     "cbs-settings-ui-layout": "libs/cbs/settings/ui-layout",
     "myra": "apps/myra",

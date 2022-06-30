@@ -1,0 +1,18 @@
+mutation setBranchData($data: BranchInput!) {
+  settings {
+    general {
+      branch {
+        add(data: $data) {
+          record {
+            id
+          }
+          error {
+            ... on BranchAddInvalidDataError {
+              error
+            }
+          }
+        }
+      }
+    }
+  }
+}
