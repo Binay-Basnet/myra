@@ -9,7 +9,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  CustomIdEnum as KYMOptionEnum,
+  Kym_Field_Custom_Id as KYMOptionEnum,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';

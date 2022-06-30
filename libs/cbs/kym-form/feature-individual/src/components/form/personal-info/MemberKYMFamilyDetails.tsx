@@ -10,7 +10,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  CustomIdEnum as KYMOptionEnum,
+  Kym_Field_Custom_Id as KYMOptionEnum,
   KymIndMemberInput,
   useGetIndividualKymOptionQuery,
   useGetIndividualKymOptionsQuery,

@@ -11,7 +11,7 @@ import { Skeleton } from '@chakra-ui/react';
 import { debounce } from 'lodash';
 
 import {
-  CustomIdEnum as KYMEnum,
+  Kym_Field_Custom_Id as KYMEnum,
   KymField,
   KymOption,
   useAddFileSizeMutation,
