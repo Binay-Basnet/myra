@@ -25,7 +25,13 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
       render={({ field: { onChange, value } }) => (
         <Box display="flex" flexDirection="column" gap="s16">
           <TextFields variant="formLabel">{label}</TextFields>
-          <RadioGroup {...rest} value={value} onChange={onChange} name={name} />
+          <RadioGroup
+            {...rest}
+            value={value}
+            onChange={onChange}
+            name={name}
+            id={name}
+          />
           {error ? error?.message : null}
         </Box>
       )}

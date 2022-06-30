@@ -1,4 +1,4 @@
-import { CustomIdEnum as KYMOptionEnum } from '@coop/shared/data-access';
+import { Kym_Field_Custom_Id as KYMOptionEnum } from '@coop/shared/data-access';
 
 import { IncomeSourceDetailsAccComponent } from '../components/IncomeSourceDetailsAccComponent';
 import { KYMDeclaration } from '../components/KYMDeclaration';
@@ -72,10 +72,12 @@ export const KYM_FIELDS: FieldType[] = [
         label: 'settingsMemberMaritalStatus',
       },
       {
+        customId: KYMOptionEnum.Relationship,
         key: 'family_relationship',
         label: 'settingsMemberFamilyRelationship',
       },
       {
+        customId: KYMOptionEnum.FamilyInformation,
         key: 'family_information',
         label: 'settingsMemberFamilyInformation',
       },

@@ -9,7 +9,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  CustomIdEnum,
+  Kym_Field_Custom_Id,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import {
@@ -69,12 +69,12 @@ const MainOccupation = ({
 
   const isOwner = watch(`mainOccupation.${fieldIndex}.isOwner`);
 
-  const { data: occupationDetailsDefaultFields } =
-    useGetIndividualKymOptionsQuery({
-      filter: {
-        customId: CustomIdEnum.OccupationDetails,
-      },
-    });
+
+  const { data: occupationDetailsDefaultFields } = useGetIndividualKymOptionsQuery({
+    filter: {
+      customId: Kym_Field_Custom_Id.Occupation,
+    },
+  });
 
   const occupationFieldNames =
     occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]

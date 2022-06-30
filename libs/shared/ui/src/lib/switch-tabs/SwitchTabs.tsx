@@ -109,7 +109,7 @@ export function SwitchTabs({
           const radio = getRadioProps({ value: value.value.toString() });
 
           return (
-            <SwitchTab name={name} key={`${value}${index}`} {...radio}>
+            <SwitchTab name={name} key={`${value}${index}`} {...radio} id={id}>
               {value.label}
             </SwitchTab>
           );

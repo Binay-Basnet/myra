@@ -1,5 +1,8 @@
 import React, { useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { AiOutlineDelete } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
+import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -31,6 +34,7 @@ import { useTranslation } from '@coop/shared/utils';
 export const AddDirector = ({ watch, index, control, removeDirector }) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
+  const { getValues, reset } = useFormContext();
 
   const [isOpen, setIsOpen] = React.useState(true);
 
@@ -79,17 +83,24 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
 
   const districtTempList = useMemo(
     () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
+      data?.administration.all.find((d) => d.id === currentTempProvinceId)
         ?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+      districtList.find((d) => d.id === currentTemptDistrictId)
+        ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
+  const resetDirectorForm = () => {
+    const values = getValues();
+
+    values['boardOfDirectorsDetails'][index] = {};
+
+    reset({ boardOfDirectorsDetails: values['boardOfDirectorsDetails'] });
+  };
   return (
     <>
       <Box display="flex" alignItems="center">
@@ -126,6 +137,7 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
         {!isOpen && (
           <IconButton
             size="sm"
+            id="boardDirectorCloseIcon"
             variant={'ghost'}
             aria-label="close"
             icon={<CloseIcon />}
@@ -304,6 +316,12 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
                 label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
                 placeholder={t['kymCoopEnterNo']}
               />
+              <FormInput
+                type="string"
+                name={`boardOfDirectorsDetails.${index}.panOrVatNo`}
+                label={t['kymCoopPanOrVatNo']}
+                placeholder={t['kymCoopEnterPanOrVat']}
+              />
             </InputGroupContainer>
 
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
@@ -331,6 +349,31 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
             </Grid>
           </SectionContainer>
         </DynamicBoxGroupContainer>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          p="s10"
+          borderTop="1px solid"
+          borderColor="border.layout"
+        >
+          <Button
+            id="kymCOOPdirectorResetButton"
+            variant="ghost"
+            leftIcon={<GrRotateRight />}
+            onClick={resetDirectorForm}
+          >
+            {t['kymInsReset']}
+          </Button>
+          <Button
+            id="kymCOOPdirectorRemoveButton"
+            variant="outline"
+            shade="danger"
+            leftIcon={<AiOutlineDelete height="11px" />}
+            onClick={removeDirector}
+          >
+            {t['kymInsDelete']}
+          </Button>
+        </Box>
       </Collapse>
     </>
   );
