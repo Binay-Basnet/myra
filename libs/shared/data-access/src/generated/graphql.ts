@@ -953,31 +953,6 @@ export type CooperativeUnionMemberDetails = {
   noOfMaleMemberTarget?: Maybe<Scalars['Int']>;
 };
 
-export enum CustomIdEnum {
-  Certificate = 'CERTIFICATE',
-  ContactDetails = 'CONTACT_DETAILS',
-  DrivingLicense = 'DRIVING_LICENSE',
-  EducationQualification = 'EDUCATION_QUALIFICATION',
-  EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
-  Ethnicity = 'ETHNICITY',
-  FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
-  FileUploads = 'FILE_UPLOADS',
-  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
-  ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
-  Gender = 'GENDER',
-  IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
-  MaritalStatus = 'MARITAL_STATUS',
-  Nationality = 'NATIONALITY',
-  NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
-  Occupation = 'OCCUPATION',
-  OccupationDetails = 'OCCUPATION_DETAILS',
-  OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
-  Passport = 'PASSPORT',
-  Purpose = 'PURPOSE',
-  Religion = 'RELIGION',
-  VoterId = 'VOTER_ID'
-}
-
 export type DashboardData = {
   listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
   listTodayTrend?: Maybe<Array<Maybe<TodayTrend>>>;
@@ -2646,6 +2621,34 @@ export type KymSearchOptionCategory = {
   search: Kym_Option_Search_Type;
 };
 
+/**  These are system defined fields which are pre-populated  */
+export enum Kym_Field_Custom_Id {
+  Certificate = 'CERTIFICATE',
+  ContactDetails = 'CONTACT_DETAILS',
+  DrivingLicense = 'DRIVING_LICENSE',
+  EducationQualification = 'EDUCATION_QUALIFICATION',
+  EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
+  Ethnicity = 'ETHNICITY',
+  FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
+  FamilyInformation = 'FAMILY_INFORMATION',
+  FileUploads = 'FILE_UPLOADS',
+  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
+  ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
+  Gender = 'GENDER',
+  IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
+  MaritalStatus = 'MARITAL_STATUS',
+  Nationality = 'NATIONALITY',
+  NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
+  Occupation = 'OCCUPATION',
+  OccupationDetails = 'OCCUPATION_DETAILS',
+  OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
+  Passport = 'PASSPORT',
+  Purpose = 'PURPOSE',
+  Relationship = 'RELATIONSHIP',
+  Religion = 'RELIGION',
+  VoterId = 'VOTER_ID'
+}
+
 export enum Kym_Field_Type {
   Declaration = 'DECLARATION',
   Group = 'GROUP',
@@ -4313,7 +4316,7 @@ export type Level2HelloArgs = {
 };
 
 export type ListKymFieldFilter = {
-  customId?: InputMaybe<CustomIdEnum>;
+  customId?: InputMaybe<Kym_Field_Custom_Id>;
   id?: InputMaybe<Scalars['ID']>;
   isCustom?: InputMaybe<Scalars['Boolean']>;
   kymType?: InputMaybe<KymMemberTypesEnum>;
@@ -5396,6 +5399,13 @@ export type GetIndividualKymOptionQueryVariables = Exact<{
 
 export type GetIndividualKymOptionQuery = { members: { individual?: { options: { list?: { data?: Array<{ options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } } | null } };
 
+export type GetIndividualKymOptionsQueryVariables = Exact<{
+  filter?: InputMaybe<ListKymFieldFilter>;
+}>;
+
+
+export type GetIndividualKymOptionsQuery = { members: { individual?: { options: { list?: { data?: Array<{ options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } } | null } };
+
 export type GetIndIdentificationDocOptionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5434,7 +5444,7 @@ export type GetKymFormStatusQuery = { members: { individual?: { formState?: { da
 export type GetKymIndItemDetailsQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
-  customId?: InputMaybe<CustomIdEnum>;
+  customId?: InputMaybe<Kym_Field_Custom_Id>;
   isIdentificationDoc?: InputMaybe<Kym_Field_Parent>;
 }>;
 
@@ -6369,6 +6379,38 @@ export const useGetIndividualKymOptionQuery = <
       useAxios<GetIndividualKymOptionQuery, GetIndividualKymOptionQueryVariables>(GetIndividualKymOptionDocument).bind(null, variables),
       options
     );
+export const GetIndividualKymOptionsDocument = `
+    query getIndividualKYMOptions($filter: ListKYMFieldFilter) {
+  members {
+    individual {
+      options {
+        list(filter: $filter) {
+          data {
+            options {
+              id
+              name
+              fieldType
+              enabled
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymOptionsQuery = <
+      TData = GetIndividualKymOptionsQuery,
+      TError = unknown
+    >(
+      variables?: GetIndividualKymOptionsQueryVariables,
+      options?: UseQueryOptions<GetIndividualKymOptionsQuery, TError, TData>
+    ) =>
+    useQuery<GetIndividualKymOptionsQuery, TError, TData>(
+      variables === undefined ? ['getIndividualKYMOptions'] : ['getIndividualKYMOptions', variables],
+      useAxios<GetIndividualKymOptionsQuery, GetIndividualKymOptionsQueryVariables>(GetIndividualKymOptionsDocument).bind(null, variables),
+      options
+    );
 export const GetIndIdentificationDocOptionDocument = `
     query getIndIdentificationDocOption {
   members {
@@ -6539,7 +6581,7 @@ export const useGetKymFormStatusQuery = <
       options
     );
 export const GetKymIndItemDetailsDocument = `
-    query getKYMIndItemDetails($id: ID, $name: String, $customId: CustomIdEnum, $isIdentificationDoc: KYM_Field_Parent) {
+    query getKYMIndItemDetails($id: ID, $name: String, $customId: KYM_FIELD_CUSTOM_ID, $isIdentificationDoc: KYM_Field_Parent) {
   settings {
     kymForm {
       field {

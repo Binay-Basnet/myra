@@ -6,7 +6,11 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import {
+  Kym_Field_Custom_Id,
+  useGetIndividualKymOptionQuery,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/shared/data-access';
 import {
   FormInput,
   FormRadioGroup,
@@ -44,8 +48,8 @@ export const KYMDeclaration = () => {
   const {
     data: foreignEmploymentOptions,
     isLoading: foreignEmploymentOptionsLoading,
-  } = useGetIndividualKymOptionQuery({
-    fieldName: 'foreign_employment_options',
+  } = useGetIndividualKymOptionsQuery({
+    filter: { customId: Kym_Field_Custom_Id.ForeignEmploymentOptions },
   });
 
   return (
@@ -71,7 +75,7 @@ export const KYMDeclaration = () => {
             <FormSwitchTab
               label={t['kynIndDoyouhavebeneficialowner']}
               options={booleanList}
-              name="beneficialOwner"
+              name="hasBeneficialOwner"
             />
             <Grid
               gap={2}
@@ -92,7 +96,7 @@ export const KYMDeclaration = () => {
                 <FormInput
                   type="text"
                   id="fullName"
-                  name="fullName"
+                  name={'benificialFullName'}
                   label=" "
                   placeholder={t['kynIndFullName']}
                 />
@@ -110,7 +114,7 @@ export const KYMDeclaration = () => {
             <FormSwitchTab
               label={t['kynIndPoliticallyexposedperson']}
               options={booleanList}
-              name="politicallyExposedPerson"
+              name="isPotiticallyExposed"
             />
 
             <InputGroupContainer>
@@ -135,7 +139,7 @@ export const KYMDeclaration = () => {
             <FormSwitchTab
               label={t['kynIndDeclarationofconvicted']}
               options={booleanList}
-              name="declarationOfConvicted"
+              name="isConvicted"
             />
 
             <InputGroupContainer>
@@ -160,14 +164,13 @@ export const KYMDeclaration = () => {
             <FormSwitchTab
               label={t['kynIndForeignCountry']}
               options={booleanList}
-              name="residentForeign"
+              name="hasForeignResidentialPermit"
             />
 
             <Box display="flex" flexDirection="column">
               {/* TODO CHANGE THIS NAME */}
               <FormRadioGroup
-                id="foreignEmployment"
-                name="residentForeignDetails"
+                name="foreignResidentialPermitTypeId"
                 label={t['kynIndSpecifyfollowingdetails']}
                 options={getFieldOption(foreignEmploymentOptions)}
                 labelFontSize="s3"

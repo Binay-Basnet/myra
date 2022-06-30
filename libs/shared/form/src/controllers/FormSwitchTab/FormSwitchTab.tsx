@@ -22,7 +22,13 @@ export const FormSwitchTab = <T,>({
       control={control}
       name={name}
       render={({ field: { onChange, value, name } }) => (
-        <SwitchTabs value={value} onChange={onChange} name={name} {...rest} />
+        <SwitchTabs
+          value={value}
+          onChange={onChange}
+          id={name}
+          name={name}
+          {...rest}
+        />
       )}
     />
   );

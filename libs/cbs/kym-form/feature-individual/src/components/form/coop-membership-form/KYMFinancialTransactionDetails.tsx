@@ -4,19 +4,20 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import {
+  Kym_Field_Custom_Id as KYMOptionEnum,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KYMFinancialTransactionDetails = () => {
   const { t } = useTranslation();
-  const {
-    data: financialTransactionDetailsData,
-    isLoading: financialTransactionLoading,
-  } = useGetIndividualKymOptionQuery({
-    fieldName: 'financial_transaction_details',
-  });
+  const { data: financialTransactionDetailsData } =
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.FinancialTransactionDetails },
+    });
 
   return (
     <GroupContainer

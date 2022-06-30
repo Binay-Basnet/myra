@@ -10,8 +10,10 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
+  Kym_Field_Custom_Id as KYMOptionEnum,
   KymIndMemberInput,
   useGetIndividualKymOptionQuery,
+  useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
@@ -85,8 +87,8 @@ export const MemberKYMFamilyDetails = () => {
   const { control } = useFormContext<KymIndMemberInput>();
 
   const { data: maritalStatusData, isLoading: maritalStatusLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'marital_status',
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.MaritalStatus },
     });
 
   const {

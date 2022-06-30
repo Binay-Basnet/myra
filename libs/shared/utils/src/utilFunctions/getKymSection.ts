@@ -69,7 +69,7 @@ const familyDetails = [
 ];
 const COOPmembership = ['purposeId', 'memberIdentityLevel'];
 const anotherCoop = [
-  'memberOfAnotherCooperative',
+  'isMemberOfAnotherCooperative',
   'nameAddressCooperative',
   'memberNo',
 ];
@@ -94,16 +94,12 @@ const declerationNextToKin = [
   'localKinContact',
   'localKinAddress',
 ];
-const politicalExposure = [
-  'politicallyExposedPerson',
-  'politicallyExposedDetails',
-];
-const benificialOwner = ['beneficialOwner', 'beneficialRelationShipId'];
-const convicted = ['declarationOfConvicted', 'convictionDetails'];
+const politicalExposure = ['isPoliticallyExposed', 'politicallyExposedDetails'];
+const benificialOwner = ['hasBeneficialOwner', 'beneficialRelationShipId'];
+const convicted = ['isConvicted', 'convictionDetails', 'beneficialFullName'];
 const foreign = [
-  'residentForeign',
-  'residentForeignDetails',
-  'foreignEmployment',
+  'hasForeignResidentialPermit',
+  'foreignResidentialPermitTypeId',
 ];
 
 export const getKymSection = (id: string) => {

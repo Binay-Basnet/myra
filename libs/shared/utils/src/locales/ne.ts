@@ -608,6 +608,7 @@ const ne: Record<string, string> = {
     'Citizenship/Passport/Driving License No',
   kymCoopEnterNo: 'Enter No',
   kymCoopTrainingRelatedToCoop: 'Training related to Co-operatives',
+  kymCoopTrainingRelatedToCoopsubText: 'Training Attended',
   kymCoopSubjectOfTraining: 'Subject of Training',
   kymCoopEnterSubjectOfTraining: 'Enter Subject of Training',
   kymCoopDateOfTraining: 'Date of Training',
@@ -617,6 +618,8 @@ const ne: Record<string, string> = {
   kymCoopPhotograph: 'Photograph',
   kymCoopPhotographOfIdentityProofDocument:
     'Photograph of identity proof document',
+  kymCoopPanOrVatNo: 'PAN No',
+  kymCoopEnterPanOrVat: 'Enter Pan No',
 
   kymCoopAssets: 'Assets',
   kymCoopAmount: 'Amount',
@@ -785,8 +788,8 @@ const ne: Record<string, string> = {
   kymCoopUnionSelectState: 'Select State',
   kymCoopUnionDistrict: 'District',
   kymCoopUnionSelectDistrict: 'Select District',
-  kymCoopUnionVDCMunicipality: 'VDC / Municipality',
-  kymCoopUnionSelectVDCMunicipality: 'Select VDC / Municipality',
+  kymCoopUnionVDCMunicipality: 'Local Government',
+  kymCoopUnionSelectVDCMunicipality: 'Select Local Government',
   kymCoopUnionWardNo: 'Ward No',
   kymCoopUnionEnterWardNo: 'Enter Ward No',
   kymCoopUnionLocality: 'Locality',
@@ -821,12 +824,12 @@ const ne: Record<string, string> = {
   kymCoopUnionOpDesignation: 'Designation',
   kymCoopUnionOpEnterDesignation: 'Enter Designation',
   kymCoopUnionOpPermanentAddress: 'Permanent Address',
-  kymCoopUnionOpState: 'State',
-  kymCoopUnionOpSelectState: 'Select State',
+  kymCoopUnionOpState: 'Province',
+  kymCoopUnionOpSelectState: 'Select Province',
   kymCoopUnionOpDistrict: 'District',
   kymCoopUnionOpSelectDistrict: 'Select District',
-  kymCoopUnionOpVDCMunicipality: 'VDC / Municipality',
-  kymCoopUnionOpSelectVDCMunicipality: 'Select VDC / Municipality',
+  kymCoopUnionOpVDCMunicipality: 'Local Government',
+  kymCoopUnionOpSelectVDCMunicipality: 'Select Local Government',
   kymCoopUnionOpWardNo: 'Ward No',
   kymCoopUnionOpEnterWardNo: 'Enter Ward No',
   kymCoopUnionOpLocality: 'Locality',
@@ -836,12 +839,13 @@ const ne: Record<string, string> = {
     'Temporary Address same as permanent',
   kymCoopUnionOpDateOfMembership: 'Date of membership',
   kymCoopUnionOpHighestQualification: 'Highest Qualification',
+  kymCoopUnionOpEnterHighestQualification: 'Enter Highest Qualification',
   kymCoopUnionOpMobileNo: 'Mobile No',
   kymCoopUnionOpEnterMobileNo: 'Enter Mobile No',
   kymCoopUnionOpEmail: 'Email',
   kymCoopUnionOpEnterEmail: 'Enter Email',
-  kymCoopUnionOpCitizenshipPassportDrivingLicenseNo:
-    'Citizenship/Passport/Driving License No',
+  kymCoopUnionOpCitizenshipPassportDrivingLicenseNo: 'Citizenship No',
+  kymCoopUnionOpEnterCitizenshipNo: 'Enter No',
   kymCoopUnionOpTrainingRelatedToCoop: 'Training related to Co-operatives',
   kymCoopUnionOpSubjectofTraining: 'Subject of Training',
   kymCoopUnionOpEnterSubjectofTraining: 'Enter Subject of Training',
@@ -1185,7 +1189,7 @@ const ne: Record<string, string> = {
   kymIns2TransactionProfile: '2. Transaction Profile',
   kymIns3DetailsofProprietorpartnersDirectors:
     '3. Details of Proprietor, partners, Directors',
-  kymIns4AccountOperations: '4. Account Operations',
+  kymIns4AccountOperations: '4. Account Operators',
   kymIns5Declaration: '5. Declaration',
   kymInsAddNewMember: 'Add New Member',
   kymInsNameofInstitution: 'Name of Institution',
@@ -1221,7 +1225,7 @@ const ne: Record<string, string> = {
   kymInsEnterNumberofEmployees: 'Enter Number of Employees',
   kymInsAGMDetailsDate: 'AGM Details (Date of Last AGM)',
   kymInsbranchOfficeAddress: 'Branch Office Address',
-  kymInsOperatorOfficeAddress: 'Operator Office Address',
+  kymInsOperatorOfficeAddress: 'Operating Office Address',
 
   kymInsNameofBank: 'Name of Bank',
   kymInsSelectBank: 'Select Bank',
@@ -1272,8 +1276,7 @@ const ne: Record<string, string> = {
   kymInsMobileNo: 'Mobile No.',
   kymInsEnterMobileNo: 'Enter Mobile No',
   kymInsEnterEmail: 'Enter Email Address',
-  kymInsCitizenshipPassportDrivingLicenseNoIns:
-    'Citizenship/Passport/Driving License No.',
+  kymInsCitizenshipPassportDrivingLicenseNoIns: 'Citizenship No.',
   kymInsEnterNo: 'Enter Number',
   kymInsPhotograph: 'Photograph',
   kymInsPhotographOfIdentityProofDocument:
@@ -1301,6 +1304,8 @@ const ne: Record<string, string> = {
   kymInsEnterWardNo: 'Enter Ward No',
   kymInsLocality: 'Locality',
   kymInsEnterLocality: 'Enter Locality',
+  kymInsHouseNo: 'House No',
+  kymInsEnterHouseNo: 'Enter House No',
   kymInsTemporaryAddress: 'Temporary Address',
   kymInsTemporaryAddressPermanent: 'Temporary Address same as permanent',
   kymInsUnionDateOfMembership: 'Date of membership',
@@ -1536,6 +1541,8 @@ const ne: Record<string, string> = {
   accSelectMonth: 'Select Month',
   accSelectDay: 'Select Day',
   accYearly: 'Yearly',
+
+  upto: 'Upto',
 };
 
 export default ne;

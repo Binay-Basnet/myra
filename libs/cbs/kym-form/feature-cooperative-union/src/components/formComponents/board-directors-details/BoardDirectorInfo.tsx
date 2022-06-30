@@ -209,6 +209,12 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                   label={t['kymCoopUnionLocality']}
                   placeholder={t['kymCoopUnionEnterLocality']}
                 />
+                <FormInput
+                  type="text"
+                  name={`boardOfDirectorsDetails.${index}.permanentHouseNo`}
+                  label={t['kymIndHouseNo']}
+                  placeholder={t['kymIndEnterHouseNo']}
+                />
               </InputGroupContainer>
 
               <Box>
@@ -274,6 +280,12 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                       name={`boardOfDirectorsDetails.${index}.temporaryLocality`}
                       label={t['kymCoopUnionLocality']}
                       placeholder={t['kymCoopUnionEnterLocality']}
+                    />
+                    <FormInput
+                      type="text"
+                      name={`boardOfDirectorsDetails.${index}.temporaryHouseNo`}
+                      label={t['kymIndHouseNo']}
+                      placeholder={t['kymIndEnterHouseNo']}
                     />
                   </InputGroupContainer>
 

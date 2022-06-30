@@ -1,36 +1,39 @@
 import React from 'react';
-import { useTranslation } from '@coop/shared/utils';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import {
+  Kym_Field_Custom_Id as KYMOptionEnum,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 export const MemberKYMBasicInfo = () => {
   const { t } = useTranslation();
   const { data: genderFields, isLoading: genderLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'gender',
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.Gender },
     });
 
   const { data: ethnicityFields, isLoading: ethnicityLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'ethnicity',
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.Ethnicity },
     });
 
   const { data: educationFields, isLoading: educationLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'education_qualification',
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.EducationQualification },
     });
 
   const { data: religionFields, isLoading: religionLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'religion',
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.Religion },
     });
 
   return (

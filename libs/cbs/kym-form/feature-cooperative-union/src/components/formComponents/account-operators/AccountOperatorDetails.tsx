@@ -158,21 +158,21 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                 <FormInput
                   type="text"
                   name={`accountOperatorsDetails.${index}.fullName`}
-                  label="Full Name"
-                  placeholder="Enter Full Name"
+                  label={t['kymCoopUnionOpFullName']}
+                  placeholder={t['kymCoopUnionOpEnterFullName']}
                 />
                 <FormInput
                   type="text"
                   name={`accountOperatorsDetails.${index}.designation`}
-                  label="Designation"
-                  placeholder="Enter Designation"
+                  label={t['kymCoopUnionOpDesignation']}
+                  placeholder={t['kymCoopUnionOpEnterDesignation']}
                 />
               </InputGroupContainer>
             </AccordianContainer>
 
             <AccordianContainer>
               <Text fontSize="r1" fontWeight="SemiBold">
-                Permanent Address
+                {t['kymCoopUnionOpPermanentAddress']}
               </Text>
               {/* <Box
               id="Permanent Address"
@@ -183,14 +183,14 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
               <InputGroupContainer>
                 <FormSelect
                   name={`accountOperatorsDetails.${index}.permanentStateId`}
-                  label="State"
-                  placeholder="Select State"
+                  label={t['kymCoopUnionOpState']}
+                  placeholder={t['kymCoopUnionOpSelectState']}
                   options={province}
                 />
                 <FormSelect
                   name={`accountOperatorsDetails.${index}.permanentDistrictId`}
-                  label="District"
-                  placeholder="Select District"
+                  label={t['kymCoopUnionOpDistrict']}
+                  placeholder={t['kymCoopUnionOpSelectDistrict']}
                   options={districtList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -198,8 +198,8 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                 />
                 <FormSelect
                   name={`accountOperatorsDetails.${index}.permanentVdcOrMunicId`}
-                  label="VDC / Municipality"
-                  placeholder="Select VDC / Municipality"
+                  label={t['kymCoopUnionOpVDCMunicipality']}
+                  placeholder={t['kymCoopUnionOpSelectVDCMunicipality']}
                   options={localityList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -208,14 +208,20 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                 <FormInput
                   type="number"
                   name={`accountOperatorsDetails.${index}.permanentWardId`}
-                  label="Ward No"
-                  placeholder="Enter Ward No"
+                  label={t['kymCoopUnionOpWardNo']}
+                  placeholder={t['kymCoopUnionOpEnterWardNo']}
                 />
                 <FormInput
                   type="text"
                   name={`accountOperatorsDetails.${index}.permanentLocality`}
-                  label="Locality"
-                  placeholder="Enter Locality"
+                  label={t['kymCoopUnionOpLocality']}
+                  placeholder={t['kymCoopUnionOpEnterLocality']}
+                />
+                <FormInput
+                  type="text"
+                  name={`accountOperatorsDetails.${index}.permanentHouseNo`}
+                  label={t['kymIndHouseNo']}
+                  placeholder={t['kymIndEnterHouseNo']}
                 />
               </InputGroupContainer>
 
@@ -235,14 +241,14 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
               scrollMarginTop={'200px'}
             >
               <Text fontSize="r1" fontWeight="SemiBold">
-                Temporary Address
+                {t['kymCoopUnionOpTemporaryAddress']}
               </Text>
 
               <FormSwitch
                 control={control}
                 id="accountOperatorsDetails"
                 name={`accountOperatorsDetails.${index}.isPermanentAndTemporaryAddressSame`}
-                label="Temporary Address same as permanent"
+                label={t['kymCoopUnionOpTemporaryAddressPermanent']}
               />
 
               {!isPermanentAndTemporaryAddressSame && (
@@ -250,14 +256,14 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                   <InputGroupContainer>
                     <FormSelect
                       name={`accountOperatorsDetails.${index}.temporaryStateId`}
-                      label="State"
-                      placeholder="Select State"
+                      label={t['kymCoopUnionOpState']}
+                      placeholder={t['kymCoopUnionOpSelectState']}
                       options={province}
                     />
                     <FormSelect
                       name={`accountOperatorsDetails.${index}.temporaryDistrictId`}
-                      label="District"
-                      placeholder="Select District"
+                      label={t['kymCoopUnionOpDistrict']}
+                      placeholder={t['kymCoopUnionOpSelectDistrict']}
                       options={districtTempList.map((d) => ({
                         label: d.name,
                         value: d.id,
@@ -265,8 +271,8 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                     />
                     <FormSelect
                       name={`accountOperatorsDetails.${index}.temporaryVdcOrMunicId`}
-                      label="VDC / Muncipality"
-                      placeholder="Select VDC / Muncipality"
+                      label={t['kymCoopUnionOpVDCMunicipality']}
+                      placeholder={t['kymCoopUnionOpSelectVDCMunicipality']}
                       options={localityTempList.map((d) => ({
                         label: d.name,
                         value: d.id,
@@ -275,14 +281,20 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                     <FormInput
                       type="number"
                       name={`accountOperatorsDetails.${index}.temporaryWardId`}
-                      label="Ward No"
-                      placeholder="Enter Ward No"
+                      label={t['kymCoopUnionOpWardNo']}
+                      placeholder={t['kymCoopUnionOpEnterWardNo']}
                     />
                     <FormInput
                       type="text"
                       name={`accountOperatorsDetails.${index}.temporaryLocality`}
-                      label="Locality"
-                      placeholder="Enter Locality"
+                      label={t['kymCoopUnionOpLocality']}
+                      placeholder={t['kymCoopUnionOpEnterLocality']}
+                    />
+                    <FormInput
+                      type="text"
+                      name={`accountOperatorsDetails.${index}.temporaryHouseNo`}
+                      label={t['kymIndHouseNo']}
+                      placeholder={t['kymIndEnterHouseNo']}
                     />
                   </InputGroupContainer>
 
@@ -298,67 +310,67 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
               <FormInput
                 type="date"
                 name={`accountOperatorsDetails.${index}.dateOfMembership`}
-                label="Date of membership"
+                label={t['kymCoopUnionOpDateOfMembership']}
                 placeholder="DD-MM-YYYY"
               />
               <FormInput
                 type="text"
                 name={`accountOperatorsDetails.${index}.highestQualification`}
-                label="Highest Qualification"
-                placeholder="Enter higest qualification"
+                label={t['kymCoopUnionOpHighestQualification']}
+                placeholder={t['kymCoopUnionOpEnterHighestQualification']}
               />
               <FormInput
                 type="number"
                 name={`accountOperatorsDetails.${index}.contactNumber`}
-                label="Mobile No"
-                placeholder="Enter Mobile No"
+                label={t['kymCoopUnionOpMobileNo']}
+                placeholder={t['kymCoopUnionOpEnterMobileNo']}
               />
               <FormInput
                 type="text"
                 name={`accountOperatorsDetails.${index}.email`}
-                label="Email"
-                placeholder="Enter Email"
+                label={t['kymCoopUnionOpEmail']}
+                placeholder={t['kymCoopUnionOpEnterEmail']}
               />
               <FormInput
                 type="string"
                 name={`accountOperatorsDetails.${index}.citizenshipOrPassportOrLisenceNo`}
-                label="Citizenship/Passport/Driving License No."
-                placeholder="Enter No"
+                label={t['kymCoopUnionOpCitizenshipPassportDrivingLicenseNo']}
+                placeholder={t['kymCoopUnionOpEnterCitizenshipNo']}
               />
             </InputGroupContainer>
             <Text fontSize="r1" fontWeight="SemiBold">
-              Training related to Co-operatives
+              {t['kymCoopUnionOpTrainingRelatedToCoop']}
             </Text>
             <InputGroupContainer>
               <FormInput
                 type="text"
                 name={`accountOperatorsDetails.${index}.subjectOfTraining`}
-                label="Subject of Training"
-                placeholder="Enter Subject of Training"
+                label={t['kymCoopUnionOpSubjectofTraining']}
+                placeholder={t['kymCoopUnionOpEnterSubjectofTraining']}
               />
               <FormInput
                 type="date"
                 name={`accountOperatorsDetails.${index}.dateOfTraining`}
-                label="Date of training"
-                placeholder="Enter date of Training"
+                label={t['kymCoopUnionOpDateofTraining']}
+                placeholder={t['kymCoopUnionOpEnterDateofTraining']}
               />
               <FormInput
                 type="number"
                 name={`accountOperatorsDetails.${index}.trainingOrganization`}
-                label="Training Organization"
-                placeholder="Enter Training Organization"
+                label={t['kymCoopUnionOpTrainingOrganization']}
+                placeholder={t['kymCoopUnionOpEnterTrainingOrganization']}
               />
             </InputGroupContainer>
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
               <FormFileInput
                 size="lg"
-                label="Photograph"
+                label={t['kymCoopUnionOpPhotograph']}
                 // control={control}
                 name={`accountOperatorsDetails.${index}.photograph`}
               />
               <FormFileInput
                 size="lg"
-                label="Photograph of identity proof document"
+                label={t['kymCoopUnionOpPhotographOfIdentityProofDocument']}
                 // control={control}
                 name={`accountOperatorsDetails.${index}.identityDocumentPhoto`}
               />
@@ -367,7 +379,7 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
               <Box w="124px">
                 <FormFileInput
                   name={`accountOperatorsDetails.${index}.signature`}
-                  label="Specimen Signature"
+                  label={t['kymCoopUnionOpSpecimenSignature']}
                 />
               </Box>
             </InputGroupContainer>

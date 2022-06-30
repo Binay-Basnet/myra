@@ -1,6 +1,9 @@
 import React from 'react';
 import { useFieldArray } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { GrRotateRight } from 'react-icons/gr';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
