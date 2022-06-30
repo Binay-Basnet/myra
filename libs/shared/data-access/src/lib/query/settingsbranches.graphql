@@ -5,11 +5,12 @@ query getBranchesList {
         list {
           edges {
             node {
+              id
               branchCode
               address {
-                provinceId
-                districtId
-                locality
+                state
+                district
+                localLevel
                 wardNo
                 locality
               }
@@ -17,9 +18,6 @@ query getBranchesList {
                 id
               }
               contactNumber
-              name
-              category
-              estDate
             }
           }
         }
