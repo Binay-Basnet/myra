@@ -1,0 +1,14 @@
+mutation setOrganizationData($data: OrganizationInput!) {
+  settings {
+    general {
+      organization {
+        initialSetup(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

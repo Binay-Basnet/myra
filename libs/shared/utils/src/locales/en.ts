@@ -356,6 +356,8 @@ const en: Record<string, string> = {
   settingsBranchCategoriesRegional: 'Regional Office',
   settingsBranchCategoriesService: 'Service Center',
   settingsBranchCategoriesContact: 'Contact Office',
+  settingsBranchSave: 'Save Account',
+  settingsBranchBranchCodePlaceholder: 'Enter Branch Code',
 
   // SETTINGS PAGE
 

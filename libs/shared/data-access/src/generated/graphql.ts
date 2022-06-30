@@ -5161,6 +5161,13 @@ export type KymIndFormStateQuery = {
   error?: Maybe<QueryError>;
 };
 
+export type SetBranchDataMutationVariables = Exact<{
+  data: BranchInput;
+}>;
+
+
+export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record: { id: string }, error?: { error?: Record<string, Array<string>> | null } | null } } | null } | null } };
+
 export type SetNewCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -5276,6 +5283,13 @@ export type SetInstitutionDataMutationVariables = Exact<{
 
 
 export type SetInstitutionDataMutation = { members: { institution?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+
+export type SetOrganizationDataMutationVariables = Exact<{
+  data: OrganizationInput;
+}>;
+
+
+export type SetOrganizationDataMutation = { settings: { general?: { organization?: { initialSetup?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
 export type AddKymOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
@@ -5471,7 +5485,7 @@ export type GetCustomFieldsQuery = { settings: { kymForm: { field?: { list?: { d
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, contactNumber: string, address: { provinceId?: string | null, districtId?: string | null, vdcId?: string | null, wardNo?: string | null, locality?: string | null, latitude?: string | null, longitude?: string | null }, manager: { id: string } } }> } | null } | null } | null } };
+export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { branchCode: number, contactNumber: string, name?: string | null, category?: BranchCategory | null, estDate?: string | null, address: { provinceId?: string | null, districtId?: string | null, locality?: string | null, wardNo?: string | null }, manager: { id: string } } }> } | null } | null } | null } };
 
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5509,6 +5523,35 @@ export const MutationErrorFragmentDoc = `
   }
 }
     `;
+export const SetBranchDataDocument = `
+    mutation setBranchData($data: BranchInput!) {
+  settings {
+    general {
+      branch {
+        add(data: $data) {
+          record {
+            id
+          }
+          error {
+            ... on BranchAddInvalidDataError {
+              error
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetBranchDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>) =>
+    useMutation<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>(
+      ['setBranchData'],
+      useAxios<SetBranchDataMutation, SetBranchDataMutationVariables>(SetBranchDataDocument),
+      options
+    );
 export const SetNewCoaDocument = `
     mutation setNewCOA($data: AddCOAAccountInput!) {
   settings {
@@ -5880,6 +5923,31 @@ export const useSetInstitutionDataMutation = <
     useMutation<SetInstitutionDataMutation, TError, SetInstitutionDataMutationVariables, TContext>(
       ['setInstitutionData'],
       useAxios<SetInstitutionDataMutation, SetInstitutionDataMutationVariables>(SetInstitutionDataDocument),
+      options
+    );
+export const SetOrganizationDataDocument = `
+    mutation setOrganizationData($data: OrganizationInput!) {
+  settings {
+    general {
+      organization {
+        initialSetup(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetOrganizationDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetOrganizationDataMutation, TError, SetOrganizationDataMutationVariables, TContext>) =>
+    useMutation<SetOrganizationDataMutation, TError, SetOrganizationDataMutationVariables, TContext>(
+      ['setOrganizationData'],
+      useAxios<SetOrganizationDataMutation, SetOrganizationDataMutationVariables>(SetOrganizationDataDocument),
       options
     );
 export const AddKymOptionDocument = `
@@ -6777,16 +6845,17 @@ export const GetBranchesListDocument = `
               address {
                 provinceId
                 districtId
-                vdcId
+                locality
                 wardNo
                 locality
-                latitude
-                longitude
               }
               manager {
                 id
               }
               contactNumber
+              name
+              category
+              estDate
             }
           }
         }

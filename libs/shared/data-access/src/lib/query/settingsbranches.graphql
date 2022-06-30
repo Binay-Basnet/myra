@@ -9,16 +9,17 @@ query getBranchesList {
               address {
                 provinceId
                 districtId
-                vdcId
+                locality
                 wardNo
                 locality
-                latitude
-                longitude
               }
               manager {
                 id
               }
               contactNumber
+              name
+              category
+              estDate
             }
           }
         }
