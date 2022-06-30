@@ -10,35 +10,46 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
+  KymOption,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import { FormCheckbox, FormInput } from '@coop/shared/form';
 import { Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export const SpouseOccupationInput = ({ option, index, fieldIndex }: any) => {
+interface DynamicInputProps {
+  fieldIndex: number;
+  optionIndex: number;
+  option: Partial<KymOption>;
+}
+
+export const SpouseOccupationInput = ({
+  option,
+  optionIndex,
+  fieldIndex,
+}: DynamicInputProps) => {
   const { register, unregister } = useFormContext();
 
   useEffect(() => {
-    register(`spouseOccupation.${fieldIndex}.options.${index}.id`, {
+    register(`spouseOccupation.${fieldIndex}.options.${optionIndex}.id`, {
       value: option.id,
     });
-    register(`spouseOccupation.${fieldIndex}.options.${index}.value`, {
+    register(`spouseOccupation.${fieldIndex}.options.${optionIndex}.value`, {
       value: '',
     });
 
     return () => {
-      unregister(`spouseOccupation.${fieldIndex}.options.${index}.id`);
-      unregister(`spouseOccupation.${fieldIndex}.options.${index}.value`);
+      unregister(`spouseOccupation.${fieldIndex}.options.${optionIndex}.id`);
+      unregister(`spouseOccupation.${fieldIndex}.options.${optionIndex}.value`);
     };
   }, []);
 
   return (
     <FormInput
       type="text"
-      name={`mainOccupation.${fieldIndex}.options.${index}.value`}
-      label={option.name.local}
-      placeholder={option.name.local}
+      name={`spouseOccupation.${fieldIndex}.options.${optionIndex}.value`}
+      label={option?.name?.local}
+      placeholder={option?.name?.local}
     />
   );
 };
@@ -83,13 +94,13 @@ const HusbandWifeOccupation = ({
         />
 
         <InputGroupContainer>
-          {occupationFieldNames.map((option, index) => {
+          {occupationFieldNames.map((option, optionIndex) => {
             return (
               <Fragment key={option.id}>
                 <SpouseOccupationInput
                   fieldIndex={fieldIndex}
                   option={option}
-                  index={index}
+                  optionIndex={optionIndex}
                 />
               </Fragment>
             );
@@ -98,7 +109,11 @@ const HusbandWifeOccupation = ({
       </Box>
 
       <Box display="flex" gap="9px" alignItems="center">
-        <FormCheckbox name={`spouseOccupation.${fieldIndex}.isOwner`} />
+        {/*TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
+        <FormCheckbox
+          isDisabled={true}
+          name={`spouseOccupation.${fieldIndex}.isOwner`}
+        />
         <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
       </Box>
 

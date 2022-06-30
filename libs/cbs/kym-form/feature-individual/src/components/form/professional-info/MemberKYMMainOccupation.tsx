@@ -10,6 +10,7 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id,
+  KymOption,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import {
@@ -29,29 +30,39 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export const MainOccupationInput = ({ option, index, fieldIndex }: any) => {
+interface DynamicInputProps {
+  fieldIndex: number;
+  optionIndex: number;
+  option: Partial<KymOption>;
+}
+
+export const MainOccupationInput = ({
+  option,
+  optionIndex,
+  fieldIndex,
+}: DynamicInputProps) => {
   const { register, unregister } = useFormContext();
 
   useEffect(() => {
-    register(`mainOccupation.${fieldIndex}.options.${index}.id`, {
+    register(`mainOccupation.${fieldIndex}.options.${optionIndex}.id`, {
       value: option.id,
     });
-    register(`mainOccupation.${fieldIndex}.options.${index}.value`, {
+    register(`mainOccupation.${fieldIndex}.options.${optionIndex}.value`, {
       value: '',
     });
 
     return () => {
-      unregister(`mainOccupation.${fieldIndex}.options.${index}.id`);
-      unregister(`mainOccupation.${fieldIndex}.options.${index}.value`);
+      unregister(`mainOccupation.${fieldIndex}.options.${optionIndex}.id`);
+      unregister(`mainOccupation.${fieldIndex}.options.${optionIndex}.value`);
     };
   }, []);
 
   return (
     <FormInput
       type="text"
-      name={`mainOccupation.0.options.${index}.value`}
-      label={option.name.local}
-      placeholder={option.name.local}
+      name={`mainOccupation.${fieldIndex}.options.${optionIndex}.value`}
+      label={option?.name?.local}
+      placeholder={option?.name?.local}
     />
   );
 };
@@ -102,13 +113,13 @@ const MainOccupation = ({
         />
 
         <InputGroupContainer>
-          {occupationFieldNames.map((option, index) => {
+          {occupationFieldNames.map((option, optionIndex) => {
             return (
               <Fragment key={option.id}>
                 <MainOccupationInput
                   fieldIndex={fieldIndex}
                   option={option}
-                  index={index}
+                  optionIndex={optionIndex}
                 />
               </Fragment>
             );
@@ -117,7 +128,11 @@ const MainOccupation = ({
       </Box>
 
       <Box display="flex" gap="9px" alignItems="center">
-        <FormCheckbox name={`mainOccupation.${fieldIndex}.isOwner`} />
+        {/*TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
+        <FormCheckbox
+          isDisabled={true}
+          name={`mainOccupation.${fieldIndex}.isOwner`}
+        />
         <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
       </Box>
 
@@ -157,7 +172,7 @@ export const MemberKYMMainOccupation = () => {
   const { t } = useTranslation();
   const { control, watch } = useFormContext();
 
-  const isForeignEmployee = watch('isForeignEmployee');
+  const isForeignEmployee = watch('enableForeignEmployee');
 
   const {
     fields: mainOccupationFields,
@@ -200,7 +215,7 @@ export const MemberKYMMainOccupation = () => {
         <FormSwitch
           control={control}
           id="isForeignEmployee"
-          name="isForeignEmployee"
+          name="enableForeignEmployee"
           label={t['kymIndEnableforForeignEmployment']}
         />
       </Box>
@@ -211,7 +226,7 @@ export const MemberKYMMainOccupation = () => {
             <FormSelect
               id="nameOfCountry"
               control={control}
-              name="nameOfCountry"
+              name="countryId"
               label={t['kymIndNameofCountry']}
               placeholder={t['kymIndSelectCountry']}
               options={[
@@ -231,18 +246,10 @@ export const MemberKYMMainOccupation = () => {
             />
           </GridItem>
           <GridItem>
-            {/* <FormInput
-            bg="white"
-            control={control}
-            type="text"
-            name={`orgName`}
-            label="Type of Visa"
-            placeholder="Enter Type of Visa"
-          /> */}
             <FormSelect
               control={control}
               id="typeOfVisa"
-              name="typeOfVisa"
+              name="typeOfVisaId"
               label={t['kymIndTypeofVisa']}
               placeholder={t['kymIndEnterTypeofVisa']}
               options={[
@@ -267,7 +274,7 @@ export const MemberKYMMainOccupation = () => {
               control={control}
               type="number"
               textAlign={'right'}
-              name={`orgName`}
+              name={`foreignEstimatedAnnualIncome`}
               id="estimatedAnnualIncome"
               label={t['kymIndEstimatedAnnualIncome']}
               placeholder="0.00"
