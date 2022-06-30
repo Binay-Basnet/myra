@@ -91,15 +91,15 @@ const AddDirector = ({ watch, index, removeDirector }) => {
 
   const districtTempList = useMemo(
     () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
+      data?.administration.all.find((d) => d.id === currentTempProvinceId)
         ?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
+        ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
 
@@ -227,6 +227,12 @@ const AddDirector = ({ watch, index, removeDirector }) => {
                 label={t['kymInsLocality']}
                 placeholder={t['kymInsEnterLocality']}
               />
+              <FormInput
+                type="text"
+                name={`detailsOfDirectors.${index}.permanentHouseNo`}
+                label={t['kymInsHouseNo']}
+                placeholder={t['kymInsEnterHouseNo']}
+              />
             </InputGroupContainer>
 
             <Box>
@@ -292,6 +298,12 @@ const AddDirector = ({ watch, index, removeDirector }) => {
                     name={`detailsOfDirectors.${index}.temporaryLocality`}
                     label={t['kymInsLocality']}
                     placeholder={t['kymInsEnterLocality']}
+                  />
+                  <FormInput
+                    type="text"
+                    name={`detailsOfDirectors.${index}.temporaryHouseNo`}
+                    label={t['kymInsHouseNo']}
+                    placeholder={t['kymInsEnterHouseNo']}
                   />
                 </InputGroupContainer>
                 <Button

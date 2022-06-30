@@ -6,7 +6,11 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import {
+  CustomIdEnum,
+  useGetIndividualKymOptionQuery,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/shared/data-access';
 import {
   FormInput,
   FormRadioGroup,
@@ -44,8 +48,8 @@ export const KYMDeclaration = () => {
   const {
     data: foreignEmploymentOptions,
     isLoading: foreignEmploymentOptionsLoading,
-  } = useGetIndividualKymOptionQuery({
-    fieldName: 'foreign_employment_options',
+  } = useGetIndividualKymOptionsQuery({
+    filter: { customId: CustomIdEnum.ForeignEmploymentOptions },
   });
 
   return (
