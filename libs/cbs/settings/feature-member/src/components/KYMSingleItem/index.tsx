@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { debounce } from 'lodash';
 
 import {
-  Field_Types,
+  Kym_Option_Field_Type as Field_Types,
   KymField,
   KymOption,
   useAddKymOptionMutation,
@@ -74,7 +74,7 @@ const GROUPED_FIELD_SELECT = [
 
   {
     label: 'Text Box',
-    value: Field_Types.TextBox,
+    value: Field_Types.Paragraph,
   },
   {
     label: 'Text Input',
@@ -85,11 +85,11 @@ const GROUPED_FIELD_SELECT = [
 const UPLOAD_FIELD_SELECT = [
   {
     label: 'Single',
-    value: Field_Types.Single,
+    value: Field_Types.SingleFile,
   },
   {
     label: 'Multiple',
-    value: Field_Types.Multiple,
+    value: Field_Types.MultipleFile,
   },
 ];
 
@@ -103,8 +103,7 @@ export const KYMSingleItem = ({
 
   const { mutateAsync: kymOptionUpdate } = useAddKymOptionMutation({
     onSuccess: (response) => {
-      const newItem =
-        response.settings.general?.KYM?.individual.option.update.record;
+      const newItem = response.settings.kymForm.option.upsert.record;
 
       if (newItem) {
         setFieldItems((prev) =>
@@ -130,10 +129,16 @@ export const KYMSingleItem = ({
     if (item.id) {
       await kymOptionUpdate({
         fieldId: field.id,
-        optionId: item.id,
-        optionEnabled: methods.getValues().enabled,
-        optionName: methods.getValues().name,
-        optionFieldType: methods.getValues().fieldType,
+        data: {
+          id: item.id,
+          name: methods.getValues().name,
+          enabled: methods.getValues().enabled,
+          fieldType: methods.getValues().fieldType?.length
+            ? methods.getValues().fieldType
+            : null,
+
+          // variant: KymOptionVariant.Text,
+        },
       });
     }
   }, 800);
@@ -161,12 +166,17 @@ export const KYMSingleItem = ({
         onSubmit={async (e) => {
           e.preventDefault();
           setIsEditable(false);
-          await kymOptionUpdate({
-            fieldId: field.id,
-            optionEnabled: methods.getValues().enabled,
-            optionName: methods.getValues().name,
-            optionFieldType: methods.getValues().fieldType,
-          });
+
+          if (!item.id) {
+            await kymOptionUpdate({
+              fieldId: field.id,
+              data: {
+                name: methods.getValues().name,
+                enabled: methods.getValues().enabled,
+                fieldType: methods.getValues().fieldType,
+              },
+            });
+          }
         }}
       >
         {item?.id && (

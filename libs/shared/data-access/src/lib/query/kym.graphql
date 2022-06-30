@@ -17,12 +17,32 @@ query getIndividualKYMOption($fieldName: String) {
     }
 }
 
+
+query getIndividualKYMOptions($filter: ListKYMFieldFilter) {
+    members {
+        individual {
+            options {
+                list(filter: $filter) {
+                    data {
+                        options {
+                            id
+                            name
+                            fieldType
+                            enabled
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 query getIndIdentificationDocOption {
     members {
         individual {
             options {
-                list(filter: { isIdentificationDoc: true }) {
-
+                list(filter: { parent: IDENTIFICATION }) {
                     data {
                         id
                         name

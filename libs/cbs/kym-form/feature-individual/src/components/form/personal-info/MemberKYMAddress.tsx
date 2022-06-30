@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FaMap } from 'react-icons/fa';
 
 import {
   GroupContainer,
@@ -8,7 +7,7 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const MemberKYMAddress = () => {
@@ -54,15 +53,15 @@ export const MemberKYMAddress = () => {
 
   const districtTempList = useMemo(
     () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
+      data?.administration.all.find((d) => d.id === currentTempProvinceId)
         ?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
+        ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
 
@@ -129,9 +128,9 @@ export const MemberKYMAddress = () => {
             />
           </InputGroupContainer>
 
-          <Box mt="-16px">
-            <FormMap name="permanentAddressLocation" />
-          </Box>
+          {/*<Box mt="-16px">*/}
+          {/*  <FormMap name="permanentAddressLocation" />*/}
+          {/*</Box>*/}
         </Box>
       </Box>
       <Box

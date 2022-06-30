@@ -11,7 +11,11 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import {
+  CustomIdEnum as KYMOptionEnum,
+  useGetIndividualKymOptionQuery,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/shared/data-access';
 import {
   FormInput,
   FormRadioGroup,
@@ -49,8 +53,8 @@ export const KYMBasiccoopDetails = () => {
   const { watch, control } = useFormContext();
 
   const { data: purposeData, isLoading: purposeLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'purpose_of_becoming_member',
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.Purpose },
     });
 
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
@@ -114,7 +118,7 @@ export const KYMBasiccoopDetails = () => {
         <FormSwitchTab
           label={t['kynIndMemberofAnothercooperative']}
           options={booleanList}
-          name="memberOfAnotherCooperative"
+          name="isMemberOfAnotherCooperative"
         />
 
         <Box display="flex" flexDirection="column" gap="s4">

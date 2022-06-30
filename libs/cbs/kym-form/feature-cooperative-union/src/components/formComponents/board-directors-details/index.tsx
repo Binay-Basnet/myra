@@ -46,9 +46,13 @@ export const DirectorDetails = (props: directorDetailsProps) => {
           contactNumber: '',
           email: '',
           citizenshipOrPassportOrLisenceNo: 0,
-          subjectOfTraining: '',
-          dateOfTraining: '',
-          trainingOrganization: '',
+          relatedTraining: [
+            {
+              subjectOfTraining: '',
+              dateOfTraining: '',
+              trainingOrganization: '',
+            },
+          ],
           photograph: '',
           identityDocumentPhoto: '',
         },

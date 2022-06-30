@@ -71,37 +71,6 @@ export function KYMIndividualPage() {
 
   const methods = useForm<KymIndMemberInput>({
     defaultValues: {
-      familyDetails: [{ relationshipId: '', fullName: '' }],
-      mainOccupation: [
-        {
-          occupation: '',
-          orgName: '',
-          idNumber: '',
-          address: '',
-          estimatedAnnualIncome: 0,
-        },
-      ],
-      spouseOccupation: [
-        {
-          occupation: '',
-          orgName: '',
-          idNumber: '',
-          address: '',
-          estimatedAnnualIncome: 0,
-        },
-      ],
-      incomeSourceDetails: [
-        {
-          source: '',
-          amount: 0,
-        },
-      ],
-      familyMemberInThisCooperative: [
-        {
-          relationshipId: '',
-          memberId: '',
-        },
-      ],
       nationalityId: 'Nepali',
     },
   });

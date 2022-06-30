@@ -11,7 +11,9 @@ import { AddIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
 
 import {
-  Field_Types,
+  Kym_Field_Type,
+  Kym_Option_Field_Type as FIELD_TYPE,
+  KymField,
   KymOption,
   useAddConditionFieldMutation,
   useAddKymOptionMutation,
@@ -49,8 +51,7 @@ export const IncomeSourceDetailsAccComponent = ({
 
   const { mutateAsync, isLoading: addLoading } = useAddKymOptionMutation({
     onSuccess: (response) => {
-      const option =
-        response.settings.general?.KYM?.individual.option.update.record;
+      const option = response.settings.kymForm?.option.upsert.record;
 
       option && setFieldItems((prev) => [...prev, option]);
     },
@@ -64,8 +65,7 @@ export const IncomeSourceDetailsAccComponent = ({
       enabled: isExpanded,
       onSuccess: (response) => {
         setFieldItems(
-          response?.settings?.general?.KYM?.individual?.field?.list?.data?.[0]
-            ?.options ?? []
+          response?.settings?.kymForm?.field?.list?.data?.[0]?.options ?? []
         );
       },
     }
@@ -80,8 +80,7 @@ export const IncomeSourceDetailsAccComponent = ({
     }
   );
 
-  const field =
-    data?.settings?.general?.KYM?.individual?.field?.list?.data?.[0];
+  const field = data?.settings?.kymForm?.field?.list?.data?.[0] as KymField;
 
   const methods = useForm<any>({
     defaultValues: {
@@ -100,7 +99,6 @@ export const IncomeSourceDetailsAccComponent = ({
       if (reorderedItem?.id) {
         await kymOptionArrange({
           optionId: reorderedItem.id,
-          from: result.source.index,
           to: result.destination.index,
         });
       }
@@ -212,14 +210,33 @@ export const IncomeSourceDetailsAccComponent = ({
             shade="primary"
             leftIcon={<AddIcon />}
             onClick={async () => {
-              field &&
-                (await mutateAsync({
-                  fieldId: field.id,
-                  optionName: '',
-                  optionEnabled: false,
-                  optionFieldType:
-                    field.fieldType === 'GROUP' ? Field_Types.TextInput : null,
-                }));
+              setFieldItems((prev) => [
+                ...prev,
+                {
+                  enabled: true,
+                  name: {
+                    local: '',
+                    en: '',
+                    np: '',
+                  },
+                  fieldType:
+                    field.fieldType === Kym_Field_Type.Group
+                      ? FIELD_TYPE.TextInput
+                      : undefined,
+                },
+              ]);
+
+              // field &&
+              //   (await mutateAsync({
+              //     fieldId: field.id,
+              //     data: {
+              //       name: ''
+              //     }
+              //     optionName: '',
+              //     optionEnabled: false,
+              //     optionFieldType:
+              //       field.fieldType === 'GROUP' ? Field_Types.TextInput : null,
+              //   }));
             }}
             _hover={{ bg: 'transparent' }}
           >
@@ -267,7 +284,7 @@ export const IncomeSourceDetailsAccComponent = ({
               name="dependsOn"
               orientation="column"
               list={[
-                ...(familyIncome?.settings?.general?.KYM?.individual?.field?.list?.data?.[0]?.options?.map(
+                ...(familyIncome?.settings?.kymForm?.field?.list?.data?.[0]?.options?.map(
                   (d) => ({ label: d.name.local, value: d.id })
                 ) ?? []),
               ]}
