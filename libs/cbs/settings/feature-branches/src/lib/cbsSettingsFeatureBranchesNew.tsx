@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
@@ -48,9 +48,13 @@ export function CbsSettingsFeatureBranchesNew(
 
   const { data } = useAllAdministrationQuery();
 
+  const [branchId, setBranchId] = useState<string>('');
+
   const { mutate } = useSetBranchDataMutation({
     onSuccess: (res) => {
-      console.log(res);
+      if (res?.settings?.general?.branch?.add?.record?.id) {
+        setBranchId(res?.settings?.general?.branch?.add?.record?.id);
+      }
     },
     // onError: () => {},
   });
@@ -132,6 +136,7 @@ export function CbsSettingsFeatureBranchesNew(
             <form
               onChange={debounce(() => {
                 mutate({
+                  id: branchId,
                   data: getValues(),
                 });
               }, 500)}

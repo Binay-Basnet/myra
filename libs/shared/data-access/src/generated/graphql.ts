@@ -142,10 +142,10 @@ export type AddChartsOfAccountResult = {
 };
 
 export type Address = {
-  district?: Maybe<Scalars['String']>;
-  localLevel?: Maybe<Scalars['String']>;
-  locality?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
+  district?: Maybe<Scalars['Localized']>;
+  localLevel?: Maybe<Scalars['Localized']>;
+  locality?: Maybe<Scalars['Localized']>;
+  state?: Maybe<Scalars['Localized']>;
   wardNo?: Maybe<Scalars['String']>;
 };
 
@@ -277,6 +277,7 @@ export type Branch = {
   email?: Maybe<Scalars['String']>;
   estDate?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
+  location?: Maybe<LocationCoordinate>;
   manager?: Maybe<Member>;
   name?: Maybe<Scalars['String']>;
   plTransferId?: Maybe<Scalars['String']>;
@@ -328,10 +329,9 @@ export type BranchInput = {
   districtId?: InputMaybe<Scalars['ID']>;
   email?: InputMaybe<Scalars['String']>;
   estDate?: InputMaybe<Scalars['Date']>;
-  latitude?: InputMaybe<Scalars['Float']>;
   localGovernmentId?: InputMaybe<Scalars['ID']>;
   locality?: InputMaybe<Scalars['String']>;
-  longitude?: InputMaybe<Scalars['Float']>;
+  location?: InputMaybe<LocationCoordinateInput>;
   managerId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   payableAccountId?: InputMaybe<Scalars['String']>;
@@ -1807,6 +1807,7 @@ export type GeneralBranchSettingsMutation = {
 
 export type GeneralBranchSettingsMutationAddArgs = {
   data?: InputMaybe<BranchInput>;
+  id: Scalars['ID'];
 };
 
 export type GeneralBranchSettingsQuery = {
@@ -4554,6 +4555,7 @@ export type Organization = Base & {
   createdBy: Identity;
   documents?: Maybe<Array<Maybe<Scalars['String']>>>;
   id: Scalars['ID'];
+  location?: Maybe<LocationCoordinate>;
   mainContactPerson?: Maybe<OrganizationMainContactPerson>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -4596,11 +4598,10 @@ export type OrganizationFormData = {
   districtId?: Maybe<Scalars['ID']>;
   documents?: Maybe<Array<Maybe<Scalars['String']>>>;
   email?: Maybe<Scalars['String']>;
-  latitude?: Maybe<Scalars['Float']>;
   localGovernmentId?: Maybe<Scalars['ID']>;
   locality?: Maybe<Scalars['String']>;
+  location?: Maybe<LocationCoordinate>;
   logo?: Maybe<Scalars['String']>;
-  longitude?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
   panOrVat?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
@@ -4636,11 +4637,10 @@ export type OrganizationInput = {
   districtId?: InputMaybe<Scalars['ID']>;
   documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   email?: InputMaybe<Scalars['String']>;
-  latitude?: InputMaybe<Scalars['Float']>;
   localGovernmentId?: InputMaybe<Scalars['ID']>;
   locality?: InputMaybe<Scalars['String']>;
+  location?: InputMaybe<LocationCoordinateInput>;
   logo?: InputMaybe<Scalars['String']>;
-  longitude?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
   panOrVat?: InputMaybe<Scalars['String']>;
   phoneNumber?: InputMaybe<Scalars['String']>;
@@ -4681,6 +4681,7 @@ export type OrganizationSettingsMutation = {
 
 export type OrganizationSettingsMutationInitialSetupArgs = {
   data: OrganizationInput;
+  id: Scalars['ID'];
 };
 
 export type OrganizationSettingsQuery = {
@@ -5162,6 +5163,7 @@ export type KymIndFormStateQuery = {
 };
 
 export type SetBranchDataMutationVariables = Exact<{
+  id: Scalars['ID'];
   data: BranchInput;
 }>;
 
@@ -5285,6 +5287,7 @@ export type SetInstitutionDataMutationVariables = Exact<{
 export type SetInstitutionDataMutation = { members: { institution?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
 export type SetOrganizationDataMutationVariables = Exact<{
+  id: Scalars['ID'];
   data: OrganizationInput;
 }>;
 
@@ -5434,7 +5437,7 @@ export type GetMemberListQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, createdAt: string, address?: { state?: string | null, district?: string | null, localLevel?: string | null, wardNo?: string | null, locality?: string | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, createdAt: string, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5470,7 +5473,7 @@ export type GetMemberIndividualDataQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: string | null, district?: string | null, localLevel?: string | null, wardNo?: string | null, locality?: string | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id?: string | null, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: string | null, district?: string | null, localLevel?: string | null, wardNo?: string | null, locality?: string | null } | null, temporaryAddress?: { state?: string | null, district?: string | null, localLevel?: string | null, wardNo?: string | null, locality?: string | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
+export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id?: string | null, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, temporaryAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
 
 export type GetKymDeclarationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5485,7 +5488,7 @@ export type GetCustomFieldsQuery = { settings: { kymForm: { field?: { list?: { d
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { id: string, branchCode?: string | null, contactNumber?: string | null, address?: { state?: string | null, district?: string | null, localLevel?: string | null, wardNo?: string | null, locality?: string | null } | null, manager?: { id: string } | null } }> } | null } | null } | null } };
+export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { id: string, branchCode?: string | null, contactNumber?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, manager?: { id: string } | null } }> } | null } | null } | null } };
 
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5524,11 +5527,11 @@ export const MutationErrorFragmentDoc = `
 }
     `;
 export const SetBranchDataDocument = `
-    mutation setBranchData($data: BranchInput!) {
+    mutation setBranchData($id: ID!, $data: BranchInput!) {
   settings {
     general {
       branch {
-        add(data: $data) {
+        add(id: $id, data: $data) {
           record {
             id
           }
@@ -5926,11 +5929,11 @@ export const useSetInstitutionDataMutation = <
       options
     );
 export const SetOrganizationDataDocument = `
-    mutation setOrganizationData($data: OrganizationInput!) {
+    mutation setOrganizationData($id: ID!, $data: OrganizationInput!) {
   settings {
     general {
       organization {
-        initialSetup(data: $data) {
+        initialSetup(id: $id, data: $data) {
           recordId
           error {
             ...MutationError

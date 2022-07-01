@@ -1,8 +1,8 @@
-mutation setBranchData($data: BranchInput!) {
+mutation setBranchData($id: ID!, $data: BranchInput!) {
   settings {
     general {
       branch {
-        add(data: $data) {
+        add(id: $id, data: $data) {
           record {
             id
           }
