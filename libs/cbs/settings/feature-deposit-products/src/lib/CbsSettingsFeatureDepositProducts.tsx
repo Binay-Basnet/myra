@@ -66,13 +66,13 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
 
       {
         Header: 'Address',
-        accessor: 'node.address.locality',
+        accessor: 'node.address.locality.local',
         maxWidth: 48,
 
         Cell: ({ value, row }) => {
           return (
             <span>
-              {value}, {row?.original?.node?.address?.locality}
+              {value}, {row?.original?.node?.address?.locality?.local}
             </span>
           );
         },
