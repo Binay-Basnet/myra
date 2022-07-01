@@ -23,6 +23,7 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../tab/TabforMemberPage';
+
 interface IMemberPageLayout {
   children: React.ReactNode;
 }
@@ -161,9 +162,13 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
         >
           <Box py="s16">
             <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-              {memberTypes?.[0]?.type?.map((item) => {
+              {memberTypes?.[0]?.type?.map((item, index) => {
+                if (!item) {
+                  return null;
+                }
+
                 return (
-                  <GridItem key={item?.id}>
+                  <GridItem key={index}>
                     <MemberTypeButton
                       icon={memberTypesArray[item]?.icon}
                       title={memberTypesArray[item]?.title}
