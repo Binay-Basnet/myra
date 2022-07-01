@@ -25,21 +25,21 @@ export const RequiredDocumentSetup = () => {
       <TopText> Required Document Setup</TopText>
       <Grid templateColumns={'repeat(2,1fr)'}>
         <Box display="flex" flexDirection="column" gap="s16">
-          <TopText>Individual</TopText>
+          {/* <TopText>Individual</TopText> */}
           <FormCheckboxGroup
             name="individualRequiredDocuments"
             list={individualList}
             orientation="column"
           />
         </Box>
-        <Box display="flex" flexDirection="column" gap="s16">
+        {/* <Box display="flex" flexDirection="column" gap="s16">
           <TopText>Institutional</TopText>
           <FormCheckboxGroup
             name="indstitutionalRequiredDocuments"
             list={instutionList}
             orientation="column"
           />
-        </Box>
+        </Box> */}
       </Grid>
     </BoxContainer>
   );
