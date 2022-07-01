@@ -63,13 +63,13 @@ export const MemberTable = () => {
 
       {
         Header: t['memberListTableAddress'],
-        accessor: 'node.address.district.local',
+        accessor: 'node.address.locality',
         width: '20%',
 
         Cell: ({ value, row }) => {
           return (
             <span>
-              {value}, {row?.original?.node?.address?.state?.local}
+              {value}, {row?.original?.node?.address?.locality}
             </span>
           );
         },
