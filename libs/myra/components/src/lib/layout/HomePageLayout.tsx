@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Box } from '@chakra-ui/react';
+import { Avatar, Box } from '@chakra-ui/react';
 
 import { TextFields, TopLevelHeader } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -93,12 +93,15 @@ export function HomePageLayout(props: HomePageLayoutProps) {
           flexDirection="column"
           justifyContent="flex-start"
           width="300px"
+          height="calc(100% - 60px)"
           p="s16"
           gap="s32"
           mt="80px"
+          overflowY="auto"
         >
-          <Box display="flex" flexDir="column" gap="s32">
+          <Box display="flex" flexDir="column" gap="s16">
             <TextFields
+              px="s16"
               color="neutralColorLight.Gray-80"
               fontWeight="SemiBold"
               fontSize="r2"
@@ -106,14 +109,18 @@ export function HomePageLayout(props: HomePageLayoutProps) {
               {t['yourMyraApplication']}
             </TextFields>
 
-            <Box display="flex" alignItems="center" flexDir="column" gap="s16">
+            <Box display="flex" alignItems="center" flexDir="column">
               {myraAppn.map((item) => (
                 <Box
                   w="100%"
+                  px="s16"
+                  py="s8"
                   display="flex"
+                  borderRadius="br2"
                   gap="s16"
                   alignItems="center"
                   cursor="pointer"
+                  _hover={{ bg: 'neutralColorLight.Gray-0' }}
                   onClick={() => router.push(item.link)}
                 >
                   <Box
@@ -142,8 +149,9 @@ export function HomePageLayout(props: HomePageLayoutProps) {
               ))}
             </Box>
           </Box>
-          <Box display="flex" flexDir="column" gap="s32">
+          <Box display="flex" flexDir="column" gap="s16">
             <TextFields
+              px="s16"
               color="neutralColorLight.Gray-80"
               fontWeight="SemiBold"
               fontSize="r2"
@@ -151,13 +159,18 @@ export function HomePageLayout(props: HomePageLayoutProps) {
               {t['moreFromMyra']}
             </TextFields>
 
-            <Box display="flex" alignItems="center" flexDir="column" gap="s16">
+            <Box display="flex" alignItems="center" flexDir="column">
               {moreFromMyra.map((item) => (
                 <Box
                   w="100%"
+                  px="s16"
+                  py="s8"
                   display="flex"
+                  borderRadius="br2"
+                  gap="s16"
                   alignItems="center"
                   cursor="pointer"
+                  _hover={{ bg: 'neutralColorLight.Gray-0' }}
                   onClick={() => router.push(item.link)}
                 >
                   <Box
@@ -165,18 +178,16 @@ export function HomePageLayout(props: HomePageLayoutProps) {
                     justifyContent="center"
                     alignItems="center"
                     w="s32"
-                    h="s32"
                     borderRadius="50%"
                   >
-                    <Image
-                      width={32}
-                      height={32}
+                    <Avatar
+                      width="s32"
+                      height="s32"
                       src={item.img}
-                      alt="corebanking"
+                      // alt="corebanking"
                     />
                   </Box>
                   <TextFields
-                    ml="s16"
                     fontSize="r1"
                     fontWeight="Regular"
                     color="neutralColorLight.Gray-80"
