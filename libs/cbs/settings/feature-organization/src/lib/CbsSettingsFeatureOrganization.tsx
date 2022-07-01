@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
 import debounce from 'lodash/debounce';
@@ -26,7 +26,16 @@ export function CbsSettingsFeatureOrganization(
   const methods = useForm({});
   const { control, handleSubmit, getValues } = methods;
 
-  const { mutate } = useSetOrganizationDataMutation();
+  const [orgId, setOrgId] = useState<string>('');
+
+  const { mutate } = useSetOrganizationDataMutation({
+    onSuccess: (res) => {
+      if (res?.settings?.general?.organization?.initialSetup?.recordId) {
+        setOrgId(res?.settings?.general?.organization?.initialSetup?.recordId);
+      }
+    },
+    // onError: () => {},
+  });
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
       <SettingsPageHeader heading="Organizations" />
@@ -51,8 +60,8 @@ export function CbsSettingsFeatureOrganization(
           <form
             onSubmit={handleSubmit((data) => console.log('data', data))}
             onChange={debounce(() => {
-              console.log(getValues());
               mutate({
+                id: orgId,
                 data: getValues(),
               });
             }, 500)}

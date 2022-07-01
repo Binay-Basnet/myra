@@ -32,13 +32,13 @@ export const SettingsBranchesTable = () => {
 
       {
         Header: t['settingsBranchAddress'],
-        accessor: 'node.address.locality',
+        accessor: 'node.address.locality.local',
         maxWidth: 4,
       },
 
       {
         Header: t['settingsBranchDistrict'],
-        accessor: 'node.address.district',
+        accessor: 'node.address.district.local',
       },
       {
         Header: t['settingsBranchManager'],

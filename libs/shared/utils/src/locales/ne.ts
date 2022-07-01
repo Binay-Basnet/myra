@@ -392,8 +392,11 @@ const ne: Record<string, string> = {
   settingsOrgAddressLocality: 'Locality',
 
   settingsOrgRegRegdOffice: 'Regd Office',
+  settingsOrgRegEnterRegdOffice: 'Registered Office',
   settingsOrgRegRegdNo: 'Regd No',
+  settingsOrgRegEnterRegdNo: 'Registered No',
   settingsOrgRegRegdAddress: 'Regd Address',
+  settingsOrgRegEnterRegdAddress: 'Registered Address',
   settingsOrgRegPANVATNo: 'PAN/VAT No',
 
   // settings general charts of accounts
