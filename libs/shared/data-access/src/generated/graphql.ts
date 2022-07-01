@@ -169,8 +169,8 @@ export type AdministrationQueryDistrictsArgs = {
 
 
 export type AdministrationQueryMunicipalitiesArgs = {
-  districtId: Scalars['Int'];
-  provinceId: Scalars['Int'];
+  districtId?: InputMaybe<Scalars['Int']>;
+  provinceId?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -272,7 +272,7 @@ export type Branch = {
   address?: Maybe<Address>;
   branchCode?: Maybe<Scalars['String']>;
   branchStatus?: Maybe<Status>;
-  category: BranchCategory;
+  category?: Maybe<BranchCategory>;
   contactNumber?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   estDate?: Maybe<Scalars['Date']>;
@@ -2342,8 +2342,8 @@ export type KymField = Base & {
 };
 
 export type KymFieldData = {
-  fields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
   id?: Maybe<Scalars['String']>;
+  options?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
 };
 
 export type KymFieldDeleteResult = {
@@ -2363,9 +2363,8 @@ export type KymFieldInput = {
 };
 
 export type KymFieldInputData = {
-  fields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
-  group?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
+  options?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
 };
 
 export type KymFieldMutation = {
@@ -3778,11 +3777,13 @@ export type KymIndDeclarationStatus = {
 };
 
 export type KymIndFormData = {
+  additionalContactDetails?: Maybe<KymFieldData>;
   annualIncomeSourceId?: Maybe<Scalars['String']>;
   beneficialFullName?: Maybe<Scalars['String']>;
   beneficialRelationshipId?: Maybe<Scalars['String']>;
   convictedDetails?: Maybe<Scalars['String']>;
   countryId?: Maybe<Scalars['String']>;
+  customFields?: Maybe<Array<Maybe<KymFieldData>>>;
   dateOfBirth?: Maybe<Scalars['String']>;
   declarationAgree?: Maybe<Scalars['Boolean']>;
   documents?: Maybe<Array<Maybe<KymFieldData>>>;
@@ -3822,12 +3823,12 @@ export type KymIndFormData = {
   nationalityId?: Maybe<Scalars['String']>;
   ordinary?: Maybe<Scalars['Float']>;
   other?: Maybe<Scalars['Float']>;
-  otherMembershipDetails?: Maybe<Array<Maybe<KymFieldData>>>;
+  otherMembershipDetails?: Maybe<KymFieldData>;
   otherProfession?: Maybe<Scalars['String']>;
   permanentDistrictId?: Maybe<Scalars['String']>;
-  permanentLatitude?: Maybe<Scalars['Float']>;
+  permanentHouseNo?: Maybe<Scalars['String']>;
   permanentLocalityId?: Maybe<Scalars['String']>;
-  permanentLongitude?: Maybe<Scalars['Float']>;
+  permanentLocation?: Maybe<LocationCoordinate>;
   permanentStateId?: Maybe<Scalars['String']>;
   permanentTole?: Maybe<Scalars['String']>;
   permanentWardId?: Maybe<Scalars['String']>;
@@ -3839,13 +3840,13 @@ export type KymIndFormData = {
   savings?: Maybe<Scalars['Float']>;
   spouseOccupation?: Maybe<Array<Maybe<KymFieldData>>>;
   temporaryDistrictId?: Maybe<Scalars['String']>;
-  temporaryLatitude?: Maybe<Scalars['Float']>;
+  temporaryHouseNo?: Maybe<Scalars['String']>;
   temporaryLocalityId?: Maybe<Scalars['String']>;
-  temporaryLongitude?: Maybe<Scalars['Float']>;
+  temporaryLocation?: Maybe<LocationCoordinate>;
   temporaryStateId?: Maybe<Scalars['String']>;
   temporaryTole?: Maybe<Scalars['String']>;
   temporaryWardId?: Maybe<Scalars['String']>;
-  typeOfVisa?: Maybe<Scalars['String']>;
+  typeOfVisaId?: Maybe<Scalars['String']>;
 };
 
 export type KymIndFormState = {
@@ -3860,11 +3861,13 @@ export type KymIndGetResult = {
 };
 
 export type KymIndMemberInput = {
+  additionalContactDetails?: InputMaybe<KymFieldInputData>;
   annualIncomeSourceId?: InputMaybe<Scalars['String']>;
   beneficialFullName?: InputMaybe<Scalars['String']>;
   beneficialRelationshipId?: InputMaybe<Scalars['String']>;
   convictionDetails?: InputMaybe<Scalars['String']>;
   countryId?: InputMaybe<Scalars['String']>;
+  customFields?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   dateOfBirth?: InputMaybe<Scalars['String']>;
   declarationAgree?: InputMaybe<Scalars['Boolean']>;
   documents?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
@@ -3903,12 +3906,12 @@ export type KymIndMemberInput = {
   nationalityId?: InputMaybe<Scalars['String']>;
   ordinary?: InputMaybe<Scalars['Float']>;
   other?: InputMaybe<Scalars['Float']>;
-  otherMembershipDetails?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
+  otherMembershipDetails?: InputMaybe<KymFieldInputData>;
   otherProfession?: InputMaybe<Scalars['String']>;
   permanentDistrictId?: InputMaybe<Scalars['String']>;
-  permanentLatitude?: InputMaybe<Scalars['Float']>;
+  permanentHouseNo?: InputMaybe<Scalars['String']>;
   permanentLocalityId?: InputMaybe<Scalars['String']>;
-  permanentLongitude?: InputMaybe<Scalars['Float']>;
+  permanentLocation?: InputMaybe<LocationCoordinateInput>;
   permanentStateId?: InputMaybe<Scalars['String']>;
   permanentTole?: InputMaybe<Scalars['String']>;
   permanentWardId?: InputMaybe<Scalars['String']>;
@@ -3920,13 +3923,13 @@ export type KymIndMemberInput = {
   savings?: InputMaybe<Scalars['Float']>;
   spouseOccupation?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   temporaryDistrictId?: InputMaybe<Scalars['String']>;
-  temporaryLatitude?: InputMaybe<Scalars['Float']>;
+  temporaryHouseNo?: InputMaybe<Scalars['String']>;
   temporaryLocalityId?: InputMaybe<Scalars['String']>;
-  temporaryLongitude?: InputMaybe<Scalars['Float']>;
+  temporaryLocation?: InputMaybe<LocationCoordinateInput>;
   temporaryStateId?: InputMaybe<Scalars['String']>;
   temporaryTole?: InputMaybe<Scalars['String']>;
   temporaryWardId?: InputMaybe<Scalars['String']>;
-  typeOfVisa?: InputMaybe<Scalars['String']>;
+  typeOfVisaId?: InputMaybe<Scalars['String']>;
 };
 
 export type KymIndMutation = {
@@ -4317,6 +4320,16 @@ export type ListKymFieldFilter = {
 
 export type LocalizationExample = {
   name?: Maybe<Scalars['Localized']>;
+};
+
+export type LocationCoordinate = {
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
+};
+
+export type LocationCoordinateInput = {
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
 };
 
 export type LoginInput = {

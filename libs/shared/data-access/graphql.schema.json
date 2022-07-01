@@ -1251,13 +1251,9 @@
                 "name": "districtId",
                 "description": null,
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -1267,13 +1263,9 @@
                 "name": "provinceId",
                 "description": null,
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -2242,13 +2234,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "BranchCategory",
-                "ofType": null
-              }
+              "kind": "ENUM",
+              "name": "BranchCategory",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -20660,7 +20648,19 @@
         "description": null,
         "fields": [
           {
-            "name": "fields",
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "options",
             "description": null,
             "args": [],
             "type": {
@@ -20671,18 +20671,6 @@
                 "name": "KymAdditionalFieldsFormState",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -20866,7 +20854,19 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "fields",
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "options",
             "description": null,
             "type": {
               "kind": "LIST",
@@ -20876,30 +20876,6 @@
                 "name": "KymAdditionalFields",
                 "ofType": null
               }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "group",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -33091,6 +33067,18 @@
         "description": null,
         "fields": [
           {
+            "name": "additionalContactDetails",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "KYMFieldData",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "annualIncomeSourceId",
             "description": null,
             "args": [],
@@ -33146,6 +33134,22 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customFields",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KYMFieldData",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -33647,13 +33651,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "KYMFieldData",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "KYMFieldData",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -33683,12 +33683,12 @@
             "deprecationReason": null
           },
           {
-            "name": "permanentLatitude",
+            "name": "permanentHouseNo",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -33707,12 +33707,12 @@
             "deprecationReason": null
           },
           {
-            "name": "permanentLongitude",
+            "name": "permanentLocation",
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
+              "kind": "OBJECT",
+              "name": "LocationCoordinate",
               "ofType": null
             },
             "isDeprecated": false,
@@ -33859,12 +33859,12 @@
             "deprecationReason": null
           },
           {
-            "name": "temporaryLatitude",
+            "name": "temporaryHouseNo",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -33883,12 +33883,12 @@
             "deprecationReason": null
           },
           {
-            "name": "temporaryLongitude",
+            "name": "temporaryLocation",
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
+              "kind": "OBJECT",
+              "name": "LocationCoordinate",
               "ofType": null
             },
             "isDeprecated": false,
@@ -33931,7 +33931,7 @@
             "deprecationReason": null
           },
           {
-            "name": "typeOfVisa",
+            "name": "typeOfVisaId",
             "description": null,
             "args": [],
             "type": {
@@ -34041,6 +34041,18 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "additionalContactDetails",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "KYMFieldInputData",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "annualIncomeSourceId",
             "description": null,
             "type": {
@@ -34095,6 +34107,22 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customFields",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "KYMFieldInputData",
+                "ofType": null
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -34584,13 +34612,9 @@
             "name": "otherMembershipDetails",
             "description": null,
             "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "KYMFieldInputData",
-                "ofType": null
-              }
+              "kind": "INPUT_OBJECT",
+              "name": "KYMFieldInputData",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -34621,11 +34645,11 @@
             "deprecationReason": null
           },
           {
-            "name": "permanentLatitude",
+            "name": "permanentHouseNo",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,
@@ -34645,11 +34669,11 @@
             "deprecationReason": null
           },
           {
-            "name": "permanentLongitude",
+            "name": "permanentLocation",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
+              "kind": "INPUT_OBJECT",
+              "name": "LocationCoordinateInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -34797,11 +34821,11 @@
             "deprecationReason": null
           },
           {
-            "name": "temporaryLatitude",
+            "name": "temporaryHouseNo",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,
@@ -34821,11 +34845,11 @@
             "deprecationReason": null
           },
           {
-            "name": "temporaryLongitude",
+            "name": "temporaryLocation",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
+              "kind": "INPUT_OBJECT",
+              "name": "LocationCoordinateInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -34869,7 +34893,7 @@
             "deprecationReason": null
           },
           {
-            "name": "typeOfVisa",
+            "name": "typeOfVisaId",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -38165,6 +38189,76 @@
         "description": "# For Localization of every data from backend\n```javascript\n{\n   local: \"localized data based on user lang setting\",\n   en: \"data in english\",\n   np: \"data in nepali\"\n}\n```",
         "fields": null,
         "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "LocationCoordinate",
+        "description": null,
+        "fields": [
+          {
+            "name": "latitude",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "longitude",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "LocationCoordinateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "latitude",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "longitude",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
