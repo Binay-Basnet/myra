@@ -11,7 +11,7 @@ import {
 /* eslint-disable-next-line */
 export interface AmountInputProps extends InputProps {
   labelColor?: string;
-  label?: string;
+  label?: string | number;
   placeholder?: string;
 }
 

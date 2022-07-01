@@ -23,6 +23,7 @@ mutation addKYMOption($fieldId: ID!, $data: KYMOptionInput!) {
 mutation deleteKYMField($optionId: ID!) {
     settings {
         kymForm {
+
             option {
                 delete(optionId: $optionId) {
                     recordId
@@ -141,3 +142,4 @@ mutation updateCustomField(
     }
 
 }
+

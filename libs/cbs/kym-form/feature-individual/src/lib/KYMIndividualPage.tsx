@@ -1,11 +1,13 @@
 /* eslint-disable-next-line */
 import { useTranslation, getKymSection } from '@coop/shared/utils';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   useSetMemberDataMutation,
   useGetKymFormStatusQuery,
   KymIndMemberInput,
+  useGetIndividualKymOptionsQuery,
+  Kym_Field_Custom_Id,
 } from '@coop/shared/data-access';
 import { useForm, FormProvider } from 'react-hook-form';
 import {
@@ -13,7 +15,6 @@ import {
   Container,
   Text,
   IconButton,
-  Checkbox,
   TextFields,
   Button,
   Icon,
@@ -43,9 +44,48 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccorrdianAddMember } from '@coop/myra/components';
+import { FormCheckbox } from '@coop/shared/form';
 
 export function KYMIndividualPage() {
   const { t } = useTranslation();
+
+  const { data: occupationDetailsDefaultFields } =
+    useGetIndividualKymOptionsQuery({
+      filter: {
+        customId: Kym_Field_Custom_Id.OccupationDetails,
+      },
+    });
+
+  const { data: familyDetailsFieldsData } = useGetIndividualKymOptionsQuery({
+    filter: {
+      customId: Kym_Field_Custom_Id.FamilyInformation,
+    },
+  });
+
+  const occupationFieldNames =
+    occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]?.options?.map(
+      (option) => ({ id: option.id, value: '' })
+    ) ?? [];
+
+  const { data: incomeSourceDetailsField, isLoading } =
+    useGetIndividualKymOptionsQuery({
+      filter: {
+        customId: Kym_Field_Custom_Id.IncomeSourceDetails,
+      },
+    });
+
+  const incomeSourceDetailFieldNames =
+    incomeSourceDetailsField?.members.individual?.options.list?.data?.[0]?.options?.map(
+      (option) => ({ id: option.id, value: '' })
+    ) ?? [];
+
+  const familyDetailsFieldNames =
+    familyDetailsFieldsData?.members.individual?.options.list?.data?.[0]?.options?.map(
+      (option) => ({ id: option.id, value: '' })
+    ) ?? [];
+
+  console.log(familyDetailsFieldNames);
+
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
     subSection: string;
@@ -53,6 +93,7 @@ export function KYMIndividualPage() {
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
+
   const { mutate } = useSetMemberDataMutation({
     onSuccess: (res) => {
       setError('firstName', {
@@ -75,7 +116,47 @@ export function KYMIndividualPage() {
     },
   });
 
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const { watch, setError, reset } = methods;
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        if (data && id) {
+          console.log(data);
+          mutate({ id: id, data });
+        }
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
+
+  useEffect(() => {
+    reset({
+      nationalityId: 'Nepali',
+      mainOccupation: [
+        {
+          options: occupationFieldNames,
+        },
+      ],
+      spouseOccupation: [
+        {
+          options: occupationFieldNames,
+        },
+      ],
+      incomeSourceDetails: [
+        {
+          options: incomeSourceDetailFieldNames,
+        },
+      ],
+      familyDetails: [
+        {
+          options: familyDetailsFieldNames,
+        },
+      ],
+    });
+  }, [isLoading]);
+
   return (
     <>
       {/* // Top Bar */}
@@ -107,12 +188,6 @@ export function KYMIndividualPage() {
       <Container minW="container.xl" height="fit-content">
         <FormProvider {...methods}>
           <form
-            onChange={debounce(() => {
-              mutate({ id, data: getValues() });
-            }, 800)}
-            onSubmit={handleSubmit((data) => {
-              console.log('data', data);
-            })}
             onFocus={(e) => {
               const kymSection = getKymSection(e.target.id);
               setKymCurrentSection(kymSection);
@@ -184,7 +259,9 @@ export function KYMIndividualPage() {
                     </SectionContainer>
 
                     <Box display="flex" gap="s16" alignItems="start">
-                      <Checkbox fontSize="s3">{''}</Checkbox>
+                      <FormCheckbox name="declarationAgree" fontSize="s3">
+                        {''}
+                      </FormCheckbox>
                       <TextFields variant="formInput" mt="-6px">
                         I hereby declare that the information provided by me/us
                         in this form and documents provided to the co-operative

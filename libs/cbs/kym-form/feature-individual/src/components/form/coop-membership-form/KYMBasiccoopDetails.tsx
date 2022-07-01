@@ -1,6 +1,6 @@
 import React from 'react';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
+import { Controller, useFormContext } from 'react-hook-form';
+import { AiOutlineSearch } from 'react-icons/ai';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
@@ -13,15 +13,9 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
-  useGetIndividualKymOptionQuery,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
-import {
-  FormInput,
-  FormRadioGroup,
-  FormSelect,
-  FormSwitchTab,
-} from '@coop/shared/form';
+import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Avatar,
   Box,
@@ -40,62 +34,37 @@ import { getFieldOption } from '../../../utils/getFieldOption';
 const booleanList = [
   {
     label: 'Yes',
-    value: 'yes',
+    value: true,
   },
   {
     label: 'No',
-    value: 'no',
+    value: false,
   },
 ];
 
 export const KYMBasiccoopDetails = () => {
   const { t } = useTranslation();
-  const { watch, control } = useFormContext();
+  const { watch, control, register } = useFormContext();
 
   const { data: purposeData, isLoading: purposeLoading } =
     useGetIndividualKymOptionsQuery({
       filter: { customId: KYMOptionEnum.Purpose },
     });
 
-  const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'family_relationship',
+  const { data: otherCooperative, isLoading: otherCooperativeLoading } =
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.OtherCooperativeDetails },
     });
 
-  const {
-    fields: familyMemberFields,
-    append: familyMemberAppend,
-    remove: familyMemberRemove,
-  } = useFieldArray({
-    control,
-    name: 'familyMemberInThisCooperative',
-  });
+  const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.Relationship },
+    });
 
   const w = watch('memberOfAnotherCooperative');
 
   return (
     <GroupContainer id="kymAccIndMainPurposeofBecomingMember">
-      <FormRadioGroup
-        label={t['kynIndMemberIdentityLevel']}
-        id="memberIdentityLevel"
-        name="memberIdentityLevel"
-        options={[
-          {
-            label: 'General',
-            value: 'general',
-          },
-          {
-            label: 'MID',
-            value: 'mid',
-          },
-          {
-            label: 'VIP',
-            value: 'vip',
-          },
-        ]}
-        labelFontSize="s3"
-      />
-
       <InputGroupContainer
         id="kymAccIndMainPurposeofBecomingMember"
         scrollMarginTop={'200px'}
@@ -122,20 +91,21 @@ export const KYMBasiccoopDetails = () => {
         />
         <Box display="flex" flexDirection="column" gap="s4">
           <InputGroupContainer>
-            <GridItem colSpan={2}>
-              <FormInput
-                name="nameAddressCooperative"
-                label={t['kynIndMembershipDetails']}
-                placeholder={t['kynIndNameandAddressCooperative']}
-              />
-            </GridItem>
-            <GridItem colSpan={1}>
-              <FormInput
-                label="&nbsp;"
-                name="memberNo"
-                placeholder={t['kynIndMemberNo']}
-              />
-            </GridItem>
+            {otherCooperative?.members?.individual?.options?.list?.data?.[0]?.options?.map(
+              (option, optionIndex) => {
+                register(`otherMembershipDetails.options.${optionIndex}.id`, {
+                  value: option.id,
+                });
+
+                return (
+                  <FormInput
+                    name={`otherMembershipDetails.options.${optionIndex}.value`}
+                    label={option.name.local}
+                    placeholder={option.name.local}
+                  />
+                );
+              }
+            )}
           </InputGroupContainer>
         </Box>
       </Box>
@@ -266,9 +236,6 @@ export const KYMBasiccoopDetails = () => {
                     fontSize="s3"
                     fontWeight="Regular"
                   >
-                    {/* {data?.address?.permanent?.district}
-                    {','}
-                    {data?.address?.permanent?.state} */}
                     Kathmandu, Tokha Municipality-10
                   </TextFields>
                 </Box>
@@ -284,7 +251,6 @@ export const KYMBasiccoopDetails = () => {
                   <Icon h="14px" w="14px" as={CloseIcon} color="gray.500" />
                 </Box>
                 <Box display="flex" alignSelf="flex-end">
-                  {/* <Button variant="link"> */}
                   <Text
                     fontWeight="Medium"
                     color="primary.500"
@@ -293,7 +259,6 @@ export const KYMBasiccoopDetails = () => {
                   >
                     {t['kynIndViewProfile']}
                   </Text>
-                  {/* </Button> */}
                   <Icon size="sm" as={RiShareBoxFill} color="primary.500" />
                 </Box>
               </GridItem>
@@ -321,10 +286,10 @@ export const KYMBasiccoopDetails = () => {
               </Text>
             </GridItem>
           </Grid>
-          <Box px="s16" py="s32" w="50%">
+          <Box px="s16" py="s32" w="40%">
             <FormSelect
-              name={`familyMemberInThisCooperative.relationshipId`}
-              id="kymIndRelationship"
+              name={`familyRelationship`}
+              id="familyMemberInThisCooperative"
               label={t['kymIndRelationship']}
               placeholder={t['kymIndSelectRelationship']}
               isLoading={familyRelationshipLoading}
@@ -334,40 +299,36 @@ export const KYMBasiccoopDetails = () => {
         </Box>
       </Box>
 
-      {familyMemberFields.map((item, index) => {
-        return (
-          <Box mt="s32" key={item.id}>
-            <FamilyMember
-              control={control}
-              index={index}
-              removeFamilyMember={() => familyMemberRemove(index)}
-            />
-          </Box>
-        );
-      })}
+      <Box display="flex" gap="s20" alignItems="center">
+        <Input
+          type="text"
+          flexGrow="1"
+          id={`familyMemberInThisCooperative.0.memberId`}
+          placeholder={t['kynIndFirstName']}
+          bg="white"
+        />
 
-      <Button
-        id="addfamilyCoopButton"
-        alignSelf="start"
-        mt="s8"
-        leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-        variant="outline"
-        onClick={() => {
-          familyMemberAppend({});
-        }}
-      >
-        {t['kynIndAddFamilyMember']}
-      </Button>
+        <Input
+          type="text"
+          flexGrow="1"
+          id={`familyMemberInThisCooperative.0.memberId`}
+          placeholder={t['kynIndEnterMemberID']}
+          bg="white"
+        />
+        <Button
+          id="findmemberButton"
+          h="44px"
+          variant="outline"
+          leftIcon={<Icon size="md" as={AiOutlineSearch} />}
+        >
+          {t['kynIndFindMember']}
+        </Button>
+      </Box>
     </GroupContainer>
   );
 };
 
-export const FamilyMember = ({
-  control,
-  index,
-  removeFamilyMember,
-  watch,
-}: any) => {
+export const FamilyMember = ({ control, index }: any) => {
   const { t } = useTranslation();
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap="s16">

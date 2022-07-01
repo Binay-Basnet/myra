@@ -33,7 +33,7 @@ export const KYMEstimatedAmount = () => {
       <InputGroupContainer>
         <FormInput
           type="number"
-          name="estimatedAnnualAccountTransactionAmount"
+          name="estimatedAnnualTransactionAmount"
           label={t['kynIndEstimatedannualaccounttransaction']}
           placeholder="0.00"
           textAlign="right"

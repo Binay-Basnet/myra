@@ -23,6 +23,7 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../tab/TabforMemberPage';
+
 interface IMemberPageLayout {
   children: React.ReactNode;
 }
@@ -111,6 +112,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
   const router = useRouter();
   const newId = useGetNewIdMutation();
   const memberTypesQuery = useGetMemberTypesQuery();
+
   const { t } = useTranslation();
 
   const memberTypes = memberTypesQuery?.data?.members?.memberTypes?.data;
@@ -160,18 +162,19 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
         >
           <Box py="s16">
             <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-              {memberTypes?.map((item) => {
-                if (!item?.type) {
+              {memberTypes?.[0]?.type?.map((item, index) => {
+                if (!item) {
                   return null;
                 }
+
                 return (
-                  <GridItem key={item?.id}>
+                  <GridItem key={index}>
                     <MemberTypeButton
-                      icon={memberTypesArray[item.type]?.icon}
-                      title={memberTypesArray[item.type]?.title}
-                      subtitle={memberTypesArray[item.type]?.subtitle}
+                      icon={memberTypesArray[item]?.icon}
+                      title={memberTypesArray[item]?.title}
+                      subtitle={memberTypesArray[item]?.subtitle}
                       onClick={() => {
-                        item?.type === 'INDIVIDUAL' &&
+                        item === 'INDIVIDUAL' &&
                           newId
                             .mutateAsync({})
                             .then((res) =>
@@ -180,7 +183,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                               )
                             );
 
-                        item?.type === 'INSTITUTION' &&
+                        item === 'INSTITUTION' &&
                           newId
                             .mutateAsync({})
                             .then((res) =>
@@ -189,7 +192,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                               )
                             );
 
-                        item?.type === 'COOPERATIVE' &&
+                        item === 'COOPERATIVE' &&
                           newId
                             .mutateAsync({})
                             .then((res) =>
@@ -197,7 +200,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                                 `/members/cooperative/add/${res?.newId}`
                               )
                             );
-                        item?.type === 'COOPERATIVE_UNION' &&
+                        item === 'COOPERATIVE_UNION' &&
                           newId
                             .mutateAsync({})
                             .then((res) =>

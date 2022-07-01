@@ -74,6 +74,8 @@ const anotherCoop = [
   'memberNo',
 ];
 const familyInCoop = [
+  'kymIndRelationship',
+  'familyRelationship',
   'familyMemberInThisCooperative',
   'familyMemberInThisInstitution',
   'addfamilyCoopButton',
@@ -81,6 +83,7 @@ const familyInCoop = [
 ];
 const FinancialTransaction = ['financialTransaction'];
 const estimatedWithdrawal = [
+  'estimatedAnnualTransactionAmount',
   'estimatedAnnualTransactionFrequencyId',
   'estimatedAnnualAccountTransactionAmount',
   'estimatedWithdrawal',
@@ -94,9 +97,17 @@ const declerationNextToKin = [
   'localKinContact',
   'localKinAddress',
 ];
-const politicalExposure = ['isPoliticallyExposed', 'politicallyExposedDetails'];
-const benificialOwner = ['hasBeneficialOwner', 'beneficialRelationShipId'];
-const convicted = ['isConvicted', 'convictionDetails', 'beneficialFullName'];
+const politicalExposure = [
+  'isPoliticallyExposed',
+  'politicallyExposedDetailsx`',
+];
+const benificialOwner = [
+  'hasBeneficialOwner',
+  'beneficialFullName',
+  'beneficialRelationshipId',
+  'beneficialFullName',
+];
+const convicted = ['isConvicted', 'convictionDetails'];
 const foreign = [
   'hasForeignResidentialPermit',
   'foreignResidentialPermitTypeId',
