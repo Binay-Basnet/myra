@@ -1,6 +1,7 @@
 export * from './hooks/useTableHook';
 export * from './hooks/useTranslation';
 export * from './lib/myra-util';
+export * from './lib/neosystheme';
 export * from './lib/theme';
 export * from './locales';
 export * from './redux/counterSlice';
