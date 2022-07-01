@@ -5161,6 +5161,13 @@ export type KymIndFormStateQuery = {
   error?: Maybe<QueryError>;
 };
 
+export type SetBranchDataMutationVariables = Exact<{
+  data: BranchInput;
+}>;
+
+
+export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record: { id: string }, error?: { error?: Record<string, Array<string>> | null } | null } } | null } | null } };
+
 export type SetNewCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -5277,6 +5284,13 @@ export type SetInstitutionDataMutationVariables = Exact<{
 
 export type SetInstitutionDataMutation = { members: { institution?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
+export type SetOrganizationDataMutationVariables = Exact<{
+  data: OrganizationInput;
+}>;
+
+
+export type SetOrganizationDataMutation = { settings: { general?: { organization?: { initialSetup?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+
 export type AddKymOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   data: KymOptionInput;
@@ -5331,11 +5345,6 @@ export type UpdateCustomFieldMutationVariables = Exact<{
 
 
 export type UpdateCustomFieldMutation = { settings: { kymForm: { field: { update: { recordId?: string | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean } | null } } } } };
-
-export type IpdaMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type IpdaMutation = { settings: { kymForm: { seed: boolean } } };
 
 export type AddSharePurchaseMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -5473,6 +5482,11 @@ export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCustomFieldsQuery = { settings: { kymForm: { field?: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: Kym_Field_Type, isCustom: boolean, hasOtherField: boolean, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } | null } } };
 
+export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { id: string, branchCode?: string | null, contactNumber?: string | null, address?: { state?: string | null, district?: string | null, localLevel?: string | null, wardNo?: string | null, locality?: string | null } | null, manager?: { id: string } | null } }> } | null } | null } | null } };
+
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5509,6 +5523,35 @@ export const MutationErrorFragmentDoc = `
   }
 }
     `;
+export const SetBranchDataDocument = `
+    mutation setBranchData($data: BranchInput!) {
+  settings {
+    general {
+      branch {
+        add(data: $data) {
+          record {
+            id
+          }
+          error {
+            ... on BranchAddInvalidDataError {
+              error
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetBranchDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>) =>
+    useMutation<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>(
+      ['setBranchData'],
+      useAxios<SetBranchDataMutation, SetBranchDataMutationVariables>(SetBranchDataDocument),
+      options
+    );
 export const SetNewCoaDocument = `
     mutation setNewCOA($data: AddCOAAccountInput!) {
   settings {
@@ -5882,6 +5925,31 @@ export const useSetInstitutionDataMutation = <
       useAxios<SetInstitutionDataMutation, SetInstitutionDataMutationVariables>(SetInstitutionDataDocument),
       options
     );
+export const SetOrganizationDataDocument = `
+    mutation setOrganizationData($data: OrganizationInput!) {
+  settings {
+    general {
+      organization {
+        initialSetup(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetOrganizationDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetOrganizationDataMutation, TError, SetOrganizationDataMutationVariables, TContext>) =>
+    useMutation<SetOrganizationDataMutation, TError, SetOrganizationDataMutationVariables, TContext>(
+      ['setOrganizationData'],
+      useAxios<SetOrganizationDataMutation, SetOrganizationDataMutationVariables>(SetOrganizationDataDocument),
+      options
+    );
 export const AddKymOptionDocument = `
     mutation addKYMOption($fieldId: ID!, $data: KYMOptionInput!) {
   settings {
@@ -6065,24 +6133,6 @@ export const useUpdateCustomFieldMutation = <
     useMutation<UpdateCustomFieldMutation, TError, UpdateCustomFieldMutationVariables, TContext>(
       ['updateCustomField'],
       useAxios<UpdateCustomFieldMutation, UpdateCustomFieldMutationVariables>(UpdateCustomFieldDocument),
-      options
-    );
-export const IpdaDocument = `
-    mutation ipda {
-  settings {
-    kymForm {
-      seed
-    }
-  }
-}
-    `;
-export const useIpdaMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<IpdaMutation, TError, IpdaMutationVariables, TContext>) =>
-    useMutation<IpdaMutation, TError, IpdaMutationVariables, TContext>(
-      ['ipda'],
-      useAxios<IpdaMutation, IpdaMutationVariables>(IpdaDocument),
       options
     );
 export const AddSharePurchaseDocument = `
@@ -6781,6 +6831,47 @@ export const useGetCustomFieldsQuery = <
     useQuery<GetCustomFieldsQuery, TError, TData>(
       variables === undefined ? ['getCustomFields'] : ['getCustomFields', variables],
       useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
+      options
+    );
+export const GetBranchesListDocument = `
+    query getBranchesList {
+  settings {
+    general {
+      branch {
+        list {
+          edges {
+            node {
+              id
+              branchCode
+              address {
+                state
+                district
+                localLevel
+                wardNo
+                locality
+              }
+              manager {
+                id
+              }
+              contactNumber
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBranchesListQuery = <
+      TData = GetBranchesListQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchesListQueryVariables,
+      options?: UseQueryOptions<GetBranchesListQuery, TError, TData>
+    ) =>
+    useQuery<GetBranchesListQuery, TError, TData>(
+      variables === undefined ? ['getBranchesList'] : ['getBranchesList', variables],
+      useAxios<GetBranchesListQuery, GetBranchesListQueryVariables>(GetBranchesListDocument).bind(null, variables),
       options
     );
 export const GetChartOfAccountsDocument = `

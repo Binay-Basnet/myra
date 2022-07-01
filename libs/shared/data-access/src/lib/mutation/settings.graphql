@@ -143,10 +143,3 @@ mutation updateCustomField(
 
 }
 
-mutation ipda {
-    settings {
-        kymForm {
-            seed
-        }
-    }
-}
