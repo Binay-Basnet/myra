@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 
-import { Box, Checkbox, Input } from '@coop/shared/ui';
+import { Box, Checkbox } from '@coop/shared/ui';
+
+import FormInput from '../FormInput/FormInput';
 
 interface IFormCheckboxGroupProps<T extends Record<string, string[]>> {
   name: Path<T>;
@@ -18,13 +20,22 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
   showOther = false,
   orientation = 'row',
 }: IFormCheckboxGroupProps<T>) => {
-  const { control } = useFormContext<T>();
+  const [hasOtherField, setHasOtherField] = useState(false);
+  const { control, unregister, resetField } = useFormContext();
+
+  useEffect(() => {
+    if (!hasOtherField) {
+      resetField('otherProfession');
+      unregister('otherProfession');
+    }
+  }, [hasOtherField]);
 
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, value } }) => {
+        console.log(value);
         return (
           <Box
             display="flex"
@@ -56,23 +67,16 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
               <Box display="flex" gap="s8">
                 <Checkbox
                   id={name}
-                  onChange={() => {
-                    if (!value) {
-                      onChange(['Other']);
-                    } else if (value?.includes('Other')) {
-                      onChange(
-                        value.filter((data: string) => data !== 'Other')
-                      );
-                    } else {
-                      onChange([...value, 'Other']);
-                    }
+                  isChecked={hasOtherField}
+                  onChange={(e) => {
+                    setHasOtherField(e.target.checked);
                   }}
                 />
-                {/** TODO(Update this input component) */}
-                <Input
+                <FormInput
+                  name="otherProfession"
                   id={name}
                   placeholder="Other"
-                  isDisabled={!value?.includes('Other')}
+                  isDisabled={!hasOtherField}
                 />
               </Box>
             ) : null}

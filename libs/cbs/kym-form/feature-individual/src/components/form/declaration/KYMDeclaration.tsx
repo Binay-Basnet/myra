@@ -8,7 +8,6 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id,
-  useGetIndividualKymOptionQuery,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import {
@@ -31,19 +30,21 @@ const details = ['Citizen', 'Permanent Resident', 'Resident'];
 const booleanList = [
   {
     label: 'Yes',
-    value: 'Yes',
+    value: true,
   },
   {
     label: 'No',
-    value: 'No',
+    value: false,
   },
 ];
 
 export const KYMDeclaration = () => {
   const { t } = useTranslation();
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'family_relationship',
+    useGetIndividualKymOptionsQuery({
+      filter: {
+        customId: Kym_Field_Custom_Id.Relationship,
+      },
     });
   const {
     data: foreignEmploymentOptions,
@@ -84,7 +85,7 @@ export const KYMDeclaration = () => {
             >
               <GridItem colSpan={1}>
                 <FormSelect
-                  name={'beneficialRelationShipId'}
+                  name={'beneficialRelationshipId'}
                   isLoading={familyRelationshipLoading}
                   options={getFieldOption(familyRelationShipData)}
                   placeholder={t['kynIndRelationship']}
@@ -95,8 +96,8 @@ export const KYMDeclaration = () => {
               <GridItem mt="20px" colSpan={2}>
                 <FormInput
                   type="text"
-                  id="fullName"
-                  name={'benificialFullName'}
+                  id="beneficialFullName"
+                  name={'beneficialFullName'}
                   label=" "
                   placeholder={t['kynIndFullName']}
                 />
@@ -114,7 +115,7 @@ export const KYMDeclaration = () => {
             <FormSwitchTab
               label={t['kynIndPoliticallyexposedperson']}
               options={booleanList}
-              name="isPotiticallyExposed"
+              name="isPoliticallyExposed"
             />
 
             <InputGroupContainer>
@@ -168,7 +169,6 @@ export const KYMDeclaration = () => {
             />
 
             <Box display="flex" flexDirection="column">
-              {/* TODO CHANGE THIS NAME */}
               <FormRadioGroup
                 name="foreignResidentialPermitTypeId"
                 label={t['kynIndSpecifyfollowingdetails']}

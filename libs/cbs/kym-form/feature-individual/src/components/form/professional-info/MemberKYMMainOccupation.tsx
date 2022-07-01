@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -10,6 +10,7 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id,
+  KymOption,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import {
@@ -29,26 +30,66 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { getFieldOption } from '../../../utils/getFieldOption';
+interface DynamicInputProps {
+  fieldIndex: number;
+  optionIndex: number;
+  option: Partial<KymOption>;
+}
+
+export const MainOccupationInput = ({
+  option,
+  optionIndex,
+  fieldIndex,
+}: DynamicInputProps) => {
+  const { register, unregister } = useFormContext();
+
+  useEffect(() => {
+    register(`mainOccupation.${fieldIndex}.options.${optionIndex}.id`, {
+      value: option.id,
+    });
+    register(`mainOccupation.${fieldIndex}.options.${optionIndex}.value`, {
+      value: '',
+    });
+
+    return () => {
+      unregister(`mainOccupation.${fieldIndex}.options.${optionIndex}.id`);
+      unregister(`mainOccupation.${fieldIndex}.options.${optionIndex}.value`);
+    };
+  }, []);
+
+  return (
+    <FormInput
+      type="text"
+      name={`mainOccupation.${fieldIndex}.options.${optionIndex}.value`}
+      label={option?.name?.local}
+      placeholder={option?.name?.local}
+    />
+  );
+};
 
 const MainOccupation = ({
   control,
-  index,
   removeMainOccupation,
-  watch,
+  index: fieldIndex,
 }: any) => {
   const { t } = useTranslation();
-  const profession = watch('profession');
 
-  const isOwner = watch(`mainOccupation.${index}.isOwner`);
+  const { watch } = useFormContext();
 
-  const { data: occupationData } = useGetIndividualKymOptionsQuery({
-    filter: {
-      customId: Kym_Field_Custom_Id.Occupation,
-    },
-  });
+  // const profession = watch('profession');
 
-  const isForeignEmployee = watch('isForeignEmployee');
+  const isOwner = watch(`mainOccupation.${fieldIndex}.isOwner`);
+
+  const { data: occupationDetailsDefaultFields } =
+    useGetIndividualKymOptionsQuery({
+      filter: {
+        customId: Kym_Field_Custom_Id.OccupationDetails,
+      },
+    });
+
+  const occupationFieldNames =
+    occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]
+      ?.options ?? [];
 
   return (
     <Box
@@ -72,64 +113,26 @@ const MainOccupation = ({
         />
 
         <InputGroupContainer>
-          <GridItem colSpan={1}>
-            <FormSelect
-              control={control}
-              name={`mainOccupation.${index}.occupation`}
-              label={t['kymIndOccupation']}
-              placeholder={t['kymIndSelectOccupation']}
-              options={
-                profession?.map((data: string) => ({
-                  label: getFieldOption(occupationData)?.find(
-                    (prev) => prev.value === data
-                  )?.label,
-                  value: data,
-                })) ?? []
-              }
-            />
-          </GridItem>
-          <GridItem colSpan={2}>
-            <FormInput
-              bg="white"
-              control={control}
-              type="text"
-              name={`mainOccupation.${index}.orgName`}
-              label={t['kymIndOrgFirmName']}
-              placeholder={t['kymIndOrgFirmName']}
-            />
-          </GridItem>
-
-          <FormInput
-            control={control}
-            bg="white"
-            type="text"
-            name={`mainOccupation.${index}.idNumber`}
-            label={t['kymIndPanVATNo']}
-            placeholder={t['kymIndPanVATNumber']}
-          />
-          <FormInput
-            control={control}
-            type="text"
-            bg="white"
-            name={`mainOccupation.${index}.address`}
-            label={t['kymIndAddress']}
-            placeholder={t['kymIndEnterAddress']}
-          />
-          <FormInput
-            bg="white"
-            control={control}
-            type="number"
-            textAlign={'right'}
-            name={`mainOccupation.${index}.estimatedAnnualIncome`}
-            label={t['kymIndEstimatedAnnualIncome']}
-            placeholder="0.00"
-          />
+          {occupationFieldNames.map((option, optionIndex) => {
+            return (
+              <Fragment key={option.id}>
+                <MainOccupationInput
+                  fieldIndex={fieldIndex}
+                  option={option}
+                  optionIndex={optionIndex}
+                />
+              </Fragment>
+            );
+          })}
         </InputGroupContainer>
       </Box>
 
       <Box display="flex" gap="9px" alignItems="center">
-        <FormCheckbox name={`mainOccupation.${index}.isOwner`} />
-        {/* translation todo */}
+        {/*TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
+        <FormCheckbox
+          isDisabled={true}
+          name={`mainOccupation.${fieldIndex}.isOwner`}
+        />
         <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
       </Box>
 
@@ -139,7 +142,7 @@ const MainOccupation = ({
             bg="white"
             control={control}
             type="date"
-            name={`mainOccupation.${index}.establishedDate`}
+            name={`mainOccupation.${fieldIndex}.establishedDate`}
             label={t['kymIndEstablishedDate']}
             placeholder={t['kymIndEstablishedDate']}
           />
@@ -147,7 +150,7 @@ const MainOccupation = ({
             bg="white"
             control={control}
             type="number"
-            name={`mainOccupation.${index}.registrationNo`}
+            name={`mainOccupation.${fieldIndex}.registrationNo`}
             label={t['kymIndRegistrationNo']}
             placeholder={t['kymIndRegistrationNo']}
           />
@@ -155,7 +158,7 @@ const MainOccupation = ({
             bg="white"
             control={control}
             type="number"
-            name={`mainOccupation.${index}.contactNo`}
+            name={`mainOccupation.${fieldIndex}.contactNo`}
             label={t['kymIndContactNo']}
             placeholder={t['kymIndContactNo']}
           />
@@ -169,7 +172,7 @@ export const MemberKYMMainOccupation = () => {
   const { t } = useTranslation();
   const { control, watch } = useFormContext();
 
-  const isForeignEmployee = watch('isForeignEmployee');
+  const isForeignEmployee = watch('enableForeignEmployee');
 
   const {
     fields: mainOccupationFields,
@@ -212,7 +215,7 @@ export const MemberKYMMainOccupation = () => {
         <FormSwitch
           control={control}
           id="isForeignEmployee"
-          name="isForeignEmployee"
+          name="enableForeignEmployee"
           label={t['kymIndEnableforForeignEmployment']}
         />
       </Box>
@@ -223,7 +226,7 @@ export const MemberKYMMainOccupation = () => {
             <FormSelect
               id="nameOfCountry"
               control={control}
-              name="nameOfCountry"
+              name="countryId"
               label={t['kymIndNameofCountry']}
               placeholder={t['kymIndSelectCountry']}
               options={[
@@ -243,18 +246,10 @@ export const MemberKYMMainOccupation = () => {
             />
           </GridItem>
           <GridItem>
-            {/* <FormInput
-            bg="white"
-            control={control}
-            type="text"
-            name={`orgName`}
-            label="Type of Visa"
-            placeholder="Enter Type of Visa"
-          /> */}
             <FormSelect
               control={control}
               id="typeOfVisa"
-              name="typeOfVisa"
+              name="typeOfVisaId"
               label={t['kymIndTypeofVisa']}
               placeholder={t['kymIndEnterTypeofVisa']}
               options={[
@@ -279,7 +274,7 @@ export const MemberKYMMainOccupation = () => {
               control={control}
               type="number"
               textAlign={'right'}
-              name={`orgName`}
+              name={`foreignEstimatedAnnualIncome`}
               id="estimatedAnnualIncome"
               label={t['kymIndEstimatedAnnualIncome']}
               placeholder="0.00"

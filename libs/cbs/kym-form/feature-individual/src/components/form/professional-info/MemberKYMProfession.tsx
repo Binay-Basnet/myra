@@ -12,16 +12,6 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
-const occupationDetails = [
-  'Agriculture',
-  'Retired-Govt, Private',
-  'Student',
-  'Housewife',
-  'Salary',
-  'Business',
-  'Foreign Employment',
-];
-
 export const MemberKYMProfession = () => {
   const { t } = useTranslation();
   const { data: occupationData, isLoading: occupationLoading } =
@@ -39,7 +29,7 @@ export const MemberKYMProfession = () => {
         <Skeleton height="40px" />
       ) : (
         <FormCheckboxGroup
-          name={'profession'}
+          name={'professional'}
           showOther
           list={getFieldOption(occupationData)}
         />

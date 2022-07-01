@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from '@coop/shared/utils';
 
 import {
   GroupContainer,
@@ -7,6 +6,7 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormEmailInput, FormPhoneNumber } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const MemberKYMContactDetails = () => {
   const { t } = useTranslation();

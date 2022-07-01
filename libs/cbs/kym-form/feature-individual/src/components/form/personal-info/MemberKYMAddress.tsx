@@ -128,9 +128,9 @@ export const MemberKYMAddress = () => {
             />
           </InputGroupContainer>
 
-          {/*<Box mt="-16px">*/}
-          {/*  <FormMap name="permanentAddressLocation" />*/}
-          {/*</Box>*/}
+          <Box mt="-16px">
+            <FormMap name="permanentLocation" />
+          </Box>
         </Box>
       </Box>
       <Box
@@ -197,7 +197,7 @@ export const MemberKYMAddress = () => {
             </InputGroupContainer>
 
             <Box mt="-16px">
-              <FormMap name="temporaryAddressLocation" />
+              <FormMap name="temporaryLocation" />
             </Box>
           </>
         )}

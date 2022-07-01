@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -10,28 +10,67 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
+  KymOption,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
-import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon, Text, TextFields } from '@coop/shared/ui';
+import { FormCheckbox, FormInput } from '@coop/shared/form';
+import { Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { getFieldOption } from '../../../utils/getFieldOption';
+interface DynamicInputProps {
+  fieldIndex: number;
+  optionIndex: number;
+  option: Partial<KymOption>;
+}
+
+export const SpouseOccupationInput = ({
+  option,
+  optionIndex,
+  fieldIndex,
+}: DynamicInputProps) => {
+  const { register, unregister } = useFormContext();
+
+  useEffect(() => {
+    register(`spouseOccupation.${fieldIndex}.options.${optionIndex}.id`, {
+      value: option.id,
+    });
+    register(`spouseOccupation.${fieldIndex}.options.${optionIndex}.value`, {
+      value: '',
+    });
+
+    return () => {
+      unregister(`spouseOccupation.${fieldIndex}.options.${optionIndex}.id`);
+      unregister(`spouseOccupation.${fieldIndex}.options.${optionIndex}.value`);
+    };
+  }, []);
+
+  return (
+    <FormInput
+      type="text"
+      name={`spouseOccupation.${fieldIndex}.options.${optionIndex}.value`}
+      label={option?.name?.local}
+      placeholder={option?.name?.local}
+    />
+  );
+};
 
 const HusbandWifeOccupation = ({
   control,
-  index,
+  index: fieldIndex,
   removeHusbandWifeOccupation,
   watch,
 }: any) => {
-  const profession = watch('profession');
+  // const profession = watch('profession');
 
-  const isOwner = watch(`spouseOccupation.${index}.isOwner`);
+  const isOwner = watch(`spouseOccupation.${fieldIndex}.isOwner`);
 
   const { data: occupationData } = useGetIndividualKymOptionsQuery({
-    filter: { customId: KYMOptionEnum.Occupation },
+    filter: { customId: KYMOptionEnum.OccupationDetails },
   });
   const { t } = useTranslation();
+
+  const occupationFieldNames =
+    occupationData?.members.individual?.options.list?.data?.[0]?.options ?? [];
 
   return (
     <Box
@@ -53,63 +92,28 @@ const HusbandWifeOccupation = ({
           aria-label="close"
           alignSelf="flex-end"
         />
+
         <InputGroupContainer>
-          <GridItem colSpan={1}>
-            <FormSelect
-              control={control}
-              name={`spouseOccupation.${index}.occupation`}
-              label={t['kymIndOccupation']}
-              placeholder={t['kymIndSelectOccupation']}
-              options={
-                profession?.map((data: string) => ({
-                  label: getFieldOption(occupationData)?.find(
-                    (prev) => prev.value === data
-                  )?.label,
-                  value: data,
-                })) ?? []
-              }
-            />
-          </GridItem>
-          <GridItem colSpan={2}>
-            <FormInput
-              control={control}
-              type="text"
-              name={`spouseOccupation.${index}.orgName`}
-              label={t['kymIndOrgFirmName']}
-              placeholder={t['kymIndOrgFirmName']}
-              bg="white"
-            />
-          </GridItem>
-          <FormInput
-            control={control}
-            type="text"
-            name={`spouseOccupation.${index}.idNumber`}
-            label={t['kymIndPanVATNo']}
-            placeholder={t['kymIndPanVATNumber']}
-            bg="white"
-          />
-          <FormInput
-            control={control}
-            type="text"
-            name={`spouseOccupation.${index}.address`}
-            label={t['kymIndAddress']}
-            placeholder={t['kymIndEnterAddress']}
-            bg="white"
-          />
-          <FormInput
-            control={control}
-            type="number"
-            textAlign={'right'}
-            name={`spouseOccupation.${index}.estimatedAnnualIncome`}
-            label={t['kymIndEstimatedAnnualIncome']}
-            bg="white"
-            placeholder="0.00"
-          />
+          {occupationFieldNames.map((option, optionIndex) => {
+            return (
+              <Fragment key={option.id}>
+                <SpouseOccupationInput
+                  fieldIndex={fieldIndex}
+                  option={option}
+                  optionIndex={optionIndex}
+                />
+              </Fragment>
+            );
+          })}
         </InputGroupContainer>
       </Box>
 
       <Box display="flex" gap="9px" alignItems="center">
-        <FormCheckbox name={`spouseOccupation.${index}.isOwner`} />
+        {/*TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
+        <FormCheckbox
+          isDisabled={true}
+          name={`spouseOccupation.${fieldIndex}.isOwner`}
+        />
         <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
       </Box>
 
@@ -119,7 +123,7 @@ const HusbandWifeOccupation = ({
             bg="white"
             control={control}
             type="date"
-            name={`spouseOccupation.${index}.establishedDate`}
+            name={`spouseOccupation.${fieldIndex}.establishedDate`}
             label={t['kymIndEstablishedDate']}
             placeholder={t['kymIndEstablishedDate']}
           />
@@ -127,7 +131,7 @@ const HusbandWifeOccupation = ({
             bg="white"
             control={control}
             type="number"
-            name={`spouseOccupation.${index}.registrationNo`}
+            name={`spouseOccupation.${fieldIndex}.registrationNo`}
             label={t['kymIndRegistrationNo']}
             placeholder={t['kymIndRegistrationNo']}
           />
@@ -135,7 +139,7 @@ const HusbandWifeOccupation = ({
             bg="white"
             control={control}
             type="number"
-            name={`spouseOccupation.${index}.contactNo`}
+            name={`spouseOccupation.${fieldIndex}.contactNo`}
             label={t['kymIndContactNo']}
             placeholder={t['kymIndContactNo']}
           />

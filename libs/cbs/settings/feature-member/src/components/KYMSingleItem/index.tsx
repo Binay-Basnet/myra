@@ -99,6 +99,8 @@ export const KYMSingleItem = ({
   field,
   setFieldItems,
 }: IKYMSingleItemProps) => {
+  console.log(field);
+
   const [isEditable, setIsEditable] = useState(!item.id);
 
   const { mutateAsync: kymOptionUpdate } = useAddKymOptionMutation({
