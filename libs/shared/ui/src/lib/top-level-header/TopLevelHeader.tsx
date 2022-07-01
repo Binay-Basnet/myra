@@ -299,6 +299,9 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         textAlign="center"
                         alignItems="center"
                         gap="s8"
+                        p="s4"
+                        borderRadius="br2"
+                        _hover={{ bg: 'primary.0' }}
                         onClick={() => router.push('/members/list')}
                       >
                         <Image
@@ -323,6 +326,9 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         textAlign="center"
                         alignItems="center"
                         gap="s8"
+                        p="s4"
+                        borderRadius="br2"
+                        _hover={{ bg: 'primary.0' }}
                         onClick={() => router.push('/inventory/items')}
                       >
                         <Image
@@ -347,6 +353,9 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         textAlign="center"
                         alignItems="center"
                         gap="s8"
+                        p="s4"
+                        borderRadius="br2"
+                        _hover={{ bg: 'primary.0' }}
                         onClick={() => router.push('/inventory/list')}
                       >
                         <Image
@@ -360,6 +369,10 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           fontWeight="Medium"
                           color="neutralColorLight.Gray-60"
                           lineHeight="125%"
+                          overflow="hidden"
+                          textOverflow="ellipsis"
+                          noOfLines={[1, 2]}
+                          _hover={{ noOfLines: '{[1, 1]}' }}
                         >
                           {t['loanManagementSystem']}
                         </Text>
@@ -371,6 +384,9 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         textAlign="center"
                         alignItems="center"
                         gap="s8"
+                        p="s4"
+                        borderRadius="br2"
+                        _hover={{ bg: 'primary.0' }}
                         onClick={() => router.push('/members/list')}
                       >
                         <Image
