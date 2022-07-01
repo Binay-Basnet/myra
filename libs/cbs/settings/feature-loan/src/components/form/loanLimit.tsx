@@ -36,7 +36,7 @@ export const LoanLimit = () => {
           name="loanProvisionTreatment"
           type="number"
           label="Loan Provision Treatment"
-          textAlign={'right'}
+          // textAlign={'right'}
           placeholder="Enter Loan Provision Treatment"
           //   rightElement={'%'}
         />
@@ -44,7 +44,7 @@ export const LoanLimit = () => {
           name="loanProvisionFrequency"
           type="number"
           label="Loan Provision Frequency"
-          textAlign={'right'}
+          // textAlign={'right'}
           placeholder="Loan Provision Frequency"
           //   rightElement={'%'}
         />
@@ -52,7 +52,7 @@ export const LoanLimit = () => {
           name="ceoAuthenticationRate"
           type="number"
           label="Schedule Change Override"
-          textAlign={'right'}
+          // textAlign={'right'}
           placeholder="Schedule Change Override"
           //   rightElement={'%'}
         />

@@ -5,6 +5,7 @@ export * from './defaultAccount';
 export * from './depositFrequency';
 export * from './interest';
 export * from './listGrid';
+export * from './loanLimit';
 export * from './loanRepayment';
 export * from './maximumTenure';
 export * from './minimunTenure';

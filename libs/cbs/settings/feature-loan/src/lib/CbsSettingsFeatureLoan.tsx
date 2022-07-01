@@ -33,6 +33,7 @@ import {
   DepositFrequency,
   GridItems,
   Interest,
+  LoanLimit,
   LoanRepayment,
   MaximumTenure,
   MinimunTenure,
@@ -79,7 +80,7 @@ export function SettingsLoanForm(props: loanProductsAdd) {
             borderBottom="1px solid #E6E6E6"
           >
             <Text fontSize="r2" fontWeight="SemiBold">
-              Add Deposit Products
+              Add Loan Products
             </Text>
             <IconButton
               variant={'ghost'}
@@ -108,7 +109,7 @@ export function SettingsLoanForm(props: loanProductsAdd) {
                     <FormSelect
                       name={'nameOfDepositProduct'}
                       options={optionsSaving}
-                      label="Nature of Deposit Product"
+                      label="Nature of Loan Product"
                     />
                     <FormSelect
                       name={'nameOfDepositProductType'}
@@ -156,11 +157,12 @@ export function SettingsLoanForm(props: loanProductsAdd) {
                 <LoanRepayment />
                 <Interest />
                 <AccountServicesCharge />
-                {(depositNature === 'recurringSaving' ||
-                  depositNature === 'termSaving') && <DefaultAccountName />}
+                <LoanLimit />
+                {/* {(depositNature === 'recurringSaving' ||
+                  depositNature === 'termSaving') && <DefaultAccountName />} */}
                 <Questions watch={watch} />
                 <RequiredDocumentSetup />
-                {depositNature !== 'termSaving' && <PrematuredPenalty />}
+                {/* {depositNature !== 'termSaving' && <PrematuredPenalty />} */}
               </ContainerWithDivider>
             </Box>
           </form>
