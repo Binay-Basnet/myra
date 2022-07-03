@@ -1,0 +1,59 @@
+mutation upsertKYMOption($fieldId: ID!, $option: KYMOptionInput!) {
+    settings {
+        kymForm {
+            option {
+                upsert(fieldId: $fieldId, data: $option) {
+                    recordId
+                    record {
+                        id
+                        name
+                        enabled
+                        fieldType
+                    }
+                    error {
+                        ...MutationError
+                    }
+                }
+            }
+        }
+    }
+}
+
+mutation deleteKYMField($optionId: ID!) {
+    settings {
+        kymForm {
+            option {
+                delete(optionId: $optionId) {
+                    recordId
+                }
+            }
+        }
+    }
+}
+
+mutation arrangeKYMField($optionId: ID!, $to: Int!) {
+    settings {
+        kymForm {
+            option {
+                move(optionId: $optionId, to: $to) {
+                    recordId
+                }
+            }
+        }
+    }
+}
+
+mutation toggleOtherOption($groupId: ID!, $hasOtherField: Boolean!) {
+    settings {
+        kymForm {
+            field {
+                update(id: $groupId, data: { hasOtherField: $hasOtherField }) {
+                    record {
+                        name
+                        hasOtherField
+                    }
+                }
+            }
+        }
+    }
+}

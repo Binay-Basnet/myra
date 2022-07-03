@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
   Kym_Field_Parent,
+  KymMemberTypesEnum,
   useGetKymIndItemDetailsQuery,
 } from '@coop/shared/data-access';
 import { Accordion, AccordionItem, AccordionPanel } from '@coop/shared/ui';
@@ -22,12 +23,14 @@ interface FieldType {
 }
 
 interface IKYMSettingsProps {
+  kymType: KymMemberTypesEnum;
   fields: FieldType;
   isSection?: boolean;
 }
 
 export const KYMSettings = ({
   fields: kymFields,
+  kymType,
   isSection,
 }: IKYMSettingsProps) => {
   const [fields, setFields] = useState(kymFields);
@@ -79,9 +82,17 @@ export const KYMSettings = ({
               >
                 {fields?.children?.map((subField, index) =>
                   subField?.children ? (
-                    <KYMSettings fields={subField} isSection={true} />
+                    <KYMSettings
+                      kymType={kymType}
+                      fields={subField}
+                      isSection={true}
+                    />
                   ) : (
-                    <KYMInnerAccordion subField={subField} index={index} />
+                    <KYMInnerAccordion
+                      kymType={kymType}
+                      subField={subField}
+                      index={index}
+                    />
                   )
                 )}
               </Accordion>

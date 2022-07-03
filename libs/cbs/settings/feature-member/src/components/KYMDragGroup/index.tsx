@@ -229,15 +229,6 @@ export const KYMDragGroup = ({
                   },
                 },
               ]);
-
-              // field &&
-              //   (await mutateAsync({
-              //     fieldId: field.id,
-              //     optionName: '',
-              //     optionEnabled: true,
-              //     optionFieldType:
-              //       field.fieldType === 'GROUP' ? Field_Types.TextInput : null,
-              //   }));
             }}
             _hover={{ bg: 'transparent' }}
           >

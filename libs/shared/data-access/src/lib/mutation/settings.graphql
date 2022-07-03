@@ -13,53 +13,13 @@ mutation addKYMOption($fieldId: ID!, $data: KYMOptionInput!) {
                     error {
                         ...MutationError
                     }
-
                 }
             }
         }
     }
 }
 
-mutation deleteKYMField($optionId: ID!) {
-    settings {
-        kymForm {
-
-            option {
-                delete(optionId: $optionId) {
-                    recordId
-                }
-            }
-        }
-    }
-}
 #
-mutation arrangeKYMField($optionId: ID!,$to: Int!) {
-    settings {
-        kymForm {
-            option {
-                move(optionId: $optionId, to: $to) {
-                    recordId
-                }
-            }
-        }
-    }
-}
-mutation toggleOtherOption($groupId: ID!, $hasOtherField: Boolean!) {
-    settings {
-        kymForm {
-            field {
-                update(id: $groupId, data: { hasOtherField: $hasOtherField }) {
-                    record {
-                        name
-                        hasOtherField
-                    }
-                }
-            }
-        }
-    }
-}
-
-
 
 mutation addConditionField($fieldId: ID!, $dependsOn: [ID]!) {
     settings {
@@ -69,7 +29,6 @@ mutation addConditionField($fieldId: ID!, $dependsOn: [ID]!) {
             }
         }
     }
-
 }
 
 mutation addFileSize($fieldId: ID!, $maxSize: Int!) {
@@ -80,7 +39,6 @@ mutation addFileSize($fieldId: ID!, $maxSize: Int!) {
             }
         }
     }
-
 }
 mutation addCustomField {
     settings {
@@ -113,8 +71,6 @@ mutation addCustomField {
             }
         }
     }
-
-
 }
 
 mutation updateCustomField(
@@ -128,7 +84,11 @@ mutation updateCustomField(
             field {
                 update(
                     id: $fieldId
-                    data: { name: $fieldName, fieldType: $fieldType, enabled: $fieldEnabled }
+                    data: {
+                        name: $fieldName
+                        fieldType: $fieldType
+                        enabled: $fieldEnabled
+                    }
                 ) {
                     recordId
                     record {
@@ -140,6 +100,4 @@ mutation updateCustomField(
             }
         }
     }
-
 }
-
