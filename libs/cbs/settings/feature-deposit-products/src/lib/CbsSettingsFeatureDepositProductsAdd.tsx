@@ -56,7 +56,13 @@ export function SettingsDepositProductsAdd(
   props: SettingsDepositProductsAddProps
 ) {
   const router = useRouter();
-  const methods = useForm({});
+  const methods = useForm({
+    defaultValues: {
+      nameOfDepositProduct: 'recurringSaving',
+      minimunTenureNumber: 0,
+      maximumTenureNumber: 0,
+    },
+  });
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
   const depositNature = watch('nameOfDepositProduct');
