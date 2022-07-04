@@ -64,6 +64,7 @@
         "libs/cbs/settings/ui-layout/src/index.ts"
       ],
       "@coop/myra/components": ["libs/myra/components/src/index.ts"],
+      "@coop/myra/inventory/item": ["libs/inventory/feature-item/src/index.ts"],
       "@coop/myra/jsonData": ["libs/myra/jsonData/index.ts"],
       "@coop/myra/locales": ["libs/myra/locales/index.ts"],
       "@coop/myra/types": ["libs/myra/types/index.ts"],

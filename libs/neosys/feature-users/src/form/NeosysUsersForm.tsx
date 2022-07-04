@@ -1,4 +1,3 @@
-import { InputGroupContainer } from '@coop/neosys-admin/layout';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

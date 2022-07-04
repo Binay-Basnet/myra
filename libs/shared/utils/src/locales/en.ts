@@ -1607,6 +1607,35 @@ const en: Record<string, string> = {
   neoUsersEmailAddress: 'Email Address',
   neoUsersPhoneNumber: 'Phone Number',
   neoUsersViewEditFullPermission: 'View and Edit Full Permission',
+
+  // INVENTORY
+
+  //items form
+  invItemAddNewItem: 'Add New Item',
+  invItemName: 'Item Name',
+  invItemSelectItem: 'Select Item',
+  invItemCode: 'Item Code',
+  invItemGroup: 'Item Group',
+  invItemCategory: 'Category',
+  invItemTax: 'Tax',
+  invItemTaxType: 'Tax Type',
+  invItemPrimaryUnit: 'Primary Unit',
+  invItemProductInformation: 'Product Information',
+  invItemSimpleProduct: 'Simple Product',
+  invItemVariantProduct: 'Variant Product',
+  invItemPurchasePrice: 'Purchase Price',
+  invItemSellingPrice: 'Selling Price',
+  invItemVariantInformation: 'Variant Information',
+  invItemAdditionalInformation: ' Add Additional Information',
+  invItemSalesLedger: 'Sales Ledger',
+  invItemSelectAccount: 'Select Account',
+  invItemPurchaseLedger: 'Purchase Ledger',
+  invItemSalesReturnLedger: 'Sales Return Ledger',
+  invItemPurchaseReturnLedger: 'Purchase Return Ledger',
+  invItemValuationMethod: 'Valuation Method',
+  invItemSelectMethod: 'Select Method',
+  invItemMinimumStockQuantity: 'Minimum Stock Quantity',
+  invItemMinimumStock: 'Minimum Stock',
 };
 
 export default en;

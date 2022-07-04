@@ -34,7 +34,8 @@ export function NeosysFeatureClients(props: NeosysFeatureClientsProps) {
             display="flex"
             justifyContent="space-between"
             alignItems={'center'}
-            px="5"
+            px="s16"
+            py="s20"
             background="white"
             borderBottom="1px solid #E6E6E6"
           >

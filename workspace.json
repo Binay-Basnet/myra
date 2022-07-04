@@ -1,7 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "neosys-feature-users": "libs/neosys/feature-users",
+    "-inventory--feature-item": "libs/inventory/feature-item",
     "cbs-accounts-feature-account-form": "libs/cbs/accounts/feature-account-form",
     "cbs-kym-form-feature-cooperative": "libs/cbs/kym-form/feature-cooperative",
     "cbs-kym-form-feature-cooperative-union": "libs/cbs/kym-form/feature-cooperative-union",
@@ -24,6 +24,7 @@
     "neosys-admin": "apps/neosys-admin",
     "neosys-admin-e2e": "apps/neosys-admin-e2e",
     "neosys-feature-clients": "libs/neosys/feature-clients",
+    "neosys-feature-users": "libs/neosys/feature-users",
     "neosys-ui-layout": "libs/neosys/ui-layout",
     "shared-data-access": "libs/shared/data-access",
     "shared-form": "libs/shared/form",

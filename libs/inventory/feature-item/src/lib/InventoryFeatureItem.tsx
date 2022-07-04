@@ -14,12 +14,12 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { NeosysUsersForm } from '../form/NeosysUsersForm';
+import { InventoryItemForm } from '../component/form/InventoryItemForm';
 
 /* eslint-disable-next-line */
-export interface NeosysFeatureUsersProps {}
+export interface InventoryFeatureItemProps {}
 
-export function NeosysFeatureUsers(props: NeosysFeatureUsersProps) {
+export function InventoryFeatureItem(props: InventoryFeatureItemProps) {
   const { t } = useTranslation();
   const methods = useForm({});
   const router = useRouter();
@@ -27,7 +27,7 @@ export function NeosysFeatureUsers(props: NeosysFeatureUsersProps) {
   const { watch } = methods;
   return (
     <>
-      <Container minW="container.lg" height="fit-content" paddingBottom="55px">
+      <Container minW="container.lg" height="fit-content" pb="55px">
         <Box margin="0px auto" bg="gray.0" width="100%" zIndex="10">
           <Box
             height="60px"
@@ -36,26 +36,32 @@ export function NeosysFeatureUsers(props: NeosysFeatureUsersProps) {
             alignItems={'center'}
             px="s16"
             py="s20"
-            background="white"
+            background="neutralColorLight.Gray-0"
             borderBottom="1px solid #E6E6E6"
           >
-            <Text fontSize="r2" fontWeight="SemiBold">
-              {t['neoUsersNewUser']}
+            <Text
+              fontSize="r2"
+              fontWeight="SemiBold"
+              color="neutralColorLight.Gray-80"
+            >
+              {t['invItemAddNewItem']}
             </Text>
+
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<IoCloseOutline />}
+              icon={<Icon as={IoCloseOutline} size="md" />}
               onClick={() => router.back()}
             />
+            <FormProvider {...methods}>
+              <form>
+                <InventoryItemForm watch={watch} />
+              </form>
+            </FormProvider>
           </Box>
-          <FormProvider {...methods}>
-            <form>
-              <NeosysUsersForm watch={watch} />
-            </form>
-          </FormProvider>
         </Box>
       </Container>
+
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100">
           <Container minW="container.lg" height="fit-content">
