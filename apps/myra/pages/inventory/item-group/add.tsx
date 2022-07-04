@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   Container,
+  Icon,
   IconButton,
   Input,
   MainLayoutInventory,
@@ -38,7 +39,7 @@ const AddNewItemGroupPage = () => {
         <IconButton
           variant={'ghost'}
           aria-label="close"
-          icon={<IoCloseOutline />}
+          icon={<Icon as={IoCloseOutline} size="md" />}
           onClick={() => router.back()}
         />
       </Box>

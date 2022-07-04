@@ -22,6 +22,7 @@ import {
   Container,
   Grid,
   GridItem,
+  Icon,
   IconButton,
   Text,
 } from '@coop/shared/ui';
@@ -92,7 +93,7 @@ export function SettingsDepositProductsAdd(
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<IoCloseOutline fontSize={'24px'} />}
+              icon={<Icon as={IoCloseOutline} size="md" />}
               onClick={() => router.back()}
             />
           </Box>
