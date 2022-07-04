@@ -8,24 +8,9 @@ import { useRouter } from 'next/router';
 import {
   ContainerWithDivider,
   InputGroupContainer,
-  SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormCheckbox,
-  FormCheckboxGroup,
-  FormInput,
-  FormSelect,
-  FormSwitch,
-  FormSwitchTab,
-} from '@coop/shared/form';
-import {
-  Box,
-  Container,
-  Grid,
-  GridItem,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { FormCheckboxGroup, FormInput, FormSelect } from '@coop/shared/form';
+import { Box, Text } from '@coop/shared/ui';
 
 import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
 

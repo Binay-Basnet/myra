@@ -24,6 +24,7 @@ import {
   Container,
   FormFooter,
   Icon,
+  IconButton,
   Input,
   MainLayout,
   RadioGroup,
@@ -77,7 +78,12 @@ const Translation = () => {
             <Text fontSize="r2" fontWeight="SemiBold">
               {t.membersFormAddNewMembers}
             </Text>
-            <IoCloseOutline size="14px" color="#91979F" />
+            <IconButton
+              variant={'ghost'}
+              aria-label="close"
+              icon={<Icon as={IoCloseOutline} size="md" />}
+              onClick={() => router.back()}
+            />{' '}
           </Box>
 
           <Box p="s20" mt={1}>

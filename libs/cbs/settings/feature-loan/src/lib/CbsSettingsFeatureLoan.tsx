@@ -21,6 +21,7 @@ import {
   Container,
   Grid,
   GridItem,
+  Icon,
   IconButton,
   Text,
 } from '@coop/shared/ui';
@@ -91,7 +92,7 @@ export function SettingsLoanForm(props: loanProductsAdd) {
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<IoCloseOutline />}
+              icon={<Icon as={IoCloseOutline} size="md" />}
               onClick={() => router.back()}
             />
           </Box>
