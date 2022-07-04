@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { InputGroupContainer } from '@coop/neosys-admin/layout';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   FormFileInput,
@@ -8,7 +8,7 @@ import {
   FormMap,
   FormSelect,
 } from '@coop/shared/form';
-import { Box, Divider, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, Divider, Grid, GridItem, SlugInput, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const NeosysClientForm = ({ watch }: any) => {
@@ -73,9 +73,10 @@ export const NeosysClientForm = ({ watch }: any) => {
             name="OrganizationLogo"
           />
         </Box>
-        <FormInput
+        <SlugInput
           type="text"
           name="URL"
+          rightAddon=".myraerp.com"
           label={t['neoClientURL']}
           placeholder={t['neoClientSlug']}
         />

@@ -210,57 +210,6 @@ export function KYMCooperativePage() {
                 </Box>
               </Box>
             </Box>
-            {/* </Box> */}
-
-            {/* footer */}
-            {/* <Box
-              minWidth="container.xl"
-              height="60px"
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              px="5"
-              background="white"
-              borderTopLeftRadius="br3"
-              borderTopRightRadius="br3"
-              bottom="0"
-              position="fixed"
-              boxShadow="0px -4px 60px rgba(52, 60, 70, 0.2)"
-              zIndex={10}
-            >
-              <Text> {t['formDetails']}</Text>
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="flex-end"
-                alignSelf="center"
-              >
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignSelf="center"
-                >
-                  <Button mr="10px" type="submit" variant="ghost">
-                    <Icon as={BiSave} color="primary.500" />
-                    <Text
-                      alignSelf="center"
-                      color="primary.500"
-                      fontWeight="Medium"
-                      fontSize="s2"
-                      ml="5px"
-                    >
-                      {t['saveDraft']}
-                    </Text>
-                  </Button>
-                </Box>
-                &nbsp;
-                <Button
-                  onClick={() => router.push(`/members/translation/${id}`)}
-                >
-                  {t['next']}
-                </Button>
-              </Box>
-            </Box> */}
           </form>
         </FormProvider>
       </Container>

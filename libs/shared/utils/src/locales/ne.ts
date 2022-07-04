@@ -1584,6 +1584,15 @@ const ne: Record<string, string> = {
   neoClientMainContactPerson: 'Main Contact Person',
   neoClientName: 'Name',
   neoClientPhoneNumber: 'Phone Number',
+
+  // users form
+  neoUsersNewUser: 'New User',
+  neoUsersName: 'Name',
+  neoUsersRole: 'Role',
+  neoUsersSelectRole: 'Select Role',
+  neoUsersEmailAddress: 'Email Address',
+  neoUsersPhoneNumber: 'Phone Number',
+  neoUsersViewEditFullPermission: 'View and Edit Full Permission',
 };
 
 export default ne;
