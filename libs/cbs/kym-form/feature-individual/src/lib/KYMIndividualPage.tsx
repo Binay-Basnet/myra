@@ -8,6 +8,7 @@ import {
   KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
   Kym_Field_Custom_Id,
+  Kym_Field_Custom_Id as KYMOptionEnum,
 } from '@coop/shared/data-access';
 import { useForm, FormProvider } from 'react-hook-form';
 import {
@@ -84,6 +85,11 @@ export function KYMIndividualPage() {
       (option) => ({ id: option.id, value: '' })
     ) ?? [];
 
+  const { data: nationalityFields, isLoading: nationalityLoading } =
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.Nationality },
+    });
+
   console.log(familyDetailsFieldNames);
 
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
@@ -111,9 +117,7 @@ export function KYMIndividualPage() {
       ?.sectionStatus;
 
   const methods = useForm<KymIndMemberInput>({
-    defaultValues: {
-      nationalityId: 'Nepali',
-    },
+    defaultValues: {},
   });
 
   const { watch, setError, reset } = methods;
@@ -133,7 +137,6 @@ export function KYMIndividualPage() {
 
   useEffect(() => {
     reset({
-      nationalityId: 'Nepali',
       mainOccupation: [
         {
           options: occupationFieldNames,
@@ -154,8 +157,11 @@ export function KYMIndividualPage() {
           options: familyDetailsFieldNames,
         },
       ],
+      nationalityId:
+        nationalityFields?.members?.individual?.options?.list?.data?.[0]
+          ?.options?.[0]?.id,
     });
-  }, [isLoading]);
+  }, [isLoading, nationalityLoading]);
 
   return (
     <>
@@ -178,7 +184,7 @@ export function KYMIndividualPage() {
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<IoCloseOutline />}
+              icon={<Icon as={IoCloseOutline} size="md" />}
               onClick={() => router.back()}
             />
           </Box>
