@@ -67,6 +67,10 @@
       "@coop/myra/jsonData": ["libs/myra/jsonData/index.ts"],
       "@coop/myra/locales": ["libs/myra/locales/index.ts"],
       "@coop/myra/types": ["libs/myra/types/index.ts"],
+      "@coop/neosys-admin/clients": [
+        "libs/neosys/feature-clients/src/index.ts"
+      ],
+      "@coop/neosys-admin/layout": ["libs/neosys/ui-layout/src/index.ts"],
       "@coop/shared/data-access": ["libs/shared/data-access/src/index.ts"],
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],
       "@coop/shared/map": ["libs/shared/map/src/index.ts"],

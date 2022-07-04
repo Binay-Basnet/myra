@@ -1,0 +1,23 @@
+{
+  "root": "libs/neosys/feature-clients",
+  "sourceRoot": "libs/neosys/feature-clients/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/neosys/feature-clients/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/neosys/feature-clients"],
+      "options": {
+        "jestConfig": "libs/neosys/feature-clients/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
