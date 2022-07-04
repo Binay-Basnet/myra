@@ -13,8 +13,6 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-// import { TableListPageHeader } from '../TableListPageHeader';
-
 export const ClientsTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -36,13 +34,6 @@ export const ClientsTable = () => {
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
-      {
-        Header: t['memberListTableMemberID'],
-        accessor: 'node.id',
-        maxWidth: 4,
-        disableSortBy: false,
-      },
-
       {
         Header: t['memberListTableName'],
         accessor: 'node.name.local',
@@ -80,12 +71,6 @@ export const ClientsTable = () => {
         },
       },
       {
-        Header: t['memberListTablePhoneNo'],
-        accessor: 'node.contact',
-
-        width: '10%',
-      },
-      {
         Header: t['memberListDateJoined'],
         accessor: 'node.createdAt',
         disableSortBy: false,
@@ -108,15 +93,15 @@ export const ClientsTable = () => {
   const memberRows = useMemo(
     () => [
       {
-        title: 'memberNavActive',
+        title: 'neoClientTableActive',
         key: 'APPROVED',
       },
       {
-        title: 'memberNavInactive',
+        title: 'neoClientTableDraft',
         key: 'VALIDATED',
       },
       {
-        title: 'memberNavDraft',
+        title: 'neoClientTableInactive',
         key: 'DRAFT',
       },
     ],
@@ -125,7 +110,10 @@ export const ClientsTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'Clients List'} tabItems={memberRows} />
+      <TableListPageHeader
+        heading={t['neoClientTableList']}
+        tabItems={memberRows}
+      />
 
       <Table
         isLoading={isFetching}
@@ -135,7 +123,7 @@ export const ClientsTable = () => {
         disableSortAll={true}
         filter={true}
         disableFilterAll={true}
-        searchPlaceholder="Search Clients"
+        searchPlaceholder={t['neoClientTableSearch']}
         pagination={{
           total: 1200,
           endCursor: data?.members?.list.pageInfo?.startCursor ?? '',

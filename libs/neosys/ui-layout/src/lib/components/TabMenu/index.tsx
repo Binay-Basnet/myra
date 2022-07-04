@@ -2,51 +2,57 @@ import { IconType } from 'react-icons';
 import { AiOutlineAppstore } from 'react-icons/ai';
 import { ImStack } from 'react-icons/im';
 import { IoCubeOutline, IoRoseOutline } from 'react-icons/io5';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Link, Tab, TabList, Tabs } from '@chakra-ui/react';
+import { Tab, TabList, Tabs } from '@chakra-ui/react';
 
 import { Box, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface TabMenuProps {}
 
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/': 0,
-  '/clients/list': 1,
+  '/clients': 1,
   '/users': 2,
   '/settings': 3,
 };
 
-const demotabs: { title: string; icon: IconType; link: string }[] = [
-  {
-    title: 'Dashboard',
-    icon: AiOutlineAppstore,
-    link: '/',
-  },
-  {
-    title: 'Clients',
-    icon: IoRoseOutline,
-    link: '/clients/list',
-  },
-  {
-    title: 'Users',
-    icon: IoCubeOutline,
-    link: '/users',
-  },
-  {
-    title: 'Settings',
-    icon: ImStack,
-    link: '/settings',
-  },
-];
-
 export function TabMenu(props: TabMenuProps) {
   const router = useRouter();
 
+  const { t } = useTranslation();
+
+  const demotabs: { title: string; icon: IconType; link: string }[] = [
+    {
+      title: t['neoClientDashboard'],
+      icon: AiOutlineAppstore,
+      link: '/',
+    },
+    {
+      title: t['neoClientClients'],
+      icon: IoRoseOutline,
+      link: '/clients',
+    },
+    {
+      title: t['neoClientUsers'],
+      icon: IoCubeOutline,
+      link: '/users',
+    },
+    {
+      title: t['neoClientSettings'],
+      icon: ImStack,
+      link: '/settings',
+    },
+  ];
+
   const currentIndex =
     NAVBAR_TAB_OBJECT[
-      Object.keys(NAVBAR_TAB_OBJECT).find(
-        (string) => router?.pathname === string
+      Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
+        string.length === 1
+          ? router?.pathname === string
+          : router?.pathname.includes(string)
       ) ?? '/'
     ];
 
@@ -55,10 +61,13 @@ export function TabMenu(props: TabMenuProps) {
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
         <TabList border="none" height="100%">
           {demotabs.map(({ title, icon, link }, index) => {
-            const isActive = router?.pathname === link;
+            const isActive =
+              link.length === 1
+                ? router?.pathname === link
+                : router?.pathname.includes(link);
 
             return (
-              <Link href={link} key={index} _hover={{ textDecoration: 'none' }}>
+              <Link href={link} key={index}>
                 <Tab
                   _focus={{}}
                   px="s24"

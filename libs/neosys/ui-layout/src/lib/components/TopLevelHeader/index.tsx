@@ -9,7 +9,7 @@ export interface TopLevelHeaderProps {}
 
 export function TopLevelHeader(props: TopLevelHeaderProps) {
   return (
-    <Box p="10px 16px" h="60px">
+    <Box px="s16" py="s10" h="60px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Image src={'/logo.svg'} alt="neosys" />
 
@@ -20,7 +20,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             aria-label="History"
             variant={'ghost'}
             color={'gray.0'}
-            // _hover={{ backgroundColor: 'secondary.800' }}
+            _hover={{ backgroundColor: 'primary.dark' }}
           />
 
           <IconButton
@@ -29,18 +29,15 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             aria-label="History"
             variant={'ghost'}
             color={'gray.0'}
-            // _hover={{ backgroundColor: 'secondary.800' }}
+            _hover={{ backgroundColor: 'primary.dark' }}
           />
 
           <Box
             w="32px"
             h="32px"
             as="button"
-            // display={'flex'}
             justifyContent={'center'}
             alignItems={'center'}
-            // bg={isOpen ? 'secondary.900' : 'secondary.700'}
-            // _hover={{ backgroundColor: 'secondary.900' }}
           >
             <Avatar src={'/avatar.png'} size="sm" />
           </Box>

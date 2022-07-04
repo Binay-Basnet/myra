@@ -1,11 +1,11 @@
 import { ReactElement } from 'react';
 
-import { NeosysFeatureClientsList } from '@coop/neosys-admin/clients';
+import { NeosysFeatureClients } from '@coop/neosys-admin/clients';
 import { ClientsSiderbarLayout, MainLayout } from '@coop/neosys-admin/layout';
 // import { MainLayout } from '@coop/shared/ui';
 
 const ClientsListPage = () => {
-  return <NeosysFeatureClientsList />;
+  return <NeosysFeatureClients />;
 };
 
 ClientsListPage.getLayout = function getLayout(page: ReactElement) {

@@ -252,6 +252,12 @@ export type BadRequestError = {
   message: Scalars['String'];
 };
 
+export type Bank = {
+  id: Scalars['ID'];
+  logo: Scalars['String'];
+  name: Scalars['String'];
+};
+
 export type BankChartsOfAccount = {
   bankAccountNumber: Scalars['Int'];
   bankGLCode: Scalars['String'];
@@ -460,6 +466,23 @@ export type Condition = {
   column: Scalars['String'];
   comparator: ComparatorType;
   value: Scalars['Any'];
+};
+
+export type ConfigQuery = {
+  bank?: Maybe<Bank>;
+  banks?: Maybe<Array<Maybe<Bank>>>;
+  countries?: Maybe<Array<Maybe<Country>>>;
+  country?: Maybe<Country>;
+};
+
+
+export type ConfigQueryBankArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type ConfigQueryCountryArgs = {
+  code: Scalars['String'];
 };
 
 export type Contact = {
@@ -946,6 +969,11 @@ export type CooperativeUnionMemberDetails = {
   noOfInstituionalMemberTarget?: Maybe<Scalars['Int']>;
   noOfMaleMemberCurrent?: Maybe<Scalars['Int']>;
   noOfMaleMemberTarget?: Maybe<Scalars['Int']>;
+};
+
+export type Country = {
+  code?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type DashboardData = {
@@ -4774,6 +4802,7 @@ export type Province = {
 export type Query = {
   administration: AdministrationQuery;
   auth: AuthQuery;
+  config: ConfigQuery;
   dashboard: DashboardQuery;
   eBanking: EBankingQuery;
   example: ExampleQuery;

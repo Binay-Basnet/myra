@@ -1,2 +1,2 @@
 export * from './lib/NeosysFeatureClients';
-export * from './lib/NeosysFeatureClientsList';
+export * from './lib/NeosysFeatureClientsAdd';

@@ -1550,6 +1550,28 @@ const ne: Record<string, string> = {
 
   // NEOSYS-ADMIN
 
+  //header
+  neoClientDashboard: 'Dashboard',
+  neoClientClients: 'Clients',
+  neoClientUsers: 'Users',
+  neoClientSettings: 'Settings',
+
+  //siderbar
+  neoClientSiderbarClients: 'Clients',
+  neoClientSiderbarClientsAdd: 'Add Client',
+  neoClientSidebarClientList: 'Client List',
+  neoClientSiderbarSettings: 'Client Settings',
+
+  //clients table
+  neoClientTableList: 'Client List',
+  neoClientTableSearch: 'Search Clients',
+  neoClientTableActive: 'Active',
+  neoClientTableDraft: 'Draft',
+  neoClientTableInactive: 'Inactive',
+  neoClientTableName: 'Name',
+  neoClientTableAddress: 'Address',
+  neoClientTableDateJoined: 'Date Joined',
+
   // clients form
   neoClientNewUser: 'New User',
   neoClientOrganizationType: 'Organization Type',
