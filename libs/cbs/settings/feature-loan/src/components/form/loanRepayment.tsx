@@ -46,67 +46,31 @@ const applicableSwitch = [
 export const LoanRepayment = () => {
   const [rightElement, setRightElement] = useState('days');
   const { resetField, watch } = useFormContext();
-  const maximumDuration = watch('enablemaximumDuration');
+  const maximumDuration = watch('enablemaximumDurationLoan');
 
-  const maxDurationUnit = watch('maximumDurationUnit');
+  const maxDurationUnit = watch('maximumDurationUnitLoan');
   useEffect(() => {
-    resetField('maximumDurationNumber');
+    resetField('maximumDurationNumberLoan');
     setRightElement(maxDurationUnit);
   }, [maxDurationUnit]);
-  const minimumDuration = watch('enableminimumDuration');
+  const minimumDuration = watch('enableminimumDurationLoan');
 
-  const minimumDurationUnit = watch('minimumDurationUnit');
+  const minimumDurationUnit = watch('minimumDurationUnitLoan');
 
   useEffect(() => {
-    resetField('minimunDurationNumber');
+    resetField('minimunDurationNumberLoan');
     setRightElement(minimumDurationUnit);
   }, [minimumDurationUnit]);
   return (
     <BoxContainer>
       <TopText> Loan Repayment Start Grace Duration</TopText>
-      <Box display={'flex'} justifyContent="space-between">
-        <TextBoxContainer>
-          <TopText>Maximum Duration</TopText>
-        </TextBoxContainer>
-        <FormSwitchTab
-          name={'enablemaximumDuration'}
-          options={applicableSwitch}
-        />
-      </Box>
-      {maximumDuration && maximumDuration === 'applicable' && (
-        <BoxContainer
-          p="s16"
-          border={'1px solid'}
-          borderColor="border.layout"
-          display={'flex'}
-          flexDirection="row"
-          justifyContent="space-between"
-          borderRadius={'4px'}
-        >
-          <Box display={'flex'} flexDirection="column" gap="s4">
-            <Text fontSize={'s3'} fontWeight="500">
-              {' '}
-              Unit
-            </Text>
-            <FormSwitchTab name={'maximumDurationUnit'} options={unitOptions} />
-          </Box>
-          <Box w="290px">
-            <FormInput
-              name="maximumDurationNumber"
-              textAlign={'right'}
-              label="Number"
-              placeholder="Enter number"
-              rightElement={rightElement}
-            />
-          </Box>
-        </BoxContainer>
-      )}
+
       <Box display={'flex'} justifyContent="space-between">
         <TextBoxContainer>
           <TopText>Minimum Duration</TopText>
         </TextBoxContainer>
         <FormSwitchTab
-          name={'enableminimumDuration'}
+          name={'enableminimumDurationLoan'}
           options={applicableSwitch}
         />
       </Box>
@@ -125,15 +89,58 @@ export const LoanRepayment = () => {
               {' '}
               Unit
             </Text>
-            <FormSwitchTab name={'minimumDurationUnit'} options={unitOptions} />
+            <FormSwitchTab
+              name={'minimumDurationUnitLoan'}
+              options={unitOptions}
+            />
           </Box>
           <Box w="290px">
             <FormInput
-              name="minimunDurationNumber"
+              name="minimunDurationNumberLoan"
               textAlign={'right'}
               label="Number"
               placeholder="Enter number"
               rightElement={<Text>{rightElement}</Text>}
+            />
+          </Box>
+        </BoxContainer>
+      )}
+      <Box display={'flex'} justifyContent="space-between">
+        <TextBoxContainer>
+          <TopText>Maximum Duration</TopText>
+        </TextBoxContainer>
+        <FormSwitchTab
+          name={'enablemaximumDurationLoan'}
+          options={applicableSwitch}
+        />
+      </Box>
+      {maximumDuration && maximumDuration === 'applicable' && (
+        <BoxContainer
+          p="s16"
+          border={'1px solid'}
+          borderColor="border.layout"
+          display={'flex'}
+          flexDirection="row"
+          justifyContent="space-between"
+          borderRadius={'4px'}
+        >
+          <Box display={'flex'} flexDirection="column" gap="s4">
+            <Text fontSize={'s3'} fontWeight="500">
+              {' '}
+              Unit
+            </Text>
+            <FormSwitchTab
+              name={'maximumDurationUnitLoan'}
+              options={unitOptions}
+            />
+          </Box>
+          <Box w="290px">
+            <FormInput
+              name="maximumDurationNumberLoan"
+              textAlign={'right'}
+              label="Number"
+              placeholder="Enter number"
+              rightElement={rightElement}
             />
           </Box>
         </BoxContainer>
