@@ -9,6 +9,7 @@ import {
 } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { GrRotateRight } from 'react-icons/gr';
+import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import {
@@ -125,8 +126,8 @@ const AddAccountDetails = ({
       <Box display="flex" alignItems="center">
         <Box
           flex={1}
-          px={2}
-          py={3}
+          px={'s16'}
+          h="60px"
           bg="gray.200"
           display="flex"
           justifyContent="space-between"
@@ -141,14 +142,14 @@ const AddAccountDetails = ({
                 size="xs"
                 variant={'ghost'}
                 aria-label="close"
-                icon={<AiOutlineCaretDown />}
+                icon={<Icon as={IoChevronUpOutline} />}
               />
             ) : (
               <IconButton
                 size="xs"
                 variant={'ghost'}
                 aria-label="close"
-                icon={<AiOutlineCaretRight />}
+                icon={<Icon as={IoChevronDownOutline} />}
               />
             )}
           </Box>
@@ -166,85 +167,90 @@ const AddAccountDetails = ({
       </Box>
 
       <Collapse in={isOpen} style={{ marginTop: '0px' }}>
-        <SectionContainer mt="0">
-          <AccordianContainer>
-            <InputGroupContainer>
-              <FormInput
-                type="text"
-                name={`accountOperatorsDetails.${index}.fullName`}
-                label={t['kymInsFullName']}
-                placeholder={t['kymInsEnterFullName']}
-              />
-              <FormInput
-                type="text"
-                name={`accountOperatorsDetails.${index}.contact`}
-                label={t['kymInsContactNo']}
-                placeholder={t['kymInsContactNoPlaceholder']}
-              />
-              <FormInput
-                type="text"
-                name={`accountOperatorsDetails.${index}.email`}
-                label={t['kymInsEmail']}
-                placeholder={t['kymInsEnterEmailAddress']}
-              />
-            </InputGroupContainer>
-          </AccordianContainer>
+        <SectionContainer
+          mt="0"
+          pt="s16"
+          border={'1px solid'}
+          borderColor="border.layout"
+          borderRadius={'4px'}
+          gap="s32"
+          px="s20"
+          pb="s20"
+        >
+          <InputGroupContainer>
+            <FormInput
+              type="text"
+              name={`accountOperatorsDetails.${index}.fullName`}
+              label={t['kymInsFullName']}
+              placeholder={t['kymInsEnterFullName']}
+            />
+            <FormInput
+              type="text"
+              name={`accountOperatorsDetails.${index}.contact`}
+              label={t['kymInsContactNo']}
+              placeholder={t['kymInsContactNoPlaceholder']}
+            />
+            <FormInput
+              type="text"
+              name={`accountOperatorsDetails.${index}.email`}
+              label={t['kymInsEmail']}
+              placeholder={t['kymInsEnterEmailAddress']}
+            />
+          </InputGroupContainer>
 
-          <AccordianContainer>
-            <Text fontSize="r1" fontWeight="SemiBold">
-              {t['kymInsPermanentAddress']}
-            </Text>
-            <InputGroupContainer>
-              <FormSelect
-                name={`accountOperatorsDetails.${index}.permanentState`}
-                label={t['kymInsState']}
-                placeholder={t['kymInsSelectState']}
-                options={province}
-              />
-              <FormSelect
-                name={`accountOperatorsDetails.${index}.permanentDistrict`}
-                label={t['kymInsDistrict']}
-                placeholder={t['kymInsSelectDistrict']}
-                options={districtList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                name={`accountOperatorsDetails.${index}.permanentMunicipality`}
-                label={t['kymInsVDCMunicipality']}
-                placeholder={t['kymInsSelectVDCMunicipality']}
-                options={localityList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormInput
-                type="number"
-                name={`accountOperatorsDetails.${index}.permanentWardNo`}
-                label={t['kymInsWardNo']}
-                placeholder={t['kymInsEnterWardNo']}
-              />
-              <FormInput
-                type="text"
-                name={`accountOperatorsDetails.${index}.permanentLocality`}
-                label={t['kymInsLocality']}
-                placeholder={t['kymInsEnterLocality']}
-              />
-              <FormInput
-                type="text"
-                name={`accountOperatorsDetails.${index}.permanentHouseNo`}
-                label={t['kymInsHouseNo']}
-                placeholder={t['kymInsEnterHouseNo']}
-              />
-            </InputGroupContainer>
+          <Text fontSize="r1" fontWeight="SemiBold">
+            {t['kymInsPermanentAddress']}
+          </Text>
+          <InputGroupContainer>
+            <FormSelect
+              name={`accountOperatorsDetails.${index}.permanentState`}
+              label={t['kymInsState']}
+              placeholder={t['kymInsSelectState']}
+              options={province}
+            />
+            <FormSelect
+              name={`accountOperatorsDetails.${index}.permanentDistrict`}
+              label={t['kymInsDistrict']}
+              placeholder={t['kymInsSelectDistrict']}
+              options={districtList.map((d) => ({
+                label: d.name,
+                value: d.id,
+              }))}
+            />
+            <FormSelect
+              name={`accountOperatorsDetails.${index}.permanentMunicipality`}
+              label={t['kymInsVDCMunicipality']}
+              placeholder={t['kymInsSelectVDCMunicipality']}
+              options={localityList.map((d) => ({
+                label: d.name,
+                value: d.id,
+              }))}
+            />
+            <FormInput
+              type="number"
+              name={`accountOperatorsDetails.${index}.permanentWardNo`}
+              label={t['kymInsWardNo']}
+              placeholder={t['kymInsEnterWardNo']}
+            />
+            <FormInput
+              type="text"
+              name={`accountOperatorsDetails.${index}.permanentLocality`}
+              label={t['kymInsLocality']}
+              placeholder={t['kymInsEnterLocality']}
+            />
+            <FormInput
+              type="text"
+              name={`accountOperatorsDetails.${index}.permanentHouseNo`}
+              label={t['kymInsHouseNo']}
+              placeholder={t['kymInsEnterHouseNo']}
+            />
+          </InputGroupContainer>
 
-            <Box>
-              <FormMap
-                name={`boardOfDirectorsDetails.${index}.permanentLocation`}
-              />
-            </Box>
-          </AccordianContainer>
+          <Box>
+            <FormMap
+              name={`boardOfDirectorsDetails.${index}.permanentLocation`}
+            />
+          </Box>
 
           <Box
             id="Temporary Address"
@@ -252,7 +258,6 @@ const AddAccountDetails = ({
             display={'flex'}
             flexDirection="column"
             scrollMarginTop={'200px'}
-            p="s10"
           >
             <Text fontSize="r1" fontWeight="SemiBold">
               {t['kymInsTemporaryAddress']}
@@ -321,7 +326,7 @@ const AddAccountDetails = ({
             )}
           </Box>
 
-          <Box p="s10">
+          <Box>
             <InputGroupContainer>
               <FormSelect
                 name={`accountOperatorsDetails.${index}.designation`}
@@ -355,9 +360,11 @@ const AddAccountDetails = ({
         <Box
           display="flex"
           justifyContent="space-between"
-          p="s10"
-          borderTop="1px solid"
+          border="1px solid"
           borderColor="border.layout"
+          alignItems={'center'}
+          h="60px"
+          px="s20"
         >
           <Button
             id="accountOperatorReset"
@@ -392,6 +399,7 @@ export const InstitutionKYMAccountDetail = () => {
 
   return (
     <GroupContainer
+      gap="s16"
       id="kymInsDetailsofAccountOperators"
       scrollMarginTop="200px"
     >
@@ -407,9 +415,9 @@ export const InstitutionKYMAccountDetail = () => {
                 key={item.id}
                 display="flex"
                 flexDirection={'column'}
-                gap="s16"
-                border="1px solid"
-                borderColor="border.layout"
+                // gap="s16"
+                // border="1px solid"
+                // borderColor="border.layout"
               >
                 <AddAccountDetails
                   index={index}

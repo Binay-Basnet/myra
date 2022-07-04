@@ -66,8 +66,8 @@ const permanentAddress = [
 ];
 
 const rentedHouse = [
-  { label: 'Contact No', value: '9865000000' },
   { label: 'Landlords Name', value: 'Hari Bahadur' },
+  { label: 'Contact No', value: '9865000000' },
 ];
 const familyDetails = [{ label: 'Martial Status', value: 'Married' }];
 const coopDetails = [
@@ -295,12 +295,15 @@ const Details = () => {
           <Divider my="s16" />
 
           {/* (Income Source Details ) */}
-          <Text mb="s8" fontSize="r1" fontWeight="semibold">
+          <Text mb="s16" fontSize="r1" fontWeight="600">
+            Income Source Details{' '}
+          </Text>
+          <Text mb="s8" fontSize="s3" fontWeight="500">
             Annual Family Income
           </Text>
 
           <Grid mb="s16" templateColumns="repeat(3, 1fr)" gap="s16">
-            <Text mb="s8" fontSize="s3" fontWeight="Regular">
+            <Text fontSize="s3" fontWeight="Regular">
               4 Lakhs to 1 Million
             </Text>
           </Grid>
@@ -520,12 +523,23 @@ const Details = () => {
                   I have been in jail for a theft case.
                 </Text>
               </GridItem>
-              <GridItem display="flex">
-                <TextComponent
-                  label={'Residential Status'}
-                  value={'Permanent Resident'}
-                />
-              </GridItem>
+              <Box display={'flex'} flexDirection="column" gap="s4">
+                <Text
+                  fontSize={'r1'}
+                  fontWeight="500"
+                  color="neutralColorLight.Gray-70"
+                >
+                  Residential Status
+                </Text>
+
+                <Text
+                  fontSize={'r1'}
+                  fontWeight="400"
+                  color="neutralColorLight.Gray-70"
+                >
+                  Permanent Resident
+                </Text>
+              </Box>
             </Grid>
           </Box>
 
