@@ -61,7 +61,6 @@ const Translation = () => {
       minW="container.xl"
       p="0"
       background="white"
-      pt="s16"
     >
       <FormProvider {...methods}>
         <form>
