@@ -14,12 +14,12 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { NeosysClientForm } from '../form/NeosysClientForm';
+import { NeosysUsersForm } from '../form/NeosysUsersForm';
 
 /* eslint-disable-next-line */
-export interface NeosysFeatureClientsProps {}
+export interface NeosysFeatureUsersProps {}
 
-export function NeosysFeatureClients(props: NeosysFeatureClientsProps) {
+export function NeosysFeatureUsers(props: NeosysFeatureUsersProps) {
   const { t } = useTranslation();
   const methods = useForm({});
   const router = useRouter();
@@ -39,7 +39,7 @@ export function NeosysFeatureClients(props: NeosysFeatureClientsProps) {
             borderBottom="1px solid #E6E6E6"
           >
             <Text fontSize="r2" fontWeight="SemiBold">
-              {t['neoClientNewUser']}
+              {t['neoUsersNewUser']}
             </Text>
             <IconButton
               variant={'ghost'}
@@ -50,7 +50,7 @@ export function NeosysFeatureClients(props: NeosysFeatureClientsProps) {
           </Box>
           <FormProvider {...methods}>
             <form>
-              <NeosysClientForm watch={watch} />
+              <NeosysUsersForm watch={watch} />
             </form>
           </FormProvider>
         </Box>

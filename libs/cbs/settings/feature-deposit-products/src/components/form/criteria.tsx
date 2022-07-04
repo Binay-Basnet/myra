@@ -1,41 +1,10 @@
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
-import { IoCloseOutline } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 
 // import debounce from 'lodash/debounce';
-import {
-  ContainerWithDivider,
-  InputGroupContainer,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormCheckbox,
-  FormCheckboxGroup,
-  FormInput,
-  FormSelect,
-  FormSwitch,
-  FormSwitchTab,
-} from '@coop/shared/form';
-import {
-  Box,
-  Container,
-  Grid,
-  GridItem,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormCheckboxGroup } from '@coop/shared/form';
 
-import { GridItems } from './listGrid';
 import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
-
-const typesOfMember = [
-  { label: 'Individual', value: 'individual' },
-  { label: 'Institiutional', value: 'institiutional' },
-  { label: 'Cooperative', value: 'cooperative' },
-  { label: 'Cooperative Union', value: 'cooperativeUnion' },
-];
 
 const age = [{ label: 'Age', value: 'age' }];
 const gender = [{ label: 'Gender', value: 'gender' }];

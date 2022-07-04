@@ -21,6 +21,7 @@ import {
   Container,
   Grid,
   GridItem,
+  Icon,
   IconButton,
   Text,
 } from '@coop/shared/ui';
@@ -55,7 +56,13 @@ const optionsSaving = [
 
 export function SettingsLoanForm(props: loanProductsAdd) {
   const router = useRouter();
-  const methods = useForm({});
+  const methods = useForm({
+    defaultValues: {
+      nameOfDepositProduct: 'recurringSaving',
+      minimunTenureNumber: 0,
+      maximumTenureNumber: 0,
+    },
+  });
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
   const depositNature = watch('nameOfDepositProduct');
@@ -85,7 +92,7 @@ export function SettingsLoanForm(props: loanProductsAdd) {
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<IoCloseOutline />}
+              icon={<Icon as={IoCloseOutline} size="md" />}
               onClick={() => router.back()}
             />
           </Box>

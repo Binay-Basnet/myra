@@ -25,7 +25,7 @@ export const ClientsSiderbarLayout = ({ children }: IClientsSidebarProps) => {
             justifyContent="start"
             leftIcon={<AddIcon h="11px" />}
           >
-            {'Add CLient'}
+            {'Add Client'}
           </Button>
 
           <Divider my="s16" />

@@ -41,7 +41,7 @@ export const Interest = () => {
         <FormInput
           name="ceoAuthenticationRate"
           type="number"
-          label="CEO Authentication"
+          label="CEO Authority"
           textAlign={'right'}
           placeholder="0.00"
           rightElement={'%'}
@@ -49,7 +49,7 @@ export const Interest = () => {
         <FormInput
           name="boardAuthenticationRate"
           type="number"
-          label="Board Authentication"
+          label="Board Authority"
           textAlign={'right'}
           placeholder="0.00"
           rightElement={'%'}

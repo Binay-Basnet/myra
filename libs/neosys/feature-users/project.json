@@ -1,0 +1,23 @@
+{
+  "root": "libs/neosys/feature-users",
+  "sourceRoot": "libs/neosys/feature-users/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/neosys/feature-users/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/neosys/feature-users"],
+      "options": {
+        "jestConfig": "libs/neosys/feature-users/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
