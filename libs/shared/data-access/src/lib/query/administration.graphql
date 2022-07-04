@@ -9,6 +9,7 @@ query allAdministration {
         municipalities {
           id
           name
+          wards
         }
       }
     }
