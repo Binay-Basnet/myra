@@ -1,4 +1,5 @@
 import React from 'react';
+import isEmpty from 'lodash/isEmpty';
 
 import {
   GroupContainer,
@@ -34,6 +35,11 @@ export const MemberKYMBasicInfo = () => {
   const { data: religionFields, isLoading: religionLoading } =
     useGetIndividualKymOptionsQuery({
       filter: { customId: KYMOptionEnum.Religion },
+    });
+
+  const { data: nationalityFields, isLoading: nationalityLoading } =
+    useGetIndividualKymOptionsQuery({
+      filter: { customId: KYMOptionEnum.Nationality },
     });
 
   return (
@@ -85,13 +91,15 @@ export const MemberKYMBasicInfo = () => {
           options={getFieldOption(ethnicityFields)}
         />
 
-        <FormInput
-          type="text"
+        <FormSelect
           name="nationalityId"
+          isDisabled
           label={t['kymIndNationality']}
           placeholder={t['kymIndEnterNationality']}
-          isDisabled={true}
+          isLoading={nationalityLoading}
+          options={getFieldOption(nationalityFields)}
         />
+
         <FormSelect
           name={'educationQualificationId'}
           label={t['kymIndEducationalQualification']}
