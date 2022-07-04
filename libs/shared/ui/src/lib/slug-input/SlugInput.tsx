@@ -9,9 +9,9 @@ import {
 
 import { TextFields } from '@coop/shared/ui';
 export interface SlugInputProps extends InputProps {
-  label?: string | number;
+  label?: string;
   labelColor?: string;
-  placeholder?: string | number;
+  placeholder?: string;
   leftAddon?: string;
   leftAddonColor?: string;
   leftAddonBg?: string;

@@ -7,7 +7,6 @@ export * from './controllers/FormInput/FormInput';
 export * from './controllers/FormMap/FormMap';
 export * from './controllers/FormPhoneNumber/FormPhoneNumber';
 export * from './controllers/FormSelect/FormSelect';
-export * from './controllers/FormSlug/FormSlugInput';
 export * from './controllers/FormSwitchTab/FormSwitchTab';
 export * from './lib/controllers-temp';
 export * from './lib/shared-form';
