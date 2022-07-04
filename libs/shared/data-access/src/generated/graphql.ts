@@ -5391,7 +5391,7 @@ export type AddShareReturnMutation = { share: { return: { recordId: string, reco
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string }> }> }> } };
+export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string, wards: Array<number> }> }> }> } };
 
 type MutationError_AuthorizationError_Fragment = {};
 
@@ -6257,6 +6257,7 @@ export const AllAdministrationDocument = `
         municipalities {
           id
           name
+          wards
         }
       }
     }
