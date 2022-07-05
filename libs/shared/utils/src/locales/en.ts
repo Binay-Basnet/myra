@@ -397,11 +397,11 @@ const en: Record<string, string> = {
   settingsOrgAddressEnterWard: 'Enter Ward',
   settingsOrgAddressLocality: 'Locality',
 
-  settingsOrgRegRegdOffice: 'Regd Office',
+  settingsOrgRegRegdOffice: 'Registered Office',
   settingsOrgRegEnterRegdOffice: 'Registered Office',
-  settingsOrgRegRegdNo: 'Regd No',
+  settingsOrgRegRegdNo: 'Registered No',
   settingsOrgRegEnterRegdNo: 'Registered No',
-  settingsOrgRegRegdAddress: 'Regd Address',
+  settingsOrgRegRegdAddress: 'Registered Address',
   settingsOrgRegEnterRegdAddress: 'Registered Address',
   settingsOrgRegPANVATNo: 'PAN/VAT No',
 
@@ -441,6 +441,7 @@ const en: Record<string, string> = {
   settingsCoaListCash: 'Cash',
   settingsCoaListBank: 'Bank',
   settingsCoaListJournal: 'Journal',
+  settingsSaveButton: 'Save Account',
 
   // settings general members individual
   settingsMember: 'Member Settings',
