@@ -17,7 +17,7 @@ export const ClientsSiderbarLayout = ({ children }: IClientsSidebarProps) => {
 
   return (
     <Box display="flex">
-      <Box width="275px" p="s24">
+      <Box width="275px" p="s24" position="fixed" flexShrink={0}>
         <Box>
           <Text fontSize="l1" fontWeight="600" color="gray.800">
             {t['neoClientSiderbarClients']}
@@ -63,8 +63,15 @@ export const ClientsSiderbarLayout = ({ children }: IClientsSidebarProps) => {
           </Button>
         </Box>
       </Box>
-      <Box width="calc(100% - 275px)" left="275px">
-        {children}
+      <Box
+        width="calc(100% - 275px)"
+        left="275px"
+        overflowX="hidden"
+        position="relative"
+      >
+        <Box minHeight="100vh" bg="white">
+          {children}
+        </Box>
       </Box>
     </Box>
   );
