@@ -1707,6 +1707,7 @@ export type EBankingLoanQueryHistoryArgs = {
 export type EBankingMutation = {
   cooperativeServices?: Maybe<EBankingCooperativeServiceMutation>;
   kym?: Maybe<EBankingKymMutation>;
+  utilityPayment: UtilityPayemntMutation;
 };
 
 export type EBankingNotificationQuery = {
@@ -5174,6 +5175,36 @@ export enum UserType {
   Human = 'HUMAN',
   System = 'SYSTEM'
 }
+
+export type UtilityPayemntMutation = {
+  post?: Maybe<UtilityPaymentResult>;
+};
+
+
+export type UtilityPayemntMutationPostArgs = {
+  serviceID: Scalars['ID'];
+  state?: InputMaybe<Scalars['Map']>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+export type UtilityPaymentError = UtilityPaymentInvalidDataError;
+
+export type UtilityPaymentInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type UtilityPaymentRecord = {
+  components?: Maybe<Scalars['Any']>;
+  header_name?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['Map']>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type UtilityPaymentResult = {
+  error?: Maybe<UtilityPaymentError>;
+  record?: Maybe<UtilityPaymentRecord>;
+  transactionID?: Maybe<Scalars['ID']>;
+};
 
 export type ValidationError = {
   code: Scalars['String'];
