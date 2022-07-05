@@ -1547,6 +1547,74 @@ const ne: Record<string, string> = {
   accYearly: 'Yearly',
 
   upto: 'Upto',
+
+  // NEOSYS-ADMIN
+
+  //header
+  neoClientDashboard: 'Dashboard',
+  neoClientClients: 'Clients',
+  neoClientUsers: 'Users',
+  neoClientSettings: 'Settings',
+
+  //siderbar
+  neoClientSiderbarClients: 'Clients',
+  neoClientSiderbarClientsAdd: 'Add Client',
+  neoClientSidebarClientList: 'Client List',
+  neoClientSiderbarSettings: 'Client Settings',
+
+  //clients table
+  neoClientTableList: 'Client List',
+  neoClientTableSearch: 'Search Clients',
+  neoClientTableActive: 'Active',
+  neoClientTableDraft: 'Draft',
+  neoClientTableInactive: 'Inactive',
+  neoClientTableName: 'Name',
+  neoClientTableAddress: 'Address',
+  neoClientTableDateJoined: 'Date Joined',
+
+  // clients form
+  neoClientNewUser: 'New User',
+  neoClientOrganizationType: 'Organization Type',
+  neoClientOrganizationCode: 'Organization Code',
+  neoClientOrganizationName: 'Organization Name',
+  neoClientOrganizationLogo: 'Organization Logo',
+  neoClientURL: 'URL',
+  neoClientSlug: 'Slug',
+  neoClientContactDetails: 'Contact Details',
+  neoClientOfficePhone: 'Office Phone',
+  neoClientEmailAddress: 'Email Address',
+  neoClientWebsite: 'Website',
+  neoClientRegistrationDetails: 'Registration Details',
+  neoClientRegisteredOffice: 'Registered Office',
+  neoClientRegisteredNo: 'Registered No',
+  neoClientRegisteredAddress: 'Registered Address',
+  neoClientRegistrationDate: 'Registration Date',
+  neoClientPANVATNo: 'PAN  / VAT No',
+  neoClientAddress: 'Address',
+  neoClientProvince: 'Province',
+  neoClientSelectProvince: 'Select Province',
+  neoClientDistrict: 'District',
+  neoClientSelectDistrict: 'Select District',
+  neoClientLocalGovernment: 'Local Government',
+  neoClienSelectLocalGovernment: 'Select Local Government',
+  neoClientWardNo: 'Ward No',
+  neoClientEnterWardNo: 'Enter Ward No',
+  neoClientLocality: 'Locality',
+  neoClientEnterLocality: 'Enter Locality',
+  neoClientHouseNo: 'House No.',
+  neoClientEnterHouseNo: 'Enter House No.',
+  neoClientMainContactPerson: 'Main Contact Person',
+  neoClientName: 'Name',
+  neoClientPhoneNumber: 'Phone Number',
+
+  // users form
+  neoUsersNewUser: 'New User',
+  neoUsersName: 'Name',
+  neoUsersRole: 'Role',
+  neoUsersSelectRole: 'Select Role',
+  neoUsersEmailAddress: 'Email Address',
+  neoUsersPhoneNumber: 'Phone Number',
+  neoUsersViewEditFullPermission: 'View and Edit Full Permission',
 };
 
 export default ne;

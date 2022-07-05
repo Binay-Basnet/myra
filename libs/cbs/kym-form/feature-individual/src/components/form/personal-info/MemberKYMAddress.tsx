@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -18,7 +18,7 @@ export const MemberKYMAddress = () => {
     'isPermanentAndTemporaryAddressSame'
   );
   const { data } = useAllAdministrationQuery();
-  const [temporaryAddress, setTemporaryAddress] = useState(false);
+  console.log('hello123', data);
 
   const province = useMemo(() => {
     return (
@@ -32,6 +32,7 @@ export const MemberKYMAddress = () => {
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('permanentStateId');
   const currentDistrictId = watch('permanentDistrictId');
+  const currentLocalityId = watch('permanentLocalityId');
 
   const districtList = useMemo(
     () =>
@@ -47,9 +48,14 @@ export const MemberKYMAddress = () => {
     [currentDistrictId]
   );
 
+  const wardList = useMemo(
+    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
+  );
   // FOR TEMPORARY ADDRESS
   const currentTempProvinceId = watch('temporaryStateId');
   const currentTemptDistrictId = watch('temporaryDistrictId');
+  const currentTempLocalityId = watch('temporaryLocalityId');
 
   const districtTempList = useMemo(
     () =>
@@ -63,6 +69,12 @@ export const MemberKYMAddress = () => {
       districtTempList.find((d) => d.id === currentTemptDistrictId)
         ?.municipalities ?? [],
     [currentTemptDistrictId]
+  );
+
+  const wardTempList = useMemo(
+    () =>
+      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+    [currentTempLocalityId]
   );
 
   return (
@@ -108,12 +120,21 @@ export const MemberKYMAddress = () => {
                 value: d.id,
               }))}
             />
-            <FormInput
+            <FormSelect
+              name="permanentWardId"
+              label={t['kymIndWardNo']}
+              placeholder={t['kymIndEnterWardNo']}
+              options={wardList?.map((d) => ({
+                label: d,
+                value: d,
+              }))}
+            />
+            {/* <FormInput
               type="number"
               name="permanentWardId"
               label={t['kymIndWardNo']}
               placeholder={t['kymIndEnterWardNo']}
-            />
+            /> */}
             <FormInput
               type="text"
               name="permanentTole"
@@ -176,11 +197,14 @@ export const MemberKYMAddress = () => {
                   value: d.id,
                 }))}
               />
-              <FormInput
-                type="number"
+              <FormSelect
                 name="temporaryWardId"
                 label={t['kymIndWardNo']}
                 placeholder={t['kymIndEnterWardNo']}
+                options={wardTempList.map((d) => ({
+                  label: d,
+                  value: d,
+                }))}
               />
               <FormInput
                 type="text"

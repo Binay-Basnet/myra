@@ -1,0 +1,23 @@
+{
+  "root": "libs/neosys/ui-layout",
+  "sourceRoot": "libs/neosys/ui-layout/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/neosys/ui-layout/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/neosys/ui-layout"],
+      "options": {
+        "jestConfig": "libs/neosys/ui-layout/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

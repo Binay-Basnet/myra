@@ -5446,7 +5446,7 @@ export type AddShareReturnMutation = { share: { return: { recordId: string, reco
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string }> }> }> } };
+export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string, wards: Array<number> }> }> }> } };
 
 type MutationError_AuthorizationError_Fragment = {};
 
@@ -5459,6 +5459,11 @@ type MutationError_ServerError_Fragment = { __typename: 'ServerError', message: 
 type MutationError_ValidationError_Fragment = {};
 
 export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
+
+export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetConfigQuery = { config: { countries?: Array<{ name?: string | null, code?: string | null } | null> | null } };
 
 export type GetKymFormStatusInstitutionQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -6404,6 +6409,7 @@ export const AllAdministrationDocument = `
         municipalities {
           id
           name
+          wards
         }
       }
     }
@@ -6420,6 +6426,28 @@ export const useAllAdministrationQuery = <
     useQuery<AllAdministrationQuery, TError, TData>(
       variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
       useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
+      options
+    );
+export const GetConfigDocument = `
+    query getConfig {
+  config {
+    countries {
+      name
+      code
+    }
+  }
+}
+    `;
+export const useGetConfigQuery = <
+      TData = GetConfigQuery,
+      TError = unknown
+    >(
+      variables?: GetConfigQueryVariables,
+      options?: UseQueryOptions<GetConfigQuery, TError, TData>
+    ) =>
+    useQuery<GetConfigQuery, TError, TData>(
+      variables === undefined ? ['getConfig'] : ['getConfig', variables],
+      useAxios<GetConfigQuery, GetConfigQueryVariables>(GetConfigDocument).bind(null, variables),
       options
     );
 export const GetKymFormStatusInstitutionDocument = `

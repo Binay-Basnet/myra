@@ -141,16 +141,8 @@ export const GridItems = ({ watch }: any) => {
                 <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                   Age
                 </Text>
-                <FormInput
-                  name="maxAge"
-                  label="Minimum Age"
-                  placeholder="Enter Minimum Age"
-                />
-                <FormInput
-                  name="minAge"
-                  label="Maximum Age"
-                  placeholder="Enter Maxinum Age"
-                />
+                <FormInput name="maxAge" placeholder="Enter Minimum Age" />
+                <FormInput name="minAge" placeholder="Enter Maxinum Age" />
               </BoxContainer>
             )}
           {memberType &&

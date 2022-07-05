@@ -1,11 +1,12 @@
+import { forwardRef } from 'react';
 import {
   Input,
-  InputLeftAddon,
-  InputRightAddon,
-  InputProps,
   InputGroup,
+  InputLeftAddon,
+  InputProps,
+  InputRightAddon,
 } from '@chakra-ui/react';
-import { forwardRef } from 'react';
+
 import { TextFields } from '@coop/shared/ui';
 export interface SlugInputProps extends InputProps {
   label?: string;
@@ -57,7 +58,12 @@ export const SlugInput = forwardRef<HTMLInputElement, SlugInputProps>(
           />
 
           {rightAddon && (
-            <InputRightAddon color={rightAddonColor} bg={rightAddonBg}>
+            <InputRightAddon
+              fontSize="r1"
+              fontWeight="regular"
+              color={rightAddonColor ?? 'neutralColorLight.Gray-80'}
+              bg={rightAddonBg ?? 'background.500'}
+            >
               {rightAddon}
             </InputRightAddon>
           )}
