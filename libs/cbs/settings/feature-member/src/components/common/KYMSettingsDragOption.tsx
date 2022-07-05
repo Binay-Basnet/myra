@@ -3,20 +3,23 @@ import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import { FormProvider, useForm } from 'react-hook-form';
 import { debounce } from 'lodash';
 
-import {
-  Kym_Option_Field_Type as Field_Types,
-  KymField,
-  KymOption,
-  useAddKymOptionMutation,
-} from '@coop/shared/data-access';
+import { useUpsertKymOptionMutation } from '@coop/shared/data-access';
 import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Icon, Text } from '@coop/shared/ui';
 
-interface IKYMSingleItemProps {
-  item: Partial<KymOption>;
-  field: KymField;
+import { GROUPED_FIELD_OPTIONS } from '../../constants/GROUPED_FIELD_OPTIONS';
+import { UPLOAD_FIELD_OPTIONS } from '../../constants/UPLOAD_FIELD_OPTIONS';
+import {
+  KymField,
+  KymFieldType,
+  KymOption,
+  KymOptionFieldType,
+} from '../../types';
+
+interface IKYMSettingsDragOptionProps {
   dragHandleProps: DraggableProvidedDragHandleProps | undefined;
-  setFieldItems: React.Dispatch<React.SetStateAction<Partial<KymOption>[]>>;
+  option: Partial<KymOption>;
+  field: Partial<KymField>;
 }
 
 const GRID2X3 = () => {
@@ -35,124 +38,54 @@ const GRID2X3 = () => {
     </svg>
   );
 };
-
-const GROUPED_FIELD_SELECT = [
-  {
-    label: 'Amount',
-    value: Field_Types.Amount,
-  },
-
-  {
-    label: 'Date',
-    value: Field_Types.Date,
-  },
-  {
-    label: 'District',
-    value: Field_Types.District,
-  },
-  {
-    label: 'Email',
-    value: Field_Types.Email,
-  },
-  {
-    label: 'Local Level',
-    value: Field_Types.LocalLevel,
-  },
-
-  {
-    label: 'Number Input',
-    value: Field_Types.NumberInput,
-  },
-  {
-    label: 'Phone Number',
-    value: Field_Types.PhoneNumber,
-  },
-  {
-    label: 'Province',
-    value: Field_Types.Province,
-  },
-
-  {
-    label: 'Text Box',
-    value: Field_Types.Paragraph,
-  },
-  {
-    label: 'Text Input',
-    value: Field_Types.TextInput,
-  },
-];
-
-const UPLOAD_FIELD_SELECT = [
-  {
-    label: 'Single',
-    value: Field_Types.SingleFile,
-  },
-  {
-    label: 'Multiple',
-    value: Field_Types.MultipleFile,
-  },
-];
-
-export const KYMSingleItem = ({
-  item,
+export const KYMSettingsDragOption = ({
   dragHandleProps,
+  option,
   field,
-  setFieldItems,
-}: IKYMSingleItemProps) => {
-  console.log(field);
-
-  const [isEditable, setIsEditable] = useState(!item.id);
-
-  const { mutateAsync: kymOptionUpdate } = useAddKymOptionMutation({
-    onSuccess: (response) => {
-      const newItem = response.settings.kymForm.option.upsert.record;
-
-      if (newItem) {
-        setFieldItems((prev) =>
-          prev.map((option) => (!option.id ? newItem : option))
-        );
-      }
-    },
-  });
+}: IKYMSettingsDragOptionProps) => {
+  const [isEditable, setIsEditable] = useState(!option.id);
 
   const methods = useForm<{
     enabled: boolean;
     name: string;
-    fieldType?: Field_Types | null;
+    fieldType?: KymOptionFieldType | null;
   }>({
     defaultValues: {
-      enabled: item.enabled,
-      name: item?.name?.local,
-      fieldType: item.fieldType,
+      enabled: option.enabled,
+      name: option?.name?.local ?? '',
+      fieldType: option.fieldType,
     },
   });
 
-  const onSubmit = debounce(async () => {
-    if (item.id) {
-      await kymOptionUpdate({
-        fieldId: field.id,
-        data: {
-          id: item.id,
-          name: methods.getValues().name,
-          enabled: methods.getValues().enabled,
-          fieldType: methods.getValues().fieldType?.length
-            ? methods.getValues().fieldType
-            : null,
-
-          // variant: KymOptionVariant.Text,
-        },
-      });
-    }
-  }, 800);
+  const { mutateAsync: updateOption } = useUpsertKymOptionMutation();
 
   useEffect(() => {
-    methods.getValues().name === '' && setIsEditable(true);
+    if (
+      (field.fieldType === KymFieldType.Group &&
+        !methods.getValues().fieldType) ||
+      methods.getValues().name === ''
+    ) {
+      setIsEditable(true);
+    }
   }, []);
 
   useEffect(() => {
-    // @ts-ignore
-    const subscription = methods.watch(methods.handleSubmit(onSubmit));
-    // @ts-ignore
+    const subscription = methods.watch(
+      debounce(async (data) => {
+        if (field.id && data.name) {
+          await updateOption({
+            fieldId: field.id,
+            option: {
+              id: option.id,
+              name: data.name,
+              enabled: data.enabled,
+              fieldType: data.fieldType ?? KymOptionFieldType.TextInput,
+            },
+          });
+        }
+      }, 800)
+    );
+
     return () => subscription.unsubscribe();
   }, [methods, methods.handleSubmit, methods.watch]);
 
@@ -165,30 +98,15 @@ export const KYMSingleItem = ({
         justifyContent="flex-start"
         alignItems="center"
         gap="s20"
-        onSubmit={async (e) => {
-          e.preventDefault();
+        onSubmit={(e) => {
           setIsEditable(false);
-
-          if (!item.id) {
-            await kymOptionUpdate({
-              fieldId: field.id,
-              data: {
-                name: methods.getValues().name,
-                enabled: methods.getValues().enabled,
-                fieldType: methods.getValues().fieldType,
-              },
-            });
-          }
+          e.preventDefault();
         }}
       >
-        {item?.id && (
-          <Box {...dragHandleProps}>
-            <Icon size="md" as={GRID2X3} />
-          </Box>
-        )}
-
-        {item?.id && <FormSwitch name="enabled" size="md" />}
-
+        <Box {...dragHandleProps}>
+          <Icon size="md" as={GRID2X3} />
+        </Box>
+        <FormSwitch name="enabled" size="md" />
         <Box
           width="100%"
           display="flex"
@@ -198,7 +116,7 @@ export const KYMSingleItem = ({
         >
           <>
             <Box width={field.fieldType !== 'GROUP' ? '100%' : '66%'}>
-              {isEditable || !item.id ? (
+              {isEditable || !option.id ? (
                 <FormInput type="text" name="name" />
               ) : (
                 <Text
@@ -230,8 +148,8 @@ export const KYMSingleItem = ({
                   name="fieldType"
                   options={
                     field.fieldType === 'GROUP'
-                      ? GROUPED_FIELD_SELECT
-                      : UPLOAD_FIELD_SELECT
+                      ? GROUPED_FIELD_OPTIONS
+                      : UPLOAD_FIELD_OPTIONS
                   }
                 />
               ) : (

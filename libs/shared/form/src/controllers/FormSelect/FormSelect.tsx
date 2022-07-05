@@ -1,10 +1,12 @@
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
+import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 
 import { Select, SelectProps } from '@coop/shared/ui';
 
 interface IFormSelectProps<T> extends SelectProps {
   control?: Control<T>;
   name: Path<T>;
+  rules?: UseControllerProps['rules'];
 }
 
 interface Option {
@@ -28,6 +30,7 @@ export const FormSelect = <T,>({
   return (
     <Controller
       control={formControl}
+      rules={rest.rules}
       name={name}
       render={({ field: { onChange, value } }) => {
         const foundValue = options?.find((option) => option.value === value);
