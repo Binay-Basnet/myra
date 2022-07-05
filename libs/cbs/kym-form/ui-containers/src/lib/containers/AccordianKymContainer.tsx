@@ -1,5 +1,6 @@
 import React from 'react';
 import { BoxProps } from '@chakra-ui/react';
+
 import { Box } from '@coop/shared/ui';
 
 interface IGroupContainer extends BoxProps {
@@ -16,7 +17,7 @@ export const AccordianContainer = ({
       flexDirection="column"
       gap="s16"
       {...otherProps}
-      p="s10"
+      p="s20"
     >
       {children}
     </Box>
