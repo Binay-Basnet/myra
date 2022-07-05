@@ -1,10 +1,12 @@
-import { Kym_Field_Custom_Id as KYMOptionEnum } from '@coop/shared/data-access';
+import { Kym_Field_Parent } from '@coop/shared/data-access';
 
 import { IncomeSourceDetailsAccComponent } from '../components/IncomeSourceDetailsAccComponent';
 import { KYMDeclaration } from '../components/KYMDeclaration';
+import { KYMCustomFieldEnum, KYMFieldParentEnum } from '../types';
 
 interface FieldType {
-  customId?: KYMOptionEnum;
+  customId?: KYMCustomFieldEnum;
+  parentId?: KYMFieldParentEnum;
   key?: string;
   label: string;
   hasChildren?: boolean;
@@ -18,39 +20,39 @@ export const KYM_FIELDS: FieldType[] = [
     label: 'settingsMemberSection1PersonalInformation',
     children: [
       {
-        customId: KYMOptionEnum.Gender,
+        customId: KYMCustomFieldEnum.Gender,
         key: 'Gender',
         label: 'settingsMemberGender',
       },
       {
-        customId: KYMOptionEnum.Nationality,
+        customId: KYMCustomFieldEnum.Nationality,
         key: 'nationality',
         label: 'settingsMemberNationality',
       },
       {
-        customId: KYMOptionEnum.EducationQualification,
+        customId: KYMCustomFieldEnum.EducationQualification,
         key: 'education_qualification',
         label: 'settingsMemberEducationQualification',
       },
       {
-        customId: KYMOptionEnum.Religion,
+        customId: KYMCustomFieldEnum.Religion,
         key: 'religion',
         label: 'settingsMemberReligion',
       },
       {
-        customId: KYMOptionEnum.Ethnicity,
+        customId: KYMCustomFieldEnum.Ethnicity,
         key: 'ethnicity',
         label: 'settingsMemberEthnicity',
       },
       {
-        customId: KYMOptionEnum.ContactDetails,
+        customId: KYMCustomFieldEnum.ContactDetails,
         key: 'Contact Details',
         label: 'settingsMemberContactDetails',
       },
       {
         key: 'customIdentification_documents',
         label: 'settingsMemberIdentificationDocuments',
-        hasChildren: true,
+        parentId: Kym_Field_Parent.Identification,
         children: [
           // {
           //   key: 'citizenship',
@@ -67,17 +69,17 @@ export const KYM_FIELDS: FieldType[] = [
         ],
       },
       {
-        customId: KYMOptionEnum.MaritalStatus,
+        customId: KYMCustomFieldEnum.MaritalStatus,
         key: 'marital_status',
         label: 'settingsMemberMaritalStatus',
       },
       {
-        customId: KYMOptionEnum.Relationship,
+        customId: KYMCustomFieldEnum.Relationship,
         key: 'family_relationship',
         label: 'settingsMemberFamilyRelationship',
       },
       {
-        customId: KYMOptionEnum.FamilyInformation,
+        customId: KYMCustomFieldEnum.FamilyInformation,
         key: 'family_information',
         label: 'settingsMemberFamilyInformation',
       },
@@ -88,28 +90,28 @@ export const KYM_FIELDS: FieldType[] = [
     label: 'settingsMemberSection2ProfessionalInformation',
     children: [
       {
-        customId: KYMOptionEnum.Occupation,
+        customId: KYMCustomFieldEnum.Occupation,
         label: 'settingsMemberOccupation',
         key: 'occupation',
       },
       {
-        customId: KYMOptionEnum.OccupationDetails,
+        customId: KYMCustomFieldEnum.OccupationDetails,
         label: 'settingsMemberOccupationDetails',
         key: 'occupation_details',
       },
       {
-        customId: KYMOptionEnum.FamilyIncomeSource,
+        customId: KYMCustomFieldEnum.FamilyIncomeSource,
         label: 'settingsMemberFamilyIncome',
         key: 'family_income',
       },
       {
-        customId: KYMOptionEnum.IncomeSourceDetails,
+        customId: KYMCustomFieldEnum.IncomeSourceDetails,
         label: 'settingsMemberIncomeSourceDetails',
         key: 'income_source_details',
         component: IncomeSourceDetailsAccComponent,
       },
       {
-        customId: KYMOptionEnum.EstimatedAnnualTransaction,
+        customId: KYMCustomFieldEnum.EstimatedAnnualTransaction,
         label: 'settingsMemberEstimatedAnnualTransaction',
         key: 'est_annual_transaction',
       },
@@ -120,17 +122,17 @@ export const KYM_FIELDS: FieldType[] = [
     label: 'settingsMemberSection3CooperativeMember',
     children: [
       {
-        customId: KYMOptionEnum.Purpose,
+        customId: KYMCustomFieldEnum.Purpose,
         label: 'settingsMemberPurposeOfBecomingAMemberOfThisCooperative',
         key: 'purpose_of_becoming_member',
       },
       {
-        customId: KYMOptionEnum.OtherCooperativeDetails,
+        customId: KYMCustomFieldEnum.OtherCooperativeDetails,
         label: 'settingsMemberOtherCooperativeDetails',
         key: 'other_cooperative_details',
       },
       {
-        customId: KYMOptionEnum.FinancialTransactionDetails,
+        customId: KYMCustomFieldEnum.FinancialTransactionDetails,
         label: 'settingsMemberFinancialTransactionDetails',
         key: 'financial_transaction_details',
       },
@@ -141,17 +143,17 @@ export const KYM_FIELDS: FieldType[] = [
     label: 'settingsMemberSection4Declaration',
     children: [
       {
-        customId: KYMOptionEnum.NextToKinInformation,
+        customId: KYMCustomFieldEnum.NextToKinInformation,
         label: 'settingsMemberNextToKinInformation',
         key: 'next_to_kin',
       },
       {
-        customId: KYMOptionEnum.ForeignEmploymentOptions,
+        customId: KYMCustomFieldEnum.ForeignEmploymentOptions,
         label: 'settingsMemberForeignEmploymentOptions',
         key: 'foreign_employment_options',
       },
       {
-        customId: KYMOptionEnum.FileUploads,
+        customId: KYMCustomFieldEnum.FileUploads,
         label: 'settingsMemberFileUploads',
         key: 'file_uploads',
       },
