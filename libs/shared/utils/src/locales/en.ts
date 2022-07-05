@@ -397,11 +397,11 @@ const en: Record<string, string> = {
   settingsOrgAddressEnterWard: 'Enter Ward',
   settingsOrgAddressLocality: 'Locality',
 
-  settingsOrgRegRegdOffice: 'Regd Office',
+  settingsOrgRegRegdOffice: 'Registered Office',
   settingsOrgRegEnterRegdOffice: 'Registered Office',
-  settingsOrgRegRegdNo: 'Regd No',
+  settingsOrgRegRegdNo: 'Registered No',
   settingsOrgRegEnterRegdNo: 'Registered No',
-  settingsOrgRegRegdAddress: 'Regd Address',
+  settingsOrgRegRegdAddress: 'Registered Address',
   settingsOrgRegEnterRegdAddress: 'Registered Address',
   settingsOrgRegPANVATNo: 'PAN/VAT No',
 
@@ -441,6 +441,7 @@ const en: Record<string, string> = {
   settingsCoaListCash: 'Cash',
   settingsCoaListBank: 'Bank',
   settingsCoaListJournal: 'Journal',
+  settingsSaveButton: 'Save Account',
 
   // settings general members individual
   settingsMember: 'Member Settings',
@@ -1115,6 +1116,10 @@ const en: Record<string, string> = {
   kynIndNameandAddressCooperative: 'Name and Address Cooperative',
   kynIndMemberNo: 'Member No',
   kynIndFamilyMemberinthisinstitution: 'Family Member in this institution',
+  kymIndFirstIntroducer: 'First Introducer',
+  kynmIndFirstIntroducerDetail: 'Find Member with ID',
+  kymIndSecondIntroducer: 'Second Introducer',
+  kymIndSecondIntroducerDetails: 'Find Member with ID',
   kynIndViewProfile: 'View Profile',
   kynIndCitizenshipNo: 'Citizenship No',
   kynIndEnterCitizenshipNo: 'Enter Citizenship No',

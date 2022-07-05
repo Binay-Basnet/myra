@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { Box, Button } from '@coop/shared/ui';
+import { Box, Button, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface FormFooterProps {
   status: React.ReactNode;
-  draftButton: React.ReactNode;
+  draftButton?: React.ReactNode;
   mainButtonLabel?: string;
-  mainButtonHandler: () => void;
+  mainButtonHandler?: () => void;
 }
 
 export function FormFooter({
@@ -30,7 +30,7 @@ export function FormFooter({
       borderTop="1px solid"
       borderColor="border.layout"
     >
-      {status}
+      <Text fontStyle={'italic'}>{status}</Text>
       <Box display="flex" gap="s16">
         {draftButton}
 
