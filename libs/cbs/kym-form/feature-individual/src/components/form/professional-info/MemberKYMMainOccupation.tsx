@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
+import isEmpty from 'lodash/isEmpty';
 
 import {
   DynamicBoxGroupContainer,
@@ -11,6 +12,7 @@ import {
 import {
   Kym_Field_Custom_Id,
   KymOption,
+  useGetConfigQuery,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import {
@@ -179,6 +181,13 @@ export const MemberKYMMainOccupation = () => {
     append: mainOccupationAppend,
     remove: mainOccupationRemove,
   } = useFieldArray({ control, name: 'mainOccupation' });
+  const countryList = useGetConfigQuery()?.data?.config?.countries ?? [];
+  const countryOptions = !isEmpty(countryList)
+    ? countryList?.map((item) => ({
+        label: item?.name ?? '',
+        value: item?.code ?? '',
+      }))
+    : [];
 
   return (
     <GroupContainer id="kymAccIndMainProfession" scrollMarginTop={'200px'}>
@@ -229,20 +238,7 @@ export const MemberKYMMainOccupation = () => {
               name="countryId"
               label={t['kymIndNameofCountry']}
               placeholder={t['kymIndSelectCountry']}
-              options={[
-                {
-                  label: 'Nepal',
-                  value: 'Nepal',
-                },
-                {
-                  label: 'India',
-                  value: 'India',
-                },
-                {
-                  label: 'China',
-                  value: 'China',
-                },
-              ]}
+              options={countryOptions}
             />
           </GridItem>
           <GridItem>
@@ -252,20 +248,7 @@ export const MemberKYMMainOccupation = () => {
               name="typeOfVisaId"
               label={t['kymIndTypeofVisa']}
               placeholder={t['kymIndEnterTypeofVisa']}
-              options={[
-                {
-                  label: 'Nepal',
-                  value: 'Nepal',
-                },
-                {
-                  label: 'India',
-                  value: 'India',
-                },
-                {
-                  label: 'China',
-                  value: 'China',
-                },
-              ]}
+              options={countryOptions}
             />
           </GridItem>
           <GridItem>
