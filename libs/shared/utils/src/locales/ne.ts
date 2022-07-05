@@ -1656,6 +1656,26 @@ const ne: Record<string, string> = {
   neoClientUserSiderbarUsersList: 'Users List',
   neoClientUserSiderbarUsersRole: 'Users Role',
   neoClientUserSiderbarNewUserRole: 'New User Role',
+
+  //settings sidebar
+  neoSettingsSidebarSettings: 'Settings',
+  neoSettingsSidebarGeneralSettings: 'General Settings',
+  neoSettingsSidebarGlobalAppSettings: 'Global App Settings',
+  neoSettingsSidebarMyraModules: 'Myra Modules',
+  neoSettingsSidebarDocumentMasterLists: 'Document Master Lists',
+  neoSettingsSidebarUsers: 'Users',
+
+  //global app settings layout
+  neoSettingsGlobalAppSettingsGlobal: 'Global App Settings',
+  neoSettingsGlobalAppSettingsGeneral: 'General',
+  neoSettingsGlobalAppSettingsInterestRate: 'Interest Rate',
+  neoSettingsGlobalAppSettingsShare: 'Share',
+  neoSettingsGlobalAppSettingsTDSTaxVAT: 'TDS / Tax / VAT',
+  neoSettingsGlobalAppSettingsChargeSetup: 'Charge Setup',
+  neoSettingsGlobalAppSettingsCalendarSetup: 'Calendar Setup',
+  neoSettingsGlobalAppSettingsChequeCertificateSetup:
+    'Cheque & Certificate Setup',
+  neoSettingsGlobalAppSettingsBulkMessaging: 'Bulk Messaging',
 };
 
 export default ne;

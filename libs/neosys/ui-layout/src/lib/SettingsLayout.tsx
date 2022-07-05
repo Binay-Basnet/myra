@@ -38,21 +38,21 @@ export const SettingsLayout = ({ children }: ISettingsLayoutProps) => {
   const router = useRouter();
 
   const tabLinks = [
-    { title: 'General Settings', to: `/settings` },
+    { title: t['neoSettingsSidebarGeneralSettings'], to: `/settings` },
     {
-      title: 'Global App Settings',
+      title: t['neoSettingsSidebarGlobalAppSettings'],
       to: `/settings/global-app-settings`,
     },
     {
-      title: 'Myra Modules',
+      title: t['neoSettingsSidebarMyraModules'],
       to: `/settings/myra-modules`,
     },
     {
-      title: 'Document Master Lists',
-      to: `/settings/document-master-list`,
+      title: t['neoSettingsSidebarDocumentMasterLists'],
+      to: `/settings/document-master-lists`,
     },
     {
-      title: 'Setting',
+      title: t['neoSettingsSidebarUsers'],
       to: `/settings/users`,
     },
   ];
@@ -66,7 +66,7 @@ export const SettingsLayout = ({ children }: ISettingsLayoutProps) => {
     <Box display="flex">
       <Box width="275px" p="s24" position="fixed" flexShrink={0}>
         <Text fontSize="l1" fontWeight="600" color="gray.800">
-          {t['neoClientSiderbarClients']}
+          {t['neoSettingsSidebarSettings']}
         </Text>
 
         <Divider my="s16" />

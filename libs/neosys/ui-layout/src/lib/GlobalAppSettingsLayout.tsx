@@ -39,36 +39,37 @@ export function GlobalAppSettingsLayout(props: GlobalAppSettingsLayoutProps) {
 
   const { t } = useTranslation();
 
-  const clientId = router?.query['id'];
-
   const tabLinks = [
-    { title: 'General', to: `/settings/global-app-settings` },
     {
-      title: 'Interest Rate',
+      title: t['neoSettingsGlobalAppSettingsGeneral'],
+      to: `/settings/global-app-settings`,
+    },
+    {
+      title: t['neoSettingsGlobalAppSettingsInterestRate'],
       to: `/settings/global-app-settings/interest-rate`,
     },
     {
-      title: 'Share',
+      title: t['neoSettingsGlobalAppSettingsShare'],
       to: `/settings/global-app-settings/share`,
     },
     {
-      title: 'TDS / Tax / VAT',
+      title: t['neoSettingsGlobalAppSettingsTDSTaxVAT'],
       to: `/settings/global-app-settings/tds-tax-vat`,
     },
     {
-      title: 'Charge Setup',
+      title: t['neoSettingsGlobalAppSettingsChargeSetup'],
       to: `/settings/global-app-settings/charge-setup`,
     },
     {
-      title: 'Calendar Setup',
+      title: t['neoSettingsGlobalAppSettingsCalendarSetup'],
       to: `/settings/global-app-settings/calendar-setup`,
     },
     {
-      title: 'Cheque & Certificate Setup',
+      title: t['neoSettingsGlobalAppSettingsChequeCertificateSetup'],
       to: `/settings/global-app-settings/cheque-certificate-setup`,
     },
     {
-      title: 'Bulk Messaging',
+      title: t['neoSettingsGlobalAppSettingsBulkMessaging'],
       to: `/settings/global-app-settings/bulk-messaging`,
     },
   ];
@@ -92,7 +93,7 @@ export function GlobalAppSettingsLayout(props: GlobalAppSettingsLayoutProps) {
         alignItems="center"
       >
         <Text color="gray.800" fontWeight={600} fontSize="r2">
-          {'Global App Settings'}
+          {t['neoSettingsGlobalAppSettingsGlobal']}
         </Text>
       </Box>
       <Box width="300px" position="fixed" px="s8" py="s16">
