@@ -274,7 +274,7 @@ export const KYMCustomField = ({
       </AccordionButton>
 
       <AccordionPanel p="0" display="flex" flexDirection="column">
-        <Box display="flex" flexDirection="column">
+        <Box display="flex" flexDirection="column" gap="s16">
           <FormProvider {...methods}>
             <Box display="flex" flexDirection="column" gap="s16">
               <Box px="s12" pt="s12">
@@ -298,12 +298,17 @@ export const KYMCustomField = ({
             </Box>
           </FormProvider>
 
-          <KYMSettingsDragField
-            id={field.id}
-            customField={{ ...field, fieldType: methods.getValues().fieldType }}
-            isExpanded={isExpanded}
-            kymType={kymType}
-          />
+          <Box p="0" borderTop={'1px'} borderTopColor={'border.layout'}>
+            <KYMSettingsDragField
+              id={field.id}
+              customField={{
+                ...field,
+                fieldType: methods.getValues().fieldType,
+              }}
+              isExpanded={isExpanded}
+              kymType={kymType}
+            />
+          </Box>
         </Box>
       </AccordionPanel>
     </>
