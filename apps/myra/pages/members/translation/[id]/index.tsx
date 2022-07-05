@@ -17,7 +17,7 @@ import {
   KymIndMemberInput,
   useGetMemberTranslationQuery,
 } from '@coop/shared/data-access';
-import { FormSwitchTab } from '@coop/shared/form';
+import { FormRadioGroup, FormSwitchTab } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -93,7 +93,7 @@ const Translation = () => {
 
               <GroupContainer>
                 <FormSwitchTab
-                  label="Name Check in Saction List"
+                  label="Name Check In Sanction List"
                   options={booleanList}
                   name="nameCheckInSactionList"
                 />
@@ -111,11 +111,11 @@ const Translation = () => {
                     fontWeight="Regular"
                     fontSize="s3"
                     color="neutralColorLight.gray-80"
-                    marginBottom="s4"
                   >
                     Risk Category
                   </Text>
-                  <RadioGroup
+                  <FormRadioGroup
+                    name="riskCategory"
                     radioList={['Low Risk', 'Medium Risk', 'High Risk', 'PEP']}
                     labelFontSize="s3"
                   />

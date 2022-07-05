@@ -1102,6 +1102,10 @@ const ne: Record<string, string> = {
   kynIndNameandAddressCooperative: 'Name and Address Cooperative',
   kynIndMemberNo: 'Member No',
   kynIndFamilyMemberinthisinstitution: 'Family Member in this institution',
+  kymIndFirstIntroducer: 'First Introducer',
+  kynmIndFirstIntroducerDetail: 'Find Member with ID',
+  kymIndSecondIntroducer: 'Second Introducer',
+  kymIndSecondIntroducerDetails: 'Find Member with ID',
   kynIndViewProfile: 'View Profile',
   kynIndCitizenshipNo: 'Citizenship No',
   kynIndEnterCitizenshipNo: 'Enter Citizenship No',
@@ -1615,6 +1619,47 @@ const ne: Record<string, string> = {
   neoUsersEmailAddress: 'Email Address',
   neoUsersPhoneNumber: 'Phone Number',
   neoUsersViewEditFullPermission: 'View and Edit Full Permission',
+
+  //client details
+  neoClientDetailsClients: 'Clients',
+  neoClientDetailsOverview: 'Overview',
+  neoClientDetailsBranches: 'Branches',
+  neoClientDetailsDocuments: 'Documents',
+  neoClientDetailsEmployee: 'Employee / Super Admin',
+  neoClientDetailsSubscription: 'Subscription',
+  neoClientDetailsCodes: 'Codes',
+  neoClientDetailsActivity: 'Activity',
+
+  //client details overview
+  neoClientDetailOverviewClientInformation: 'Client Information',
+  neoClientDetailOverviewEdit: 'Edit',
+  neoClientDetailOverviewType: 'Type',
+  neoClientDetailOverviewCode: 'Code',
+  neoClientDetailOverviewPanVat: 'PAN / VAT',
+  neoClientDetailOverviewRegdNo: 'Regd No',
+  neoClientDetailOverviewContactNumber: 'Contact Number',
+  neoClientDetailOverviewEmail: 'Email',
+  neoClientDetailOverviewAddress: 'Address',
+  neoClientDetailOverviewDocuments: 'Documents',
+  neoClientDetailOverviewRegistrationDoc: 'Registration Doc',
+  neoClientDetailOverviewMoa: 'MOA',
+  neoClientDetailOverviewAoa: 'AOA',
+  neoClientDetailOverviewBODDecision: 'BOD Decision',
+
+  //client details documents
+  neoClientDetailDocumentsDocuments: 'Documents',
+  neoClientDetailDocumentsAddDocument: 'Add New Document',
+  neoClientDetailDocumentsRegistrationDoc: 'Registration Doc',
+  neoClientDetailDocumentsMoa: 'MOA',
+  neoClientDetailDocumentsAoa: 'AOA',
+  neoClientDetailDocumentsBODDecision: 'BOD Decision',
+
+  //users sidebar
+  neoClientUserSiderbarUsers: 'Users',
+  neoClientUserSiderbarNewUser: 'New User',
+  neoClientUserSiderbarUsersList: 'Users List',
+  neoClientUserSiderbarUsersRole: 'Users Role',
+  neoClientUserSiderbarNewUserRole: 'New User Role',
 };
 
 export default ne;
