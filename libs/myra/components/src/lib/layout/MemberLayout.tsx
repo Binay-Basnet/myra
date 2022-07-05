@@ -61,10 +61,9 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
       onClick={onClick}
       boxShadow={'none'}
       color={'#4b4f56'}
-      // _hover={{
-      //   bg: '#ebedf0',
-      //   color: 'primary.500',
-      // }}
+      _hover={{
+        color: 'primary.500',
+      }}
       _active={{
         // bg: '#dddfe2',
         transform: 'scale(0.98)',
@@ -73,11 +72,17 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
     >
       <Icon size="xl" as={icon} />
       <br />{' '}
-      <Text fontSize="r2" fontWeight="medium">
+      <Text fontSize="r2" fontWeight="medium" color="neutralColorLight.Gray-80">
         {t[title]}{' '}
       </Text>
       <br />{' '}
-      <Text fontSize="s3" fontWeight="regular" textAlign="center" px="2px">
+      <Text
+        fontSize="s3"
+        fontWeight="regular"
+        textAlign="center"
+        px="2px"
+        color="neutralColorLight.Gray-80"
+      >
         {t[subtitle]}{' '}
       </Text>
     </Box>

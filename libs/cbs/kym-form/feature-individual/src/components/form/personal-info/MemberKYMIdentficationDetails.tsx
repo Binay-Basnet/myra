@@ -1,8 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { useGetIndIdentificationDocOptionQuery } from '@coop/shared/data-access';
+import {
+  Kym_Option_Field_Type,
+  useGetIndIdentificationDocOptionQuery,
+} from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Checkbox, Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -79,9 +83,9 @@ export const MemberKYMIdentificationDetails = () => {
                           value: option.id,
                         }
                       );
-
                       return (
-                        <FormInput
+                        <FormInputWithType
+                          formType={option?.fieldType}
                           id="identificationFields"
                           type="number"
                           name={`identification.${fieldIndex}.options.${optionIndex}.value`}
