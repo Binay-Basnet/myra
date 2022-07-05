@@ -37,10 +37,9 @@ export const KYMFinancialTransactionDetails = () => {
         <InputGroupContainer>
           {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
             (option, index) => {
-              register(
-                `initialTransactionDetails.options.${index}.id`,
-                option.id
-              );
+              register(`initialTransactionDetails.options.${index}.id`, {
+                value: option.id,
+              });
               return (
                 <FormInput
                   id={`financialTransaction.${String(option?.name?.local)}`}
