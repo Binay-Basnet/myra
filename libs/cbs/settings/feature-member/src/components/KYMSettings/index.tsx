@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
-  Kym_Field_Parent,
   KymMemberTypesEnum,
-  useGetKymIndItemDetailsQuery,
+  useGetKymSettingsFieldsQuery,
 } from '@coop/shared/data-access';
 import { Accordion, AccordionItem, AccordionPanel } from '@coop/shared/ui';
 
+import { KYMInnerAccordion } from '../common/KYMInnerAccordion';
 import { KYMBottomPanel } from '../KYMBottomPanel';
 import { KYMCustomSection } from '../KYMCustomField/KYMCustomField';
-import { KYMInnerAccordion } from '../KYMInnerAccordion';
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
+import { KYMFieldParentEnum } from '../../types';
 
 /* eslint-disable-next-line */
 interface FieldType {
   customId?: KYMOptionEnum;
+  parentId?: KYMFieldParentEnum;
   key?: string;
   label: string;
-  hasChildren?: boolean;
   children?: FieldType[];
 }
 
@@ -35,14 +35,18 @@ export const KYMSettings = ({
 }: IKYMSettingsProps) => {
   const [fields, setFields] = useState(kymFields);
 
-  const { data, isLoading } = useGetKymIndItemDetailsQuery(
-    { isIdentificationDoc: Kym_Field_Parent.Identification },
+  const { data, isLoading } = useGetKymSettingsFieldsQuery(
+    {
+      filter: {
+        parent: fields.parentId,
+      },
+    },
     {
       enabled: fields.children?.length === 0,
       onSuccess: (response) => {
         const responseFields = response?.settings?.kymForm?.field?.list?.data;
 
-        if (responseFields && fields.hasChildren) {
+        if (responseFields && fields.parentId) {
           setFields((prev) => ({
             ...prev,
             children: responseFields.map((field) => ({
@@ -77,33 +81,43 @@ export const KYMSettings = ({
                 allowToggle
                 display="flex"
                 flexDirection="column"
-                p="s12"
+                p={fields?.children?.length === 0 ? 0 : 's12'}
                 gap="s12"
               >
                 {fields?.children?.map((subField, index) =>
                   subField?.children ? (
-                    <KYMSettings
-                      kymType={kymType}
-                      fields={subField}
-                      isSection={true}
-                    />
+                    <Fragment key={subField.label}>
+                      <KYMSettings
+                        kymType={kymType}
+                        fields={subField}
+                        isSection={true}
+                      />
+                    </Fragment>
                   ) : (
-                    <KYMInnerAccordion
-                      kymType={kymType}
-                      subField={subField}
-                      index={index}
-                    />
+                    <Fragment key={subField.label}>
+                      <KYMInnerAccordion
+                        kymType={kymType}
+                        subField={subField}
+                        index={index}
+                      />
+                    </Fragment>
                   )
                 )}
               </Accordion>
             </AccordionPanel>
 
-            {isSection ? <KYMBottomPanel setItems={setFields} /> : null}
+            {isSection && fields.parentId ? (
+              <KYMBottomPanel
+                parent={fields.parentId}
+                kymType={kymType}
+                setItems={setFields}
+              />
+            ) : null}
           </>
         )}
       </AccordionItem>
     </Accordion>
   ) : (
-    <KYMCustomSection fields={fields} />
+    <KYMCustomSection kymType={kymType} fields={fields} />
   );
 };

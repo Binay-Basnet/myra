@@ -1,103 +1,89 @@
 mutation addKYMOption($fieldId: ID!, $data: KYMOptionInput!) {
-    settings {
-        kymForm {
-            option {
-                upsert(fieldId: $fieldId, data: $data) {
-                    recordId
-                    record {
-                        id
-                        name
-                        fieldType
-                        enabled
-                    }
-                    error {
-                        ...MutationError
-                    }
-                }
-            }
+  settings {
+    kymForm {
+      option {
+        upsert(fieldId: $fieldId, data: $data) {
+          recordId
+          record {
+            id
+            name
+            fieldType
+            enabled
+          }
+          error {
+            ...MutationError
+          }
         }
+      }
     }
+  }
 }
 
 #
 
 mutation addConditionField($fieldId: ID!, $dependsOn: [ID]!) {
-    settings {
-        kymForm {
-            condition(fieldId: $fieldId, dependsOn: $dependsOn) {
-                recordId
-            }
+  settings {
+    kymForm {
+      condition(fieldId: $fieldId, dependsOn: $dependsOn) {
+        recordId
+        error {
+          ...MutationError
         }
+      }
     }
+  }
 }
 
 mutation addFileSize($fieldId: ID!, $maxSize: Int!) {
-    settings {
-        kymForm {
-            maxSize(fieldId: $fieldId, maxSize: $maxSize) {
-                recordId
-            }
-        }
+  settings {
+    kymForm {
+      maxSize(fieldId: $fieldId, maxSize: $maxSize) {
+        recordId
+      }
     }
-}
-mutation addCustomField {
-    settings {
-        kymForm {
-            field {
-                add(
-                    data: {
-                        kymType: INDIVIDUAL
-                        name: "121"
-                        fieldType: SINGLE_SELECT
-                        hasOtherField: false
-                        enabled: false
-                    }
-                ) {
-                    record {
-                        id
-                        name
-                        enabled
-                        fieldType
-                        isCustom
-                        hasOtherField
-                        options {
-                            id
-                            name
-                            fieldType
-                            enabled
-                        }
-                    }
-                }
-            }
-        }
-    }
+  }
 }
 
 mutation updateCustomField(
-    $fieldId: ID!
-    $fieldName: String
-    $fieldType: KYM_FIELD_TYPE
-    $fieldEnabled: Boolean
+  $fieldId: ID!
+  $fieldName: String
+  $fieldType: KYM_FIELD_TYPE
+  $fieldEnabled: Boolean
 ) {
-    settings {
-        kymForm {
-            field {
-                update(
-                    id: $fieldId
-                    data: {
-                        name: $fieldName
-                        fieldType: $fieldType
-                        enabled: $fieldEnabled
-                    }
-                ) {
-                    recordId
-                    record {
-                        id
-                        name
-                        enabled
-                    }
-                }
-            }
+  settings {
+    kymForm {
+      field {
+        update(
+          id: $fieldId
+          data: {
+            name: $fieldName
+            fieldType: $fieldType
+            enabled: $fieldEnabled
+          }
+        ) {
+          recordId
+          record {
+            id
+            name
+            enabled
+          }
         }
+      }
     }
+  }
+}
+
+mutation deleteCustomField($id: ID!) {
+  settings {
+    kymForm {
+      field {
+        delete(id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
 }
