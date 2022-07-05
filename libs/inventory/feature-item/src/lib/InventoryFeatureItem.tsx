@@ -1,4 +1,3 @@
-import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
@@ -21,10 +20,7 @@ export interface InventoryFeatureItemProps {}
 
 export function InventoryFeatureItem(props: InventoryFeatureItemProps) {
   const { t } = useTranslation();
-  const methods = useForm({});
   const router = useRouter();
-
-  const { watch } = methods;
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="55px">
@@ -53,12 +49,9 @@ export function InventoryFeatureItem(props: InventoryFeatureItemProps) {
               icon={<Icon as={IoCloseOutline} size="md" />}
               onClick={() => router.back()}
             />
-            <FormProvider {...methods}>
-              <form>
-                <InventoryItemForm watch={watch} />
-              </form>
-            </FormProvider>
           </Box>
+
+          <InventoryItemForm />
         </Box>
       </Container>
 

@@ -1,0 +1,23 @@
+{
+  "root": "libs/inventory/ui-layout",
+  "sourceRoot": "libs/inventory/ui-layout/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/inventory/ui-layout/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/inventory/ui-layout"],
+      "options": {
+        "jestConfig": "libs/inventory/ui-layout/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

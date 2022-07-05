@@ -1,0 +1,25 @@
+{
+  "root": "libs/inventory/feature-vendors",
+  "sourceRoot": "libs/inventory/feature-vendors/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/inventory/feature-vendors/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/inventory/feature-vendors"],
+      "options": {
+        "jestConfig": "libs/inventory/feature-vendors/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

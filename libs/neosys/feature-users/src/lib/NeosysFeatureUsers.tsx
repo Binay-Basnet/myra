@@ -1,4 +1,3 @@
-import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
@@ -21,10 +20,7 @@ export interface NeosysFeatureUsersProps {}
 
 export function NeosysFeatureUsers(props: NeosysFeatureUsersProps) {
   const { t } = useTranslation();
-  const methods = useForm({});
   const router = useRouter();
-
-  const { watch } = methods;
   return (
     <>
       <Container minW="container.lg" height="fit-content" paddingBottom="55px">
@@ -49,11 +45,7 @@ export function NeosysFeatureUsers(props: NeosysFeatureUsersProps) {
               onClick={() => router.back()}
             />
           </Box>
-          <FormProvider {...methods}>
-            <form>
-              <NeosysUsersForm watch={watch} />
-            </form>
-          </FormProvider>
+          <NeosysUsersForm />
         </Box>
       </Container>
       <Box position="relative" margin="0px auto">

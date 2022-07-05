@@ -1707,6 +1707,7 @@ export type EBankingLoanQueryHistoryArgs = {
 export type EBankingMutation = {
   cooperativeServices?: Maybe<EBankingCooperativeServiceMutation>;
   kym?: Maybe<EBankingKymMutation>;
+  utilityPayment: UtilityPayemntMutation;
 };
 
 export type EBankingNotificationQuery = {
@@ -4767,13 +4768,7 @@ export type PersonalInformationInNepali = {
 };
 
 export type PresignedUrlMutation = {
-  get: PresignedUrlOutput;
   upload: PresignedUrlOutput;
-};
-
-
-export type PresignedUrlMutationGetArgs = {
-  objectName: Scalars['String'];
 };
 
 
@@ -4783,7 +4778,8 @@ export type PresignedUrlMutationUploadArgs = {
 
 export type PresignedUrlOutput = {
   filename?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  get_url?: Maybe<Scalars['String']>;
+  put_url?: Maybe<Scalars['String']>;
 };
 
 export type Province = {
@@ -5174,6 +5170,36 @@ export enum UserType {
   Human = 'HUMAN',
   System = 'SYSTEM'
 }
+
+export type UtilityPayemntMutation = {
+  post?: Maybe<UtilityPaymentResult>;
+};
+
+
+export type UtilityPayemntMutationPostArgs = {
+  serviceID: Scalars['ID'];
+  state?: InputMaybe<Scalars['Map']>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+export type UtilityPaymentError = UtilityPaymentInvalidDataError;
+
+export type UtilityPaymentInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type UtilityPaymentRecord = {
+  components?: Maybe<Scalars['Any']>;
+  header_name?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['Map']>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type UtilityPaymentResult = {
+  error?: Maybe<UtilityPaymentError>;
+  record?: Maybe<UtilityPaymentRecord>;
+  transactionID?: Maybe<Scalars['ID']>;
+};
 
 export type ValidationError = {
   code: Scalars['String'];

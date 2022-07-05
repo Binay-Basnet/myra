@@ -8,15 +8,15 @@ import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 
 import { Icon } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface TabMenuInventoryProps {}
 
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/inventory/items': 0,
-  '/inventory/item-group': 1,
+  '/inventory/warehouse': 1,
   '/inventory/vendor': 2,
-  '/inventory/units-of-measure': 3,
 };
 
 const demotabs: {
@@ -26,28 +26,22 @@ const demotabs: {
   name: string;
 }[] = [
   {
-    title: 'Items',
+    title: 'items',
     icon: IoLockClosed,
     link: '/inventory/items',
     name: 'items',
   },
   {
-    title: 'Item Group',
+    title: 'warehouse',
     icon: FaShapes,
-    link: '/inventory/item-group',
-    name: 'item-group',
+    link: '/inventory/warehouse',
+    name: 'warehouse',
   },
   {
-    title: 'Vendors',
+    title: 'vendors',
     icon: FaUserFriends,
     link: '/inventory/vendor',
     name: 'vendor',
-  },
-  {
-    title: 'Units',
-    icon: AiFillTag,
-    link: '/inventory/units-of-measure',
-    name: 'units-of-measure',
   },
 ];
 
@@ -55,6 +49,7 @@ const demotabs: {
 export function TabMenuForInventoryApp() {
   // const [tabIndex, setTabIndex] = useState(1);
   const router = useRouter();
+  const { t } = useTranslation();
 
   const currentIndex =
     NAVBAR_TAB_OBJECT[
@@ -82,7 +77,7 @@ export function TabMenuForInventoryApp() {
           color={'gray.0'}
           letterSpacing="wide"
         >
-          Inventory
+          {t['inventory']}
         </Text>
       </Box>
       <Tabs index={currentIndex} height="100%" size="md" variant="enclosed">
@@ -117,7 +112,7 @@ export function TabMenuForInventoryApp() {
                     color={isActive ? 'gray.800' : 'gray.0'}
                     fontWeight={isActive ? '600' : '500'}
                   >
-                    {title}
+                    {t[title]}
                   </Text>
                 </Tab>
               </Link>

@@ -12,6 +12,7 @@ const ne: Record<string, string> = {
   memberSince: 'Member since',
   branch: 'Branch',
   complete: 'Complete',
+  applyChanges: 'Apply Changes',
 
   // navbar
   searchMembersNameReportsEtc: 'सदस्यहरूको नाम, रिपोर्टहरू, आदि खोज्नुहोस्',
@@ -1593,6 +1594,95 @@ const ne: Record<string, string> = {
   neoUsersEmailAddress: 'Email Address',
   neoUsersPhoneNumber: 'Phone Number',
   neoUsersViewEditFullPermission: 'View and Edit Full Permission',
+
+  // INVENTORY
+
+  // item layout
+  inventory: 'Inventory',
+
+  items: 'Items',
+  addItems: 'Add Item',
+  itemsList: 'Items List',
+  itemsCategory: 'Items Category',
+  itemUnits: 'Units',
+  inventoryAdjustments: 'Inventory Adjustments',
+  itemInventorySettings: 'Inventory Settings',
+
+  warehouse: 'Warehouse',
+  vendors: 'Vendors',
+
+  //items form
+  invItemAddNewItem: 'Add New Item',
+  invItemName: 'Item Name',
+  invItemSelectItem: 'Select Item',
+  invItemCode: 'Item Code',
+  invItemGroup: 'Item Group',
+  invItemCategory: 'Category',
+  invItemTax: 'Tax',
+  invItemTaxType: 'Tax Type',
+  invItemPrimaryUnit: 'Primary Unit',
+  invItemProductInformation: 'Product Information',
+  invItemSimpleProduct: 'Simple Product',
+  invItemVariantProduct: 'Variant Product',
+  invItemPurchasePrice: 'Purchase Price',
+  invItemProfit: 'Profit %',
+  invItemSellingPrice: 'Selling Price',
+  invItemVariantInformation: 'Variant Information',
+  invItemAddAdditionalInformation: 'Add Additional Information',
+  invItemAddtionalInformation: 'Additional Information',
+  invItemSalesLedger: 'Sales Ledger',
+  invItemSelectAccount: 'Select Account',
+  invItemPurchaseLedger: 'Purchase Ledger',
+  invItemSalesReturnLedger: 'Sales Return Ledger',
+  invItemPurchaseReturnLedger: 'Purchase Return Ledger',
+  invItemValuationMethod: 'Valuation Method',
+  invItemSelectMethod: 'Select Method',
+  invItemMinimumStockQuantity: 'Minimum Stock Quantity',
+  invItemMinimumStock: 'Minimum Stock',
+
+  // item list table
+  itemListID: 'Item ID',
+  itemListName: 'Name',
+  itemListType: 'Type',
+  itemListUnitPrice: 'Unit Price',
+  itemListTotalCost: 'Total Cost',
+  itemListItemQuantity: 'Item Quantity',
+
+  // item category table
+  catgItemsCategory: 'Items Category',
+  catgName: 'Name',
+  catgParentCategory: 'Parent Category',
+  catgDescriptional: 'Descriptional',
+  catgNewItemCategory: 'New Item Category',
+  catgAddNewCatgModal: 'Add New Items Category',
+  catgItemGroupName: 'Item Group Name',
+  catgUnderItemGroup: 'Under Item Group',
+  catgSelectItemGroup: 'Select Item Group',
+  catgDescription: 'Description',
+
+  // item units table
+  itemUnitUnits: 'Units',
+  itemUnitName: 'Name',
+  itemUnitShortname: 'Short name',
+  itemUnitAcceptFraction: 'Accept Fraction',
+  itemUnitNewUnit: 'New Unit',
+  itemUnitAddNewUnit: 'Add New Unit of Measurement',
+  itemUnitFormName: 'Name',
+  itemUnitFormShortName: 'Short Name',
+  itemUnitFormDescription: 'Description',
+  itemUnitFormAcceptsFraction: 'Accepts fraction',
+  itemUnitFormAddUnitofMeasurement: 'Add Unit of Measurement',
+
+  // item adjustments table
+  itemUnitInventoryAdjustment: 'Inventory Adjustment',
+  itemUnitsDate: 'Date',
+  itemUnitsEntryNo: 'Entry No',
+  itemUnitsReference: 'Reference',
+  itemUnitsNewInventoryAdjustment: 'New Inventory Adjustment',
+  itemUnitAddNewInventoryAdjustment: 'Add New Inventory Adjustment',
+  itemUnitCode: 'Code',
+  itemUnitDate: 'Date',
+  itemUnitReferenceNumber: 'Reference Number ',
 };
 
 export default ne;
