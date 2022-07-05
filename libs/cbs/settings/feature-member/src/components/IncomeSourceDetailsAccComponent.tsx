@@ -11,6 +11,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
 
 import {
+  Kym_Field_Custom_Id,
   Kym_Field_Type,
   Kym_Option_Field_Type as FIELD_TYPE,
   KymField,
@@ -19,7 +20,7 @@ import {
   useAddKymOptionMutation,
   useArrangeKymFieldMutation,
   useDeleteKymFieldMutation,
-  useGetKymIndItemDetailsQuery,
+  useGetKymSettingsFieldsQuery,
   useToggleOtherOptionMutation,
 } from '@coop/shared/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
@@ -32,7 +33,7 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-import { KYMSingleItem } from './KYMSingleItem';
+import { KYMSettingsDragOption } from './common/KYMSettingsDragOption';
 
 export const IncomeSourceDetailsAccComponent = ({
   isExpanded,
@@ -57,9 +58,9 @@ export const IncomeSourceDetailsAccComponent = ({
     },
   });
 
-  const { isLoading, data } = useGetKymIndItemDetailsQuery(
+  const { isLoading, data } = useGetKymSettingsFieldsQuery(
     {
-      name: 'income_source_details',
+      filter: { customId: Kym_Field_Custom_Id.IncomeSourceDetails },
     },
     {
       enabled: isExpanded,
@@ -71,9 +72,9 @@ export const IncomeSourceDetailsAccComponent = ({
     }
   );
 
-  const { data: familyIncome } = useGetKymIndItemDetailsQuery(
+  const { data: familyIncome } = useGetKymSettingsFieldsQuery(
     {
-      name: 'family_income',
+      filter: { customId: Kym_Field_Custom_Id.FamilyIncomeSource },
     },
     {
       enabled: isExpanded,
@@ -142,10 +143,9 @@ export const IncomeSourceDetailsAccComponent = ({
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                         >
-                          <KYMSingleItem
-                            setFieldItems={setFieldItems}
+                          <KYMSettingsDragOption
                             field={field}
-                            item={item}
+                            option={item}
                             dragHandleProps={provided.dragHandleProps}
                           />
                           <Icon

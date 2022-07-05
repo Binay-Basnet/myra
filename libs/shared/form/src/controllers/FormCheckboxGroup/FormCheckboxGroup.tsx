@@ -35,7 +35,6 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
       control={control}
       name={name}
       render={({ field: { onChange, value } }) => {
-        console.log(value);
         return (
           <Box
             display="flex"

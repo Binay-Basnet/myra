@@ -48,8 +48,8 @@ export const SettingsInnerVerticalMenu = ({
       <Tabs variant="unstyled" index={currentIndex}>
         {tablinks.map(({ title, to }, index) => {
           return (
-            <Link href={to}>
-              <TabCol key={`${title}${index}`}>
+            <Link href={to} key={`${title}${index}`}>
+              <TabCol>
                 <Text>{t[title]}</Text>
               </TabCol>
             </Link>
