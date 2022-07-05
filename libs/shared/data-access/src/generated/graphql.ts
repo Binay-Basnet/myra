@@ -1707,6 +1707,7 @@ export type EBankingLoanQueryHistoryArgs = {
 export type EBankingMutation = {
   cooperativeServices?: Maybe<EBankingCooperativeServiceMutation>;
   kym?: Maybe<EBankingKymMutation>;
+  utilityPayment: UtilityPayemntMutation;
 };
 
 export type EBankingNotificationQuery = {
@@ -5175,6 +5176,36 @@ export enum UserType {
   System = 'SYSTEM'
 }
 
+export type UtilityPayemntMutation = {
+  post?: Maybe<UtilityPaymentResult>;
+};
+
+
+export type UtilityPayemntMutationPostArgs = {
+  serviceID: Scalars['ID'];
+  state?: InputMaybe<Scalars['Map']>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+export type UtilityPaymentError = UtilityPaymentInvalidDataError;
+
+export type UtilityPaymentInvalidDataError = {
+  error?: Maybe<Scalars['InvalidData']>;
+};
+
+export type UtilityPaymentRecord = {
+  components?: Maybe<Scalars['Any']>;
+  header_name?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['Map']>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type UtilityPaymentResult = {
+  error?: Maybe<UtilityPaymentError>;
+  record?: Maybe<UtilityPaymentRecord>;
+  transactionID?: Maybe<Scalars['ID']>;
+};
+
 export type ValidationError = {
   code: Scalars['String'];
   message: Scalars['InvalidData'];
@@ -5404,6 +5435,11 @@ type MutationError_ServerError_Fragment = { __typename: 'ServerError', message: 
 type MutationError_ValidationError_Fragment = {};
 
 export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
+
+export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetConfigQuery = { config: { countries?: Array<{ name?: string | null, code?: string | null } | null> | null } };
 
 export type GetKymFormStatusInstitutionQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -6274,6 +6310,28 @@ export const useAllAdministrationQuery = <
     useQuery<AllAdministrationQuery, TError, TData>(
       variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
       useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
+      options
+    );
+export const GetConfigDocument = `
+    query getConfig {
+  config {
+    countries {
+      name
+      code
+    }
+  }
+}
+    `;
+export const useGetConfigQuery = <
+      TData = GetConfigQuery,
+      TError = unknown
+    >(
+      variables?: GetConfigQueryVariables,
+      options?: UseQueryOptions<GetConfigQuery, TError, TData>
+    ) =>
+    useQuery<GetConfigQuery, TError, TData>(
+      variables === undefined ? ['getConfig'] : ['getConfig', variables],
+      useAxios<GetConfigQuery, GetConfigQueryVariables>(GetConfigDocument).bind(null, variables),
       options
     );
 export const GetKymFormStatusInstitutionDocument = `
