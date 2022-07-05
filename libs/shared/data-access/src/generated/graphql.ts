@@ -4768,13 +4768,7 @@ export type PersonalInformationInNepali = {
 };
 
 export type PresignedUrlMutation = {
-  get: PresignedUrlOutput;
   upload: PresignedUrlOutput;
-};
-
-
-export type PresignedUrlMutationGetArgs = {
-  objectName: Scalars['String'];
 };
 
 
@@ -4784,7 +4778,8 @@ export type PresignedUrlMutationUploadArgs = {
 
 export type PresignedUrlOutput = {
   filename?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
+  get_url?: Maybe<Scalars['String']>;
+  put_url?: Maybe<Scalars['String']>;
 };
 
 export type Province = {

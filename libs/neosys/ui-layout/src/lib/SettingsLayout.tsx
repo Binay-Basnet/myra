@@ -1,5 +1,5 @@
-import React from 'react';
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
+import { AiOutlineSetting } from 'react-icons/ai';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
@@ -7,10 +7,6 @@ import { chakra, Tab, Tabs } from '@chakra-ui/react';
 
 import { Box, Button, Divider, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-interface IUsersSidebarProps {
-  children: React.ReactNode;
-}
 
 const TabCol = chakra(Tab, {
   baseStyle: {
@@ -32,16 +28,32 @@ const TabCol = chakra(Tab, {
   },
 });
 
-export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
+interface ISettingsLayoutProps {
+  children: ReactNode;
+}
+
+export const SettingsLayout = ({ children }: ISettingsLayoutProps) => {
   const { t } = useTranslation();
 
   const router = useRouter();
 
   const tabLinks = [
-    { title: t['neoClientUserSiderbarUsersList'], to: `/users` },
+    { title: 'General Settings', to: `/settings` },
     {
-      title: t['neoClientUserSiderbarUsersRole'],
-      to: `/users/role`,
+      title: 'Global App Settings',
+      to: `/settings/global-app-settings`,
+    },
+    {
+      title: 'Myra Modules',
+      to: `/settings/myra-modules`,
+    },
+    {
+      title: 'Document Master Lists',
+      to: `/settings/document-master-list`,
+    },
+    {
+      title: 'Setting',
+      to: `/settings/users`,
     },
   ];
 
@@ -54,20 +66,8 @@ export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
     <Box display="flex">
       <Box width="275px" p="s24" position="fixed" flexShrink={0}>
         <Text fontSize="l1" fontWeight="600" color="gray.800">
-          {t['neoClientUserSiderbarUsers']}
+          {t['neoClientSiderbarClients']}
         </Text>
-
-        <Divider my="s16" />
-
-        <Button
-          width="full"
-          size="lg"
-          justifyContent="start"
-          leftIcon={<AddIcon h="11px" />}
-          onClick={() => router.push('/users/add')}
-        >
-          {t['neoClientUserSiderbarNewUser']}
-        </Button>
 
         <Divider my="s16" />
 
@@ -82,44 +82,6 @@ export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
             );
           })}
         </Tabs>
-
-        {/* <Button
-          width="full"
-          size="lg"
-          color="gray.600"
-          fontWeight={600}
-          variant="ghost"
-          justifyContent="start"
-          onClick={() => router.push('/users')}
-        >
-          {t['neoClientUserSiderbarUsersList']}
-        </Button>
-
-        <Button
-          width="full"
-          size="lg"
-          color="gray.600"
-          fontWeight={600}
-          variant="ghost"
-          justifyContent="start"
-          onClick={() => router.push('/users')}
-        >
-          {t['neoClientUserSiderbarUsersRole']}
-        </Button> */}
-
-        <Divider my="s16" />
-
-        <Button
-          width="full"
-          size="lg"
-          justifyContent="start"
-          variant="ghost"
-          color="gray.600"
-          leftIcon={<AddIcon height="11px" />}
-          // onClick={() => router.push('/users/add')}
-        >
-          {t['neoClientUserSiderbarNewUserRole']}
-        </Button>
       </Box>
       <Box
         width="calc(100% - 275px)"
