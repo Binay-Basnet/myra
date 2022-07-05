@@ -6,6 +6,7 @@ import { chakra, Image } from '@chakra-ui/react';
 import { Tab, Tabs } from '@chakra-ui/react';
 
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
@@ -36,22 +37,34 @@ export function ClientDetailLayout(props: ClientDetailLayoutProps) {
 
   const router = useRouter();
 
-  console.log(router);
+  const { t } = useTranslation();
 
   const clientId = router?.query['id'];
 
   const tabLinks = [
-    { title: 'Overview', to: `/clients/${clientId}` },
-    { title: 'Branches', to: `/clients/${clientId}/branches` },
-    { title: 'Documents', to: `/clients/${clientId}/documents` },
+    { title: t['neoClientDetailsOverview'], to: `/clients/${clientId}` },
     {
-      title: 'Employee / Super Admin',
+      title: t['neoClientDetailsBranches'],
+      to: `/clients/${clientId}/branches`,
+    },
+    {
+      title: t['neoClientDetailsDocuments'],
+      to: `/clients/${clientId}/documents`,
+    },
+    {
+      title: t['neoClientDetailsEmployee'],
       to: `/clients/${clientId}/employee-admin`,
     },
-    { title: 'Subscription', to: `/clients/${clientId}/subscription` },
-    { title: 'Codes', to: `/clients/${clientId}/codes` },
+    {
+      title: t['neoClientDetailsSubscription'],
+      to: `/clients/${clientId}/subscription`,
+    },
+    { title: t['neoClientDetailsCodes'], to: `/clients/${clientId}/codes` },
 
-    { title: 'Activity', to: `/clients/${clientId}/activity` },
+    {
+      title: t['neoClientDetailsActivity'],
+      to: `/clients/${clientId}/activity`,
+    },
   ];
 
   const currentIndex = useMemo(
@@ -73,7 +86,7 @@ export function ClientDetailLayout(props: ClientDetailLayoutProps) {
         alignItems="center"
       >
         <Text color="gray.600" fontWeight={600} fontSize="r2">
-          Clients
+          {t['neoClientDetailsClients']}
         </Text>
 
         <AiOutlineRight />

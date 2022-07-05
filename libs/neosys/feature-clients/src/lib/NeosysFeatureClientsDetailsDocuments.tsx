@@ -3,6 +3,7 @@ import { EditIcon } from '@chakra-ui/icons';
 import { Image } from '@chakra-ui/react';
 
 import { Box, Button, Grid, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { ClientDetailHeader } from './components';
 
@@ -12,13 +13,15 @@ export interface NeosysFeatureClientsDetailsDocumentsProps {}
 export function NeosysFeatureClientsDetailsDocuments(
   props: NeosysFeatureClientsDetailsDocumentsProps
 ) {
+  const { t } = useTranslation();
+
   return (
     <Box bg="white" flexBasis="35%" borderRadius="4px">
       <ClientDetailHeader
-        title="Documents"
+        title={t['neoClientDetailDocumentsDocuments']}
         button={
           <Button variant="ghost" fontSize="r1" leftIcon={<EditIcon />}>
-            Add New Document
+            {t['neoClientDetailDocumentsAddDocument']}
           </Button>
         }
       />
@@ -37,7 +40,9 @@ export function NeosysFeatureClientsDetailsDocuments(
             <Box boxSize="36px">
               <Image src="/registration-doc.png" borderRadius="s4" />
             </Box>
-            <Text fontSize="r1">Registration Doc</Text>
+            <Text fontSize="r1">
+              {t['neoClientDetailDocumentsRegistrationDoc']}
+            </Text>
           </Box>
 
           <GrView />
@@ -61,7 +66,7 @@ export function NeosysFeatureClientsDetailsDocuments(
             >
               <Image src="/moa.png" />
             </Box>
-            <Text fontSize="r1">MOA</Text>
+            <Text fontSize="r1">{t['neoClientDetailDocumentsMoa']}</Text>
           </Box>
 
           <GrView />
@@ -80,7 +85,7 @@ export function NeosysFeatureClientsDetailsDocuments(
             <Box boxSize="36px">
               <Image src="/aoa.png" borderRadius="s4" />
             </Box>
-            <Text fontSize="r1">AOA</Text>
+            <Text fontSize="r1">{t['neoClientDetailDocumentsAoa']}</Text>
           </Box>
 
           <GrView />
@@ -99,7 +104,9 @@ export function NeosysFeatureClientsDetailsDocuments(
             <Box boxSize="36px">
               <Image src="/bod.png" borderRadius="s4" />
             </Box>
-            <Text fontSize="r1">BOD Decision</Text>
+            <Text fontSize="r1">
+              {t['neoClientDetailDocumentsBODDecision']}
+            </Text>
           </Box>
 
           <GrView />
