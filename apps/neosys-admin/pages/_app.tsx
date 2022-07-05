@@ -1,4 +1,6 @@
+import { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import type { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -6,6 +8,15 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { neosysTheme } from '@coop/shared/utils';
 
 import './styles.css';
+
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
 const fiveMinutesInMs = 5 * 60 * 1000;
 
 const queryClient = new QueryClient({
@@ -22,7 +33,9 @@ const queryClient = new QueryClient({
   },
 });
 
-function CustomApp({ Component, pageProps }: AppProps) {
+function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout || ((page) => page);
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -30,9 +43,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
           <Head>
             <title>Welcome to neosys-admin!</title>
           </Head>
-          <main className="app">
-            <Component {...pageProps} />
-          </main>
+          <main className="app">{getLayout(<Component {...pageProps} />)}</main>
         </ChakraProvider>
       </QueryClientProvider>
     </>
