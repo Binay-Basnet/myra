@@ -1663,6 +1663,13 @@ const en: Record<string, string> = {
   neoClientDetailDocumentsMoa: 'MOA',
   neoClientDetailDocumentsAoa: 'AOA',
   neoClientDetailDocumentsBODDecision: 'BOD Decision',
+
+  //users sidebar
+  neoClientUserSiderbarUsers: 'Users',
+  neoClientUserSiderbarNewUser: 'New User',
+  neoClientUserSiderbarUsersList: 'Users List',
+  neoClientUserSiderbarUsersRole: 'Users Role',
+  neoClientUserSiderbarNewUserRole: 'New User Role',
 };
 
 export default en;
