@@ -1615,6 +1615,40 @@ const ne: Record<string, string> = {
   neoUsersEmailAddress: 'Email Address',
   neoUsersPhoneNumber: 'Phone Number',
   neoUsersViewEditFullPermission: 'View and Edit Full Permission',
+
+  //client details
+  neoClientDetailsClients: 'Clients',
+  neoClientDetailsOverview: 'Overview',
+  neoClientDetailsBranches: 'Branches',
+  neoClientDetailsDocuments: 'Documents',
+  neoClientDetailsEmployee: 'Employee / Super Admin',
+  neoClientDetailsSubscription: 'Subscription',
+  neoClientDetailsCodes: 'Codes',
+  neoClientDetailsActivity: 'Activity',
+
+  //client details overview
+  neoClientDetailOverviewClientInformation: 'Client Information',
+  neoClientDetailOverviewEdit: 'Edit',
+  neoClientDetailOverviewType: 'Type',
+  neoClientDetailOverviewCode: 'Code',
+  neoClientDetailOverviewPanVat: 'PAN / VAT',
+  neoClientDetailOverviewRegdNo: 'Regd No',
+  neoClientDetailOverviewContactNumber: 'Contact Number',
+  neoClientDetailOverviewEmail: 'Email',
+  neoClientDetailOverviewAddress: 'Address',
+  neoClientDetailOverviewDocuments: 'Documents',
+  neoClientDetailOverviewRegistrationDoc: 'Registration Doc',
+  neoClientDetailOverviewMoa: 'MOA',
+  neoClientDetailOverviewAoa: 'AOA',
+  neoClientDetailOverviewBODDecision: 'BOD Decision',
+
+  //client details documents
+  neoClientDetailDocumentsDocuments: 'Documents',
+  neoClientDetailDocumentsAddDocument: 'Add New Document',
+  neoClientDetailDocumentsRegistrationDoc: 'Registration Doc',
+  neoClientDetailDocumentsMoa: 'MOA',
+  neoClientDetailDocumentsAoa: 'AOA',
+  neoClientDetailDocumentsBODDecision: 'BOD Decision',
 };
 
 export default ne;

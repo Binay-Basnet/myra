@@ -24,7 +24,6 @@ export function NeosysFeatureClientsAdd(props: NeosysFeatureClientsAddProps) {
   const methods = useForm({});
   const router = useRouter();
 
-  const { watch } = methods;
   return (
     <>
       <Container minW="container.lg" height="fit-content" paddingBottom="55px">
@@ -50,7 +49,7 @@ export function NeosysFeatureClientsAdd(props: NeosysFeatureClientsAddProps) {
           </Box>
           <FormProvider {...methods}>
             <form>
-              <NeosysClientForm watch={watch} />
+              <NeosysClientForm />
             </form>
           </FormProvider>
         </Box>
