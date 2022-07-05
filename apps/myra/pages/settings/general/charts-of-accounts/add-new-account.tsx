@@ -2,18 +2,18 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
-import { Form } from '@coop/myra/components';
 
 import { SettingsLayout } from '@coop/cbs/settings/ui-layout';
+import { Form } from '@coop/myra/components';
 import {
   AddCoaAccountInput,
   CoaTypesOfAccount,
 } from '@coop/shared/data-access';
 import {
+  FormAccountInput,
   FormInput,
   FormSelect,
   FormSwitchTab,
-  FormAccountInput,
 } from '@coop/shared/form';
 import {
   Box,

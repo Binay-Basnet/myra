@@ -11,13 +11,13 @@ import {
 import { TextFields } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
-export interface InputProps extends Omit<ChakraInputProps, 'placeholder'> {
+export interface InputProps extends ChakraInputProps {
   rightElement?: React.ReactNode;
   leftElement?: React.ReactNode;
   helperText?: string;
   errorText?: string;
-  label?: string | number;
-  placeholder?: string | number;
+  label?: string;
+  placeholder?: string;
 }
 
 type ForwardRefInputProps = React.DetailedHTMLProps<

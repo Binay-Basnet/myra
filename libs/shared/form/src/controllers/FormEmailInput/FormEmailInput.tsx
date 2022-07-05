@@ -6,7 +6,6 @@ import { Icon, Input, InputProps } from '@coop/shared/ui';
 
 interface IFormEmailInputProps<T> extends InputProps {
   name: Path<T>;
-  control?: Control<T>;
 }
 
 export const FormEmailInput = <T,>({

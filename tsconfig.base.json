@@ -30,6 +30,9 @@
       "@coop/cbs/kym-form/feature-individual": [
         "libs/cbs/kym-form/feature-individual/src/index.ts"
       ],
+      "@coop/cbs/kym-form/formElements": [
+        "libs/cbs/kym-form/ui-form-elements/src/index.ts"
+      ],
       "@coop/cbs/kym-form/institution": [
         "libs/cbs/kym-form/feature-institution/src/index.ts"
       ],
