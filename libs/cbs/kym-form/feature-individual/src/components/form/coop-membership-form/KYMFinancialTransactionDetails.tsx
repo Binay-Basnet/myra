@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import {
   GroupContainer,
@@ -14,6 +15,7 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const KYMFinancialTransactionDetails = () => {
   const { t } = useTranslation();
+  const { register } = useFormContext();
   const { data: financialTransactionDetailsData } =
     useGetIndividualKymOptionsQuery({
       filter: { customId: KYMOptionEnum.FinancialTransactionDetails },
@@ -34,16 +36,22 @@ export const KYMFinancialTransactionDetails = () => {
         </Text>
         <InputGroupContainer>
           {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
-            (option) => (
-              <FormInput
-                id={`financialTransaction.${String(option?.name?.local)}`}
-                type="number"
-                name={String(option?.name?.local)}
-                textAlign="right"
-                label={option?.name.local}
-                placeholder="0.00"
-              />
-            )
+            (option, index) => {
+              register(`initialTransactionDetails.options.${index}.id`, {
+                value: option.id,
+              });
+              return (
+                <FormInput
+                  id={`financialTransaction.${String(option?.name?.local)}`}
+                  type="number"
+                  // name={String(option?.name?.local)}
+                  name={`initialTransactionDetails.options.${index}.value`}
+                  textAlign="right"
+                  label={option?.name.local}
+                  placeholder="0.00"
+                />
+              );
+            }
           )}
         </InputGroupContainer>
       </Box>

@@ -1,11 +1,13 @@
 import React from 'react';
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
+import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 
 import { Input, InputProps } from '@coop/shared/ui';
 
 interface IFormInputProps<T> extends InputProps {
   name: Path<T> | string;
   control?: Control<T>;
+  rules?: UseControllerProps['rules'];
 }
 
 export const FormInput = <T,>({ name, ...rest }: IFormInputProps<T>) => {
@@ -19,6 +21,7 @@ export const FormInput = <T,>({ name, ...rest }: IFormInputProps<T>) => {
   return (
     <Controller
       name={name}
+      rules={rest.rules}
       control={control}
       render={({ field: { onChange, value, ...fieldProps } }) => {
         return (
