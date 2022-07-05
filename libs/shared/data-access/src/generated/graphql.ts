@@ -261,16 +261,158 @@ export type BadRequestError = {
   message: Scalars['String'];
 };
 
-export type Bank = {
+export type Bank = Base & {
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
   id: Scalars['ID'];
-  logo: Scalars['String'];
-  name: Scalars['String'];
+  logo?: Maybe<Scalars['String']>;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  name?: Maybe<Scalars['String']>;
+  objState: ObjState;
+};
+
+export type BankAddResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<BankDataQuery>;
+  record: Bank;
+  recordId: Scalars['ID'];
+};
+
+export type BankBranch = Base & {
+  address?: Maybe<Address>;
+  bankId?: Maybe<Scalars['ID']>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  id: Scalars['ID'];
+  location?: Maybe<LocationCoordinate>;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  name?: Maybe<Scalars['String']>;
+  objState: ObjState;
+};
+
+export type BankBranchAddResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<BankBranchQuery>;
+  record: BankBranch;
+  recordId: Scalars['ID'];
+};
+
+export type BankBranchDeleteResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<BankBranchQuery>;
+  recordId: Scalars['ID'];
+};
+
+export type BankBranchInput = {
+  bankId?: InputMaybe<Scalars['ID']>;
+  districtId?: InputMaybe<Scalars['Int']>;
+  localGovernmentId?: InputMaybe<Scalars['Int']>;
+  locality?: InputMaybe<Scalars['String']>;
+  location?: InputMaybe<LocationCoordinateInput>;
+  name?: InputMaybe<Scalars['String']>;
+  provinceId?: InputMaybe<Scalars['Int']>;
+  wardNo?: InputMaybe<Scalars['Int']>;
+};
+
+export type BankBranchMutation = {
+  add: BankBranchAddResult;
+  delete: BankBranchDeleteResult;
+};
+
+
+export type BankBranchMutationAddArgs = {
+  data?: InputMaybe<BankBranchInput>;
+  id: Scalars['ID'];
+};
+
+
+export type BankBranchMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+export type BankBranchQuery = {
+  get?: Maybe<BankBranch>;
+  list?: Maybe<Array<Maybe<BankBranch>>>;
+};
+
+
+export type BankBranchQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type BankBranchQueryListArgs = {
+  filter?: InputMaybe<BankBranchSearchFilter>;
+};
+
+export type BankBranchSearchFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export type BankChartsOfAccount = {
   bankAccountNumber: Scalars['Int'];
   bankGLCode: Scalars['String'];
   bankId: Scalars['ID'];
+};
+
+export type BankDataMutation = {
+  add: BankAddResult;
+  delete: BankDeleteResult;
+};
+
+
+export type BankDataMutationAddArgs = {
+  data?: InputMaybe<BankInput>;
+  id: Scalars['ID'];
+};
+
+
+export type BankDataMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+export type BankDataQuery = {
+  get?: Maybe<Bank>;
+  list?: Maybe<Array<Maybe<Bank>>>;
+};
+
+
+export type BankDataQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type BankDataQueryListArgs = {
+  filter?: InputMaybe<BankSearchFilter>;
+};
+
+export type BankDeleteResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<BankDataQuery>;
+  recordId: Scalars['ID'];
+};
+
+export type BankInput = {
+  logo?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type BankMutation = {
+  bank?: Maybe<BankDataMutation>;
+  branch?: Maybe<BankBranchMutation>;
+};
+
+export type BankQuery = {
+  bank?: Maybe<BankDataQuery>;
+  branch?: Maybe<BankBranchQuery>;
+};
+
+export type BankSearchFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export type Base = {
@@ -1014,6 +1156,13 @@ export enum DashboardTodayType {
   Loan = 'LOAN',
   Transaction = 'TRANSACTION',
   Withdraws = 'WITHDRAWS',
+}
+
+export enum DeclarationFor {
+  KymCoop = 'KYM_COOP',
+  KymCoopUnion = 'KYM_COOP_UNION',
+  KymIndividual = 'KYM_INDIVIDUAL',
+  KymInstitution = 'KYM_INSTITUTION'
 }
 
 export type DirectorDetails = {
@@ -2304,13 +2453,21 @@ export type KymCustomOptionCategory = {
   custom: Kym_Option_Custom_Type;
 };
 
-export type KymDeclaration = {
-  content: Scalars['String'];
+export type KymDeclaration = Base & {
+  content: Scalars['Localized'];
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  for: DeclarationFor;
   id: Scalars['ID'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
 };
 
 export type KymDeclarationInput = {
-  content: Scalars['String'];
+  dataEn?: InputMaybe<Scalars['String']>;
+  dataNp?: InputMaybe<Scalars['String']>;
+  for: DeclarationFor;
 };
 
 export type KymDeclarationMutation = {
@@ -2325,7 +2482,6 @@ export type KymDeclarationResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<KymQuery>;
   record?: Maybe<KymDeclaration>;
-  recordId: Scalars['ID'];
 };
 
 export type KymDisplayOptionCategory = {
@@ -4499,6 +4655,7 @@ export type Municipality = {
 
 export type Mutation = {
   auth: AuthMutation;
+  bank: BankMutation;
   eBanking: EBankingMutation;
   example: ExampleMutation;
   inventory: InventoryMutation;
@@ -4764,6 +4921,10 @@ export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
 };
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 export type PresignedUrlMutationUploadArgs = {
   fileExtension: AllowedFileExtension;
 };
@@ -4784,6 +4945,7 @@ export type Province = {
 export type Query = {
   administration: AdministrationQuery;
   auth: AuthQuery;
+  bank: BankQuery;
   config: ConfigQuery;
   dashboard: DashboardQuery;
   eBanking: EBankingQuery;
@@ -6247,6 +6409,7 @@ export type GetKymDeclarationQuery = {
 
 export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never }>;
 
+<<<<<<< Updated upstream
 export type GetCustomFieldsQuery = {
   settings: {
     kymForm: {
@@ -6271,6 +6434,9 @@ export type GetCustomFieldsQuery = {
     };
   };
 };
+=======
+export type GetKymDeclarationQuery = { settings: { kymForm: { declaration: { id: string, content: Record<"local"|"en"|"np",string> } } } };
+>>>>>>> Stashed changes
 
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never }>;
 

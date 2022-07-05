@@ -459,7 +459,7 @@ const en: Record<string, string> = {
   settingsChooseMember: 'Choose which type of member is allowed',
   settingsMemberRisk: 'Member Risk Level',
   settingsMemberRiskLevel: 'Risk Level',
-  settingsMemberYearsTillKYMUpdate: 'Years till KYM Update',
+  settingsMemberYearsTillKYMUpdate: 'Months till KYM Update',
   settingsMemberAddNewOption: 'Add New Option',
 
   settingsMemberSection1PersonalInformation: 'Section 1: Personal Information',
