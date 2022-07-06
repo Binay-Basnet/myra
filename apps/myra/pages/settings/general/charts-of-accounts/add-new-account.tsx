@@ -315,6 +315,22 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Divider />
+                  <Box display="grid" gridTemplateColumns="repeat(2, 2fr)">
+                    <Box>
+                      <Text color="Gray.700" fontWeight="medium" fontSize="s3">
+                        {t['settingsCoaApplicable']}
+                      </Text>
+                      <Text color="Gray.700" fontWeight="regular" fontSize="s3">
+                        {t['settingsCoaApplicableHelper']}
+                      </Text>
+                    </Box>
+
+                    <Box justifySelf="flex-end">
+                      <FormSwitchTab name="allicableAllBranch" options={list} />
+                    </Box>
+                  </Box>
+
+                  <Divider />
                   <Box
                     display="grid"
                     gridTemplateColumns="repeat(2, 2fr)"
@@ -411,9 +427,12 @@ const AddNewAccount = () => {
                     gridTemplateColumns="repeat(2, 2fr)"
                     gap={5}
                   >
-                    <Box>
+                    <Box display={'flex'} flexDirection="column" gap="0">
                       <Text color="Gray.700" fontWeight="medium" fontSize="s3">
                         {t['settingsCoaAllowFreeEntry']}
+                      </Text>
+                      <Text color="Gray.700" fontWeight="regular" fontSize="s3">
+                        {t['settingsCoaAllowFreeEntryHelper']}
                       </Text>
                     </Box>
 
