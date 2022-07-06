@@ -1299,6 +1299,7 @@ const en: Record<string, string> = {
   kymInsEnterMobileNo: 'Enter Mobile No',
   kymInsEnterEmail: 'Enter Email Address',
   kymInsCitizenshipPassportDrivingLicenseNo: 'Citizenship No.',
+  kymInsPanEnterNo: 'Enter PAN No',
   kymInsEnterNo: 'Enter Number',
   kymInsPhotograph: 'Photograph',
   kymInsPhotographOfIdentityProofDocument:

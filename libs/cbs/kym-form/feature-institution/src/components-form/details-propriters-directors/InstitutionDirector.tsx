@@ -355,6 +355,12 @@ const AddDirector = ({ watch, index, removeDirector }) => {
                 label={t['kymInsCitizenshipPassportDrivingLicenseNo']}
                 placeholder={t['kymInsEnterNo']}
               />
+              <FormInput
+                type="string"
+                name={`detailsOfDirectors.${index}.panNo`}
+                label={t['kymInsPanNo']}
+                placeholder={t['kymInsPanEnterNo']}
+              />
             </InputGroupContainer>
           </Box>
           {/* <Text fontSize="r1" fontWeight="SemiBold">

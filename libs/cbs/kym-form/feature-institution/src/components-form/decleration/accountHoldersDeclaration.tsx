@@ -126,6 +126,12 @@ export const AccountHolderDeclarationInstitution = () => {
             label={t['kymInsLocality']}
             placeholder={t['kymInsEnterLocality']}
           />
+          <FormInput
+            type="text"
+            name="accountHolderLocality"
+            label={t['kymInsHouseNo']}
+            placeholder={t['kymInsEnterHouseNo']}
+          />
         </InputGroupContainer>
 
         <Box>
