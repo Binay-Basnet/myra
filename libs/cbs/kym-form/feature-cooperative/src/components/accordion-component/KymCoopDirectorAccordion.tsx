@@ -193,7 +193,7 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
               <FormSelect
                 name={`boardOfDirectorsDetails.${index}.permanentLocalityId`}
                 label={t['kymCoopLocalGovernment']}
-                placeholder={t['kymCoopLocalGovernmentSelect']}
+                placeholder={t['kymCoopSelectLocal']}
                 options={localityList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -257,8 +257,8 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
                     />
                     <FormSelect
                       name={`boardOfDirectorsDetails.${index}.temporaryLocalityId`}
-                      label={t['kymCoopVDCMunicipality']}
-                      placeholder={t['kymCoopSelectVDCMunicipality']}
+                      label={t['kymCoopLocalGovernment']}
+                      placeholder={t['kymCoopSelectLocal']}
                       options={localityTempList.map((d) => ({
                         label: d.name,
                         value: d.id,

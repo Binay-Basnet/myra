@@ -668,7 +668,8 @@ const en: Record<string, string> = {
   kymCoopProvince: 'Province',
   kymCoopMuncipality: 'Muncipality',
   kymCoopSelectMunicipality: 'Select Municipality',
-
+  kymCoopLocalGovernment: 'Local Government',
+  kymCoopSelectLocal: 'Select Local Government',
   kymCoopOperatingAddress: 'Operating Address',
   kymCoopContactDetails: 'Contact Details',
   kymCoopOfficialEmail: 'Official Email',
@@ -676,6 +677,7 @@ const en: Record<string, string> = {
   kymCoopWebsiteLink: 'Website Link',
   kymCoopEnterWebsiteURL: 'Enter Website URL',
   kymCoopPhoneno: 'Phone no.',
+
   kymCoopEnterPhoneNumber: 'Enter Phone Number',
 
   kymCoopCurrentMembers: 'Current Members',

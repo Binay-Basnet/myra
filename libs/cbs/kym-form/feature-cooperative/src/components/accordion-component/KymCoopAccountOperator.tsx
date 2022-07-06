@@ -191,8 +191,8 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
               />
               <FormSelect
                 name={`accountOperatorsDetails.${index}.permanentLocalityId`}
-                label={t['kymCoopVDCMunicipality']}
-                placeholder={t['kymCoopSelectVDCMunicipality']}
+                label={t['kymCoopLocalGovernment']}
+                placeholder={t['kymCoopSelectLocal']}
                 options={localityList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -209,6 +209,12 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
                 name={`accountOperatorsDetails.${index}.permanentTole`}
                 label={t['kymCoopLocality']}
                 placeholder={t['kymCoopEnterLocality']}
+              />
+              <FormInput
+                type="text"
+                name={`accountOperatorsDetails.${index}.permanentHouseNo`}
+                label={t['kymCoopRepresentativeHouseNo']}
+                placeholder={t['kymCoopRepresentativeEnterHouseNo']}
               />
             </InputGroupContainer>
 
@@ -256,8 +262,8 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
                     />
                     <FormSelect
                       name={`accountOperatorsDetails.${index}.temporaryLocalityId`}
-                      label={t['kymCoopVDCMunicipality']}
-                      placeholder={t['kymCoopSelectVDCMunicipality']}
+                      label={t['kymCoopLocalGovernment']}
+                      placeholder={t['kymCoopSelectLocal']}
                       options={localityTempList.map((d) => ({
                         label: d.name,
                         value: d.id,
@@ -274,6 +280,12 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
                       name={`accountOperatorsDetails.${index}.temporaryTole`}
                       label={t['kymCoopLocality']}
                       placeholder={t['kymCoopEnterLocality']}
+                    />
+                    <FormInput
+                      type="text"
+                      name={`accountOperatorsDetails.${index}.temporaryHouseNo`}
+                      label={t['kymCoopRepresentativeHouseNo']}
+                      placeholder={t['kymCoopRepresentativeEnterHouseNo']}
                     />
                   </InputGroupContainer>
 

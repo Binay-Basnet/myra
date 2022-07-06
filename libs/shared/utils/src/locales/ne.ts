@@ -659,6 +659,8 @@ const ne: Record<string, string> = {
   kymCoopProvince: 'Province',
   kymCoopMuncipality: 'Muncipality',
   kymCoopSelectMunicipality: 'Select Municipality',
+  kymCoopLocalGovernment: 'Local Government',
+  kymCoopSelectLocal: 'Select Local Government',
 
   kymCoopOperatingAddress: 'Operating Address',
   kymCoopContactDetails: 'Contact Details',
