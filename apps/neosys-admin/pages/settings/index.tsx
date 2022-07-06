@@ -1,17 +1,18 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@coop/neosys-admin/layout';
+import { MainLayout, SettingsLayout } from '@coop/neosys-admin/layout';
+import { NeosysFeatureSettings } from '@coop/neosys-admin/settings';
 
 const Settings = () => {
-  return (
-    <div>
-      <h1>Settings</h1>
-    </div>
-  );
+  return <NeosysFeatureSettings />;
 };
 
 Settings.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <SettingsLayout>{page}</SettingsLayout>
+    </MainLayout>
+  );
 };
 
 export default Settings;

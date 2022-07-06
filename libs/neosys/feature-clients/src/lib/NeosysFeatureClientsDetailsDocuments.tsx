@@ -2,6 +2,7 @@ import { GrView } from 'react-icons/gr';
 import { EditIcon } from '@chakra-ui/icons';
 import { Image } from '@chakra-ui/react';
 
+import { NeosysDocumentCard } from '@coop/neosys-admin/ui-components';
 import { Box, Button, Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -15,6 +16,25 @@ export function NeosysFeatureClientsDetailsDocuments(
 ) {
   const { t } = useTranslation();
 
+  const documentsList = [
+    {
+      title: t['neoClientDetailOverviewRegistrationDoc'],
+      img: '/citizenship.jpeg',
+    },
+    {
+      title: t['neoClientDetailOverviewMoa'],
+      img: '/fingerprint.jpg',
+    },
+    {
+      title: t['neoClientDetailOverviewAoa'],
+      img: '/signature.jpg',
+    },
+    {
+      title: t['neoClientDetailOverviewBODDecision'],
+      img: '/citizenship.jpeg',
+    },
+  ];
+
   return (
     <Box bg="white" flexBasis="35%" borderRadius="4px">
       <ClientDetailHeader
@@ -27,7 +47,10 @@ export function NeosysFeatureClientsDetailsDocuments(
       />
 
       <Grid p="s16" gap="s16" templateColumns="repeat(2, 1fr)">
-        <Box
+        {documentsList.map(({ title, img }, index) => (
+          <NeosysDocumentCard title={title} img={img} key={index} />
+        ))}
+        {/* <Box
           display="flex"
           justifyContent="space-between"
           alignItems="center"
@@ -110,7 +133,7 @@ export function NeosysFeatureClientsDetailsDocuments(
           </Box>
 
           <GrView />
-        </Box>
+        </Box> */}
       </Grid>
     </Box>
   );
