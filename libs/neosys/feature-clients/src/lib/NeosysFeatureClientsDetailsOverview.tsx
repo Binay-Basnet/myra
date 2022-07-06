@@ -2,6 +2,7 @@ import { GrView } from 'react-icons/gr';
 import { EditIcon } from '@chakra-ui/icons';
 import { Image } from '@chakra-ui/react';
 
+import { NeosysDocumentCard } from '@coop/neosys-admin/ui-components';
 import { Box, Button, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -14,6 +15,25 @@ export function NeosysFeatureClientsDetailsOverview(
   props: NeosysFeatureClientsDetailsOverviewProps
 ) {
   const { t } = useTranslation();
+
+  const documentsList = [
+    {
+      title: t['neoClientDetailOverviewRegistrationDoc'],
+      img: '/citizenship.jpeg',
+    },
+    {
+      title: t['neoClientDetailOverviewMoa'],
+      img: '/fingerprint.jpg',
+    },
+    {
+      title: t['neoClientDetailOverviewAoa'],
+      img: '/signature.jpg',
+    },
+    {
+      title: t['neoClientDetailOverviewBODDecision'],
+      img: '/citizenship.jpeg',
+    },
+  ];
 
   return (
     <Box display="flex" gap="s16">
@@ -78,90 +98,9 @@ export function NeosysFeatureClientsDetailsOverview(
         />
 
         <Box p="s16" display="flex" flexDirection="column" gap="s16">
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            p="s8"
-            border="1px solid"
-            borderColor="border.layout"
-            borderRadius="4px"
-          >
-            <Box display="flex" gap="s8" alignItems="center">
-              <Box boxSize="36px">
-                <Image src="/registration-doc.png" borderRadius="s4" />
-              </Box>
-              <Text fontSize="r1">
-                {t['neoClientDetailOverviewRegistrationDoc']}
-              </Text>
-            </Box>
-
-            <GrView />
-          </Box>
-
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            p="s8"
-            border="1px solid"
-            borderColor="border.layout"
-            borderRadius="4px"
-          >
-            <Box display="flex" gap="s8" alignItems="center">
-              <Box
-                boxSize="36px"
-                borderRadius="4px"
-                border="1px solid"
-                borderColor="border.layout"
-              >
-                <Image src="/moa.png" />
-              </Box>
-              <Text fontSize="r1">{t['neoClientDetailOverviewMoa']}</Text>
-            </Box>
-
-            <GrView />
-          </Box>
-
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            p="s8"
-            border="1px solid"
-            borderColor="border.layout"
-            borderRadius="4px"
-          >
-            <Box display="flex" gap="s8" alignItems="center">
-              <Box boxSize="36px">
-                <Image src="/aoa.png" borderRadius="s4" />
-              </Box>
-              <Text fontSize="r1">{t['neoClientDetailOverviewAoa']}</Text>
-            </Box>
-
-            <GrView />
-          </Box>
-
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            p="s8"
-            border="1px solid"
-            borderColor="border.layout"
-            borderRadius="4px"
-          >
-            <Box display="flex" gap="s8" alignItems="center">
-              <Box boxSize="36px">
-                <Image src="/bod.png" borderRadius="s4" />
-              </Box>
-              <Text fontSize="r1">
-                {t['neoClientDetailOverviewBODDecision']}
-              </Text>
-            </Box>
-
-            <GrView />
-          </Box>
+          {documentsList.map(({ title, img }, index) => (
+            <NeosysDocumentCard title={title} img={img} key={index} />
+          ))}
         </Box>
       </Box>
     </Box>
