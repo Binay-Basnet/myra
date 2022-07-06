@@ -1774,6 +1774,26 @@ const ne: Record<string, string> = {
   neoSettingsGlobalAppSettingsChequeCertificateSetup:
     'Cheque & Certificate Setup',
   neoSettingsGlobalAppSettingsBulkMessaging: 'Bulk Messaging',
+
+  //shortcuts modal
+  shortcutsModalAll: 'All Keyboard Shorcut',
+  shortcutsModalGeneral: 'General',
+  shortcutsModalFocusOut: 'Focus Out',
+  shortcutModalSearch: 'Search',
+  shortcutModalHistory: 'History',
+  shortcutModalAppSwitcher: 'App Switcher',
+  shortcutModalHelp: 'Help',
+  shortcutModalAppHeader: 'App Header',
+  shortcutModalAppMenu: 'App Menu',
+  shortcutModalDirectMenuOpen: 'Direct Menu Open',
+  shortcutModalForms: 'Forms',
+  shortcutModalSave: 'Save',
+  shortcutModalNavigateBtnFields: 'Navigate between fields',
+  shortcutModalCancel: 'Cancel',
+  shortcutModalObject: 'Object',
+  shortcutModalNewOpen: 'New Open',
+  shortcutModalObjectMenu: 'Object Menu',
+  shortcutModalSwitchTabs: 'Switch Tabs',
 };
 
 export default ne;
