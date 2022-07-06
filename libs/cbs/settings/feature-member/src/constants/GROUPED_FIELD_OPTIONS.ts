@@ -5,12 +5,10 @@ export const GROUPED_FIELD_OPTIONS = [
     label: 'Address',
     value: Field_Types.Address,
   },
-
   {
     label: 'Amount',
     value: Field_Types.Amount,
   },
-
   {
     label: 'Bank',
     value: Field_Types.Bank,
@@ -35,7 +33,6 @@ export const GROUPED_FIELD_OPTIONS = [
     label: 'Local Level',
     value: Field_Types.LocalLevel,
   },
-
   {
     label: 'Number Input',
     value: Field_Types.NumberInput,
@@ -48,7 +45,10 @@ export const GROUPED_FIELD_OPTIONS = [
     label: 'Province',
     value: Field_Types.Province,
   },
-
+  {
+    label: 'Po Box',
+    value: Field_Types.PoBox,
+  },
   {
     label: 'Paragraph',
     value: Field_Types.Paragraph,
