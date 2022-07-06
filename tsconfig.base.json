@@ -78,6 +78,9 @@
         "libs/neosys/feature-settings/src/index.ts"
       ],
       "@coop/neosys-admin/users": ["libs/neosys/feature-users/src/index.ts"],
+      "@coop/neosys-admin/ui-components": [
+        "libs/neosys/ui-components/src/index.ts"
+      ],
       "@coop/shared/data-access": ["libs/shared/data-access/src/index.ts"],
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],
       "@coop/shared/map": ["libs/shared/map/src/index.ts"],

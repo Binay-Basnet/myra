@@ -4,12 +4,13 @@ import { Avatar, Flex } from '@chakra-ui/react';
 import format from 'date-fns/format';
 
 import { PopoverComponent } from '@coop/myra/components';
+import { NeosysTableListPageHeader } from '@coop/neosys-admin/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import {
   Column,
   DEFAULT_PAGE_SIZE,
   Table,
-  TableListPageHeader,
+  // TableListPageHeader,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -110,7 +111,7 @@ export const ClientsTable = () => {
 
   return (
     <>
-      <TableListPageHeader
+      <NeosysTableListPageHeader
         heading={t['neoClientTableList']}
         tabItems={memberRows}
       />
