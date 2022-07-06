@@ -6,10 +6,12 @@ import { Provider } from 'react-redux';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { Login } from '@coop/myra/components';
 import { store, theme } from '@coop/shared/utils';
+
+const { ToastContainer, toast } = createStandaloneToast();
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -31,6 +33,18 @@ const queryClient = new QueryClient({
       keepPreviousData: true,
       cacheTime: fiveMinutesInMs,
       staleTime: fiveMinutesInMs,
+
+      onError: (error) => {
+        toast({
+          title: '500 Server Error',
+          description: 'Check Console for More Info',
+          status: 'error',
+          variant: 'left-accent',
+          position: 'bottom-right',
+          isClosable: true,
+          size: 'lg',
+        });
+      },
     },
   },
 });
@@ -53,6 +67,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
           <Head>
             <title>Myra | Cloud Cooperative Platform</title>
           </Head>
+          <ToastContainer />
           {isLoggedIn === true ? (
             <main className="app">
               {getLayout(<Component {...pageProps} />)}

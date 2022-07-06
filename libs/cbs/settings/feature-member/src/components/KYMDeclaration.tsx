@@ -24,7 +24,7 @@ export const KYMDeclaration = ({ isExpanded }: any) => {
           label="English"
           size="lg"
           h="110px"
-          defaultValue={data?.settings.kymForm?.declaration.content}
+          defaultValue={data?.settings.kymForm?.declaration.content.local}
         />
       </Box>
 

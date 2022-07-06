@@ -1,6 +1,5 @@
-import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useFormContext } from 'react-hook-form';
+import { useEffect, useMemo } from 'react';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/neosys-admin/layout';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
@@ -189,99 +188,6 @@ export const NeosysClientForm = () => {
             </Text>
             <InputGroupContainer>
               <FormSelect
-                name="province"
-                label={t['neoClientProvince']}
-                placeholder={t['neoClientSelectProvince']}
-                options={province.map((d) => ({
-                  label: d.label,
-                  value: d.value,
-                }))}
-              />
-
-              <FormSelect
-                name="clientDistrict"
-                label={t['neoClientDistrict']}
-                placeholder={t['neoClientSelectDistrict']}
-                options={districtList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-
-              <FormSelect
-                name="localGovernment"
-                label={t['neoClientLocalGovernment']}
-                placeholder={t['neoClienSelectLocalGovernment']}
-                options={muncipalityList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormInput
-                type="text"
-                name="wardNo"
-                label={t['neoClientWardNo']}
-                placeholder={t['neoClientEnterWardNo']}
-              />
-              <FormInput
-                type="text"
-                name="locality"
-                label={t['neoClientLocality']}
-                placeholder={t['neoClientEnterLocality']}
-              />
-              <FormInput
-                type="text"
-                name="houseNo"
-                label={t['neoClientHouseNo']}
-                placeholder={t['neoClientEnterHouseNo']}
-              />
-            </InputGroupContainer>
-            <Box>
-              <FormMap name="kymCoopLocation" />
-            </Box>
-          </Box>
-
-          <Divider />
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Text
-              fontSize="r1"
-              fontWeight="SemiBold"
-              color="neutralColorLight.Gray-60"
-            >
-              {t['neoClientMainContactPerson']}
-            </Text>
-
-            <InputGroupContainer>
-              <FormInput
-                type="text"
-                name="name"
-                label={t['neoClientName']}
-                placeholder={t['neoClientName']}
-              />
-              <FormInput
-                type="text"
-                name="emailAddress"
-                label={t['neoClientEmailAddress']}
-                placeholder={t['neoClientEmailAddress']}
-              />
-              <FormInput
-                type="text"
-                name="phoneNumber"
-                label={t['neoClientPhoneNumber']}
-                placeholder={t['neoClientPhoneNumber']}
-              />
-            </InputGroupContainer>
-          </Box>
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Text
-              fontSize="r1"
-              fontWeight="SemiBold"
-              color="neutralColorLight.Gray-60"
-            >
-              {t['neoClientAddress']}
-            </Text>
-            <InputGroupContainer>
-              <FormSelect
                 name="provinceId"
                 label={t['neoClientProvince']}
                 placeholder={t['neoClientSelectProvince']}
@@ -335,6 +241,91 @@ export const NeosysClientForm = () => {
             <Box>
               <FormMap name="kymCoopLocation" />
             </Box>
+          </Box>
+
+          <InputGroupContainer>
+            <FormInput
+              type="text"
+              name="name"
+              label={t['neoClientName']}
+              placeholder={t['neoClientName']}
+            />
+            <FormInput
+              type="text"
+              name="emailAddress"
+              label={t['neoClientEmailAddress']}
+              placeholder={t['neoClientEmailAddress']}
+            />
+            <FormInput
+              type="text"
+              name="phoneNumber"
+              label={t['neoClientPhoneNumber']}
+              placeholder={t['neoClientPhoneNumber']}
+            />
+          </InputGroupContainer>
+        </Box>
+        <Box display="flex" flexDirection="column" gap="s16">
+          <Text
+            fontSize="r1"
+            fontWeight="SemiBold"
+            color="neutralColorLight.Gray-60"
+          >
+            {t['neoClientAddress']}
+          </Text>
+          <InputGroupContainer>
+            <FormSelect
+              name="provinceId"
+              label={t['neoClientProvince']}
+              placeholder={t['neoClientSelectProvince']}
+              options={province.map((d) => ({
+                label: d.label,
+                value: d.value,
+              }))}
+            />
+
+            <FormSelect
+              name="districtId"
+              label={t['neoClientDistrict']}
+              placeholder={t['neoClientSelectDistrict']}
+              options={districtList.map((d) => ({
+                label: d.name,
+                value: d.id,
+              }))}
+            />
+
+            <FormSelect
+              name="localityId"
+              label={t['neoClientLocalGovernment']}
+              placeholder={t['neoClienSelectLocalGovernment']}
+              options={muncipalityList.map((d) => ({
+                label: d.name,
+                value: d.id,
+              }))}
+            />
+            <FormSelect
+              name="wardNo"
+              label={t['neoClientWardNo']}
+              placeholder={t['neoClientEnterWardNo']}
+              options={wardList.map((d) => ({
+                label: d,
+                value: d,
+              }))}
+            />
+            <FormInput
+              type="text"
+              name="locality"
+              label={t['neoClientLocality']}
+              placeholder={t['neoClientEnterLocality']}
+            />
+            <FormInput
+              type="text"
+              name="houseNo"
+              label={t['neoClientHouseNo']}
+              placeholder={t['neoClientEnterHouseNo']}
+            />
+          </InputGroupContainer>
+          <Box>
+            <FormMap name="kymCoopLocation" />
           </Box>
         </Box>
       </form>
