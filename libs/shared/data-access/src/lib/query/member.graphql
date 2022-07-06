@@ -288,7 +288,7 @@ query getIndividualKymEditData($id: ID!) {
             isConvicted
             convictedDetails
             hasForeignResidentialPermit
-            foreignResidentialPermitDetails
+            foreignResidentialPermitTypeId
             documents {
               ...KYMFieldData
             }

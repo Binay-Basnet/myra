@@ -122,6 +122,12 @@ export function KYMIndividualPage() {
   const { data, isLoading: editLoading } = useGetIndividualKymEditDataQuery({
     id: id,
   });
+  console.log(
+    'previous',
+    useGetIndividualKymEditDataQuery({
+      id: id,
+    })
+  );
 
   const previousFormData =
     data?.members.individual?.formState?.data?.formData ?? {};
@@ -170,6 +176,7 @@ export function KYMIndividualPage() {
     });
   }, [isLoading, nationalityLoading, editLoading, JSON.stringify(data)]);
 
+  console.log('previous data', previousFormData, data);
   return (
     <>
       {/* // Top Bar */}
