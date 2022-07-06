@@ -212,13 +212,6 @@ export type AffiliatedDirectorDetailsType = {
   yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
-export enum AllowedFileExtension {
-  Docx = 'docx',
-  Jpg = 'jpg',
-  Pdf = 'pdf',
-  Png = 'png'
-}
-
 export enum Arrange {
   Ascending = 'ASCENDING',
   Descending = 'DESCENDING'
@@ -1149,12 +1142,66 @@ export enum DashboardTodayType {
   Withdraws = 'WITHDRAWS'
 }
 
+export type Declaration = Base & {
+  content: Scalars['Localized'];
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  for: DeclarationFor;
+  id: Scalars['ID'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
+};
+
 export enum DeclarationFor {
   KymCoop = 'KYM_COOP',
   KymCoopUnion = 'KYM_COOP_UNION',
   KymIndividual = 'KYM_INDIVIDUAL',
   KymInstitution = 'KYM_INSTITUTION'
 }
+
+export type DeclarationGetResult = {
+  data?: Maybe<Declaration>;
+  error?: Maybe<QueryError>;
+};
+
+export type DeclarationInput = {
+  dataEn?: InputMaybe<Scalars['String']>;
+  dataNp?: InputMaybe<Scalars['String']>;
+  for: DeclarationFor;
+};
+
+export type DeclarationMutation = {
+  update: DeclarationUpdateResult;
+};
+
+
+export type DeclarationMutationUpdateArgs = {
+  data: DeclarationInput;
+};
+
+export type DeclarationQuery = {
+  get?: Maybe<DeclarationGetResult>;
+};
+
+
+export type DeclarationQueryGetArgs = {
+  for?: InputMaybe<DeclarationFor>;
+};
+
+export type DeclarationSettingMutation = {
+  declaration: DeclarationMutation;
+};
+
+export type DeclarationSettingQuery = {
+  declaration: DeclarationQuery;
+};
+
+export type DeclarationUpdateResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<DeclarationQuery>;
+  record?: Maybe<Declaration>;
+};
 
 export type DirectorDetails = {
   dateOfMembership?: InputMaybe<Scalars['Date']>;
@@ -2672,7 +2719,7 @@ export type KymInputOptionCategory = {
 
 export type KymListFieldResult = {
   data?: Maybe<Array<Maybe<KymField>>>;
-  error?: Maybe<MutationError>;
+  error?: Maybe<QueryError>;
 };
 
 export type KymMaxSizeResult = {
@@ -4928,11 +4975,6 @@ export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
 };
 
-
-export type PresignedUrlMutationUploadArgs = {
-  fileExtension: AllowedFileExtension;
-};
-
 export type PresignedUrlOutput = {
   filename?: Maybe<Scalars['String']>;
   get_url?: Maybe<Scalars['String']>;
@@ -5015,11 +5057,13 @@ export type Services = {
 };
 
 export type SettingsMutation = {
+  declaration: DeclarationMutation;
   general?: Maybe<GeneralSettingsMutation>;
   kymForm: KymFormSettingMutation;
 };
 
 export type SettingsQuery = {
+  declaration: DeclarationQuery;
   general?: Maybe<GeneralSettingsQuery>;
   kymForm: KymFormSettingQuery;
 };
@@ -5539,9 +5583,7 @@ export type SetOrganizationDataMutationVariables = Exact<{
 
 export type SetOrganizationDataMutation = { settings: { general?: { organization?: { initialSetup?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
-export type GetPreSignedUrlMutationVariables = Exact<{
-  fileExtension: AllowedFileExtension;
-}>;
+export type GetPreSignedUrlMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetPreSignedUrlMutation = { presignedUrl: { upload: { filename?: string | null, get_url?: string | null, put_url?: string | null } } };
@@ -6345,9 +6387,9 @@ export const useSetOrganizationDataMutation = <
       options
     );
 export const GetPreSignedUrlDocument = `
-    mutation getPreSignedUrl($fileExtension: AllowedFileExtension!) {
+    mutation getPreSignedUrl {
   presignedUrl {
-    upload(fileExtension: $fileExtension) {
+    upload {
       filename
       get_url
       put_url
