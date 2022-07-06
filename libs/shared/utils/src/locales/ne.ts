@@ -425,12 +425,17 @@ const ne: Record<string, string> = {
   settingsCoaLedgerAccount: 'Ledger Account',
   settingsCoaYouCan:
     'You can perform transaction in this account. However, you cannot create any more accounts under this heading',
+  settingsCoaApplicable: 'Applicable to all the branch',
+  settingsCoaApplicableHelper:
+    'If No, this account is only applicable to current branch',
   settingsCoaBSAccount: 'B/S Account',
   settingsCoaSummationAccount: 'Summation Account',
   settingsCoaIBTAC: 'IBT A/C',
   settingsCoaIntransitAC: 'Intransit A/C',
   settingsCoaPLAccount: 'P/L Account',
   settingsCoaAllowFreeEntry: 'Allow Free Entry',
+  settingsCoaAllowFreeEntryHelper: 'This option allows manual journal entry',
+
   settingsCoaAllowTransaction: 'Allow Transaction',
   settingsCoaListCash: 'Cash',
   settingsCoaListBank: 'Bank',
