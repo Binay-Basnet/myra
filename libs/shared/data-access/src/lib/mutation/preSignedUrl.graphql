@@ -1,6 +1,6 @@
-mutation getPreSignedUrl{
+mutation getPreSignedUrl {
   presignedUrl {
-    upload{
+    upload {
       filename
       get_url
       put_url

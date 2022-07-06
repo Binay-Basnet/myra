@@ -4720,6 +4720,7 @@ export type Mutation = {
   presignedUrl: PresignedUrlMutation;
   settings: SettingsMutation;
   share: ShareMutation;
+  user: UserMutation;
 };
 
 export type MutationError = AuthorizationError | BadRequestError | NotFoundError | ServerError | ValidationError;
@@ -5001,6 +5002,7 @@ export type Query = {
   routesAndCodes: RoutesAndCodesQuery;
   settings: SettingsQuery;
   share: ShareQuery;
+  user: UserQuery;
 };
 
 export type QueryError = AuthorizationError | BadRequestError | NotFoundError | ServerError;
@@ -5368,6 +5370,51 @@ export type User = Base & {
   username: Scalars['String'];
 };
 
+export type UserMutation = {
+  add?: Maybe<UserPreferenceResult>;
+  delete?: Maybe<UserPreferenceDeleteResult>;
+};
+
+
+export type UserMutationAddArgs = {
+  data: UserPreferenceInput;
+  id: Scalars['ID'];
+};
+
+
+export type UserMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+export type UserPreference = {
+  id?: Maybe<Scalars['ID']>;
+  language?: Maybe<Scalars['String']>;
+};
+
+export type UserPreferenceDeleteResult = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['ID'];
+};
+
+export type UserPreferenceInput = {
+  language?: InputMaybe<Scalars['String']>;
+};
+
+export type UserPreferenceResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<UserPreference>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type UserQuery = {
+  get?: Maybe<UserPreference>;
+};
+
+
+export type UserQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
 export enum UserType {
   Human = 'HUMAN',
   System = 'SYSTEM'
@@ -5390,8 +5437,13 @@ export type UtilityPaymentInvalidDataError = {
   error?: Maybe<Scalars['InvalidData']>;
 };
 
+export type UtilityPaymentLayoutComponent = {
+  contents?: Maybe<Scalars['Any']>;
+  type?: Maybe<Scalars['String']>;
+};
+
 export type UtilityPaymentRecord = {
-  components?: Maybe<Scalars['Any']>;
+  components?: Maybe<Array<Maybe<UtilityPaymentLayoutComponent>>>;
   header_name?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['Map']>;
   type?: Maybe<Scalars['String']>;
@@ -5662,6 +5714,8 @@ type MutationError_ValidationError_Fragment = {};
 
 export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
 
+export type KymFieldDataFragment = { id?: string | null, options?: Array<{ id?: string | null, value?: string | null } | null> | null };
+
 export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5760,6 +5814,13 @@ export type GetMemberIndividualDataQueryVariables = Exact<{
 
 export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id?: string | null, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, temporaryAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
 
+export type GetIndividualKymEitDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetIndividualKymEitDataQuery = { members: { individual?: { formState?: { data?: { formData?: { memberId?: string | null, firstName?: string | null, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null, permanentStateId?: number | null, permanentDistrictId?: number | null, permanentLocalityId?: number | null, permanentWardId?: number | null, permanentTole?: string | null, permanentHouseNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, temporaryStateId?: number | null, temporaryDistrictId?: number | null, temporaryLocalityId?: number | null, temporaryWardId?: number | null, temporaryTole?: string | null, temporaryHouseNo?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, professional?: Array<string | null> | null, otherProfession?: string | null, enableForeignEmployee?: boolean | null, countryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: number | null, annualIncomeSourceId?: string | null, identityLevel?: string | null, purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null, familyMemberInThisCooperative?: boolean | null, estimatedAnnualTransactionAmount?: number | null, estimatedAnnualLoanAmount?: number | null, isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: string | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitDetails?: string | null, declarationAgree?: boolean | null, additionalContactDetails?: KymFieldDataFragment | null, identification?: Array<KymFieldDataFragment | null> | null, permanentLocation?: { longitude?: number | null, latitude?: number | null } | null, temporaryLocation?: { longitude?: number | null, latitude?: number | null } | null, familyDetails?: Array<KymFieldDataFragment | null> | null, mainOccupation?: Array<KymFieldDataFragment | null> | null, spouseOccupation?: Array<KymFieldDataFragment | null> | null, incomeSourceDetails?: Array<KymFieldDataFragment | null> | null, otherMembershipDetails?: KymFieldDataFragment | null, familyMembershipDetails?: Array<KymFieldDataFragment | null> | null, initialTransactionDetails?: KymFieldDataFragment | null, documents?: Array<KymFieldDataFragment | null> | null, customFields?: Array<KymFieldDataFragment | null> | null } | null } | null } | null } | null } };
+
 export type GetKymSettingsFieldsQueryVariables = Exact<{
   filter?: InputMaybe<ListKymFieldFilter>;
 }>;
@@ -5815,6 +5876,15 @@ export const MutationErrorFragmentDoc = `
     __typename
     message
     code
+  }
+}
+    `;
+export const KymFieldDataFragmentDoc = `
+    fragment KYMFieldData on KYMFieldData {
+  id
+  options {
+    id
+    value
   }
 }
     `;
@@ -7192,6 +7262,127 @@ export const useGetMemberIndividualDataQuery = <
     useQuery<GetMemberIndividualDataQuery, TError, TData>(
       ['getMemberIndividualData', variables],
       useAxios<GetMemberIndividualDataQuery, GetMemberIndividualDataQueryVariables>(GetMemberIndividualDataDocument).bind(null, variables),
+      options
+    );
+export const GetIndividualKymEitDataDocument = `
+    query getIndividualKymEitData($id: ID!) {
+  members {
+    individual {
+      formState(id: $id) {
+        data {
+          formData {
+            memberId
+            firstName
+            middleName
+            lastName
+            genderId
+            dateOfBirth
+            ethnicityId
+            nationalityId
+            educationQualificationId
+            religionId
+            educationQualificationId
+            religionId
+            mobileNumber
+            phoneNumber
+            email
+            additionalContactDetails {
+              ...KYMFieldData
+            }
+            identification {
+              ...KYMFieldData
+            }
+            permanentStateId
+            permanentDistrictId
+            permanentLocalityId
+            permanentWardId
+            permanentTole
+            permanentHouseNo
+            permanentLocation {
+              longitude
+              latitude
+            }
+            isPermanentAndTemporaryAddressSame
+            temporaryStateId
+            temporaryDistrictId
+            temporaryLocalityId
+            temporaryWardId
+            temporaryTole
+            temporaryHouseNo
+            temporaryLocation {
+              longitude
+              latitude
+            }
+            landlordName
+            landlordContact
+            familyDetails {
+              ...KYMFieldData
+            }
+            maritalStatusId
+            professional
+            otherProfession
+            mainOccupation {
+              ...KYMFieldData
+            }
+            spouseOccupation {
+              ...KYMFieldData
+            }
+            enableForeignEmployee
+            countryId
+            typeOfVisaId
+            foreignEstimatedAnnualIncome
+            annualIncomeSourceId
+            incomeSourceDetails {
+              ...KYMFieldData
+            }
+            identityLevel
+            purposeId
+            isMemberOfAnotherCooperative
+            otherMembershipDetails {
+              ...KYMFieldData
+            }
+            familyMemberInThisCooperative
+            familyMembershipDetails {
+              ...KYMFieldData
+            }
+            initialTransactionDetails {
+              ...KYMFieldData
+            }
+            estimatedAnnualTransactionAmount
+            estimatedAnnualLoanAmount
+            isPoliticallyExposed
+            politicallyExposedDetails
+            hasBeneficialOwner
+            beneficialRelationshipId
+            beneficialFullName
+            isConvicted
+            convictedDetails
+            hasForeignResidentialPermit
+            foreignResidentialPermitDetails
+            documents {
+              ...KYMFieldData
+            }
+            declarationAgree
+            customFields {
+              ...KYMFieldData
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${KymFieldDataFragmentDoc}`;
+export const useGetIndividualKymEitDataQuery = <
+      TData = GetIndividualKymEitDataQuery,
+      TError = unknown
+    >(
+      variables: GetIndividualKymEitDataQueryVariables,
+      options?: UseQueryOptions<GetIndividualKymEitDataQuery, TError, TData>
+    ) =>
+    useQuery<GetIndividualKymEitDataQuery, TError, TData>(
+      ['getIndividualKymEitData', variables],
+      useAxios<GetIndividualKymEitDataQuery, GetIndividualKymEitDataQueryVariables>(GetIndividualKymEitDataDocument).bind(null, variables),
       options
     );
 export const GetKymSettingsFieldsDocument = `
