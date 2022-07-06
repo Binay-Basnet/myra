@@ -11,7 +11,6 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { AccorrdianAddInstitution } from '@coop/myra/components';
 import {
-  KymInsFormData,
   useGetKymFormStatusInstitutionQuery,
   useSetInstitutionDataMutation,
 } from '@coop/shared/data-access';
@@ -24,8 +23,7 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
-import { getKymSectionInstitution } from '@coop/shared/utils';
+import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import {
   AccountHolderDeclarationInstitution,
@@ -60,7 +58,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
     kymFormStatusQuery?.data?.members?.institution?.formState?.data
       ?.sectionStatus;
 
-  const methods = useForm<KymInsFormData>({
+  const methods = useForm<any>({
     defaultValues: {
       sisterConcernDetails: [
         {
