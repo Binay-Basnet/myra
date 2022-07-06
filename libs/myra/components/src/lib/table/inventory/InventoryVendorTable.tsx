@@ -4,10 +4,12 @@ import { IconButton } from '@chakra-ui/react';
 
 import { useGetInventoryVendorQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 
 export const InventoryVendorTable = () => {
+  const { t } = useTranslation();
   const { data, isFetching } = useGetInventoryVendorQuery();
 
   const rowItems = data?.inventory.vendors?.list?.edges ?? [];
@@ -15,24 +17,24 @@ export const InventoryVendorTable = () => {
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        Header: 'Name',
+        Header: t['vendorName'],
         accessor: 'node.name',
         width: '80%',
       },
       {
-        Header: 'Location',
+        Header: t['vendorLocation'],
         accessor: 'node.location',
         width: '40%',
       },
 
       {
-        Header: 'Phone Number',
+        Header: t['vendorPhoneNumber'],
         accessor: 'node.phoneNumber',
         width: '40%',
       },
 
       {
-        Header: 'Email Address',
+        Header: t['vendorEmailAddress'],
         accessor: 'node.email',
         width: '40%',
       },
@@ -48,12 +50,12 @@ export const InventoryVendorTable = () => {
         ),
       },
     ],
-    []
+    [t]
   );
 
   return (
     <>
-      <TableListPageHeader heading={'Vendor'} />
+      <TableListPageHeader heading={'vendorsLayout'} />
 
       <Table
         isLoading={isFetching}

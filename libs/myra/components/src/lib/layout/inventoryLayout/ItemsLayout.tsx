@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
 import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
 
@@ -13,8 +14,20 @@ interface IInventoryPageLayoutProps {
 
 const inventoryColumns = [
   {
-    title: 'inventoryItems',
+    title: 'itemsList',
     link: '/inventory/items',
+  },
+  {
+    title: 'itemsCategory',
+    link: '/inventory/items/category',
+  },
+  {
+    title: 'itemUnits',
+    link: '/inventory/items/units',
+  },
+  {
+    title: 'inventoryAdjustments',
+    link: '/inventory/items/adjustments',
   },
 ];
 
@@ -22,12 +35,13 @@ export const InventoryItemsLayout = ({
   children,
 }: IInventoryPageLayoutProps) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <Box display="flex">
       <Box width="275px" p="s24" flexShrink={0} position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
-          Items{' '}
+          {t['items']}
         </Text>
         <Divider my="s16" />
         <Button
@@ -39,7 +53,7 @@ export const InventoryItemsLayout = ({
             router.push(router.pathname + '/add');
           }}
         >
-          Add Item
+          {t['addItems']}
         </Button>
         <Divider my="s16" />
         <TabColumn list={inventoryColumns} />
@@ -55,7 +69,7 @@ export const InventoryItemsLayout = ({
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          Inventory Settings
+          {t['itemInventorySettings']}
         </Button>
       </Box>
       <Box

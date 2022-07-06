@@ -4,10 +4,12 @@ import { IconButton } from '@chakra-ui/react';
 
 import { useGetInventoryItemsQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 
 export const InventoryItemTable = () => {
+  const { t } = useTranslation();
   const { data, isFetching } = useGetInventoryItemsQuery();
 
   const rowItems = data?.inventory.items?.list?.edges ?? [];
@@ -15,24 +17,24 @@ export const InventoryItemTable = () => {
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        Header: 'Item Id',
+        Header: t['itemListID'],
         accessor: 'node.id',
         maxWidth: 4,
       },
 
       {
-        Header: 'Name',
+        Header: t['itemListName'],
         accessor: 'node.name',
         width: '80%',
       },
       {
-        Header: 'Type',
+        Header: t['itemListType'],
         accessor: 'node.type',
         width: '40%',
       },
 
       {
-        Header: 'Unit Price',
+        Header: t['itemListUnitPrice'],
         accessor: 'node.unitPrice',
         Cell: ({ value }) => {
           return <span>{Number(value).toFixed(2)}</span>;
@@ -41,7 +43,7 @@ export const InventoryItemTable = () => {
 
       {
         id: 'total-cost',
-        Header: 'Total Cost',
+        Header: t['itemListTotalCost'],
         accessor: 'node.unitPrice',
         Cell: ({ value, row }) => {
           return (
@@ -53,7 +55,7 @@ export const InventoryItemTable = () => {
       },
 
       {
-        Header: 'Item Quantity',
+        Header: t['itemListItemQuantity'],
         accessor: 'node.itemQuantity',
         Cell: ({ value }) => {
           return <span>{Number(value).toFixed(2)}</span>;
@@ -71,12 +73,12 @@ export const InventoryItemTable = () => {
         ),
       },
     ],
-    []
+    [t]
   );
 
   return (
     <>
-      <TableListPageHeader heading={'Items'} />
+      <TableListPageHeader heading={'items'} />
 
       <Table
         isLoading={isFetching}

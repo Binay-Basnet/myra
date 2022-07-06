@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
 import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
 
@@ -22,12 +23,13 @@ export const InventoryVendorsLayout = ({
   children,
 }: IInventoryPageLayoutProps) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <Box display="flex">
       <Box width="275px" p="s24" flexShrink={0} position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
-          Vendors
+          {t['vendorsLayout']}
         </Text>
         <Divider my="s16" />
         <Button
@@ -39,7 +41,7 @@ export const InventoryVendorsLayout = ({
             router.push(router.pathname + '/add');
           }}
         >
-          Add Vendors
+          {t['addVendors']}
         </Button>
         <Divider my="s16" />
         <TabColumn list={inventoryColumns} />
@@ -55,7 +57,7 @@ export const InventoryVendorsLayout = ({
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          Inventory Settings
+          {t['inventorySettings']}
         </Button>
       </Box>
       <Box

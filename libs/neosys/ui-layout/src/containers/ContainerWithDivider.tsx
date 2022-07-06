@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Divider, VStack } from '@coop/shared/ui';
 
 interface IContainerWithDividerProps {
