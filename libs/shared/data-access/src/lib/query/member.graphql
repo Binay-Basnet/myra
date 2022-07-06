@@ -195,7 +195,7 @@ query getMemberIndividualData($id: ID!) {
   }
 }
 
-query getIndividualKymEitData($id: ID!) {
+query getIndividualKymEditData($id: ID!) {
   members {
     individual {
       formState(id: $id) {
