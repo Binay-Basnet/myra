@@ -1,0 +1,28 @@
+query getKYMSettingsFields($filter: ListKYMFieldFilter) {
+  settings {
+    kymForm {
+      field {
+        list(filter: $filter) {
+          data {
+            id
+            name
+            enabled
+            fieldType
+            hasOtherField
+            options {
+              id
+              name
+              fieldType
+              enabled
+
+            }
+            dependsOn
+            isCustom
+            maxSize
+            parent
+          }
+        }
+      }
+    }
+  }
+}

@@ -12,7 +12,7 @@ export interface CollapseProps extends ChakraCollapseProps {
 
 export function Collapse({ children, ...rest }: CollapseProps) {
   return (
-    <ChakraCollapse {...rest} in={true}>
+    <ChakraCollapse in={true} {...rest}>
       {children}
     </ChakraCollapse>
   );

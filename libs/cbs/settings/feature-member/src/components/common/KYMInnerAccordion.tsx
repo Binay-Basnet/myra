@@ -1,9 +1,12 @@
 import React from 'react';
 
-import { Kym_Field_Custom_Id as KYMOptionEnum } from '@coop/shared/data-access';
+import { KYMSettingsDragField } from '@coop/cbs/settings/feature-member';
+import {
+  Kym_Field_Custom_Id as KYMOptionEnum,
+  KymMemberTypesEnum,
+} from '@coop/shared/data-access';
 import { AccordionItem } from '@coop/shared/ui';
 
-import { KYMDragGroup } from '../KYMDragGroup';
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 
 interface IKYMInnerAccordionProps {
@@ -15,14 +18,16 @@ interface IKYMInnerAccordionProps {
     component?: (props: any) => JSX.Element;
   };
   index: number;
+  kymType: KymMemberTypesEnum;
 }
 
 export const KYMInnerAccordion = ({
   subField,
   index,
+  kymType,
 }: IKYMInnerAccordionProps) => {
   return (
-    <AccordionItem key={`${subField}${index}`}>
+    <AccordionItem key={`${subField.key}${index}`}>
       {({ isExpanded }) => (
         <>
           <KYMSettingsAccordionBtn
@@ -32,17 +37,26 @@ export const KYMInnerAccordion = ({
           {subField.component ? (
             subField.component({ isExpanded })
           ) : subField.customId ? (
-            <KYMDragGroup
-              isExpanded={isExpanded}
+            <KYMSettingsDragField
+              kymType={kymType}
               customId={subField.customId}
+              isExpanded={isExpanded}
             />
-          ) : subField.id ? (
-            <KYMDragGroup isExpanded={isExpanded} fieldId={subField.id} />
           ) : (
-            <KYMDragGroup isExpanded={isExpanded} fieldName={subField.key} />
+            <KYMSettingsDragField
+              kymType={kymType}
+              id={subField.id}
+              isExpanded={isExpanded}
+            />
           )}
         </>
       )}
     </AccordionItem>
   );
 };
+
+// subField.id ? (
+//   <KYMDragGroup isExpanded={isExpanded} fieldId={subField.id} />
+// ) : (
+//   <KYMDragGroup isExpanded={isExpanded} fieldName={subField.key} />
+// )

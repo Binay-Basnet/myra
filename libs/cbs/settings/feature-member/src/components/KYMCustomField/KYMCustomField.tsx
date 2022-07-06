@@ -1,14 +1,21 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import {
+  IoChevronDownOutline,
+  IoChevronUpOutline,
+  IoClose,
+} from 'react-icons/io5';
 import { useQueryClient } from 'react-query';
 import { Skeleton } from '@chakra-ui/react';
 import { debounce } from 'lodash';
 
+import { KYMSettingsDragField } from '@coop/cbs/settings/feature-member';
 import {
   Kym_Field_Type,
+  KymMemberTypesEnum,
   useAddCustomFieldMutation,
+  useDeleteCustomFieldMutation,
   useGetCustomFieldsQuery,
   useUpdateCustomFieldMutation,
 } from '@coop/shared/data-access';
@@ -25,8 +32,8 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
-import { KYMCustomDragGroup } from '../KYMBottomPanel/KYMCustomDragGroup';
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 
 interface FieldType {
@@ -38,9 +45,10 @@ interface FieldType {
 
 interface IKYMCustomField {
   fields: FieldType;
+  kymType: KymMemberTypesEnum;
 }
 
-export const KYMCustomSection = ({ fields }: IKYMCustomField) => {
+export const KYMCustomSection = ({ fields, kymType }: IKYMCustomField) => {
   return (
     <Accordion
       allowMultiple
@@ -57,7 +65,7 @@ export const KYMCustomSection = ({ fields }: IKYMCustomField) => {
               title={fields.label}
             />
 
-            <KYMCustomFields isExpanded={isExpanded} />
+            <KYMCustomFields kymType={kymType} isExpanded={isExpanded} />
           </>
         )}
       </AccordionItem>
@@ -80,7 +88,13 @@ const FIELD_TYPE = [
   },
 ];
 
-export const KYMCustomFields = ({ isExpanded }: { isExpanded: boolean }) => {
+export const KYMCustomFields = ({
+  isExpanded,
+  kymType,
+}: {
+  isExpanded: boolean;
+  kymType: KymMemberTypesEnum;
+}) => {
   const queryClient = useQueryClient();
 
   const { data, isLoading, isFetching } = useGetCustomFieldsQuery(
@@ -114,6 +128,9 @@ export const KYMCustomFields = ({ isExpanded }: { isExpanded: boolean }) => {
       <Accordion
         allowMultiple
         allowToggle
+        defaultIndex={[
+          fields.findIndex((field) => field?.name.en === 'Untitled'),
+        ]}
         display="flex"
         flexDirection="column"
         p="s12"
@@ -123,6 +140,7 @@ export const KYMCustomFields = ({ isExpanded }: { isExpanded: boolean }) => {
           <AccordionItem>
             {({ isExpanded }) => (
               <KYMCustomField
+                kymType={kymType}
                 field={subField}
                 index={index}
                 isExpanded={isExpanded}
@@ -131,7 +149,7 @@ export const KYMCustomFields = ({ isExpanded }: { isExpanded: boolean }) => {
           </AccordionItem>
         ))}
         {(addLoading || isFetching) && (
-          <Skeleton height="40px" borderRadius="br1" />
+          <Skeleton height="50px" borderRadius="br1" />
         )}
         <Button
           size="lg"
@@ -141,7 +159,15 @@ export const KYMCustomFields = ({ isExpanded }: { isExpanded: boolean }) => {
           alignItems="center"
           gap="s8"
           onClick={async () => {
-            await addCustomField({});
+            await addCustomField({
+              data: {
+                name: `Untitled`,
+                enabled: true,
+                kymType,
+                hasOtherField: false,
+                fieldType: Kym_Field_Type.SingleSelect,
+              },
+            });
           }}
         >
           <Icon as={AiOutlinePlus} />
@@ -156,11 +182,21 @@ export const KYMCustomField = ({
   field,
   isExpanded,
   index,
+  kymType,
 }: {
   field: any;
   isExpanded: any;
   index: number;
+  kymType: KymMemberTypesEnum;
 }) => {
+  const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const { mutateAsync: removeCustomField } = useDeleteCustomFieldMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries('getCustomFields');
+    },
+  });
+
   const [fieldType, setFieldType] = useState(field.fieldType);
   const [enabled, setEnabled] = useState(field.enabled);
 
@@ -223,35 +259,56 @@ export const KYMCustomField = ({
         ) : (
           <IoChevronDownOutline fontSize="18px" />
         )}
+        {isExpanded ? (
+          <Icon
+            as={IoClose}
+            onClick={async () => {
+              await removeCustomField({
+                id: field.id,
+              });
+            }}
+          >
+            {t['kymInsDelete']}
+          </Icon>
+        ) : null}
       </AccordionButton>
 
-      <AccordionPanel p="0" display="flex" flexDirection="column" gap="s16">
+      <AccordionPanel p="0" display="flex" flexDirection="column">
         <Box display="flex" flexDirection="column" gap="s16">
           <FormProvider {...methods}>
-            <Box px="s12" pt="s12">
-              <FormInput
-                name="name"
-                placeholder="Name of Field"
-                helperText="This name will appear in the KYM Form"
-              />
-            </Box>
-            <Box px="s12" w="50%">
-              <FormSelect name={'fieldType'} options={FIELD_TYPE} />
-              <TextFields variant="formHelper" mt="s4" color="gray.800">
-                {methods.getValues().fieldType === Kym_Field_Type.SingleSelect
-                  ? 'Users can select only one option from the list'
-                  : methods.getValues().fieldType === Kym_Field_Type.MultiSelect
-                  ? 'Users can select one or more options'
-                  : 'You can add different type fields at once'}
-              </TextFields>
+            <Box display="flex" flexDirection="column" gap="s16">
+              <Box px="s12" pt="s12">
+                <FormInput
+                  name="name"
+                  placeholder="Name of Field"
+                  helperText="This name will appear in the KYM Form"
+                />
+              </Box>
+              <Box px="s12" w="50%">
+                <FormSelect name={'fieldType'} options={FIELD_TYPE} />
+                <TextFields variant="formHelper" mt="s4" color="gray.800">
+                  {methods.getValues().fieldType === Kym_Field_Type.SingleSelect
+                    ? 'Users can select only one option from the list'
+                    : methods.getValues().fieldType ===
+                      Kym_Field_Type.MultiSelect
+                    ? 'Users can select one or more options'
+                    : 'You can add different type fields at once'}
+                </TextFields>
+              </Box>
             </Box>
           </FormProvider>
 
-          <KYMCustomDragGroup
-            field={{ ...field, fieldType }}
-            fieldOption={field.options}
-            isExpanded={isExpanded}
-          />
+          <Box p="0" borderTop={'1px'} borderTopColor={'border.layout'}>
+            <KYMSettingsDragField
+              id={field.id}
+              customField={{
+                ...field,
+                fieldType: methods.getValues().fieldType,
+              }}
+              isExpanded={isExpanded}
+              kymType={kymType}
+            />
+          </Box>
         </Box>
       </AccordionPanel>
     </>

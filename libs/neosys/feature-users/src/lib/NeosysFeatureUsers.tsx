@@ -14,6 +14,7 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 import { NeosysUsersForm } from '../form/NeosysUsersForm';
+// import { UsersTable } from './components';
 
 /* eslint-disable-next-line */
 export interface NeosysFeatureUsersProps {}
@@ -84,4 +85,5 @@ export function NeosysFeatureUsers(props: NeosysFeatureUsersProps) {
       </Box>
     </>
   );
+  // return <UsersTable />;
 }

@@ -1,0 +1,17 @@
+import { Story, Meta } from '@storybook/react';
+import {
+  TableListPageHeader,
+  TableListPageHeaderProps,
+} from './TableListPageHeader';
+
+export default {
+  component: TableListPageHeader,
+  title: 'TableListPageHeader',
+} as Meta;
+
+const Template: Story<TableListPageHeaderProps> = (args) => (
+  <TableListPageHeader {...args} />
+);
+
+export const Primary = Template.bind({});
+Primary.args = {};

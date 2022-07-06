@@ -1,0 +1,8 @@
+query getConfig {
+  config {
+    countries {
+      name
+      code
+    }
+  }
+}

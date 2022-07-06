@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/neosys-admin/layout';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
@@ -16,7 +17,9 @@ export const NeosysClientForm = () => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
   const methods = useForm({});
-  const { watch } = methods;
+  // const { watch } = methods;
+
+  const { watch } = useFormContext();
 
   const province = useMemo(() => {
     return (
@@ -27,9 +30,9 @@ export const NeosysClientForm = () => {
     );
   }, [data?.administration?.all]);
 
-  // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('oprProvinceId');
-  const currentDistrictId = watch('oprDistrictId');
+  const currentProvinceId = watch('provinceId');
+  const currentDistrictId = watch('districtId');
+  const currentLocalityId = watch('localityId');
 
   const districtList = useMemo(
     () =>
@@ -43,6 +46,11 @@ export const NeosysClientForm = () => {
       districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
       [],
     [currentDistrictId]
+  );
+
+  const wardList = useMemo(
+    () => muncipalityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
   );
 
   return (
@@ -234,7 +242,6 @@ export const NeosysClientForm = () => {
           </Box>
 
           <Divider />
-
           <Box display="flex" flexDirection="column" gap="s16">
             <Text
               fontSize="r1"
@@ -264,6 +271,70 @@ export const NeosysClientForm = () => {
                 placeholder={t['neoClientPhoneNumber']}
               />
             </InputGroupContainer>
+          </Box>
+          <Box display="flex" flexDirection="column" gap="s16">
+            <Text
+              fontSize="r1"
+              fontWeight="SemiBold"
+              color="neutralColorLight.Gray-60"
+            >
+              {t['neoClientAddress']}
+            </Text>
+            <InputGroupContainer>
+              <FormSelect
+                name="provinceId"
+                label={t['neoClientProvince']}
+                placeholder={t['neoClientSelectProvince']}
+                options={province.map((d) => ({
+                  label: d.label,
+                  value: d.value,
+                }))}
+              />
+
+              <FormSelect
+                name="districtId"
+                label={t['neoClientDistrict']}
+                placeholder={t['neoClientSelectDistrict']}
+                options={districtList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+
+              <FormSelect
+                name="localityId"
+                label={t['neoClientLocalGovernment']}
+                placeholder={t['neoClienSelectLocalGovernment']}
+                options={muncipalityList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormSelect
+                name="wardNo"
+                label={t['neoClientWardNo']}
+                placeholder={t['neoClientEnterWardNo']}
+                options={wardList.map((d) => ({
+                  label: d,
+                  value: d,
+                }))}
+              />
+              <FormInput
+                type="text"
+                name="locality"
+                label={t['neoClientLocality']}
+                placeholder={t['neoClientEnterLocality']}
+              />
+              <FormInput
+                type="text"
+                name="houseNo"
+                label={t['neoClientHouseNo']}
+                placeholder={t['neoClientEnterHouseNo']}
+              />
+            </InputGroupContainer>
+            <Box>
+              <FormMap name="kymCoopLocation" />
+            </Box>
           </Box>
         </Box>
       </form>

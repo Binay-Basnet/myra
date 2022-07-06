@@ -1,16 +1,15 @@
-import { Box, Button } from '@coop/shared/ui';
+import { ReactElement } from 'react';
 
-export function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.css file.
-   */
-  return (
-    <Box bg="primary.500" h="500px">
-      jjnjfnsjkdnfjknsdkfnsdjkfnsdjkfnfksndfknsdknsdfkfjksdnjkjsdffnfksndnfjkjsdnjksdnf
-    </Box>
-  );
+// import { MainLayout } from '@coop/neosys-admin/layout';
+import { MainLayout } from '@coop/neosys-admin/layout';
+import { Box } from '@coop/shared/ui';
+
+function Index() {
+  return <Box>Dashboard</Box>;
 }
+
+Index.getLayout = function getLayout(page: ReactElement) {
+  return <MainLayout>{page}</MainLayout>;
+};
 
 export default Index;

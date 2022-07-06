@@ -72,6 +72,7 @@ const anotherCoop = [
   'isMemberOfAnotherCooperative',
   'nameAddressCooperative',
   'memberNo',
+  'otherMembershipDetails',
 ];
 const familyInCoop = [
   'kymIndRelationship',
@@ -79,6 +80,8 @@ const familyInCoop = [
   'familyMemberInThisCooperative',
   'familyMemberInThisInstitution',
   'addfamilyCoopButton',
+  'firstIntroducerId',
+  'secondIntroducerId',
   'findmemberButton',
 ];
 const FinancialTransaction = ['financialTransaction'];
@@ -183,7 +186,7 @@ export const getKymSection = (id: string) => {
       subSection: 'kymAccIndMainPurposeofBecomingMember',
     };
   }
-  if (anotherCoop.includes(id.split('-')[0])) {
+  if (anotherCoop.includes(id.split('.')[0])) {
     return {
       section: 'COOPmembership',
       subSection: 'kymAccIndMemberofAnothercooperative',
