@@ -107,11 +107,11 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
       <Box display="flex" alignItems="center">
         <Box
           flex={1}
-          px={2}
-          py={3}
+          px={'s12'}
           bg="gray.200"
           display="flex"
           justifyContent="space-between"
+          h="60px"
           alignItems="center"
           cursor={'pointer'}
           onClick={() => setIsOpen(!isOpen)}
@@ -123,14 +123,14 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
                 size="xs"
                 variant={'ghost'}
                 aria-label="close"
-                icon={<IoChevronUpOutline />}
+                icon={<Icon as={IoChevronUpOutline} />}
               />
             ) : (
               <IconButton
                 size="xs"
                 variant={'ghost'}
                 aria-label="close"
-                icon={<IoChevronDownOutline />}
+                icon={<Icon as={IoChevronDownOutline} />}
               />
             )}
           </Box>
@@ -149,74 +149,74 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
       </Box>
 
       <Collapse in={isOpen} style={{ marginTop: '0px' }}>
-        <DynamicBoxGroupContainer>
+        <DynamicBoxGroupContainer
+          p="s20"
+          border="1px solid"
+          borderColor={'border.layout'}
+        >
           <SectionContainer>
-            <AccordianContainer>
-              <InputGroupContainer>
-                <FormInput
-                  type="text"
-                  name={`accountOperatorsDetails.${index}.fullName`}
-                  label={t['kymCoopFullName']}
-                  placeholder={t['kymCoopEnterFullName']}
-                />
-                <FormInput
-                  type="text"
-                  name={`accountOperatorsDetails.${index}.designation`}
-                  label={t['kymCoopDesignation']}
-                  placeholder={t['kymCoopEnterDesignation']}
-                />
-              </InputGroupContainer>
-            </AccordianContainer>
+            <InputGroupContainer>
+              <FormInput
+                type="text"
+                name={`accountOperatorsDetails.${index}.fullName`}
+                label={t['kymCoopFullName']}
+                placeholder={t['kymCoopEnterFullName']}
+              />
+              <FormInput
+                type="text"
+                name={`accountOperatorsDetails.${index}.designation`}
+                label={t['kymCoopDesignation']}
+                placeholder={t['kymCoopEnterDesignation']}
+              />
+            </InputGroupContainer>
 
-            <AccordianContainer>
-              <Text fontSize="r1" fontWeight="SemiBold">
-                {t['kymCoopPermanentAddress']}
-              </Text>
-              <InputGroupContainer>
-                <FormSelect
-                  name={`accountOperatorsDetails.${index}.permanentStateId`}
-                  label={t['kymCoopState']}
-                  placeholder={t['kymCoopSelectState']}
-                  options={province}
-                />
-                <FormSelect
-                  name={`accountOperatorsDetails.${index}.permanentDistrictId`}
-                  label={t['kymCoopDistrict']}
-                  placeholder={t['kymCoopSelectDistrict']}
-                  options={districtList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name={`accountOperatorsDetails.${index}.permanentLocalityId`}
-                  label={t['kymCoopVDCMunicipality']}
-                  placeholder={t['kymCoopSelectVDCMunicipality']}
-                  options={localityList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormInput
-                  type="number"
-                  name={`accountOperatorsDetails.${index}.permanentWardId`}
-                  label={t['kymCoopWardNo']}
-                  placeholder={t['kymCoopEnterWardNo']}
-                />
-                <FormInput
-                  type="text"
-                  name={`accountOperatorsDetails.${index}.permanentTole`}
-                  label={t['kymCoopLocality']}
-                  placeholder={t['kymCoopEnterLocality']}
-                />
-              </InputGroupContainer>
+            <Text fontSize="r1" fontWeight="SemiBold">
+              {t['kymCoopPermanentAddress']}
+            </Text>
+            <InputGroupContainer>
+              <FormSelect
+                name={`accountOperatorsDetails.${index}.permanentStateId`}
+                label={t['kymCoopState']}
+                placeholder={t['kymCoopSelectState']}
+                options={province}
+              />
+              <FormSelect
+                name={`accountOperatorsDetails.${index}.permanentDistrictId`}
+                label={t['kymCoopDistrict']}
+                placeholder={t['kymCoopSelectDistrict']}
+                options={districtList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormSelect
+                name={`accountOperatorsDetails.${index}.permanentLocalityId`}
+                label={t['kymCoopVDCMunicipality']}
+                placeholder={t['kymCoopSelectVDCMunicipality']}
+                options={localityList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormInput
+                type="number"
+                name={`accountOperatorsDetails.${index}.permanentWardId`}
+                label={t['kymCoopWardNo']}
+                placeholder={t['kymCoopEnterWardNo']}
+              />
+              <FormInput
+                type="text"
+                name={`accountOperatorsDetails.${index}.permanentTole`}
+                label={t['kymCoopLocality']}
+                placeholder={t['kymCoopEnterLocality']}
+              />
+            </InputGroupContainer>
 
-              <Box>
-                <FormMap
-                  name={`accountOperatorsDetails.${index}.permanentLocation`}
-                />
-              </Box>
-            </AccordianContainer>
+            <Box>
+              <FormMap
+                name={`accountOperatorsDetails.${index}.permanentLocation`}
+              />
+            </Box>
 
             <Box
               id="Temporary Address"
@@ -348,8 +348,10 @@ export const AddOperator = ({ watch, index, control, removeAccount }) => {
         <Box
           display="flex"
           justifyContent="space-between"
-          p="s10"
-          borderTop="1px solid"
+          px="s20"
+          py="s10"
+          alignItems={'center'}
+          border="1px solid"
           borderColor="border.layout"
         >
           <Button

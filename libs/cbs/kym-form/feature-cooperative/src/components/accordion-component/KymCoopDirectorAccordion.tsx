@@ -353,7 +353,8 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
         <Box
           display="flex"
           justifyContent="space-between"
-          p="s10"
+          py="s10"
+          px="s20"
           border="1px solid"
           borderColor="border.layout"
         >

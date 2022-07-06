@@ -25,7 +25,7 @@ export const KymCoopAccountOperatorDetail = ({ watch, control }) => {
       </Text>
       {accountFields.map((item, index) => {
         return (
-          <Box key={item.id} display="flex" flexDirection={'column'} gap="s16">
+          <Box key={item.id} display="flex" flexDirection={'column'}>
             <AddOperator
               watch={watch}
               index={index}
