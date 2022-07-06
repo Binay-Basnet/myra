@@ -28,7 +28,7 @@ export const KymCoopBoardDirectorDetail = ({ watch, control }) => {
       </Text>
       {directorFields.map((item, index) => {
         return (
-          <Box key={item.id} display="flex" flexDirection={'column'} gap="s16">
+          <Box key={item.id} display="flex" flexDirection={'column'}>
             <AddDirector
               watch={watch}
               index={index}

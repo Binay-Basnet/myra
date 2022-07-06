@@ -712,6 +712,7 @@ const en: Record<string, string> = {
   kymCoopRepresentativeLocality: 'Locality',
   kymCoopRepresentativeEnterLocality: 'Enter Locality',
   kymCoopRepresentativeHouseNo: 'House No',
+
   kymCoopRepresentativeEnterHouseNo: 'Enter House No',
   kymCoopRepresentativeTemporaryAddress: 'Temporary Address',
   kymCoopRepresentativeTemporaryAddressPermanent:
@@ -1207,7 +1208,7 @@ const en: Record<string, string> = {
   kymInsAccountHolderDeclaration: 'Account Holder Declaration',
   kymInsDetailsofAccountOperators: 'Details of Account Operators',
   kymInsAccountOperationInstruction: 'Account Operation Instruction',
-  kymIns1InformationofInstitution: '1. Information of Institution',
+  kymIns1InformationofInstitution: '1. COOP - Institution',
   kymIns2TransactionProfile: '2. Transaction Profile',
   kymIns3DetailsofProprietorpartnersDirectors:
     '3. Details of Proprietor, partners, Directors',

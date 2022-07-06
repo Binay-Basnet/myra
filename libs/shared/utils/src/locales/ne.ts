@@ -1193,7 +1193,7 @@ const ne: Record<string, string> = {
   kymInsAccountHolderDeclaration: 'Account Holder Declaration',
   kymInsDetailsofAccountOperators: 'Details of Account Operators',
   kymInsAccountOperationInstruction: 'Account Operation Instruction',
-  kymIns1InformationofInstitution: '1. Information of Institution',
+  kymIns1InformationofInstitution: '1. COOP - Institution',
   kymIns2TransactionProfile: '2. Transaction Profile',
   kymIns3DetailsofProprietorpartnersDirectors:
     '3. Details of Proprietor, partners, Directors',
