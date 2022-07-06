@@ -1819,6 +1819,46 @@ const en: Record<string, string> = {
   neoClientUserSiderbarUsersList: 'Users List',
   neoClientUserSiderbarUsersRole: 'Users Role',
   neoClientUserSiderbarNewUserRole: 'New User Role',
+
+  //settings sidebar
+  neoSettingsSidebarSettings: 'Settings',
+  neoSettingsSidebarGeneralSettings: 'General Settings',
+  neoSettingsSidebarGlobalAppSettings: 'Global App Settings',
+  neoSettingsSidebarMyraModules: 'Myra Modules',
+  neoSettingsSidebarDocumentMasterLists: 'Document Master Lists',
+  neoSettingsSidebarUsers: 'Users',
+
+  //global app settings layout
+  neoSettingsGlobalAppSettingsGlobal: 'Global App Settings',
+  neoSettingsGlobalAppSettingsGeneral: 'General',
+  neoSettingsGlobalAppSettingsInterestRate: 'Interest Rate',
+  neoSettingsGlobalAppSettingsShare: 'Share',
+  neoSettingsGlobalAppSettingsTDSTaxVAT: 'TDS / Tax / VAT',
+  neoSettingsGlobalAppSettingsChargeSetup: 'Charge Setup',
+  neoSettingsGlobalAppSettingsCalendarSetup: 'Calendar Setup',
+  neoSettingsGlobalAppSettingsChequeCertificateSetup:
+    'Cheque & Certificate Setup',
+  neoSettingsGlobalAppSettingsBulkMessaging: 'Bulk Messaging',
+
+  //shortcuts modal
+  shortcutsModalAll: 'All Keyboard Shorcut',
+  shortcutsModalGeneral: 'General',
+  shortcutsModalFocusOut: 'Focus Out',
+  shortcutModalSearch: 'Search',
+  shortcutModalHistory: 'History',
+  shortcutModalAppSwitcher: 'App Switcher',
+  shortcutModalHelp: 'Help',
+  shortcutModalAppHeader: 'App Header',
+  shortcutModalAppMenu: 'App Menu',
+  shortcutModalDirectMenuOpen: 'Direct Menu Open',
+  shortcutModalForms: 'Forms',
+  shortcutModalSave: 'Save',
+  shortcutModalNavigateBtnFields: 'Navigate between fields',
+  shortcutModalCancel: 'Cancel',
+  shortcutModalObject: 'Object',
+  shortcutModalNewOpen: 'New Open',
+  shortcutModalObjectMenu: 'Object Menu',
+  shortcutModalSwitchTabs: 'Switch Tabs',
 };
 
 export default en;

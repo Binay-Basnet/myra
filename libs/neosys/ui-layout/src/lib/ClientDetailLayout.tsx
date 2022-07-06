@@ -127,7 +127,7 @@ export function ClientDetailLayout(props: ClientDetailLayoutProps) {
             <Tabs variant="unstyled" index={currentIndex}>
               {tabLinks.map(({ title, to }, index) => {
                 return (
-                  <Link href={to}>
+                  <Link href={to} key={index}>
                     <TabCol key={`${title}${index}`}>
                       <Text>{title}</Text>
                     </TabCol>

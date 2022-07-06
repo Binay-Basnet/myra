@@ -1,47 +1,48 @@
 /* eslint-disable-next-line */
-import { useTranslation, getKymSection } from '@coop/shared/utils';
+import { getKymSection, useTranslation } from '@coop/shared/utils';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
-  useSetMemberDataMutation,
-  useGetKymFormStatusQuery,
-  KymIndMemberInput,
-  useGetIndividualKymOptionsQuery,
   Kym_Field_Custom_Id,
   Kym_Field_Custom_Id as KYMOptionEnum,
+  KymIndMemberInput,
+  useGetIndividualKymEditDataQuery,
+  useGetIndividualKymOptionsQuery,
+  useGetKymFormStatusQuery,
+  useSetMemberDataMutation,
 } from '@coop/shared/data-access';
-import { useForm, FormProvider } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import {
   Box,
-  Container,
-  Text,
-  IconButton,
-  TextFields,
   Button,
-  Icon,
+  Container,
   FormFooter,
+  Icon,
+  IconButton,
+  Text,
+  TextFields,
 } from '@coop/shared/ui';
 import { IoCloseOutline } from 'react-icons/io5';
 import debounce from 'lodash/debounce';
 import {
-  MemberKYMBasicInfo,
-  MemberKYMContactDetails,
-  MemberKYMIdentificationDetails,
-  MemberKYMAddress,
-  MemberKYMFamilyDetails,
-  MemberKYMProfession,
-  MemberKYMMainOccupation,
-  MemberKYMHusbandWifeOccupation,
-  MemberKYMIncomeSourceDetails,
   KYMBasiccoopDetails,
-  KYMFinancialTransactionDetails,
-  KYMEstimatedAmount,
   KYMDeclaration,
   KYMDocumentDeclaration,
+  KYMEstimatedAmount,
+  KYMFinancialTransactionDetails,
+  MemberKYMAddress,
+  MemberKYMBasicInfo,
+  MemberKYMContactDetails,
+  MemberKYMFamilyDetails,
+  MemberKYMHusbandWifeOccupation,
+  MemberKYMIdentificationDetails,
+  MemberKYMIncomeSourceDetails,
+  MemberKYMMainOccupation,
+  MemberKYMProfession,
 } from '../components/form';
 import {
-  SectionContainer,
   ContainerWithDivider,
+  SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccorrdianAddMember } from '@coop/myra/components';
@@ -90,8 +91,6 @@ export function KYMIndividualPage() {
       filter: { customId: KYMOptionEnum.Nationality },
     });
 
-  console.log(familyDetailsFieldNames);
-
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
     subSection: string;
@@ -119,6 +118,19 @@ export function KYMIndividualPage() {
   const methods = useForm<KymIndMemberInput>({
     defaultValues: {},
   });
+
+  const { data, isLoading: editLoading } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+  console.log(
+    'previous',
+    useGetIndividualKymEditDataQuery({
+      id: id,
+    })
+  );
+
+  const previousFormData =
+    data?.members.individual?.formState?.data?.formData ?? {};
 
   const { watch, setError, reset } = methods;
 
@@ -160,9 +172,11 @@ export function KYMIndividualPage() {
       nationalityId:
         nationalityFields?.members?.individual?.options?.list?.data?.[0]
           ?.options?.[0]?.id,
+      ...previousFormData,
     });
-  }, [isLoading, nationalityLoading]);
+  }, [isLoading, nationalityLoading, editLoading, JSON.stringify(data)]);
 
+  console.log('previous data', previousFormData, data);
   return (
     <>
       {/* // Top Bar */}

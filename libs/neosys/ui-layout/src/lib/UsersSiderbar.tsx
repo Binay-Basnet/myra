@@ -50,8 +50,6 @@ export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
     [router.asPath]
   );
 
-  console.log({ currentIndex });
-
   return (
     <Box display="flex">
       <Box width="275px" p="s24" position="fixed" flexShrink={0}>

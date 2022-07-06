@@ -1,14 +1,20 @@
-fragment MutationError on MutationError{
-    ...on BadRequestError{
-        __typename
-        message
-        code
-    }
-    ...on ServerError{
-        __typename
-        message
-        code
-    }
-
+fragment MutationError on MutationError {
+  ... on BadRequestError {
+    __typename
+    message
+    code
+  }
+  ... on ServerError {
+    __typename
+    message
+    code
+  }
 }
 
+fragment KYMFieldData on KYMFieldData {
+  id
+  options {
+    id
+    value
+  }
+}
