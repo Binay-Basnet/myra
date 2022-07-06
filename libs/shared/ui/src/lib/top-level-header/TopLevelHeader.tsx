@@ -30,6 +30,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Select,
+  ShortcutTab,
   SwitchTabs,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -696,19 +697,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
 
                   <Box display="flex" gap="s12">
                     {shortcutKeys.map((key, index) => (
-                      <Box
-                        px="s10"
-                        py="s8"
-                        border="1px"
-                        borderRadius="br2"
-                        borderColor="border.layout"
-                        bg="Background"
-                        key={index}
-                      >
-                        <Text fontSize="s3" color="black">
-                          {key}
-                        </Text>
-                      </Box>
+                      <ShortcutTab shortcut={key} key={index} />
                     ))}
                   </Box>
                 </Box>
