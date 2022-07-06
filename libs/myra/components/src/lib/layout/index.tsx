@@ -1,6 +1,7 @@
 export * from './AccountLayout';
 export * from './HomePageLayout';
-export * from './InventoryLayout';
+// export * from './InventoryLayout';
+export * from './inventoryLayout/inventory/InventoryTabLayout';
 export * from './inventoryLayout/itemGroupsLayout';
 export * from './inventoryLayout/ItemsLayout';
 export * from './inventoryLayout/UnitsLayout';

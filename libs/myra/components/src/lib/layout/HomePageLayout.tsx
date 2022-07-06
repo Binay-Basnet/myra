@@ -19,7 +19,7 @@ const myraAppn = [
   {
     title: 'inventoryManagement',
     img: '/exp.svg',
-    link: '/inventory/items',
+    link: '/inventory/register',
   },
   {
     title: 'loanManagementSystem',

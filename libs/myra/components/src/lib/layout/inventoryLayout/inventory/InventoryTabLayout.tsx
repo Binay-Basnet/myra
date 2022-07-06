@@ -6,7 +6,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { TabColumn } from '../../tab/TabforMemberPage';
+import { TabColumn } from '../../../tab/TabforMemberPage';
 
 interface IInventoryPageLayoutProps {
   children: React.ReactNode;
@@ -14,22 +14,20 @@ interface IInventoryPageLayoutProps {
 
 const inventoryColumns = [
   {
-    title: 'itemsList',
-    link: '/inventory/items',
+    title: 'invInventoryRegister',
+    link: '/inventory/register',
   },
   {
-    title: 'itemsCategory',
-    link: '/inventory/items/category',
+    title: 'invInventoryAdjustment',
+    link: '/inventory/adjustments',
   },
   {
-    title: 'itemUnits',
-    link: '/inventory/items/units',
+    title: 'invInventoryReports',
+    link: '/inventory/reports',
   },
 ];
 
-export const InventoryItemsLayout = ({
-  children,
-}: IInventoryPageLayoutProps) => {
+export const InventoryTabLayout = ({ children }: IInventoryPageLayoutProps) => {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -37,7 +35,7 @@ export const InventoryItemsLayout = ({
     <Box display="flex">
       <Box width="275px" p="s24" flexShrink={0} position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
-          {t['items']}
+          {t['invInventory']}
         </Text>
         <Divider my="s16" />
         <Button
@@ -49,7 +47,7 @@ export const InventoryItemsLayout = ({
             router.push(router.pathname + '/add');
           }}
         >
-          {t['addItems']}
+          {t['invInventoryNewInventoryEntry']}
         </Button>
         <Divider my="s16" />
         <TabColumn list={inventoryColumns} />

@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 
-import { InventoryFeatureItemAdjustment } from '@coop/myra/inventory/item';
+import { InventoryFeatureAdjustment } from '@coop/inventory/inventory';
 import { MainLayoutInventory } from '@coop/shared/ui';
 
 const AddInventoryAdjustments = () => {
-  return <InventoryFeatureItemAdjustment />;
+  return <InventoryFeatureAdjustment />;
 };
 
 export default AddInventoryAdjustments;

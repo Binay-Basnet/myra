@@ -13,14 +13,12 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import ItemAdjustmentForm from '../component/form/ItemAdjustmentForm';
+import { InventoryRegisterForm } from '../component/form/InventoryRegisterForm';
 
 /* eslint-disable-next-line */
-export interface InventoryFeatureItemAdjustmentProps {}
+export interface InventoryFeatureRegisterProps {}
 
-export function InventoryFeatureItemAdjustment(
-  props: InventoryFeatureItemAdjustmentProps
-) {
+export function InventoryFeatureRegister(props: InventoryFeatureRegisterProps) {
   const { t } = useTranslation();
   const router = useRouter();
   return (
@@ -42,7 +40,7 @@ export function InventoryFeatureItemAdjustment(
               fontWeight="SemiBold"
               color="neutralColorLight.Gray-80"
             >
-              {t['itemUnitAddNewInventoryAdjustment']}
+              {t['invItemAddNewItem']}
             </Text>
 
             <IconButton
@@ -53,7 +51,7 @@ export function InventoryFeatureItemAdjustment(
             />
           </Box>
 
-          <ItemAdjustmentForm />
+          <InventoryRegisterForm />
         </Box>
       </Container>
 
@@ -81,7 +79,7 @@ export function InventoryFeatureItemAdjustment(
                     fontSize="s2"
                     ml="5px"
                   >
-                    {t['applyChanges']}
+                    {t['saveDraft']}
                   </Text>
                 </Button>
               }

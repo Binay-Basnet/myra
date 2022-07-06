@@ -96,6 +96,7 @@ export function TabMenu() {
         <TabList border="none" height="100%">
           {demotabs.map(({ title, icon, link }, index) => {
             const isActive = router?.asPath.includes(title.toLowerCase());
+            console.log(router?.asPath, title);
             return (
               <Link href={link} key={index}>
                 <Tab

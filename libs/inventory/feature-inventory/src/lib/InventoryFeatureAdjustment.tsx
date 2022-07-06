@@ -13,12 +13,14 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { AddVendorForm } from '../component/form/AddVendorForm';
+import InventoryAdjustmentForm from '../component/form/InventoryAdjustmentForm';
 
 /* eslint-disable-next-line */
-export interface InventoryFeatureVendorsProps {}
+export interface InventoryFeatureAdjustmentProps {}
 
-export function InventoryFeatureVendors(props: InventoryFeatureVendorsProps) {
+export function InventoryFeatureAdjustment(
+  props: InventoryFeatureAdjustmentProps
+) {
   const { t } = useTranslation();
   const router = useRouter();
   return (
@@ -40,7 +42,7 @@ export function InventoryFeatureVendors(props: InventoryFeatureVendorsProps) {
               fontWeight="SemiBold"
               color="neutralColorLight.Gray-80"
             >
-              {t['addVendorAddNewVendor']}
+              {t['itemUnitAddNewInventoryAdjustment']}
             </Text>
 
             <IconButton
@@ -51,7 +53,7 @@ export function InventoryFeatureVendors(props: InventoryFeatureVendorsProps) {
             />
           </Box>
 
-          <AddVendorForm />
+          <InventoryAdjustmentForm />
         </Box>
       </Container>
 
@@ -79,11 +81,11 @@ export function InventoryFeatureVendors(props: InventoryFeatureVendorsProps) {
                     fontSize="s2"
                     ml="5px"
                   >
-                    {t['saveDraft']}
+                    {t['applyChanges']}
                   </Text>
                 </Button>
               }
-              mainButtonLabel={t['addVendorSaveVendor']}
+              mainButtonLabel={t['next']}
               mainButtonHandler={() => router.push(`/members/translation}`)}
             />
           </Container>

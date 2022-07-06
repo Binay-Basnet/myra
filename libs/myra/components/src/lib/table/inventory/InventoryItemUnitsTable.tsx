@@ -1,12 +1,21 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BsThreeDots } from 'react-icons/bs';
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from '@chakra-ui/react';
 import { IconButton } from '@chakra-ui/react';
 
 import { InventoryPageHeader } from '@coop/myra/inventory/ui-layout';
 import { useGetInventoryItemsQuery } from '@coop/shared/data-access';
 import { FormInput, FormSwitch } from '@coop/shared/form';
-import { Box, Column, Modal, Table, Text } from '@coop/shared/ui';
+import { Box, Button, Column, Table, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const InventoryItemUnitsTable = () => {
@@ -60,47 +69,58 @@ export const InventoryItemUnitsTable = () => {
   const NewItemUnitModal = () => {
     return (
       <Modal
-        open={openModal}
+        isOpen={openModal}
         onClose={onCloseModal}
         isCentered={true}
-        title={
-          <Text
-            fontSize="r2"
-            color="neutralColorLight.Gray-80"
-            fontWeight="SemiBold"
-          >
-            {t['itemUnitAddNewUnit']}
-          </Text>
-        }
+        trapFocus={false}
       >
-        <FormProvider {...methods}>
-          <form>
-            <Box display="flex" flexDirection="column" gap="s24">
-              <FormInput
-                type="text"
-                name="name"
-                label={t['itemUnitFormName']}
-                placeholder={t['itemUnitFormName']}
-              />
-              <FormInput
-                type="text"
-                name="shortName"
-                label={t['itemUnitFormShortName']}
-                placeholder={t['itemUnitFormShortName']}
-              />
-              <FormInput
-                type="text"
-                name="description"
-                label={t['itemUnitFormDescription']}
-                placeholder={t['itemUnitFormDescription']}
-              />
-              <FormSwitch
-                name="acceptFraction"
-                label={t['itemUnitFormAcceptsFraction']}
-              />
-            </Box>
-          </form>
-        </FormProvider>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <Text
+              fontSize="r2"
+              color="neutralColorLight.Gray-80"
+              fontWeight="SemiBold"
+            >
+              {t['itemUnitAddNewUnit']}
+            </Text>
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormProvider {...methods}>
+              <form>
+                <Box display="flex" flexDirection="column" gap="s24">
+                  <FormInput
+                    type="text"
+                    name="name"
+                    label={t['itemUnitFormName']}
+                    placeholder={t['itemUnitFormName']}
+                  />
+                  <FormInput
+                    type="text"
+                    name="shortName"
+                    label={t['itemUnitFormShortName']}
+                    placeholder={t['itemUnitFormShortName']}
+                  />
+                  <FormInput
+                    type="text"
+                    name="description"
+                    label={t['itemUnitFormDescription']}
+                    placeholder={t['itemUnitFormDescription']}
+                  />
+                  <FormSwitch
+                    name="acceptFraction"
+                    label={t['itemUnitFormAcceptsFraction']}
+                  />
+                </Box>
+              </form>
+            </FormProvider>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button>{t['itemUnitFormAddUnitofMeasurement']}</Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     );
   };

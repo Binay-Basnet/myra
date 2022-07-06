@@ -1704,6 +1704,7 @@ const en: Record<string, string> = {
   catgUnderItemGroup: 'Under Item Group',
   catgSelectItemGroup: 'Select Item Group',
   catgDescription: 'Description',
+  catgAddItemGroup: 'Add Item Group',
 
   // item units table
   itemUnitUnits: 'Units',
@@ -1729,6 +1730,21 @@ const en: Record<string, string> = {
   itemUnitDate: 'Date',
   itemUnitReferenceNumber: 'Reference Number ',
 
+  // inventory
+  invInventory: 'Inventory',
+  invInventoryNewInventoryEntry: 'New Inventory Entry',
+  invInventoryRegister: 'Inventory Register ',
+  invInventoryAdjustment: 'Inventory Adjustment',
+  invInventoryReports: 'Inventory Reports',
+
+  // inventory register table
+  inRegItemID: 'Item ID',
+  inRegName: 'Name',
+  inRegType: 'Type',
+  inRegUnitPrice: 'Unit Price',
+  inRegTotalCost: 'Total Cost',
+  inRegItemQuantity: 'Item Quantity',
+
   // VENDORS
 
   // vendor layout
@@ -1741,6 +1757,28 @@ const en: Record<string, string> = {
   vendorLocation: 'Location',
   vendorPhoneNumber: 'Phone Number',
   vendorEmailAddress: 'Email Address',
+
+  // add vendor
+  addVendorAddNewVendor: 'Add New Vendor',
+  addVendorName: 'Name',
+  addVendorEnterName: 'Select Name',
+  addVendorVendorCode: 'Vendor Code',
+  addVendorEnterVendorCode: 'Enter Vendor Code',
+  addVendorAddress: 'Address',
+  addVendorSelectAddress: 'Select Address',
+  addVendorPanNo: 'PAN No',
+  addVendorEnterPanNo: 'Enter PAN No',
+  addVendorPhoneNumber: 'Phone Number',
+  addVendorEmailAddress: 'Email Address',
+  addVendorContactPerson: 'Contact Person',
+  addVendorContactName: 'Name',
+  addVendorPhoneNo: 'Phone No',
+  addVendorAdditionalField: 'Additional Field',
+  addVendorOpeningBalance: 'Opening Balance',
+  addVendorCreditTerms: 'Credit Terms',
+  addVendorCreditLimit: 'Credit Limit',
+  addVendorSaveVendor: 'Save Vendor',
+
   //client details
   neoClientDetailsClients: 'Clients',
   neoClientDetailsOverview: 'Overview',

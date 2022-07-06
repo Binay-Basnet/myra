@@ -1,15 +1,12 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
-import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 
-import { InventoryPageHeader } from '@coop/myra/inventory/ui-layout';
 import { useGetInventoryItemsQuery } from '@coop/shared/data-access';
-import { Column, Table } from '@coop/shared/ui';
+import { Column, Table, TableListPageHeader } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export const InventoryItemAdjustmentsTable = () => {
-  const router = useRouter();
+export const InventoryRegisterTable = () => {
   const { t } = useTranslation();
   const { data, isFetching } = useGetInventoryItemsQuery();
 
@@ -18,18 +15,45 @@ export const InventoryItemAdjustmentsTable = () => {
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        Header: t['itemUnitsDate'],
+        Header: t['inRegItemID'],
+        accessor: 'node.id',
+        maxWidth: 4,
+      },
+      {
+        Header: t['inRegName'],
         accessor: 'node.name',
+        width: '80%',
       },
       {
-        Header: t['itemUnitsEntryNo'],
+        Header: t['inRegType'],
         accessor: 'node.type',
+        width: '40%',
       },
-
       {
-        Header: t['itemUnitsReference'],
+        Header: t['inRegUnitPrice'],
         accessor: 'node.unitPrice',
-        width: '50%',
+        Cell: ({ value }) => {
+          return <span>{Number(value).toFixed(2)}</span>;
+        },
+      },
+      {
+        id: 'total-cost',
+        Header: t['inRegTotalCost'],
+        accessor: 'node.unitPrice',
+        Cell: ({ value, row }) => {
+          return (
+            <span>
+              {Number(value * row.original.node.itemQuantity).toFixed(2)}
+            </span>
+          );
+        },
+      },
+      {
+        Header: t['inRegItemQuantity'],
+        accessor: 'node.itemQuantity',
+        Cell: ({ value }) => {
+          return <span>{Number(value).toFixed(2)}</span>;
+        },
       },
       {
         accessor: 'actions',
@@ -47,11 +71,7 @@ export const InventoryItemAdjustmentsTable = () => {
 
   return (
     <>
-      <InventoryPageHeader
-        heading="itemUnitInventoryAdjustment"
-        buttonLabel="itemUnitsNewInventoryAdjustment"
-        buttonHandler={() => router.push('/inventory/items/adjustments/add')}
-      />
+      <TableListPageHeader heading={'items'} />
 
       <Table
         isLoading={isFetching}

@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IoAddOutline } from 'react-icons/io5';
 
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import {
+  FormAccountInput,
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+} from '@coop/shared/form';
 import { Box, Button, Divider, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -10,13 +15,6 @@ export const AddVendorForm = () => {
   const { t } = useTranslation();
   const [addnInfo, setAddnInfo] = useState(false);
   const methods = useForm({});
-  const { watch } = methods;
-  const productInfo = watch('productInfo');
-
-  const productInfoList = [
-    { label: t['invItemSimpleProduct'], value: 'simpleProduct' },
-    { label: t['invItemVariantProduct'], value: 'variantProduct' },
-  ];
 
   return (
     <FormProvider {...methods}>
@@ -31,26 +29,10 @@ export const AddVendorForm = () => {
         >
           <Grid templateColumns="repeat(3,1fr)" gap="s20">
             <GridItem colSpan={2}>
-              <FormInput
-                type="text"
-                name="name"
-                label={t['invItemPrimaryUnit']}
-                placeholder={t['invItemSelectItem']}
-              />
-            </GridItem>
-            <GridItem>
-              <FormInput
-                type="text"
-                name="item"
-                label={t['invItemCode']}
-                placeholder={t['invItemCode']}
-              />
-            </GridItem>
-            <GridItem>
               <FormSelect
-                name="group"
-                label={t['invItemGroup']}
-                placeholder={t['invItemCategory']}
+                name="name"
+                label={t['addVendorName']}
+                placeholder={t['addVendorEnterName']}
                 options={[
                   {
                     label: '1',
@@ -70,211 +52,124 @@ export const AddVendorForm = () => {
             <GridItem>
               <FormInput
                 type="text"
-                name="tax"
-                label={t['invItemTax']}
-                placeholder={t['invItemTaxType']}
+                name="vendorCode"
+                label={t['addVendorVendorCode']}
+                placeholder={t['addVendorEnterVendorCode']}
+              />
+            </GridItem>
+            <GridItem colSpan={2}>
+              <FormSelect
+                name="address"
+                label={t['addVendorAddress']}
+                placeholder={t['addVendorSelectAddress']}
+                options={[
+                  {
+                    label: '1',
+                    value: '1',
+                  },
+                  {
+                    label: '2',
+                    value: '2',
+                  },
+                  {
+                    label: '3',
+                    value: '3',
+                  },
+                ]}
               />
             </GridItem>
             <GridItem>
               <FormInput
                 type="text"
-                name="primaryUnit"
-                label={t['invItemPrimaryUnit']}
-                placeholder={t['invItemPrimaryUnit']}
+                name="panNo"
+                label={t['addVendorPanNo']}
+                placeholder={t['addVendorEnterPanNo']}
+              />
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormInput
+                type="text"
+                name="phoneNumber"
+                label={t['addVendorPhoneNumber']}
+                placeholder={t['addVendorPhoneNumber']}
+              />
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormInput
+                type="text"
+                name="emailAddress"
+                label={t['addVendorEmailAddress']}
+                placeholder={t['addVendorEmailAddress']}
               />
             </GridItem>
           </Grid>
 
-          <Divider />
-
           <Box flexDirection="column" display="flex" gap="s16">
-            <Text
-              fontSize="r2"
-              fontWeight="SemiBold"
-              color="neutralColorLight.Gray-80"
-            >
-              {t['invItemProductInformation']}
+            <Text fontSize="r1" fontWeight="SemiBold" color="gray.500">
+              {t['addVendorContactPerson']}
             </Text>
-            <FormSwitchTab
-              name="productInfo"
-              options={productInfoList.map((value) => ({
-                label: value.label,
-                value: value.value,
-              }))}
-            />
-            {productInfo === 'simpleProduct' && (
-              <Grid templateColumns="repeat(3,1fr)" gap="s20">
-                <GridItem>
-                  <FormInput
-                    type="text"
-                    name="purchasePrice"
-                    label={t['invItemPurchasePrice']}
-                    placeholder={t['invItemPurchasePrice']}
-                  />
-                </GridItem>
-                <GridItem>
-                  <FormInput
-                    type="text"
-                    name="profit"
-                    label={t['invItemProfit']}
-                    placeholder={t['invItemProfit']}
-                  />
-                </GridItem>
-                <GridItem>
-                  <FormInput
-                    type="text"
-                    name="sellingPrice"
-                    label={t['invItemSellingPrice']}
-                    placeholder={t['invItemSellingPrice']}
-                  />
-                </GridItem>
-              </Grid>
-            )}
+            <Grid templateColumns="repeat(3,1fr)" gap="s20">
+              <GridItem>
+                <FormInput
+                  type="text"
+                  name="contactName"
+                  label={t['addVendorContactName']}
+                  placeholder={t['addVendorContactName']}
+                />
+              </GridItem>
+              <GridItem>
+                <FormInput
+                  type="text"
+                  name="email"
+                  label={t['addVendorEmailAddress']}
+                  placeholder={t['addVendorEmailAddress']}
+                />
+              </GridItem>
+            </Grid>
           </Box>
 
-          {!addnInfo && (
-            <Box>
-              <Button
-                leftIcon={<IoAddOutline />}
-                variant="ghost"
-                onClick={() => setAddnInfo(true)}
-              >
-                {t['invItemAddAdditionalInformation']}
-              </Button>
-            </Box>
-          )}
-
-          {addnInfo && (
-            <>
-              {' '}
-              <Divider />
-              <Box>
-                <Text
-                  fontSize="r1"
-                  fontWeight="SemiBold"
-                  color="neutralColorLight.Gray-50"
-                >
-                  {t['invItemAddtionalInformation']}
-                </Text>
-
-                <Grid mt="s16" templateColumns="repeat(3,1fr)" gap="s20">
-                  <GridItem>
-                    <FormSelect
-                      name="salesLedger"
-                      label={t['invItemSalesLedger']}
-                      placeholder={t['invItemSelectAccount']}
-                      options={[
-                        {
-                          label: '1',
-                          value: '1',
-                        },
-                        {
-                          label: '2',
-                          value: '2',
-                        },
-                        {
-                          label: '3',
-                          value: '3',
-                        },
-                      ]}
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormSelect
-                      name="purchaseLedger"
-                      label={t['invItemPurchaseLedger']}
-                      placeholder={t['invItemSelectAccount']}
-                      options={[
-                        {
-                          label: '1',
-                          value: '1',
-                        },
-                        {
-                          label: '2',
-                          value: '2',
-                        },
-                        {
-                          label: '3',
-                          value: '3',
-                        },
-                      ]}
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormSelect
-                      name="salesReturnLedger"
-                      label={t['invItemSalesReturnLedger']}
-                      placeholder={t['invItemSelectAccount']}
-                      options={[
-                        {
-                          label: '1',
-                          value: '1',
-                        },
-                        {
-                          label: '2',
-                          value: '2',
-                        },
-                        {
-                          label: '3',
-                          value: '3',
-                        },
-                      ]}
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormSelect
-                      name="purchaseReturnLedger"
-                      label={t['invItemPurchaseReturnLedger']}
-                      placeholder={t['invItemSelectAccount']}
-                      options={[
-                        {
-                          label: '1',
-                          value: '1',
-                        },
-                        {
-                          label: '2',
-                          value: '2',
-                        },
-                        {
-                          label: '3',
-                          value: '3',
-                        },
-                      ]}
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormSelect
-                      name="valuationMethod"
-                      label={t['invItemValuationMethod']}
-                      placeholder={t['invItemSelectMethod']}
-                      options={[
-                        {
-                          label: '1',
-                          value: '1',
-                        },
-                        {
-                          label: '2',
-                          value: '2',
-                        },
-                        {
-                          label: '3',
-                          value: '3',
-                        },
-                      ]}
-                    />
-                  </GridItem>
-                  <GridItem>
-                    <FormInput
-                      type="text"
-                      name="minimumStockQuantity"
-                      label={t['invItemMinimumStockQuantity']}
-                      placeholder={t['invItemMinimumStock']}
-                    />
-                  </GridItem>
-                </Grid>
-              </Box>
-            </>
-          )}
+          <Box flexDirection="column" display="flex" gap="s16">
+            <Text fontSize="r1" fontWeight="SemiBold" color="gray.500">
+              {t['addVendorAdditionalField']}
+            </Text>
+            <Grid templateColumns="repeat(3,1fr)" gap="s20">
+              <GridItem>
+                <FormAccountInput
+                  name="openingBalance"
+                  label={t['addVendorOpeningBalance']}
+                />
+              </GridItem>
+              <GridItem>
+                <FormSelect
+                  name="creditTerms"
+                  label={t['addVendorCreditTerms']}
+                  placeholder={t['addVendorCreditTerms']}
+                  options={[
+                    {
+                      label: '1',
+                      value: '1',
+                    },
+                    {
+                      label: '2',
+                      value: '2',
+                    },
+                    {
+                      label: '3',
+                      value: '3',
+                    },
+                  ]}
+                />
+              </GridItem>
+              <GridItem>
+                <FormInput
+                  type="text"
+                  name="creditLimit"
+                  label={t['addVendorCreditLimit']}
+                  placeholder={t['addVendorCreditLimit']}
+                />
+              </GridItem>
+            </Grid>
+          </Box>
         </Box>
       </form>
     </FormProvider>

@@ -1,6 +1,4 @@
-import React from 'react';
 import { IconType } from 'react-icons';
-import { AiFillTag } from 'react-icons/ai';
 import { FaShapes, FaUserFriends } from 'react-icons/fa';
 import { IoLockClosed } from 'react-icons/io5';
 import Link from 'next/link';
@@ -14,9 +12,10 @@ import { useTranslation } from '@coop/shared/utils';
 export interface TabMenuInventoryProps {}
 
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
-  '/inventory/items': 0,
-  '/inventory/warehouse': 1,
-  '/inventory/vendor': 2,
+  '/inventory/register': 0,
+  '/inventory/items': 1,
+  '/inventory/warehouse': 2,
+  '/inventory/vendor': 3,
 };
 
 const demotabs: {
@@ -26,8 +25,14 @@ const demotabs: {
   name: string;
 }[] = [
   {
-    title: 'items',
+    title: 'inventory',
     icon: IoLockClosed,
+    link: '/inventory/register',
+    name: 'inventory',
+  },
+  {
+    title: 'items',
+    icon: FaShapes,
     link: '/inventory/items',
     name: 'items',
   },
@@ -40,8 +45,8 @@ const demotabs: {
   {
     title: 'vendors',
     icon: FaUserFriends,
-    link: '/inventory/vendor',
-    name: 'vendor',
+    link: '/inventory/vendors',
+    name: 'vendors',
   },
 ];
 
@@ -55,7 +60,7 @@ export function TabMenuForInventoryApp() {
     NAVBAR_TAB_OBJECT[
       Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
         router?.pathname.includes(string)
-      ) ?? '/inventory/items'
+      ) ?? '/inventory/register'
     ];
 
   return (
@@ -83,7 +88,7 @@ export function TabMenuForInventoryApp() {
       <Tabs index={currentIndex} height="100%" size="md" variant="enclosed">
         <TabList border="none" height="100%">
           {demotabs.map(({ title, icon, link, name }, index) => {
-            const isActive = router?.asPath.includes(name.toLowerCase());
+            const isActive = router?.asPath.includes(link);
             return (
               <Link href={link} key={index}>
                 <Tab
