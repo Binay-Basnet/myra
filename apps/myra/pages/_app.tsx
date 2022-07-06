@@ -34,17 +34,17 @@ const queryClient = new QueryClient({
       cacheTime: fiveMinutesInMs,
       staleTime: fiveMinutesInMs,
 
-      onError: (error) => {
-        toast({
-          title: '500 Server Error',
-          description: 'Check Console for More Info',
-          status: 'error',
-          variant: 'left-accent',
-          position: 'bottom-right',
-          isClosable: true,
-          size: 'lg',
-        });
-      },
+      // onError: (error) => {
+      //   toast({
+      //     title: '500 Server Error',
+      //     description: 'Check Console for More Info',
+      //     status: 'error',
+      //     variant: 'left-accent',
+      //     position: 'bottom-right',
+      //     isClosable: true,
+      //     size: 'lg',
+      //   });
+      // },
     },
   },
 });
