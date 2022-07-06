@@ -1,6 +1,6 @@
-mutation getPreSignedUrl($fileExtension: AllowedFileExtension! ) {
+mutation getPreSignedUrl {
   presignedUrl {
-    upload(fileExtension: $fileExtension ){
+    upload {
       filename
       get_url
       put_url

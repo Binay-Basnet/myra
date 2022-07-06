@@ -66,12 +66,12 @@ export function FileInput({
     async (acceptedFiles: File[]) => {
       setFiles([...files, ...acceptedFiles]);
 
-      acceptedFiles.forEach((file) => {
+      for (const file of acceptedFiles) {
         console.log(file);
-        // await getPreSignedUrl({
-        //   fileExtension: file.,
-        // });
-      });
+        // const response = await getPreSignedUrl();
+        //
+        // console.log(response);
+      }
 
       onChange && onChange([...files, ...acceptedFiles]);
     },
