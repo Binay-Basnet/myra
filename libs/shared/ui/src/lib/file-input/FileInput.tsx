@@ -12,6 +12,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
+import { useGetPreSignedUrlMutation } from '@coop/shared/data-access';
+
 import { dropdownStyles } from './FileInputStyles';
 import Box from '../box/Box';
 import Button from '../button/Button';
@@ -57,11 +59,19 @@ export function FileInput({
   maxFiles = 'many',
   ...rest
 }: FileInputProps) {
+  const { mutateAsync: getPreSignedUrl } = useGetPreSignedUrlMutation();
   const [files, setFiles] = useState<File[]>([]);
 
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    async (acceptedFiles: File[]) => {
       setFiles([...files, ...acceptedFiles]);
+
+      acceptedFiles.forEach((file) => {
+        console.log(file);
+        // await getPreSignedUrl({
+        //   fileExtension: file.,
+        // });
+      });
 
       onChange && onChange([...files, ...acceptedFiles]);
     },

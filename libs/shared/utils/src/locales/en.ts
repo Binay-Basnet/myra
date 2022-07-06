@@ -14,6 +14,7 @@ const en: Record<string, string> = {
   branch: 'Branch',
   complete: 'Complete',
   submit: 'Submit',
+  applyChanges: 'Apply Changes',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
@@ -431,12 +432,16 @@ const en: Record<string, string> = {
   settingsCoaLedgerAccount: 'Ledger Account',
   settingsCoaYouCan:
     'You can perform transaction in this account. However, you cannot create any more accounts under this heading',
+  settingsCoaApplicable: 'Applicable to all the branch',
+  settingsCoaApplicableHelper:
+    'If No, this account is only applicable to current branch',
   settingsCoaBSAccount: 'B/S Account',
   settingsCoaSummationAccount: 'Summation Account',
   settingsCoaIBTAC: 'IBT A/C',
   settingsCoaIntransitAC: 'Intransit A/C',
   settingsCoaPLAccount: 'P/L Account',
   settingsCoaAllowFreeEntry: 'Allow Free Entry',
+  settingsCoaAllowFreeEntryHelper: 'This option allows manual journal entry',
   settingsCoaAllowTransaction: 'Allow Transaction',
   settingsCoaListCash: 'Cash',
   settingsCoaListBank: 'Bank',
@@ -459,7 +464,7 @@ const en: Record<string, string> = {
   settingsChooseMember: 'Choose which type of member is allowed',
   settingsMemberRisk: 'Member Risk Level',
   settingsMemberRiskLevel: 'Risk Level',
-  settingsMemberYearsTillKYMUpdate: 'Years till KYM Update',
+  settingsMemberYearsTillKYMUpdate: 'Months till KYM Update',
   settingsMemberAddNewOption: 'Add New Option',
 
   settingsMemberSection1PersonalInformation: 'Section 1: Personal Information',
@@ -526,8 +531,8 @@ const en: Record<string, string> = {
   settingsSideGeneral: 'General',
   settingsSideIndividual: 'KYM Form - Individual',
   settingsSideInstitutional: 'KYM Form - Institutional',
-  settingsSideCoop: 'KYM Form - CoOperative',
-  settingsSideCoopUnion: 'KYM Form - CoOperative Union',
+  settingsSideCoop: 'KYM Form - Cooperative',
+  settingsSideCoopUnion: 'KYM Form - Cooperative Union',
 
   // settings side bar
   settingsSideBarOrganization: 'Organization',
@@ -1635,6 +1640,107 @@ const en: Record<string, string> = {
   neoUsersPhoneNumber: 'Phone Number',
   neoUsersViewEditFullPermission: 'View and Edit Full Permission',
 
+  // INVENTORY
+
+  // item layout
+  inventory: 'Inventory',
+
+  items: 'Items',
+  addItems: 'Add Item',
+  itemsList: 'Items List',
+  itemsCategory: 'Items Category',
+  itemUnits: 'Units',
+  inventoryAdjustments: 'Inventory Adjustments',
+  itemInventorySettings: 'Inventory Settings',
+
+  warehouse: 'Warehouse',
+  vendors: 'Vendors',
+
+  //items form
+  invItemAddNewItem: 'Add New Item',
+  invItemName: 'Item Name',
+  invItemSelectItem: 'Select Item',
+  invItemCode: 'Item Code',
+  invItemGroup: 'Item Group',
+  invItemCategory: 'Category',
+  invItemTax: 'Tax',
+  invItemTaxType: 'Tax Type',
+  invItemPrimaryUnit: 'Primary Unit',
+  invItemProductInformation: 'Product Information',
+  invItemSimpleProduct: 'Simple Product',
+  invItemVariantProduct: 'Variant Product',
+  invItemPurchasePrice: 'Purchase Price',
+  invItemProfit: 'Profit %',
+  invItemSellingPrice: 'Selling Price',
+  invItemVariantInformation: 'Variant Information',
+  invItemAddAdditionalInformation: 'Add Additional Information',
+  invItemAddtionalInformation: 'Additional Information',
+  invItemSalesLedger: 'Sales Ledger',
+  invItemSelectAccount: 'Select Account',
+  invItemPurchaseLedger: 'Purchase Ledger',
+  invItemSalesReturnLedger: 'Sales Return Ledger',
+  invItemPurchaseReturnLedger: 'Purchase Return Ledger',
+  invItemValuationMethod: 'Valuation Method',
+  invItemSelectMethod: 'Select Method',
+  invItemMinimumStockQuantity: 'Minimum Stock Quantity',
+  invItemMinimumStock: 'Minimum Stock',
+
+  // item list table
+  itemListID: 'Item ID',
+  itemListName: 'Name',
+  itemListType: 'Type',
+  itemListUnitPrice: 'Unit Price',
+  itemListTotalCost: 'Total Cost',
+  itemListItemQuantity: 'Item Quantity',
+
+  // item category table
+  catgItemsCategory: 'Items Category',
+  catgName: 'Name',
+  catgParentCategory: 'Parent Category',
+  catgDescriptional: 'Descriptional',
+  catgNewItemCategory: 'New Item Category',
+  catgAddNewCatgModal: 'Add New Items Category',
+  catgItemGroupName: 'Item Group Name',
+  catgUnderItemGroup: 'Under Item Group',
+  catgSelectItemGroup: 'Select Item Group',
+  catgDescription: 'Description',
+
+  // item units table
+  itemUnitUnits: 'Units',
+  itemUnitName: 'Name',
+  itemUnitShortname: 'Short name',
+  itemUnitAcceptFraction: 'Accept Fraction',
+  itemUnitNewUnit: 'New Unit',
+  itemUnitAddNewUnit: 'Add New Unit of Measurement',
+  itemUnitFormName: 'Name',
+  itemUnitFormShortName: 'Short Name',
+  itemUnitFormDescription: 'Description',
+  itemUnitFormAcceptsFraction: 'Accepts fraction',
+  itemUnitFormAddUnitofMeasurement: 'Add Unit of Measurement',
+
+  // item adjustments table
+  itemUnitInventoryAdjustment: 'Inventory Adjustment',
+  itemUnitsDate: 'Date',
+  itemUnitsEntryNo: 'Entry No',
+  itemUnitsReference: 'Reference',
+  itemUnitsNewInventoryAdjustment: 'New Inventory Adjustment',
+  itemUnitAddNewInventoryAdjustment: 'Add New Inventory Adjustment',
+  itemUnitCode: 'Code',
+  itemUnitDate: 'Date',
+  itemUnitReferenceNumber: 'Reference Number ',
+
+  // VENDORS
+
+  // vendor layout
+  vendorsLayout: 'Vendors',
+  addVendors: 'Add Vendors',
+  inventorySettings: 'Inventory Settings',
+
+  // vendor table
+  vendorName: 'Name',
+  vendorLocation: 'Location',
+  vendorPhoneNumber: 'Phone Number',
+  vendorEmailAddress: 'Email Address',
   //client details
   neoClientDetailsClients: 'Clients',
   neoClientDetailsOverview: 'Overview',

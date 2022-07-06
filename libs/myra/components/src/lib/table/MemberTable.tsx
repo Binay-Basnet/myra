@@ -97,7 +97,7 @@ export const MemberTable = () => {
         disableFilters: true,
       },
     ],
-    []
+    [t]
   );
 
   const memberRows = useMemo(

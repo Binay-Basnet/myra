@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 export const useAxios = <TData, TVariables>(
   query: string
@@ -11,7 +11,17 @@ export const useAxios = <TData, TVariables>(
   return async (variables?: TVariables) => {
     return axios
       .post<{ data: TData }>(url, { query, variables })
-      .then((res) => {
+      .then((res: AxiosResponse<{ data: TData; errors?: any[] }>) => {
+        // IF ERROR, THROW AN ERROR !!
+        // if (res.data.errors) {
+        //   res.data.errors.map((error) => {
+        //     const updatedError = new Error('Unknown Server Error');
+        //     updatedError.message =
+        //       error?.message + '\n Path: ' + error?.path.toString();
+        //     updatedError.stack = error?.path;
+        //     throw updatedError;
+        //   });
+        // }
         return res.data.data;
       });
   };

@@ -5539,6 +5539,13 @@ export type SetOrganizationDataMutationVariables = Exact<{
 
 export type SetOrganizationDataMutation = { settings: { general?: { organization?: { initialSetup?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
+export type GetPreSignedUrlMutationVariables = Exact<{
+  fileExtension: AllowedFileExtension;
+}>;
+
+
+export type GetPreSignedUrlMutation = { presignedUrl: { upload: { filename?: string | null, get_url?: string | null, put_url?: string | null } } };
+
 export type AddKymOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   data: KymOptionInput;
@@ -6335,6 +6342,26 @@ export const useSetOrganizationDataMutation = <
     useMutation<SetOrganizationDataMutation, TError, SetOrganizationDataMutationVariables, TContext>(
       ['setOrganizationData'],
       useAxios<SetOrganizationDataMutation, SetOrganizationDataMutationVariables>(SetOrganizationDataDocument),
+      options
+    );
+export const GetPreSignedUrlDocument = `
+    mutation getPreSignedUrl($fileExtension: AllowedFileExtension!) {
+  presignedUrl {
+    upload(fileExtension: $fileExtension) {
+      filename
+      get_url
+      put_url
+    }
+  }
+}
+    `;
+export const useGetPreSignedUrlMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>) =>
+    useMutation<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>(
+      ['getPreSignedUrl'],
+      useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(GetPreSignedUrlDocument),
       options
     );
 export const AddKymOptionDocument = `

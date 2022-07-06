@@ -70,7 +70,7 @@ export const KYMNewOptionInput = ({
     },
   });
 
-  if (!hasNewField) return null;
+  if (!hasNewField || !field) return null;
 
   return (
     <FormProvider {...methods}>
