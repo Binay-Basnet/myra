@@ -329,7 +329,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         p="s4"
                         borderRadius="br2"
                         _hover={{ bg: 'primary.0' }}
-                        onClick={() => router.push('/inventory/items')}
+                        onClick={() => router.push('/inventory/register')}
                       >
                         <Image
                           width={12}

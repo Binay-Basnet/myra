@@ -29,7 +29,6 @@ export const FormAccountInput = <T,>({
       render={({ field: { onChange, value, ...fieldProps } }) => (
         <AmountInput
           label={String(label)}
-          placeholder={String(label)}
           id={name}
           type="number"
           onChange={onChange}

@@ -2,11 +2,20 @@ import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from '@chakra-ui/react';
 
 import { InventoryPageHeader } from '@coop/myra/inventory/ui-layout';
 import { useGetInventoryItemsQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Column, Modal, Table, Text } from '@coop/shared/ui';
+import { Box, Button, Column, Table, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const InventoryItemCategoryTable = () => {
@@ -60,56 +69,67 @@ export const InventoryItemCategoryTable = () => {
   const NewItemCategoryModal = () => {
     return (
       <Modal
-        open={openModal}
+        isOpen={openModal}
         onClose={onCloseModal}
         isCentered={true}
-        title={
-          <Text
-            fontSize="r2"
-            color="neutralColorLight.Gray-80"
-            fontWeight="SemiBold"
-          >
-            {t['catgAddNewCatgModal']}
-          </Text>
-        }
+        trapFocus={false}
       >
-        <FormProvider {...methods}>
-          <form>
-            <Box p="s16" display="flex" flexDirection="column" gap="s24">
-              <FormInput
-                type="text"
-                name="name"
-                label={t['catgItemGroupName']}
-                placeholder={t['catgItemGroupName']}
-              />
-              <FormSelect
-                name="group"
-                label={t['catgUnderItemGroup']}
-                placeholder={t['catgSelectItemGroup']}
-                options={[
-                  {
-                    label: '1',
-                    value: '1',
-                  },
-                  {
-                    label: '2',
-                    value: '2',
-                  },
-                  {
-                    label: '3',
-                    value: '3',
-                  },
-                ]}
-              />
-              <FormInput
-                type="text"
-                name="name"
-                label={t['catgDescription']}
-                placeholder={t['catgDescription']}
-              />
-            </Box>
-          </form>
-        </FormProvider>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <Text
+              fontSize="r2"
+              color="neutralColorLight.Gray-80"
+              fontWeight="SemiBold"
+            >
+              {t['catgAddNewCatgModal']}
+            </Text>
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormProvider {...methods}>
+              <form>
+                <Box p="s16" display="flex" flexDirection="column" gap="s24">
+                  <FormInput
+                    type="text"
+                    name="name"
+                    label={t['catgItemGroupName']}
+                    placeholder={t['catgItemGroupName']}
+                  />
+                  <FormSelect
+                    name="group"
+                    label={t['catgUnderItemGroup']}
+                    placeholder={t['catgSelectItemGroup']}
+                    options={[
+                      {
+                        label: '1',
+                        value: '1',
+                      },
+                      {
+                        label: '2',
+                        value: '2',
+                      },
+                      {
+                        label: '3',
+                        value: '3',
+                      },
+                    ]}
+                  />
+                  <FormInput
+                    type="text"
+                    name="name"
+                    label={t['catgDescription']}
+                    placeholder={t['catgDescription']}
+                  />
+                </Box>
+              </form>
+            </FormProvider>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button>{t['catgAddItemGroup']}</Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     );
   };
