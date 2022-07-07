@@ -146,8 +146,8 @@ export const KYMDeclaration = () => {
             <InputGroupContainer>
               <Box display="flex" flexDirection="column">
                 <FormTextArea
-                  name="convictionDetails"
-                  id="convictionDetails"
+                  name="convictedDetails"
+                  id="convictedDetails"
                   label={t['kynIndPleasespecify']}
                   placeholder={t['kynIndEnterDetails']}
                 />

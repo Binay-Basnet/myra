@@ -131,6 +131,7 @@ export function KYMIndividualPage() {
       staleTime: 0,
     }
   );
+  console.log('gandu', data?.members?.individual?.formState?.data?.formData);
 
   const previousFormData =
     data?.members?.individual?.formState?.data?.formData ?? {};
