@@ -119,12 +119,19 @@ export function KYMIndividualPage() {
     defaultValues: {},
   });
 
-  const { data, isLoading: editLoading } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const {
+    data,
+    isLoading: editLoading,
+    refetch,
+  } = useGetIndividualKymEditDataQuery(
+    {
+      id: id,
+    },
+    { enabled: false }
+  );
 
   const previousFormData =
-    data?.members.individual?.formState?.data?.formData ?? {};
+    data?.members?.individual?.formState?.data?.formData ?? {};
 
   const { watch, setError, reset } = methods;
 

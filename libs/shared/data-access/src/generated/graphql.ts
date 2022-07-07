@@ -5005,10 +5005,15 @@ export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
 };
 
+
+export type PresignedUrlMutationUploadArgs = {
+  contentType?: InputMaybe<Scalars['String']>;
+};
+
 export type PresignedUrlOutput = {
   filename?: Maybe<Scalars['String']>;
-  get_url?: Maybe<Scalars['String']>;
-  put_url?: Maybe<Scalars['String']>;
+  getUrl?: Maybe<Scalars['String']>;
+  putUrl?: Maybe<Scalars['String']>;
 };
 
 export type Province = {
@@ -5467,7 +5472,7 @@ export type UtilityPaymentInvalidDataError = {
 };
 
 export type UtilityPaymentLayoutComponent = {
-  contents?: Maybe<Scalars['Any']>;
+  contents?: Maybe<Scalars['Map']>;
   type?: Maybe<Scalars['String']>;
 };
 
@@ -5664,10 +5669,12 @@ export type SetOrganizationDataMutationVariables = Exact<{
 
 export type SetOrganizationDataMutation = { settings: { general?: { organization?: { initialSetup?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
-export type GetPreSignedUrlMutationVariables = Exact<{ [key: string]: never; }>;
+export type GetPreSignedUrlMutationVariables = Exact<{
+  contentType?: InputMaybe<Scalars['String']>;
+}>;
 
 
-export type GetPreSignedUrlMutation = { presignedUrl: { upload: { filename?: string | null, get_url?: string | null, put_url?: string | null } } };
+export type GetPreSignedUrlMutation = { presignedUrl: { upload: { filename?: string | null, getUrl?: string | null, putUrl?: string | null } } };
 
 export type AddKymOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
@@ -6486,12 +6493,12 @@ export const useSetOrganizationDataMutation = <
       options
     );
 export const GetPreSignedUrlDocument = `
-    mutation getPreSignedUrl {
+    mutation getPreSignedUrl($contentType: String) {
   presignedUrl {
-    upload {
+    upload(contentType: $contentType) {
       filename
-      get_url
-      put_url
+      getUrl
+      putUrl
     }
   }
 }

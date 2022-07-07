@@ -1,9 +1,9 @@
-mutation getPreSignedUrl {
+mutation getPreSignedUrl($contentType: String) {
   presignedUrl {
-    upload {
+    upload(contentType: $contentType) {
       filename
-      get_url
-      put_url
+      getUrl
+      putUrl
     }
   }
 }

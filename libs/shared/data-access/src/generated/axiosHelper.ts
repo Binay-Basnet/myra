@@ -1,16 +1,19 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export const useAxios = <TData, TVariables>(
   query: string
-): ((variables?: TVariables) => Promise<TData>) => {
+): ((
+  variables?: TVariables,
+  config?: AxiosRequestConfig<TData>
+) => Promise<TData>) => {
   // it is safe to call React Hooks here.
   // const { url, headers } = React.useContext(FetchParamsContext)
   const url = process.env['NX_SCHEMA_PATH'] ?? '';
   // return axios.post<TData>(url,data:{query,variables}).then((res) => res.data);
 
-  return async (variables?: TVariables) => {
+  return async (variables?: TVariables, config?: AxiosRequestConfig<TData>) => {
     return axios
-      .post<{ data: TData }>(url, { query, variables })
+      .post<{ data: TData }>(url, { query, variables }, config)
       .then((res: AxiosResponse<{ data: TData; errors?: any[] }>) => {
         // IF ERROR, THROW AN ERROR !!
         // if (res.data.errors) {

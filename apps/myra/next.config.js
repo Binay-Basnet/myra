@@ -15,6 +15,9 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  images: {
+    domains: ['images.unsplash.com', 'cdn.raralabs.live'],
+  },
   i18n: {
     locales: ['en', 'ne'],
     defaultLocale: 'en',

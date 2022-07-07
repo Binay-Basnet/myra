@@ -1,7 +1,10 @@
 import React from 'react';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { useGetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import {
+  Kym_Field_Custom_Id,
+  useGetIndividualKymOptionsQuery,
+} from '@coop/shared/data-access';
 import { FormFileInput } from '@coop/shared/form';
 import { Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -9,8 +12,10 @@ import { useTranslation } from '@coop/shared/utils';
 export const KYMDocumentDeclaration = () => {
   const { t } = useTranslation();
   const { data: fileUploadsData, isLoading: fileUploadsLoading } =
-    useGetIndividualKymOptionQuery({
-      fieldName: 'file_uploads',
+    useGetIndividualKymOptionsQuery({
+      filter: {
+        customId: Kym_Field_Custom_Id.FileUploads,
+      },
     });
 
   // console.log(
@@ -29,7 +34,7 @@ export const KYMDocumentDeclaration = () => {
             <FormFileInput
               size="lg"
               label={option.name?.local}
-              name={option.id}
+              name="documents"
             />
           )
         )}

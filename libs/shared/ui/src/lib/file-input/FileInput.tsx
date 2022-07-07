@@ -2,15 +2,18 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import { BsCloudUpload } from 'react-icons/bs';
 import { IoClose } from 'react-icons/io5';
+import Image from 'next/image';
 import {
   Flex,
   Modal,
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
+  Progress,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
+import axios from 'axios';
 
 import { useGetPreSignedUrlMutation } from '@coop/shared/data-access';
 
@@ -18,14 +21,7 @@ import { dropdownStyles } from './FileInputStyles';
 import Box from '../box/Box';
 import Button from '../button/Button';
 import Icon from '../icon/Icon';
-import { TextFields } from '../text-fields/TextFields';
-
-export interface FileInputProps extends Omit<DropzoneOptions, 'maxFiles'> {
-  size?: 'sm' | 'md' | 'lg';
-  dropText?: string;
-  onChange?: (file: File[] | null) => void;
-  maxFiles?: 'one' | 'many';
-}
+import TextFields from '../text-fields/TextFields';
 
 const DefaultFileIcon = () => {
   return (
@@ -48,35 +44,31 @@ const DefaultFileIcon = () => {
   );
 };
 
-/**
- *
- * @see https://react-dropzone.js.org/#section-accepting-specific-file-types for more info about providing props.
- */
+export interface FileInputProps extends Omit<DropzoneOptions, 'maxFiles'> {
+  size?: 'sm' | 'md' | 'lg';
+  dropText?: string;
+  value?: { url?: string; fileName: string }[];
+  onChange?: (file: string[] | null) => void;
+  maxFiles?: 'one' | 'many';
+}
+
 export function FileInput({
   size = 'md',
   onChange,
   dropText = 'or drop files to upload',
+  value = [],
   maxFiles = 'many',
   ...rest
 }: FileInputProps) {
-  const { mutateAsync: getPreSignedUrl } = useGetPreSignedUrlMutation();
   const [files, setFiles] = useState<File[]>([]);
+  const [fileNames, setFileNames] = useState<string[]>([]);
+  const [alreadyAddedFiles, setAlreadyAddedFiles] = useState<
+    { url?: string; fileName: string }[]
+  >([...value]);
 
-  const onDrop = useCallback(
-    async (acceptedFiles: File[]) => {
-      setFiles([...files, ...acceptedFiles]);
-
-      for (const file of acceptedFiles) {
-        console.log(file);
-        // const response = await getPreSignedUrl();
-        //
-        // console.log(response);
-      }
-
-      onChange && onChange([...files, ...acceptedFiles]);
-    },
-    [files]
-  );
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFiles((prev) => [...prev, ...acceptedFiles]);
+  }, []);
 
   const { getInputProps, getRootProps, isFocused, isDragAccept, isDragReject } =
     useDropzone({
@@ -88,12 +80,6 @@ export function FileInput({
       ...rest,
     });
 
-  const removeFile = (file: File) => {
-    const newFiles = files.filter((prev) => prev !== file);
-    setFiles(newFiles);
-    onChange && onChange(newFiles);
-  };
-
   const style = useMemo(
     () => ({
       ...dropdownStyles.baseStyle,
@@ -104,6 +90,12 @@ export function FileInput({
     }),
     [isFocused, isDragAccept, isDragReject]
   );
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(fileNames);
+    }
+  }, [fileNames]);
 
   return (
     <Box display="flex" flexDirection="column" gap="s12">
@@ -148,113 +140,314 @@ export function FileInput({
         </Flex>
       </Box>
 
-      {files.map((file) => {
-        return (
-          <FileInputPreview
-            file={file}
-            size={size}
-            remove={() => removeFile(file)}
-          />
-        );
-      })}
+      {files.map((file) => (
+        <FilePreview
+          file={file}
+          size={size}
+          setFileNames={setFileNames}
+          remove={() =>
+            setFiles((prev) => prev.filter((f) => f.name !== file.name))
+          }
+        />
+      ))}
+
+      {alreadyAddedFiles.map((fileUrl) => (
+        <FileUrlPreview
+          setFileNames={setFileNames}
+          fileName={fileUrl.fileName}
+          fileUrl={String(fileUrl.url)}
+          size={size}
+          remove={() =>
+            setAlreadyAddedFiles((prev) =>
+              prev.filter((f) => f.fileName !== fileUrl.fileName)
+            )
+          }
+        />
+      ))}
     </Box>
   );
 }
 
-export const FileInputPreview = ({
-  file,
-  remove,
-  size,
-}: {
+interface FilePreviewProps {
   file: File;
-  remove: any;
   size: 'sm' | 'md' | 'lg';
-}) => {
+  remove?: () => void;
+  setFileNames?: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+export const FilePreview = ({
+  file,
+  size,
+  remove,
+  setFileNames,
+}: FilePreviewProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [fileUrl, setFileUrl] = useState('');
+
+  const [error, setError] = useState<boolean>(false);
+  const [fileUploadProgress, setFileUploadProgress] = useState(0);
+  const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
+  const [fileName, setFileName] = useState<string | undefined>('4i9r4');
+
+  const { mutateAsync: getPreSignedUrl } = useGetPreSignedUrlMutation({
+    onMutate: () => {
+      setFileUploadProgress(1);
+    },
+    onSuccess: () => {
+      setFileUploadProgress(2);
+    },
+  });
 
   useEffect(() => {
-    const reader = new FileReader();
+    const uploadFile = async () => {
+      try {
+        const {
+          presignedUrl: {
+            upload: { getUrl: publicUrl, putUrl, filename },
+          },
+        } = await getPreSignedUrl(
+          {
+            contentType: file.type,
+          },
+          {}
+        );
 
-    reader.addEventListener('load', () => {
-      setFileUrl(reader.result as string);
-    });
+        if (typeof putUrl !== 'string' || !filename || !publicUrl) {
+          setError(true);
+          return;
+        }
+        const putResponse = await axios.put(putUrl, file, {
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted =
+              (progressEvent.loaded * 98) / progressEvent.total + 2;
+            setFileUploadProgress(percentCompleted);
+          },
+        });
 
-    if (file) {
-      reader.readAsDataURL(file);
+        if (putResponse.status === 200) {
+          if (setFileNames) {
+            setFileName(filename);
+            setFileNames((prev) => [...prev, filename]);
+          }
+
+          setFileUrl(publicUrl);
+        }
+      } catch (e) {
+        setError(true);
+      }
+    };
+
+    if (!error) {
+      uploadFile();
     }
-  }, [file]);
+  }, [error]);
 
   return (
     <Box
       display="flex"
-      alignItems="center"
-      justifyContent="space-between"
-      gap="s12"
-      p="s8"
+      flexDirection="column"
       border="1px solid"
       borderColor="border.element"
       borderRadius="br2"
-      minWidth="128px"
-      maxWidth="100%"
+      overflow="hidden"
     >
-      <Box display="flex" alignItems="center" gap="s8">
-        <Box
-          w="s48"
-          h="s48"
-          display="flex"
-          onClick={() => file.type.includes('image') && onOpen()}
-          alignItems="center"
-          justifyContent="center"
-          cursor="pointer"
-        >
-          {fileUrl && file.type.includes('image') ? (
-            <img src={fileUrl} />
-          ) : (
-            <Icon as={DefaultFileIcon} size="lg" />
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        gap="s12"
+        p="s8"
+        minWidth="128px"
+        maxWidth="100%"
+      >
+        <Box display="flex" alignItems="center" gap="s8">
+          <Box
+            w="s48"
+            h="s48"
+            display="flex"
+            onClick={() => file?.type.includes('image') && onOpen()}
+            alignItems="center"
+            justifyContent="center"
+            position="relative"
+            cursor="pointer"
+          >
+            {fileUrl && file?.type.includes('image') ? (
+              <Image src={fileUrl} layout="fill" objectFit="contain" />
+            ) : (
+              <Icon as={DefaultFileIcon} size="lg" />
+            )}
+          </Box>
+          {size === 'lg' && (
+            <Box>
+              <TextFields
+                variant="bodyRegular"
+                fontWeight="500"
+                color="gray.800"
+                noOfLines={1}
+                width="100%"
+              >
+                {file.name}
+              </TextFields>
+              {!error ? (
+                <TextFields variant="formLabel" color="gray.600">
+                  {file?.size && (file?.size / 1000 / 1000).toPrecision(2)} MB
+                </TextFields>
+              ) : (
+                <TextFields variant="formLabel" color="danger.500">
+                  Upload Failed
+                </TextFields>
+              )}
+            </Box>
           )}
         </Box>
-        {size === 'lg' && (
-          <Box>
-            <TextFields
-              variant="bodyRegular"
-              fontWeight="500"
-              color="gray.800"
-              noOfLines={1}
-              maxWidth="150px"
-            >
-              {file.name}
-            </TextFields>
-            <TextFields variant="formLabel" color="gray.600">
-              {(file.size / 1000 / 1000).toPrecision(2)} MB
-            </TextFields>
-          </Box>
-        )}
-      </Box>
-      {size === 'md' || size === 'lg' || size === 'sm' ? (
         <Icon
           as={IoClose}
           size="lg"
           cursor="pointer"
-          onClick={() => remove()}
+          onClick={() => {
+            remove && remove();
+            setFileNames &&
+              setFileNames((prev) => prev.filter((name) => name !== fileName));
+          }}
         />
+
+        <Modal isOpen={isOpen} onClose={onClose} size="xl">
+          <ModalOverlay />
+
+          <ModalContent
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            minHeight="300px"
+          >
+            <ModalCloseButton _focus={{ boxShadow: 'none' }} />
+            <img src={fileUrl} />
+          </ModalContent>
+        </Modal>
+      </Box>
+      {!error ? (
+        <Progress size="xs" colorScheme="primary" value={fileUploadProgress} />
       ) : null}
-
-      <Modal isOpen={isOpen} onClose={onClose} size="xl">
-        <ModalOverlay />
-
-        <ModalContent
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          minHeight="300px"
-        >
-          <ModalCloseButton _focus={{ boxShadow: 'none' }} />
-          <img src={fileUrl} />
-        </ModalContent>
-      </Modal>
     </Box>
   );
 };
 
-export default FileInput;
+interface FileUrlPreviewProps {
+  fileUrl: string;
+  fileName: string;
+  size: 'sm' | 'md' | 'lg';
+  remove?: () => void;
+  setFileNames: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+export const FileUrlPreview = ({
+  fileUrl,
+  fileName,
+  size,
+  remove,
+  setFileNames,
+}: FileUrlPreviewProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [file, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    const getFile = async () => {
+      if (!fileUrl) return;
+
+      const response = await fetch(fileUrl);
+      const contentType = response.headers.get('content-type');
+      const blob = await response.blob();
+      const file = new File([blob], 'image.jpg', { type: contentType! });
+
+      console.log(file);
+      setFile(file);
+    };
+
+    getFile();
+  }, [fileUrl]);
+
+  useEffect(() => {
+    setFileNames((prev) => [...prev, fileName]);
+  }, []);
+
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      border="1px solid"
+      borderColor="border.element"
+      borderRadius="br2"
+      overflow="hidden"
+    >
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        gap="s12"
+        p="s8"
+        minWidth="128px"
+        maxWidth="100%"
+      >
+        <Box display="flex" alignItems="center" gap="s8">
+          <Box
+            w="s48"
+            h="s48"
+            display="flex"
+            onClick={() => file?.type.includes('image') && onOpen()}
+            alignItems="center"
+            justifyContent="center"
+            position="relative"
+            cursor="pointer"
+          >
+            {fileUrl && file?.type.includes('image') ? (
+              <Image src={fileUrl} layout="fill" objectFit="contain" />
+            ) : (
+              <Icon as={DefaultFileIcon} size="lg" />
+            )}
+          </Box>
+          {size === 'lg' && (
+            <Box>
+              <TextFields
+                variant="bodyRegular"
+                fontWeight="500"
+                color="gray.800"
+                noOfLines={1}
+                width="100%"
+              >
+                {file?.name}
+              </TextFields>
+              {
+                <TextFields variant="formLabel" color="gray.600">
+                  {file?.size && (file?.size / 1000 / 1000).toPrecision(2)} MB
+                </TextFields>
+              }
+            </Box>
+          )}
+        </Box>
+        <Icon
+          as={IoClose}
+          size="lg"
+          cursor="pointer"
+          onClick={() => {
+            remove && remove();
+
+            setFileNames((prev) => prev.filter((name) => name !== fileName));
+          }}
+        />
+
+        <Modal isOpen={isOpen} onClose={onClose} size="xl">
+          <ModalOverlay />
+
+          <ModalContent
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            minHeight="300px"
+          >
+            <ModalCloseButton _focus={{ boxShadow: 'none' }} />
+            <img src={fileUrl} />
+          </ModalContent>
+        </Modal>
+      </Box>
+    </Box>
+  );
+};
