@@ -672,6 +672,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             {t['shortcutsModalAll']}
           </Text>
         }
+        modalContentProps={{ minW: '60vw' }}
       >
         <Grid
           templateColumns="repeat(2, 1fr)"
