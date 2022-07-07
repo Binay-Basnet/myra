@@ -26,15 +26,26 @@ export const MemberTable = () => {
 
           first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
           after: (router.query['after'] ?? '') as string,
-        }
+        },
+    {
+      staleTime: 0,
+    }
   );
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
   const popoverTitle = [
-    'memberListTableViewMemberProfile',
-    'memberListTableEditMember',
-    'memberListTableMakeInactive',
+    {
+      title: 'memberListTableViewMemberProfile',
+    },
+    {
+      title: 'memberListTableEditMember',
+      onClick: (memberId?: string) =>
+        router.push(`/members/individual/edit/${memberId}`),
+    },
+    {
+      title: 'memberListTableMakeInactive',
+    },
   ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -101,7 +112,12 @@ export const MemberTable = () => {
       {
         Header: '',
         accessor: 'actions',
-        Cell: () => <PopoverComponent title={popoverTitle} />,
+        Cell: (cell) => (
+          <PopoverComponent
+            items={popoverTitle}
+            memberId={cell?.row?.original?.node?.id}
+          />
+        ),
         disableFilters: true,
       },
     ],

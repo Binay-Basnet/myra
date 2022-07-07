@@ -292,7 +292,7 @@ export const KYMCustomField = ({
                     : methods.getValues().fieldType ===
                       Kym_Field_Type.MultiSelect
                     ? 'Users can select one or more options'
-                    : 'You can add different type fields at once'}
+                    : 'You can [action] different type fields at once'}
                 </TextFields>
               </Box>
             </Box>

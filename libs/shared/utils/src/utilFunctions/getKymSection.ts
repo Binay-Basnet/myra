@@ -110,7 +110,7 @@ const benificialOwner = [
   'beneficialRelationshipId',
   'beneficialFullName',
 ];
-const convicted = ['isConvicted', 'convictionDetails'];
+const convicted = ['isConvicted', 'convictedDetails'];
 const foreign = [
   'hasForeignResidentialPermit',
   'foreignResidentialPermitTypeId',

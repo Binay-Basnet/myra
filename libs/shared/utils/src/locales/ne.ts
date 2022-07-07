@@ -80,7 +80,7 @@ const ne: Record<string, string> = {
   memberNavDraft: 'मस्यौदा',
   searchMembers: 'सदस्यहरू खोज्नुहोस्',
 
-  // member add form page
+  // member [action] form page
   membersFormAddNewMembers: 'नयाँ सदस्यहरू थप्नुहोस्',
   memberPersonalInformation: 'व्यक्तिगत जानकारी',
   memberFirstName: 'पहिलो नाम',
@@ -1551,7 +1551,7 @@ const ne: Record<string, string> = {
   accRebate: 'Rebate',
   accMonthly: 'Monthly',
   accAddfrequencydayorweek:
-    'Either Pick a day or manually add frequency day or day of the week.',
+    'Either Pick a day or manually [action] frequency day or day of the week.',
   accDay: 'Day',
   accDayOfWeek: 'Day of the week',
   accEnterDay: 'Enter Day',
@@ -1733,7 +1733,7 @@ const ne: Record<string, string> = {
   vendorPhoneNumber: 'Phone Number',
   vendorEmailAddress: 'Email Address',
 
-  // add vendor
+  // [action] vendor
   addVendorAddNewVendor: 'Add New Vendor',
   addVendorName: 'Name',
   addVendorEnterName: 'Select Name',

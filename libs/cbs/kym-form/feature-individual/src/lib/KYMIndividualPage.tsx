@@ -123,9 +123,15 @@ export function KYMIndividualPage() {
     data,
     isLoading: editLoading,
     error,
-  } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  } = useGetIndividualKymEditDataQuery(
+    {
+      id: id,
+    },
+    {
+      staleTime: 0,
+    }
+  );
+  console.log('gandu', data?.members?.individual?.formState?.data?.formData);
 
   const previousFormData =
     data?.members?.individual?.formState?.data?.formData ?? {};
