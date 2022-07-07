@@ -1954,13 +1954,13 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "ASCENDING",
+            "name": "ASC",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "DESCENDING",
+            "name": "DESC",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -35380,6 +35380,18 @@
             "deprecationReason": null
           },
           {
+            "name": "firstIntroducerId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "firstName",
             "description": null,
             "args": [],
@@ -35404,7 +35416,7 @@
             "deprecationReason": null
           },
           {
-            "name": "foreignResidentialPermitDetails",
+            "name": "foreignResidentialPermitTypeId",
             "description": null,
             "args": [],
             "type": {
@@ -35840,6 +35852,18 @@
             "deprecationReason": null
           },
           {
+            "name": "secondIntroducerId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "spouseOccupation",
             "description": null,
             "args": [],
@@ -36098,7 +36122,7 @@
             "deprecationReason": null
           },
           {
-            "name": "convictionDetails",
+            "name": "convictedDetails",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -36312,6 +36336,18 @@
                 "name": "KYMFieldInputData",
                 "ofType": null
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "firstIntroducerId",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -36755,6 +36791,18 @@
           },
           {
             "name": "religionId",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "secondIntroducerId",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -40763,9 +40811,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "ENUM",
-              "name": "KymMemberTypesEnum",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "KymMemberTypesEnum",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -43735,11 +43787,11 @@
             "deprecationReason": null
           },
           {
-            "name": "orderBy",
+            "name": "order",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
+              "kind": "INPUT_OBJECT",
+              "name": "Order",
               "ofType": null
             },
             "defaultValue": null,

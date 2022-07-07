@@ -122,13 +122,12 @@ export function KYMIndividualPage() {
   const {
     data,
     isLoading: editLoading,
-    refetch,
-  } = useGetIndividualKymEditDataQuery(
-    {
-      id: id,
-    },
-    { enabled: false }
-  );
+    error,
+  } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+
+  console.log(error, 'error');
 
   const previousFormData =
     data?.members?.individual?.formState?.data?.formData ?? {};
@@ -173,6 +172,7 @@ export function KYMIndividualPage() {
       nationalityId:
         nationalityFields?.members?.individual?.options?.list?.data?.[0]
           ?.options?.[0]?.id,
+
       ...previousFormData,
     });
   }, [isLoading, nationalityLoading, editLoading, JSON.stringify(data)]);

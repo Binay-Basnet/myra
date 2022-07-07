@@ -5,7 +5,6 @@ import {
   Kym_Field_Custom_Id,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
-import { FormFileInput } from '@coop/shared/form';
 import { Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -29,15 +28,15 @@ export const KYMDocumentDeclaration = () => {
       </Text>
 
       <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
-        {fileUploadsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
-          (option) => (
-            <FormFileInput
-              size="lg"
-              label={option.name?.local}
-              name="documents"
-            />
-          )
-        )}
+        {/*{fileUploadsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(*/}
+        {/*  (option) => (*/}
+        {/*    <FormFileInput*/}
+        {/*      size="lg"*/}
+        {/*      label={option.name?.local}*/}
+        {/*      name="documentsTemp"*/}
+        {/*    />*/}
+        {/*  )*/}
+        {/*)}*/}
       </Grid>
     </GroupContainer>
   );
