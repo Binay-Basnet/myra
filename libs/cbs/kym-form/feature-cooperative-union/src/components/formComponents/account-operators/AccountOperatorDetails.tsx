@@ -43,6 +43,8 @@ import {
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+
+import { AccountOperatorTraining } from './accountOperatorTraining';
 const AddDirector = ({ watch, index, control, removeAccount }) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
@@ -352,7 +354,7 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                 placeholder={t['kymCoopUnionOpEnterCitizenshipNo']}
               />
             </InputGroupContainer>
-            <Text fontSize="r1" fontWeight="SemiBold">
+            {/* <Text fontSize="r1" fontWeight="SemiBold">
               {t['kymCoopUnionOpTrainingRelatedToCoop']}
             </Text>
             <InputGroupContainer>
@@ -374,7 +376,9 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                 label={t['kymCoopUnionOpTrainingOrganization']}
                 placeholder={t['kymCoopUnionOpEnterTrainingOrganization']}
               />
-            </InputGroupContainer>
+            </InputGroupContainer> */}
+
+            <AccountOperatorTraining bodIndex={index} />
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
               <FormFileInput
                 size="lg"

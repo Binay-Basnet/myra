@@ -37,6 +37,8 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { CentralRepresentativeTraining } from './centralRepresentativeTraining';
+
 export const AddRepresentative = ({ watch, control }) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
@@ -56,8 +58,9 @@ export const AddRepresentative = ({ watch, control }) => {
       })) ?? []
     );
   }, [data?.administration?.all]);
-  const directorList = watch('boardOfDirectorsDetails');
-  const direcctorArray = directorList?.map((a) => a?.fullName);
+  // const directorList = watch('boardOfDirectorsDetails');
+  // const direcctorArray = directorList?.map((a) => a?.fullName);
+  // console.log('director', direcctorArray);
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch(
@@ -108,7 +111,7 @@ export const AddRepresentative = ({ watch, control }) => {
       id="kymCoopUnionAccDetailsofdirectorsaffiliatedwithotherFirms"
       scrollMarginTop={'200px'}
     >
-      {!tab && (
+      {/* {!tab && (
         <Box
           display="flex"
           alignItems="flex-start"
@@ -123,7 +126,7 @@ export const AddRepresentative = ({ watch, control }) => {
             size={'md'}
           />
         </Box>
-      )}
+      )} */}
       <Box>
         <FormSwitch
           px={'s16'}
@@ -136,87 +139,83 @@ export const AddRepresentative = ({ watch, control }) => {
         <Box display="flex" alignItems="center">
           {/* <DynamicBoxGroupContainer> */}
 
-          <DynamicBoxGroupContainer>
+          <DynamicBoxGroupContainer p="s20">
             <SectionContainer>
-              <AccordianContainer>
-                <InputGroupContainer>
-                  <FormInput
-                    type="text"
-                    name={`centralRepresentativeDetails.fullName`}
-                    label={t['kymCoopUnionDirFullName']}
-                    placeholder={t['kymCoopUnionDirEnterFullName']}
-                  />
-                  <FormInput
-                    type="text"
-                    name={`centralRepresentativeDetails.designation`}
-                    label={t['kymCoopUnionDirDesignation']}
-                    placeholder={t['kymCoopUnionDirEnterDesignation']}
-                  />
-                </InputGroupContainer>
-              </AccordianContainer>
+              <InputGroupContainer>
+                <FormInput
+                  type="text"
+                  name={`centralRepresentativeDetails.fullName`}
+                  label={t['kymCoopUnionDirFullName']}
+                  placeholder={t['kymCoopUnionDirEnterFullName']}
+                />
+                <FormInput
+                  type="text"
+                  name={`centralRepresentativeDetails.designation`}
+                  label={t['kymCoopUnionDirDesignation']}
+                  placeholder={t['kymCoopUnionDirEnterDesignation']}
+                />
+              </InputGroupContainer>
 
-              <AccordianContainer>
-                <Text fontSize="r1" fontWeight="SemiBold">
-                  {t['kymCoopUnionDirPermanentAddress']}
-                </Text>
-                {/* <Box
+              <Text fontSize="r1" fontWeight="SemiBold">
+                {t['kymCoopUnionDirPermanentAddress']}
+              </Text>
+              {/* <Box
               id="Permanent Address"
               gap="s32"
               display={'flex'}
               flexDirection="column"
             > */}
-                <InputGroupContainer>
-                  <FormSelect
-                    name={`centralRepresentativeDetails.permanentStateId`}
-                    label={t['kymCoopUnionDirState']}
-                    placeholder={t['kymCoopUnionDirSelectState']}
-                    options={province}
-                  />
-                  <FormSelect
-                    name={`centralRepresentativeDetails.permanentDistrictId`}
-                    label={t['kymCoopUnionDirDistrict']}
-                    placeholder={t['kymCoopUnionDirSelectDistrict']}
-                    options={districtList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    name={`centralRepresentativeDetails.permanentVdcOrMunicId`}
-                    label={t['kymCoopUnionDirVDCMunicipality']}
-                    placeholder={t['kymCoopUnionDirSelectVDCMunicipality']}
-                    options={localityList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormInput
-                    type="number"
-                    name={`centralRepresentativeDetails.permanentWardId`}
-                    label={t['kymCoopUnionDirWardNo']}
-                    placeholder={t['kymCoopUnionDirEnterWardNo']}
-                  />
-                  <FormInput
-                    type="text"
-                    name={`centralRepresentativeDetails.permanentLocality`}
-                    label={t['kymCoopUnionDirLocality']}
-                    placeholder={t['kymCoopUnionDirEnterLocality']}
-                  />
-                  <FormInput
-                    type="text"
-                    name="centralRepresentativeDetails.permanentHouseNo"
-                    label={t['kymIndHouseNo']}
-                    placeholder={t['kymIndEnterHouseNo']}
-                  />
-                </InputGroupContainer>
+              <InputGroupContainer>
+                <FormSelect
+                  name={`centralRepresentativeDetails.permanentStateId`}
+                  label={t['kymCoopUnionDirState']}
+                  placeholder={t['kymCoopUnionDirSelectState']}
+                  options={province}
+                />
+                <FormSelect
+                  name={`centralRepresentativeDetails.permanentDistrictId`}
+                  label={t['kymCoopUnionDirDistrict']}
+                  placeholder={t['kymCoopUnionDirSelectDistrict']}
+                  options={districtList.map((d) => ({
+                    label: d.name,
+                    value: d.id,
+                  }))}
+                />
+                <FormSelect
+                  name={`centralRepresentativeDetails.permanentVdcOrMunicId`}
+                  label={t['kymCoopUnionDirVDCMunicipality']}
+                  placeholder={t['kymCoopUnionDirSelectVDCMunicipality']}
+                  options={localityList.map((d) => ({
+                    label: d.name,
+                    value: d.id,
+                  }))}
+                />
+                <FormInput
+                  type="number"
+                  name={`centralRepresentativeDetails.permanentWardId`}
+                  label={t['kymCoopUnionDirWardNo']}
+                  placeholder={t['kymCoopUnionDirEnterWardNo']}
+                />
+                <FormInput
+                  type="text"
+                  name={`centralRepresentativeDetails.permanentLocality`}
+                  label={t['kymCoopUnionDirLocality']}
+                  placeholder={t['kymCoopUnionDirEnterLocality']}
+                />
+                <FormInput
+                  type="text"
+                  name="centralRepresentativeDetails.permanentHouseNo"
+                  label={t['kymIndHouseNo']}
+                  placeholder={t['kymIndEnterHouseNo']}
+                />
+              </InputGroupContainer>
 
-                <Box>
-                  <FormMap
-                    name={`centralRepresentativeDetails.permanentLocation`}
-                  />
-                </Box>
-                {/* </Box> */}
-              </AccordianContainer>
+              <Box>
+                <FormMap
+                  name={`centralRepresentativeDetails.permanentLocation`}
+                />
+              </Box>
+              {/* </Box> */}
 
               <Box
                 id="Temporary Address"
@@ -325,10 +324,10 @@ export const AddRepresentative = ({ watch, control }) => {
                   placeholder={t['keyCoopUnionDirEnterNo']}
                 />
               </InputGroupContainer>
-              <Text fontSize="r1" fontWeight="SemiBold">
+              {/* <Text fontSize="r1" fontWeight="SemiBold">
                 {t['kymCoopUnionDirTrainingRelatedtoCoop']}
-              </Text>
-              <InputGroupContainer>
+              </Text> */}
+              {/* <InputGroupContainer>
                 <FormInput
                   type="text"
                   name={`centralRepresentativeDetails.subjectOfTraining`}
@@ -347,7 +346,8 @@ export const AddRepresentative = ({ watch, control }) => {
                   label={t['kymCoopUnionDirTrainingOrganization']}
                   placeholder={t['kymCoopUnionDirEnterTrainingOrganization']}
                 />
-              </InputGroupContainer>
+              </InputGroupContainer> */}
+              <CentralRepresentativeTraining />
               <Grid
                 templateColumns="repeat(2, 1fr)"
                 rowGap="s32"
