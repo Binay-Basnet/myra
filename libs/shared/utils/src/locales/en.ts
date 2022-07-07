@@ -86,7 +86,7 @@ const en: Record<string, string> = {
   memberNavDraft: 'Draft',
   searchMembers: 'Search Members',
 
-  // member add form page
+  // member [action] form page
   membersFormAddNewMembers: 'Add New Member',
   memberPersonalInformation: 'Personal Information',
   memberFirstName: 'First Name',
@@ -731,7 +731,7 @@ const en: Record<string, string> = {
   kymCoopRepresentativeContactNo: 'Contact No',
 
   kymCoopAdditionalCoorperativeDetails: 'Additional Coorperative Details',
-  kymCoopType: 'Type',
+  kymCoopType: 'Coorperative Type',
   kymCoopSelectType: 'Select Type',
   kymCoopMainServiceProduct: 'Main Service/Product',
   kymCoopEnterMainServiceProduct: 'Enter Main Service/Product',
@@ -1566,7 +1566,7 @@ const en: Record<string, string> = {
   accRebate: 'Rebate',
   accMonthly: 'Monthly',
   accAddfrequencydayorweek:
-    'Either Pick a day or manually add frequency day or day of the week.',
+    'Either Pick a day or manually [action] frequency day or day of the week.',
   accDay: 'Day',
   accDayOfWeek: 'Day of the week',
   accEnterDay: 'Enter Day',
@@ -1845,6 +1845,26 @@ const en: Record<string, string> = {
   warehouseTransferSourceWarehouse: 'Source Warehouse',
   warehouseTransferDestinationWarehouse: 'Destination Warehouse',
   warehouseTransferStatus: 'Status ',
+  // [action] vendor
+  addVendorAddNewVendor: 'Add New Vendor',
+  addVendorName: 'Name',
+  addVendorEnterName: 'Select Name',
+  addVendorVendorCode: 'Vendor Code',
+  addVendorEnterVendorCode: 'Enter Vendor Code',
+  addVendorAddress: 'Address',
+  addVendorSelectAddress: 'Select Address',
+  addVendorPanNo: 'PAN No',
+  addVendorEnterPanNo: 'Enter PAN No',
+  addVendorPhoneNumber: 'Phone Number',
+  addVendorEmailAddress: 'Email Address',
+  addVendorContactPerson: 'Contact Person',
+  addVendorContactName: 'Name',
+  addVendorPhoneNo: 'Phone No',
+  addVendorAdditionalField: 'Additional Field',
+  addVendorOpeningBalance: 'Opening Balance',
+  addVendorCreditTerms: 'Credit Terms',
+  addVendorCreditLimit: 'Credit Limit',
+  addVendorSaveVendor: 'Save Vendor',
 
   //client details
   neoClientDetailsClients: 'Clients',

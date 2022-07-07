@@ -13,7 +13,7 @@ export function ShortcutTab({ shortcut }: ShortcutTabProps) {
       border="1px"
       borderRadius="br2"
       borderColor="border.layout"
-      bg="Background"
+      bg="background.500"
     >
       <Text fontSize="s3" color="black">
         {shortcut}

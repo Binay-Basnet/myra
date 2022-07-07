@@ -80,7 +80,7 @@ const ne: Record<string, string> = {
   memberNavDraft: 'मस्यौदा',
   searchMembers: 'सदस्यहरू खोज्नुहोस्',
 
-  // member add form page
+  // member [action] form page
   membersFormAddNewMembers: 'नयाँ सदस्यहरू थप्नुहोस्',
   memberPersonalInformation: 'व्यक्तिगत जानकारी',
   memberFirstName: 'पहिलो नाम',
@@ -721,7 +721,7 @@ const ne: Record<string, string> = {
   kymCoopRepresentativeContactNo: 'Contact No',
 
   kymCoopAdditionalCoorperativeDetails: 'Additional Coorperative Details',
-  kymCoopType: 'Type',
+  kymCoopType: 'Coorperative Type',
   kymCoopSelectType: 'Select Type',
   kymCoopMainServiceProduct: 'Main Service/Product',
   kymCoopEnterMainServiceProduct: 'Enter Main Service/Product',
@@ -1551,7 +1551,7 @@ const ne: Record<string, string> = {
   accRebate: 'Rebate',
   accMonthly: 'Monthly',
   accAddfrequencydayorweek:
-    'Either Pick a day or manually add frequency day or day of the week.',
+    'Either Pick a day or manually [action] frequency day or day of the week.',
   accDay: 'Day',
   accDayOfWeek: 'Day of the week',
   accEnterDay: 'Enter Day',
@@ -1820,6 +1820,26 @@ const ne: Record<string, string> = {
   warehouseFormAddress: 'Address',
   warehouseFormEnterAddress: 'Enter Address',
   warehouseFormAddWarehouse: 'Add Warehouse',
+  // [action] vendor
+  addVendorAddNewVendor: 'Add New Vendor',
+  addVendorName: 'Name',
+  addVendorEnterName: 'Select Name',
+  addVendorVendorCode: 'Vendor Code',
+  addVendorEnterVendorCode: 'Enter Vendor Code',
+  addVendorAddress: 'Address',
+  addVendorSelectAddress: 'Select Address',
+  addVendorPanNo: 'PAN No',
+  addVendorEnterPanNo: 'Enter PAN No',
+  addVendorPhoneNumber: 'Phone Number',
+  addVendorEmailAddress: 'Email Address',
+  addVendorContactPerson: 'Contact Person',
+  addVendorContactName: 'Name',
+  addVendorPhoneNo: 'Phone No',
+  addVendorAdditionalField: 'Additional Field',
+  addVendorOpeningBalance: 'Opening Balance',
+  addVendorCreditTerms: 'Credit Terms',
+  addVendorCreditLimit: 'Credit Limit',
+  addVendorSaveVendor: 'Save Vendor',
 
   //client details
   neoClientDetailsClients: 'Clients',

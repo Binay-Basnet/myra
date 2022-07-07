@@ -39,16 +39,18 @@ jobs:
           username: ${{secrets.SSH_USERNAME}} #user of the server
           command_timeout: 200m
           script: |
-            cd myra/myra-ui-dev
+            mkdir -p myra/myra-ui
+            cd myra/myra-ui
+            [ ! -d myra-ui-dev ] && \
+              mkdir myra-ui-dev && \
+              git clone git@github.com:raralabs/myra-ui.git myra-ui-dev && \
+              echo "Successfully cloned the repo"
+            cd myra-ui-dev
             git pull origin dev
-            docker build -t myra-deploy:node-yarn -f ./myra-deploy.Dockerfile .
-            echo custom image created
-            docker build --tag myra-ui-dev_image .
-            echo docker built successfully
-            docker rm -f myra-ui-dev  || true
-            echo previous container removed
-            docker run --rm -p 3000:3000 -d --name myra-ui-dev myra-ui-dev_image
-            echo UI deployed successfully
-            yes y | docker image prune
-            yes y | docker container prune
-            docker run -d --name ui-temp myra-deploy:node-yarn
+            echo "Successfully updated repo to the latest version"
+            docker-compose -f docker-compose.myra.yml up --build --force-recreate -d
+            echo "Myra app deployed successfully"
+            docker-compose -f docker-compose.neosys.yml up --build --force-recreate -d
+            echo "Neosys admin app deployed successfully"
+            docker image prune -f || true
+            docker container prune -f || true

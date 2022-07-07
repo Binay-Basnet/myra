@@ -11,7 +11,7 @@ export const AmountLimit = () => {
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Amount Limit</TopText>
+        <TopText>Loan Amount Limit</TopText>
       </TextBoxContainer>
       <InputGroupContainer>
         <FormInput

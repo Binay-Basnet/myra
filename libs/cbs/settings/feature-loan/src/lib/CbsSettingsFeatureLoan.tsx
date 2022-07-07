@@ -36,6 +36,7 @@ import {
   Interest,
   LoanLimit,
   LoanRepayment,
+  LoanRepaymentScheme,
   MaximumTenure,
   MinimunTenure,
   PrematuredPenalty,
@@ -68,7 +69,7 @@ export function SettingsLoanForm(props: loanProductsAdd) {
   const depositNature = watch('nameOfDepositProduct');
 
   return (
-    <Container height="fit-content" minW="container.lg">
+    <Container height="fit-content" minW="container.lg" p={0}>
       <Box position="relative" margin="0px auto">
         <Box
           position="fixed"
@@ -98,7 +99,7 @@ export function SettingsLoanForm(props: loanProductsAdd) {
           </Box>
         </Box>
       </Box>
-      <Container minW="container.lg" height="fit-content" bg="white">
+      <Container minW="container.lg" height="fit-content" bg="white" p={0}>
         <FormProvider {...methods}>
           <form>
             {/* main */}
@@ -106,29 +107,48 @@ export function SettingsLoanForm(props: loanProductsAdd) {
               <ContainerWithDivider>
                 <Box background="white" mt="50px">
                   <InputGroupContainer>
-                    <FormInput
-                      name="productName"
-                      label="Product Name"
-                      placeholder="Enter Product Name"
-                    />
+                    <GridItem colSpan={2}>
+                      <FormInput
+                        name="productName"
+                        label="Product Name"
+                        placeholder="Enter Product Name"
+                      />
+                    </GridItem>
                     {/* <FormSelect name={'duhjisdfsd'} /> */}
 
-                    <FormSelect
-                      name={'nameOfDepositProduct'}
-                      options={optionsSaving}
-                      label="Nature of Loan Product"
-                    />
                     <FormSelect
                       name={'nameOfDepositProductType'}
                       options={optionsSaving}
                       label="Product Type"
                       placeholder="Select Product Type"
                     />
+                    <GridItem colSpan={2}>
+                      <FormSelect
+                        name={'nameOfDepositProductSubtype'}
+                        options={optionsSaving}
+                        label="Product Subtype"
+                        placeholder="Select Product Type"
+                      />
+                    </GridItem>
+
+                    <FormSelect
+                      name={'nameOfDepositProduct'}
+                      options={optionsSaving}
+                      label="Nature of Loan Product"
+                    />
                   </InputGroupContainer>
                 </Box>
                 <Box>
                   <Text fontWeight="500" fontSize={'r1'} color="gray.700">
                     Product Code
+                  </Text>
+                  <Text
+                    mt="s4"
+                    fontWeight="400"
+                    fontSize={'s2'}
+                    color="gray.700"
+                  >
+                    Add prefix & intial number. Eg. ASM506
                   </Text>
                   <InputGroupContainer mt="s16">
                     <FormInput
@@ -149,18 +169,19 @@ export function SettingsLoanForm(props: loanProductsAdd) {
                   </InputGroupContainer>
                 </Box>
                 <TypesOfMember watch={watch} />
-                {depositNature !== 'mandatory' && (
-                  <Box display="flex" flexDirection={'column'} gap="s16">
-                    <Critera watch={watch} />
-                    <GridItems watch={watch} />
-                  </Box>
-                )}
+
+                <Box display="flex" flexDirection={'column'} gap="s16">
+                  <Critera watch={watch} />
+                  <GridItems watch={watch} />
+                </Box>
+
                 {/* {depositNature !== 'voluntary' && (
                   <DepositFrequency watch={watch} />
                 )} */}
-                {depositNature !== 'voluntary' && <MinimunTenure />}
-                {depositNature !== 'voluntary' && <MaximumTenure />}
+                <MinimunTenure />
+                <MaximumTenure />
                 <AmountLimit />
+                <LoanRepaymentScheme />
                 <LoanRepayment />
                 <Interest />
                 <AccountServicesCharge />

@@ -7,9 +7,7 @@ mutation setBranchData($id: ID!, $data: BranchInput!) {
             id
           }
           error {
-            ... on BranchAddInvalidDataError {
-              error
-            }
+            ...MutationError
           }
         }
       }

@@ -66,7 +66,7 @@ export const SettingsBranchesTable = () => {
       <SettingsPageHeader
         heading={t['settingsBranch']}
         buttonLabel={t['settingsBranchNew']}
-        buttonHandler={() => router.push('/settings/general/branches/add')}
+        buttonHandler={() => router.push('/settings/general/branches/[action]')}
       />
 
       <Table

@@ -39,19 +39,19 @@ const AddRelatedTraining = ({
       <InputGroupContainer>
         <FormInput
           type="text"
-          name={`boardOfDirectorsDetails.${bodIndex}.relatedTraining.${index}.subjectOfTraining`}
+          name={`accountOperatorsDetails.${bodIndex}.relatedTraining.${index}.subjectOfTraining`}
           label={t['kymCoopUnionSubjectOfTraining']}
           placeholder={t['kymCoopUnionEnterSubjectOfTraining']}
         />
         <FormInput
           type="date"
-          name={`boardOfDirectorsDetails.${bodIndex}.relatedTraining.${index}.dateOfTraining`}
+          name={`accountOperatorsDetails.${bodIndex}.relatedTraining.${index}.dateOfTraining`}
           label={t['kymCoopUnionDateOfTraining']}
           placeholder={t['kymCoopUnionEnterDateOfTraining']}
         />
         <FormInput
           type="text"
-          name={`boardOfDirectorsDetails.${bodIndex}.relatedTraining.${index}.trainingOrganization`}
+          name={`accountOperatorsDetails.${bodIndex}.relatedTraining.${index}.trainingOrganization`}
           label={t['kymCoopUnionTrainingOrganization']}
           placeholder={t['kymCoopUnionEnterTrainingOrganization']}
         />
@@ -64,7 +64,7 @@ interface BoardOfDirectorRelatedTrainingConcern {
   bodIndex: number;
 }
 
-export const BoardOfDirectorRelatedTraining = ({
+export const AccountOperatorTraining = ({
   bodIndex,
 }: BoardOfDirectorRelatedTrainingConcern) => {
   const { t } = useTranslation();

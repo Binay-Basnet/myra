@@ -48,11 +48,7 @@ export function NeosysFeatureUsersAdd(props: NeosysFeatureUsersAddProps) {
               onClick={() => router.back()}
             />
           </Box>
-          <FormProvider {...methods}>
-            <form>
-              <NeosysUsersForm watch={watch} />
-            </form>
-          </FormProvider>
+          <NeosysUsersForm />
         </Box>
       </Container>
       <Box position="relative" margin="0px auto">

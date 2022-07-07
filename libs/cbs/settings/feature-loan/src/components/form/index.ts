@@ -7,6 +7,7 @@ export * from './interest';
 export * from './listGrid';
 export * from './loanLimit';
 export * from './loanRepayment';
+export * from './loanRepaymentScheme';
 export * from './maximumTenure';
 export * from './minimunTenure';
 export * from './prematuruedPenaltySetup';

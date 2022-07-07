@@ -28,8 +28,13 @@ export const FormTextArea = ({
       <Controller
         control={formControl}
         name={name}
-        render={({ field: { onChange } }) => (
-          <TextAreaInput id={name} onChange={onChange} {...rest} />
+        render={({ field: { onChange, value } }) => (
+          <TextAreaInput
+            id={name}
+            value={value}
+            onChange={onChange}
+            {...rest}
+          />
         )}
       />
       {error ? error?.message : null}

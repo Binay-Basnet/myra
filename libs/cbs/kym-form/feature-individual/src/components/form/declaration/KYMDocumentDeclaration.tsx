@@ -34,7 +34,7 @@ export const KYMDocumentDeclaration = () => {
             <FormFileInput
               size="lg"
               label={option.name?.local}
-              name="documents"
+              name="documentsTemp"
             />
           )
         )}
