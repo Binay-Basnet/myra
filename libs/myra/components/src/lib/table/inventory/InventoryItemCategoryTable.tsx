@@ -89,7 +89,7 @@ export const InventoryItemCategoryTable = () => {
           <ModalBody>
             <FormProvider {...methods}>
               <form>
-                <Box p="s16" display="flex" flexDirection="column" gap="s24">
+                <Box display="flex" flexDirection="column" gap="s24">
                   <FormInput
                     type="text"
                     name="name"

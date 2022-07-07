@@ -2,12 +2,11 @@ import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
-import { TableListPageHeader } from '@coop/myra/components';
 import { useGetInventoryItemGroupQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export const SupplierTable = () => {
+export const WarehouseListTable = () => {
   const { t } = useTranslation();
   const { data, isFetching } = useGetInventoryItemGroupQuery();
 
@@ -47,15 +46,11 @@ export const SupplierTable = () => {
   );
 
   return (
-    <>
-      <TableListPageHeader heading={'supplier'} />
-
-      <Table
-        data={rowItems}
-        isLoading={isFetching}
-        columns={columns}
-        sort={true}
-      />
-    </>
+    <Table
+      data={rowItems}
+      isLoading={isFetching}
+      columns={columns}
+      sort={true}
+    />
   );
 };
