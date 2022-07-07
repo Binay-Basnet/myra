@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  neosys-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile.neosys-admin
+    container_name: ${ADMIN_CONTAINER_NAME}
+    env_file: .env
+    ports:
+      - ${ADMIN_PORT}:3000
+    restart: unless-stopped
