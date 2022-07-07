@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
 import {
@@ -15,30 +16,64 @@ const yesNo = [
   { label: 'No', value: 'no' },
 ];
 export const Questions = ({ watch }: any) => {
-  const depositNature = watch('nameOfDepositProduct');
+  const collateral = watch('collateral');
   return (
     <DividerContainer>
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>Insurance</SubHeadingText>
         <FormSwitchTab name={'autoOpenWhenJoin'} options={yesNo} />
       </Box>
-      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Collateral</SubHeadingText>
-        <FormSwitchTab name={'alternativeChannels'} options={yesNo} />
-      </Box>
-      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Rebate </SubHeadingText>
-        <FormSwitchTab name={'atmFacility'} options={yesNo} />
+      <Box display={'flex'} flexDirection="column" gap="s16">
+        <Box
+          display="flex"
+          flexDirection={'row'}
+          justifyContent="space-between"
+        >
+          <SubHeadingText>Collateral</SubHeadingText>
+          <FormSwitchTab name={'collateral'} options={yesNo} />
+        </Box>
+        {collateral && collateral === 'yes' && (
+          <Box
+            p="s16"
+            border={'1px solid'}
+            borderColor="border.layout"
+            borderRadius={'6px'}
+          >
+            <InputGroupContainer>
+              <FormInput
+                type="text"
+                name="disburementOfFMV"
+                label="Disburement % of FMV"
+                placeholder="Loan Provision Frequency"
+              />
+              <FormInput
+                type="text"
+                name="disburementOfDMV"
+                label="Disburement % of DMV"
+                placeholder="Loan Provision Frequency"
+              />
+            </InputGroupContainer>
+          </Box>
+        )}{' '}
       </Box>
 
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>Rebate </SubHeadingText>
-        <FormSwitchTab name={'chequeIssue'} options={yesNo} />
+        <FormSwitchTab name={'rebate'} options={yesNo} />
       </Box>
 
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Allow Partial Installment</SubHeadingText>
-        <FormSwitchTab name={'allowLoan'} options={yesNo} />
+        <SubHeadingText>Staff Product </SubHeadingText>
+        <FormSwitchTab name={'staffProduct'} options={yesNo} />
+      </Box>
+
+      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+        <SubHeadingText>Support Multiple Account</SubHeadingText>
+        <FormSwitchTab name={'supportMultipleAcc'} options={yesNo} />
+      </Box>
+      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+        <SubHeadingText>Loan Schedule Change Override</SubHeadingText>
+        <FormSwitchTab name={'loanScheduleChangeOverride'} options={yesNo} />
       </Box>
     </DividerContainer>
   );
