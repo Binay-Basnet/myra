@@ -85,7 +85,7 @@ const en: Record<string, string> = {
   memberNavDraft: 'Draft',
   searchMembers: 'Search Members',
 
-  // member add form page
+  // member [action] form page
   membersFormAddNewMembers: 'Add New Member',
   memberPersonalInformation: 'Personal Information',
   memberFirstName: 'First Name',
@@ -1565,7 +1565,7 @@ const en: Record<string, string> = {
   accRebate: 'Rebate',
   accMonthly: 'Monthly',
   accAddfrequencydayorweek:
-    'Either Pick a day or manually add frequency day or day of the week.',
+    'Either Pick a day or manually [action] frequency day or day of the week.',
   accDay: 'Day',
   accDayOfWeek: 'Day of the week',
   accEnterDay: 'Enter Day',
@@ -1762,7 +1762,7 @@ const en: Record<string, string> = {
   vendorPhoneNumber: 'Phone Number',
   vendorEmailAddress: 'Email Address',
 
-  // add vendor
+  // [action] vendor
   addVendorAddNewVendor: 'Add New Vendor',
   addVendorName: 'Name',
   addVendorEnterName: 'Select Name',

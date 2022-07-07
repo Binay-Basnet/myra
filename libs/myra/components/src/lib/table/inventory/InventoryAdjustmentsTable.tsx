@@ -51,7 +51,7 @@ export const InventoryAdjustmentsTable = () => {
         heading="itemUnitInventoryAdjustment"
         buttonLabel="itemUnitsNewInventoryAdjustment"
         buttonHandler={() =>
-          router.push('/inventory/inventory/adjustments/add')
+          router.push('/inventory/inventory/adjustments/[action]')
         }
       />
 

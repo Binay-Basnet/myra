@@ -1,48 +1,48 @@
 mutation getNewId {
-    newId
+  newId
 }
 
 mutation setMemberData($id: ID!, $data: KymIndMemberInput!) {
-    members {
-        individual(id: $id) {
-            add(data: $data) {
-                recordId
-                error {
-                    ... on KymIndAddInvalidDataError {
-                        error
-                    }
-                }
-            }
+  members {
+    individual(id: $id) {
+      add(data: $data) {
+        recordId
+        error {
+          ... on KymIndAddInvalidDataError {
+            error
+          }
         }
+      }
     }
+  }
 }
 
 mutation updateKYMField($id: ID!, $enabled: Boolean, $name: String) {
-    settings {
-        kymForm {
-            field {
-                update(id: $id, data: { enabled: $enabled, name: $name }) {
-                    record {
-                        id
-                        enabled
-                        name
-                    }
-                }
-            }
+  settings {
+    kymForm {
+      field {
+        update(id: $id, data: { enabled: $enabled, name: $name }) {
+          record {
+            id
+            enabled
+            name
+          }
         }
+      }
     }
+  }
 }
 
 mutation deleteKYMField($optionId: ID!) {
-    settings {
-        kymForm {
-            option {
-                delete(optionId: $optionId) {
-                    recordId
-                }
-            }
+  settings {
+    kymForm {
+      option {
+        delete(optionId: $optionId) {
+          recordId
         }
+      }
     }
+  }
 }
 
 #mutation addKYMField(
@@ -54,7 +54,7 @@ mutation deleteKYMField($optionId: ID!) {
 #    settings {
 #        kymForm {
 #            field {
-#                add(
+#                [action](
 #                    data: {
 #                        kymType: INDIVIDUAL
 #                        name: $name
@@ -81,11 +81,11 @@ mutation deleteKYMField($optionId: ID!) {
 #}
 
 mutation setKymCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
-    members {
-        cooperative(id: $id) {
-            add(data: $data) {
-                recordId
-            }
-        }
+  members {
+    cooperative(id: $id) {
+      add(data: $data) {
+        recordId
+      }
     }
+  }
 }

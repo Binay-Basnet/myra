@@ -1,5 +1,4 @@
-import React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
@@ -64,7 +63,7 @@ export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
           size="lg"
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
-          onClick={() => router.push('/users/add')}
+          onClick={() => router.push('/users/[action]')}
         >
           {t['neoClientUserSiderbarNewUser']}
         </Button>
@@ -116,7 +115,7 @@ export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
           variant="ghost"
           color="gray.600"
           leftIcon={<AddIcon height="11px" />}
-          // onClick={() => router.push('/users/add')}
+          // onClick={() => router.push('/users/[action]')}
         >
           {t['neoClientUserSiderbarNewUserRole']}
         </Button>

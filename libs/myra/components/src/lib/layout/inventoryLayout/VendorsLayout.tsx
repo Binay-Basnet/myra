@@ -38,7 +38,7 @@ export const InventoryVendorsLayout = ({
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
           onClick={() => {
-            router.push(router.pathname + '/add');
+            router.push(router.pathname + '/[action]');
           }}
         >
           {t['addVendors']}

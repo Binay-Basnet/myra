@@ -123,9 +123,14 @@ export function KYMIndividualPage() {
     data,
     isLoading: editLoading,
     error,
-  } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  } = useGetIndividualKymEditDataQuery(
+    {
+      id: id,
+    },
+    {
+      staleTime: 0,
+    }
+  );
 
   const previousFormData =
     data?.members?.individual?.formState?.data?.formData ?? {};
