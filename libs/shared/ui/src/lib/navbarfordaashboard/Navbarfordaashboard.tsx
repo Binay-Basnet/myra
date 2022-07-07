@@ -18,7 +18,7 @@ import { MdOutlineHelpOutline } from 'react-icons/md';
 import { BiBell } from 'react-icons/bi';
 import { CgMenuGridO } from 'react-icons/cg';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from '@coop/shared/utils';
 import { IoHomeSharp, IoGrid } from 'react-icons/io5';
 
@@ -82,11 +82,11 @@ export function Navbarfordaashboard() {
         <Box display="flex" alignItems="flex-end" h="60px">
           <ActiveLink href="/">
             <Icon as={IoHomeSharp} mr="s12" />
-            {t.home}
+            {t['home']}
           </ActiveLink>
           <ActiveLink href="/dashboard-main">
             <Icon as={IoGrid} mr="s12" ml="s4" />
-            {t.dashboard}
+            {t['dashboard']}
           </ActiveLink>
         </Box>
         <Spacer />

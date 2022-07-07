@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "-inventory--feature-inventory": "libs/inventory/feature-inventory",
     "-inventory--feature-item": "libs/inventory/feature-item",
     "-inventory--feature-vendors": "libs/inventory/feature-vendors",
     "cbs-accounts-feature-account-form": "libs/cbs/accounts/feature-account-form",

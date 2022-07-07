@@ -5,7 +5,7 @@ import { FormInput } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-const ItemAdjustmentForm = () => {
+const InventoryAdjustmentForm = () => {
   const { t } = useTranslation();
   const methods = useForm({});
   return (
@@ -33,4 +33,4 @@ const ItemAdjustmentForm = () => {
   );
 };
 
-export default ItemAdjustmentForm;
+export default InventoryAdjustmentForm;

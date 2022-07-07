@@ -177,6 +177,7 @@ export function KYMIndividualPage() {
     });
   }, [isLoading, nationalityLoading, editLoading, JSON.stringify(data)]);
 
+  console.log('previous data', previousFormData, data);
   return (
     <>
       {/* // Top Bar */}
