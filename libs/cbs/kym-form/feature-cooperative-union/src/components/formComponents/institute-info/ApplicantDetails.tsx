@@ -167,12 +167,12 @@ export const ApplicantDetails = () => {
                 label={t['kymIndLocality']}
                 placeholder={t['kymIndEnterLocality']}
               />
-              <FormInput
+              {/* <FormInput
                 type="text"
                 name="applicantPermanentHouseNo"
                 label={t['kymIndHouseNo']}
                 placeholder={t['kymIndEnterHouseNo']}
-              />
+              /> */}
             </InputGroupContainer>
 
             <Box mt="-16px">
@@ -235,12 +235,12 @@ export const ApplicantDetails = () => {
                   label={t['kymIndLocality']}
                   placeholder={t['kymIndEnterLocality']}
                 />
-                <FormInput
+                {/* <FormInput
                   type="text"
                   name="applicantTemporaryHouseNo"
                   label={t['kymIndHouseNo']}
                   placeholder={t['kymIndEnterHouseNo']}
-                />
+                /> */}
               </InputGroupContainer>
 
               <Box mt="-16px">

@@ -202,6 +202,12 @@ export const AddRepresentative = ({ watch, control }) => {
                     label={t['kymCoopUnionDirLocality']}
                     placeholder={t['kymCoopUnionDirEnterLocality']}
                   />
+                  <FormInput
+                    type="text"
+                    name="centralRepresentativeDetails.permanentHouseNo"
+                    label={t['kymIndHouseNo']}
+                    placeholder={t['kymIndEnterHouseNo']}
+                  />
                 </InputGroupContainer>
 
                 <Box>
@@ -268,6 +274,12 @@ export const AddRepresentative = ({ watch, control }) => {
                         name={`centralRepresentativeDetails.temporaryLocality`}
                         label={t['kymCoopUnionDirLocality']}
                         placeholder={t['kymCoopUnionDirEnterLocality']}
+                      />
+                      <FormInput
+                        type="text"
+                        name="centralRepresentativeDetails.temporaryHouseNo"
+                        label={t['kymIndHouseNo']}
+                        placeholder={t['kymIndEnterHouseNo']}
                       />
                     </InputGroupContainer>
 

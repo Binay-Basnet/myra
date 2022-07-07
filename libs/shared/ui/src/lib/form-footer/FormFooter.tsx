@@ -20,6 +20,7 @@ export function FormFooter({
   const { t } = useTranslation();
   return (
     <Box
+      zIndex="12"
       display="flex"
       justifyContent="space-between"
       alignItems="center"

@@ -726,7 +726,7 @@ const ne: Record<string, string> = {
 
   // kym coop union
   kymCoopUnionAddNewMembers: 'Add New Member',
-  kymCoopUnionInstitutionInformation: '1. Institution Information',
+  kymCoopUnionInstitutionInformation: '1. Cooperative Information',
   kymCoopUnionBasicInformation: 'Basic Information',
   kymCoopUnionNameOfInstitution: 'Name of Institution',
   kymCoopUnionInstitutionType: 'Institution Type',
@@ -922,7 +922,7 @@ const ne: Record<string, string> = {
   kymCoopUnionRepTotalAssets: 'Total assets',
   kymCoopUnionRepTotal: 'Total',
 
-  kymCoopUnionEco6EconomicDetails: '6. Economic Details',
+  kymCoopUnionEco6EconomicDetails: '5. Economic Details',
   kymCoopUnionEcoAssets: 'Assets',
   kymCoopUnionEcoCurrent: 'Current',
   kymCoopUnionEcoTarget: 'Target for next fiscal year',
@@ -974,7 +974,7 @@ const ne: Record<string, string> = {
   kymCoopUnionEqtTotal: 'Total',
   kymCoopUnionEqtTotalassets: 'Total assets',
 
-  kymCoopUnionDec7Declaration: ' 7. Declaration',
+  kymCoopUnionDec7Declaration: ' 6. Declaration',
   kymCoopUnionDecDocumentsDeclaration: 'Documents Declaration',
   kymCoopUnionDecAGMDecisionDocument: 'AGM/BOD Decision Document',
   kymCoopUnionDecRegisteredCertificate: 'Registered Certificate',
@@ -1162,8 +1162,8 @@ const ne: Record<string, string> = {
   kymCoopUnionAcc4DetailsofCentralRepresentative:
     '4. Details of Central Representative',
   kymCoopUnionAcc5Detailsofmember: '5. Details of member',
-  kymCoopUnionAcc6EconomicDetails: '6. Economic Details',
-  kymCoopUnionAcc7Declaration: '7. Declaration',
+  kymCoopUnionAcc6EconomicDetails: '5. Economic Details',
+  kymCoopUnionAcc7Declaration: '6. Declaration',
 
   kymCoopUnionCurrentMembers: 'Current Members',
   kymCoopUnionNoofMalemembers: 'No. of Male members',

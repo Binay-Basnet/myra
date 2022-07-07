@@ -12,6 +12,8 @@ import {
   FormFooter,
 } from '@coop/shared/ui';
 import { IoCloseOutline } from 'react-icons/io5';
+import { useFormContext } from 'react-hook-form';
+
 import {
   InstituteInfo,
   DirectorDetails,
@@ -47,7 +49,7 @@ export function KYMCooperativeUnionPage() {
           width="100%"
           zIndex="10"
         >
-          <Container minW="container.xl" height="fit-content">
+          <Container minW="container.xl" height="fit-content" p={0}>
             <Box
               height="60px"
               display="flex"
@@ -71,9 +73,9 @@ export function KYMCooperativeUnionPage() {
         </Box>
       </Box>
 
-      <Container minW="container.xl" height="fit-content">
+      <Container minW="container.xl" height="fit-content" p={0}>
         <Box display="flex" width="100%">
-          <Box display="flex">
+          <Box display="flex" w="100%">
             <Box
               w={320}
               p={2}
@@ -85,7 +87,7 @@ export function KYMCooperativeUnionPage() {
               <AccorrdianAddCOOPUnion kymCurrentSection={kymCurrentSection} />
             </Box>
 
-            <Box background="white" ml={320} px="s20" pb="120px">
+            <Box background="white" ml={320} px="s20" pb="120px" w="100%">
               <SectionContainer>
                 <Text fontSize="r3" fontWeight="600">
                   {t['kymCoopUnionInstitutionInformation']}
@@ -94,7 +96,7 @@ export function KYMCooperativeUnionPage() {
                 <DirectorDetails setSection={setSection} />
                 <AccountOperatorDetails setSection={setSection} />
                 <CentralRepresentativeDetails setSection={setSection} />
-                <MemberDetails setSection={setSection} />
+                {/* <MemberDetails setSection={setSection} /> */}
                 <EconomicDetails setSection={setSection} />
                 <Declaration setSection={setSection} />
               </SectionContainer>
@@ -104,7 +106,7 @@ export function KYMCooperativeUnionPage() {
       </Container>
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
+          <Container minW="container.xl" height="fit-content" p={0}>
             {/* <Box
               display="flex"
               height="60px"

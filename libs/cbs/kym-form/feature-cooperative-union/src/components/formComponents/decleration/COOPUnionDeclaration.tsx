@@ -10,8 +10,8 @@ export const DocumentDeclarationInstitutionCOOPUnion = () => {
   const { t } = useTranslation();
   return (
     <GroupContainer
-      id="kymCoopUnionAccAccountHolderDeclaration"
       scrollMarginTop={'200px'}
+      id="kymCoopUnionAccDocumentsDeclaration"
     >
       <Text
         fontSize="r1"
@@ -62,7 +62,7 @@ export const DocumentDeclarationInstitutionCOOPUnion = () => {
         display="flex"
         gap="s16"
         alignItems="start"
-        id="Account Holder Declaration"
+        id="kymCoopUnionAccAccountHolderDeclaration"
         scrollMarginTop={'200px'}
       >
         <Checkbox fontSize="s3" id="weAgree" mt="2px">

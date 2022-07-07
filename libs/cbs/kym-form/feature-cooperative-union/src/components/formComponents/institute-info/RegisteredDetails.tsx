@@ -108,12 +108,6 @@ export const RegisteredDetails = () => {
           label={t['kymIndLocality']}
           placeholder={t['kymIndEnterLocality']}
         />
-        <FormInput
-          type="text"
-          name="regdHouseNo"
-          label={t['kymIndHouseNo']}
-          placeholder={t['kymIndEnterHouseNo']}
-        />
       </InputGroupContainer>
       <Box mt="-16px">
         <FormMap name={`regdLocation`} />
