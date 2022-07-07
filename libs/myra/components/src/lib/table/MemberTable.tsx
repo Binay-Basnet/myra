@@ -106,7 +106,7 @@ export const MemberTable = () => {
         disableFilters: false,
 
         Cell: ({ value }) => {
-          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
+          return <span>{format(new Date(value), 'yyyy-MM-dd')}</span>;
         },
       },
       {
