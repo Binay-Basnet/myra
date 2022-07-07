@@ -445,14 +445,8 @@ export type Branch = {
   tdsTransaferId?: Maybe<Scalars['String']>;
 };
 
-export type BranchAddError = BranchAddInvalidDataError;
-
-export type BranchAddInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
-};
-
 export type BranchAddResult = {
-  error?: Maybe<BranchAddError>;
+  error?: Maybe<MutationError>;
   query?: Maybe<GeneralBranchSettingsQuery>;
   record: Branch;
   recordId: Scalars['ID'];
@@ -470,6 +464,12 @@ export type BranchConnection = {
   edges: Array<BranchEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type BranchDeleteResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<GeneralBranchSettingsQuery>;
+  recordId: Scalars['ID'];
 };
 
 export type BranchEdge = {
@@ -2057,11 +2057,17 @@ export type FullAddressInput = {
 
 export type GeneralBranchSettingsMutation = {
   add: BranchAddResult;
+  delete?: Maybe<BranchDeleteResult>;
 };
 
 
 export type GeneralBranchSettingsMutationAddArgs = {
   data?: InputMaybe<BranchInput>;
+  id: Scalars['ID'];
+};
+
+
+export type GeneralBranchSettingsMutationDeleteArgs = {
   id: Scalars['ID'];
 };
 
@@ -4544,6 +4550,11 @@ export type KymOccupationDetailsType = {
   orgName?: Maybe<Scalars['String']>;
 };
 
+export enum Language {
+  English = 'ENGLISH',
+  Nepali = 'NEPALI'
+}
+
 export type Level1 = {
   level2: Level2;
 };
@@ -4844,6 +4855,12 @@ export type OrganizationContactDetails = {
   website?: Maybe<Scalars['String']>;
 };
 
+export type OrganizationDeleteResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<OrganizationSettingsQuery>;
+  recordId: Scalars['ID'];
+};
+
 export type OrganizationDocument = {
   documents?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
@@ -4936,7 +4953,13 @@ export type OrganizationRegistrationDetails = {
 };
 
 export type OrganizationSettingsMutation = {
+  delete?: Maybe<OrganizationDeleteResult>;
   initialSetup?: Maybe<OrganizationAddResult>;
+};
+
+
+export type OrganizationSettingsMutationDeleteArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -5409,33 +5432,36 @@ export type User = Base & {
 };
 
 export type UserMutation = {
-  add?: Maybe<UserPreferenceResult>;
-  delete?: Maybe<UserPreferenceDeleteResult>;
-};
-
-
-export type UserMutationAddArgs = {
-  data: UserPreferenceInput;
-  id: Scalars['ID'];
-};
-
-
-export type UserMutationDeleteArgs = {
-  id: Scalars['ID'];
+  preference?: Maybe<UserPreferenceMutation>;
 };
 
 export type UserPreference = {
   id?: Maybe<Scalars['ID']>;
-  language?: Maybe<Scalars['String']>;
-};
-
-export type UserPreferenceDeleteResult = {
-  error?: Maybe<MutationError>;
-  recordId: Scalars['ID'];
+  language?: Maybe<Language>;
+  languageCode?: Maybe<Scalars['String']>;
 };
 
 export type UserPreferenceInput = {
-  language?: InputMaybe<Scalars['String']>;
+  language?: InputMaybe<Language>;
+};
+
+export type UserPreferenceMutation = {
+  update?: Maybe<UserPreferenceResult>;
+};
+
+
+export type UserPreferenceMutationUpdateArgs = {
+  data: UserPreferenceInput;
+  id: Scalars['ID'];
+};
+
+export type UserPreferenceQuery = {
+  get?: Maybe<UserPreference>;
+};
+
+
+export type UserPreferenceQueryGetArgs = {
+  id: Scalars['ID'];
 };
 
 export type UserPreferenceResult = {
@@ -5445,12 +5471,7 @@ export type UserPreferenceResult = {
 };
 
 export type UserQuery = {
-  get?: Maybe<UserPreference>;
-};
-
-
-export type UserQueryGetArgs = {
-  id: Scalars['ID'];
+  preference?: Maybe<UserPreferenceQuery>;
 };
 
 export enum UserType {
@@ -5509,7 +5530,7 @@ export type SetBranchDataMutationVariables = Exact<{
 }>;
 
 
-export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record: { id: string }, error?: { error?: Record<string, Array<string>> | null } | null } } | null } | null } };
+export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record: { id: string }, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
 export type SetNewCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
@@ -5938,16 +5959,14 @@ export const SetBranchDataDocument = `
             id
           }
           error {
-            ... on BranchAddInvalidDataError {
-              error
-            }
+            ...MutationError
           }
         }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetBranchDataMutation = <
       TError = unknown,
       TContext = unknown
