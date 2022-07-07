@@ -78,7 +78,7 @@ export const TypesOfMember = ({ watch }: any) => {
   return (
     <Box display="flex" flexDirection={'column'} gap="s16">
       <Text fontWeight="500" fontSize={'s3'} color="gray.700">
-        Type of member
+        Member Category{' '}
       </Text>
 
       <FormCheckboxGroup

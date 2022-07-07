@@ -33,52 +33,40 @@ const unitOptions = [
   },
 ];
 
-const applicableSwitch = [
-  {
-    label: 'Applicable',
-    value: 'applicable',
-  },
-  {
-    label: 'Not Applicable',
-    value: 'notApplicable',
-  },
-];
 export const LoanRepayment = () => {
-  const [rightElement, setRightElement] = useState('days');
+  const [rightElementMax, setRightElementMax] = useState('days');
+  const [rightElementMin, setRightElementMin] = useState('days');
+
   const { resetField, watch } = useFormContext();
-  const maximumDuration = watch('enablemaximumDurationLoan');
 
   const maxDurationUnit = watch('maximumDurationUnitLoan');
   useEffect(() => {
     resetField('maximumDurationNumberLoan');
-    setRightElement(maxDurationUnit);
+    setRightElementMax(maxDurationUnit);
   }, [maxDurationUnit]);
-  const minimumDuration = watch('enableminimumDurationLoan');
 
   const minimumDurationUnit = watch('minimumDurationUnitLoan');
 
   useEffect(() => {
     resetField('minimunDurationNumberLoan');
-    setRightElement(minimumDurationUnit);
+    setRightElementMin(minimumDurationUnit);
   }, [minimumDurationUnit]);
   return (
     <BoxContainer>
       <TopText> Loan Repayment Start Grace Duration</TopText>
 
-      <Box display={'flex'} justifyContent="space-between">
+      <Box
+        display={'flex'}
+        justifyContent="space-between"
+        flexDirection={'column'}
+        gap="s8"
+      >
         <TextBoxContainer>
           <TopText>Minimum Duration</TopText>
         </TextBoxContainer>
-        <FormSwitchTab
-          name={'enableminimumDurationLoan'}
-          options={applicableSwitch}
-        />
-      </Box>
-      {minimumDuration && minimumDuration === 'applicable' && (
-        <BoxContainer
-          p="s16"
-          border={'1px solid'}
-          borderColor="border.layout"
+
+        {/* {minimumDuration && minimumDuration === 'applicable' && ( */}
+        <Box
           display={'flex'}
           flexDirection="row"
           justifyContent="space-between"
@@ -100,29 +88,27 @@ export const LoanRepayment = () => {
               textAlign={'right'}
               label="Number"
               placeholder="Enter number"
-              rightElement={<Text>{rightElement}</Text>}
+              rightElement={<Text>{rightElementMin}</Text>}
             />
           </Box>
-        </BoxContainer>
-      )}
-      <Box display={'flex'} justifyContent="space-between">
+        </Box>
+      </Box>
+      {/* )} */}
+      <Box
+        display={'flex'}
+        justifyContent="space-between"
+        gap="s8"
+        flexDirection={'column'}
+      >
         <TextBoxContainer>
           <TopText>Maximum Duration</TopText>
         </TextBoxContainer>
-        <FormSwitchTab
-          name={'enablemaximumDurationLoan'}
-          options={applicableSwitch}
-        />
-      </Box>
-      {maximumDuration && maximumDuration === 'applicable' && (
+
+        {/* {maximumDuration && maximumDuration === 'applicable' && ( */}
         <BoxContainer
-          p="s16"
-          border={'1px solid'}
-          borderColor="border.layout"
           display={'flex'}
           flexDirection="row"
           justifyContent="space-between"
-          borderRadius={'4px'}
         >
           <Box display={'flex'} flexDirection="column" gap="s4">
             <Text fontSize={'s3'} fontWeight="500">
@@ -140,11 +126,12 @@ export const LoanRepayment = () => {
               textAlign={'right'}
               label="Number"
               placeholder="Enter number"
-              rightElement={rightElement}
+              rightElement={rightElementMax}
             />
           </Box>
         </BoxContainer>
-      )}
+      </Box>
+      {/* )} */}
     </BoxContainer>
   );
 };
