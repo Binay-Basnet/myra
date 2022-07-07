@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import {
   InventoryAdjustmentsTable,
-  InventoryItemsLayout,
+  InventoryTabLayout,
 } from '@coop/myra/components';
 import { MainLayoutInventory } from '@coop/shared/ui';
 
@@ -13,7 +13,7 @@ const InventoryAdjustments = () => {
 InventoryAdjustments.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayoutInventory>
-      <InventoryItemsLayout>{page}</InventoryItemsLayout>{' '}
+      <InventoryTabLayout>{page}</InventoryTabLayout>
     </MainLayoutInventory>
   );
 };

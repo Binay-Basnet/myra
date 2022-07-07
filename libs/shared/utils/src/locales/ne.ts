@@ -1644,7 +1644,7 @@ const ne: Record<string, string> = {
   itemInventorySettings: 'Inventory Settings',
 
   warehouse: 'Warehouse',
-  vendors: 'Vendors',
+  suppliers: 'Suppliers',
 
   //items form
   invItemAddNewItem: 'Add New Item',
@@ -1718,21 +1718,108 @@ const ne: Record<string, string> = {
   itemUnitAddNewInventoryAdjustment: 'Add New Inventory Adjustment',
   itemUnitCode: 'Code',
   itemUnitDate: 'Date',
-  itemUnitReferenceNumber: 'Reference Number ',
+  itemUnitReferenceNumber: 'Reference Number',
 
-  // VENDORS
+  // inventory
+  invInventory: 'Inventory',
+  invInventoryNewInventoryEntry: 'New Inventory Entry',
+  invInventoryRegister: 'Inventory Register',
+  invInventoryAdjustment: 'Inventory Adjustment',
+  invInventoryReports: 'Inventory Reports',
 
-  // vendor layout
-  vendorsLayout: 'Vendors',
-  addVendors: 'Add Vendors',
+  // inventory register table
+  inRegItemID: 'Item ID',
+  inRegName: 'Name',
+  inRegType: 'Type',
+  inRegUnitPrice: 'Unit Price',
+  inRegTotalCost: 'Total Cost',
+  inRegItemQuantity: 'Item Quantity',
+
+  // inventory add form
+  invFormNewInventoryEntry: 'New Inventory Entry',
+  invFormSupplierName: 'Supplier Name',
+  invFormSelectSupplier: 'Select Supplier ',
+  invFormSupplierInvoiceReference: 'Supplier Invoice Reference',
+  invFormEnterSupplierInvoiceReference: 'Enter Supplier Invoice Reference',
+  invFormInvoiceDate: 'Invoice Date',
+  invFormDueDate: 'Due Date',
+  invFormWarehouse: 'Warehouse',
+  invFormSelectWarehouse: 'Select Warehouse',
+  invFormNotes: 'Notes ',
+  invFormNote: 'Note ',
+  invFormInvoiceFields: 'Invoice Fields',
+  invForSubTotal: 'Sub Total',
+  invFormDiscount: 'Discount',
+  invFormTaxableTotal: 'Taxable Total',
+  invFormVAT: 'VAT ',
+  invFormGrandTotal: 'Grand Total',
+  invFormTDS: 'TDS',
+  invFormApplicable: 'Applicable',
+  invFormNotApplicable: 'Not Applicable',
+  invFormTDSLedgerAccount: 'TDS Ledger Account',
+  invFormTDSType: 'TDS Type',
+  invFormTDSAmount: 'TDS Amount',
+
+  // Suppliers
+
+  // supplier layout
+  supplier: 'Supplier',
+  suppliersLayout: 'Suppliers',
+  supplierList: 'Supplier List',
+  addSuppliers: 'Add Suppliers',
   inventorySettings: 'Inventory Settings',
 
-  // vendor table
-  vendorName: 'Name',
-  vendorLocation: 'Location',
-  vendorPhoneNumber: 'Phone Number',
-  vendorEmailAddress: 'Email Address',
+  // supplier table
+  supplierName: 'Name',
+  supplierLocation: 'Location',
+  supplierPhoneNumber: 'Phone Number',
+  supplierEmailAddress: 'Email Address',
 
+  // add supplier
+  addSuppliersAddNewSupplier: 'Add New Supplier',
+  addSuppliersName: 'Name',
+  addSuppliersEnterName: 'Select Name',
+  addSuppliersVendorCode: 'Vendor Code',
+  addSuppliersEnterVendorCode: 'Enter Vendor Code',
+  addSuppliersAddress: 'Address',
+  addSupplierselectAddress: 'Select Address',
+  addSuppliersPanNo: 'PAN No',
+  addSuppliersEnterPanNo: 'Enter PAN No',
+  addSuppliersPhoneNumber: 'Phone Number',
+  addSuppliersEmailAddress: 'Email Address',
+  addSuppliersContactPerson: 'Contact Person',
+  addSuppliersContactName: 'Name',
+  addSuppliersPhoneNo: 'Phone No',
+  addSuppliersAdditionalField: 'Additional Field',
+  addSuppliersOpeningBalance: 'Opening Balance',
+  addSuppliersCreditTerms: 'Credit Terms',
+  addSuppliersCreditLimit: 'Credit Limit',
+  addSuppliersaveSuppliers: 'Save Suppliers',
+
+  // WAREHOUSE
+
+  // warehouse layout
+  warehouseLayoutWarehouse: 'Warehouse',
+  warehouseLayoutAddWarehouse: 'Add Warehouse',
+  warehouseLayoutWarehouseList: 'Warehouse List',
+  warehouseLayoutWarehouseTransfer: 'Warehouse Transfer',
+  warehouseLayoutInventorySettings: 'Inventory Settings',
+
+  // warehouse table
+  warehouseTableName: 'Name',
+  warehouseTableLocation: 'Location',
+  warehouseTablePhoneNumber: 'Phone Number',
+
+  // warehouse add
+  warehouseFormNewWarehouse: 'New Warehouse',
+  warehouseFormName: 'Name',
+  warehouseFormEnterName: 'Enter Name',
+  warehouseFormPhoneNumber: 'Phone Number',
+  warehouseFormEnterPhoneNumber: 'Phone Number',
+  warehouseFormDefaultWarehouse: 'Default Warehouse',
+  warehouseFormAddress: 'Address',
+  warehouseFormEnterAddress: 'Enter Address',
+  warehouseFormAddWarehouse: 'Add Warehouse',
   // [action] vendor
   addVendorAddNewVendor: 'Add New Vendor',
   addVendorName: 'Name',

@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 import { BsThreeDots } from 'react-icons/bs';
+import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
+
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -53,7 +54,7 @@ export const CoaAccountListTable = () => {
         ),
       },
     ],
-    [router.locale]
+    [t]
   );
 
   return (

@@ -44,7 +44,7 @@ export const InventoryTabLayout = ({ children }: IInventoryPageLayoutProps) => {
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
           onClick={() => {
-            router.push(router.pathname + '/[action]');
+            router.push('/inventory/register/add');
           }}
         >
           {t['invInventoryNewInventoryEntry']}

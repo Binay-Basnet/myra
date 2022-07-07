@@ -1,0 +1,25 @@
+{
+  "root": "libs/inventory/feature-warehouse",
+  "sourceRoot": "libs/inventory/feature-warehouse/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/inventory/feature-warehouse/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/inventory/feature-warehouse"],
+      "options": {
+        "jestConfig": "libs/inventory/feature-warehouse/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

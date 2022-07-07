@@ -3,7 +3,8 @@
   "projects": {
     "-inventory--feature-inventory": "libs/inventory/feature-inventory",
     "-inventory--feature-item": "libs/inventory/feature-item",
-    "-inventory--feature-vendors": "libs/inventory/feature-vendors",
+    "-inventory--feature-suppliers": "libs/inventory/feature-suppliers",
+    "-inventory--feature-warehouse": "libs/inventory/feature-warehouse",
     "cbs-accounts-feature-account-form": "libs/cbs/accounts/feature-account-form",
     "cbs-kym-form-feature-cooperative": "libs/cbs/kym-form/feature-cooperative",
     "cbs-kym-form-feature-cooperative-union": "libs/cbs/kym-form/feature-cooperative-union",
@@ -32,6 +33,7 @@
     "neosys-feature-users": "libs/neosys/feature-users",
     "neosys-ui-components": "libs/neosys/ui-components",
     "neosys-ui-layout": "libs/neosys/ui-layout",
+    "shared-components": "libs/shared/components",
     "shared-data-access": "libs/shared/data-access",
     "shared-form": "libs/shared/form",
     "shared-map": "libs/shared/map",
