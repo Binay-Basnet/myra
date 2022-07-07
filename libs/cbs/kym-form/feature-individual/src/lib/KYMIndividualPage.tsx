@@ -127,8 +127,6 @@ export function KYMIndividualPage() {
     id: id,
   });
 
-  console.log(error, 'error');
-
   const previousFormData =
     data?.members?.individual?.formState?.data?.formData ?? {};
 
@@ -146,6 +144,12 @@ export function KYMIndividualPage() {
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
+
+  Object.keys(previousFormData).forEach((key: string) =>
+    !previousFormData[key as keyof typeof previousFormData]
+      ? delete previousFormData[key as keyof typeof previousFormData]
+      : {}
+  );
 
   useEffect(() => {
     reset({
