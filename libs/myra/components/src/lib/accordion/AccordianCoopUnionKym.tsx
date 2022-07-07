@@ -238,7 +238,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
           ))}
         </Box>
       </Collapse>
-      <Box
+      {/* <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
@@ -276,7 +276,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
             </Box>
           ))}
         </Box>
-      </Collapse>
+      </Collapse> */}
       <Box
         display="flex"
         justifyContent="space-between"

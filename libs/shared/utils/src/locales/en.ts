@@ -673,7 +673,8 @@ const en: Record<string, string> = {
   kymCoopProvince: 'Province',
   kymCoopMuncipality: 'Muncipality',
   kymCoopSelectMunicipality: 'Select Municipality',
-
+  kymCoopLocalGovernment: 'Local Government',
+  kymCoopSelectLocal: 'Select Local Government',
   kymCoopOperatingAddress: 'Operating Address',
   kymCoopContactDetails: 'Contact Details',
   kymCoopOfficialEmail: 'Official Email',
@@ -681,6 +682,7 @@ const en: Record<string, string> = {
   kymCoopWebsiteLink: 'Website Link',
   kymCoopEnterWebsiteURL: 'Enter Website URL',
   kymCoopPhoneno: 'Phone no.',
+
   kymCoopEnterPhoneNumber: 'Enter Phone Number',
 
   kymCoopCurrentMembers: 'Current Members',
@@ -717,6 +719,7 @@ const en: Record<string, string> = {
   kymCoopRepresentativeLocality: 'Locality',
   kymCoopRepresentativeEnterLocality: 'Enter Locality',
   kymCoopRepresentativeHouseNo: 'House No',
+
   kymCoopRepresentativeEnterHouseNo: 'Enter House No',
   kymCoopRepresentativeTemporaryAddress: 'Temporary Address',
   kymCoopRepresentativeTemporaryAddressPermanent:
@@ -738,7 +741,7 @@ const en: Record<string, string> = {
 
   // kym coop union
   kymCoopUnionAddNewMembers: 'Add New Member',
-  kymCoopUnionInstitutionInformation: '1. Institution Information',
+  kymCoopUnionInstitutionInformation: '1. Cooperative Information',
   kymCoopUnionBasicInformation: 'Basic Information',
   kymCoopUnionNameOfInstitution: 'Name of Institution',
   kymCoopUnionInstitutionType: 'Institution Type',
@@ -935,7 +938,7 @@ const en: Record<string, string> = {
   kymCoopUnionRepTotalAssets: 'Total assets',
   kymCoopUnionRepTotal: 'Total',
 
-  kymCoopUnionEco6EconomicDetails: '6. Economic Details',
+  kymCoopUnionEco6EconomicDetails: '5. Economic Details',
   kymCoopUnionEcoAssets: 'Assets',
   kymCoopUnionEcoCurrent: 'Current',
   kymCoopUnionEcoTarget: 'Target for next fiscal year',
@@ -987,7 +990,7 @@ const en: Record<string, string> = {
   kymCoopUnionEqtTotal: 'Total',
   kymCoopUnionEqtTotalassets: 'Total assets',
 
-  kymCoopUnionDec7Declaration: ' 7. Declaration',
+  kymCoopUnionDec7Declaration: ' 6. Declaration',
   kymCoopUnionDecDocumentsDeclaration: 'Documents Declaration',
   kymCoopUnionDecAGMDecisionDocument: 'AGM/BOD Decision Document',
   kymCoopUnionDecRegisteredCertificate: 'Registered Certificate',
@@ -1179,8 +1182,8 @@ const en: Record<string, string> = {
   kymCoopUnionAcc4DetailsofCentralRepresentative:
     '4. Details of Central Representative',
   kymCoopUnionAcc5Detailsofmember: '5. Details of member',
-  kymCoopUnionAcc6EconomicDetails: '6. Economic Details',
-  kymCoopUnionAcc7Declaration: '7. Declaration',
+  kymCoopUnionAcc6EconomicDetails: '5. Economic Details',
+  kymCoopUnionAcc7Declaration: '6. Declaration',
 
   kymCoopUnionCurrentMembers: 'Current Members',
   kymCoopUnionNoofMalemembers: 'No. of Male members',
@@ -1212,7 +1215,7 @@ const en: Record<string, string> = {
   kymInsAccountHolderDeclaration: 'Account Holder Declaration',
   kymInsDetailsofAccountOperators: 'Details of Account Operators',
   kymInsAccountOperationInstruction: 'Account Operation Instruction',
-  kymIns1InformationofInstitution: '1. Information of Institution',
+  kymIns1InformationofInstitution: '1. COOP - Institution',
   kymIns2TransactionProfile: '2. Transaction Profile',
   kymIns3DetailsofProprietorpartnersDirectors:
     '3. Details of Proprietor, partners, Directors',
@@ -1304,6 +1307,7 @@ const en: Record<string, string> = {
   kymInsEnterMobileNo: 'Enter Mobile No',
   kymInsEnterEmail: 'Enter Email Address',
   kymInsCitizenshipPassportDrivingLicenseNo: 'Citizenship No.',
+  kymInsPanEnterNo: 'Enter PAN No',
   kymInsEnterNo: 'Enter Number',
   kymInsPhotograph: 'Photograph',
   kymInsPhotographOfIdentityProofDocument:

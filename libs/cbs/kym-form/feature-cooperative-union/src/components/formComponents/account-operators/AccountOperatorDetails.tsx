@@ -1,12 +1,15 @@
 import React, { useMemo, useState } from 'react';
 import { Control, useFieldArray } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import {
   AiFillCloseCircle,
   AiOutlineCaretDown,
   AiOutlineCaretRight,
   AiOutlinePlus,
 } from 'react-icons/ai';
+import { AiOutlineDelete } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
+import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -40,10 +43,10 @@ import {
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
 const AddDirector = ({ watch, index, control, removeAccount }) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
+  const { getValues, reset } = useFormContext();
 
   const [temporaryAddress, setTemporaryAddress] = useState(false);
   const [isOpen, setIsOpen] = React.useState(true);
@@ -104,6 +107,15 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
         ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
+  const resetDirectorForm = () => {
+    const values = getValues();
+
+    values['accountOperatorsDetails'][index] = {};
+
+    reset({
+      accountOperatorsDetails: values['accountOperatorsDetails'],
+    });
+  };
   return (
     <>
       <Box display="flex" alignItems="center">
@@ -116,6 +128,7 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
           justifyContent="space-between"
           alignItems="center"
           cursor={'pointer'}
+          h="60px"
           onClick={() => setIsOpen(!isOpen)}
         >
           <Text fontSize="r1">{`Account Operator ${index + 1}`}</Text>
@@ -125,14 +138,14 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
                 size="xs"
                 variant={'ghost'}
                 aria-label="close"
-                icon={<IoChevronUpOutline />}
+                icon={<Icon as={IoChevronUpOutline} />}
               />
             ) : (
               <IconButton
                 size="xs"
                 variant={'ghost'}
                 aria-label="close"
-                icon={<IoChevronDownOutline />}
+                icon={<Icon as={IoChevronDownOutline} />}
               />
             )}
           </Box>
@@ -151,87 +164,88 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
 
       {/* <DynamicBoxGroupContainer> */}
       <Collapse in={isOpen} style={{ marginTop: '0px' }}>
-        <DynamicBoxGroupContainer>
+        <DynamicBoxGroupContainer
+          p="s20"
+          border={'1px solid'}
+          borderColor="border.layout"
+          borderRadius={'4px'}
+        >
           <SectionContainer>
-            <AccordianContainer>
-              <InputGroupContainer>
-                <FormInput
-                  type="text"
-                  name={`accountOperatorsDetails.${index}.fullName`}
-                  label={t['kymCoopUnionOpFullName']}
-                  placeholder={t['kymCoopUnionOpEnterFullName']}
-                />
-                <FormInput
-                  type="text"
-                  name={`accountOperatorsDetails.${index}.designation`}
-                  label={t['kymCoopUnionOpDesignation']}
-                  placeholder={t['kymCoopUnionOpEnterDesignation']}
-                />
-              </InputGroupContainer>
-            </AccordianContainer>
+            <InputGroupContainer>
+              <FormInput
+                type="text"
+                name={`accountOperatorsDetails.${index}.fullName`}
+                label={t['kymCoopUnionOpFullName']}
+                placeholder={t['kymCoopUnionOpEnterFullName']}
+              />
+              <FormInput
+                type="text"
+                name={`accountOperatorsDetails.${index}.designation`}
+                label={t['kymCoopUnionOpDesignation']}
+                placeholder={t['kymCoopUnionOpEnterDesignation']}
+              />
+            </InputGroupContainer>
 
-            <AccordianContainer>
-              <Text fontSize="r1" fontWeight="SemiBold">
-                {t['kymCoopUnionOpPermanentAddress']}
-              </Text>
-              {/* <Box
+            <Text fontSize="r1" fontWeight="SemiBold">
+              {t['kymCoopUnionOpPermanentAddress']}
+            </Text>
+            {/* <Box
               id="Permanent Address"
               gap="s32"
               display={'flex'}
               flexDirection="column"
             > */}
-              <InputGroupContainer>
-                <FormSelect
-                  name={`accountOperatorsDetails.${index}.permanentStateId`}
-                  label={t['kymCoopUnionOpState']}
-                  placeholder={t['kymCoopUnionOpSelectState']}
-                  options={province}
-                />
-                <FormSelect
-                  name={`accountOperatorsDetails.${index}.permanentDistrictId`}
-                  label={t['kymCoopUnionOpDistrict']}
-                  placeholder={t['kymCoopUnionOpSelectDistrict']}
-                  options={districtList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name={`accountOperatorsDetails.${index}.permanentVdcOrMunicId`}
-                  label={t['kymCoopUnionOpVDCMunicipality']}
-                  placeholder={t['kymCoopUnionOpSelectVDCMunicipality']}
-                  options={localityList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormInput
-                  type="number"
-                  name={`accountOperatorsDetails.${index}.permanentWardId`}
-                  label={t['kymCoopUnionOpWardNo']}
-                  placeholder={t['kymCoopUnionOpEnterWardNo']}
-                />
-                <FormInput
-                  type="text"
-                  name={`accountOperatorsDetails.${index}.permanentLocality`}
-                  label={t['kymCoopUnionOpLocality']}
-                  placeholder={t['kymCoopUnionOpEnterLocality']}
-                />
-                <FormInput
-                  type="text"
-                  name={`accountOperatorsDetails.${index}.permanentHouseNo`}
-                  label={t['kymIndHouseNo']}
-                  placeholder={t['kymIndEnterHouseNo']}
-                />
-              </InputGroupContainer>
+            <InputGroupContainer>
+              <FormSelect
+                name={`accountOperatorsDetails.${index}.permanentStateId`}
+                label={t['kymCoopUnionOpState']}
+                placeholder={t['kymCoopUnionOpSelectState']}
+                options={province}
+              />
+              <FormSelect
+                name={`accountOperatorsDetails.${index}.permanentDistrictId`}
+                label={t['kymCoopUnionOpDistrict']}
+                placeholder={t['kymCoopUnionOpSelectDistrict']}
+                options={districtList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormSelect
+                name={`accountOperatorsDetails.${index}.permanentVdcOrMunicId`}
+                label={t['kymCoopUnionOpVDCMunicipality']}
+                placeholder={t['kymCoopUnionOpSelectVDCMunicipality']}
+                options={localityList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormInput
+                type="number"
+                name={`accountOperatorsDetails.${index}.permanentWardId`}
+                label={t['kymCoopUnionOpWardNo']}
+                placeholder={t['kymCoopUnionOpEnterWardNo']}
+              />
+              <FormInput
+                type="text"
+                name={`accountOperatorsDetails.${index}.permanentLocality`}
+                label={t['kymCoopUnionOpLocality']}
+                placeholder={t['kymCoopUnionOpEnterLocality']}
+              />
+              <FormInput
+                type="text"
+                name={`accountOperatorsDetails.${index}.permanentHouseNo`}
+                label={t['kymIndHouseNo']}
+                placeholder={t['kymIndEnterHouseNo']}
+              />
+            </InputGroupContainer>
 
-              <Box>
-                <FormMap
-                  name={`accountOperatorsDetails.${index}.permanentLocation`}
-                />
-              </Box>
-              {/* </Box> */}
-            </AccordianContainer>
+            <Box>
+              <FormMap
+                name={`accountOperatorsDetails.${index}.permanentLocation`}
+              />
+            </Box>
+            {/* </Box> */}
 
             <Box
               id="Temporary Address"
@@ -385,6 +399,31 @@ const AddDirector = ({ watch, index, control, removeAccount }) => {
             </InputGroupContainer>
           </SectionContainer>
         </DynamicBoxGroupContainer>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          border="1px solid"
+          borderColor="border.layout"
+          alignItems={'center'}
+          h="60px"
+          px="s20"
+        >
+          <Button
+            variant="ghost"
+            leftIcon={<GrRotateRight />}
+            onClick={resetDirectorForm}
+          >
+            {t['kymInsReset']}
+          </Button>
+          <Button
+            variant="outline"
+            shade="danger"
+            leftIcon={<AiOutlineDelete height="11px" />}
+            onClick={removeAccount}
+          >
+            {t['kymInsDelete']}
+          </Button>
+        </Box>
       </Collapse>
       {/* </DynamicBoxGroupContainer> */}
     </>
@@ -412,7 +451,6 @@ export const AccountOperatorInfo = ({ watch, control }) => {
             key={item.id}
             display="flex"
             flexDirection={'column'}
-            gap="s16"
             id="Details of Account Operators"
             scrollMarginTop={'200px'}
           >

@@ -114,6 +114,7 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
           alignItems="center"
           cursor={'pointer'}
           onClick={() => setIsOpen(!isOpen)}
+          h="60px"
         >
           <Text fontSize="r1">{`Director ${index + 1}`}</Text>
           <Box>
@@ -122,14 +123,14 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
                 size="xs"
                 variant={'ghost'}
                 aria-label="close"
-                icon={<IoChevronUpOutline />}
+                icon={<Icon as={IoChevronUpOutline} />}
               />
             ) : (
               <IconButton
                 size="xs"
                 variant={'ghost'}
                 aria-label="close"
-                icon={<IoChevronDownOutline />}
+                icon={<Icon as={IoChevronDownOutline} />}
               />
             )}
           </Box>
@@ -149,74 +150,74 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
 
       {/* <DynamicBoxGroupContainer> */}
       <Collapse in={isOpen} style={{ marginTop: '0px' }}>
-        <DynamicBoxGroupContainer>
+        <DynamicBoxGroupContainer
+          border={'1px solid'}
+          borderColor="border.layout"
+          p="s20"
+        >
           <SectionContainer>
-            <AccordianContainer>
-              <InputGroupContainer>
-                <FormInput
-                  type="text"
-                  name={`boardOfDirectorsDetails.${index}.fullName`}
-                  label={t['kymCoopFullName']}
-                  placeholder={t['kymCoopEnterFullName']}
-                />
-                <FormInput
-                  type="text"
-                  name={`boardOfDirectorsDetails.${index}.designation`}
-                  label={t['kymCoopDesignation']}
-                  placeholder={t['kymCoopEnterDesignation']}
-                />
-              </InputGroupContainer>
-            </AccordianContainer>
+            <InputGroupContainer>
+              <FormInput
+                type="text"
+                name={`boardOfDirectorsDetails.${index}.fullName`}
+                label={t['kymCoopFullName']}
+                placeholder={t['kymCoopEnterFullName']}
+              />
+              <FormInput
+                type="text"
+                name={`boardOfDirectorsDetails.${index}.designation`}
+                label={t['kymCoopDesignation']}
+                placeholder={t['kymCoopEnterDesignation']}
+              />
+            </InputGroupContainer>
 
-            <AccordianContainer>
-              <Text fontSize="r1" fontWeight="SemiBold">
-                {t['kymCoopPermanentAddress']}
-              </Text>
-              <InputGroupContainer>
-                <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.permanentStateId`}
-                  label={t['kymCoopState']}
-                  placeholder={t['kymCoopSelectState']}
-                  options={province}
-                />
-                <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.permanentDistrictId`}
-                  label={t['kymCoopDistrict']}
-                  placeholder={t['kymCoopSelectDistrict']}
-                  options={districtList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name={`boardOfDirectorsDetails.${index}.permanentLocalityId`}
-                  label={t['kymCoopVDCMunicipality']}
-                  placeholder={t['kymCoopSelectVDCMunicipality']}
-                  options={localityList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormInput
-                  type="number"
-                  name={`boardOfDirectorsDetails.${index}.permanentWardId`}
-                  label={t['kymCoopWardNo']}
-                  placeholder={t['kymCoopEnterWardNo']}
-                />
-                <FormInput
-                  type="text"
-                  name={`boardOfDirectorsDetails.${index}.permanentTole`}
-                  label={t['kymCoopLocality']}
-                  placeholder={t['kymCoopEnterLocality']}
-                />
-              </InputGroupContainer>
+            <Text fontSize="r1" fontWeight="SemiBold">
+              {t['kymCoopPermanentAddress']}
+            </Text>
+            <InputGroupContainer>
+              <FormSelect
+                name={`boardOfDirectorsDetails.${index}.permanentStateId`}
+                label={t['kymCoopState']}
+                placeholder={t['kymCoopSelectState']}
+                options={province}
+              />
+              <FormSelect
+                name={`boardOfDirectorsDetails.${index}.permanentDistrictId`}
+                label={t['kymCoopDistrict']}
+                placeholder={t['kymCoopSelectDistrict']}
+                options={districtList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormSelect
+                name={`boardOfDirectorsDetails.${index}.permanentLocalityId`}
+                label={t['kymCoopLocalGovernment']}
+                placeholder={t['kymCoopSelectLocal']}
+                options={localityList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormInput
+                type="number"
+                name={`boardOfDirectorsDetails.${index}.permanentWardId`}
+                label={t['kymCoopWardNo']}
+                placeholder={t['kymCoopEnterWardNo']}
+              />
+              <FormInput
+                type="text"
+                name={`boardOfDirectorsDetails.${index}.permanentTole`}
+                label={t['kymCoopLocality']}
+                placeholder={t['kymCoopEnterLocality']}
+              />
+            </InputGroupContainer>
 
-              <Box>
-                <FormMap
-                  name={`boardOfDirectorsDetails.${index}.permanentLocation`}
-                />
-              </Box>
-            </AccordianContainer>
+            <Box>
+              <FormMap
+                name={`boardOfDirectorsDetails.${index}.permanentLocation`}
+              />
+            </Box>
 
             <Box
               id="Temporary Address"
@@ -256,8 +257,8 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
                     />
                     <FormSelect
                       name={`boardOfDirectorsDetails.${index}.temporaryLocalityId`}
-                      label={t['kymCoopVDCMunicipality']}
-                      placeholder={t['kymCoopSelectVDCMunicipality']}
+                      label={t['kymCoopLocalGovernment']}
+                      placeholder={t['kymCoopSelectLocal']}
                       options={localityTempList.map((d) => ({
                         label: d.name,
                         value: d.id,
@@ -352,8 +353,9 @@ export const AddDirector = ({ watch, index, control, removeDirector }) => {
         <Box
           display="flex"
           justifyContent="space-between"
-          p="s10"
-          borderTop="1px solid"
+          py="s10"
+          px="s20"
+          border="1px solid"
           borderColor="border.layout"
         >
           <Button

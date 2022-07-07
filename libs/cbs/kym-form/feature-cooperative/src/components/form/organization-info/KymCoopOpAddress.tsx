@@ -88,6 +88,12 @@ export const KymCoopOpAddress = ({ watch }: any) => {
           label={t['kymCoopLocality']}
           placeholder={t['kymCoopEnterLocality']}
         />
+        <FormInput
+          type="text"
+          name="representativeTemporaryHouseNo"
+          label={t['kymCoopRepresentativeHouseNo']}
+          placeholder={t['kymCoopRepresentativeEnterHouseNo']}
+        />
       </InputGroupContainer>
 
       <Box mt="-16px">

@@ -60,6 +60,7 @@ export const TransactionProfileInstitution = () => {
               label={t['kymInsExpectedMonthlyTurnover']}
               radioList={radioList1}
               orientation="vertical"
+              gap={'s8'}
             />
           </Box>
 
@@ -73,6 +74,7 @@ export const TransactionProfileInstitution = () => {
               label={t['kymInsExpectedMonthlyTransaction']}
               radioList={radioList2}
               orientation="vertical"
+              gap={'s8'}
             />
           </Box>
         </Grid>
