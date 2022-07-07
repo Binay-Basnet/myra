@@ -1,6 +1,5 @@
 import { IconType } from 'react-icons';
-import { FaShapes, FaUserFriends } from 'react-icons/fa';
-import { IoLockClosed } from 'react-icons/io5';
+import { FaShapes, FaTools, FaUserFriends } from 'react-icons/fa';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
@@ -26,7 +25,7 @@ const demotabs: {
 }[] = [
   {
     title: 'inventory',
-    icon: IoLockClosed,
+    icon: FaTools,
     link: '/inventory/register',
     name: 'inventory',
   },
