@@ -71,7 +71,7 @@ export const InventoryRegisterTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'items'} />
+      <TableListPageHeader heading={t['inventory']} />
 
       <Table
         isLoading={isFetching}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 
 import { Box, Button, PageHeaderTab, Text } from '@coop/shared/ui';

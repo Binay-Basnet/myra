@@ -1820,6 +1820,24 @@ const en: Record<string, string> = {
   warehouseLayoutWarehouseTransfer: 'Warehouse Transfer',
   warehouseLayoutInventorySettings: 'Inventory Settings',
 
+  // warehouse transfer form
+  warehouseTransferSourceWarehouse: 'Source Warehouse',
+  // warehouseTransferSelect: 'Select Source Warehouse',
+  warehouseTransferDestinationWarehouse: 'Destination Warehouse',
+  // warehouseTransferSelectDestinationWarehouse: 'Select Destination Warehouse',
+  warehouseTransferCode: 'Code',
+  // warehouseTransferEnterCode: 'Enter Code',
+  warehouseTransferDate: 'Date',
+  warehouseTransferReferenceNumber: 'Reference Number ',
+  // warehouseTransferEnterReferenceNumber: 'Enter Reference Number ',
+  warehouseTransferAuthorizedSender: 'Authorized Sender',
+  warehouseTransferSelectAuthorizedSender: 'Select Authorized Sender',
+  warehouseTransferAuthorizedReceiver: 'Authorized Receiver',
+  warehouseTransferSelectAuthorizedReceiver: 'Select Authorized Receiver',
+  warehouseTransferDescription: 'Description',
+  warehouseTransferNote: 'Note',
+  warehouseTransferSearchProduct: 'Search Product',
+
   // warehouse table
   warehouseTableName: 'Name',
   warehouseTableLocation: 'Location',
@@ -1836,15 +1854,20 @@ const en: Record<string, string> = {
   warehouseFormEnterAddress: 'Enter Address',
   warehouseFormAddWarehouse: 'Add Warehouse',
 
+  // warehouse list
+  warehouseListView: 'List View',
+  warehouseTreeView: 'Tree View',
+
   // warehouse transfer table
   warehouseTransferWarehouseTransfer: 'Warehouse Transfer',
   warehouseTransferNewWarehouseTransfer: 'New Warehouse Transfer',
-  warehouseTransferDate: 'Date',
+  // warehouseTransferDate: 'Date',
   warehouseTransferEntryNo: 'Entry No',
   warehouseTransferReference: 'Reference',
-  warehouseTransferSourceWarehouse: 'Source Warehouse',
-  warehouseTransferDestinationWarehouse: 'Destination Warehouse',
-  warehouseTransferStatus: 'Status ',
+  // warehouseTransferSourceWarehouse: 'Source Warehouse',
+  // warehouseTransferDestinationWarehouse: 'Destination Warehouse',
+  warehouseTransferStatus: 'Status',
+
   // [action] vendor
   addVendorAddNewVendor: 'Add New Vendor',
   addVendorName: 'Name',

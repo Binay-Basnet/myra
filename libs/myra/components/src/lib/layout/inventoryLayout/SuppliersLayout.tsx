@@ -36,7 +36,7 @@ export const SuppliersLayout = ({ children }: IInventoryPageLayoutProps) => {
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
           onClick={() => {
-            router.push(router.pathname + '/[action]');
+            router.push('/inventory/suppliers/add');
           }}
         >
           {t['addSuppliers']}
