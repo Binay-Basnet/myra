@@ -70,26 +70,26 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
       ],
     },
     {
-      title: 'App Header',
+      title: t['shortcutModalAppHeader'],
       shortcuts: [
-        { title: 'App Menu', shortcutKeys: ['Alt', 'M'] },
-        { title: 'Direct Menu Open', shortcutKeys: ['1'] },
+        { title: t['shortcutModalAppMenu'], shortcutKeys: ['Alt', 'M'] },
+        { title: t['shortcutModalDirectMenuOpen'], shortcutKeys: ['1'] },
       ],
     },
     {
-      title: 'Forms',
+      title: t['shortcutModalForms'],
       shortcuts: [
-        { title: 'Save', shortcutKeys: ['Ctrl or Shift', 'S'] },
-        { title: 'Navigate between fields', shortcutKeys: ['Tab'] },
-        { title: 'Cancel', shortcutKeys: ['Ctrl', 'X'] },
+        { title: t['shortcutModalSave'], shortcutKeys: ['Ctrl or Shift', 'S'] },
+        { title: t['shortcutModalNavigateBtnFields'], shortcutKeys: ['Tab'] },
+        { title: t['shortcutModalCancel'], shortcutKeys: ['Ctrl', 'X'] },
       ],
     },
     {
-      title: 'Object',
+      title: t['shortcutModalObject'],
       shortcuts: [
-        { title: 'New Open', shortcutKeys: ['Shift', 'N'] },
-        { title: 'Object Menu', shortcutKeys: ['.', '.'] },
-        { title: 'Switch Tabs', shortcutKeys: ['<', '>'] },
+        { title: t['shortcutModalNewOpen'], shortcutKeys: ['Shift', 'N'] },
+        { title: t['shortcutModalObjectMenu'], shortcutKeys: ['.', '.'] },
+        { title: t['shortcutModalSwitchTabs'], shortcutKeys: ['<', '>'] },
       ],
     },
   ];
