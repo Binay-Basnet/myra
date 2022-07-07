@@ -233,8 +233,8 @@ export type AffiliatedDirectorDetailsType = {
 };
 
 export enum Arrange {
-  Ascending = 'ASCENDING',
-  Descending = 'DESCENDING'
+  Asc = 'ASC',
+  Desc = 'DESC'
 }
 
 export type AuthMutation = {
@@ -4045,9 +4045,10 @@ export type KymIndFormData = {
   familyDetails?: Maybe<Array<Maybe<KymFieldData>>>;
   familyMemberInThisCooperative?: Maybe<Scalars['Boolean']>;
   familyMembershipDetails?: Maybe<Array<Maybe<KymFieldData>>>;
+  firstIntroducerId?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   foreignEstimatedAnnualIncome?: Maybe<Scalars['Float']>;
-  foreignResidentialPermitDetails?: Maybe<Scalars['String']>;
+  foreignResidentialPermitTypeId?: Maybe<Scalars['String']>;
   genderId?: Maybe<Scalars['String']>;
   hasBeneficialOwner?: Maybe<Scalars['Boolean']>;
   hasForeignResidentialPermit?: Maybe<Scalars['Boolean']>;
@@ -4082,6 +4083,7 @@ export type KymIndFormData = {
   professional?: Maybe<Array<Maybe<Scalars['String']>>>;
   purposeId?: Maybe<Scalars['String']>;
   religionId?: Maybe<Scalars['String']>;
+  secondIntroducerId?: Maybe<Scalars['String']>;
   spouseOccupation?: Maybe<Array<Maybe<KymFieldData>>>;
   temporaryDistrictId?: Maybe<Scalars['Int']>;
   temporaryHouseNo?: Maybe<Scalars['String']>;
@@ -4109,7 +4111,7 @@ export type KymIndMemberInput = {
   annualIncomeSourceId?: InputMaybe<Scalars['String']>;
   beneficialFullName?: InputMaybe<Scalars['String']>;
   beneficialRelationshipId?: InputMaybe<Scalars['String']>;
-  convictionDetails?: InputMaybe<Scalars['String']>;
+  convictedDetails?: InputMaybe<Scalars['String']>;
   countryId?: InputMaybe<Scalars['String']>;
   customFields?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   dateOfBirth?: InputMaybe<Scalars['String']>;
@@ -4126,6 +4128,7 @@ export type KymIndMemberInput = {
   familyDetails?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   familyMemberInThisCooperative?: InputMaybe<Scalars['Boolean']>;
   familyMembershipDetails?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
+  firstIntroducerId?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
   foreignEstimatedAnnualIncome?: InputMaybe<Scalars['Float']>;
   foreignResidentialPermitTypeId?: InputMaybe<Scalars['String']>;
@@ -4162,6 +4165,7 @@ export type KymIndMemberInput = {
   professional?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   purposeId?: InputMaybe<Scalars['String']>;
   religionId?: InputMaybe<Scalars['String']>;
+  secondIntroducerId?: InputMaybe<Scalars['String']>;
   spouseOccupation?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   temporaryDistrictId?: InputMaybe<Scalars['Int']>;
   temporaryHouseNo?: InputMaybe<Scalars['String']>;
@@ -4540,6 +4544,11 @@ export type KymOccupationDetailsType = {
   orgName?: Maybe<Scalars['String']>;
 };
 
+export enum Language {
+  English = 'ENGLISH',
+  Nepali = 'NEPALI'
+}
+
 export type Level1 = {
   level2: Level2;
 };
@@ -4623,7 +4632,7 @@ export type Member = Base & {
   objState: ObjState;
   profile?: Maybe<MemberProfile>;
   share?: Maybe<MemberShare>;
-  type?: Maybe<KymMemberTypesEnum>;
+  type: KymMemberTypesEnum;
 };
 
 export type MemberDetailsResult = {
@@ -4981,7 +4990,7 @@ export type Pagination = {
   before?: InputMaybe<Scalars['Cursor']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<Order>;
 };
 
 export type PersonalInformation = {
@@ -5405,33 +5414,36 @@ export type User = Base & {
 };
 
 export type UserMutation = {
-  add?: Maybe<UserPreferenceResult>;
-  delete?: Maybe<UserPreferenceDeleteResult>;
-};
-
-
-export type UserMutationAddArgs = {
-  data: UserPreferenceInput;
-  id: Scalars['ID'];
-};
-
-
-export type UserMutationDeleteArgs = {
-  id: Scalars['ID'];
+  preference?: Maybe<UserPreferenceMutation>;
 };
 
 export type UserPreference = {
   id?: Maybe<Scalars['ID']>;
-  language?: Maybe<Scalars['String']>;
-};
-
-export type UserPreferenceDeleteResult = {
-  error?: Maybe<MutationError>;
-  recordId: Scalars['ID'];
+  language?: Maybe<Language>;
+  languageCode?: Maybe<Scalars['String']>;
 };
 
 export type UserPreferenceInput = {
-  language?: InputMaybe<Scalars['String']>;
+  language?: InputMaybe<Language>;
+};
+
+export type UserPreferenceMutation = {
+  update?: Maybe<UserPreferenceResult>;
+};
+
+
+export type UserPreferenceMutationUpdateArgs = {
+  data: UserPreferenceInput;
+  id: Scalars['ID'];
+};
+
+export type UserPreferenceQuery = {
+  get?: Maybe<UserPreference>;
+};
+
+
+export type UserPreferenceQueryGetArgs = {
+  id: Scalars['ID'];
 };
 
 export type UserPreferenceResult = {
@@ -5441,12 +5453,7 @@ export type UserPreferenceResult = {
 };
 
 export type UserQuery = {
-  get?: Maybe<UserPreference>;
-};
-
-
-export type UserQueryGetArgs = {
-  id: Scalars['ID'];
+  preference?: Maybe<UserPreferenceQuery>;
 };
 
 export enum UserType {
@@ -5855,7 +5862,7 @@ export type GetIndividualKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { memberId?: string | null, firstName?: string | null, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null, permanentStateId?: number | null, permanentDistrictId?: number | null, permanentLocalityId?: number | null, permanentWardId?: number | null, permanentTole?: string | null, permanentHouseNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, temporaryStateId?: number | null, temporaryDistrictId?: number | null, temporaryLocalityId?: number | null, temporaryWardId?: number | null, temporaryTole?: string | null, temporaryHouseNo?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, professional?: Array<string | null> | null, otherProfession?: string | null, enableForeignEmployee?: boolean | null, countryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: number | null, annualIncomeSourceId?: string | null, identityLevel?: string | null, purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null, familyMemberInThisCooperative?: boolean | null, estimatedAnnualTransactionAmount?: number | null, estimatedAnnualLoanAmount?: number | null, isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: string | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitDetails?: string | null, declarationAgree?: boolean | null, additionalContactDetails?: KymFieldDataFragment | null, identification?: Array<KymFieldDataFragment | null> | null, permanentLocation?: { longitude?: number | null, latitude?: number | null } | null, temporaryLocation?: { longitude?: number | null, latitude?: number | null } | null, familyDetails?: Array<KymFieldDataFragment | null> | null, mainOccupation?: Array<KymFieldDataFragment | null> | null, spouseOccupation?: Array<KymFieldDataFragment | null> | null, incomeSourceDetails?: Array<KymFieldDataFragment | null> | null, otherMembershipDetails?: KymFieldDataFragment | null, familyMembershipDetails?: Array<KymFieldDataFragment | null> | null, initialTransactionDetails?: KymFieldDataFragment | null, documents?: Array<KymFieldDataFragment | null> | null, customFields?: Array<KymFieldDataFragment | null> | null } | null } | null } | null } | null } };
+export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { memberId?: string | null, firstName?: string | null, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null, permanentStateId?: number | null, permanentDistrictId?: number | null, permanentLocalityId?: number | null, permanentWardId?: number | null, permanentTole?: string | null, permanentHouseNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, temporaryStateId?: number | null, temporaryDistrictId?: number | null, temporaryLocalityId?: number | null, temporaryWardId?: number | null, temporaryTole?: string | null, temporaryHouseNo?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, professional?: Array<string | null> | null, otherProfession?: string | null, enableForeignEmployee?: boolean | null, countryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: number | null, annualIncomeSourceId?: string | null, identityLevel?: string | null, purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null, familyMemberInThisCooperative?: boolean | null, estimatedAnnualTransactionAmount?: number | null, estimatedAnnualLoanAmount?: number | null, isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: string | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null, declarationAgree?: boolean | null, additionalContactDetails?: KymFieldDataFragment | null, identification?: Array<KymFieldDataFragment | null> | null, permanentLocation?: { longitude?: number | null, latitude?: number | null } | null, temporaryLocation?: { longitude?: number | null, latitude?: number | null } | null, familyDetails?: Array<KymFieldDataFragment | null> | null, mainOccupation?: Array<KymFieldDataFragment | null> | null, spouseOccupation?: Array<KymFieldDataFragment | null> | null, incomeSourceDetails?: Array<KymFieldDataFragment | null> | null, otherMembershipDetails?: KymFieldDataFragment | null, familyMembershipDetails?: Array<KymFieldDataFragment | null> | null, initialTransactionDetails?: KymFieldDataFragment | null, documents?: Array<KymFieldDataFragment | null> | null, customFields?: Array<KymFieldDataFragment | null> | null } | null } | null } | null } | null } };
 
 export type GetKymSettingsFieldsQueryVariables = Exact<{
   filter?: InputMaybe<ListKymFieldFilter>;
@@ -7394,7 +7401,7 @@ export const GetIndividualKymEditDataDocument = `
             isConvicted
             convictedDetails
             hasForeignResidentialPermit
-            foreignResidentialPermitDetails
+            foreignResidentialPermitTypeId
             documents {
               ...KYMFieldData
             }

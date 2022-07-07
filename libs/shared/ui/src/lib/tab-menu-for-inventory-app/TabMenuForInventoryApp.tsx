@@ -15,7 +15,7 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/inventory/register': 0,
   '/inventory/items': 1,
   '/inventory/warehouse': 2,
-  '/inventory/vendor': 3,
+  '/inventory/suppliers': 3,
 };
 
 const demotabs: {
@@ -39,20 +39,19 @@ const demotabs: {
   {
     title: 'warehouse',
     icon: FaShapes,
-    link: '/inventory/warehouse',
+    link: '/inventory/warehouse/list',
     name: 'warehouse',
   },
   {
-    title: 'vendors',
+    title: 'suppliers',
     icon: FaUserFriends,
-    link: '/inventory/vendors',
-    name: 'vendors',
+    link: '/inventory/suppliers',
+    name: 'suppliers',
   },
 ];
 
 // ! TODO create theme and tests
 export function TabMenuForInventoryApp() {
-  // const [tabIndex, setTabIndex] = useState(1);
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -88,7 +87,7 @@ export function TabMenuForInventoryApp() {
       <Tabs index={currentIndex} height="100%" size="md" variant="enclosed">
         <TabList border="none" height="100%">
           {demotabs.map(({ title, icon, link, name }, index) => {
-            const isActive = router?.asPath.includes(link);
+            const isActive = router?.asPath.includes(name);
             return (
               <Link href={link} key={index}>
                 <Tab

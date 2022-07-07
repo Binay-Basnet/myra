@@ -6,6 +6,7 @@ const en: Record<string, string> = {
   rs: 'Rs.',
   sn: 'SN',
   next: 'Next',
+  save: 'Save',
   saveDraft: 'Save Draft',
   formDetails: 'Form Details saved to draft',
   pinOnMap: 'Pin on Map',
@@ -1658,7 +1659,7 @@ const en: Record<string, string> = {
   itemInventorySettings: 'Inventory Settings',
 
   warehouse: 'Warehouse',
-  vendors: 'Vendors',
+  suppliers: 'Suppliers',
 
   //items form
   invItemAddNewItem: 'Add New Item',
@@ -1732,12 +1733,12 @@ const en: Record<string, string> = {
   itemUnitAddNewInventoryAdjustment: 'Add New Inventory Adjustment',
   itemUnitCode: 'Code',
   itemUnitDate: 'Date',
-  itemUnitReferenceNumber: 'Reference Number ',
+  itemUnitReferenceNumber: 'Reference Number',
 
   // inventory
   invInventory: 'Inventory',
   invInventoryNewInventoryEntry: 'New Inventory Entry',
-  invInventoryRegister: 'Inventory Register ',
+  invInventoryRegister: 'Inventory Register',
   invInventoryAdjustment: 'Inventory Adjustment',
   invInventoryReports: 'Inventory Reports',
 
@@ -1749,39 +1750,101 @@ const en: Record<string, string> = {
   inRegTotalCost: 'Total Cost',
   inRegItemQuantity: 'Item Quantity',
 
-  // VENDORS
+  // inventory add form
+  invFormNewInventoryEntry: 'New Inventory Entry',
+  invFormSupplierName: 'Supplier Name',
+  invFormSelectSupplier: 'Select Supplier ',
+  invFormSupplierInvoiceReference: 'Supplier Invoice Reference',
+  invFormEnterSupplierInvoiceReference: 'Enter Supplier Invoice Reference',
+  invFormInvoiceDate: 'Invoice Date',
+  invFormDueDate: 'Due Date',
+  invFormWarehouse: 'Warehouse',
+  invFormSelectWarehouse: 'Select Warehouse',
+  invFormNotes: 'Notes ',
+  invFormNote: 'Note ',
+  invFormInvoiceFields: 'Invoice Fields',
+  invForSubTotal: 'Sub Total',
+  invFormDiscount: 'Discount',
+  invFormTaxableTotal: 'Taxable Total',
+  invFormVAT: 'VAT ',
+  invFormGrandTotal: 'Grand Total',
+  invFormTDS: 'TDS',
+  invFormApplicable: 'Applicable',
+  invFormNotApplicable: 'Not Applicable',
+  invFormTDSLedgerAccount: 'TDS Ledger Account',
+  invFormTDSType: 'TDS Type',
+  invFormTDSAmount: 'TDS Amount',
 
-  // vendor layout
-  vendorsLayout: 'Vendors',
-  addVendors: 'Add Vendors',
+  // Suppliers
+
+  // supplier layout
+  supplier: 'Supplier',
+  suppliersLayout: 'Suppliers',
+  supplierList: 'Supplier List',
+  addSuppliers: 'Add Suppliers',
   inventorySettings: 'Inventory Settings',
 
-  // vendor table
-  vendorName: 'Name',
-  vendorLocation: 'Location',
-  vendorPhoneNumber: 'Phone Number',
-  vendorEmailAddress: 'Email Address',
+  // supplier table
+  supplierName: 'Name',
+  supplierLocation: 'Location',
+  supplierPhoneNumber: 'Phone Number',
+  supplierEmailAddress: 'Email Address',
 
-  // add vendor
-  addVendorAddNewVendor: 'Add New Vendor',
-  addVendorName: 'Name',
-  addVendorEnterName: 'Select Name',
-  addVendorVendorCode: 'Vendor Code',
-  addVendorEnterVendorCode: 'Enter Vendor Code',
-  addVendorAddress: 'Address',
-  addVendorSelectAddress: 'Select Address',
-  addVendorPanNo: 'PAN No',
-  addVendorEnterPanNo: 'Enter PAN No',
-  addVendorPhoneNumber: 'Phone Number',
-  addVendorEmailAddress: 'Email Address',
-  addVendorContactPerson: 'Contact Person',
-  addVendorContactName: 'Name',
-  addVendorPhoneNo: 'Phone No',
-  addVendorAdditionalField: 'Additional Field',
-  addVendorOpeningBalance: 'Opening Balance',
-  addVendorCreditTerms: 'Credit Terms',
-  addVendorCreditLimit: 'Credit Limit',
-  addVendorSaveVendor: 'Save Vendor',
+  // add supplier
+  addSuppliersAddNewSupplier: 'Add New Supplier',
+  addSuppliersName: 'Name',
+  addSuppliersEnterName: 'Select Name',
+  addSuppliersVendorCode: 'Vendor Code',
+  addSuppliersEnterVendorCode: 'Enter Vendor Code',
+  addSuppliersAddress: 'Address',
+  addSupplierselectAddress: 'Select Address',
+  addSuppliersPanNo: 'PAN No',
+  addSuppliersEnterPanNo: 'Enter PAN No',
+  addSuppliersPhoneNumber: 'Phone Number',
+  addSuppliersEmailAddress: 'Email Address',
+  addSuppliersContactPerson: 'Contact Person',
+  addSuppliersContactName: 'Name',
+  addSuppliersPhoneNo: 'Phone No',
+  addSuppliersAdditionalField: 'Additional Field',
+  addSuppliersOpeningBalance: 'Opening Balance',
+  addSuppliersCreditTerms: 'Credit Terms',
+  addSuppliersCreditLimit: 'Credit Limit',
+  addSuppliersaveSuppliers: 'Save Suppliers',
+
+  // WAREHOUSE
+
+  // warehouse layout
+  warehouseLayoutWarehouse: 'Warehouse',
+  warehouseLayoutAddWarehouse: 'Add Warehouse',
+  warehouseLayoutWarehouseList: 'Warehouse List',
+  warehouseLayoutWarehouseTransfer: 'Warehouse Transfer',
+  warehouseLayoutInventorySettings: 'Inventory Settings',
+
+  // warehouse table
+  warehouseTableName: 'Name',
+  warehouseTableLocation: 'Location',
+  warehouseTablePhoneNumber: 'Phone Number',
+
+  // warehouse add
+  warehouseFormNewWarehouse: 'New Warehouse',
+  warehouseFormName: 'Name',
+  warehouseFormEnterName: 'Enter Name',
+  warehouseFormPhoneNumber: 'Phone Number',
+  warehouseFormEnterPhoneNumber: 'Phone Number',
+  warehouseFormDefaultWarehouse: 'Default Warehouse',
+  warehouseFormAddress: 'Address',
+  warehouseFormEnterAddress: 'Enter Address',
+  warehouseFormAddWarehouse: 'Add Warehouse',
+
+  // warehouse transfer table
+  warehouseTransferWarehouseTransfer: 'Warehouse Transfer',
+  warehouseTransferNewWarehouseTransfer: 'New Warehouse Transfer',
+  warehouseTransferDate: 'Date',
+  warehouseTransferEntryNo: 'Entry No',
+  warehouseTransferReference: 'Reference',
+  warehouseTransferSourceWarehouse: 'Source Warehouse',
+  warehouseTransferDestinationWarehouse: 'Destination Warehouse',
+  warehouseTransferStatus: 'Status ',
 
   //client details
   neoClientDetailsClients: 'Clients',

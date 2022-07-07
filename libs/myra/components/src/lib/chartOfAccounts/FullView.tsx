@@ -1,11 +1,12 @@
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+
 import { useGetChartOfAccountsQuery } from '@coop/shared/data-access';
 import {
-  Box,
   Accordion,
   AccordionButton,
   AccordionItem,
   AccordionPanel,
+  Box,
   Text,
 } from '@coop/shared/ui';
 
