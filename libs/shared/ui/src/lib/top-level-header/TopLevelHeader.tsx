@@ -682,7 +682,9 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
         >
           {helpOptions.map(({ title, shortcuts }, index) => (
             <Box display="flex" flexDirection="column" gap="s16" key={index}>
-              <Text fontSize="r2">{title}</Text>
+              <Text fontSize="r2" fontWeight={500} color="black">
+                {title}
+              </Text>
 
               {shortcuts.map(({ title, shortcutKeys }, index) => (
                 <Box
@@ -691,7 +693,11 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Text color="gray.700" fontSize="r1">
+                  <Text
+                    color="neutralColorLight.Gray-70"
+                    fontSize="r1"
+                    fontWeight={400}
+                  >
                     {title}
                   </Text>
 
