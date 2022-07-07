@@ -14,7 +14,7 @@ import { useTranslation } from '@coop/shared/utils';
 
 interface IAddRelatedTrainingConcern {
   index: number;
-  bodIndex: number;
+  bodIndex?: number;
   removeRelatedTraining: () => void;
 }
 
@@ -39,19 +39,19 @@ const AddRelatedTraining = ({
       <InputGroupContainer>
         <FormInput
           type="text"
-          name={`boardOfDirectorsDetails.${bodIndex}.relatedTraining.${index}.subjectOfTraining`}
+          name={`centralRepresentativeDetails.${index}.subjectOfTraining`}
           label={t['kymCoopUnionSubjectOfTraining']}
           placeholder={t['kymCoopUnionEnterSubjectOfTraining']}
         />
         <FormInput
           type="date"
-          name={`boardOfDirectorsDetails.${bodIndex}.relatedTraining.${index}.dateOfTraining`}
+          name={`centralRepresentativeDetails.${index}.dateOfTraining`}
           label={t['kymCoopUnionDateOfTraining']}
           placeholder={t['kymCoopUnionEnterDateOfTraining']}
         />
         <FormInput
           type="text"
-          name={`boardOfDirectorsDetails.${bodIndex}.relatedTraining.${index}.trainingOrganization`}
+          name={`centralRepresentativeDetails.${index}.trainingOrganization`}
           label={t['kymCoopUnionTrainingOrganization']}
           placeholder={t['kymCoopUnionEnterTrainingOrganization']}
         />
@@ -61,10 +61,10 @@ const AddRelatedTraining = ({
 };
 
 interface BoardOfDirectorRelatedTrainingConcern {
-  bodIndex: number;
+  bodIndex?: number;
 }
 
-export const BoardOfDirectorRelatedTraining = ({
+export const CentralRepresentativeTraining = ({
   bodIndex,
 }: BoardOfDirectorRelatedTrainingConcern) => {
   const { t } = useTranslation();
@@ -104,7 +104,6 @@ export const BoardOfDirectorRelatedTraining = ({
             );
           })}
           <Button
-            id="boardOfDirectorRelatedTrainig"
             alignSelf="start"
             leftIcon={<Icon size="md" as={AiOutlinePlus} />}
             variant="outline"
