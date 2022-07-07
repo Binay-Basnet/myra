@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { FormFileInput } from '@coop/shared/form';
+import { FormFileInput, FormSwitchTab } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 
 const Temp = () => {
@@ -12,6 +12,7 @@ const Temp = () => {
           fileName: 'nightlight.jpg',
         },
       ],
+      switch: true,
     },
   });
 
@@ -24,6 +25,13 @@ const Temp = () => {
       <FormProvider {...methods}>
         {/*<img src="https://cdn.raralabs.live/myra/34d9839a-79b1-4337-907e-d8908e7d16fc?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=jMeXgnuLUIGDH6vb%2F20220706%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220706T105452Z&X-Amz-Expires=1000&X-Amz-SignedHeaders=host&X-Amz-Signature=fff6dec85fca8985d3226ee5b0de7bfcf3cbf212e67e2950332b23d788e3ba40" />*/}
         <FormFileInput name="file" size="lg" />
+        <FormSwitchTab
+          name={'switch'}
+          options={[
+            { label: 'Yes', value: true },
+            { label: 'No', value: false },
+          ]}
+        />
       </FormProvider>
     </Box>
   );

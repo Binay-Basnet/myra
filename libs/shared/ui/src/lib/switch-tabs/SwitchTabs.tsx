@@ -64,7 +64,7 @@ export interface SwitchTabsProps {
   label?: string;
   errorText?: string;
   helperText?: string;
-  value?: string | boolean;
+  value?: string;
   name?: string;
   onChange?: (nextValue: string) => void;
 }

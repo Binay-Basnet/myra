@@ -47,6 +47,7 @@ import {
 import { BiSave } from 'react-icons/bi';
 import { AccorrdianAddMember } from '@coop/myra/components';
 import { FormCheckbox } from '@coop/shared/form';
+import { identity, pickBy } from 'lodash';
 
 export function KYMIndividualPage() {
   const { t } = useTranslation();
@@ -58,14 +59,19 @@ export function KYMIndividualPage() {
       },
     });
 
+  const occupationFieldNames =
+    occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]?.options?.map(
+      (option) => ({ id: option.id, value: '' })
+    ) ?? [];
+
   const { data: familyDetailsFieldsData } = useGetIndividualKymOptionsQuery({
     filter: {
       customId: Kym_Field_Custom_Id.FamilyInformation,
     },
   });
 
-  const occupationFieldNames =
-    occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]?.options?.map(
+  const familyDetailsFieldNames =
+    familyDetailsFieldsData?.members.individual?.options.list?.data?.[0]?.options?.map(
       (option) => ({ id: option.id, value: '' })
     ) ?? [];
 
@@ -78,11 +84,6 @@ export function KYMIndividualPage() {
 
   const incomeSourceDetailFieldNames =
     incomeSourceDetailsField?.members.individual?.options.list?.data?.[0]?.options?.map(
-      (option) => ({ id: option.id, value: '' })
-    ) ?? [];
-
-  const familyDetailsFieldNames =
-    familyDetailsFieldsData?.members.individual?.options.list?.data?.[0]?.options?.map(
       (option) => ({ id: option.id, value: '' })
     ) ?? [];
 
@@ -110,84 +111,85 @@ export function KYMIndividualPage() {
       setError('firstName', { type: 'custom', message: 'gg' });
     },
   });
-  const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
+  const kymFormStatusQuery = useGetKymFormStatusQuery(
+    { id },
+    { enabled: id !== 'undefined' }
+  );
   const kymFormStatus =
     kymFormStatusQuery?.data?.members?.individual?.formState?.data
       ?.sectionStatus;
 
-  const methods = useForm<KymIndMemberInput>({
-    defaultValues: {},
-  });
+  const methods = useForm<KymIndMemberInput>();
 
   const {
-    data,
+    data: editValues,
     isLoading: editLoading,
-    error,
+    refetch,
   } = useGetIndividualKymEditDataQuery(
     {
       id: id,
     },
-    {
-      staleTime: 0,
-    }
+    { enabled: id !== 'undefined' }
   );
-  console.log('gandu', data?.members?.individual?.formState?.data?.formData);
-
-  const previousFormData =
-    data?.members?.individual?.formState?.data?.formData ?? {};
 
   const { watch, setError, reset } = methods;
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        if (data && id) {
-          console.log(data);
-          mutate({ id: id, data });
+        console.log(editValues);
+        if (editValues && data) {
+          mutate({ id: router.query['id'] as string, data });
+          refetch();
         }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-
-  Object.keys(previousFormData).forEach((key: string) =>
-    !previousFormData[key as keyof typeof previousFormData]
-      ? delete previousFormData[key as keyof typeof previousFormData]
-      : {}
-  );
+  }, [watch, router.isReady, editValues]);
 
   useEffect(() => {
-    reset({
-      mainOccupation: [
-        {
-          options: occupationFieldNames,
-        },
-      ],
-      spouseOccupation: [
-        {
-          options: occupationFieldNames,
-        },
-      ],
-      incomeSourceDetails: [
-        {
-          options: incomeSourceDetailFieldNames,
-        },
-      ],
-      familyDetails: [
-        {
-          options: familyDetailsFieldNames,
-        },
-      ],
-      nationalityId:
-        nationalityFields?.members?.individual?.options?.list?.data?.[0]
-          ?.options?.[0]?.id,
+    if (editValues) {
+      console.log(
+        pickBy(
+          editValues?.members?.individual?.formState?.data?.formData ?? {},
+          (v) => v !== null
+        )
+      );
 
-      ...previousFormData,
-    });
-  }, [isLoading, nationalityLoading, editLoading, JSON.stringify(data)]);
+      reset({
+        mainOccupation: [
+          {
+            options: occupationFieldNames,
+          },
+        ],
+        spouseOccupation: [
+          {
+            options: occupationFieldNames,
+          },
+        ],
+        incomeSourceDetails: [
+          {
+            options: incomeSourceDetailFieldNames,
+          },
+        ],
+        familyDetails: [
+          {
+            options: familyDetailsFieldNames,
+          },
+        ],
+        nationalityId:
+          nationalityFields?.members?.individual?.options?.list?.data?.[0]
+            ?.options?.[0]?.id,
 
-  console.log('previous data', previousFormData, data);
+        ...pickBy(
+          editValues?.members?.individual?.formState?.data?.formData ?? {},
+          identity
+        ),
+      });
+    }
+  }, [isLoading, nationalityLoading, editLoading]);
+
   return (
     <>
       {/* // Top Bar */}

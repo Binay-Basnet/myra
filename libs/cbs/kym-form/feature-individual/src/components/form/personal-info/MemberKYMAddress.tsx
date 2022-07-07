@@ -18,7 +18,6 @@ export const MemberKYMAddress = () => {
     'isPermanentAndTemporaryAddressSame'
   );
   const { data } = useAllAdministrationQuery();
-  console.log('hello123', data);
 
   const province = useMemo(() => {
     return (

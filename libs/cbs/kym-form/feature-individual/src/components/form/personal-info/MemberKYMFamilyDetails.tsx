@@ -40,20 +40,10 @@ const FamilyMemberInput = ({
 }: DynamicInputProps) => {
   const { register, unregister } = useFormContext();
 
-  console.log('option', option);
-
   useEffect(() => {
     register(`familyDetails.${fieldIndex}.options.${optionIndex}.id`, {
       value: option.id,
     });
-    register(`familyDetails.${fieldIndex}.options.${optionIndex}.value`, {
-      value: '',
-    });
-
-    return () => {
-      unregister(`familyDetails.${fieldIndex}.options.${optionIndex}.id`);
-      unregister(`familyDetails.${fieldIndex}.options.${optionIndex}.value`);
-    };
   }, []);
 
   return (
@@ -67,10 +57,7 @@ const FamilyMemberInput = ({
 };
 
 const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
-  /*const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
-          useGetIndividualKymOptionQuery({
-            fieldName: 'family_relationship',
-          });*/
+  const { unregister } = useFormContext();
 
   const { data: familyDetailsFieldsData } = useGetIndividualKymOptionsQuery({
     filter: {
@@ -82,7 +69,10 @@ const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
     <DynamicBoxContainer>
       <CloseIcon
         cursor="pointer"
-        onClick={removeFamilyMember}
+        onClick={() => {
+          removeFamilyMember();
+          unregister(`familyDetails.${index}`);
+        }}
         color="gray.500"
         _hover={{
           color: 'gray.900',

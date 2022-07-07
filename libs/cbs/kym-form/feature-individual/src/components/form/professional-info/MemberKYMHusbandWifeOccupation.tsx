@@ -28,7 +28,7 @@ export const SpouseOccupationInput = ({
   optionIndex,
   fieldIndex,
 }: DynamicInputProps) => {
-  const { register, unregister } = useFormContext();
+  const { register } = useFormContext();
 
   useEffect(() => {
     register(`spouseOccupation.${fieldIndex}.options.${optionIndex}.id`, {
@@ -37,11 +37,6 @@ export const SpouseOccupationInput = ({
     register(`spouseOccupation.${fieldIndex}.options.${optionIndex}.value`, {
       value: '',
     });
-
-    return () => {
-      unregister(`spouseOccupation.${fieldIndex}.options.${optionIndex}.id`);
-      unregister(`spouseOccupation.${fieldIndex}.options.${optionIndex}.value`);
-    };
   }, []);
 
   return (
@@ -60,6 +55,8 @@ const HusbandWifeOccupation = ({
   removeHusbandWifeOccupation,
   watch,
 }: any) => {
+  const { unregister } = useFormContext();
+
   // const profession = watch('profession');
 
   const isOwner = watch(`spouseOccupation.${fieldIndex}.isOwner`);
@@ -84,7 +81,10 @@ const HusbandWifeOccupation = ({
       <Box display="flex" flexDirection="column">
         <CloseIcon
           cursor="pointer"
-          onClick={removeHusbandWifeOccupation}
+          onClick={() => {
+            removeHusbandWifeOccupation();
+            unregister(`spouseOccupation.${fieldIndex}`);
+          }}
           color="gray.500"
           _hover={{
             color: 'gray.900',
