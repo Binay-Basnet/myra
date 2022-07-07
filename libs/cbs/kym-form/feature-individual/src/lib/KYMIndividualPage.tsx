@@ -122,13 +122,10 @@ export function KYMIndividualPage() {
   const {
     data,
     isLoading: editLoading,
-    refetch,
-  } = useGetIndividualKymEditDataQuery(
-    {
-      id: id,
-    },
-    { enabled: false }
-  );
+    error,
+  } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
 
   const previousFormData =
     data?.members?.individual?.formState?.data?.formData ?? {};
@@ -147,6 +144,12 @@ export function KYMIndividualPage() {
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
+
+  Object.keys(previousFormData).forEach((key: string) =>
+    !previousFormData[key as keyof typeof previousFormData]
+      ? delete previousFormData[key as keyof typeof previousFormData]
+      : {}
+  );
 
   useEffect(() => {
     reset({
@@ -173,6 +176,7 @@ export function KYMIndividualPage() {
       nationalityId:
         nationalityFields?.members?.individual?.options?.list?.data?.[0]
           ?.options?.[0]?.id,
+
       ...previousFormData,
     });
   }, [isLoading, nationalityLoading, editLoading, JSON.stringify(data)]);

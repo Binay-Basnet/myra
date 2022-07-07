@@ -6,24 +6,27 @@ import format from 'date-fns/format';
 import { PopoverComponent } from '@coop/myra/components';
 import { NeosysTableListPageHeader } from '@coop/neosys-admin/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
-import {
-  Column,
-  DEFAULT_PAGE_SIZE,
-  Table,
-  // TableListPageHeader,
-} from '@coop/shared/ui';
+import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const ClientsTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { data, isFetching } = useGetMemberListQuery({
-    objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-    last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-    after: router.query['after'] as string,
-    before: router.query['before'] as string,
-  });
+  const { data, isFetching } = useGetMemberListQuery(
+    router.query['before']
+      ? {
+          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+
+          last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          before: router.query['before'] as string,
+        }
+      : {
+          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+
+          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+          after: (router.query['after'] ?? '') as string,
+        }
+  );
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 

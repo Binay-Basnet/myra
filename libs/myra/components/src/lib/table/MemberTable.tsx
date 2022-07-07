@@ -13,13 +13,21 @@ import { TableListPageHeader } from '../TableListPageHeader';
 export const MemberTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { data, isFetching } = useGetMemberListQuery({
-    objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-    last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-    after: router.query['after'] as string,
-    before: router.query['before'] as string,
-  });
+  const { data, isFetching } = useGetMemberListQuery(
+    router.query['before']
+      ? {
+          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+
+          last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          before: router.query['before'] as string,
+        }
+      : {
+          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+
+          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+          after: (router.query['after'] ?? '') as string,
+        }
+  );
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
@@ -134,9 +142,9 @@ export const MemberTable = () => {
         filter={true}
         disableFilterAll={true}
         pagination={{
-          total: 1200,
-          endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
-          startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
+          total: Number(data?.members?.list?.totalCount),
+          endCursor: data?.members?.list.pageInfo?.endCursor ?? '',
+          startCursor: data?.members?.list.pageInfo?.startCursor ?? '',
         }}
       />
     </>
