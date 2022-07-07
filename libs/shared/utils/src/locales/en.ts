@@ -730,7 +730,7 @@ const en: Record<string, string> = {
   kymCoopRepresentativeContactNo: 'Contact No',
 
   kymCoopAdditionalCoorperativeDetails: 'Additional Coorperative Details',
-  kymCoopType: 'Type',
+  kymCoopType: 'Coorperative Type',
   kymCoopSelectType: 'Select Type',
   kymCoopMainServiceProduct: 'Main Service/Product',
   kymCoopEnterMainServiceProduct: 'Enter Main Service/Product',
