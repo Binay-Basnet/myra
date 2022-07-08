@@ -309,6 +309,11 @@ export type BankBranchDeleteResult = {
   recordId: Scalars['ID'];
 };
 
+export type BankBranchGetResult = {
+  data?: Maybe<BankBranch>;
+  error?: Maybe<QueryError>;
+};
+
 export type BankBranchInput = {
   bankId?: InputMaybe<Scalars['ID']>;
   districtId?: InputMaybe<Scalars['Int']>;
@@ -337,13 +342,20 @@ export type BankBranchMutationDeleteArgs = {
 };
 
 export type BankBranchQuery = {
-  get?: Maybe<BankBranch>;
+  get?: Maybe<BankBranchGetResult>;
+  /** This is to get all the branches of one Bank */
+  getBranches?: Maybe<Array<Maybe<BankBranch>>>;
   list?: Maybe<Array<Maybe<BankBranch>>>;
 };
 
 
 export type BankBranchQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+
+export type BankBranchQueryGetBranchesArgs = {
+  bankId: Scalars['ID'];
 };
 
 
@@ -379,7 +391,7 @@ export type BankDataMutationDeleteArgs = {
 };
 
 export type BankDataQuery = {
-  get?: Maybe<Bank>;
+  get?: Maybe<BankGetResult>;
   list?: Maybe<Array<Maybe<Bank>>>;
 };
 
@@ -397,6 +409,11 @@ export type BankDeleteResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<BankDataQuery>;
   recordId: Scalars['ID'];
+};
+
+export type BankGetResult = {
+  data?: Maybe<Bank>;
+  error?: Maybe<QueryError>;
 };
 
 export type BankInput = {
