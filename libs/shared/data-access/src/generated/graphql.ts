@@ -5504,7 +5504,6 @@ export type UtilityPaymentLayoutComponent = {
 
 export type UtilityPaymentRecord = {
   components?: Maybe<Array<Maybe<UtilityPaymentLayoutComponent>>>;
-  header_name?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['Map']>;
   type?: Maybe<Scalars['String']>;
 };

@@ -225,8 +225,8 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               flex={1}
               borderColor="secondary.700"
               bg={isClose ? 'secondary.800' : 'gray.0'}
-              // color={isClose ? 'gray.0' : 'gray.500'}
-              color="gray.500"
+              color={isClose ? 'gray.500' : 'gray.800'}
+              // color="gray.500"
               _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
             >
               <InputLeftElement
@@ -237,7 +237,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               <Input
                 type="search"
                 placeholder="खोज्नुहोस्"
-                color={'gray.500'}
+                // color={'gray.500'}
                 fontSize="r1"
                 ref={inputRef}
               />

@@ -156,7 +156,28 @@ export function KYMIndividualPage() {
           (v) => v !== null
         )
       );
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+      const permanentLocationData =
+        editValueData?.permanentLocation?.latitude === null
+          ? { latitude: 27.71, longitude: 85.31 }
+          : editValueData?.permanentLocation;
 
+      const temporaryLocationData =
+        editValueData?.temporaryLocation?.latitude === null
+          ? { latitude: 27.71, longitude: 85.31 }
+          : editValueData?.temporaryLocation;
+      console.log(
+        'location',
+        editValueData,
+        permanentLocationData,
+        temporaryLocationData,
+        {
+          ...editValueData,
+          permanentLocation: permanentLocationData,
+          temporaryLocation: temporaryLocationData,
+        }
+      );
       reset({
         mainOccupation: [
           {
@@ -183,7 +204,11 @@ export function KYMIndividualPage() {
             ?.options?.[0]?.id,
 
         ...pickBy(
-          editValues?.members?.individual?.formState?.data?.formData ?? {},
+          {
+            ...editValueData,
+            permanentLocation: permanentLocationData,
+            temporaryLocation: temporaryLocationData,
+          } ?? {},
           identity
         ),
       });

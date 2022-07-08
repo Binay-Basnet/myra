@@ -1,61 +1,58 @@
 query getIndividualKYMOption($fieldName: String) {
-    members {
-        individual {
+  members {
+    individual {
+      options {
+        list(filter: { name: $fieldName }) {
+          data {
             options {
-                list(filter: { name: $fieldName }) {
-                    data {
-                        options {
-                            id
-                            name
-                            fieldType
-                            enabled
-                        }
-                    }
-                }
+              id
+              name
+              fieldType
+              enabled
             }
+          }
         }
+      }
     }
+  }
 }
-
 
 query getIndividualKYMOptions($filter: ListKYMFieldFilter) {
-    members {
-        individual {
+  members {
+    individual {
+      options {
+        list(filter: $filter) {
+          data {
             options {
-                list(filter: $filter) {
-                    data {
-                        options {
-                            id
-                            name
-                            fieldType
-                            enabled
-                        }
-
-                    }
-                }
+              id
+              name
+              fieldType
+              enabled
             }
+          }
         }
+      }
     }
+  }
 }
 
-
 query getIndIdentificationDocOption {
-    members {
-        individual {
+  members {
+    individual {
+      options {
+        list(filter: { parent: IDENTIFICATION }) {
+          data {
+            id
+            name
             options {
-                list(filter: { parent: IDENTIFICATION }) {
-                    data {
-                        id
-                        name
-                        options {
-                            id
-                            name
-                            fieldType
-                            enabled
-                        }
-                    }
-                }
+              id
+              name
+              fieldType
+              enabled
             }
+          }
         }
+      }
     }
+  }
 }

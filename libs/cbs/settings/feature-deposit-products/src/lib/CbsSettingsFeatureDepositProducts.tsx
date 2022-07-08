@@ -113,7 +113,8 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
           <Button
             leftIcon={<AddIcon h="11px" />}
             onClick={() =>
-              router.push('/settings/general/deposit-products/[action]')
+              // router.push('/settings/general/deposit-products/[action]')
+              router.push('/settings/general/deposit-products/add')
             }
           >
             {t['settingsDepositProductNew']}
