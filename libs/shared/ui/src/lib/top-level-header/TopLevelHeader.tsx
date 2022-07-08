@@ -56,7 +56,7 @@ const calendarList = [
 const keyMap = {
   inputFocus: ['ctrl+/'],
   appSwitcher: 'alt+o',
-  helpOptions1: ['alt+p'],
+  showHelpOptions: ['alt+l'],
 
   // up: ["i"],
   // shiftUp: ["shift+i"],
@@ -133,7 +133,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
   };
   const inputRef = useRef<HTMLInputElement>(null);
   const appSwitcherRef = useRef<HTMLButtonElement>(null);
-  const helpIconRef = useRef<HTMLInputElement>(null);
+  const helpIconRef = useRef<HTMLButtonElement>(null);
   const handlers = {
     inputFocus() {
       inputRef.current?.focus();
@@ -144,11 +144,9 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
         appSwitcherRef.current?.click();
       }
     },
-    helpOptions1() {
-      alert('hjfjdfjsdfkj');
+    showHelpOptions() {
       if (helpIconRef.current) {
-        alert('fhjfrjnvf');
-        helpIconRef.current?.focus();
+        helpIconRef.current?.click();
       }
     },
   };
@@ -344,7 +342,6 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               borderRadius={'br1'}
               _hover={{ backgroundColor: 'secondary.900' }}
             />
-            <Input ref={helpIconRef} />
             <IconButton
               icon={<Icon size="md" as={MdOutlineHelpOutline} />}
               aria-label="help"
@@ -354,6 +351,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               bg={isModalOpen ? 'secondary.900' : 'secondary.700'}
               borderRadius={'br1'}
               _hover={{ backgroundColor: 'secondary.900' }}
+              ref={helpIconRef}
             />
             <Link href={'/settings/general/organization'}>
               <IconButton
