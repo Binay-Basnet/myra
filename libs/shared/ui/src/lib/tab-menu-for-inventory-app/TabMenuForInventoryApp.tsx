@@ -17,6 +17,12 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/inventory/suppliers': 3,
 };
 
+//inventory/register
+//inventory/adjustment
+
+//inventory/items
+//inventory/items/category
+
 const demotabs: {
   title: string;
   icon: IconType;
@@ -61,6 +67,12 @@ export function TabMenuForInventoryApp() {
       ) ?? '/inventory/register'
     ];
 
+  console.log(
+    Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
+      router?.pathname.includes(string)
+    ) ?? '/inventory/register'
+  );
+
   return (
     <Box
       height="50px"
@@ -86,7 +98,7 @@ export function TabMenuForInventoryApp() {
       <Tabs index={currentIndex} height="100%" size="md" variant="enclosed">
         <TabList border="none" height="100%">
           {demotabs.map(({ title, icon, link, name }, index) => {
-            const isActive = router?.asPath.includes(name);
+            const isActive = index === currentIndex;
             return (
               <Link href={link} key={index}>
                 <Tab
