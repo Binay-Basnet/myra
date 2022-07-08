@@ -63,7 +63,7 @@ export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
           size="lg"
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
-          onClick={() => router.push('/users/[action]')}
+          onClick={() => router.push('/users/add')}
         >
           {t['neoClientUserSiderbarNewUser']}
         </Button>
