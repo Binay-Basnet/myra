@@ -72,6 +72,7 @@ export function CbsSettingsFeatureOrganization(
               flex={1}
               display="flex"
               flexDirection={'column'}
+              width="100%"
             >
               <Box py={'s24'}>
                 <Text fontWeight="600">
