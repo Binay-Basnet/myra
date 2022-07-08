@@ -52,7 +52,7 @@ const ShareReturn = () => {
     { label: t['sharePurchaseCash'], value: Payment_Mode.Cash },
   ];
 
-  const memberIdQuery = watch('memberId');
+  // const memberIdQuery = watch('memberId');
   const noOfShares = watch('noOfReturnedShares');
   const allShares = watch('selectAllShares');
   const printingFees = watch('printingFee');

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import { BsCloudUpload } from 'react-icons/bs';
 import { IoClose } from 'react-icons/io5';
@@ -64,7 +64,7 @@ export function FileInput({
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [alreadyAddedFiles, setAlreadyAddedFiles] = useState<
     { url?: string; fileName: string }[]
-  >([...value]);
+  >([...(value ?? [])]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles((prev) => [...prev, ...acceptedFiles]);
@@ -141,28 +141,32 @@ export function FileInput({
       </Box>
 
       {files.map((file) => (
-        <FilePreview
-          file={file}
-          size={size}
-          setFileNames={setFileNames}
-          remove={() =>
-            setFiles((prev) => prev.filter((f) => f.name !== file.name))
-          }
-        />
+        <Fragment key={file.name}>
+          <FilePreview
+            file={file}
+            size={size}
+            setFileNames={setFileNames}
+            remove={() =>
+              setFiles((prev) => prev.filter((f) => f.name !== file.name))
+            }
+          />
+        </Fragment>
       ))}
 
       {alreadyAddedFiles.map((fileUrl) => (
-        <FileUrlPreview
-          setFileNames={setFileNames}
-          fileName={fileUrl.fileName}
-          fileUrl={String(fileUrl.url)}
-          size={size}
-          remove={() =>
-            setAlreadyAddedFiles((prev) =>
-              prev.filter((f) => f.fileName !== fileUrl.fileName)
-            )
-          }
-        />
+        <Fragment key={fileUrl.url}>
+          <FileUrlPreview
+            setFileNames={setFileNames}
+            fileName={fileUrl.fileName}
+            fileUrl={String(fileUrl.url)}
+            size={size}
+            remove={() =>
+              setAlreadyAddedFiles((prev) =>
+                prev.filter((f) => f.fileName !== fileUrl.fileName)
+              )
+            }
+          />
+        </Fragment>
       ))}
     </Box>
   );

@@ -201,7 +201,6 @@ query getIndividualKymEditData($id: ID!) {
       formState(id: $id) {
         data {
           formData {
-            memberId
             firstName
             middleName
             lastName

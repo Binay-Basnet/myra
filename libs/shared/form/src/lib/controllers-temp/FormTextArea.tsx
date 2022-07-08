@@ -1,5 +1,6 @@
 import React from 'react';
 import { Control, Controller, useFormContext } from 'react-hook-form';
+
 import { Box, TextAreaInput, TextAreaInputProps } from '@coop/shared/ui';
 
 interface IFormInputProps extends TextAreaInputProps {
@@ -27,8 +28,13 @@ export const FormTextArea = ({
       <Controller
         control={formControl}
         name={name}
-        render={({ field: { onChange } }) => (
-          <TextAreaInput id={name} onChange={onChange} {...rest} />
+        render={({ field: { onChange, value } }) => (
+          <TextAreaInput
+            id={name}
+            value={value}
+            onChange={onChange}
+            {...rest}
+          />
         )}
       />
       {error ? error?.message : null}

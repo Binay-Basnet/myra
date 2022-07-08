@@ -1,8 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { FormInput, FormTextArea } from '@coop/shared/form';
+import { Box, Divider } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const InventoryAdjustmentForm = () => {
@@ -11,7 +11,13 @@ const InventoryAdjustmentForm = () => {
   return (
     <FormProvider {...methods}>
       <form>
-        <Box p="s20" gap="s32" bg="neutralColorLight.Gray-0">
+        <Box
+          p="s20"
+          display="flex"
+          flexDirection="column"
+          gap="s32"
+          bg="neutralColorLight.Gray-0"
+        >
           <InputGroupContainer>
             <FormInput
               type="text"
@@ -27,6 +33,16 @@ const InventoryAdjustmentForm = () => {
               placeholder={t['itemUnitReferenceNumber']}
             />
           </InputGroupContainer>
+
+          <Divider />
+
+          <Box>
+            <FormTextArea
+              name="note"
+              label=" "
+              placeholder={t['invFormNote']}
+            />
+          </Box>
         </Box>
       </form>
     </FormProvider>

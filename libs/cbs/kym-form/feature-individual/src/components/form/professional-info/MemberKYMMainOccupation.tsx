@@ -43,20 +43,12 @@ export const MainOccupationInput = ({
   optionIndex,
   fieldIndex,
 }: DynamicInputProps) => {
-  const { register, unregister } = useFormContext();
+  const { register } = useFormContext();
 
   useEffect(() => {
     register(`mainOccupation.${fieldIndex}.options.${optionIndex}.id`, {
       value: option.id,
     });
-    register(`mainOccupation.${fieldIndex}.options.${optionIndex}.value`, {
-      value: '',
-    });
-
-    return () => {
-      unregister(`mainOccupation.${fieldIndex}.options.${optionIndex}.id`);
-      unregister(`mainOccupation.${fieldIndex}.options.${optionIndex}.value`);
-    };
   }, []);
 
   return (
@@ -77,6 +69,7 @@ const MainOccupation = ({
   const { t } = useTranslation();
 
   const { watch } = useFormContext();
+  const { unregister } = useFormContext();
 
   // const profession = watch('profession');
 
@@ -105,7 +98,10 @@ const MainOccupation = ({
       <Box display="flex" flexDirection="column">
         <CloseIcon
           cursor="pointer"
-          onClick={removeMainOccupation}
+          onClick={() => {
+            removeMainOccupation();
+            unregister(`mainOccupation.${fieldIndex}`);
+          }}
           color="gray.500"
           _hover={{
             color: 'gray.900',

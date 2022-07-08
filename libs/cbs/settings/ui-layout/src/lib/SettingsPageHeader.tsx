@@ -1,4 +1,3 @@
-import React from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 
 import { Box, Button, PageHeaderTab, Text } from '@coop/shared/ui';
@@ -24,6 +23,7 @@ export const SettingsPageHeader = ({
       bg="white"
       zIndex="10"
       w="100%"
+      top="110px"
       position="sticky"
       borderBottom="1px solid #E6E6E6"
       display="flex"

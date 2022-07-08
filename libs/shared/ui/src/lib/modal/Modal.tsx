@@ -23,6 +23,7 @@ export interface ModalProps
   footerSecondaryProps?: React.ReactNode;
   leftIcon?: React.ReactElement;
   onClickPrimary?: () => void;
+  modalContentProps?: Record<string, string>;
 }
 
 export function Modal(props: ModalProps) {
@@ -36,14 +37,14 @@ export function Modal(props: ModalProps) {
     footerPrimary2Props,
     footerSecondaryProps,
     onClickPrimary,
-
+    modalContentProps,
     ...rest
   } = props;
 
   return (
     <ChakraModal {...rest} isOpen={open} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent {...modalContentProps}>
         {title && (
           <>
             <ModalHeader>{title}</ModalHeader>

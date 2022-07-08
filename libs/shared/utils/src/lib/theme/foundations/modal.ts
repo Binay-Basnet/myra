@@ -39,10 +39,14 @@ const baseStyleDialog: SystemStyleFunction = (props) => {
 };
 
 const baseStyleHeader: SystemStyleObject = {
-  px: 6,
-  py: 4,
+  px: 's16',
+  py: 0,
   fontSize: 'xl',
   fontWeight: 'semibold',
+  flex: 'none',
+  height: '50px',
+  display: 'flex',
+  alignItems: 'center',
 };
 
 const baseStyleCloseButton: SystemStyleObject = {

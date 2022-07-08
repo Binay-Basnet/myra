@@ -46,7 +46,7 @@ export const InventoryItemsLayout = ({
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
           onClick={() => {
-            router.push(router.pathname + '/add');
+            router.push('/inventory/items/add');
           }}
         >
           {t['addItems']}

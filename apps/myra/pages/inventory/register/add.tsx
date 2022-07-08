@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 
-import { InventoryFeatureRegister } from '@coop/inventory/inventory';
+import { AddInventory } from '@coop/inventory/inventory';
 import { MainLayoutInventory } from '@coop/shared/ui';
 
 const AddNewInventoryRegisterPage = () => {
-  return <InventoryFeatureRegister />;
+  return <AddInventory />;
 };
 
 export default AddNewInventoryRegisterPage;

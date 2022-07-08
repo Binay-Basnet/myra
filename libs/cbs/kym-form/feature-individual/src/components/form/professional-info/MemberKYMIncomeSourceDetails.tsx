@@ -29,13 +29,6 @@ const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
     register(`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`, {
       value: '',
     });
-
-    return () => {
-      unregister(`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.id`);
-      unregister(
-        `incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`
-      );
-    };
   }, []);
 
   return (
@@ -53,11 +46,17 @@ const IncomeSource = ({ index, removeIncomeSource }: any) => {
     useGetIndividualKymOptionsQuery({
       filter: { customId: KYMOptionEnum.IncomeSourceDetails },
     });
+
+  const { unregister } = useFormContext();
+
   return (
     <DynamicBoxContainer>
       <CloseIcon
         cursor="pointer"
-        onClick={removeIncomeSource}
+        onClick={() => {
+          removeIncomeSource();
+          unregister(`incomeSourceDetails.${index}`);
+        }}
         color="gray.500"
         _hover={{
           color: 'gray.900',

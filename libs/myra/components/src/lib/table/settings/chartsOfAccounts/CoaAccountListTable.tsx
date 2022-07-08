@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
+
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -17,7 +17,6 @@ type MemberData = {
 
 export const CoaAccountListTable = () => {
   const { t } = useTranslation();
-  const router = useRouter();
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
@@ -53,7 +52,7 @@ export const CoaAccountListTable = () => {
         ),
       },
     ],
-    [router.locale]
+    [t]
   );
 
   return (

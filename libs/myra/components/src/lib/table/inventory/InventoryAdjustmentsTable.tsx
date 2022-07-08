@@ -50,9 +50,7 @@ export const InventoryAdjustmentsTable = () => {
       <InventoryPageHeader
         heading="itemUnitInventoryAdjustment"
         buttonLabel="itemUnitsNewInventoryAdjustment"
-        buttonHandler={() =>
-          router.push('/inventory/inventory/adjustments/add')
-        }
+        buttonHandler={() => router.push('/inventory/adjustments/add')}
       />
 
       <Table

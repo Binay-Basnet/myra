@@ -13,20 +13,39 @@ import { TableListPageHeader } from '../TableListPageHeader';
 export const MemberTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { data, isFetching } = useGetMemberListQuery({
-    objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-    last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-    after: router.query['after'] as string,
-    before: router.query['before'] as string,
-  });
+  const { data, isFetching } = useGetMemberListQuery(
+    router.query['before']
+      ? {
+          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+
+          last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          before: router.query['before'] as string,
+        }
+      : {
+          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+
+          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+          after: (router.query['after'] ?? '') as string,
+        },
+    {
+      staleTime: 0,
+    }
+  );
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
   const popoverTitle = [
-    'memberListTableViewMemberProfile',
-    'memberListTableEditMember',
-    'memberListTableMakeInactive',
+    {
+      title: 'memberListTableViewMemberProfile',
+    },
+    {
+      title: 'memberListTableEditMember',
+      onClick: (memberId?: string) =>
+        router.push(`/members/individual/edit/${memberId}`),
+    },
+    {
+      title: 'memberListTableMakeInactive',
+    },
   ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -87,13 +106,18 @@ export const MemberTable = () => {
         disableFilters: false,
 
         Cell: ({ value }) => {
-          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
+          return <span>{format(new Date(value), 'yyyy-MM-dd')}</span>;
         },
       },
       {
         Header: '',
         accessor: 'actions',
-        Cell: () => <PopoverComponent title={popoverTitle} />,
+        Cell: (cell) => (
+          <PopoverComponent
+            items={popoverTitle}
+            memberId={cell?.row?.original?.node?.id}
+          />
+        ),
         disableFilters: true,
       },
     ],
@@ -134,9 +158,9 @@ export const MemberTable = () => {
         filter={true}
         disableFilterAll={true}
         pagination={{
-          total: 1200,
-          endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
-          startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
+          total: Number(data?.members?.list?.totalCount),
+          endCursor: data?.members?.list.pageInfo?.endCursor ?? '',
+          startCursor: data?.members?.list.pageInfo?.startCursor ?? '',
         }}
       />
     </>

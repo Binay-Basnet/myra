@@ -385,7 +385,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           p="s4"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
-                          onClick={() => router.push('/inventory/items')}
+                          onClick={() => router.push('/inventory/register')}
                         >
                           <Image
                             width={12}
@@ -672,6 +672,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             {t['shortcutsModalAll']}
           </Text>
         }
+        modalContentProps={{ minW: '60vw' }}
       >
         <Grid
           templateColumns="repeat(2, 1fr)"

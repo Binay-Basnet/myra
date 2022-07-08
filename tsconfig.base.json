@@ -69,13 +69,16 @@
       "@coop/inventory/inventory": [
         "libs/inventory/feature-inventory/src/index.ts"
       ],
+      "@coop/inventory/warehouse": [
+        "libs/inventory/feature-warehouse/src/index.ts"
+      ],
       "@coop/myra/components": ["libs/myra/components/src/index.ts"],
       "@coop/myra/inventory/item": ["libs/inventory/feature-item/src/index.ts"],
+      "@coop/myra/inventory/suppliers": [
+        "libs/inventory/feature-suppliers/src/index.ts"
+      ],
       "@coop/myra/inventory/ui-layout": [
         "libs/inventory/ui-layout/src/index.ts"
-      ],
-      "@coop/myra/inventory/vendors": [
-        "libs/inventory/feature-vendors/src/index.ts"
       ],
       "@coop/myra/jsonData": ["libs/myra/jsonData/index.ts"],
       "@coop/myra/locales": ["libs/myra/locales/index.ts"],
@@ -91,6 +94,7 @@
         "libs/neosys/ui-components/src/index.ts"
       ],
       "@coop/neosys-admin/users": ["libs/neosys/feature-users/src/index.ts"],
+      "@coop/shared/components": ["libs/shared/components/src/index.ts"],
       "@coop/shared/data-access": ["libs/shared/data-access/src/index.ts"],
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],
       "@coop/shared/map": ["libs/shared/map/src/index.ts"],
