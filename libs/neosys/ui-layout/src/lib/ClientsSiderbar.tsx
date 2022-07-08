@@ -29,7 +29,7 @@ export const ClientsSiderbarLayout = ({ children }: IClientsSidebarProps) => {
           size="lg"
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
-          onClick={() => router.push('/clients/[action]')}
+          onClick={() => router.push('/clients/add')}
         >
           {t['neoClientSiderbarClientsAdd']}
         </Button>
