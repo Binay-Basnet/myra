@@ -1950,6 +1950,11 @@ const ne: Record<string, string> = {
   shortcutModalNewOpen: 'New Open',
   shortcutModalObjectMenu: 'Object Menu',
   shortcutModalSwitchTabs: 'Switch Tabs',
+
+  //neosys clients table
+  neoClientTableViewClientProfile: 'View Client Profile',
+  neoClientTableEditClient: 'Edit Client',
+  neoClientTableMakeInactive: 'Make Inactive',
 };
 
 export default ne;
