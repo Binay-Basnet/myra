@@ -21,13 +21,11 @@ export const MemberKYMContactDetails = () => {
       </Text>
       <InputGroupContainer>
         <FormPhoneNumber
-          type="text"
           name="mobileNumber"
           label={t['kymIndMobileNo']}
           placeholder={t['kymIndEnterMobileNo']}
         />
         <FormPhoneNumber
-          type="text"
           name="phoneNumber"
           label={t['kymIndPhoneNo']}
           placeholder={t['kymIndEnterPhoneNo']}
