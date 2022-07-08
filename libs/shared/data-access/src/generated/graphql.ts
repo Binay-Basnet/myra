@@ -2550,21 +2550,6 @@ export type KymDeclaration = Base & {
   objState: ObjState;
 };
 
-export type KymDeclarationInput = {
-  dataEn?: InputMaybe<Scalars['String']>;
-  dataNp?: InputMaybe<Scalars['String']>;
-  for: DeclarationFor;
-};
-
-export type KymDeclarationMutation = {
-  update: KymDeclarationResult;
-};
-
-
-export type KymDeclarationMutationUpdateArgs = {
-  data: KymDeclarationInput;
-};
-
 export type KymDeclarationResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<KymQuery>;
@@ -2678,11 +2663,9 @@ export type KymFileOptionCategory = {
 
 export type KymFormSettingMutation = {
   condition: KymConditionalOptionResult;
-  declaration: KymDeclarationMutation;
   field: KymFieldMutation;
   maxSize: KymMaxSizeResult;
   option: KymOptionMutation;
-  seed: Scalars['Boolean'];
 };
 
 
@@ -4762,6 +4745,7 @@ export type Mutation = {
   members: MemberMutation;
   newId: Scalars['String'];
   presignedUrl: PresignedUrlMutation;
+  seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
   user: UserMutation;
@@ -5503,7 +5487,6 @@ export type UtilityPaymentLayoutComponent = {
 
 export type UtilityPaymentRecord = {
   components?: Maybe<Array<Maybe<UtilityPaymentLayoutComponent>>>;
-  header_name?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['Map']>;
   type?: Maybe<Scalars['String']>;
 };
