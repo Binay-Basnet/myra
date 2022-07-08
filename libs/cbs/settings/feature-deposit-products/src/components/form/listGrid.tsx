@@ -164,6 +164,7 @@ export const GridItems = ({ watch }: any) => {
                 name="selectMarialOptions"
                 options={MartialOptions}
                 label="Marital Status"
+                isMulti
               />
             )}
           {memberType &&
@@ -174,6 +175,7 @@ export const GridItems = ({ watch }: any) => {
                 name="selectEducationOptions"
                 options={EducationalOptions}
                 label="Education Qualification"
+                isMulti
               />
             )}
           {memberType &&
@@ -184,6 +186,7 @@ export const GridItems = ({ watch }: any) => {
                 name="selectEthniciyOptions"
                 options={EthnicityOptions}
                 label="Ethinicity"
+                isMulti
               />
             )}
           {memberType &&
@@ -194,6 +197,7 @@ export const GridItems = ({ watch }: any) => {
                 name="selectOccupationalOptions"
                 options={OccupationalOptions}
                 label="Occupational Details"
+                isMulti
               />
             )}
           {memberType &&
@@ -219,6 +223,7 @@ export const GridItems = ({ watch }: any) => {
                 name="selectbusinessInstitution"
                 options={OccupationalOptions}
                 label="Nature of Business (Institutions)"
+                isMulti
               />
             )}
           {memberType &&
@@ -245,6 +250,7 @@ export const GridItems = ({ watch }: any) => {
                 name="selectbusinessInstitution"
                 options={OccupationalOptions}
                 label="Nature of Business (COOP Union)"
+                isMulti
               />
             )}
         </InputGroupContainer>

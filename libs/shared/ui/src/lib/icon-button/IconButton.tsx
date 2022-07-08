@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import {
   IconButton as ChakraIconButton,
   IconButtonProps as ChakraProps,
@@ -6,9 +7,10 @@ import {
 /* eslint-disable-next-line */
 export interface IconButtonProps extends ChakraProps {}
 
-export function IconButton(props: IconButtonProps) {
-  const { ...rest } = props;
-  return <ChakraIconButton {...rest} />;
-}
-
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  (props, ref) => {
+    const { ...rest } = props;
+    return <ChakraIconButton {...rest} ref={ref} />;
+  }
+);
 export default IconButton;

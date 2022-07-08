@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { GlobalHotKeys } from 'react-hotkeys';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BiBell } from 'react-icons/bi';
 import { CgMenuGridO } from 'react-icons/cg';
@@ -8,11 +9,13 @@ import { RiHistoryFill } from 'react-icons/ri';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import {
-  IconButton,
+  forwardRef,
   Image,
+  // Input as ChakraInput,
   Input,
   InputGroup,
   InputLeftElement,
+  InputProps,
   InputRightElement,
   Text,
 } from '@chakra-ui/react';
@@ -24,6 +27,7 @@ import {
   Button,
   Grid,
   Icon,
+  IconButton,
   Modal,
   Popover,
   PopoverBody,
@@ -49,10 +53,34 @@ const calendarList = [
   { label: 'AD', value: 'AD' },
   { label: 'BS', value: 'BS' },
 ];
+const keyMap = {
+  inputFocus: ['ctrl+/'],
+  appSwitcher: 'alt+o',
+  helpOptions1: ['alt+p'],
 
+  // up: ["i"],
+  // shiftUp: ["shift+i"],
+  // delete: ["r"],
+  // addFocus: ["a"]
+};
 const currentDate = format(new Date(), 'yyyy-MM-dd');
 const closingDate = format(new Date(), 'yyyy-MM-dd');
 
+// export const Input = forwardRef<HTMLInputElement, InputProps>(
+//   (props: InputProps, ref) => {
+//     return (
+//       <ChakraInput
+//         {...props}
+//         ref={ref}
+//         onKeyDown={(e) => {
+//           if (e.key === 'Escape') {
+//             e.currentTarget?.blur();
+//           }
+//         }}
+//       />
+//     );
+//   }
+// );
 export function TopLevelHeader(props: TopLevelHeaderProps) {
   const { t } = useTranslation();
   const router = useRouter();
@@ -103,9 +131,30 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+  const inputRef = useRef<HTMLInputElement>(null);
+  const appSwitcherRef = useRef<HTMLButtonElement>(null);
+  const helpIconRef = useRef<HTMLInputElement>(null);
+  const handlers = {
+    inputFocus() {
+      inputRef.current?.focus();
+    },
+
+    appSwitcher() {
+      if (appSwitcherRef.current) {
+        appSwitcherRef.current?.click();
+      }
+    },
+    helpOptions1() {
+      alert('hjfjdfjsdfkj');
+      if (helpIconRef.current) {
+        alert('fhjfrjnvf');
+        helpIconRef.current?.focus();
+      }
+    },
+  };
 
   return (
-    <>
+    <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
       <Box
         h="60px"
         background={'secondary.700'}
@@ -178,7 +227,8 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               flex={1}
               borderColor="secondary.700"
               bg={isClose ? 'secondary.800' : 'gray.0'}
-              color={isClose ? 'gray.0' : 'gray.500'}
+              // color={isClose ? 'gray.0' : 'gray.500'}
+              color="gray.500"
               _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
             >
               <InputLeftElement
@@ -191,6 +241,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                 placeholder="खोज्नुहोस्"
                 color={'gray.500'}
                 fontSize="r1"
+                ref={inputRef}
               />
               {isClose && (
                 <InputRightElement
@@ -293,6 +344,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               borderRadius={'br1'}
               _hover={{ backgroundColor: 'secondary.900' }}
             />
+            <Input ref={helpIconRef} />
             <IconButton
               icon={<Icon size="md" as={MdOutlineHelpOutline} />}
               aria-label="help"
@@ -314,7 +366,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               />
             </Link>
 
-            <Popover placement="bottom-end">
+            <Popover placement="bottom-end" gutter={3}>
               {({ isOpen }) => (
                 <>
                   <PopoverTrigger>
@@ -325,8 +377,10 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                       variant={'ghost'}
                       color={'white'}
                       borderRadius={'br1'}
+                      ref={appSwitcherRef}
                     />
                   </PopoverTrigger>
+
                   <PopoverContent
                     bg="gray.0"
                     w="370px"
@@ -477,7 +531,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               )}
             </Popover>
 
-            <Popover placement="bottom-end">
+            <Popover placement="bottom-end" gutter={3}>
               {({ isOpen }) => (
                 <>
                   <PopoverTrigger>
@@ -713,7 +767,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           ))}
         </Grid>
       </Modal>
-    </>
+    </GlobalHotKeys>
   );
 }
 
