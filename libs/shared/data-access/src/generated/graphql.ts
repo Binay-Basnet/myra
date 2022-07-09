@@ -309,6 +309,11 @@ export type BankBranchDeleteResult = {
   recordId: Scalars['ID'];
 };
 
+export type BankBranchGetResult = {
+  data?: Maybe<BankBranch>;
+  error?: Maybe<QueryError>;
+};
+
 export type BankBranchInput = {
   bankId?: InputMaybe<Scalars['ID']>;
   districtId?: InputMaybe<Scalars['Int']>;
@@ -337,13 +342,20 @@ export type BankBranchMutationDeleteArgs = {
 };
 
 export type BankBranchQuery = {
-  get?: Maybe<BankBranch>;
+  get?: Maybe<BankBranchGetResult>;
+  /** This is to get all the branches of one Bank */
+  getBranches?: Maybe<Array<Maybe<BankBranch>>>;
   list?: Maybe<Array<Maybe<BankBranch>>>;
 };
 
 
 export type BankBranchQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+
+export type BankBranchQueryGetBranchesArgs = {
+  bankId: Scalars['ID'];
 };
 
 
@@ -379,7 +391,7 @@ export type BankDataMutationDeleteArgs = {
 };
 
 export type BankDataQuery = {
-  get?: Maybe<Bank>;
+  get?: Maybe<BankGetResult>;
   list?: Maybe<Array<Maybe<Bank>>>;
 };
 
@@ -397,6 +409,11 @@ export type BankDeleteResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<BankDataQuery>;
   recordId: Scalars['ID'];
+};
+
+export type BankGetResult = {
+  data?: Maybe<Bank>;
+  error?: Maybe<QueryError>;
 };
 
 export type BankInput = {
@@ -1160,6 +1177,11 @@ export enum DashboardTodayType {
   Loan = 'LOAN',
   Transaction = 'TRANSACTION',
   Withdraws = 'WITHDRAWS'
+}
+
+export enum DateType {
+  Ad = 'AD',
+  Bs = 'BS'
 }
 
 export type Declaration = Base & {
@@ -2550,21 +2572,6 @@ export type KymDeclaration = Base & {
   objState: ObjState;
 };
 
-export type KymDeclarationInput = {
-  dataEn?: InputMaybe<Scalars['String']>;
-  dataNp?: InputMaybe<Scalars['String']>;
-  for: DeclarationFor;
-};
-
-export type KymDeclarationMutation = {
-  update: KymDeclarationResult;
-};
-
-
-export type KymDeclarationMutationUpdateArgs = {
-  data: KymDeclarationInput;
-};
-
 export type KymDeclarationResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<KymQuery>;
@@ -2678,11 +2685,9 @@ export type KymFileOptionCategory = {
 
 export type KymFormSettingMutation = {
   condition: KymConditionalOptionResult;
-  declaration: KymDeclarationMutation;
   field: KymFieldMutation;
   maxSize: KymMaxSizeResult;
   option: KymOptionMutation;
-  seed: Scalars['Boolean'];
 };
 
 
@@ -4762,6 +4767,7 @@ export type Mutation = {
   members: MemberMutation;
   newId: Scalars['String'];
   presignedUrl: PresignedUrlMutation;
+  seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
   user: UserMutation;
@@ -5120,12 +5126,14 @@ export type Services = {
 };
 
 export type SettingsMutation = {
+  chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
   declaration: DeclarationMutation;
   general?: Maybe<GeneralSettingsMutation>;
   kymForm: KymFormSettingMutation;
 };
 
 export type SettingsQuery = {
+  chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
   declaration: DeclarationQuery;
   general?: Maybe<GeneralSettingsQuery>;
   kymForm: KymFormSettingQuery;
@@ -5436,12 +5444,14 @@ export type UserMutation = {
 };
 
 export type UserPreference = {
+  date?: Maybe<DateType>;
   id?: Maybe<Scalars['ID']>;
   language?: Maybe<Language>;
   languageCode?: Maybe<Scalars['String']>;
 };
 
 export type UserPreferenceInput = {
+  date?: InputMaybe<DateType>;
   language?: InputMaybe<Language>;
 };
 

@@ -98,6 +98,7 @@
       "@coop/shared/data-access": ["libs/shared/data-access/src/index.ts"],
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],
       "@coop/shared/map": ["libs/shared/map/src/index.ts"],
+      "@coop/shared/table": ["libs/shared/table/src/index.ts"],
       "@coop/shared/ui": ["libs/shared/ui/src/index.ts"],
       "@coop/shared/utils": ["libs/shared/utils/src/index.ts"]
     }

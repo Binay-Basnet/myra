@@ -1,38 +1,106 @@
-import { FormProvider, useForm } from 'react-hook-form';
-
-import { FormFileInput, FormSwitchTab } from '@coop/shared/form';
+import { Table } from '@coop/shared/table';
 import { Box } from '@coop/shared/ui';
 
+const data = [
+  {
+    member_id: '131221',
+    name: 'Test User',
+    age: 12,
+    src: 'https://images.unsplash.com/photo-1614204424926-196a80bf0be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+    address:
+      'Lalitpur, Nepal, Nepal Lalitpur, Nepal, Nepal Lalitpur, Nepal, NepalLalitpur, Nepal, NepalLalitpur, Nepal, NepalLalitpur, Nepal, Nepal ',
+    contact_number: '+977-9830189301',
+    date_joined: '2020-01-12',
+  },
+  {
+    member_id: '22139',
+    age: 43,
+    name: 'John Test',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: '224',
+    age: 94,
+    name: 'John Doe',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: '2139',
+    name: 'Anup Shrestha',
+    age: 20,
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: '12',
+    age: 18,
+    name: 'Test User',
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: '24',
+    name: 'Anup Shrestha',
+    age: 20,
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+  {
+    member_id: '2234',
+    name: 'Anup Shrestha',
+    age: 43,
+    address: 'Kathmandu, Nepal',
+    contact_number: '+977-9833919301',
+    date_joined: '2010-01-12',
+  },
+];
+
 const Temp = () => {
-  const methods = useForm({
-    defaultValues: {
-      file: [
-        {
-          url: 'https://images.unsplash.com/photo-1657037029325-be5c4f1d4dfb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-          fileName: 'nightlight.jpg',
-        },
-      ],
-      switch: true,
-    },
-  });
-
-  const fileWatch = methods.watch('file');
-
-  console.log(fileWatch);
-
   return (
-    <Box p="s32" bg="white">
-      <FormProvider {...methods}>
-        {/*<img src="https://cdn.raralabs.live/myra/34d9839a-79b1-4337-907e-d8908e7d16fc?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=jMeXgnuLUIGDH6vb%2F20220706%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220706T105452Z&X-Amz-Expires=1000&X-Amz-SignedHeaders=host&X-Amz-Signature=fff6dec85fca8985d3226ee5b0de7bfcf3cbf212e67e2950332b23d788e3ba40" />*/}
-        <FormFileInput name="file" size="lg" />
-        <FormSwitchTab
-          name={'switch'}
-          options={[
-            { label: 'Yes', value: true },
-            { label: 'No', value: false },
+    <Box bg="white" p="s8" minH="100vh">
+      <Box border="1px" borderColor="border.layout">
+        <Table
+          data={data}
+          columns={[
+            {
+              accessorKey: 'member_id',
+              header: 'Member Id',
+              meta: {
+                width: '50px',
+              },
+            },
+            {
+              accessorKey: 'name',
+              header: 'Name',
+              meta: {
+                width: '80%',
+              },
+            },
+            {
+              accessorKey: 'age',
+              header: 'Age',
+            },
+            {
+              accessorKey: 'contact_number',
+              header: 'Contact Number',
+              meta: {
+                isNumeric: true,
+              },
+            },
+            {
+              accessorKey: 'address',
+              header: 'Address',
+            },
           ]}
         />
-      </FormProvider>
+      </Box>
     </Box>
   );
 };
