@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box,
   Collapse,
+  Flex,
   Spinner,
   Table as ChakraTable,
   TableContainer,
@@ -61,7 +62,7 @@ export const Table = <T extends Record<string, unknown>>({
       <TableContainer
         overflowX="auto"
         overflowY="hidden"
-        minH={isLoading ? '400px' : 'auto'}
+        minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
         position="relative"
       >
         <ChakraTable size={tableSize}>
@@ -89,12 +90,12 @@ export const Table = <T extends Record<string, unknown>>({
             ))}
           </Thead>
           <Tbody position="relative">
-            {isLoading && (
+            {isLoading ? (
               <Box
                 position="absolute"
                 width="100%"
                 height="100%"
-                zIndex={100}
+                zIndex={10}
                 bg="#ffffff99"
                 display="flex"
                 justifyContent="center"
@@ -108,8 +109,28 @@ export const Table = <T extends Record<string, unknown>>({
                   size="xl"
                 />
               </Box>
+            ) : (
+              !data ||
+              (data?.length === 0 && (
+                <Box
+                  position="absolute"
+                  width="100%"
+                  height="100%"
+                  display="flex"
+                  justifyContent="center"
+                >
+                  <Flex
+                    justifyContent="center"
+                    height="250px"
+                    alignItems="center"
+                  >
+                    <Text fontSize="r3" color="gray.500">
+                      No Data Found
+                    </Text>
+                  </Flex>
+                </Box>
+              ))
             )}
-
             {table.getRowModel().rows.map((row) => {
               return (
                 <Tr
