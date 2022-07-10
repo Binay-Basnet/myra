@@ -1,11 +1,4 @@
-import {
-  Cell,
-  Column as RTColumn,
-  ColumnDef,
-  Row,
-  RowModel,
-  Table as RTTable,
-} from '@tanstack/react-table';
+import { ColumnDef, Row, Table } from '@tanstack/react-table';
 
 declare module '@tanstack/table-core' {
   interface ColumnMeta {
@@ -28,6 +21,14 @@ export interface TableProps<TData extends Record<string, unknown>> {
     endCursor: string;
   };
 
-  // data: TData[];
-  // columns: Column<TData>[];
+  size?: 'default' | 'compact';
+  isLoading?: boolean;
+  isStatic?: boolean;
+
+  searchPlaceholder?: string;
+
+  getRowId?: (originalRow: TData) => string;
 }
+
+export type TableInstance<T> = Table<T>;
+export { Row };

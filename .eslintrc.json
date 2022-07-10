@@ -1,15 +1,8 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "**/*"
-  ],
-  "plugins": [
-    "@nrwl/nx",
-    "simple-import-sort"
-  ],
-  "extends": [
-    "eslint:recommended"
-  ],
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx", "simple-import-sort", "unused-imports"],
+  "extends": ["eslint:recommended"],
   "rules": {
     "simple-import-sort/exports": "warn",
     "simple-import-sort/imports": [
@@ -17,14 +10,8 @@
       {
         "groups": [
           // Packages 'react' related packages come first.
-          [
-            "^react",
-            "^next",
-            "^@?\\w"
-          ],
-          [
-            "^@coop"
-          ],
+          ["^react", "^next", "^@?\\w"],
+          ["^@coop"],
           [
             "^\\./?$",
             "^\\.(?!/?$)",
@@ -42,12 +29,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
@@ -58,9 +40,7 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": [
-                  "*"
-                ]
+                "onlyDependOnLibsWithTags": ["*"]
               }
             ]
           }
@@ -68,23 +48,13 @@
       }
     },
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/typescript"
-      ],
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {}
     },
     {
-      "files": [
-        "*.js",
-        "*.jsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/javascript"
-      ],
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     }
   ]

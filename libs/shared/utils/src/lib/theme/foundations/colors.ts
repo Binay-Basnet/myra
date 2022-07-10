@@ -83,7 +83,7 @@ const colors = {
 
   danger: {
     0: '#FFECEB',
-    100: '#FFC5C1',
+    100: '#FFECEB',
     200: '#FFA9A3',
     300: '#FF827A',
     400: '#FF6A60',
@@ -97,7 +97,7 @@ const colors = {
 
   success: {
     0: '#F5F9F7',
-    100: '#E6F0EB',
+    100: '#FFECEB',
     200: '#C2DBCA',
     300: '#80B496',
     400: '#3D8F5F',

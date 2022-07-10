@@ -6,7 +6,7 @@ import format from 'date-fns/format';
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import { Table } from '@coop/shared/table';
-import { Column, DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
+import { Column, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TableListPageHeader } from '../TableListPageHeader';
@@ -167,6 +167,7 @@ export const MemberTable = () => {
 
       <Table
         data={rowData}
+        getRowId={(row) => String(row?.node?.id)}
         columns={[
           {
             accessorFn: (row) => row?.node?.id,
@@ -175,6 +176,26 @@ export const MemberTable = () => {
           {
             accessorFn: (row) => row?.node?.name?.local,
             header: 'Name',
+            cell: (props) => {
+              return (
+                <Flex alignItems="center" gap="s12">
+                  <Avatar
+                    name="Dan Abrahmov"
+                    size="sm"
+                    src="https://bit.ly/dan-abramov"
+                  />
+                  <Text
+                    fontSize="s3"
+                    textTransform="capitalize"
+                    textOverflow="ellipsis"
+                    overflow="hidden"
+                  >
+                    {props.getValue()}
+                  </Text>
+                </Flex>
+              );
+            },
+
             meta: {
               width: '60%',
             },

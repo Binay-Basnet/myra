@@ -6,7 +6,7 @@ import { mode, transparentize } from '@chakra-ui/theme-tools';
 
 const baseStyle: SystemStyleObject = {
   textTransform: 'initial',
-  lineHeight: '1.2',
+  lineHeight: '0',
   borderRadius: '4px',
   px: '12px',
   py: '8px',
@@ -50,10 +50,10 @@ const variantGhost: SystemStyleFunction = (props) => {
     bg: 'transparent',
     // bg: 'gray.200',
     _hover: {
-      bg: 'gray.200',
+      bg: mode(`${c}.100`, `${c}.200`)(props),
     },
     _active: {
-      bg: 'gray.200',
+      bg: mode(`${c}.100`, `${c}.200`)(props),
     },
   };
 };

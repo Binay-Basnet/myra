@@ -10,7 +10,6 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "composite": true,
     "noFallthroughCasesInSwitch": true
   },
   "files": [],

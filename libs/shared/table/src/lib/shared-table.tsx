@@ -1,7 +1,6 @@
-import React, { HTMLProps, RefObject, useEffect } from 'react';
+import React from 'react';
 import {
-  Checkbox,
-  CheckboxProps,
+  Collapse,
   Table as ChakraTable,
   TableContainer,
   Tbody,
@@ -10,54 +9,31 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { flexRender, Row } from '@tanstack/react-table';
-import { uniqBy } from 'lodash';
+import { flexRender } from '@tanstack/react-table';
 
-import { Pagination, Text } from '@coop/shared/ui';
+import { Pagination, TableSearch, Text } from '@coop/shared/ui';
 
+import { TableSelectionBar } from '../components';
 import { useTable } from '../hooks/useTable';
 import { TableProps } from '../types/Table';
+import { getCheckBoxColumn } from '../utils/getCheckBoxColumn';
 
 export const Table = <T extends Record<string, unknown>>({
   columns,
   data,
   pagination,
+  isStatic = false,
+  searchPlaceholder,
+  size = 'default',
+  getRowId,
 }: TableProps<T>) => {
-  const [selectedRows, setSelectedRows] = React.useState<Row<T>[]>([]);
+  const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const rowIds = React.useMemo(() => Object.keys(rowSelection), [rowSelection]);
-
   const table = useTable<T>({
-    columns: [
-      {
-        id: 'select',
-        header: ({ table }) => (
-          <IndeterminateCheckbox
-            {...{
-              checked: table.getIsAllRowsSelected(),
-              indeterminate: table.getIsSomeRowsSelected(),
-              onChange: table.getToggleAllRowsSelectedHandler(),
-            }}
-          />
-        ),
-        cell: ({ row }) => (
-          <div className="px-1">
-            <IndeterminateCheckbox
-              {...{
-                checked: row.getIsSelected(),
-                indeterminate: row.getIsSomeSelected(),
-                onChange: row.getToggleSelectedHandler(),
-              }}
-            />
-          </div>
-        ),
-        meta: {
-          width: '20px',
-        },
-      },
-      ...columns,
-    ],
+    getRowId,
+
+    columns: isStatic ? columns : [getCheckBoxColumn<T>(), ...columns],
     state: {
       rowSelection,
     },
@@ -66,22 +42,21 @@ export const Table = <T extends Record<string, unknown>>({
     data,
   });
 
-  useEffect(() => {
-    const currentPageRowIds = Object.keys(table.getRowModel().rowsById);
-
-    if (currentPageRowIds.some((id) => rowIds.includes(id))) {
-      setSelectedRows((prev) =>
-        uniqBy([...prev, ...table.getSelectedRowModel().rows], 'id')
-      );
-    } else {
-      setSelectedRows((prev) => prev.filter((row) => rowIds.includes(row.id)));
-    }
-  }, [rowIds, table]);
-
   return (
     <>
+      <Collapse in={Object.keys(rowSelection).length !== 0} animateOpacity>
+        <TableSelectionBar tableInstance={table} columns={columns} />
+      </Collapse>
+      {!isStatic && (
+        <TableSearch
+          placeholder={searchPlaceholder}
+          pagination={pagination}
+          size={tableSize}
+          setSize={setTableSize}
+        />
+      )}
       <TableContainer overflowX="auto" overflowY="hidden" position="relative">
-        <ChakraTable size="default">
+        <ChakraTable size={tableSize}>
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
@@ -91,6 +66,8 @@ export const Table = <T extends Record<string, unknown>>({
                     colSpan={header.colSpan}
                     isNumeric={header.column.columnDef.meta?.isNumeric}
                     width={header.column.columnDef.meta?.width}
+                    px="s12"
+                    py="0"
                   >
                     {header.isPlaceholder
                       ? null
@@ -106,13 +83,19 @@ export const Table = <T extends Record<string, unknown>>({
           <Tbody>
             {table.getRowModel().rows.map((row) => {
               return (
-                <Tr key={row.id} _hover={{ bg: 'background.500' }}>
+                <Tr
+                  key={row.id}
+                  _hover={{ bg: 'background.500' }}
+                  bg={row.getIsSelected() ? 'primary.0' : 'white'}
+                >
                   {row.getVisibleCells().map((cell) => {
                     return (
                       <Td
                         key={cell.id}
                         isNumeric={cell.column.columnDef.meta?.isNumeric}
                         width={cell.column.columnDef.meta?.width}
+                        px="s12"
+                        py="0"
                       >
                         <Text
                           as="div"
@@ -148,27 +131,3 @@ export const Table = <T extends Record<string, unknown>>({
 };
 
 export default Table;
-
-function IndeterminateCheckbox({
-  indeterminate,
-  className = '',
-  checked,
-  ...rest
-}: { indeterminate?: boolean } & CheckboxProps) {
-  const ref = React.useRef<HTMLInputElement>(null);
-
-  React.useEffect(() => {
-    if (typeof indeterminate === 'boolean' && ref?.current?.indeterminate) {
-      ref.current.indeterminate = !checked && indeterminate;
-    }
-  }, [ref, indeterminate, checked]);
-
-  return (
-    <Checkbox
-      colorScheme="primary"
-      isChecked={checked}
-      isIndeterminate={indeterminate}
-      {...rest}
-    />
-  );
-}

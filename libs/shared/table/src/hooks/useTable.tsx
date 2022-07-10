@@ -18,8 +18,6 @@ export const useTable = <T extends Record<string, unknown>>({
       },
     },
 
-    getRowId: (row) => (row?.['node'] as any).id,
-
     enableRowSelection: true,
     data: data as unknown as T[],
     columns: columns as unknown as ColumnDef<T>[],
