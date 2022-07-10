@@ -26,7 +26,7 @@ const fiveMinutesInMs = 5 * 60 * 1000;
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
       refetchOnMount: true,
       refetchOnReconnect: false,
       retry: false,

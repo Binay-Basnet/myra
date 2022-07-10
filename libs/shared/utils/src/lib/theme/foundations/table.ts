@@ -23,7 +23,7 @@ const baseStyle: PartsStyleObject<typeof parts> = {
   },
   td: {
     textAlign: 'start',
-    transition: 'padding 0.2s ease',
+    transition: 'height 0.2s ease',
   },
   caption: {
     mt: 4,
@@ -45,8 +45,8 @@ const variantSimple: PartsStyleFunction<typeof parts> = (props) => {
   return {
     th: {
       color: mode('gray.800', 'gray.400')(props),
-      borderBottom: '2px',
-      borderColor: mode(`background.500`, `${c}.700`)(props),
+      borderBottom: '1px',
+      borderColor: mode(`border.layout`, `${c}.700`)(props),
       ...numericStyles,
     },
     td: {
@@ -81,6 +81,7 @@ const sizes: Record<string, PartsStyleObject<typeof parts>> = {
       py: '17px',
       lineHeight: '4',
       fontSize: 's3',
+      height: '50px',
     },
     td: {
       px: '6',
@@ -101,13 +102,14 @@ const sizes: Record<string, PartsStyleObject<typeof parts>> = {
       py: '17px',
       lineHeight: '4',
       fontSize: 's3',
-      height: '60px',
+      height: '50px',
     },
     td: {
       px: '6',
       py: '16px',
       lineHeight: '5',
       fontSize: 's3',
+      height: '60px',
     },
     caption: {
       px: '6',

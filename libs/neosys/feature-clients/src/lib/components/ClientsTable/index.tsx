@@ -16,16 +16,21 @@ export const ClientsTable = () => {
     router.query['before']
       ? {
           objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-
-          last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-          before: router.query['before'] as string,
+          pagination: {
+            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+            before: router.query['before'] as string,
+          },
         }
       : {
           objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-
-          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-          after: (router.query['after'] ?? '') as string,
-        }
+          pagination: {
+            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+            after: (router.query['after'] ?? '') as string,
+          },
+        },
+    {
+      staleTime: 0,
+    }
   );
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);

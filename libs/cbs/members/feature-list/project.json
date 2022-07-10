@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/members/feature-list",
+  "sourceRoot": "libs/cbs/members/feature-list/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/members/feature-list/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/members/feature-list"],
+      "options": {
+        "jestConfig": "libs/cbs/members/feature-list/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

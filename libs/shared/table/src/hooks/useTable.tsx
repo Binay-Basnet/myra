@@ -1,0 +1,37 @@
+import {
+  ColumnDef,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+
+import { IUseTableProps } from '../types/UseTable';
+import { getCheckBoxColumn } from '../utils/getCheckBoxColumn';
+
+export const useTable = <T extends Record<string, unknown>>({
+  data,
+  columns,
+  isStatic,
+  ...rest
+}: IUseTableProps<T>) => {
+  const columnsWithRowSelection = [
+    getCheckBoxColumn<T>(),
+    ...(columns as unknown as ColumnDef<T>[]),
+  ];
+
+  const columnsWithoutRowSelection = columns as unknown as ColumnDef<T>[];
+
+  return useReactTable<T>({
+    defaultColumn: {
+      meta: {
+        width: '150px',
+      },
+    },
+
+    enableRowSelection: true,
+    data: data as unknown as T[],
+    columns: isStatic ? columnsWithoutRowSelection : columnsWithRowSelection,
+
+    ...rest,
+    getCoreRowModel: getCoreRowModel(),
+  });
+};

@@ -22,7 +22,7 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { TabColumn } from '../tab/TabforMemberPage';
+import { TabColumn } from '../../../../../myra/components/src/lib/tab/TabforMemberPage';
 
 interface IMemberPageLayout {
   children: React.ReactNode;
@@ -245,7 +245,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
         position="relative"
         left="275px"
       >
-        <Box bg="white" minHeight="100vh">
+        <Box bg="white" minHeight="calc(100vh - 110px)" width="100%">
           {children}
         </Box>
       </Box>

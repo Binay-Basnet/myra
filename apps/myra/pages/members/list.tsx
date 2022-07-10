@@ -1,10 +1,13 @@
 import { ReactElement } from 'react';
 
-import { MemberPagesLayout, MemberTable } from '@coop/myra/components';
+import {
+  MemberListPage as MemberList,
+  MemberPagesLayout,
+} from '@coop/cbs/members/list';
 import { MainLayout } from '@coop/shared/ui';
 
 const MemberListPage = () => {
-  return <MemberTable />;
+  return <MemberList />;
 };
 
 MemberListPage.getLayout = function getLayout(page: ReactElement) {

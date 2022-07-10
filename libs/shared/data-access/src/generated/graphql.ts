@@ -1179,6 +1179,11 @@ export enum DashboardTodayType {
   Withdraws = 'WITHDRAWS'
 }
 
+export enum DateType {
+  Ad = 'AD',
+  Bs = 'BS'
+}
+
 export type Declaration = Base & {
   content: Scalars['Localized'];
   createdAt: Scalars['Time'];
@@ -5121,12 +5126,14 @@ export type Services = {
 };
 
 export type SettingsMutation = {
+  chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
   declaration: DeclarationMutation;
   general?: Maybe<GeneralSettingsMutation>;
   kymForm: KymFormSettingMutation;
 };
 
 export type SettingsQuery = {
+  chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
   declaration: DeclarationQuery;
   general?: Maybe<GeneralSettingsQuery>;
   kymForm: KymFormSettingQuery;
@@ -5437,12 +5444,14 @@ export type UserMutation = {
 };
 
 export type UserPreference = {
+  date?: Maybe<DateType>;
   id?: Maybe<Scalars['ID']>;
   language?: Maybe<Language>;
   languageCode?: Maybe<Scalars['String']>;
 };
 
 export type UserPreferenceInput = {
+  date?: InputMaybe<DateType>;
   language?: InputMaybe<Language>;
 };
 
@@ -5831,14 +5840,11 @@ export type GetIndIdentificationDocOptionQuery = { members: { individual?: { opt
 
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
-  first?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  after?: InputMaybe<Scalars['Cursor']>;
-  last?: InputMaybe<Scalars['Int']>;
+  pagination?: InputMaybe<Pagination>;
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, createdAt: string, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, createdAt: string, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7067,17 +7073,15 @@ export const useGetIndIdentificationDocOptionQuery = <
       options
     );
 export const GetMemberListDocument = `
-    query getMemberList($objState: ObjState, $first: Int, $before: Cursor, $after: Cursor, $last: Int) {
+    query getMemberList($objState: ObjState, $pagination: Pagination) {
   members {
-    list(
-      pagination: {first: $first, before: $before, after: $after, last: $last}
-      filter: {objState: $objState}
-    ) {
+    list(pagination: $pagination, filter: {objState: $objState}) {
       totalCount
       edges {
         node {
           id
           name
+          code
           address {
             state
             district
@@ -7087,6 +7091,7 @@ export const GetMemberListDocument = `
           }
           contact
           createdAt
+          dateJoined
         }
         cursor
       }
