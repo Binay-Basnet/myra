@@ -1,18 +1,24 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { Avatar, Flex } from '@chakra-ui/react';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
+import {
+  Avatar,
+  Box,
+  DEFAULT_PAGE_SIZE,
+  PageHeader,
+  Text,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { TableListPageHeader } from '../TableListPageHeader';
+import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
 
-export const MemberTable = () => {
+export function MemberListPage() {
   const { t } = useTranslation();
+
   const router = useRouter();
   const { data, isFetching } = useGetMemberListQuery(
     router.query['before']
@@ -32,7 +38,6 @@ export const MemberTable = () => {
         },
     {
       staleTime: 0,
-      keepPreviousData: true,
     }
   );
 
@@ -63,7 +68,7 @@ export const MemberTable = () => {
         header: t['memberListTableName'],
         cell: (props) => {
           return (
-            <Flex alignItems="center" gap="s12">
+            <Box display="flex" alignItems="center" gap="s12">
               <Avatar
                 name="Dan Abrahmov"
                 size="sm"
@@ -77,7 +82,7 @@ export const MemberTable = () => {
               >
                 {props.getValue()}
               </Text>
-            </Flex>
+            </Box>
           );
         },
 
@@ -122,29 +127,11 @@ export const MemberTable = () => {
     [t]
   );
 
-  const memberRows = useMemo(
-    () => [
-      {
-        title: 'memberNavActive',
-        key: 'APPROVED',
-      },
-      {
-        title: 'memberNavInactive',
-        key: 'VALIDATED',
-      },
-      {
-        title: 'memberNavDraft',
-        key: 'DRAFT',
-      },
-    ],
-    []
-  );
-
   return (
     <>
-      <TableListPageHeader
-        heading={'memberLayoutMembers'}
-        tabItems={memberRows}
+      <PageHeader
+        heading={t['memberLayoutMembers']}
+        tabItems={MEMBER_TAB_ITEMS}
       />
 
       <Table
@@ -160,4 +147,6 @@ export const MemberTable = () => {
       />
     </>
   );
-};
+}
+
+export default MemberListPage;

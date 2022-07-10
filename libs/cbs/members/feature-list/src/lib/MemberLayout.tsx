@@ -22,7 +22,7 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { TabColumn } from '../tab/TabforMemberPage';
+import { TabColumn } from '../../../../../myra/components/src/lib/tab/TabforMemberPage';
 
 interface IMemberPageLayout {
   children: React.ReactNode;

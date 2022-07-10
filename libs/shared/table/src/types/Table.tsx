@@ -15,7 +15,7 @@ export type Column<TData extends Maybe<Record<string, unknown>>> =
 export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   data: Maybe<Array<Maybe<TData>>>;
   columns: Maybe<Array<Maybe<Column<Maybe<TData>>>>>;
-  
+
   pagination?: {
     total: number | string;
     startCursor: string;
@@ -32,4 +32,4 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
 }
 
 export type TableInstance<T> = Table<T>;
-export { Row };
+export type { Row };

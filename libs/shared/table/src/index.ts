@@ -1,2 +1,2 @@
 export * from './lib/shared-table';
-export { Column } from './types/Table';
+export type { Column } from './types/Table';

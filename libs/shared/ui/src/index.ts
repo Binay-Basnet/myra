@@ -30,6 +30,7 @@ export * from './lib/modal/Modal';
 export * from './lib/myra-ui';
 export * from './lib/navbar/Navbar';
 export * from './lib/navbarfordaashboard/Navbarfordaashboard';
+export * from './lib/page-header/PageHeader';
 export * from './lib/page-header-tab/PageHeaderTab';
 export * from './lib/pagination/Pagination';
 export * from './lib/password-input/PasswordInput';

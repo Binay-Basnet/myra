@@ -12,6 +12,7 @@
     "cbs-kym-form-feature-institution": "libs/cbs/kym-form/feature-institution",
     "cbs-kym-form-ui-containers": "libs/cbs/kym-form/ui-containers",
     "cbs-kym-form-ui-form-elements": "libs/cbs/kym-form/ui-form-elements",
+    "cbs-members-feature-list": "libs/cbs/members/feature-list",
     "cbs-members-feature-profile": "libs/cbs/members/feature-profile",
     "cbs-settings--feature-loan": "libs/cbs/settings/feature-loan",
     "cbs-settings-feature-branches": "libs/cbs/settings/feature-branches",

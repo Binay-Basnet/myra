@@ -1,11 +1,12 @@
 import { ReactElement } from 'react';
 
-import { AccountPagesLayout, ShareTable } from '@coop/myra/components';
+import { MemberListPage } from '@coop/cbs/members/list';
+import { AccountPagesLayout } from '@coop/myra/components';
 import { MainLayout } from '@coop/shared/ui';
 
 // TODO ( Update this page when design arrives )
 const AccountCertificatePrint = () => {
-  return <ShareTable />;
+  return <MemberListPage />;
 };
 
 AccountCertificatePrint.getLayout = function getLayout(page: ReactElement) {
