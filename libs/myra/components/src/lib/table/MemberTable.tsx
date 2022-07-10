@@ -5,7 +5,8 @@ import format from 'date-fns/format';
 
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
-import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/shared/ui';
+import { Table } from '@coop/shared/table';
+import { Column, DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TableListPageHeader } from '../TableListPageHeader';
@@ -48,81 +49,81 @@ export const MemberTable = () => {
     },
   ];
 
-  const columns = useMemo<Column<typeof rowData[0]>[]>(
-    () => [
-      {
-        Header: t['memberListTableMemberID'],
-        accessor: 'node.id',
-        maxWidth: 4,
-        disableSortBy: false,
-      },
+  // const columns = useMemo<Column<typeof rowData[0]>[]>(
+  //   () => [
+  //     {
+  //       Header: t['memberListTableMemberID'],
+  //       accessor: 'node.id',
+  //       maxWidth: 4,
+  //       disableSortBy: false,
+  //     },
 
-      {
-        Header: t['memberListTableName'],
-        accessor: 'node.name.local',
+  //     {
+  //       Header: t['memberListTableName'],
+  //       accessor: 'node.name.local',
 
-        width: '60%',
+  //       width: '60%',
 
-        disableSortBy: false,
-        disableFilters: false,
+  //       disableSortBy: false,
+  //       disableFilters: false,
 
-        Cell: ({ value, row }) => {
-          return (
-            <Flex alignItems="center" gap="2">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <span>{value}</span>
-            </Flex>
-          );
-        },
-      },
+  //       Cell: ({ value, row }) => {
+  //         return (
+  //           <Flex alignItems="center" gap="2">
+  //             <Avatar
+  //               name="Dan Abrahmov"
+  //               size="sm"
+  //               src="https://bit.ly/dan-abramov"
+  //             />
+  //             <span>{value}</span>
+  //           </Flex>
+  //         );
+  //       },
+  //     },
 
-      {
-        Header: t['memberListTableAddress'],
-        accessor: 'node.address.locality.local',
-        width: '20%',
+  //     {
+  //       Header: t['memberListTableAddress'],
+  //       accessor: 'node.address.locality.local',
+  //       width: '20%',
 
-        Cell: ({ value, row }) => {
-          return (
-            <span>
-              {value}, {row?.original?.node?.address?.locality?.local}
-            </span>
-          );
-        },
-      },
-      {
-        Header: t['memberListTablePhoneNo'],
-        accessor: 'node.contact',
+  //       Cell: ({ value, row }) => {
+  //         return (
+  //           <span>
+  //             {value}, {row?.original?.node?.address?.locality?.local}
+  //           </span>
+  //         );
+  //       },
+  //     },
+  //     {
+  //       Header: t['memberListTablePhoneNo'],
+  //       accessor: 'node.contact',
 
-        width: '10%',
-      },
-      {
-        Header: t['memberListDateJoined'],
-        accessor: 'node.createdAt',
-        disableSortBy: false,
-        disableFilters: false,
+  //       width: '10%',
+  //     },
+  //     {
+  //       Header: t['memberListDateJoined'],
+  //       accessor: 'node.createdAt',
+  //       disableSortBy: false,
+  //       disableFilters: false,
 
-        Cell: ({ value }) => {
-          return <span>{format(new Date(value), 'yyyy-MM-dd')}</span>;
-        },
-      },
-      {
-        Header: '',
-        accessor: 'actions',
-        Cell: (cell) => (
-          <PopoverComponent
-            items={popoverTitle}
-            memberId={cell?.row?.original?.node?.id}
-          />
-        ),
-        disableFilters: true,
-      },
-    ],
-    [t]
-  );
+  //       Cell: ({ value }) => {
+  //         return <span>{format(new Date(value), 'yyyy-MM-dd')}</span>;
+  //       },
+  //     },
+  //     {
+  //       Header: '',
+  //       accessor: 'actions',
+  //       Cell: (cell) => (
+  //         <PopoverComponent
+  //           items={popoverTitle}
+  //           memberId={cell?.row?.original?.node?.id}
+  //         />
+  //       ),
+  //       disableFilters: true,
+  //     },
+  //   ],
+  //   [t]
+  // );
 
   const memberRows = useMemo(
     () => [
@@ -149,7 +150,7 @@ export const MemberTable = () => {
         tabItems={memberRows}
       />
 
-      <Table
+      {/* <Table
         isLoading={isFetching}
         data={rowData}
         columns={columns}
@@ -157,6 +158,44 @@ export const MemberTable = () => {
         disableSortAll={true}
         filter={true}
         disableFilterAll={true}
+        pagination={{
+          total: Number(data?.members?.list?.totalCount),
+          endCursor: data?.members?.list.pageInfo?.endCursor ?? '',
+          startCursor: data?.members?.list.pageInfo?.startCursor ?? '',
+        }}
+      /> */}
+
+      <Table
+        data={rowData}
+        columns={[
+          {
+            accessorFn: (row) => row?.node?.id,
+            header: 'Member Id',
+          },
+          {
+            accessorFn: (row) => row?.node?.name?.local,
+            header: 'Name',
+            meta: {
+              width: '60%',
+            },
+          },
+          {
+            accessorFn: ({ node }) =>
+              `${node?.address?.locality?.local}, ${node?.address?.district?.local}, ${node?.address?.state?.local}`,
+            header: 'Address',
+          },
+          {
+            accessorFn: (row) => row?.node?.contact,
+            header: 'Contact',
+          },
+          {
+            accessorFn: ({ node }) =>
+              node?.dateJoined
+                ? format(new Date(node?.dateJoined), 'yyyy-MM-dd')
+                : 'N/A',
+            header: 'Date Joined',
+          },
+        ]}
         pagination={{
           total: Number(data?.members?.list?.totalCount),
           endCursor: data?.members?.list.pageInfo?.endCursor ?? '',

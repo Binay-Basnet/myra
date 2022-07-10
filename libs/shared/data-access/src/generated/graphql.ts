@@ -5847,7 +5847,7 @@ export type GetMemberListQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, createdAt: string, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, createdAt: string, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7087,6 +7087,7 @@ export const GetMemberListDocument = `
         node {
           id
           name
+          code
           address {
             state
             district
@@ -7096,6 +7097,7 @@ export const GetMemberListDocument = `
           }
           contact
           createdAt
+          dateJoined
         }
         cursor
       }

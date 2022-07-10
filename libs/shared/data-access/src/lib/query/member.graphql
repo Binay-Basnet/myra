@@ -15,6 +15,7 @@ query getMemberList(
         node {
           id
           name
+          code
           address {
             state
             district
@@ -24,6 +25,7 @@ query getMemberList(
           }
           contact
           createdAt
+          dateJoined
         }
         cursor
       }

@@ -245,7 +245,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
         position="relative"
         left="275px"
       >
-        <Box bg="white" minHeight="100vh">
+        <Box bg="white" minHeight="100vh" width="100%">
           {children}
         </Box>
       </Box>
