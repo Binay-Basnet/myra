@@ -9,12 +9,13 @@ declare module '@tanstack/table-core' {
 
 export type Maybe<T> = T | null;
 
-export type Column<TData extends Record<string, unknown>> = ColumnDef<TData>;
+export type Column<TData extends Maybe<Record<string, unknown>>> =
+  ColumnDef<TData>;
 
-export interface TableProps<TData extends Record<string, unknown>> {
+export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   data: Maybe<Array<Maybe<TData>>>;
-  columns: Array<Maybe<Column<TData>>>;
-
+  columns: Maybe<Array<Maybe<Column<Maybe<TData>>>>>;
+  
   pagination?: {
     total: number | string;
     startCursor: string;

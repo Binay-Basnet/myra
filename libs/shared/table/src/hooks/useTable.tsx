@@ -5,12 +5,21 @@ import {
 } from '@tanstack/react-table';
 
 import { IUseTableProps } from '../types/UseTable';
+import { getCheckBoxColumn } from '../utils/getCheckBoxColumn';
 
 export const useTable = <T extends Record<string, unknown>>({
   data,
   columns,
+  isStatic,
   ...rest
 }: IUseTableProps<T>) => {
+  const columnsWithRowSelection = [
+    getCheckBoxColumn<T>(),
+    ...(columns as unknown as ColumnDef<T>[]),
+  ];
+
+  const columnsWithoutRowSelection = columns as unknown as ColumnDef<T>[];
+
   return useReactTable<T>({
     defaultColumn: {
       meta: {
@@ -20,9 +29,9 @@ export const useTable = <T extends Record<string, unknown>>({
 
     enableRowSelection: true,
     data: data as unknown as T[],
-    columns: columns as unknown as ColumnDef<T>[],
+    columns: isStatic ? columnsWithoutRowSelection : columnsWithRowSelection,
 
-    getCoreRowModel: getCoreRowModel(),
     ...rest,
+    getCoreRowModel: getCoreRowModel(),
   });
 };

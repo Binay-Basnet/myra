@@ -1,6 +1,8 @@
 import React from 'react';
 import {
+  Box,
   Collapse,
+  Spinner,
   Table as ChakraTable,
   TableContainer,
   Tbody,
@@ -16,7 +18,6 @@ import { Pagination, TableSearch, Text } from '@coop/shared/ui';
 import { TableSelectionBar } from '../components';
 import { useTable } from '../hooks/useTable';
 import { TableProps } from '../types/Table';
-import { getCheckBoxColumn } from '../utils/getCheckBoxColumn';
 
 export const Table = <T extends Record<string, unknown>>({
   columns,
@@ -25,21 +26,22 @@ export const Table = <T extends Record<string, unknown>>({
   isStatic = false,
   searchPlaceholder,
   size = 'default',
+  isLoading,
   getRowId,
 }: TableProps<T>) => {
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useTable<T>({
-    getRowId,
+    columns,
+    data,
+    isStatic,
 
-    columns: isStatic ? columns : [getCheckBoxColumn<T>(), ...columns],
     state: {
       rowSelection,
     },
     onRowSelectionChange: setRowSelection,
-
-    data,
+    getRowId,
   });
 
   return (
@@ -55,7 +57,13 @@ export const Table = <T extends Record<string, unknown>>({
           setSize={setTableSize}
         />
       )}
-      <TableContainer overflowX="auto" overflowY="hidden" position="relative">
+
+      <TableContainer
+        overflowX="auto"
+        overflowY="hidden"
+        minH={isLoading ? '400px' : 'auto'}
+        position="relative"
+      >
         <ChakraTable size={tableSize}>
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -80,7 +88,28 @@ export const Table = <T extends Record<string, unknown>>({
               </Tr>
             ))}
           </Thead>
-          <Tbody>
+          <Tbody position="relative">
+            {isLoading && (
+              <Box
+                position="absolute"
+                width="100%"
+                height="100%"
+                zIndex={100}
+                bg="#ffffff99"
+                display="flex"
+                justifyContent="center"
+                pt="100px"
+              >
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="primary.500"
+                  size="xl"
+                />
+              </Box>
+            )}
+
             {table.getRowModel().rows.map((row) => {
               return (
                 <Tr

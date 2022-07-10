@@ -5840,10 +5840,7 @@ export type GetIndIdentificationDocOptionQuery = { members: { individual?: { opt
 
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
-  first?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  after?: InputMaybe<Scalars['Cursor']>;
-  last?: InputMaybe<Scalars['Int']>;
+  pagination?: InputMaybe<Pagination>;
 }>;
 
 
@@ -7076,12 +7073,9 @@ export const useGetIndIdentificationDocOptionQuery = <
       options
     );
 export const GetMemberListDocument = `
-    query getMemberList($objState: ObjState, $first: Int, $before: Cursor, $after: Cursor, $last: Int) {
+    query getMemberList($objState: ObjState, $pagination: Pagination) {
   members {
-    list(
-      pagination: {first: $first, before: $before, after: $after, last: $last}
-      filter: {objState: $objState}
-    ) {
+    list(pagination: $pagination, filter: {objState: $objState}) {
       totalCount
       edges {
         node {

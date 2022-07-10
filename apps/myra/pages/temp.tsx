@@ -68,6 +68,7 @@ const Temp = () => {
       <Box border="1px" borderColor="border.layout">
         <Table
           data={data}
+          isLoading={true}
           columns={[
             {
               accessorKey: 'member_id',
