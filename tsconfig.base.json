@@ -25,6 +25,9 @@
       "@coop/accounting/ui-components": [
         "libs/accounting/ui-components/src/index.ts"
       ],
+      "@coop/accounting/ui-layouts": [
+        "libs/accounting/ui-layouts/src/index.ts"
+      ],
       "@coop/cbs/accounts/account-form": [
         "libs/cbs/accounts/feature-account-form/src/index.ts"
       ],
