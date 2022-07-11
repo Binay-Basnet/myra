@@ -1964,6 +1964,14 @@ const ne: Record<string, string> = {
   kymCoopVDCLocalGov: 'Local Government',
   kymCoopSelectLocalGov: 'Select Local Government',
   kymIndWriteStudentVISA: 'Write 0 if Student VISA',
+  //accounting
+  //purchase sidebar
+  accountingPurchaseSidebarPurchase: 'Purchase',
+  accountingPurchaseSidebarCreate: 'Create',
+  accountingPurchaseSidebarPurchaseList: 'Purchase List',
+  accountingPurchaseSidebarExpenses: 'Expenses',
+  accountingPurchaseSidebarDebitNote: 'Debit Note',
+  accountingPurchaseSidebarSupplierPayment: 'Supplier Note',
 };
 
 export default ne;

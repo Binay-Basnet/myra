@@ -44,6 +44,8 @@ export const TableSelectionBar = <T extends Record<string, unknown>>({
     }
   }, [rowIds, table]);
 
+  console.log(rowIds);
+
   return (
     <Box
       bg="primary.0"
@@ -65,7 +67,7 @@ export const TableSelectionBar = <T extends Record<string, unknown>>({
         gap="s8"
         onClick={onOpen}
       >
-        <span>{selectedRows.length} items selected</span>
+        <span>{rowIds.length} items selected</span>
         <Icon as={ArrowForwardIcon} color="primary.500" />
       </Button>
 

@@ -119,7 +119,7 @@ export const AddInventoryForm = () => {
                 alignItems="center"
               >
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="Medium"
                   fontSize="s3"
                 >
@@ -143,7 +143,7 @@ export const AddInventoryForm = () => {
                 alignItems="center"
               >
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="Medium"
                   fontSize="s3"
                 >
@@ -168,7 +168,7 @@ export const AddInventoryForm = () => {
                 alignItems="center"
               >
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="Medium"
                   fontSize="s3"
                 >
@@ -191,7 +191,7 @@ export const AddInventoryForm = () => {
                 alignItems="center"
               >
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="600"
                   fontSize="s3"
                 >
@@ -215,7 +215,7 @@ export const AddInventoryForm = () => {
                 alignItems="center"
               >
                 <Text
-                  color="neutralLightColor.Gray-80"
+                  color="neutralColorLight.Gray-80"
                   fontWeight="600"
                   fontSize="s3"
                 >

@@ -364,7 +364,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               />
             </Link>
 
-            <Popover placement="bottom-end" gutter={3}>
+            <Popover placement="left-start" gutter={3}>
               {({ isOpen }) => (
                 <>
                   <PopoverTrigger>
@@ -495,7 +495,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           p="s4"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
-                          onClick={() => router.push('/members/list')}
+                          onClick={() => router.push('/accounting/sales/list')}
                         >
                           <Image
                             width={12}
