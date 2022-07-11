@@ -6,19 +6,42 @@ import React from 'react';
 
 // import debounce from 'lodash/debounce';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, GridItem, Text } from '@coop/shared/ui';
 
 export const SalesDetails = () => {
   return (
     <BoxContainer>
       <InputGroupContainer>
+        <GridItem colSpan={2}>
+          <FormInput
+            name="customerName"
+            type="number"
+            label="Customer Name"
+            placeholder="Select Customer"
+          />
+        </GridItem>
         <FormInput
-          name="minimumInterestRate"
+          name="supplierInvoiceRefrence"
           type="number"
-          label="Mininum Rate"
-          textAlign={'right'}
-          placeholder="0.00"
-          rightElement={'%'}
+          label="Supplier Invoice Reference"
+          placeholder="Enter Supplier Invoice Reference"
+        />
+        <FormInput
+          name="invoiceDate"
+          type="date"
+          label="Invoice Date"
+          placeholder="DD-MM-YYYY"
+        />
+        <FormInput
+          name="dueDate"
+          type="date"
+          label="Due Date"
+          placeholder="DD-MM-YYYY"
+        />
+        <FormSelect
+          name="wareHouse"
+          label="Warehouse"
+          placeholder="Select Warehouse"
         />
       </InputGroupContainer>
     </BoxContainer>
