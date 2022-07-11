@@ -1,0 +1,25 @@
+{
+  "root": "libs/accounting/feature-sales",
+  "sourceRoot": "libs/accounting/feature-sales/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/accounting/feature-sales/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/accounting/feature-sales"],
+      "options": {
+        "jestConfig": "libs/accounting/feature-sales/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

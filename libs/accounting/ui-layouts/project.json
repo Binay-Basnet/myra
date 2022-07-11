@@ -1,0 +1,23 @@
+{
+  "root": "libs/accounting/ui-layouts",
+  "sourceRoot": "libs/accounting/ui-layouts/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/accounting/ui-layouts/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/accounting/ui-layouts"],
+      "options": {
+        "jestConfig": "libs/accounting/ui-layouts/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
