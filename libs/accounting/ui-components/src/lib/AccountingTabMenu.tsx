@@ -37,7 +37,7 @@ export function AccountingTabMenu() {
     {
       title: 'Purchase',
       icon: IoPerson,
-      link: '/accounting/sales/list',
+      link: '/accounting/purchase/list',
     },
     {
       title: 'Accounting',
