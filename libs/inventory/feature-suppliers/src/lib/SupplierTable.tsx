@@ -3,32 +3,38 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
 import { TableListPageHeader } from '@coop/myra/components';
-import { useGetInventoryItemGroupQuery } from '@coop/shared/data-access';
+import { useGetInventoryItemsQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const SupplierTable = () => {
   const { t } = useTranslation();
-  const { data, isFetching } = useGetInventoryItemGroupQuery();
+  const { data, isFetching } = useGetInventoryItemsQuery();
 
-  const rowItems = data?.inventory.itemsGroup?.list?.edges ?? [];
+  const rowItems = data?.inventory.items?.list?.edges ?? [];
 
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        Header: t['warehouseTableName'],
+        Header: t['supplierName'],
         accessor: 'node.name',
         width: '80%',
       },
       {
-        Header: t['warehouseTableLocation'],
-        accessor: 'node.parentCategory',
+        Header: t['supplierLocation'],
+        accessor: 'node.type',
         width: '40%',
       },
 
       {
-        Header: t['warehouseTablePhoneNumber'],
-        accessor: 'node.description',
+        Header: t['supplierPhoneNumber'],
+        accessor: 'node.unitPrice',
+        width: '40%',
+      },
+
+      {
+        Header: t['supplierEmailAddress'],
+        accessor: 'node.itemQuantity',
         width: '40%',
       },
 

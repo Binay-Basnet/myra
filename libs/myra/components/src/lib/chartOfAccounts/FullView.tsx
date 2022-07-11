@@ -28,10 +28,13 @@ export const FullView = () => {
           <AccordionItem key={memberType?.id} mt="s8">
             {({ isExpanded }) => (
               <>
-                <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
+                <AccordionButton
+                  p="s12"
+                  bg={isExpanded ? '#E0E5EB' : ''}
+                  h="60px"
+                >
                   <Box flex="1" textAlign="left">
-                    <Text fontSize={'r1'} fontWeight="600" pl="s16">
-                      {' '}
+                    <Text fontSize="r1" fontWeight="SemiBold">
                       {memberType?.name}
                     </Text>
                   </Box>

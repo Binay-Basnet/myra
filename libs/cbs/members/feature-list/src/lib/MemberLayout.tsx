@@ -3,10 +3,12 @@ import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
 import { IoMdPerson } from 'react-icons/io';
 import { IconType } from 'react-icons/lib';
 import { MdCorporateFare } from 'react-icons/md';
+import { TbLayersUnion } from 'react-icons/tb';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 import { Grid } from '@chakra-ui/react';
 
+import { TabColumn } from '@coop/myra/components';
 import {
   useGetMemberTypesQuery,
   useGetNewIdMutation,
@@ -21,8 +23,6 @@ import {
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-import { TabColumn } from '../../../../../myra/components/src/lib/tab/TabforMemberPage';
 
 interface IMemberPageLayout {
   children: React.ReactNode;
@@ -107,7 +107,7 @@ const memberTypesArray = {
     subtitle: 'memberLayoutCreateKYMFormForCoOperativeMembers',
   },
   COOPERATIVE_UNION: {
-    icon: AiFillBank,
+    icon: TbLayersUnion,
     title: 'memberLayoutCooperativeUnion',
     subtitle: 'memberLayoutCreateKYMFormForCooperativeUnion',
   },

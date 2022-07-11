@@ -4,33 +4,49 @@ import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 
 import { InventoryPageHeader } from '@coop/myra/inventory/ui-layout';
-import { useGetInventoryItemGroupQuery } from '@coop/shared/data-access';
+import { useGetShareRegisterListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const WarehouseTransferTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { data, isFetching } = useGetInventoryItemGroupQuery();
+  const { data, isFetching } = useGetShareRegisterListQuery();
 
-  const rowItems = data?.inventory.itemsGroup?.list?.edges ?? [];
+  const rowItems = useMemo(() => data?.share?.register?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        Header: t['warehouseTableName'],
-        accessor: 'node.name',
+        Header: t['warehouseTranserDate'],
+        accessor: 'node.id',
         width: '80%',
       },
       {
-        Header: t['warehouseTableLocation'],
-        accessor: 'node.parentCategory',
+        Header: t['warehouseTranserEntryNo'],
+        accessor: 'node.member.name.local',
         width: '40%',
       },
 
       {
-        Header: t['warehouseTablePhoneNumber'],
-        accessor: 'node.description',
+        Header: t['warehouseTranserReference'],
+        accessor: 'node.transactionDate',
+        width: '40%',
+      },
+      {
+        Header: t['warehouseTranserSourceWarehouse'],
+        accessor: 'node.balance',
+        width: '40%',
+      },
+
+      {
+        Header: t['warehouseTranserDestinationWarehouse'],
+        accessor: 'node.transactionDirection',
+        width: '40%',
+      },
+      {
+        Header: t['warehouseTranserStatus'],
+        accessor: 'node.startNumber',
         width: '40%',
       },
 

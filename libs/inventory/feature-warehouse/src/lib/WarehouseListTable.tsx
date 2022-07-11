@@ -1,10 +1,21 @@
 import { useMemo } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { IconButton } from '@chakra-ui/react';
 
+import { PopoverComponent } from '@coop/myra/components';
 import { useGetInventoryItemGroupQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+
+const popoverTitle = [
+  {
+    title: 'warehouseTableReceived',
+  },
+  {
+    title: 'warehouseTableEditMember',
+  },
+  {
+    title: 'warehouseTableMakeInactive',
+  },
+];
 
 export const WarehouseListTable = () => {
   const { t } = useTranslation();
@@ -32,14 +43,13 @@ export const WarehouseListTable = () => {
       },
 
       {
+        id: '_actions',
+        Header: '',
         accessor: 'actions',
-        Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
-        ),
+        cell: () => <PopoverComponent items={popoverTitle} />,
+        meta: {
+          width: '60px',
+        },
       },
     ],
     [t]
