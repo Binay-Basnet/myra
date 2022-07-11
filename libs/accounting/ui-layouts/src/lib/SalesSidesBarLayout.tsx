@@ -44,7 +44,7 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
           onClick={() => {
-            router.push('/inventory/items/add');
+            router.push('/accounting/sales/add');
           }}
         >
           {t['addItems']}
