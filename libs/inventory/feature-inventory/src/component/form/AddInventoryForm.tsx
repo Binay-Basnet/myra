@@ -115,7 +115,7 @@ export const AddInventoryForm = () => {
             <FieldCardComponents rows={'repeat(5,1fr)'}>
               <GridItem display="flex" justifyContent="space-between">
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="Medium"
                   fontSize="s3"
                 >
@@ -123,7 +123,7 @@ export const AddInventoryForm = () => {
                 </Text>
 
                 <Text
-                  color="neutralLightColor.Gray-50"
+                  color="neutralColorLight.Gray-50"
                   fontWeight="SemiBold"
                   fontSize="r1"
                 >
@@ -133,7 +133,7 @@ export const AddInventoryForm = () => {
 
               <GridItem display="flex" justifyContent="space-between">
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="Medium"
                   fontSize="s3"
                 >
@@ -154,14 +154,14 @@ export const AddInventoryForm = () => {
 
               <GridItem display="flex" justifyContent="space-between">
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="Medium"
                   fontSize="s3"
                 >
                   {t['invFormTaxableTotal']}
                 </Text>
                 <Text
-                  color="neutralLightColor.Gray-50"
+                  color="neutralColorLight.Gray-50"
                   fontWeight="SemiBold"
                   fontSize="r1"
                 >
@@ -171,7 +171,7 @@ export const AddInventoryForm = () => {
 
               <GridItem display="flex" justifyContent="space-between">
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="600"
                   fontSize="s3"
                 >
@@ -179,7 +179,7 @@ export const AddInventoryForm = () => {
                 </Text>
 
                 <Text
-                  color="neutralLightColor.Gray-50"
+                  color="neutralColorLight.Gray-50"
                   fontWeight="SemiBold"
                   fontSize="r1"
                 >
@@ -189,7 +189,7 @@ export const AddInventoryForm = () => {
 
               <GridItem display="flex" justifyContent="space-between">
                 <Text
-                  color="neutralLightColor.Gray-80"
+                  color="neutralColorLight.Gray-80"
                   fontWeight="600"
                   fontSize="s3"
                 >
@@ -197,7 +197,7 @@ export const AddInventoryForm = () => {
                 </Text>
 
                 <Text
-                  color="neutralLightColor.Gray-70"
+                  color="neutralColorLight.Gray-70"
                   fontWeight="SemiBold"
                   fontSize="r1"
                 >

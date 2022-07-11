@@ -1,14 +1,18 @@
 import { ReactElement } from 'react';
 
-import { AccountingFeaturePurchase } from '@coop/accounting/purchase';
-import { AccountingLayout } from '@coop/accounting/ui-layouts';
+import { AccountingFeaturePurchaseList } from '@coop/accounting/purchase';
+import { AccountingLayout, PurchaseLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
 const AccountingPurchaseList = () => {
-  return <AccountingFeaturePurchase />;
+  return <AccountingFeaturePurchaseList />;
 };
 
 AccountingPurchaseList.getLayout = function getLayout(page: ReactElement) {
-  return <AccountingLayout>{page}</AccountingLayout>;
+  return (
+    <AccountingLayout>
+      <PurchaseLayout>{page}</PurchaseLayout>
+    </AccountingLayout>
+  );
 };
 export default AccountingPurchaseList;
