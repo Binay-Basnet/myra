@@ -18,6 +18,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@coop/accounting/sales": ["libs/accounting/feature-sales/src/index.ts"],
       "@coop/cbs/accounts/account-form": [
         "libs/cbs/accounts/feature-account-form/src/index.ts"
       ],
