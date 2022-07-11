@@ -8,6 +8,7 @@
     "accounting-feature-purchase": "libs/accounting/feature-purchase",
     "accounting-feature-sales": "libs/accounting/feature-sales",
     "accounting-ui-components": "libs/accounting/ui-components",
+    "accounting-ui-layouts": "libs/accounting/ui-layouts",
     "cbs-accounts-feature-account-form": "libs/cbs/accounts/feature-account-form",
     "cbs-kym-form-feature-cooperative": "libs/cbs/kym-form/feature-cooperative",
     "cbs-kym-form-feature-cooperative-union": "libs/cbs/kym-form/feature-cooperative-union",
