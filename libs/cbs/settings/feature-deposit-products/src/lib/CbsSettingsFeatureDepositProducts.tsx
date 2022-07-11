@@ -52,14 +52,14 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'memberID',
+        Header: t['depositProductCode'],
         accessor: 'node.id',
         maxWidth: 4,
         disableSortBy: false,
       },
 
       {
-        Header: 'Name',
+        Header: t['depositProductName'],
         accessor: 'node.name.local',
         width: '80%',
 
@@ -78,7 +78,7 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
       },
 
       {
-        Header: 'Address',
+        Header: t['depositNature'],
         accessor: 'node.address.locality.local',
         maxWidth: 48,
 
@@ -91,11 +91,11 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
         },
       },
       {
-        Header: 'Phone No.',
+        Header: t['depositInterest'],
         accessor: 'node.contact',
       },
       {
-        Header: 'Date Joined',
+        Header: t['depositCreatedDate'],
         accessor: 'node.createdAt',
         Cell: ({ value }) => {
           return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;

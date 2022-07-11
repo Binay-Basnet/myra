@@ -338,7 +338,7 @@ const Details = () => {
               fontSize="r1"
               fontWeight="semibold"
             >
-              Income Source
+              Family Members
             </Text>
             <Box mt="s8" border="1px solid" borderColor="border.layout">
               <FamilyMemberTable />

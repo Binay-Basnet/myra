@@ -190,6 +190,8 @@ const colors = {
     700: '#1b959a',
     800: '#85d044',
     900: '#44b556',
+    debit: '#143E9F',
+    credit: '#FC814A',
   },
 
   neutralColorLight: {
