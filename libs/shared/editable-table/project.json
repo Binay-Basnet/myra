@@ -1,0 +1,23 @@
+{
+  "root": "libs/shared/editable-table",
+  "sourceRoot": "libs/shared/editable-table/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/editable-table/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/editable-table"],
+      "options": {
+        "jestConfig": "libs/shared/editable-table/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

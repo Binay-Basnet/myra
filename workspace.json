@@ -37,6 +37,7 @@
     "neosys-ui-layout": "libs/neosys/ui-layout",
     "shared-components": "libs/shared/components",
     "shared-data-access": "libs/shared/data-access",
+    "shared-editable-table": "libs/shared/editable-table",
     "shared-form": "libs/shared/form",
     "shared-map": "libs/shared/map",
     "shared-table": "libs/shared/table",
