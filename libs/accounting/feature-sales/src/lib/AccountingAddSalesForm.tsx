@@ -23,6 +23,12 @@ import {
   TextFields,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+import {
+  InputGroupContainer,
+  BoxContainer,
+  DividerContainer,
+} from '@coop/accounting/ui-components';
+import { SalesDetails } from '../components/form-components';
 
 /* eslint-disable-next-line */
 export interface CbsAccountOpenFormProps {}
@@ -71,13 +77,11 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
                 onClick={() => router.back()}
               />
             </Box>
-            <Box
-              w="100%"
-              background="neutralColorLight.Gray-0"
-              p="s20"
-              display="flex"
-              flexDirection="column"
-            ></Box>
+            <Box bg="white" p="s20">
+              <DividerContainer>
+                <SalesDetails />
+              </DividerContainer>
+            </Box>
           </form>
         </FormProvider>
       </Container>
