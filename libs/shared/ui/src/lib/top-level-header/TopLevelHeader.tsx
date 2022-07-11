@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BiBell } from 'react-icons/bi';

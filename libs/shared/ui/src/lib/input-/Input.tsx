@@ -70,6 +70,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               pointerEvents="none"
               children={rightElement}
               ml="s4"
+              px="s12"
             />
           )}
         </InputGroup>

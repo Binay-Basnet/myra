@@ -302,17 +302,19 @@ export const FilePreview = ({
               )}
             </Box>
           )}
+          <Icon
+            as={IoClose}
+            size="lg"
+            cursor="pointer"
+            onClick={() => {
+              remove && remove();
+              setFileNames &&
+                setFileNames((prev) =>
+                  prev.filter((name) => name !== fileName)
+                );
+            }}
+          />
         </Box>
-        <Icon
-          as={IoClose}
-          size="lg"
-          cursor="pointer"
-          onClick={() => {
-            remove && remove();
-            setFileNames &&
-              setFileNames((prev) => prev.filter((name) => name !== fileName));
-          }}
-        />
 
         <Modal isOpen={isOpen} onClose={onClose} size="xl">
           <ModalOverlay />

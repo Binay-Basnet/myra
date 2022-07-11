@@ -125,35 +125,15 @@ export const ShareSettingsDividendPage = () => {
           subtitle={t['shareAndAccountSubtitle']}
         >
           <Box display="flex" flexDir="column" gap={'s16'}>
-            <Box
-              width="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              h="36px"
-            >
-              <Text fontSize="r1" fontWeight="400" color="gray.500">
-                {t['shareAllocation']}
-              </Text>
-              <Text fontSize="r1" fontWeight="400" color="gray.500">
-                12
+            <Box>
+              <Text
+                fontWeight="Regular"
+                color="neutralColorLight.Gray-80"
+                fontSize="r1"
+              >
+                {t['shareAndAccountNote']}
               </Text>
             </Box>
-            <Box
-              width="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              h="36px"
-            >
-              <Text fontSize="r1" fontWeight="400" color="gray.500">
-                {t['shareAccountAllocation']}
-              </Text>
-              <Text fontSize="r1" fontWeight="400" color="gray.500">
-                32
-              </Text>
-            </Box>
-
             <Box
               width="100%"
               display="flex"

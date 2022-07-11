@@ -607,9 +607,7 @@ const en: Record<string, string> = {
   kymCoopSelectState: 'Select State',
   kymCoopDistrict: 'District',
   kymCoopSelectDistrict: 'Select District',
-  kymCoopVDCMunicipality: 'VDC / Municipality',
   kymCoopMunicipality: 'Muncipality',
-  kymCoopSelectVDCMunicipality: 'Select VDC / Municipality',
   kymCoopWardNo: 'Ward No',
   kymCoopEnterWardNo: 'Enter Ward No',
   kymCoopLocality: 'Locality',
@@ -1420,12 +1418,10 @@ const en: Record<string, string> = {
 
   shareTypesOfShare: 'Types of Share',
   shareChooseTypeOfShare: 'Choose which type of share is allowed',
-  shareTransactable: 'Transactable',
-  shareNonTransactable: 'Non-Transactable',
   shareIssueQuantity: 'Share Issue Quantity',
   shareMultiplicityFactor: 'Share Multiplicity Factor',
   shareTransactableMinimumQuantityOfShareThatCanBeIssued:
-    'Transactable Minimum Quantity of Share that can be issued',
+    'Minimum Quantity of Share that can be issued',
   shareMaximumQuantityOfShareThatCanBeIssued:
     'Maximum Quantity of Share that can be issued',
   shareRate: 'Share Rate',
@@ -1517,14 +1513,7 @@ const en: Record<string, string> = {
   shareTransferMemberToMember: 'Member to Member',
   shareTransferShareRefund: 'Share Refund (Cash / Bank payment format)',
 
-  shareToFundLedgerMapping: 'Share To Fund / Ledger Mapping',
-  shareToFundLedgerMappingSubtitle:
-    'Account from which shares are paid to and paid from',
-  shareFundName: 'Fund Name',
-
-  shareToAccount: 'Share To Account  /',
   shareToAccountSubtitle: 'Account from which shares are paid to and paid from',
-  shareTransferAccountName: 'Account Name',
 
   // account list
 
@@ -1974,6 +1963,38 @@ const en: Record<string, string> = {
   neoClientTableViewClientProfile: 'View Client Profile',
   neoClientTableEditClient: 'Edit Client',
   neoClientTableMakeInactive: 'Make Inactive',
+
+  // deposit product
+  depositProductCode: 'Product Code',
+  depositProductName: 'Product Name',
+  depositNature: 'Nature',
+  depositInterest: 'Interest',
+  depositCreatedDate: 'Created Date',
+
+  shareAndAccountNote:
+    'Note: Bonus that can be transferred to share will be transferred to Share and remianing will be transferred to the account',
+  sharePaidUpShare: 'Paid Up Share',
+  shareToFundLedgerMappingSubtitle: 'Ledger where the share purchase is mapped',
+  shareToFundLedgerMapping: 'Share Ledger Mapping',
+  shareTransferLedgerName: 'Ledger Name',
+  shareFundAccountName: 'Share Account Name',
+  shareFund: 'Share Fund',
+
+  warehouseTableReceived: 'Received',
+  warehouseTableEditMember: 'Edit Member',
+  warehouseTableMakeInactive: 'Make Inactive',
+
+  // warehouseTransferTable
+  warehouseTranserDate: 'Date',
+  warehouseTranserEntryNo: 'Entry No',
+  warehouseTranserReference: 'Reference',
+  warehouseTranserSourceWarehouse: 'Source Warehouse',
+  warehouseTranserDestinationWarehouse: 'Destination Warehouse',
+  warehouseTranserStatus: 'Status ',
+
+  kymCoopVDCLocalGov: 'Local Government',
+  kymCoopSelectLocalGov: 'Select Local Government',
+  kymIndWriteStudentVISA: 'Write 0 if Student VISA',
 };
 
 export default en;

@@ -18,7 +18,7 @@ export function FieldCardComponents({
       p="s16"
       bg="background.500"
       borderRadius="br2"
-      gap="10px"
+      gap="s10"
     >
       {children}
     </Grid>

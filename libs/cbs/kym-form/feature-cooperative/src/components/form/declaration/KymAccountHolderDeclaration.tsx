@@ -1,8 +1,9 @@
 import React from 'react';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormFileInput } from '@coop/shared/form';
-import { Text, Box } from '@coop/shared/ui';
 import { Grid, GridItem } from '@chakra-ui/react';
+
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormFileInput, FormInput } from '@coop/shared/form';
+import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KymAccountHolderDeclaration = () => {

@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import { Column, Table } from '@coop/shared/ui';
 
 export const FamilyMemberTable = () => {
@@ -26,6 +27,27 @@ export const FamilyMemberTable = () => {
   ];
 
   const rowData = useMemo(() => data ?? [], [data]);
+
+  // const columns = useMemo<Column<typeof rowData[0]>[]>(
+  //   () => [
+  //     {
+  //       header: 'SN',
+  //       accessorFn: (row) => row.id,
+  //       maxWidth: 4,
+  //       disableSortBy: false,
+  //     },
+  //     {
+  //       header: 'Relationship',
+  //       accessorFn: (row) => row.relationship,
+  //     },
+  //     {
+  //       header: 'Full Name',
+  //       accessorFn: (row) => row.fullName,
+  //       width: '80%',
+  //     },
+  //   ],
+  //   []
+  // );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import { Form, FormFooter } from '@coop/myra/components';
+import { FieldCardComponents } from '@coop/shared/components';
 import {
   Payment_Mode,
   ShareReturnInput,
@@ -392,108 +393,107 @@ const ShareReturn = () => {
                   </GridItem>
 
                   {noOfShares ? (
-                    <GridItem>
-                      <Box
-                        h="100%"
-                        borderRadius="br2"
-                        p="s16"
-                        bg="background.500"
+                    <FieldCardComponents rows={'repeat(4,1fr)'}>
+                      <GridItem
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
                       >
-                        <Grid templateRows="repeat(4,1fr)">
-                          <GridItem>
-                            <Box display="flex" justifyContent="space-between">
-                              <Text
-                                color="neutralLightColor.Gray-60"
-                                fontWeight="Medium"
-                                fontSize="s3"
-                              >
-                                {t['shareReturnWithdrawAmount']}
-                              </Text>
+                        <Text
+                          color="neutralLightColor.Gray-60"
+                          fontWeight="Medium"
+                          fontSize="s3"
+                        >
+                          {t['shareReturnWithdrawAmount']}
+                        </Text>
 
-                              <Text
-                                color="neutralLightColor.Gray-80"
-                                fontWeight="SemiBold"
-                                fontSize="r1"
-                              >
-                                {noOfShares * 100}
-                              </Text>
-                            </Box>
-                          </GridItem>
+                        <Box p="s12">
+                          <Text
+                            color="neutralLightColor.Gray-80"
+                            fontWeight="SemiBold"
+                            fontSize="r1"
+                          >
+                            {noOfShares * 100}
+                          </Text>
+                        </Box>
+                      </GridItem>
 
-                          <GridItem>
-                            <Box
-                              mb="10px"
-                              display="flex"
-                              justifyContent="space-between"
-                            >
-                              <Text
-                                color="neutralLightColor.Gray-60"
-                                fontWeight="Medium"
-                                fontSize="s3"
-                                display="flex"
-                                alignItems="center"
-                              >
-                                {t['shareReturnAdministrationFees']}
-                              </Text>
-                              <FormInput
-                                name="adminFee"
-                                label=""
-                                placeholder="34000.00"
-                                textAlign="right"
-                                bg="gray.0"
-                              />
-                            </Box>
-                          </GridItem>
+                      <GridItem
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Text
+                          color="neutralLightColor.Gray-60"
+                          fontWeight="Medium"
+                          fontSize="s3"
+                        >
+                          {t['shareReturnAdministrationFees']}
+                        </Text>
+                        <Box width="300px">
+                          <FormInput
+                            name="adminFee"
+                            label=""
+                            placeholder="34000.00"
+                            textAlign="right"
+                            bg="gray.0"
+                          />
+                        </Box>
+                      </GridItem>
 
-                          {/* todo */}
-                          <GridItem>
-                            <Box display="flex" justifyContent="space-between">
-                              <Text
-                                color="neutralLightColor.Gray-60"
-                                fontWeight="Medium"
-                                fontSize="s3"
-                                display="flex"
-                                alignItems="center"
-                              >
-                                {t['shareReturnPrintingFees']}
-                              </Text>
-                              <FormInput
-                                name="printingFee"
-                                label=""
-                                placeholder="54.00"
-                                bg="gray.0"
-                                textAlign="right"
-                              />
-                            </Box>
-                          </GridItem>
+                      {/* todo */}
+                      <GridItem
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Text
+                          color="neutralLightColor.Gray-60"
+                          fontWeight="Medium"
+                          fontSize="s3"
+                        >
+                          {t['shareReturnPrintingFees']}
+                        </Text>
+                        <Box width="300px">
+                          <FormInput
+                            name="printingFee"
+                            label=""
+                            placeholder="54.00"
+                            bg="gray.0"
+                            textAlign="right"
+                          />
+                        </Box>
+                      </GridItem>
 
-                          <GridItem mt="22px">
-                            <Box display="flex" justifyContent="space-between">
-                              <Text
-                                color="neutralLightColor.Gray-80"
-                                fontWeight="600"
-                                fontSize="s3"
-                              >
-                                {t['shareReturnTotalAmount']}
-                              </Text>
+                      <GridItem
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Text
+                          color="neutralLightColor.Gray-80"
+                          fontWeight="600"
+                          fontSize="s3"
+                        >
+                          {t['shareReturnTotalAmount']}
+                        </Text>
 
-                              <Text
-                                color="neutralLightColor.Gray-80"
-                                fontWeight="SemiBold"
-                                fontSize="r1"
-                              >
-                                {t['rs']}{' '}
-                                {adminFees && printingFees
-                                  ? noOfShares * 1000 +
-                                    Number(adminFees) +
-                                    Number(printingFees)
-                                  : 0.0}
-                              </Text>
-                            </Box>
-                          </GridItem>
-                        </Grid>
-                      </Box>
-                    </GridItem>
+                        <Box p="s12">
+                          <Text
+                            color="neutralLightColor.Gray-80"
+                            fontWeight="SemiBold"
+                            fontSize="r1"
+                          >
+                            {t['rs']}{' '}
+                            {adminFees && printingFees
+                              ? noOfShares * 1000 +
+                                Number(adminFees) +
+                                Number(printingFees)
+                              : 0.0}
+                          </Text>
+                        </Box>
+                      </GridItem>
+                    </FieldCardComponents>
                   ) : null}
                 </Grid>
               </Box>
