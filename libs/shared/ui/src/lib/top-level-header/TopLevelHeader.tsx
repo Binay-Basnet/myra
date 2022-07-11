@@ -364,7 +364,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               />
             </Link>
 
-            <Popover placement="bottom-end" gutter={3}>
+            <Popover placement="left-start" gutter={3}>
               {({ isOpen }) => (
                 <>
                   <PopoverTrigger>

@@ -1974,6 +1974,15 @@ const en: Record<string, string> = {
   neoClientTableViewClientProfile: 'View Client Profile',
   neoClientTableEditClient: 'Edit Client',
   neoClientTableMakeInactive: 'Make Inactive',
+
+  //accounting
+  //purchase sidebar
+  accountingPurchaseSidebarPurchase: 'Purchase',
+  accountingPurchaseSidebarCreate: 'Create',
+  accountingPurchaseSidebarPurchaseList: 'Purchase List',
+  accountingPurchaseSidebarExpenses: 'Expenses',
+  accountingPurchaseSidebarDebitNote: 'Debit Note',
+  accountingPurchaseSidebarSupplierPayment: 'Supplier Note',
 };
 
 export default en;
