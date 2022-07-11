@@ -3,9 +3,18 @@ import { BiSave } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
 
-import { DividerContainer } from '@coop/accounting/ui-components';
+import {
+  BoxContainer,
+  DividerContainer,
+  InputGroupContainer,
+} from '@coop/accounting/ui-components';
 import { FieldCardComponents } from '@coop/shared/components';
-import { FormInput, FormTextArea } from '@coop/shared/form';
+import {
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -18,16 +27,23 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { AddToInventory, PurchaseDetails, TDS } from '../components';
-
 /* eslint-disable-next-line */
-export interface AccountingFeaturePurchaseAddProps {}
+export interface AccountingFeaturePurchaseAddExpensesProps {}
 
-export function AccountingFeaturePurchaseAdd(
-  props: AccountingFeaturePurchaseAddProps
+export function AccountingFeaturePurchaseAddExpenses(
+  props: AccountingFeaturePurchaseAddExpensesProps
 ) {
   const { t } = useTranslation();
   const methods = useForm();
+
+  const { watch } = methods;
+
+  const tds = watch('tds');
+
+  const booleanList = [
+    { label: 'Yes', value: 'Yes' },
+    { label: 'No', value: 'No' },
+  ];
 
   return (
     <>
@@ -47,7 +63,7 @@ export function AccountingFeaturePurchaseAdd(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Purchase Entry
+            New Expense
           </Text>
           <IconButton
             variant={'ghost'}
@@ -61,8 +77,29 @@ export function AccountingFeaturePurchaseAdd(
           <form>
             <Box bg="white" p="s20">
               <DividerContainer>
-                <PurchaseDetails />
-                <AddToInventory />
+                <BoxContainer>
+                  <InputGroupContainer>
+                    <GridItem colSpan={2}>
+                      <FormInput
+                        name="supplierName"
+                        type="text"
+                        label="Supplier Name"
+                        placeholder="Supplier Name"
+                      />
+                    </GridItem>
+
+                    <FormInput name="date" type="date" label="Date" />
+
+                    <FormInput name="dueDate" type="date" label="Due Date" />
+
+                    <FormInput
+                      name="reference"
+                      type="text"
+                      label="Reference"
+                      placeholder="Reference"
+                    />
+                  </InputGroupContainer>
+                </BoxContainer>
 
                 <Box
                   display="grid"
@@ -170,7 +207,41 @@ export function AccountingFeaturePurchaseAdd(
                   </FieldCardComponents>
                 </Box>
 
-                <TDS />
+                <BoxContainer>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="s3" fontWeight="500" color="gray.700">
+                      TDS
+                    </Text>
+
+                    <FormSwitchTab options={booleanList} name="tds" />
+                  </Box>
+
+                  {tds === 'Yes' && (
+                    <InputGroupContainer>
+                      <FormSelect
+                        name="tdsAccount"
+                        label={'TDS Account'}
+                        placeholder={'TDS Account'}
+                        options={[]}
+                      />
+
+                      <FormSelect
+                        name="tdsType"
+                        label={'TDS Type'}
+                        placeholder={'TDS Type'}
+                        options={[]}
+                      />
+
+                      <FormInput
+                        name="tdsAmount"
+                        type="number"
+                        label="TDS Amount"
+                        textAlign={'right'}
+                        placeholder="0.00"
+                      />
+                    </InputGroupContainer>
+                  )}
+                </BoxContainer>
               </DividerContainer>
             </Box>
           </form>
