@@ -37,11 +37,11 @@ export const SalesDetails = () => {
           label="Due Date"
           placeholder="DD-MM-YYYY"
         />
-        <FormSelect
+        {/* <FormSelect
           name="wareHouse"
           label="Warehouse"
           placeholder="Select Warehouse"
-        />
+        /> */}
       </InputGroupContainer>
     </BoxContainer>
   );

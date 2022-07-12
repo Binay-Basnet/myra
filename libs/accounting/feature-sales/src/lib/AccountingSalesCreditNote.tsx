@@ -35,7 +35,7 @@ import {
 } from '../components/form-components/creditNote';
 
 /* eslint-disable-next-line */
-export interface CbsAccountOpenFormProps {}
+interface CbsAccountOpenFormProps {}
 
 export function CreditNoteForm(props: CbsAccountOpenFormProps) {
   const { t } = useTranslation();
