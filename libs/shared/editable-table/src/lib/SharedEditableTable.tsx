@@ -25,6 +25,12 @@ export interface EditableTableProps<T> {
   columns: Column<T>[];
 }
 
+const cellWidthObj = {
+  lg: '30%',
+  md: '20%',
+  sm: '15%',
+};
+
 export function EditableTable<T>({
   columns,
   defaultData,
@@ -42,7 +48,7 @@ export function EditableTable<T>({
         bg="gray.700"
         color="white"
       >
-        <Box w="s36" />
+        <Box w="s36" flexShrink={0} />
         {columns
           .filter((column) => !column.hidden)
           .map((column) => (
@@ -51,14 +57,19 @@ export function EditableTable<T>({
               fontSize="r1"
               textAlign={column.isNumeric ? 'right' : 'left'}
               px="s8"
+              flexGrow={column.cellWidth === 'auto' ? 1 : 0}
               flexBasis={
-                100 / columns.filter((column) => !column.hidden).length + '%'
+                column.cellWidth === 'auto'
+                  ? '100%'
+                  : column.cellWidth
+                  ? cellWidthObj[column.cellWidth]
+                  : '30%'
               }
             >
               {column.header}
             </Box>
           ))}
-        <Box w="s36" />
+        <Box w="s36" flexShrink={0} />
       </Flex>
 
       <Box
@@ -71,59 +82,56 @@ export function EditableTable<T>({
         {defaultData?.map((data, index) => (
           <HStack
             w="100%"
-            h="36px"
+            minH="36px"
             overflow="hidden"
-            alignItems="center"
+            alignItems="stretch"
             bg="white"
             spacing={0}
             borderBottom="1px"
             borderBottomColor="border.layout"
-            divider={
-              <Divider orientation="vertical" borderColor="border.layout" />
-            }
           >
-            <Box w="s36" h="s36" />
+            <Box w="s36" minH="s36" flexShrink={0} />
             {columns
               .filter((column) => !column.hidden)
               .map((column) => (
-                <Box
+                <Editable
+                  w="100%"
+                  minH="inherit"
                   display="flex"
                   alignItems="center"
                   justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
-                  height="100%"
                   fontSize="r1"
+                  borderLeft="1px"
+                  borderLeftColor="border.layout"
                   flexGrow={column.cellWidth === 'auto' ? 1 : 0}
-                  // flexBasis={
-                  //   100 / columns.filter((column) => !column.hidden).length +
-                  //   '%'
-                  // }
+                  flexBasis={
+                    column.cellWidth === 'auto'
+                      ? '100%'
+                      : column.cellWidth
+                      ? cellWidthObj[column.cellWidth]
+                      : '30%'
+                  }
                   textAlign={column.isNumeric ? 'right' : 'left'}
+                  defaultValue={data[column.accessor] as string}
                 >
-                  {/* {data[column.accessor] as string} */}
-                  <Editable
-                    w="100%"
-                    defaultValue={data[column.accessor] as string}
-                  >
-                    <Box px="s8">
-                      <EditablePreview />
-                    </Box>
+                  <EditablePreview width="100%" px="s8" />
 
-                    <Input
-                      py="0"
-                      h="s36"
-                      w="100%"
-                      px="s8"
-                      bg="gray.100"
-                      _focus={{ boxShadow: 'none' }}
-                      _focusWithin={{ boxShadow: 'none' }}
-                      border="none"
-                      borderRadius="0"
-                      as={EditableInput}
-                    />
-                  </Editable>
-                </Box>
+                  <Input
+                    py="0"
+                    h="100%"
+                    w="100%"
+                    px="s8"
+                    minH="inherit"
+                    bg="gray.100"
+                    _focus={{ boxShadow: 'none' }}
+                    _focusWithin={{ boxShadow: 'none' }}
+                    border="none"
+                    borderRadius="0"
+                    as={EditableInput}
+                  />
+                </Editable>
               ))}
-            <Box w="s36" h="s36" />
+            <Box w="s36" h="s36" flexShrink={0} />
           </HStack>
         ))}
       </Box>
