@@ -123,13 +123,6 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
                     />
 
                     <FormInput name="dueDate" type="date" label="Due Date" />
-
-                    <FormInput
-                      name="warehouse"
-                      type="text"
-                      label="Warehouse"
-                      placeholder="Warehouse"
-                    />
                   </InputGroupContainer>
                 </BoxContainer>
 
