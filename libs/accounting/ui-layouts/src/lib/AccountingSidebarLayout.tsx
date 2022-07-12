@@ -2,23 +2,18 @@ import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
-import {
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-} from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 
 import { TabColumn } from '@coop/myra/components';
 import {
   Box,
-  Button,
+  // Button,
   Divider,
   Icon,
-  //   Popover,
-  //   PopoverBody,
-  //   PopoverContent,
-  //   PopoverTrigger,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -68,13 +63,13 @@ export const AccountingSidebarLayout = ({
         </Text>
         <Divider my="s16" />
 
-        <Popover placement="bottom-start">
+        <Popover placement="bottom-start" gutter={3}>
           <PopoverTrigger>
             <Button
               width="full"
               size="lg"
               justifyContent="start"
-              leftIcon={<AddIcon h="11px" />}
+              leftIcon={<AddIcon />}
             >
               {t['accountingAccountingSidebarCreate']}
             </Button>
@@ -82,19 +77,13 @@ export const AccountingSidebarLayout = ({
 
           <PopoverContent
             // bg="gray.0"
-            w="275px"
-            h="auto"
-            px="s12"
-            py="s24"
-            border="none"
-            boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
-            outline={'none'}
+            p={0}
+            w="225px"
             _focus={{
-              boxShadow:
-                '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
+              boxShadow: 'none',
             }}
           >
-            <PopoverBody>
+            <PopoverBody p={0}>
               <Box>
                 <Button
                   width="full"
@@ -102,7 +91,9 @@ export const AccountingSidebarLayout = ({
                   justifyContent="start"
                   leftIcon={<AddIcon h="11px" />}
                   variant="ghost"
-                  onClick={() => router.push('/accounting/purchase/add')}
+                  onClick={() =>
+                    router.push('/accounting/accounting/journal-vouchers/add')
+                  }
                 >
                   {'Journal Voucher'}
                 </Button>
@@ -114,7 +105,7 @@ export const AccountingSidebarLayout = ({
                   leftIcon={<AddIcon h="11px" />}
                   variant="ghost"
                   onClick={() =>
-                    router.push('/accounting/purchase/expenses/add')
+                    router.push('/accounting/accounting/cash-transfer/add')
                   }
                 >
                   {'Cash Transfer'}
@@ -127,7 +118,7 @@ export const AccountingSidebarLayout = ({
                   leftIcon={<AddIcon h="11px" />}
                   variant="ghost"
                   onClick={() =>
-                    router.push('/accounting/purchase/debit-note/add')
+                    router.push('/accounting/accounting/quick-payment/add')
                   }
                 >
                   {'Quick Payment'}
@@ -140,7 +131,20 @@ export const AccountingSidebarLayout = ({
                   leftIcon={<AddIcon h="11px" />}
                   variant="ghost"
                   onClick={() =>
-                    router.push('/accounting/purchase/supplier-payment/add')
+                    router.push('/accounting/accounting/quick-receipt/add')
+                  }
+                >
+                  {'Quick Receipt'}
+                </Button>
+
+                <Button
+                  width="full"
+                  size="lg"
+                  justifyContent="start"
+                  leftIcon={<AddIcon h="11px" />}
+                  variant="ghost"
+                  onClick={() =>
+                    router.push('/accounting/accounting/bank-accounts/add')
                   }
                 >
                   {'Bank Accounts'}
@@ -153,7 +157,7 @@ export const AccountingSidebarLayout = ({
                   leftIcon={<AddIcon h="11px" />}
                   variant="ghost"
                   onClick={() =>
-                    router.push('/accounting/purchase/supplier-payment/add')
+                    router.push('/accounting/accounting/charts-of-accounts/add')
                   }
                 >
                   {'Charts of Accounts'}

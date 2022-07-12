@@ -2,23 +2,18 @@ import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
-import {
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-} from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 
 import { TabColumn } from '@coop/myra/components';
 import {
   Box,
-  Button,
+  // Button,
   Divider,
   Icon,
-  //   Popover,
-  //   PopoverBody,
-  //   PopoverContent,
-  //   PopoverTrigger,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -60,43 +55,23 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
 
         <Popover placement="bottom-start" gutter={3}>
           <PopoverTrigger>
-            {/* <Button
+            <Button
               width="full"
               size="lg"
               justifyContent="start"
-              leftIcon={<AddIcon h="11px" />}
+              leftIcon={<AddIcon />}
             >
               {t['accountingPurchaseSidebarCreate']}
-            </Button> */}
-
-            <Box
-              as="button"
-              display={'flex'}
-              flexDirection="row"
-              gap="8px"
-              px="s16"
-              bg="primary.500"
-              _hover={{ bg: 'primary.600' }}
-              w="227px"
-              h="48px"
-              borderRadius={'4px'}
-              alignItems="center"
-            >
-              {/* <Text fontSize={'r3'} fontWeight="500" color={'white'}>
-                +
-              </Text> */}
-
-              <Icon as={AddIcon} size="sm" color="white" fontWeight={'500'} />
-              <Text fontSize={'r1'} fontWeight="500" color={'white'}>
-                {t['accountingPurchaseSidebarCreate']}
-              </Text>
-            </Box>
+            </Button>
           </PopoverTrigger>
 
           <PopoverContent
             // bg="gray.0"
             p={0}
             w="225px"
+            _focus={{
+              boxShadow: 'none',
+            }}
           >
             <PopoverBody p={0}>
               <Box>
@@ -105,7 +80,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                   borderRadius={'none'}
                   size="lg"
                   justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
+                  leftIcon={<AddIcon />}
                   variant="ghost"
                   onClick={() => router.push('/accounting/purchase/add')}
                 >
@@ -117,7 +92,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                   size="lg"
                   borderRadius={'none'}
                   justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
+                  leftIcon={<AddIcon />}
                   variant="ghost"
                   onClick={() =>
                     router.push('/accounting/purchase/expenses/add')
@@ -131,7 +106,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                   size="lg"
                   borderRadius={'none'}
                   justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
+                  leftIcon={<AddIcon />}
                   variant="ghost"
                   onClick={() =>
                     router.push('/accounting/purchase/debit-note/add')
@@ -145,7 +120,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                   size="lg"
                   justifyContent="start"
                   borderRadius={'none'}
-                  leftIcon={<AddIcon h="11px" />}
+                  leftIcon={<AddIcon />}
                   variant="ghost"
                   onClick={() =>
                     router.push('/accounting/purchase/supplier-payment/add')
