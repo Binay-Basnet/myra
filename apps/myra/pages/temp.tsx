@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 
 import { EditableTable } from '@coop/shared/editable-table';
 
-interface SalesTable {
+type SalesTable = {
   product: string;
   quantity: number;
   rate: number;
@@ -11,11 +11,11 @@ interface SalesTable {
   product_description?: string;
   warehouse_partition?: string;
   sales_ledger?: string;
-}
+};
 
 const Temp = () => {
   return (
-    <Box p="s8">
+    <Box p="s16" bg="white" minH="100vh">
       <EditableTable<SalesTable>
         defaultData={[
           {
@@ -45,6 +45,7 @@ const Temp = () => {
             accessor: 'product',
             header: 'Product',
             cellWidth: 'auto',
+            fieldType: 'search',
           },
           {
             accessor: 'quantity',
