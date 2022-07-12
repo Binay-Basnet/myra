@@ -1,11 +1,11 @@
 import { ReactElement } from 'react';
 
-import { AccountingFeaturePurchaseAddSupplierNote } from '@coop/accounting/purchase';
+import { AccountingFeaturePurchaseAddSupplierPayment } from '@coop/accounting/purchase';
 import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
 const AccountingPurchaseSupplierPayment = () => {
-  return <AccountingFeaturePurchaseAddSupplierNote />;
+  return <AccountingFeaturePurchaseAddSupplierPayment />;
 };
 
 AccountingPurchaseSupplierPayment.getLayout = function getLayout(
