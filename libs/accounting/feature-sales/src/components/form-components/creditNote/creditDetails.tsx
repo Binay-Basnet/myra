@@ -1,35 +1,34 @@
-import {
-  InputGroupContainer,
-  BoxContainer,
-} from '@coop/accounting/ui-components';
 import React from 'react';
 
+import {
+  BoxContainer,
+  InputGroupContainer,
+} from '@coop/accounting/ui-components';
 // import debounce from 'lodash/debounce';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
 
-export const SalesDetails = () => {
+export const CreditNoteDetails = () => {
   return (
     <BoxContainer>
       <InputGroupContainer>
         <GridItem colSpan={2}>
-          <FormInput
+          <FormSelect
             name="customerName"
-            type="number"
             label="Customer Name"
             placeholder="Select Customer"
           />
         </GridItem>
         <FormInput
-          name="supplierInvoiceRefrence"
+          name="invoiceRefrence"
           type="number"
-          label="Supplier Invoice Reference"
-          placeholder="Enter Supplier Invoice Reference"
+          label="Invoice Reference"
+          placeholder="Enter Invoice Reference"
         />
         <FormInput
-          name="invoiceDate"
+          name="date"
           type="date"
-          label="Invoice Date"
+          label="Date"
           placeholder="DD-MM-YYYY"
         />
         <FormInput
@@ -39,9 +38,9 @@ export const SalesDetails = () => {
           placeholder="DD-MM-YYYY"
         />
         <FormSelect
-          name="wareHouse"
-          label="Warehouse"
-          placeholder="Select Warehouse"
+          name="invoiceReference2"
+          label="Invoice Reference"
+          placeholder="Invoice Reference"
         />
       </InputGroupContainer>
     </BoxContainer>
