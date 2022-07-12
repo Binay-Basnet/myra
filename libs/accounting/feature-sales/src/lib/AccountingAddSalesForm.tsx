@@ -42,21 +42,6 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
   const { t } = useTranslation();
   const methods = useForm();
 
-  const daysList = [
-    { label: t['accSunday'], value: 'sunday' },
-    { label: t['accMonday'], value: 'monday' },
-    { label: t['accTuesday'], value: 'tuesday' },
-    { label: t['accWednesday'], value: 'wednesday' },
-    { label: t['accThursday'], value: 'thursday' },
-    { label: t['accFriday'], value: 'friday' },
-    { label: t['accSaturday'], value: 'saturday' },
-  ];
-
-  const monthlyList = [
-    { label: t['accDay'], value: 'day' },
-    { label: t['accDayOfWeek'], value: 'dayOfWeek' },
-  ];
-
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">

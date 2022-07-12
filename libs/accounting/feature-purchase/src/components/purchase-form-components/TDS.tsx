@@ -5,7 +5,7 @@ import {
   InputGroupContainer,
 } from '@coop/accounting/ui-components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 
 const booleanList = [
   { label: 'Yes', value: 'Yes' },

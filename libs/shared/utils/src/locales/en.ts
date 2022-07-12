@@ -1994,6 +1994,7 @@ const en: Record<string, string> = {
   kymCoopVDCLocalGov: 'Local Government',
   kymCoopSelectLocalGov: 'Select Local Government',
   kymIndWriteStudentVISA: 'Write 0 if Student VISA',
+
   //accounting
   //purchase sidebar
   accountingPurchaseSidebarPurchase: 'Purchase',
@@ -2004,6 +2005,24 @@ const en: Record<string, string> = {
   accountingPurchaseSidebarSupplierPayment: 'Supplier Note',
 
   settingsMemberNominee: 'Nominee',
+  accountingPurchaseSidebarSupplierPayment: 'Supplier Payment',
+
+  //accounting sidebar
+  accountingAccountingSidebarAccounting: 'Accounting',
+  accountingAccountingSidebarCreate: 'Create',
+  accountingAccountingSidebarJournalVouchers: 'Journal Vouchers',
+  accountingAccountingSidebarCashTransfer: 'Cash Transfer',
+  accountingAccountingSidebarQuickPayment: 'Quick Payment',
+  accountingAccountingSidebarQuickReceipt: 'Quick Receipt',
+  accountingAccountingSidebarBankAccounts: 'Bank Accounts',
+  accountingAccountingSidebarChartsOfAccounts: 'Charts of Account',
+  //acouting sales sidebar
+  accountingsales: 'Sales',
+  accountingSalesCreate: 'Create',
+  accountingSalesSettings: 'Sales Settings',
+  salesList: 'Sales List',
+  creditNote: 'Credit Note',
+  customerPayment: 'Customer Payment',
 };
 
 export default en;

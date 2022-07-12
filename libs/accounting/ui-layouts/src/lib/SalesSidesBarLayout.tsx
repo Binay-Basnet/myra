@@ -3,10 +3,9 @@ import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
+import { TabColumn } from '@coop/myra/components';
 import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-import { TabColumn } from '@coop/myra/components';
 
 interface ISalesLayoutProps {
   children: React.ReactNode;
@@ -14,16 +13,16 @@ interface ISalesLayoutProps {
 
 const inventoryColumns = [
   {
-    title: 'itemsList',
-    link: '/inventory/items',
+    title: 'salesList',
+    link: '/accounting/sales/list',
   },
   {
-    title: 'itemsCategory',
-    link: '/inventory/items/category',
+    title: 'creditNote',
+    link: '/accounting/sales/credit-note/list',
   },
   {
-    title: 'itemUnits',
-    link: '/inventory/items/units',
+    title: 'customerPayment',
+    link: '/accounting/sales/customer-payment/list',
   },
 ];
 
@@ -35,7 +34,7 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
     <Box display="flex">
       <Box width="275px" p="s24" flexShrink={0} position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
-          {t['items']}
+          {t['accountingsales']}
         </Text>
         <Divider my="s16" />
         <Button
@@ -47,7 +46,7 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
             router.push('/accounting/sales/add');
           }}
         >
-          {t['addItems']}
+          {t['accountingSalesCreate']}
         </Button>
         <Divider my="s16" />
         <TabColumn list={inventoryColumns} />
@@ -63,18 +62,17 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          {t['itemInventorySettings']}
+          {t['accountingSalesSettings']}
         </Button>
       </Box>
       <Box
         width="calc(100% - 275px)"
-        overflowX="hidden"
         position="relative"
         left="275px"
+        minH="calc(100vh - 110px)"
+        bg="white"
       >
-        <Box bg="white" minHeight="100vh">
-          {children}
-        </Box>
+        {children}
       </Box>
     </Box>
   );

@@ -9,12 +9,7 @@ import {
   InputGroupContainer,
 } from '@coop/accounting/ui-components';
 import { FieldCardComponents } from '@coop/shared/components';
-import {
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-  FormTextArea,
-} from '@coop/shared/form';
+import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -63,7 +58,7 @@ export function AccountingFeaturePurchaseAddDebitNote(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Expense
+            New Debit Note
           </Text>
           <IconButton
             variant={'ghost'}
@@ -75,29 +70,25 @@ export function AccountingFeaturePurchaseAddDebitNote(
 
         <FormProvider {...methods}>
           <form>
-            <Box bg="white" p="s20">
+            <Box bg="white" p="s20" minH="calc(100vh - 220px)">
               <DividerContainer>
                 <BoxContainer>
                   <InputGroupContainer>
-                    <GridItem colSpan={2}>
-                      <FormInput
-                        name="supplierName"
-                        type="text"
-                        label="Supplier Name"
-                        placeholder="Supplier Name"
-                      />
-                    </GridItem>
-
-                    <FormInput name="date" type="date" label="Date" />
-
-                    <FormInput name="dueDate" type="date" label="Due Date" />
+                    <FormSelect
+                      name="supplierName"
+                      label={'Supplier Name'}
+                      placeholder={'Supplier Name'}
+                      options={[]}
+                    />
 
                     <FormInput
-                      name="reference"
+                      name="billReference"
                       type="text"
-                      label="Reference"
-                      placeholder="Reference"
+                      label="Bill Reference"
+                      placeholder="Enter Bill Reference"
                     />
+
+                    <FormInput name="date" type="date" label="Date" />
                   </InputGroupContainer>
                 </BoxContainer>
 
@@ -129,27 +120,6 @@ export function AccountingFeaturePurchaseAddDebitNote(
                       >
                         2,000.00
                       </Text>
-                    </GridItem>
-
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
-                        {t['invFormDiscount']}
-                      </Text>
-
-                      <Box width="200px">
-                        <FormInput
-                          width="100%"
-                          name="adminFee"
-                          label=""
-                          placeholder="34000.00"
-                          textAlign="right"
-                          bg="gray.0"
-                        />
-                      </Box>
                     </GridItem>
 
                     <GridItem display="flex" justifyContent="space-between">
@@ -206,42 +176,6 @@ export function AccountingFeaturePurchaseAddDebitNote(
                     </GridItem>
                   </FieldCardComponents>
                 </Box>
-
-                <BoxContainer>
-                  <Box display="flex" justifyContent="space-between">
-                    <Text fontSize="s3" fontWeight="500" color="gray.700">
-                      TDS
-                    </Text>
-
-                    <FormSwitchTab options={booleanList} name="tds" />
-                  </Box>
-
-                  {tds === 'Yes' && (
-                    <InputGroupContainer>
-                      <FormSelect
-                        name="tdsAccount"
-                        label={'TDS Account'}
-                        placeholder={'TDS Account'}
-                        options={[]}
-                      />
-
-                      <FormSelect
-                        name="tdsType"
-                        label={'TDS Type'}
-                        placeholder={'TDS Type'}
-                        options={[]}
-                      />
-
-                      <FormInput
-                        name="tdsAmount"
-                        type="number"
-                        label="TDS Amount"
-                        textAlign={'right'}
-                        placeholder="0.00"
-                      />
-                    </InputGroupContainer>
-                  )}
-                </BoxContainer>
               </DividerContainer>
             </Box>
           </form>

@@ -19,26 +19,26 @@ export const CreditNoteDetails = () => {
             placeholder="Select Customer"
           />
         </GridItem>
-        <FormInput
+        {/* <FormInput
           name="invoiceRefrence"
           type="number"
           label="Invoice Reference"
           placeholder="Enter Invoice Reference"
-        />
+        /> */}
         <FormInput
           name="date"
           type="date"
           label="Date"
           placeholder="DD-MM-YYYY"
         />
-        <FormInput
+        {/* <FormInput
           name="dueDate"
           type="date"
           label="Due Date"
           placeholder="DD-MM-YYYY"
-        />
+        /> */}
         <FormSelect
-          name="invoiceReference2"
+          name="invoiceReference"
           label="Invoice Reference"
           placeholder="Invoice Reference"
         />

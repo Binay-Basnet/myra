@@ -1,0 +1,25 @@
+{
+  "root": "libs/accounting/feature-loan",
+  "sourceRoot": "libs/accounting/feature-loan/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/accounting/feature-loan/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/accounting/feature-loan"],
+      "options": {
+        "jestConfig": "libs/accounting/feature-loan/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
