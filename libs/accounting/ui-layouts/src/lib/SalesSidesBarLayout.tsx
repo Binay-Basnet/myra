@@ -67,13 +67,12 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
       </Box>
       <Box
         width="calc(100% - 275px)"
-        overflowX="hidden"
         position="relative"
         left="275px"
+        minH="calc(100vh - 110px)"
+        bg="white"
       >
-        <Box bg="white" minHeight="100vh">
-          {children}
-        </Box>
+        {children}
       </Box>
     </Box>
   );
