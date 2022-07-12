@@ -34,15 +34,15 @@ const purchaseColumns = [
   },
   {
     title: 'accountingPurchaseSidebarExpenses',
-    link: '/accounting/purchase/expenses',
+    link: '/accounting/purchase/expenses/list',
   },
   {
     title: 'accountingPurchaseSidebarDebitNote',
-    link: '/accounting/purchase/debit-note',
+    link: '/accounting/purchase/debit-note/list',
   },
   {
     title: 'accountingPurchaseSidebarSupplierPayment',
-    link: '/accounting/purchase/supplier-payment',
+    link: '/accounting/purchase/supplier-payment/list',
   },
 ];
 

@@ -1982,7 +1982,7 @@ const en: Record<string, string> = {
   accountingPurchaseSidebarPurchaseList: 'Purchase List',
   accountingPurchaseSidebarExpenses: 'Expenses',
   accountingPurchaseSidebarDebitNote: 'Debit Note',
-  accountingPurchaseSidebarSupplierPayment: 'Supplier Note',
+  accountingPurchaseSidebarSupplierPayment: 'Supplier Payment',
 };
 
 export default en;
