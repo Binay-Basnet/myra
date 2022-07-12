@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { format } from 'date-fns';
 
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
@@ -104,10 +103,7 @@ export function MemberListPage() {
       },
       {
         header: t['memberListDateJoined'],
-        accessorFn: (row) =>
-          row?.node?.dateJoined
-            ? format(new Date(row?.node?.dateJoined), 'yyyy-MM-dd')
-            : 'N/A',
+        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
         id: '_actions',

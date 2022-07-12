@@ -67,7 +67,12 @@ export const Interest = () => {
         <FormSelect
           name="postingFrequency"
           label="Posting Frequency"
-          placeholder="0.00"
+          placeholder="Select Posting Frequency"
+        />
+        <FormSelect
+          name="interestMethod"
+          label="Interest Method"
+          placeholder="Select Interest Method"
         />
       </InputGroupContainer>
       <Box

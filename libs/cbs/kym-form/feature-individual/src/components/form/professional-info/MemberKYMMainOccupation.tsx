@@ -256,6 +256,7 @@ export const MemberKYMMainOccupation = () => {
               name={`foreignEstimatedAnnualIncome`}
               id="estimatedAnnualIncome"
               label={t['kymIndEstimatedAnnualIncome']}
+              helperText={t['kymIndWriteStudentVISA']}
               placeholder="0.00"
             />
           </GridItem>
