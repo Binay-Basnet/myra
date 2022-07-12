@@ -498,7 +498,6 @@ const en: Record<string, string> = {
   settingsMemberFinancialTransactionDetails: 'Financial Transaction Details',
 
   settingsMemberSection4Declaration: 'Section 4: Declaration',
-  settingsMemberNextToKinInformation: 'Next to Kin Information',
   settingsMemberForeignEmploymentOptions: 'Foreign Employment Options',
   settingsMemberFileUploads: 'File Uploads',
   settingsMemberDeclaration: 'Declaration',
@@ -2003,6 +2002,8 @@ const en: Record<string, string> = {
   accountingPurchaseSidebarExpenses: 'Expenses',
   accountingPurchaseSidebarDebitNote: 'Debit Note',
   accountingPurchaseSidebarSupplierPayment: 'Supplier Note',
+
+  settingsMemberNominee: 'Nominee',
 };
 
 export default en;

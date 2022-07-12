@@ -53,6 +53,7 @@ export const MaximumTenure = () => {
     resetField('maximumTenureNumber');
     setRightElement(maxTenureUnit);
   }, [maxTenureUnit]);
+
   return (
     <BoxContainer>
       <Box display={'flex'} justifyContent="space-between">
@@ -91,7 +92,11 @@ export const MaximumTenure = () => {
               textAlign={'right'}
               label="Number"
               placeholder="Enter number"
-              rightElement={rightElement}
+              rightElement={
+                <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
+                  {rightElement}
+                </Text>
+              }
             />
           </Box>
         </BoxContainer>

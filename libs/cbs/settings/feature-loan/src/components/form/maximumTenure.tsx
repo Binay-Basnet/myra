@@ -91,7 +91,11 @@ export const MaximumTenure = () => {
               textAlign={'right'}
               label="Number"
               placeholder="Enter number"
-              rightElement={rightElement}
+              rightElement={
+                <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
+                  {rightElement}
+                </Text>
+              }
             />
           </Box>
         </BoxContainer>
