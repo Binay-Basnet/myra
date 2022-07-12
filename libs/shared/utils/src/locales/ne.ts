@@ -1971,10 +1971,9 @@ const ne: Record<string, string> = {
   accountingPurchaseSidebarPurchaseList: 'Purchase List',
   accountingPurchaseSidebarExpenses: 'Expenses',
   accountingPurchaseSidebarDebitNote: 'Debit Note',
-  accountingPurchaseSidebarSupplierPayment: 'Supplier Note',
+  accountingPurchaseSidebarSupplierPayment: 'Supplier Payment',
 
   settingsMemberNominee: 'Nominee',
-  accountingPurchaseSidebarSupplierPayment: 'Supplier Payment',
 
   //accounting sidebar
   accountingAccountingSidebarAccounting: 'Accounting',
