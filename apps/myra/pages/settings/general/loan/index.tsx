@@ -1,8 +1,5 @@
 import { SettingsLoanForm } from '@coop/cbs/settings//feature-loan';
-import {
-  SettingsGeneralLayout,
-  SettingsLayout,
-} from '@coop/cbs/settings/ui-layout';
+import { SettingsLayout } from '@coop/cbs/settings/ui-layout';
 
 const Loan = () => {
   return <SettingsLoanForm />;

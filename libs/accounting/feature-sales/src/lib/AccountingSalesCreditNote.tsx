@@ -26,19 +26,18 @@ import {
   FormFooter,
   IconButton,
   Text,
-  TextFields,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
-  SalesBox,
-  SalesDetails,
-} from '../components/form-components/salesEntry';
+  CreditBox,
+  CreditNoteDetails,
+} from '../components/form-components/creditNote';
 
 /* eslint-disable-next-line */
 export interface CbsAccountOpenFormProps {}
 
-export function NewSalesForm(props: CbsAccountOpenFormProps) {
+export function CreditNoteForm(props: CbsAccountOpenFormProps) {
   const { t } = useTranslation();
   const methods = useForm();
 
@@ -71,7 +70,7 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
           borderTopRadius={5}
         >
           <Text fontSize="r2" fontWeight="600">
-            New Sales Entry{' '}
+            New Credit Note{' '}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -84,10 +83,11 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
           <form>
             <Box bg="white" p="s20">
               <DividerContainer>
-                <SalesDetails />
+                <CreditNoteDetails />
                 {/* -------------------- TODO -----------ADD Table here */}
                 <Box></Box>
-                <SalesBox />
+                {/* <SalesBox /> */}
+                <CreditBox />
               </DividerContainer>
             </Box>
           </form>

@@ -74,7 +74,6 @@ export const LoanRepayment = () => {
         >
           <Box display={'flex'} flexDirection="column" gap="s4">
             <Text fontSize={'s3'} fontWeight="500">
-              {' '}
               Unit
             </Text>
             <FormSwitchTab
@@ -88,7 +87,13 @@ export const LoanRepayment = () => {
               textAlign={'right'}
               label="Number"
               placeholder="Enter number"
-              rightElement={<Text>{rightElementMin}</Text>}
+              rightElement={
+                <Box p="s12">
+                  <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
+                    {rightElementMin}
+                  </Text>
+                </Box>
+              }
             />
           </Box>
         </Box>
@@ -112,7 +117,6 @@ export const LoanRepayment = () => {
         >
           <Box display={'flex'} flexDirection="column" gap="s4">
             <Text fontSize={'s3'} fontWeight="500">
-              {' '}
               Unit
             </Text>
             <FormSwitchTab
@@ -126,7 +130,11 @@ export const LoanRepayment = () => {
               textAlign={'right'}
               label="Number"
               placeholder="Enter number"
-              rightElement={rightElementMax}
+              rightElement={
+                <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
+                  {rightElementMax}
+                </Text>
+              }
             />
           </Box>
         </BoxContainer>

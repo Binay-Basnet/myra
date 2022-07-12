@@ -103,7 +103,6 @@ export const DepositFrequency = ({ watch }: any) => {
               type="number"
               label="Penalty Amount"
               placeholder="Penalty Amount"
-              textAlign={'right'}
             />
           </InputGroupContainer>
         </BoxContainer>
@@ -148,7 +147,8 @@ export const DepositFrequency = ({ watch }: any) => {
               name="nosOfInstallment"
               type="number"
               label="No. of Installment"
-              placeholder="Enter Number of Installments"
+              placeholder="0"
+              helperText="Enter Number of Installments"
               textAlign={'right'}
             />
           </InputGroupContainer>

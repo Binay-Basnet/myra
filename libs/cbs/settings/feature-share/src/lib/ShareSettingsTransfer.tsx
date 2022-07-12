@@ -17,8 +17,21 @@ export const ShareSettingsTransfer = () => {
         subtitle={t['shareTransferSubtitle']}
       >
         <Box display="flex" flexDir="column" gap="s16">
-          <Checkbox label={t['shareTransferMemberToMember']} isChecked />
+          <Checkbox label={t['shareTransferMemberToMember']} />
           <Checkbox label={t['shareTransferShareRefund']} />
+        </Box>
+      </ShareSettingsCard>
+
+      <ShareSettingsCard
+        title={t['shareFund']}
+        subtitle={t['shareToAccountSubtitle']}
+      >
+        <Box width="33%">
+          <Select
+            size="sm"
+            options={[]}
+            placeholder={t['shareFundAccountName']}
+          />
         </Box>
       </ShareSettingsCard>
 
@@ -27,19 +40,10 @@ export const ShareSettingsTransfer = () => {
         subtitle={t['shareToFundLedgerMappingSubtitle']}
       >
         <Box width="33%">
-          <Select size="sm" options={[]} placeholder={t['shareFundName']} />
-        </Box>
-      </ShareSettingsCard>
-
-      <ShareSettingsCard
-        title={t['shareToAccount']}
-        subtitle={t['shareToAccountSubtitle']}
-      >
-        <Box width="33%">
           <Select
             size="sm"
             options={[]}
-            placeholder={t['shareTransferAccountName']}
+            placeholder={t['shareTransferLedgerName']}
           />
         </Box>
       </ShareSettingsCard>
