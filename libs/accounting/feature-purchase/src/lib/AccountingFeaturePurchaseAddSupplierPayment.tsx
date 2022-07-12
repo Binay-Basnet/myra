@@ -28,10 +28,10 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface AccountingFeaturePurchaseAddDebitNoteProps {}
+export interface AccountingFeaturePurchaseAddSupplierPaymentProps {}
 
-export function AccountingFeaturePurchaseAddDebitNote(
-  props: AccountingFeaturePurchaseAddDebitNoteProps
+export function AccountingFeaturePurchaseAddSupplierPayment(
+  props: AccountingFeaturePurchaseAddSupplierPaymentProps
 ) {
   const { t } = useTranslation();
   const methods = useForm();
@@ -43,6 +43,25 @@ export function AccountingFeaturePurchaseAddDebitNote(
   const booleanList = [
     { label: 'Yes', value: 'Yes' },
     { label: 'No', value: 'No' },
+  ];
+
+  const PaymentModes = [
+    {
+      label: 'Bank Transfer',
+      value: 'bankTransfer',
+    },
+    {
+      label: 'Cheque',
+      value: 'cheque',
+    },
+    {
+      label: 'Account',
+      value: 'account',
+    },
+    {
+      label: 'Cash',
+      value: 'cash',
+    },
   ];
 
   return (
@@ -63,7 +82,7 @@ export function AccountingFeaturePurchaseAddDebitNote(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Debit Note
+            New Supplier Payment
           </Text>
           <IconButton
             variant={'ghost'}
@@ -75,112 +94,103 @@ export function AccountingFeaturePurchaseAddDebitNote(
 
         <FormProvider {...methods}>
           <form>
-            <Box bg="white" p="s20" minH="calc(100vh - 220px)">
+            <Box bg="white" p="s20">
               <DividerContainer>
                 <BoxContainer>
                   <InputGroupContainer>
                     <FormSelect
-                      name="supplierName"
-                      label={'Supplier Name'}
-                      placeholder={'Supplier Name'}
+                      name="paidTo"
+                      label={'Paid To'}
+                      placeholder={'Paid To'}
                       options={[]}
                     />
 
-                    <FormInput
-                      name="billReference"
-                      type="text"
-                      label="Bill Reference"
-                      placeholder="Enter Bill Reference"
+                    <FormSelect
+                      name="paidFrom"
+                      label={'Paid From'}
+                      placeholder={'Paid From'}
+                      options={[]}
                     />
 
                     <FormInput name="date" type="date" label="Date" />
+
+                    <FormInput
+                      name="amount"
+                      type="number"
+                      label="Amount"
+                      textAlign={'right'}
+                      placeholder="0.00"
+                    />
+
+                    <FormInput name="dueDate" type="date" label="Due Date" />
                   </InputGroupContainer>
                 </BoxContainer>
 
-                <Box
-                  display="grid"
-                  gap="s32"
-                  gridTemplateColumns="repeat(2,1fr)"
-                >
+                <BoxContainer>
+                  <Text
+                    fontSize={'s3'}
+                    fontWeight="500"
+                    color="neutralColorLight.Gray-80"
+                  >
+                    {'Payment Mode'}
+                  </Text>
+
+                  <FormSwitchTab name={'paymentMode'} options={PaymentModes} />
+
+                  <InputGroupContainer>
+                    <FormInput
+                      name="paymentReferenceNo"
+                      type="text"
+                      label="Payment Reference No"
+                      placeholder="Payment Reference No"
+                    />
+                  </InputGroupContainer>
+                </BoxContainer>
+
+                <BoxContainer>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text fontSize="s3" fontWeight="500" color="gray.700">
+                      TDS
+                    </Text>
+
+                    <FormSwitchTab options={booleanList} name="tds" />
+                  </Box>
+
+                  {tds === 'Yes' && (
+                    <InputGroupContainer>
+                      <FormSelect
+                        name="tdsAccount"
+                        label={'TDS Account'}
+                        placeholder={'TDS Account'}
+                        options={[]}
+                      />
+
+                      <FormSelect
+                        name="tdsType"
+                        label={'TDS Type'}
+                        placeholder={'TDS Type'}
+                        options={[]}
+                      />
+
+                      <FormInput
+                        name="tdsAmount"
+                        type="number"
+                        label="TDS Amount"
+                        textAlign={'right'}
+                        placeholder="0.00"
+                      />
+                    </InputGroupContainer>
+                  )}
+                </BoxContainer>
+
+                <BoxContainer>
                   <FormTextArea
                     name="note"
                     label={t['invFormNotes']}
                     placeholder={t['invFormNote']}
                     rows={5}
                   />
-                  <FieldCardComponents rows={'repeat(5,1fr)'}>
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
-                        {t['invForSubTotal']}
-                      </Text>
-
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
-                        2,000.00
-                      </Text>
-                    </GridItem>
-
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
-                        {t['invFormTaxableTotal']}
-                      </Text>
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
-                        5,000.00
-                      </Text>
-                    </GridItem>
-
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
-                        {t['invFormVAT']}
-                      </Text>
-
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
-                        2000
-                      </Text>
-                    </GridItem>
-
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-80"
-                        fontWeight="500"
-                        fontSize="s3"
-                      >
-                        {t['invFormGrandTotal']}
-                      </Text>
-
-                      <Text
-                        color="neutralColorLight.Gray-70"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
-                        12,000
-                      </Text>
-                    </GridItem>
-                  </FieldCardComponents>
-                </Box>
+                </BoxContainer>
               </DividerContainer>
             </Box>
           </form>
