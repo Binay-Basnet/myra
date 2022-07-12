@@ -1972,6 +1972,13 @@ const ne: Record<string, string> = {
   accountingPurchaseSidebarExpenses: 'Expenses',
   accountingPurchaseSidebarDebitNote: 'Debit Note',
   accountingPurchaseSidebarSupplierPayment: 'Supplier Payment',
+  //acouting sales sidebar
+  accountingsales: 'Sales',
+  accountingSalesCreate: 'Create',
+  accountingSalesSettings: 'Sales Settings',
+  salesList: 'Sales List',
+  creditNote: 'Credit Note',
+  customerPayment: 'Customer Payment',
 };
 
 export default ne;

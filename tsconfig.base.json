@@ -28,6 +28,7 @@
       "@coop/accounting/ui-layouts": [
         "libs/accounting/ui-layouts/src/index.ts"
       ],
+      "@coop/accouting/loan": ["libs/accounting/feature-loan/src/index.ts"],
       "@coop/cbs/accounts/account-form": [
         "libs/cbs/accounts/feature-account-form/src/index.ts"
       ],
