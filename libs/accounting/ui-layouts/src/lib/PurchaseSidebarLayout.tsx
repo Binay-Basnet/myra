@@ -58,36 +58,51 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
         </Text>
         <Divider my="s16" />
 
-        <Popover placement="bottom-start">
+        <Popover placement="bottom-start" gutter={3}>
           <PopoverTrigger>
-            <Button
+            {/* <Button
               width="full"
               size="lg"
               justifyContent="start"
               leftIcon={<AddIcon h="11px" />}
             >
               {t['accountingPurchaseSidebarCreate']}
-            </Button>
+            </Button> */}
+
+            <Box
+              as="button"
+              display={'flex'}
+              flexDirection="row"
+              gap="8px"
+              px="s16"
+              bg="primary.500"
+              _hover={{ bg: 'primary.600' }}
+              w="227px"
+              h="48px"
+              borderRadius={'4px'}
+              alignItems="center"
+            >
+              {/* <Text fontSize={'r3'} fontWeight="500" color={'white'}>
+                +
+              </Text> */}
+
+              <Icon as={AddIcon} size="sm" color="white" fontWeight={'500'} />
+              <Text fontSize={'r1'} fontWeight="500" color={'white'}>
+                {t['accountingPurchaseSidebarCreate']}
+              </Text>
+            </Box>
           </PopoverTrigger>
 
           <PopoverContent
             // bg="gray.0"
-            w="275px"
-            h="auto"
-            px="s12"
-            py="s24"
-            border="none"
-            boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
-            outline={'none'}
-            _focus={{
-              boxShadow:
-                '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
-            }}
+            p={0}
+            w="225px"
           >
-            <PopoverBody>
+            <PopoverBody p={0}>
               <Box>
                 <Button
                   width="full"
+                  borderRadius={'none'}
                   size="lg"
                   justifyContent="start"
                   leftIcon={<AddIcon h="11px" />}
@@ -100,6 +115,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                 <Button
                   width="full"
                   size="lg"
+                  borderRadius={'none'}
                   justifyContent="start"
                   leftIcon={<AddIcon h="11px" />}
                   variant="ghost"
@@ -113,6 +129,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                 <Button
                   width="full"
                   size="lg"
+                  borderRadius={'none'}
                   justifyContent="start"
                   leftIcon={<AddIcon h="11px" />}
                   variant="ghost"
@@ -127,6 +144,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                   width="full"
                   size="lg"
                   justifyContent="start"
+                  borderRadius={'none'}
                   leftIcon={<AddIcon h="11px" />}
                   variant="ghost"
                   onClick={() =>
