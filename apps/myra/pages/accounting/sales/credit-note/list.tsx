@@ -1,18 +1,18 @@
 import { ReactElement } from 'react';
 
-import { AccountingSalesList } from '@coop/accounting/sales';
+import { AccountingListCreditNote } from '@coop/accounting/sales';
 import { AccountingLayout, SalesLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingSalesListPage = () => {
-  return <AccountingSalesList />;
+const CreditNote = () => {
+  return <AccountingListCreditNote />;
 };
 
-AccountingSalesListPage.getLayout = function getLayout(page: ReactElement) {
+CreditNote.getLayout = function getLayout(page: ReactElement) {
   return (
     <AccountingLayout>
       <SalesLayout>{page}</SalesLayout>
     </AccountingLayout>
   );
 };
-export default AccountingSalesListPage;
+export default CreditNote;

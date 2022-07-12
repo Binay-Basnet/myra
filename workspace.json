@@ -6,6 +6,7 @@
     "-inventory--feature-suppliers": "libs/inventory/feature-suppliers",
     "-inventory--feature-warehouse": "libs/inventory/feature-warehouse",
     "accounting-feature-accounting": "libs/accounting/feature-accounting",
+    "accounting-feature-loan": "libs/accounting/feature-loan",
     "accounting-feature-purchase": "libs/accounting/feature-purchase",
     "accounting-feature-sales": "libs/accounting/feature-sales",
     "accounting-ui-components": "libs/accounting/ui-components",

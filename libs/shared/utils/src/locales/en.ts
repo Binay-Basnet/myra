@@ -2014,6 +2014,13 @@ const en: Record<string, string> = {
   accountingAccountingSidebarQuickReceipt: 'Quick Receipt',
   accountingAccountingSidebarBankAccounts: 'Bank Accounts',
   accountingAccountingSidebarChartsOfAccounts: 'Charts of Account',
+  //acouting sales sidebar
+  accountingsales: 'Sales',
+  accountingSalesCreate: 'Create',
+  accountingSalesSettings: 'Sales Settings',
+  salesList: 'Sales List',
+  creditNote: 'Credit Note',
+  customerPayment: 'Customer Payment',
 };
 
 export default en;
