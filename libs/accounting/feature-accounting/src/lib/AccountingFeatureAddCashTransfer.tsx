@@ -8,14 +8,12 @@ import {
   DividerContainer,
   InputGroupContainer,
 } from '@coop/accounting/ui-components';
-import { FieldCardComponents } from '@coop/shared/components';
 import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
   Box,
   Button,
   Container,
   FormFooter,
-  GridItem,
   Icon,
   IconButton,
   Text,
@@ -23,23 +21,13 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface AccountingFeaturePurchaseAddDebitNoteProps {}
+export interface AccountingFeatureAddCashTransferProps {}
 
-export function AccountingFeaturePurchaseAddDebitNote(
-  props: AccountingFeaturePurchaseAddDebitNoteProps
+export function AccountingFeatureAddCashTransfer(
+  props: AccountingFeatureAddCashTransferProps
 ) {
   const { t } = useTranslation();
   const methods = useForm();
-
-  const { watch } = methods;
-
-  const tds = watch('tds');
-
-  const booleanList = [
-    { label: 'Yes', value: 'Yes' },
-    { label: 'No', value: 'No' },
-  ];
-
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">
@@ -58,7 +46,7 @@ export function AccountingFeaturePurchaseAddDebitNote(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Debit Note
+            New Cash Transfer
           </Text>
           <IconButton
             variant={'ghost'}
@@ -75,20 +63,19 @@ export function AccountingFeaturePurchaseAddDebitNote(
                 <BoxContainer>
                   <InputGroupContainer>
                     <FormSelect
-                      name="supplierName"
-                      label={'Supplier Name'}
-                      placeholder={'Supplier Name'}
+                      name="transferredFromAccount"
+                      label={'Transferred From Account'}
+                      placeholder={'Select Account'}
                       options={[]}
                     />
+                    <FormInput name="date" type="date" label="Date" />
 
                     <FormInput
-                      name="billReference"
+                      name="reference"
                       type="text"
-                      label="Bill Reference"
-                      placeholder="Enter Bill Reference"
+                      label="Reference"
+                      placeholder="Reference"
                     />
-
-                    <FormInput name="date" type="date" label="Date" />
                   </InputGroupContainer>
                 </BoxContainer>
 
@@ -99,82 +86,10 @@ export function AccountingFeaturePurchaseAddDebitNote(
                 >
                   <FormTextArea
                     name="note"
-                    label={t['invFormNotes']}
-                    placeholder={t['invFormNote']}
+                    label={'Notes'}
+                    placeholder={'Note'}
                     rows={5}
                   />
-                  <FieldCardComponents rows={'repeat(5,1fr)'}>
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
-                        {t['invForSubTotal']}
-                      </Text>
-
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
-                        2,000.00
-                      </Text>
-                    </GridItem>
-
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
-                        {t['invFormTaxableTotal']}
-                      </Text>
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
-                        5,000.00
-                      </Text>
-                    </GridItem>
-
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
-                        {t['invFormVAT']}
-                      </Text>
-
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
-                        2000
-                      </Text>
-                    </GridItem>
-
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-80"
-                        fontWeight="500"
-                        fontSize="s3"
-                      >
-                        {t['invFormGrandTotal']}
-                      </Text>
-
-                      <Text
-                        color="neutralColorLight.Gray-70"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
-                        12,000
-                      </Text>
-                    </GridItem>
-                  </FieldCardComponents>
                 </Box>
               </DividerContainer>
             </Box>
@@ -226,3 +141,5 @@ export function AccountingFeaturePurchaseAddDebitNote(
     </>
   );
 }
+
+export default AccountingFeatureAddCashTransfer;
