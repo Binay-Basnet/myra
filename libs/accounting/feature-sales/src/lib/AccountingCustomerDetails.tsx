@@ -1,44 +1,31 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { GrClose, GrMail } from 'react-icons/gr';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
+import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
-import { Avatar, Grid, GridItem, Icon } from '@chakra-ui/react';
 
-import {
-  BoxContainer,
-  DividerContainer,
-  InputGroupContainer,
-} from '@coop/accounting/ui-components';
-import {
-  FormFileInput,
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-  FormTextArea,
-} from '@coop/shared/form';
+import { DividerContainer } from '@coop/accounting/ui-components';
 import {
   Box,
   Button,
   Container,
   FormFooter,
+  Icon,
   IconButton,
   Text,
-  TextFields,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
-  SalesBox,
-  SalesDetails,
-} from '../components/form-components/salesEntry';
+  CustomerDetails,
+  CustomerPaymentBox,
+  PaymentMode,
+  TDS,
+} from '../components/form-components/customerPaayment';
 
 /* eslint-disable-next-line */
-export interface CbsAccountOpenFormProps {}
+interface CbsAccountOpenFormProps {}
 
-export function NewSalesForm(props: CbsAccountOpenFormProps) {
+export function CustomerPaymentForm(props: CbsAccountOpenFormProps) {
   const { t } = useTranslation();
   const methods = useForm();
 
@@ -56,7 +43,7 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
           borderTopRadius={5}
         >
           <Text fontSize="r2" fontWeight="600">
-            New Sales Entry{' '}
+            New Customer Payment{' '}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -69,10 +56,14 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
           <form>
             <Box bg="white" p="s20">
               <DividerContainer>
-                <SalesDetails />
-                {/* -------------------- TODO -----------ADD Table here */}
+                <CustomerDetails />
+                {/* -------------------- TODO -----------ADD PasymentMode herehere */}
+                <PaymentMode />
+                {/* <SalesBox /> */}
+                <TDS />
+                {/* -------------------- TODO -----------ADD  TABLE HERE*/}
                 <Box></Box>
-                <SalesBox />
+                <CustomerPaymentBox />
               </DividerContainer>
             </Box>
           </form>

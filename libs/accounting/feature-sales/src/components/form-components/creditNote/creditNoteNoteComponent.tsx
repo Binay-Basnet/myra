@@ -40,7 +40,7 @@ export const CreditBox = () => {
           </Text>
         </GridItem>
 
-        <GridItem display="flex" justifyContent="space-between">
+        {/* <GridItem display="flex" justifyContent="space-between">
           <Text
             color="neutralColorLight.Gray-60"
             fontWeight="Medium"
@@ -59,7 +59,7 @@ export const CreditBox = () => {
               bg="gray.0"
             />
           </Box>
-        </GridItem>
+        </GridItem> */}
 
         <GridItem display="flex" justifyContent="space-between">
           <Text
