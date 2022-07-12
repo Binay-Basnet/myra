@@ -28,10 +28,10 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface AccountingFeaturePurchaseAddSupplierNoteProps {}
+export interface AccountingFeaturePurchaseAddSupplierPaymentProps {}
 
-export function AccountingFeaturePurchaseAddSupplierNote(
-  props: AccountingFeaturePurchaseAddSupplierNoteProps
+export function AccountingFeaturePurchaseAddSupplierPayment(
+  props: AccountingFeaturePurchaseAddSupplierPaymentProps
 ) {
   const { t } = useTranslation();
   const methods = useForm();
@@ -134,7 +134,11 @@ export function AccountingFeaturePurchaseAddSupplierNote(
                 </BoxContainer>
 
                 <BoxContainer>
-                  <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+                  <Text
+                    fontSize={'s3'}
+                    fontWeight="500"
+                    color="neutralColorLight.Gray-80"
+                  >
                     {'Payment Mode'}
                   </Text>
 
@@ -143,10 +147,9 @@ export function AccountingFeaturePurchaseAddSupplierNote(
                   <InputGroupContainer>
                     <FormInput
                       name="paymentReferenceNo"
-                      type="number"
+                      type="text"
                       label="Payment Reference No"
-                      textAlign={'right'}
-                      placeholder="0.00"
+                      placeholder="Payment Reference No"
                     />
                   </InputGroupContainer>
                 </BoxContainer>
