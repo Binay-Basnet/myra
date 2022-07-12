@@ -1,0 +1,25 @@
+{
+  "root": "libs/accounting/feature-accounting",
+  "sourceRoot": "libs/accounting/feature-accounting/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/accounting/feature-accounting/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/accounting/feature-accounting"],
+      "options": {
+        "jestConfig": "libs/accounting/feature-accounting/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

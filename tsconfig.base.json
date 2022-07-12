@@ -18,6 +18,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@coop/accounting/accounting": [
+        "libs/accounting/feature-accounting/src/index.ts"
+      ],
       "@coop/accounting/purchase": [
         "libs/accounting/feature-purchase/src/index.ts"
       ],

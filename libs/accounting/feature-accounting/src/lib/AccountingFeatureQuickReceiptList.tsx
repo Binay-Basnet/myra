@@ -9,10 +9,10 @@ import { Avatar, Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface AccountingFeaturePurchaseSupplierPaymentProps {}
+export interface AccountingFeatureQuickReceiptListProps {}
 
-export function AccountingFeaturePurchaseSupplierPayment(
-  props: AccountingFeaturePurchaseSupplierPaymentProps
+export function AccountingFeatureQuickReceiptList(
+  props: AccountingFeatureQuickReceiptListProps
 ) {
   const { t } = useTranslation();
 
@@ -58,12 +58,12 @@ export function AccountingFeaturePurchaseSupplierPayment(
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Bill No',
+        header: 'Item Id',
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Supplier',
+        header: 'Name',
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
@@ -89,14 +89,28 @@ export function AccountingFeaturePurchaseSupplierPayment(
         },
       },
       {
-        header: 'Amount',
+        header: 'Type',
+        accessorFn: (row) => row?.node?.code,
+        meta: {
+          width: '30%',
+        },
+      },
+      {
+        header: 'Unit Price',
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Date',
+        header: 'Total Cost',
+        accessorFn: (row) => row?.node?.contact,
+        meta: {
+          width: '30%',
+        },
+      },
+      {
+        header: 'Item Quantity',
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
@@ -120,10 +134,10 @@ export function AccountingFeaturePurchaseSupplierPayment(
   return (
     <>
       <AccountingPageHeader
-        heading="Supplier Payment"
-        buttonLabel={'New Supplier Payment'}
+        heading="Quick Receipt"
+        buttonLabel={'New Quick Receipt'}
         buttonHandler={() =>
-          router.push('/accounting/purchase/supplier-payment/add')
+          router.push('/accounting/accounting/quick-receipt/add')
         }
       />
 
@@ -142,4 +156,4 @@ export function AccountingFeaturePurchaseSupplierPayment(
   );
 }
 
-export default AccountingFeaturePurchaseSupplierPayment;
+export default AccountingFeatureQuickReceiptList;

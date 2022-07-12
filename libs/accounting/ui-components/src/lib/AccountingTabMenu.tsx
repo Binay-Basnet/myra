@@ -42,7 +42,7 @@ export function AccountingTabMenu() {
     {
       title: 'Accounting',
       icon: IoCubeOutline,
-      link: '/accounting/accounting/list',
+      link: '/accounting/accounting/journal-vouchers/list',
     },
     {
       title: 'Loan',
