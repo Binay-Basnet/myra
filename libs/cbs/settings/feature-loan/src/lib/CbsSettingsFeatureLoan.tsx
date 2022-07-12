@@ -18,13 +18,16 @@ import {
 } from '@coop/shared/form';
 import {
   Box,
+  Button,
   Container,
+  FormFooter,
   Grid,
   GridItem,
   Icon,
   IconButton,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   AccountServicesCharge,
@@ -57,6 +60,7 @@ const optionsSaving = [
 
 export function SettingsLoanForm(props: loanProductsAdd) {
   const router = useRouter();
+  const { t } = useTranslation();
   const methods = useForm({
     defaultValues: {
       nameOfDepositProduct: 'recurringSaving',
@@ -69,134 +73,170 @@ export function SettingsLoanForm(props: loanProductsAdd) {
   const depositNature = watch('nameOfDepositProduct');
 
   return (
-    <Container height="fit-content" minW="container.lg" p={0}>
-      <Box position="relative" margin="0px auto">
-        <Box
-          position="fixed"
-          margin="0px auto"
-          bg="gray.100"
-          minW="container.lg"
-          zIndex="10"
-        >
+    <>
+      <Container height="fit-content" minW="container.lg" pb="55px">
+        <Box position="relative" margin="0px auto">
           <Box
-            height="50px"
-            display="flex"
-            justifyContent="space-between"
-            alignItems={'center'}
-            px="5"
-            background="white"
-            borderBottom="1px solid #E6E6E6"
+            position="fixed"
+            margin="0px auto"
+            bg="gray.100"
+            minW="container.lg"
+            zIndex="10"
           >
-            <Text fontSize="r2" fontWeight="SemiBold">
-              Add Loan Products
-            </Text>
-            <IconButton
-              variant={'ghost'}
-              aria-label="close"
-              icon={<Icon as={IoCloseOutline} size="md" />}
-              onClick={() => router.back()}
-            />
+            <Box
+              height="50px"
+              display="flex"
+              justifyContent="space-between"
+              alignItems={'center'}
+              px="5"
+              background="white"
+              borderBottom="1px solid #E6E6E6"
+            >
+              <Text fontSize="r2" fontWeight="SemiBold">
+                Add Loan Products
+              </Text>
+              <IconButton
+                variant={'ghost'}
+                aria-label="close"
+                icon={<Icon as={IoCloseOutline} size="md" />}
+                onClick={() => router.back()}
+              />
+            </Box>
           </Box>
         </Box>
-      </Box>
-      <Container minW="container.lg" height="fit-content" bg="white" p={0}>
-        <FormProvider {...methods}>
-          <form>
-            {/* main */}
-            <Box px="s20" py="s24">
-              <ContainerWithDivider>
-                <Box background="white" mt="50px">
-                  <InputGroupContainer>
-                    <GridItem colSpan={2}>
-                      <FormInput
-                        name="productName"
-                        label="Product Name"
-                        placeholder="Enter Product Name"
-                      />
-                    </GridItem>
-                    {/* <FormSelect name={'duhjisdfsd'} /> */}
+        <Container minW="container.lg" height="fit-content" bg="white">
+          <FormProvider {...methods}>
+            <form>
+              {/* main */}
+              <Box px="s20" py="s24">
+                <ContainerWithDivider>
+                  <Box background="white" mt="50px">
+                    <InputGroupContainer>
+                      <GridItem colSpan={2}>
+                        <FormInput
+                          name="productName"
+                          label="Product Name"
+                          placeholder="Enter Product Name"
+                        />
+                      </GridItem>
+                      {/* <FormSelect name={'duhjisdfsd'} /> */}
 
-                    <FormSelect
-                      name={'nameOfDepositProductType'}
-                      options={optionsSaving}
-                      label="Product Type"
-                      placeholder="Select Product Type"
-                    />
-                    <GridItem colSpan={2}>
                       <FormSelect
-                        name={'nameOfDepositProductSubtype'}
+                        name={'nameOfDepositProductType'}
                         options={optionsSaving}
-                        label="Product Subtype"
+                        label="Product Type"
                         placeholder="Select Product Type"
                       />
-                    </GridItem>
+                      <GridItem colSpan={2}>
+                        <FormSelect
+                          name={'nameOfDepositProductSubtype'}
+                          options={optionsSaving}
+                          label="Product Subtype"
+                          placeholder="Select Product Type"
+                        />
+                      </GridItem>
 
-                    <FormSelect
-                      name={'nameOfDepositProduct'}
-                      options={optionsSaving}
-                      label="Nature of Loan Product"
-                    />
-                  </InputGroupContainer>
-                </Box>
-                <Box>
-                  <Text fontWeight="500" fontSize={'r1'} color="gray.700">
-                    Product Code
-                  </Text>
-                  <Text
-                    mt="s4"
-                    fontWeight="400"
-                    fontSize={'s2'}
-                    color="gray.700"
-                  >
-                    Add prefix & intial number. Eg. ASM506
-                  </Text>
-                  <InputGroupContainer mt="s16">
-                    <FormInput
-                      label="Prefix"
-                      placeholder="Enter Prefix"
-                      name="prefix"
-                    />
-                    <FormInput
-                      label="Intitial Number"
-                      placeholder="Intitial Number"
-                      name="initialNumber"
-                    />
-                    <Box></Box>
-                    <FormSwitch
-                      name="resetSwitch"
-                      label="Reset every fiscal year"
-                    />
-                  </InputGroupContainer>
-                </Box>
-                <TypesOfMember watch={watch} />
+                      <FormSelect
+                        name={'nameOfDepositProduct'}
+                        options={optionsSaving}
+                        label="Nature of Loan Product"
+                      />
+                    </InputGroupContainer>
+                  </Box>
+                  <Box>
+                    <Text fontWeight="500" fontSize={'r1'} color="gray.700">
+                      Product Code
+                    </Text>
+                    <Text
+                      mt="s4"
+                      fontWeight="400"
+                      fontSize={'s2'}
+                      color="gray.700"
+                    >
+                      Add prefix & intial number. Eg. ASM506
+                    </Text>
+                    <InputGroupContainer mt="s16">
+                      <FormInput
+                        label="Prefix"
+                        placeholder="Enter Prefix"
+                        name="prefix"
+                      />
+                      <FormInput
+                        label="Intitial Number"
+                        placeholder="Intitial Number"
+                        name="initialNumber"
+                      />
+                      <Box></Box>
+                      <FormSwitch
+                        name="resetSwitch"
+                        label="Reset every fiscal year"
+                      />
+                    </InputGroupContainer>
+                  </Box>
+                  <TypesOfMember watch={watch} />
 
-                <Box display="flex" flexDirection={'column'} gap="s16">
-                  <Critera watch={watch} />
-                  <GridItems watch={watch} />
-                </Box>
+                  <Box display="flex" flexDirection={'column'} gap="s16">
+                    <Critera watch={watch} />
+                    <GridItems watch={watch} />
+                  </Box>
 
-                {/* {depositNature !== 'voluntary' && (
+                  {/* {depositNature !== 'voluntary' && (
                   <DepositFrequency watch={watch} />
                 )} */}
-                <MinimunTenure />
-                <MaximumTenure />
-                <AmountLimit />
-                <LoanRepaymentScheme />
-                <LoanRepayment />
-                <Interest />
-                <AccountServicesCharge />
-                <LoanLimit />
-                {/* {(depositNature === 'recurringSaving' ||
+                  <MinimunTenure />
+                  <MaximumTenure />
+                  <AmountLimit />
+                  <LoanRepaymentScheme />
+                  <LoanRepayment />
+                  <Interest />
+                  <AccountServicesCharge />
+                  <LoanLimit />
+                  {/* {(depositNature === 'recurringSaving' ||
                   depositNature === 'termSaving') && <DefaultAccountName />} */}
-                <Questions watch={watch} />
-                <RequiredDocumentSetup />
-                {/* {depositNature !== 'termSaving' && <PrematuredPenalty />} */}
-              </ContainerWithDivider>
-            </Box>
-          </form>
-        </FormProvider>
+                  <Questions watch={watch} />
+                  <RequiredDocumentSetup />
+                  {/* {depositNature !== 'termSaving' && <PrematuredPenalty />} */}
+                </ContainerWithDivider>
+              </Box>
+            </form>
+          </FormProvider>
+        </Container>
       </Container>
-    </Container>
+      <Box position="relative" margin="0px auto">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container minW="container.lg" height="fit-content">
+            <FormFooter
+              status={
+                <Box display="flex" gap="s8">
+                  <Text as="i" fontSize="r1">
+                    {t['formDetails']}
+                  </Text>
+                  <Text as="i" fontSize="r1">
+                    09:41 AM
+                  </Text>
+                </Box>
+              }
+              draftButton={
+                <Button type="submit" variant="ghost">
+                  <Icon as={BiSave} color="primary.500" />
+                  <Text
+                    alignSelf="center"
+                    color="primary.500"
+                    fontWeight="Medium"
+                    fontSize="s2"
+                    ml="5px"
+                  >
+                    {t['saveDraft']}
+                  </Text>
+                </Button>
+              }
+              mainButtonLabel={t['next']}
+              mainButtonHandler={() => router.push(`/members/translation`)}
+            />
+          </Container>
+        </Box>
+      </Box>
+    </>
   );
 }
 

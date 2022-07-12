@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { PopoverComponent } from '@coop/myra/components';
 import { useGetInventoryItemGroupQuery } from '@coop/shared/data-access';
-import { Column, Table } from '@coop/shared/ui';
+import { Column, Table } from '@coop/shared/table';
 import { useTranslation } from '@coop/shared/utils';
 
 const popoverTitle = [
@@ -26,26 +26,32 @@ export const WarehouseListTable = () => {
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        Header: t['warehouseTableName'],
-        accessor: 'node.name',
-        width: '80%',
+        header: t['warehouseTableName'],
+        accessorFn: (row) => row?.node?.name,
+        meta: {
+          width: '80%',
+        },
       },
       {
-        Header: t['warehouseTableLocation'],
-        accessor: 'node.parentCategory',
-        width: '40%',
+        header: t['warehouseTableLocation'],
+        accessorFn: (row) => row?.node?.parentCategory,
+        meta: {
+          width: '40%',
+        },
       },
 
       {
-        Header: t['warehouseTablePhoneNumber'],
-        accessor: 'node.description',
-        width: '40%',
+        header: t['warehouseTablePhoneNumber'],
+        accessorFn: (row) => row?.node?.description,
+        meta: {
+          width: '40%',
+        },
       },
 
       {
         id: '_actions',
-        Header: '',
-        accessor: 'actions',
+        header: '',
+        accessorFn: 'actions',
         cell: () => <PopoverComponent items={popoverTitle} />,
         meta: {
           width: '60px',
@@ -60,7 +66,7 @@ export const WarehouseListTable = () => {
       data={rowItems}
       isLoading={isFetching}
       columns={columns}
-      sort={true}
+      // sort={true}
     />
   );
 };
