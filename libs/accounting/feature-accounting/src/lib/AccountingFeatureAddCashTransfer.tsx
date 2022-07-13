@@ -46,7 +46,7 @@ export function AccountingFeatureAddCashTransfer(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Cash Transfer
+            {t['accountingCashTransferAddNewCashTransfer']}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -64,17 +64,23 @@ export function AccountingFeatureAddCashTransfer(
                   <InputGroupContainer>
                     <FormSelect
                       name="transferredFromAccount"
-                      label={'Transferred From Account'}
-                      placeholder={'Select Account'}
+                      label={
+                        t['accountingCashTransferAddTransferredFromAccount']
+                      }
+                      placeholder={t['accountingCashTransferAddSelectAccount']}
                       options={[]}
                     />
-                    <FormInput name="date" type="date" label="Date" />
+                    <FormInput
+                      name="date"
+                      type="date"
+                      label={t['accountingCashTransferAddDate']}
+                    />
 
                     <FormInput
                       name="reference"
                       type="text"
-                      label="Reference"
-                      placeholder="Reference"
+                      label={t['accountingCashTransferAddReference']}
+                      placeholder={t['accountingCashTransferAddReference']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -86,8 +92,8 @@ export function AccountingFeatureAddCashTransfer(
                 >
                   <FormTextArea
                     name="note"
-                    label={'Notes'}
-                    placeholder={'Note'}
+                    label={t['accountingCashTransferAddNotes']}
+                    placeholder={t['accountingCashTransferAddNote']}
                     rows={5}
                   />
                 </Box>

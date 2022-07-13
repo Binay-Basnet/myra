@@ -41,8 +41,8 @@ export function AccountingFeaturePurchaseAddExpenses(
   const tds = watch('tds');
 
   const booleanList = [
-    { label: 'Yes', value: 'Yes' },
-    { label: 'No', value: 'No' },
+    { label: t['accountingExpensesAddTDSYes'], value: 'Yes' },
+    { label: t['accountingExpensesAddTDSNo'], value: 'No' },
   ];
 
   return (
@@ -63,7 +63,7 @@ export function AccountingFeaturePurchaseAddExpenses(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Expense
+            {t['accountingExpensesAddNewExpense']}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -83,20 +83,28 @@ export function AccountingFeaturePurchaseAddExpenses(
                       <FormInput
                         name="supplierName"
                         type="text"
-                        label="Supplier Name"
-                        placeholder="Supplier Name"
+                        label={t['accountingExpensesAddSupplierName']}
+                        placeholder={t['accountingExpensesAddSupplierName']}
                       />
                     </GridItem>
 
-                    <FormInput name="date" type="date" label="Date" />
+                    <FormInput
+                      name="date"
+                      type="date"
+                      label={t['accountingExpensesAddDate']}
+                    />
 
-                    <FormInput name="dueDate" type="date" label="Due Date" />
+                    <FormInput
+                      name="dueDate"
+                      type="date"
+                      label={t['accountingExpensesAddDueDate']}
+                    />
 
                     <FormInput
                       name="reference"
                       type="text"
-                      label="Reference"
-                      placeholder="Reference"
+                      label={t['accountingExpensesAddReference']}
+                      placeholder={t['accountingExpensesAddReference']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -108,8 +116,8 @@ export function AccountingFeaturePurchaseAddExpenses(
                 >
                   <FormTextArea
                     name="note"
-                    label={t['invFormNotes']}
-                    placeholder={t['invFormNote']}
+                    label={t['accountingExpensesAddNotes']}
+                    placeholder={t['accountingExpensesAddNote']}
                     rows={5}
                   />
                   <FieldCardComponents rows={'repeat(5,1fr)'}>
@@ -119,7 +127,7 @@ export function AccountingFeaturePurchaseAddExpenses(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invForSubTotal']}
+                        {t['accountingExpensesAddSubTotal']}
                       </Text>
 
                       <Text
@@ -137,7 +145,7 @@ export function AccountingFeaturePurchaseAddExpenses(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invFormDiscount']}
+                        {t['accountingExpensesAddDiscount']}
                       </Text>
 
                       <Box width="200px">
@@ -158,7 +166,7 @@ export function AccountingFeaturePurchaseAddExpenses(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invFormTaxableTotal']}
+                        {t['accountingExpensesAddTaxableTotal']}
                       </Text>
                       <Text
                         color="neutralColorLight.Gray-50"
@@ -175,7 +183,7 @@ export function AccountingFeaturePurchaseAddExpenses(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invFormVAT']}
+                        {t['accountingExpensesAddVAT']}
                       </Text>
 
                       <Text
@@ -193,7 +201,7 @@ export function AccountingFeaturePurchaseAddExpenses(
                         fontWeight="500"
                         fontSize="s3"
                       >
-                        {t['invFormGrandTotal']}
+                        {t['accountingExpensesAddGrandTotal']}
                       </Text>
 
                       <Text
@@ -210,7 +218,7 @@ export function AccountingFeaturePurchaseAddExpenses(
                 <BoxContainer>
                   <Box display="flex" justifyContent="space-between">
                     <Text fontSize="s3" fontWeight="500" color="gray.700">
-                      TDS
+                      {t['accountingExpensesAddTDS']}
                     </Text>
 
                     <FormSwitchTab options={booleanList} name="tds" />
@@ -220,22 +228,22 @@ export function AccountingFeaturePurchaseAddExpenses(
                     <InputGroupContainer>
                       <FormSelect
                         name="tdsAccount"
-                        label={'TDS Account'}
-                        placeholder={'TDS Account'}
+                        label={t['accountingExpensesAddTDSLedgerAccount']}
+                        placeholder={t['accountingExpensesAddTDSLedgerAccount']}
                         options={[]}
                       />
 
                       <FormSelect
                         name="tdsType"
-                        label={'TDS Type'}
-                        placeholder={'TDS Type'}
+                        label={t['accountingExpensesAddTDSType']}
+                        placeholder={t['accountingExpensesAddTDSType']}
                         options={[]}
                       />
 
                       <FormInput
                         name="tdsAmount"
                         type="number"
-                        label="TDS Amount"
+                        label={t['accountingExpensesAddTDSAmount']}
                         textAlign={'right'}
                         placeholder="0.00"
                       />

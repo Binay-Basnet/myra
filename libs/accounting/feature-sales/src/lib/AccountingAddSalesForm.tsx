@@ -41,7 +41,7 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
           borderTopRadius={5}
         >
           <Text fontSize="r2" fontWeight="600">
-            New Sales Entry{' '}
+            {t['accountingSalesFormNewSalesEntry']}
           </Text>
           <IconButton
             variant={'ghost'}

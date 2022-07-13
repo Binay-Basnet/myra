@@ -46,7 +46,7 @@ export function AccountingFeatureAddQuickReceipt(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Quick Receipt
+            {t['accountingQuickReceiptAddNewQuickReceipt']}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -64,17 +64,23 @@ export function AccountingFeatureAddQuickReceipt(
                   <InputGroupContainer>
                     <FormSelect
                       name="depositTo"
-                      label={'Deposit To'}
-                      placeholder={'Select Ledger Name'}
+                      label={t['accountingQuickReceiptAddDepositTo']}
+                      placeholder={
+                        t['accountingQuickReceiptAddSelectLedgerName']
+                      }
                       options={[]}
                     />
-                    <FormInput name="date" type="date" label="Date" />
+                    <FormInput
+                      name="date"
+                      type="date"
+                      label={t['accountingQuickReceiptAddDate']}
+                    />
 
                     <FormInput
                       name="reference"
                       type="text"
-                      label="Reference"
-                      placeholder="Enter Reference No"
+                      label={t['accountingQuickReceiptAddReference']}
+                      placeholder={t['accountingQuickReceiptAddEnterReference']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -82,8 +88,8 @@ export function AccountingFeatureAddQuickReceipt(
                 <Box>
                   <FormTextArea
                     name="note"
-                    label={'Notes'}
-                    placeholder={'Note'}
+                    label={t['accountingQuickReceiptAddNotes']}
+                    placeholder={t['accountingQuickReceiptAddNote']}
                     rows={5}
                   />
                 </Box>

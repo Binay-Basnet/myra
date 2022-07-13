@@ -41,25 +41,25 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
   const tds = watch('tds');
 
   const booleanList = [
-    { label: 'Yes', value: 'Yes' },
-    { label: 'No', value: 'No' },
+    { label: t['accountingSupplierPaymentAddTDSYes'], value: 'Yes' },
+    { label: t['accountingSupplierPaymentAddTDSNo'], value: 'No' },
   ];
 
   const PaymentModes = [
     {
-      label: 'Bank Transfer',
+      label: t['accountingSupplierPaymentAddPaymentModeBankTransfer'],
       value: 'bankTransfer',
     },
     {
-      label: 'Cheque',
+      label: t['accountingSupplierPaymentAddPaymentModeCheque'],
       value: 'cheque',
     },
     {
-      label: 'Account',
+      label: t['accountingSupplierPaymentAddPaymentModeAccount'],
       value: 'account',
     },
     {
-      label: 'Cash',
+      label: t['accountingSupplierPaymentAddPaymentModeCash'],
       value: 'cash',
     },
   ];
@@ -82,7 +82,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Supplier Payment
+            {t['accountingSupplierPaymentAddNewSupplierPayment']}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -100,29 +100,37 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
                   <InputGroupContainer>
                     <FormSelect
                       name="paidTo"
-                      label={'Paid To'}
-                      placeholder={'Paid To'}
+                      label={t['accountingSupplierPaymentAddPaidTo']}
+                      placeholder={t['accountingSupplierPaymentAddPaidTo']}
                       options={[]}
                     />
 
                     <FormSelect
                       name="paidFrom"
-                      label={'Paid From'}
-                      placeholder={'Paid From'}
+                      label={t['accountingSupplierPaymentAddPaidFrom']}
+                      placeholder={t['accountingSupplierPaymentAddPaidFrom']}
                       options={[]}
                     />
 
-                    <FormInput name="date" type="date" label="Date" />
+                    <FormInput
+                      name="date"
+                      type="date"
+                      label={t['accountingSupplierPaymentAddDate']}
+                    />
 
                     <FormInput
                       name="amount"
                       type="number"
-                      label="Amount"
+                      label={t['accountingSupplierPaymentAddAmount']}
                       textAlign={'right'}
                       placeholder="0.00"
                     />
 
-                    <FormInput name="dueDate" type="date" label="Due Date" />
+                    <FormInput
+                      name="dueDate"
+                      type="date"
+                      label={t['accountingSupplierPaymentAddDueDate']}
+                    />
                   </InputGroupContainer>
                 </BoxContainer>
 
@@ -132,7 +140,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
                     fontWeight="500"
                     color="neutralColorLight.Gray-80"
                   >
-                    {'Payment Mode'}
+                    {t['accountingSupplierPaymentAddPaymentMode']}
                   </Text>
 
                   <FormSwitchTab name={'paymentMode'} options={PaymentModes} />
@@ -141,8 +149,12 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
                     <FormInput
                       name="paymentReferenceNo"
                       type="text"
-                      label="Payment Reference No"
-                      placeholder="Payment Reference No"
+                      label={
+                        t['accountingSupplierPaymentAddPaymentReferenceNo']
+                      }
+                      placeholder={
+                        t['accountingSupplierPaymentAddPaymentReferenceNo']
+                      }
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -150,7 +162,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
                 <BoxContainer>
                   <Box display="flex" justifyContent="space-between">
                     <Text fontSize="s3" fontWeight="500" color="gray.700">
-                      TDS
+                      {t['accountingSupplierPaymentAddTDS']}
                     </Text>
 
                     <FormSwitchTab options={booleanList} name="tds" />
@@ -160,22 +172,24 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
                     <InputGroupContainer>
                       <FormSelect
                         name="tdsAccount"
-                        label={'TDS Account'}
-                        placeholder={'TDS Account'}
+                        label={t['accountingSupplierPaymentAddTDSAccount']}
+                        placeholder={
+                          t['accountingSupplierPaymentAddTDSAccount']
+                        }
                         options={[]}
                       />
 
                       <FormSelect
                         name="tdsType"
-                        label={'TDS Type'}
-                        placeholder={'TDS Type'}
+                        label={t['accountingSupplierPaymentAddTDSType']}
+                        placeholder={t['accountingSupplierPaymentAddTDSType']}
                         options={[]}
                       />
 
                       <FormInput
                         name="tdsAmount"
                         type="number"
-                        label="TDS Amount"
+                        label={t['accountingSupplierPaymentAddTDSAmount']}
                         textAlign={'right'}
                         placeholder="0.00"
                       />

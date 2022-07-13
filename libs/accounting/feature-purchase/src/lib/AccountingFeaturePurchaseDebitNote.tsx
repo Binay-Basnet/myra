@@ -58,12 +58,12 @@ export function AccountingFeaturePurchaseDebitNote(
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Bill No',
+        header: t['accountingDebitNoteListBillNo'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Supplier Name',
+        header: t['accountingDebitNoteListSupplierName'],
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
@@ -89,14 +89,14 @@ export function AccountingFeaturePurchaseDebitNote(
         },
       },
       {
-        header: 'Amount',
+        header: t['accountingDebitNoteListAmount'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Date',
+        header: t['accountingDebitNoteListDate'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
@@ -120,8 +120,8 @@ export function AccountingFeaturePurchaseDebitNote(
   return (
     <>
       <AccountingPageHeader
-        heading="Debit Note"
-        buttonLabel={'New Debit Note'}
+        heading={t['accountingDebitNoteListDebitNote']}
+        buttonLabel={t['accountingDebitNoteListDebitNoteNew']}
         buttonHandler={() => router.push('/accounting/purchase/debit-note/add')}
       />
 

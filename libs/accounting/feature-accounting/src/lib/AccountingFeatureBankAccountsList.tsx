@@ -58,12 +58,12 @@ export function AccountingFeatureBankAccountsList(
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Item Id',
+        header: t['accountingBankAccountsListItemId'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Name',
+        header: t['accountingBankAccountsListName'],
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
@@ -89,28 +89,28 @@ export function AccountingFeatureBankAccountsList(
         },
       },
       {
-        header: 'Type',
+        header: t['accountingBankAccountsListType'],
         accessorFn: (row) => row?.node?.code,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Unit Price',
+        header: t['accountingBankAccountsListUnitPrice'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Total Cost',
+        header: t['accountingBankAccountsListTotalCost'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Item Quantity',
+        header: t['accountingBankAccountsListItemQuantity'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
@@ -134,8 +134,8 @@ export function AccountingFeatureBankAccountsList(
   return (
     <>
       <AccountingPageHeader
-        heading="Bank Accounts"
-        buttonLabel={'New Bank Accounts'}
+        heading={t['accountingBankAccountsListBankAccounts']}
+        buttonLabel={t['accountingBankAccountsListNewBankAccounts']}
         buttonHandler={() =>
           router.push('/accounting/accounting/bank-accounts/add')
         }

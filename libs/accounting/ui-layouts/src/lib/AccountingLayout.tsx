@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@chakra-ui/react';
 
 import { AccountingTabMenu } from '@coop/accounting/ui-components';
-import { TabMenu, TopLevelHeader } from '@coop/shared/ui';
+import { TopLevelHeader } from '@coop/shared/ui';
 
 export interface AccountingLayoutProps {
   children: React.ReactNode;

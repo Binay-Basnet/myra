@@ -56,12 +56,12 @@ export function AccountingSalesList(props: AccountingSalesListProps) {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Invoice No',
+        header: t['accountingSalesListInvoiceNo'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Customer',
+        header: t['accountingSalesListCustomer'],
         cell: (props) => {
           return (
             <Box
@@ -94,14 +94,14 @@ export function AccountingSalesList(props: AccountingSalesListProps) {
         },
       },
       {
-        header: 'Total Amount',
+        header: t['accountingSalesListTotalAmount'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Invoice Date',
+        header: t['accountingSalesListInvoiceDate'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
@@ -125,8 +125,8 @@ export function AccountingSalesList(props: AccountingSalesListProps) {
   return (
     <>
       <AccountingPageHeader
-        heading="Sales"
-        buttonLabel={'Sale Entry'}
+        heading={t['accountingSalesListSales']}
+        buttonLabel={t['accountingSalesListSaleEntry']}
         buttonHandler={() => router.push('/accounting/sales/add')}
       />
 

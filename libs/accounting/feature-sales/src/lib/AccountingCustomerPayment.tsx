@@ -58,12 +58,12 @@ export function AccountingCustomerPayment(
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Entry No',
+        header: t['accountingCustomerPaymentListEntryNo'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Customer',
+        header: t['accountingCustomerPaymentListCustomer'],
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
@@ -89,7 +89,7 @@ export function AccountingCustomerPayment(
         },
       },
       {
-        header: 'Received From ',
+        header: t['accountingCustomerPaymentListReceivedFrom'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '10%',
@@ -97,18 +97,18 @@ export function AccountingCustomerPayment(
       },
 
       {
-        header: 'Total Amount',
+        header: t['accountingCustomerPaymentListTotalAmount'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Date',
+        header: t['accountingCustomerPaymentListDate'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
-        header: 'Payment Mode',
+        header: t['accountingCustomerPaymentListPaymentMode'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '10%',
@@ -135,9 +135,11 @@ export function AccountingCustomerPayment(
   return (
     <>
       <AccountingPageHeader
-        heading="Credit Note"
-        buttonLabel={'New Credit Note'}
-        buttonHandler={() => router.push('/accounting/sales/credit-note/add')}
+        heading={t['accountingCustomerPaymentListCustomerPayment']}
+        buttonLabel={t['accountingCustomerPaymentListNewCustomerPayment']}
+        buttonHandler={() =>
+          router.push('/accounting/sales/customer-payment/add')
+        }
       />
 
       <Table

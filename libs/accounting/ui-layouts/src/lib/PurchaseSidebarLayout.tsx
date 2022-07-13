@@ -81,7 +81,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                   variant="ghost"
                   onClick={() => router.push('/accounting/purchase/add')}
                 >
-                  {'Purchase List'}
+                  {t['accountingPurchaseSidebarPurchaseList']}
                 </Button>
 
                 <Button
@@ -95,7 +95,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                     router.push('/accounting/purchase/expenses/add')
                   }
                 >
-                  {'Expenses'}
+                  {t['accountingPurchaseSidebarExpenses']}
                 </Button>
 
                 <Button
@@ -109,7 +109,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                     router.push('/accounting/purchase/debit-note/add')
                   }
                 >
-                  {'Debit Note'}
+                  {t['accountingPurchaseSidebarDebitNote']}
                 </Button>
 
                 <Button
@@ -123,7 +123,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                     router.push('/accounting/purchase/supplier-payment/add')
                   }
                 >
-                  {'Supplier Payment'}
+                  {t['accountingPurchaseSidebarSupplierPayment']}
                 </Button>
               </Box>
             </PopoverBody>
@@ -143,7 +143,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          {'Purchase Settings'}
+          {t['accountingPurchaseSidebarPurchaseSettings']}
         </Button>
       </Box>
       <Box

@@ -46,7 +46,7 @@ export function AccountingFeatureAddQuickPayment(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Quick Payment
+            {t['accountingQuickPaymentAddNewQuickPayment']}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -64,17 +64,23 @@ export function AccountingFeatureAddQuickPayment(
                   <InputGroupContainer>
                     <FormSelect
                       name="paidFrom"
-                      label={'Paid From'}
-                      placeholder={'Select Ledger Name'}
+                      label={t['accountingQuickPaymentAddPaidFrom']}
+                      placeholder={
+                        t['accountingQuickPaymentAddSelectLedgerName']
+                      }
                       options={[]}
                     />
-                    <FormInput name="date" type="date" label="Date" />
+                    <FormInput
+                      name="date"
+                      type="date"
+                      label={t['accountingQuickPaymentAddDate']}
+                    />
 
                     <FormInput
                       name="reference"
                       type="text"
-                      label="Reference"
-                      placeholder="Enter Reference No"
+                      label={t['accountingQuickPaymentAddReference']}
+                      placeholder={t['accountingQuickPaymentAddEnterReference']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -82,8 +88,8 @@ export function AccountingFeatureAddQuickPayment(
                 <Box>
                   <FormTextArea
                     name="note"
-                    label={'Notes'}
-                    placeholder={'Note'}
+                    label={t['accountingQuickPaymentAddNotes']}
+                    placeholder={t['accountingQuickPaymentAddNote']}
                     rows={5}
                   />
                 </Box>
