@@ -17,27 +17,27 @@ export const CustomerDetails = () => {
       <InputGroupContainer>
         <FormSelect
           name="receivedFrom"
-          label={t['accountingCustomerDetailsAddReceivedFrom']}
-          placeholder={t['accountingCustomerDetailsAddReceivedFrom']}
+          label={t['accountingCustomerPaymentAddReceivedFrom']}
+          placeholder={t['accountingCustomerPaymentAddReceivedFrom']}
         />
 
         <FormInput
           name="recievedAccount"
           type="number"
-          label={t['accountingCustomerDetailsAddReceivedAccount']}
+          label={t['accountingCustomerPaymentAddReceivedAccount']}
           textAlign={'right'}
-          placeholder={t['accountingCustomerDetailsAddSelectReceivedAccount']}
+          placeholder={t['accountingCustomerPaymentAddSelectReceivedAccount']}
         />
         <FormInput
           name="recievedDate"
           type="date"
-          label={t['accountingCustomerDetailsAddReceivedDate']}
+          label={t['accountingCustomerPaymentAddReceivedDate']}
           placeholder="DD-MM-YYYY"
         />
         <FormInput
           name="amount"
           type="number"
-          label={t['accountingCustomerDetailsAddAmount']}
+          label={t['accountingCustomerPaymentAddAmount']}
           textAlign={'right'}
           placeholder="0.00"
         />

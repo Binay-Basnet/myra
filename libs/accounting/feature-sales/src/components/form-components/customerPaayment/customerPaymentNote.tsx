@@ -16,8 +16,8 @@ export const CustomerPaymentBox = () => {
   return (
     <FormTextArea
       name="note"
-      label={t['accountingCustomerDetailsAddNotes']}
-      placeholder={t['accountingCustomerDetailsAddNote']}
+      label={t['accountingCustomerPaymentAddNotes']}
+      placeholder={t['accountingCustomerPaymentAddNote']}
       rows={5}
     />
   );

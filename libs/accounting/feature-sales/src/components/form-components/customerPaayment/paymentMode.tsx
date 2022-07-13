@@ -14,15 +14,15 @@ export const PaymentMode = () => {
 
   const paymentModeOptions = [
     {
-      label: t['accountingCustomerDetailsAddPaymentModeBankTransfer'],
+      label: t['accountingCustomerPaymentAddPaymentModeBankTransfer'],
       value: 'bankTransfer',
     },
     {
-      label: t['accountingCustomerDetailsAddPaymentModeCheque'],
+      label: t['accountingCustomerPaymentAddPaymentModeCheque'],
       value: 'cheque',
     },
     {
-      label: t['accountingCustomerDetailsAddPaymentModeCash'],
+      label: t['accountingCustomerPaymentAddPaymentModeCash'],
       value: 'cash',
     },
   ];
@@ -30,15 +30,15 @@ export const PaymentMode = () => {
   return (
     <BoxContainer>
       <Text fontWeight={'500'} fontSize="s3">
-        {t['accountingCustomerDetailsAddPaymentMode']}
+        {t['accountingCustomerPaymentAddPaymentMode']}
       </Text>
       <FormSwitchTab name="paymentMode" options={paymentModeOptions} />
       <InputGroupContainer>
         <FormInput
           type="text"
           name="paymentReferenceNo"
-          label={t['accountingCustomerDetailsAddPaymentReferenceNo']}
-          placeholder={t['accountingCustomerDetailsAddPaymentReferenceNo']}
+          label={t['accountingCustomerPaymentAddPaymentReferenceNo']}
+          placeholder={t['accountingCustomerPaymentAddPaymentReferenceNo']}
         />
       </InputGroupContainer>
     </BoxContainer>

@@ -16,14 +16,14 @@ export const TDS = () => {
   const tds = watch('tds');
 
   const booleanList = [
-    { label: t['accountingCustomerDetailsAddTDSYes'], value: 'Yes' },
-    { label: t['accountingCustomerDetailsAddTDSNo'], value: 'No' },
+    { label: t['accountingCustomerPaymentAddTDSYes'], value: 'Yes' },
+    { label: t['accountingCustomerPaymentAddTDSNo'], value: 'No' },
   ];
   return (
     <BoxContainer>
       <Box display="flex" justifyContent="space-between">
         <Text fontSize="s3" fontWeight="500" color="gray.700">
-          {t['accountingCustomerDetailsAddTDS']}
+          {t['accountingCustomerPaymentAddTDS']}
         </Text>
 
         <FormSwitchTab options={booleanList} name="tds" />
@@ -33,22 +33,22 @@ export const TDS = () => {
         <InputGroupContainer>
           <FormSelect
             name="tdsAccount"
-            label={t['accountingCustomerDetailsAddTDSAccount']}
-            placeholder={t['accountingCustomerDetailsAddSelectTDSAccount']}
+            label={t['accountingCustomerPaymentAddTDSAccount']}
+            placeholder={t['accountingCustomerPaymentAddSelectTDSAccount']}
             options={[]}
           />
 
           <FormSelect
             name="tdsType"
-            label={t['accountingCustomerDetailsAddTDSType']}
-            placeholder={t['accountingCustomerDetailsAddTDSType']}
+            label={t['accountingCustomerPaymentAddTDSType']}
+            placeholder={t['accountingCustomerPaymentAddTDSType']}
             options={[]}
           />
 
           <FormInput
             name="tdsAmount"
             type="number"
-            label={t['accountingCustomerDetailsAddTDSAmount']}
+            label={t['accountingCustomerPaymentAddTDSAmount']}
             textAlign={'right'}
             placeholder="0.00"
           />
