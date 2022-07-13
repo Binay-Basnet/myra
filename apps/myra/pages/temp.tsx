@@ -1,9 +1,10 @@
+// USAGE FOR EDITABLE TABLE, WILL MOVE THIS LATER
 import { Box } from '@chakra-ui/react';
 
 import { EditableTable } from '@coop/shared/editable-table';
 
 type SalesTable = {
-  product: string;
+  product_id: string;
   quantity: number;
   account_type?: string;
   rate: number;
@@ -14,7 +15,7 @@ type SalesTable = {
   sales_ledger?: string;
 };
 
-const ADD_OPTIONS = [
+const search_options = [
   { label: 'MI 001 - Lenovo Laptop', value: 'mi001' },
   { label: 'MI 002 - Lenovo Laptop', value: 'mi002' },
   { label: 'MI 003 - Lenovo Laptop', value: 'mi003' },
@@ -31,10 +32,9 @@ const Temp = () => {
   return (
     <Box p="s16" bg="white" minH="100vh">
       <EditableTable<SalesTable>
-        addOptions={ADD_OPTIONS}
         defaultData={[
           {
-            product: 'MI 001. Lenovo Laptop',
+            product_id: 'mi001',
             quantity: 100,
             account_type: 'savings',
             rate: 40,
@@ -42,7 +42,7 @@ const Temp = () => {
             total_amount: 100,
           },
           {
-            product: 'MI 001. Lenovo Laptop',
+            product_id: 'mi002',
             quantity: 100,
             rate: 40,
             tax: 400,
@@ -50,7 +50,7 @@ const Temp = () => {
             total_amount: 100,
           },
           {
-            product: 'MI 001. Lenovo Laptop',
+            product_id: 'mi0010',
             quantity: 100,
             account_type: 'savings',
 
@@ -61,10 +61,11 @@ const Temp = () => {
         ]}
         columns={[
           {
-            accessor: 'product',
+            accessor: 'product_id',
             header: 'Product',
             cellWidth: 'auto',
             fieldType: 'search',
+            searchOptions: search_options,
           },
           {
             accessor: 'account_type',

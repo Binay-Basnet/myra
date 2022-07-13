@@ -49,6 +49,7 @@ type Column<T extends RecordWithId & Record<string, string | number>> = {
     | 'search'
     | 'select';
   selectOptions?: { label: string; value: string }[];
+  searchOptions?: { label: string; value: string }[];
   isNumeric?: boolean;
 
   cellWidth?: 'auto' | 'lg' | 'md' | 'sm';
@@ -59,7 +60,6 @@ export interface EditableTableProps<
 > {
   defaultData?: T[];
   columns: Column<T>[];
-  addOptions?: { label: string; value: string }[];
 }
 
 const cellWidthObj = {
@@ -70,7 +70,7 @@ const cellWidthObj = {
 
 export function EditableTable<
   T extends RecordWithId & Record<string, string | number>
->({ columns, defaultData, addOptions }: EditableTableProps<T>) {
+>({ columns, defaultData }: EditableTableProps<T>) {
   const [currentData, setCurrentData] = useState(defaultData ?? []);
 
   useEffect(() => {
@@ -144,7 +144,9 @@ export function EditableTable<
             <Select
               components={components}
               placeholder="Search for items"
-              options={addOptions}
+              options={
+                columns.find((column) => column.searchOptions)?.searchOptions
+              }
               chakraStyles={searchBarStyle}
               value=""
               onChange={(newValue) => {
@@ -153,7 +155,7 @@ export function EditableTable<
                     key.fieldType === 'search'
                       ? {
                           ...o,
-                          [key.accessor]: newValue.label,
+                          [key.accessor]: newValue.value,
                         }
                       : {
                           ...o,
@@ -316,7 +318,11 @@ const EditableTableRow = <
                       : '30%'
                   }
                   value={
-                    column.accessorFn
+                    column.fieldType === 'search'
+                      ? column.searchOptions?.find(
+                          (search) => search.value === data[column.accessor]
+                        )?.label
+                      : column.accessorFn
                       ? accessorFnValue
                         ? String(accessorFnValue)
                         : ''
