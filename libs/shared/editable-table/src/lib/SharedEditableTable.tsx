@@ -62,6 +62,7 @@ export interface EditableTableProps<
   columns: Column<T>[];
 
   canDeleteRow?: boolean;
+  onChange?: (updatedData: T[]) => void;
 }
 
 const cellWidthObj = {
@@ -72,7 +73,12 @@ const cellWidthObj = {
 
 export function EditableTable<
   T extends RecordWithId & Record<string, string | number>
->({ columns, defaultData, canDeleteRow = true }: EditableTableProps<T>) {
+>({
+  columns,
+  defaultData,
+  canDeleteRow = true,
+  onChange,
+}: EditableTableProps<T>) {
   const [currentData, setCurrentData] = useState(defaultData ?? []);
 
   useEffect(() => {
@@ -87,6 +93,12 @@ export function EditableTable<
       )
     );
   }, [currentData.length]);
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(currentData);
+    }
+  }, [JSON.stringify(currentData)]);
 
   return (
     <>
