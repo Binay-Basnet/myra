@@ -8,5 +8,6 @@ export * from './controllers/FormMap/FormMap';
 export * from './controllers/FormPhoneNumber/FormPhoneNumber';
 export * from './controllers/FormSelect/FormSelect';
 export * from './controllers/FormSwitchTab/FormSwitchTab';
+export * from './controllers/FormEditableTable/FormEditableTable';
 export * from './lib/controllers-temp';
 export * from './lib/shared-form';

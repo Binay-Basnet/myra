@@ -62,6 +62,10 @@ export interface EditableTableProps<
   columns: Column<T>[];
 
   canDeleteRow?: boolean;
+  onChange?: (updatedData: T[]) => void;
+
+  debug?: boolean;
+
 }
 
 const cellWidthObj = {
@@ -72,7 +76,13 @@ const cellWidthObj = {
 
 export function EditableTable<
   T extends RecordWithId & Record<string, string | number>
->({ columns, defaultData, canDeleteRow = true }: EditableTableProps<T>) {
+>({
+  columns,
+  defaultData,
+  canDeleteRow = true,
+  onChange,
+  debug = false,
+}: EditableTableProps<T>) {
   const [currentData, setCurrentData] = useState(defaultData ?? []);
 
   useEffect(() => {
@@ -87,6 +97,12 @@ export function EditableTable<
       )
     );
   }, [currentData.length]);
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(currentData);
+    }
+  }, [JSON.stringify(currentData)]);
 
   return (
     <>
@@ -207,16 +223,18 @@ export function EditableTable<
         )}
       </Flex>
 
-      <Box
-        bg="gray.700"
-        color="white"
-        fontSize="r1"
-        mt="s20"
-        p="s8"
-        borderRadius="br2"
-      >
-        <pre>{JSON.stringify(currentData, null, 2)}</pre>
-      </Box>
+      {debug && (
+        <Box
+          bg="gray.700"
+          color="white"
+          fontSize="r1"
+          mt="s20"
+          p="s8"
+          borderRadius="br2"
+        >
+          <pre>{JSON.stringify(currentData, null, 2)}</pre>
+        </Box>
+      )}
     </>
   );
 }

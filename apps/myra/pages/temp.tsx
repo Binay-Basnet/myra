@@ -2,6 +2,8 @@
 import { Box } from '@chakra-ui/react';
 
 import { EditableTable } from '@coop/shared/editable-table';
+import { FormEditableTable } from '@coop/shared/form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 type SalesTable = {
   product_id: string;
@@ -29,103 +31,111 @@ const search_options = [
 ];
 
 const Temp = () => {
+  const methods = useForm({
+    defaultValues: {
+      data: [
+        {
+          product_id: 'mi001',
+          quantity: 100,
+          account_type: 'savings',
+          rate: 40,
+          tax: 400,
+          total_amount: 100,
+        },
+        {
+          product_id: 'mi002',
+          quantity: 100,
+          rate: 40,
+          tax: 400,
+          account_type: 'current',
+          total_amount: 100,
+        },
+        {
+          product_id: 'mi0010',
+          quantity: 100,
+          account_type: 'savings',
+
+          rate: 40,
+          tax: 400,
+          total_amount: 100,
+        },
+      ],
+    },
+  });
+
   return (
-    <Box p="s16" bg="white" minH="100vh">
-      <EditableTable<SalesTable>
-        defaultData={[
-          {
-            product_id: 'mi001',
-            quantity: 100,
-            account_type: 'savings',
-            rate: 40,
-            tax: 400,
-            total_amount: 100,
-          },
-          {
-            product_id: 'mi002',
-            quantity: 100,
-            rate: 40,
-            tax: 400,
-            account_type: 'current',
-            total_amount: 100,
-          },
-          {
-            product_id: 'mi0010',
-            quantity: 100,
-            account_type: 'savings',
+    <FormProvider {...methods}>
+      <Box p="s16" bg="white" minH="100vh">
+        <FormEditableTable<SalesTable>
+          name="data"
+          columns={[
+            {
+              accessor: 'product_id',
+              header: 'Product',
+              cellWidth: 'auto',
+              fieldType: 'search',
+              searchOptions: search_options,
+            },
+            {
+              accessor: 'account_type',
+              header: 'Account Type',
+              cellWidth: 'lg',
+              fieldType: 'select',
+              selectOptions: [
+                {
+                  label: 'SAVINGS',
+                  value: 'savings',
+                },
+                {
+                  label: 'CURRENT',
+                  value: 'current',
+                },
+              ],
+            },
+            {
+              accessor: 'quantity',
+              header: 'Quantity',
+              isNumeric: true,
+            },
+            {
+              accessor: 'rate',
+              header: 'Rate',
+              isNumeric: true,
+            },
+            {
+              accessor: 'tax',
+              header: 'Tax',
+              isNumeric: true,
+            },
+            {
+              accessor: 'total_amount',
+              header: 'Total Amount',
+              isNumeric: true,
 
-            rate: 40,
-            tax: 400,
-            total_amount: 100,
-          },
-        ]}
-        columns={[
-          {
-            accessor: 'product_id',
-            header: 'Product',
-            cellWidth: 'auto',
-            fieldType: 'search',
-            searchOptions: search_options,
-          },
-          {
-            accessor: 'account_type',
-            header: 'Account Type',
-            cellWidth: 'lg',
-            fieldType: 'select',
-            selectOptions: [
-              {
-                label: 'SAVINGS',
-                value: 'savings',
-              },
-              {
-                label: 'CURRENT',
-                value: 'current',
-              },
-            ],
-          },
-          {
-            accessor: 'quantity',
-            header: 'Quantity',
-            isNumeric: true,
-          },
-          {
-            accessor: 'rate',
-            header: 'Rate',
-            isNumeric: true,
-          },
-          {
-            accessor: 'tax',
-            header: 'Tax',
-            isNumeric: true,
-          },
-          {
-            accessor: 'total_amount',
-            header: 'Total Amount',
-            isNumeric: true,
+              accessorFn: (row) => row.quantity * row.rate + row.tax,
+            },
+            {
+              accessor: 'product_description',
+              header: 'Product Description',
+              hidden: true,
 
-            accessorFn: (row) => row.quantity * row.rate + row.tax,
-          },
-          {
-            accessor: 'product_description',
-            header: 'Product Description',
-            hidden: true,
+              fieldType: 'textarea',
+            },
 
-            fieldType: 'textarea',
-          },
-
-          {
-            accessor: 'warehouse_partition',
-            hidden: true,
-            header: 'Warehouse Partition',
-          },
-          {
-            accessor: 'sales_ledger',
-            hidden: true,
-            header: 'Sales Ledger',
-          },
-        ]}
-      />
-    </Box>
+            {
+              accessor: 'warehouse_partition',
+              hidden: true,
+              header: 'Warehouse Partition',
+            },
+            {
+              accessor: 'sales_ledger',
+              hidden: true,
+              header: 'Sales Ledger',
+            },
+          ]}
+        />
+      </Box>
+    </FormProvider>
   );
 };
 

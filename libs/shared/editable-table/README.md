@@ -144,4 +144,5 @@ export default EDITABLE;
 ## REMAINING FEATURES
 
 - [ ] focus element up and down using arrow keys
+- [ ] validations
 
