@@ -10,7 +10,6 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  FormCheckboxGroup,
   FormInput,
   FormSelect,
   FormSwitch,
@@ -21,7 +20,6 @@ import {
   Button,
   Container,
   FormFooter,
-  Grid,
   GridItem,
   Icon,
   IconButton,
@@ -74,7 +72,7 @@ export function SettingsLoanForm(props: loanProductsAdd) {
 
   return (
     <>
-      <Container height="fit-content" minW="container.lg" pb="55px">
+      <Container p="0" height="fit-content" minW="container.lg">
         <Box position="relative" margin="0px auto">
           <Box
             position="fixed"
@@ -104,107 +102,108 @@ export function SettingsLoanForm(props: loanProductsAdd) {
             </Box>
           </Box>
         </Box>
-        <Container minW="container.lg" height="fit-content" bg="white">
-          <FormProvider {...methods}>
-            <form>
-              {/* main */}
-              <Box px="s20" py="s24">
-                <ContainerWithDivider>
-                  <Box background="white" mt="50px">
-                    <InputGroupContainer>
-                      <GridItem colSpan={2}>
-                        <FormInput
-                          name="productName"
-                          label="Product Name"
-                          placeholder="Enter Product Name"
-                        />
-                      </GridItem>
-                      {/* <FormSelect name={'duhjisdfsd'} /> */}
+      </Container>
+      <Container minW="container.lg" height="fit-content" bg="gray.0" pb="55px">
+        <FormProvider {...methods}>
+          <form>
+            {/* main */}
+            <Box px="s20" py="s24">
+              <ContainerWithDivider>
+                <Box background="white" mt="50px">
+                  <InputGroupContainer>
+                    <GridItem colSpan={2}>
+                      <FormInput
+                        name="productName"
+                        label="Product Name"
+                        placeholder="Enter Product Name"
+                      />
+                    </GridItem>
+                    {/* <FormSelect name={'duhjisdfsd'} /> */}
 
+                    <FormSelect
+                      name={'nameOfDepositProductType'}
+                      options={optionsSaving}
+                      label="Product Type"
+                      placeholder="Select Product Type"
+                    />
+                    <GridItem colSpan={2}>
                       <FormSelect
-                        name={'nameOfDepositProductType'}
+                        name={'nameOfDepositProductSubtype'}
                         options={optionsSaving}
-                        label="Product Type"
+                        label="Product Subtype"
                         placeholder="Select Product Type"
                       />
-                      <GridItem colSpan={2}>
-                        <FormSelect
-                          name={'nameOfDepositProductSubtype'}
-                          options={optionsSaving}
-                          label="Product Subtype"
-                          placeholder="Select Product Type"
-                        />
-                      </GridItem>
+                    </GridItem>
 
-                      <FormSelect
-                        name={'nameOfDepositProduct'}
-                        options={optionsSaving}
-                        label="Nature of Loan Product"
-                      />
-                    </InputGroupContainer>
-                  </Box>
-                  <Box>
-                    <Text fontWeight="500" fontSize={'r1'} color="gray.700">
-                      Product Code
-                    </Text>
-                    <Text
-                      mt="s4"
-                      fontWeight="400"
-                      fontSize={'s2'}
-                      color="gray.700"
-                    >
-                      Add prefix & intial number. Eg. ASM506
-                    </Text>
-                    <InputGroupContainer mt="s16">
-                      <FormInput
-                        label="Prefix"
-                        placeholder="Enter Prefix"
-                        name="prefix"
-                      />
-                      <FormInput
-                        label="Intitial Number"
-                        placeholder="Intitial Number"
-                        name="initialNumber"
-                      />
-                      <Box></Box>
-                      <FormSwitch
-                        name="resetSwitch"
-                        label="Reset every fiscal year"
-                      />
-                    </InputGroupContainer>
-                  </Box>
-                  <TypesOfMember watch={watch} />
+                    <FormSelect
+                      name={'nameOfDepositProduct'}
+                      options={optionsSaving}
+                      label="Nature of Loan Product"
+                    />
+                  </InputGroupContainer>
+                </Box>
+                <Box>
+                  <Text fontWeight="500" fontSize={'r1'} color="gray.700">
+                    Product Code
+                  </Text>
+                  <Text
+                    mt="s4"
+                    fontWeight="400"
+                    fontSize={'s2'}
+                    color="gray.700"
+                  >
+                    Add prefix & intial number. Eg. ASM506
+                  </Text>
+                  <InputGroupContainer mt="s16">
+                    <FormInput
+                      label="Prefix"
+                      placeholder="Enter Prefix"
+                      name="prefix"
+                    />
+                    <FormInput
+                      label="Intitial Number"
+                      placeholder="Intitial Number"
+                      name="initialNumber"
+                    />
+                    <Box></Box>
+                    <FormSwitch
+                      name="resetSwitch"
+                      label="Reset every fiscal year"
+                    />
+                  </InputGroupContainer>
+                </Box>
+                <TypesOfMember watch={watch} />
 
-                  <Box display="flex" flexDirection={'column'} gap="s16">
-                    <Critera watch={watch} />
-                    <GridItems watch={watch} />
-                  </Box>
+                <Box display="flex" flexDirection={'column'} gap="s16">
+                  <Critera watch={watch} />
+                  <GridItems watch={watch} />
+                </Box>
 
-                  {/* {depositNature !== 'voluntary' && (
+                {/* {depositNature !== 'voluntary' && (
                   <DepositFrequency watch={watch} />
                 )} */}
-                  <MinimunTenure />
-                  <MaximumTenure />
-                  <AmountLimit />
-                  <LoanRepaymentScheme />
-                  <LoanRepayment />
-                  <Interest />
-                  <AccountServicesCharge />
-                  <LoanLimit />
-                  {/* {(depositNature === 'recurringSaving' ||
+                <MinimunTenure />
+                <MaximumTenure />
+                <AmountLimit />
+                <LoanRepaymentScheme />
+                <LoanRepayment />
+                <Interest />
+                <AccountServicesCharge />
+                <LoanLimit />
+                {/* {(depositNature === 'recurringSaving' ||
                   depositNature === 'termSaving') && <DefaultAccountName />} */}
-                  <Questions watch={watch} />
-                  <RequiredDocumentSetup />
-                  {/* {depositNature !== 'termSaving' && <PrematuredPenalty />} */}
-                </ContainerWithDivider>
-              </Box>
-            </form>
-          </FormProvider>
-        </Container>
+                <Questions watch={watch} />
+                <RequiredDocumentSetup />
+                {/* {depositNature !== 'termSaving' && <PrematuredPenalty />} */}
+              </ContainerWithDivider>
+            </Box>
+          </form>
+        </FormProvider>
       </Container>
+
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.lg" height="fit-content">
+          <Container minW="container.lg" height="fit-content" p="0">
             <FormFooter
               status={
                 <Box display="flex" gap="s8">

@@ -98,11 +98,13 @@ export const MinimunTenure = () => {
               name="minimunTenureNumber"
               textAlign={'right'}
               label="Number"
-              placeholder="Enter number"
+              placeholder="0"
               rightElement={
-                <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
-                  {rightElement}
-                </Text>
+                <Box mr="s24">
+                  <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
+                    {rightElement}
+                  </Text>
+                </Box>
               }
             />
           </Box>

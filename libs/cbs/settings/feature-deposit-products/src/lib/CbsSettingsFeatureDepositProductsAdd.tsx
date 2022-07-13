@@ -27,6 +27,7 @@ import {
   Critera,
   DefaultAccountName,
   DepositFrequency,
+  DormantSetup,
   GridItems,
   Interest,
   MaximumTenure,
@@ -70,7 +71,7 @@ export function SettingsDepositProductsAdd(
 
   return (
     <>
-      <Container height="fit-content" minW="container.lg" pb="55px">
+      <Container height="fit-content" minW="container.lg" p="0">
         <Box position="relative" margin="0px auto">
           <Box
             position="fixed"
@@ -100,86 +101,89 @@ export function SettingsDepositProductsAdd(
             </Box>
           </Box>
         </Box>
-        <Container bg="white" height="fit-content" minW="container.lg">
-          <FormProvider {...methods}>
-            <form>
-              {/* main */}
-              <Box px="s20" py="s24">
-                <ContainerWithDivider>
-                  <Box background="white" mt="50px">
-                    <InputGroupContainer>
-                      <GridItem colSpan={2}>
-                        <FormInput
-                          name="productName"
-                          label="Product Name"
-                          placeholder="Enter Product Name"
-                        />
-                        {/* <FormSelect name={'duhjisdfsd'} /> */}
-                      </GridItem>
-                      <FormSelect
-                        name={'nameOfDepositProduct'}
-                        options={optionsSaving}
-                        label="Nature of Deposit Product"
-                      />
-                    </InputGroupContainer>
-                  </Box>
-                  <Box>
-                    <Text fontWeight="500" fontSize={'r1'} color="gray.700">
-                      Product Code
-                    </Text>
-                    <InputGroupContainer mt="s16">
+      </Container>
+      <Container bg="white" height="fit-content" minW="container.lg" pb="120px">
+        <FormProvider {...methods}>
+          <form>
+            {/* main */}
+            <Box px="s20" py="s24">
+              <ContainerWithDivider>
+                <Box background="white" mt="50px">
+                  <InputGroupContainer>
+                    <GridItem colSpan={2}>
                       <FormInput
-                        label="Prefix"
-                        placeholder="Enter Prefix"
-                        name="prefix"
+                        name="productName"
+                        label="Product Name"
+                        placeholder="Enter Product Name"
                       />
-                      <FormInput
-                        label="Intitial Number"
-                        placeholder="Intitial Number"
-                        name="initialNumber"
-                      />
-                      <Box></Box>
-                      <FormSwitch
-                        name="resetSwitch"
-                        label="Reset every fiscal year"
-                      />
-                    </InputGroupContainer>
+                      {/* <FormSelect name={'duhjisdfsd'} /> */}
+                    </GridItem>
+                    <FormSelect
+                      name={'nameOfDepositProduct'}
+                      options={optionsSaving}
+                      label="Nature of Deposit Product"
+                    />
+                  </InputGroupContainer>
+                </Box>
+                <Box>
+                  <Text fontWeight="Medium" fontSize={'r1'} color="gray.700">
+                    Product Code
+                  </Text>
+                  <Text fontWeight="Regular" fontSize="s2" color="gray.700">
+                    Add prefix & intial number. Eg. ASM506
+                  </Text>
+                  <InputGroupContainer mt="s16">
+                    <FormInput
+                      label="Prefix"
+                      placeholder="Enter Prefix"
+                      name="prefix"
+                    />
+                    <FormInput
+                      label="Intitial Number"
+                      placeholder="Intitial Number"
+                      name="initialNumber"
+                    />
+                    <Box></Box>
+                    <FormSwitch
+                      name="resetSwitch"
+                      label="Reset every fiscal year"
+                    />
+                  </InputGroupContainer>
+                </Box>
+                {depositNature !== 'mandatory' && (
+                  <TypesOfMember watch={watch} />
+                )}
+
+                {depositNature !== 'mandatory' && (
+                  <Box display="flex" flexDirection={'column'} gap="s16">
+                    <Critera watch={watch} />
+                    <GridItems watch={watch} />
                   </Box>
-                  {depositNature !== 'mandatory' && (
-                    <TypesOfMember watch={watch} />
-                  )}
+                )}
+                {depositNature !== 'voluntary' && (
+                  <DepositFrequency watch={watch} />
+                )}
+                {depositNature !== 'voluntary' && <MinimunTenure />}
+                {depositNature !== 'voluntary' && <MaximumTenure />}
+                <BalanceLimit />
+                <Interest />
+                <PostingFrequency />
+                {depositNature !== 'termSaving' && <AccountServicesCharge />}
 
-                  {depositNature !== 'mandatory' && (
-                    <Box display="flex" flexDirection={'column'} gap="s16">
-                      <Critera watch={watch} />
-                      <GridItems watch={watch} />
-                    </Box>
-                  )}
-                  {depositNature !== 'voluntary' && (
-                    <DepositFrequency watch={watch} />
-                  )}
-                  {depositNature !== 'voluntary' && <MinimunTenure />}
-                  {depositNature !== 'voluntary' && <MaximumTenure />}
-                  <BalanceLimit />
-                  <Interest />
-                  <PostingFrequency />
-                  {depositNature !== 'termSaving' && <AccountServicesCharge />}
-
-                  {(depositNature === 'recurringSaving' ||
-                    depositNature === 'termSaving') && <DefaultAccountName />}
-                  <Questions />
-                  <RequiredDocumentSetup />
-                  {depositNature !== 'voluntary' && <PrematuredPenalty />}
-                </ContainerWithDivider>
-              </Box>
-            </form>
-          </FormProvider>
-        </Container>
+                {depositNature === 'termSaving' && <DefaultAccountName />}
+                <Questions />
+                {depositNature === 'mandatory' && <DormantSetup />}
+                <RequiredDocumentSetup />
+                {depositNature !== 'voluntary' && <PrematuredPenalty />}
+              </ContainerWithDivider>
+            </Box>
+          </form>
+        </FormProvider>
       </Container>
 
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.lg" height="fit-content">
+          <Container minW="container.lg" height="fit-content" p="0">
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
@@ -205,7 +209,7 @@ export function SettingsDepositProductsAdd(
                   </Text>
                 </Button>
               }
-              mainButtonLabel={t['next']}
+              mainButtonLabel={t['saveAccount']}
               mainButtonHandler={() => router.push(`/members/translation`)}
             />
           </Container>

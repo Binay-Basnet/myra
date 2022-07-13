@@ -48,7 +48,6 @@ export const MemberKYMIdentificationDetails = () => {
         {identificationDocs.map(
           (item, index) => {
             const isChecked = checkedIds?.includes(item?.id);
-            console.log('hello', isChecked);
             return (
               // identificationValues.map((data, i) => (
               <Checkbox
@@ -101,6 +100,7 @@ export const MemberKYMIdentificationDetails = () => {
                           value: option.id,
                         }
                       );
+                      console.log(option);
                       return (
                         <FormInputWithType
                           formType={option?.fieldType}

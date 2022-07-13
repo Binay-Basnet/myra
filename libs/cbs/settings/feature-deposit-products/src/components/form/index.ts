@@ -3,6 +3,7 @@ export * from './balanceLimit';
 export * from './criteria';
 export * from './defaultAccount';
 export * from './depositFrequency';
+export * from './dormantSetup';
 export * from './interest';
 export * from './listGrid';
 export * from './maximumTenure';

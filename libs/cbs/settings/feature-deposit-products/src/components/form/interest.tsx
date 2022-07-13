@@ -32,6 +32,7 @@ const postingFreq = [
 export const Interest = () => {
   const { watch } = useFormContext();
   const depositNature = watch('nameOfDepositProduct');
+
   return (
     <>
       <BoxContainer>
@@ -75,18 +76,21 @@ export const Interest = () => {
               </Text>
             }
           />
-          <FormInput
-            type="number"
-            name="qdditionalToBaseRate"
-            label="Additional to Base Rate"
-            textAlign={'right'}
-            placeholder="0.00"
-            rightElement={
-              <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                %
-              </Text>
-            }
-          />
+          {depositNature !== 'recurringSaving' && (
+            <FormInput
+              type="number"
+              name="qdditionalToBaseRate"
+              label="Additional to Base Rate"
+              textAlign={'right'}
+              placeholder="0.00"
+              rightElement={
+                <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                  %
+                </Text>
+              }
+            />
+          )}
+
           <FormInput
             name="ceoAuthenticationRate"
             type="number"

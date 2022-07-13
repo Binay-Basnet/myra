@@ -56,8 +56,6 @@ export const KYMDeclaration = () => {
 
   const hasBeneficialOwner = watch('hasBeneficialOwner');
 
-  console.log(hasBeneficialOwner);
-
   return (
     <GroupContainer>
       <Box

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Box, BoxProps } from '@coop/shared/ui';
 
 interface IGroupContainer extends BoxProps {
@@ -15,7 +16,8 @@ export const DynamicBoxGroupContainer = ({
       display="flex"
       flexDirection="column"
       gap="s16"
-      boxShadow="E0"
+      border="1px solid"
+      borderColor="border.layout"
       {...rest}
     >
       {children}

@@ -32,6 +32,7 @@ export const BalanceLimit = () => {
   const { resetField, watch } = useFormContext();
 
   const frequencyUnit = watch('frequencyUnit');
+  const depositNature = watch('nameOfDepositProduct');
 
   useEffect(() => {
     resetField('unitDays');
@@ -41,7 +42,11 @@ export const BalanceLimit = () => {
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Amount Limit</TopText>
+        {depositNature === 'recurringSaving' ? (
+          <TopText>Transaction Limit</TopText>
+        ) : (
+          <TopText>Balance Limit</TopText>
+        )}
       </TextBoxContainer>
       <InputGroupContainer>
         <FormInput
@@ -54,8 +59,17 @@ export const BalanceLimit = () => {
           label="Maximum Amount"
           placeholder="Enter Maximum Amount"
         />
+        {depositNature !== 'recurringSaving' && (
+          <FormInput
+            type="number"
+            name="average"
+            label="Average"
+            textAlign="right"
+            placeholder="0"
+          />
+        )}
       </InputGroupContainer>
-      <Box display="flex" flexDirection="column" gap="s8">
+      {/* <Box display="flex" flexDirection="column" gap="s8">
         <Text fontSize={'s3'} fontWeight="Medium">
           Frquency
         </Text>
@@ -77,14 +91,16 @@ export const BalanceLimit = () => {
               label="Number"
               placeholder="0"
               rightElement={
-                <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
-                  {rightElement}
-                </Text>
+                <Box mr="s24">
+                  <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
+                    {rightElement}
+                  </Text>
+                </Box>
               }
             />
           </Box>
         </Box>
-      </Box>
+      </Box> */}
     </BoxContainer>
   );
 };

@@ -85,6 +85,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
   const { t } = useTranslation();
   const router = useRouter();
   const [isClose, setIsClose] = useState(true);
+  const [numLines, setNumLines] = useState([1, 2]);
 
   const helpOptions = [
     {
@@ -465,6 +466,9 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
                           onClick={() => router.push('/inventory/list')}
+                          // _hover={{ noOfLines: '{[1, 1]}' }}
+                          onMouseOver={() => setNumLines([1, 3])}
+                          onMouseLeave={() => setNumLines([1, 2])}
                         >
                           <Image
                             w={12}
@@ -479,8 +483,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                             lineHeight="125%"
                             overflow="hidden"
                             textOverflow="ellipsis"
-                            noOfLines={[1, 2]}
-                            _hover={{ noOfLines: '{[1, 1]}' }}
+                            noOfLines={numLines}
                           >
                             {t['loanManagementSystem']}
                           </Text>

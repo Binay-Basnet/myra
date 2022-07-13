@@ -31,9 +31,7 @@ const ChartsOfAccounts = () => {
         tabItems={tabList}
         buttonLabel={t['settingsCoaNewAccount']}
         buttonHandler={() =>
-          router.push(
-            '/settings/general/charts-of-accounts/[action]-new-account'
-          )
+          router.push('/settings/general/charts-of-accounts/add-new-account')
         }
       />
       <Box>

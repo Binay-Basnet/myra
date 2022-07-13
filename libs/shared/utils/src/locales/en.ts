@@ -16,6 +16,8 @@ const en: Record<string, string> = {
   complete: 'Complete',
   submit: 'Submit',
   applyChanges: 'Apply Changes',
+  done: 'Done',
+  saveAccount: 'Save Account',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
