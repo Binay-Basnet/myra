@@ -6,11 +6,13 @@ import accordion from './foundations/accordion';
 import button from './foundations/button';
 import checkbox from './foundations/checkbox';
 import Input from './foundations/input';
+import Textarea from './foundations/textarea';
 import modal from './foundations/modal';
 import radio from './foundations/radio';
 import switches from './foundations/switches';
 import Table from './foundations/table';
 import tags from './foundations/tags';
+import textarea from './foundations/textarea';
 
 // 2. Call `extendTheme` and pass your custom values
 
@@ -86,6 +88,12 @@ export const theme = extendTheme({
     },
     Table,
     Input,
+    Textarea: {
+      sizes: textarea.sizes,
+      variants: textarea.variants,
+      baseStyle: textarea.baseStyle,
+      defaultProps: textarea.defaultProps,
+    },
     Tag: {
       sizes: tags.sizes,
       variants: tags.variants,

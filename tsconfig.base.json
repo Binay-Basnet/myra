@@ -111,6 +111,9 @@
       "@coop/neosys-admin/users": ["libs/neosys/feature-users/src/index.ts"],
       "@coop/shared/components": ["libs/shared/components/src/index.ts"],
       "@coop/shared/data-access": ["libs/shared/data-access/src/index.ts"],
+      "@coop/shared/editable-table": [
+        "libs/shared/editable-table/src/index.ts"
+      ],
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],
       "@coop/shared/map": ["libs/shared/map/src/index.ts"],
       "@coop/shared/table": ["libs/shared/table/src/index.ts"],
