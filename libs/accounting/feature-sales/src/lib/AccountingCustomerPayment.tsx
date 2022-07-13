@@ -9,9 +9,11 @@ import { Avatar, Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface AccountingSalesListProps {}
+export interface AccountingCustomerPaymentProps {}
 
-export function AccountingSalesList(props: AccountingSalesListProps) {
+export function AccountingCustomerPayment(
+  props: AccountingCustomerPaymentProps
+) {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -56,22 +58,15 @@ export function AccountingSalesList(props: AccountingSalesListProps) {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['accountingSalesListInvoiceNo'],
+        header: 'Entry No',
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: t['accountingSalesListCustomer'],
+        header: 'Customer',
         cell: (props) => {
           return (
-            <Box
-              display="flex"
-              alignItems="center"
-              gap="s12"
-              onClick={() => {
-                router.push('/accounting/sales/object');
-              }}
-            >
+            <Box display="flex" alignItems="center" gap="s12">
               <Avatar
                 name="Dan Abrahmov"
                 size="sm"
@@ -90,19 +85,34 @@ export function AccountingSalesList(props: AccountingSalesListProps) {
         },
 
         meta: {
-          width: '60%',
+          width: '40%',
         },
       },
       {
-        header: t['accountingSalesListTotalAmount'],
+        header: 'Received From ',
+        accessorFn: (row) => row?.node?.contact,
+        meta: {
+          width: '10%',
+        },
+      },
+
+      {
+        header: 'Total Amount',
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: t['accountingSalesListInvoiceDate'],
+        header: 'Date',
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+      },
+      {
+        header: 'Payment Mode',
+        accessorFn: (row) => row?.node?.contact,
+        meta: {
+          width: '10%',
+        },
       },
       {
         id: '_actions',
@@ -125,12 +135,13 @@ export function AccountingSalesList(props: AccountingSalesListProps) {
   return (
     <>
       <AccountingPageHeader
-        heading={t['accountingSalesListSales']}
-        buttonLabel={t['accountingSalesListSaleEntry']}
-        buttonHandler={() => router.push('/accounting/sales/add')}
+        heading="Credit Note"
+        buttonLabel={'New Credit Note'}
+        buttonHandler={() => router.push('/accounting/sales/credit-note/add')}
       />
 
       <Table
+        // rowClick={(id) => alert(id)}
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
@@ -145,4 +156,4 @@ export function AccountingSalesList(props: AccountingSalesListProps) {
   );
 }
 
-export default AccountingSalesList;
+export default AccountingCustomerPayment;

@@ -2303,6 +2303,12 @@ const en: Record<string, string> = {
   accountingCustomerDetailsAddTDSAmount: 'TDS Amount',
   accountingCustomerDetailsAddNotes: 'Notes',
   accountingCustomerDetailsAddNote: 'Note',
+
+  // accouting sales obj
+  salesObjTabOverview: 'Overview',
+  salesObjTabTasks: 'Tasks',
+  salesObjTabDocs: 'Documents',
+  salesObjTabActivity: 'Activity',
 };
 
 export default en;
