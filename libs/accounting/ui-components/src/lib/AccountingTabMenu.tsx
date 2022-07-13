@@ -1,10 +1,8 @@
 import { IconType } from 'react-icons';
 import { AiOutlineAppstore } from 'react-icons/ai';
-import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
 import { ImStack } from 'react-icons/im';
 import { IoIosList } from 'react-icons/io';
 import { IoCubeOutline, IoPerson } from 'react-icons/io5';
-import { MdOutlineWaterDrop } from 'react-icons/md';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
@@ -30,28 +28,28 @@ export function AccountingTabMenu() {
 
   const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
     {
-      title: 'Sales',
+      title: t['accountingAccountingTabMenuSales'],
       icon: AiOutlineAppstore,
       link: '/accounting/sales/list',
     },
     {
-      title: 'Purchase',
+      title: t['accountingAccountingTabMenuPurchase'],
       icon: IoPerson,
       link: '/accounting/purchase/list',
     },
     {
-      title: 'Accounting',
+      title: t['accountingAccountingTabMenuAccounting'],
       icon: IoCubeOutline,
       link: '/accounting/accounting/journal-vouchers/list',
     },
     {
-      title: 'Loan',
+      title: t['accountingAccountingTabMenuLoan'],
       icon: ImStack,
       link: '/accounting/loan/list',
     },
 
     {
-      title: 'Investment',
+      title: t['accountingAccountingTabMenuInvestment'],
       icon: IoIosList,
       link: '/accounting/investment/list',
     },
@@ -83,7 +81,7 @@ export function AccountingTabMenu() {
           color={'gray.0'}
           letterSpacing="wide"
         >
-          {'Accounting'}
+          {t['accountingAccountingTabMenuAccounting']}
         </Text>
       </Box>
       <Tabs index={currentIndex} height="100%" size="md" variant="enclosed">
