@@ -62,6 +62,7 @@ export const SalesObject = () => {
           p="s16"
           display={'flex'}
           justifyContent="space-between"
+          borderRadius="br2"
         >
           <Box w="30%">
             <BoxContainer>
@@ -103,40 +104,41 @@ export const SalesObject = () => {
               </Box>
             </BoxContainer>
           </Box>
+
           <Box h="fit-content">
             <Tags label="Approved" type="chip" />
           </Box>
         </Box>
-      </Box>
-      <Box py="s24">
-        <Box
-          px="s16"
-          position={'sticky'}
-          top="169px"
-          zIndex={12}
-          w="100%"
-          bg="white"
-          borderBottom={'1px solid'}
-          borderColor="border.layout"
-        >
-          <PageHeaderTab list={tabHeader} />
+        <Box py="s24">
+          <Box
+            px="s16"
+            position={'sticky'}
+            top="170px"
+            zIndex={12}
+            w="100%"
+            bg="white"
+            borderBottom={'1px solid'}
+            borderColor="border.layout"
+          >
+            <PageHeaderTab list={tabHeader} />
+          </Box>
+          <FormProvider {...methods}>
+            <form>
+              <Box bg="white" py="s32">
+                <DividerContainer>
+                  <SalesDetails />
+                  {/* -------------------- TODO -----------ADD Table here */}
+                  <Box></Box>
+                  <SalesBox />
+                  <SalesDetails />
+                  {/* -------------------- TODO -----------ADD Table here */}
+                  <Box></Box>
+                  <SalesBox />
+                </DividerContainer>
+              </Box>
+            </form>
+          </FormProvider>
         </Box>
-        <FormProvider {...methods}>
-          <form>
-            <Box bg="white" p="s32">
-              <DividerContainer>
-                <SalesDetails />
-                {/* -------------------- TODO -----------ADD Table here */}
-                <Box></Box>
-                <SalesBox />
-                <SalesDetails />
-                {/* -------------------- TODO -----------ADD Table here */}
-                <Box></Box>
-                <SalesBox />
-              </DividerContainer>
-            </Box>
-          </form>
-        </FormProvider>
       </Box>
     </Box>
   );
