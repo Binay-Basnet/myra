@@ -37,7 +37,7 @@ export function CbsSettingsFeatureOrganization(
     // onError: () => {},
   });
   return (
-    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
+    <Box width="100%" display={'flex'} flexDirection={'column'}>
       <SettingsPageHeader heading="Organizations" />
       <Box display={'flex'} flexDirection="row" h="fit-content">
         <Box

@@ -7,6 +7,7 @@ export * from './interest';
 export * from './listGrid';
 export * from './maximumTenure';
 export * from './minimunTenure';
+export * from './postingFrequency';
 export * from './prematuruedPenaltySetup';
 export * from './requiredDocumentSetup';
 export * from './TypesofMembers';

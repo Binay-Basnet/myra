@@ -63,7 +63,7 @@ export function AccountingFeaturePurchaseSupplierPayment(
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Supplier Name',
+        header: 'Supplier',
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">

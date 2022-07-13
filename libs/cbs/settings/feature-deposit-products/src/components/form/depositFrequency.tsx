@@ -1,9 +1,7 @@
-import React from 'react';
-
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 
 import {
   BoxContainer,
@@ -96,7 +94,11 @@ export const DepositFrequency = ({ watch }: any) => {
               label="Penalty"
               textAlign={'right'}
               placeholder="0.00"
-              rightElement={'%'}
+              rightElement={
+                <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                  %
+                </Text>
+              }
             />
             <FormInput
               name="penaltyAmount"
@@ -141,7 +143,11 @@ export const DepositFrequency = ({ watch }: any) => {
               label="Percentage of Deposited Amount"
               textAlign={'right'}
               placeholder="0.00"
-              rightElement={'%'}
+              rightElement={
+                <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                  %
+                </Text>
+              }
             />
             <FormInput
               name="nosOfInstallment"

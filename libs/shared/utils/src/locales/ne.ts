@@ -34,7 +34,7 @@ const ne: Record<string, string> = {
   yourDashboard: 'तपाईंको ड्यासबोर्ड',
   yourMyraApplication: 'Your Myra Applications',
   corebankingSystems: 'मुख्य बैंकिङ प्रणाली',
-  inventoryManagement: 'invetory व्यवस्थापन',
+  inventoryManagement: 'सूची व्यवस्थापन',
   loanManagementSystem: 'ऋण व्यवस्थापन प्रणाली',
   accountingSystem: 'लेखा प्रणाली',
   otherApplications: 'अन्य अनुप्रयोगहरू',
@@ -490,7 +490,6 @@ const ne: Record<string, string> = {
   settingsMemberOtherCooperativeDetails: 'Other Cooperative Details',
   settingsMemberFinancialTransactionDetails: 'Financial Transaction Details',
   settingsMemberSection4Declaration: 'Section 4: Declaration',
-  settingsMemberNextToKinInformation: 'Next to Kin Information',
   settingsMemberForeignEmploymentOptions: 'Foreign Employment Options',
   settingsMemberFileUploads: 'File Uploads',
   settingsMemberDeclaration: 'Declaration',
@@ -1964,6 +1963,7 @@ const ne: Record<string, string> = {
   kymCoopVDCLocalGov: 'Local Government',
   kymCoopSelectLocalGov: 'Select Local Government',
   kymIndWriteStudentVISA: 'Write 0 if Student VISA',
+
   //accounting
   //purchase sidebar
   accountingPurchaseSidebarPurchase: 'Purchase',
@@ -1972,6 +1972,17 @@ const ne: Record<string, string> = {
   accountingPurchaseSidebarExpenses: 'Expenses',
   accountingPurchaseSidebarDebitNote: 'Debit Note',
   accountingPurchaseSidebarSupplierPayment: 'Supplier Payment',
+
+  settingsMemberNominee: 'Nominee',
+
+  //accounting sidebar
+  accountingAccountingSidebarAccounting: 'Accounting',
+  accountingAccountingSidebarCreate: 'Create',
+  accountingAccountingSidebarJournalVouchers: 'Journal Vouchers',
+  accountingAccountingSidebarCashTransfer: 'Cash Transfer',
+  accountingAccountingSidebarQuickReceipt: 'Quick Receipt',
+  accountingAccountingSidebarBankAccounts: 'Bank Accounts',
+  accountingAccountingSidebarChartsOfAccounts: 'Charts of Account',
   //acouting sales sidebar
   accountingsales: 'Sales',
   accountingSalesCreate: 'Create',

@@ -86,7 +86,7 @@ export const LoanRepayment = () => {
               name="minimunDurationNumberLoan"
               textAlign={'right'}
               label="Number"
-              placeholder="Enter number"
+              placeholder="0"
               rightElement={
                 <Box p="s12">
                   <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
@@ -129,7 +129,7 @@ export const LoanRepayment = () => {
               name="maximumDurationNumberLoan"
               textAlign={'right'}
               label="Number"
-              placeholder="Enter number"
+              placeholder="0"
               rightElement={
                 <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
                   {rightElementMax}

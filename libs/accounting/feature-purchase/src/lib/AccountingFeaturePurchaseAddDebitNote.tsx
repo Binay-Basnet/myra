@@ -9,12 +9,7 @@ import {
   InputGroupContainer,
 } from '@coop/accounting/ui-components';
 import { FieldCardComponents } from '@coop/shared/components';
-import {
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-  FormTextArea,
-} from '@coop/shared/form';
+import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
   Box,
   Button,

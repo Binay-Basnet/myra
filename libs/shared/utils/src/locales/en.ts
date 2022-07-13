@@ -498,7 +498,6 @@ const en: Record<string, string> = {
   settingsMemberFinancialTransactionDetails: 'Financial Transaction Details',
 
   settingsMemberSection4Declaration: 'Section 4: Declaration',
-  settingsMemberNextToKinInformation: 'Next to Kin Information',
   settingsMemberForeignEmploymentOptions: 'Foreign Employment Options',
   settingsMemberFileUploads: 'File Uploads',
   settingsMemberDeclaration: 'Declaration',
@@ -1995,6 +1994,7 @@ const en: Record<string, string> = {
   kymCoopVDCLocalGov: 'Local Government',
   kymCoopSelectLocalGov: 'Select Local Government',
   kymIndWriteStudentVISA: 'Write 0 if Student VISA',
+
   //accounting
   //purchase sidebar
   accountingPurchaseSidebarPurchase: 'Purchase',
@@ -2003,6 +2003,18 @@ const en: Record<string, string> = {
   accountingPurchaseSidebarExpenses: 'Expenses',
   accountingPurchaseSidebarDebitNote: 'Debit Note',
   accountingPurchaseSidebarSupplierPayment: 'Supplier Payment',
+
+  settingsMemberNominee: 'Nominee',
+
+  //accounting sidebar
+  accountingAccountingSidebarAccounting: 'Accounting',
+  accountingAccountingSidebarCreate: 'Create',
+  accountingAccountingSidebarJournalVouchers: 'Journal Vouchers',
+  accountingAccountingSidebarCashTransfer: 'Cash Transfer',
+  accountingAccountingSidebarQuickPayment: 'Quick Payment',
+  accountingAccountingSidebarQuickReceipt: 'Quick Receipt',
+  accountingAccountingSidebarBankAccounts: 'Bank Accounts',
+  accountingAccountingSidebarChartsOfAccounts: 'Charts of Account',
   //acouting sales sidebar
   accountingsales: 'Sales',
   accountingSalesCreate: 'Create',

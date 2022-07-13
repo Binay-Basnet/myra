@@ -1,12 +1,9 @@
-import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
-import {
-  ContainerWithDivider,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { Box } from '@coop/shared/ui';
 
 import { DividerContainer, SubHeadingText } from '../formui';
 
@@ -14,7 +11,8 @@ const yesNo = [
   { label: 'Yes', value: 'yes' },
   { label: 'No', value: 'no' },
 ];
-export const Questions = ({ watch }: any) => {
+export const Questions = () => {
+  const { watch } = useFormContext();
   const depositNature = watch('nameOfDepositProduct');
   const allowLoan = watch('allowLoan');
   const withdrawRestricted = watch('withdrawRestricted');
@@ -99,38 +97,48 @@ export const Questions = ({ watch }: any) => {
         <SubHeadingText>Staff Product</SubHeadingText>
         <FormSwitchTab name={'staffProduct'} options={yesNo} />
       </Box>
-      <Box display={'flex'} flexDirection="column" gap="s16">
+      {(depositNature === 'recurringSaving' ||
+        depositNature === 'mandatory') && (
+        <Box display={'flex'} flexDirection="column" gap="s16">
+          <Box
+            display="flex"
+            flexDirection={'row'}
+            justifyContent="space-between"
+          >
+            <SubHeadingText>Widthdraw Restricted</SubHeadingText>
+            <FormSwitchTab name={'withdrawRestricted'} options={yesNo} />
+          </Box>
+          {withdrawRestricted && withdrawRestricted === 'yes' && (
+            <Box
+              border="1px solid"
+              borderColor="border.layout"
+              borderRadius="6px"
+              p="s16"
+              minH="156px"
+            >
+              <Box>
+                <FormInput
+                  type="text"
+                  name="specifyRestrictedwithdraw"
+                  label="Specify,"
+                  minH={'100px'}
+                />{' '}
+              </Box>
+            </Box>
+          )}
+        </Box>
+      )}
+      {(depositNature === 'recurringSaving' ||
+        depositNature === 'mandatory') && (
         <Box
           display="flex"
           flexDirection={'row'}
           justifyContent="space-between"
         >
-          <SubHeadingText>Widthdraw Restricted</SubHeadingText>
-          <FormSwitchTab name={'withdrawRestricted'} options={yesNo} />
+          <SubHeadingText>Wealth Building Product</SubHeadingText>
+          <FormSwitchTab name={'wealthBuildingProject'} options={yesNo} />
         </Box>
-        {withdrawRestricted && withdrawRestricted === 'yes' && (
-          <Box
-            border="1px solid"
-            borderColor="border.layout"
-            borderRadius="6px"
-            p="s16"
-            minH="156px"
-          >
-            <Box>
-              <FormInput
-                type="text"
-                name="specifyRestrictedwithdraw"
-                label="Specify,"
-                minH={'100px'}
-              />{' '}
-            </Box>
-          </Box>
-        )}
-      </Box>
-      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Wealth Building Product</SubHeadingText>
-        <FormSwitchTab name={'wealthBuildingProject'} options={yesNo} />
-      </Box>
+      )}
     </DividerContainer>
   );
 };
