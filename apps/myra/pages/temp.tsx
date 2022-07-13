@@ -102,24 +102,26 @@ const Temp = () => {
             accessor: 'total_amount',
             header: 'Total Amount',
             isNumeric: true,
+
             accessorFn: (row) => row.quantity * row.rate + row.tax,
           },
           {
             accessor: 'product_description',
             header: 'Product Description',
             hidden: true,
+
             fieldType: 'textarea',
           },
 
           {
             accessor: 'warehouse_partition',
-            header: 'Warehouse Partition',
             hidden: true,
+            header: 'Warehouse Partition',
           },
           {
             accessor: 'sales_ledger',
-            header: 'Sales Ledger',
             hidden: true,
+            header: 'Sales Ledger',
           },
         ]}
       />

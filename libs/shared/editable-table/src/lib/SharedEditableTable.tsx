@@ -60,6 +60,8 @@ export interface EditableTableProps<
 > {
   defaultData?: T[];
   columns: Column<T>[];
+
+  canDeleteRow?: boolean;
 }
 
 const cellWidthObj = {
@@ -70,7 +72,7 @@ const cellWidthObj = {
 
 export function EditableTable<
   T extends RecordWithId & Record<string, string | number>
->({ columns, defaultData }: EditableTableProps<T>) {
+>({ columns, defaultData, canDeleteRow = true }: EditableTableProps<T>) {
   const [currentData, setCurrentData] = useState(defaultData ?? []);
 
   useEffect(() => {
@@ -97,7 +99,10 @@ export function EditableTable<
           bg="gray.700"
           color="white"
         >
-          <Box w="s36" flexShrink={0} />
+          {columns.some((column) => column.hidden) && (
+            <Box w="s36" flexShrink={0} />
+          )}
+
           {columns
             .filter((column) => !column.hidden)
             .map((column, index) => (
@@ -119,13 +124,14 @@ export function EditableTable<
                 </Box>
               </Fragment>
             ))}
-          <Box w="s36" flexShrink={0} />
+          {canDeleteRow ? <Box w="s36" flexShrink={0} /> : null}
         </Flex>
 
         <Box w="100%" bg="white" borderX="1px" borderColor="border.layout">
           {currentData?.map((data, index) => (
             <Fragment key={`${data._id}${index}`}>
               <MemoEditableTableRow
+                canDeleteRow={canDeleteRow}
                 columns={columns}
                 setCurrentData={setCurrentData}
                 data={data}
@@ -223,6 +229,7 @@ interface IEditableTableRowProps<
   columns: Column<T>[];
   data: T;
   setCurrentData: Dispatch<SetStateAction<T[]>>;
+  canDeleteRow?: boolean;
 }
 
 const EditableTableRow = <
@@ -231,6 +238,7 @@ const EditableTableRow = <
   columns,
   data,
   setCurrentData,
+  canDeleteRow,
 }: IEditableTableRowProps<T>) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -264,30 +272,33 @@ const EditableTableRow = <
         borderBottom={isExpanded ? '0' : '1px'}
         borderBottomColor="border.layout"
       >
-        <Box
-          as="button"
-          w="s36"
-          borderRadius="0"
-          minH="s36"
-          flexShrink={0}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          color="gray.600"
-          cursor="pointer"
-          bg={isExpanded ? 'background.500' : 'white'}
-          _hover={{ bg: 'gray.100' }}
-          _focus={{ bg: 'background.500' }}
-          _focusVisible={{ outline: 'none' }}
-          onClick={() => setIsExpanded((prev) => !prev)}
-        >
-          <Icon
-            as={BsChevronRight}
-            fontSize="xl"
-            transition="transform 0.2s ease"
-            transform={isExpanded ? 'rotate(90deg)' : 'rotate(0deg)'}
-          />
-        </Box>
+        {columns.some((column) => column.hidden) && (
+          <Box
+            as="button"
+            w="s36"
+            borderRadius="0"
+            minH="s36"
+            flexShrink={0}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            color="gray.600"
+            cursor="pointer"
+            bg={isExpanded ? 'background.500' : 'white'}
+            _hover={{ bg: 'gray.100' }}
+            _focus={{ bg: 'background.500' }}
+            _focusVisible={{ outline: 'none' }}
+            onClick={() => setIsExpanded((prev) => !prev)}
+          >
+            <Icon
+              as={BsChevronRight}
+              fontSize="xl"
+              transition="transform 0.2s ease"
+              transform={isExpanded ? 'rotate(90deg)' : 'rotate(0deg)'}
+            />
+          </Box>
+        )}
+
         {columns
           .filter((column) => !column.hidden)
           .map((column, index) => {
@@ -410,25 +421,30 @@ const EditableTableRow = <
               </Fragment>
             );
           })}
-        <Box
-          w="s36"
-          minH="s36"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexShrink={0}
-          borderLeft="1px"
-          borderLeftColor="border.layout"
-          cursor="pointer"
-          _hover={{ bg: 'gray.100' }}
-          onClick={() => {
-            setCurrentData((prev) =>
-              prev.filter((prevData) => prevData._id !== data._id)
-            );
-          }}
-        >
-          <Icon as={IoCloseCircleOutline} color="danger.500" fontSize="2xl" />
-        </Box>
+        {canDeleteRow ? (
+          <Box
+            as="button"
+            w="s36"
+            minH="s36"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            flexShrink={0}
+            borderLeft="1px"
+            borderLeftColor="border.layout"
+            cursor="pointer"
+            _focus={{ bg: 'background.500' }}
+            _focusVisible={{ outline: 'none' }}
+            _hover={{ bg: 'gray.100' }}
+            onClick={() => {
+              setCurrentData((prev) =>
+                prev.filter((prevData) => prevData._id !== data._id)
+              );
+            }}
+          >
+            <Icon as={IoCloseCircleOutline} color="danger.500" fontSize="2xl" />
+          </Box>
+        ) : null}
       </HStack>
       <Collapse in={isExpanded} animateOpacity>
         <Grid
