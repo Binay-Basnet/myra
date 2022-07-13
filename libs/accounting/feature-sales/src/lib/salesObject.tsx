@@ -112,7 +112,7 @@ export const SalesObject = () => {
         <Box
           px="s16"
           position={'sticky'}
-          top="160px"
+          top="169px"
           zIndex={12}
           w="100%"
           bg="white"
