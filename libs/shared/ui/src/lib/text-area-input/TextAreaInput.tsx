@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { Textarea, TextareaProps } from '@chakra-ui/react';
+import { Textarea, TextareaProps, Flex } from '@chakra-ui/react';
 
 import { TextFields } from '../text-fields/TextFields';
 
@@ -15,23 +15,20 @@ export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>(
   (props, ref) => {
     const { labelColor, label, placeholder, id, ...rest } = props;
     return (
-      <>
-        <TextFields variant="formLabel" color={labelColor}>
-          {' '}
-          {label ?? 'Description'}
-        </TextFields>
+      <Flex flexDir="column" gap="s4">
+        {placeholder && (
+          <TextFields variant="formLabel" color={labelColor}>
+            {label ?? 'Description'}
+          </TextFields>
+        )}
+
         <Textarea
-          minH="64px"
+          variant="outline"
           placeholder={placeholder ?? 'Add description here'}
-          mt="s4"
-          h={'auto'}
-          p="s12"
-          fontSize={'r1'}
-          focusBorderColor="primary.500"
           id={id}
           {...rest}
         ></Textarea>
-      </>
+      </Flex>
     );
   }
 );

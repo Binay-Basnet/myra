@@ -18,6 +18,7 @@ import {
   Icon,
   Input,
   Text,
+  Textarea,
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 import { uniqueId } from 'lodash';
@@ -229,10 +230,7 @@ const EditableTableRow = <
   data,
   setCurrentData,
 }: IEditableTableRowProps<T>) => {
-  const [value, setValue] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
-
-  console.log(JSON.stringify(data, null, 2));
 
   useEffect(() => {
     columns.forEach((column) =>
@@ -330,6 +328,11 @@ const EditableTableRow = <
                   {column.fieldType === 'select' ? null : (
                     <EditablePreview
                       width="100%"
+                      cursor={
+                        column.fieldType === 'search' || !!column?.accessorFn
+                          ? 'not-allowed'
+                          : 'text'
+                      }
                       height="100%"
                       px="s8"
                       display="flex"
@@ -443,24 +446,50 @@ const EditableTableRow = <
                   >
                     {column.header}
                   </Text>
-                  <Input
-                    bg="white"
-                    textAlign={column.isNumeric ? 'right' : 'left'}
-                    placeholder={column.header}
-                    defaultValue={String(data[column.accessor] ?? '')}
-                    onChange={(e) => {
-                      setCurrentData((prev) =>
-                        prev.map((item) =>
-                          item._id === data._id
-                            ? {
-                                ...item,
-                                [column.accessor]: e.target.value,
-                              }
-                            : item
-                        )
-                      );
-                    }}
-                  />
+
+                  {/* TODO - IMPLEMENT FIELD TYPE FOR SELECT */}
+                  {column.fieldType === 'textarea' ? (
+                    <Textarea
+                      bg="white"
+                      fontSize="r1"
+                      _hover={{
+                        borderColor: 'gray.500',
+                      }}
+                      placeholder={column.header}
+                      defaultValue={String(data[column.accessor] ?? '')}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        setCurrentData((prev) =>
+                          prev.map((item) =>
+                            item._id === data._id
+                              ? {
+                                  ...item,
+                                  [column.accessor]: e.target.value,
+                                }
+                              : item
+                          )
+                        );
+                      }}
+                    />
+                  ) : (
+                    <Input
+                      bg="white"
+                      textAlign={column.isNumeric ? 'right' : 'left'}
+                      placeholder={column.header}
+                      defaultValue={String(data[column.accessor] ?? '')}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setCurrentData((prev) =>
+                          prev.map((item) =>
+                            item._id === data._id
+                              ? {
+                                  ...item,
+                                  [column.accessor]: e.target.value,
+                                }
+                              : item
+                          )
+                        );
+                      }}
+                    />
+                  )}
                 </Flex>
               </Fragment>
             ))}

@@ -107,6 +107,7 @@ const Temp = () => {
             accessor: 'product_description',
             header: 'Product Description',
             hidden: true,
+            fieldType: 'textarea',
           },
 
           {
