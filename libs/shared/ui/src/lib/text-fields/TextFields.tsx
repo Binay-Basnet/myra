@@ -78,7 +78,13 @@ export function TextFields(props: TextFieldsProps) {
       );
     case 'switch':
       return (
-        <Text fontSize="r1" fontWeight="500" {...rest} lineHeight="1.3">
+        <Text
+          fontSize="r1"
+          color="neutralColorLight.Gray-80"
+          fontWeight="500"
+          {...rest}
+          lineHeight="1.3"
+        >
           {children}
         </Text>
       );

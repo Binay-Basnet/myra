@@ -153,6 +153,7 @@ export const KYMBasiccoopDetails = () => {
 
           <Box
             mt="s16"
+            borderRadius="br2"
             border="1px solid"
             borderColor="border.layout"
             display="flex"

@@ -1,59 +1,60 @@
 import { useMemo } from 'react';
-import { Column, Table } from '@coop/shared/ui';
+
+import { Column, Table } from '@coop/shared/table';
+
+interface IData {
+  [key: string]: string | number;
+  id: number;
+  relationship: string;
+  fullName: string;
+}
+
+const data = [
+  {
+    id: 1,
+    relationship: 'Grandfather',
+    fullName: 'Bal Bahadur Nepal',
+  },
+  {
+    id: 2,
+    relationship: 'Grandmother',
+    fullName: 'Hari maya Nepal',
+  },
+  {
+    id: 3,
+    relationship: 'Father',
+    fullName: 'Shyam Nepal',
+  },
+  {
+    id: 4,
+    relationship: 'mother',
+    fullName: 'Parbati Nepal',
+  },
+];
 
 export const FamilyMemberTable = () => {
-  const data = [
-    {
-      id: 1,
-      relationship: 'Grandfather',
-      fullName: 'Bal Bahadur Nepal',
-    },
-    {
-      id: 2,
-      relationship: 'Grandmother',
-      fullName: 'Hari maya Nepal',
-    },
-    {
-      id: 3,
-      relationship: 'Father',
-      fullName: 'Shyam Nepal',
-    },
-    {
-      id: 4,
-      relationship: 'mother',
-      fullName: 'Parbati Nepal',
-    },
-  ];
-
-  const rowData = useMemo(() => data ?? [], [data]);
-
-  const columns = useMemo<Column<typeof rowData[0]>[]>(
-    () => [
-      {
-        Header: 'SN',
-        accessor: 'id',
-        maxWidth: 4,
-        disableSortBy: false,
-      },
-
-      {
-        Header: 'Relationship',
-        accessor: 'relationship',
-      },
-      {
-        Header: 'Full Name',
-        accessor: 'fullName',
-        width: '80%',
-      },
-    ],
-    []
-  );
-
   return (
     <Table
       isLoading={false}
-      data={rowData}
-      columns={columns}
+      data={data}
+      columns={[
+        {
+          header: 'SN',
+          accessorFn: (row) => row?.id,
+          // disableSortBy: false,
+        },
+        {
+          header: 'Relationship',
+          accessorFn: (row) => row?.relationship,
+        },
+        {
+          header: 'Full Name',
+          accessorFn: (row) => row?.fullName,
+          meta: {
+            width: '80%',
+          },
+        },
+      ]}
       isStatic={true}
       size="compact"
     />

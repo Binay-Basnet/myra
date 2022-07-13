@@ -14,7 +14,10 @@ export function CbsSettingsFeatureDepositTDS(
 
   const methods = useForm({});
 
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const {
+    control,
+    //  handleSubmit, getValues, watch, setError
+  } = methods;
 
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>

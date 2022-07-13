@@ -22,6 +22,10 @@ interface MapComponentProps {
 
 const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [location, setLocation] = useState<MapPosition>({
+    latitude: 27.7172,
+    longitude: 85.324,
+  });
   const [hasClickedModal, setHasClickedModal] = useState(false);
   const { t } = useTranslation();
 
@@ -82,7 +86,6 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
         open={isModalOpen}
         onClose={() => {
           closeModal();
-          setAddress('');
         }}
         isCentered={true}
         size="3xl"
@@ -97,11 +100,18 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
         }
         footerPrimary1Props={
           <Box px={5} display="flex" justifyContent="flex-end" h={50}>
-            <Button onClick={closeModal}>Save</Button>
+            <Button
+              onClick={() => {
+                setCurrentLoc(location);
+                closeModal();
+              }}
+            >
+              Save
+            </Button>
           </Box>
         }
       >
-        <Map position={currentLoc} setPosition={setCurrentLoc} />
+        <Map position={location} setPosition={setLocation} />
       </Modal>
 
       {address && (

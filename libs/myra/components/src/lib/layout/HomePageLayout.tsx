@@ -29,7 +29,7 @@ const myraAppn = [
   {
     title: 'accountingSystem',
     img: '/hpb.svg',
-    link: '/members/list',
+    link: '/accounting/sales/list',
   },
 ];
 

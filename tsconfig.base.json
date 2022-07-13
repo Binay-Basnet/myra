@@ -18,7 +18,20 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@coop/accounting/accounting": [
+        "libs/accounting/feature-accounting/src/index.ts"
+      ],
+      "@coop/accounting/purchase": [
+        "libs/accounting/feature-purchase/src/index.ts"
+      ],
       "@coop/accounting/sales": ["libs/accounting/feature-sales/src/index.ts"],
+      "@coop/accounting/ui-components": [
+        "libs/accounting/ui-components/src/index.ts"
+      ],
+      "@coop/accounting/ui-layouts": [
+        "libs/accounting/ui-layouts/src/index.ts"
+      ],
+      "@coop/accouting/loan": ["libs/accounting/feature-loan/src/index.ts"],
       "@coop/cbs/accounts/account-form": [
         "libs/cbs/accounts/feature-account-form/src/index.ts"
       ],

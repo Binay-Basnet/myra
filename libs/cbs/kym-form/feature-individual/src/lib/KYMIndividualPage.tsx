@@ -158,6 +158,7 @@ export function KYMIndividualPage() {
       );
       const editValueData =
         editValues?.members?.individual?.formState?.data?.formData;
+      console.log('edit value', editValueData);
       const permanentLocationData =
         editValueData?.permanentLocation?.latitude === null
           ? { latitude: 27.71, longitude: 85.31 }

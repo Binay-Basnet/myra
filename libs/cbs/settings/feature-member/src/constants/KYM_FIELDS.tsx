@@ -14,6 +14,8 @@ interface FieldType {
   children?: FieldType[];
 }
 
+// translation not needed. TODO
+
 export const KYM_FIELDS: FieldType[] = [
   {
     key: 'personal_information',
@@ -144,7 +146,7 @@ export const KYM_FIELDS: FieldType[] = [
     children: [
       {
         customId: KYMCustomFieldEnum.NextToKinInformation,
-        label: 'settingsMemberNextToKinInformation',
+        label: 'settingsMemberNominee',
         key: 'next_to_kin',
       },
       {

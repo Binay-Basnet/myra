@@ -68,8 +68,8 @@ export const KymCoopOpAddress = ({ watch }: any) => {
         />
         <FormSelect
           name="oprMunicipalityId"
-          label={t['kymCoopVDCMunicipality']}
-          placeholder={t['kymCoopSelectMunicipality']}
+          label={t['kymCoopVDCLocalGov']}
+          placeholder={t['kymCoopSelectLocalGov']}
           options={muncipalityList.map((d) => ({
             label: d.name,
             value: d.id,

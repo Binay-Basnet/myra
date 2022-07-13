@@ -1,5 +1,5 @@
 import React from 'react';
-import { Control } from 'react-hook-form';
+import { Control, useFormContext } from 'react-hook-form';
 
 import {
   ContainerWithDivider,
@@ -30,16 +30,17 @@ const details = ['Citizen', 'Permanent Resident', 'Resident'];
 const booleanList = [
   {
     label: 'Yes',
-    value: true,
+    value: 'true',
   },
   {
     label: 'No',
-    value: false,
+    value: 'false',
   },
 ];
 
 export const KYMDeclaration = () => {
   const { t } = useTranslation();
+  const { watch } = useFormContext();
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
     useGetIndividualKymOptionsQuery({
       filter: {
@@ -52,6 +53,8 @@ export const KYMDeclaration = () => {
   } = useGetIndividualKymOptionsQuery({
     filter: { customId: Kym_Field_Custom_Id.ForeignEmploymentOptions },
   });
+
+  const hasBeneficialOwner = watch('hasBeneficialOwner');
 
   return (
     <GroupContainer>
@@ -78,31 +81,33 @@ export const KYMDeclaration = () => {
               options={booleanList}
               name="hasBeneficialOwner"
             />
-            <Grid
-              gap={2}
-              templateColumns="repeat(3,1fr)"
-              alignItems="last baseline"
-            >
-              <GridItem colSpan={1}>
-                <FormSelect
-                  name={'beneficialRelationshipId'}
-                  isLoading={familyRelationshipLoading}
-                  options={getFieldOption(familyRelationShipData)}
-                  placeholder={t['kynIndRelationship']}
-                  label={t['kynIndIyespleasewritenameandrelationship']}
-                />
-              </GridItem>
+            {hasBeneficialOwner && (
+              <Grid
+                gap={2}
+                templateColumns="repeat(3,1fr)"
+                alignItems="last baseline"
+              >
+                <GridItem colSpan={1}>
+                  <FormSelect
+                    name={'beneficialRelationshipId'}
+                    isLoading={familyRelationshipLoading}
+                    options={getFieldOption(familyRelationShipData)}
+                    placeholder={t['kynIndRelationship']}
+                    label={t['kynIndIyespleasewritenameandrelationship']}
+                  />
+                </GridItem>
 
-              <GridItem mt="20px" colSpan={2}>
-                <FormInput
-                  type="text"
-                  id="beneficialFullName"
-                  name={'beneficialFullName'}
-                  label=" "
-                  placeholder={t['kynIndFullName']}
-                />
-              </GridItem>
-            </Grid>
+                <GridItem mt="20px" colSpan={2}>
+                  <FormInput
+                    type="text"
+                    id="beneficialFullName"
+                    name={'beneficialFullName'}
+                    label=" "
+                    placeholder={t['kynIndFullName']}
+                  />
+                </GridItem>
+              </Grid>
+            )}
           </Box>
 
           <Box

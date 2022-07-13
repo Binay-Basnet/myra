@@ -5,6 +5,7 @@ import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Option_Field_Type,
+  KymIndMemberInput,
   useGetIndIdentificationDocOptionQuery,
 } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
@@ -13,7 +14,7 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const MemberKYMIdentificationDetails = () => {
   const { t } = useTranslation();
-  const { register } = useFormContext();
+  const { register, getValues } = useFormContext<KymIndMemberInput>();
   const { data: identificationDocsData } =
     useGetIndIdentificationDocOptionQuery();
 
@@ -22,7 +23,15 @@ export const MemberKYMIdentificationDetails = () => {
       identificationDocsData?.members?.individual?.options?.list?.data ?? [],
     [identificationDocsData]
   );
+  const identificationValues = getValues()?.identification;
+  const checkedIds =
+    identificationValues?.map((item) =>
+      String(item?.options?.[0] && item?.id)
+    ) ?? [];
   const [currentShownDetails, setCurrentDetailsShown] = useState<string[]>([]);
+  React.useEffect(() => {
+    checkedIds.length !== 0 && setCurrentDetailsShown([...checkedIds]);
+  }, [JSON.stringify(checkedIds)]);
 
   return (
     <GroupContainer
@@ -36,32 +45,40 @@ export const MemberKYMIdentificationDetails = () => {
         {t['kymIndChooseidentificationdetails']}
       </Text>
       <Box display="flex">
-        {identificationDocs.map((item, index) => (
-          <Checkbox
-            id="identificationDetailsPersonal"
-            mr={5}
-            key={index}
-            label={String(item?.name.local)}
-            onChange={() => {
-              if (!item?.id) return;
+        {identificationDocs.map(
+          (item, index) => {
+            const isChecked = checkedIds?.includes(item?.id);
+            return (
+              // identificationValues.map((data, i) => (
+              <Checkbox
+                id="identificationDetailsPersonal"
+                mr={5}
+                key={item?.id + isChecked}
+                label={String(item?.name.local)}
+                defaultChecked={isChecked}
+                onChange={() => {
+                  if (!item?.id) return;
 
-              if (currentShownDetails.includes(item.id)) {
-                setCurrentDetailsShown((prev) =>
-                  prev.filter((data) => data !== item.id)
-                );
-              } else {
-                item?.name.local &&
-                  setCurrentDetailsShown((prev) => [...prev, item.id]);
-              }
-            }}
-          />
-        ))}
+                  if (currentShownDetails?.includes(item.id)) {
+                    setCurrentDetailsShown((prev) =>
+                      prev.filter((data) => data !== item.id)
+                    );
+                  } else {
+                    item?.name.local &&
+                      setCurrentDetailsShown((prev) => [...prev, item.id]);
+                  }
+                }}
+              />
+            );
+          }
+          // ))
+        )}
       </Box>
 
-      {currentShownDetails.length !== 0 ? (
+      {currentShownDetails?.length !== 0 ? (
         <GroupContainer>
           {identificationDocs
-            .filter((docs) => docs && currentShownDetails.includes(docs?.id))
+            .filter((docs) => docs && currentShownDetails?.includes(docs?.id))
             .map((field, fieldIndex) => {
               register(`identification.${fieldIndex}.id`, {
                 value: field?.id,
@@ -83,6 +100,7 @@ export const MemberKYMIdentificationDetails = () => {
                           value: option.id,
                         }
                       );
+                      console.log(option);
                       return (
                         <FormInputWithType
                           formType={option?.fieldType}

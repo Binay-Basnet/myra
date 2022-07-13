@@ -67,12 +67,6 @@ export function TabMenuForInventoryApp() {
       ) ?? '/inventory/register'
     ];
 
-  console.log(
-    Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
-      router?.pathname.includes(string)
-    ) ?? '/inventory/register'
-  );
-
   return (
     <Box
       height="50px"
@@ -97,7 +91,7 @@ export function TabMenuForInventoryApp() {
       </Box>
       <Tabs index={currentIndex} height="100%" size="md" variant="enclosed">
         <TabList border="none" height="100%">
-          {demotabs.map(({ title, icon, link, name }, index) => {
+          {demotabs.map(({ title, icon, link }, index) => {
             const isActive = index === currentIndex;
             return (
               <Link href={link} key={index}>

@@ -13,6 +13,8 @@ const ne: Record<string, string> = {
   branch: 'Branch',
   complete: 'Complete',
   applyChanges: 'Apply Changes',
+  done: 'Done',
+  saveAccount: 'Save Account',
 
   // navbar
   searchMembersNameReportsEtc: 'सदस्यहरूको नाम, रिपोर्टहरू, आदि खोज्नुहोस्',
@@ -34,7 +36,7 @@ const ne: Record<string, string> = {
   yourDashboard: 'तपाईंको ड्यासबोर्ड',
   yourMyraApplication: 'Your Myra Applications',
   corebankingSystems: 'मुख्य बैंकिङ प्रणाली',
-  inventoryManagement: 'invetory व्यवस्थापन',
+  inventoryManagement: 'सूची व्यवस्थापन',
   loanManagementSystem: 'ऋण व्यवस्थापन प्रणाली',
   accountingSystem: 'लेखा प्रणाली',
   otherApplications: 'अन्य अनुप्रयोगहरू',
@@ -490,7 +492,6 @@ const ne: Record<string, string> = {
   settingsMemberOtherCooperativeDetails: 'Other Cooperative Details',
   settingsMemberFinancialTransactionDetails: 'Financial Transaction Details',
   settingsMemberSection4Declaration: 'Section 4: Declaration',
-  settingsMemberNextToKinInformation: 'Next to Kin Information',
   settingsMemberForeignEmploymentOptions: 'Foreign Employment Options',
   settingsMemberFileUploads: 'File Uploads',
   settingsMemberDeclaration: 'Declaration',
@@ -599,8 +600,6 @@ const ne: Record<string, string> = {
   kymCoopSelectState: 'Select State',
   kymCoopDistrict: 'District',
   kymCoopSelectDistrict: 'Select District',
-  kymCoopVDCMunicipality: 'VDC / Municipality',
-  kymCoopSelectVDCMunicipality: 'Select VDC / Municipality',
   kymCoopWardNo: 'Ward No',
   kymCoopEnterWardNo: 'Enter Ward No',
   kymCoopLocality: 'Locality',
@@ -1405,12 +1404,10 @@ const ne: Record<string, string> = {
 
   shareTypesOfShare: 'Types of Share',
   shareChooseTypeOfShare: 'Choose which type of share is allowed',
-  shareTransactable: 'Transactable',
-  shareNonTransactable: 'Non-Transactable',
   shareIssueQuantity: 'Share Issue Quantity',
   shareMultiplicityFactor: 'Share Multiplicity Factor',
   shareTransactableMinimumQuantityOfShareThatCanBeIssued:
-    'Transactable Minimum Quantity of Share that can be issued',
+    'Minimum Quantity of Share that can be issued',
   shareMaximumQuantityOfShareThatCanBeIssued:
     'Maximum Quantity of Share that can be issued',
   shareRate: 'Share Rate',
@@ -1502,14 +1499,7 @@ const ne: Record<string, string> = {
   shareTransferMemberToMember: 'Member to Member',
   shareTransferShareRefund: 'Share Refund (Cash / Bank payment format)',
 
-  shareToFundLedgerMapping: 'Share To Fund / Ledger Mapping',
-  shareToFundLedgerMappingSubtitle:
-    'Account from which shares are paid to and paid from',
-  shareFundName: 'Fund Name',
-
-  shareToAccount: 'Share To Account  /',
   shareToAccountSubtitle: 'Account from which shares are paid to and paid from',
-  shareTransferAccountName: 'Account Name',
 
   // account list
 
@@ -1955,6 +1945,350 @@ const ne: Record<string, string> = {
   neoClientTableViewClientProfile: 'View Client Profile',
   neoClientTableEditClient: 'Edit Client',
   neoClientTableMakeInactive: 'Make Inactive',
+
+  // deposit product
+  depositProductCode: 'Product Code',
+  depositProductName: 'Product Name',
+  depositNature: 'Nature',
+  depositInterest: 'Interest',
+  depositCreatedDate: 'Created Date',
+
+  shareAndAccountNote:
+    'Note: Bonus that can be transferred to share will be transferred to Share and remianing will be transferred to the account',
+  sharePaidUpShare: 'Paid Up Share',
+  shareToFundLedgerMappingSubtitle: 'Ledger where the share purchase is mapped',
+  shareToFundLedgerMapping: 'Share Ledger Mapping',
+  shareTransferLedgerName: 'Ledger Name',
+  shareFundAccountName: 'Share Account Name',
+  shareFund: 'Share Fund',
+
+  kymCoopVDCLocalGov: 'Local Government',
+  kymCoopSelectLocalGov: 'Select Local Government',
+  kymIndWriteStudentVISA: 'Write 0 if Student VISA',
+
+  //accounting
+  //purchase sidebar
+  accountingPurchaseSidebarPurchase: 'Purchase',
+  accountingPurchaseSidebarCreate: 'Create',
+  accountingPurchaseSidebarPurchaseList: 'Purchase List',
+  accountingPurchaseSidebarExpenses: 'Expenses',
+  accountingPurchaseSidebarDebitNote: 'Debit Note',
+  accountingPurchaseSidebarSupplierPayment: 'Supplier Payment',
+  accountingPurchaseSidebarPurchaseSettings: 'Purchase Settings',
+
+  settingsMemberNominee: 'Nominee',
+
+  //accounting sidebar
+  accountingAccountingSidebarAccounting: 'Accounting',
+  accountingAccountingSidebarCreate: 'Create',
+  accountingAccountingSidebarJournalVouchers: 'Journal Vouchers',
+  accountingAccountingSidebarCashTransfer: 'Cash Transfer',
+  accountingAccountingSidebarQuickReceipt: 'Quick Receipt',
+  accountingAccountingSidebarBankAccounts: 'Bank Accounts',
+  accountingAccountingSidebarChartsOfAccounts: 'Charts of Account',
+  accountingAccountingSiderbarAccountingSettings: 'Accounting Settings',
+
+  //accounting sales sidebar
+  accountingsales: 'Sales',
+  accountingSalesCreate: 'Create',
+  accountingSalesSettings: 'Sales Settings',
+  salesList: 'Sales List',
+  creditNote: 'Credit Note',
+  customerPayment: 'Customer Payment',
+
+  //accounting tab menu
+  accountingAccountingTabMenuSales: 'Sales',
+  accountingAccountingTabMenuPurchase: 'Purchase',
+  accountingAccountingTabMenuAccounting: 'Accounting',
+  accountingAccountingTabMenuLoan: 'Loan',
+  accountingAccountingTabMenuInvestment: 'Investment',
+
+  //accounting purchase list
+  accountingPurchaseListBillNo: 'Bill No',
+  accountingPurchaseListSupplierName: 'Supplier Name',
+  accountingPurchaseListTotalAmount: 'Total Amount',
+  accountingPurchaseListInvoiceDate: 'Invoice Date',
+  accountingPurchaseListPurchase: 'Purchase',
+  accountingPurchaseListPurchaseEntry: 'Purchase Entry',
+
+  //accounting purchase add
+  accountingPurchaseAddPurchaseNew: 'New Purchase Entry',
+  accountingPurchaseAddSupplierName: 'Supplier Name',
+  accountingPurchaseAddSupplierInvoiceReference: 'Supplier Invoice Reference',
+  accountingPurchaseAddInvoiceDate: 'Invoice Date',
+  accountingPurchaseAddDueDate: 'Due Date',
+  accountingPurchaseAddInventoryAdd: 'Add to Inventory',
+  accountingPurchaseAddWarehouse: 'Warehouse',
+  accountingPurchaseAddWarehouseSelect: 'Select Warehouse',
+  accountingPurchaseAddNotes: 'Notes',
+  accountingPurchaseAddNote: 'Note',
+  accountingPurchaseAddSubTotal: 'Sub Total',
+  accountingPurchaseAddDiscount: 'Discount',
+  accountingPurchaseAddTaxableTotal: 'Taxable Total',
+  accountingPurchaseAddVAT: 'VAT',
+  accountingPurchaseAddGrandTotal: 'Grand Total',
+  accountingPurchaseAddTDS: 'TDS',
+  accountingPurchaseAddTDSLedgerAccount: 'TDS Ledger Account',
+  accountingPurchaseAddTDSType: 'TDS Type',
+  accountingPurchaseAddTDSAmount: 'TDS Amount',
+  accountingPurchaseAddYes: 'Yes',
+  accountingPurchaseAddNo: 'No',
+
+  //accounting expenses list
+  accountingExpensesListBillNo: 'Bill No',
+  accountingExpensesListSupplierName: 'Supplier Name',
+  accountingExpensesListTotalAmount: 'Total Amount',
+  accountingExpensesListInvoiceDate: 'Invoice Date',
+  accountingExpensesListExpenses: 'Expenses',
+  accountingExpensesListExpensesNew: 'New Expense',
+
+  //accounting expenses add
+  accountingExpensesAddNewExpense: 'New Expense',
+  accountingExpensesAddSupplierName: 'Supplier Name',
+  accountingExpensesAddDate: 'Date',
+  accountingExpensesAddDueDate: 'Due Date',
+  accountingExpensesAddReference: 'Reference',
+  accountingExpensesAddNotes: 'Notes',
+  accountingExpensesAddNote: 'Note',
+  accountingExpensesAddSubTotal: 'Sub Total',
+  accountingExpensesAddDiscount: 'Discount',
+  accountingExpensesAddTaxableTotal: 'Taxable Total',
+  accountingExpensesAddVAT: 'VAT',
+  accountingExpensesAddGrandTotal: 'Grand Total',
+  accountingExpensesAddTDS: 'TDS',
+  accountingExpensesAddTDSLedgerAccount: 'TDS Ledger Account',
+  accountingExpensesAddTDSType: 'TDS Type',
+  accountingExpensesAddTDSAmount: 'TDS Amount',
+  accountingExpensesAddTDSYes: 'Yes',
+  accountingExpensesAddTDSNo: 'No',
+
+  //accounting debit note list
+  accountingDebitNoteListBillNo: 'Bill No',
+  accountingDebitNoteListSupplierName: 'Supplier Name',
+  accountingDebitNoteListAmount: 'Amount',
+  accountingDebitNoteListDate: 'Date',
+  accountingDebitNoteListDebitNote: 'Debit Note',
+  accountingDebitNoteListDebitNoteNew: 'New Debit Note',
+
+  //accounting debit note add
+  accountingDebitNoteAddNewDebitNote: 'New Debit Note',
+  accountingDebitNoteAddSupplierName: 'Supplier Name',
+  accountingDebitNoteAddBillReference: 'Bill Reference',
+  accountingDebitNoteAddBillReferenceEnter: 'Enter Bill Reference',
+  accountingDebitNoteAddDate: 'Date',
+  accountingDebitNoteAddNotes: 'Notes',
+  accountingDebitNoteAddNote: 'Note',
+  accountingDebitNoteAddSubTotal: 'Sub Total',
+  accountingDebitNoteAddTaxableTotal: 'Taxable Total',
+  accountingDebitNoteAddVAT: 'VAT',
+  accountingDebitNoteAddGrandTotal: 'Grand Total',
+
+  //accounting supplier Payment list
+  accountingSupplierPaymentListBillNo: 'Bill No',
+  accountingSupplierPaymentListSupplierName: 'Supplier Name',
+  accountingSupplierPaymentListAmount: 'Amount',
+  accountingSupplierPaymentListDate: 'Date',
+  accountingSupplierPaymentListSupplierPayment: 'Supplier Payment',
+  accountingSupplierPaymentListSupplierPaymentNew: 'New Supplier Payment',
+
+  //accounting supplier payment add
+  accountingSupplierPaymentAddNewSupplierPayment: 'New Supplier Payment',
+  accountingSupplierPaymentAddPaidTo: 'Paid To',
+  accountingSupplierPaymentAddPaidFrom: 'Paid From',
+  accountingSupplierPaymentAddDate: 'Date',
+  accountingSupplierPaymentAddAmount: 'Amount',
+  accountingSupplierPaymentAddDueDate: 'Due Date',
+  accountingSupplierPaymentAddPaymentMode: 'Payment Mode',
+  accountingSupplierPaymentAddPaymentModeBankTransfer: 'Bank Transfer',
+  accountingSupplierPaymentAddPaymentModeCheque: 'Cheque',
+  accountingSupplierPaymentAddPaymentModeAccount: 'Account',
+  accountingSupplierPaymentAddPaymentModeCash: 'Cash',
+  accountingSupplierPaymentAddPaymentReferenceNo: 'Payment Reference No',
+  accountingSupplierPaymentAddNotes: 'Notes',
+  accountingSupplierPaymentAddNote: 'Note',
+  accountingSupplierPaymentAddSubTotal: 'Sub Total',
+  accountingSupplierPaymentAddDiscount: 'Discount',
+  accountingSupplierPaymentAddTaxableTotal: 'Taxable Total',
+  accountingSupplierPaymentAddVAT: 'VAT',
+  accountingSupplierPaymentAddGrandTotal: 'Grand Total',
+  accountingSupplierPaymentAddTDS: 'TDS',
+  accountingSupplierPaymentAddTDSAccount: 'TDS Account',
+  accountingSupplierPaymentAddTDSType: 'TDS Type',
+  accountingSupplierPaymentAddTDSAmount: 'TDS Amount',
+  accountingSupplierPaymentAddTDSYes: 'Yes',
+  accountingSupplierPaymentAddTDSNo: 'No',
+
+  //accounting journal vouchers list
+  accountingJournalVouchersListJournalVouchers: 'Journal Vouchers',
+  accountingJournalVouchersListNewJournalVoucher: 'New Journal Voucher',
+  accountingJournalVouchersListItemId: 'Item Id',
+  accountingJournalVouchersListName: 'Name',
+  accountingJournalVouchersListType: 'Type',
+  accountingJournalVouchersListUnitPrice: 'Unit Price',
+  accountingJournalVouchersListTotalCost: 'Total Cost',
+  accountingJournalVouchersListItemQuantity: 'Item Quantity',
+
+  //accounting journal voucher add
+  accountingJournalVoucherAddNewJournalVoucher: 'New Journal Voucher',
+  accountingJournalVoucherAddDueDate: 'Due Date',
+  accountingJournalVoucherAddReference: 'Reference',
+  accountingJournalVoucherAddNotes: 'Notes',
+  accountingJournalVoucherAddNote: 'Note',
+
+  //accounting cash transfer list
+  accountingCashTransferListCashTransfer: 'Cash Transfer',
+  accountingCashTransferListNewJournalVoucher: 'New Cash Transfer',
+  accountingCashTransferListItemId: 'Item Id',
+  accountingCashTransferListName: 'Name',
+  accountingCashTransferListType: 'Type',
+  accountingCashTransferListUnitPrice: 'Unit Price',
+  accountingCashTransferListTotalCost: 'Total Cost',
+  accountingCashTransferListItemQuantity: 'Item Quantity',
+
+  //accounting cash transfer add
+  accountingCashTransferAddNewCashTransfer: 'New Cash Transfer',
+  accountingCashTransferAddTransferredFromAccount: 'Transferred From Account',
+  accountingCashTransferAddSelectAccount: 'Select Account',
+  accountingCashTransferAddDate: 'Date',
+  accountingCashTransferAddReference: 'Reference',
+  accountingCashTransferAddNotes: 'Notes',
+  accountingCashTransferAddNote: 'Note',
+
+  //accounting quick payment list
+  accountingQuickPaymentListQuickPayment: 'Quick Payment',
+  accountingQuickPaymentListNewJournalVoucher: 'New Quick Payment',
+  accountingQuickPaymentListItemId: 'Item Id',
+  accountingQuickPaymentListName: 'Name',
+  accountingQuickPaymentListType: 'Type',
+  accountingQuickPaymentListUnitPrice: 'Unit Price',
+  accountingQuickPaymentListTotalCost: 'Total Cost',
+  accountingQuickPaymentListItemQuantity: 'Item Quantity',
+
+  //accounting quick payment add
+  accountingQuickPaymentAddNewQuickPayment: 'New Quick Payment',
+  accountingQuickPaymentAddPaidFrom: 'Paid From',
+  accountingQuickPaymentAddSelectLedgerName: 'Select Ledger Name',
+  accountingQuickPaymentAddDate: 'Date',
+  accountingQuickPaymentAddReference: 'Reference',
+  accountingQuickPaymentAddEnterReference: 'Enter Reference No',
+  accountingQuickPaymentAddNotes: 'Notes',
+  accountingQuickPaymentAddNote: 'Note',
+
+  //accounting quick receipt list
+  accountingQuickReceiptListQuickReceipt: 'Quick Receipt',
+  accountingQuickReceiptListNewQuickReceipt: 'New Quick Receipt',
+  accountingQuickReceiptListItemId: 'Item Id',
+  accountingQuickReceiptListName: 'Name',
+  accountingQuickReceiptListType: 'Type',
+  accountingQuickReceiptListUnitPrice: 'Unit Price',
+  accountingQuickReceiptListTotalCost: 'Total Cost',
+  accountingQuickReceiptListItemQuantity: 'Item Quantity',
+
+  //accounting cash transfer add
+  accountingQuickReceiptAddNewQuickReceipt: 'New Quick Receipt',
+  accountingQuickReceiptAddDepositTo: 'Deposit To',
+  accountingQuickReceiptAddSelectLedgerName: 'Select Ledger Name',
+  accountingQuickReceiptAddDate: 'Date',
+  accountingQuickReceiptAddReference: 'Reference',
+  accountingQuickReceiptAddEnterReference: 'Enter Reference No',
+  accountingQuickReceiptAddNotes: 'Notes',
+  accountingQuickReceiptAddNote: 'Note',
+
+  //accounting bank accounts list
+  accountingBankAccountsListBankAccounts: 'Bank Accounts',
+  accountingBankAccountsListNewBankAccounts: 'New Bank Accounts',
+  accountingBankAccountsListItemId: 'Item Id',
+  accountingBankAccountsListName: 'Name',
+  accountingBankAccountsListType: 'Type',
+  accountingBankAccountsListUnitPrice: 'Unit Price',
+  accountingBankAccountsListTotalCost: 'Total Cost',
+  accountingBankAccountsListItemQuantity: 'Item Quantity',
+
+  //accounting cash transfer add
+  accountingBankAccountAddNewBankAccount: 'New Bank Account',
+  accountingBankAccountAddBank: 'Bank',
+  accountingBankAccountAddSelectBank: 'Select Bank',
+  accountingBankAccountAddDisplayName: 'Display Name',
+  accountingBankAccountAddCode: 'Code',
+  accountingBankAccountAddCodeEnter: 'Enter Code',
+  accountingBankAccountAddAccountName: 'Account Name',
+  accountingBankAccountAddEnterAccountName: 'Enter Account Name',
+  accountingBankAccountAddAccountNumber: 'Account Number',
+  accountingBankAccountAddEnterAccountNumber: 'Enter Account Number',
+  accountingBankAccountAddAccountType: 'Account Type',
+  accountingBankAccountAddSelectAccountType: 'Select Account Type',
+  accountingBankAccountAddOpeningBalance: 'Opening Balance',
+  accountingBankAccountAddDesciption: 'Description',
+
+  //accounting sales list
+  accountingSalesListSales: 'Sales',
+  accountingSalesListSaleEntry: 'Sale Entry',
+  accountingSalesListInvoiceNo: 'Invoice No',
+  accountingSalesListCustomer: 'Customer',
+  accountingSalesListTotalAmount: 'Total Amount',
+  accountingSalesListInvoiceDate: 'Invoice Date',
+
+  //accounting sales form
+  accountingSalesFormNewSalesEntry: 'New Sales Entry',
+
+  //accounting credit note list
+  accountingCreditNoteListCreditNote: 'Credit Note',
+  accountingCreditNoteListNewCreditNote: 'New Credit Note',
+  accountingCreditNoteListNoteNo: 'Note No',
+  accountingCreditNoteListCustomer: 'Customer',
+  accountingCreditNoteListTotalAmount: 'Total Amount',
+  accountingCreditNoteListInvoiceDate: 'Invoice Date',
+
+  //accounting credit note form
+  accountingCreditNoteAddNewCreditNote: 'New Credit Note',
+  accountingCreditNoteAddCustomerName: 'Customer Name',
+  accountingCreditNoteAddSelectCustomer: 'Select Customer',
+  accountingCreditNoteAddDate: 'Date',
+  accountingCreditNoteAddInvoiceReference: 'Invoice Reference',
+  accountingCreditNoteAddNotes: 'Notes',
+  accountingCreditNoteAddNote: 'Note',
+  accountingCreditNoteAddSubTotal: 'Sub Total',
+  accountingCreditNoteAddTaxableTotal: 'Taxable Total',
+  accountingCreditNoteAddVAT: 'VAT',
+  accountingCreditNoteAddGrandTotal: 'Grand Total',
+
+  //accounting customer payment list
+  accountingCustomerPaymentListCustomerPayment: 'Customer Payment',
+  accountingCustomerPaymentListNewCustomerPayment: 'New Customer Payment',
+  accountingCustomerPaymentListEntryNo: 'Entry No',
+  accountingCustomerPaymentListCustomer: 'Customer',
+  accountingCustomerPaymentListReceivedFrom: 'Received From',
+  accountingCustomerPaymentListTotalAmount: 'Total Amount',
+  accountingCustomerPaymentListDate: 'Date',
+  accountingCustomerPaymentListPaymentMode: 'Payment Mode',
+
+  //accounting customer payment form
+  accountingCustomerPaymentAddNewCustomerPayment: 'New Customer Payment',
+  accountingCustomerPaymentAddReceivedFrom: 'Received From',
+  accountingCustomerPaymentAddReceivedAccount: 'Received Account',
+  accountingCustomerPaymentAddSelectReceivedAccount: 'Select Received Account',
+  accountingCustomerPaymentAddReceivedDate: 'Received Date',
+  accountingCustomerPaymentAddAmount: 'Amount',
+  accountingCustomerPaymentAddPaymentMode: 'Payment Mode',
+  accountingCustomerPaymentAddPaymentModeBankTransfer: 'Bank Transfer',
+  accountingCustomerPaymentAddPaymentModeCheque: 'Cheque',
+  accountingCustomerPaymentAddPaymentModeCash: 'Cash',
+  accountingCustomerPaymentAddPaymentReferenceNo: 'Payment Reference No',
+  accountingCustomerPaymentAddTDS: 'TDS',
+  accountingCustomerPaymentAddTDSYes: 'Yes',
+  accountingCustomerPaymentAddTDSNo: 'No',
+  accountingCustomerPaymentAddTDSAccount: 'TDS Account',
+  accountingCustomerPaymentAddSelectTDSAccount: 'Select TDS Account',
+  accountingCustomerPaymentAddTDSType: 'TDS Type',
+  accountingCustomerPaymentAddTDSAmount: 'TDS Amount',
+  accountingCustomerPaymentAddNotes: 'Notes',
+  accountingCustomerPaymentAddNote: 'Note',
+
+  // accouting sales obj
+  salesObjTabOverview: 'Overview',
+  salesObjTabTasks: 'Tasks',
+  salesObjTabDocs: 'Documents',
+  salesObjTabActivity: 'Activity',
 };
 
 export default ne;

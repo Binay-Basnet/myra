@@ -6,12 +6,14 @@ import { Box, TextAreaInput, TextAreaInputProps } from '@coop/shared/ui';
 interface IFormInputProps extends TextAreaInputProps {
   control?: Control;
   name: string;
+  rows?: number;
 }
 
 export const FormTextArea = ({
   control,
   name,
   id,
+  rows,
   ...rest
 }: IFormInputProps) => {
   const methods = useFormContext();
@@ -33,6 +35,7 @@ export const FormTextArea = ({
             id={name}
             value={value}
             onChange={onChange}
+            rows={rows}
             {...rest}
           />
         )}

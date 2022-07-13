@@ -3,7 +3,7 @@ import React from 'react';
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Text } from '@coop/shared/ui';
 
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 
@@ -35,19 +35,17 @@ export const PrematuredPenalty = () => {
           name="penaltyRate"
           label="Penalty Rate"
           placeholder="0.00"
-          rightElement="%"
+          rightElement={
+            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+              %
+            </Text>
+          }
           textAlign={'right'}
         />
         <FormSelect
           name="penaltyLedgerMapping"
           label="Penalty Ledger Mapping"
           placeholder="Penalty Ledger Mapping"
-        />
-        <FormInput
-          name="averageBalanceAmount"
-          label="Average"
-          textAlign={'right'}
-          placeholder="0.00"
         />
       </InputGroupContainer>
     </BoxContainer>

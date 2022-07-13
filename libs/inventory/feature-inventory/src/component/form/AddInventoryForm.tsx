@@ -113,27 +113,37 @@ export const AddInventoryForm = () => {
               placeholder={t['invFormNote']}
             />
             <FieldCardComponents rows={'repeat(5,1fr)'}>
-              <GridItem display="flex" justifyContent="space-between">
+              <GridItem
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="Medium"
                   fontSize="s3"
                 >
                   {t['invForSubTotal']}
                 </Text>
 
-                <Text
-                  color="neutralLightColor.Gray-50"
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                >
-                  2,000.00
-                </Text>
+                <Box p="s12">
+                  <Text
+                    color="neutralLightColor.Gray-50"
+                    fontWeight="SemiBold"
+                    fontSize="r1"
+                  >
+                    2,000.00
+                  </Text>
+                </Box>
               </GridItem>
 
-              <GridItem display="flex" justifyContent="space-between">
+              <GridItem
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="Medium"
                   fontSize="s3"
                 >
@@ -152,57 +162,75 @@ export const AddInventoryForm = () => {
                 </Box>
               </GridItem>
 
-              <GridItem display="flex" justifyContent="space-between">
+              <GridItem
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="Medium"
                   fontSize="s3"
                 >
                   {t['invFormTaxableTotal']}
                 </Text>
-                <Text
-                  color="neutralLightColor.Gray-50"
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                >
-                  5,000.00
-                </Text>
+                <Box p="s12">
+                  <Text
+                    color="neutralLightColor.Gray-50"
+                    fontWeight="SemiBold"
+                    fontSize="r1"
+                  >
+                    5,000.00
+                  </Text>
+                </Box>
               </GridItem>
 
-              <GridItem display="flex" justifyContent="space-between">
+              <GridItem
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
                 <Text
-                  color="neutralLightColor.Gray-60"
+                  color="neutralColorLight.Gray-60"
                   fontWeight="600"
                   fontSize="s3"
                 >
                   {t['invFormVAT']}
                 </Text>
 
-                <Text
-                  color="neutralLightColor.Gray-50"
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                >
-                  2000
-                </Text>
+                <Box p="s12">
+                  <Text
+                    color="neutralLightColor.Gray-50"
+                    fontWeight="SemiBold"
+                    fontSize="r1"
+                  >
+                    2000
+                  </Text>
+                </Box>
               </GridItem>
 
-              <GridItem display="flex" justifyContent="space-between">
+              <GridItem
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
                 <Text
-                  color="neutralLightColor.Gray-80"
+                  color="neutralColorLight.Gray-80"
                   fontWeight="600"
                   fontSize="s3"
                 >
                   {t['invFormGrandTotal']}
                 </Text>
 
-                <Text
-                  color="neutralLightColor.Gray-70"
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                >
-                  12,000
-                </Text>
+                <Box p="s12">
+                  <Text
+                    color="neutralLightColor.Gray-70"
+                    fontWeight="SemiBold"
+                    fontSize="r1"
+                  >
+                    12,000
+                  </Text>
+                </Box>
               </GridItem>
             </FieldCardComponents>
           </Box>
