@@ -43,7 +43,7 @@ export function CustomerPaymentForm(props: CbsAccountOpenFormProps) {
           borderTopRadius={5}
         >
           <Text fontSize="r2" fontWeight="600">
-            New Customer Payment{' '}
+            {t['accountingCustomerDetailsAddNewCustomerPayment']}
           </Text>
           <IconButton
             variant={'ghost'}

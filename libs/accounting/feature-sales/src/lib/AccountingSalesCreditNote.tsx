@@ -70,7 +70,7 @@ export function CreditNoteForm(props: CbsAccountOpenFormProps) {
           borderTopRadius={5}
         >
           <Text fontSize="r2" fontWeight="600">
-            New Credit Note{' '}
+            {t['accountingCreditNoteAddNewCreditNote']}
           </Text>
           <IconButton
             variant={'ghost'}

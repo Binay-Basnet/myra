@@ -17,8 +17,8 @@ export const CreditBox = () => {
     <Box display="grid" gap="s32" gridTemplateColumns="repeat(2,1fr)">
       <FormTextArea
         name="note"
-        label={t['invFormNotes']}
-        placeholder={t['invFormNote']}
+        label={t['accountingCreditNoteAddNotes']}
+        placeholder={t['accountingCreditNoteAddNote']}
         rows={5}
       />
       <FieldCardComponents rows={'repeat(5,1fr)'}>
@@ -28,7 +28,7 @@ export const CreditBox = () => {
             fontWeight="Medium"
             fontSize="s3"
           >
-            {t['invForSubTotal']}
+            {t['accountingCreditNoteAddSubTotal']}
           </Text>
 
           <Text
@@ -67,7 +67,7 @@ export const CreditBox = () => {
             fontWeight="Medium"
             fontSize="s3"
           >
-            {t['invFormTaxableTotal']}
+            {t['accountingCreditNoteAddTaxableTotal']}
           </Text>
           <Text
             color="neutralColorLight.Gray-50"
@@ -84,7 +84,7 @@ export const CreditBox = () => {
             fontWeight="Medium"
             fontSize="s3"
           >
-            {t['invFormVAT']}
+            {t['accountingCreditNoteAddVAT']}
           </Text>
 
           <Text
@@ -102,7 +102,7 @@ export const CreditBox = () => {
             fontWeight="500"
             fontSize="s3"
           >
-            {t['invFormGrandTotal']}
+            {t['accountingCreditNoteAddGrandTotal']}
           </Text>
 
           <Text

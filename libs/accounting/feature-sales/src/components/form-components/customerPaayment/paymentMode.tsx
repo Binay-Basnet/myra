@@ -7,34 +7,38 @@ import {
 // import debounce from 'lodash/debounce';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
-const paymentModeOptions = [
-  {
-    label: 'Bank Transfer',
-    value: 'bankTransfer',
-  },
-  {
-    label: 'Cheque',
-    value: 'cheque',
-  },
-  {
-    label: 'Cash',
-    value: 'cash',
-  },
-];
+import { useTranslation } from '@coop/shared/utils';
+
 export const PaymentMode = () => {
+  const { t } = useTranslation();
+
+  const paymentModeOptions = [
+    {
+      label: t['accountingCustomerDetailsAddPaymentModeBankTransfer'],
+      value: 'bankTransfer',
+    },
+    {
+      label: t['accountingCustomerDetailsAddPaymentModeCheque'],
+      value: 'cheque',
+    },
+    {
+      label: t['accountingCustomerDetailsAddPaymentModeCash'],
+      value: 'cash',
+    },
+  ];
+
   return (
     <BoxContainer>
       <Text fontWeight={'500'} fontSize="s3">
-        {' '}
-        Payment Mode
+        {t['accountingCustomerDetailsAddPaymentMode']}
       </Text>
       <FormSwitchTab name="paymentMode" options={paymentModeOptions} />
       <InputGroupContainer>
         <FormInput
           type="text"
           name="paymentReferenceNo"
-          label="Payment Reference no"
-          placeholder="Payment Reference no"
+          label={t['accountingCustomerDetailsAddPaymentReferenceNo']}
+          placeholder={t['accountingCustomerDetailsAddPaymentReferenceNo']}
         />
       </InputGroupContainer>
     </BoxContainer>

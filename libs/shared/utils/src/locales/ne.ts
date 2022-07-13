@@ -2217,6 +2217,60 @@ const ne: Record<string, string> = {
   accountingBankAccountAddSelectAccountType: 'Select Account Type',
   accountingBankAccountAddOpeningBalance: 'Opening Balance',
   accountingBankAccountAddDesciption: 'Description',
+
+  //accounting sales list
+  accountingSalesListSales: 'Sales',
+  accountingSalesListSaleEntry: 'Sale Entry',
+  accountingSalesListInvoiceNo: 'Invoice No',
+  accountingSalesListCustomer: 'Customer',
+  accountingSalesListTotalAmount: 'Total Amount',
+  accountingSalesListInvoiceDate: 'Invoice Date',
+
+  //accounting sales form
+  accountingSalesFormNewSalesEntry: 'New Sales Entry',
+
+  //accounting credit note list
+  accountingCreditNoteListCreditNote: 'Credit Note',
+  accountingCreditNoteListNewCreditNote: 'New Credit Note',
+  accountingCreditNoteListNoteNo: 'Note No',
+  accountingCreditNoteListCustomer: 'Customer',
+  accountingCreditNoteListTotalAmount: 'Total Amount',
+  accountingCreditNoteListInvoiceDate: 'Invoice Date',
+
+  //accounting credit note form
+  accountingCreditNoteAddNewCreditNote: 'New Credit Note',
+  accountingCreditNoteAddCustomerName: 'Customer Name',
+  accountingCreditNoteAddSelectCustomer: 'Select Customer',
+  accountingCreditNoteAddDate: 'Date',
+  accountingCreditNoteAddInvoiceReference: 'Invoice Reference',
+  accountingCreditNoteAddNotes: 'Notes',
+  accountingCreditNoteAddNote: 'Note',
+  accountingCreditNoteAddSubTotal: 'Sub Total',
+  accountingCreditNoteAddTaxableTotal: 'Taxable Total',
+  accountingCreditNoteAddVAT: 'VAT',
+  accountingCreditNoteAddGrandTotal: 'Grand Total',
+
+  //accounting customer details form
+  accountingCustomerDetailsAddNewCustomerPayment: 'New Customer Payment',
+  accountingCustomerDetailsAddReceivedFrom: 'Received From',
+  accountingCustomerDetailsAddReceivedAccount: 'Received Account',
+  accountingCustomerDetailsAddSelectReceivedAccount: 'Select Received Account',
+  accountingCustomerDetailsAddReceivedDate: 'Received Date',
+  accountingCustomerDetailsAddAmount: 'Amount',
+  accountingCustomerDetailsAddPaymentMode: 'Payment Mode',
+  accountingCustomerDetailsAddPaymentModeBankTransfer: 'Bank Transfer',
+  accountingCustomerDetailsAddPaymentModeCheque: 'Cheque',
+  accountingCustomerDetailsAddPaymentModeCash: 'Cash',
+  accountingCustomerDetailsAddPaymentReferenceNo: 'Payment Reference No',
+  accountingCustomerDetailsAddTDS: 'TDS',
+  accountingCustomerDetailsAddTDSYes: 'Yes',
+  accountingCustomerDetailsAddTDSNo: 'No',
+  accountingCustomerDetailsAddTDSAccount: 'TDS Account',
+  accountingCustomerDetailsAddSelectTDSAccount: 'Select TDS Account',
+  accountingCustomerDetailsAddTDSType: 'TDS Type',
+  accountingCustomerDetailsAddTDSAmount: 'TDS Amount',
+  accountingCustomerDetailsAddNotes: 'Notes',
+  accountingCustomerDetailsAddNote: 'Note',
 };
 
 export default ne;

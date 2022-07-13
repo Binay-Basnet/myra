@@ -56,12 +56,12 @@ export function AccountingListCreditNote(props: AccountingListCreditNoteProps) {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Note No',
+        header: t['accountingCreditNoteListNoteNo'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Customer',
+        header: t['accountingCreditNoteListCustomer'],
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
@@ -87,14 +87,14 @@ export function AccountingListCreditNote(props: AccountingListCreditNoteProps) {
         },
       },
       {
-        header: 'Total Amount',
+        header: t['accountingCreditNoteListTotalAmount'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Invoice Date',
+        header: t['accountingCreditNoteListInvoiceDate'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
@@ -118,8 +118,8 @@ export function AccountingListCreditNote(props: AccountingListCreditNoteProps) {
   return (
     <>
       <AccountingPageHeader
-        heading="Credit Note"
-        buttonLabel={'New Credit Note'}
+        heading={t['accountingCreditNoteListCreditNote']}
+        buttonLabel={t['accountingCreditNoteListNewCreditNote']}
         buttonHandler={() => router.push('/accounting/sales/credit-note/add')}
       />
 
