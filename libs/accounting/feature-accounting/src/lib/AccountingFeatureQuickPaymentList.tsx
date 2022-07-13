@@ -58,12 +58,12 @@ export function AccountingFeatureQuickPaymentList(
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Item Id',
+        header: t['accountingQuickPaymentListItemId'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Name',
+        header: t['accountingQuickPaymentListName'],
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
@@ -89,28 +89,28 @@ export function AccountingFeatureQuickPaymentList(
         },
       },
       {
-        header: 'Type',
+        header: t['accountingQuickPaymentListType'],
         accessorFn: (row) => row?.node?.code,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Unit Price',
+        header: t['accountingQuickPaymentListUnitPrice'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Total Cost',
+        header: t['accountingQuickPaymentListTotalCost'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Item Quantity',
+        header: t['accountingQuickPaymentListItemQuantity'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
@@ -134,8 +134,8 @@ export function AccountingFeatureQuickPaymentList(
   return (
     <>
       <AccountingPageHeader
-        heading="Quick Payment"
-        buttonLabel={'New Quick Payment'}
+        heading={t['accountingQuickPaymentListQuickPayment']}
+        buttonLabel={t['accountingQuickPaymentListNewJournalVoucher']}
         buttonHandler={() =>
           router.push('/accounting/accounting/quick-payment/add')
         }

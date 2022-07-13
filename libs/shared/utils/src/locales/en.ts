@@ -2016,7 +2016,9 @@ const en: Record<string, string> = {
   accountingAccountingSidebarQuickReceipt: 'Quick Receipt',
   accountingAccountingSidebarBankAccounts: 'Bank Accounts',
   accountingAccountingSidebarChartsOfAccounts: 'Charts of Account',
-  //acouting sales sidebar
+  accountingAccountingSiderbarAccountingSettings: 'Accounting Settings',
+
+  //accounting sales sidebar
   accountingsales: 'Sales',
   accountingSalesCreate: 'Create',
   accountingSalesSettings: 'Sales Settings',
@@ -2145,6 +2147,108 @@ const en: Record<string, string> = {
   accountingSupplierPaymentAddTDSAmount: 'TDS Amount',
   accountingSupplierPaymentAddTDSYes: 'Yes',
   accountingSupplierPaymentAddTDSNo: 'No',
+
+  //accounting journal vouchers list
+  accountingJournalVouchersListJournalVouchers: 'Journal Vouchers',
+  accountingJournalVouchersListNewJournalVoucher: 'New Journal Voucher',
+  accountingJournalVouchersListItemId: 'Item Id',
+  accountingJournalVouchersListName: 'Name',
+  accountingJournalVouchersListType: 'Type',
+  accountingJournalVouchersListUnitPrice: 'Unit Price',
+  accountingJournalVouchersListTotalCost: 'Total Cost',
+  accountingJournalVouchersListItemQuantity: 'Item Quantity',
+
+  //accounting journal voucher add
+  accountingJournalVoucherAddNewJournalVoucher: 'New Journal Voucher',
+  accountingJournalVoucherAddDueDate: 'Due Date',
+  accountingJournalVoucherAddReference: 'Reference',
+  accountingJournalVoucherAddNotes: 'Notes',
+  accountingJournalVoucherAddNote: 'Note',
+
+  //accounting cash transfer list
+  accountingCashTransferListCashTransfer: 'Cash Transfer',
+  accountingCashTransferListNewJournalVoucher: 'New Cash Transfer',
+  accountingCashTransferListItemId: 'Item Id',
+  accountingCashTransferListName: 'Name',
+  accountingCashTransferListType: 'Type',
+  accountingCashTransferListUnitPrice: 'Unit Price',
+  accountingCashTransferListTotalCost: 'Total Cost',
+  accountingCashTransferListItemQuantity: 'Item Quantity',
+
+  //accounting cash transfer add
+  accountingCashTransferAddNewCashTransfer: 'New Cash Transfer',
+  accountingCashTransferAddTransferredFromAccount: 'Transferred From Account',
+  accountingCashTransferAddSelectAccount: 'Select Account',
+  accountingCashTransferAddDate: 'Date',
+  accountingCashTransferAddReference: 'Reference',
+  accountingCashTransferAddNotes: 'Notes',
+  accountingCashTransferAddNote: 'Note',
+
+  //accounting quick payment list
+  accountingQuickPaymentListQuickPayment: 'Quick Payment',
+  accountingQuickPaymentListNewJournalVoucher: 'New Quick Payment',
+  accountingQuickPaymentListItemId: 'Item Id',
+  accountingQuickPaymentListName: 'Name',
+  accountingQuickPaymentListType: 'Type',
+  accountingQuickPaymentListUnitPrice: 'Unit Price',
+  accountingQuickPaymentListTotalCost: 'Total Cost',
+  accountingQuickPaymentListItemQuantity: 'Item Quantity',
+
+  //accounting cash transfer add
+  accountingQuickPaymentAddNewQuickPayment: 'New Quick Payment',
+  accountingQuickPaymentAddPaidFrom: 'Paid From',
+  accountingQuickPaymentAddSelectLedgerName: 'Select Ledger Name',
+  accountingQuickPaymentAddDate: 'Date',
+  accountingQuickPaymentAddReference: 'Reference',
+  accountingQuickPaymentAddEnterReference: 'Enter Reference No',
+  accountingQuickPaymentAddNotes: 'Notes',
+  accountingQuickPaymentAddNote: 'Note',
+
+  //accounting quick receipt list
+  accountingQuickReceiptListQuickReceipt: 'Quick Receipt',
+  accountingQuickReceiptListNewQuickReceipt: 'New Quick Receipt',
+  accountingQuickReceiptListItemId: 'Item Id',
+  accountingQuickReceiptListName: 'Name',
+  accountingQuickReceiptListType: 'Type',
+  accountingQuickReceiptListUnitPrice: 'Unit Price',
+  accountingQuickReceiptListTotalCost: 'Total Cost',
+  accountingQuickReceiptListItemQuantity: 'Item Quantity',
+
+  //accounting cash transfer add
+  accountingQuickReceiptAddNewQuickReceipt: 'New Quick Receipt',
+  accountingQuickReceiptAddDepositTo: 'Deposit To',
+  accountingQuickReceiptAddSelectLedgerName: 'Select Ledger Name',
+  accountingQuickReceiptAddDate: 'Date',
+  accountingQuickReceiptAddReference: 'Reference',
+  accountingQuickReceiptAddEnterReference: 'Enter Reference No',
+  accountingQuickReceiptAddNotes: 'Notes',
+  accountingQuickReceiptAddNote: 'Note',
+
+  //accounting bank accounts list
+  accountingBankAccountsListBankAccounts: 'Bank Accounts',
+  accountingBankAccountsListNewBankAccounts: 'New Bank Accounts',
+  accountingBankAccountsListItemId: 'Item Id',
+  accountingBankAccountsListName: 'Name',
+  accountingBankAccountsListType: 'Type',
+  accountingBankAccountsListUnitPrice: 'Unit Price',
+  accountingBankAccountsListTotalCost: 'Total Cost',
+  accountingBankAccountsListItemQuantity: 'Item Quantity',
+
+  //accounting cash transfer add
+  accountingBankAccountAddNewBankAccount: 'New Bank Account',
+  accountingBankAccountAddBank: 'Bank',
+  accountingBankAccountAddSelectBank: 'Select Bank',
+  accountingBankAccountAddDisplayName: 'Display Name',
+  accountingBankAccountAddCode: 'Code',
+  accountingBankAccountAddCodeEnter: 'Enter Code',
+  accountingBankAccountAddAccountName: 'Account Name',
+  accountingBankAccountAddEnterAccountName: 'Enter Account Name',
+  accountingBankAccountAddAccountNumber: 'Account Number',
+  accountingBankAccountAddEnterAccountNumber: 'Enter Account Number',
+  accountingBankAccountAddAccountType: 'Account Type',
+  accountingBankAccountAddSelectAccountType: 'Select Account Type',
+  accountingBankAccountAddOpeningBalance: 'Opening Balance',
+  accountingBankAccountAddDesciption: 'Description',
 };
 
 export default en;

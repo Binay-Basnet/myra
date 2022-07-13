@@ -47,7 +47,7 @@ export function AccountingFeatureAddBankAccount(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Bank Account
+            {t['accountingBankAccountAddNewBankAccount']}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -67,28 +67,28 @@ export function AccountingFeatureAddBankAccount(
                     color="neutralColorLight.Gray-70"
                     fontWeight="medium"
                   >
-                    Bank
+                    {t['accountingBankAccountAddBank']}
                   </Text>
                   <InputGroupContainer>
                     <FormSelect
                       name="bank"
-                      label={'Select Bank'}
-                      placeholder={'Select Bank'}
+                      label={t['accountingBankAccountAddSelectBank']}
+                      placeholder={t['accountingBankAccountAddSelectBank']}
                       options={[]}
                     />
 
                     <FormInput
                       name="bankDisplayName"
                       type="text"
-                      label="Display Name"
-                      placeholder="Display Name"
+                      label={t['accountingBankAccountAddDisplayName']}
+                      placeholder={t['accountingBankAccountAddDisplayName']}
                     />
 
                     <FormInput
                       name="code"
                       type="text"
-                      label="Code"
-                      placeholder="Enter Code"
+                      label={t['accountingBankAccountAddCode']}
+                      placeholder={t['accountingBankAccountAddCodeEnter']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -97,37 +97,43 @@ export function AccountingFeatureAddBankAccount(
                   <InputGroupContainer>
                     <FormSelect
                       name="accountName"
-                      label={'Account Name'}
-                      placeholder={'Enter Account Name'}
+                      label={t['accountingBankAccountAddAccountName']}
+                      placeholder={
+                        t['accountingBankAccountAddEnterAccountName']
+                      }
                       options={[]}
                     />
 
                     <FormInput
                       name="accountNumber"
                       type="text"
-                      label="Account Number"
-                      placeholder="Enter Account Number"
+                      label={t['accountingBankAccountAddAccountNumber']}
+                      placeholder={
+                        t['accountingBankAccountAddEnterAccountNumber']
+                      }
                     />
 
                     <FormSelect
                       name="accountType"
-                      label={'Account Type'}
-                      placeholder={'Select Account Type'}
+                      label={t['accountingBankAccountAddAccountType']}
+                      placeholder={
+                        t['accountingBankAccountAddSelectAccountType']
+                      }
                       options={[]}
                     />
 
                     <FormInput
                       name="openingBalance"
                       type="text"
-                      label="Opening Balance"
-                      placeholder="Opening Balance"
+                      label={t['accountingBankAccountAddOpeningBalance']}
+                      placeholder={t['accountingBankAccountAddOpeningBalance']}
                     />
 
                     <GridItem colSpan={3}>
                       <FormTextArea
                         name="description"
-                        label={'Description'}
-                        placeholder={'Description'}
+                        label={t['accountingBankAccountAddDesciption']}
+                        placeholder={t['accountingBankAccountAddDesciption']}
                         rows={5}
                       />
                     </GridItem>

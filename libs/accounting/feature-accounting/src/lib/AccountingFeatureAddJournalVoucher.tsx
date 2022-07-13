@@ -47,7 +47,7 @@ export function AccountingFeatureAddJournalVoucher(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Journal Voucher
+            {t['accountingJournalVoucherAddNewJournalVoucher']}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -63,13 +63,17 @@ export function AccountingFeatureAddJournalVoucher(
               <DividerContainer>
                 <BoxContainer>
                   <InputGroupContainer>
-                    <FormInput name="dueDate" type="date" label="Due Date" />
+                    <FormInput
+                      name="dueDate"
+                      type="date"
+                      label={t['accountingJournalVoucherAddDueDate']}
+                    />
 
                     <FormInput
                       name="reference"
                       type="text"
-                      label="Reference"
-                      placeholder="Reference"
+                      label={t['accountingJournalVoucherAddReference']}
+                      placeholder={t['accountingJournalVoucherAddReference']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -81,8 +85,8 @@ export function AccountingFeatureAddJournalVoucher(
                 >
                   <FormTextArea
                     name="note"
-                    label={t['invFormNotes']}
-                    placeholder={t['invFormNote']}
+                    label={t['accountingJournalVoucherAddNotes']}
+                    placeholder={t['accountingJournalVoucherAddNote']}
                     rows={5}
                   />
                 </Box>

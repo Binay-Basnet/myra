@@ -58,12 +58,12 @@ export function AccountingFeatureQuickReceiptList(
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Item Id',
+        header: t['accountingQuickReceiptListItemId'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Name',
+        header: t['accountingQuickReceiptListName'],
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
@@ -89,28 +89,28 @@ export function AccountingFeatureQuickReceiptList(
         },
       },
       {
-        header: 'Type',
+        header: t['accountingQuickReceiptListType'],
         accessorFn: (row) => row?.node?.code,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Unit Price',
+        header: t['accountingQuickReceiptListUnitPrice'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Total Cost',
+        header: t['accountingQuickReceiptListTotalCost'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Item Quantity',
+        header: t['accountingQuickReceiptListItemQuantity'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
@@ -134,8 +134,8 @@ export function AccountingFeatureQuickReceiptList(
   return (
     <>
       <AccountingPageHeader
-        heading="Quick Receipt"
-        buttonLabel={'New Quick Receipt'}
+        heading={t['accountingQuickReceiptListQuickReceipt']}
+        buttonLabel={t['accountingQuickReceiptListNewQuickReceipt']}
         buttonHandler={() =>
           router.push('/accounting/accounting/quick-receipt/add')
         }
