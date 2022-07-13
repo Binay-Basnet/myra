@@ -2,12 +2,11 @@ import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
-import { Button } from '@chakra-ui/react';
 
 import { TabColumn } from '@coop/myra/components';
 import {
   Box,
-  // Button,
+  Button,
   Divider,
   Icon,
   Popover,
