@@ -14,10 +14,24 @@ type SalesTable = {
   sales_ledger?: string;
 };
 
+const ADD_OPTIONS = [
+  { label: 'MI 001 - Lenovo Laptop', value: 'mi001' },
+  { label: 'MI 002 - Lenovo Laptop', value: 'mi002' },
+  { label: 'MI 003 - Lenovo Laptop', value: 'mi003' },
+  { label: 'MI 004 - Lenovo Laptop', value: 'mi004' },
+  { label: 'MI 005 - Lenovo Laptop', value: 'mi005' },
+  { label: 'MI 006 - Lenovo Laptop', value: 'mi006' },
+  { label: 'MI 007 - Lenovo Laptop', value: 'mi007' },
+  { label: 'MI 008 - Lenovo Laptop', value: 'mi008' },
+  { label: 'MI 009 - Lenovo Laptop', value: 'mi009' },
+  { label: 'MI 0010 - Lenovo Laptop', value: 'mi0010' },
+];
+
 const Temp = () => {
   return (
     <Box p="s16" bg="white" minH="100vh">
       <EditableTable<SalesTable>
+        addOptions={ADD_OPTIONS}
         defaultData={[
           {
             product: 'MI 001. Lenovo Laptop',
@@ -50,6 +64,7 @@ const Temp = () => {
             accessor: 'product',
             header: 'Product',
             cellWidth: 'auto',
+            fieldType: 'search',
           },
           {
             accessor: 'account_type',

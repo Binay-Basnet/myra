@@ -24,7 +24,11 @@ import { uniqueId } from 'lodash';
 
 import { Grid } from '@coop/shared/ui';
 
-import { chakraDefaultStyles } from '../utils/ChakraSelectTheme';
+import {
+  chakraDefaultStyles,
+  searchBarStyle,
+} from '../utils/ChakraSelectTheme';
+import { components } from '../utils/SelectComponents';
 
 interface RecordWithId {
   _id?: number;
@@ -54,6 +58,7 @@ export interface EditableTableProps<
 > {
   defaultData?: T[];
   columns: Column<T>[];
+  addOptions?: { label: string; value: string }[];
 }
 
 const cellWidthObj = {
@@ -64,7 +69,7 @@ const cellWidthObj = {
 
 export function EditableTable<
   T extends RecordWithId & Record<string, string | number>
->({ columns, defaultData }: EditableTableProps<T>) {
+>({ columns, defaultData, addOptions }: EditableTableProps<T>) {
   const [currentData, setCurrentData] = useState(defaultData ?? []);
 
   useEffect(() => {
@@ -128,35 +133,69 @@ export function EditableTable<
           ))}
         </Box>
 
-        <Box
-          w="100%"
-          bg="white"
-          borderBottom="1px"
-          borderX="1px"
-          borderColor="border.layout"
-          borderBottomRadius="br2"
-          h="36px"
-          px="s8"
-          display="flex"
-          alignItems="center"
-          color="gray.600"
-          _hover={{ bg: 'gray.100' }}
-          cursor="pointer"
-          gap="s4"
-          onClick={() => {
-            const newObj = columns.reduce(
-              (o, key) => ({ ...o, [key.accessor]: key.isNumeric ? 0 : '' }),
-              {}
-            );
+        {columns.some((column) => column.fieldType === 'search') ? (
+          <Box
+            borderBottom="1px"
+            borderX="1px"
+            borderColor="border.layout"
+            borderBottomRadius="br2"
+          >
+            <Select
+              components={components}
+              placeholder="Search for items"
+              options={addOptions}
+              chakraStyles={searchBarStyle}
+              value=""
+              onChange={(newValue) => {
+                const newObj = columns.reduce(
+                  (o, key) =>
+                    key.fieldType === 'search'
+                      ? {
+                          ...o,
+                          [key.accessor]: newValue.label,
+                        }
+                      : {
+                          ...o,
+                          [key.accessor]: key.isNumeric ? 0 : '',
+                        },
+                  {}
+                );
 
-            setCurrentData((prev) => [...prev, { ...newObj } as T]);
-          }}
-        >
-          <Icon as={IoAdd} fontSize="xl" />
-          <Text fontSize="s3" lineHeight="1.5">
-            New
-          </Text>
-        </Box>
+                setCurrentData((prev) => [...prev, { ...newObj } as T]);
+              }}
+            />
+          </Box>
+        ) : (
+          <Box
+            w="100%"
+            bg="white"
+            borderBottom="1px"
+            borderX="1px"
+            borderColor="border.layout"
+            borderBottomRadius="br2"
+            h="36px"
+            px="s8"
+            display="flex"
+            alignItems="center"
+            color="gray.600"
+            _hover={{ bg: 'gray.100' }}
+            cursor="pointer"
+            gap="s4"
+            onClick={() => {
+              const newObj = columns.reduce(
+                (o, key) => ({ ...o, [key.accessor]: key.isNumeric ? 0 : '' }),
+                {}
+              );
+
+              setCurrentData((prev) => [...prev, { ...newObj } as T]);
+            }}
+          >
+            <Icon as={IoAdd} fontSize="xl" />
+            <Text fontSize="s3" lineHeight="1.5">
+              New
+            </Text>
+          </Box>
+        )}
       </Flex>
 
       <Box
@@ -190,6 +229,7 @@ const EditableTableRow = <
   data,
   setCurrentData,
 }: IEditableTableRowProps<T>) => {
+  const [value, setValue] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
 
   console.log(JSON.stringify(data, null, 2));
