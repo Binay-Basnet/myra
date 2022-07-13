@@ -4,7 +4,17 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
 import { TabColumn } from '@coop/myra/components';
-import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface ISalesLayoutProps {
@@ -37,17 +47,92 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
           {t['accountingsales']}
         </Text>
         <Divider my="s16" />
-        <Button
-          width="full"
-          size="lg"
-          justifyContent="start"
-          leftIcon={<AddIcon h="11px" />}
-          onClick={() => {
-            router.push('/accounting/sales/add');
-          }}
-        >
-          {t['accountingSalesCreate']}
-        </Button>
+        <Popover placement="bottom-start" gutter={3}>
+          <PopoverTrigger>
+            <Button
+              width="full"
+              size="lg"
+              justifyContent="start"
+              leftIcon={<AddIcon h="11px" />}
+            >
+              {t['accountingPurchaseSidebarCreate']}
+            </Button>
+
+            {/* <Box
+              as="button"
+              display={'flex'}
+              flexDirection="row"
+              gap="8px"
+              px="s16"
+              bg="primary.500"
+              _hover={{ bg: 'primary.600' }}
+              w="227px"
+              h="48px"
+              borderRadius={'4px'}
+              alignItems="center"
+            >
+              <Text fontSize={'r3'} fontWeight="500" color={'white'}>
+                +
+              </Text>
+
+              <Icon as={AddIcon} size="sm" color="white" fontWeight={'500'} />
+              <Text fontSize={'r1'} fontWeight="500" color={'white'}>
+                {t['accountingPurchaseSidebarCreate']}
+              </Text>
+            </Box> */}
+          </PopoverTrigger>
+
+          <PopoverContent
+            // bg="gray.0"
+            p={0}
+            w="225px"
+            _focus={{ boxShadow: 'none' }}
+          >
+            <PopoverBody p={0}>
+              <Box>
+                <Button
+                  width="full"
+                  borderRadius={'none'}
+                  size="lg"
+                  justifyContent="start"
+                  leftIcon={<AddIcon h="11px" />}
+                  variant="ghost"
+                  onClick={() => router.push('/accounting/sales/add')}
+                >
+                  {'Sales List'}
+                </Button>
+
+                <Button
+                  width="full"
+                  size="lg"
+                  borderRadius={'none'}
+                  justifyContent="start"
+                  leftIcon={<AddIcon h="11px" />}
+                  variant="ghost"
+                  onClick={() =>
+                    router.push('/accounting/sales/credit-note/add')
+                  }
+                >
+                  {'Credit Note'}
+                </Button>
+
+                <Button
+                  width="full"
+                  size="lg"
+                  justifyContent="start"
+                  borderRadius={'none'}
+                  leftIcon={<AddIcon h="11px" />}
+                  variant="ghost"
+                  onClick={() =>
+                    router.push('/accounting/sales/customer-payment/add')
+                  }
+                >
+                  Customer Payment
+                </Button>
+              </Box>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
         <Divider my="s16" />
         <TabColumn list={inventoryColumns} />
         <Divider my="s16" />

@@ -124,6 +124,7 @@ export function AccountingListCreditNote(props: AccountingListCreditNoteProps) {
       />
 
       <Table
+        // rowClick={(id) => alert(id)}
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}

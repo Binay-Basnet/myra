@@ -2,23 +2,23 @@ import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
-import {
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-} from '@chakra-ui/react';
 
+// import {
+//   Popover,
+//   PopoverBody,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from '@chakra-ui/react';
 import { TabColumn } from '@coop/myra/components';
 import {
   Box,
   Button,
   Divider,
   Icon,
-  //   Popover,
-  //   PopoverBody,
-  //   PopoverContent,
-  //   PopoverTrigger,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -97,6 +97,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
             // bg="gray.0"
             p={0}
             w="225px"
+            _focus={{ boxShadow: 'none' }}
           >
             <PopoverBody p={0}>
               <Box>
