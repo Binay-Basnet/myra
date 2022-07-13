@@ -64,7 +64,14 @@ export function AccountingSalesList(props: AccountingSalesListProps) {
         header: 'Customer',
         cell: (props) => {
           return (
-            <Box display="flex" alignItems="center" gap="s12">
+            <Box
+              display="flex"
+              alignItems="center"
+              gap="s12"
+              onClick={() => {
+                router.push('/accounting/sales/object');
+              }}
+            >
               <Avatar
                 name="Dan Abrahmov"
                 size="sm"

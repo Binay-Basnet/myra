@@ -1990,6 +1990,12 @@ const ne: Record<string, string> = {
   salesList: 'Sales List',
   creditNote: 'Credit Note',
   customerPayment: 'Customer Payment',
+
+  // accouting sales obj
+  salesObjTabOverview: 'Overview',
+  salesObjTabTasks: 'Tasks',
+  salesObjTabDocs: 'Documents',
+  salesObjTabActivity: 'Activity',
 };
 
 export default ne;
