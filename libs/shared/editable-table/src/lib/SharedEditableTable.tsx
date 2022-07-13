@@ -19,9 +19,12 @@ import {
   Input,
   Text,
 } from '@chakra-ui/react';
+import { Select } from 'chakra-react-select';
 import { uniqueId } from 'lodash';
 
 import { Grid } from '@coop/shared/ui';
+
+import { chakraDefaultStyles } from '../utils/ChakraSelectTheme';
 
 interface RecordWithId {
   _id?: number;
@@ -33,7 +36,14 @@ type Column<T extends RecordWithId & Record<string, string | number>> = {
   accessor: keyof T;
   accessorFn?: (row: T) => string | number;
   hidden?: boolean;
-  fieldType?: 'text' | 'number' | 'percentage' | 'textarea' | 'search';
+  fieldType?:
+    | 'text'
+    | 'number'
+    | 'percentage'
+    | 'textarea'
+    | 'search'
+    | 'select';
+  selectOptions?: { label: string; value: string }[];
   isNumeric?: boolean;
 
   cellWidth?: 'auto' | 'lg' | 'md' | 'sm';
@@ -47,27 +57,10 @@ export interface EditableTableProps<
 }
 
 const cellWidthObj = {
-  lg: '30%',
+  lg: '50%',
   md: '20%',
   sm: '15%',
 };
-
-// const AddIcon = () => (
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     width="10"
-//     height="11"
-//     viewBox="0 0 10 11"
-//     fill="none"
-//   >
-//     <path
-//       d="M5 1V10M9.5 5.5H0.5"
-//       stroke="#636972"
-//       stroke-linecap="round"
-//       stroke-linejoin="round"
-//     />
-//   </svg>
-// );
 
 export function EditableTable<
   T extends RecordWithId & Record<string, string | number>
@@ -94,7 +87,6 @@ export function EditableTable<
           w="100%"
           borderTopRadius="br2"
           h="40px"
-          overflow="hidden"
           alignItems="center"
           bg="gray.700"
           color="white"
@@ -108,7 +100,6 @@ export function EditableTable<
                   fontWeight="600"
                   fontSize="r1"
                   textAlign={column.isNumeric ? 'right' : 'left'}
-                  px="s8"
                   flexGrow={column.cellWidth === 'auto' ? 1 : 0}
                   flexBasis={
                     column.cellWidth === 'auto'
@@ -118,20 +109,14 @@ export function EditableTable<
                       : '30%'
                   }
                 >
-                  {column.header}
+                  <Text px="s8">{column.header}</Text>
                 </Box>
               </Fragment>
             ))}
           <Box w="s36" flexShrink={0} />
         </Flex>
 
-        <Box
-          w="100%"
-          overflow="hidden"
-          bg="white"
-          borderX="1px"
-          borderColor="border.layout"
-        >
+        <Box w="100%" bg="white" borderX="1px" borderColor="border.layout">
           {currentData?.map((data, index) => (
             <Fragment key={`${data._id}${index}`}>
               <MemoEditableTableRow
@@ -151,7 +136,6 @@ export function EditableTable<
           borderColor="border.layout"
           borderBottomRadius="br2"
           h="36px"
-          overflow="hidden"
           px="s8"
           display="flex"
           alignItems="center"
@@ -234,7 +218,6 @@ const EditableTableRow = <
       <HStack
         w="100%"
         minH="36px"
-        overflow="hidden"
         alignItems="stretch"
         bg="white"
         spacing={0}
@@ -304,50 +287,76 @@ const EditableTableRow = <
                         )
                   }
                 >
-                  <EditablePreview
-                    width="100%"
-                    height="100%"
-                    px="s8"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent={
-                      column.isNumeric ? 'flex-end' : 'flex-start'
-                    }
-                  />
+                  {column.fieldType === 'select' ? null : (
+                    <EditablePreview
+                      width="100%"
+                      height="100%"
+                      px="s8"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent={
+                        column.isNumeric ? 'flex-end' : 'flex-start'
+                      }
+                    />
+                  )}
 
-                  <Input
-                    py="0"
-                    h="100%"
-                    type={column.isNumeric ? 'number' : 'text'}
-                    w="100%"
-                    px="s8"
-                    minH="inherit"
-                    bg="primary.100"
-                    textAlign={column.isNumeric ? 'right' : 'left'}
-                    justifyContent={
-                      column.isNumeric ? 'flex-end' : 'flex-start'
-                    }
-                    _focus={{ boxShadow: 'none' }}
-                    _focusWithin={{ boxShadow: 'none' }}
-                    border="none"
-                    borderRadius="0"
-                    value={String(data[column.accessor] ?? '')}
-                    onChange={(e) => {
-                      setCurrentData((prev) =>
-                        prev.map((item) =>
-                          item._id === data._id
-                            ? {
-                                ...item,
-                                [column.accessor]: column.isNumeric
-                                  ? +e.target.value
-                                  : e.target.value,
-                              }
-                            : item
-                        )
-                      );
-                    }}
-                    as={EditableInput}
-                  />
+                  {column.fieldType === 'select' ? (
+                    <Box w="100%">
+                      <Select
+                        value={column.selectOptions?.find(
+                          (option) => option.value === data[column.accessor]
+                        )}
+                        onChange={(newValue) => {
+                          setCurrentData((prev) =>
+                            prev.map((item) =>
+                              item._id === data._id
+                                ? {
+                                    ...item,
+                                    [column.accessor]: newValue.value,
+                                  }
+                                : item
+                            )
+                          );
+                        }}
+                        chakraStyles={chakraDefaultStyles}
+                        options={column.selectOptions}
+                      />
+                    </Box>
+                  ) : (
+                    <Input
+                      py="0"
+                      h="100%"
+                      type={column.isNumeric ? 'number' : 'text'}
+                      w="100%"
+                      px="s8"
+                      minH="inherit"
+                      bg="primary.100"
+                      textAlign={column.isNumeric ? 'right' : 'left'}
+                      justifyContent={
+                        column.isNumeric ? 'flex-end' : 'flex-start'
+                      }
+                      _focus={{ boxShadow: 'none' }}
+                      _focusWithin={{ boxShadow: 'none' }}
+                      border="none"
+                      borderRadius="0"
+                      value={String(data[column.accessor] ?? '')}
+                      onChange={(e) => {
+                        setCurrentData((prev) =>
+                          prev.map((item) =>
+                            item._id === data._id
+                              ? {
+                                  ...item,
+                                  [column.accessor]: column.isNumeric
+                                    ? +e.target.value
+                                    : e.target.value,
+                                }
+                              : item
+                          )
+                        );
+                      }}
+                      as={EditableInput}
+                    />
+                  )}
                 </Editable>
               </Fragment>
             );

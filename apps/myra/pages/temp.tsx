@@ -5,6 +5,7 @@ import { EditableTable } from '@coop/shared/editable-table';
 type SalesTable = {
   product: string;
   quantity: number;
+  account_type?: string;
   rate: number;
   tax: number;
   total_amount: number;
@@ -21,6 +22,7 @@ const Temp = () => {
           {
             product: 'MI 001. Lenovo Laptop',
             quantity: 100,
+            account_type: 'savings',
             rate: 40,
             tax: 400,
             total_amount: 100,
@@ -30,11 +32,14 @@ const Temp = () => {
             quantity: 100,
             rate: 40,
             tax: 400,
+            account_type: 'current',
             total_amount: 100,
           },
           {
             product: 'MI 001. Lenovo Laptop',
             quantity: 100,
+            account_type: 'savings',
+
             rate: 40,
             tax: 400,
             total_amount: 100,
@@ -45,6 +50,22 @@ const Temp = () => {
             accessor: 'product',
             header: 'Product',
             cellWidth: 'auto',
+          },
+          {
+            accessor: 'account_type',
+            header: 'Account Type',
+            cellWidth: 'lg',
+            fieldType: 'select',
+            selectOptions: [
+              {
+                label: 'SAVINGS',
+                value: 'savings',
+              },
+              {
+                label: 'CURRENT',
+                value: 'current',
+              },
+            ],
           },
           {
             accessor: 'quantity',
