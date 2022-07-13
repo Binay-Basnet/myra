@@ -175,6 +175,7 @@ export const GridItems = ({ watch }: any) => {
                 name="selectEducationOptions"
                 options={EducationalOptions}
                 label="Education Qualification"
+                placeholder="Select Education Qualification"
                 isMulti
               />
             )}
@@ -186,6 +187,7 @@ export const GridItems = ({ watch }: any) => {
                 name="selectEthniciyOptions"
                 options={EthnicityOptions}
                 label="Ethinicity"
+                placeholder="Select Ethinicity"
                 isMulti
               />
             )}
@@ -197,6 +199,7 @@ export const GridItems = ({ watch }: any) => {
                 name="selectOccupationalOptions"
                 options={OccupationalOptions}
                 label="Occupational Details"
+                placeholder="Select Occupational Details"
                 isMulti
               />
             )}
@@ -223,6 +226,19 @@ export const GridItems = ({ watch }: any) => {
                 name="selectbusinessInstitution"
                 options={OccupationalOptions}
                 label="Nature of Business (Institutions)"
+                placeholder="Select Nature of Business"
+                isMulti
+              />
+            )}
+          {memberType &&
+            memberType?.indexOf('cooperativeUnion') !== -1 &&
+            cooperativeUnionstatus &&
+            cooperativeUnionstatus.indexOf('noBCOOPunion') !== -1 && (
+              <FormSelect
+                name="selectbusinessInstitution"
+                options={OccupationalOptions}
+                label="Nature of Business (COOP Union)"
+                placeholder="Nature of Business"
                 isMulti
               />
             )}
@@ -241,17 +257,6 @@ export const GridItems = ({ watch }: any) => {
                   orientation="column"
                 />
               </BoxContainer>
-            )}
-          {memberType &&
-            memberType?.indexOf('cooperativeUnion') !== -1 &&
-            cooperativeUnionstatus &&
-            cooperativeUnionstatus.indexOf('noBCOOPunion') !== -1 && (
-              <FormSelect
-                name="selectbusinessInstitution"
-                options={OccupationalOptions}
-                label="Nature of Business (COOP Union)"
-                isMulti
-              />
             )}
         </InputGroupContainer>
       </BoxContainer>

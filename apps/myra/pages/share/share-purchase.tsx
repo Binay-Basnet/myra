@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
-import { FormFooter } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
   Payment_Mode,
@@ -12,9 +12,12 @@ import {
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Box,
+  Button,
   Container,
+  FormFooter,
   Grid,
   GridItem,
+  Icon,
   MainLayout,
   Navbar,
   TabMenu,
@@ -80,61 +83,62 @@ const SharePurchase = () => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form>
-        <Box
-          position="fixed"
-          width="100%"
-          top={0}
-          zIndex={2}
-          backdropFilter="saturate(180%) blur(5px)"
-        >
-          <Header />
-        </Box>
-        <Container minW="container.xl" p="0">
+    <>
+      <FormProvider {...methods}>
+        <form>
           <Box
-            height="60px"
-            display="flex"
-            justifyContent="space-between"
-            alignItems={'center'}
-            px="5"
-            background="white"
-            borderBottom="1px solid #E6E6E6"
+            position="fixed"
+            width="100%"
+            top={0}
+            zIndex={2}
+            backdropFilter="saturate(180%) blur(5px)"
           >
-            <Text fontSize="r2" fontWeight="600">
-              {t['sharePurchaseNewSharePurchase']}
-            </Text>
-            <CloseIcon cursor="pointer" onClick={() => router.back()} />
+            <Header />
           </Box>
-          <Box mb="50px" display="flex" width="100%">
-            <Box w="100%" minHeight="100vh">
-              <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
-                <Box w="50%">
-                  <FormSelect
-                    // rightElement={
-                    //   <Icon as={IoSearch} color="gray.500" fontSize={'s3'} />
-                    // }
-                    name="memberId"
-                    label={t['sharePurchaseSelectMember']}
-                    placeholder={t['sharePurchaseEnterMemberID']}
-                    options={[
-                      {
-                        label: '1',
-                        value: '1',
-                      },
-                      {
-                        label: '2',
-                        value: '2',
-                      },
-                      {
-                        label: '3',
-                        value: '3',
-                      },
-                    ]}
-                  />
-                </Box>
+          <Container minW="container.lg" p="0">
+            <Box
+              height="60px"
+              display="flex"
+              justifyContent="space-between"
+              alignItems={'center'}
+              px="5"
+              background="white"
+              borderBottom="1px solid #E6E6E6"
+            >
+              <Text fontSize="r2" fontWeight="600">
+                {t['sharePurchaseNewSharePurchase']}
+              </Text>
+              <CloseIcon cursor="pointer" onClick={() => router.back()} />
+            </Box>
+            <Box mb="50px" display="flex" width="100%">
+              <Box w="100%" minHeight="100vh">
+                <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
+                  <Box w="50%">
+                    <FormSelect
+                      // rightElement={
+                      //   <Icon as={IoSearch} color="gray.500" fontSize={'s3'} />
+                      // }
+                      name="memberId"
+                      label={t['sharePurchaseSelectMember']}
+                      placeholder={t['sharePurchaseEnterMemberID']}
+                      options={[
+                        {
+                          label: '1',
+                          value: '1',
+                        },
+                        {
+                          label: '2',
+                          value: '2',
+                        },
+                        {
+                          label: '3',
+                          value: '3',
+                        },
+                      ]}
+                    />
+                  </Box>
 
-                {/* {data && (
+                  {/* {data && (
                   <Box
                     mt="s16"
                     border="1px solid"
@@ -286,264 +290,296 @@ const SharePurchase = () => {
                     </Box>
                   </Box>
                 )}*/}
-              </Box>
+                </Box>
 
-              <Box
-                display="flex"
-                flexDirection="column"
-                p="5"
-                pb="28px"
-                background="white"
-                borderBottom="1px solid #E6E6E6"
-                borderTopRadius={5}
-              >
-                <Text
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                  color="neutralColorLight.Gray-60"
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  p="5"
+                  pb="28px"
+                  background="white"
+                  borderBottom="1px solid #E6E6E6"
+                  borderTopRadius={5}
                 >
-                  {t['sharePurchaseShareInformation']}
-                </Text>
+                  <Text
+                    fontWeight="SemiBold"
+                    fontSize="r1"
+                    color="neutralColorLight.Gray-60"
+                  >
+                    {t['sharePurchaseShareInformation']}
+                  </Text>
 
-                <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
-                  <GridItem>
-                    <FormInput
-                      id="noOfShares"
-                      name="shareCount"
-                      label={t['sharePurchaseNoOfShares']}
-                      placeholder={t['sharePurchaseNoOfShares']}
-                    />
-                  </GridItem>
+                  <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
+                    <GridItem>
+                      <FormInput
+                        id="noOfShares"
+                        name="shareCount"
+                        label={t['sharePurchaseNoOfShares']}
+                        placeholder={t['sharePurchaseNoOfShares']}
+                      />
+                    </GridItem>
 
-                  {noOfShares ? (
-                    <FieldCardComponents rows={'repeat(4,1fr)'}>
-                      <GridItem
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Text
-                          color="neutralLightColor.Gray-60"
-                          fontWeight="Medium"
-                          fontSize="s3"
-                        >
-                          {t['sharePurchaseShareAmount']}
-                        </Text>
-
-                        <Box p="s12">
-                          <Text
-                            color="neutralLightColor.Gray-80"
-                            fontWeight="SemiBold"
-                            fontSize="r1"
-                          >
-                            {noOfShares * 100}
-                          </Text>
-                        </Box>
-                      </GridItem>
-
-                      <GridItem display="flex" justifyContent="space-between">
-                        <Text
-                          color="neutralLightColor.Gray-60"
-                          fontWeight="Medium"
-                          fontSize="s3"
+                    {noOfShares ? (
+                      <FieldCardComponents rows={'repeat(4,1fr)'}>
+                        <GridItem
                           display="flex"
+                          justifyContent="space-between"
                           alignItems="center"
                         >
-                          {t['sharePurchaseAdministrationFees']}
-                        </Text>
-                        <Box width="300px">
-                          <FormInput
-                            name="adminFee"
-                            id="administrationFees"
-                            label=""
-                            placeholder="34000.00"
-                            bg="gray.0"
-                            textAlign="right"
-                          />
-                        </Box>
-                      </GridItem>
+                          <Text
+                            color="neutralLightColor.Gray-60"
+                            fontWeight="Medium"
+                            fontSize="s3"
+                          >
+                            {t['sharePurchaseShareAmount']}
+                          </Text>
 
-                      <GridItem
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Text
-                          color="neutralLightColor.Gray-60"
-                          fontWeight="Medium"
-                          fontSize="s3"
+                          <Box p="s12">
+                            <Text
+                              color="neutralLightColor.Gray-80"
+                              fontWeight="SemiBold"
+                              fontSize="r1"
+                            >
+                              {noOfShares * 100}
+                            </Text>
+                          </Box>
+                        </GridItem>
+
+                        <GridItem display="flex" justifyContent="space-between">
+                          <Text
+                            color="neutralLightColor.Gray-60"
+                            fontWeight="Medium"
+                            fontSize="s3"
+                            display="flex"
+                            alignItems="center"
+                          >
+                            {t['sharePurchaseAdministrationFees']}
+                          </Text>
+                          <Box width="300px">
+                            <FormInput
+                              name="adminFee"
+                              id="administrationFees"
+                              label=""
+                              placeholder="34000.00"
+                              bg="gray.0"
+                              textAlign="right"
+                            />
+                          </Box>
+                        </GridItem>
+
+                        <GridItem
+                          display="flex"
+                          justifyContent="space-between"
+                          alignItems="center"
                         >
-                          {t['sharePurchasePrintingFees']}
-                        </Text>
-                        <Box width="300px">
-                          <FormInput
-                            name="printingFee"
-                            id="printingFees"
-                            label=""
-                            placeholder="54.00"
-                            bg="gray.0"
-                            textAlign="right"
-                          />
-                        </Box>
-                      </GridItem>
+                          <Text
+                            color="neutralLightColor.Gray-60"
+                            fontWeight="Medium"
+                            fontSize="s3"
+                          >
+                            {t['sharePurchasePrintingFees']}
+                          </Text>
+                          <Box width="300px">
+                            <FormInput
+                              name="printingFee"
+                              id="printingFees"
+                              label=""
+                              placeholder="54.00"
+                              bg="gray.0"
+                              textAlign="right"
+                            />
+                          </Box>
+                        </GridItem>
 
-                      <GridItem
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <Text
-                          color="neutralLightColor.Gray-80"
-                          fontWeight="SemiBold"
-                          fontSize="s3"
+                        <GridItem
+                          display="flex"
+                          justifyContent="space-between"
+                          alignItems="center"
                         >
-                          {t['sharePurchaseTotalAmount']}
-                        </Text>
-
-                        <Box p="s12">
                           <Text
                             color="neutralLightColor.Gray-80"
                             fontWeight="SemiBold"
-                            fontSize="r1"
+                            fontSize="s3"
                           >
-                            {t['rs']}{' '}
-                            {adminFee && printingFee
-                              ? noOfShares * 1000 +
-                                Number(adminFee) +
-                                Number(printingFee)
-                              : 0.0}
+                            {t['sharePurchaseTotalAmount']}
                           </Text>
-                        </Box>
-                      </GridItem>
-                    </FieldCardComponents>
-                  ) : null}
-                </Grid>
-              </Box>
 
-              <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontSize="r2"
-                  fontWeight="600"
-                  mb="8px"
-                >
-                  {t['sharePurchasePaymentInformation']}
-                </Text>
-                <Text
-                  color="neutralColorLight.Gray-80"
-                  fontSize="s3"
-                  fontWeight="500"
-                  mb="s16"
-                >
-                  {t['sharePurchasePaymentMode']}
-                </Text>
+                          <Box p="s12">
+                            <Text
+                              color="neutralLightColor.Gray-80"
+                              fontWeight="SemiBold"
+                              fontSize="r1"
+                            >
+                              {t['rs']}{' '}
+                              {adminFee && printingFee
+                                ? noOfShares * 1000 +
+                                  Number(adminFee) +
+                                  Number(printingFee)
+                                : 0.0}
+                            </Text>
+                          </Box>
+                        </GridItem>
+                      </FieldCardComponents>
+                    ) : null}
+                  </Grid>
+                </Box>
 
-                <FormSwitchTab
-                  // TODO ( USE FORM SWITCH TAB)
-                  name="paymentMode"
-                  options={accountList.map((value) => ({
-                    label: value.label,
-                    value: value.value,
-                  }))}
-                />
-
-                {paymentModes === Payment_Mode.Account && (
-                  <Box mt="s16" mb="s16" w="25%">
-                    <FormSelect
-                      name="accountId"
-                      label={t['sharePurchaseSelectAccount']}
-                      placeholder={t['sharePurchaseSelectAccount']}
-                      options={[
-                        {
-                          label: 'Option 1',
-                          value: 'option-1',
-                        },
-                        {
-                          label: 'Option 2',
-                          value: 'option-2',
-                        },
-                        {
-                          label: 'Option 3',
-                          value: 'option-3',
-                        },
-                      ]}
-                    />
-
-                    <Box
-                      px="s16"
-                      py="s8"
-                      bg="background.500"
-                      color="neutralColorLight.Gray-70"
-                      mt="s16"
-                    >
-                      <Text fontWeight="400" fontSize="s2">
-                        {t['sharePurchaseAvailableBalance']}
-                      </Text>
-                      <Text fontWeight="600" fontSize="r1">
-                        Rs. 12,342
-                      </Text>
-                    </Box>
-                  </Box>
-                )}
-                {paymentModes === Payment_Mode.BankVoucher && (
-                  <Box
-                    w="25%"
-                    mt="s16"
-                    mb="s16"
-                    display="flex"
-                    flexDirection="column"
-                    gap="s16"
+                <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
+                  <Text
+                    color="neutralColorLight.Gray-60"
+                    fontSize="r2"
+                    fontWeight="600"
+                    mb="8px"
                   >
-                    <FormSelect
-                      name="bankId"
-                      label={t['sharePurchaseSelectBank']}
-                      placeholder={t['sharePurchaseSelectBank']}
-                      options={[
-                        {
-                          label: 'Option 1',
-                          value: 'option-1',
-                        },
-                        {
-                          label: 'Option 2',
-                          value: 'option-2',
-                        },
-                        {
-                          label: 'Option 3',
-                          value: 'option-3',
-                        },
-                      ]}
-                    />
+                    {t['sharePurchasePaymentInformation']}
+                  </Text>
+                  <Text
+                    color="neutralColorLight.Gray-80"
+                    fontSize="s3"
+                    fontWeight="500"
+                    mb="s16"
+                  >
+                    {t['sharePurchasePaymentMode']}
+                  </Text>
 
-                    <Box>
+                  <FormSwitchTab
+                    // TODO ( USE FORM SWITCH TAB)
+                    name="paymentMode"
+                    options={accountList.map((value) => ({
+                      label: value.label,
+                      value: value.value,
+                    }))}
+                  />
+
+                  {paymentModes === Payment_Mode.Account && (
+                    <Box mt="s16" mb="s16" w="25%">
+                      <FormSelect
+                        name="accountId"
+                        label={t['sharePurchaseSelectAccount']}
+                        placeholder={t['sharePurchaseSelectAccount']}
+                        options={[
+                          {
+                            label: 'Option 1',
+                            value: 'option-1',
+                          },
+                          {
+                            label: 'Option 2',
+                            value: 'option-2',
+                          },
+                          {
+                            label: 'Option 3',
+                            value: 'option-3',
+                          },
+                        ]}
+                      />
+
+                      <Box
+                        px="s16"
+                        py="s8"
+                        bg="background.500"
+                        color="neutralColorLight.Gray-70"
+                        mt="s16"
+                      >
+                        <Text fontWeight="400" fontSize="s2">
+                          {t['sharePurchaseAvailableBalance']}
+                        </Text>
+                        <Text fontWeight="600" fontSize="r1">
+                          Rs. 12,342
+                        </Text>
+                      </Box>
+                    </Box>
+                  )}
+                  {paymentModes === Payment_Mode.BankVoucher && (
+                    <Box
+                      w="25%"
+                      mt="s16"
+                      mb="s16"
+                      display="flex"
+                      flexDirection="column"
+                      gap="s16"
+                    >
+                      <FormSelect
+                        name="bankId"
+                        label={t['sharePurchaseSelectBank']}
+                        placeholder={t['sharePurchaseSelectBank']}
+                        options={[
+                          {
+                            label: 'Option 1',
+                            value: 'option-1',
+                          },
+                          {
+                            label: 'Option 2',
+                            value: 'option-2',
+                          },
+                          {
+                            label: 'Option 3',
+                            value: 'option-3',
+                          },
+                        ]}
+                      />
+
+                      <Box>
+                        <FormInput
+                          type="text"
+                          name="voucherNumber"
+                          placeholder={t['sharePurchaseEnterVoucherNumber']}
+                          label={t['sharePurchaseEnterVoucherNumber']}
+                        />
+                      </Box>
+                    </Box>
+                  )}
+
+                  {paymentModes === Payment_Mode.Cash && (
+                    <Box mt="s16" w="25%">
                       <FormInput
                         type="text"
-                        name="voucherNumber"
-                        placeholder={t['sharePurchaseEnterVoucherNumber']}
-                        label={t['sharePurchaseEnterVoucherNumber']}
+                        name="totalAmount"
+                        placeholder={t['sharePurchaseEnterCashAmount']}
+                        label={t['sharePurchaseEnterCashAmount']}
                       />
                     </Box>
-                  </Box>
-                )}
-
-                {paymentModes === Payment_Mode.Cash && (
-                  <Box mt="s16" w="25%">
-                    <FormInput
-                      type="text"
-                      name="totalAmount"
-                      placeholder={t['sharePurchaseEnterCashAmount']}
-                      label={t['sharePurchaseEnterCashAmount']}
-                    />
-                  </Box>
-                )}
+                  )}
+                </Box>
               </Box>
             </Box>
-          </Box>
-          <Box position="relative" width="100%">
-            <FormFooter onClick={submitForm} />
-          </Box>
-        </Container>
-      </form>
-    </FormProvider>
+          </Container>
+        </form>
+      </FormProvider>
+      <Box position="relative" margin="0px auto">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container minW="container.lg" height="fit-content" p="0">
+            <FormFooter
+              status={
+                <Box display="flex" gap="s8">
+                  <Text as="i" fontSize="r1">
+                    {t['formDetails']}
+                  </Text>
+                  <Text as="i" fontSize="r1">
+                    09:41 AM
+                  </Text>
+                </Box>
+              }
+              draftButton={
+                <Button type="submit" variant="ghost">
+                  <Icon as={BiSave} color="primary.500" />
+                  <Text
+                    alignSelf="center"
+                    color="primary.500"
+                    fontWeight="Medium"
+                    fontSize="s2"
+                    ml="5px"
+                  >
+                    {t['saveDraft']}
+                  </Text>
+                </Button>
+              }
+              mainButtonLabel={t['done']}
+              mainButtonHandler={() => router.push(`/members/translation`)}
+            />
+          </Container>
+        </Box>
+      </Box>
+    </>
   );
 };
 

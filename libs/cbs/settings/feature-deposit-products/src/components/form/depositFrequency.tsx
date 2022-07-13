@@ -45,6 +45,22 @@ export const DepositFrequency = ({ watch }: any) => {
   return (
     <BoxContainer>
       <TextBoxContainer>
+        <TopText>Deposit Amount Limit</TopText>
+      </TextBoxContainer>
+      <InputGroupContainer>
+        <FormInput
+          name="minimunBalaneAmount"
+          label="Minimum Amount"
+          placeholder="Enter Minimum Amount"
+        />
+        <FormInput
+          name="maximumBalaneAmount"
+          label="Maximum Amount"
+          placeholder="Enter Maximum Amount"
+        />
+      </InputGroupContainer>
+
+      <TextBoxContainer>
         <TopText>Deposit Frequency</TopText>
         <SubText>
           Select deposit frequency. Further details have to be added during

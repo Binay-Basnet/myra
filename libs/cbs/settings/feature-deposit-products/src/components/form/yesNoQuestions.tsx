@@ -73,6 +73,7 @@ export const Questions = () => {
                 <InputGroupContainer>
                   <FormInput
                     type="number"
+                    textAlign="right"
                     name="percentageOfDeposit"
                     label="Percentage of Deposit"
                     placeholder="0.00"
@@ -97,8 +98,7 @@ export const Questions = () => {
         <SubHeadingText>Staff Product</SubHeadingText>
         <FormSwitchTab name={'staffProduct'} options={yesNo} />
       </Box>
-      {(depositNature === 'recurringSaving' ||
-        depositNature === 'mandatory') && (
+      {depositNature === 'recurringSaving' && (
         <Box display={'flex'} flexDirection="column" gap="s16">
           <Box
             display="flex"
@@ -128,8 +128,7 @@ export const Questions = () => {
           )}
         </Box>
       )}
-      {(depositNature === 'recurringSaving' ||
-        depositNature === 'mandatory') && (
+      {depositNature === 'recurringSaving' && (
         <Box
           display="flex"
           flexDirection={'row'}

@@ -102,7 +102,7 @@ const declerationNextToKin = [
 ];
 const politicalExposure = [
   'isPoliticallyExposed',
-  'politicallyExposedDetailsx`',
+  'politicallyExposedDetails`',
 ];
 const benificialOwner = [
   'hasBeneficialOwner',
@@ -223,7 +223,7 @@ export const getKymSection = (id: string) => {
       subSection: 'kymAccIndNexttoKin',
     };
   }
-  if (politicalExposure.includes(id.split('-')[0])) {
+  if (politicalExposure.includes(id)) {
     return {
       section: 'declaration',
       subSection: 'kymAccIndFamilymembersinpolitics',

@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { useSetOrganizationDataMutation } from '@coop/shared/data-access';
 import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -24,7 +24,7 @@ export function CbsSettingsFeatureOrganization(
 ) {
   const { t } = useTranslation();
   const methods = useForm({});
-  const { control, handleSubmit, getValues } = methods;
+  const { handleSubmit, getValues } = methods;
 
   const [orgId, setOrgId] = useState<string>('');
 
@@ -72,7 +72,6 @@ export function CbsSettingsFeatureOrganization(
               flex={1}
               display="flex"
               flexDirection={'column'}
-              width="100%"
             >
               <Box py={'s24'}>
                 <Text fontWeight="600">

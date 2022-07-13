@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -23,6 +24,7 @@ import {
   FormFooter,
   Grid,
   GridItem,
+  Icon,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -61,11 +63,11 @@ const AddNewAccount = () => {
       >
         <form>
           <Container
-            minW="container.xl"
+            minW="container.lg"
             height="fit-content"
             p="0"
-            pb="120px"
-            background="white"
+            pb="55px"
+            background="gray.0"
           >
             <FormProvider {...methods}>
               <form>
@@ -461,27 +463,41 @@ const AddNewAccount = () => {
               </form>
             </FormProvider>
           </Container>
-
-          {/* </Box> */}
         </form>
       </Form>
-      {/* <Box
-        position={'relative'}
-        display="flex"
-        justifyContent={'center'}
-        alignItems={'center'}
-        bottom={'0'}
-        w="100%"
-        zIndex={10}
-        height="fit-content"
-      > */}
-      <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-        <Container minW="container.xl" p={0}>
-          <FormFooter
-            mainButtonLabel={t['settingsSaveButton']}
-            status="Form details saved to draft 09:41 AM"
-          />
-        </Container>
+      <Box position="relative" margin="0px auto">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container minW="container.lg" height="fit-content" p="0">
+            <FormFooter
+              status={
+                <Box display="flex" gap="s8">
+                  <Text as="i" fontSize="r1">
+                    {t['formDetails']}
+                  </Text>
+                  <Text as="i" fontSize="r1">
+                    09:41 AM
+                  </Text>
+                </Box>
+              }
+              draftButton={
+                <Button type="submit" variant="ghost">
+                  <Icon as={BiSave} color="primary.500" />
+                  <Text
+                    alignSelf="center"
+                    color="primary.500"
+                    fontWeight="Medium"
+                    fontSize="s2"
+                    ml="5px"
+                  >
+                    {t['saveDraft']}
+                  </Text>
+                </Button>
+              }
+              mainButtonLabel={t['next']}
+              mainButtonHandler={() => router.push(`/members/translation`)}
+            />
+          </Container>
+        </Box>
       </Box>
     </>
   );

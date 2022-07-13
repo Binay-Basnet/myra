@@ -13,6 +13,8 @@ const ne: Record<string, string> = {
   branch: 'Branch',
   complete: 'Complete',
   applyChanges: 'Apply Changes',
+  done: 'Done',
+  saveAccount: 'Save Account',
 
   // navbar
   searchMembersNameReportsEtc: 'सदस्यहरूको नाम, रिपोर्टहरू, आदि खोज्नुहोस्',
