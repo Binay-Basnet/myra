@@ -47,7 +47,7 @@ export function AccountingFeaturePurchaseAdd(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Purchase Entry
+            {t['accountingPurchaseAddPurchaseNew']}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -71,8 +71,8 @@ export function AccountingFeaturePurchaseAdd(
                 >
                   <FormTextArea
                     name="note"
-                    label={t['invFormNotes']}
-                    placeholder={t['invFormNote']}
+                    label={t['accountingPurchaseAddNotes']}
+                    placeholder={t['accountingPurchaseAddNote']}
                     rows={5}
                   />
                   <FieldCardComponents rows={'repeat(5,1fr)'}>
@@ -82,7 +82,7 @@ export function AccountingFeaturePurchaseAdd(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invForSubTotal']}
+                        {t['accountingPurchaseAddSubTotal']}
                       </Text>
 
                       <Text
@@ -100,7 +100,7 @@ export function AccountingFeaturePurchaseAdd(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invFormDiscount']}
+                        {t['accountingPurchaseAddDiscount']}
                       </Text>
 
                       <Box width="200px">
@@ -121,7 +121,7 @@ export function AccountingFeaturePurchaseAdd(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invFormTaxableTotal']}
+                        {t['accountingPurchaseAddTaxableTotal']}
                       </Text>
                       <Text
                         color="neutralColorLight.Gray-50"
@@ -138,7 +138,7 @@ export function AccountingFeaturePurchaseAdd(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invFormVAT']}
+                        {t['accountingPurchaseAddVAT']}
                       </Text>
 
                       <Text
@@ -156,7 +156,7 @@ export function AccountingFeaturePurchaseAdd(
                         fontWeight="500"
                         fontSize="s3"
                       >
-                        {t['invFormGrandTotal']}
+                        {t['accountingPurchaseAddGrandTotal']}
                       </Text>
 
                       <Text

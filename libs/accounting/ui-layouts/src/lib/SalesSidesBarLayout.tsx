@@ -99,7 +99,7 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
                   variant="ghost"
                   onClick={() => router.push('/accounting/sales/add')}
                 >
-                  {'Sales List'}
+                  {t['salesList']}
                 </Button>
 
                 <Button
@@ -113,7 +113,7 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
                     router.push('/accounting/sales/credit-note/add')
                   }
                 >
-                  {'Credit Note'}
+                  {t['creditNote']}
                 </Button>
 
                 <Button
@@ -127,7 +127,7 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
                     router.push('/accounting/sales/customer-payment/add')
                   }
                 >
-                  Customer Payment
+                  {t['customerPayment']}
                 </Button>
               </Box>
             </PopoverBody>

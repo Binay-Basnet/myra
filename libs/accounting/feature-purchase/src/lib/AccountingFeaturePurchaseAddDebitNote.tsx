@@ -31,15 +31,6 @@ export function AccountingFeaturePurchaseAddDebitNote(
   const { t } = useTranslation();
   const methods = useForm();
 
-  const { watch } = methods;
-
-  const tds = watch('tds');
-
-  const booleanList = [
-    { label: 'Yes', value: 'Yes' },
-    { label: 'No', value: 'No' },
-  ];
-
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">
@@ -58,7 +49,7 @@ export function AccountingFeaturePurchaseAddDebitNote(
             fontWeight="600"
             color="neutralColorLight.Gray-80"
           >
-            New Debit Note
+            {t['accountingDebitNoteAddNewDebitNote']}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -76,19 +67,25 @@ export function AccountingFeaturePurchaseAddDebitNote(
                   <InputGroupContainer>
                     <FormSelect
                       name="supplierName"
-                      label={'Supplier Name'}
-                      placeholder={'Supplier Name'}
+                      label={t['accountingDebitNoteAddSupplierName']}
+                      placeholder={t['accountingDebitNoteAddSupplierName']}
                       options={[]}
                     />
 
                     <FormInput
                       name="billReference"
                       type="text"
-                      label="Bill Reference"
-                      placeholder="Enter Bill Reference"
+                      label={t['accountingDebitNoteAddBillReference']}
+                      placeholder={
+                        t['accountingDebitNoteAddBillReferenceEnter']
+                      }
                     />
 
-                    <FormInput name="date" type="date" label="Date" />
+                    <FormInput
+                      name="date"
+                      type="date"
+                      label={t['accountingDebitNoteAddDate']}
+                    />
                   </InputGroupContainer>
                 </BoxContainer>
 
@@ -99,8 +96,8 @@ export function AccountingFeaturePurchaseAddDebitNote(
                 >
                   <FormTextArea
                     name="note"
-                    label={t['invFormNotes']}
-                    placeholder={t['invFormNote']}
+                    label={t['accountingDebitNoteAddNotes']}
+                    placeholder={t['accountingDebitNoteAddNote']}
                     rows={5}
                   />
                   <FieldCardComponents rows={'repeat(5,1fr)'}>
@@ -110,7 +107,7 @@ export function AccountingFeaturePurchaseAddDebitNote(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invForSubTotal']}
+                        {t['accountingDebitNoteAddSubTotal']}
                       </Text>
 
                       <Text
@@ -128,7 +125,7 @@ export function AccountingFeaturePurchaseAddDebitNote(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invFormTaxableTotal']}
+                        {t['accountingDebitNoteAddTaxableTotal']}
                       </Text>
                       <Text
                         color="neutralColorLight.Gray-50"
@@ -145,7 +142,7 @@ export function AccountingFeaturePurchaseAddDebitNote(
                         fontWeight="Medium"
                         fontSize="s3"
                       >
-                        {t['invFormVAT']}
+                        {t['accountingDebitNoteAddVAT']}
                       </Text>
 
                       <Text
@@ -163,7 +160,7 @@ export function AccountingFeaturePurchaseAddDebitNote(
                         fontWeight="500"
                         fontSize="s3"
                       >
-                        {t['invFormGrandTotal']}
+                        {t['accountingDebitNoteAddGrandTotal']}
                       </Text>
 
                       <Text

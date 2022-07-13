@@ -6,21 +6,25 @@ import {
 } from '@coop/accounting/ui-components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
-
-const booleanList = [
-  { label: 'Yes', value: 'Yes' },
-  { label: 'No', value: 'No' },
-];
+import { useTranslation } from '@coop/shared/utils';
 
 export const TDS = () => {
+  const { t } = useTranslation();
+
   const { watch } = useFormContext();
 
   const tds = watch('tds');
+
+  const booleanList = [
+    { label: t['accountingPurchaseAddYes'], value: 'Yes' },
+    { label: t['accountingPurchaseAddNo'], value: 'No' },
+  ];
+
   return (
     <BoxContainer>
       <Box display="flex" justifyContent="space-between">
         <Text fontSize="s3" fontWeight="500" color="gray.700">
-          TDS
+          {t['accountingPurchaseAddTDS']}
         </Text>
 
         <FormSwitchTab options={booleanList} name="tds" />
@@ -30,22 +34,22 @@ export const TDS = () => {
         <InputGroupContainer>
           <FormSelect
             name="tdsLedgerAccount"
-            label={'TDS Ledger Account'}
-            placeholder={'TDS Ledger Account'}
+            label={t['accountingPurchaseAddTDSLedgerAccount']}
+            placeholder={t['accountingPurchaseAddTDSLedgerAccount']}
             options={[]}
           />
 
           <FormSelect
             name="tdsType"
-            label={'TDS Type'}
-            placeholder={'TDS Type'}
+            label={t['accountingPurchaseAddTDSType']}
+            placeholder={t['accountingPurchaseAddTDSType']}
             options={[]}
           />
 
           <FormInput
             name="tdsAmount"
             type="number"
-            label="TDS Amount"
+            label={t['accountingPurchaseAddTDSAmount']}
             textAlign={'right'}
             placeholder="0.00"
           />

@@ -7,34 +7,37 @@ import {
 // import debounce from 'lodash/debounce';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const CustomerDetails = () => {
+  const { t } = useTranslation();
+
   return (
     <BoxContainer>
       <InputGroupContainer>
         <FormSelect
           name="receivedFrom"
-          label="Received From"
-          placeholder="Received From"
+          label={t['accountingCustomerPaymentAddReceivedFrom']}
+          placeholder={t['accountingCustomerPaymentAddReceivedFrom']}
         />
 
         <FormInput
           name="recievedAccount"
           type="number"
-          label="Received Account"
+          label={t['accountingCustomerPaymentAddReceivedAccount']}
           textAlign={'right'}
-          placeholder="Select Received Account"
+          placeholder={t['accountingCustomerPaymentAddSelectReceivedAccount']}
         />
         <FormInput
           name="recievedDate"
           type="date"
-          label="Recieved Date"
+          label={t['accountingCustomerPaymentAddReceivedDate']}
           placeholder="DD-MM-YYYY"
         />
         <FormInput
           name="amount"
           type="number"
-          label="Amount"
+          label={t['accountingCustomerPaymentAddAmount']}
           textAlign={'right'}
           placeholder="0.00"
         />

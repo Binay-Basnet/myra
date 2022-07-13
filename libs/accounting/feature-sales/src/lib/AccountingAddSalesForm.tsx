@@ -1,24 +1,10 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { GrClose, GrMail } from 'react-icons/gr';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
+import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
-import { Avatar, Grid, GridItem, Icon } from '@chakra-ui/react';
+import { Icon } from '@chakra-ui/react';
 
-import {
-  BoxContainer,
-  DividerContainer,
-  InputGroupContainer,
-} from '@coop/accounting/ui-components';
-import {
-  FormFileInput,
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-  FormTextArea,
-} from '@coop/shared/form';
+import { DividerContainer } from '@coop/accounting/ui-components';
 import {
   Box,
   Button,
@@ -26,7 +12,6 @@ import {
   FormFooter,
   IconButton,
   Text,
-  TextFields,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -56,7 +41,7 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
           borderTopRadius={5}
         >
           <Text fontSize="r2" fontWeight="600">
-            New Sales Entry{' '}
+            {t['accountingSalesFormNewSalesEntry']}
           </Text>
           <IconButton
             variant={'ghost'}

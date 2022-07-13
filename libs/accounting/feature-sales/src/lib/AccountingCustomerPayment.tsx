@@ -9,10 +9,10 @@ import { Avatar, Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface AccountingFeaturePurchaseListProps {}
+export interface AccountingCustomerPaymentProps {}
 
-export function AccountingFeaturePurchaseList(
-  props: AccountingFeaturePurchaseListProps
+export function AccountingCustomerPayment(
+  props: AccountingCustomerPaymentProps
 ) {
   const { t } = useTranslation();
 
@@ -58,12 +58,12 @@ export function AccountingFeaturePurchaseList(
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['accountingPurchaseListBillNo'],
+        header: t['accountingCustomerPaymentListEntryNo'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: t['accountingPurchaseListSupplierName'],
+        header: t['accountingCustomerPaymentListCustomer'],
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
@@ -85,19 +85,34 @@ export function AccountingFeaturePurchaseList(
         },
 
         meta: {
-          width: '60%',
+          width: '40%',
         },
       },
       {
-        header: t['accountingPurchaseListTotalAmount'],
+        header: t['accountingCustomerPaymentListReceivedFrom'],
+        accessorFn: (row) => row?.node?.contact,
+        meta: {
+          width: '10%',
+        },
+      },
+
+      {
+        header: t['accountingCustomerPaymentListTotalAmount'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: t['accountingPurchaseListInvoiceDate'],
+        header: t['accountingCustomerPaymentListDate'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+      },
+      {
+        header: t['accountingCustomerPaymentListPaymentMode'],
+        accessorFn: (row) => row?.node?.contact,
+        meta: {
+          width: '10%',
+        },
       },
       {
         id: '_actions',
@@ -120,12 +135,15 @@ export function AccountingFeaturePurchaseList(
   return (
     <>
       <AccountingPageHeader
-        heading={t['accountingPurchaseListPurchase']}
-        buttonLabel={t['accountingPurchaseListPurchaseEntry']}
-        buttonHandler={() => router.push('/accounting/purchase/add')}
+        heading={t['accountingCustomerPaymentListCustomerPayment']}
+        buttonLabel={t['accountingCustomerPaymentListNewCustomerPayment']}
+        buttonHandler={() =>
+          router.push('/accounting/sales/customer-payment/add')
+        }
       />
 
       <Table
+        // rowClick={(id) => alert(id)}
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
@@ -140,4 +158,4 @@ export function AccountingFeaturePurchaseList(
   );
 }
 
-export default AccountingFeaturePurchaseList;
+export default AccountingCustomerPayment;

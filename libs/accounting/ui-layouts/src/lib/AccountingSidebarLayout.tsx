@@ -2,12 +2,11 @@ import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
-import { Button } from '@chakra-ui/react';
 
 import { TabColumn } from '@coop/myra/components';
 import {
   Box,
-  // Button,
+  Button,
   Divider,
   Icon,
   Popover,
@@ -95,7 +94,7 @@ export const AccountingSidebarLayout = ({
                     router.push('/accounting/accounting/journal-vouchers/add')
                   }
                 >
-                  {'Journal Voucher'}
+                  {t['accountingAccountingSidebarJournalVouchers']}
                 </Button>
 
                 <Button
@@ -108,7 +107,7 @@ export const AccountingSidebarLayout = ({
                     router.push('/accounting/accounting/cash-transfer/add')
                   }
                 >
-                  {'Cash Transfer'}
+                  {t['accountingAccountingSidebarCashTransfer']}
                 </Button>
 
                 <Button
@@ -121,7 +120,7 @@ export const AccountingSidebarLayout = ({
                     router.push('/accounting/accounting/quick-payment/add')
                   }
                 >
-                  {'Quick Payment'}
+                  {t['accountingAccountingSidebarQuickPayment']}
                 </Button>
 
                 <Button
@@ -134,7 +133,7 @@ export const AccountingSidebarLayout = ({
                     router.push('/accounting/accounting/quick-receipt/add')
                   }
                 >
-                  {'Quick Receipt'}
+                  {t['accountingAccountingSidebarQuickReceipt']}
                 </Button>
 
                 <Button
@@ -147,7 +146,7 @@ export const AccountingSidebarLayout = ({
                     router.push('/accounting/accounting/bank-accounts/add')
                   }
                 >
-                  {'Bank Accounts'}
+                  {t['accountingAccountingSidebarBankAccounts']}
                 </Button>
 
                 <Button
@@ -160,7 +159,7 @@ export const AccountingSidebarLayout = ({
                     router.push('/accounting/accounting/charts-of-accounts/add')
                   }
                 >
-                  {'Charts of Accounts'}
+                  {t['accountingAccountingSidebarChartsOfAccounts']}
                 </Button>
               </Box>
             </PopoverBody>
@@ -180,7 +179,7 @@ export const AccountingSidebarLayout = ({
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          {'Accounting Settings'}
+          {t['accountingAccountingSiderbarAccountingSettings']}
         </Button>
       </Box>
       <Box

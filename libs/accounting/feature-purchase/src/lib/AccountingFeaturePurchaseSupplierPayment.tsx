@@ -58,12 +58,12 @@ export function AccountingFeaturePurchaseSupplierPayment(
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Bill No',
+        header: t['accountingSupplierPaymentListBillNo'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Supplier',
+        header: t['accountingSupplierPaymentListSupplierName'],
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
@@ -89,14 +89,14 @@ export function AccountingFeaturePurchaseSupplierPayment(
         },
       },
       {
-        header: 'Amount',
+        header: t['accountingSupplierPaymentListAmount'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Date',
+        header: t['accountingSupplierPaymentListDate'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
@@ -120,8 +120,8 @@ export function AccountingFeaturePurchaseSupplierPayment(
   return (
     <>
       <AccountingPageHeader
-        heading="Supplier Payment"
-        buttonLabel={'New Supplier Payment'}
+        heading={t['accountingSupplierPaymentListSupplierPayment']}
+        buttonLabel={t['accountingSupplierPaymentListSupplierPaymentNew']}
         buttonHandler={() =>
           router.push('/accounting/purchase/supplier-payment/add')
         }

@@ -7,16 +7,19 @@ import {
 // import debounce from 'lodash/debounce';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const CreditNoteDetails = () => {
+  const { t } = useTranslation();
+
   return (
     <BoxContainer>
       <InputGroupContainer>
         <GridItem colSpan={2}>
           <FormSelect
             name="customerName"
-            label="Customer Name"
-            placeholder="Select Customer"
+            label={t['accountingCreditNoteAddCustomerName']}
+            placeholder={t['accountingCreditNoteAddSelectCustomer']}
           />
         </GridItem>
         {/* <FormInput
@@ -28,7 +31,7 @@ export const CreditNoteDetails = () => {
         <FormInput
           name="date"
           type="date"
-          label="Date"
+          label={t['accountingCreditNoteAddDate']}
           placeholder="DD-MM-YYYY"
         />
         {/* <FormInput
@@ -39,8 +42,8 @@ export const CreditNoteDetails = () => {
         /> */}
         <FormSelect
           name="invoiceReference"
-          label="Invoice Reference"
-          placeholder="Invoice Reference"
+          label={t['accountingCreditNoteAddInvoiceReference']}
+          placeholder={t['accountingCreditNoteAddInvoiceReference']}
         />
       </InputGroupContainer>
     </BoxContainer>

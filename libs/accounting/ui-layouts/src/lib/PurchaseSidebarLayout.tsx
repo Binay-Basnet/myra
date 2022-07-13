@@ -2,21 +2,11 @@ import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
-<<<<<<< HEAD
-=======
-import { Button } from '@chakra-ui/react';
->>>>>>> e4f0561c966a601d1fc25eeee3dcece8ea105fd9
 
-// import {
-//   Popover,
-//   PopoverBody,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from '@chakra-ui/react';
 import { TabColumn } from '@coop/myra/components';
 import {
   Box,
-  // Button,
+  Button,
   Divider,
   Icon,
   Popover,
@@ -78,13 +68,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
             // bg="gray.0"
             p={0}
             w="225px"
-<<<<<<< HEAD
             _focus={{ boxShadow: 'none' }}
-=======
-            _focus={{
-              boxShadow: 'none',
-            }}
->>>>>>> e4f0561c966a601d1fc25eeee3dcece8ea105fd9
           >
             <PopoverBody p={0}>
               <Box>
@@ -97,7 +81,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                   variant="ghost"
                   onClick={() => router.push('/accounting/purchase/add')}
                 >
-                  {'Purchase List'}
+                  {t['accountingPurchaseSidebarPurchaseList']}
                 </Button>
 
                 <Button
@@ -111,7 +95,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                     router.push('/accounting/purchase/expenses/add')
                   }
                 >
-                  {'Expenses'}
+                  {t['accountingPurchaseSidebarExpenses']}
                 </Button>
 
                 <Button
@@ -125,7 +109,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                     router.push('/accounting/purchase/debit-note/add')
                   }
                 >
-                  {'Debit Note'}
+                  {t['accountingPurchaseSidebarDebitNote']}
                 </Button>
 
                 <Button
@@ -139,7 +123,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                     router.push('/accounting/purchase/supplier-payment/add')
                   }
                 >
-                  {'Supplier Payment'}
+                  {t['accountingPurchaseSidebarSupplierPayment']}
                 </Button>
               </Box>
             </PopoverBody>
@@ -159,7 +143,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          {'Purchase Settings'}
+          {t['accountingPurchaseSidebarPurchaseSettings']}
         </Button>
       </Box>
       <Box

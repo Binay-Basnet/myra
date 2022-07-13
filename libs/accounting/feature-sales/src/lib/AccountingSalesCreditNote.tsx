@@ -1,24 +1,10 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { GrClose, GrMail } from 'react-icons/gr';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
+import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
-import { Avatar, Grid, GridItem, Icon } from '@chakra-ui/react';
+import { Icon } from '@chakra-ui/react';
 
-import {
-  BoxContainer,
-  DividerContainer,
-  InputGroupContainer,
-} from '@coop/accounting/ui-components';
-import {
-  FormFileInput,
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-  FormTextArea,
-} from '@coop/shared/form';
+import { DividerContainer } from '@coop/accounting/ui-components';
 import {
   Box,
   Button,
@@ -41,21 +27,6 @@ export function CreditNoteForm(props: CbsAccountOpenFormProps) {
   const { t } = useTranslation();
   const methods = useForm();
 
-  const daysList = [
-    { label: t['accSunday'], value: 'sunday' },
-    { label: t['accMonday'], value: 'monday' },
-    { label: t['accTuesday'], value: 'tuesday' },
-    { label: t['accWednesday'], value: 'wednesday' },
-    { label: t['accThursday'], value: 'thursday' },
-    { label: t['accFriday'], value: 'friday' },
-    { label: t['accSaturday'], value: 'saturday' },
-  ];
-
-  const monthlyList = [
-    { label: t['accDay'], value: 'day' },
-    { label: t['accDayOfWeek'], value: 'dayOfWeek' },
-  ];
-
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">
@@ -70,7 +41,7 @@ export function CreditNoteForm(props: CbsAccountOpenFormProps) {
           borderTopRadius={5}
         >
           <Text fontSize="r2" fontWeight="600">
-            New Credit Note{' '}
+            {t['accountingCreditNoteAddNewCreditNote']}
           </Text>
           <IconButton
             variant={'ghost'}
