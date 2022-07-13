@@ -111,9 +111,9 @@ export const SalesObject = () => {
         </Box>
         <Box py="s24">
           <Box
-            px="s16"
+            // px="s16"
             position={'sticky'}
-            top="170px"
+            top="169px"
             zIndex={12}
             w="100%"
             bg="white"
