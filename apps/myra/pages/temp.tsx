@@ -9,7 +9,7 @@ type SalesTable = {
   tax: number;
   total_amount: number;
   product_description?: string;
-  warehouse_partition?: string;
+  warehouse_partition?: number;
   sales_ledger?: string;
 };
 
@@ -45,7 +45,6 @@ const Temp = () => {
             accessor: 'product',
             header: 'Product',
             cellWidth: 'auto',
-            fieldType: 'search',
           },
           {
             accessor: 'quantity',
@@ -62,7 +61,12 @@ const Temp = () => {
             header: 'Tax',
             isNumeric: true,
           },
-          { accessor: 'total_amount', header: 'Total Amount', isNumeric: true },
+          {
+            accessor: 'total_amount',
+            header: 'Total Amount',
+            isNumeric: true,
+            accessorFn: (row) => row.quantity * row.rate + row.tax,
+          },
           {
             accessor: 'product_description',
             header: 'Product Description',

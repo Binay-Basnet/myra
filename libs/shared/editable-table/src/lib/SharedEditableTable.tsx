@@ -31,6 +31,7 @@ type Column<T extends RecordWithId & Record<string, string | number>> = {
   id?: string;
   header?: string;
   accessor: keyof T;
+  accessorFn?: (row: T) => string | number;
   hidden?: boolean;
   fieldType?: 'text' | 'number' | 'percentage' | 'textarea' | 'search';
   isNumeric?: boolean;
@@ -158,7 +159,14 @@ export function EditableTable<
           _hover={{ bg: 'gray.100' }}
           cursor="pointer"
           gap="s4"
-          onClick={() => setCurrentData((prev) => [...prev, {} as T])}
+          onClick={() => {
+            const newObj = columns.reduce(
+              (o, key) => ({ ...o, [key.accessor]: key.isNumeric ? 0 : '' }),
+              {}
+            );
+
+            setCurrentData((prev) => [...prev, { ...newObj } as T]);
+          }}
         >
           <Icon as={IoAdd} fontSize="xl" />
           <Text fontSize="s3" lineHeight="1.5">
@@ -200,6 +208,27 @@ const EditableTableRow = <
 }: IEditableTableRowProps<T>) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  console.log(JSON.stringify(data, null, 2));
+
+  useEffect(() => {
+    columns.forEach((column) =>
+      column.accessorFn
+        ? setCurrentData((prev) =>
+            prev.map((item) =>
+              item._id === data._id
+                ? {
+                    ...item,
+                    [column.accessor]: column.isNumeric
+                      ? Number(column?.accessorFn?.(data))
+                      : column?.accessorFn?.(data),
+                  }
+                : item
+            )
+          )
+        : null
+    );
+  }, [JSON.stringify(data)]);
+
   return (
     <>
       <HStack
@@ -213,6 +242,7 @@ const EditableTableRow = <
         borderBottomColor="border.layout"
       >
         <Box
+          as="button"
           w="s36"
           borderRadius="0"
           minH="s36"
@@ -224,6 +254,8 @@ const EditableTableRow = <
           cursor="pointer"
           bg={isExpanded ? 'background.500' : 'white'}
           _hover={{ bg: 'gray.100' }}
+          _focus={{ bg: 'background.500' }}
+          _focusVisible={{ outline: 'none' }}
           onClick={() => setIsExpanded((prev) => !prev)}
         >
           <Icon
@@ -235,71 +267,91 @@ const EditableTableRow = <
         </Box>
         {columns
           .filter((column) => !column.hidden)
-          .map((column, index) => (
-            <Fragment key={index}>
-              <Editable
-                // isDisabled={column.fieldType === 'search'}
-                isPreviewFocusable={true}
-                selectAllOnFocus={false}
-                w="100%"
-                minH="inherit"
-                display="flex"
-                alignItems="center"
-                justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
-                fontSize="r1"
-                borderLeft="1px"
-                borderLeftColor="border.layout"
-                flexGrow={column.cellWidth === 'auto' ? 1 : 0}
-                flexBasis={
-                  column.cellWidth === 'auto'
-                    ? '100%'
-                    : column.cellWidth
-                    ? cellWidthObj[column.cellWidth]
-                    : '30%'
-                }
-                defaultValue={String(data[column.accessor] ?? '')}
-              >
-                <EditablePreview
-                  width="100%"
-                  height="100%"
-                  px="s8"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
-                />
+          .map((column, index) => {
+            const accessorFnValue = column?.accessorFn?.(data);
 
-                <Input
-                  py="0"
-                  h="100%"
+            return (
+              <Fragment key={index}>
+                <Editable
+                  isDisabled={
+                    column.fieldType === 'search' || !!column?.accessorFn
+                  }
+                  isPreviewFocusable={true}
+                  selectAllOnFocus={false}
                   w="100%"
-                  px="s8"
                   minH="inherit"
-                  bg="primary.0"
                   display="flex"
                   alignItems="center"
                   justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
-                  _focus={{ boxShadow: 'none' }}
-                  _focusWithin={{ boxShadow: 'none' }}
-                  border="none"
-                  borderRadius="0"
-                  value={data[column.accessor] ?? ''}
-                  onChange={(e) => {
-                    setCurrentData((prev) =>
-                      prev.map((item) =>
-                        item._id === data._id
-                          ? {
-                              ...item,
-                              [column.accessor]: e.target.value,
-                            }
-                          : item
-                      )
-                    );
-                  }}
-                  as={EditableInput}
-                />
-              </Editable>
-            </Fragment>
-          ))}
+                  fontSize="r1"
+                  borderLeft="1px"
+                  borderLeftColor="border.layout"
+                  flexGrow={column.cellWidth === 'auto' ? 1 : 0}
+                  flexBasis={
+                    column.cellWidth === 'auto'
+                      ? '100%'
+                      : column.cellWidth
+                      ? cellWidthObj[column.cellWidth]
+                      : '30%'
+                  }
+                  value={
+                    column.accessorFn
+                      ? accessorFnValue
+                        ? String(accessorFnValue)
+                        : ''
+                      : String(
+                          data[column.accessor] ? data[column.accessor] : ''
+                        )
+                  }
+                >
+                  <EditablePreview
+                    width="100%"
+                    height="100%"
+                    px="s8"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent={
+                      column.isNumeric ? 'flex-end' : 'flex-start'
+                    }
+                  />
+
+                  <Input
+                    py="0"
+                    h="100%"
+                    type={column.isNumeric ? 'number' : 'text'}
+                    w="100%"
+                    px="s8"
+                    minH="inherit"
+                    bg="primary.100"
+                    textAlign={column.isNumeric ? 'right' : 'left'}
+                    justifyContent={
+                      column.isNumeric ? 'flex-end' : 'flex-start'
+                    }
+                    _focus={{ boxShadow: 'none' }}
+                    _focusWithin={{ boxShadow: 'none' }}
+                    border="none"
+                    borderRadius="0"
+                    value={String(data[column.accessor] ?? '')}
+                    onChange={(e) => {
+                      setCurrentData((prev) =>
+                        prev.map((item) =>
+                          item._id === data._id
+                            ? {
+                                ...item,
+                                [column.accessor]: column.isNumeric
+                                  ? +e.target.value
+                                  : e.target.value,
+                              }
+                            : item
+                        )
+                      );
+                    }}
+                    as={EditableInput}
+                  />
+                </Editable>
+              </Fragment>
+            );
+          })}
         <Box
           w="s36"
           minH="s36"
@@ -372,6 +424,6 @@ const EditableTableRow = <
 const MemoEditableTableRow = React.memo(
   EditableTableRow,
   (prevProps, nextProps) => {
-    return prevProps.data._id === nextProps.data._id;
+    return JSON.stringify(prevProps.data) === JSON.stringify(nextProps.data);
   }
 ) as typeof EditableTableRow;
