@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FormEditableTable } from '@coop/shared/form';
@@ -32,7 +31,7 @@ export const PurchaseTable = () => {
 
   const addToInventory = watch('addToInventory');
 
-  const [tableColumns, setTableColumns] = useState([
+  const tableColumns = [
     {
       accessor: 'product_id',
       header: 'Product',
@@ -77,29 +76,26 @@ export const PurchaseTable = () => {
       hidden: true,
       fieldType: 'select',
     },
-  ]);
-
-  useEffect(() => {
-    if (addToInventory === 'Yes') {
-      setTableColumns([
-        ...tableColumns,
-        {
-          accessor: 'warehouse_partition',
-          header: 'Warehouse Partition',
-          hidden: true,
-          fieldType: 'select',
-        },
-      ]);
-    }
-
-    if (addToInventory === 'No') {
-      const temp = [...tableColumns];
-      temp.pop();
-      setTableColumns(temp);
-    }
-  }, [addToInventory]);
+  ];
 
   return (
-    <FormEditableTable<PurchaseTableType> name="data" columns={tableColumns} />
+    <FormEditableTable<PurchaseTableType>
+      name="data"
+      columns={
+        addToInventory
+          ? addToInventory === 'Yes'
+            ? [
+                ...tableColumns,
+                {
+                  accessor: 'warehouse_partition',
+                  header: 'Warehouse Partition',
+                  hidden: true,
+                  fieldType: 'select',
+                },
+              ]
+            : tableColumns
+          : tableColumns
+      }
+    />
   );
 };
