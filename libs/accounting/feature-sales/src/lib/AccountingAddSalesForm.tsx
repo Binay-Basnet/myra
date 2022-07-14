@@ -92,7 +92,7 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
                   columns={[
                     {
                       accessor: 'product_id',
-                      header: 'Product',
+                      header: t['Salesproduct_id'],
                       cellWidth: 'auto',
                       fieldType: 'search',
                       searchOptions: search_options,
@@ -100,23 +100,23 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
 
                     {
                       accessor: 'quantity',
-                      header: 'Quantity',
+                      header: t['SalesQuantity'],
                       isNumeric: true,
                     },
                     {
                       accessor: 'rate',
-                      header: 'Rate',
+                      header: t['SaleRate'],
                       isNumeric: true,
                     },
                     {
                       accessor: 'tax',
-                      header: 'Tax',
+                      header: t['SaleTax'],
                       isNumeric: true,
                       fieldType: 'percentage',
                     },
                     {
                       accessor: 'total_amount',
-                      header: 'Total Amount',
+                      header: t['SaleTotalAmount'],
                       isNumeric: true,
 
                       accessorFn: (row) =>
@@ -125,7 +125,7 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
                     },
                     {
                       accessor: 'product_description',
-                      header: 'Product Description',
+                      header: t['SaleProductDescription'],
                       hidden: true,
 
                       fieldType: 'textarea',
@@ -134,12 +134,12 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
                     {
                       accessor: 'warehouse_partition',
                       hidden: true,
-                      header: 'Warehouse Partition',
+                      header: t['SaleWarehousePartition'],
                     },
                     {
                       accessor: 'sales_ledger',
                       hidden: true,
-                      header: 'Sales Ledger',
+                      header: t['SaleSelectWareLedger'],
                     },
                   ]}
                 />

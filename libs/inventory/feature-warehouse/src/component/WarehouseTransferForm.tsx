@@ -163,28 +163,29 @@ export const WarehouseTransferForm = () => {
               columns={[
                 {
                   accessor: 'product_id',
-                  header: 'Product',
+                  header: t['warehouseTransferProduct'],
                   cellWidth: 'auto',
-                  fieldType: 'select',
+                  fieldType: 'search',
                   searchOptions: search_options,
                 },
 
                 {
                   accessor: 'quantity',
-                  header: 'Quantity',
+                  header: t['warehouseTransfertableQuantity'],
                   isNumeric: true,
                 },
                 {
                   accessor: 'product_description',
-                  header: 'Product Description',
+                  header: t['warehouseTransfertableDescription'],
                   hidden: true,
+                  colSpan: 3,
 
                   fieldType: 'textarea',
                 },
               ]}
             />
           </Box>
-
+          <Divider />
           <Box flexDirection="column" display="flex" gap="s16">
             <FormTextArea
               name="description"

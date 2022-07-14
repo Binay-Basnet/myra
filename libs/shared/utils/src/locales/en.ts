@@ -1851,6 +1851,9 @@ const en: Record<string, string> = {
   // warehouse transfer table
   warehouseTransferWarehouseTransfer: 'Warehouse Transfer',
   warehouseTransferNewWarehouseTransfer: 'New Warehouse Transfer',
+  warehouseTransferProduct: 'Product',
+  warehouseTransfertableQuantity: 'Quantity',
+  warehouseTransfertableDescription: 'Quantity',
   // warehouseTransferDate: 'Date',
   warehouseTransferEntryNo: 'Entry No',
   warehouseTransferReference: 'Reference',
@@ -2372,6 +2375,32 @@ const en: Record<string, string> = {
   //accounting quick receipt form table
   accountingQuickReceiptFormTableAccount: 'Account',
   accountingQuickReceiptFormTableAmount: 'Amount',
+  //editabletableSales
+  Salesproduct_id: 'Product',
+  SalesQuantity: 'Quantity',
+  SaleRate: 'Rate',
+  SaleTax: 'Tax',
+  SaleTotalAmount: 'Amount',
+  SaleProductDescription: 'Product Description',
+  SaleWarehousePartition: 'Warehouse Partition',
+  SaleSelectWareLedger: 'Sales Ledger',
+
+  //editable sales CreditnOte table
+  CreditNoteProduct: 'Product',
+  CreditNoteQuantity: 'Quantity',
+  CreditNoteRate: 'Rate',
+  CreditNoteTax: 'Tax',
+  CreditNoteTotalAmount: 'Total Amount',
+  CreditNoteProductDes: 'Product Description',
+  CreditNoteWareHouse: 'Warehouse Partition',
+  CreditNoteSalesReturn: 'Sales Return Ledger',
+  //editable sales customer payment
+  CustomerPaymentAllocation: 'Payment Allocation',
+  CustomerPaymentType: 'Type',
+  CustomerPaymentDate: 'Date',
+  CustomerPaymentAmount: 'Amount',
+  CustomerPaymentLeftTo: 'Left to Allocate',
+  CustomerPaymentThis: 'This Allocation',
 };
 
 export default en;
