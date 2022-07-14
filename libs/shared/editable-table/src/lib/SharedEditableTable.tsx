@@ -47,6 +47,7 @@ type Column<T extends RecordWithId & Record<string, string | number>> = {
     | 'percentage'
     | 'textarea'
     | 'search'
+    | 'date'
     | 'select';
   selectOptions?: { label: string; value: string }[];
   searchOptions?: { label: string; value: string }[];
