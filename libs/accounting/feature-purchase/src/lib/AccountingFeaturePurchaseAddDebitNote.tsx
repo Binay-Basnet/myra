@@ -22,6 +22,8 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { DebitNoteTable } from '../components';
+
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseAddDebitNoteProps {}
 
@@ -29,7 +31,27 @@ export function AccountingFeaturePurchaseAddDebitNote(
   props: AccountingFeaturePurchaseAddDebitNoteProps
 ) {
   const { t } = useTranslation();
-  const methods = useForm();
+
+  const methods = useForm({
+    defaultValues: {
+      data: [
+        {
+          product_id: 'm003',
+          quantity: 45,
+          rate: 45,
+          tax: 45,
+          amount: 23,
+        },
+        {
+          product_id: 'm004',
+          quantity: 2,
+          rate: 4,
+          tax: 4,
+          amount: 34212,
+        },
+      ],
+    },
+  });
 
   return (
     <>
@@ -88,6 +110,8 @@ export function AccountingFeaturePurchaseAddDebitNote(
                     />
                   </InputGroupContainer>
                 </BoxContainer>
+
+                <DebitNoteTable />
 
                 <Box
                   display="grid"

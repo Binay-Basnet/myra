@@ -18,7 +18,12 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { AddToInventory, PurchaseDetails, TDS } from '../components';
+import {
+  AddToInventory,
+  PurchaseDetails,
+  PurchaseTable,
+  TDS,
+} from '../components';
 
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseAddProps {}
@@ -27,7 +32,28 @@ export function AccountingFeaturePurchaseAdd(
   props: AccountingFeaturePurchaseAddProps
 ) {
   const { t } = useTranslation();
-  const methods = useForm();
+
+  const methods = useForm({
+    defaultValues: {
+      data: [
+        {
+          product_id: 'm003',
+          quantity: 45,
+          rate: 45,
+          tax: 45,
+          amount: 23,
+        },
+        {
+          product_id: 'm004',
+          quantity: 2,
+          rate: 4,
+          tax: 4,
+          amount: 34212,
+        },
+      ],
+      addToInventory: '',
+    },
+  });
 
   return (
     <>
@@ -63,6 +89,8 @@ export function AccountingFeaturePurchaseAdd(
               <DividerContainer>
                 <PurchaseDetails />
                 <AddToInventory />
+
+                <PurchaseTable />
 
                 <Box
                   display="grid"
@@ -169,7 +197,6 @@ export function AccountingFeaturePurchaseAdd(
                     </GridItem>
                   </FieldCardComponents>
                 </Box>
-
                 <TDS />
               </DividerContainer>
             </Box>

@@ -27,6 +27,8 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { ExpensesTable } from '../components';
+
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseAddExpensesProps {}
 
@@ -34,7 +36,19 @@ export function AccountingFeaturePurchaseAddExpenses(
   props: AccountingFeaturePurchaseAddExpensesProps
 ) {
   const { t } = useTranslation();
-  const methods = useForm();
+
+  const methods = useForm({
+    defaultValues: {
+      data: [
+        {
+          product_id: 'm003',
+          tax: 45,
+          amount: 23,
+        },
+      ],
+      tds: '',
+    },
+  });
 
   const { watch } = methods;
 
@@ -108,6 +122,8 @@ export function AccountingFeaturePurchaseAddExpenses(
                     />
                   </InputGroupContainer>
                 </BoxContainer>
+
+                <ExpensesTable />
 
                 <Box
                   display="grid"
@@ -214,7 +230,6 @@ export function AccountingFeaturePurchaseAddExpenses(
                     </GridItem>
                   </FieldCardComponents>
                 </Box>
-
                 <BoxContainer>
                   <Box display="flex" justifyContent="space-between">
                     <Text fontSize="s3" fontWeight="500" color="gray.700">

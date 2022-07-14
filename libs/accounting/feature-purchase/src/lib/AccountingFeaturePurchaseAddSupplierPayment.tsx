@@ -8,7 +8,6 @@ import {
   DividerContainer,
   InputGroupContainer,
 } from '@coop/accounting/ui-components';
-import { FieldCardComponents } from '@coop/shared/components';
 import {
   FormInput,
   FormSelect,
@@ -20,12 +19,13 @@ import {
   Button,
   Container,
   FormFooter,
-  GridItem,
   Icon,
   IconButton,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+
+import { SupplierPaymentTable } from '../components';
 
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseAddSupplierPaymentProps {}
@@ -34,7 +34,19 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
   props: AccountingFeaturePurchaseAddSupplierPaymentProps
 ) {
   const { t } = useTranslation();
-  const methods = useForm();
+
+  const methods = useForm({
+    defaultValues: {
+      data: [
+        {
+          amount: 45,
+          left_to_allocate: 45,
+          this_allocation: 23,
+        },
+      ],
+      tds: '',
+    },
+  });
 
   const { watch } = methods;
 
@@ -196,6 +208,8 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
                     </InputGroupContainer>
                   )}
                 </BoxContainer>
+
+                <SupplierPaymentTable />
 
                 <BoxContainer>
                   <FormTextArea

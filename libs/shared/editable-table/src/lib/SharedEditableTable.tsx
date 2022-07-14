@@ -560,6 +560,9 @@ const EditableTableRow = <
 const MemoEditableTableRow = React.memo(
   EditableTableRow,
   (prevProps, nextProps) => {
-    return JSON.stringify(prevProps.data) === JSON.stringify(nextProps.data);
+    return (
+      JSON.stringify(prevProps.data) === JSON.stringify(nextProps.data) &&
+      JSON.stringify(prevProps.columns) === JSON.stringify(nextProps.columns)
+    );
   }
 ) as typeof EditableTableRow;
