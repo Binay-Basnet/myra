@@ -11,9 +11,20 @@ type SalesTable = {
   amount: number;
 };
 
-const serviceName = [
-  { label: 'MI 001 - Lenovo Laptop', value: 'mi001' },
-  { label: 'MI 002 - Lenovo Laptop', value: 'mi002' },
+const service_name = [
+  { label: 'Lenovo Laptop', value: 'mi001' },
+  { label: 'Alienware Laptop', value: 'mi002' },
+];
+
+const ledger_name = [
+  {
+    label: 'Purchase Ledger',
+    value: 'purchaseLedger',
+  },
+  {
+    label: 'Sales Ledger',
+    value: 'salesLedger',
+  },
 ];
 
 export const AccountServicesCharge = () => {
@@ -30,39 +41,30 @@ export const AccountServicesCharge = () => {
         <TopText>Account Service Charge</TopText>
         <SubText>Add different service charges.</SubText>
       </TextBoxContainer>
-      <Box p="s16" bg="white" minH="100vh">
+      <Box>
         <FormEditableTable<SalesTable>
           name="data"
-          debug={true}
           columns={[
             {
               accessor: 'serviceName',
               header: 'Service Name',
-              // cellWidth: 'auto',
               fieldType: 'select',
-              searchOptions: serviceName,
+              cellWidth: 'auto',
+
+              selectOptions: service_name,
             },
             {
               accessor: 'ledgerName',
               header: 'Ledger Name',
-              // cellWidth: 'lg',
               fieldType: 'select',
-              selectOptions: [
-                {
-                  label: 'Purchase Ledger',
-                  value: 'purchaseLedger',
-                },
-                {
-                  label: 'Sales Ledger',
-                  value: 'salesLedger',
-                },
-              ],
+              cellWidth: 'auto',
+              selectOptions: ledger_name,
             },
             {
               accessor: 'amount',
               header: 'Amount',
+              cellWidth: 'auto',
               isNumeric: true,
-              // accessorFn: (row) => row.amount,
             },
           ]}
         />
