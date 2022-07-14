@@ -62,7 +62,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <ChakraInput
             ref={ref}
             h="100%"
-            _placeholder={{ px: 's12' }}
             isInvalid={!!errorText}
             placeholder={String(placeholder ?? '')}
             {...rest}
