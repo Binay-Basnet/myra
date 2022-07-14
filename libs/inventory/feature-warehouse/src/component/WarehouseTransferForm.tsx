@@ -163,7 +163,7 @@ export const WarehouseTransferForm = () => {
               columns={[
                 {
                   accessor: 'product_id',
-                  header: 'Product',
+                  header: t['warehouseTransferProduct'],
                   cellWidth: 'auto',
                   fieldType: 'search',
                   searchOptions: search_options,
@@ -171,12 +171,12 @@ export const WarehouseTransferForm = () => {
 
                 {
                   accessor: 'quantity',
-                  header: 'Quantity',
+                  header: t['warehouseTransfertableQuantity'],
                   isNumeric: true,
                 },
                 {
                   accessor: 'product_description',
-                  header: 'Description',
+                  header: t['warehouseTransfertableDescription'],
                   hidden: true,
                   colSpan: 3,
 
