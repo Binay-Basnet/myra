@@ -48,7 +48,7 @@ const ShareReturn = () => {
   const { t } = useTranslation();
   const { mutate } = useAddShareReturnMutation();
   // TODO! CHANGE THIS ANY
-  const methods = useForm<any>();
+  const methods = useForm();
   const { getValues, watch } = methods;
 
   const accountList = [
@@ -69,42 +69,42 @@ const ShareReturn = () => {
   // });
   // const data = memberData?.members?.individual?.get?.data?.member;
 
-  const submitForm = () => {
-    const {
-      memberId,
-      selectAllShares,
-      noOfReturnedShares,
-      withdrawAmount,
-      totalAmount,
-      // remainingShare,
-      // remainingShareValue,
-      bankId,
-      voucherNumber,
-      accountId,
-      paymentMode,
-    } = getValues();
+  // const submitForm = () => {
+  //   const {
+  //     memberId,
+  //     selectAllShares,
+  //     noOfReturnedShares,
+  //     withdrawAmount,
+  //     totalAmount,
+  //     // remainingShare,
+  //     // remainingShareValue,
+  //     bankId,
+  //     voucherNumber,
+  //     accountId,
+  //     paymentMode,
+  //   } = getValues();
 
-    const formData = {
-      memberId,
-      selectAllShares,
-      noOfReturnedShares: Number(noOfReturnedShares),
-      withdrawAmount,
-      extraFee: [
-        { name: 'Administration fee', value: Number(adminFees) },
-        { name: 'Printing fee', value: Number(printingFees) },
-        { name: 'Others', value: 10 },
-      ],
-      totalAmount,
-      remainingShare: 29,
-      remainingShareValue: 200,
-      paymentMode,
-      bankId,
-      voucherNumber,
-      accountId,
-    };
-    console.log(formData);
-    mutate({ id: '12', data: formData });
-  };
+  //   const formData = {
+  //     memberId,
+  //     selectAllShares,
+  //     noOfReturnedShares: Number(noOfReturnedShares),
+  //     withdrawAmount,
+  //     extraFee: [
+  //       { name: 'Administration fee', value: Number(adminFees) },
+  //       { name: 'Printing fee', value: Number(printingFees) },
+  //       { name: 'Others', value: 10 },
+  //     ],
+  //     totalAmount,
+  //     remainingShare: 29,
+  //     remainingShareValue: 200,
+  //     paymentMode,
+  //     bankId,
+  //     voucherNumber,
+  //     accountId,
+  //   };
+  //   console.log(formData);
+  //   mutate({ id: '12', data: formData });
+  // };
 
   return (
     <>

@@ -6,7 +6,7 @@ import { FormEmailInput, FormInput, FormTextArea } from '@coop/shared/form';
 import { InputProps, TextAreaInputProps } from '@coop/shared/ui';
 
 interface FormInputTypeProps<T> extends InputProps {
-  formType: FIELD_TYPE;
+  formType?: FIELD_TYPE;
   name: Path<T>;
 }
 

@@ -3,6 +3,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
+import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
@@ -12,6 +13,7 @@ import {
 import {
   Kym_Field_Custom_Id,
   Kym_Field_Custom_Id as KYMOptionEnum,
+  Kym_Option_Field_Type,
   KymIndMemberInput,
   KymOption,
   useGetIndividualKymOptionsQuery,
@@ -45,10 +47,9 @@ const FamilyMemberInput = ({
       value: option.id,
     });
   }, []);
-
   return (
-    <FormInput
-      type="text"
+    <FormInputWithType
+      formType={option?.fieldType}
       name={`familyDetails.${fieldIndex}.options.${optionIndex}.value`}
       label={option?.name?.local}
       placeholder={option?.name?.local}
@@ -89,6 +90,14 @@ const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
               optionIndex={optionIndex}
               option={option}
             />
+            //  <FormInputWithType
+            //               formType={option?.fieldType}
+            //               id="identificationFields"
+            //               type={option?.fieldType}
+            //               name={`identification.${fieldIndex}.options.${optionIndex}.value`}
+            //               label={String(option?.name?.local)}
+            //               placeholder={String(option?.name?.local)}
+            //             />
           )
         )}
       </InputGroupContainer>

@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { NewSalesForm } from '@coop/accounting/sales';
-import { AccountingLayout, SalesLayout } from '@coop/accounting/ui-layouts';
+import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
 const AccountingPurchaseList = () => {

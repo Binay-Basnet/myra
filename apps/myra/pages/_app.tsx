@@ -11,7 +11,7 @@ import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 import { Login } from '@coop/myra/components';
 import { store, theme } from '@coop/shared/utils';
 
-const { ToastContainer, toast } = createStandaloneToast();
+const { ToastContainer } = createStandaloneToast();
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
