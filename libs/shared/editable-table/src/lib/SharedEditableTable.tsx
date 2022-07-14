@@ -17,6 +17,8 @@ import {
   HStack,
   Icon,
   Input,
+  InputGroup,
+  InputRightAddon,
   Text,
   Textarea,
 } from '@chakra-ui/react';
@@ -65,7 +67,6 @@ export interface EditableTableProps<
   onChange?: (updatedData: T[]) => void;
 
   debug?: boolean;
-
 }
 
 const cellWidthObj = {
@@ -325,6 +326,17 @@ const EditableTableRow = <
             return (
               <Fragment key={index}>
                 <Editable
+                  _after={
+                    column.fieldType === 'percentage'
+                      ? {
+                          content: "'%'",
+                          color: 'primary.500',
+                          position: 'absolute',
+                          fontWeight: '500',
+                          px: 's8',
+                        }
+                      : {}
+                  }
                   isDisabled={
                     column.fieldType === 'search' || !!column?.accessorFn
                   }
@@ -363,6 +375,7 @@ const EditableTableRow = <
                   {column.fieldType === 'select' ? null : (
                     <EditablePreview
                       width="100%"
+                      mr={column.fieldType === 'percentage' ? 's24' : '0'}
                       cursor={
                         column.fieldType === 'search' || !!column?.accessorFn
                           ? 'not-allowed'
@@ -402,6 +415,7 @@ const EditableTableRow = <
                     </Box>
                   ) : (
                     <Input
+                      mt="-1px"
                       py="0"
                       h="100%"
                       type={column.isNumeric ? 'number' : 'text'}

@@ -68,6 +68,7 @@ const Temp = () => {
       <Box p="s16" bg="white" minH="100vh">
         <FormEditableTable<SalesTable>
           name="data"
+          debug={true}
           columns={[
             {
               accessor: 'product_id',
@@ -101,6 +102,7 @@ const Temp = () => {
               accessor: 'rate',
               header: 'Rate',
               isNumeric: true,
+              fieldType: 'percentage',
             },
             {
               accessor: 'tax',
