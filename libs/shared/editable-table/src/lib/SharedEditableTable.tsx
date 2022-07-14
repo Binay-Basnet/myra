@@ -23,7 +23,7 @@ import {
 import { Select } from 'chakra-react-select';
 import { uniqueId } from 'lodash';
 
-import { Grid } from '@coop/shared/ui';
+import { Grid, GridItem } from '@coop/shared/ui';
 
 import {
   chakraDefaultStyles,
@@ -53,6 +53,7 @@ type Column<T extends RecordWithId & Record<string, string | number>> = {
   isNumeric?: boolean;
 
   cellWidth?: 'auto' | 'lg' | 'md' | 'sm';
+  colSpan?: number;
 };
 
 export interface EditableTableProps<
@@ -493,7 +494,7 @@ const EditableTableRow = <
           {columns
             .filter((column) => column.hidden)
             .map((column, index) => (
-              <Fragment key={index}>
+              <GridItem colSpan={column.colSpan ?? 1} key={index}>
                 <Flex flexDir="column" gap="s4">
                   <Text
                     fontSize="s3"
@@ -548,7 +549,7 @@ const EditableTableRow = <
                     />
                   )}
                 </Flex>
-              </Fragment>
+              </GridItem>
             ))}
         </Grid>
       </Collapse>

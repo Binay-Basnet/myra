@@ -2,7 +2,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Box } from '@chakra-ui/react';
 
-import { EditableTable } from '@coop/shared/editable-table';
 import { FormEditableTable } from '@coop/shared/form';
 
 type SalesTable = {
@@ -122,17 +121,13 @@ const Temp = () => {
               hidden: true,
 
               fieldType: 'textarea',
+              colSpan: 2,
             },
 
             {
               accessor: 'warehouse_partition',
               hidden: true,
               header: 'Warehouse Partition',
-            },
-            {
-              accessor: 'sales_ledger',
-              hidden: true,
-              header: 'Sales Ledger',
             },
           ]}
         />
