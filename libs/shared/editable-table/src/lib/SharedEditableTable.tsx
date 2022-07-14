@@ -17,8 +17,6 @@ import {
   HStack,
   Icon,
   Input,
-  InputGroup,
-  InputRightAddon,
   Text,
   Textarea,
 } from '@chakra-ui/react';
@@ -351,7 +349,9 @@ const EditableTableRow = <
                   alignItems="center"
                   justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
                   fontSize="r1"
-                  borderLeft="1px"
+                  borderLeft={
+                    !columns.some((column) => column.hidden) ? 0 : '1px'
+                  }
                   borderLeftColor="border.layout"
                   flexGrow={column.cellWidth === 'auto' ? 1 : 0}
                   flexBasis={
