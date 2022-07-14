@@ -26,15 +26,11 @@ import {
 /* eslint-disable-next-line */
 interface CbsAccountOpenFormProps {}
 type CustomerPaymentTable = {
-  product_id: string;
-  quantity: number;
-  account_type?: string;
-  rate: number;
-  tax: number;
-  total_amount: number;
-  product_description?: string;
-  warehouse_partition?: number;
-  sales_ledger?: string;
+  payment_type: string;
+  date: string;
+  amount: number;
+  left_to_allocate: number;
+  this_allocation: number;
 };
 
 export function CustomerPaymentForm(props: CbsAccountOpenFormProps) {
@@ -74,8 +70,42 @@ export function CustomerPaymentForm(props: CbsAccountOpenFormProps) {
                 {/* <SalesBox /> */}
                 <TDS />
                 {/* -------------------- TODO -----------ADD  TABLE HERE*/}
+                <FormEditableTable<CustomerPaymentTable>
+                  name="data"
+                  columns={[
+                    {
+                      accessor: 'payment_type',
+                      header: 'Type',
+                      cellWidth: 'auto',
+                      fieldType: 'text',
+                      // searchOptions: search_options,
+                    },
 
-                <Box></Box>
+                    {
+                      accessor: 'date',
+                      header: 'Date',
+                      // isNumeric: true,
+                      fieldType: 'date',
+                    },
+
+                    {
+                      accessor: 'amount',
+                      header: 'Amount',
+                      isNumeric: true,
+                    },
+                    {
+                      accessor: 'left_to_allocate',
+                      header: 'Left to Allocate',
+                      isNumeric: true,
+                    },
+                    {
+                      accessor: 'this_allocation',
+                      header: 'This Allocation',
+                      isNumeric: true,
+                    },
+                  ]}
+                />
+
                 <CustomerPaymentBox />
               </DividerContainer>
             </Box>
