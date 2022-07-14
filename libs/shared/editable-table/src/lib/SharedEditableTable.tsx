@@ -418,7 +418,7 @@ const EditableTableRow = <
                     </Box>
                   ) : (
                     <Input
-                      mt="-1px"
+                      //  mt="-1px"
                       py="0"
                       h="100%"
                       type={column.isNumeric ? 'number' : 'text'}
