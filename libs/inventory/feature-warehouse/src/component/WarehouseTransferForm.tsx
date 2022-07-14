@@ -185,7 +185,7 @@ export const WarehouseTransferForm = () => {
               ]}
             />
           </Box>
-
+          <Divider />
           <Box flexDirection="column" display="flex" gap="s16">
             <FormTextArea
               name="description"
