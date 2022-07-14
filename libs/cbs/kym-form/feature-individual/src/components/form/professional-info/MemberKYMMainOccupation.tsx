@@ -4,6 +4,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 import isEmpty from 'lodash/isEmpty';
 
+import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxGroupContainer,
   GroupContainer,
@@ -52,11 +53,11 @@ export const MainOccupationInput = ({
   }, []);
 
   return (
-    <FormInput
-      type="text"
+    <FormInputWithType
+      formType={option?.fieldType}
       name={`mainOccupation.${fieldIndex}.options.${optionIndex}.value`}
-      label={option?.name?.local}
-      placeholder={option?.name?.local}
+      label={String(option?.name?.local)}
+      placeholder={String(option?.name?.local)}
     />
   );
 };

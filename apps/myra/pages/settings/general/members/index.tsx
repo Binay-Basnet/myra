@@ -13,18 +13,18 @@ import { useTranslation } from '@coop/shared/utils';
 const Members = () => {
   const { t } = useTranslation();
 
-  const checkBox = [
-    t['settingsIndividual'],
-    t['settingsInstitutional'],
-    t['settingsCooperative'],
-    t['settingsCorporativeUnion'],
-  ];
+  // const checkBox = [
+  //   t['settingsIndividual'],
+  //   t['settingsInstitutional'],
+  //   t['settingsCooperative'],
+  //   t['settingsCorporativeUnion'],
+  // ];
 
-  const riskArray = [
-    t['settingsGeneralRisk'],
-    t['settingsMediumRisk'],
-    t['settingsHighRisk'],
-  ];
+  // const riskArray = [
+  //   t['settingsGeneralRisk'],
+  //   t['settingsMediumRisk'],
+  //   t['settingsHighRisk'],
+  // ];
   return (
     <Box display={'flex'} flexDirection="row" h="fit-content">
       <Box flex={1} p="s16">

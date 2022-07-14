@@ -7,6 +7,7 @@ import { IoLocationSharp, IoSearchSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { CloseIcon } from '@chakra-ui/icons';
 
+import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   ContainerWithDivider,
   GroupContainer,
@@ -100,10 +101,11 @@ export const KYMBasiccoopDetails = () => {
                   });
 
                   return (
-                    <FormInput
+                    <FormInputWithType
+                      formType={option?.fieldType}
                       name={`otherMembershipDetails.options.${optionIndex}.value`}
-                      label={option.name.local}
-                      placeholder={option.name.local}
+                      label={option?.name?.local}
+                      placeholder={option?.name?.local}
                     />
                   );
                 }

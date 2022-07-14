@@ -3,6 +3,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
+import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
@@ -32,11 +33,11 @@ const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
   }, []);
 
   return (
-    <FormInput
-      type="text"
+    <FormInputWithType
+      formType={option?.fieldType}
       name={`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`}
-      label={option.name.local}
-      placeholder={option.name.local}
+      label={String(option?.name?.local)}
+      placeholder={String(option?.name?.local)}
     />
   );
 };
