@@ -17,15 +17,13 @@ import {
   HStack,
   Icon,
   Input,
-  InputGroup,
-  InputRightAddon,
   Text,
   Textarea,
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 import { uniqueId } from 'lodash';
 
-import { Grid } from '@coop/shared/ui';
+import { Grid, GridItem } from '@coop/shared/ui';
 
 import {
   chakraDefaultStyles,
@@ -49,12 +47,14 @@ type Column<T extends RecordWithId & Record<string, string | number>> = {
     | 'percentage'
     | 'textarea'
     | 'search'
+    | 'date'
     | 'select';
   selectOptions?: { label: string; value: string }[];
   searchOptions?: { label: string; value: string }[];
   isNumeric?: boolean;
 
   cellWidth?: 'auto' | 'lg' | 'md' | 'sm';
+  colSpan?: number;
 };
 
 export interface EditableTableProps<
@@ -116,8 +116,21 @@ export function EditableTable<
           bg="gray.700"
           color="white"
         >
-          {columns.some((column) => column.hidden) && (
+          {columns.some((column) => column.hidden) ? (
             <Box w="s36" flexShrink={0} />
+          ) : (
+            <Box
+              w="s36"
+              flexShrink={0}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              fontWeight="600"
+              fontSize="r1"
+              px="s16"
+            >
+              S.N.
+            </Box>
           )}
 
           {columns
@@ -152,6 +165,7 @@ export function EditableTable<
                 columns={columns}
                 setCurrentData={setCurrentData}
                 data={data}
+                index={index}
               />
             </Fragment>
           ))}
@@ -249,6 +263,7 @@ interface IEditableTableRowProps<
   data: T;
   setCurrentData: Dispatch<SetStateAction<T[]>>;
   canDeleteRow?: boolean;
+  index: number;
 }
 
 const EditableTableRow = <
@@ -256,6 +271,7 @@ const EditableTableRow = <
 >({
   columns,
   data,
+  index,
   setCurrentData,
   canDeleteRow,
 }: IEditableTableRowProps<T>) => {
@@ -291,7 +307,7 @@ const EditableTableRow = <
         borderBottom={isExpanded ? '0' : '1px'}
         borderBottomColor="border.layout"
       >
-        {columns.some((column) => column.hidden) && (
+        {columns.some((column) => column.hidden) ? (
           <Box
             as="button"
             type="button"
@@ -318,6 +334,23 @@ const EditableTableRow = <
               transition="transform 0.2s ease"
               transform={isExpanded ? 'rotate(90deg)' : 'rotate(0deg)'}
             />
+          </Box>
+        ) : (
+          <Box
+            w="s36"
+            borderRadius="0"
+            minH="s36"
+            flexShrink={0}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            color="gray.600"
+            cursor="pointer"
+            _hover={{ bg: 'gray.100' }}
+            _focus={{ bg: 'background.500' }}
+            _focusVisible={{ outline: 'none' }}
+          >
+            {index + 1}
           </Box>
         )}
 
@@ -493,7 +526,7 @@ const EditableTableRow = <
           {columns
             .filter((column) => column.hidden)
             .map((column, index) => (
-              <Fragment key={index}>
+              <GridItem colSpan={column.colSpan ?? 1} key={index}>
                 <Flex flexDir="column" gap="s4">
                   <Text
                     fontSize="s3"
@@ -548,7 +581,7 @@ const EditableTableRow = <
                     />
                   )}
                 </Flex>
-              </Fragment>
+              </GridItem>
             ))}
         </Grid>
       </Collapse>

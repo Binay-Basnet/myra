@@ -7,11 +7,21 @@ import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+import { Snipping } from '@raralabs/web-feedback';
 
 import { Login } from '@coop/myra/components';
 import { store, theme } from '@coop/shared/utils';
 
-const { ToastContainer, toast } = createStandaloneToast();
+import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
+
+const { ToastContainer } = createStandaloneToast();
+
+const snap = new Snipping({
+  buttonLabel: 'Send Feedback',
+  initialMarkMode: 'mark',
+  fileName: 'feedbackScreenshot.png',
+  /** other configs **/
+});
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -57,6 +67,13 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
 
     typeof window !== 'undefined' &&
       setIsLoggedIn(Boolean(isLoggedIn || false));
+  }, []);
+
+  useEffect(() => {
+    snap.init((data) => {
+      const { image, base64Image } = data;
+      console.log(image);
+    });
   }, []);
 
   const getLayout = Component.getLayout || ((page) => page);

@@ -1,14 +1,36 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
+import {
+  FormEditableTable,
+  FormInput,
+  FormSelect,
+  FormTextArea,
+} from '@coop/shared/form';
 import { Box, Divider, Grid, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const WarehouseTransferForm = () => {
   const { t } = useTranslation();
   const methods = useForm({});
+  type WareHouseTransferTable = {
+    product_id: string;
+    quantity: number;
+    product_description: string;
+  };
 
+  const search_options = [
+    { label: 'MI 001 - Lenovo Laptop', value: 'mi001' },
+    { label: 'MI 002 - Lenovo Laptop', value: 'mi002' },
+    { label: 'MI 003 - Lenovo Laptop', value: 'mi003' },
+    { label: 'MI 004 - Lenovo Laptop', value: 'mi004' },
+    { label: 'MI 005 - Lenovo Laptop', value: 'mi005' },
+    { label: 'MI 006 - Lenovo Laptop', value: 'mi006' },
+    { label: 'MI 007 - Lenovo Laptop', value: 'mi007' },
+    { label: 'MI 008 - Lenovo Laptop', value: 'mi008' },
+    { label: 'MI 009 - Lenovo Laptop', value: 'mi009' },
+    { label: 'MI 0010 - Lenovo Laptop', value: 'mi0010' },
+  ];
   return (
     <FormProvider {...methods}>
       <form>
@@ -134,6 +156,34 @@ export const WarehouseTransferForm = () => {
           </InputGroupContainer>
 
           <Divider />
+
+          <Box>
+            <FormEditableTable<WareHouseTransferTable>
+              name="data"
+              columns={[
+                {
+                  accessor: 'product_id',
+                  header: 'Product',
+                  cellWidth: 'auto',
+                  fieldType: 'select',
+                  searchOptions: search_options,
+                },
+
+                {
+                  accessor: 'quantity',
+                  header: 'Quantity',
+                  isNumeric: true,
+                },
+                {
+                  accessor: 'product_description',
+                  header: 'Product Description',
+                  hidden: true,
+
+                  fieldType: 'textarea',
+                },
+              ]}
+            />
+          </Box>
 
           <Box flexDirection="column" display="flex" gap="s16">
             <FormTextArea
