@@ -294,6 +294,7 @@ const EditableTableRow = <
         {columns.some((column) => column.hidden) && (
           <Box
             as="button"
+            type="button"
             w="s36"
             borderRadius="0"
             minH="s36"
@@ -307,7 +308,9 @@ const EditableTableRow = <
             _hover={{ bg: 'gray.100' }}
             _focus={{ bg: 'background.500' }}
             _focusVisible={{ outline: 'none' }}
-            onClick={() => setIsExpanded((prev) => !prev)}
+            onClick={() => {
+              setIsExpanded((prev) => !prev);
+            }}
           >
             <Icon
               as={BsChevronRight}

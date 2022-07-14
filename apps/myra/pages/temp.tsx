@@ -1,9 +1,9 @@
 // USAGE FOR EDITABLE TABLE, WILL MOVE THIS LATER
+import { FormProvider, useForm } from 'react-hook-form';
 import { Box } from '@chakra-ui/react';
 
 import { EditableTable } from '@coop/shared/editable-table';
 import { FormEditableTable } from '@coop/shared/form';
-import { FormProvider, useForm } from 'react-hook-form';
 
 type SalesTable = {
   product_id: string;
@@ -77,22 +77,22 @@ const Temp = () => {
               fieldType: 'search',
               searchOptions: search_options,
             },
-            {
-              accessor: 'account_type',
-              header: 'Account Type',
-              cellWidth: 'lg',
-              fieldType: 'select',
-              selectOptions: [
-                {
-                  label: 'SAVINGS',
-                  value: 'savings',
-                },
-                {
-                  label: 'CURRENT',
-                  value: 'current',
-                },
-              ],
-            },
+            // {
+            //   accessor: 'account_type',
+            //   header: 'Account Type',
+            //   cellWidth: 'lg',
+            //   fieldType: 'select',
+            //   selectOptions: [
+            //     {
+            //       label: 'SAVINGS',
+            //       value: 'savings',
+            //     },
+            //     {
+            //       label: 'CURRENT',
+            //       value: 'current',
+            //     },
+            //   ],
+            // },
             {
               accessor: 'quantity',
               header: 'Quantity',
