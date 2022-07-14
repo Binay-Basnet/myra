@@ -4,6 +4,7 @@ import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
 
 import { DividerContainer } from '@coop/accounting/ui-components';
+import { FormEditableTable } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -24,6 +25,17 @@ import {
 
 /* eslint-disable-next-line */
 interface CbsAccountOpenFormProps {}
+type CustomerPaymentTable = {
+  product_id: string;
+  quantity: number;
+  account_type?: string;
+  rate: number;
+  tax: number;
+  total_amount: number;
+  product_description?: string;
+  warehouse_partition?: number;
+  sales_ledger?: string;
+};
 
 export function CustomerPaymentForm(props: CbsAccountOpenFormProps) {
   const { t } = useTranslation();
@@ -62,6 +74,7 @@ export function CustomerPaymentForm(props: CbsAccountOpenFormProps) {
                 {/* <SalesBox /> */}
                 <TDS />
                 {/* -------------------- TODO -----------ADD  TABLE HERE*/}
+
                 <Box></Box>
                 <CustomerPaymentBox />
               </DividerContainer>
