@@ -35,7 +35,7 @@ interface RecordWithId {
   _id?: number;
 }
 
-type Column<T extends RecordWithId & Record<string, string | number>> = {
+export type Column<T extends RecordWithId & Record<string, string | number>> = {
   id?: string;
   header?: string;
   accessor: keyof T;
