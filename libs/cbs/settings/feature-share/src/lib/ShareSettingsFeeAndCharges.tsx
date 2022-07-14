@@ -1,11 +1,21 @@
+import { FormProvider, useForm } from 'react-hook-form';
+
 import { FormEditableTable } from '@coop/shared/form';
-import { Box, Grid, GridItem, Input } from '@coop/shared/ui';
+import { Box, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
 
 type ShareChargeTable = {
+  type: string;
+  minShareQuantity: string;
+  maxShareQuantity: string;
+  charge: number;
+};
+
+type OtherChargeTable = {
+  name: string;
   type: string;
   minShareQuantity: string;
   maxShareQuantity: string;
@@ -25,91 +35,105 @@ const type = [
 
 export const ShareSettingsFeeAndCharges = () => {
   const { t } = useTranslation();
+  const methods = useForm({});
   return (
-    <>
-      <ShareSettingsHeader title={t['settingsShareFeeAndCharges']} />
-      <ShareSettingsCard
-        title={t['shareCertificateCharge']}
-        subtitle={t['shareCertificateChargeSubtitle']}
-      >
-        <Box>
-          {/* <FormEditableTable<ShareChargeTable>
-            name="data"
-            columns={[
-              {
-                accessor: 'type',
-                header: 'Type',
-                fieldType: 'select',
-                selectOptions: type,
-              },
-              {
-                accessor: 'minShareQuantity',
-                header: 'Minimum Share Quantity',
-              },
-              {
-                accessor: 'maxShareQuantity',
-                header: 'Maximum Share Quantity',
-              },
-              {
-                accessor: 'charge',
-                header: 'Charge',
-                isNumeric: true,
-              },
-            ]}
-          /> */}
-        </Box>
-      </ShareSettingsCard>
-      <ShareSettingsCard
-        title={t['shareCertificateCharge']}
-        subtitle={t['shareCertificateChargeSubtitle']}
-      >
-        <Box display="flex" flexDir="column" gap="s16">
-          <Grid gap="s16" templateColumns="repeat(3, 1fr)">
-            <GridItem>
-              <Input placeholder="1000" label={t['shareMinShareQuantity']} />
-            </GridItem>
-            <GridItem>
-              <Input placeholder="1000" label={t['shareMaxShareQuantity']} />
-            </GridItem>
-            <GridItem>
-              <Input placeholder="1000" label={t['shareType']} />
-            </GridItem>
-            <GridItem>
-              <Input placeholder="1000" label={t['shareCharge']} />
-            </GridItem>
-          </Grid>
+    <FormProvider {...methods}>
+      <form>
+        <Box display="flex" flexDirection="column" gap="s32">
+          <ShareSettingsHeader title={t['settingsShareFeeAndCharges']} />
+          <Box display="flex" flexDirection="column" gap="s48">
+            <Box display="flex" flexDirection="column" gap="s10">
+              <Box display="flex" flexDirection="column" gap="s4">
+                <Text
+                  fontSize="r1"
+                  fontWeight="SemiBold"
+                  color="neutralColorLight.Gray-80"
+                >
+                  {t['shareCertificateCharge']}
+                </Text>
+                <Text
+                  fontSize="s3"
+                  fontWeight="Medium"
+                  color="neutralColorLight.Gray-60"
+                >
+                  {t['shareCertificateChargeSubtitle']}
+                </Text>
+              </Box>
+              <FormEditableTable<ShareChargeTable>
+                name="data"
+                columns={[
+                  {
+                    accessor: 'type',
+                    header: 'Type',
+                    fieldType: 'select',
+                    selectOptions: type,
+                  },
+                  {
+                    accessor: 'minShareQuantity',
+                    header: 'Minimum Share Quantity',
+                  },
+                  {
+                    accessor: 'maxShareQuantity',
+                    header: 'Maximum Share Quantity',
+                  },
+                  {
+                    accessor: 'charge',
+                    header: 'Charge',
+                    isNumeric: true,
+                  },
+                ]}
+              />
+            </Box>
 
-          <Grid gap="s16" templateColumns="repeat(3, 1fr)">
-            <GridItem>
-              <Input placeholder="1000" label={t['shareMinShareQuantity']} />
-            </GridItem>
-            <GridItem>
-              <Input placeholder="1000" label={t['shareMaxShareQuantity']} />
-            </GridItem>
-            <GridItem>
-              <Input placeholder="1000" label={t['shareType']} />
-            </GridItem>
-            <GridItem>
-              <Input placeholder="1000" label={t['shareCharge']} />
-            </GridItem>
-          </Grid>
-
-          <Grid gap="s16" templateColumns="repeat(3, 1fr)">
-            <GridItem>
-              <Input placeholder="1000" label={t['shareMinShareQuantity']} />
-            </GridItem>
-            <GridItem>
-              <Input placeholder="1000" label={t['shareMaxShareQuantity']} />
-            </GridItem>
-            <GridItem>
-              <Input placeholder="1000" label={t['shareType']} />
-            </GridItem>
-            <GridItem>
-              <Input placeholder="1000" label={t['shareCharge']} />
-            </GridItem>
-          </Grid>
+            <Box display="flex" flexDirection="column" gap="s10">
+              <Box display="flex" flexDirection="column" gap="s4">
+                <Text
+                  fontSize="r1"
+                  fontWeight="SemiBold"
+                  color="neutralColorLight.Gray-80"
+                >
+                  {t['shareOtherCharge']}
+                </Text>
+                <Text
+                  fontSize="s3"
+                  fontWeight="Medium"
+                  color="neutralColorLight.Gray-60"
+                >
+                  {t['shareOtherBasicCharge']}
+                </Text>
+              </Box>
+              <FormEditableTable<OtherChargeTable>
+                name="data"
+                columns={[
+                  {
+                    accessor: 'name',
+                    header: 'Name',
+                  },
+                  {
+                    accessor: 'type',
+                    header: 'Type',
+                    fieldType: 'select',
+                    selectOptions: type,
+                  },
+                  {
+                    accessor: 'minShareQuantity',
+                    header: 'Minimum Share Quantity',
+                  },
+                  {
+                    accessor: 'maxShareQuantity',
+                    header: 'Maximum Share Quantity',
+                  },
+                  {
+                    accessor: 'charge',
+                    header: 'Charge',
+                    isNumeric: true,
+                  },
+                ]}
+              />
+            </Box>
+          </Box>
         </Box>
-      </ShareSettingsCard>
-    </>
+      </form>
+    </FormProvider>
   );
 };

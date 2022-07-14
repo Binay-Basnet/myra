@@ -2289,6 +2289,9 @@ const ne: Record<string, string> = {
   salesObjTabTasks: 'Tasks',
   salesObjTabDocs: 'Documents',
   salesObjTabActivity: 'Activity',
+
+  shareOtherCharge: 'Other Charge',
+  shareOtherBasicCharge: 'Basic Charge for share issue and return',
 };
 
 export default ne;
