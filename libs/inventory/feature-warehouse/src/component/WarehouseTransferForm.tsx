@@ -165,7 +165,7 @@ export const WarehouseTransferForm = () => {
                   accessor: 'product_id',
                   header: 'Product',
                   cellWidth: 'auto',
-                  fieldType: 'select',
+                  fieldType: 'search',
                   searchOptions: search_options,
                 },
 
@@ -176,8 +176,9 @@ export const WarehouseTransferForm = () => {
                 },
                 {
                   accessor: 'product_description',
-                  header: 'Product Description',
+                  header: 'Description',
                   hidden: true,
+                  colSpan: 3,
 
                   fieldType: 'textarea',
                 },
