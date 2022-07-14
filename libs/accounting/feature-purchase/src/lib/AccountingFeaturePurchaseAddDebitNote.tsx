@@ -65,6 +65,9 @@ export function AccountingFeaturePurchaseAddDebitNote(
           background="neutralColorLight.Gray-0"
           borderBottom="1px solid #E6E6E6"
           borderTopRadius={5}
+          position="sticky"
+          top="110px"
+          zIndex={8}
         >
           <Text
             fontSize="r2"
