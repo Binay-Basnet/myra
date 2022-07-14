@@ -4,6 +4,7 @@ import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
 
 import { DividerContainer } from '@coop/accounting/ui-components';
+import { FormEditableTable } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -24,6 +25,13 @@ import {
 
 /* eslint-disable-next-line */
 interface CbsAccountOpenFormProps {}
+type CustomerPaymentTable = {
+  payment_type: string;
+  date: string;
+  amount: number;
+  left_to_allocate: number;
+  this_allocation: number;
+};
 
 export function CustomerPaymentForm(props: CbsAccountOpenFormProps) {
   const { t } = useTranslation();
@@ -62,7 +70,42 @@ export function CustomerPaymentForm(props: CbsAccountOpenFormProps) {
                 {/* <SalesBox /> */}
                 <TDS />
                 {/* -------------------- TODO -----------ADD  TABLE HERE*/}
-                <Box></Box>
+                <FormEditableTable<CustomerPaymentTable>
+                  name="data"
+                  columns={[
+                    {
+                      accessor: 'payment_type',
+                      header: 'Type',
+                      cellWidth: 'auto',
+                      fieldType: 'text',
+                      // searchOptions: search_options,
+                    },
+
+                    {
+                      accessor: 'date',
+                      header: 'Date',
+                      // isNumeric: true,
+                      fieldType: 'date',
+                    },
+
+                    {
+                      accessor: 'amount',
+                      header: 'Amount',
+                      isNumeric: true,
+                    },
+                    {
+                      accessor: 'left_to_allocate',
+                      header: 'Left to Allocate',
+                      isNumeric: true,
+                    },
+                    {
+                      accessor: 'this_allocation',
+                      header: 'This Allocation',
+                      isNumeric: true,
+                    },
+                  ]}
+                />
+
                 <CustomerPaymentBox />
               </DividerContainer>
             </Box>
