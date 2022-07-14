@@ -27,7 +27,6 @@ import {
   IconButton,
   Input,
   MainLayout,
-  RadioGroup,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -52,8 +51,6 @@ const Translation = () => {
   const translationDataArray = translatedData?.data?.members?.translate.data;
 
   const methods = useForm<KymIndMemberInput>({});
-
-  const { control, handleSubmit, getValues, watch, setError } = methods;
 
   return (
     <Container

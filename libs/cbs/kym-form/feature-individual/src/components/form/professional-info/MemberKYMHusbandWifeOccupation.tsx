@@ -3,6 +3,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
+import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxGroupContainer,
   GroupContainer,
@@ -40,8 +41,8 @@ export const SpouseOccupationInput = ({
   }, []);
 
   return (
-    <FormInput
-      type="text"
+    <FormInputWithType
+      formType={option?.fieldType}
       name={`spouseOccupation.${fieldIndex}.options.${optionIndex}.value`}
       label={option?.name?.local}
       placeholder={option?.name?.local}

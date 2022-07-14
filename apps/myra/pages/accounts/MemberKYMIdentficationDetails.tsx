@@ -4,9 +4,11 @@ import { useFormContext } from 'react-hook-form';
 import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
+  Kym_Option_Field_Type,
   KymIndMemberInput,
   useGetIndIdentificationDocOptionQuery,
 } from '@coop/shared/data-access';
+import { FormInput } from '@coop/shared/form';
 import { Box, Checkbox, Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -108,6 +110,7 @@ export const MemberKYMIdentificationDetails = () => {
                           key={optionIndex}
                           formType={option?.fieldType}
                           id="identificationFields"
+                          type={option?.fieldType}
                           name={`identification.${fieldIndex}.options.${optionIndex}.value`}
                           label={String(option?.name?.local)}
                           placeholder={String(option?.name?.local)}

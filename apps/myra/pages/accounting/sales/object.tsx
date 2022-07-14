@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { AccountingSalesList, SalesObject } from '@coop/accounting/sales';
+import { SalesObject } from '@coop/accounting/sales';
 import { AccountingLayout, SalesLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
