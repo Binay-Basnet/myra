@@ -1,30 +1,17 @@
 import React, { useMemo, useState } from 'react';
-import { Control, useFieldArray } from 'react-hook-form';
-import { useFormContext } from 'react-hook-form';
-import {
-  AiFillCloseCircle,
-  AiOutlineCaretDown,
-  AiOutlineCaretRight,
-  AiOutlinePlus,
-} from 'react-icons/ai';
-import { AiOutlineDelete } from 'react-icons/ai';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import {
-  AccordianContainer,
-  DynamicBoxContainer,
-  DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  KymIndMemberInput,
-  useAllAdministrationQuery,
-} from '@coop/shared/data-access';
+import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   FormFileInput,
   FormInput,
@@ -37,7 +24,6 @@ import {
   Button,
   Collapse,
   Grid,
-  GridItem,
   Icon,
   IconButton,
   Text,
@@ -115,6 +101,8 @@ const AddDirector = ({ watch, index, removeDirector }) => {
 
     reset({ detailsOfDirectors: values['detailsOfDirectors'] });
   };
+
+  const isAffiliated = watch('isAffiliated');
 
   return (
     <>
@@ -400,6 +388,56 @@ const AddDirector = ({ watch, index, removeDirector }) => {
               name={`detailsOfDirectors.${index}.documentPhotograph`}
             />
           </Grid>
+          <Box display="flex" flexDirection="column" gap="s16">
+            <FormSwitch
+              name="isAffiliated"
+              label={t['kymInsIsaffiliatedwithotherfirms']}
+            />
+            {isAffiliated && (
+              <Box>
+                <Grid templateColumns={'repeat(2, 1fr)'} gap="s20">
+                  <FormInput
+                    type="text"
+                    bg="white"
+                    name={`detailsOfDirectorsWithAffiliation.${index}.nameOfDirector`}
+                    label={t['kymInsNameofDirector']}
+                    placeholder={t['kymInsEnterNameofDirector']}
+                  />
+                  <FormInput
+                    type="text"
+                    bg="white"
+                    name={`detailsOfDirectorsWithAffiliation.${index}.nameOfInstitution`}
+                    label={t['kymInsNameofInstitution']}
+                    placeholder={t['kymInsEnterNameofInstitution']}
+                  />
+                </Grid>
+                <InputGroupContainer mt="s16">
+                  <FormInput
+                    type="text"
+                    bg="white"
+                    name={`detailsOfDirectorsWithAffiliation.${index}.addressOfInstitution`}
+                    label={t['kymInsAddressofInstitution']}
+                    placeholder={t['kymInsEnterAddressofInstitution']}
+                  />
+                  <FormInput
+                    type="text"
+                    bg="white"
+                    name={`detailsOfDirectorsWithAffiliation.${index}.designation`}
+                    label={t['kymInsDesignation']}
+                    placeholder={t['kymInsEnterDesignation']}
+                  />
+                  <FormInput
+                    type="number"
+                    textAlign={'right'}
+                    bg="white"
+                    name={`detailsOfDirectorsWithAffiliation.${index}.yearlyIncome`}
+                    label={t['kymInsYearlyIncome']}
+                    placeholder="0.00"
+                  />
+                </InputGroupContainer>
+              </Box>
+            )}
+          </Box>
         </SectionContainer>
 
         <Box
@@ -427,6 +465,7 @@ const AddDirector = ({ watch, index, removeDirector }) => {
             {t['kymInsDelete']}
           </Button>
         </Box>
+
         {/* </AccordianContainer> */}
       </Collapse>
       {/* </DynamicBoxGroupContainer> */}
@@ -434,7 +473,7 @@ const AddDirector = ({ watch, index, removeDirector }) => {
   );
 };
 
-export const BoardDirectorInfo = ({ watch }) => {
+export const BoardDirectorInfo = ({ watch }: any) => {
   const { t } = useTranslation();
   const {
     fields: directorFields,

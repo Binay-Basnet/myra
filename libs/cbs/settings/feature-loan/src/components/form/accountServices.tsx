@@ -5,7 +5,7 @@ import { Box } from '@coop/shared/ui';
 
 import { SubText, TextBoxContainer, TopText } from '../formui';
 
-type SalesTable = {
+type AccountServiceTable = {
   serviceName: string;
   ledgerName: string;
   amount: number;
@@ -42,7 +42,7 @@ export const AccountServicesCharge = () => {
         <SubText>Add different service charges.</SubText>
       </TextBoxContainer>
       <Box>
-        <FormEditableTable<SalesTable>
+        <FormEditableTable<AccountServiceTable>
           name="data"
           columns={[
             {

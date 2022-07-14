@@ -1,5 +1,4 @@
-import React from 'react';
-import { Control, useFieldArray } from 'react-hook-form';
+import { useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -9,7 +8,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { FormInput } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

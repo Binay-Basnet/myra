@@ -1,5 +1,4 @@
-import React from 'react';
-import { Control, useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -9,12 +8,12 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { FormEditableTable, FormInput, FormSelect } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
-import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Box, Button, Icon } from '@coop/shared/ui';
 
-import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
+// import { useTranslation } from '@coop/shared/utils';
+import { SubText, TextBoxContainer, TopText } from '../formui';
 
 const options = [
   { label: 'option 1', value: 'option1' },
@@ -25,11 +24,33 @@ interface IAddAccountServices {
   removeAccountServices: () => void;
 }
 
+type AccountServiceTable = {
+  serviceName: string;
+  ledgerName: string;
+  amount: number;
+};
+
+const service_name = [
+  { label: 'Lenovo Laptop', value: 'mi001' },
+  { label: 'Alienware Laptop', value: 'mi002' },
+];
+
+const ledger_name = [
+  {
+    label: 'Purchase Ledger',
+    value: 'purchaseLedger',
+  },
+  {
+    label: 'Sales Ledger',
+    value: 'salesLedger',
+  },
+];
+
 const AddServiceCharge = ({
   index,
   removeAccountServices,
 }: IAddAccountServices) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -75,6 +96,13 @@ export const AccountServicesCharge = () => {
     remove: accountServicesRemove,
   } = useFieldArray({ name: 'accountServiceCharge' });
 
+  const methods = useFormContext();
+
+  const { watch } = methods;
+
+  const depositNature = watch('nameOfDepositProduct');
+
+  console.log(depositNature);
   return (
     <GroupContainer
       scrollMarginTop={'200px'}
@@ -86,31 +114,61 @@ export const AccountServicesCharge = () => {
         <TopText>Account Service Charge</TopText>
         <SubText>Add different service charges.</SubText>
       </TextBoxContainer>
-      <div>
-        <DynamicBoxGroupContainer>
-          {accountServicesFields.map((item, index) => {
-            return (
-              <Box key={item.id}>
-                <AddServiceCharge
-                  index={index}
-                  removeAccountServices={() => accountServicesRemove(index)}
-                />
-              </Box>
-            );
-          })}
-          <Button
-            id="sisterConcernButton"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              accountServicesAppend({});
-            }}
-          >
-            New Service Charge{' '}
-          </Button>
-        </DynamicBoxGroupContainer>
-      </div>
+      {(depositNature === 'mandatory' || depositNature === 'voluntary') && (
+        <div>
+          <DynamicBoxGroupContainer>
+            {accountServicesFields.map((item, index) => {
+              return (
+                <Box key={item.id}>
+                  <AddServiceCharge
+                    index={index}
+                    removeAccountServices={() => accountServicesRemove(index)}
+                  />
+                </Box>
+              );
+            })}
+            <Button
+              id="sisterConcernButton"
+              alignSelf="start"
+              leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+              variant="outline"
+              onClick={() => {
+                accountServicesAppend({});
+              }}
+            >
+              New Service Charge{' '}
+            </Button>
+          </DynamicBoxGroupContainer>
+        </div>
+      )}
+      {depositNature === 'recurringSaving' && (
+        <FormEditableTable<AccountServiceTable>
+          name="data"
+          columns={[
+            {
+              accessor: 'serviceName',
+              header: 'Service Name',
+              fieldType: 'select',
+              cellWidth: 'auto',
+
+              selectOptions: service_name,
+            },
+            {
+              accessor: 'ledgerName',
+              header: 'Ledger Name',
+              fieldType: 'select',
+              cellWidth: 'auto',
+              selectOptions: ledger_name,
+            },
+            {
+              accessor: 'amount',
+              header: 'Amount',
+              cellWidth: 'auto',
+              isNumeric: true,
+            },
+          ]}
+        />
+      )}
     </GroupContainer>
   );
 };

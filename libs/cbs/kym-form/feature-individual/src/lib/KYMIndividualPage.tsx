@@ -238,7 +238,7 @@ export function KYMIndividualPage() {
               variant={'ghost'}
               aria-label="close"
               icon={<Icon as={IoCloseOutline} size="md" />}
-              onClick={() => router.back()}
+              onClick={() => router.push('/members/list')}
             />
           </Box>
         </Container>

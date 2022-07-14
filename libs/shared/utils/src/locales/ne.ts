@@ -15,6 +15,7 @@ const ne: Record<string, string> = {
   applyChanges: 'Apply Changes',
   done: 'Done',
   saveAccount: 'Save Account',
+  generate: 'Generate',
 
   // navbar
   searchMembersNameReportsEtc: 'सदस्यहरूको नाम, रिपोर्टहरू, आदि खोज्नुहोस्',
@@ -2293,6 +2294,14 @@ const ne: Record<string, string> = {
   salesObjTabDocs: 'Documents',
   salesObjTabActivity: 'Activity',
 
+  shareOtherCharge: 'Other Charge',
+  shareOtherBasicCharge: 'Basic Charge for share issue and return',
+  kymInsIsaffiliatedwithotherfirms: 'Is affiliated with other firms?',
+  invItemsVariantnName: 'Variant Name',
+  invItemSizes: 'Sizes',
+  invItemsOptions: 'Options',
+  invItemsSml: 'S.M,L',
+  invItemAddNewVariant: 'Add New Variant',
   //accounting purchase form table
   accountingPurchaseFormTableProduct: 'Product',
   accountingPurchaseFormTableQuantity: 'Quantity',

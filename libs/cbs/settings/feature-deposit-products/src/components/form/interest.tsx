@@ -2,7 +2,12 @@
 import { useFormContext } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import {
+  FormEditableTable,
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+} from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
@@ -10,11 +15,11 @@ import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 const ladderSwitch = [
   {
     label: 'Yes',
-    value: true,
+    value: 'yes',
   },
   {
     label: 'No',
-    value: false,
+    value: 'no',
   },
 ];
 
@@ -29,9 +34,22 @@ const postingFreq = [
   },
 ];
 
+type SalesTable = {
+  type: string;
+  ladderAmount: number;
+  ladderRate: number;
+};
+
+const type = [
+  { label: 'Lenovo Laptop', value: 'mi001' },
+  { label: 'Alienware Laptop', value: 'mi002' },
+];
+
 export const Interest = () => {
   const { watch } = useFormContext();
   const depositNature = watch('nameOfDepositProduct');
+
+  const ladderOptions = watch('ladderOptions');
 
   return (
     <>
@@ -125,20 +143,45 @@ export const Interest = () => {
           )}
         </InputGroupContainer>
       </BoxContainer>
-      <Box
-        alignItems="center"
-        display={'flex'}
-        flexDirection="row"
-        justifyContent="space-between"
-      >
-        <Text
-          color="neutralColorLight.Gray-70"
-          fontSize={'s3'}
-          fontWeight="Medium"
+      <Box display={'flex'} flexDirection="column" gap="s20">
+        <Box
+          alignItems="center"
+          display={'flex'}
+          justifyContent="space-between"
         >
-          Ladder Rate
-        </Text>
-        <FormSwitchTab name={'minimumTenureUnit'} options={ladderSwitch} />
+          <Text
+            color="neutralColorLight.Gray-70"
+            fontSize={'s3'}
+            fontWeight="Medium"
+          >
+            Ladder Rate
+          </Text>
+          <FormSwitchTab name={'ladderOptions'} options={ladderSwitch} />
+        </Box>
+        {ladderOptions === 'yes' && (
+          <FormEditableTable<SalesTable>
+            name="data"
+            columns={[
+              {
+                accessor: 'type',
+                header: 'Type',
+                fieldType: 'select',
+                selectOptions: type,
+              },
+              {
+                accessor: 'ladderAmount',
+                header: 'Ladder Amount',
+                isNumeric: true,
+              },
+              {
+                accessor: 'ladderRate',
+                header: 'Ladder Rate',
+                fieldType: 'percentage',
+                isNumeric: true,
+              },
+            ]}
+          />
+        )}
       </Box>
     </>
   );
