@@ -68,7 +68,6 @@ export function SettingsLoanForm(props: loanProductsAdd) {
   });
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
-  const depositNature = watch('nameOfDepositProduct');
 
   return (
     <>
