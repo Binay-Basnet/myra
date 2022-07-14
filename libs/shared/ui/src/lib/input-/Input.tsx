@@ -52,7 +52,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
         <InputGroup
           borderRadius="br2"
-          px="s4"
           height={size === 'default' ? '44px' : '36px'}
         >
           {leftElement && (

@@ -153,7 +153,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                 variant={'ghost'}
                 aria-label="close"
                 icon={<Icon as={IoCloseOutline} size="md" />}
-                onClick={() => router.back()}
+                onClick={() => router.push('/members/list')}
               />
             </Box>
           </Container>
@@ -231,7 +231,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
                       </Text>
                       <ContainerWithDivider>
                         <BoardDirectorInfo watch={watch} />
-                        <InstitutionKYMDirectorWithAffiliation />
+                        {/* <InstitutionKYMDirectorWithAffiliation /> */}
                       </ContainerWithDivider>
                     </SectionContainer>
 

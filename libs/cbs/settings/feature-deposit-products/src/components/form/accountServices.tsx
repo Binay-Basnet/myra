@@ -1,5 +1,4 @@
-import React from 'react';
-import { Control, useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -11,10 +10,10 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormEditableTable, FormInput, FormSelect } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
-import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Box, Button, Icon } from '@coop/shared/ui';
 
-import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
+// import { useTranslation } from '@coop/shared/utils';
+import { SubText, TextBoxContainer, TopText } from '../formui';
 
 const options = [
   { label: 'option 1', value: 'option1' },
@@ -97,7 +96,7 @@ export const AccountServicesCharge = () => {
     remove: accountServicesRemove,
   } = useFieldArray({ name: 'accountServiceCharge' });
 
-  const methods = useForm({});
+  const methods = useFormContext();
 
   const { watch } = methods;
 

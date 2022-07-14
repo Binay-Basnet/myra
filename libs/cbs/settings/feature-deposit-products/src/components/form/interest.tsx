@@ -15,11 +15,11 @@ import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 const ladderSwitch = [
   {
     label: 'Yes',
-    value: true,
+    value: 'yes',
   },
   {
     label: 'No',
-    value: false,
+    value: 'no',
   },
 ];
 
@@ -49,7 +49,7 @@ export const Interest = () => {
   const { watch } = useFormContext();
   const depositNature = watch('nameOfDepositProduct');
 
-  const minimumTenureUnit = watch('minimumTenureUnit');
+  const ladderOptions = watch('ladderOptions');
 
   return (
     <>
@@ -156,9 +156,9 @@ export const Interest = () => {
           >
             Ladder Rate
           </Text>
-          <FormSwitchTab name={'minimumTenureUnit'} options={ladderSwitch} />
+          <FormSwitchTab name={'ladderOptions'} options={ladderSwitch} />
         </Box>
-        {minimumTenureUnit && (
+        {ladderOptions === 'yes' && (
           <FormEditableTable<SalesTable>
             name="data"
             columns={[
