@@ -30,11 +30,11 @@ const details = ['Citizen', 'Permanent Resident', 'Resident'];
 const booleanList = [
   {
     label: 'Yes',
-    value: 'yes',
+    value: true,
   },
   {
     label: 'No',
-    value: 'no',
+    value: false,
   },
 ];
 
@@ -81,7 +81,7 @@ export const KYMDeclaration = () => {
               options={booleanList}
               name="hasBeneficialOwner"
             />
-            {hasBeneficialOwner === 'yes' && (
+            {hasBeneficialOwner && (
               <Grid
                 gap={2}
                 templateColumns="repeat(3,1fr)"

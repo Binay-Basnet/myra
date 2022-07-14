@@ -26,7 +26,7 @@ export const FormSwitchTab = <T,>({
           value={value}
           onChange={(nextValue) => {
             if (nextValue === 'true' || nextValue === 'false') {
-              onChange(Boolean(nextValue));
+              onChange(nextValue === 'true');
             } else {
               onChange(nextValue);
             }
