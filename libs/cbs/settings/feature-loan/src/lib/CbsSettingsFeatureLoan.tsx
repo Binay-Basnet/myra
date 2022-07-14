@@ -64,11 +64,22 @@ export function SettingsLoanForm(props: loanProductsAdd) {
       nameOfDepositProduct: 'recurringSaving',
       minimunTenureNumber: 0,
       maximumTenureNumber: 0,
+      data: [
+        {
+          serviceName: 'Cheque Book Issue',
+          ledgerName: 'Purchase Ledger',
+          amount: 45,
+        },
+        {
+          serviceName: 'Bank Issue',
+          ledgerName: 'Sales Ledger',
+          amount: 200,
+        },
+      ],
     },
   });
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
-  const depositNature = watch('nameOfDepositProduct');
 
   return (
     <>
