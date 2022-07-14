@@ -140,7 +140,7 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
                     },
                   ]}
                 />
-                <Box></Box>
+
                 <SalesBox />
               </DividerContainer>
             </Box>
