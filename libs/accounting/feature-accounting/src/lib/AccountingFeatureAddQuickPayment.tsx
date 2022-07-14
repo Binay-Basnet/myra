@@ -20,6 +20,8 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { QuickPaymentTable } from '../components';
+
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddQuickPaymentProps {}
 
@@ -27,7 +29,10 @@ export function AccountingFeatureAddQuickPayment(
   props: AccountingFeatureAddQuickPaymentProps
 ) {
   const { t } = useTranslation();
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: { data: [{ account: 'Saving Account', amount: 45 }] },
+  });
+
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">
@@ -84,6 +89,8 @@ export function AccountingFeatureAddQuickPayment(
                     />
                   </InputGroupContainer>
                 </BoxContainer>
+
+                <QuickPaymentTable />
 
                 <Box>
                   <FormTextArea

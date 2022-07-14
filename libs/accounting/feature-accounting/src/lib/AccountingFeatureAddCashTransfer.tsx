@@ -20,6 +20,8 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { CashTransferTable } from '../components';
+
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddCashTransferProps {}
 
@@ -27,7 +29,10 @@ export function AccountingFeatureAddCashTransfer(
   props: AccountingFeatureAddCashTransferProps
 ) {
   const { t } = useTranslation();
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: { data: [{ transferred_to: '', amount: 45 }] },
+  });
+
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">
@@ -84,6 +89,8 @@ export function AccountingFeatureAddCashTransfer(
                     />
                   </InputGroupContainer>
                 </BoxContainer>
+
+                <CashTransferTable />
 
                 <Box
                   display="grid"

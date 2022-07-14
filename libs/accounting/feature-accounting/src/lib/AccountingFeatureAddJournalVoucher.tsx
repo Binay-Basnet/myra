@@ -20,6 +20,8 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { JournalVouchersTable } from '../components';
+
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddJournalVoucherProps {}
 
@@ -27,7 +29,17 @@ export function AccountingFeatureAddJournalVoucher(
   props: AccountingFeatureAddJournalVoucherProps
 ) {
   const { t } = useTranslation();
-  const methods = useForm();
+
+  const methods = useForm({
+    defaultValues: {
+      data: [
+        {
+          dr_amount: 45,
+          cr_amount: 45,
+        },
+      ],
+    },
+  });
 
   return (
     <>
@@ -77,6 +89,8 @@ export function AccountingFeatureAddJournalVoucher(
                     />
                   </InputGroupContainer>
                 </BoxContainer>
+
+                <JournalVouchersTable />
 
                 <Box
                   display="grid"
