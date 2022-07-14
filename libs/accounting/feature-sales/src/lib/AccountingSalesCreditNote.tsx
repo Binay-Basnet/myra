@@ -65,6 +65,9 @@ export function CreditNoteForm(props: CbsAccountOpenFormProps) {
           background="neutralColorLight.Gray-0"
           borderBottom="1px solid #E6E6E6"
           borderTopRadius={5}
+          position="sticky"
+          top="110px"
+          zIndex={8}
         >
           <Text fontSize="r2" fontWeight="600">
             {t['accountingCreditNoteAddNewCreditNote']}
@@ -87,7 +90,7 @@ export function CreditNoteForm(props: CbsAccountOpenFormProps) {
                   columns={[
                     {
                       accessor: 'product_id',
-                      header: 'Product',
+                      header: t['CreditNoteProduct'],
                       cellWidth: 'auto',
                       fieldType: 'search',
                       searchOptions: search_options,
@@ -95,23 +98,23 @@ export function CreditNoteForm(props: CbsAccountOpenFormProps) {
 
                     {
                       accessor: 'quantity',
-                      header: 'Quantity',
+                      header: t['CreditNoteQuantity'],
                       isNumeric: true,
                     },
                     {
                       accessor: 'rate',
-                      header: 'Rate',
+                      header: t['CreditNoteRate'],
                       isNumeric: true,
                     },
                     {
                       accessor: 'tax',
-                      header: 'Tax',
+                      header: t['CreditNoteTax'],
                       isNumeric: true,
                       fieldType: 'percentage',
                     },
                     {
                       accessor: 'total_amount',
-                      header: 'Total Amount',
+                      header: t['CreditNoteTotalAmount'],
                       isNumeric: true,
 
                       accessorFn: (row) =>
@@ -120,7 +123,7 @@ export function CreditNoteForm(props: CbsAccountOpenFormProps) {
                     },
                     {
                       accessor: 'product_description',
-                      header: 'Product Description',
+                      header: t['CreditNoteProductDes'],
                       hidden: true,
 
                       fieldType: 'textarea',
@@ -129,12 +132,12 @@ export function CreditNoteForm(props: CbsAccountOpenFormProps) {
                     {
                       accessor: 'warehouse_partition',
                       hidden: true,
-                      header: 'Warehouse Partition',
+                      header: t['CreditNoteWareHouse'],
                     },
                     {
                       accessor: 'sales_ledger',
                       hidden: true,
-                      header: 'Sales Ledger',
+                      header: t['CreditNoteSalesReturn'],
                     },
                   ]}
                 />

@@ -38,10 +38,10 @@ const Header = () => {
 const SharePurchase = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { mutate } = useAddSharePurchaseMutation();
+  // const { mutate } = useAddSharePurchaseMutation();
   // TODO! Change this!!
-  const methods = useForm<any>();
-  const { getValues, watch } = methods;
+  const methods = useForm();
+  const { watch } = methods;
 
   const accountList = [
     { label: t['sharePurchaseBankVoucher'], value: Payment_Mode.BankVoucher },
@@ -61,26 +61,26 @@ const SharePurchase = () => {
   //
   // const data = memberData?.members?.individual?.get?.data?.member;
 
-  const submitForm = () => {
-    const { memberId, bankId, paymentMode, voucherNumber } = getValues();
-    const formData = {
-      memberId,
-      shareCount: Number(noOfShares),
-      shareAmount: noOfShares * 100,
-      accountId: '12',
-      extraFee: [
-        { name: 'Administration fee', value: Number(adminFee) },
-        { name: 'Printing fee', value: Number(printingFee) },
-        { name: '“Others”', value: 10 },
-      ],
-      totalAmount: noOfShares * 100 + Number(adminFee) + Number(printingFee),
-      bankId,
-      paymentMode,
-      voucherNumber,
-    };
-    const id = 'asdsad';
-    mutate({ id, data: formData });
-  };
+  // const submitForm = () => {
+  //   const { memberId, bankId, paymentMode, voucherNumber } = getValues();
+  //   const formData = {
+  //     memberId,
+  //     shareCount: Number(noOfShares),
+  //     shareAmount: noOfShares * 100,
+  //     accountId: '12',
+  //     extraFee: [
+  //       { name: 'Administration fee', value: Number(adminFee) },
+  //       { name: 'Printing fee', value: Number(printingFee) },
+  //       { name: '“Others”', value: 10 },
+  //     ],
+  //     totalAmount: noOfShares * 100 + Number(adminFee) + Number(printingFee),
+  //     bankId,
+  //     paymentMode,
+  //     voucherNumber,
+  //   };
+  //   const id = 'asdsad';
+  //   mutate({ id, data: formData });
+  // };
 
   return (
     <>

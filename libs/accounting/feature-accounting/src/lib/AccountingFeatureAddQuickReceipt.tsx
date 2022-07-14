@@ -20,6 +20,8 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { QuickReceiptTable } from '../components';
+
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddQuickReceiptProps {}
 
@@ -27,7 +29,11 @@ export function AccountingFeatureAddQuickReceipt(
   props: AccountingFeatureAddQuickReceiptProps
 ) {
   const { t } = useTranslation();
-  const methods = useForm();
+
+  const methods = useForm({
+    defaultValues: { data: [{ account: 'Saving Account', amount: 45 }] },
+  });
+
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">
@@ -40,6 +46,9 @@ export function AccountingFeatureAddQuickReceipt(
           background="neutralColorLight.Gray-0"
           borderBottom="1px solid #E6E6E6"
           borderTopRadius={5}
+          position="sticky"
+          top="110px"
+          zIndex={8}
         >
           <Text
             fontSize="r2"
@@ -84,6 +93,8 @@ export function AccountingFeatureAddQuickReceipt(
                     />
                   </InputGroupContainer>
                 </BoxContainer>
+
+                <QuickReceiptTable />
 
                 <Box>
                   <FormTextArea

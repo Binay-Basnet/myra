@@ -67,6 +67,7 @@ export function AccountingSalesList(props: AccountingSalesListProps) {
             <Box
               display="flex"
               alignItems="center"
+              cursor={'pointer'}
               gap="s12"
               onClick={() => {
                 router.push('/accounting/sales/object');

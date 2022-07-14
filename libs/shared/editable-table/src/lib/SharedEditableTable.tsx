@@ -35,7 +35,7 @@ interface RecordWithId {
   _id?: number;
 }
 
-type Column<T extends RecordWithId & Record<string, string | number>> = {
+export type Column<T extends RecordWithId & Record<string, string | number>> = {
   id?: string;
   header?: string;
   accessor: keyof T;
@@ -592,6 +592,9 @@ const EditableTableRow = <
 const MemoEditableTableRow = React.memo(
   EditableTableRow,
   (prevProps, nextProps) => {
-    return JSON.stringify(prevProps.data) === JSON.stringify(nextProps.data);
+    return (
+      JSON.stringify(prevProps.data) === JSON.stringify(nextProps.data) &&
+      JSON.stringify(prevProps.columns) === JSON.stringify(nextProps.columns)
+    );
   }
 ) as typeof EditableTableRow;

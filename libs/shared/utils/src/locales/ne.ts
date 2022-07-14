@@ -1833,6 +1833,9 @@ const ne: Record<string, string> = {
   // warehouse transfer table
   warehouseTransferWarehouseTransfer: 'Warehouse Transfer',
   warehouseTransferNewWarehouseTransfer: 'New Warehouse Transfer',
+  warehouseTransferProduct: 'Product',
+  warehouseTransfertableQuantity: 'Quantity',
+  warehouseTransfertableDescription: 'Quantity',
   // warehouseTransferDate: 'Date',
   warehouseTransferEntryNo: 'Entry No',
   warehouseTransferReference: 'Reference',
@@ -2299,6 +2302,82 @@ const ne: Record<string, string> = {
   invItemsOptions: 'Options',
   invItemsSml: 'S.M,L',
   invItemAddNewVariant: 'Add New Variant',
+  //accounting purchase form table
+  accountingPurchaseFormTableProduct: 'Product',
+  accountingPurchaseFormTableQuantity: 'Quantity',
+  accountingPurchaseFormTableRate: 'Rate',
+  accountingPurchaseFormTableTax: 'Tax',
+  accountingPurchaseFormTableAmount: 'Amount',
+  accountingPurchaseFormTableProductDescription: 'Product Description',
+  accountingPurchaseFormTablePurchaseLedger: 'Purchase Ledger',
+  accountingPurchaseFormTableWarehousePartition: 'Warehouse Partition',
+
+  //accounting expenses form table
+  accountingExpensesFormTableTransferredTo: 'Transferred To (Select Ledger)',
+  accountingExpensesFormTableTax: 'Tax',
+  accountingExpensesFormTableAmount: 'Amount',
+
+  //accounting debit note form table
+  accountingDebitNoteFormTableProduct: 'Product',
+  accountingDebitNoteFormTableQuantity: 'Quantity',
+  accountingDebitNoteFormTableRate: 'Rate',
+  accountingDebitNoteFormTableTax: 'Tax',
+  accountingDebitNoteFormTableAmount: 'Amount',
+  accountingDebitNoteFormTableProductDescription: 'Product Description',
+  accountingDebitNoteFormTableWarehousePartition: 'Warehouse Partition',
+  accountingDebitNoteFormTablePurchaseReturnLedger: 'Purchase Return Ledger',
+
+  //accounting supplier payment form table
+  accountingSupplierPaymentFormTableType: 'Type',
+  accountingSupplierPaymentFormTableDate: 'Date',
+  accountingSupplierPaymentFormTableAmount: 'Amount',
+  accountingSupplierPaymentFormTableLeftToAllocate: 'Left to Allocate',
+  accountingSupplierPaymentFormTableThisAllocation: 'This Allocation',
+
+  //accounting journal vouchers form table
+  accountingJournalVouchersFormTableTransferredTo:
+    'Transferred To (Select Ledger)',
+  accountingJournalVouchersFormTableDRAmount: 'DR Amount',
+  accountingJournalVouchersFormTableCRAmount: 'CR Amount',
+
+  //accounting cash transfer form table
+  accountingCashTransferFormTableTransferredTo:
+    'Transferred To (Select Ledger)',
+  accountingCashTransferFormTableAmount: 'Amount',
+
+  //accounting quick payment form table
+  accountingQuickPaymentFormTableAccount: 'Account',
+  accountingQuickPaymentFormTableAmount: 'Amount',
+
+  //accounting quick receipt form table
+  accountingQuickReceiptFormTableAccount: 'Account',
+  accountingQuickReceiptFormTableAmount: 'Amount',
+  //editabletableSales
+  Salesproduct_id: 'Product',
+  SalesQuantity: 'Quantity',
+  SaleRate: 'Rate',
+  SaleTax: 'Tax',
+  SaleTotalAmount: 'Amount',
+  SaleProductDescription: 'Product Description',
+  SaleWarehousePartition: 'Warehouse Partition',
+  SaleSelectWareLedger: 'Sales Ledger',
+
+  //editable sales CreditnOte table
+  CreditNoteProduct: 'Product',
+  CreditNoteQuantity: 'Quantity',
+  CreditNoteRate: 'Rate',
+  CreditNoteTax: 'Tax',
+  CreditNoteTotalAmount: 'Total Amount',
+  CreditNoteProductDes: 'Product Description',
+  CreditNoteWareHouse: 'Warehouse Partition',
+  CreditNoteSalesReturn: 'Sales Return Ledger',
+  //editable sales customer payment
+  CustomerPaymentAllocation: 'Payment Allocation',
+  CustomerPaymentType: 'Type',
+  CustomerPaymentDate: 'Date',
+  CustomerPaymentAmount: 'Amount',
+  CustomerPaymentLeftTo: 'Left to Allocate',
+  CustomerPaymentThis: 'This Allocation',
 };
 
 export default ne;
