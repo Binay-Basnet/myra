@@ -1,4 +1,5 @@
 import { FormEditableTable } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type JournalVouchersTableType = {
   transferred_to: string;
@@ -7,24 +8,26 @@ type JournalVouchersTableType = {
 };
 
 export const JournalVouchersTable = () => {
+  const { t } = useTranslation();
+
   return (
     <FormEditableTable<JournalVouchersTableType>
       name="data"
       columns={[
         {
           accessor: 'transferred_to',
-          header: 'Transferred To (Select Ledger)',
+          header: t['accountingJournalVouchersFormTableTransferredTo'],
           cellWidth: 'auto',
           fieldType: 'select',
         },
         {
           accessor: 'dr_amount',
-          header: 'DR Amount',
+          header: t['accountingJournalVouchersFormTableDRAmount'],
           isNumeric: true,
         },
         {
           accessor: 'cr_amount',
-          header: 'CR Amount',
+          header: t['accountingJournalVouchersFormTableCRAmount'],
           isNumeric: true,
         },
       ]}

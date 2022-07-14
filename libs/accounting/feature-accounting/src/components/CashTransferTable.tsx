@@ -1,4 +1,5 @@
 import { FormEditableTable } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type CashTransferTableType = {
   transferred_to: string;
@@ -6,19 +7,21 @@ type CashTransferTableType = {
 };
 
 export const CashTransferTable = () => {
+  const { t } = useTranslation();
+
   return (
     <FormEditableTable<CashTransferTableType>
       name="data"
       columns={[
         {
           accessor: 'transferred_to',
-          header: 'Transferred To (Select Ledger)',
+          header: t['accountingCashTransferFormTableTransferredTo'],
           cellWidth: 'auto',
           fieldType: 'select',
         },
         {
           accessor: 'amount',
-          header: 'Amount',
+          header: t['accountingCashTransferFormTableAmount'],
           isNumeric: true,
         },
       ]}

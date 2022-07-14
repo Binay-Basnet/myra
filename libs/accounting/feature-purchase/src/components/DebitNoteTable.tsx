@@ -1,4 +1,5 @@
 import { FormEditableTable } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type DebitNoteTableType = {
   product_id: string;
@@ -25,43 +26,45 @@ const search_options = [
 ];
 
 export const DebitNoteTable = () => {
+  const { t } = useTranslation();
+
   return (
     <FormEditableTable<DebitNoteTableType>
       name="data"
       columns={[
         {
           accessor: 'product_id',
-          header: 'Product',
+          header: t['accountingDebitNoteFormTableProduct'],
           cellWidth: 'auto',
           fieldType: 'search',
           searchOptions: search_options,
         },
         {
           accessor: 'quantity',
-          header: 'Quantity',
+          header: t['accountingDebitNoteFormTableQuantity'],
           isNumeric: true,
         },
         {
           accessor: 'rate',
-          header: 'Rate',
+          header: t['accountingDebitNoteFormTableRate'],
           isNumeric: true,
         },
         {
           accessor: 'tax',
-          header: 'Tax',
+          header: t['accountingDebitNoteFormTableTax'],
           isNumeric: true,
           fieldType: 'percentage',
         },
         {
           accessor: 'amount',
-          header: 'Amount',
+          header: t['accountingDebitNoteFormTableAmount'],
           isNumeric: true,
 
           accessorFn: (row) => row.quantity * row.rate + row.tax,
         },
         {
           accessor: 'product_description',
-          header: 'Product Description',
+          header: t['accountingDebitNoteFormTableProductDescription'],
           hidden: true,
 
           fieldType: 'textarea',
@@ -70,12 +73,12 @@ export const DebitNoteTable = () => {
         {
           accessor: 'warehouse_partition',
           hidden: true,
-          header: 'Warehouse Partition',
+          header: t['accountingDebitNoteFormTableWarehousePartition'],
           fieldType: 'select',
         },
         {
           accessor: 'purchase_return_ledger',
-          header: 'Purchase Return Ledger',
+          header: t['accountingDebitNoteFormTablePurchaseReturnLedger'],
           hidden: true,
           fieldType: 'select',
         },

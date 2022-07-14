@@ -1,4 +1,5 @@
 import { FormEditableTable } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type SupplierPaymentTableType = {
   type: string;
@@ -9,33 +10,34 @@ type SupplierPaymentTableType = {
 };
 
 export const SupplierPaymentTable = () => {
+  const { t } = useTranslation();
   return (
     <FormEditableTable<SupplierPaymentTableType>
       name="data"
       columns={[
         {
           accessor: 'type',
-          header: 'Type',
+          header: t['accountingSupplierPaymentFormTableType'],
           cellWidth: 'auto',
         },
         {
           accessor: 'date',
-          header: 'Date',
+          header: t['accountingSupplierPaymentFormTableDate'],
           fieldType: 'date',
         },
         {
           accessor: 'amount',
-          header: 'Amount',
+          header: t['accountingSupplierPaymentFormTableAmount'],
           isNumeric: true,
         },
         {
           accessor: 'left_to_allocate',
-          header: 'Left to Allocate',
+          header: t['accountingSupplierPaymentFormTableLeftToAllocate'],
           isNumeric: true,
         },
         {
           accessor: 'this_allocation',
-          header: 'This Allocation',
+          header: t['accountingSupplierPaymentFormTableThisAllocation'],
           isNumeric: true,
         },
       ]}

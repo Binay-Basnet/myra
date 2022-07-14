@@ -1,4 +1,5 @@
 import { FormEditableTable } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type ExpensesTableType = {
   product_id: string;
@@ -12,41 +13,30 @@ type ExpensesTableType = {
 };
 
 export const ExpensesTable = () => {
+  const { t } = useTranslation();
+
   return (
     <FormEditableTable<ExpensesTableType>
       name="data"
       columns={[
         {
           accessor: 'transferred_to',
-          header: 'Transferred To (Select Ledger)',
+          header: t['accountingExpensesFormTableTransferredTo'],
           fieldType: 'select',
-          selectOptions: [
-            {
-              label: 'SAVINGS',
-              value: 'savings',
-            },
-            {
-              label: 'CURRENT',
-              value: 'current',
-            },
-          ],
           cellWidth: 'auto',
         },
         {
           accessor: 'tax',
-          header: 'Tax',
+          header: t['accountingExpensesFormTableTax'],
           isNumeric: true,
           cellWidth: 'auto',
           fieldType: 'percentage',
         },
         {
           accessor: 'amount',
-          header: 'Amount',
+          header: t['accountingExpensesFormTableAmount'],
           isNumeric: true,
           cellWidth: 'auto',
-          //   hidden: true,
-
-          // accessorFn: (row) => row.quantity * row.rate + row.tax,
         },
       ]}
     />

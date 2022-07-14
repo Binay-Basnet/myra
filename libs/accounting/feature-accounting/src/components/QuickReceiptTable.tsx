@@ -1,4 +1,5 @@
 import { FormEditableTable } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type QuickReceiptTableType = {
   account: string;
@@ -6,18 +7,20 @@ type QuickReceiptTableType = {
 };
 
 export const QuickReceiptTable = () => {
+  const { t } = useTranslation();
+
   return (
     <FormEditableTable<QuickReceiptTableType>
       name="data"
       columns={[
         {
           accessor: 'account',
-          header: 'Account',
+          header: t['accountingQuickReceiptFormTableAccount'],
           cellWidth: 'auto',
         },
         {
           accessor: 'amount',
-          header: 'Amount',
+          header: t['accountingQuickReceiptFormTableAmount'],
           isNumeric: true,
         },
       ]}

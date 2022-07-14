@@ -2321,6 +2321,57 @@ const en: Record<string, string> = {
   salesObjTabTasks: 'Tasks',
   salesObjTabDocs: 'Documents',
   salesObjTabActivity: 'Activity',
+
+  //accounting purchase table
+  accountingPurchaseTableProduct: 'Product',
+  accountingPurchaseTableQuantity: 'Quantity',
+  accountingPurchaseTableRate: 'Rate',
+  accountingPurchaseTableTax: 'Tax',
+  accountingPurchaseTableAmount: 'Amount',
+  accountingPurchaseTableProductDescription: 'Product Description',
+  accountingPurchaseTablePurchaseLedger: 'Purchase Ledger',
+  accountingPurchaseTableWarehousePartition: 'Warehouse Partition',
+
+  //accounting expenses form table
+  accountingExpensesFormTableTransferredTo: 'Transferred To (Select Ledger)',
+  accountingExpensesFormTableTax: 'Tax',
+  accountingExpensesFormTableAmount: 'Amount',
+
+  //accounting debit note form table
+  accountingDebitNoteFormTableProduct: 'Product',
+  accountingDebitNoteFormTableQuantity: 'Quantity',
+  accountingDebitNoteFormTableRate: 'Rate',
+  accountingDebitNoteFormTableTax: 'Tax',
+  accountingDebitNoteFormTableAmount: 'Amount',
+  accountingDebitNoteFormTableProductDescription: 'Product Description',
+  accountingDebitNoteFormTableWarehousePartition: 'Warehouse Partition',
+  accountingDebitNoteFormTablePurchaseReturnLedger: 'Purchase Return Ledger',
+
+  //accounting supplier payment form table
+  accountingSupplierPaymentFormTableType: 'Type',
+  accountingSupplierPaymentFormTableDate: 'Date',
+  accountingSupplierPaymentFormTableAmount: 'Amount',
+  accountingSupplierPaymentFormTableLeftToAllocate: 'Left to Allocate',
+  accountingSupplierPaymentFormTableThisAllocation: 'This Allocation',
+
+  //accounting journal vouchers form table
+  accountingJournalVouchersFormTableTransferredTo:
+    'Transferred To (Select Ledger)',
+  accountingJournalVouchersFormTableDRAmount: 'DR Amount',
+  accountingJournalVouchersFormTableCRAmount: 'CR Amount',
+
+  //accounting cash transfer form table
+  accountingCashTransferFormTableTransferredTo:
+    'Transferred To (Select Ledger)',
+  accountingCashTransferFormTableAmount: 'Amount',
+
+  //accounting quick payment form table
+  accountingQuickPaymentFormTableAccount: 'Account',
+  accountingQuickPaymentFormTableAmount: 'Amount',
+
+  //accounting quick receipt form table
+  accountingQuickReceiptFormTableAccount: 'Account',
+  accountingQuickReceiptFormTableAmount: 'Amount',
 };
 
 export default en;

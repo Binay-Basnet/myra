@@ -1,4 +1,5 @@
 import { FormEditableTable } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type QuickPaymentTableType = {
   account: string;
@@ -6,18 +7,20 @@ type QuickPaymentTableType = {
 };
 
 export const QuickPaymentTable = () => {
+  const { t } = useTranslation();
+
   return (
     <FormEditableTable<QuickPaymentTableType>
       name="data"
       columns={[
         {
           accessor: 'account',
-          header: 'Account',
+          header: t['accountingQuickPaymentFormTableAccount'],
           cellWidth: 'auto',
         },
         {
           accessor: 'amount',
-          header: 'Amount',
+          header: t['accountingQuickPaymentFormTableAmount'],
           isNumeric: true,
         },
       ]}

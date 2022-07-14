@@ -1,6 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { FormEditableTable } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type PurchaseTableType = {
   product_id: string;
@@ -27,6 +28,8 @@ const search_options = [
 ];
 
 export const PurchaseTable = () => {
+  const { t } = useTranslation();
+
   const { watch } = useFormContext();
 
   const addToInventory = watch('addToInventory');
@@ -34,45 +37,45 @@ export const PurchaseTable = () => {
   const tableColumns = [
     {
       accessor: 'product_id',
-      header: 'Product',
+      header: t['accountingPurchaseTableProduct'],
       cellWidth: 'auto',
       fieldType: 'search',
       searchOptions: search_options,
     },
     {
       accessor: 'quantity',
-      header: 'Quantity',
+      header: t['accountingPurchaseTableQuantity'],
       isNumeric: true,
     },
     {
       accessor: 'rate',
-      header: 'Rate',
+      header: t['accountingPurchaseTableRate'],
       isNumeric: true,
     },
     {
       accessor: 'tax',
-      header: 'Tax',
+      header: t['accountingPurchaseTableTax'],
       isNumeric: true,
       fieldType: 'percentage',
     },
     {
       accessor: 'amount',
-      header: 'Amount',
+      header: t['accountingPurchaseTableAmount'],
       isNumeric: true,
 
-      accessorFn: (row) =>
+      accessorFn: (row: PurchaseTableType) =>
         row.quantity * row.rate + (row.quantity * row.rate * row.tax) / 100,
     },
     {
       accessor: 'product_description',
-      header: 'Product Description',
+      header: t['accountingPurchaseTableProductDescription'],
       hidden: true,
 
       fieldType: 'textarea',
     },
     {
       accessor: 'purchase_ledger',
-      header: 'Purchase Ledger',
+      header: t['accountingPurchaseTablePurchaseLedger'],
       hidden: true,
       fieldType: 'select',
     },
@@ -88,7 +91,7 @@ export const PurchaseTable = () => {
                 ...tableColumns,
                 {
                   accessor: 'warehouse_partition',
-                  header: 'Warehouse Partition',
+                  header: t['accountingPurchaseTableWarehousePartition'],
                   hidden: true,
                   fieldType: 'select',
                 },
