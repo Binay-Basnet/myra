@@ -1,9 +1,7 @@
-import React from 'react';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 
@@ -12,7 +10,6 @@ import {
   SubHeadingText,
   SubText,
   TextBoxContainer,
-  TopText,
 } from '../formui';
 const unitOptions = [
   {
@@ -49,10 +46,12 @@ export const MaximumTenure = () => {
   const maximumTenure = watch('enablemaximumTenure');
 
   const maxTenureUnit = watch('maximumTenureUnit');
+
   useEffect(() => {
     resetField('maximumTenureNumber');
     setRightElement(maxTenureUnit);
   }, [maxTenureUnit]);
+
   return (
     <BoxContainer>
       <Box display={'flex'} justifyContent="space-between">

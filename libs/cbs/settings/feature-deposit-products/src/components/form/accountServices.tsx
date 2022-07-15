@@ -11,6 +11,7 @@ import {
 import { FormEditableTable, FormInput, FormSelect } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Icon } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 // import { useTranslation } from '@coop/shared/utils';
 import { SubText, TextBoxContainer, TopText } from '../formui';
@@ -89,7 +90,7 @@ const AddServiceCharge = ({
 };
 
 export const AccountServicesCharge = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const {
     fields: accountServicesFields,
     append: accountServicesAppend,
@@ -102,7 +103,6 @@ export const AccountServicesCharge = () => {
 
   const depositNature = watch('nameOfDepositProduct');
 
-  console.log(depositNature);
   return (
     <GroupContainer
       scrollMarginTop={'200px'}
@@ -144,25 +144,25 @@ export const AccountServicesCharge = () => {
       {depositNature === 'recurringSaving' && (
         <FormEditableTable<AccountServiceTable>
           name="data"
+          debug={false}
           columns={[
             {
               accessor: 'serviceName',
-              header: 'Service Name',
+              header: t['depositProductAccServiceTableServiceName'],
               fieldType: 'select',
               cellWidth: 'auto',
-
               selectOptions: service_name,
             },
             {
               accessor: 'ledgerName',
-              header: 'Ledger Name',
+              header: t['depositProductAccServiceTableServiceName'],
               fieldType: 'select',
               cellWidth: 'auto',
               selectOptions: ledger_name,
             },
             {
               accessor: 'amount',
-              header: 'Amount',
+              header: t['depositProductAccServiceTableAmount'],
               cellWidth: 'auto',
               isNumeric: true,
             },
