@@ -43,7 +43,6 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
           currentLoc.longitude
         );
         const address = data?.data?.address;
-        console.log('address', address);
         setAddress(
           `${address?.amenity ? address?.amenity + ', ' : ''}${
             address?.road ? address?.road + ', ' : ''
