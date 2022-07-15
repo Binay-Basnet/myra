@@ -1854,7 +1854,7 @@ const en: Record<string, string> = {
   warehouseTransferNewWarehouseTransfer: 'New Warehouse Transfer',
   warehouseTransferProduct: 'Product',
   warehouseTransfertableQuantity: 'Quantity',
-  warehouseTransfertableDescription: 'Quantity',
+  warehouseTransfertableDescription: 'Description',
   // warehouseTransferDate: 'Date',
   warehouseTransferEntryNo: 'Entry No',
   warehouseTransferReference: 'Reference',
@@ -2441,6 +2441,8 @@ const en: Record<string, string> = {
   accoutnOpenLadderRateInfo: 'Ladder Rate Info: ',
   accountOpenUnit: 'Unit',
   accountOpenTenure: 'Tenure',
+  //settings general sidebar
+  settingsSideBarValuator: 'Valuator',
 };
 
 export default en;

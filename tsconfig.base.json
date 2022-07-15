@@ -81,6 +81,9 @@
       "@coop/cbs/settings/ui-layout": [
         "libs/cbs/settings/ui-layout/src/index.ts"
       ],
+      "@coop/cbs/settings/valuator": [
+        "libs/cbs/settings/feature-valuator/src/index.ts"
+      ],
       "@coop/inventory/inventory": [
         "libs/inventory/feature-inventory/src/index.ts"
       ],

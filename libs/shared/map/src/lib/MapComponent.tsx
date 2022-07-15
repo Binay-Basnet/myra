@@ -57,16 +57,15 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
       }
     };
 
-    if (hasClickedModal) {
-      getPermanentAddress();
-    }
+    // if (hasClickedModal) {
+    getPermanentAddress();
+    // }
   }, [JSON.stringify(currentLoc)]);
 
   const reverseGeoCodeAddress = (lat: number, lon: number) =>
     axios.get(
       `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
     );
-
   return (
     <Box display="flex" flexDir="column" gap="s20">
       <Button
