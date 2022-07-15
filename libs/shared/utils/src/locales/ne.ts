@@ -2378,6 +2378,9 @@ const ne: Record<string, string> = {
   CustomerPaymentAmount: 'Amount',
   CustomerPaymentLeftTo: 'Left to Allocate',
   CustomerPaymentThis: 'This Allocation',
+
+  //settings general sidebar
+  settingsSideBarValuator: 'Valuator',
 };
 
 export default ne;

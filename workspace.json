@@ -27,6 +27,7 @@
     "cbs-settings-feature-member": "libs/cbs/settings/feature-member",
     "cbs-settings-feature-organization": "libs/cbs/settings/feature-organization",
     "cbs-settings-feature-share": "libs/cbs/settings/feature-share",
+    "cbs-settings-feature-valuator": "libs/cbs/settings/feature-valuator",
     "cbs-settings-ui-layout": "libs/cbs/settings/ui-layout",
     "inventory-ui-layout": "libs/inventory/ui-layout",
     "myra": "apps/myra",
