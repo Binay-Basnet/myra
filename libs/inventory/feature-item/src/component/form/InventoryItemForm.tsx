@@ -38,6 +38,11 @@ interface IVariantProduct {
   removeVariantProduct: () => void;
 }
 
+interface IVariantMap {
+  variantName: string;
+  options: string;
+}
+
 const VariantProduct = ({ index, removeVariantProduct }: IVariantProduct) => {
   const { t } = useTranslation();
   return (
@@ -76,24 +81,30 @@ export const InventoryItemForm = () => {
   const { t } = useTranslation();
   const [addnInfo, setAddnInfo] = useState(false);
   const methods = useFormContext();
-  const { watch } = methods;
+  const { watch, setValue } = methods;
   const productInfo = watch('productInfo');
   const {
     fields: variantProducts,
     append: variantProductAppend,
     remove: variantProductRemove,
-  } = useFieldArray({ name: 'detailsOfDirectors' });
+  } = useFieldArray({ name: 'variantProduct' });
 
   const productInfoList = [
     { label: t['invItemSimpleProduct'], value: 'simpleProduct' },
     { label: t['invItemVariantProduct'], value: 'variantProduct' },
   ];
 
-  const variantList = variantProducts.map((item, index) => {
-    const name = watch(`variantProduct.${index}.variantName`);
-    const options = watch(`variantProduct.${index}.options`);
-    return { variantName: name, variantOptions: options };
-  });
+  const generate = () => {
+    const itemName = watch('itemName');
+    const itemCode = watch('itemCode');
+    const variantProduct = watch('variantProduct');
+    setValue(
+      'data',
+      variantProduct.map((item: IVariantMap) => {
+        return { sku: itemCode, itemName: `${itemName}-${item.options}` };
+      })
+    );
+  };
 
   return (
     <Box
@@ -106,17 +117,26 @@ export const InventoryItemForm = () => {
     >
       <Grid templateColumns="repeat(3,1fr)" gap="s20">
         <GridItem colSpan={2}>
-          <FormInput
-            type="text"
-            name="name"
-            label={t['invItemPrimaryUnit']}
+          <FormSelect
+            name="itemName"
+            options={[
+              {
+                label: 'Rice',
+                value: 'rice',
+              },
+              {
+                label: 'Pizza',
+                value: 'pizze',
+              },
+            ]}
+            label={t['invItemName']}
             placeholder={t['invItemSelectItem']}
           />
         </GridItem>
         <GridItem>
           <FormInput
             type="text"
-            name="item"
+            name="itemCode"
             label={t['invItemCode']}
             placeholder={t['invItemCode']}
           />
@@ -239,7 +259,7 @@ export const InventoryItemForm = () => {
                       id="newDetailButton"
                       alignSelf="start"
                       onClick={() => {
-                        console.log(variantList);
+                        generate();
                       }}
                     >
                       {t['generate']}
@@ -254,23 +274,24 @@ export const InventoryItemForm = () => {
 
           <FormEditableTable<VarinatProductTable>
             name="data"
+            debug={false}
             columns={[
               {
                 accessor: 'sku',
-                header: 'SKU',
+                header: t['inventoryItemTableSKU'],
               },
               {
                 accessor: 'itemName',
-                header: 'Item Name',
+                header: t['inventoryItemTableItemName'],
               },
               {
                 accessor: 'sellingPrice',
-                header: 'Selling Price',
+                header: t['inventoryItemTableSellingPrice'],
                 isNumeric: true,
               },
               {
                 accessor: 'purchasePrice',
-                header: 'Purchase Price',
+                header: t['inventoryItemTablePurchasePrice'],
                 isNumeric: true,
               },
             ]}
