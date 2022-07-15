@@ -1854,7 +1854,7 @@ const en: Record<string, string> = {
   warehouseTransferNewWarehouseTransfer: 'New Warehouse Transfer',
   warehouseTransferProduct: 'Product',
   warehouseTransfertableQuantity: 'Quantity',
-  warehouseTransfertableDescription: 'Quantity',
+  warehouseTransfertableDescription: 'Description',
   // warehouseTransferDate: 'Date',
   warehouseTransferEntryNo: 'Entry No',
   warehouseTransferReference: 'Reference',

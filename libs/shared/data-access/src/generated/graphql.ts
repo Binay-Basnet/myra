@@ -1470,6 +1470,7 @@ export type EBankingCombined = {
   recentTransactions: Array<Maybe<Transactions>>;
   services: Array<Maybe<Services>>;
   share: EbankingShare;
+  utilityPayments: Array<Maybe<UtilityPayments>>;
 };
 
 export type EBankingComplaintHistory = {
@@ -1955,6 +1956,7 @@ export type EBankingQuery = {
   services?: Maybe<Array<Maybe<Services>>>;
   share?: Maybe<EBankingShareQuery>;
   transaction?: Maybe<EBankingTransactionQuery>;
+  utilityPayments?: Maybe<Array<Maybe<UtilityPayments>>>;
 };
 
 export type EBankingRegisterComplaintInput = {
@@ -5120,9 +5122,11 @@ export type ServerError = {
 };
 
 export type Services = {
+  enabled: Scalars['Boolean'];
   icon: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
+  service_id: Scalars['String'];
 };
 
 export type SettingsMutation = {
@@ -5522,6 +5526,14 @@ export type UtilityPaymentResult = {
   error?: Maybe<UtilityPaymentError>;
   record?: Maybe<UtilityPaymentRecord>;
   transactionID?: Maybe<Scalars['ID']>;
+};
+
+export type UtilityPayments = {
+  enabled: Scalars['Boolean'];
+  icon: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  service_id: Scalars['String'];
 };
 
 export type ValidationError = {
