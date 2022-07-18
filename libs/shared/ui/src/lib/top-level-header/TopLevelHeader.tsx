@@ -9,13 +9,10 @@ import { RiHistoryFill } from 'react-icons/ri';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import {
-  forwardRef,
   Image,
-  // Input as ChakraInput,
   Input,
   InputGroup,
   InputLeftElement,
-  InputProps,
   InputRightElement,
   Text,
 } from '@chakra-ui/react';
