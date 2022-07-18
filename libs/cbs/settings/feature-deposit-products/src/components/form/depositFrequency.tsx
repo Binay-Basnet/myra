@@ -2,6 +2,7 @@
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   BoxContainer,
@@ -10,62 +11,62 @@ import {
   TextBoxContainer,
   TopText,
 } from '../formui';
-const DepositFrequencyOptions = [
-  {
-    label: 'Daily',
-    value: 'Daily',
-  },
-  {
-    label: 'Weekly',
-    value: 'Weekly',
-  },
-  {
-    label: 'Monthly',
-    value: 'Monthly',
-  },
-  {
-    label: 'Yearly',
-    value: 'Yearly',
-  },
-];
 
-const enableSwitch = [
-  {
-    label: 'Enable',
-    value: 'enable',
-  },
-  {
-    label: 'Disable',
-    value: 'disable',
-  },
-];
 export const DepositFrequency = ({ watch }: any) => {
   const penalty = watch('enablePenalty');
   const rebate = watch('enableRebate');
+  const { t } = useTranslation();
+
+  const DepositFrequencyOptions = [
+    {
+      label: t['daily'],
+      value: 'Daily',
+    },
+    {
+      label: t['weekly'],
+      value: 'Weekly',
+    },
+    {
+      label: t['monthly'],
+      value: 'Monthly',
+    },
+    {
+      label: t['yearly'],
+      value: 'Yearly',
+    },
+  ];
+
+  const enableSwitch = [
+    {
+      label: t['enable'],
+      value: 'enable',
+    },
+    {
+      label: t['disable'],
+      value: 'disable',
+    },
+  ];
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Deposit Amount Limit</TopText>
+        <TopText>{t['depositProductDepositAmountLimit']} </TopText>
       </TextBoxContainer>
       <InputGroupContainer>
         <FormInput
           name="minimunBalaneAmount"
-          label="Minimum Amount"
-          placeholder="Enter Minimum Amount"
+          label={t['depositProductMinimumAmount']}
+          placeholder={t['depositProductEnterMinimumAmount']}
         />
         <FormInput
           name="maximumBalaneAmount"
-          label="Maximum Amount"
-          placeholder="Enter Maximum Amount"
+          label={t['depositProductMaximumAmount']}
+          placeholder={t['depositProductEnterMaximumAmount']}
         />
       </InputGroupContainer>
 
       <TextBoxContainer>
-        <TopText>Deposit Frequency</TopText>
-        <SubText>
-          Select deposit frequency. Further details have to be added during
-          account opening.
-        </SubText>
+        <TopText> {t['depositProductDepositFrequency']} </TopText>
+        <SubText>{t['depositProductSelectdepositfrequency']}</SubText>
       </TextBoxContainer>
       <FormSwitchTab
         name={'depositFrequency'}
@@ -73,8 +74,8 @@ export const DepositFrequency = ({ watch }: any) => {
       />
       <Box display={'flex'} justifyContent="space-between">
         <TextBoxContainer>
-          <SubHeadingText>Penalty</SubHeadingText>
-          <SubText>Enter Penalty details.</SubText>
+          <SubHeadingText>{t['depositProductpenalty']} </SubHeadingText>
+          <SubText>{t['depositProductEnterPenaltydetails']} </SubText>
         </TextBoxContainer>
         <FormSwitchTab name={'enablePenalty'} options={enableSwitch} />
       </Box>
@@ -89,25 +90,25 @@ export const DepositFrequency = ({ watch }: any) => {
             <FormInput
               name="dayFromTheEndPenalty"
               type="number"
-              label="Day from end date"
-              placeholder="Day from end date"
+              label={t['depositProductDayfromenddate']}
+              placeholder={t['depositProductDayfromenddate']}
             />
             <FormInput
               name="minimumAmount"
               type="number"
-              label="Minimum Amount"
-              placeholder="Minimum Amount"
+              label={t['depositProductMinimumAmount']}
+              placeholder={t['depositProductEnterMinimumAmount']}
             />
             <FormInput
               name="flatRatePenalty"
               type="number"
-              label="Flat-rate Penalty"
-              placeholder="Flat-rate penalty"
+              label={t['depositProductFlatratePenalty']}
+              placeholder={t['depositProductFlatratePenalty']}
             />
             <FormInput
               name="penaltyPercentage"
               type="number"
-              label="Penalty"
+              label={t['depositProductpenalty']}
               textAlign={'right'}
               placeholder="0.00"
               rightElement={
@@ -119,16 +120,16 @@ export const DepositFrequency = ({ watch }: any) => {
             <FormInput
               name="penaltyAmount"
               type="number"
-              label="Penalty Amount"
-              placeholder="Penalty Amount"
+              label={t['depositProductPenaltyAmount']}
+              placeholder={t['depositProductPenaltyAmount']}
             />
           </InputGroupContainer>
         </BoxContainer>
       )}
       <Box display={'flex'} justifyContent="space-between">
         <TextBoxContainer>
-          <SubHeadingText>Rebate</SubHeadingText>
-          <SubText>Enter Rebate details.</SubText>
+          <SubHeadingText>{t['depositProductRebate']} </SubHeadingText>
+          <SubText>{t['depositProductEnterRebatedetails']} </SubText>
         </TextBoxContainer>
         <FormSwitchTab name={'enableRebate'} options={enableSwitch} />
       </Box>
@@ -143,20 +144,20 @@ export const DepositFrequency = ({ watch }: any) => {
             <FormInput
               name="dayFromTheEndRebate"
               type="number"
-              label="Day from end date"
-              placeholder="Day from end date"
+              label={t['depositProductDaysfromenddate']}
+              placeholder={t['depositProductDaysfromenddate']}
             />
             <FormInput
               name="rebateAmount"
               type="number"
-              label="Rebate Amount"
-              placeholder="Rebate Amount"
+              label={t['depositProductRebateAmount']}
+              placeholder={t['depositProductRebateAmount']}
             />
 
             <FormInput
               name="percentageRebate"
               type="number"
-              label="Percentage of Deposited Amount"
+              label={t['depositProductPercentageDepositedAmount']}
               textAlign={'right'}
               placeholder="0.00"
               rightElement={
@@ -168,9 +169,9 @@ export const DepositFrequency = ({ watch }: any) => {
             <FormInput
               name="nosOfInstallment"
               type="number"
-              label="No. of Installment"
+              label={t['depositProductNoInstallment']}
               placeholder="0"
-              helperText="Enter Number of Installments"
+              helperText={t['depositProductEnterNumberInstallments']}
               textAlign={'right'}
             />
           </InputGroupContainer>
