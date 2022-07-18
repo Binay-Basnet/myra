@@ -32,6 +32,7 @@
     "cbs-settings-ui-layout": "libs/cbs/settings/ui-layout",
     "ebanking": "apps/ebanking",
     "ebanking-e2e": "apps/ebanking-e2e",
+    "ebanking-ui-layout": "libs/ebanking/ui-layout",
     "inventory-ui-layout": "libs/inventory/ui-layout",
     "myra": "apps/myra",
     "myra-components": "libs/myra/components",
