@@ -1,12 +1,14 @@
-import { useEffect, useMemo } from 'react';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { useMemo } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/neosys-admin/layout';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
+  FormEmailInput,
   FormFileInput,
   FormInput,
   FormMap,
+  FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
 import { Box, Divider, Grid, GridItem, SlugInput, Text } from '@coop/shared/ui';
@@ -58,8 +60,7 @@ export const NeosysClientForm = () => {
         <Box display="flex" flexDirection="column" gap="s32" p="s20">
           <Box display="flex" flexDirection="column" gap="s32">
             <InputGroupContainer>
-              <FormInput
-                type="text"
+              <FormSelect
                 name="orgnanizationType"
                 label={t['neoClientOrganizationType']}
                 placeholder={t['neoClientOrganizationType']}
@@ -243,26 +244,37 @@ export const NeosysClientForm = () => {
             </Box>
           </Box>
 
-          <InputGroupContainer>
-            <FormInput
-              type="text"
-              name="name"
-              label={t['neoClientName']}
-              placeholder={t['neoClientName']}
-            />
-            <FormInput
-              type="text"
-              name="emailAddress"
-              label={t['neoClientEmailAddress']}
-              placeholder={t['neoClientEmailAddress']}
-            />
-            <FormInput
-              type="text"
-              name="phoneNumber"
-              label={t['neoClientPhoneNumber']}
-              placeholder={t['neoClientPhoneNumber']}
-            />
-          </InputGroupContainer>
+          <Box display="flex" flexDirection="column" gap="s16">
+            <Text
+              fontSize="r1"
+              fontWeight="SemiBold"
+              color="neutralColorLight.Gray-60"
+            >
+              {'Main Contact Person'}
+            </Text>
+            <InputGroupContainer>
+              <FormInput
+                type="text"
+                name="name"
+                label={t['neoClientName']}
+                placeholder={t['neoClientName']}
+              />
+
+              <FormPhoneNumber
+                // type="text"
+                name="phoneNumber"
+                label={t['neoClientPhoneNumber']}
+                placeholder={t['neoClientPhoneNumber']}
+              />
+
+              <FormEmailInput
+                // type="email"
+                name="emailAddress"
+                label={t['neoClientEmailAddress']}
+                placeholder={t['neoClientEmailAddress']}
+              />
+            </InputGroupContainer>
+          </Box>
         </Box>
       </form>
     </FormProvider>
