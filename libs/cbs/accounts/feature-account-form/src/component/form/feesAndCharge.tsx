@@ -1,0 +1,128 @@
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
+
+export const FeesAndCharge = () => {
+  const { t } = useTranslation();
+
+  return (
+    <GroupContainer
+      scrollMarginTop={'200px'}
+      display="flex"
+      flexDirection={'column'}
+      gap="s16"
+    >
+      <Box p="s20" background="neutralColorLight.Gray-0">
+        <Box mb="s16">
+          <Text
+            fontSize="r1"
+            color="neutralColorLight.Gray-80"
+            fontWeight="SemiBold"
+          >
+            {t['accFeesChargesSummary']}
+          </Text>
+          <Text
+            fontSize="s2"
+            color="neutralColorLight.Gray-80"
+            fontWeight="Regular"
+          >
+            {t['accAllchargesandfees']}
+          </Text>
+        </Box>
+
+        <Box
+          p="s16"
+          background="background.500"
+          display="flex"
+          flexDirection="column"
+          gap="s10"
+        >
+          <Box
+            h="45px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Text
+              fontSize="s3"
+              color="neutralColorLight.Gray-60"
+              fontWeight="Medium"
+            >
+              {t['accFormCharge']}
+            </Text>
+            <Text
+              fontSize="r1"
+              color="neutralColorLight.Gray-60"
+              fontWeight="SemiBold"
+            >
+              210.00
+            </Text>
+          </Box>
+          <Box
+            h="45px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Text
+              fontSize="s3"
+              color="neutralColorLight.Gray-60"
+              fontWeight="Medium"
+            >
+              {t['accApplicationProcessingFees']}
+            </Text>
+            <Text
+              fontSize="r1"
+              color="neutralColorLight.Gray-60"
+              fontWeight="SemiBold"
+            >
+              450.00
+            </Text>
+          </Box>
+          <Box
+            h="45px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Text
+              fontSize="s3"
+              color="neutralColorLight.Gray-60"
+              fontWeight="Medium"
+            >
+              {t['accSupportFees']}
+            </Text>
+            <Text
+              fontSize="r1"
+              color="neutralColorLight.Gray-60"
+              fontWeight="SemiBold"
+            >
+              5,000.00
+            </Text>
+          </Box>
+          <Box
+            h="45px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Text
+              fontSize="s3"
+              color="neutralColorLight.Gray-80"
+              fontWeight="SemiBold"
+            >
+              {t['accTotalAmount']}
+            </Text>
+            <Text
+              fontSize="r1"
+              color="neutralColorLight.Gray-80"
+              fontWeight="SemiBold"
+            >
+              5,660.00
+            </Text>
+          </Box>
+        </Box>
+      </Box>
+    </GroupContainer>
+  );
+};

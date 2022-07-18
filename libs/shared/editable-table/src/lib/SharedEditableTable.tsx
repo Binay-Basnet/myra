@@ -2,6 +2,7 @@ import React, {
   Dispatch,
   Fragment,
   SetStateAction,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -61,6 +62,7 @@ export interface EditableTableProps<
   T extends RecordWithId & Record<string, string | number>
 > {
   defaultData?: T[];
+
   columns: Column<T>[];
 
   canDeleteRow?: boolean;
@@ -82,9 +84,17 @@ export function EditableTable<
   defaultData,
   canDeleteRow = true,
   onChange,
-  debug = false,
+  debug = true,
 }: EditableTableProps<T>) {
   const [currentData, setCurrentData] = useState(defaultData ?? []);
+  const stringifiedData = JSON.stringify(currentData);
+  const stringifiedDefaultData = JSON.stringify(defaultData)?.length ?? 0;
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(currentData);
+    }
+  }, [stringifiedData]);
 
   useEffect(() => {
     setCurrentData((prev) =>
@@ -100,10 +110,19 @@ export function EditableTable<
   }, [currentData.length]);
 
   useEffect(() => {
-    if (onChange) {
-      onChange(currentData);
+    if (defaultData) {
+      setCurrentData(
+        defaultData?.map((item) =>
+          item._id
+            ? item
+            : {
+                ...item,
+                _id: uniqueId('row_'),
+              }
+        )
+      );
     }
-  }, [JSON.stringify(currentData)]);
+  }, [stringifiedDefaultData]);
 
   return (
     <>

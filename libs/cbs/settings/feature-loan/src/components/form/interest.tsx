@@ -1,5 +1,3 @@
-import React from 'react';
-
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
@@ -8,7 +6,6 @@ import { Box, Text } from '@coop/shared/ui';
 import {
   BoxContainer,
   SubHeadingText,
-  SubText,
   TextBoxContainer,
   TopText,
 } from '../formui';
@@ -30,7 +27,11 @@ export const Interest = () => {
           label="Mininum Rate"
           textAlign={'right'}
           placeholder="0.00"
-          rightElement={'%'}
+          rightElement={
+            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+              %
+            </Text>
+          }
         />
         <FormInput
           name="maximumInterestRate"
@@ -38,7 +39,11 @@ export const Interest = () => {
           label="Maximum Rate"
           textAlign={'right'}
           placeholder="0.00"
-          rightElement={'%'}
+          rightElement={
+            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+              %
+            </Text>
+          }
         />
         <FormInput
           name="defaultInterestRate"
@@ -46,7 +51,11 @@ export const Interest = () => {
           label="Default Rate"
           textAlign={'right'}
           placeholder="0.00"
-          rightElement={'%'}
+          rightElement={
+            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+              %
+            </Text>
+          }
         />
         <FormInput
           name="ceoAuthenticationRate"
@@ -54,7 +63,11 @@ export const Interest = () => {
           label="CEO Authority"
           textAlign={'right'}
           placeholder="0.00"
-          rightElement={'%'}
+          rightElement={
+            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+              %
+            </Text>
+          }
         />
         <FormInput
           name="boardAuthenticationRate"
@@ -62,7 +75,11 @@ export const Interest = () => {
           label="Board Authority"
           textAlign={'right'}
           placeholder="0.00"
-          rightElement={'%'}
+          rightElement={
+            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+              %
+            </Text>
+          }
         />
         <FormSelect
           name="postingFrequency"

@@ -1,9 +1,8 @@
-import React from 'react';
-import { Control, Controller, Path, useFormContext } from 'react-hook-form';
+import { useCallback } from 'react';
+import { Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 
 import { EditableTable, EditableTableProps } from '@coop/shared/editable-table';
-import { Input, InputProps } from '@coop/shared/ui';
 
 interface RecordWithId {
   _id?: number;

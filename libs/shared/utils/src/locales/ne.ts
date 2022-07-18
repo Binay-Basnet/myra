@@ -1836,7 +1836,7 @@ const ne: Record<string, string> = {
   warehouseTransferNewWarehouseTransfer: 'New Warehouse Transfer',
   warehouseTransferProduct: 'Product',
   warehouseTransfertableQuantity: 'Quantity',
-  warehouseTransfertableDescription: 'Quantity',
+  warehouseTransfertableDescription: 'Description',
   // warehouseTransferDate: 'Date',
   warehouseTransferEntryNo: 'Entry No',
   warehouseTransferReference: 'Reference',
@@ -2379,6 +2379,39 @@ const ne: Record<string, string> = {
   CustomerPaymentAmount: 'Amount',
   CustomerPaymentLeftTo: 'Left to Allocate',
   CustomerPaymentThis: 'This Allocation',
+
+  inventoryAdjustmentTableProduct: 'Product',
+  inventoryAdjustmentTableQuantity: 'Quantity',
+  inventoryAdjustmentTableRate: 'Rate',
+  inventoryAdjustmentTableTotalAmount: 'Total Amount',
+  inventoryAdjustmentTableDescription: 'Description',
+
+  inventoryItemTableSKU: 'SKU',
+  inventoryItemTableItemName: 'Item Name',
+  inventoryItemTableSellingPrice: 'Selling Price',
+  inventoryItemTablePurchasePrice: 'Purchase Price',
+
+  depositProductAccServiceTableServiceName: 'Service Name',
+  depositProductAccServiceTableLedgerName: 'Ledger Name',
+  depositProductAccServiceTableAmount: 'Amount',
+
+  depositProductInterestType: 'Type',
+  depositProductInterestLadderAmount: 'Ladder Amount',
+  depositProductInterestLadderRate: 'Ladder Rate',
+
+  loanAccServiceTableServiceName: 'Service Name',
+  loanAccServiceTableLedgerName: 'Ledger Name',
+  loanAccServiceTableAmount: 'Amount',
+
+  accountOpenSelectAgent: 'Select Agent',
+  accountOpenCEOAuthority: 'CEO Authority',
+  accountOpenBoardAuthority: 'Board Authority',
+  accountOpenInterestRate: 'Interest Rate',
+  accoutnOpenLadderRateInfo: 'Ladder Rate Info:',
+  accountOpenUnit: 'Unit',
+  accountOpenTenure: 'Tenure',
+  //settings general sidebar
+  settingsSideBarValuator: 'Valuator',
 };
 
 export default ne;

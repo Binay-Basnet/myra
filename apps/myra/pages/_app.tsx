@@ -10,6 +10,7 @@ import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 import { Snipping } from '@raralabs/web-feedback';
 
 import { Login } from '@coop/myra/components';
+import { Box, Button, FloatingShortcutButton } from '@coop/shared/ui';
 import { store, theme } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
@@ -94,6 +95,15 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
               <Login />
             </main>
           )}
+          <Box
+            position="fixed"
+            bottom={'40px'}
+            right={'32px'}
+            display="flex"
+            flexDirection={'row-reverse'}
+          >
+            <FloatingShortcutButton />
+          </Box>
         </ChakraProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>
