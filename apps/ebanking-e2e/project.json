@@ -1,0 +1,28 @@
+{
+  "root": "apps/ebanking-e2e",
+  "sourceRoot": "apps/ebanking-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/ebanking-e2e/cypress.json",
+        "devServerTarget": "ebanking:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "ebanking:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/ebanking-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["ebanking"]
+}
