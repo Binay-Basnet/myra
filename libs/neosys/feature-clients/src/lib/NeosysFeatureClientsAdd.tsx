@@ -25,7 +25,7 @@ export function NeosysFeatureClientsAdd(props: NeosysFeatureClientsAddProps) {
   return (
     <>
       <Container minW="container.lg" height="fit-content" paddingBottom="55px">
-        <Box margin="0px auto" bg="gray.0" width="100%" zIndex="10">
+        <Box margin="0px auto" bg="gray.0" width="100%">
           <Box
             height="60px"
             display="flex"
@@ -34,6 +34,9 @@ export function NeosysFeatureClientsAdd(props: NeosysFeatureClientsAddProps) {
             px="5"
             background="white"
             borderBottom="1px solid #E6E6E6"
+            position="sticky"
+            top="110px"
+            zIndex="10"
           >
             <Text fontSize="r2" fontWeight="SemiBold">
               {t['neoClientNewUser']}
@@ -41,7 +44,7 @@ export function NeosysFeatureClientsAdd(props: NeosysFeatureClientsAddProps) {
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<IoCloseOutline />}
+              icon={<Icon as={IoCloseOutline} size="md" />}
               onClick={() => router.back()}
             />
           </Box>
