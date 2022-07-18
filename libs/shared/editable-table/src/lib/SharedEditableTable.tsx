@@ -84,7 +84,7 @@ export function EditableTable<
   defaultData,
   canDeleteRow = true,
   onChange,
-  debug = true,
+  debug = false,
 }: EditableTableProps<T>) {
   const [currentData, setCurrentData] = useState(defaultData ?? []);
   const stringifiedData = JSON.stringify(currentData);
