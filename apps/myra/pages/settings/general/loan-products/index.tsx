@@ -1,19 +1,11 @@
-// import { CbsSettingsFeatureLoanProducts } from '@coop/cbs/settings/loan-products';
-import {
-  SettingsGeneralLayout,
-  SettingsLayout,
-} from '@coop/cbs/settings/ui-layout';
+import { SettingsLoanForm } from '@coop/cbs/settings//feature-loan';
+import { SettingsLayout } from '@coop/cbs/settings/ui-layout';
 
-const LoanProducts = () => {
-  return <div> loan Products</div>;
+const Loan = () => {
+  return <SettingsLoanForm />;
 };
 
-export default LoanProducts;
-
-LoanProducts.getLayout = function getLayout(page) {
-  return (
-    <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
-    </SettingsLayout>
-  );
+export default Loan;
+Loan.getLayout = function getLayout(page) {
+  return <SettingsLayout>{page}</SettingsLayout>;
 };
