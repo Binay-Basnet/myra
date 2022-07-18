@@ -72,7 +72,6 @@ export function FloatingShortcutButton(props: FloatingShortcutButtonProps) {
       <Popover placement="top-start" gutter={3}>
         <PopoverTrigger>
           <IconButton
-            mt="400px"
             aria-label="button"
             boxShadow={' 0px 4px 10px rgba(52, 60, 70, 0.1)'}
             icon={<BsQuestionLg color="black" />}
