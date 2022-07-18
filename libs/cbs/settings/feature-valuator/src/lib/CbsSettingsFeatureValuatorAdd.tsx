@@ -112,7 +112,7 @@ export function CbsSettingsFeatureValuatorAdd(
           borderBottom="1px solid #E6E6E6"
         >
           <Text fontSize="r2" fontWeight="SemiBold">
-            {'New Valuator'}
+            {t['settingsGeneralValuatorFormNewValuator']}
           </Text>
           <IconButton
             variant={'ghost'}
@@ -136,60 +136,84 @@ export function CbsSettingsFeatureValuatorAdd(
                 <ContainerWithDivider>
                   <Box display={'flex'} flexDirection="column" gap="s16">
                     <TextFields variant="tableHeader" color="gray.700">
-                      {'Valuator Setup'}
+                      {t['settingsGeneralValuatorFormValuatorSetup']}
                     </TextFields>
 
                     <InputGroupContainer>
                       <GridItem colSpan={2}>
                         <FormInput
                           name="valuatorName"
-                          label={'Valuator Name'}
-                          placeholder={'Valuator Name'}
+                          label={t['settingsGeneralValuatorFormValuatorName']}
+                          placeholder={
+                            t['settingsGeneralValuatorFormValuatorName']
+                          }
                         />
                       </GridItem>
 
                       <FormSelect
                         name="valuatorType"
-                        label={'Valuator Type'}
-                        placeholder={'Select Valuator Type'}
+                        label={t['settingsGeneralValuatorFormValuatorType']}
+                        placeholder={
+                          t['settingsGeneralValuatorFormSelectValuatorType']
+                        }
                       />
 
                       <FormInput
                         type="text"
                         name="valuatorId"
-                        label={'Valuator ID'}
-                        placeholder={'ID'}
+                        label={t['settingsGeneralValuatorFormValuatorID']}
+                        placeholder={t['settingsGeneralValuatorFormID']}
                       />
 
                       <FormSelect
                         name="academicQualification"
-                        label={'Academic Qualification'}
-                        placeholder={'Academic Qualification'}
+                        label={
+                          t['settingsGeneralValuatorFormAcademicQualification']
+                        }
+                        placeholder={
+                          t['settingsGeneralValuatorFormAcademicQualification']
+                        }
                       />
 
                       <FormInput
                         type="text"
                         name="valuationLicenseNo"
-                        label={'Valuation License No'}
-                        placeholder={'Valuation License No'}
+                        label={
+                          t['settingsGeneralValuatorFormValuationLicenseNo']
+                        }
+                        placeholder={
+                          t['settingsGeneralValuatorFormValuationLicenseNo']
+                        }
                       />
 
                       <FormInput
                         type="date"
                         name="valuatorLatestRenewalDate"
-                        label={'Valuator Latest Renewal Date'}
+                        label={
+                          t[
+                            'settingsGeneralValuatorFormValuatorLatestRenewalDate'
+                          ]
+                        }
                       />
 
                       <FormInput
                         type="date"
                         name="valuatorSaccosContractDate"
-                        label={'Valuator - SACCOS Contract Date'}
+                        label={
+                          t[
+                            'settingsGeneralValuatorFormValuatorSaccosContractDate'
+                          ]
+                        }
                       />
 
                       <FormInput
                         name="insurancePremiumPercent"
                         type="number"
-                        label="Insurance Premium Percent"
+                        label={
+                          t[
+                            'settingsGeneralValuatorFormInsurancePremiumPercent'
+                          ]
+                        }
                         textAlign={'right'}
                         placeholder="0.00"
                         rightElement={
@@ -207,46 +231,50 @@ export function CbsSettingsFeatureValuatorAdd(
 
                   <Box display={'flex'} flexDirection="column" gap="s16">
                     <TextFields variant="tableHeader" color="gray.700">
-                      {'Contact Details'}
+                      {t['settingsGeneralValuatorFormContactDetails']}
                     </TextFields>
 
                     <InputGroupContainer>
                       <FormPhoneNumber
                         name="mobileNo"
-                        label={'Mobile No'}
-                        placeholder={'Mobile No'}
+                        label={t['settingsGeneralValuatorFormMobileNo']}
+                        placeholder={t['settingsGeneralValuatorFormMobileNo']}
                       />
 
                       <FormPhoneNumber
                         name="phoneNo"
-                        label={'Phone No'}
-                        placeholder={'Phone No'}
+                        label={t['settingsGeneralValuatorFormPhoneNo']}
+                        placeholder={t['settingsGeneralValuatorFormPhoneNo']}
                       />
 
                       <FormEmailInput
                         name="email"
-                        label={'Email'}
-                        placeholder={'Email'}
+                        label={t['settingsGeneralValuatorFormEmail']}
+                        placeholder={t['settingsGeneralValuatorFormEmail']}
                       />
                     </InputGroupContainer>
                   </Box>
 
                   <Box display={'flex'} flexDirection="column" gap="s16">
                     <TextFields variant="tableHeader" color="gray.700">
-                      {'Address'}
+                      {t['settingsGeneralValuatorFormAddress']}
                     </TextFields>
                     <Box gap="s16" display={'flex'} flexDirection="column">
                       <InputGroupContainer>
                         <FormSelect
                           name="provinceId"
-                          label={t['kymIndProvince']}
-                          placeholder={t['kymIndSelectProvince']}
+                          label={t['settingsGeneralValuatorFormProvince']}
+                          placeholder={
+                            t['settingsGeneralValuatorFormSelectProvince']
+                          }
                           options={province}
                         />
                         <FormSelect
                           name="districtId"
-                          label={t['kymIndDistrict']}
-                          placeholder={t['kymIndSelectDistrict']}
+                          label={t['settingsGeneralValuatorFormDistrict']}
+                          placeholder={
+                            t['settingsGeneralValuatorFormSelectDistrict']
+                          }
                           options={districtList.map((d) => ({
                             label: d.name,
                             value: d.id,
@@ -254,8 +282,10 @@ export function CbsSettingsFeatureValuatorAdd(
                         />
                         <FormSelect
                           name="localGovernmentId"
-                          label={t['kymIndLocalGovernment']}
-                          placeholder={t['kymIndSelectLocalGovernment']}
+                          label={t['settingsGeneralValuatorFormLocalGoverment']}
+                          placeholder={
+                            t['settingsGeneralValuatorFormSelectLocalGoverment']
+                          }
                           options={localityList.map((d) => ({
                             label: d.name,
                             value: d.id,
@@ -264,8 +294,10 @@ export function CbsSettingsFeatureValuatorAdd(
 
                         <FormSelect
                           name="wardNo"
-                          label={t['kymIndWardNo']}
-                          placeholder={t['kymIndEnterWardNo']}
+                          label={t['settingsGeneralValuatorFormWardNo']}
+                          placeholder={
+                            t['settingsGeneralValuatorFormEnterWardNo']
+                          }
                           options={wardList.map((d) => ({
                             label: d,
                             value: d,
@@ -274,14 +306,18 @@ export function CbsSettingsFeatureValuatorAdd(
                         <FormInput
                           type="text"
                           name="locality"
-                          label={t['kymIndLocality']}
-                          placeholder={t['kymIndEnterLocality']}
+                          label={t['settingsGeneralValuatorFormLocality']}
+                          placeholder={
+                            t['settingsGeneralValuatorFormEnterLocality']
+                          }
                         />
                         <FormInput
                           type="text"
                           name="houseNo"
-                          label={'House No'}
-                          placeholder={'House No'}
+                          label={t['settingsGeneralValuatorFormHouseNo']}
+                          placeholder={
+                            t['settingsGeneralValuatorFormEnterHouseNo']
+                          }
                         />
                       </InputGroupContainer>
 
@@ -297,7 +333,7 @@ export function CbsSettingsFeatureValuatorAdd(
                       </Text> */}
 
                     <TextFields variant="tableHeader" color="gray.700">
-                      {'Documents Declaration'}
+                      {t['settingsGeneralValuatorFormDocumentsDeclaration']}
                     </TextFields>
 
                     <Grid
@@ -307,7 +343,11 @@ export function CbsSettingsFeatureValuatorAdd(
                     >
                       <FormFileInput
                         size="lg"
-                        label={'Valuator - SACCOS Contract Documents Upload '}
+                        label={
+                          t[
+                            'settingsGeneralValuatorFormDocumentDeclarationLabel'
+                          ]
+                        }
                         name="documents"
                       />
                     </Grid>

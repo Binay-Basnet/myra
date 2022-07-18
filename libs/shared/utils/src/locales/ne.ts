@@ -2412,6 +2412,52 @@ const ne: Record<string, string> = {
   accountOpenTenure: 'Tenure',
   //settings general sidebar
   settingsSideBarValuator: 'Valuator',
+
+  //settings general valuator
+  settingsGeneralValuatorValuator: 'Valuator',
+  settingsGeneralValuatorNewValuator: 'New Valuator',
+  settingsGeneralValuatorId: 'ID',
+  settingsGeneralValuatorValuatorName: 'Valuator Name',
+  settingsGeneralValuatorValuatorType: 'Valuator Type',
+  settingsGeneralValuatorAddress: 'Address',
+  settingsGeneralValuatorContractDate: 'Contract Date',
+
+  //settings general valuator form
+  settingsGeneralValuatorFormNewValuator: 'New Valuator',
+  settingsGeneralValuatorFormValuatorSetup: 'Valuator Setup',
+  settingsGeneralValuatorFormValuatorName: 'Valuator Name',
+  settingsGeneralValuatorFormValuatorType: 'Valuator Type',
+  settingsGeneralValuatorFormSelectValuatorType: 'Select Valuator Type',
+  settingsGeneralValuatorFormValuatorID: 'Valuator ID',
+  settingsGeneralValuatorFormID: 'ID',
+  settingsGeneralValuatorFormAcademicQualification: 'Academic Qualification',
+  settingsGeneralValuatorFormValuationLicenseNo: 'Valuation License No',
+  settingsGeneralValuatorFormValuatorLatestRenewalDate:
+    'Valuator Latest Renewal Date',
+  settingsGeneralValuatorFormValuatorSaccosContractDate:
+    'Valuator - SACCOS Contract Date',
+  settingsGeneralValuatorFormInsurancePremiumPercent:
+    'Insurance Premium Percent',
+  settingsGeneralValuatorFormContactDetails: 'Contact Details',
+  settingsGeneralValuatorFormMobileNo: 'Mobile No',
+  settingsGeneralValuatorFormPhoneNo: 'Phone No',
+  settingsGeneralValuatorFormEmail: 'Email',
+  settingsGeneralValuatorFormAddress: 'Address',
+  settingsGeneralValuatorFormProvince: 'Province',
+  settingsGeneralValuatorFormSelectProvince: 'Select Province',
+  settingsGeneralValuatorFormDistrict: 'District',
+  settingsGeneralValuatorFormSelectDistrict: 'Select District',
+  settingsGeneralValuatorFormLocalGoverment: 'Local Government',
+  settingsGeneralValuatorFormSelectLocalGoverment: 'Select Local Government',
+  settingsGeneralValuatorFormWardNo: 'Ward No',
+  settingsGeneralValuatorFormEnterWardNo: 'Enter Ward No',
+  settingsGeneralValuatorFormLocality: 'Locality',
+  settingsGeneralValuatorFormEnterLocality: 'Enter Locality',
+  settingsGeneralValuatorFormHouseNo: 'House No',
+  settingsGeneralValuatorFormEnterHouseNo: 'Enter House No',
+  settingsGeneralValuatorFormDocumentsDeclaration: 'Documents Declaration',
+  settingsGeneralValuatorFormDocumentDeclarationLabel:
+    'Valuator - SACCOS Contract Documents Upload',
 };
 
 export default ne;

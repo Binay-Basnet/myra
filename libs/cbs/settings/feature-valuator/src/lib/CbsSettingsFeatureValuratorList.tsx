@@ -57,12 +57,12 @@ export const CbsSettingsFeatureValuatorList = (
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'ID',
+        header: t['settingsGeneralValuatorId'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Valuator Name',
+        header: t['settingsGeneralValuatorValuatorName'],
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
@@ -88,19 +88,19 @@ export const CbsSettingsFeatureValuatorList = (
         },
       },
       {
-        header: 'Valuator Type',
+        header: t['settingsGeneralValuatorValuatorType'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Address',
+        header: t['settingsGeneralValuatorAddress'],
         accessorFn: (row) =>
           `${row?.node?.address?.locality?.local}, ${row?.node?.address?.district?.local}, ${row?.node?.address?.state?.local}`,
       },
       {
-        header: 'Contract Date',
+        header: t['settingsGeneralValuatorContractDate'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
@@ -124,8 +124,8 @@ export const CbsSettingsFeatureValuatorList = (
   return (
     <>
       <SettingsPageHeader
-        heading={'Valuator'}
-        buttonLabel={'New Valuator'}
+        heading={t['settingsGeneralValuatorValuator']}
+        buttonLabel={t['settingsGeneralValuatorNewValuator']}
         buttonHandler={() => router.push('/settings/general/valuator/add')}
       />
 
