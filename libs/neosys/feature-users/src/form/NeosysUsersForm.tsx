@@ -1,6 +1,11 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { FormInput, FormSelect } from '@coop/shared/form';
+import {
+  FormEmailInput,
+  FormInput,
+  FormPhoneNumber,
+  FormSelect,
+} from '@coop/shared/form';
 import { Box, Button, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -52,16 +57,16 @@ export const NeosysUsersForm = () => {
 
             <Grid templateColumns="repeat(3,1fr)" gap="s20">
               <GridItem colSpan={2}>
-                <FormInput
-                  type="text"
+                <FormEmailInput
+                  // type="text"
                   name="emailAddress"
                   label={t['neoUsersEmailAddress']}
                   placeholder={t['neoUsersEmailAddress']}
                 />
               </GridItem>
               <GridItem>
-                <FormInput
-                  type="text"
+                <FormPhoneNumber
+                  // type="text"
                   name="phoneNumber"
                   label={t['neoUsersPhoneNumber']}
                   placeholder={t['neoUsersPhoneNumber']}

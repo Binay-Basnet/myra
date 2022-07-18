@@ -86,6 +86,7 @@ const AddFamilyMember = ({ index, removeFamilyMember }: IAddFamilyMember) => {
         {familyDetailsFieldsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
           (option, optionIndex) => (
             <FamilyMemberInput
+              key={optionIndex}
               fieldIndex={index}
               optionIndex={optionIndex}
               option={option}
