@@ -546,6 +546,7 @@ const en: Record<string, string> = {
   settingsSideBarDeposit: 'Deposit',
   settingsSideBarDepositProducts: 'Deposit Products',
   settingsSideBarLoan: 'Loan',
+  settingsSideBarLoanProducts: 'Loan Products',
 
   //settings tab menu
   settingsTabMenu: 'Settings',

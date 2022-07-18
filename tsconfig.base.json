@@ -72,6 +72,9 @@
       "@coop/cbs/settings/feature-member": [
         "libs/cbs/settings/feature-member/src/index.ts"
       ],
+      "@coop/cbs/settings/loan-products": [
+        "libs/cbs/settings/feature-loan-products/src/index.ts"
+      ],
       "@coop/cbs/settings/organization": [
         "libs/cbs/settings/feature-organization/src/index.ts"
       ],
