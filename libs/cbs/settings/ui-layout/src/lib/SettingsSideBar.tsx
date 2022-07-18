@@ -40,6 +40,10 @@ const tabList: TabList[] = [
     title: 'settingsSideBarLoan',
     to: '/settings/general/loan',
   },
+  {
+    title: 'settingsSideBarLoanProducts',
+    to: '/settings/general/loan-products',
+  },
 ];
 
 export const SettingSideBar = () => {
