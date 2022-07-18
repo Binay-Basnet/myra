@@ -30,6 +30,8 @@
     "cbs-settings-feature-share": "libs/cbs/settings/feature-share",
     "cbs-settings-feature-valuator": "libs/cbs/settings/feature-valuator",
     "cbs-settings-ui-layout": "libs/cbs/settings/ui-layout",
+    "ebanking": "apps/ebanking",
+    "ebanking-e2e": "apps/ebanking-e2e",
     "inventory-ui-layout": "libs/inventory/ui-layout",
     "myra": "apps/myra",
     "myra-components": "libs/myra/components",
