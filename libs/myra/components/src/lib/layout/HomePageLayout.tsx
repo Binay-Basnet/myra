@@ -110,8 +110,9 @@ export function HomePageLayout(props: HomePageLayoutProps) {
             </TextFields>
 
             <Box display="flex" alignItems="center" flexDir="column">
-              {myraAppn.map((item) => (
+              {myraAppn.map((item, index) => (
                 <Box
+                  key={index}
                   w="100%"
                   px="s16"
                   py="s8"
@@ -160,8 +161,9 @@ export function HomePageLayout(props: HomePageLayoutProps) {
             </TextFields>
 
             <Box display="flex" alignItems="center" flexDir="column">
-              {moreFromMyra.map((item) => (
+              {moreFromMyra.map((item, index) => (
                 <Box
+                  key={index}
                   w="100%"
                   px="s16"
                   py="s8"

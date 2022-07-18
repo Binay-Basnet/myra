@@ -30,8 +30,9 @@ export const KYMDocumentDeclaration = () => {
 
       <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
         {fileUploadsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
-          (option) => (
+          (option, index) => (
             <FormFileInput
+              key={index}
               size="lg"
               label={option.name?.local}
               name="documentsTemp"
