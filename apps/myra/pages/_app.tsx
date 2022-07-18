@@ -101,6 +101,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
             right={'32px'}
             display="flex"
             flexDirection={'row-reverse'}
+            zIndex="99"
           >
             <FloatingShortcutButton />
           </Box>

@@ -573,6 +573,10 @@ const en: Record<string, string> = {
   settingsDepositIroCode: 'IRO Code',
   settingsDepositProducts: 'Deposit Products',
   settingsDepositProductNew: 'New Deposit Product',
+
+  // settings LOAN
+  settingsLoanGeneral: 'General',
+  settingsLoan: 'Loan Setting',
   // KYM FORM
 
   // kym coop
