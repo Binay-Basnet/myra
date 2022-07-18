@@ -1,19 +1,11 @@
-import React from 'react';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 
-import {
-  BoxContainer,
-  SubHeadingText,
-  SubText,
-  TextBoxContainer,
-  TopText,
-} from '../formui';
+import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 const unitOptions = [
   {
     label: 'Day',
@@ -51,6 +43,7 @@ export const LoanRepayment = () => {
     resetField('minimunDurationNumberLoan');
     setRightElementMin(minimumDurationUnit);
   }, [minimumDurationUnit]);
+
   return (
     <BoxContainer>
       <TopText> Loan Repayment Start Grace Duration</TopText>
@@ -131,7 +124,7 @@ export const LoanRepayment = () => {
               label="Number"
               placeholder="0"
               rightElement={
-                <Box mr="s24">
+                <Box>
                   <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
                     {rightElementMax}
                   </Text>

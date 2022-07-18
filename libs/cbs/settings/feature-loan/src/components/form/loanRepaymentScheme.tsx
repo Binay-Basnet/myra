@@ -1,17 +1,11 @@
-import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { Box } from '@coop/shared/ui';
 
-import {
-  BoxContainer,
-  SubHeadingText,
-  TextBoxContainer,
-  TopText,
-} from '../formui';
+import { BoxContainer, SubHeadingText, TopText } from '../formui';
 const loanschemeOptions = [
   { label: 'EPI', value: 'epi' },
   { label: 'EMI', value: 'emi' },

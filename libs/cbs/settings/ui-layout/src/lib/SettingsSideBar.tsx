@@ -41,6 +41,10 @@ const tabList: TabList[] = [
     to: '/settings/general/loan',
   },
   {
+    title: 'settingsSideBarLoanProducts',
+    to: '/settings/general/loan-products',
+  },
+  {
     title: 'settingsSideBarValuator',
     to: '/settings/general/valuator/list',
   },

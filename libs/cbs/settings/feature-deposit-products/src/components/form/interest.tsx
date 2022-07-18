@@ -9,6 +9,7 @@ import {
   FormSwitchTab,
 } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 
@@ -47,6 +48,7 @@ const type = [
 
 export const Interest = () => {
   const { watch } = useFormContext();
+  const { t } = useTranslation();
   const depositNature = watch('nameOfDepositProduct');
 
   const ladderOptions = watch('ladderOptions');
@@ -161,21 +163,22 @@ export const Interest = () => {
         {ladderOptions === 'yes' && (
           <FormEditableTable<SalesTable>
             name="data"
+            debug={false}
             columns={[
               {
                 accessor: 'type',
-                header: 'Type',
+                header: t['depositProductInterestType'],
                 fieldType: 'select',
                 selectOptions: type,
               },
               {
                 accessor: 'ladderAmount',
-                header: 'Ladder Amount',
+                header: t['depositProductInterestLadderAmount'],
                 isNumeric: true,
               },
               {
                 accessor: 'ladderRate',
-                header: 'Ladder Rate',
+                header: t['depositProductInterestLadderRate'],
                 fieldType: 'percentage',
                 isNumeric: true,
               },

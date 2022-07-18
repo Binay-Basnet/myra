@@ -2,6 +2,7 @@ import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormEditableTable } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { SubText, TextBoxContainer, TopText } from '../formui';
 
@@ -28,7 +29,7 @@ const ledger_name = [
 ];
 
 export const AccountServicesCharge = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <GroupContainer
@@ -44,10 +45,11 @@ export const AccountServicesCharge = () => {
       <Box>
         <FormEditableTable<AccountServiceTable>
           name="data"
+          debug={false}
           columns={[
             {
               accessor: 'serviceName',
-              header: 'Service Name',
+              header: t['loanAccServiceTableServiceName'],
               fieldType: 'select',
               cellWidth: 'auto',
 
@@ -55,14 +57,14 @@ export const AccountServicesCharge = () => {
             },
             {
               accessor: 'ledgerName',
-              header: 'Ledger Name',
+              header: t['loanAccServiceTableLedgerName'],
               fieldType: 'select',
               cellWidth: 'auto',
               selectOptions: ledger_name,
             },
             {
               accessor: 'amount',
-              header: 'Amount',
+              header: t['loanAccServiceTableAmount'],
               cellWidth: 'auto',
               isNumeric: true,
             },

@@ -57,29 +57,6 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
             >
               {t['accountingPurchaseSidebarCreate']}
             </Button>
-
-            {/* <Box
-              as="button"
-              display={'flex'}
-              flexDirection="row"
-              gap="8px"
-              px="s16"
-              bg="primary.500"
-              _hover={{ bg: 'primary.600' }}
-              w="227px"
-              h="48px"
-              borderRadius={'4px'}
-              alignItems="center"
-            >
-              <Text fontSize={'r3'} fontWeight="500" color={'white'}>
-                +
-              </Text>
-
-              <Icon as={AddIcon} size="sm" color="white" fontWeight={'500'} />
-              <Text fontSize={'r1'} fontWeight="500" color={'white'}>
-                {t['accountingPurchaseSidebarCreate']}
-              </Text>
-            </Box> */}
           </PopoverTrigger>
 
           <PopoverContent
