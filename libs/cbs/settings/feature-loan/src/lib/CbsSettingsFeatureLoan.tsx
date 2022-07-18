@@ -7,14 +7,8 @@ import { useRouter } from 'next/router';
 import {
   ContainerWithDivider,
   InputGroupContainer,
-  SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormInput,
-  FormSelect,
-  FormSwitch,
-  FormSwitchTab,
-} from '@coop/shared/form';
+import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -31,8 +25,6 @@ import {
   AccountServicesCharge,
   AmountLimit,
   Critera,
-  DefaultAccountName,
-  DepositFrequency,
   GridItems,
   Interest,
   LoanLimit,
@@ -40,7 +32,6 @@ import {
   LoanRepaymentScheme,
   MaximumTenure,
   MinimunTenure,
-  PrematuredPenalty,
   Questions,
   RequiredDocumentSetup,
   TypesOfMember,

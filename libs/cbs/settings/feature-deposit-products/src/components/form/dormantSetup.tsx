@@ -44,16 +44,16 @@ const AddServiceCharge = ({
         <GridItem>
           <FormSelect
             name={`dormantSetup.${index}.duration`}
-            label={'Duration'}
-            placeholder={'Select Duration'}
+            label={t['depositProductDuration']}
+            placeholder={t['depositProductSelectDuration']}
             options={options}
           />
         </GridItem>
         <GridItem>
           <FormSelect
             name={`dormantSetup.${index}.condition`}
-            label="Condition"
-            placeholder={'Select Condition'}
+            label={t['depositProductCondition']}
+            placeholder={t['depositProductSelectCondition']}
             options={options}
           />
         </GridItem>
@@ -63,7 +63,7 @@ const AddServiceCharge = ({
 };
 
 export const DormantSetup = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const {
     fields: accountServicesFields,
     append: accountServicesAppend,
@@ -78,7 +78,7 @@ export const DormantSetup = () => {
       gap="s16"
     >
       <TextBoxContainer>
-        <TopText>Dormant Setup</TopText>
+        <TopText>{t['depositProductDormantSetup']} </TopText>
       </TextBoxContainer>
       <div>
         <DynamicBoxGroupContainer>
@@ -101,7 +101,7 @@ export const DormantSetup = () => {
               accountServicesAppend({});
             }}
           >
-            New
+            [t['new']]
           </Button>
         </DynamicBoxGroupContainer>
       </div>

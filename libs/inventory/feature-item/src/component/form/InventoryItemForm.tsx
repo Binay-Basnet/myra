@@ -148,16 +148,20 @@ export const InventoryItemForm = () => {
             placeholder={t['invItemCategory']}
             options={[
               {
-                label: '1',
-                value: '1',
+                label: 'Recurring Saving',
+                value: 'recurringSaving',
               },
               {
-                label: '2',
-                value: '2',
+                label: 'Mandatory',
+                value: 'mandatory',
               },
               {
-                label: '3',
-                value: '3',
+                label: 'Voluntary',
+                value: 'voluntary',
+              },
+              {
+                label: 'Term Saving',
+                value: 'termSaving',
               },
             ]}
           />

@@ -16,6 +16,7 @@ import { useTranslation } from '@coop/shared/utils';
 
 import {
   Agent,
+  Atm,
   DepositFrequency,
   FeesAndCharge,
   Interest,
@@ -31,6 +32,8 @@ export interface CbsAccountOpenFormProps {}
 export function CbsAccountOpen(props: CbsAccountOpenFormProps) {
   const { t } = useTranslation();
   const methods = useForm();
+  const { watch } = methods;
+  const products = watch('productId');
 
   return (
     <>
@@ -62,16 +65,18 @@ export function CbsAccountOpen(props: CbsAccountOpenFormProps) {
 
             <Product />
 
-            <Tenure />
+            {products !== 'voluntary' && <Tenure />}
+
             <Interest />
 
-            <DepositFrequency />
+            {products !== 'voluntary' && <DepositFrequency />}
 
             <RequiredDocuments />
 
-            <FeesAndCharge />
-
+            {products === 'voluntary' && <Atm />}
             <Agent />
+
+            <FeesAndCharge />
           </form>
         </FormProvider>
       </Container>

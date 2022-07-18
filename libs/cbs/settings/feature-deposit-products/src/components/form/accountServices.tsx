@@ -51,7 +51,7 @@ const AddServiceCharge = ({
   index,
   removeAccountServices,
 }: IAddAccountServices) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -67,21 +67,21 @@ const AddServiceCharge = ({
       <InputGroupContainer>
         <FormSelect
           name={`accountServiceCharge.${index}.serviceName`}
-          label={'Service Name'}
-          placeholder={'Select Service Name'}
+          label={t['depositProductServiceName Name']}
+          placeholder={t['depositProductSelectServiceName']}
           options={options}
         />
         <FormSelect
           name={`accountServiceCharge.${index}.ledgerName`}
-          label="Ledger Name"
-          placeholder={'Ledger Name'}
+          label={t['depositProductLedgerName']}
+          placeholder={t['depositProductLedgerName']}
         />
         <FormInput
           type="text"
           textAlign={'right'}
           bg="white"
           name={`accountServiceCharge.${index}.amount`}
-          label={'Amount'}
+          label={t['depositProductAmount']}
           placeholder={'0.00'}
         />
       </InputGroupContainer>
@@ -111,8 +111,8 @@ export const AccountServicesCharge = () => {
       gap="s16"
     >
       <TextBoxContainer>
-        <TopText>Account Service Charge</TopText>
-        <SubText>Add different service charges.</SubText>
+        <TopText>{t['depositProductAccountServiceCharge']} </TopText>
+        <SubText>{t['depositProductAdddifferentservicecharges']} </SubText>
       </TextBoxContainer>
       {(depositNature === 'mandatory' || depositNature === 'voluntary') && (
         <div>
@@ -136,7 +136,7 @@ export const AccountServicesCharge = () => {
                 accountServicesAppend({});
               }}
             >
-              New Service Charge{' '}
+              {t['depositProductNewServiceCharge']}
             </Button>
           </DynamicBoxGroupContainer>
         </div>

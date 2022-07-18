@@ -1,3 +1,5 @@
+import { useFormContext } from 'react-hook-form';
+
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text, TextFields } from '@coop/shared/ui';
@@ -5,6 +7,8 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const Product = () => {
   const { t } = useTranslation();
+  const { watch } = useFormContext();
+  const products = watch('productId');
 
   return (
     <GroupContainer
@@ -22,21 +26,25 @@ export const Product = () => {
       >
         <Box w="50%">
           <FormSelect
-            name="memberId"
+            name="productId"
             label={t['accProductName']}
             placeholder={t['accSelectProduct']}
             options={[
               {
-                label: '1',
-                value: '1',
+                label: 'Recurring Saving',
+                value: 'recurringSaving',
               },
               {
-                label: '2',
-                value: '2',
+                label: 'Mandatory',
+                value: 'mandatory',
               },
               {
-                label: '3',
-                value: '3',
+                label: 'Voluntary',
+                value: 'voluntary',
+              },
+              {
+                label: 'Term Saving',
+                value: 'termSaving',
               },
             ]}
           />
@@ -79,69 +87,35 @@ export const Product = () => {
           </Box>
 
           <Grid templateColumns="repeat(3,1fr)" gap="s32">
-            <GridItem display="flex" flexDirection="column">
-              <Box display="flex" flexDirection="column" gap="s4">
-                <TextFields
-                  color="primary.800"
-                  fontSize="s3"
-                  fontWeight="Medium"
-                >
-                  {/* {t['accInterestRate']} */}
-                  Tenure
-                </TextFields>
+            {products !== 'voluntary' && (
+              <GridItem display="flex" flexDirection="column">
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <TextFields
+                    color="primary.800"
+                    fontSize="s3"
+                    fontWeight="Medium"
+                  >
+                    {/* {t['accInterestRate']} */}
+                    Tenure
+                  </TextFields>
 
-                <TextFields
-                  color="neutralColorLight.Gray-70"
-                  fontSize="s2"
-                  fontWeight="Regular"
-                >
-                  Minimum: 7 days
-                </TextFields>
-                <TextFields
-                  color="neutralColorLight.Gray-70"
-                  fontSize="s2"
-                  fontWeight="Regular"
-                >
-                  Maximum: 500 days
-                </TextFields>
-              </Box>
-            </GridItem>
-
-            <GridItem display="flex" flexDirection="column">
-              <Box display="flex" flexDirection="column" gap="s4">
-                <TextFields
-                  color="primary.800"
-                  fontSize="s3"
-                  fontWeight="Medium"
-                >
-                  {/* {t['accInterestRate']} */}
-                  Transaction Limit
-                </TextFields>
-                <Box pl="s24">
-                  <ul>
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Criteria: 1
-                      </TextFields>
-                    </li>
-
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Criteria: 2
-                      </TextFields>
-                    </li>
-                  </ul>
+                  <TextFields
+                    color="neutralColorLight.Gray-70"
+                    fontSize="s2"
+                    fontWeight="Regular"
+                  >
+                    Minimum: 7 days
+                  </TextFields>
+                  <TextFields
+                    color="neutralColorLight.Gray-70"
+                    fontSize="s2"
+                    fontWeight="Regular"
+                  >
+                    Maximum: 500 days
+                  </TextFields>
                 </Box>
-              </Box>
-            </GridItem>
+              </GridItem>
+            )}
 
             <GridItem display="flex" flexDirection="column">
               <Box display="flex" flexDirection="column" gap="s4">
@@ -187,10 +161,9 @@ export const Product = () => {
                   fontWeight="Medium"
                 >
                   {/* {t['accInterestRate']} */}
-                  Criteria
+                  Transaction Limit
                 </TextFields>
-
-                <Box display="flex" flexDirection="column" gap="s16" pl="s24">
+                <Box pl="s24">
                   <ul>
                     <li>
                       <TextFields
@@ -198,7 +171,7 @@ export const Product = () => {
                         fontSize="s2"
                         fontWeight="Regular"
                       >
-                        Age: Mininum: 12 : Maximum 35
+                        Criteria: 1
                       </TextFields>
                     </li>
 
@@ -208,29 +181,7 @@ export const Product = () => {
                         fontSize="s2"
                         fontWeight="Regular"
                       >
-                        Gender: Male, Female
-                      </TextFields>
-                    </li>
-                  </ul>
-
-                  <ul>
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Foreign Employment: No
-                      </TextFields>
-                    </li>
-
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Business (Institutions): Club
+                        Criteria: 2
                       </TextFields>
                     </li>
                   </ul>
@@ -238,83 +189,160 @@ export const Product = () => {
               </Box>
             </GridItem>
 
-            <GridItem display="flex" flexDirection="column">
-              <Box display="flex" flexDirection="column" gap="s4">
-                <Box display="flex" flexDirection="column" gap="s16" pl="s24">
-                  <ul>
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Marital Status: Married
-                      </TextFields>
-                    </li>
+            {(products === 'recurringSaving' || products === 'termSaving') && (
+              <>
+                {' '}
+                <GridItem display="flex" flexDirection="column">
+                  <Box display="flex" flexDirection="column" gap="s4">
+                    <TextFields
+                      color="primary.800"
+                      fontSize="s3"
+                      fontWeight="Medium"
+                    >
+                      {/* {t['accInterestRate']} */}
+                      Criteria
+                    </TextFields>
 
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Occupation Detail: Business, Agriculture
-                      </TextFields>
-                    </li>
-                  </ul>
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      gap="s16"
+                      pl="s24"
+                    >
+                      <ul>
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Age: Mininum: 12 : Maximum 35
+                          </TextFields>
+                        </li>
 
-                  <ul>
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Nature of Business ( COOP Union): Club
-                      </TextFields>
-                    </li>
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Gender: Male, Female
+                          </TextFields>
+                        </li>
+                      </ul>
 
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Cooperative Type: Saving & Loan
-                      </TextFields>
-                    </li>
-                  </ul>
-                </Box>
-              </Box>
-            </GridItem>
+                      <ul>
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Foreign Employment: No
+                          </TextFields>
+                        </li>
 
-            <GridItem display="flex" flexDirection="column">
-              <Box display="flex" flexDirection="column" gap="s4">
-                <Box display="flex" flexDirection="column" gap="s16" pl="s24">
-                  <ul>
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Education Qualification: SEE
-                      </TextFields>
-                    </li>
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Business (Institutions): Club
+                          </TextFields>
+                        </li>
+                      </ul>
+                    </Box>
+                  </Box>
+                </GridItem>
+                <GridItem display="flex" flexDirection="column">
+                  <Box display="flex" flexDirection="column" gap="s4">
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      gap="s16"
+                      pl="s24"
+                    >
+                      <ul>
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Marital Status: Married
+                          </TextFields>
+                        </li>
 
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Ethinicity: Buddhist
-                      </TextFields>
-                    </li>
-                  </ul>
-                </Box>
-              </Box>
-            </GridItem>
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Occupation Detail: Business, Agriculture
+                          </TextFields>
+                        </li>
+                      </ul>
+
+                      <ul>
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Nature of Business ( COOP Union): Club
+                          </TextFields>
+                        </li>
+
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Cooperative Type: Saving & Loan
+                          </TextFields>
+                        </li>
+                      </ul>
+                    </Box>
+                  </Box>
+                </GridItem>
+                <GridItem display="flex" flexDirection="column">
+                  <Box display="flex" flexDirection="column" gap="s4">
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      gap="s16"
+                      pl="s24"
+                    >
+                      <ul>
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Education Qualification: SEE
+                          </TextFields>
+                        </li>
+
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Ethinicity: Buddhist
+                          </TextFields>
+                        </li>
+                      </ul>
+                    </Box>
+                  </Box>
+                </GridItem>
+              </>
+            )}
 
             <GridItem display="flex" flexDirection="column">
               <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
@@ -355,83 +383,95 @@ export const Product = () => {
               </Box>
             </GridItem>
 
-            <GridItem display="flex" flexDirection="column">
-              <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
-                {t['accPenalty']}
-              </TextFields>
-              <Box pl="s24">
-                <ul>
-                  <li>
-                    <TextFields
-                      color="neutralColorLight.Gray-70"
-                      fontSize="s2"
-                      fontWeight="Regular"
-                    >
-                      Penalty 1
-                    </TextFields>
-                  </li>
+            {products !== 'voluntary' && (
+              <>
+                {' '}
+                <GridItem display="flex" flexDirection="column">
+                  <TextFields
+                    color="primary.800"
+                    fontSize="s3"
+                    fontWeight="Medium"
+                  >
+                    {t['accPenalty']}
+                  </TextFields>
+                  <Box pl="s24">
+                    <ul>
+                      <li>
+                        <TextFields
+                          color="neutralColorLight.Gray-70"
+                          fontSize="s2"
+                          fontWeight="Regular"
+                        >
+                          Penalty 1
+                        </TextFields>
+                      </li>
 
-                  <li>
-                    <TextFields
-                      color="neutralColorLight.Gray-70"
-                      fontSize="s2"
-                      fontWeight="Regular"
-                    >
-                      Penalty 2
-                    </TextFields>
-                  </li>
+                      <li>
+                        <TextFields
+                          color="neutralColorLight.Gray-70"
+                          fontSize="s2"
+                          fontWeight="Regular"
+                        >
+                          Penalty 2
+                        </TextFields>
+                      </li>
 
-                  <li>
-                    <TextFields
-                      color="neutralColorLight.Gray-70"
-                      fontSize="s2"
-                      fontWeight="Regular"
-                    >
-                      Penalty 3
-                    </TextFields>
-                  </li>
-                </ul>
-              </Box>
-            </GridItem>
+                      <li>
+                        <TextFields
+                          color="neutralColorLight.Gray-70"
+                          fontSize="s2"
+                          fontWeight="Regular"
+                        >
+                          Penalty 3
+                        </TextFields>
+                      </li>
+                    </ul>
+                  </Box>
+                </GridItem>
+                <GridItem display="flex" flexDirection="column" gap="s4">
+                  <TextFields
+                    color="primary.800"
+                    fontSize="s3"
+                    fontWeight="Medium"
+                  >
+                    {t['accRebate']}
+                  </TextFields>
+                  <Box pl="s24">
+                    <ul>
+                      <li>
+                        <TextFields
+                          color="neutralColorLight.Gray-70"
+                          fontSize="s2"
+                          fontWeight="Regular"
+                        >
+                          Rebate 1
+                        </TextFields>
+                      </li>
 
-            <GridItem display="flex" flexDirection="column" gap="s4">
-              <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
-                {t['accRebate']}
-              </TextFields>
-              <Box pl="s24">
-                <ul>
-                  <li>
-                    <TextFields
-                      color="neutralColorLight.Gray-70"
-                      fontSize="s2"
-                      fontWeight="Regular"
-                    >
-                      Rebate 1
-                    </TextFields>
-                  </li>
+                      <li>
+                        <TextFields
+                          color="neutralColorLight.Gray-70"
+                          fontSize="s2"
+                          fontWeight="Regular"
+                        >
+                          Rebate 2
+                        </TextFields>
+                      </li>
 
-                  <li>
-                    <TextFields
-                      color="neutralColorLight.Gray-70"
-                      fontSize="s2"
-                      fontWeight="Regular"
-                    >
-                      Rebate 2
-                    </TextFields>
-                  </li>
-
-                  <li>
-                    <TextFields
-                      color="neutralColorLight.Gray-70"
-                      fontSize="s2"
-                      fontWeight="Regular"
-                    >
-                      Rebate 3
-                    </TextFields>
-                  </li>
-                </ul>
-              </Box>
-            </GridItem>
+                      <li>
+                        <TextFields
+                          color="neutralColorLight.Gray-70"
+                          fontSize="s2"
+                          fontWeight="Regular"
+                        >
+                          Rebate 3
+                        </TextFields>
+                      </li>
+                    </ul>
+                  </Box>
+                </GridItem>
+              </>
+            )}
           </Grid>
         </Box>
       </Box>
