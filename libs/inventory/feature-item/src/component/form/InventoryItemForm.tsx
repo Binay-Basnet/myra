@@ -81,7 +81,7 @@ export const InventoryItemForm = () => {
   const { t } = useTranslation();
   const [addnInfo, setAddnInfo] = useState(false);
   const methods = useFormContext();
-  const { watch, setValue } = methods;
+  const { watch, getValues, reset } = methods;
   const productInfo = watch('productInfo');
   const {
     fields: variantProducts,
@@ -98,12 +98,12 @@ export const InventoryItemForm = () => {
     const itemName = watch('itemName');
     const itemCode = watch('itemCode');
     const variantProduct = watch('variantProduct');
-    setValue(
-      'data',
-      variantProduct.map((item: IVariantMap) => {
+    reset({
+      ...getValues(),
+      data: variantProduct.map((item: IVariantMap) => {
         return { sku: itemCode, itemName: `${itemName}-${item.options}` };
-      })
-    );
+      }),
+    });
   };
 
   return (
@@ -274,7 +274,6 @@ export const InventoryItemForm = () => {
 
           <FormEditableTable<VarinatProductTable>
             name="data"
-            debug={false}
             columns={[
               {
                 accessor: 'sku',

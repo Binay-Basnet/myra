@@ -109,20 +109,20 @@ export function EditableTable<
     );
   }, [currentData.length]);
 
-  useEffect(() => {
-    if (defaultData) {
-      setCurrentData(
-        defaultData?.map((item) =>
-          item._id
-            ? item
-            : {
-                ...item,
-                _id: uniqueId('row_'),
-              }
-        )
-      );
-    }
-  }, [stringifiedDefaultData]);
+  // useEffect(() => {
+  //   if (defaultData) {
+  //     setCurrentData(
+  //       defaultData?.map((item) =>
+  //         item._id
+  //           ? item
+  //           : {
+  //               ...item,
+  //               _id: uniqueId('row_'),
+  //             }
+  //       )
+  //     );
+  //   }
+  // }, [stringifiedDefaultData]);
 
   return (
     <>
