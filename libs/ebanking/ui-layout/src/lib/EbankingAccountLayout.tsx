@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box } from '@coop/shared/ui';
 
-import { DefaultAnnouncements } from '../components/announcements';
+import { AccountAnnouncements } from '../components/announcements';
 import { EbankingHeader } from '../components/EbankingHeader';
 import { EbankingSidebar } from '../components/EbankingSidebar';
 
@@ -10,7 +10,9 @@ interface IEbankingMainLayoutProps {
   children: React.ReactNode;
 }
 
-export const EbankingMainLayout = ({ children }: IEbankingMainLayoutProps) => {
+export const EbankingAccountLayout = ({
+  children,
+}: IEbankingMainLayoutProps) => {
   return (
     <>
       <EbankingHeader />
@@ -38,7 +40,7 @@ export const EbankingMainLayout = ({ children }: IEbankingMainLayoutProps) => {
         </Box>
 
         <Box w="18.5%" flexShrink={0} borderRadius="br2" py="s32">
-          <DefaultAnnouncements />
+          <AccountAnnouncements />
         </Box>
       </Box>
     </>
