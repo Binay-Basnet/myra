@@ -1,6 +1,6 @@
 import styles from './index.module.css';
 
-export function Index() {
+export function Home() {
   /*
    * Replace the elements below with your own.
    *
@@ -412,4 +412,4 @@ export function Index() {
   );
 }
 
-export default Index;
+export default Home;
