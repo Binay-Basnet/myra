@@ -1,7 +1,7 @@
-import Home from 'apps/ebanking/pages/home';
+import Temp from '../temp';
 
 const AccountDetailPage = () => {
-  return <Home />;
+  return <Temp />;
 };
 
 export default AccountDetailPage;

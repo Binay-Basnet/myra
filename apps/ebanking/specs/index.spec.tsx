@@ -1,10 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Home from 'apps/ebanking/pages/home';
 
-describe('Home', () => {
+import Temp from '../temp';
+
+describe('Temp', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Home />);
+    const { baseElement } = render(<Temp />);
     expect(baseElement).toBeTruthy();
   });
 });

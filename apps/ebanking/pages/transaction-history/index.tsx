@@ -4,12 +4,12 @@ import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
 
 import Temp from '../temp';
 
-const AccountsListPage = () => {
+const TransactionHistoryPage = () => {
   return <Temp />;
 };
 
-export default AccountsListPage;
-
-AccountsListPage.getLayout = function (page: ReactElement) {
+TransactionHistoryPage.getLayout = function (page: ReactElement) {
   return <EbankingAccountLayout>{page}</EbankingAccountLayout>;
 };
+
+export default TransactionHistoryPage;
