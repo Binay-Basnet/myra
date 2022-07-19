@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
@@ -31,7 +31,7 @@ import {
   Text,
   TextInput,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 // TODO! use Layout
 const Header = () => {
@@ -105,6 +105,14 @@ const ShareReturn = () => {
   //   console.log(formData);
   //   mutate({ id: '12', data: formData });
   // };
+
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    setTotalAmount(
+      noOfShares * 1000 + Number(adminFees ?? 0) + Number(printingFees ?? 0)
+    );
+  }, [noOfShares, adminFees, printingFees]);
 
   return (
     <>
@@ -418,7 +426,7 @@ const ShareReturn = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              {noOfShares * 100}
+                              {amountConverter(noOfShares * 100)}
                             </Text>
                           </Box>
                         </GridItem>
@@ -489,12 +497,7 @@ const ShareReturn = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              {t['rs']}{' '}
-                              {adminFees && printingFees
-                                ? noOfShares * 1000 +
-                                  Number(adminFees) +
-                                  Number(printingFees)
-                                : 0.0}
+                              {t['rs']} {amountConverter(totalAmount)}
                             </Text>
                           </Box>
                         </GridItem>
