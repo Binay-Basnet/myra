@@ -4,21 +4,24 @@ import { useFormContext } from 'react-hook-form';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, SubHeadingText, TopText } from '../formui';
-const loanschemeOptions = [
-  { label: 'EPI', value: 'epi' },
-  { label: 'EMI', value: 'emi' },
-  { label: 'Flat', value: 'flat' },
-];
-const YesNoOptions = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
-];
 
 export const LoanRepaymentScheme = () => {
   const { watch } = useFormContext();
   const loanScheme = watch('loanRepaymentScheme');
+  const { t } = useTranslation();
+
+  const loanschemeOptions = [
+    { label: t['loanProductEPI'], value: 'epi' },
+    { label: t['loanProductEMI'], value: 'emi' },
+    { label: t['loanProductFlat'], value: 'flat' },
+  ];
+  const YesNoOptions = [
+    { label: t['yes'], value: 'yes' },
+    { label: t['no'], value: 'no' },
+  ];
 
   return (
     <BoxContainer>
@@ -27,23 +30,23 @@ export const LoanRepaymentScheme = () => {
         flexDirection="row"
         justifyContent={'space-between'}
       >
-        <TopText>Loan Repayment Scheme</TopText>
+        <TopText>{t['loanProductLoanRepaymentScheme']}</TopText>
         <FormSwitchTab name="loanRepaymentScheme" options={loanschemeOptions} />
       </Box>
       <InputGroupContainer>
         {loanScheme && (loanScheme === 'epi' || loanScheme === 'emi') && (
           <FormSelect
             name="modeOfPayment"
-            label="Mode of Payment"
-            placeholder="Select Mode of Payment"
+            label={t['loanProductModePayment']}
+            placeholder={t['loanProductSelectModePayment']}
             // options={loanschemeOptions}
           />
         )}
 
         <FormSelect
           name="installmentType"
-          label="Installment Type"
-          placeholder="Select Installment Type"
+          label={t['loanProductInstallmentType']}
+          placeholder={t['loanProductSelectInstallmentType']}
         />
       </InputGroupContainer>
       <Box
@@ -53,7 +56,9 @@ export const LoanRepaymentScheme = () => {
         alignItems="center"
         pt="s16"
       >
-        <SubHeadingText>Allow Partial Installment</SubHeadingText>
+        <SubHeadingText>
+          {t['loanProductAllowPartialInstallment']}
+        </SubHeadingText>
         <FormSwitchTab name="allowPartialInstallment" options={YesNoOptions} />
       </Box>
       <Box
@@ -63,7 +68,9 @@ export const LoanRepaymentScheme = () => {
         alignItems="center"
         pt="s16"
       >
-        <SubHeadingText>Is Monthly Interest Compulsory</SubHeadingText>
+        <SubHeadingText>
+          {t['loanProductIsMonthlyInterestCompulsory']}
+        </SubHeadingText>
         <FormSwitchTab
           name="monthlyInterestCompulsory"
           options={YesNoOptions}

@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   BoxContainer,
   SubHeadingText,
   SubText,
   TextBoxContainer,
-  TopText,
 } from '../formui';
 const unitOptions = [
   {
@@ -48,11 +47,13 @@ export const MinimunTenure = () => {
   const minimumTenure = watch('enableminimumTenure');
 
   const minimumTenureUnit = watch('minimumTenureUnit');
+  const { t } = useTranslation();
 
   useEffect(() => {
     resetField('minimunTenureNumber');
     setRightElement(minimumTenureUnit);
   }, [minimumTenureUnit]);
+
   return (
     <BoxContainer>
       {/* <TextBoxContainer>
@@ -65,11 +66,8 @@ export const MinimunTenure = () => {
       <FormSwitchTab name={'depositFrequency'} options={applicableSwitch} /> */}
       <Box display={'flex'} justifyContent="space-between">
         <TextBoxContainer>
-          <SubHeadingText>Minimum Tenure</SubHeadingText>
-          <SubText>
-            Note: Week is equal to 7 days, Month is equal to 30 days & year is
-            equal to 365days.
-          </SubText>
+          <SubHeadingText>{t['loanProductMinimumTenure']} </SubHeadingText>
+          <SubText>{t['loanProductNoteWeek']}</SubText>
         </TextBoxContainer>
         <FormSwitchTab
           name={'enableminimumTenure'}
@@ -88,8 +86,7 @@ export const MinimunTenure = () => {
         >
           <Box display={'flex'} flexDirection="column" gap="s4">
             <Text fontSize={'s3'} fontWeight="500">
-              {' '}
-              Unit
+              {t['loanProductUnit']}
             </Text>
             <FormSwitchTab name={'minimumTenureUnit'} options={unitOptions} />
           </Box>
@@ -97,8 +94,8 @@ export const MinimunTenure = () => {
             <FormInput
               name="minimunTenureNumber"
               textAlign={'right'}
-              label="Number"
-              placeholder="Enter number"
+              label={t['loanProductNumber']}
+              placeholder={t['loanProductEnterNumber']}
               rightElement={
                 <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
                   {rightElement}

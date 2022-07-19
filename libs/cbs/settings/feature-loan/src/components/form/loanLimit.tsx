@@ -1,18 +1,11 @@
-import React from 'react';
-
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { FormEditableTable } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
-import {
-  BoxContainer,
-  SubHeadingText,
-  SubText,
-  TextBoxContainer,
-  TopText,
-} from '../formui';
+import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
 
 type AccountServiceTable = {
   loanProvision: string;
@@ -33,6 +26,8 @@ const search_options = [
   { label: 'Bad Loan (1 year above)', value: 'bad' },
 ];
 export const LoanLimit = () => {
+  const { t } = useTranslation();
+
   return (
     <BoxContainer>
       <TextBoxContainer>
@@ -43,9 +38,9 @@ export const LoanLimit = () => {
         <FormInput
           name="scheduleChangeOverride"
           type="number"
-          label="Schedule Change Override"
+          label={t['loanProductScheduleChangeOverride']}
           // textAlign={'right'}
-          placeholder="Schedule Change Override"
+          placeholder={t['loanProductScheduleChangeOverride']}
           //   rightElement={'%'}
         />
       </InputGroupContainer> */}
