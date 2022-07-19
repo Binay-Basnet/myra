@@ -1,6 +1,7 @@
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 
@@ -27,22 +28,23 @@ const minFrequency = [
 ];
 
 export const PostingFrequency = () => {
+  const { t } = useTranslation();
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Posting Frequency</TopText>
+        <TopText>{t['depositProductPostingFrequency']} </TopText>
       </TextBoxContainer>
       <InputGroupContainer>
         <FormSelect
           name="minimumPostingFrequency"
-          label="Minimum Posting Frequency"
-          placeholder="Select Posting Frequency"
+          label={t['depositProductMinimumPostingFrequency']}
+          placeholder={t['depositProductSelectPostingFrequency']}
           options={minFrequency}
         />
         <FormSelect
           name="maximumPostingFrequency"
-          label="Maximum Posting Frequency"
-          placeholder="Select Posting Frequency"
+          label={t['depositProductMaximumPostingFrequency']}
+          placeholder={t['depositProductSelectPostingFrequency']}
           options={maxFrequency}
         />
       </InputGroupContainer>

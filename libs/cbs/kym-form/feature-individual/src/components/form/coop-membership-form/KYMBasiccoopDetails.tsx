@@ -102,6 +102,7 @@ export const KYMBasiccoopDetails = () => {
 
                   return (
                     <FormInputWithType
+                      key={optionIndex}
                       formType={option?.fieldType}
                       name={`otherMembershipDetails.options.${optionIndex}.value`}
                       label={option?.name?.local}

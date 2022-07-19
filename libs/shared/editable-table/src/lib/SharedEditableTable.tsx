@@ -1,9 +1,8 @@
 import React, {
-  Dispatch,
   Fragment,
-  SetStateAction,
-  useCallback,
+  Reducer,
   useEffect,
+  useReducer,
   useState,
 } from 'react';
 import { BsChevronRight } from 'react-icons/bs';
@@ -22,7 +21,7 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
-import { uniqueId } from 'lodash';
+import { isEmpty, isEqual, uniqueId, xorWith } from 'lodash';
 
 import { Grid, GridItem } from '@coop/shared/ui';
 
@@ -31,6 +30,9 @@ import {
   searchBarStyle,
 } from '../utils/ChakraSelectTheme';
 import { components } from '../utils/SelectComponents';
+
+export const isArrayEqual = <T,>(x: T[], y: T[]) =>
+  isEmpty(xorWith(x, y, isEqual));
 
 interface RecordWithId {
   _id?: number;
@@ -66,7 +68,7 @@ export interface EditableTableProps<
   columns: Column<T>[];
 
   canDeleteRow?: boolean;
-  onChange?: (updatedData: T[]) => void;
+  onChange?: (updatedData: Omit<T, '_id'>[]) => void;
 
   debug?: boolean;
 }
@@ -77,6 +79,101 @@ const cellWidthObj = {
   sm: '15%',
 };
 
+enum EditableTableActionKind {
+  ADD = 'Add',
+  EDIT = 'Edit',
+  DELETE = 'Delete',
+  REPLACE = 'Replace',
+}
+
+type EditableTableAction<
+  TData extends RecordWithId & Record<string, string | number>
+> =
+  | {
+      type: EditableTableActionKind.ADD;
+      payload: TData;
+    }
+  | {
+      type: EditableTableActionKind.EDIT;
+      payload: {
+        data: TData;
+        column: Column<TData>;
+        newValue: string;
+      };
+    }
+  | {
+      type: EditableTableActionKind.DELETE;
+      payload: {
+        data: TData;
+      };
+    }
+  | {
+      type: EditableTableActionKind.REPLACE;
+      payload: {
+        newData: TData[];
+      };
+    };
+
+interface EditableState<
+  T extends RecordWithId & Record<string, string | number>
+> {
+  data: T[];
+  columns: Column<T>[];
+}
+
+function editableReducer<
+  T extends RecordWithId & Record<string, string | number>
+>(state: EditableState<T>, action: EditableTableAction<T>): EditableState<T> {
+  const { type, payload } = action;
+
+  switch (type) {
+    case EditableTableActionKind.ADD:
+      return {
+        ...state,
+        data: [
+          ...state.data,
+          {
+            ...payload,
+            _id: uniqueId('row_'),
+          },
+        ],
+      };
+
+    case EditableTableActionKind.EDIT:
+      return {
+        ...state,
+        data: state.data.map((item) =>
+          item['_id'] === payload?.data?._id
+            ? {
+                ...item,
+                [payload.column.accessor]: payload.column.isNumeric
+                  ? +payload.newValue
+                  : payload.newValue,
+              }
+            : item
+        ),
+      };
+
+    case EditableTableActionKind.DELETE:
+      return {
+        ...state,
+        data: state.data.filter((data) => data['_id'] !== payload.data._id),
+      };
+
+    case EditableTableActionKind.REPLACE:
+      return {
+        ...state,
+        data: payload.newData.map((data) => ({
+          ...data,
+          _id: uniqueId('row_'),
+        })),
+      };
+
+    default:
+      return state;
+  }
+}
+
 export function EditableTable<
   T extends RecordWithId & Record<string, string | number>
 >({
@@ -84,45 +181,43 @@ export function EditableTable<
   defaultData,
   canDeleteRow = true,
   onChange,
-  debug = false,
+  debug = true,
 }: EditableTableProps<T>) {
-  const [currentData, setCurrentData] = useState(defaultData ?? []);
-  const stringifiedData = JSON.stringify(currentData);
-  const stringifiedDefaultData = JSON.stringify(defaultData)?.length ?? 0;
+  const [state, dispatch] = useReducer<
+    Reducer<EditableState<T>, EditableTableAction<T>>
+  >(editableReducer, {
+    data: [],
+    columns,
+  });
 
   useEffect(() => {
-    if (onChange) {
-      onChange(currentData);
-    }
-  }, [stringifiedData]);
-
-  useEffect(() => {
-    setCurrentData((prev) =>
-      prev.map((item) =>
-        item._id
-          ? item
-          : {
-              ...item,
-              _id: uniqueId('row_'),
-            }
+    if (
+      onChange &&
+      !isArrayEqual(
+        (defaultData ?? []).map(({ _id, ...rest }) => rest),
+        state.data.map(({ _id, ...rest }) => rest)
       )
-    );
-  }, [currentData.length]);
+    ) {
+      onChange(state.data.map(({ _id, ...rest }) => rest));
+    }
+  }, [JSON.stringify(state.data)]);
 
   useEffect(() => {
-    if (defaultData) {
-      setCurrentData(
-        defaultData?.map((item) =>
-          item._id
-            ? item
-            : {
-                ...item,
-                _id: uniqueId('row_'),
-              }
-        )
-      );
+    if (
+      defaultData &&
+      !isArrayEqual(
+        (defaultData ?? []).map(({ _id, ...rest }) => rest),
+        state.data.map(({ _id, ...rest }) => rest)
+      )
+    ) {
+      dispatch({
+        type: EditableTableActionKind.REPLACE,
+        payload: {
+          newData: defaultData,
+        },
+      });
     }
-  }, [stringifiedDefaultData]);
+  }, [JSON.stringify(defaultData)]);
 
   return (
     <>
@@ -177,12 +272,12 @@ export function EditableTable<
         </Flex>
 
         <Box w="100%" bg="white" borderX="1px" borderColor="border.layout">
-          {currentData?.map((data, index) => (
+          {state?.data.map((data, index) => (
             <Fragment key={`${data._id}${index}`}>
               <MemoEditableTableRow
                 canDeleteRow={canDeleteRow}
                 columns={columns}
-                setCurrentData={setCurrentData}
+                dispatch={dispatch}
                 data={data}
                 index={index}
               />
@@ -206,21 +301,22 @@ export function EditableTable<
               chakraStyles={searchBarStyle}
               value=""
               onChange={(newValue) => {
-                const newObj = columns.reduce(
-                  (o, key) =>
-                    key.fieldType === 'search'
-                      ? {
-                          ...o,
-                          [key.accessor]: newValue.value,
-                        }
-                      : {
-                          ...o,
-                          [key.accessor]: key.isNumeric ? 0 : '',
-                        },
-                  {}
-                );
-
-                setCurrentData((prev) => [...prev, { ...newObj } as T]);
+                dispatch({
+                  type: EditableTableActionKind.ADD,
+                  payload: columns.reduce(
+                    (o, key) =>
+                      key.fieldType === 'search'
+                        ? {
+                            ...o,
+                            [key.accessor]: newValue.value,
+                          }
+                        : {
+                            ...o,
+                            [key.accessor]: key.isNumeric ? 0 : '',
+                          },
+                    {}
+                  ) as T,
+                });
               }}
             />
           </Box>
@@ -241,12 +337,16 @@ export function EditableTable<
             cursor="pointer"
             gap="s4"
             onClick={() => {
-              const newObj = columns.reduce(
-                (o, key) => ({ ...o, [key.accessor]: key.isNumeric ? 0 : '' }),
-                {}
-              );
-
-              setCurrentData((prev) => [...prev, { ...newObj } as T]);
+              dispatch({
+                type: EditableTableActionKind.ADD,
+                payload: columns.reduce(
+                  (o, key) => ({
+                    ...o,
+                    [key.accessor]: key.isNumeric ? 0 : '',
+                  }),
+                  {}
+                ) as T,
+              });
             }}
           >
             <Icon as={IoAdd} fontSize="xl" />
@@ -257,7 +357,7 @@ export function EditableTable<
         )}
       </Flex>
 
-      {debug && (
+      {
         <Box
           bg="gray.700"
           color="white"
@@ -266,9 +366,11 @@ export function EditableTable<
           p="s8"
           borderRadius="br2"
         >
-          <pre>{JSON.stringify(currentData, null, 2)}</pre>
+          <pre>
+            {JSON.stringify({ ...state, hook_form: defaultData }, null, 2)}
+          </pre>
         </Box>
-      )}
+      }
     </>
   );
 }
@@ -280,9 +382,9 @@ interface IEditableTableRowProps<
 > {
   columns: Column<T>[];
   data: T;
-  setCurrentData: Dispatch<SetStateAction<T[]>>;
   canDeleteRow?: boolean;
   index: number;
+  dispatch: React.Dispatch<EditableTableAction<T>>;
 }
 
 const EditableTableRow = <
@@ -291,29 +393,10 @@ const EditableTableRow = <
   columns,
   data,
   index,
-  setCurrentData,
+  dispatch,
   canDeleteRow,
 }: IEditableTableRowProps<T>) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
-  useEffect(() => {
-    columns.forEach((column) =>
-      column.accessorFn
-        ? setCurrentData((prev) =>
-            prev.map((item) =>
-              item._id === data._id
-                ? {
-                    ...item,
-                    [column.accessor]: column.isNumeric
-                      ? Number(column?.accessorFn?.(data))
-                      : column?.accessorFn?.(data),
-                  }
-                : item
-            )
-          )
-        : null
-    );
-  }, [JSON.stringify(data)]);
 
   return (
     <>
@@ -453,16 +536,14 @@ const EditableTableRow = <
                           (option) => option.value === data[column.accessor]
                         )}
                         onChange={(newValue) => {
-                          setCurrentData((prev) =>
-                            prev.map((item) =>
-                              item._id === data._id
-                                ? {
-                                    ...item,
-                                    [column.accessor]: newValue.value,
-                                  }
-                                : item
-                            )
-                          );
+                          dispatch({
+                            type: EditableTableActionKind.EDIT,
+                            payload: {
+                              data: data,
+                              newValue: newValue.value,
+                              column: column,
+                            },
+                          });
                         }}
                         chakraStyles={chakraDefaultStyles}
                         options={column.selectOptions}
@@ -488,18 +569,14 @@ const EditableTableRow = <
                       borderRadius="0"
                       value={String(data[column.accessor] ?? '')}
                       onChange={(e) => {
-                        setCurrentData((prev) =>
-                          prev.map((item) =>
-                            item._id === data._id
-                              ? {
-                                  ...item,
-                                  [column.accessor]: column.isNumeric
-                                    ? +e.target.value
-                                    : e.target.value,
-                                }
-                              : item
-                          )
-                        );
+                        dispatch({
+                          type: EditableTableActionKind.EDIT,
+                          payload: {
+                            data: data,
+                            newValue: e.target.value,
+                            column: column,
+                          },
+                        });
                       }}
                       as={EditableInput}
                     />
@@ -524,9 +601,12 @@ const EditableTableRow = <
             _focusVisible={{ outline: 'none' }}
             _hover={{ bg: 'gray.100' }}
             onClick={() => {
-              setCurrentData((prev) =>
-                prev.filter((prevData) => prevData._id !== data._id)
-              );
+              dispatch({
+                type: EditableTableActionKind.DELETE,
+                payload: {
+                  data: data,
+                },
+              });
             }}
           >
             <Icon as={IoCloseCircleOutline} color="danger.500" fontSize="2xl" />
@@ -567,16 +647,14 @@ const EditableTableRow = <
                       placeholder={column.header}
                       defaultValue={String(data[column.accessor] ?? '')}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                        setCurrentData((prev) =>
-                          prev.map((item) =>
-                            item._id === data._id
-                              ? {
-                                  ...item,
-                                  [column.accessor]: e.target.value,
-                                }
-                              : item
-                          )
-                        );
+                        dispatch({
+                          type: EditableTableActionKind.EDIT,
+                          payload: {
+                            data: data,
+                            newValue: e.target.value,
+                            column: column,
+                          },
+                        });
                       }}
                     />
                   ) : (
@@ -586,16 +664,14 @@ const EditableTableRow = <
                       placeholder={column.header}
                       defaultValue={String(data[column.accessor] ?? '')}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setCurrentData((prev) =>
-                          prev.map((item) =>
-                            item._id === data._id
-                              ? {
-                                  ...item,
-                                  [column.accessor]: e.target.value,
-                                }
-                              : item
-                          )
-                        );
+                        dispatch({
+                          type: EditableTableActionKind.EDIT,
+                          payload: {
+                            data: data,
+                            newValue: e.target.value,
+                            column: column,
+                          },
+                        });
                       }}
                     />
                   )}

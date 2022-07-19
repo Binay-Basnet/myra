@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 
@@ -35,7 +34,7 @@ export const FormEditableTable = <
       control={control}
       render={({ field: { onChange, value } }) => {
         return (
-          <EditableTable defaultData={value} {...rest} onChange={onChange} />
+          <EditableTable defaultData={value} onChange={onChange} {...rest} />
         );
       }}
     />
