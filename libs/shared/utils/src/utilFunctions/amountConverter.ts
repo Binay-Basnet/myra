@@ -1,8 +1,5 @@
-type amountType = {
-  amount: number;
-};
+export const amountConverter = (amount: number | string) => {
+  const parsedAmount = typeof amount === 'string' ? parseInt(amount) : amount;
 
-export const amountConverter = ({ amount }: amountType) => {
-  const data = amount && amount.toLocaleString('en-IN');
-  return data;
+  return parsedAmount && parsedAmount.toLocaleString('en-IN');
 };
