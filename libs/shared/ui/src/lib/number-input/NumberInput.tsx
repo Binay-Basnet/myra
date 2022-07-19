@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { FocusEvent, forwardRef, useState } from 'react';
 import {
   Box,
   NumberInput as ChakraNumberInput,
@@ -32,8 +32,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     ref
   ) => {
     const format = (val: string) =>
-      val ? parseInt(val).toLocaleString('en-IN') : '';
-    const parse = (val: string) => val.replace(/\D/g, '');
+      val ? parseFloat(val).toLocaleString('en-IN') : '';
+    const parse = (val: string) => val.replace(/,/g, '');
 
     const [tempValue, setTempValue] = useState<string>(value ?? '');
 
@@ -42,8 +42,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       handleChange && handleChange(parse(val));
     };
 
-    const handleBlur = () => {
-      setTempValue(format(tempValue));
+    const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+      setTempValue(format(e.target.value));
     };
 
     const handleFocus = () => {
@@ -66,6 +66,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           value={tempValue}
           onFocus={handleFocus}
           borderRadius="md"
+          step={0.01}
           {...rest}
         >
           <ChakraNumberInputField
