@@ -1,8 +1,8 @@
 import { Box, Text } from '@coop/shared/ui';
 
 interface IAnnouncementCardProps {
-  title: string;
-  subtitle: string;
+  title: string | undefined;
+  subtitle: string | undefined;
 }
 
 export const AnnouncementCard = ({

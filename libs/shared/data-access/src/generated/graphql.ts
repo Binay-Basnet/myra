@@ -5804,6 +5804,11 @@ export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetConfigQuery = { config: { countries?: Array<{ name?: string | null, code?: string | null } | null> | null } };
 
+export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAnnouncementListQuery = { eBanking: { notification?: { announcements?: { list: Array<{ id: string, details: any, summary: string, title: string, date: string } | null> } | null } | null } };
+
 export type GetKymFormStatusInstitutionQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -6818,6 +6823,35 @@ export const useGetConfigQuery = <
     useQuery<GetConfigQuery, TError, TData>(
       variables === undefined ? ['getConfig'] : ['getConfig', variables],
       useAxios<GetConfigQuery, GetConfigQueryVariables>(GetConfigDocument).bind(null, variables),
+      options
+    );
+export const GetAnnouncementListDocument = `
+    query getAnnouncementList {
+  eBanking {
+    notification {
+      announcements {
+        list {
+          id
+          details
+          summary
+          title
+          date
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAnnouncementListQuery = <
+      TData = GetAnnouncementListQuery,
+      TError = unknown
+    >(
+      variables?: GetAnnouncementListQueryVariables,
+      options?: UseQueryOptions<GetAnnouncementListQuery, TError, TData>
+    ) =>
+    useQuery<GetAnnouncementListQuery, TError, TData>(
+      variables === undefined ? ['getAnnouncementList'] : ['getAnnouncementList', variables],
+      useAxios<GetAnnouncementListQuery, GetAnnouncementListQueryVariables>(GetAnnouncementListDocument).bind(null, variables),
       options
     );
 export const GetKymFormStatusInstitutionDocument = `
