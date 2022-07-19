@@ -117,8 +117,8 @@ export const GridItems = ({ watch }: any) => {
             ageCheck.indexOf('age') !== -1 && (
               <FormInput
                 name="maxAge"
-                placeholder="Enter Minimum Age"
-                label="Minimum Age"
+                placeholder={t['loanProductMinAgeEnter']}
+                label={t['loanProductMinAge']}
               />
             )}
           {memberType &&
@@ -127,8 +127,8 @@ export const GridItems = ({ watch }: any) => {
             ageCheck.indexOf('age') !== -1 && (
               <FormInput
                 name="minAge"
-                placeholder="Enter Maxinum Age"
-                label="Maximum Age"
+                placeholder={t['loanProductMaxAgeEnter']}
+                label={t['loanProductMaxAge']}
               />
             )}
           {memberType &&
