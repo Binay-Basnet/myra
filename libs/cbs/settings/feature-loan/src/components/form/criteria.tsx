@@ -1,33 +1,8 @@
-import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
-import { IoCloseOutline } from 'react-icons/io5';
-import { useRouter } from 'next/router';
-
 // import debounce from 'lodash/debounce';
-import {
-  ContainerWithDivider,
-  InputGroupContainer,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormCheckbox,
-  FormCheckboxGroup,
-  FormInput,
-  FormSelect,
-  FormSwitch,
-  FormSwitchTab,
-} from '@coop/shared/form';
-import {
-  Box,
-  Container,
-  Grid,
-  GridItem,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormCheckboxGroup } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
-import { GridItems } from './listGrid';
 import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
 
 const typesOfMember = [
@@ -61,15 +36,13 @@ const NOBCoopUnion = [
 const CoperativeType = [{ label: 'Coperative Type', value: 'cooperativeType' }];
 export const Critera = ({ watch }: any) => {
   const memberType = watch('typeOfMember');
+  const { t } = useTranslation();
 
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Criteria</TopText>
-        <SubText>
-          Selected Checklist will generate fields below. Multi select for
-          different criteria.
-        </SubText>
+        <TopText>{t['loanProductCriteria']} </TopText>
+        <SubText>{t['loanProductSelectedChecklist']}</SubText>
       </TextBoxContainer>
       <InputGroupContainer>
         {memberType && memberType?.indexOf('individual') !== -1 && (

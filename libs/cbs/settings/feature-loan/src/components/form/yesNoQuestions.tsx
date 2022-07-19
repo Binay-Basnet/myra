@@ -1,26 +1,24 @@
-import React from 'react';
-import { useFormContext } from 'react-hook-form';
-
 // import debounce from 'lodash/debounce';
-import {
-  ContainerWithDivider,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { DividerContainer, SubHeadingText } from '../formui';
 
-const yesNo = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
-];
 export const Questions = ({ watch }: any) => {
+  const { t } = useTranslation();
   const collateral = watch('collateral');
+
+  const yesNo = [
+    { label: t['yes'], value: 'yes' },
+    { label: t['no'], value: 'no' },
+  ];
+
   return (
     <DividerContainer>
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Insurance</SubHeadingText>
+        <SubHeadingText>{t['loanProductInsurance']} </SubHeadingText>
         <FormSwitchTab name={'autoOpenWhenJoin'} options={yesNo} />
       </Box>
       <Box display={'flex'} flexDirection="column" gap="s16">
@@ -29,7 +27,7 @@ export const Questions = ({ watch }: any) => {
           flexDirection={'row'}
           justifyContent="space-between"
         >
-          <SubHeadingText>Collateral</SubHeadingText>
+          <SubHeadingText>{t['loanProductCollateral']} </SubHeadingText>
           <FormSwitchTab name={'collateral'} options={yesNo} />
         </Box>
         {collateral && collateral === 'yes' && (
@@ -43,14 +41,14 @@ export const Questions = ({ watch }: any) => {
               <FormInput
                 type="text"
                 name="disburementOfFMV"
-                label="Disburement % of FMV"
-                placeholder="Loan Provision Frequency"
+                label={t['loanProductDisburementofFMV']}
+                placeholder={t['loanProductDisburementofFMV']}
               />
               <FormInput
                 type="text"
                 name="disburementOfDMV"
-                label="Disburement % of DMV"
-                placeholder="Loan Provision Frequency"
+                label={t['loanProductDisburementDMV']}
+                placeholder={t['loanProductDisburementofFMV']}
               />
             </InputGroupContainer>
           </Box>
@@ -58,21 +56,25 @@ export const Questions = ({ watch }: any) => {
       </Box>
 
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Rebate </SubHeadingText>
+        <SubHeadingText>{t['loanProductRebate']} </SubHeadingText>
         <FormSwitchTab name={'rebate'} options={yesNo} />
       </Box>
 
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Staff Product </SubHeadingText>
+        <SubHeadingText>{t['loanProductStaffProduct']} </SubHeadingText>
         <FormSwitchTab name={'staffProduct'} options={yesNo} />
       </Box>
 
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Support Multiple Account</SubHeadingText>
+        <SubHeadingText>
+          {t['loanProductSupportMultipleAccount']}t
+        </SubHeadingText>
         <FormSwitchTab name={'supportMultipleAcc'} options={yesNo} />
       </Box>
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>Loan Schedule Change Override</SubHeadingText>
+        <SubHeadingText>
+          {t['loanProductLoanScheduleChangeOverride']}
+        </SubHeadingText>
         <FormSwitchTab name={'loanScheduleChangeOverride'} options={yesNo} />
       </Box>
     </DividerContainer>

@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 // import debounce from 'lodash/debounce';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   BoxContainer,
@@ -46,6 +47,7 @@ export const MaximumTenure = () => {
   const maximumTenure = watch('enablemaximumTenure');
 
   const maxTenureUnit = watch('maximumTenureUnit');
+  const { t } = useTranslation();
 
   useEffect(() => {
     resetField('maximumTenureNumber');
@@ -56,11 +58,8 @@ export const MaximumTenure = () => {
     <BoxContainer>
       <Box display={'flex'} justifyContent="space-between">
         <TextBoxContainer>
-          <SubHeadingText>Maxinum Tenure</SubHeadingText>
-          <SubText>
-            Note: Week is equal to 7 days, Month is equal to 30 days & year is
-            equal to 365days.
-          </SubText>
+          <SubHeadingText>{t['loanProductMaxinumTenure']} </SubHeadingText>
+          <SubText>{t['loanProductNoteWeek']}</SubText>
         </TextBoxContainer>
         <FormSwitchTab
           name={'enablemaximumTenure'}
@@ -79,8 +78,7 @@ export const MaximumTenure = () => {
         >
           <Box display={'flex'} flexDirection="column" gap="s4">
             <Text fontSize={'s3'} fontWeight="500">
-              {' '}
-              Unit
+              {t['loanProductUnit']}
             </Text>
             <FormSwitchTab name={'maximumTenureUnit'} options={unitOptions} />
           </Box>
@@ -88,8 +86,8 @@ export const MaximumTenure = () => {
             <FormInput
               name="maximumTenureNumber"
               textAlign={'right'}
-              label="Number"
-              placeholder="Enter number"
+              label={t['loanProductNumber']}
+              placeholder={t['loanProductEnterNumber']}
               rightElement={
                 <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
                   {rightElement}

@@ -1,29 +1,28 @@
-import React from 'react';
-
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 
 export const AmountLimit = () => {
+  const { t } = useTranslation();
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Loan Amount Limit</TopText>
+        <TopText>{t['loanProductMaxinumTenure']}</TopText>
       </TextBoxContainer>
       <InputGroupContainer>
         <FormInput
           textAlign={'right'}
           name="minimunBalaneAmount"
-          label="Minimum Amount"
+          label={t['loanProductMinimumAmount']}
           placeholder="0.00"
         />
         <FormInput
           textAlign={'right'}
           name="maximumBalaneAmount"
-          label="Maximum Amount"
+          label={t['loanProductMaximumAmount']}
           placeholder="0.00"
         />
       </InputGroupContainer>
