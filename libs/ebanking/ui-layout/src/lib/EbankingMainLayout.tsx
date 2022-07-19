@@ -19,7 +19,6 @@ export const EbankingMainLayout = ({ children }: IEbankingMainLayoutProps) => {
         <Box
           w="18.5%"
           position="sticky"
-          overflow="auto"
           top={'60px'}
           h="100%"
           py="s32"
@@ -37,7 +36,14 @@ export const EbankingMainLayout = ({ children }: IEbankingMainLayoutProps) => {
           {children}
         </Box>
 
-        <Box w="18.5%" flexShrink={0} borderRadius="br2" py="s32">
+        <Box
+          w="18.5%"
+          h="100%"
+          position="sticky"
+          top={'60px'}
+          flexShrink={0}
+          py="s32"
+        >
           <DefaultAnnouncements />
         </Box>
       </Box>
