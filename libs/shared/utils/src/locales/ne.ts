@@ -23,6 +23,8 @@ const ne: Record<string, string> = {
   enable: 'Enable',
   disable: 'Disable',
   new: 'New',
+  quatrerly: 'Quarterly',
+  halfYearly: 'Half-Yearly',
 
   // navbar
   searchMembersNameReportsEtc: 'सदस्यहरूको नाम, रिपोर्टहरू, आदि खोज्नुहोस्',
@@ -2742,6 +2744,9 @@ const ne: Record<string, string> = {
   loanProductLoanChangeDocument: 'Loan Change Document',
   loanProductForm: 'Form',
   loanProductCitizenship: 'Citizenship',
+
+  depositProductMaximumPostingFrequencyDifference:
+    'Maximum Posting Frequency Difference',
 };
 
 export default ne;

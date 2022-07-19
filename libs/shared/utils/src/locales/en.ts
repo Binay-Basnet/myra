@@ -26,6 +26,8 @@ const en: Record<string, string> = {
   enable: 'Enable',
   disable: 'Disable',
   new: 'New',
+  quatrerly: 'Quarterly',
+  halfYearly: 'Half-Yearly',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
@@ -2776,6 +2778,9 @@ const en: Record<string, string> = {
   loanProductLoanChangeDocument: 'Loan Change Document',
   loanProductForm: 'Form',
   loanProductCitizenship: 'Citizenship',
+
+  depositProductMaximumPostingFrequencyDifference:
+    'Maximum Posting Frequency Difference',
 };
 
 export default en;

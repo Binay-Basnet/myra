@@ -14,6 +14,7 @@ import {
 import {
   FormCheckbox,
   FormInput,
+  FormNumberInput,
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
@@ -357,11 +358,10 @@ const ShareReturn = () => {
                         gap={3}
                       >
                         <GridItem>
-                          <FormInput
+                          <FormNumberInput
                             id="noOfShares"
                             name="noOfReturnedShares"
                             label={t['shareReturnNoOfShares']}
-                            placeholder={t['shareReturnNoOfShares']}
                           />
                         </GridItem>
 
@@ -444,10 +444,9 @@ const ShareReturn = () => {
                             {t['shareReturnAdministrationFees']}
                           </Text>
                           <Box width="300px">
-                            <FormInput
+                            <FormNumberInput
                               name="adminFee"
                               label=""
-                              placeholder="34000.00"
                               textAlign="right"
                               bg="gray.0"
                             />
@@ -468,10 +467,9 @@ const ShareReturn = () => {
                             {t['shareReturnPrintingFees']}
                           </Text>
                           <Box width="300px">
-                            <FormInput
+                            <FormNumberInput
                               name="printingFee"
                               label=""
-                              placeholder="54.00"
                               bg="gray.0"
                               textAlign="right"
                             />

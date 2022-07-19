@@ -67,7 +67,7 @@ const AddServiceCharge = ({
       <InputGroupContainer>
         <FormSelect
           name={`accountServiceCharge.${index}.serviceName`}
-          label={t['depositProductServiceName Name']}
+          label={t['depositProductServiceName']}
           placeholder={t['depositProductSelectServiceName']}
           options={options}
         />
