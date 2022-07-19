@@ -115,13 +115,21 @@ export const GridItems = ({ watch }: any) => {
             memberType?.indexOf('individual') !== -1 &&
             ageCheck &&
             ageCheck.indexOf('age') !== -1 && (
-              <BoxContainer>
-                <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-                  {t['loanProductAge']}
-                </Text>
-                <FormInput name="maxAge" placeholder="Enter Minimum Age" />
-                <FormInput name="minAge" placeholder="Enter Maxinum Age" />
-              </BoxContainer>
+              <FormInput
+                name="maxAge"
+                placeholder="Enter Minimum Age"
+                label="Minimum Age"
+              />
+            )}
+          {memberType &&
+            memberType?.indexOf('individual') !== -1 &&
+            ageCheck &&
+            ageCheck.indexOf('age') !== -1 && (
+              <FormInput
+                name="minAge"
+                placeholder="Enter Maxinum Age"
+                label="Maximum Age"
+              />
             )}
           {memberType &&
             memberType?.indexOf('individual') !== -1 &&

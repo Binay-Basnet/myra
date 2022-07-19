@@ -658,7 +658,7 @@ const ShareReturn = () => {
                 </Button>
               }
               mainButtonLabel={t['done']}
-              mainButtonHandler={() => router.push(`/members/translation`)}
+              mainButtonHandler={() => router.push(`/share/balance`)}
             />
           </Container>
         </Box>
