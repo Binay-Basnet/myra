@@ -36,6 +36,7 @@ export function AccountingFeatureAddJournalVoucher(
         {
           dr_amount: 45,
           cr_amount: 45,
+          transferred_to: 'savings_account',
         },
       ],
     },
