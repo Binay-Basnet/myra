@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { FormCheckboxGroup } from '@coop/shared/form';
 // import debounce from 'lodash/debounce';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Divider, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AcceptedCollateral, AccountServicesCharge } from '../components';
@@ -42,6 +42,7 @@ export function CbsSettingsFeatureLoanProducts(
 
               <AccountServicesCharge />
             </Box>
+            <Divider />
             <Box display={'flex'} flexDirection="column" gap="s16">
               <Text fontSize="r1" fontWeight="500">
                 {t['settingsLoanRepaymentScheme']}{' '}
@@ -52,6 +53,7 @@ export function CbsSettingsFeatureLoanProducts(
                 orientation="column"
               />
             </Box>
+            <Divider />
             <AcceptedCollateral />
           </Box>
         </form>
