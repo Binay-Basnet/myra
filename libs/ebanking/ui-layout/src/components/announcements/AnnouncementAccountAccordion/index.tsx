@@ -1,9 +1,12 @@
-import { AnnouncementAccountCard } from 'libs/ebanking/ui-layout/src/components/announcements/AnnouncementAccountCard';
-import { AnnouncementsAccBtn } from 'libs/ebanking/ui-layout/src/components/announcements/AnnouncementsAccBtn';
-
+import { useGetAccountListQuery } from '@coop/shared/data-access';
 import { Accordion, AccordionItem, AccordionPanel } from '@coop/shared/ui';
 
+import { AnnouncementAccountCard } from '../AnnouncementAccountCard';
+import { AnnouncementsAccBtn } from '../AnnouncementsAccBtn';
+
 export const AnnouncementAccountAccordion = () => {
+  const { data: accountsList } = useGetAccountListQuery();
+
   return (
     <Accordion allowMultiple={true} allowToggle={true} border="none">
       <AccordionItem borderRadius={0} border="none" bg="transparent">
@@ -14,27 +17,13 @@ export const AnnouncementAccountAccordion = () => {
               label="Accounts Summary"
             />
             <AccordionPanel p="0">
-              <AnnouncementAccountCard
-                name="Salary Saving Account"
-                balance="NRs. 54,000"
-                isDefault
-              />
-              <AnnouncementAccountCard
-                name="NRN  Saving Deposit Account"
-                balance="NRs. 1,54,000"
-              />
-              <AnnouncementAccountCard
-                name="Nari Samman Bachat Khata"
-                balance="NRs. 5.34,000"
-              />
-              <AnnouncementAccountCard
-                name="Nagarik Bachat Khata"
-                balance="NRs. 4,000"
-              />
-              <AnnouncementAccountCard
-                name="Normal Saving Account"
-                balance="NRs. 24,000"
-              />
+              {accountsList?.eBanking?.account?.list?.edges?.map((account) => (
+                <AnnouncementAccountCard
+                  name={account.node.name}
+                  balance={'NRs. ' + account.node.amount.toFixed(2)}
+                  isDefault={account.node.isDefault}
+                />
+              ))}
             </AccordionPanel>
           </>
         )}

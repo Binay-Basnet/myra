@@ -1,4 +1,6 @@
-import { Box, Text } from '@coop/shared/ui';
+import { MdOutlineStar } from 'react-icons/md';
+
+import { Box, Icon, Text } from '@coop/shared/ui';
 
 interface IAnnouncementAccountCardProps {
   name: string;
@@ -14,19 +16,22 @@ export const AnnouncementAccountCard = ({
   return (
     <Box
       bg="white"
-      p="s16"
+      px="s16"
+      py="s12"
       display="flex"
-      flexDir="column"
-      gap="s4"
+      justifyContent="space-between"
       borderBottom="1px"
       borderBottomColor="border.layout"
     >
-      <Text noOfLines={1} fontSize="s3" fontWeight="500" color="gray.700">
-        {name}
-      </Text>
-      <Text fontSize="s2" fontWeight="700" color="gray.500">
-        {balance}
-      </Text>
+      <Box display="flex" flexDir="column" gap="s4">
+        <Text fontSize="s3" fontWeight="500" color="gray.700">
+          {name}
+        </Text>
+        <Text fontSize="s2" fontWeight="700" color="gray.700">
+          {balance}
+        </Text>
+      </Box>
+      {isDefault && <Icon as={MdOutlineStar} size="lg" color="primary.500" />}
     </Box>
   );
 };

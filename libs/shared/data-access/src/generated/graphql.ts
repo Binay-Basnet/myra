@@ -5804,6 +5804,11 @@ export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetConfigQuery = { config: { countries?: Array<{ name?: string | null, code?: string | null } | null> | null } };
 
+export type GetAccountListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAccountListQuery = { eBanking: { account?: { list?: { edges: Array<{ node: { id: string, name: string, amount: number, isDefault: boolean } }> } | null } | null } };
+
 export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6823,6 +6828,36 @@ export const useGetConfigQuery = <
     useQuery<GetConfigQuery, TError, TData>(
       variables === undefined ? ['getConfig'] : ['getConfig', variables],
       useAxios<GetConfigQuery, GetConfigQueryVariables>(GetConfigDocument).bind(null, variables),
+      options
+    );
+export const GetAccountListDocument = `
+    query getAccountList {
+  eBanking {
+    account {
+      list(paginate: {first: 5}) {
+        edges {
+          node {
+            id
+            name
+            amount
+            isDefault
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountListQuery = <
+      TData = GetAccountListQuery,
+      TError = unknown
+    >(
+      variables?: GetAccountListQueryVariables,
+      options?: UseQueryOptions<GetAccountListQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountListQuery, TError, TData>(
+      variables === undefined ? ['getAccountList'] : ['getAccountList', variables],
+      useAxios<GetAccountListQuery, GetAccountListQueryVariables>(GetAccountListDocument).bind(null, variables),
       options
     );
 export const GetAnnouncementListDocument = `

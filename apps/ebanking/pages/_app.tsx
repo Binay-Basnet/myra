@@ -5,7 +5,6 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 import { theme } from '@coop/shared/utils';
 
 import './styles.css';
@@ -35,6 +34,8 @@ const queryClient = new QueryClient({
 });
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout || ((page) => page);
+
   return (
     <>
       <Head>
@@ -42,9 +43,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
       </Head>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
-          <EbankingMainLayout>
-            <Component {...pageProps} />
-          </EbankingMainLayout>
+          {getLayout(<Component {...pageProps} />)}
         </ChakraProvider>
       </QueryClientProvider>
     </>

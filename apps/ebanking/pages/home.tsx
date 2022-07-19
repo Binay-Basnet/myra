@@ -1,3 +1,7 @@
+import { ReactElement } from 'react';
+
+import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
+
 import styles from './index.module.css';
 
 export function Home() {
@@ -411,5 +415,9 @@ export function Home() {
     </div>
   );
 }
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <EbankingMainLayout>{page}</EbankingMainLayout>;
+};
 
 export default Home;
