@@ -1,25 +1,23 @@
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
 
 export const DefaultAccountName = () => {
+  const { t } = useTranslation();
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Default Amount Deposit Account Name</TopText>
-        <SubText>
-          If the member does not specify particular account for deposit, this
-          mapped account will be set globally. Normally this is a compulsory
-          account type.
-        </SubText>
+        <TopText>{t['depositProductDefaultAmountDepositAccountName']} </TopText>
+        <SubText>{t['depositProductIf']}</SubText>
       </TextBoxContainer>
       <InputGroupContainer>
         <FormSelect
           name="defaultDepositAccount"
-          label="Account Type"
-          placeholder="Select Account"
+          label={t['depositProductAccountType']}
+          placeholder={t['depositProductSelectAccount']}
         />
       </InputGroupContainer>
     </BoxContainer>

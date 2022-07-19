@@ -57,13 +57,13 @@ export const Interest = () => {
     <>
       <BoxContainer>
         <TextBoxContainer>
-          <TopText>Interest</TopText>
+          <TopText>{t['depositProductInterest']} </TopText>
         </TextBoxContainer>
         <InputGroupContainer>
           <FormInput
             name="minimumInterestRate"
             type="number"
-            label="Mininum Rate"
+            label={t['depositProductMinimumAmount']}
             textAlign={'right'}
             placeholder="0.00"
             rightElement={
@@ -75,7 +75,7 @@ export const Interest = () => {
           <FormInput
             name="maximumInterestRate"
             type="number"
-            label="Maximum Rate"
+            label={t['depositProductMaximumAmount']}
             textAlign={'right'}
             placeholder="0.00"
             rightElement={
@@ -87,7 +87,7 @@ export const Interest = () => {
           <FormInput
             name="defaultInterestRate"
             type="number"
-            label="Default Rate"
+            label={t['depositProductDefaultRate']}
             textAlign={'right'}
             placeholder="0.00"
             rightElement={
@@ -99,8 +99,8 @@ export const Interest = () => {
           {depositNature !== 'recurringSaving' && (
             <FormInput
               type="number"
-              name="qdditionalToBaseRate"
-              label="Additional to Base Rate"
+              name="additionalToBaseRate"
+              label={t['depositProductAdditionalBaseRate']}
               textAlign={'right'}
               placeholder="0.00"
               rightElement={
@@ -114,7 +114,7 @@ export const Interest = () => {
           <FormInput
             name="ceoAuthenticationRate"
             type="number"
-            label="CEO Authority"
+            label={t['depositProductCEOAuthority']}
             textAlign={'right'}
             placeholder="0.00"
             rightElement={
@@ -126,7 +126,7 @@ export const Interest = () => {
           <FormInput
             name="boardAuthenticationRate"
             type="number"
-            label="Board Authority"
+            label={t['depositProductBoardAuthority']}
             textAlign={'right'}
             placeholder="0.00"
             rightElement={
@@ -138,8 +138,8 @@ export const Interest = () => {
           {depositNature !== 'recurringSaving' && (
             <FormSelect
               name="minimumInterestRate"
-              label="Posting Frequency"
-              placeholder="Select Posting Frequency"
+              label={t['depositProductPostingFrequency']}
+              placeholder={t['depositProductSelectPostingFrequency']}
               options={postingFreq}
             />
           )}
@@ -156,7 +156,7 @@ export const Interest = () => {
             fontSize={'s3'}
             fontWeight="Medium"
           >
-            Ladder Rate
+            {t['depositProductLadderRate']}
           </Text>
           <FormSwitchTab name={'ladderOptions'} options={ladderSwitch} />
         </Box>
