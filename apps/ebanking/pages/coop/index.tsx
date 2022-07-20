@@ -1,11 +1,10 @@
 import { ReactElement } from 'react';
 
+import { EbankingFeatureCoop } from '@coop/ebanking/coop';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
-import Temp from '../temp';
-
 const COOPHomePage = () => {
-  return <Temp />;
+  return <EbankingFeatureCoop />;
 };
 
 COOPHomePage.getLayout = function (page: ReactElement) {

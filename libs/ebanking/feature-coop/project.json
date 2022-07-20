@@ -1,0 +1,23 @@
+{
+  "root": "libs/ebanking/feature-coop",
+  "sourceRoot": "libs/ebanking/feature-coop/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/ebanking/feature-coop/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ebanking/feature-coop"],
+      "options": {
+        "jestConfig": "libs/ebanking/feature-coop/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
