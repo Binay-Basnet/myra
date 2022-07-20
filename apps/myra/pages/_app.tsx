@@ -8,9 +8,10 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 import { Snipping } from '@raralabs/web-feedback';
+import axios from 'axios';
 
 import { Login } from '@coop/myra/components';
-import { Box, Button, FloatingShortcutButton } from '@coop/shared/ui';
+import { Box, FloatingShortcutButton } from '@coop/shared/ui';
 import { store, theme } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
@@ -71,9 +72,36 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   }, []);
 
   useEffect(() => {
-    snap.init((data) => {
-      const { image, base64Image } = data;
-      console.log(image);
+    snap.init(async (data) => {
+      const { image } = data;
+      const formData = new FormData();
+
+      const query = `mutation ($file: Upload!) {createPublicFeedback(input: {appSlug: "MYRA", userEmail: "pk@pk.com"}, imageInput: $file) {success data {userEmail description appSlugID { name }} errors {__typename ... on ValidationError { message field } ... on BadRequestError {  message } ... on NotFoundError { message } ... on InternalServerError { message } } } }`;
+
+      formData.append(
+        'operations',
+        JSON.stringify({
+          query,
+          variables: {
+            file: null,
+          },
+        })
+      );
+      formData.append(
+        'map',
+        JSON.stringify({
+          '0': ['variables.file'],
+        })
+      );
+      formData.append('0', image);
+
+      const response = await axios({
+        url: 'https://portal-backend.raralabs.live/query',
+        method: 'post',
+        data: formData,
+      });
+
+      console.log(response);
     });
   }, []);
 
