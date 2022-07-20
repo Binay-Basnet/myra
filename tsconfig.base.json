@@ -87,6 +87,7 @@
       "@coop/cbs/settings/valuator": [
         "libs/cbs/settings/feature-valuator/src/index.ts"
       ],
+      "@coop/ebanking/cards": ["libs/ebanking/ui-cards/src/index.ts"],
       "@coop/ebanking/home": ["libs/ebanking/feature-home/src/index.ts"],
       "@coop/ebanking/ui-layout": ["libs/ebanking/ui-layout/src/index.ts"],
       "@coop/inventory/inventory": [

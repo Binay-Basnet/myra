@@ -33,6 +33,7 @@
     "ebanking": "apps/ebanking",
     "ebanking-e2e": "apps/ebanking-e2e",
     "ebanking-feature-home": "libs/ebanking/feature-home",
+    "ebanking-ui-cards": "libs/ebanking/ui-cards",
     "ebanking-ui-layout": "libs/ebanking/ui-layout",
     "inventory-ui-layout": "libs/inventory/ui-layout",
     "myra": "apps/myra",
