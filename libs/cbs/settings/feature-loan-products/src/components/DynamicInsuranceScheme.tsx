@@ -15,7 +15,7 @@ import {
   FormSwitchTab,
 } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
-import { Box, Button, Icon } from '@coop/shared/ui';
+import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 interface IAddAccountServices {
   index: number;
@@ -59,7 +59,6 @@ const AddServiceCharge = ({
         />
         <FormInput
           type="text"
-          textAlign={'right'}
           bg="white"
           name={`accountServiceCharge.${index}.amount`}
           label={t['settingsLoanPaymentFreq']}
@@ -102,6 +101,11 @@ const AddServiceCharge = ({
                 name={`accountServiceCharge.${index}.insurancePremium`}
                 label={t['settingsLoanInsurancePremium']}
                 placeholder={t['settingsLoanPlceholderNumber']}
+                rightElement={
+                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                    %
+                  </Text>
+                }
               />
             </InputGroupContainer>
           </Box>
@@ -137,6 +141,11 @@ const AddServiceCharge = ({
                 name={`accountServiceCharge.${index}.insurancePremium`}
                 label={t['settingsLoanInsurancePremium']}
                 placeholder={t['settingsLoanPlceholderNumber']}
+                rightElement={
+                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                    %
+                  </Text>
+                }
               />
             </InputGroupContainer>
           </Box>

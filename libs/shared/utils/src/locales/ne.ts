@@ -23,6 +23,8 @@ const ne: Record<string, string> = {
   enable: 'Enable',
   disable: 'Disable',
   new: 'New',
+  quatrerly: 'Quarterly',
+  halfYearly: 'Half-Yearly',
 
   // navbar
   searchMembersNameReportsEtc: 'सदस्यहरूको नाम, रिपोर्टहरू, आदि खोज्नुहोस्',
@@ -593,7 +595,7 @@ const ne: Record<string, string> = {
   settingsLoanInsurancePremium: 'Insurance Premium Percent',
   settingsLoanPlceholderNumber: '0.00',
   settingsLoanMinimumPer: 'Minimum Percentage',
-  settingsLoanMaximumPer: 'Maximum Percenage',
+  settingsLoanMaximumPer: 'Maximum Percentage',
   settingsLoanVehicle: 'Vehicle',
   settingsLoanLand: 'Land',
   settingsLoanHouse: 'House',
@@ -2742,6 +2744,15 @@ const ne: Record<string, string> = {
   loanProductLoanChangeDocument: 'Loan Change Document',
   loanProductForm: 'Form',
   loanProductCitizenship: 'Citizenship',
+
+  depositProductMaximumPostingFrequencyDifference:
+    'Maximum Posting Frequency Difference',
+
+  shareSettingsFeesName: 'Name',
+  shareSettingsFeesType: 'Type',
+  shareSettingsFeesMinQuantity: 'Min Quantity',
+  shareSettingsFeesMaxQuantity: 'Max Quantity',
+  shareSettingsFeesCharge: 'Charge',
 };
 
 export default ne;
