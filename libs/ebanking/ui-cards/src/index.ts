@@ -1,1 +1,1 @@
-export * from './lib/EbankingUiCards';
+export * from './lib/AccountCard/AccountCard';

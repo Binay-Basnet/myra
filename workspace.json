@@ -32,6 +32,7 @@
     "cbs-settings-ui-layout": "libs/cbs/settings/ui-layout",
     "ebanking": "apps/ebanking",
     "ebanking-e2e": "apps/ebanking-e2e",
+    "ebanking-feature-accounts": "libs/ebanking/feature-accounts",
     "ebanking-feature-home": "libs/ebanking/feature-home",
     "ebanking-ui-cards": "libs/ebanking/ui-cards",
     "ebanking-ui-layout": "libs/ebanking/ui-layout",

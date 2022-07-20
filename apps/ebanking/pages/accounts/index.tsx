@@ -1,11 +1,10 @@
 import { ReactElement } from 'react';
 
+import { EbankingAccountsPage } from '@coop/ebanking/accounts';
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
 
-import Temp from '../temp';
-
 const AccountsListPage = () => {
-  return <Temp />;
+  return <EbankingAccountsPage />;
 };
 
 export default AccountsListPage;
