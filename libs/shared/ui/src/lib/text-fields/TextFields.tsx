@@ -13,6 +13,7 @@ export interface TextFieldsProps extends TextProps {
     | 'pageHeader'
     | 'tabs'
     | 'switch'
+    | 'stickyCardHeader'
     | string;
   children?: React.ReactNode;
   color?: string;
@@ -85,6 +86,13 @@ export function TextFields(props: TextFieldsProps) {
           {...rest}
           lineHeight="1.3"
         >
+          {children}
+        </Text>
+      );
+
+    case 'stickyCardHeader':
+      return (
+        <Text fontSize="r3" fontWeight="500" lineHeight="1.3">
           {children}
         </Text>
       );

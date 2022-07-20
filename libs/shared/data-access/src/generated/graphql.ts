@@ -5804,6 +5804,21 @@ export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetConfigQuery = { config: { countries?: Array<{ name?: string | null, code?: string | null } | null> | null } };
 
+export type GetAccountListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAccountListQuery = { eBanking: { account?: { list?: { edges: Array<{ node: { id: string, name: string, amount: number, isDefault: boolean } }> } | null } | null } };
+
+export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAnnouncementListQuery = { eBanking: { notification?: { announcements?: { list: Array<{ id: string, details: any, summary: string, title: string, date: string } | null> } | null } | null } };
+
+export type GetHomeServiceListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetHomeServiceListQuery = { eBanking: { services?: Array<{ id: string, name: string, service_id: string, icon: string, enabled: boolean } | null> | null } };
+
 export type GetKymFormStatusInstitutionQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -6818,6 +6833,90 @@ export const useGetConfigQuery = <
     useQuery<GetConfigQuery, TError, TData>(
       variables === undefined ? ['getConfig'] : ['getConfig', variables],
       useAxios<GetConfigQuery, GetConfigQueryVariables>(GetConfigDocument).bind(null, variables),
+      options
+    );
+export const GetAccountListDocument = `
+    query getAccountList {
+  eBanking {
+    account {
+      list(paginate: {first: 5}) {
+        edges {
+          node {
+            id
+            name
+            amount
+            isDefault
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountListQuery = <
+      TData = GetAccountListQuery,
+      TError = unknown
+    >(
+      variables?: GetAccountListQueryVariables,
+      options?: UseQueryOptions<GetAccountListQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountListQuery, TError, TData>(
+      variables === undefined ? ['getAccountList'] : ['getAccountList', variables],
+      useAxios<GetAccountListQuery, GetAccountListQueryVariables>(GetAccountListDocument).bind(null, variables),
+      options
+    );
+export const GetAnnouncementListDocument = `
+    query getAnnouncementList {
+  eBanking {
+    notification {
+      announcements {
+        list {
+          id
+          details
+          summary
+          title
+          date
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAnnouncementListQuery = <
+      TData = GetAnnouncementListQuery,
+      TError = unknown
+    >(
+      variables?: GetAnnouncementListQueryVariables,
+      options?: UseQueryOptions<GetAnnouncementListQuery, TError, TData>
+    ) =>
+    useQuery<GetAnnouncementListQuery, TError, TData>(
+      variables === undefined ? ['getAnnouncementList'] : ['getAnnouncementList', variables],
+      useAxios<GetAnnouncementListQuery, GetAnnouncementListQueryVariables>(GetAnnouncementListDocument).bind(null, variables),
+      options
+    );
+export const GetHomeServiceListDocument = `
+    query getHomeServiceList {
+  eBanking {
+    services {
+      id
+      name
+      service_id
+      icon
+      enabled
+    }
+  }
+}
+    `;
+export const useGetHomeServiceListQuery = <
+      TData = GetHomeServiceListQuery,
+      TError = unknown
+    >(
+      variables?: GetHomeServiceListQueryVariables,
+      options?: UseQueryOptions<GetHomeServiceListQuery, TError, TData>
+    ) =>
+    useQuery<GetHomeServiceListQuery, TError, TData>(
+      variables === undefined ? ['getHomeServiceList'] : ['getHomeServiceList', variables],
+      useAxios<GetHomeServiceListQuery, GetHomeServiceListQueryVariables>(GetHomeServiceListDocument).bind(null, variables),
       options
     );
 export const GetKymFormStatusInstitutionDocument = `
