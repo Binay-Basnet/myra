@@ -5807,7 +5807,12 @@ export type GetConfigQuery = { config: { countries?: Array<{ name?: string | nul
 export type GetAccountListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAccountListQuery = { eBanking: { account?: { list?: { edges: Array<{ node: { id: string, name: string, amount: number, isDefault: boolean } }> } | null } | null } };
+export type GetAccountListQuery = { eBanking: { account?: { list?: { edges: Array<{ node: { id: string, name: string, amount: number, isDefault: boolean, accountNumber: string, interestRate: number } }> } | null } | null } };
+
+export type GetAccountSummaryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAccountSummaryQuery = { eBanking: { account?: { summary?: { totalSaving: number, totalLoan: number } | null } | null } };
 
 export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6839,13 +6844,15 @@ export const GetAccountListDocument = `
     query getAccountList {
   eBanking {
     account {
-      list(paginate: {first: 5}) {
+      list(paginate: {first: 6}) {
         edges {
           node {
             id
             name
             amount
             isDefault
+            accountNumber
+            interestRate
           }
         }
       }
@@ -6863,6 +6870,30 @@ export const useGetAccountListQuery = <
     useQuery<GetAccountListQuery, TError, TData>(
       variables === undefined ? ['getAccountList'] : ['getAccountList', variables],
       useAxios<GetAccountListQuery, GetAccountListQueryVariables>(GetAccountListDocument).bind(null, variables),
+      options
+    );
+export const GetAccountSummaryDocument = `
+    query getAccountSummary {
+  eBanking {
+    account {
+      summary {
+        totalSaving
+        totalLoan
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountSummaryQuery = <
+      TData = GetAccountSummaryQuery,
+      TError = unknown
+    >(
+      variables?: GetAccountSummaryQueryVariables,
+      options?: UseQueryOptions<GetAccountSummaryQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountSummaryQuery, TError, TData>(
+      variables === undefined ? ['getAccountSummary'] : ['getAccountSummary', variables],
+      useAxios<GetAccountSummaryQuery, GetAccountSummaryQueryVariables>(GetAccountSummaryDocument).bind(null, variables),
       options
     );
 export const GetAnnouncementListDocument = `
