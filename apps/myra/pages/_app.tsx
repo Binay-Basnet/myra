@@ -7,23 +7,15 @@ import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
-import { Snipping } from '@raralabs/web-feedback';
-import axios from 'axios';
 
 import { Login } from '@coop/myra/components';
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
+import { useSnap } from '@coop/shared/utils';
 import { store, theme } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
 const { ToastContainer } = createStandaloneToast();
-
-const snap = new Snipping({
-  buttonLabel: 'Send Feedback',
-  initialMarkMode: 'mark',
-  fileName: 'feedbackScreenshot.png',
-  /** other configs **/
-});
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -70,40 +62,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
     typeof window !== 'undefined' &&
       setIsLoggedIn(Boolean(isLoggedIn || false));
   }, []);
-
-  useEffect(() => {
-    snap.init(async (data) => {
-      const { image } = data;
-      const formData = new FormData();
-
-      const query = `mutation ($file: Upload!) {createPublicFeedback(input: {appSlug: "MYRA", userEmail: "pk@pk.com"}, imageInput: $file) {success data {userEmail description appSlugID { name }} errors {__typename ... on ValidationError { message field } ... on BadRequestError {  message } ... on NotFoundError { message } ... on InternalServerError { message } } } }`;
-
-      formData.append(
-        'operations',
-        JSON.stringify({
-          query,
-          variables: {
-            file: null,
-          },
-        })
-      );
-      formData.append(
-        'map',
-        JSON.stringify({
-          '0': ['variables.file'],
-        })
-      );
-      formData.append('0', image);
-
-      const response = await axios({
-        url: 'https://portal-backend.raralabs.live/query',
-        method: 'post',
-        data: formData,
-      });
-
-      console.log(response);
-    });
-  }, []);
+  const snap = useSnap();
 
   const getLayout = Component.getLayout || ((page) => page);
   return (
