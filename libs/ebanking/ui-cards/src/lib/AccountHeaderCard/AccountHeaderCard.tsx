@@ -2,7 +2,7 @@ import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 
 import { Box, Grid, Icon, TextFields } from '@coop/shared/ui';
 
-export const AccountCard = () => {
+export const AccountHeaderCard = () => {
   return (
     <Box
       display="flex"

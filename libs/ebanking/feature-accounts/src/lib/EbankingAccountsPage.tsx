@@ -1,10 +1,10 @@
-import { AccountCard } from '@coop/ebanking/cards';
+import { AccountHeaderCard } from '@coop/ebanking/cards';
 import { Box } from '@coop/shared/ui';
 
 export function EbankingAccountsPage() {
   return (
     <Box>
-      <AccountCard />
+      <AccountHeaderCard />
     </Box>
   );
 }

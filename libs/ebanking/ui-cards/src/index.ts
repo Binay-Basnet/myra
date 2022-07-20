@@ -1,1 +1,1 @@
-export * from './lib/AccountCard/AccountCard';
+export * from '../src/lib/AccountHeaderCard/AccountHeaderCard';
