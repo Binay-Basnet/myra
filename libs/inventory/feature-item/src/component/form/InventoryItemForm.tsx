@@ -38,10 +38,10 @@ interface IVariantProduct {
   removeVariantProduct: () => void;
 }
 
-interface IVariantMap {
+type variantProps = {
   variantName: string;
   options: string;
-}
+};
 
 const VariantProduct = ({ index, removeVariantProduct }: IVariantProduct) => {
   const { t } = useTranslation();
@@ -97,12 +97,24 @@ export const InventoryItemForm = () => {
   const generate = () => {
     const itemName = watch('itemName');
     const itemCode = watch('itemCode');
-    const variantProduct = watch('variantProduct');
+    const variantProduct = watch('variantProduct') as {
+      variantName: string;
+      options: string;
+    }[];
+
+    const z = variantProduct.reduce(
+      (accumulator, currentVal) =>
+        accumulator.concat(
+          currentVal.options.split(',').map((option: string) => {
+            return { sku: itemCode, itemName: `${itemName}-${option}` };
+          })
+        ),
+      [{}]
+    );
+
     reset({
       ...getValues(),
-      data: variantProduct.map((item: IVariantMap) => {
-        return { sku: itemCode, itemName: `${itemName}-${item.options}` };
-      }),
+      data: z.slice(1),
     });
   };
 

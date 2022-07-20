@@ -1,0 +1,16 @@
+query getAccountList{
+  eBanking {
+    account {
+      list(paginate: {first: 5}) {
+        edges {
+          node {
+            id
+            name
+            amount
+            isDefault
+          }
+        }
+      }
+    }
+  }
+}

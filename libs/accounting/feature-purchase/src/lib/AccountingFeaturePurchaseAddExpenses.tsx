@@ -11,6 +11,7 @@ import {
 import { FieldCardComponents } from '@coop/shared/components';
 import {
   FormInput,
+  FormNumberInput,
   FormSelect,
   FormSwitchTab,
   FormTextArea,
@@ -168,11 +169,10 @@ export function AccountingFeaturePurchaseAddExpenses(
                       </Text>
 
                       <Box width="200px">
-                        <FormInput
+                        <FormNumberInput
                           width="100%"
                           name="adminFee"
                           label=""
-                          placeholder="34000.00"
                           textAlign="right"
                           bg="gray.0"
                         />

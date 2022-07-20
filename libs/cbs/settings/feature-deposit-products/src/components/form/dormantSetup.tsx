@@ -101,7 +101,7 @@ export const DormantSetup = () => {
               accountServicesAppend({});
             }}
           >
-            [t['new']]
+            {t['new']}
           </Button>
         </DynamicBoxGroupContainer>
       </div>

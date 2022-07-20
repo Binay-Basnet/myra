@@ -4,30 +4,14 @@ import { useFormContext } from 'react-hook-form';
 // import debounce from 'lodash/debounce';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
-const unitOptions = [
-  {
-    label: 'Day',
-    value: 'Day',
-  },
-  {
-    label: 'Week',
-    value: 'Week',
-  },
-  {
-    label: 'Month',
-    value: 'Month',
-  },
-  {
-    label: 'Year',
-    value: 'Year',
-  },
-];
 
 export const LoanRepayment = () => {
   const [rightElementMax, setRightElementMax] = useState('days');
   const [rightElementMin, setRightElementMin] = useState('days');
+  const { t } = useTranslation();
 
   const { resetField, watch } = useFormContext();
 
@@ -44,9 +28,28 @@ export const LoanRepayment = () => {
     setRightElementMin(minimumDurationUnit);
   }, [minimumDurationUnit]);
 
+  const unitOptions = [
+    {
+      label: t['daily'],
+      value: 'Daily',
+    },
+    {
+      label: t['weekly'],
+      value: 'Weekly',
+    },
+    {
+      label: t['monthly'],
+      value: 'Monthly',
+    },
+    {
+      label: t['yearly'],
+      value: 'Yearly',
+    },
+  ];
+
   return (
     <BoxContainer>
-      <TopText> Loan Repayment Start Grace Duration</TopText>
+      <TopText>{t['loanProductLoanRepaymentStartGraceDuration']}</TopText>
 
       <Box
         display={'flex'}
@@ -55,7 +58,7 @@ export const LoanRepayment = () => {
         gap="s8"
       >
         <TextBoxContainer>
-          <TopText>Minimum Duration</TopText>
+          <TopText>{t['loanProductMinimumDuration']}</TopText>
         </TextBoxContainer>
 
         {/* {minimumDuration && minimumDuration === 'applicable' && ( */}
@@ -67,7 +70,7 @@ export const LoanRepayment = () => {
         >
           <Box display={'flex'} flexDirection="column" gap="s4">
             <Text fontSize={'s3'} fontWeight="500">
-              Unit
+              {t['loanProductUnit']}
             </Text>
             <FormSwitchTab
               name={'minimumDurationUnitLoan'}
@@ -78,7 +81,7 @@ export const LoanRepayment = () => {
             <FormInput
               name="minimunDurationNumberLoan"
               textAlign={'right'}
-              label="Number"
+              label={t['loanProductNumber']}
               placeholder="0"
               rightElement={
                 <Box mr="s24">
@@ -99,7 +102,7 @@ export const LoanRepayment = () => {
         flexDirection={'column'}
       >
         <TextBoxContainer>
-          <TopText>Maximum Duration</TopText>
+          <TopText>{t['loanProductMaximumDuration']}</TopText>
         </TextBoxContainer>
 
         {/* {maximumDuration && maximumDuration === 'applicable' && ( */}
@@ -110,7 +113,7 @@ export const LoanRepayment = () => {
         >
           <Box display={'flex'} flexDirection="column" gap="s4">
             <Text fontSize={'s3'} fontWeight="500">
-              Unit
+              {t['loanProductUnit']}
             </Text>
             <FormSwitchTab
               name={'maximumDurationUnitLoan'}
@@ -121,7 +124,7 @@ export const LoanRepayment = () => {
             <FormInput
               name="maximumDurationNumberLoan"
               textAlign={'right'}
-              label="Number"
+              label={t['loanProductNumber']}
               placeholder="0"
               rightElement={
                 <Box>

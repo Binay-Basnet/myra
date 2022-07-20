@@ -71,6 +71,7 @@ export interface EditableTableProps<
   onChange?: (updatedData: Omit<T, '_id'>[]) => void;
 
   debug?: boolean;
+  canAddRow?: boolean;
 }
 
 const cellWidthObj = {
@@ -181,7 +182,8 @@ export function EditableTable<
   defaultData,
   canDeleteRow = true,
   onChange,
-  debug = true,
+  debug = false,
+  canAddRow = true,
 }: EditableTableProps<T>) {
   const [state, dispatch] = useReducer<
     Reducer<EditableState<T>, EditableTableAction<T>>
@@ -285,7 +287,9 @@ export function EditableTable<
           ))}
         </Box>
 
-        {columns.some((column) => column.fieldType === 'search') ? (
+        {!canAddRow ? null : columns.some(
+            (column) => column.fieldType === 'search'
+          ) ? (
           <Box
             borderBottom="1px"
             borderX="1px"
@@ -357,7 +361,7 @@ export function EditableTable<
         )}
       </Flex>
 
-      {
+      {debug && (
         <Box
           bg="gray.700"
           color="white"
@@ -370,7 +374,7 @@ export function EditableTable<
             {JSON.stringify({ ...state, hook_form: defaultData }, null, 2)}
           </pre>
         </Box>
-      }
+      )}
     </>
   );
 }
@@ -384,6 +388,7 @@ interface IEditableTableRowProps<
   data: T;
   canDeleteRow?: boolean;
   index: number;
+
   dispatch: React.Dispatch<EditableTableAction<T>>;
 }
 

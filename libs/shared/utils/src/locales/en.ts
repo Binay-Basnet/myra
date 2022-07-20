@@ -26,6 +26,8 @@ const en: Record<string, string> = {
   enable: 'Enable',
   disable: 'Disable',
   new: 'New',
+  quatrerly: 'Quarterly',
+  halfYearly: 'Half-Yearly',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
@@ -601,7 +603,7 @@ const en: Record<string, string> = {
   settingsLoanInsurancePremium: 'Insurance Premium Percent',
   settingsLoanPlceholderNumber: '0.00',
   settingsLoanMinimumPer: 'Minimum Percentage',
-  settingsLoanMaximumPer: 'Maximum Percenage',
+  settingsLoanMaximumPer: 'Maximum Percentage',
   settingsLoanVehicle: 'Vehicle',
   settingsLoanLand: 'Land',
   settingsLoanHouse: 'House',
@@ -2723,6 +2725,7 @@ const en: Record<string, string> = {
   loanProductNotApplicable: 'Not Applicable',
   loanProductUnit: 'Unit',
   loanProductNumber: 'Number',
+  loanProductEnterNumber: 'Enter Number',
   loanProductMaxinumTenure: 'Maxinum Tenure',
   loanProductLoanAmountLimit: 'Loan Amount Limit',
   loanProductMinimumAmount: 'Minimum Amount',
@@ -2740,10 +2743,13 @@ const en: Record<string, string> = {
   loanProductLoanRepaymentStartGraceDuration:
     'Loan Repayment Start Grace Duration',
   loanProductMinimumDuration: 'Minimum Duration',
+  loanProductMaximumDuration: 'Maximum Duration',
   loanProductInterest: 'Interest',
   loanProductMaximumRate: 'Maximum Rate',
+  loanProductMinimumRate: 'Minimum Rate',
   loanProductDefaultRate: 'Default Rate',
   loanProductCEOAuthority: 'CEO Authority',
+  loanProductBoardAuthority: 'Board Authority',
   loanProductBookingFrequency: 'Booking Frequency',
   loanProductSelectBookingFrequency: 'Select Booking Frequency',
   loanProductPostingFrequency: 'Posting Frequency',
@@ -2763,6 +2769,7 @@ const en: Record<string, string> = {
   loanProductDisburementofFMV: 'Disburement % of FMV',
   loanProductLoanProvisionFrequency: 'Loan Provision Frequency',
   loanProductDisburementDMV: 'Disburement % of DMV',
+  loanProductRebate: 'Rebate',
   loanProductStaffProduct: 'Staff Product',
   loanProductSupportMultipleAccount: 'Support Multiple Account',
   loanProductLoanScheduleChangeOverride: 'Loan Schedule Change Override',
@@ -2771,6 +2778,15 @@ const en: Record<string, string> = {
   loanProductLoanChangeDocument: 'Loan Change Document',
   loanProductForm: 'Form',
   loanProductCitizenship: 'Citizenship',
+
+  depositProductMaximumPostingFrequencyDifference:
+    'Maximum Posting Frequency Difference',
+
+  shareSettingsFeesName: 'Name',
+  shareSettingsFeesType: 'Type',
+  shareSettingsFeesMinQuantity: 'Min Quantity',
+  shareSettingsFeesMaxQuantity: 'Max Quantity',
+  shareSettingsFeesCharge: 'Charge',
 };
 
 export default en;

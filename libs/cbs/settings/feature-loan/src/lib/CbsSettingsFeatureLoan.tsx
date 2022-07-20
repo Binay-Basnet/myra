@@ -1,5 +1,4 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
@@ -11,7 +10,6 @@ import {
 import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Box,
-  Button,
   Container,
   FormFooter,
   GridItem,
@@ -81,7 +79,7 @@ export function SettingsLoanForm(props: loanProductsAdd) {
               borderBottom="1px solid #E6E6E6"
             >
               <Text fontSize="r2" fontWeight="SemiBold">
-                Add Loan Products
+                {t['loanProductAddLoanProduct']}
               </Text>
               <IconButton
                 variant={'ghost'}
@@ -100,12 +98,20 @@ export function SettingsLoanForm(props: loanProductsAdd) {
             <Box px="s20" py="s24">
               <ContainerWithDivider>
                 <Box background="white" mt="50px">
+                  <Text
+                    fontSize="r2"
+                    fontWeight="SemiBold"
+                    color="neutralColorLight.Gray-70"
+                    mb="s16"
+                  >
+                    {t['loanProductGeneralSetup']}
+                  </Text>
                   <InputGroupContainer>
                     <GridItem colSpan={2}>
                       <FormInput
                         name="productName"
-                        label="Product Name"
-                        placeholder="Enter Product Name"
+                        label={t['loanProductProductName']}
+                        placeholder={t['loanProductEnterProductName']}
                       />
                     </GridItem>
                     {/* <FormSelect name={'duhjisdfsd'} /> */}
@@ -113,28 +119,28 @@ export function SettingsLoanForm(props: loanProductsAdd) {
                     <FormSelect
                       name={'nameOfDepositProductType'}
                       options={optionsSaving}
-                      label="Product Type"
-                      placeholder="Select Product Type"
+                      label={t['loanProductProductType']}
+                      placeholder={t['loanProductSelectProductType']}
                     />
                     <GridItem colSpan={2}>
                       <FormSelect
                         name={'nameOfDepositProductSubtype'}
                         options={optionsSaving}
-                        label="Product Subtype"
-                        placeholder="Select Product Type"
+                        label={t['loanProductProductSubtype']}
+                        placeholder={t['loanProductSelectProductType']}
                       />
                     </GridItem>
 
                     <FormSelect
                       name={'nameOfDepositProduct'}
                       options={optionsSaving}
-                      label="Nature of Loan Product"
+                      label={t['loanProductNatureLoanProduct']}
                     />
                   </InputGroupContainer>
                 </Box>
                 <Box>
                   <Text fontWeight="500" fontSize={'r1'} color="gray.700">
-                    Product Code
+                    {t['loanProductProductCode']}
                   </Text>
                   <Text
                     mt="s4"
@@ -142,23 +148,23 @@ export function SettingsLoanForm(props: loanProductsAdd) {
                     fontSize={'s2'}
                     color="gray.700"
                   >
-                    Add prefix & intial number. Eg. ASM506
+                    {t['loanProductAddprefixInitial']}
                   </Text>
                   <InputGroupContainer mt="s16">
                     <FormInput
-                      label="Prefix"
-                      placeholder="Enter Prefix"
+                      label={t['loanProductPrefix']}
+                      placeholder={t['loanProductEnterPrefix']}
                       name="prefix"
                     />
                     <FormInput
-                      label="Intitial Number"
-                      placeholder="Intitial Number"
+                      label={t['loanProductIntitialNumber']}
+                      placeholder={t['loanProductIntitialNumber']}
                       name="initialNumber"
                     />
                     <Box></Box>
                     <FormSwitch
                       name="resetSwitch"
-                      label="Reset every fiscal year"
+                      label={t['loanProductReseteveryfiscalyear']}
                     />
                   </InputGroupContainer>
                 </Box>
@@ -205,21 +211,21 @@ export function SettingsLoanForm(props: loanProductsAdd) {
                   </Text>
                 </Box>
               }
-              draftButton={
-                <Button type="submit" variant="ghost">
-                  <Icon as={BiSave} color="primary.500" />
-                  <Text
-                    alignSelf="center"
-                    color="primary.500"
-                    fontWeight="Medium"
-                    fontSize="s2"
-                    ml="5px"
-                  >
-                    {t['saveDraft']}
-                  </Text>
-                </Button>
-              }
-              mainButtonLabel={t['next']}
+              // draftButton={
+              //   <Button type="submit" variant="ghost">
+              //     <Icon as={BiSave} color="primary.500" />
+              //     <Text
+              //       alignSelf="center"
+              //       color="primary.500"
+              //       fontWeight="Medium"
+              //       fontSize="s2"
+              //       ml="5px"
+              //     >
+              //       {t['saveDraft']}
+              //     </Text>
+              //   </Button>
+              // }
+              mainButtonLabel={t['saveAccount']}
               mainButtonHandler={() => router.push(`/members/translation`)}
             />
           </Container>
