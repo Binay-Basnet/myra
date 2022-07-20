@@ -1,5 +1,6 @@
-import { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -45,6 +46,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
         <ChakraProvider theme={theme}>
           {getLayout(<Component {...pageProps} />)}
         </ChakraProvider>
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </>
   );

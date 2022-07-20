@@ -1,11 +1,10 @@
 import { ReactElement } from 'react';
 
+import { EbankingHomePage } from '@coop/ebanking/home';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
-import Temp from '../temp';
-
 const HomePage = () => {
-  return <Temp />;
+  return <EbankingHomePage />;
 };
 
 HomePage.getLayout = function (page: ReactElement) {

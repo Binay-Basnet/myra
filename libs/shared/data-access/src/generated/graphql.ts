@@ -5814,6 +5814,11 @@ export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>
 
 export type GetAnnouncementListQuery = { eBanking: { notification?: { announcements?: { list: Array<{ id: string, details: any, summary: string, title: string, date: string } | null> } | null } | null } };
 
+export type GetHomeServiceListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetHomeServiceListQuery = { eBanking: { services?: Array<{ id: string, name: string, service_id: string, icon: string, enabled: boolean } | null> | null } };
+
 export type GetKymFormStatusInstitutionQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -6887,6 +6892,31 @@ export const useGetAnnouncementListQuery = <
     useQuery<GetAnnouncementListQuery, TError, TData>(
       variables === undefined ? ['getAnnouncementList'] : ['getAnnouncementList', variables],
       useAxios<GetAnnouncementListQuery, GetAnnouncementListQueryVariables>(GetAnnouncementListDocument).bind(null, variables),
+      options
+    );
+export const GetHomeServiceListDocument = `
+    query getHomeServiceList {
+  eBanking {
+    services {
+      id
+      name
+      service_id
+      icon
+      enabled
+    }
+  }
+}
+    `;
+export const useGetHomeServiceListQuery = <
+      TData = GetHomeServiceListQuery,
+      TError = unknown
+    >(
+      variables?: GetHomeServiceListQueryVariables,
+      options?: UseQueryOptions<GetHomeServiceListQuery, TError, TData>
+    ) =>
+    useQuery<GetHomeServiceListQuery, TError, TData>(
+      variables === undefined ? ['getHomeServiceList'] : ['getHomeServiceList', variables],
+      useAxios<GetHomeServiceListQuery, GetHomeServiceListQueryVariables>(GetHomeServiceListDocument).bind(null, variables),
       options
     );
 export const GetKymFormStatusInstitutionDocument = `
