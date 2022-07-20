@@ -1,5 +1,6 @@
 import { BsThreeDots } from 'react-icons/bs';
 import { IoCopyOutline } from 'react-icons/io5';
+import { useRouter } from 'next/router';
 
 import {
   Box,
@@ -17,6 +18,7 @@ import {
 interface IAccountCardProps {
   isDefault: boolean;
   account: {
+    id: string;
     name: string;
     accountNumber: string;
     amount: number;
@@ -25,6 +27,7 @@ interface IAccountCardProps {
 }
 
 export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
+  const router = useRouter();
   return (
     <Box
       p="s16"
@@ -86,7 +89,12 @@ export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
         </Popover>
       </Box>
       <Box display="flex" justifyContent="space-between" alignItems="flex-end">
-        <Box>
+        <Box
+          cursor="pointer"
+          onClick={(e) => {
+            router.push(`/accounts/${account.id}`);
+          }}
+        >
           <TextFields variant="tableHeader" color="gray.800">
             {account.name}{' '}
           </TextFields>

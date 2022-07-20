@@ -22,8 +22,8 @@ export function EbankingAccountsPage() {
           </>
         )}
         {accountList?.eBanking?.account?.list?.edges.map(
-          ({ node: { isDefault, id, ...rest } }) => (
-            <Fragment key={id}>
+          ({ node: { isDefault, ...rest } }) => (
+            <Fragment key={rest.id}>
               <AccountCard account={rest} isDefault={isDefault} />
             </Fragment>
           )

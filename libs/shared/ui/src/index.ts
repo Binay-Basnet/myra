@@ -1,3 +1,4 @@
+export * from './lib/path-bar/PathBar';
 export * from './lib/floating-shortcut-button/FloatingShortcutButton';
 export * from './lib/accordion/Accordion';
 export * from './lib/amount-input/AmountInput';

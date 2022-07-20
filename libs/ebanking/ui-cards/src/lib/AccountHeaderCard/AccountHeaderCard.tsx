@@ -18,8 +18,8 @@ export const AccountHeaderCard = () => {
     >
       <TextFields variant="stickyCardHeader">Accounts</TextFields>
 
-      <Grid templateColumns="repeat(2, 1fr)">
-        <Box display="flex" gap="s12">
+      <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+        <Box display="flex" alignItems="center" gap="s12">
           <Box
             borderRadius="br2"
             bg="primary.100"
