@@ -14,13 +14,15 @@ export interface TextFieldsProps extends TextProps {
     | 'tabs'
     | 'switch'
     | 'stickyCardHeader'
+    | 'link'
     | string;
   children?: React.ReactNode;
   color?: string;
+  onClick?: () => void;
 }
 
 export function TextFields(props: TextFieldsProps) {
-  const { children, variant, ...rest } = props;
+  const { children, variant, onClick, ...rest } = props;
 
   switch (variant) {
     case 'bodyLarge':
@@ -93,6 +95,21 @@ export function TextFields(props: TextFieldsProps) {
     case 'stickyCardHeader':
       return (
         <Text fontSize="r3" fontWeight="500" lineHeight="1.3">
+          {children}
+        </Text>
+      );
+
+    case 'link':
+      return (
+        <Text
+          fontSize="r1"
+          color="primary.500"
+          fontWeight="500"
+          lineHeight="17px"
+          cursor="pointer"
+          _hover={{ textDecoration: 'underline' }}
+          onClick={onClick}
+        >
           {children}
         </Text>
       );

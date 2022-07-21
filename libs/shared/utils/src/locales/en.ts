@@ -2789,6 +2789,30 @@ const en: Record<string, string> = {
   shareSettingsFeesCharge: 'Charge',
 
   accountOpenNumber: 'Number',
+
+  bankAccountsCode: 'Code',
+  bankAccountsBankName: 'Bank Name',
+  bankAccountsBookBalance: 'Book Balance',
+  bankAccountsBankBalance: 'Bank Balance',
+  bankAccountsDifference: 'Difference',
+  bankAccountsOverview: 'Overview',
+  bankAccountsBankStatement: 'Bank Statement',
+  bankAccountsBookStatement: 'Book Statement',
+  bankAccountsReconcillationReport: 'Reconcillation Report',
+  bankAccountsCheque: 'Cheque',
+  bankAccountsTasks: 'Tasks',
+  bankAccountsDocuments: 'Documents',
+  bankAccountsActivity: 'Activity',
+  bankAccountsViewLedger: 'View Ledger',
+  bankAccountsViewBankStatement: 'View Bank Statement',
+  bankAccountsGoReconciliation: 'Go to Reconciliation',
+  bankAccountsRecentTransactions: 'Recent Transactions',
+  bankAccountsViewAllTransactions: 'View All Transactions',
+  bankAccountsDate: 'Date ',
+  bankAccountsTransactionNo: 'Transaction No',
+  bankAccountsType: 'Type',
+  bankAccountsAmount: 'Amount',
+  bankAccountsDifferenceBalance: 'Difference in Balance',
 };
 
 export default en;
