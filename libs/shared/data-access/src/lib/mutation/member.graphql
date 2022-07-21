@@ -17,6 +17,58 @@ mutation setMemberData($id: ID!, $data: KymIndMemberInput!) {
   }
 }
 
+mutation setMemberFamilyDetails($id: ID!, $data: KYMIndFamilyMemberInput!) {
+  members {
+    individual(id: $id) {
+      familyMember {
+        upsert(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteMemberFamilyDetails($memberId: ID!, $id: ID!) {
+  members {
+    individual(id: $memberId) {
+      familyMember {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setMemberOccupation(
+  $id: ID!
+  $isSpouse: Boolean!
+  $data: KYMIndOccupationInput!
+) {
+  members {
+    individual(id: $id) {
+      occupation {
+        upsert(isSpouse: $isSpouse, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteMemberOccupation($memberId: ID!, $id: ID!) {
+  members {
+    individual(id: $memberId) {
+      occupation {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
 mutation updateKYMField($id: ID!, $enabled: Boolean, $name: String) {
   settings {
     kymForm {

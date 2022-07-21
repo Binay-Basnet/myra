@@ -39,6 +39,7 @@ import {
   MemberKYMIncomeSourceDetails,
   MemberKYMMainOccupation,
   MemberKYMProfession,
+  KYMDeclarationAgree,
 } from '../components/form';
 import {
   ContainerWithDivider,
@@ -52,8 +53,12 @@ import { identity, pickBy } from 'lodash';
 export function KYMIndividualPage() {
   const { t } = useTranslation();
 
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
   const { data: occupationDetailsDefaultFields } =
     useGetIndividualKymOptionsQuery({
+      id,
       filter: {
         customId: Kym_Field_Custom_Id.OccupationDetails,
       },
@@ -65,6 +70,7 @@ export function KYMIndividualPage() {
     ) ?? [];
 
   const { data: familyDetailsFieldsData } = useGetIndividualKymOptionsQuery({
+    id,
     filter: {
       customId: Kym_Field_Custom_Id.FamilyInformation,
     },
@@ -77,6 +83,7 @@ export function KYMIndividualPage() {
 
   const { data: incomeSourceDetailsField, isLoading } =
     useGetIndividualKymOptionsQuery({
+      id,
       filter: {
         customId: Kym_Field_Custom_Id.IncomeSourceDetails,
       },
@@ -89,6 +96,7 @@ export function KYMIndividualPage() {
 
   const { data: nationalityFields, isLoading: nationalityLoading } =
     useGetIndividualKymOptionsQuery({
+      id,
       filter: { customId: KYMOptionEnum.Nationality },
     });
 
@@ -97,20 +105,18 @@ export function KYMIndividualPage() {
     subSection: string;
   }>();
 
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
+  // const { mutate } = useSetMemberDataMutation({
+  //   onSuccess: (res) => {
+  //     setError('firstName', {
+  //       type: 'custom',
+  //       message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
+  //     });
+  //   },
+  //   onError: () => {
+  //     setError('firstName', { type: 'custom', message: 'gg' });
+  //   },
+  // });
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      setError('firstName', {
-        type: 'custom',
-        message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      });
-    },
-    onError: () => {
-      setError('firstName', { type: 'custom', message: 'gg' });
-    },
-  });
   const kymFormStatusQuery = useGetKymFormStatusQuery(
     { id },
     { enabled: id !== 'undefined' }
@@ -119,7 +125,7 @@ export function KYMIndividualPage() {
     kymFormStatusQuery?.data?.members?.individual?.formState?.data
       ?.sectionStatus;
 
-  const methods = useForm<KymIndMemberInput>();
+  // const methods = useForm<KymIndMemberInput>();
 
   const {
     data: editValues,
@@ -132,89 +138,92 @@ export function KYMIndividualPage() {
     { enabled: id !== 'undefined' }
   );
 
-  const { watch, setError, reset } = methods;
+  console.log('ind page');
+  console.log({ editValues });
 
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        console.log(editValues);
-        if (editValues && data) {
-          mutate({ id: router.query['id'] as string, data });
-          refetch();
-        }
-      }, 800)
-    );
+  // const { watch, setError, reset } = methods;
 
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady, editValues]);
+  // useEffect(() => {
+  //   const subscription = watch(
+  //     debounce((data) => {
+  //       console.log(editValues);
+  //       if (editValues && data) {
+  //         mutate({ id: router.query['id'] as string, data });
+  //         refetch();
+  //       }
+  //     }, 800)
+  //   );
 
-  useEffect(() => {
-    if (editValues) {
-      console.log(
-        pickBy(
-          editValues?.members?.individual?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        )
-      );
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
-      console.log('edit value', editValueData);
-      const permanentLocationData =
-        editValueData?.permanentLocation?.latitude === null
-          ? { latitude: 27.71, longitude: 85.31 }
-          : editValueData?.permanentLocation;
+  //   return () => subscription.unsubscribe();
+  // }, [watch, router.isReady, editValues]);
 
-      const temporaryLocationData =
-        editValueData?.temporaryLocation?.latitude === null
-          ? { latitude: 27.71, longitude: 85.31 }
-          : editValueData?.temporaryLocation;
-      console.log(
-        'location',
-        editValueData,
-        permanentLocationData,
-        temporaryLocationData,
-        {
-          ...editValueData,
-          permanentLocation: permanentLocationData,
-          temporaryLocation: temporaryLocationData,
-        }
-      );
-      reset({
-        mainOccupation: [
-          {
-            options: occupationFieldNames,
-          },
-        ],
-        spouseOccupation: [
-          {
-            options: occupationFieldNames,
-          },
-        ],
-        incomeSourceDetails: [
-          {
-            options: incomeSourceDetailFieldNames,
-          },
-        ],
-        familyDetails: [
-          {
-            options: familyDetailsFieldNames,
-          },
-        ],
-        nationalityId:
-          nationalityFields?.members?.individual?.options?.list?.data?.[0]
-            ?.options?.[0]?.id,
+  // useEffect(() => {
+  //   if (editValues) {
+  //     console.log(
+  //       pickBy(
+  //         editValues?.members?.individual?.formState?.data?.formData ?? {},
+  //         (v) => v !== null
+  //       )
+  //     );
+  //     const editValueData =
+  //       editValues?.members?.individual?.formState?.data?.formData;
+  //     console.log('edit value', editValueData);
+  //     const permanentLocationData =
+  //       editValueData?.permanentAddress?.coordinates?.latitude === null
+  //         ? { latitude: 27.71, longitude: 85.31 }
+  //         : editValueData?.permanentAddress;
 
-        ...pickBy(
-          {
-            ...editValueData,
-            permanentLocation: permanentLocationData,
-            temporaryLocation: temporaryLocationData,
-          } ?? {},
-          identity
-        ),
-      });
-    }
-  }, [isLoading, nationalityLoading, editLoading]);
+  //     const temporaryLocationData =
+  //       editValueData?.temporaryAddress?.coordinates?.latitude === null
+  //         ? { latitude: 27.71, longitude: 85.31 }
+  //         : editValueData?.temporaryAddress;
+  //     console.log(
+  //       'location',
+  //       editValueData,
+  //       permanentLocationData,
+  //       temporaryLocationData,
+  //       {
+  //         ...editValueData,
+  //         permanentLocation: permanentLocationData,
+  //         temporaryLocation: temporaryLocationData,
+  //       }
+  //     );
+  //     reset({
+  //       mainOccupation: [
+  //         {
+  //           options: occupationFieldNames,
+  //         },
+  //       ],
+  //       spouseOccupation: [
+  //         {
+  //           options: occupationFieldNames,
+  //         },
+  //       ],
+  //       incomeSourceDetails: [
+  //         {
+  //           options: incomeSourceDetailFieldNames,
+  //         },
+  //       ],
+  //       familyDetails: [
+  //         {
+  //           options: familyDetailsFieldNames,
+  //         },
+  //       ],
+  //       nationalityId:
+  //         nationalityFields?.members?.individual?.options?.list?.data?.[0]
+  //           ?.options?.[0]?.id,
+
+  //       ...pickBy(
+  //         {
+  //           ...editValueData,
+  //           permanentLocation: permanentLocationData,
+  //           temporaryLocation: temporaryLocationData,
+  //         } ?? {},
+  //         identity
+  //       ),
+  //     });
+  //   }
+  // }, [isLoading, nationalityLoading, editLoading]);
 
   return (
     <>
@@ -245,99 +254,129 @@ export function KYMIndividualPage() {
       </Box>
 
       <Container minW="container.xl" height="fit-content">
-        <FormProvider {...methods}>
+        {/* <FormProvider {...methods}>
           <form
             onFocus={(e) => {
               const kymSection = getKymSection(e.target.id);
               setKymCurrentSection(kymSection);
             }}
-          >
-            {/* main */}
-            <Box pb="s40" display="flex" width="100%">
-              <Box display="flex">
-                <Box
-                  w={320}
-                  p={2}
-                  position="fixed"
-                  borderRight="1px solid #E6E6E6"
-                  minHeight="100%"
-                  bg="white"
-                >
-                  <AccorrdianAddMember
-                    formStatus={kymFormStatus}
-                    kymCurrentSection={kymCurrentSection}
-                  />
-                </Box>
-
-                <Box background="white" ml={320} px="s20" pt="s20" pb="120px">
-                  <SectionContainer>
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymInd1PersonalInformation']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <MemberKYMBasicInfo />
-                        <MemberKYMContactDetails />
-                        <MemberKYMIdentificationDetails />
-                        <MemberKYMAddress />
-                        <MemberKYMFamilyDetails />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymInd2ProfessionalInformation']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <MemberKYMProfession />
-                        <MemberKYMMainOccupation />
-                        <MemberKYMHusbandWifeOccupation />
-                        <MemberKYMIncomeSourceDetails />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymInd3COOPmembership']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <KYMBasiccoopDetails />
-                        <KYMFinancialTransactionDetails />
-                        <KYMEstimatedAmount />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymInd4Declaration']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <KYMDeclaration />
-                        <KYMDocumentDeclaration />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <Box display="flex" gap="s16" alignItems="start">
-                      <FormCheckbox name="declarationAgree" fontSize="s3">
-                        {''}
-                      </FormCheckbox>
-                      <TextFields variant="formInput" mt="-6px">
-                        I hereby declare that the information provided by me/us
-                        in this form and documents provided to the co-operative
-                        are true and correct. All transaction in this account
-                        are from legitimate source. If found otherwise, I shall
-                        bear the consequences thereof.
-                      </TextFields>
-                    </Box>
-                  </SectionContainer>
-                </Box>
-              </Box>
+          > */}
+        {/* main */}
+        <Box pb="s40" display="flex" width="100%">
+          <Box display="flex">
+            <Box
+              w={320}
+              p={2}
+              position="fixed"
+              borderRight="1px solid #E6E6E6"
+              minHeight="100%"
+              bg="white"
+            >
+              <AccorrdianAddMember
+                formStatus={kymFormStatus}
+                kymCurrentSection={kymCurrentSection}
+              />
             </Box>
-            {/* </Box> */}
 
-            {/* footer */}
-          </form>
-        </FormProvider>
+            <Box background="white" ml={320} px="s20" pt="s20" pb="120px">
+              <SectionContainer>
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymInd1PersonalInformation']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <MemberKYMBasicInfo
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                    <MemberKYMContactDetails
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                    <MemberKYMIdentificationDetails
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                    <MemberKYMAddress
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                    <MemberKYMFamilyDetails
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymInd2ProfessionalInformation']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <MemberKYMProfession
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                    <MemberKYMMainOccupation
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                    <MemberKYMHusbandWifeOccupation
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                    <MemberKYMIncomeSourceDetails
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymInd3COOPmembership']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <KYMBasiccoopDetails
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                    <KYMFinancialTransactionDetails
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                    <KYMEstimatedAmount
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymInd4Declaration']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <KYMDeclaration
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                    <KYMDocumentDeclaration
+                      setKymCurrentSection={setKymCurrentSection}
+                    />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                {/* <Box display="flex" gap="s16" alignItems="start">
+                  <FormCheckbox name="declarationAgree" fontSize="s3">
+                    {''}
+                  </FormCheckbox>
+                  <TextFields variant="formInput" mt="-6px">
+                    I hereby declare that the information provided by me/us in
+                    this form and documents provided to the co-operative are
+                    true and correct. All transaction in this account are from
+                    legitimate source. If found otherwise, I shall bear the
+                    consequences thereof.
+                  </TextFields>
+                </Box> */}
+
+                <KYMDeclarationAgree />
+              </SectionContainer>
+            </Box>
+          </Box>
+        </Box>
+        {/* </Box> */}
+
+        {/* footer */}
+        {/* </form>
+        </FormProvider> */}
       </Container>
       {/* <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>

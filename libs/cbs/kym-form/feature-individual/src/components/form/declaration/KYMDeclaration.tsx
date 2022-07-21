@@ -1,5 +1,7 @@
-import React from 'react';
-import { Control, useFormContext } from 'react-hook-form';
+import { useEffect } from 'react';
+import { Control, FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import debounce from 'lodash/debounce';
 
 import {
   ContainerWithDivider,
@@ -8,7 +10,9 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id,
+  KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
+  useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import {
   FormInput,
@@ -18,7 +22,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import { Box, Grid, GridItem, TextFields } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -38,11 +42,28 @@ const booleanList = [
   },
 ];
 
-export const KYMDeclaration = () => {
+interface IKYMDeclarationProps {
+  setKymCurrentSection: (section?: {
+    section: string;
+    subSection: string;
+  }) => void;
+}
+
+export const KYMDeclaration = ({
+  setKymCurrentSection,
+}: IKYMDeclarationProps) => {
   const { t } = useTranslation();
-  const { watch } = useFormContext();
+
+  const methods = useForm<KymIndMemberInput>();
+
+  const { watch } = methods;
+
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
     useGetIndividualKymOptionsQuery({
+      id,
       filter: {
         customId: Kym_Field_Custom_Id.Relationship,
       },
@@ -51,139 +72,172 @@ export const KYMDeclaration = () => {
     data: foreignEmploymentOptions,
     isLoading: foreignEmploymentOptionsLoading,
   } = useGetIndividualKymOptionsQuery({
+    id,
     filter: { customId: Kym_Field_Custom_Id.ForeignEmploymentOptions },
   });
 
   const hasBeneficialOwner = watch('hasBeneficialOwner');
 
+  const { mutate } = useSetMemberDataMutation({
+    onSuccess: (res) => {
+      // setError('firstName', {
+      //   type: 'custom',
+      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
+      // });
+      console.log(res);
+    },
+    //   onError: () => {
+    //     setError('firstName', { type: 'custom', message: 'gg' });
+    //   },
+  });
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        mutate({ id: router.query['id'] as string, data });
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
+
   return (
-    <GroupContainer>
-      <Box
-        display="flex"
-        flexDirection="column"
-        gap="s16"
-        id="Next to Kin"
-        scrollMarginTop={'200px'}
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSection(e.target.id);
+          setKymCurrentSection(kymSection);
+        }}
       >
-        <TextFields variant="bodyRegular" fontWeight={600}>
-          {t['kynIndNominee']}
-        </TextFields>
-        <ContainerWithDivider>
+        <GroupContainer>
           <Box
-            id="kymAccIndBeneficialOwner"
-            scrollMarginTop={'200px'}
             display="flex"
             flexDirection="column"
-            gap="s32"
+            gap="s16"
+            id="Next to Kin"
+            scrollMarginTop={'200px'}
           >
-            <FormSwitchTab
-              label={t['kynIndDoyouhavebeneficialowner']}
-              options={booleanList}
-              name="hasBeneficialOwner"
-            />
-            {hasBeneficialOwner && (
-              <Grid
-                gap={2}
-                templateColumns="repeat(3,1fr)"
-                alignItems="last baseline"
+            <TextFields variant="bodyRegular" fontWeight={600}>
+              {t['kynIndNominee']}
+            </TextFields>
+            <ContainerWithDivider>
+              <Box
+                id="kymAccIndBeneficialOwner"
+                scrollMarginTop={'200px'}
+                display="flex"
+                flexDirection="column"
+                gap="s32"
               >
-                <GridItem colSpan={1}>
-                  <FormSelect
-                    name={'beneficialRelationshipId'}
-                    isLoading={familyRelationshipLoading}
-                    options={getFieldOption(familyRelationShipData)}
-                    placeholder={t['kynIndRelationship']}
-                    label={t['kynIndIyespleasewritenameandrelationship']}
-                  />
-                </GridItem>
-
-                <GridItem mt="20px" colSpan={2}>
-                  <FormInput
-                    type="text"
-                    id="beneficialFullName"
-                    name={'beneficialFullName'}
-                    label=" "
-                    placeholder={t['kynIndFullName']}
-                  />
-                </GridItem>
-              </Grid>
-            )}
-          </Box>
-
-          <Box
-            id="kymAccIndFamilymembersinpolitics"
-            scrollMarginTop={'200px'}
-            display="flex"
-            flexDirection="column"
-            gap="s32"
-          >
-            <FormSwitchTab
-              label={t['kynIndPoliticallyexposedperson']}
-              options={booleanList}
-              name="isPoliticallyExposed"
-            />
-
-            <InputGroupContainer>
-              <Box display="flex" flexDirection="column">
-                <FormTextArea
-                  name="politicallyExposedDetails"
-                  id="politicallyExposedDetails"
-                  label={t['kynIndPleasespecify']}
-                  placeholder={t['kynIndEnterDetails']}
+                <FormSwitchTab
+                  label={t['kynIndDoyouhavebeneficialowner']}
+                  options={booleanList}
+                  name="hasBeneficialOwner"
                 />
+                {hasBeneficialOwner && (
+                  <Grid
+                    gap={2}
+                    templateColumns="repeat(3,1fr)"
+                    alignItems="last baseline"
+                  >
+                    <GridItem colSpan={1}>
+                      <FormSelect
+                        name={'beneficialRelationshipId'}
+                        isLoading={familyRelationshipLoading}
+                        options={getFieldOption(familyRelationShipData)}
+                        placeholder={t['kynIndRelationship']}
+                        label={t['kynIndIyespleasewritenameandrelationship']}
+                      />
+                    </GridItem>
+
+                    <GridItem mt="20px" colSpan={2}>
+                      <FormInput
+                        type="text"
+                        id="beneficialFullName"
+                        name={'beneficialFullName'}
+                        label=" "
+                        placeholder={t['kynIndFullName']}
+                      />
+                    </GridItem>
+                  </Grid>
+                )}
               </Box>
-            </InputGroupContainer>
-          </Box>
 
-          <Box
-            id="kymAccIndConvictedNonconvictedStatus"
-            scrollMarginTop={'200px'}
-            display="flex"
-            flexDirection="column"
-            gap="s32"
-          >
-            <FormSwitchTab
-              label={t['kynIndDeclarationofconvicted']}
-              options={booleanList}
-              name="isConvicted"
-            />
-
-            <InputGroupContainer>
-              <Box display="flex" flexDirection="column">
-                <FormTextArea
-                  name="convictedDetails"
-                  id="convictedDetails"
-                  label={t['kynIndPleasespecify']}
-                  placeholder={t['kynIndEnterDetails']}
+              <Box
+                id="kymAccIndFamilymembersinpolitics"
+                scrollMarginTop={'200px'}
+                display="flex"
+                flexDirection="column"
+                gap="s32"
+              >
+                <FormSwitchTab
+                  label={t['kynIndPoliticallyexposedperson']}
+                  options={booleanList}
+                  name="isPoliticallyExposed"
                 />
+
+                <InputGroupContainer>
+                  <Box display="flex" flexDirection="column">
+                    <FormTextArea
+                      name="politicallyExposedDetails"
+                      id="politicallyExposedDetails"
+                      label={t['kynIndPleasespecify']}
+                      placeholder={t['kynIndEnterDetails']}
+                    />
+                  </Box>
+                </InputGroupContainer>
               </Box>
-            </InputGroupContainer>
-          </Box>
 
-          <Box
-            id="kymAccIndResidentialpermitofforeigncountry"
-            scrollMarginTop={'200px'}
-            display="flex"
-            flexDirection="column"
-            gap="s32"
-          >
-            <FormSwitchTab
-              label={t['kynIndForeignCountry']}
-              options={booleanList}
-              name="hasForeignResidentialPermit"
-            />
+              <Box
+                id="kymAccIndConvictedNonconvictedStatus"
+                scrollMarginTop={'200px'}
+                display="flex"
+                flexDirection="column"
+                gap="s32"
+              >
+                <FormSwitchTab
+                  label={t['kynIndDeclarationofconvicted']}
+                  options={booleanList}
+                  name="isConvicted"
+                />
 
-            <Box display="flex" flexDirection="column">
-              <FormRadioGroup
-                name="foreignResidentialPermitTypeId"
-                label={t['kynIndSpecifyfollowingdetails']}
-                options={getFieldOption(foreignEmploymentOptions)}
-                labelFontSize="s3"
-              />
-            </Box>
+                <InputGroupContainer>
+                  <Box display="flex" flexDirection="column">
+                    <FormTextArea
+                      name="convictedDetails"
+                      id="convictedDetails"
+                      label={t['kynIndPleasespecify']}
+                      placeholder={t['kynIndEnterDetails']}
+                    />
+                  </Box>
+                </InputGroupContainer>
+              </Box>
+
+              <Box
+                id="kymAccIndResidentialpermitofforeigncountry"
+                scrollMarginTop={'200px'}
+                display="flex"
+                flexDirection="column"
+                gap="s32"
+              >
+                <FormSwitchTab
+                  label={t['kynIndForeignCountry']}
+                  options={booleanList}
+                  name="hasForeignResidentialPermit"
+                />
+
+                <Box display="flex" flexDirection="column">
+                  <FormRadioGroup
+                    name="foreignResidentialPermitTypeId"
+                    label={t['kynIndSpecifyfollowingdetails']}
+                    options={getFieldOption(foreignEmploymentOptions)}
+                    labelFontSize="s3"
+                  />
+                </Box>
+              </Box>
+            </ContainerWithDivider>
           </Box>
-        </ContainerWithDivider>
-      </Box>
-    </GroupContainer>
+        </GroupContainer>
+      </form>
+    </FormProvider>
   );
 };

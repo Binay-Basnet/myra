@@ -1,6 +1,12 @@
 import React, { Fragment, useEffect } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  useFormContext,
+} from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
@@ -11,17 +17,25 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
+  KymIndMemberInput,
   KymOption,
   useGetIndividualKymOptionsQuery,
 } from '@coop/shared/data-access';
 import { FormCheckbox, FormInput } from '@coop/shared/form';
 import { Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 interface DynamicInputProps {
   fieldIndex: number;
   optionIndex: number;
   option: Partial<KymOption>;
+}
+
+interface IMemberKYMHusbandWifeOccupationProps {
+  setKymCurrentSection: (section?: {
+    section: string;
+    subSection: string;
+  }) => void;
 }
 
 export const SpouseOccupationInput = ({
@@ -62,9 +76,14 @@ const HusbandWifeOccupation = ({
 
   const isOwner = watch(`spouseOccupation.${fieldIndex}.isOwner`);
 
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
   const { data: occupationData } = useGetIndividualKymOptionsQuery({
+    id,
     filter: { customId: KYMOptionEnum.OccupationDetails },
   });
+
   const { t } = useTranslation();
 
   const occupationFieldNames =
@@ -150,9 +169,14 @@ const HusbandWifeOccupation = ({
   );
 };
 
-export const MemberKYMHusbandWifeOccupation = () => {
+export const MemberKYMHusbandWifeOccupation = ({
+  setKymCurrentSection,
+}: IMemberKYMHusbandWifeOccupationProps) => {
   const { t } = useTranslation();
-  const { control, watch } = useFormContext();
+
+  const methods = useForm<KymIndMemberInput>();
+
+  const { control, watch } = methods;
 
   const {
     fields: husbandWifeOccupationFields,
@@ -161,42 +185,51 @@ export const MemberKYMHusbandWifeOccupation = () => {
   } = useFieldArray({ control, name: 'spouseOccupation' });
 
   return (
-    <GroupContainer
-      id="kymAccIndMainOccupationofHusabandWife"
-      scrollMarginTop={'200px'}
-    >
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE']}
-      </Text>
-
-      <DynamicBoxGroupContainer>
-        {husbandWifeOccupationFields.map((item, index) => {
-          return (
-            <Box key={item.id}>
-              <HusbandWifeOccupation
-                control={control}
-                index={index}
-                watch={watch}
-                removeHusbandWifeOccupation={() =>
-                  husbandWifeOccupationRemove(index)
-                }
-              />
-            </Box>
-          );
-        })}
-
-        <Button
-          id="spouseOccupationButton"
-          alignSelf="start"
-          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-          variant="outline"
-          onClick={() => {
-            husbandWifeOccupationAppend({});
-          }}
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSection(e.target.id);
+          setKymCurrentSection(kymSection);
+        }}
+      >
+        <GroupContainer
+          id="kymAccIndMainOccupationofHusabandWife"
+          scrollMarginTop={'200px'}
         >
-          {t['kymIndAddOccupation']}
-        </Button>
-      </DynamicBoxGroupContainer>
-    </GroupContainer>
+          <Text fontSize="r1" fontWeight="SemiBold">
+            {t['kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE']}
+          </Text>
+
+          <DynamicBoxGroupContainer>
+            {husbandWifeOccupationFields.map((item, index) => {
+              return (
+                <Box key={item.id}>
+                  <HusbandWifeOccupation
+                    control={control}
+                    index={index}
+                    watch={watch}
+                    removeHusbandWifeOccupation={() =>
+                      husbandWifeOccupationRemove(index)
+                    }
+                  />
+                </Box>
+              );
+            })}
+
+            <Button
+              id="spouseOccupationButton"
+              alignSelf="start"
+              leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+              variant="outline"
+              onClick={() => {
+                husbandWifeOccupationAppend({});
+              }}
+            >
+              {t['kymIndAddOccupation']}
+            </Button>
+          </DynamicBoxGroupContainer>
+        </GroupContainer>
+      </form>
+    </FormProvider>
   );
 };

@@ -1,7 +1,14 @@
-import React, { useEffect } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useEffect } from 'react';
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  useFormContext,
+} from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
+import debounce from 'lodash/debounce';
 
 import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
@@ -12,13 +19,22 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
+  KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
+  useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
+
+interface IMemberKYMIncomeSourceDetailsProps {
+  setKymCurrentSection: (section?: {
+    section: string;
+    subSection: string;
+  }) => void;
+}
 
 const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
   const { register, unregister } = useFormContext();
@@ -43,8 +59,13 @@ const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
 };
 
 const IncomeSource = ({ index, removeIncomeSource }: any) => {
+  const router = useRouter();
+
+  const id = String(router?.query?.['id']);
+
   const { data: familyIncomeData, isLoading: familyIncomeLoading } =
     useGetIndividualKymOptionsQuery({
+      id,
       filter: { customId: KYMOptionEnum.IncomeSourceDetails },
     });
 
@@ -82,14 +103,46 @@ const IncomeSource = ({ index, removeIncomeSource }: any) => {
   );
 };
 
-export const MemberKYMIncomeSourceDetails = () => {
+export const MemberKYMIncomeSourceDetails = ({
+  setKymCurrentSection,
+}: IMemberKYMIncomeSourceDetailsProps) => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
+  const methods = useForm<KymIndMemberInput>();
+
+  const { watch, control } = methods;
+
+  const { mutate } = useSetMemberDataMutation({
+    onSuccess: (res) => {
+      // setError('firstName', {
+      //   type: 'custom',
+      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
+      // });
+      console.log(res);
+    },
+    //   onError: () => {
+    //     setError('firstName', { type: 'custom', message: 'gg' });
+    //   },
+  });
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        mutate({ id: router.query['id'] as string, data });
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
+
   const { data: familyIncomeData, isLoading: familyIncomeLoading } =
     useGetIndividualKymOptionsQuery({
+      id,
       filter: { customId: KYMOptionEnum.FamilyIncomeSource },
     });
-
-  const { control } = useFormContext();
 
   const {
     fields: incomeSourceFields,
@@ -98,47 +151,59 @@ export const MemberKYMIncomeSourceDetails = () => {
   } = useFieldArray({ control, name: 'incomeSourceDetails' });
 
   return (
-    <GroupContainer id="kymAccIndIncomeSourceDetails" scrollMarginTop={'200px'}>
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymIndINCOMESOURCEDETAILS']}
-      </Text>
-      <GroupContainer>
-        <Box display="flex" flexDirection="column">
-          <FormRadioGroup
-            id="annualIncomeSourceId"
-            name="annualIncomeSourceId"
-            label={t['kynIndAnnualFamilyIncome']}
-            options={getFieldOption(familyIncomeData)}
-          />
-        </Box>
-        <div>
-          <Text fontSize="s3" mb="s4">
-            {t['kynIndIncomegreater']}
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSection(e.target.id);
+          setKymCurrentSection(kymSection);
+        }}
+      >
+        <GroupContainer
+          id="kymAccIndIncomeSourceDetails"
+          scrollMarginTop={'200px'}
+        >
+          <Text fontSize="r1" fontWeight="SemiBold">
+            {t['kymIndINCOMESOURCEDETAILS']}
           </Text>
-          <DynamicBoxGroupContainer>
-            {incomeSourceFields.map((item, index) => {
-              return (
-                <Box key={item.id}>
-                  <IncomeSource
-                    control={control}
-                    removeIncomeSource={() => incomeSourceRemove(index)}
-                    index={index}
-                  />
-                </Box>
-              );
-            })}
-            <Button
-              id="incomeSourceDetailsButton"
-              alignSelf="start"
-              leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-              variant="outline"
-              onClick={() => incomeSourceAppend({})}
-            >
-              {t['kynIndNewEntry']}
-            </Button>
-          </DynamicBoxGroupContainer>
-        </div>
-      </GroupContainer>
-    </GroupContainer>
+          <GroupContainer>
+            <Box display="flex" flexDirection="column">
+              <FormRadioGroup
+                id="annualIncomeSourceId"
+                name="annualIncomeSourceId"
+                label={t['kynIndAnnualFamilyIncome']}
+                options={getFieldOption(familyIncomeData)}
+              />
+            </Box>
+            <div>
+              <Text fontSize="s3" mb="s4">
+                {t['kynIndIncomegreater']}
+              </Text>
+              <DynamicBoxGroupContainer>
+                {incomeSourceFields.map((item, index) => {
+                  return (
+                    <Box key={item.id}>
+                      <IncomeSource
+                        control={control}
+                        removeIncomeSource={() => incomeSourceRemove(index)}
+                        index={index}
+                      />
+                    </Box>
+                  );
+                })}
+                <Button
+                  id="incomeSourceDetailsButton"
+                  alignSelf="start"
+                  leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+                  variant="outline"
+                  onClick={() => incomeSourceAppend({})}
+                >
+                  {t['kynIndNewEntry']}
+                </Button>
+              </DynamicBoxGroupContainer>
+            </div>
+          </GroupContainer>
+        </GroupContainer>
+      </form>
+    </FormProvider>
   );
 };
