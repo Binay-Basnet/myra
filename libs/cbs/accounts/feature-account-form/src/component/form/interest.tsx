@@ -41,12 +41,7 @@ export const Interest = () => {
         >
           {t['accInterest']}
         </Text>
-        <Box display="grid" gridTemplateColumns="repeat(1, 1fr)" gap={6}>
-          <FormCheckboxGroup
-            name="individualRequiredDocuments"
-            list={interestList}
-            orientation="row"
-          />
+        <Box display="grid" gridTemplateColumns="repeat(1, 1fr)" gap="s16">
           <InputGroupContainer>
             <FormInput
               name="interestRate"
@@ -78,11 +73,17 @@ export const Interest = () => {
               </>
             )}
           </InputGroupContainer>
+          <FormCheckboxGroup
+            name="individualRequiredDocuments"
+            list={interestList}
+            orientation="row"
+          />
           {products === 'recurringSaving' && (
             <Box
               display="flex"
               gap="s12"
-              p="s12"
+              px="s16"
+              paddingTop="s16"
               bg="primary.0"
               borderRadius="br2"
             >
@@ -90,13 +91,12 @@ export const Interest = () => {
                 as={IoInformationCircleOutline}
                 color="neutralColorLight.Gray-80"
               />
-              <Box display="flex" flexDirection="column" gap="s16">
-                <Box display="flex" flexDirection="column">
+              <Box display="flex" flexDirection="column">
+                <Box display="flex" flexDirection="column" gap="s8">
                   <TextFields
                     fontSize="s3"
                     fontWeight="SemiBold"
                     color="neutralColorLight.Gray-80"
-                    mb="s16"
                   >
                     {t['accountOpenInterestRate']}
                   </TextFields>
@@ -105,18 +105,16 @@ export const Interest = () => {
                       fontSize="s3"
                       fontWeight="Regular"
                       color="neutralColorLight.Gray-80"
-                      mb="s16"
                     >
-                      Minimum Interest Rate:7%
-                    </TextFields>
-
-                    <TextFields
-                      fontSize="s3"
-                      fontWeight="Regular"
-                      color="neutralColorLight.Gray-80"
-                      mb="s16"
-                    >
-                      Interest Rate: 12%
+                      Minimum Interest Rate: <b>7%</b>
+                      <TextFields
+                        fontSize="s3"
+                        fontWeight="Regular"
+                        color="neutralColorLight.Gray-80"
+                        mb="s16"
+                      >
+                        Interest Rate: <b> 12%</b>
+                      </TextFields>
                     </TextFields>
                   </Box>
                 </Box>
@@ -126,26 +124,25 @@ export const Interest = () => {
                     fontSize="s3"
                     fontWeight="SemiBold"
                     color="neutralColorLight.Gray-80"
-                    mb="s16"
                   >
                     {t['accoutnOpenLadderRateInfo']}
                   </TextFields>
-                  <Box display="flex" flexDirection="column" gap="s2">
+                  <Box display="flex" flexDirection="column">
                     <TextFields
                       fontSize="s3"
                       fontWeight="Regular"
                       color="neutralColorLight.Gray-80"
-                      mb="s16"
                     >
-                      For More than 45,000.00 Ladder Rate is 15%.
-                    </TextFields>
-                    <TextFields
-                      fontSize="s3"
-                      fontWeight="Regular"
-                      color="neutralColorLight.Gray-80"
-                      mb="s16"
-                    >
-                      For More than 10,000.00 Ladder Rate is 10%.
+                      For More than <b>45,000.00</b> Ladder Rate is <b> 15%</b>.
+                      <TextFields
+                        fontSize="s3"
+                        fontWeight="Regular"
+                        color="neutralColorLight.Gray-80"
+                        mb="s16"
+                      >
+                        For More than <b>10,000.00</b> Ladder Rate is
+                        <b> 10%</b>.
+                      </TextFields>
                     </TextFields>
                   </Box>
                 </Box>

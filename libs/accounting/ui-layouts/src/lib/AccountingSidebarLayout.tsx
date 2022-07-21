@@ -84,83 +84,113 @@ export const AccountingSidebarLayout = ({
           >
             <PopoverBody p={0}>
               <Box>
-                <Button
-                  width="full"
-                  size="lg"
-                  justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
                   onClick={() =>
                     router.push('/accounting/accounting/journal-vouchers/add')
                   }
                 >
-                  {t['accountingAccountingSidebarJournalVouchers']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['accountingAccountingSidebarJournalVouchers']}
+                  </Text>
+                </Box>
 
-                <Button
-                  width="full"
-                  size="lg"
-                  justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
                   onClick={() =>
                     router.push('/accounting/accounting/cash-transfer/add')
                   }
                 >
-                  {t['accountingAccountingSidebarCashTransfer']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['accountingAccountingSidebarCashTransfer']}
+                  </Text>
+                </Box>
 
-                <Button
-                  width="full"
-                  size="lg"
-                  justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
                   onClick={() =>
                     router.push('/accounting/accounting/quick-payment/add')
                   }
                 >
-                  {t['accountingAccountingSidebarQuickPayment']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['accountingAccountingSidebarQuickPayment']}
+                  </Text>
+                </Box>
 
-                <Button
-                  width="full"
-                  size="lg"
-                  justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
                   onClick={() =>
                     router.push('/accounting/accounting/quick-receipt/add')
                   }
                 >
-                  {t['accountingAccountingSidebarQuickReceipt']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['accountingAccountingSidebarQuickReceipt']}
+                  </Text>
+                </Box>
 
-                <Button
-                  width="full"
-                  size="lg"
-                  justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
                   onClick={() =>
                     router.push('/accounting/accounting/bank-accounts/add')
                   }
                 >
-                  {t['accountingAccountingSidebarBankAccounts']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['accountingAccountingSidebarBankAccounts']}
+                  </Text>
+                </Box>
 
-                <Button
-                  width="full"
-                  size="lg"
-                  justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
                   onClick={() =>
                     router.push('/accounting/accounting/charts-of-accounts/add')
                   }
                 >
-                  {t['accountingAccountingSidebarChartsOfAccounts']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['accountingAccountingSidebarChartsOfAccounts']}
+                  </Text>
+                </Box>
               </Box>
             </PopoverBody>
           </PopoverContent>

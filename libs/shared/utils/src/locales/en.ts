@@ -98,7 +98,7 @@ const en: Record<string, string> = {
   memberNavDraft: 'Draft',
   searchMembers: 'Search Members',
 
-  // member [action] form page
+  // member add form page
   membersFormAddNewMembers: 'Add New Member',
   memberPersonalInformation: 'Personal Information',
   memberFirstName: 'First Name',
@@ -1599,7 +1599,7 @@ const en: Record<string, string> = {
   accRebate: 'Rebate',
   accMonthly: 'Monthly',
   accAddfrequencydayorweek:
-    'Either Pick a day or manually [action] frequency day or day of the week.',
+    'Either Pick a day or manually add frequency day or day of the week.',
   accDay: 'Day',
   accDayOfWeek: 'Day of the week',
   accEnterDay: 'Enter Day',
@@ -1904,7 +1904,7 @@ const en: Record<string, string> = {
   // warehouseTransferDestinationWarehouse: 'Destination Warehouse',
   warehouseTransferStatus: 'Status',
 
-  // [action] vendor
+  // add vendor
   addVendorAddNewVendor: 'Add New Vendor',
   addVendorName: 'Name',
   addVendorEnterName: 'Select Name',
@@ -2787,6 +2787,8 @@ const en: Record<string, string> = {
   shareSettingsFeesMinQuantity: 'Min Quantity',
   shareSettingsFeesMaxQuantity: 'Max Quantity',
   shareSettingsFeesCharge: 'Charge',
+
+  accountOpenNumber: 'Number',
 };
 
 export default en;
