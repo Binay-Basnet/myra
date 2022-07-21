@@ -1,0 +1,14 @@
+query getRecentTransactions {
+  eBanking {
+    transaction {
+      recent {
+        id
+        name
+        transactionType
+        date
+        transactionDirection
+        amount
+      }
+    }
+  }
+}

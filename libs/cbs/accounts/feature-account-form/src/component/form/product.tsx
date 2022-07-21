@@ -55,7 +55,7 @@ export const Product = () => {
           flexDirection="column"
           gap="s32"
           borderRadius="br2"
-          bg="primary.0"
+          bg="gray.0"
           border="1px solid"
           borderColor="border.layout"
         >
@@ -191,18 +191,16 @@ export const Product = () => {
 
             {(products === 'recurringSaving' || products === 'termSaving') && (
               <>
-                {' '}
                 <GridItem display="flex" flexDirection="column">
+                  <TextFields
+                    color="primary.800"
+                    fontSize="s3"
+                    fontWeight="Medium"
+                  >
+                    {/* {t['accInterestRate']} */}
+                    Criteria
+                  </TextFields>
                   <Box display="flex" flexDirection="column" gap="s4">
-                    <TextFields
-                      color="primary.800"
-                      fontSize="s3"
-                      fontWeight="Medium"
-                    >
-                      {/* {t['accInterestRate']} */}
-                      Criteria
-                    </TextFields>
-
                     <Box
                       display="flex"
                       flexDirection="column"
@@ -216,7 +214,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Age: Mininum: 12 : Maximum 35
+                            Age: <b> Mininum: 12 : Maximum 35</b>
                           </TextFields>
                         </li>
 
@@ -226,7 +224,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Gender: Male, Female
+                            Gender: <b> Male, Female</b>
                           </TextFields>
                         </li>
                       </ul>
@@ -238,7 +236,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Foreign Employment: No
+                            Foreign Employment: <b>No</b>
                           </TextFields>
                         </li>
 
@@ -248,7 +246,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Business (Institutions): Club
+                            Business (Institutions): <b> Club</b>
                           </TextFields>
                         </li>
                       </ul>
@@ -270,7 +268,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Marital Status: Married
+                            Marital Status: <b> Married</b>
                           </TextFields>
                         </li>
 
@@ -280,7 +278,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Occupation Detail: Business, Agriculture
+                            Occupation Detail: <b>Business, Agriculture</b>
                           </TextFields>
                         </li>
                       </ul>
@@ -292,7 +290,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Nature of Business ( COOP Union): Club
+                            Nature of Business ( COOP Union): <b>Club</b>
                           </TextFields>
                         </li>
 
@@ -302,7 +300,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Cooperative Type: Saving & Loan
+                            Cooperative Type: <b> Saving & Loan</b>
                           </TextFields>
                         </li>
                       </ul>
@@ -324,7 +322,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Education Qualification: SEE
+                            Education Qualification: <b> SEE</b>
                           </TextFields>
                         </li>
 
@@ -334,7 +332,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Ethinicity: Buddhist
+                            Ethinicity: <b> Buddhist</b>
                           </TextFields>
                         </li>
                       </ul>

@@ -74,9 +74,10 @@ export function CbsAccountOpen(props: CbsAccountOpenFormProps) {
             <RequiredDocuments />
 
             {products === 'voluntary' && <Atm />}
-            <Agent />
 
             <FeesAndCharge />
+
+            <Agent />
           </form>
         </FormProvider>
       </Container>

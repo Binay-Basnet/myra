@@ -1,3 +1,5 @@
+import { useFormContext } from 'react-hook-form';
+
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
@@ -5,6 +7,8 @@ import { useTranslation } from '@coop/shared/utils';
 
 export const DepositFrequency = () => {
   const { t } = useTranslation();
+  const { watch } = useFormContext();
+  const monthly = watch('monthly');
 
   const daysList = [
     { label: t['accSunday'], value: 'sunday' },
@@ -60,7 +64,7 @@ export const DepositFrequency = () => {
           >
             {t['accWeekly']}
           </Text>
-          <Box>
+          <Box display="flex" flexDirection="column" gap="s4">
             <Text
               fontSize="s3"
               color="neutralColorLight.Gray-80"
@@ -69,7 +73,7 @@ export const DepositFrequency = () => {
               {t['accDayoftheWeek']}
             </Text>
             <FormSwitchTab
-              name="paymentMode"
+              name="dayOfWeek"
               options={daysList.map((value) => ({
                 label: value.label,
                 value: value.value,
@@ -106,84 +110,89 @@ export const DepositFrequency = () => {
             </Text>
           </Box>
           <FormSwitchTab
-            name="paymentMode"
+            name="monthly"
             options={monthlyList.map((value) => ({
               label: value.label,
               value: value.value,
             }))}
           />
-          <Box
-            display="grid"
-            mt="s16"
-            gridTemplateColumns="repeat(3, 1fr)"
-            gap={6}
-          >
-            <FormInput
-              type="text"
-              name="noOfReturnedShares"
-              label={t['accDay']}
-              placeholder={t['accEnterDay']}
-            />
-          </Box>
-          <Box
-            display="grid"
-            mt="s16"
-            gridTemplateColumns="repeat(3, 1fr)"
-            gap={6}
-          >
-            <FormSelect
-              name="memberId"
-              label={t['accFrequencyDay']}
-              placeholder={t['accFrequencyDay']}
-              options={[
-                {
-                  label: '1',
-                  value: '1',
-                },
-                {
-                  label: '2',
-                  value: '2',
-                },
-                {
-                  label: '3',
-                  value: '3',
-                },
-              ]}
-            />
+          {monthly === 'day' && (
+            <Box
+              display="grid"
+              mt="s16"
+              gridTemplateColumns="repeat(3, 1fr)"
+              gap="s16"
+            >
+              <FormInput
+                type="text"
+                name="noOfReturnedShares"
+                label={t['accDay']}
+                placeholder={t['accEnterDay']}
+              />
+            </Box>
+          )}
 
-            <FormSelect
-              name="memberId"
-              label={t['accDayOfWeek']}
-              placeholder={t['accDayOfWeek']}
-              options={[
-                {
-                  label: 'Sunday',
-                  value: 'sunday',
-                },
-                {
-                  label: 'Monday',
-                  value: 'monday',
-                },
-                {
-                  label: 'Tuesday',
-                  value: 'tuesday',
-                },
-              ]}
-            />
-          </Box>
+          {monthly === 'dayOfWeek' && (
+            <Box
+              display="grid"
+              mt="s16"
+              gridTemplateColumns="repeat(3, 1fr)"
+              gap="s16"
+            >
+              <FormSelect
+                name="memberId"
+                label={t['accFrequencyDay']}
+                placeholder={t['accFrequencyDay']}
+                options={[
+                  {
+                    label: '1',
+                    value: '1',
+                  },
+                  {
+                    label: '2',
+                    value: '2',
+                  },
+                  {
+                    label: '3',
+                    value: '3',
+                  },
+                ]}
+              />
+
+              <FormSelect
+                name="memberId"
+                label={t['accDayOfWeek']}
+                placeholder={t['accDayOfWeek']}
+                options={[
+                  {
+                    label: 'Sunday',
+                    value: 'sunday',
+                  },
+                  {
+                    label: 'Monday',
+                    value: 'monday',
+                  },
+                  {
+                    label: 'Tuesday',
+                    value: 'tuesday',
+                  },
+                ]}
+              />
+            </Box>
+          )}
         </Box>
 
         <Box
           display="flex"
           flexDirection="column"
-          p="s20"
+          p="s16"
           mt="s16"
           background="neutralColorLight.Gray-0"
           border="1px solid"
           borderColor="border.layout"
           borderRadius="br2"
         >
-          <Box mb="s16">
+          <Box>
             <Text
               fontWeight="SemiBold"
               fontSize="r1"
@@ -193,13 +202,6 @@ export const DepositFrequency = () => {
               {t['accYearly']}
             </Text>
           </Box>
-          <FormSwitchTab
-            name="paymentMode"
-            options={monthlyList.map((value) => ({
-              label: value.label,
-              value: value.value,
-            }))}
-          />
           <Box
             display="grid"
             mt="s16"
