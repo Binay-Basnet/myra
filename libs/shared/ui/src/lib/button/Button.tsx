@@ -13,7 +13,7 @@ export interface ButtonProps extends ChakrabuttonProps {
   rightIcon?: React.ReactElement;
   spinner?: React.ReactElement;
   bg?: string;
-  variant?: 'solid' | 'outline' | 'link' | 'ghost';
+  variant?: 'solid' | 'outline' | 'link' | 'ghost' | 'unstyled';
   shade?: 'primary' | 'danger' | 'neutral';
 }
 

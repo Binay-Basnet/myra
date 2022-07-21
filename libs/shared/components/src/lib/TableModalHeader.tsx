@@ -1,8 +1,9 @@
 import { AddIcon } from '@chakra-ui/icons';
 
 import { Box, Button, PageHeaderTab, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
-interface IDetailPageHeader {
+interface ITableModalHeader {
   heading: string;
   tabItems?: {
     title: string;
@@ -12,18 +13,18 @@ interface IDetailPageHeader {
   buttonHandler?: () => void;
 }
 
-export const DetailPageHeader = ({
+export const TableModalHeader = ({
   tabItems,
   heading,
   buttonLabel,
   buttonHandler,
-}: IDetailPageHeader) => {
+}: ITableModalHeader) => {
+  const { t } = useTranslation();
   return (
     <Box
       bg="white"
       zIndex="10"
       w="100%"
-      top="110px"
       position="sticky"
       borderBottom="1px solid #E6E6E6"
       display="flex"
@@ -34,7 +35,7 @@ export const DetailPageHeader = ({
       gap="s48"
     >
       <Text fontSize="r2" fontWeight="600" color="gray.800">
-        {heading}
+        {t[heading]}
       </Text>
 
       <PageHeaderTab list={tabItems ?? []} />
@@ -42,7 +43,7 @@ export const DetailPageHeader = ({
       {buttonLabel && buttonHandler && (
         <Box display="flex" justifyContent="flex-end" flexGrow={100}>
           <Button leftIcon={<AddIcon />} onClick={buttonHandler}>
-            {buttonLabel}
+            {t[buttonLabel]}
           </Button>
         </Box>
       )}

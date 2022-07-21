@@ -15,6 +15,7 @@ export interface TextFieldsProps extends TextProps {
     | 'switch'
     | 'stickyCardHeader'
     | 'link'
+    | 'navItems'
     | string;
   children?: React.ReactNode;
   color?: string;
@@ -95,6 +96,12 @@ export function TextFields(props: TextFieldsProps) {
     case 'stickyCardHeader':
       return (
         <Text fontSize="r3" fontWeight="500" lineHeight="1.3">
+          {children}
+        </Text>
+      );
+    case 'navItems':
+      return (
+        <Text fontSize="r1" fontWeight="500" lineHeight="1.3">
           {children}
         </Text>
       );

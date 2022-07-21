@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { BankAccountDetailPage } from '@coop/accounting/accounting';
+import { ChequeDetailPage } from '@coop/accounting/accounting';
 import { AccountsDetailPageLayout } from '@coop/accounting/ui-components';
 import {
   AccountingLayout,
@@ -9,7 +9,7 @@ import {
 
 // TODO ( Update this page when design arrives )
 const AccountingBankAccountsDetail = () => {
-  return <BankAccountDetailPage />;
+  return <ChequeDetailPage />;
 };
 
 AccountingBankAccountsDetail.getLayout = function getLayout(

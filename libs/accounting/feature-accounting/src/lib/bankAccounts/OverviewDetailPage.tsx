@@ -8,7 +8,7 @@ import { Column, Table } from '@coop/shared/table';
 import { Box, DEFAULT_PAGE_SIZE, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export function BankAccountDetailPage() {
+export function OverviewDetailPage() {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -196,15 +196,10 @@ export function BankAccountDetailPage() {
           getRowId={(row) => String(row?.node?.id)}
           isLoading={isFetching}
           columns={columns}
-          pagination={{
-            total: data?.members?.list?.totalCount ?? 'Many',
-            endCursor: data?.members?.list.pageInfo?.endCursor ?? '',
-            startCursor: data?.members?.list.pageInfo?.startCursor ?? '',
-          }}
         />
       </Box>
     </Box>
   );
 }
 
-export default BankAccountDetailPage;
+export default OverviewDetailPage;

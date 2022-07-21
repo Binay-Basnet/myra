@@ -2790,6 +2790,7 @@ const en: Record<string, string> = {
 
   accountOpenNumber: 'Number',
 
+  // accounting bank account overview
   bankAccountsCode: 'Code',
   bankAccountsBankName: 'Bank Name',
   bankAccountsBookBalance: 'Book Balance',
@@ -2813,6 +2814,46 @@ const en: Record<string, string> = {
   bankAccountsType: 'Type',
   bankAccountsAmount: 'Amount',
   bankAccountsDifferenceBalance: 'Difference in Balance',
+
+  // accounting bank account bank statement
+  bankAccountStatementBankStatement: 'Bank Statement',
+  bankAccountStatementSearch: 'Search in Bank Statement',
+  bankAccountStatementDate: 'Date ',
+  bankAccountStatementImportDate: 'Import Date',
+  bankAccountStatementDescription: 'Description',
+  bankAccountStatementAmount: 'Amount',
+
+  // accounting bank account book statement
+  bankAccountStatementBookStatement: 'Book Statement',
+  bankAccountStatementBookSearch: 'Search in Book Statement',
+  bankAccountStatementBookDate: 'Date ',
+  bankAccountStatementBookTransactionType: 'Transaction Type',
+  bankAccountStatementBookTransactionNo: 'Transaction No',
+  bankAccountStatementBookAmount: 'Amount',
+
+  // accounting bank account cheque
+  bankAccountChequeCheque: 'Cheque',
+  bankAccountChequeChequeFrom: 'Cheque From',
+  bankAccountChequeChequeTo: 'Cheque To',
+  bankAccountChequeTotalCheques: 'Total Cheques',
+  bankAccountChequeAvailableCheques: 'Available Cheques',
+  bankAccountChequeIssuedCheques: 'Issued Cheques',
+  bankAccountChequeCancelledCheques: 'Cancelled Cheques',
+  bankAccountChequeChequeNumber: 'Cheque Number',
+  bankAccountChequePartyName: 'Party Name',
+  bankAccountChequeStatus: 'Status',
+  bankAccountChequeIssueDate: 'Issue Date',
+  bankAccountChequeAmount: 'Amount',
+  bankAccountNewChequeBook: 'New Cheque Book',
+  bankAccountChequeCreateChequeBook: 'Create Cheque Book',
+  bankAccountChequeBank: 'Bank',
+  bankAccountChequeSelectBank: 'Select Bank',
+  bankAccountChequeEnterMICR: 'Enter MICR (Magnetic Ink Character Recognition)',
+  bankAccountChequeChequeStart: 'Cheque Start',
+  bankAccountChequeEg00005: 'Eg. 00001',
+  bankAccountChequeChequeEnd: 'Cheque End',
+  bankAccountChequeEg00050: 'Eg. 00050',
+  bankAccountChequeTotalLeafs: 'Total no of cheque leafs',
 };
 
 export default en;

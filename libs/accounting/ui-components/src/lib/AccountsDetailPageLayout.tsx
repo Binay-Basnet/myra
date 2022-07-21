@@ -8,35 +8,35 @@ import { DetailPageHeader, DetailPageSideBar } from '../components';
 const tabList = [
   {
     title: 'bankAccountsOverview',
-    to: '/settings/general/members',
+    to: '/accounting/accounting/bank-accounts/12123/overview',
   },
   {
     title: 'bankAccountsBankStatement',
-    to: '/settings/general/members/kym-individual',
+    to: '/accounting/accounting/bank-accounts/12123/bank-statement',
   },
   {
     title: 'bankAccountsBookStatement',
-    to: '/settings/general/members/kym-institutional',
+    to: '/accounting/accounting/bank-accounts/12123/book-statement',
   },
   {
     title: 'bankAccountsReconcillationReport',
-    to: '/settings/general/members/kym-cooperative',
+    to: '/accounting/accounting/bank-accounts/12123/reconcillation-report',
   },
   {
     title: 'bankAccountsCheque',
-    to: '/settings/general/members/kym-cooperative-union',
+    to: '/accounting/accounting/bank-accounts/12123/cheque',
   },
   {
     title: 'bankAccountsTasks',
-    to: '/settings/general/members/kym-institutional',
+    to: '/accounting/accounting/bank-accounts/12123/tasks',
   },
   {
     title: 'bankAccountsDocuments',
-    to: '/settings/general/members/kym-cooperative',
+    to: '/accounting/accounting/bank-accounts/12123/documents',
   },
   {
     title: 'bankAccountsActivity',
-    to: '/settings/general/members/kym-cooperative-union',
+    to: '/accounting/accounting/bank-accounts/12123/activity',
   },
 ];
 

@@ -1,14 +1,59 @@
-query getAccountList{
+query getAccountList {
   eBanking {
     account {
-      list(paginate: {first: 5}) {
+      list(paginate: { first: 6 }) {
         edges {
           node {
             id
             name
             amount
             isDefault
+            accountNumber
+            interestRate
           }
+        }
+      }
+    }
+  }
+}
+
+query getAccountSummary {
+  eBanking {
+    account {
+      summary {
+        totalSaving
+        totalLoan
+      }
+    }
+  }
+}
+
+query getAccountDetails($id: ID!) {
+  eBanking {
+    account {
+      get(id: $id) {
+        id
+        name
+        accountNumber
+        isDefault
+        amount
+        interestRate
+        accountType
+        interestBooked
+        interestEarned
+        subscribedDate
+        history {
+          id
+          date
+          balance
+        }
+        transactions {
+          id
+          name
+          date
+          amount
+          transactionType
+          transactionDirection
         }
       }
     }

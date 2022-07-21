@@ -12,4 +12,7 @@ export * from './lib/AccountingFeatureChartsOfAccountList';
 export * from './lib/AccountingFeatureJournalVouchersList';
 export * from './lib/AccountingFeatureQuickPaymentList';
 export * from './lib/AccountingFeatureQuickReceiptList';
-export * from './lib/BankAccountDetailPage';
+export * from './lib/bankAccounts/BankStatDetailPage';
+export * from './lib/bankAccounts/BookStatDetailPage';
+export * from './lib/bankAccounts/ChequeDetailPage';
+export * from './lib/bankAccounts/OverviewDetailPage';
