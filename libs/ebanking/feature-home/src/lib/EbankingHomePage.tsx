@@ -1,9 +1,18 @@
-import { ChevronDownIcon } from '@chakra-ui/icons';
+import { Fragment } from 'react';
+import { useRouter } from 'next/router';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton, useDisclosure } from '@chakra-ui/react';
 
-import { UtilityHomeCard } from '@coop/ebanking/cards';
 import {
+  AccountCard,
+  InfoCard,
+  TransactionCard,
+  UtilityHomeCard,
+} from '@coop/ebanking/cards';
+import {
+  useGetAccountListQuery,
   useGetHomeServiceListQuery,
+  useGetRecentTransactionsQuery,
   useGetUtilityListQuery,
 } from '@coop/shared/data-access';
 import {
@@ -23,11 +32,15 @@ import {
 } from '../constants/SERVICE_ICON';
 
 export function EbankingHomePage() {
+  const router = useRouter();
   const { isOpen, onToggle } = useDisclosure();
 
   const { data: servicesList, isLoading } = useGetHomeServiceListQuery();
   const { data: utilityList, isLoading: utilityLoading } =
     useGetUtilityListQuery();
+  const { data: accountList, isLoading: accountsLoading } =
+    useGetAccountListQuery();
+  const { data: transactionList } = useGetRecentTransactionsQuery();
 
   const utilityPayments = [
     ...(utilityList?.eBanking?.utilityPayments ?? []),
@@ -87,7 +100,7 @@ export function EbankingHomePage() {
           Utility Payments
         </Text>
 
-        <Box bg="white" borderRadius="br2">
+        <Box bg="white" borderRadius="br2" boxShadow="E0" overflow="hidden">
           <Grid
             templateColumns="repeat(5, 1fr)"
             p="s16"
@@ -138,16 +151,78 @@ export function EbankingHomePage() {
               justifyContent="center"
               gap="s4"
               _hover={{ bg: 'gray.0' }}
+              borderTop="1px"
+              borderTopColor="border.layout"
               onClick={onToggle}
             >
               <Button variant="link">
                 See all
-                <Icon as={ChevronDownIcon} color="primary.500" />
+                <Icon
+                  as={ChevronDownIcon}
+                  transform={isOpen ? 'rotate(180deg)' : ''}
+                  transition="0.1s ease"
+                  color="primary.500"
+                />
               </Button>
             </Box>
           )}
         </Box>
       </Box>
+      <Divider />
+      <Box display="flex" flexDir="column" gap="s8">
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          gap="s8"
+        >
+          <Text fontSize="r1" color="gray.700" fontWeight="600">
+            Accounts
+          </Text>
+          <Button
+            py="0"
+            variant="link"
+            h="auto"
+            minH="none"
+            onClick={() => router.push('/accounts')}
+          >
+            See all
+            <Icon as={ChevronRightIcon} color="primary.500" />
+          </Button>
+        </Box>
+        <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+          {accountsLoading && (
+            <>
+              <Skeleton h="144px" />
+              <Skeleton h="144px" />
+            </>
+          )}
+          {accountList?.eBanking?.account?.list?.edges
+            .slice(0, 2)
+            .map(({ node: { isDefault, ...rest } }) => (
+              <Fragment key={rest.id}>
+                <AccountCard account={rest} isDefault={isDefault} />
+              </Fragment>
+            ))}
+        </Grid>
+      </Box>
+      <Divider />
+
+      <InfoCard
+        title="Recent Transactions"
+        btn={
+          <Button variant="link" w="auto" px="0">
+            View All Transactions
+            <Icon as={ChevronRightIcon} color="priamry.500" />
+          </Button>
+        }
+      >
+        {transactionList?.eBanking?.transaction?.recent?.map((transaction) => (
+          <Fragment key={transaction?.id}>
+            {transaction && <TransactionCard transaction={transaction} />}
+          </Fragment>
+        ))}
+      </InfoCard>
     </Box>
   );
 }
