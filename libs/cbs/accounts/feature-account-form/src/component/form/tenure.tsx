@@ -5,7 +5,7 @@ import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText } from '@coop/shared/components';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
-// import { useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 const unitOptions = [
   {
@@ -27,19 +27,19 @@ const unitOptions = [
 ];
 
 export const Tenure = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const [rightElementMax, setRightElementMax] = useState('day');
 
   const { resetField, watch } = useFormContext();
 
-  const maxDurationUnit = watch('maximumDurationUnitLoan');
+  const tenureUnit = watch('tenureUnit');
 
   useEffect(() => {
-    resetField('maximumDurationUnitLoan');
-    setRightElementMax(maxDurationUnit);
-  }, [maxDurationUnit]);
+    resetField('tenureUnitFrequency');
+    setRightElementMax(tenureUnit);
+  }, [tenureUnit]);
 
-  console.log(maxDurationUnit);
+  console.log(tenureUnit);
 
   return (
     <GroupContainer
@@ -55,7 +55,7 @@ export const Tenure = () => {
         p="s16"
         bg="neutralColorLight.Gray-0"
       >
-        <SubHeadingText>Tenure</SubHeadingText>
+        <SubHeadingText>{t['accountOpenTenure']} </SubHeadingText>
         <Box
           display={'flex'}
           flexDirection="column"
@@ -72,17 +72,14 @@ export const Tenure = () => {
             borderRadius={'4px'}
           >
             <Box display={'flex'} flexDirection="column" gap="s4">
-              <SubHeadingText>Unit</SubHeadingText>
-              <FormSwitchTab
-                name={'minimumDurationUnitLoan'}
-                options={unitOptions}
-              />
+              <SubHeadingText>{t['accountOpenUnit']} </SubHeadingText>
+              <FormSwitchTab name={'tenureUnit'} options={unitOptions} />
             </Box>
             <Box w="290px">
               <FormInput
-                name="maximumDurationUnitLoan"
+                name="tenureUnitFrequency"
                 textAlign={'right'}
-                label="Number"
+                label={t['accountOpenNumber']}
                 placeholder="0"
                 rightElement={
                   <Box mr="s24">
@@ -91,7 +88,7 @@ export const Tenure = () => {
                       fontSize="r1"
                       color="accent.debit"
                     >
-                      {/* {rightElementMax} */}
+                      {rightElementMax}
                     </Text>
                   </Box>
                 }

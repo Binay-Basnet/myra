@@ -2753,6 +2753,8 @@ const ne: Record<string, string> = {
   shareSettingsFeesMinQuantity: 'Min Quantity',
   shareSettingsFeesMaxQuantity: 'Max Quantity',
   shareSettingsFeesCharge: 'Charge',
+
+  accountOpenNumber: 'Number',
 };
 
 export default ne;
