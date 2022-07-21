@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Snipping } from '@raralabs/web-feedback';
 import axios from 'axios';
 
+import { useChakraToast } from './useChakraToast';
+
 const snap = new Snipping({
   buttonLabel: 'Send Feedback',
   initialMarkMode: 'mark',
@@ -9,6 +11,7 @@ const snap = new Snipping({
   /** other configs **/
 });
 export const useSnap = () => {
+  const toast = useChakraToast();
   useEffect(() => {
     snap.init(async (data) => {
       const { image } = data;
@@ -38,8 +41,27 @@ export const useSnap = () => {
         method: 'post',
         data: formData,
       });
+      console.log('response', response);
 
-      console.log(response);
+      if (response && response?.status === 200) {
+        toast({
+          title: 'Feedback sent successfully',
+          description: 'your feedback was sent successfully',
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+
+      if (response && response?.status !== 200) {
+        toast({
+          title: 'Something went wrong',
+          description: 'your feedback couldnt be saved due to some error',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
     });
   }, []);
   return;
