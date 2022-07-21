@@ -1,12 +1,26 @@
-import { ReactElement } from 'react';
+import { Fragment, ReactElement } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
 
-import { AccountLargeCard, InfoCard } from '@coop/ebanking/cards';
+import {
+  AccountLargeCard,
+  InfoCard,
+  TransactionCard,
+} from '@coop/ebanking/cards';
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
 import { useGetAccountDetailsQuery } from '@coop/shared/data-access';
-import { Box, Divider, Grid, GridItem, PathBar, Text } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  GridItem,
+  Icon,
+  PathBar,
+  Text,
+} from '@coop/shared/ui';
 
 const AccountDetailPage = () => {
   const router = useRouter();
@@ -49,7 +63,7 @@ const AccountDetailPage = () => {
       <Box display="flex" flexDir="column" gap="s8">
         {account ? (
           <InfoCard title="Account Details">
-            <Grid templateColumns="repeat(3, 1fr)" gap="s16">
+            <Grid templateColumns="repeat(3, 1fr)" gap="s16" p="s16">
               <GridItem>
                 <Text color="gray.700" fontSize="s3" fontWeight="600" mb="s4">
                   Account Holder Name
@@ -121,7 +135,7 @@ const AccountDetailPage = () => {
         )}
 
         <InfoCard title="Balance History">
-          <Box position="relative" w="100%" h="300px">
+          <Box position="relative" w="100%" h="300px" p="s8">
             <Image
               src={'/account-dummy-chart.svg'}
               layout="fill"
@@ -129,7 +143,21 @@ const AccountDetailPage = () => {
             />
           </Box>
         </InfoCard>
-        <InfoCard title="Recent Transactions"></InfoCard>
+        <InfoCard
+          title="Recent Transactions"
+          btn={
+            <Button variant="ghost">
+              View All Transactions
+              <Icon as={ChevronRightIcon} color="priamry.500" />
+            </Button>
+          }
+        >
+          {account?.transactions?.map((transaction) => (
+            <Fragment key={transaction.id}>
+              <TransactionCard transaction={transaction} />
+            </Fragment>
+          ))}
+        </InfoCard>
       </Box>
     </Box>
   );

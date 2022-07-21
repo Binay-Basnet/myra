@@ -5831,6 +5831,11 @@ export type GetHomeServiceListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetHomeServiceListQuery = { eBanking: { services?: Array<{ id: string, name: string, service_id: string, icon: string, enabled: boolean } | null> | null } };
 
+export type GetRecentTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRecentTransactionsQuery = { eBanking: { transaction?: { recent?: Array<{ id: string, name: string, transactionType: Transaction_Type, date: string, transactionDirection: Transaction_Direction, amount: number } | null> | null } | null } };
+
 export type GetKymFormStatusInstitutionQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -7000,6 +7005,34 @@ export const useGetHomeServiceListQuery = <
     useQuery<GetHomeServiceListQuery, TError, TData>(
       variables === undefined ? ['getHomeServiceList'] : ['getHomeServiceList', variables],
       useAxios<GetHomeServiceListQuery, GetHomeServiceListQueryVariables>(GetHomeServiceListDocument).bind(null, variables),
+      options
+    );
+export const GetRecentTransactionsDocument = `
+    query getRecentTransactions {
+  eBanking {
+    transaction {
+      recent {
+        id
+        name
+        transactionType
+        date
+        transactionDirection
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useGetRecentTransactionsQuery = <
+      TData = GetRecentTransactionsQuery,
+      TError = unknown
+    >(
+      variables?: GetRecentTransactionsQueryVariables,
+      options?: UseQueryOptions<GetRecentTransactionsQuery, TError, TData>
+    ) =>
+    useQuery<GetRecentTransactionsQuery, TError, TData>(
+      variables === undefined ? ['getRecentTransactions'] : ['getRecentTransactions', variables],
+      useAxios<GetRecentTransactionsQuery, GetRecentTransactionsQueryVariables>(GetRecentTransactionsDocument).bind(null, variables),
       options
     );
 export const GetKymFormStatusInstitutionDocument = `

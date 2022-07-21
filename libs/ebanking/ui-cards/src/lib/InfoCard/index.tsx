@@ -6,9 +6,10 @@ export interface InfoCardProps {
   title: string;
   subtitle?: string;
   children?: React.ReactNode;
+  btn?: React.ReactNode;
 }
 
-export function InfoCard({ title, subtitle, children }: InfoCardProps) {
+export function InfoCard({ title, subtitle, children, btn }: InfoCardProps) {
   return (
     <VStack
       width="100%"
@@ -18,7 +19,14 @@ export function InfoCard({ title, subtitle, children }: InfoCardProps) {
       divider={<Divider border="1px" borderColor="border.layout" />}
       borderRadius="br2"
     >
-      <Box display="flex" alignItems="center" px="s16" height="50px">
+      <Box
+        display="flex"
+        alignItems="center"
+        w="100%"
+        justifyContent="space-between"
+        px="s16"
+        height="50px"
+      >
         <Box display="flex" flexDir="column" gap="s4">
           <Text
             fontSize="r1"
@@ -39,10 +47,9 @@ export function InfoCard({ title, subtitle, children }: InfoCardProps) {
             </Text>
           )}
         </Box>
+        {btn}
       </Box>
-      <Box p="s16" width="100%">
-        {children}
-      </Box>
+      <Box width="100%">{children}</Box>
     </VStack>
   );
 }
