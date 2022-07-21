@@ -21,6 +21,7 @@ const Registerdetails = [
   'registeredTole',
   'registeredHouseNo',
   'registeredInstitutionLocation',
+  'registeredAddress',
 ];
 const contactDetails = [
   'phone',
@@ -39,6 +40,7 @@ const operatorOfficeAddress = [
   'operatorOfficeWardId',
   'operatorOfficeTole',
   'operatorOfficeHouseNo',
+  'operatingOfficeAddress',
 ];
 
 const branchOfficeAddress = [
@@ -48,6 +50,7 @@ const branchOfficeAddress = [
   'branchOfficeWard',
   'branchOfficeTole',
   'branchOfficeHouseNo',
+  'branchOfficeAddress',
 ];
 
 const TransactionDetails = [
@@ -104,21 +107,21 @@ export const getKymSectionInstitution = (id: string) => {
       subSection: 'kymInsBasicInformation',
     };
   }
-  if (Registerdetails.includes(id)) {
+  if (Registerdetails.includes(id.split('.')[0])) {
     return {
       section: 'organizationInfo',
       subSection: 'kymInsRegisteredDetails',
     };
   }
 
-  if (operatorOfficeAddress.includes(id)) {
+  if (operatorOfficeAddress.includes(id.split('.')[0])) {
     return {
       section: 'organizationInfo',
       subSection: 'kymInsOperatorOfficeAddress',
     };
   }
 
-  if (branchOfficeAddress.includes(id)) {
+  if (branchOfficeAddress.includes(id.split('.')[0])) {
     return {
       section: 'organizationInfo',
       subSection: 'kymInsbranchOfficeAddress',

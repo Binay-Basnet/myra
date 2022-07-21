@@ -87,22 +87,6 @@ export enum AccountOperationType {
   Single = 'SINGLE'
 }
 
-export type AccountOperatorDetails = {
-  contact?: InputMaybe<Scalars['String']>;
-  designation?: InputMaybe<Scalars['String']>;
-  email?: InputMaybe<Scalars['String']>;
-  fullName?: InputMaybe<Scalars['String']>;
-  isTemporaryAndPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
-  panNo?: InputMaybe<Scalars['String']>;
-  permanenetAddress?: InputMaybe<FullAddressInput>;
-  permanentLatitude?: InputMaybe<Scalars['Float']>;
-  permanentLongitude?: InputMaybe<Scalars['Float']>;
-  specimenSignature?: InputMaybe<Scalars['String']>;
-  temporaryAddress?: InputMaybe<FullAddressInput>;
-  temporaryLatitude?: InputMaybe<Scalars['Float']>;
-  temporaryLongitude?: InputMaybe<Scalars['Float']>;
-};
-
 export type AccountOperatorDetailsFormState = {
   contact?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
@@ -111,18 +95,20 @@ export type AccountOperatorDetailsFormState = {
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   panNo?: Maybe<Scalars['String']>;
   permanenetAddress?: Maybe<FullAddress>;
-  permanentLatitude?: Maybe<Scalars['Float']>;
-  permanentLongitude?: Maybe<Scalars['Float']>;
   specimenSignature?: Maybe<Scalars['String']>;
   temporaryAddress?: Maybe<FullAddress>;
-  temporaryLatitude?: Maybe<Scalars['Float']>;
-  temporaryLongitude?: Maybe<Scalars['Float']>;
 };
 
 export type AccountOperatorDetailsType = {
+  contact?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
+  isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
+  panNo?: Maybe<Scalars['String']>;
+  permanenetAddress?: Maybe<FullAddress>;
   specimenSignature?: Maybe<Scalars['String']>;
+  temporaryAddress?: Maybe<FullAddress>;
 };
 
 export type AccountSummary = {
@@ -208,19 +194,11 @@ export type AdministrativeAddress = {
   wardNo: Scalars['Int'];
 };
 
-export type AffiliatedDirectorDetails = {
-  addressOfInstitution?: InputMaybe<FullAddressInput>;
-  designation?: InputMaybe<Scalars['String']>;
-  nameOfDirector?: InputMaybe<Scalars['String']>;
-  nameOfInstitution?: InputMaybe<Scalars['String']>;
-  yearlyIncome?: InputMaybe<Scalars['Float']>;
-};
-
 export type AffiliatedDirectorDetailsFormState = {
-  addressOfInstitution?: Maybe<FullAddress>;
+  address?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
-  nameOfDirector?: Maybe<Scalars['String']>;
-  nameOfInstitution?: Maybe<Scalars['String']>;
+  directorName?: Maybe<Scalars['String']>;
+  institutionName?: Maybe<Scalars['String']>;
   yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
@@ -1245,35 +1223,33 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
-export type DirectorAffiliationFormDetails = {
-  addressOfInstitution?: InputMaybe<FullAddressInput>;
-  designation?: InputMaybe<Scalars['String']>;
-  nameOfDirector?: InputMaybe<Scalars['String']>;
-  nameOfInstitution?: InputMaybe<Scalars['String']>;
-  yearlyIncome?: InputMaybe<Scalars['Float']>;
-};
-
-export type DirectorDetails = {
-  citizenshipNo?: InputMaybe<Scalars['String']>;
-  dateOfMembership?: InputMaybe<Scalars['Date']>;
-  designation?: InputMaybe<Scalars['String']>;
-  documentPhotograph?: InputMaybe<Scalars['String']>;
-  emailAddress?: InputMaybe<Scalars['String']>;
-  fullName?: InputMaybe<Scalars['String']>;
-  highestQualification?: InputMaybe<Scalars['String']>;
-  isHeadOfOrganization?: InputMaybe<Scalars['Boolean']>;
-  isTemporaryAndPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
-  mobileNo?: InputMaybe<Scalars['String']>;
-  permanentAddress?: InputMaybe<FullAddressInput>;
-  permanentLatitude?: InputMaybe<Scalars['Float']>;
-  permanentLongitude?: InputMaybe<Scalars['Float']>;
-  photograph?: InputMaybe<Scalars['String']>;
-  temporaryAddress?: InputMaybe<FullAddressInput>;
-  temporaryLatitude?: InputMaybe<Scalars['Float']>;
-  temporaryLongitude?: InputMaybe<Scalars['Float']>;
+export type DirectorAffiliatedFirms = {
+  addressOfInstitution?: Maybe<Scalars['String']>;
+  contact?: Maybe<Scalars['String']>;
+  designation?: Maybe<Scalars['String']>;
+  nameOfInstitution?: Maybe<Scalars['String']>;
+  yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
 export type DirectorDetailsFormState = {
+  citizenshipNo?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Date']>;
+  designation?: Maybe<Scalars['String']>;
+  emailAddress?: Maybe<Scalars['String']>;
+  firmDetails?: Maybe<AffiliatedDirectorDetailsFormState>;
+  fullName?: Maybe<Scalars['String']>;
+  highestQualification?: Maybe<Scalars['String']>;
+  isAffiliatedWithOtherFirms?: Maybe<Scalars['Boolean']>;
+  isHeadOfOrganization?: Maybe<Scalars['Boolean']>;
+  isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
+  mobileNo?: Maybe<Scalars['String']>;
+  panNo?: Maybe<Scalars['String']>;
+  permanentAddress?: Maybe<FullAddress>;
+  temporaryAddress?: Maybe<FullAddress>;
+};
+
+export type DirectorDetailsType = {
+  affiliatedFirms?: Maybe<Array<Maybe<DirectorAffiliatedFirms>>>;
   citizenshipNo?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   designation?: Maybe<Scalars['String']>;
@@ -1281,44 +1257,14 @@ export type DirectorDetailsFormState = {
   emailAddress?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
   highestQualification?: Maybe<Scalars['String']>;
+  isAffiliatedWithOtherFirms?: Maybe<Scalars['Boolean']>;
   isHeadOfOrganization?: Maybe<Scalars['Boolean']>;
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   mobileNo?: Maybe<Scalars['String']>;
-  permanentAddress?: Maybe<FullAddress>;
-  permanentLatitude?: Maybe<Scalars['Float']>;
-  permanentLongitude?: Maybe<Scalars['Float']>;
+  panNo?: Maybe<Scalars['String']>;
+  permanenetAddress?: Maybe<FullAddress>;
   photograph?: Maybe<Scalars['String']>;
   temporaryAddress?: Maybe<FullAddress>;
-  temporaryLatitude?: Maybe<Scalars['Float']>;
-  temporaryLongitude?: Maybe<Scalars['Float']>;
-};
-
-export type DirectorDetailsType = {
-  dateOfMembership?: Maybe<Scalars['Date']>;
-  designation?: Maybe<Scalars['String']>;
-  documentNo?: Maybe<Scalars['String']>;
-  documentPhotograph?: Maybe<Scalars['String']>;
-  emailAddress?: Maybe<Scalars['String']>;
-  fullName?: Maybe<Scalars['String']>;
-  highestQualification?: Maybe<Scalars['String']>;
-  isHeadOfOrganization?: Maybe<Scalars['Boolean']>;
-  isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
-  mobileNo?: Maybe<Scalars['String']>;
-  permanentDistrict?: Maybe<Scalars['ID']>;
-  permanentLatitude?: Maybe<Scalars['Float']>;
-  permanentLocality?: Maybe<Scalars['String']>;
-  permanentLongitude?: Maybe<Scalars['Float']>;
-  permanentMunicipality?: Maybe<Scalars['ID']>;
-  permanentState?: Maybe<Scalars['ID']>;
-  permanentWardNo?: Maybe<Scalars['Int']>;
-  photograph?: Maybe<Scalars['String']>;
-  temporaryDistrict?: Maybe<Scalars['ID']>;
-  temporaryLatitude?: Maybe<Scalars['Float']>;
-  temporaryLocality?: Maybe<Scalars['String']>;
-  temporaryLongitude?: Maybe<Scalars['Float']>;
-  temporaryMunicipality?: Maybe<Scalars['ID']>;
-  temporaryState?: Maybe<Scalars['ID']>;
-  temporaryWardNo?: Maybe<Scalars['Int']>;
 };
 
 export type District = {
@@ -1470,7 +1416,6 @@ export type EBankingCombined = {
   recentTransactions: Array<Maybe<Transactions>>;
   services: Array<Maybe<Services>>;
   share: EbankingShare;
-  utilityPayments: Array<Maybe<UtilityPayments>>;
 };
 
 export type EBankingComplaintHistory = {
@@ -1956,7 +1901,6 @@ export type EBankingQuery = {
   services?: Maybe<Array<Maybe<Services>>>;
   share?: Maybe<EBankingShareQuery>;
   transaction?: Maybe<EBankingTransactionQuery>;
-  utilityPayments?: Maybe<Array<Maybe<UtilityPayments>>>;
 };
 
 export type EBankingRegisterComplaintInput = {
@@ -2062,20 +2006,24 @@ export type Filter = {
 };
 
 export type FullAddress = {
-  district?: Maybe<Scalars['String']>;
+  districtId?: Maybe<Scalars['Int']>;
   houseNo?: Maybe<Scalars['String']>;
-  localGovernment?: Maybe<Scalars['String']>;
+  latitude?: Maybe<Scalars['String']>;
+  localGovernmentId?: Maybe<Scalars['Int']>;
   locality?: Maybe<Scalars['String']>;
-  province?: Maybe<Scalars['String']>;
+  longitude?: Maybe<Scalars['String']>;
+  provinceId?: Maybe<Scalars['Int']>;
   wardNo?: Maybe<Scalars['Int']>;
 };
 
 export type FullAddressInput = {
-  district?: InputMaybe<Scalars['String']>;
+  districtId?: InputMaybe<Scalars['Int']>;
   houseNo?: InputMaybe<Scalars['String']>;
-  localGovernment?: InputMaybe<Scalars['String']>;
+  latitude?: InputMaybe<Scalars['String']>;
+  localGovernmentId?: InputMaybe<Scalars['Int']>;
   locality?: InputMaybe<Scalars['String']>;
-  province?: InputMaybe<Scalars['String']>;
+  longitude?: InputMaybe<Scalars['String']>;
+  provinceId?: InputMaybe<Scalars['Int']>;
   wardNo?: InputMaybe<Scalars['Int']>;
 };
 
@@ -2143,14 +2091,18 @@ export type InstitutionAccountOperatoionsDetails = {
   accountOperatorsDetails?: Maybe<Array<Maybe<AccountOperatorDetailsType>>>;
   accountType?: Maybe<AccountOperationType>;
   companyStamp?: Maybe<Scalars['String']>;
+  isCompanyStampCompulsory?: Maybe<Scalars['Boolean']>;
   specialInstruction?: Maybe<Scalars['String']>;
 };
 
 export type InstitutionDeclaration = {
+  accountHolderAddress?: Maybe<FullAddress>;
+  accountHolderEmail?: Maybe<Scalars['String']>;
   accountHolderName?: Maybe<Scalars['String']>;
+  accountHolderPhone?: Maybe<Scalars['String']>;
   accountHolderSignature?: Maybe<Scalars['String']>;
   accountHolderStamp?: Maybe<Scalars['String']>;
-  cooperativeDocuments?: Maybe<Array<Maybe<KymInstitutionDocumentsType>>>;
+  institutionDocuments?: Maybe<Array<Maybe<KymInstitutionDocumentsType>>>;
 };
 
 export enum InstitutionExpectedMonthlyTransaction {
@@ -2163,7 +2115,7 @@ export type InstitutionMember = {
   accoountOperationsDetails?: Maybe<InstitutionAccountOperatoionsDetails>;
   declaration?: Maybe<InstitutionDeclaration>;
   organizationInformation?: Maybe<InstitutionOrganizationInformation>;
-  propietorAndDirectorDetails?: Maybe<InstitutionPropietorAndDirectorDetails>;
+  proprietorAndDirectorDetails?: Maybe<InstitutionProprietorAndDirectorDetails>;
   transactionProfile?: Maybe<InstitutionTransactionProfile>;
 };
 
@@ -2178,8 +2130,6 @@ export type InstitutionOrganizationInformation = {
   institutionName?: Maybe<Scalars['String']>;
   institutionType?: Maybe<Scalars['String']>;
   issuingOffice?: Maybe<Scalars['String']>;
-  latitude?: Maybe<Scalars['Float']>;
-  longitude?: Maybe<Scalars['Float']>;
   natureOfBusiness?: Maybe<Scalars['String']>;
   noOfBranches?: Maybe<Scalars['Int']>;
   numberOfEmployee?: Maybe<Scalars['Int']>;
@@ -2187,7 +2137,6 @@ export type InstitutionOrganizationInformation = {
   phone?: Maybe<Scalars['String']>;
   postBoxNo?: Maybe<Scalars['String']>;
   registeredAddress?: Maybe<FullAddress>;
-  registeredAddressIfChanged?: Maybe<FullAddress>;
   registeredNumber?: Maybe<Scalars['String']>;
   registrationDate?: Maybe<Scalars['Date']>;
   sisterConcernDetails?: Maybe<Array<Maybe<SisterConcernDetailsType>>>;
@@ -2195,7 +2144,7 @@ export type InstitutionOrganizationInformation = {
   website?: Maybe<Scalars['String']>;
 };
 
-export type InstitutionPropietorAndDirectorDetails = {
+export type InstitutionProprietorAndDirectorDetails = {
   detailsOfDirectors?: Maybe<Array<Maybe<DirectorDetailsType>>>;
   detailsOfDirectorsWithAffiliation?: Maybe<Array<Maybe<AffiliatedDirectorDetailsType>>>;
 };
@@ -4276,6 +4225,19 @@ export type KymInsAccountLus = {
   name: KymInsAccountSection;
 };
 
+export type KymInsAccountOperatorInput = {
+  contact?: InputMaybe<Scalars['String']>;
+  designation?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  institutionId?: InputMaybe<Scalars['ID']>;
+  isTemporaryAndPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+  panNo?: InputMaybe<Scalars['String']>;
+  permanentAddress?: InputMaybe<FullAddressInput>;
+  temporaryAddress?: InputMaybe<FullAddressInput>;
+};
+
 export enum KymInsAccountSection {
   AccountOperationInstruction = 'ACCOUNT_OPERATION_INSTRUCTION',
   DetailsOfAccountOperators = 'DETAILS_OF_ACCOUNT_OPERATORS'
@@ -4317,6 +4279,14 @@ export type KymInsDeclarationStatus = {
   error?: Maybe<Array<Maybe<KymInsDeclarationSection>>>;
 };
 
+export type KymInsDirectorAffiliatedFirmInput = {
+  address?: InputMaybe<Scalars['String']>;
+  designation?: InputMaybe<Scalars['String']>;
+  directorName?: InputMaybe<Scalars['String']>;
+  institutionName?: InputMaybe<Scalars['String']>;
+  yearlyIncome?: InputMaybe<Scalars['Float']>;
+};
+
 export type KymInsDirectorDetailsLus = {
   name: KymInsDirectorDetailsSection;
 };
@@ -4331,8 +4301,30 @@ export type KymInsDirectorDetailsStatus = {
   error?: Maybe<Array<Maybe<KymInsDirectorDetailsSection>>>;
 };
 
+export type KymInsDirectorInput = {
+  citizenshipNo?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Date']>;
+  designation?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  firmDetails?: InputMaybe<KymInsDirectorAffiliatedFirmInput>;
+  highestQualification?: InputMaybe<Scalars['String']>;
+  institutionId?: InputMaybe<Scalars['ID']>;
+  isAffiliatedWithOtherFirms?: InputMaybe<Scalars['Boolean']>;
+  isHeadOfOrganization?: InputMaybe<Scalars['Boolean']>;
+  isTemporaryAndPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
+  mobileNo?: InputMaybe<Scalars['String']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+  panNo?: InputMaybe<Scalars['String']>;
+  permanentAddress?: InputMaybe<FullAddressInput>;
+  temporaryAddress?: InputMaybe<FullAddressInput>;
+};
+
 export type KymInsFormData = {
+  accountHolderAddress?: Maybe<FullAddress>;
+  accountHolderEmail?: Maybe<Scalars['String']>;
   accountHolderName?: Maybe<Scalars['String']>;
+  accountHolderPhone?: Maybe<Scalars['String']>;
   accountHolderSignature?: Maybe<Scalars['String']>;
   accountHolderStamp?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
@@ -4345,7 +4337,6 @@ export type KymInsFormData = {
   companyStamp?: Maybe<Scalars['String']>;
   dateOfLastAGM?: Maybe<Scalars['Date']>;
   detailsOfDirectors?: Maybe<Array<Maybe<DirectorDetailsFormState>>>;
-  detailsOfDirectorsWithAffiliation?: Maybe<Array<Maybe<AffiliatedDirectorDetailsFormState>>>;
   documents?: Maybe<Array<Maybe<KymFieldData>>>;
   email?: Maybe<Scalars['String']>;
   expectedMonthlyTransaction?: Maybe<Scalars['String']>;
@@ -4356,8 +4347,6 @@ export type KymInsFormData = {
   institutionType?: Maybe<Scalars['String']>;
   isCompanyStampCompulsory?: Maybe<Scalars['Boolean']>;
   issuingOffice?: Maybe<Scalars['String']>;
-  latitude?: Maybe<Scalars['Float']>;
-  longitude?: Maybe<Scalars['Float']>;
   natureOfBusiness?: Maybe<Scalars['String']>;
   natureOfTransaction?: Maybe<Scalars['String']>;
   noOfBranches?: Maybe<Scalars['Int']>;
@@ -4366,7 +4355,6 @@ export type KymInsFormData = {
   phone?: Maybe<Scalars['String']>;
   postBoxNo?: Maybe<Scalars['String']>;
   registeredAddress?: Maybe<FullAddress>;
-  registeredAddressIfChanged?: Maybe<FullAddress>;
   registeredNumber?: Maybe<Scalars['String']>;
   registrationDate?: Maybe<Scalars['Date']>;
   sisterConcernDetails?: Maybe<Array<Maybe<SisterConcernDetailsFormState>>>;
@@ -4405,36 +4393,27 @@ export type KymInsInformationStatus = {
 export type KymInsInput = {
   accountHolderAddress?: InputMaybe<FullAddressInput>;
   accountHolderEmail?: InputMaybe<Scalars['String']>;
-  accountHolderLatitude?: InputMaybe<Scalars['Float']>;
-  accountHolderLongitude?: InputMaybe<Scalars['Float']>;
   accountHolderName?: InputMaybe<Scalars['String']>;
   accountHolderPhone?: InputMaybe<Scalars['String']>;
   accountHolderSignature?: InputMaybe<Scalars['String']>;
   accountHolderStamp?: InputMaybe<Scalars['String']>;
   accountName?: InputMaybe<Scalars['String']>;
   accountNumber?: InputMaybe<Scalars['String']>;
-  accountOperatorsDetails?: InputMaybe<Array<InputMaybe<AccountOperatorDetails>>>;
   accountType?: InputMaybe<AccountOperationType>;
   annualTurnover?: InputMaybe<Scalars['Float']>;
   bank?: InputMaybe<Scalars['ID']>;
   branchOfficeAddress?: InputMaybe<FullAddressInput>;
   companyStamp?: InputMaybe<Scalars['String']>;
   dateOfLastAGM?: InputMaybe<Scalars['Date']>;
-  detailsOfDirectors?: InputMaybe<Array<InputMaybe<DirectorDetails>>>;
-  detailsOfDirectorsWithAffiliation?: InputMaybe<Array<InputMaybe<AffiliatedDirectorDetails>>>;
   email?: InputMaybe<Scalars['String']>;
   expectedMonthlyTransaction?: InputMaybe<Scalars['String']>;
   expectedMonthlyTurnover?: InputMaybe<Scalars['String']>;
   fax?: InputMaybe<Scalars['String']>;
-  hasTCAccepted?: InputMaybe<Scalars['Boolean']>;
   initialDepositAmount?: InputMaybe<Scalars['Float']>;
-  institutionDocuments?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   institutionName?: InputMaybe<Scalars['String']>;
   institutionType?: InputMaybe<Scalars['String']>;
   isCompanyStampCompulsory?: InputMaybe<Scalars['Boolean']>;
   issuingOffice?: InputMaybe<Scalars['String']>;
-  latitude?: InputMaybe<Scalars['Float']>;
-  longitude?: InputMaybe<Scalars['Float']>;
   natureOfBusiness?: InputMaybe<Scalars['String']>;
   natureOfTransaction?: InputMaybe<Scalars['String']>;
   noOfBranches?: InputMaybe<Scalars['Int']>;
@@ -4443,10 +4422,8 @@ export type KymInsInput = {
   phone?: InputMaybe<Scalars['String']>;
   postBoxNo?: InputMaybe<Scalars['String']>;
   registeredAddress?: InputMaybe<FullAddressInput>;
-  registeredAddressIfChanged?: InputMaybe<FullAddressInput>;
   registeredNumber?: InputMaybe<Scalars['String']>;
   registrationDate?: InputMaybe<Scalars['Date']>;
-  sisterConcernDetails?: InputMaybe<Array<InputMaybe<SisterConcernDetails>>>;
   specialInstruction?: InputMaybe<Scalars['String']>;
   vatOrPanNo?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;
@@ -4454,11 +4431,32 @@ export type KymInsInput = {
 
 export type KymInsMutation = {
   add?: Maybe<KymInsAddResult>;
+  addAccountOperators?: Maybe<KymInsAddResult>;
+  addDirectors?: Maybe<KymInsAddResult>;
+  addSisterConcerns?: Maybe<KymInsAddResult>;
 };
 
 
 export type KymInsMutationAddArgs = {
   data: KymInsInput;
+};
+
+
+export type KymInsMutationAddAccountOperatorsArgs = {
+  data: KymInsAccountOperatorInput;
+  operatorId: Scalars['ID'];
+};
+
+
+export type KymInsMutationAddDirectorsArgs = {
+  data: KymInsDirectorInput;
+  directorId: Scalars['ID'];
+};
+
+
+export type KymInsMutationAddSisterConcernsArgs = {
+  data: KymInsSisterConcernInput;
+  sisterConcernId: Scalars['ID'];
 };
 
 export type KymInsQuery = {
@@ -4473,6 +4471,15 @@ export type KymInsQueryFormStateArgs = {
 export type KymInsRecord = {
   member: Member;
   sectionStatus?: Maybe<KymInsFormStatus>;
+};
+
+export type KymInsSisterConcernInput = {
+  address?: InputMaybe<Scalars['String']>;
+  institutionId?: InputMaybe<Scalars['ID']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+  natureOfBusiness?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 export type KymInsTransactionLus = {
@@ -4498,8 +4505,14 @@ export type KymInstitutionDocumentsFormState = {
 };
 
 export type KymInstitutionDocumentsType = {
-  documentUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
-  id?: Maybe<Scalars['ID']>;
+  agmBodDecisionDocument?: Maybe<Scalars['String']>;
+  latestAuditReport?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
+  minuteOfCentralRep?: Maybe<Scalars['String']>;
+  moaAOA?: Maybe<Scalars['String']>;
+  panCertificate?: Maybe<Scalars['String']>;
+  registeredCertificate?: Maybe<Scalars['String']>;
+  taxClearance?: Maybe<Scalars['String']>;
 };
 
 export type KymMemberDataFilter = {
@@ -5122,11 +5135,9 @@ export type ServerError = {
 };
 
 export type Services = {
-  enabled: Scalars['Boolean'];
   icon: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
-  service_id: Scalars['String'];
 };
 
 export type SettingsMutation = {
@@ -5528,14 +5539,6 @@ export type UtilityPaymentResult = {
   transactionID?: Maybe<Scalars['ID']>;
 };
 
-export type UtilityPayments = {
-  enabled: Scalars['Boolean'];
-  icon: Scalars['String'];
-  id: Scalars['String'];
-  name: Scalars['String'];
-  service_id: Scalars['String'];
-};
-
 export type ValidationError = {
   code: Scalars['String'];
   message: Scalars['InvalidData'];
@@ -5810,6 +5813,13 @@ export type GetKymFormStatusInstitutionQueryVariables = Exact<{
 
 
 export type GetKymFormStatusInstitutionQuery = { members: { institution?: { formState?: { data?: { sectionStatus?: { information?: { completed?: Array<KymInsInformationSection | null> | null, error?: Array<KymInsInformationSection | null> | null } | null, transaction?: { completed?: Array<KymInsTransactionSection | null> | null, error?: Array<KymInsTransactionSection | null> | null } | null, directorDetails?: { completed?: Array<KymInsDirectorDetailsSection | null> | null, error?: Array<KymInsDirectorDetailsSection | null> | null } | null, account?: { completed?: Array<KymInsAccountSection | null> | null, error?: Array<KymInsAccountSection | null> | null } | null, declaration?: { completed?: Array<KymInsDeclarationSection | null> | null, error?: Array<KymInsDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
+
+export type GetInstitutionKymEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInstitutionKymEditDataQuery = { members: { institution?: { formState?: { data?: { lastUpdated: { account: KymInsAccountSection } | { declaration: KymInsDeclarationSection } | { directorDetails: KymInsDirectorDetailsSection } | { information: KymInsInformationSection } | { transaction: KymInsTransactionSection }, sectionStatus?: { information?: { completed?: Array<KymInsInformationSection | null> | null, error?: Array<KymInsInformationSection | null> | null } | null, transaction?: { completed?: Array<KymInsTransactionSection | null> | null, error?: Array<KymInsTransactionSection | null> | null } | null, directorDetails?: { completed?: Array<KymInsDirectorDetailsSection | null> | null, error?: Array<KymInsDirectorDetailsSection | null> | null } | null } | null, formData?: { institutionName?: string | null, institutionType?: string | null, natureOfBusiness?: string | null, registrationDate?: string | null, vatOrPanNo?: string | null, noOfBranches?: number | null, registeredNumber?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, email?: string | null, website?: string | null, postBoxNo?: string | null, numberOfEmployee?: number | null, dateOfLastAGM?: string | null, bank?: string | null, accountNumber?: string | null, accountName?: string | null, natureOfTransaction?: string | null, annualTurnover?: number | null, initialDepositAmount?: number | null, expectedMonthlyTurnover?: string | null, expectedMonthlyTransaction?: string | null, accountType?: AccountOperationType | null, isCompanyStampCompulsory?: boolean | null, specialInstruction?: string | null, accountHolderName?: string | null, accountHolderPhone?: string | null, accountHolderEmail?: string | null, accountHolderSignature?: string | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: string | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: string | null } | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: string | null } | null, accountHolderAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: string | null } | null } | null } | null } | null } | null } };
 
 export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6864,6 +6874,121 @@ export const useGetKymFormStatusInstitutionQuery = <
     useQuery<GetKymFormStatusInstitutionQuery, TError, TData>(
       ['getKymFormStatusInstitution', variables],
       useAxios<GetKymFormStatusInstitutionQuery, GetKymFormStatusInstitutionQueryVariables>(GetKymFormStatusInstitutionDocument).bind(null, variables),
+      options
+    );
+export const GetInstitutionKymEditDataDocument = `
+    query getInstitutionKymEditData($id: ID!) {
+  members {
+    institution {
+      formState(id: $id) {
+        data {
+          lastUpdated {
+            ... on KymInsInformationLUS {
+              information: name
+            }
+            ... on KymInsTransactionLUS {
+              transaction: name
+            }
+            ... on KymInsDirectorDetailsLUS {
+              directorDetails: name
+            }
+            ... on KymInsAccountLUS {
+              account: name
+            }
+            ... on KymInsDeclarationLUS {
+              declaration: name
+            }
+          }
+          sectionStatus {
+            information {
+              completed
+              error
+            }
+            transaction {
+              completed
+              error
+            }
+            directorDetails {
+              completed
+              error
+            }
+          }
+          formData {
+            institutionName
+            institutionType
+            natureOfBusiness
+            registrationDate
+            vatOrPanNo
+            operatingOfficeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            noOfBranches
+            branchOfficeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            registeredAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            registeredNumber
+            issuingOffice
+            phone
+            fax
+            email
+            website
+            postBoxNo
+            numberOfEmployee
+            dateOfLastAGM
+            bank
+            accountNumber
+            accountName
+            natureOfTransaction
+            annualTurnover
+            initialDepositAmount
+            expectedMonthlyTurnover
+            expectedMonthlyTransaction
+            accountType
+            isCompanyStampCompulsory
+            specialInstruction
+            accountHolderName
+            accountHolderPhone
+            accountHolderEmail
+            accountHolderAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            accountHolderSignature
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInstitutionKymEditDataQuery = <
+      TData = GetInstitutionKymEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetInstitutionKymEditDataQueryVariables,
+      options?: UseQueryOptions<GetInstitutionKymEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetInstitutionKymEditDataQuery, TError, TData>(
+      ['getInstitutionKymEditData', variables],
+      useAxios<GetInstitutionKymEditDataQuery, GetInstitutionKymEditDataQueryVariables>(GetInstitutionKymEditDataDocument).bind(null, variables),
       options
     );
 export const GetInventoryItemsDocument = `
