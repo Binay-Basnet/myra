@@ -4994,8 +4994,8 @@ export type OrganizationSettingsQueryListArgs = {
 };
 
 export type OrganizationStatistics = {
-  totalCapital?: Maybe<Scalars['Float']>;
-  totalMembers?: Maybe<Scalars['Int']>;
+  totalCapital: Scalars['Float'];
+  totalMembers: Scalars['Int'];
 };
 
 export enum Payment_Mode {
