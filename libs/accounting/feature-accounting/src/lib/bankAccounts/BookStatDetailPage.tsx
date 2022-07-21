@@ -1,19 +1,13 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
+import { Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-/* eslint-disable-next-line */
-export interface AccountingFeatureBankAccountsListProps {}
-
-export function AccountingFeatureBankAccountsList(
-  props: AccountingFeatureBankAccountsListProps
-) {
+export function BookStatDetailPage() {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -58,37 +52,29 @@ export function AccountingFeatureBankAccountsList(
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['bankAccountsCode'],
+        header: t['bankAccountStatementBookDate'],
         accessorFn: (row) => row?.node?.id,
+        // meta: {
+        //   width: '20%',
+        // },
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: t['bankAccountsBankName'],
-
+        header: t['bankAccountStatementBookTransactionType'],
         meta: {
-          width: '60%',
+          width: '50%',
         },
       },
       {
-        header: t['bankAccountsBookBalance'],
+        header: t['bankAccountStatementBookTransactionNo'],
         accessorFn: (row) => row?.node?.code,
         meta: {
-          width: '30%',
+          width: '50%',
         },
       },
       {
-        header: t['bankAccountsBankBalance'],
+        header: t['bankAccountStatementBookAmount'],
         accessorFn: (row) => row?.node?.contact,
-        meta: {
-          width: '30%',
-        },
-      },
-      {
-        header: t['bankAccountsDifference'],
-        accessorFn: (row) => row?.node?.contact,
-        meta: {
-          width: '30%',
-        },
       },
       {
         id: '_actions',
@@ -109,28 +95,32 @@ export function AccountingFeatureBankAccountsList(
   );
 
   return (
-    <>
-      <AccountingPageHeader
-        heading={t['accountingBankAccountsListBankAccounts']}
-        buttonLabel={t['accountingBankAccountsListNewBankAccounts']}
-        buttonHandler={() =>
-          router.push('/accounting/accounting/bank-accounts/add')
-        }
-      />
-
-      <Table
-        data={rowData}
-        getRowId={(row) => String(row?.node?.id)}
-        isLoading={isFetching}
-        columns={columns}
-        pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          endCursor: data?.members?.list.pageInfo?.endCursor ?? '',
-          startCursor: data?.members?.list.pageInfo?.startCursor ?? '',
-        }}
-      />
-    </>
+    <Box p="s16">
+      <Box
+        borderBottom="1px solid"
+        borderColor="border.layout"
+        bg="gray.0"
+        p="s16"
+        borderRadius="br2"
+      >
+        <Text
+          fontSize="r1"
+          color="neutralColorLight.Gray-80"
+          fontWeight="SemiBold"
+        >
+          {t['bankAccountStatementBookStatement']}
+        </Text>
+      </Box>
+      <Box>
+        <Table
+          data={rowData}
+          getRowId={(row) => String(row?.node?.id)}
+          isLoading={isFetching}
+          columns={columns}
+        />
+      </Box>
+    </Box>
   );
 }
 
-export default AccountingFeatureBankAccountsList;
+export default BookStatDetailPage;
