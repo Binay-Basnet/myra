@@ -4994,8 +4994,8 @@ export type OrganizationSettingsQueryListArgs = {
 };
 
 export type OrganizationStatistics = {
-  totalCapital?: Maybe<Scalars['Float']>;
-  totalMembers?: Maybe<Scalars['Int']>;
+  totalCapital: Scalars['Float'];
+  totalMembers: Scalars['Int'];
 };
 
 export enum Payment_Mode {
@@ -5835,6 +5835,11 @@ export type GetRecentTransactionsQueryVariables = Exact<{ [key: string]: never; 
 
 
 export type GetRecentTransactionsQuery = { eBanking: { transaction?: { recent?: Array<{ id: string, name: string, transactionType: Transaction_Type, date: string, transactionDirection: Transaction_Direction, amount: number } | null> | null } | null } };
+
+export type GetUtilityListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUtilityListQuery = { eBanking: { utilityPayments?: Array<{ id: string, name: string, enabled: boolean, icon: string, service_id: string } | null> | null } };
 
 export type GetKymFormStatusInstitutionQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -7033,6 +7038,31 @@ export const useGetRecentTransactionsQuery = <
     useQuery<GetRecentTransactionsQuery, TError, TData>(
       variables === undefined ? ['getRecentTransactions'] : ['getRecentTransactions', variables],
       useAxios<GetRecentTransactionsQuery, GetRecentTransactionsQueryVariables>(GetRecentTransactionsDocument).bind(null, variables),
+      options
+    );
+export const GetUtilityListDocument = `
+    query getUtilityList {
+  eBanking {
+    utilityPayments {
+      id
+      name
+      enabled
+      icon
+      service_id
+    }
+  }
+}
+    `;
+export const useGetUtilityListQuery = <
+      TData = GetUtilityListQuery,
+      TError = unknown
+    >(
+      variables?: GetUtilityListQueryVariables,
+      options?: UseQueryOptions<GetUtilityListQuery, TError, TData>
+    ) =>
+    useQuery<GetUtilityListQuery, TError, TData>(
+      variables === undefined ? ['getUtilityList'] : ['getUtilityList', variables],
+      useAxios<GetUtilityListQuery, GetUtilityListQueryVariables>(GetUtilityListDocument).bind(null, variables),
       options
     );
 export const GetKymFormStatusInstitutionDocument = `
