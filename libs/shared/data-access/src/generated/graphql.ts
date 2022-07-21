@@ -5814,6 +5814,13 @@ export type GetAccountSummaryQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAccountSummaryQuery = { eBanking: { account?: { summary?: { totalSaving: number, totalLoan: number } | null } | null } };
 
+export type GetAccountDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetAccountDetailsQuery = { eBanking: { account?: { get?: { id: string, name: string, accountNumber: string, isDefault: boolean, amount: number, interestRate: number, accountType: Account_Type, interestBooked: number, interestEarned: number, subscribedDate: string, history?: Array<{ id: string, date: string, balance: number }> | null, transactions?: Array<{ id: string, name: string, date: string, amount: number, transactionType: Transaction_Type, transactionDirection: Transaction_Direction }> | null } | null } | null } };
+
 export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6894,6 +6901,51 @@ export const useGetAccountSummaryQuery = <
     useQuery<GetAccountSummaryQuery, TError, TData>(
       variables === undefined ? ['getAccountSummary'] : ['getAccountSummary', variables],
       useAxios<GetAccountSummaryQuery, GetAccountSummaryQueryVariables>(GetAccountSummaryDocument).bind(null, variables),
+      options
+    );
+export const GetAccountDetailsDocument = `
+    query getAccountDetails($id: ID!) {
+  eBanking {
+    account {
+      get(id: $id) {
+        id
+        name
+        accountNumber
+        isDefault
+        amount
+        interestRate
+        accountType
+        interestBooked
+        interestEarned
+        subscribedDate
+        history {
+          id
+          date
+          balance
+        }
+        transactions {
+          id
+          name
+          date
+          amount
+          transactionType
+          transactionDirection
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountDetailsQuery = <
+      TData = GetAccountDetailsQuery,
+      TError = unknown
+    >(
+      variables: GetAccountDetailsQueryVariables,
+      options?: UseQueryOptions<GetAccountDetailsQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountDetailsQuery, TError, TData>(
+      ['getAccountDetails', variables],
+      useAxios<GetAccountDetailsQuery, GetAccountDetailsQueryVariables>(GetAccountDetailsDocument).bind(null, variables),
       options
     );
 export const GetAnnouncementListDocument = `

@@ -1,6 +1,5 @@
 import { BsThreeDots } from 'react-icons/bs';
 import { IoCopyOutline } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 
 import {
   Box,
@@ -18,7 +17,6 @@ import {
 interface IAccountCardProps {
   isDefault: boolean;
   account: {
-    id: string;
     name: string;
     accountNumber: string;
     amount: number;
@@ -26,14 +24,13 @@ interface IAccountCardProps {
   };
 }
 
-export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
-  const router = useRouter();
+export const AccountLargeCard = ({ isDefault, account }: IAccountCardProps) => {
   return (
     <Box
       p="s16"
       display="flex"
       flexDir="column"
-      gap="s8"
+      gap="s16"
       bg="white"
       borderRadius="br2"
     >
@@ -88,37 +85,42 @@ export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
           </PopoverContent>
         </Popover>
       </Box>
-      <Box display="flex" justifyContent="space-between" alignItems="flex-end">
-        <Box
-          cursor="pointer"
-          onClick={(e) => {
-            router.push(`/accounts/${account.id}?name=${account.name}`);
-          }}
-        >
+
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box>
           <TextFields variant="tableHeader" color="gray.800">
             {account.name}{' '}
           </TextFields>
-          <TextFields variant="bodyRegular" color="gray.700">
-            {account.accountNumber}
+          <Box display="flex" alignItems="center" gap="s4">
+            <TextFields variant="bodyRegular" color="gray.700">
+              {account.accountNumber}
+            </TextFields>
+            <Icon
+              as={IoCopyOutline}
+              _hover={{ color: 'gray.800' }}
+              cursor="pointer"
+              size="md"
+              color="gray.400"
+            />
+          </Box>
+        </Box>
+        <Box display="flex" flexDir="column" alignItems="flex-end">
+          <TextFields variant="pageHeader" color="gray.800">
+            {account.amount.toLocaleString('en-IN')}
+          </TextFields>
+          <TextFields variant="bodyRegular" color="gray.600">
+            Interest Rate: {account.interestRate.toFixed(2)}%
           </TextFields>
         </Box>
-        <Icon
-          as={IoCopyOutline}
-          _hover={{ color: 'gray.800' }}
-          cursor="pointer"
-          size="md"
-          color="gray.400"
-        />
       </Box>
 
       <Divider />
+
       <Box display="flex" alignItems="center" justifyContent="space-between">
-        <TextFields variant="pageHeader" color="gray.800">
-          NRs. {account.amount.toLocaleString('en-IN')}
-        </TextFields>
-        <TextFields variant="bodyRegular" color="gray.600">
-          Interest Rate: {account.interestRate.toFixed(2)}%
-        </TextFields>
+        <Text fontSize="r1" color="gray.900">
+          Set as Default Account
+        </Text>
+        <Switch defaultChecked={isDefault} />
       </Box>
     </Box>
   );
