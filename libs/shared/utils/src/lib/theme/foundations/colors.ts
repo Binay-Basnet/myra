@@ -119,7 +119,7 @@ const colors = {
   },
 
   highlight: {
-    500: '#EEF1F7',
+    500: '#F7F9FE',
   },
 
   disabled: {

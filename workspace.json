@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "ebanking-feature-coop": "libs/ebanking/feature-coop",
     "-inventory--feature-inventory": "libs/inventory/feature-inventory",
     "-inventory--feature-item": "libs/inventory/feature-item",
     "-inventory--feature-suppliers": "libs/inventory/feature-suppliers",

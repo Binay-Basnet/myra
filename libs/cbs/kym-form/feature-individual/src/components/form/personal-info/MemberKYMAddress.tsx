@@ -219,7 +219,7 @@ export const MemberKYMAddress = () => {
               />
             </InputGroupContainer>
 
-            <Box mt="-16px">
+            <Box>
               <FormMap name="temporaryLocation" />
             </Box>
           </>

@@ -3,6 +3,7 @@ import React from 'react';
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
 
@@ -30,15 +31,13 @@ const NOBCoopUnion = [
 const CoperativeType = [{ label: 'Coperative Type', value: 'cooperativeType' }];
 export const Critera = ({ watch }: any) => {
   const memberType = watch('typeOfMember');
+  const { t } = useTranslation();
 
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Criteria</TopText>
-        <SubText>
-          Selected Checklist will generate fields below. Multi select for
-          different criteria.
-        </SubText>
+        <TopText> {t['depositProductCriteria']} </TopText>
+        <SubText>{t['depositProductSelectedChecklistwillgenerate']}</SubText>
       </TextBoxContainer>
       <InputGroupContainer>
         {memberType && memberType?.indexOf('individual') !== -1 && (

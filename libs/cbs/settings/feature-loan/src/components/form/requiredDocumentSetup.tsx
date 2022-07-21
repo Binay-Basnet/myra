@@ -1,17 +1,9 @@
-import React from 'react';
-
 // import debounce from 'lodash/debounce';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckboxGroup, FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, Grid, Text } from '@coop/shared/ui';
+import { FormCheckboxGroup } from '@coop/shared/form';
+import { Box, Grid } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TopText } from '../formui';
-const individualList = [
-  { label: 'Policy Document ', value: 'policyDocument' },
-  { label: 'Loan Change Document ', value: 'loanChangeDocument' },
-  { label: 'Form', value: 'form' },
-  { label: 'Citizenship', value: 'citizenship' },
-];
 
 const instutionList = [
   { label: 'Decision', value: 'decision' },
@@ -20,9 +12,17 @@ const instutionList = [
   { label: 'Tax Clearance', value: 'taxClearance' },
 ];
 export const RequiredDocumentSetup = () => {
+  const { t } = useTranslation();
+
+  const individualList = [
+    { label: t['loanProductPolicyDocument'], value: 'policyDocument' },
+    { label: t['loanProductLoanChangeDocument'], value: 'loanChangeDocument' },
+    { label: t['loanProductForm'], value: 'form' },
+    { label: t['loanProductCitizenship'], value: 'citizenship' },
+  ];
   return (
     <BoxContainer>
-      <TopText> Required Document Setup</TopText>
+      <TopText> {t['loanProductRequiredDocumentSetup']} </TopText>
       <Grid templateColumns={'repeat(2,1fr)'}>
         <Box display="flex" flexDirection="column" gap="s16">
           {/* <TopText>Individual</TopText> */}

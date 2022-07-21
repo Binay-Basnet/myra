@@ -69,6 +69,8 @@ export function SettingsDepositProductsAdd(
   } = methods;
   const depositNature = watch('nameOfDepositProduct');
 
+  console.log(depositNature);
+
   return (
     <>
       <Container height="fit-content" minW="container.lg" p="0">
@@ -90,7 +92,7 @@ export function SettingsDepositProductsAdd(
               borderBottom="1px solid #E6E6E6"
             >
               <Text fontSize="r2" fontWeight="SemiBold">
-                Add Deposit Products
+                {t['depositProductAddDepositProducts']}
               </Text>
               <IconButton
                 variant={'ghost'}
@@ -113,40 +115,43 @@ export function SettingsDepositProductsAdd(
                     <GridItem colSpan={2}>
                       <FormInput
                         name="productName"
-                        label="Product Name"
-                        placeholder="Enter Product Name"
+                        label={t['depositProductProductName']}
+                        placeholder={t['depositProductEnterProductName']}
                       />
                       {/* <FormSelect name={'duhjisdfsd'} /> */}
                     </GridItem>
                     <FormSelect
                       name={'nameOfDepositProduct'}
                       options={optionsSaving}
-                      label="Nature of Deposit Product"
+                      label={t['depositProductNatureofDepositProduct']}
+                      placeholder={
+                        t['depositProductSelectNatureofDepositProduct']
+                      }
                     />
                   </InputGroupContainer>
                 </Box>
                 <Box>
                   <Text fontWeight="Medium" fontSize={'r1'} color="gray.700">
-                    Product Code
+                    {t['depositProductProductCode']}
                   </Text>
                   <Text fontWeight="Regular" fontSize="s2" color="gray.700">
-                    Add prefix & intial number. Eg. ASM506
+                    {t['depositProductAddprefixintial']}
                   </Text>
                   <InputGroupContainer mt="s16">
                     <FormInput
-                      label="Prefix"
-                      placeholder="Enter Prefix"
+                      label={t['depositProductPrefix']}
+                      placeholder={t['depositProductEnterPrefix']}
                       name="prefix"
                     />
                     <FormInput
-                      label="Intitial Number"
-                      placeholder="Intitial Number"
+                      label={t['depositProductIntitialNumber']}
+                      placeholder={t['depositProductIntitialNumber']}
                       name="initialNumber"
                     />
                     <Box></Box>
                     <FormSwitch
                       name="resetSwitch"
-                      label="Reset every fiscal year"
+                      label={t['depositProductReseteveryfiscalyear']}
                     />
                   </InputGroupContainer>
                 </Box>

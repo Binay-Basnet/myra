@@ -3,6 +3,7 @@ import React from 'react';
 // import debounce from 'lodash/debounce';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const typesOfMember = [
   { label: 'Individual', value: 'individual' },
@@ -75,10 +76,11 @@ const typesOfMember = [
 // ];
 
 export const TypesOfMember = ({ watch }: any) => {
+  const { t } = useTranslation();
   return (
     <Box display="flex" flexDirection={'column'} gap="s16">
       <Text fontWeight="500" fontSize={'s3'} color="gray.700">
-        Member Category{' '}
+        {t['loanProductMemberCategory']}
       </Text>
 
       <FormCheckboxGroup

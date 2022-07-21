@@ -19,6 +19,16 @@ export const JournalVouchersTable = () => {
           header: t['accountingJournalVouchersFormTableTransferredTo'],
           cellWidth: 'auto',
           fieldType: 'select',
+          selectOptions: [
+            {
+              label: 'Savings Account',
+              value: 'savings_account',
+            },
+            {
+              label: 'Current Account',
+              value: 'current_account',
+            },
+          ],
         },
         {
           accessor: 'dr_amount',

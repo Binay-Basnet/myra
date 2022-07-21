@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, TextProps } from '@coop/shared/ui';
 
 interface IGroupContainer extends TextProps {
-  children: string;
+  children: React.ReactNode;
 }
 
 export const SubText = ({ children, ...rest }: IGroupContainer) => {

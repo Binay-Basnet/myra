@@ -1,31 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
-
-const unitOptions = [
-  {
-    label: 'Day',
-    value: 'Day',
-  },
-  {
-    label: 'Week',
-    value: 'Week',
-  },
-  {
-    label: 'Month',
-    value: 'Month',
-  },
-  {
-    label: 'Year',
-    value: 'Year',
-  },
-];
 
 export const BalanceLimit = () => {
   const [rightElement, setRightElement] = useState('days');
@@ -39,31 +20,52 @@ export const BalanceLimit = () => {
     setRightElement(frequencyUnit);
   }, [frequencyUnit]);
 
+  const { t } = useTranslation();
+
+  const unitOptions = [
+    {
+      label: t['daily'],
+      value: 'Daily',
+    },
+    {
+      label: t['weekly'],
+      value: 'Weekly',
+    },
+    {
+      label: t['monthly'],
+      value: 'Monthly',
+    },
+    {
+      label: t['yearly'],
+      value: 'Yearly',
+    },
+  ];
+
   return (
     <BoxContainer>
       <TextBoxContainer>
         {depositNature === 'recurringSaving' ? (
-          <TopText>Transaction Limit</TopText>
+          <TopText>{t['depositProductTransactionLimit']} </TopText>
         ) : (
-          <TopText>Balance Limit</TopText>
+          <TopText>{t['depositProdictBalanceLimit']}</TopText>
         )}
       </TextBoxContainer>
       <InputGroupContainer>
         <FormInput
           name="minimunBalaneAmount"
-          label="Minimum Amount"
-          placeholder="Enter Minimum Amount"
+          label={t['depositProductMinimumAmount']}
+          placeholder={t['depositProductEnterMinimumAmount']}
         />
         <FormInput
           name="maximumBalaneAmount"
-          label="Maximum Amount"
-          placeholder="Enter Maximum Amount"
+          label={t['depositProductMaximumAmount']}
+          placeholder={t['depositProductEnterMaximumAmount']}
         />
         {depositNature !== 'recurringSaving' && (
           <FormInput
             type="number"
             name="average"
-            label="Average"
+            label={t['depositProductAverage']}
             textAlign="right"
             placeholder="0"
           />

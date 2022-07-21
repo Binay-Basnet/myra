@@ -2,6 +2,7 @@
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   BoxContainer,
@@ -10,21 +11,24 @@ import {
   TopText,
 } from '../formui';
 
-const yesNo = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
-];
 export const Interest = () => {
+  const { t } = useTranslation();
+
+  const yesNo = [
+    { label: t['yes'], value: 'yes' },
+    { label: t['no'], value: 'no' },
+  ];
+
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Interest</TopText>
+        <TopText>{t['loanProductInterest']} </TopText>
       </TextBoxContainer>
       <InputGroupContainer>
         <FormInput
           name="minimumInterestRate"
           type="number"
-          label="Mininum Rate"
+          label={t['loanProductMinimumRate']}
           textAlign={'right'}
           placeholder="0.00"
           rightElement={
@@ -36,7 +40,7 @@ export const Interest = () => {
         <FormInput
           name="maximumInterestRate"
           type="number"
-          label="Maximum Rate"
+          label={t['loanProductMaximumRate']}
           textAlign={'right'}
           placeholder="0.00"
           rightElement={
@@ -48,7 +52,7 @@ export const Interest = () => {
         <FormInput
           name="defaultInterestRate"
           type="number"
-          label="Default Rate"
+          label={t['loanProductDefaultRate']}
           textAlign={'right'}
           placeholder="0.00"
           rightElement={
@@ -60,7 +64,7 @@ export const Interest = () => {
         <FormInput
           name="ceoAuthenticationRate"
           type="number"
-          label="CEO Authority"
+          label={t['loanProductCEOAuthority']}
           textAlign={'right'}
           placeholder="0.00"
           rightElement={
@@ -72,7 +76,7 @@ export const Interest = () => {
         <FormInput
           name="boardAuthenticationRate"
           type="number"
-          label="Board Authority"
+          label={t['loanProductBoardAuthority']}
           textAlign={'right'}
           placeholder="0.00"
           rightElement={
@@ -83,13 +87,13 @@ export const Interest = () => {
         />
         <FormSelect
           name="postingFrequency"
-          label="Posting Frequency"
-          placeholder="Select Posting Frequency"
+          label={t['loanProductPostingFrequency']}
+          placeholder={t['loanProductSelectPostingFrequency']}
         />
         <FormSelect
           name="interestMethod"
-          label="Interest Method"
-          placeholder="Select Interest Method"
+          label={t['loanProductInterestMethod']}
+          placeholder={t['loanProductSelectInterestMethod']}
         />
       </InputGroupContainer>
       <Box
@@ -102,7 +106,7 @@ export const Interest = () => {
         alignItems={'center'}
         borderRadius="4px"
       >
-        <SubHeadingText>Override Interest </SubHeadingText>
+        <SubHeadingText>{t['loanProductOverrideInterest']} </SubHeadingText>
         <FormSwitchTab name={'overrideInterest'} options={yesNo} />
       </Box>
     </BoxContainer>

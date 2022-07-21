@@ -39,8 +39,8 @@ export const AccountServicesCharge = () => {
       gap="s16"
     >
       <TextBoxContainer>
-        <TopText>Account Service Charge</TopText>
-        <SubText>Add different service charges.</SubText>
+        <TopText>{t['loanProductAccountServiceCharge']} </TopText>
+        <SubText>{t['loanProductAdddifferentservicecharges']}.</SubText>
       </TextBoxContainer>
       <Box>
         <FormEditableTable<AccountServiceTable>

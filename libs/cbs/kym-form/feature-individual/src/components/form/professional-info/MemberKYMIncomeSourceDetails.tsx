@@ -70,6 +70,7 @@ const IncomeSource = ({ index, removeIncomeSource }: any) => {
         {familyIncomeData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
           (option, optionIndex) => (
             <IncomeSourceInput
+              key={optionIndex}
               fieldIndex={index}
               option={option}
               optionIndex={optionIndex}

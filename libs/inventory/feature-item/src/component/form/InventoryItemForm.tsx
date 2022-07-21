@@ -38,10 +38,10 @@ interface IVariantProduct {
   removeVariantProduct: () => void;
 }
 
-interface IVariantMap {
+type variantProps = {
   variantName: string;
   options: string;
-}
+};
 
 const VariantProduct = ({ index, removeVariantProduct }: IVariantProduct) => {
   const { t } = useTranslation();
@@ -81,7 +81,7 @@ export const InventoryItemForm = () => {
   const { t } = useTranslation();
   const [addnInfo, setAddnInfo] = useState(false);
   const methods = useFormContext();
-  const { watch, setValue } = methods;
+  const { watch, getValues, reset } = methods;
   const productInfo = watch('productInfo');
   const {
     fields: variantProducts,
@@ -97,13 +97,25 @@ export const InventoryItemForm = () => {
   const generate = () => {
     const itemName = watch('itemName');
     const itemCode = watch('itemCode');
-    const variantProduct = watch('variantProduct');
-    setValue(
-      'data',
-      variantProduct.map((item: IVariantMap) => {
-        return { sku: itemCode, itemName: `${itemName}-${item.options}` };
-      })
+    const variantProduct = watch('variantProduct') as {
+      variantName: string;
+      options: string;
+    }[];
+
+    const z = variantProduct.reduce(
+      (accumulator, currentVal) =>
+        accumulator.concat(
+          currentVal.options.split(',').map((option: string) => {
+            return { sku: itemCode, itemName: `${itemName}-${option}` };
+          })
+        ),
+      [{}]
     );
+
+    reset({
+      ...getValues(),
+      data: z.slice(1),
+    });
   };
 
   return (
@@ -148,16 +160,20 @@ export const InventoryItemForm = () => {
             placeholder={t['invItemCategory']}
             options={[
               {
-                label: '1',
-                value: '1',
+                label: 'Recurring Saving',
+                value: 'recurringSaving',
               },
               {
-                label: '2',
-                value: '2',
+                label: 'Mandatory',
+                value: 'mandatory',
               },
               {
-                label: '3',
-                value: '3',
+                label: 'Voluntary',
+                value: 'voluntary',
+              },
+              {
+                label: 'Term Saving',
+                value: 'termSaving',
               },
             ]}
           />
@@ -274,7 +290,6 @@ export const InventoryItemForm = () => {
 
           <FormEditableTable<VarinatProductTable>
             name="data"
-            debug={false}
             columns={[
               {
                 accessor: 'sku',

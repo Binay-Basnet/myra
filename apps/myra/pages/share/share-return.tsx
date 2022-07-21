@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
@@ -14,6 +14,7 @@ import {
 import {
   FormCheckbox,
   FormInput,
+  FormNumberInput,
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
@@ -31,7 +32,7 @@ import {
   Text,
   TextInput,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 // TODO! use Layout
 const Header = () => {
@@ -105,6 +106,14 @@ const ShareReturn = () => {
   //   console.log(formData);
   //   mutate({ id: '12', data: formData });
   // };
+
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    setTotalAmount(
+      noOfShares * 1000 + Number(adminFees ?? 0) + Number(printingFees ?? 0)
+    );
+  }, [noOfShares, adminFees, printingFees]);
 
   return (
     <>
@@ -349,11 +358,10 @@ const ShareReturn = () => {
                         gap={3}
                       >
                         <GridItem>
-                          <FormInput
+                          <FormNumberInput
                             id="noOfShares"
                             name="noOfReturnedShares"
                             label={t['shareReturnNoOfShares']}
-                            placeholder={t['shareReturnNoOfShares']}
                           />
                         </GridItem>
 
@@ -418,7 +426,7 @@ const ShareReturn = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              {noOfShares * 100}
+                              {amountConverter(noOfShares * 100)}
                             </Text>
                           </Box>
                         </GridItem>
@@ -436,10 +444,9 @@ const ShareReturn = () => {
                             {t['shareReturnAdministrationFees']}
                           </Text>
                           <Box width="300px">
-                            <FormInput
+                            <FormNumberInput
                               name="adminFee"
                               label=""
-                              placeholder="34000.00"
                               textAlign="right"
                               bg="gray.0"
                             />
@@ -460,10 +467,9 @@ const ShareReturn = () => {
                             {t['shareReturnPrintingFees']}
                           </Text>
                           <Box width="300px">
-                            <FormInput
+                            <FormNumberInput
                               name="printingFee"
                               label=""
-                              placeholder="54.00"
                               bg="gray.0"
                               textAlign="right"
                             />
@@ -489,12 +495,7 @@ const ShareReturn = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              {t['rs']}{' '}
-                              {adminFees && printingFees
-                                ? noOfShares * 1000 +
-                                  Number(adminFees) +
-                                  Number(printingFees)
-                                : 0.0}
+                              {t['rs']} {amountConverter(totalAmount)}
                             </Text>
                           </Box>
                         </GridItem>
@@ -657,7 +658,7 @@ const ShareReturn = () => {
                 </Button>
               }
               mainButtonLabel={t['done']}
-              mainButtonHandler={() => router.push(`/members/translation`)}
+              mainButtonHandler={() => router.push(`/share/balance`)}
             />
           </Container>
         </Box>

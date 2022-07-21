@@ -12,7 +12,7 @@ const basicInfo = [
 
 const contact = ['phoneNumber', 'mobileNumber', 'email'];
 
-const profession = ['profession'];
+const profession = ['profession', 'professional'];
 const mainOccupation = [
   'mainOccupation',
   'mainOccupationButton',

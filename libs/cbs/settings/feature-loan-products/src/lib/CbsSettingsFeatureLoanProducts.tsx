@@ -1,11 +1,12 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { FormCheckboxGroup } from '@coop/shared/form';
 // import debounce from 'lodash/debounce';
-import { Box, TextFields } from '@coop/shared/ui';
+import { Box, Divider, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { AccountServicesCharge } from '../components';
+import { AcceptedCollateral, AccountServicesCharge } from '../components';
 
 /* eslint-disable-next-line */
 export interface CbsSettingsFeatureLoanProductsProps {}
@@ -18,52 +19,45 @@ export function CbsSettingsFeatureLoanProducts(
   const methods = useForm();
   const { control, handleSubmit, getValues, watch, setError } = methods;
 
+  const CheckboxList = [
+    { label: t['settingsLoanInsuranceEmi'], value: 'emi' },
+    { label: t['settingsLoanInsuranceEpi'], value: 'epi' },
+
+    { label: t['settingsLoanInsuranceFlat'], value: 'flat' },
+  ];
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
-      <Box display={'flex'} flexDirection="row" h="fit-content">
-        <Box p="s16" flex={1}>
-          <Box
-            borderBottom={'1px'}
-            borderBottomColor="border.layout"
-            py="s8"
-            w="100%"
-          >
-            <TextFields variant="pageHeader" color="neutralColorLight.Gray-80">
-              Insurance Scheme Setup
-            </TextFields>
-          </Box>
-          <Box mt="s12">
-            <Box
-              pl="s12"
-              py="s12"
-              border={'1px'}
-              borderColor="border.layout"
-              w="100%"
-            >
-              <TextFields
-                variant="tableHeader"
-                color="neutralColorLight.Gray-80"
-              >
-                Setup insurance scheme setup
-              </TextFields>
+      <FormProvider {...methods}>
+        <form>
+          <Box display="flex" flexDirection="column" rowGap="s32" padding="s12">
+            <Box display="flex" flexDirection={'column'} rowGap="s16">
+              <Box display="flex" flexDirection={'column'} gap="s4">
+                <Text fontSize="r1" fontWeight="500">
+                  {t['settingsLoanInsuranceScheme']}
+                </Text>
+                <Text fontSize="s2" fontWeight="400">
+                  {t['settingsLoanInsuranceScheme']}{' '}
+                </Text>
+              </Box>
+
+              <AccountServicesCharge />
             </Box>
-            <Box p="s12" border={'1px'} borderColor="border.layout" w="100%">
-              <FormProvider {...methods}>
-                <form>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    rowGap="s16"
-                    padding="s12"
-                  >
-                    <AccountServicesCharge />
-                  </Box>
-                </form>
-              </FormProvider>
+            <Divider />
+            <Box display={'flex'} flexDirection="column" gap="s16">
+              <Text fontSize="r1" fontWeight="500">
+                {t['settingsLoanRepaymentScheme']}{' '}
+              </Text>
+              <FormCheckboxGroup
+                name="loanRepaymentScheme"
+                list={CheckboxList}
+                orientation="column"
+              />
             </Box>
+            <Divider />
+            <AcceptedCollateral />
           </Box>
-        </Box>
-      </Box>
+        </form>
+      </FormProvider>
     </Box>
   );
 }

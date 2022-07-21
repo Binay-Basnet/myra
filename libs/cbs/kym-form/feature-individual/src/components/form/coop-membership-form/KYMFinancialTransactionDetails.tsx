@@ -42,6 +42,7 @@ export const KYMFinancialTransactionDetails = () => {
               });
               return (
                 <FormInput
+                  key={index}
                   id={`financialTransaction.${String(option?.name?.local)}`}
                   type="number"
                   // name={String(option?.name?.local)}

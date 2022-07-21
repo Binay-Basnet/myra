@@ -6,6 +6,7 @@ import { useFormContext } from 'react-hook-form';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   BoxContainer,
@@ -14,35 +15,7 @@ import {
   TextBoxContainer,
   TopText,
 } from '../formui';
-const unitOptions = [
-  {
-    label: 'Day',
-    value: 'Day',
-  },
-  {
-    label: 'Week',
-    value: 'Week',
-  },
-  {
-    label: 'Month',
-    value: 'Month',
-  },
-  {
-    label: 'Year',
-    value: 'Year',
-  },
-];
 
-const applicableSwitch = [
-  {
-    label: 'Applicable',
-    value: 'applicable',
-  },
-  {
-    label: 'Not Applicable',
-    value: 'notApplicable',
-  },
-];
 export const MaximumTenure = () => {
   const [rightElement, setRightElement] = useState('days');
   const { resetField, watch } = useFormContext();
@@ -54,15 +27,44 @@ export const MaximumTenure = () => {
     setRightElement(maxTenureUnit);
   }, [maxTenureUnit]);
 
+  const { t } = useTranslation();
+
+  const unitOptions = [
+    {
+      label: t['daily'],
+      value: 'Daily',
+    },
+    {
+      label: t['weekly'],
+      value: 'Weekly',
+    },
+    {
+      label: t['monthly'],
+      value: 'Monthly',
+    },
+    {
+      label: t['yearly'],
+      value: 'Yearly',
+    },
+  ];
+
+  const applicableSwitch = [
+    {
+      label: t['depositProductApplicable'],
+      value: 'applicable',
+    },
+    {
+      label: t['depositProductNotApplicable'],
+      value: 'notApplicable',
+    },
+  ];
+
   return (
     <BoxContainer>
       <Box display={'flex'} justifyContent="space-between">
         <TextBoxContainer>
-          <SubHeadingText>Maxinum Tenure</SubHeadingText>
-          <SubText>
-            Note: Week is equal to 7 days, Month is equal to 30 days & year is
-            equal to 365days.
-          </SubText>
+          <SubHeadingText>{t['depositProductMaxinumTenure']} </SubHeadingText>
+          <SubText>{t['depositProductNoteWeek']}</SubText>
         </TextBoxContainer>
         <FormSwitchTab
           name={'enablemaximumTenure'}
@@ -81,8 +83,7 @@ export const MaximumTenure = () => {
         >
           <Box display={'flex'} flexDirection="column" gap="s4">
             <Text fontSize={'s3'} fontWeight="500">
-              {' '}
-              Unit
+              {t['depositProductUnit']}
             </Text>
             <FormSwitchTab name={'maximumTenureUnit'} options={unitOptions} />
           </Box>
@@ -90,7 +91,7 @@ export const MaximumTenure = () => {
             <FormInput
               name="maximumTenureNumber"
               textAlign={'right'}
-              label="Number"
+              label={t['depositProductNumber']}
               placeholder="0"
               rightElement={
                 <Box mr="s24">

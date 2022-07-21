@@ -118,9 +118,7 @@ const Dashboard = () => {
                       onClick={() =>
                         newId
                           .mutateAsync({})
-                          .then((res) =>
-                            router.push(`members/addMember/${res?.newId}`)
-                          )
+                          .then((res) => router.push(`members/list`))
                       }
                     >
                       {t.addNewMember}

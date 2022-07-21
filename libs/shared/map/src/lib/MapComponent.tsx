@@ -39,8 +39,8 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
     const getPermanentAddress = async () => {
       try {
         const data = await reverseGeoCodeAddress(
-          currentLoc.latitude,
-          currentLoc.longitude
+          currentLoc?.latitude,
+          currentLoc?.longitude
         );
         const address = data?.data?.address;
         setAddress(

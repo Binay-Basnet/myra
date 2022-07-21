@@ -15,21 +15,25 @@ import {
   FormSwitchTab,
 } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
-import { Box, Button, Icon } from '@coop/shared/ui';
+import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 interface IAddAccountServices {
   index: number;
   removeAccountServices: () => void;
 }
 
-const amountOpt = [
-  { label: 'Amount', value: 'amount' },
-  { label: 'Percentage', value: 'percentage' },
-];
 const AddServiceCharge = ({
   index,
   removeAccountServices,
 }: IAddAccountServices) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
+
+  const amountOpt = [
+    { label: t['settingsLoanAmount'], value: 'amount' },
+    { label: t['settingsLoanPercentage'], value: 'percentage' },
+  ];
+  const { watch } = useFormContext();
+  const AmountPer = watch(`accountServiceCharge.${index}.choose`);
   return (
     <DynamicBoxContainer>
       <CloseIcon
@@ -45,32 +49,113 @@ const AddServiceCharge = ({
       <InputGroupContainer>
         <FormSelect
           name={`accountServiceCharge.${index}.serviceName`}
-          label={'Scheme Name'}
-          placeholder={'Select Service Name'}
+          label={t['settingsLoanNewSchemeName']}
+          placeholder={t['settingsLoanNewSchemeName']}
         />
         <FormSelect
           name={`accountServiceCharge.${index}.ledgerName`}
-          label="Insurance Company"
-          placeholder={'Insurance Company'}
+          label={t['settingsLoanInsuranceCompany']}
+          placeholder={t['settingsLoanInsuranceCompany']}
         />
         <FormInput
           type="text"
-          textAlign={'right'}
           bg="white"
           name={`accountServiceCharge.${index}.amount`}
-          label={'Payment Frequency'}
-          placeholder={'Payment Frequency'}
+          label={t['settingsLoanPaymentFreq']}
+          placeholder={t['settingsLoanPaymentFreq']}
         />
         <FormSwitchTab
           name={`accountServiceCharge.${index}.choose`}
           options={amountOpt}
         />
       </InputGroupContainer>
+      <Box pt="s16">
+        {AmountPer && AmountPer === 'amount' && (
+          <Box
+            border="1px solid"
+            borderColor={'border.layout'}
+            p="s16"
+            borderRadius={'4px'}
+          >
+            <InputGroupContainer>
+              <FormInput
+                type="number"
+                textAlign={'right'}
+                bg="white"
+                name={`accountServiceCharge.${index}.minAmount`}
+                label={t['settingsLoanMinimumAmount']}
+                placeholder={t['settingsLoanPlceholderNumber']}
+              />
+              <FormInput
+                type="number"
+                textAlign={'right'}
+                bg="white"
+                name={`accountServiceCharge.${index}.maxAmount`}
+                label={t['settingsLoanMaximumAmount']}
+                placeholder={t['settingsLoanPlceholderNumber']}
+              />
+              <FormInput
+                type="number"
+                textAlign={'right'}
+                bg="white"
+                name={`accountServiceCharge.${index}.insurancePremium`}
+                label={t['settingsLoanInsurancePremium']}
+                placeholder={t['settingsLoanPlceholderNumber']}
+                rightElement={
+                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                    %
+                  </Text>
+                }
+              />
+            </InputGroupContainer>
+          </Box>
+        )}
+        {AmountPer && AmountPer === 'percentage' && (
+          <Box
+            border="1px solid"
+            borderColor={'border.layout'}
+            p="s16"
+            borderRadius={'4px'}
+          >
+            <InputGroupContainer>
+              <FormInput
+                type="number"
+                textAlign={'right'}
+                bg="white"
+                name={`accountServiceCharge.${index}.minPer`}
+                label={t['settingsLoanMinimumPer']}
+                placeholder={t['settingsLoanPlceholderNumber']}
+              />
+              <FormInput
+                type="number"
+                textAlign={'right'}
+                bg="white"
+                name={`accountServiceCharge.${index}.maxPer`}
+                label={t['settingsLoanMaximumPer']}
+                placeholder={t['settingsLoanPlceholderNumber']}
+              />
+              <FormInput
+                type="number"
+                textAlign={'right'}
+                bg="white"
+                name={`accountServiceCharge.${index}.insurancePremium`}
+                label={t['settingsLoanInsurancePremium']}
+                placeholder={t['settingsLoanPlceholderNumber']}
+                rightElement={
+                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                    %
+                  </Text>
+                }
+              />
+            </InputGroupContainer>
+          </Box>
+        )}
+      </Box>
     </DynamicBoxContainer>
   );
 };
 export const AccountServicesCharge = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const {
     fields: accountServicesFields,
     append: accountServicesAppend,
@@ -96,7 +181,6 @@ export const AccountServicesCharge = () => {
           );
         })}
         <Button
-          id="sisterConcernButton"
           alignSelf="start"
           leftIcon={<Icon size="md" as={AiOutlinePlus} />}
           variant="outline"
@@ -104,7 +188,7 @@ export const AccountServicesCharge = () => {
             accountServicesAppend({});
           }}
         >
-          New Insurance Scheme
+          {t['settingsLoanNewScheme']}{' '}
         </Button>
       </DynamicBoxGroupContainer>
     </GroupContainer>

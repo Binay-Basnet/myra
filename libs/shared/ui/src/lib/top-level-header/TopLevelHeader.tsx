@@ -158,7 +158,6 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
         alignItems={'asdcenter'}
         justifyContent={'flex-start'}
         pr={'s16'}
-        cursor={'pointer'}
       >
         <Box
           h="100%"
@@ -179,6 +178,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               flexDirection={'column'}
               justifyContent={'center'}
               alignItems={'flex-start'}
+              cursor={'pointer'}
             >
               <Text fontSize="r1" fontWeight="bold" color={'white'}>
                 नमुना बचत तथ ऋण सहकारी{' '}
@@ -462,7 +462,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           p="s4"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
-                          onClick={() => router.push('/inventory/list')}
+                          onClick={() => router.push('/loan')}
                           // _hover={{ noOfLines: '{[1, 1]}' }}
                           onMouseOver={() => setNumLines([1, 3])}
                           onMouseLeave={() => setNumLines([1, 2])}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
@@ -9,7 +9,12 @@ import {
   Payment_Mode,
   useAddSharePurchaseMutation,
 } from '@coop/shared/data-access';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import {
+  FormInput,
+  FormNumberInput,
+  FormSelect,
+  FormSwitchTab,
+} from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -23,7 +28,7 @@ import {
   TabMenu,
   Text,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 // TODO! use layout
 const Header = () => {
@@ -81,6 +86,14 @@ const SharePurchase = () => {
   //   const id = 'asdsad';
   //   mutate({ id, data: formData });
   // };
+
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    setTotalAmount(
+      noOfShares * 1000 + Number(adminFee ?? 0) + Number(printingFee ?? 0)
+    );
+  }, [noOfShares, adminFee, printingFee]);
 
   return (
     <>
@@ -311,11 +324,11 @@ const SharePurchase = () => {
 
                   <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
                     <GridItem>
-                      <FormInput
+                      <FormNumberInput
                         id="noOfShares"
                         name="shareCount"
                         label={t['sharePurchaseNoOfShares']}
-                        placeholder={t['sharePurchaseNoOfShares']}
+                        // placeholder={t['sharePurchaseNoOfShares']}
                       />
                     </GridItem>
 
@@ -340,7 +353,7 @@ const SharePurchase = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              {noOfShares * 100}
+                              {amountConverter(noOfShares * 100)}
                             </Text>
                           </Box>
                         </GridItem>
@@ -356,13 +369,21 @@ const SharePurchase = () => {
                             {t['sharePurchaseAdministrationFees']}
                           </Text>
                           <Box width="300px">
-                            <FormInput
+                            {/* <FormInput
                               name="adminFee"
                               id="administrationFees"
                               label=""
                               placeholder="34000.00"
                               bg="gray.0"
                               textAlign="right"
+                            /> */}
+
+                            <FormNumberInput
+                              name="adminFee"
+                              id="administrationFees"
+                              label=""
+                              placeholder="34000.00"
+                              bg="gray.0"
                             />
                           </Box>
                         </GridItem>
@@ -380,13 +401,21 @@ const SharePurchase = () => {
                             {t['sharePurchasePrintingFees']}
                           </Text>
                           <Box width="300px">
-                            <FormInput
+                            {/* <FormInput
                               name="printingFee"
                               id="printingFees"
                               label=""
                               placeholder="54.00"
                               bg="gray.0"
                               textAlign="right"
+                            /> */}
+
+                            <FormNumberInput
+                              name="printingFee"
+                              id="printingFees"
+                              label=""
+                              placeholder="54.00"
+                              bg="gray.0"
                             />
                           </Box>
                         </GridItem>
@@ -410,12 +439,7 @@ const SharePurchase = () => {
                               fontWeight="SemiBold"
                               fontSize="r1"
                             >
-                              {t['rs']}{' '}
-                              {adminFee && printingFee
-                                ? noOfShares * 1000 +
-                                  Number(adminFee) +
-                                  Number(printingFee)
-                                : 0.0}
+                              {t['rs']} {amountConverter(totalAmount)}
                             </Text>
                           </Box>
                         </GridItem>
@@ -574,7 +598,7 @@ const SharePurchase = () => {
                 </Button>
               }
               mainButtonLabel={t['done']}
-              mainButtonHandler={() => router.push(`/members/translation`)}
+              mainButtonHandler={() => router.push(`/share/balance`)}
             />
           </Container>
         </Box>

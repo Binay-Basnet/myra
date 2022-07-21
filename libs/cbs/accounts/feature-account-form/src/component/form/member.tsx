@@ -61,18 +61,15 @@ export const Member = () => {
           border="1px solid"
           borderColor="border.layout"
           borderRadius="br2"
-          bg="background.500"
+          bg="gray.0"
         >
           <Grid
             templateRows="repeat(1,1fr)"
-            templateColumns="repeat(5,1fr)"
+            templateColumns="repeat(6,1fr)"
             gap={2}
-            mt="s20"
-            mb="s20"
-            ml="s16"
           >
-            <GridItem display="flex" alignSelf="center" colSpan={2}>
-              <Box alignSelf="center" mr="s16">
+            <GridItem display="flex" alignSelf="center" colSpan={2} gap="s16">
+              <Box alignSelf="center">
                 <Avatar
                   src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
                   size="lg"
@@ -126,7 +123,7 @@ export const Member = () => {
               flexDirection="column"
               alignSelf="center"
               colSpan={2}
-              gap={3}
+              gap="s8"
             >
               <Box display="flex">
                 <Icon size="sm" as={BsFillTelephoneFill} color="primary.500" />
@@ -169,7 +166,12 @@ export const Member = () => {
               </Box>
             </GridItem>
 
-            <GridItem display="flex" justifyContent="flex-end" mr="s32">
+            <GridItem
+              display="flex"
+              justifyContent="flex-end"
+              mr="s32"
+              colSpan={2}
+            >
               <Text
                 fontWeight="Medium"
                 color="primary.500"
