@@ -1,0 +1,23 @@
+{
+  "root": "libs/ebanking/ui-cards",
+  "sourceRoot": "libs/ebanking/ui-cards/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/ebanking/ui-cards/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ebanking/ui-cards"],
+      "options": {
+        "jestConfig": "libs/ebanking/ui-cards/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

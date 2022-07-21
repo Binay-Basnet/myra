@@ -1,0 +1,23 @@
+{
+  "root": "libs/ebanking/feature-home",
+  "sourceRoot": "libs/ebanking/feature-home/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/ebanking/feature-home/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ebanking/feature-home"],
+      "options": {
+        "jestConfig": "libs/ebanking/feature-home/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
