@@ -25,26 +25,32 @@ const accountingSidebarColumns = [
   {
     title: 'accountingAccountingSidebarJournalVouchers',
     link: '/accounting/accounting/journal-vouchers/list',
+    name: 'journal-vouchers',
   },
   {
     title: 'accountingAccountingSidebarCashTransfer',
     link: '/accounting/accounting/cash-transfer/list',
+    name: 'cash-transfer',
   },
   {
     title: 'accountingAccountingSidebarQuickPayment',
     link: '/accounting/accounting/quick-payment/list',
+    name: 'quick-payment',
   },
   {
     title: 'accountingAccountingSidebarQuickReceipt',
     link: '/accounting/accounting/quick-receipt/list',
+    name: 'quick-receipt',
   },
   {
     title: 'accountingAccountingSidebarBankAccounts',
     link: '/accounting/accounting/bank-accounts/list',
+    name: 'bank-accounts',
   },
   {
     title: 'accountingAccountingSidebarChartsOfAccounts',
     link: '/accounting/accounting/charts-of-account/list',
+    name: 'charts-of-account',
   },
 ];
 
