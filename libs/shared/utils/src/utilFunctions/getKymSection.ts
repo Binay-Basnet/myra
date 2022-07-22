@@ -12,7 +12,7 @@ const basicInfo = [
 
 const contact = ['phoneNumber', 'mobileNumber', 'email'];
 
-const profession = ['profession', 'professional'];
+const profession = ['professionId', 'profession', 'professional'];
 const mainOccupation = [
   'mainOccupation',
   'mainOccupationButton',
@@ -44,26 +44,27 @@ const identificationDetails = [
   'nationalId',
 ];
 const permanentAddress = [
-  'permanentStateId',
-  'permanentDistrictId',
-  'permanentLocalityId',
-  'permanentWardId',
-  'permanentTole',
-  'permanentAddressLocation',
-  'permanentHouseNo',
+  'permanentAddress.provinceId',
+  'permanentAddress.districtId',
+  'permanentAddress.localLevelId',
+  'permanentAddress.wardNo',
+  'permanentAddress.locality',
+  'permanentAddress.houseNo',
+  'permanentAddress.coordinate',
 ];
 const temporaryAddress = [
-  'isPermanentAndTemporaryAddressSame',
-  'temporaryStateId',
-  'temporaryDistrictId',
-  'temporaryLocalityId',
-  'temporaryWardId',
-  'temporaryTole',
-  'temporaryHouseNo',
+  'sameTempAsPermanentAddress',
+  'temporaryAddress.provinceId',
+  'temporaryAddress.districtId',
+  'temporaryAddress.localLevelId',
+  'temporaryAddress.wardNo',
+  'temporaryAddress.locality',
+  'temporaryAddress.houseNo',
+  'temporaryAddress.coordinate',
 ];
 const incaseRented = ['landlordName', 'landlordContact'];
 const familyDetails = [
-  'maritalStatus',
+  'maritalStatusId',
   'familyDetails',
   'addFamilyMemberButton',
 ];
