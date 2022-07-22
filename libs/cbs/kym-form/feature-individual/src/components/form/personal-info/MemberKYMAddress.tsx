@@ -10,6 +10,7 @@ import {
 import {
   KymIndMemberInput,
   useAllAdministrationQuery,
+  useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
@@ -30,9 +31,11 @@ export const MemberKYMAddress = ({
 
   const router = useRouter();
 
+  const id = String(router?.query?.['id']);
+
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch, control } = methods;
+  const { watch, control, reset } = methods;
 
   const isPermanentAndTemporaryAddressSame = watch(
     'sameTempAsPermanentAddress'
@@ -51,7 +54,7 @@ export const MemberKYMAddress = ({
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('permanentAddress.provinceId');
   const currentDistrictId = watch('permanentAddress.districtId');
-  const currentLocalityId = watch('permanentAddress.localLevelId');
+  const currentLocalityId = watch('permanentAddress.localGovernmentId');
 
   const districtList = useMemo(
     () =>
@@ -72,10 +75,9 @@ export const MemberKYMAddress = ({
     [currentLocalityId]
   );
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('permanentAddress.provinceId');
-  const currentTemptDistrictId = watch('permanentAddress.districtId');
-  const currentTempLocalityId = watch('permanentAddress.localLevelId');
-  console.log('locality', currentTempLocalityId);
+  const currentTempProvinceId = watch('temporaryAddress.provinceId');
+  const currentTemptDistrictId = watch('temporaryAddress.districtId');
+  const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
 
   const districtTempList = useMemo(
     () =>
@@ -96,6 +98,62 @@ export const MemberKYMAddress = ({
       localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
     [currentTempLocalityId]
   );
+
+  const { data: editValues, isLoading: editLoading } =
+    useGetIndividualKymEditDataQuery({
+      id: id,
+    });
+
+  console.log({
+    ind: 'address info',
+    data: {
+      permanentAddress:
+        editValues?.members?.individual?.formState?.data?.formData
+          ?.permanentAddress,
+      temporaryAddress:
+        editValues?.members?.individual?.formState?.data?.formData
+          ?.temporaryAddress,
+      sameTempAsPermanentAddress:
+        editValues?.members?.individual?.formState?.data?.formData
+          ?.temporaryAddress?.sameTempAsPermanentAddress,
+    },
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+      console.log('edit value', editValueData);
+
+      console.log({
+        permanentAddress: {
+          ...editValueData?.permanentAddress,
+          locality: editValueData?.permanentAddress?.locality?.local,
+        },
+        temporaryAddress: {
+          ...editValueData?.temporaryAddress?.address,
+          locality: editValueData?.temporaryAddress?.address?.locality?.local,
+        },
+        sameTempAsPermanentAddress:
+          editValueData?.temporaryAddress?.sameTempAsPermanentAddress,
+      });
+
+      reset({
+        permanentAddress: {
+          ...editValueData?.permanentAddress,
+          locality: editValueData?.permanentAddress?.locality?.local,
+        },
+        temporaryAddress: {
+          ...editValueData?.temporaryAddress?.address,
+          locality: editValueData?.temporaryAddress?.address?.locality?.local,
+        },
+        sameTempAsPermanentAddress:
+          editValueData?.temporaryAddress?.sameTempAsPermanentAddress,
+        ...editValueData?.rentedHouse,
+        landlordName: editValueData?.rentedHouse?.landlordName?.local,
+      });
+    }
+  }, [editValues]);
 
   const { mutate } = useSetMemberDataMutation({
     onSuccess: (res) => {
@@ -162,7 +220,7 @@ export const MemberKYMAddress = ({
                   }))}
                 />
                 <FormSelect
-                  name="permanentAddress.localLevelId"
+                  name="permanentAddress.localGovernmentId"
                   label={t['kymIndLocalGovernment']}
                   placeholder={t['kymIndSelectLocalGovernment']}
                   options={localityList.map((d) => ({
@@ -200,7 +258,7 @@ export const MemberKYMAddress = ({
               </InputGroupContainer>
 
               <Box mt="-16px">
-                <FormMap name="permanentAddress.coordinate" />
+                <FormMap name="permanentAddress.coordinates" />
               </Box>
             </Box>
           </Box>
@@ -239,7 +297,7 @@ export const MemberKYMAddress = ({
                     }))}
                   />
                   <FormSelect
-                    name="temporaryAddress.localLevelId"
+                    name="temporaryAddress.localGovernmentId"
                     label={t['kymIndLocalGovernment']}
                     placeholder={t['kymIndSelectLocalGovernment']}
                     options={localityTempList.map((d) => ({
@@ -271,7 +329,7 @@ export const MemberKYMAddress = ({
                 </InputGroupContainer>
 
                 <Box mt="-16px">
-                  <FormMap name="temporaryAddress.coordinate" />
+                  <FormMap name="temporaryAddress.coordinates" />
                 </Box>
               </>
             )}

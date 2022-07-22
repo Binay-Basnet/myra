@@ -8,6 +8,7 @@ import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   KymIndMemberInput,
   useGetIndIdentificationDocOptionQuery,
+  useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormCheckboxGroup, FormInput } from '@coop/shared/form';
@@ -35,7 +36,7 @@ export const MemberKYMIdentificationDetails = ({
   const { t } = useTranslation();
   const methods = useForm<KymIndMemberInput>();
 
-  const { register, getValues, watch } = methods;
+  const { reset, getValues, watch } = methods;
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -48,8 +49,6 @@ export const MemberKYMIdentificationDetails = ({
       identificationDocsData?.members?.individual?.options?.list?.data ?? [],
     [identificationDocsData]
   );
-
-  console.log({ identificationDocs });
 
   const identificationValues = getValues()?.identificationSelection;
 
@@ -65,6 +64,28 @@ export const MemberKYMIdentificationDetails = ({
   // React.useEffect(() => {
   //   checkedIds.length !== 0 && setCurrentDetailsShown([...checkedIds]);
   // }, [JSON.stringify(checkedIds)]);
+
+  const { data: editValues, isLoading: editLoading } =
+    useGetIndividualKymEditDataQuery({
+      id: id,
+    });
+
+  console.log({
+    ind: 'identification details info',
+    data: editValues?.members?.individual?.formState?.data?.formData
+      ?.identification,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      reset({
+        ...editValueData?.identification,
+      });
+    }
+  }, [editValues]);
 
   const { mutate } = useSetMemberDataMutation({
     onSuccess: (res) => {

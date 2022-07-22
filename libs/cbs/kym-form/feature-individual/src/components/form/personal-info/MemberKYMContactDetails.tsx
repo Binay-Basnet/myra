@@ -9,6 +9,7 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   KymIndMemberInput,
+  useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormEmailInput, FormPhoneNumber } from '@coop/shared/form';
@@ -29,22 +30,35 @@ export const MemberKYMContactDetails = ({
 
   const router = useRouter();
 
+  const id = String(router?.query?.['id']);
+
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      // setError('firstName', {
-      //   type: 'custom',
-      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      // });
-      console.log(res);
-    },
-    //   onError: () => {
-    //     setError('firstName', { type: 'custom', message: 'gg' });
-    //   },
+  const { data: editValues, isLoading: editLoading } =
+    useGetIndividualKymEditDataQuery({
+      id: id,
+    });
+
+  console.log({
+    ind: 'contact details info',
+    data: editValues?.members?.individual?.formState?.data?.formData
+      ?.contactDetails,
   });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      reset({
+        ...editValueData?.contactDetails,
+      });
+    }
+  }, [editValues]);
+
+  const { mutate } = useSetMemberDataMutation();
 
   useEffect(() => {
     const subscription = watch(
