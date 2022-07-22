@@ -127,19 +127,19 @@ export function KYMIndividualPage() {
 
   // const methods = useForm<KymIndMemberInput>();
 
-  const {
-    data: editValues,
-    isLoading: editLoading,
-    refetch,
-  } = useGetIndividualKymEditDataQuery(
-    {
-      id: id,
-    },
-    { enabled: id !== 'undefined' }
-  );
+  // const {
+  //   data: editValues,
+  //   isLoading: editLoading,
+  //   refetch,
+  // } = useGetIndividualKymEditDataQuery(
+  //   {
+  //     id: id,
+  //   },
+  //   { enabled: id !== 'undefined' }
+  // );
 
-  console.log('ind page');
-  console.log({ editValues });
+  // console.log('ind page');
+  // console.log({ editValues });
 
   // const { watch, setError, reset } = methods;
 

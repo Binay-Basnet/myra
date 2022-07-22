@@ -51,7 +51,7 @@ export const MemberKYMAddress = ({
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('permanentAddress.provinceId');
   const currentDistrictId = watch('permanentAddress.districtId');
-  const currentLocalityId = watch('permanentAddress.localLevelId');
+  const currentLocalityId = watch('permanentAddress.localGovernmentId');
 
   const districtList = useMemo(
     () =>
@@ -74,7 +74,7 @@ export const MemberKYMAddress = ({
   // FOR TEMPORARY ADDRESS
   const currentTempProvinceId = watch('permanentAddress.provinceId');
   const currentTemptDistrictId = watch('permanentAddress.districtId');
-  const currentTempLocalityId = watch('permanentAddress.localLevelId');
+  const currentTempLocalityId = watch('permanentAddress.localGovernmentId');
 
   const districtTempList = useMemo(
     () =>
@@ -161,7 +161,7 @@ export const MemberKYMAddress = ({
                   }))}
                 />
                 <FormSelect
-                  name="permanentAddress.localLevelId"
+                  name="permanentAddress.localGovernmentId"
                   label={t['kymIndLocalGovernment']}
                   placeholder={t['kymIndSelectLocalGovernment']}
                   options={localityList.map((d) => ({
@@ -238,7 +238,7 @@ export const MemberKYMAddress = ({
                     }))}
                   />
                   <FormSelect
-                    name="temporaryAddress.localLevelId"
+                    name="temporaryAddress.localGovernmentId"
                     label={t['kymIndLocalGovernment']}
                     placeholder={t['kymIndSelectLocalGovernment']}
                     options={localityTempList.map((d) => ({
