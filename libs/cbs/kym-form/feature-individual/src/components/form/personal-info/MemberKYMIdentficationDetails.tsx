@@ -51,7 +51,7 @@ export const MemberKYMIdentificationDetails = ({
 
   console.log({ identificationDocs });
 
-  const identificationValues = getValues()?.identifications;
+  const identificationValues = getValues()?.identificationSelection;
 
   // const checkedIds =
   //   identificationValues?.map((item) =>
@@ -109,7 +109,7 @@ export const MemberKYMIdentificationDetails = ({
           </Text>
           <Box display="flex">
             <FormCheckboxGroup
-              name={'identifications'}
+              name={'identificationSelection'}
               showOther={false}
               list={identificationOptions}
             />
