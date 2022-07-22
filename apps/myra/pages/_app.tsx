@@ -72,7 +72,7 @@ function MainApp({ Component, pageProps }: ManAppProps) {
   }, []);
 
   useSnap();
-
+  console.log('auth', auth);
   return (
     <>
       <Head>

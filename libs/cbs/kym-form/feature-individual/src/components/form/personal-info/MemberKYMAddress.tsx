@@ -75,6 +75,7 @@ export const MemberKYMAddress = ({
   const currentTempProvinceId = watch('permanentAddress.provinceId');
   const currentTemptDistrictId = watch('permanentAddress.districtId');
   const currentTempLocalityId = watch('permanentAddress.localLevelId');
+  console.log('locality', currentTempLocalityId);
 
   const districtTempList = useMemo(
     () =>
