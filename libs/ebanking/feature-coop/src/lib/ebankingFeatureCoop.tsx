@@ -1,3 +1,4 @@
+import { IconType } from 'react-icons';
 import { BsCash } from 'react-icons/bs';
 import { FiBook } from 'react-icons/fi';
 import { ImBlocked } from 'react-icons/im';
@@ -6,6 +7,7 @@ import { SiFormstack } from 'react-icons/si';
 import { TbCalendarTime } from 'react-icons/tb';
 import Link from 'next/link';
 import { ChevronRightIcon } from '@chakra-ui/icons';
+import { Skeleton } from '@chakra-ui/react';
 
 import { AccountPopover } from '@coop/ebanking/accounts';
 import {
@@ -14,6 +16,12 @@ import {
   COOPHeaderCard,
   InfoCard,
 } from '@coop/ebanking/cards';
+import {
+  useGetCoopChequeServicesQuery,
+  useGetCoopComplaintServicesQuery,
+  useGetCoopDownloadsQuery,
+  useGetCoopLoanServicesQuery,
+} from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -27,7 +35,78 @@ import {
 /* eslint-disable-next-line */
 export interface EbankingFeatureCoopProps {}
 
+const CHEQUE_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
+  'Request chequebook': {
+    link: '/coop/cheque/request',
+    icon: FiBook,
+  },
+  'Withdraw via collector': {
+    icon: IoCashOutline,
+    link: '/coop/cheque/withdraw',
+  },
+  'Block Cheque': {
+    icon: ImBlocked,
+    link: '/coop/cheque/block',
+  },
+};
+
+const LOAN_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
+  'Apply for loan': {
+    link: '/coop/loan/apply',
+    icon: BsCash,
+  },
+  'View loan schedule': {
+    icon: TbCalendarTime,
+    link: '/coop/loan/schedule',
+  },
+};
+
+const COMPLAINTS_SERVICE_DICT: Record<
+  string,
+  { icon: IconType; link: string }
+> = {
+  'Register new grievance': {
+    link: '/coop/complaints/new',
+    icon: BsCash,
+  },
+};
+
+const DOWNLOADS_DICT: Record<
+  string,
+  {
+    icon: IconType;
+    link: string;
+  }
+> = {
+  Forms: {
+    icon: SiFormstack,
+    link: '/coop/downloads/forms',
+  },
+  Guidelines: {
+    icon: SiFormstack,
+    link: '/coop/downloads/guidelines',
+  },
+  Reports: {
+    icon: SiFormstack,
+    link: '/coop/downloads/reports',
+  },
+  Directives: {
+    icon: SiFormstack,
+    link: '/coop/downloads/directives',
+  },
+};
+
 export function EbankingFeatureCoop(props: EbankingFeatureCoopProps) {
+  const { data: chequeServices, isLoading: chequeLoading } =
+    useGetCoopChequeServicesQuery();
+  const { data: loanList, isLoading: loanLoading } =
+    useGetCoopLoanServicesQuery();
+  const { data: complaintList, isLoading: complaintLoading } =
+    useGetCoopComplaintServicesQuery();
+
+  const { data: downloadsList, isLoading: downloadLoading } =
+    useGetCoopDownloadsQuery();
+
   return (
     <Box display="flex" flexDir="column" gap="s16">
       <COOPHeaderCard />
@@ -88,21 +167,22 @@ export function EbankingFeatureCoop(props: EbankingFeatureCoopProps) {
         }
       >
         <Grid templateColumns="repeat(3, 1fr)" p="s16" gap="s16">
-          <CoopCard
-            icon={FiBook}
-            title={'Request Chequebook'}
-            link={'/coop/cheque/request'}
-          />
-          <CoopCard
-            icon={IoCashOutline}
-            title={'Withdraw Via Collector'}
-            link={'/coop/cheque/withdraw'}
-          />
-          <CoopCard
-            icon={ImBlocked}
-            title={'Block Cheque'}
-            link={'/coop/cheque/block'}
-          />
+          {chequeLoading && (
+            <>
+              <Skeleton h="86px" />
+              <Skeleton h="86px" />
+              <Skeleton h="86px" />
+            </>
+          )}
+          {chequeServices?.eBanking?.cooperativeServices?.cheque?.options
+            ?.filter((cheque) => cheque.enabled)
+            .map((cheque) => (
+              <CoopCard
+                icon={CHEQUE_SERVICE_DICT[cheque.name]?.icon}
+                title={cheque.name}
+                link={String(CHEQUE_SERVICE_DICT[cheque.name]?.link)}
+              />
+            ))}
         </Grid>
       </InfoCard>
       <InfoCard
@@ -119,16 +199,22 @@ export function EbankingFeatureCoop(props: EbankingFeatureCoopProps) {
         }
       >
         <Grid templateColumns="repeat(3, 1fr)" p="s16" gap="s16">
-          <CoopCard
-            icon={BsCash}
-            title={'Apply for Loan'}
-            link={'/coop/loan/apply'}
-          />
-          <CoopCard
-            icon={TbCalendarTime}
-            title={'View Loan Schedule'}
-            link={'/coop/cheque/withdraw'}
-          />
+          {loanLoading && (
+            <>
+              <Skeleton h="86px" />
+              <Skeleton h="86px" />
+              <Skeleton h="86px" />
+            </>
+          )}
+          {loanList?.eBanking?.cooperativeServices?.loan?.options
+            ?.filter((loan) => loan.enabled)
+            .map((loan) => (
+              <CoopCard
+                icon={LOAN_SERVICE_DICT[loan.name]?.icon}
+                title={loan.name}
+                link={String(LOAN_SERVICE_DICT[loan.name]?.link)}
+              />
+            ))}
         </Grid>
       </InfoCard>
       <InfoCard
@@ -145,35 +231,42 @@ export function EbankingFeatureCoop(props: EbankingFeatureCoopProps) {
         }
       >
         <Grid templateColumns="repeat(3, 1fr)" p="s16" gap="s16">
-          <CoopCard
-            icon={BsCash}
-            title={'Register New complaint'}
-            link={'/coop/complaints/new'}
-          />
+          {complaintLoading && (
+            <>
+              <Skeleton h="86px" />
+              <Skeleton h="86px" />
+              <Skeleton h="86px" />
+            </>
+          )}
+          {complaintList?.eBanking?.cooperativeServices?.complaint?.options
+            ?.filter((complaint) => complaint.enabled)
+            .map((complaint) => (
+              <CoopCard
+                icon={COMPLAINTS_SERVICE_DICT[complaint.name]?.icon}
+                title={complaint.name}
+                link={String(COMPLAINTS_SERVICE_DICT[complaint.name]?.link)}
+              />
+            ))}
         </Grid>
       </InfoCard>
       <InfoCard title="Downloads">
         <Grid templateColumns="repeat(2, 1fr)" p="s16" gap="s16">
-          <CoopDownloadCard
-            icon={SiFormstack}
-            title={'Forms'}
-            link={'/coop/downloads/forms'}
-          />
-          <CoopDownloadCard
-            icon={SiFormstack}
-            title={'Guidelines'}
-            link={'/coop/downloads/guidelines'}
-          />
-          <CoopDownloadCard
-            icon={SiFormstack}
-            title={'Reports'}
-            link={'/coop/downloads/reports'}
-          />
-          <CoopDownloadCard
-            icon={SiFormstack}
-            title={'Directives'}
-            link={'/coop/downloads/directives'}
-          />
+          {downloadLoading && (
+            <>
+              <Skeleton h="86px" />
+              <Skeleton h="86px" />
+              <Skeleton h="86px" />
+            </>
+          )}
+          {downloadsList?.eBanking?.cooperativeServices?.downloads?.options
+            ?.filter((download) => download.enabled)
+            .map((download) => (
+              <CoopDownloadCard
+                icon={DOWNLOADS_DICT[download.name]?.icon}
+                title={download.name}
+                link={String(DOWNLOADS_DICT[download.name]?.link)}
+              />
+            ))}
         </Grid>
       </InfoCard>
     </Box>
