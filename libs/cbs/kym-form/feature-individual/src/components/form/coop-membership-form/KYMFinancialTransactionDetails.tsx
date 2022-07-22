@@ -31,34 +31,23 @@ export const KYMFinancialTransactionDetails = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { register, watch } = methods;
+  const { watch } = methods;
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  const { data: financialTransactionDetailsData } =
-    useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.FinancialTransactionDetails },
-    });
+  // const { data: financialTransactionDetailsData } =
+  //   useGetIndividualKymOptionsQuery({
+  //     id,
+  //     filter: { customId: KYMOptionEnum.FinancialTransactionDetails },
+  //   });
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      // setError('firstName', {
-      //   type: 'custom',
-      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      // });
-      console.log(res);
-    },
-    //   onError: () => {
-    //     setError('firstName', { type: 'custom', message: 'gg' });
-    //   },
-  });
+  const { mutate } = useSetMemberDataMutation();
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id: router.query['id'] as string, data });
+        mutate({ id, data });
       }, 800)
     );
 
@@ -86,7 +75,35 @@ export const KYMFinancialTransactionDetails = ({
               {t['kynIndDetailsoftheamount']}
             </Text>
             <InputGroupContainer>
-              {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
+              <FormInput
+                type="number"
+                name="initialShare"
+                textAlign="right"
+                label="Share"
+                placeholder="0.00"
+              />
+              <FormInput
+                type="number"
+                name="initialSaving"
+                label="Savings"
+                textAlign="right"
+                placeholder="0.00"
+              />
+              <FormInput
+                type="number"
+                name="initialLoan"
+                label="Loan"
+                textAlign="right"
+                placeholder="0.00"
+              />
+              <FormInput
+                type="number"
+                name="otherFinancialAmount"
+                label="Other"
+                textAlign="right"
+                placeholder="0.00"
+              />
+              {/* {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
                 (option, index) => {
                   register(`initialTransactionDetails.options.${index}.id`, {
                     value: option.id,
@@ -104,7 +121,7 @@ export const KYMFinancialTransactionDetails = ({
                     />
                   );
                 }
-              )}
+              )} */}
             </InputGroupContainer>
           </Box>
         </GroupContainer>

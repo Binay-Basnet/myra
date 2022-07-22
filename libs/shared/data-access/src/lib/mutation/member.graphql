@@ -69,6 +69,30 @@ mutation deleteMemberOccupation($memberId: ID!, $id: ID!) {
   }
 }
 
+mutation setMemberIncomeSource($id: ID!, $data: KYMIndIncomeSourceInput!) {
+  members {
+    individual(id: $id) {
+      incomeSource {
+        upsert(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteMemberIncomeSource($memberId: ID!, $id: ID!) {
+  members {
+    individual(id: $memberId) {
+      incomeSource {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
 mutation updateKYMField($id: ID!, $enabled: Boolean, $name: String) {
   settings {
     kymForm {

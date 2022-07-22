@@ -5350,8 +5350,8 @@ export type OrganizationSettingsQueryListArgs = {
 };
 
 export type OrganizationStatistics = {
-  totalCapital?: Maybe<Scalars['Float']>;
-  totalMembers?: Maybe<Scalars['Int']>;
+  totalCapital: Scalars['Float'];
+  totalMembers: Scalars['Int'];
 };
 
 export enum Payment_Mode {
@@ -6026,6 +6026,22 @@ export type DeleteMemberOccupationMutationVariables = Exact<{
 
 
 export type DeleteMemberOccupationMutation = { members: { individual?: { occupation: { delete: { recordId?: string | null } } } | null } };
+
+export type SetMemberIncomeSourceMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymIndIncomeSourceInput;
+}>;
+
+
+export type SetMemberIncomeSourceMutation = { members: { individual?: { incomeSource: { upsert: { recordId?: string | null } } } | null } };
+
+export type DeleteMemberIncomeSourceMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteMemberIncomeSourceMutation = { members: { individual?: { incomeSource: { delete: { recordId?: string | null } } } | null } };
 
 export type UpdateKymFieldMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -6754,6 +6770,50 @@ export const useDeleteMemberOccupationMutation = <
     useMutation<DeleteMemberOccupationMutation, TError, DeleteMemberOccupationMutationVariables, TContext>(
       ['deleteMemberOccupation'],
       useAxios<DeleteMemberOccupationMutation, DeleteMemberOccupationMutationVariables>(DeleteMemberOccupationDocument),
+      options
+    );
+export const SetMemberIncomeSourceDocument = `
+    mutation setMemberIncomeSource($id: ID!, $data: KYMIndIncomeSourceInput!) {
+  members {
+    individual(id: $id) {
+      incomeSource {
+        upsert(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetMemberIncomeSourceMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetMemberIncomeSourceMutation, TError, SetMemberIncomeSourceMutationVariables, TContext>) =>
+    useMutation<SetMemberIncomeSourceMutation, TError, SetMemberIncomeSourceMutationVariables, TContext>(
+      ['setMemberIncomeSource'],
+      useAxios<SetMemberIncomeSourceMutation, SetMemberIncomeSourceMutationVariables>(SetMemberIncomeSourceDocument),
+      options
+    );
+export const DeleteMemberIncomeSourceDocument = `
+    mutation deleteMemberIncomeSource($memberId: ID!, $id: ID!) {
+  members {
+    individual(id: $memberId) {
+      incomeSource {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteMemberIncomeSourceMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMemberIncomeSourceMutation, TError, DeleteMemberIncomeSourceMutationVariables, TContext>) =>
+    useMutation<DeleteMemberIncomeSourceMutation, TError, DeleteMemberIncomeSourceMutationVariables, TContext>(
+      ['deleteMemberIncomeSource'],
+      useAxios<DeleteMemberIncomeSourceMutation, DeleteMemberIncomeSourceMutationVariables>(DeleteMemberIncomeSourceDocument),
       options
     );
 export const UpdateKymFieldDocument = `

@@ -78,18 +78,13 @@ export const KYMDeclaration = ({
 
   const hasBeneficialOwner = watch('hasBeneficialOwner');
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      // setError('firstName', {
-      //   type: 'custom',
-      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      // });
-      console.log(res);
-    },
-    //   onError: () => {
-    //     setError('firstName', { type: 'custom', message: 'gg' });
-    //   },
-  });
+  const isPoliticallyExposed = watch('isPoliticallyExposed');
+
+  const isConvicted = watch('isConvicted');
+
+  const hasForeignResidentialPermit = watch('hasForeignResidentialPermit');
+
+  const { mutate } = useSetMemberDataMutation();
 
   useEffect(() => {
     const subscription = watch(
@@ -175,16 +170,18 @@ export const KYMDeclaration = ({
                   name="isPoliticallyExposed"
                 />
 
-                <InputGroupContainer>
-                  <Box display="flex" flexDirection="column">
-                    <FormTextArea
-                      name="politicallyExposedDetails"
-                      id="politicallyExposedDetails"
-                      label={t['kynIndPleasespecify']}
-                      placeholder={t['kynIndEnterDetails']}
-                    />
-                  </Box>
-                </InputGroupContainer>
+                {isPoliticallyExposed && (
+                  <InputGroupContainer>
+                    <Box display="flex" flexDirection="column">
+                      <FormTextArea
+                        name="politicallyExposedDetails"
+                        id="politicallyExposedDetails"
+                        label={t['kynIndPleasespecify']}
+                        placeholder={t['kynIndEnterDetails']}
+                      />
+                    </Box>
+                  </InputGroupContainer>
+                )}
               </Box>
 
               <Box
@@ -200,16 +197,18 @@ export const KYMDeclaration = ({
                   name="isConvicted"
                 />
 
-                <InputGroupContainer>
-                  <Box display="flex" flexDirection="column">
-                    <FormTextArea
-                      name="convictedDetails"
-                      id="convictedDetails"
-                      label={t['kynIndPleasespecify']}
-                      placeholder={t['kynIndEnterDetails']}
-                    />
-                  </Box>
-                </InputGroupContainer>
+                {isConvicted && (
+                  <InputGroupContainer>
+                    <Box display="flex" flexDirection="column">
+                      <FormTextArea
+                        name="convictedDetails"
+                        id="convictedDetails"
+                        label={t['kynIndPleasespecify']}
+                        placeholder={t['kynIndEnterDetails']}
+                      />
+                    </Box>
+                  </InputGroupContainer>
+                )}
               </Box>
 
               <Box
@@ -225,14 +224,16 @@ export const KYMDeclaration = ({
                   name="hasForeignResidentialPermit"
                 />
 
-                <Box display="flex" flexDirection="column">
-                  <FormRadioGroup
-                    name="foreignResidentialPermitTypeId"
-                    label={t['kynIndSpecifyfollowingdetails']}
-                    options={getFieldOption(foreignEmploymentOptions)}
-                    labelFontSize="s3"
-                  />
-                </Box>
+                {hasForeignResidentialPermit && (
+                  <Box display="flex" flexDirection="column">
+                    <FormRadioGroup
+                      name="foreignResidentialPermitTypeId"
+                      label={t['kynIndSpecifyfollowingdetails']}
+                      options={getFieldOption(foreignEmploymentOptions)}
+                      labelFontSize="s3"
+                    />
+                  </Box>
+                )}
               </Box>
             </ContainerWithDivider>
           </Box>
