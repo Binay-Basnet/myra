@@ -67,33 +67,59 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
           >
             <PopoverBody p={0}>
               <Box>
-                <Button
-                  width="full"
-                  borderRadius={'none'}
-                  size="lg"
-                  justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
                   onClick={() => router.push('/accounting/sales/add')}
                 >
-                  {t['salesList']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['salesList']}
+                  </Text>
+                </Box>
 
-                <Button
-                  width="full"
-                  size="lg"
-                  borderRadius={'none'}
-                  justifyContent="start"
-                  leftIcon={<AddIcon h="11px" />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
+                  display="flex"
+                  alignItems="center"
                   onClick={() =>
                     router.push('/accounting/sales/credit-note/add')
                   }
                 >
-                  {t['creditNote']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['creditNote']}
+                  </Text>
+                </Box>
 
-                <Button
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
+                  onClick={() =>
+                    router.push('/accounting/sales/customer-payment/add')
+                  }
+                >
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['customerPayment']}
+                  </Text>
+                </Box>
+
+                {/* <Button
                   width="full"
                   size="lg"
                   justifyContent="start"
@@ -105,7 +131,7 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
                   }
                 >
                   {t['customerPayment']}
-                </Button>
+                </Button> */}
               </Box>
             </PopoverBody>
           </PopoverContent>

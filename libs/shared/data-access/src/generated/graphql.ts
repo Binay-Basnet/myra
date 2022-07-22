@@ -6209,6 +6209,43 @@ export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetConfigQuery = { config: { countries?: Array<{ name?: string | null, code?: string | null } | null> | null } };
 
+export type GetAccountListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAccountListQuery = { eBanking: { account?: { list?: { edges: Array<{ node: { id: string, name: string, amount: number, isDefault: boolean, accountNumber: string, interestRate: number } }> } | null } | null } };
+
+export type GetAccountSummaryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAccountSummaryQuery = { eBanking: { account?: { summary?: { totalSaving: number, totalLoan: number } | null } | null } };
+
+export type GetAccountDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetAccountDetailsQuery = { eBanking: { account?: { get?: { id: string, name: string, accountNumber: string, isDefault: boolean, amount: number, interestRate: number, accountType: Account_Type, interestBooked: number, interestEarned: number, subscribedDate: string, history?: Array<{ id: string, date: string, balance: number }> | null, transactions?: Array<{ id: string, name: string, date: string, amount: number, transactionType: Transaction_Type, transactionDirection: Transaction_Direction }> | null } | null } | null } };
+
+export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAnnouncementListQuery = { eBanking: { notification?: { announcements?: { list: Array<{ id: string, details: any, summary: string, title: string, date: string } | null> } | null } | null } };
+
+export type GetHomeServiceListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetHomeServiceListQuery = { eBanking: { services?: Array<{ id: string, name: string, service_id: string, icon: string, enabled: boolean } | null> | null } };
+
+export type GetRecentTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRecentTransactionsQuery = { eBanking: { transaction?: { recent?: Array<{ id: string, name: string, transactionType: Transaction_Type, date: string, transactionDirection: Transaction_Direction, amount: number } | null> | null } | null } };
+
+export type GetUtilityListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUtilityListQuery = { eBanking: { utilityPayments?: Array<{ id: string, name: string, enabled: boolean, icon: string, service_id: string } | null> | null } };
+
 export type GetKymFormStatusInstitutionQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -7359,6 +7396,214 @@ export const useGetConfigQuery = <
     useQuery<GetConfigQuery, TError, TData>(
       variables === undefined ? ['getConfig'] : ['getConfig', variables],
       useAxios<GetConfigQuery, GetConfigQueryVariables>(GetConfigDocument).bind(null, variables),
+      options
+    );
+export const GetAccountListDocument = `
+    query getAccountList {
+  eBanking {
+    account {
+      list(paginate: {first: 6}) {
+        edges {
+          node {
+            id
+            name
+            amount
+            isDefault
+            accountNumber
+            interestRate
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountListQuery = <
+      TData = GetAccountListQuery,
+      TError = unknown
+    >(
+      variables?: GetAccountListQueryVariables,
+      options?: UseQueryOptions<GetAccountListQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountListQuery, TError, TData>(
+      variables === undefined ? ['getAccountList'] : ['getAccountList', variables],
+      useAxios<GetAccountListQuery, GetAccountListQueryVariables>(GetAccountListDocument).bind(null, variables),
+      options
+    );
+export const GetAccountSummaryDocument = `
+    query getAccountSummary {
+  eBanking {
+    account {
+      summary {
+        totalSaving
+        totalLoan
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountSummaryQuery = <
+      TData = GetAccountSummaryQuery,
+      TError = unknown
+    >(
+      variables?: GetAccountSummaryQueryVariables,
+      options?: UseQueryOptions<GetAccountSummaryQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountSummaryQuery, TError, TData>(
+      variables === undefined ? ['getAccountSummary'] : ['getAccountSummary', variables],
+      useAxios<GetAccountSummaryQuery, GetAccountSummaryQueryVariables>(GetAccountSummaryDocument).bind(null, variables),
+      options
+    );
+export const GetAccountDetailsDocument = `
+    query getAccountDetails($id: ID!) {
+  eBanking {
+    account {
+      get(id: $id) {
+        id
+        name
+        accountNumber
+        isDefault
+        amount
+        interestRate
+        accountType
+        interestBooked
+        interestEarned
+        subscribedDate
+        history {
+          id
+          date
+          balance
+        }
+        transactions {
+          id
+          name
+          date
+          amount
+          transactionType
+          transactionDirection
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountDetailsQuery = <
+      TData = GetAccountDetailsQuery,
+      TError = unknown
+    >(
+      variables: GetAccountDetailsQueryVariables,
+      options?: UseQueryOptions<GetAccountDetailsQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountDetailsQuery, TError, TData>(
+      ['getAccountDetails', variables],
+      useAxios<GetAccountDetailsQuery, GetAccountDetailsQueryVariables>(GetAccountDetailsDocument).bind(null, variables),
+      options
+    );
+export const GetAnnouncementListDocument = `
+    query getAnnouncementList {
+  eBanking {
+    notification {
+      announcements {
+        list {
+          id
+          details
+          summary
+          title
+          date
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAnnouncementListQuery = <
+      TData = GetAnnouncementListQuery,
+      TError = unknown
+    >(
+      variables?: GetAnnouncementListQueryVariables,
+      options?: UseQueryOptions<GetAnnouncementListQuery, TError, TData>
+    ) =>
+    useQuery<GetAnnouncementListQuery, TError, TData>(
+      variables === undefined ? ['getAnnouncementList'] : ['getAnnouncementList', variables],
+      useAxios<GetAnnouncementListQuery, GetAnnouncementListQueryVariables>(GetAnnouncementListDocument).bind(null, variables),
+      options
+    );
+export const GetHomeServiceListDocument = `
+    query getHomeServiceList {
+  eBanking {
+    services {
+      id
+      name
+      service_id
+      icon
+      enabled
+    }
+  }
+}
+    `;
+export const useGetHomeServiceListQuery = <
+      TData = GetHomeServiceListQuery,
+      TError = unknown
+    >(
+      variables?: GetHomeServiceListQueryVariables,
+      options?: UseQueryOptions<GetHomeServiceListQuery, TError, TData>
+    ) =>
+    useQuery<GetHomeServiceListQuery, TError, TData>(
+      variables === undefined ? ['getHomeServiceList'] : ['getHomeServiceList', variables],
+      useAxios<GetHomeServiceListQuery, GetHomeServiceListQueryVariables>(GetHomeServiceListDocument).bind(null, variables),
+      options
+    );
+export const GetRecentTransactionsDocument = `
+    query getRecentTransactions {
+  eBanking {
+    transaction {
+      recent {
+        id
+        name
+        transactionType
+        date
+        transactionDirection
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useGetRecentTransactionsQuery = <
+      TData = GetRecentTransactionsQuery,
+      TError = unknown
+    >(
+      variables?: GetRecentTransactionsQueryVariables,
+      options?: UseQueryOptions<GetRecentTransactionsQuery, TError, TData>
+    ) =>
+    useQuery<GetRecentTransactionsQuery, TError, TData>(
+      variables === undefined ? ['getRecentTransactions'] : ['getRecentTransactions', variables],
+      useAxios<GetRecentTransactionsQuery, GetRecentTransactionsQueryVariables>(GetRecentTransactionsDocument).bind(null, variables),
+      options
+    );
+export const GetUtilityListDocument = `
+    query getUtilityList {
+  eBanking {
+    utilityPayments {
+      id
+      name
+      enabled
+      icon
+      service_id
+    }
+  }
+}
+    `;
+export const useGetUtilityListQuery = <
+      TData = GetUtilityListQuery,
+      TError = unknown
+    >(
+      variables?: GetUtilityListQueryVariables,
+      options?: UseQueryOptions<GetUtilityListQuery, TError, TData>
+    ) =>
+    useQuery<GetUtilityListQuery, TError, TData>(
+      variables === undefined ? ['getUtilityList'] : ['getUtilityList', variables],
+      useAxios<GetUtilityListQuery, GetUtilityListQueryVariables>(GetUtilityListDocument).bind(null, variables),
       options
     );
 export const GetKymFormStatusInstitutionDocument = `

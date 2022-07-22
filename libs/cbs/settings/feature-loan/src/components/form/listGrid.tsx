@@ -1,18 +1,10 @@
-import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
-import { IoCloseOutline } from 'react-icons/io5';
-import { useRouter } from 'next/router';
-
 // import debounce from 'lodash/debounce';
-import {
-  ContainerWithDivider,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup, FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
-import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
+import { BoxContainer } from '../formui';
 
 const GenderOptions = [
   {
@@ -97,6 +89,7 @@ export const GridItems = ({ watch }: any) => {
   const cooperativeUnionstatus = watch('criteria.nobCOOPUnion');
   const coperativeStatus = watch('criteria.cooperativeType');
   const memberType = watch('typeOfMember');
+  const { t } = useTranslation();
 
   if (
     ageCheck ||
@@ -122,13 +115,21 @@ export const GridItems = ({ watch }: any) => {
             memberType?.indexOf('individual') !== -1 &&
             ageCheck &&
             ageCheck.indexOf('age') !== -1 && (
-              <BoxContainer>
-                <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-                  Age
-                </Text>
-                <FormInput name="maxAge" placeholder="Enter Minimum Age" />
-                <FormInput name="minAge" placeholder="Enter Maxinum Age" />
-              </BoxContainer>
+              <FormInput
+                name="maxAge"
+                placeholder="Enter Minimum Age"
+                label="Minimum Age"
+              />
+            )}
+          {memberType &&
+            memberType?.indexOf('individual') !== -1 &&
+            ageCheck &&
+            ageCheck.indexOf('age') !== -1 && (
+              <FormInput
+                name="minAge"
+                placeholder="Enter Maxinum Age"
+                label="Maximum Age"
+              />
             )}
           {memberType &&
             memberType?.indexOf('individual') !== -1 &&
@@ -137,7 +138,7 @@ export const GridItems = ({ watch }: any) => {
               <FormSelect
                 name="selectGender"
                 options={GenderOptions}
-                label="Gender"
+                label={t['loanProductGender']}
                 isMulti
               />
             )}
@@ -148,7 +149,7 @@ export const GridItems = ({ watch }: any) => {
               <FormSelect
                 name="selectMarialOptions"
                 options={MartialOptions}
-                label="Marital Status"
+                label={t['loanProductMarital']}
               />
             )}
           {memberType &&
@@ -158,7 +159,7 @@ export const GridItems = ({ watch }: any) => {
               <FormSelect
                 name="selectEducationOptions"
                 options={EducationalOptions}
-                label="Education Qualification"
+                label={t['loanProductEducationQualification']}
               />
             )}
           {memberType &&
@@ -168,7 +169,7 @@ export const GridItems = ({ watch }: any) => {
               <FormSelect
                 name="selectEthniciyOptions"
                 options={EthnicityOptions}
-                label="Ethinicity"
+                label={t['loanProductEthinicity']}
               />
             )}
           {memberType &&
@@ -178,7 +179,7 @@ export const GridItems = ({ watch }: any) => {
               <FormSelect
                 name="selectOccupationalOptions"
                 options={OccupationalOptions}
-                label="Occupational Details"
+                label={t['loanProductOccupationDetails']}
               />
             )}
           {memberType &&
@@ -187,7 +188,7 @@ export const GridItems = ({ watch }: any) => {
             foreignCheck.indexOf('foreignEmployment') !== -1 && (
               <BoxContainer>
                 <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-                  Foreign Employment Details{' '}
+                  {t['loanProductForeignEmployment']}
                 </Text>
                 <FormCheckboxGroup
                   name="foreignEmploymentRequired"
@@ -203,7 +204,7 @@ export const GridItems = ({ watch }: any) => {
               <FormSelect
                 name="selectbusinessInstitution"
                 options={OccupationalOptions}
-                label="Nature of Business (Institutions)"
+                label={t['loanProductNatureBusinessIns']}
               />
             )}
           {memberType &&
@@ -212,11 +213,11 @@ export const GridItems = ({ watch }: any) => {
             coperativeStatus.indexOf('cooperativeType') !== -1 && (
               <BoxContainer>
                 <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-                  Coorperative Type
+                  {t['loanProductCoorperativeType']}
                 </Text>
                 <FormCheckboxGroup
                   name="selectCooperativeType"
-                  label="Coorperative Type"
+                  label={t['loanProductCoorperativeType']}
                   list={CoOperativeType}
                   orientation="column"
                 />
@@ -229,7 +230,7 @@ export const GridItems = ({ watch }: any) => {
               <FormSelect
                 name="selectbusinessInstitution"
                 options={OccupationalOptions}
-                label="Nature of Business (COOP Union)"
+                label={t['loanProductNatureBusinessCoopUnion']}
               />
             )}
         </InputGroupContainer>

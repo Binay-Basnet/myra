@@ -26,6 +26,8 @@ const en: Record<string, string> = {
   enable: 'Enable',
   disable: 'Disable',
   new: 'New',
+  quatrerly: 'Quarterly',
+  halfYearly: 'Half-Yearly',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
@@ -96,7 +98,7 @@ const en: Record<string, string> = {
   memberNavDraft: 'Draft',
   searchMembers: 'Search Members',
 
-  // member [action] form page
+  // member add form page
   membersFormAddNewMembers: 'Add New Member',
   memberPersonalInformation: 'Personal Information',
   memberFirstName: 'First Name',
@@ -601,7 +603,7 @@ const en: Record<string, string> = {
   settingsLoanInsurancePremium: 'Insurance Premium Percent',
   settingsLoanPlceholderNumber: '0.00',
   settingsLoanMinimumPer: 'Minimum Percentage',
-  settingsLoanMaximumPer: 'Maximum Percenage',
+  settingsLoanMaximumPer: 'Maximum Percentage',
   settingsLoanVehicle: 'Vehicle',
   settingsLoanLand: 'Land',
   settingsLoanHouse: 'House',
@@ -1597,7 +1599,7 @@ const en: Record<string, string> = {
   accRebate: 'Rebate',
   accMonthly: 'Monthly',
   accAddfrequencydayorweek:
-    'Either Pick a day or manually [action] frequency day or day of the week.',
+    'Either Pick a day or manually add frequency day or day of the week.',
   accDay: 'Day',
   accDayOfWeek: 'Day of the week',
   accEnterDay: 'Enter Day',
@@ -1902,7 +1904,7 @@ const en: Record<string, string> = {
   // warehouseTransferDestinationWarehouse: 'Destination Warehouse',
   warehouseTransferStatus: 'Status',
 
-  // [action] vendor
+  // add vendor
   addVendorAddNewVendor: 'Add New Vendor',
   addVendorName: 'Name',
   addVendorEnterName: 'Select Name',
@@ -2723,6 +2725,7 @@ const en: Record<string, string> = {
   loanProductNotApplicable: 'Not Applicable',
   loanProductUnit: 'Unit',
   loanProductNumber: 'Number',
+  loanProductEnterNumber: 'Enter Number',
   loanProductMaxinumTenure: 'Maxinum Tenure',
   loanProductLoanAmountLimit: 'Loan Amount Limit',
   loanProductMinimumAmount: 'Minimum Amount',
@@ -2740,10 +2743,13 @@ const en: Record<string, string> = {
   loanProductLoanRepaymentStartGraceDuration:
     'Loan Repayment Start Grace Duration',
   loanProductMinimumDuration: 'Minimum Duration',
+  loanProductMaximumDuration: 'Maximum Duration',
   loanProductInterest: 'Interest',
   loanProductMaximumRate: 'Maximum Rate',
+  loanProductMinimumRate: 'Minimum Rate',
   loanProductDefaultRate: 'Default Rate',
   loanProductCEOAuthority: 'CEO Authority',
+  loanProductBoardAuthority: 'Board Authority',
   loanProductBookingFrequency: 'Booking Frequency',
   loanProductSelectBookingFrequency: 'Select Booking Frequency',
   loanProductPostingFrequency: 'Posting Frequency',
@@ -2763,6 +2769,7 @@ const en: Record<string, string> = {
   loanProductDisburementofFMV: 'Disburement % of FMV',
   loanProductLoanProvisionFrequency: 'Loan Provision Frequency',
   loanProductDisburementDMV: 'Disburement % of DMV',
+  loanProductRebate: 'Rebate',
   loanProductStaffProduct: 'Staff Product',
   loanProductSupportMultipleAccount: 'Support Multiple Account',
   loanProductLoanScheduleChangeOverride: 'Loan Schedule Change Override',
@@ -2771,6 +2778,82 @@ const en: Record<string, string> = {
   loanProductLoanChangeDocument: 'Loan Change Document',
   loanProductForm: 'Form',
   loanProductCitizenship: 'Citizenship',
+
+  depositProductMaximumPostingFrequencyDifference:
+    'Maximum Posting Frequency Difference',
+
+  shareSettingsFeesName: 'Name',
+  shareSettingsFeesType: 'Type',
+  shareSettingsFeesMinQuantity: 'Min Quantity',
+  shareSettingsFeesMaxQuantity: 'Max Quantity',
+  shareSettingsFeesCharge: 'Charge',
+
+  accountOpenNumber: 'Number',
+
+  // accounting bank account overview
+  bankAccountsCode: 'Code',
+  bankAccountsBankName: 'Bank Name',
+  bankAccountsBookBalance: 'Book Balance',
+  bankAccountsBankBalance: 'Bank Balance',
+  bankAccountsDifference: 'Difference',
+  bankAccountsOverview: 'Overview',
+  bankAccountsBankStatement: 'Bank Statement',
+  bankAccountsBookStatement: 'Book Statement',
+  bankAccountsReconcillationReport: 'Reconcillation Report',
+  bankAccountsCheque: 'Cheque',
+  bankAccountsTasks: 'Tasks',
+  bankAccountsDocuments: 'Documents',
+  bankAccountsActivity: 'Activity',
+  bankAccountsViewLedger: 'View Ledger',
+  bankAccountsViewBankStatement: 'View Bank Statement',
+  bankAccountsGoReconciliation: 'Go to Reconciliation',
+  bankAccountsRecentTransactions: 'Recent Transactions',
+  bankAccountsViewAllTransactions: 'View All Transactions',
+  bankAccountsDate: 'Date ',
+  bankAccountsTransactionNo: 'Transaction No',
+  bankAccountsType: 'Type',
+  bankAccountsAmount: 'Amount',
+  bankAccountsDifferenceBalance: 'Difference in Balance',
+
+  // accounting bank account bank statement
+  bankAccountStatementBankStatement: 'Bank Statement',
+  bankAccountStatementSearch: 'Search in Bank Statement',
+  bankAccountStatementDate: 'Date ',
+  bankAccountStatementImportDate: 'Import Date',
+  bankAccountStatementDescription: 'Description',
+  bankAccountStatementAmount: 'Amount',
+
+  // accounting bank account book statement
+  bankAccountStatementBookStatement: 'Book Statement',
+  bankAccountStatementBookSearch: 'Search in Book Statement',
+  bankAccountStatementBookDate: 'Date ',
+  bankAccountStatementBookTransactionType: 'Transaction Type',
+  bankAccountStatementBookTransactionNo: 'Transaction No',
+  bankAccountStatementBookAmount: 'Amount',
+
+  // accounting bank account cheque
+  bankAccountChequeCheque: 'Cheque',
+  bankAccountChequeChequeFrom: 'Cheque From',
+  bankAccountChequeChequeTo: 'Cheque To',
+  bankAccountChequeTotalCheques: 'Total Cheques',
+  bankAccountChequeAvailableCheques: 'Available Cheques',
+  bankAccountChequeIssuedCheques: 'Issued Cheques',
+  bankAccountChequeCancelledCheques: 'Cancelled Cheques',
+  bankAccountChequeChequeNumber: 'Cheque Number',
+  bankAccountChequePartyName: 'Party Name',
+  bankAccountChequeStatus: 'Status',
+  bankAccountChequeIssueDate: 'Issue Date',
+  bankAccountChequeAmount: 'Amount',
+  bankAccountNewChequeBook: 'New Cheque Book',
+  bankAccountChequeCreateChequeBook: 'Create Cheque Book',
+  bankAccountChequeBank: 'Bank',
+  bankAccountChequeSelectBank: 'Select Bank',
+  bankAccountChequeEnterMICR: 'Enter MICR (Magnetic Ink Character Recognition)',
+  bankAccountChequeChequeStart: 'Cheque Start',
+  bankAccountChequeEg00005: 'Eg. 00001',
+  bankAccountChequeChequeEnd: 'Cheque End',
+  bankAccountChequeEg00050: 'Eg. 00050',
+  bankAccountChequeTotalLeafs: 'Total no of cheque leafs',
 };
 
 export default en;

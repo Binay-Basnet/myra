@@ -72,59 +72,75 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
           >
             <PopoverBody p={0}>
               <Box>
-                <Button
-                  width="full"
-                  borderRadius={'none'}
-                  size="lg"
-                  justifyContent="start"
-                  leftIcon={<AddIcon />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
                   onClick={() => router.push('/accounting/purchase/add')}
                 >
-                  {t['accountingPurchaseSidebarPurchaseList']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['accountingPurchaseSidebarPurchaseList']}
+                  </Text>
+                </Box>
 
-                <Button
-                  width="full"
-                  size="lg"
-                  borderRadius={'none'}
-                  justifyContent="start"
-                  leftIcon={<AddIcon />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
+                  display="flex"
+                  alignItems="center"
                   onClick={() =>
                     router.push('/accounting/purchase/expenses/add')
                   }
                 >
-                  {t['accountingPurchaseSidebarExpenses']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['accountingPurchaseSidebarExpenses']}
+                  </Text>
+                </Box>
 
-                <Button
-                  width="full"
-                  size="lg"
-                  borderRadius={'none'}
-                  justifyContent="start"
-                  leftIcon={<AddIcon />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
                   onClick={() =>
                     router.push('/accounting/purchase/debit-note/add')
                   }
                 >
-                  {t['accountingPurchaseSidebarDebitNote']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['accountingPurchaseSidebarDebitNote']}
+                  </Text>
+                </Box>
 
-                <Button
-                  width="full"
-                  size="lg"
-                  justifyContent="start"
-                  borderRadius={'none'}
-                  leftIcon={<AddIcon />}
-                  variant="ghost"
+                <Box
+                  px="s16"
+                  py="s10"
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ bg: 'gray.100' }}
+                  cursor="pointer"
                   onClick={() =>
                     router.push('/accounting/purchase/supplier-payment/add')
                   }
                 >
-                  {t['accountingPurchaseSidebarSupplierPayment']}
-                </Button>
+                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                    {t['accountingPurchaseSidebarSupplierPayment']}
+                  </Text>
+                </Box>
               </Box>
             </PopoverBody>
           </PopoverContent>

@@ -63,6 +63,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             h="100%"
             isInvalid={!!errorText}
             placeholder={String(placeholder ?? '')}
+            autoComplete="none"
             {...rest}
           />
           {rightElement && (

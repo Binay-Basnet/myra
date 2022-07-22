@@ -1,3 +1,6 @@
+export * from './lib/alert-container/AlertContainer';
+export * from './lib/path-bar/PathBar';
+export * from './lib/floating-shortcut-button/FloatingShortcutButton';
 export * from './lib/accordion/Accordion';
 export * from './lib/amount-input/AmountInput';
 export * from './lib/amount-input/AmountInput';
@@ -31,7 +34,6 @@ export * from './lib/modal/Modal';
 export * from './lib/myra-ui';
 export * from './lib/navbar/Navbar';
 export * from './lib/navbarfordaashboard/Navbarfordaashboard';
-export * from './lib/number-input/NumberInput';
 export * from './lib/number-input/NumberInput';
 export * from './lib/page-header/PageHeader';
 export * from './lib/page-header-tab/PageHeaderTab';

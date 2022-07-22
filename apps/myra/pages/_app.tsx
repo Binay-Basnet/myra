@@ -3,26 +3,19 @@ import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
-import type { NextPage } from 'next';
-import type { AppProps } from 'next/app';
+import type { NextComponentType, NextPage, NextPageContext } from 'next';
+import type { AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
-import { Snipping } from '@raralabs/web-feedback';
 
 import { Login } from '@coop/myra/components';
-import { Box, Button, FloatingShortcutButton } from '@coop/shared/ui';
+import { Box, FloatingShortcutButton } from '@coop/shared/ui';
+import { useSnap } from '@coop/shared/utils';
 import { store, theme } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
 const { ToastContainer } = createStandaloneToast();
-
-const snap = new Snipping({
-  buttonLabel: 'Send Feedback',
-  initialMarkMode: 'mark',
-  fileName: 'feedbackScreenshot.png',
-  /** other configs **/
-});
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -60,7 +53,13 @@ const queryClient = new QueryClient({
   },
 });
 
-function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
+interface ManAppProps extends AppInitialProps {
+  Component: NextPageWithLayout;
+}
+
+function MainApp({ Component, pageProps }: ManAppProps) {
+  const getLayout = Component.getLayout || ((page) => page);
+
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   useEffect(() => {
@@ -70,41 +69,41 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
       setIsLoggedIn(Boolean(isLoggedIn || false));
   }, []);
 
-  useEffect(() => {
-    snap.init((data) => {
-      const { image, base64Image } = data;
-      console.log(image);
-    });
-  }, []);
+  useSnap();
 
-  const getLayout = Component.getLayout || ((page) => page);
+  return (
+    <>
+      <Head>
+        <title>Myra | Cloud Cooperative Platform</title>
+      </Head>
+      <ToastContainer />
+      {isLoggedIn === true ? (
+        <main className="app">{getLayout(<Component {...pageProps} />)}</main>
+      ) : (
+        <main className="app">
+          <Login />
+        </main>
+      )}
+      <Box
+        position="fixed"
+        bottom={'40px'}
+        right={'32px'}
+        display="flex"
+        flexDirection={'row-reverse'}
+        zIndex="99"
+      >
+        <FloatingShortcutButton />
+      </Box>
+    </>
+  );
+}
+
+function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
-          <Head>
-            <title>Myra | Cloud Cooperative Platform</title>
-          </Head>
-          <ToastContainer />
-          {isLoggedIn === true ? (
-            <main className="app">
-              {getLayout(<Component {...pageProps} />)}
-            </main>
-          ) : (
-            <main className="app">
-              <Login />
-            </main>
-          )}
-          <Box
-            position="fixed"
-            bottom={'40px'}
-            right={'32px'}
-            display="flex"
-            flexDirection={'row-reverse'}
-            zIndex="99"
-          >
-            <FloatingShortcutButton />
-          </Box>
+          <MainApp Component={Component} pageProps={pageProps} />
         </ChakraProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>

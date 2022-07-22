@@ -5,7 +5,7 @@ import router from 'next/router';
 
 import { DividerContainer } from '@coop/accounting/ui-components';
 import { FieldCardComponents } from '@coop/shared/components';
-import { FormInput, FormTextArea } from '@coop/shared/form';
+import { FormInput, FormNumberInput, FormTextArea } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -135,11 +135,10 @@ export function AccountingFeaturePurchaseAdd(
                       </Text>
 
                       <Box width="200px">
-                        <FormInput
+                        <FormNumberInput
                           width="100%"
                           name="adminFee"
                           label=""
-                          placeholder="34000.00"
                           textAlign="right"
                           bg="gray.0"
                         />
