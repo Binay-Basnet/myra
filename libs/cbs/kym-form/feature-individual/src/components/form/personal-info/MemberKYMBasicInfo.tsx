@@ -92,59 +92,11 @@ export const MemberKYMBasicInfo = ({
     id: id,
   });
 
-  console.log({ ind: 'basic info', editValues });
-
-  // useEffect(() => {
-  //   reset({
-  //     nationalityId:
-  //       nationalityFields?.members?.individual?.options?.list?.data?.[0]
-  //         ?.options?.[0]?.id,
-  //   });
-  // }, [nationalityLoading]);
-
   useEffect(() => {
     if (editValues) {
-      console.log(
-        pickBy(
-          editValues?.members?.individual?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        )
-      );
       const editValueData =
         editValues?.members?.individual?.formState?.data?.formData;
-      console.log('edit value', editValueData);
 
-      console.log({
-        ...pickBy({ ...editValueData?.basicInformation }),
-        firstName: editValueData?.basicInformation?.firstName?.local,
-        middleName: editValueData?.basicInformation?.middleName?.local,
-        lastName: editValueData?.basicInformation?.lastName?.local,
-        nationalityId:
-          nationalityFields?.members?.individual?.options?.list?.data?.[0]
-            ?.options?.[0]?.id,
-      });
-
-      // const permanentLocationData =
-      //   editValueData?.permanentAddress?.coordinates?.latitude === null
-      //     ? { coordinates: { latitude: 27.71, longitude: 85.31 } }
-      //     : editValueData?.permanentAddress;
-
-      // const temporaryLocationData =
-      //   editValueData?.temporaryAddress?.coordinates?.latitude === null
-      //     ? { coordinates: { latitude: 27.71, longitude: 85.31 } }
-      //     : editValueData?.temporaryAddress;
-
-      // console.log(
-      //   'location',
-      //   editValueData,
-      //   permanentLocationData,
-      //   temporaryLocationData,
-      //   {
-      //     ...editValueData,
-      //     permanentLocation: permanentLocationData,
-      //     temporaryLocation: temporaryLocationData,
-      //   }
-      // );
       reset({
         ...editValueData?.basicInformation,
         firstName: editValueData?.basicInformation?.firstName?.local,
@@ -155,7 +107,7 @@ export const MemberKYMBasicInfo = ({
             ?.options?.[0]?.id,
       });
     }
-  }, [nationalityLoading, editLoading]);
+  }, [nationalityFields, editValues]);
 
   return (
     <FormProvider {...methods}>

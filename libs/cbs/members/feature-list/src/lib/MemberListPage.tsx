@@ -42,6 +42,8 @@ export function MemberListPage() {
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
+  console.log({ rowData });
+
   const popoverTitle = [
     {
       title: 'memberListTableViewMemberProfile',

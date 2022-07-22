@@ -210,6 +210,16 @@ export type AffiliatedDirectorDetailsType = {
   yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
+export type AmountLimit = {
+  maxAmount?: InputMaybe<Scalars['String']>;
+  minAmount?: InputMaybe<Scalars['String']>;
+};
+
+export type AmountLimitFormState = {
+  maxAmount?: Maybe<Scalars['String']>;
+  minAmount?: Maybe<Scalars['String']>;
+};
+
 export enum Arrange {
   Asc = 'ASC',
   Desc = 'DESC'
@@ -1148,6 +1158,19 @@ export type Country = {
   name?: Maybe<Scalars['String']>;
 };
 
+export enum CriteriaSection {
+  Age = 'AGE',
+  CooperativeType = 'COOPERATIVE_TYPE',
+  EducationQualification = 'EDUCATION_QUALIFICATION',
+  Ethnicity = 'ETHNICITY',
+  ForeignEmployment = 'FOREIGN_EMPLOYMENT',
+  Gender = 'GENDER',
+  MaritalStatus = 'MARITAL_STATUS',
+  NatureOfBusinessCoopunion = 'NATURE_OF_BUSINESS_COOPUNION',
+  NatureOfBusinessInstitutions = 'NATURE_OF_BUSINESS_INSTITUTIONS',
+  OccupationDetails = 'OCCUPATION_DETAILS'
+}
+
 export type DashboardData = {
   listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
   listTodayTrend?: Maybe<Array<Maybe<TodayTrend>>>;
@@ -1245,6 +1268,248 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
+export type DepositIro = {
+  id: Scalars['ID'];
+  iroAddress?: Maybe<Scalars['String']>;
+  iroCode?: Maybe<Scalars['String']>;
+  iroName?: Maybe<Scalars['String']>;
+};
+
+export type DepositIroInput = {
+  iroAddress?: InputMaybe<Scalars['String']>;
+  iroCode?: InputMaybe<Scalars['String']>;
+  iroName?: InputMaybe<Scalars['String']>;
+};
+
+export type DepositIroResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<DepositIro>;
+  recordId: Scalars['ID'];
+};
+
+export type DepositProduct = Base & {
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  createdDate: Scalars['String'];
+  id: Scalars['ID'];
+  interest: Scalars['Float'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  nature: NatureOfDepositProduct;
+  objState: ObjState;
+  productCode: Scalars['String'];
+  productName: Scalars['String'];
+  typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
+};
+
+export type DepositProductConnection = {
+  edges: Array<DepositProductEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type DepositProductEdge = {
+  cursor: Scalars['Cursor'];
+  node: DepositProduct;
+};
+
+export type DepositProductFormStateData = {
+  accountType?: Maybe<Scalars['ID']>;
+  allowLoan?: Maybe<Scalars['Boolean']>;
+  alternativeChannels?: Maybe<Scalars['Boolean']>;
+  atmFacility?: Maybe<Scalars['Boolean']>;
+  autoOpen?: Maybe<Scalars['Boolean']>;
+  balanceLimit?: Maybe<AmountLimitFormState>;
+  chequeIssue?: Maybe<Scalars['Boolean']>;
+  cooperativeType?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  criteria?: Maybe<Array<Maybe<CriteriaSection>>>;
+  depositAmount?: Maybe<AmountLimitFormState>;
+  depositFrequency?: Maybe<Frequency>;
+  dormantSetup?: Maybe<Array<Maybe<DormantSetupFormState>>>;
+  educationQualification?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  ethnicity?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  foreignEmployment?: Maybe<Scalars['Boolean']>;
+  genderId?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  individualDocuments?: Maybe<Array<Maybe<IndividualRequiredDocument>>>;
+  institutionDocuments?: Maybe<Array<Maybe<InstitutionRequiredDocument>>>;
+  interest?: Maybe<InterestFormState>;
+  ladderRate?: Maybe<Scalars['Boolean']>;
+  ladderRateData: Array<Maybe<LadderRateFormState>>;
+  maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  maxAge?: Maybe<Scalars['Int']>;
+  maxPostingFreqDifference?: Maybe<Scalars['Int']>;
+  maxTenure?: Maybe<Scalars['Boolean']>;
+  maxTenureUnit?: Maybe<Frequency>;
+  maxTenureUnitNumber?: Maybe<Scalars['Int']>;
+  minAge?: Maybe<Scalars['Int']>;
+  minTenure?: Maybe<Scalars['Boolean']>;
+  minTenureUnit?: Maybe<Frequency>;
+  minTenureUnitNumber?: Maybe<Scalars['Int']>;
+  nature?: Maybe<NatureOfDepositProduct>;
+  natureOFBusinessCoop?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  natureOfBusinessInstitution?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  occupation?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  penalty?: Maybe<Scalars['Boolean']>;
+  penaltyData?: Maybe<PenaltyFormState>;
+  percentageOfDeposit?: Maybe<Scalars['Float']>;
+  postingFrequency?: Maybe<Array<Maybe<Frequency>>>;
+  prematurePenalty?: Maybe<PrematurePenaltyFormState>;
+  productCode: ProductCodeFormState;
+  productName?: Maybe<Scalars['String']>;
+  rebate?: Maybe<Scalars['Boolean']>;
+  rebateData?: Maybe<RebateFormState>;
+  serviceCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
+  specifyWithdrawRestricttion?: Maybe<Scalars['String']>;
+  staffProduct?: Maybe<Scalars['Boolean']>;
+  supportMultiple?: Maybe<Scalars['Boolean']>;
+  transactionLimit?: Maybe<AmountLimitFormState>;
+  typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
+  wealthBuildingProduct?: Maybe<Scalars['Boolean']>;
+  withdrawRestricted?: Maybe<Scalars['Boolean']>;
+};
+
+export type DepositProductFormStateResult = {
+  data?: Maybe<DepositProductFormStateData>;
+  error?: Maybe<QueryError>;
+};
+
+export type DepositProductInput = {
+  accountType?: InputMaybe<Scalars['ID']>;
+  allowLoan?: InputMaybe<Scalars['Boolean']>;
+  alternativeChannels?: InputMaybe<Scalars['Boolean']>;
+  atmFacility?: InputMaybe<Scalars['Boolean']>;
+  autoOpen?: InputMaybe<Scalars['Boolean']>;
+  balanceLimit?: InputMaybe<AmountLimit>;
+  chequeIssue?: InputMaybe<Scalars['Boolean']>;
+  cooperativeType?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  criteria?: InputMaybe<Array<InputMaybe<CriteriaSection>>>;
+  depositAmount?: InputMaybe<AmountLimit>;
+  depositFrequency?: InputMaybe<Frequency>;
+  dormantSetup?: InputMaybe<Array<InputMaybe<DormantSetup>>>;
+  educationQualification?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  ethnicity?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  foreignEmployment?: InputMaybe<Scalars['Boolean']>;
+  genderId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  individualDocuments?: InputMaybe<Array<InputMaybe<IndividualRequiredDocument>>>;
+  institutionDocuments?: InputMaybe<Array<InputMaybe<InstitutionRequiredDocument>>>;
+  interest: InterestRate;
+  ladderRate?: InputMaybe<Scalars['Boolean']>;
+  ladderRateData?: InputMaybe<Array<InputMaybe<LadderRate>>>;
+  maritalStatusId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  maxAge?: InputMaybe<Scalars['Int']>;
+  maxPostingFreqDifference?: InputMaybe<Scalars['Int']>;
+  maxTenure?: InputMaybe<Scalars['Boolean']>;
+  maxTenureUnit?: InputMaybe<Frequency>;
+  maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
+  minAge?: InputMaybe<Scalars['Int']>;
+  minTenure?: InputMaybe<Scalars['Boolean']>;
+  minTenureUnit?: InputMaybe<Frequency>;
+  minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
+  nature: NatureOfDepositProduct;
+  natureOFBusinessCoop?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  penalty?: InputMaybe<Scalars['Boolean']>;
+  penaltyData: PenaltyInput;
+  percentageOfDeposit?: InputMaybe<Scalars['Float']>;
+  postingFrequency?: InputMaybe<Array<InputMaybe<Frequency>>>;
+  prematurePenalty?: InputMaybe<PrematurePenalty>;
+  productCode: ProductCode;
+  productName: Scalars['String'];
+  rebate?: InputMaybe<Scalars['Boolean']>;
+  rebateData?: InputMaybe<RebateInput>;
+  serviceCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
+  specifyWithdrawRestricttion?: InputMaybe<Scalars['String']>;
+  staffProduct?: InputMaybe<Scalars['Boolean']>;
+  supportMultiple?: InputMaybe<Scalars['Boolean']>;
+  transactionLimit?: InputMaybe<AmountLimit>;
+  typeOfMember?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
+  wealthBuildingProduct?: InputMaybe<Scalars['Boolean']>;
+  withdrawRestricted?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type DepositProductResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<DepositProductSettingsQuery>;
+  record?: Maybe<DepositProduct>;
+  recordId: Scalars['ID'];
+};
+
+export type DepositProductSearchFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type DepositProductSettingsMutation = {
+  add?: Maybe<DepositProductResult>;
+};
+
+
+export type DepositProductSettingsMutationAddArgs = {
+  data?: InputMaybe<DepositProductInput>;
+  id: Scalars['ID'];
+};
+
+export type DepositProductSettingsQuery = {
+  formState?: Maybe<DepositProductFormStateResult>;
+  get?: Maybe<DepositProduct>;
+  list?: Maybe<DepositProductConnection>;
+};
+
+
+export type DepositProductSettingsQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type DepositProductSettingsQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type DepositProductSettingsQueryListArgs = {
+  filter?: InputMaybe<DepositProductSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositSettingsMutation = {
+  iroSetup?: Maybe<DepositIroResult>;
+  tdsSetup?: Maybe<DepositTdsResult>;
+};
+
+
+export type DepositSettingsMutationIroSetupArgs = {
+  data?: InputMaybe<DepositIroInput>;
+  id: Scalars['ID'];
+};
+
+
+export type DepositSettingsMutationTdsSetupArgs = {
+  data?: InputMaybe<DepositTdsInput>;
+  id: Scalars['ID'];
+};
+
+export type DepositTds = {
+  coopUnion?: Maybe<Scalars['Float']>;
+  cooperative?: Maybe<Scalars['Float']>;
+  id: Scalars['ID'];
+  individual?: Maybe<Scalars['Float']>;
+  insitution?: Maybe<Scalars['Float']>;
+};
+
+export type DepositTdsInput = {
+  coopUnion?: InputMaybe<Scalars['Float']>;
+  cooperative?: InputMaybe<Scalars['Float']>;
+  individual?: InputMaybe<Scalars['Float']>;
+  insitution?: InputMaybe<Scalars['Float']>;
+};
+
+export type DepositTdsResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<DepositTds>;
+  recordId: Scalars['ID'];
+};
+
 export type DirectorAffiliatedFirms = {
   addressOfInstitution?: Maybe<Scalars['String']>;
   contact?: Maybe<Scalars['String']>;
@@ -1317,6 +1582,16 @@ export type DocumentQuery = {
 
 export type DocumentQueryListKymDocumentsArgs = {
   memberId: Scalars['String'];
+};
+
+export type DormantSetup = {
+  condition?: InputMaybe<Scalars['String']>;
+  duration?: InputMaybe<Scalars['String']>;
+};
+
+export type DormantSetupFormState = {
+  condition?: Maybe<Scalars['String']>;
+  duration?: Maybe<Scalars['String']>;
 };
 
 export type EBankingAccountQuery = {
@@ -2057,6 +2332,13 @@ export type Filter = {
   orConditions: Array<OrConditions>;
 };
 
+export enum Frequency {
+  Daily = 'DAILY',
+  Monthly = 'MONTHLY',
+  Weekly = 'WEEKLY',
+  Yearly = 'YEARLY'
+}
+
 export type GeneralBranchSettingsMutation = {
   add: BranchAddResult;
   delete?: Maybe<BranchDeleteResult>;
@@ -2088,6 +2370,9 @@ export type GeneralSettingsMutation = {
   KYM?: Maybe<KymMutation>;
   branch?: Maybe<GeneralBranchSettingsMutation>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
+  deposit?: Maybe<DepositSettingsMutation>;
+  depositProduct?: Maybe<DepositProductSettingsMutation>;
+  loanProducts?: Maybe<LoanProductsMutation>;
   organization?: Maybe<OrganizationSettingsMutation>;
 };
 
@@ -2095,6 +2380,8 @@ export type GeneralSettingsQuery = {
   KYM?: Maybe<KymQuery>;
   branch?: Maybe<GeneralBranchSettingsQuery>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
+  depositProduct?: Maybe<DepositProductSettingsQuery>;
+  loanProducts?: Maybe<LoanProductsQuery>;
   organization?: Maybe<OrganizationSettingsQuery>;
 };
 
@@ -2116,6 +2403,14 @@ export type IndividualMember = {
   personalInformation?: Maybe<KymIndPersonalInformation>;
   professionalInformation?: Maybe<KymIndProfessionalInformation>;
 };
+
+export enum IndividualRequiredDocument {
+  Fingerprint = 'FINGERPRINT',
+  Form = 'FORM',
+  NomineeDocument = 'NOMINEE_DOCUMENT',
+  Photo = 'PHOTO',
+  Signature = 'SIGNATURE'
+}
 
 export type InstitutionAccountOperatoionsDetails = {
   accountOperatorsDetails?: Maybe<Array<Maybe<AccountOperatorDetailsType>>>;
@@ -2179,12 +2474,47 @@ export type InstitutionProprietorAndDirectorDetails = {
   detailsOfDirectorsWithAffiliation?: Maybe<Array<Maybe<AffiliatedDirectorDetailsType>>>;
 };
 
+export enum InstitutionRequiredDocument {
+  Decision = 'DECISION',
+  Registered = 'REGISTERED',
+  Signature = 'SIGNATURE',
+  TaxClearance = 'TAX_CLEARANCE'
+}
+
 export type InstitutionTransactionProfile = {
   annualTurnover?: Maybe<Scalars['Float']>;
   expectedMonthlyTransaction?: Maybe<Scalars['String']>;
   expectedMonthlyTurnover?: Maybe<Scalars['String']>;
   initialDepositAmount?: Maybe<Scalars['Float']>;
   natureOfTransaction?: Maybe<Scalars['String']>;
+};
+
+export type InterestFormState = {
+  additionalRate?: Maybe<Scalars['Float']>;
+  boardAuthoriy?: Maybe<Scalars['Float']>;
+  ceoAuthority?: Maybe<Scalars['Float']>;
+  defaultRate?: Maybe<Scalars['Float']>;
+  maxRate?: Maybe<Scalars['Float']>;
+  minRate?: Maybe<Scalars['Float']>;
+};
+
+export type InterestRate = {
+  additionalRate?: InputMaybe<Scalars['Float']>;
+  boardAuthoriy?: InputMaybe<Scalars['Float']>;
+  ceoAuthority?: InputMaybe<Scalars['Float']>;
+  defaultRate: Scalars['Float'];
+  maxRate?: InputMaybe<Scalars['Float']>;
+  minRate?: InputMaybe<Scalars['Float']>;
+};
+
+export type InterestRateType = {
+  additionalRate?: Maybe<Scalars['Float']>;
+  boardAuthoriy?: Maybe<Scalars['Float']>;
+  ceoAuthority?: Maybe<Scalars['Float']>;
+  defaultRate: Scalars['Float'];
+  maxRate?: Maybe<Scalars['Float']>;
+  minRate?: Maybe<Scalars['Float']>;
+  postingFrequency?: Maybe<Frequency>;
 };
 
 export type InvItems = {
@@ -2511,7 +2841,7 @@ export type KymAddress = {
 };
 
 export type KymAddressInput = {
-  coordinate?: InputMaybe<CoordinateInput>;
+  coordinates?: InputMaybe<CoordinateInput>;
   districtId?: InputMaybe<Scalars['Int']>;
   houseNo?: InputMaybe<Scalars['String']>;
   localGovernmentId?: InputMaybe<Scalars['Int']>;
@@ -4945,6 +5275,18 @@ export type KymOccupationDetailsType = {
   orgName?: Maybe<Scalars['String']>;
 };
 
+export type LadderRate = {
+  amount?: InputMaybe<Scalars['String']>;
+  rate?: InputMaybe<Scalars['Float']>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+export type LadderRateFormState = {
+  amount?: Maybe<Scalars['String']>;
+  rate?: Maybe<Scalars['Float']>;
+  type?: Maybe<Scalars['String']>;
+};
+
 export enum Language {
   English = 'ENGLISH',
   Nepali = 'NEPALI'
@@ -4983,6 +5325,264 @@ export type ListKymFieldFilter = {
   parent?: InputMaybe<Kym_Field_Parent>;
   query?: InputMaybe<Scalars['String']>;
 };
+
+export enum LoanPaymentInstallmentType {
+  Monthly = 'MONTHLY',
+  Quarterly = 'QUARTERLY'
+}
+
+export enum LoanPaymentMode {
+  Installment = 'INSTALLMENT'
+}
+
+export type LoanProduct = Base & {
+  allowPartialInstallment?: Maybe<Scalars['Boolean']>;
+  badLoanProvision?: Maybe<Scalars['Float']>;
+  cooperativeType?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  criteria?: Maybe<Array<Maybe<CriteriaSection>>>;
+  disburementOfDMV?: Maybe<Scalars['Float']>;
+  disburementOfFMV?: Maybe<Scalars['Float']>;
+  doubtfulLoanProvision?: Maybe<Scalars['Float']>;
+  educationQualification?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  ethnicity?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  foreignEmployment?: Maybe<Scalars['Boolean']>;
+  genderId?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  goodLoanProvision?: Maybe<Scalars['Float']>;
+  id: Scalars['ID'];
+  installmentType?: Maybe<LoanPaymentInstallmentType>;
+  interest?: Maybe<InterestRateType>;
+  isCollateralRequired?: Maybe<Scalars['Boolean']>;
+  isInsuranceApplicable?: Maybe<Scalars['Boolean']>;
+  isMonthlyInstallmentCompulsory?: Maybe<Scalars['Boolean']>;
+  isPenaltyApplicable?: Maybe<Scalars['Boolean']>;
+  isRebateApplicable?: Maybe<Scalars['Boolean']>;
+  isStaffProduct?: Maybe<Scalars['Boolean']>;
+  loanScheduleChangeOverride?: Maybe<Scalars['Boolean']>;
+  maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  maxAge?: Maybe<Scalars['Int']>;
+  maxGraceDurationUnit?: Maybe<Frequency>;
+  maxGraceDurationUnitNumber?: Maybe<Scalars['Int']>;
+  maxLoanAmount?: Maybe<Scalars['String']>;
+  maxTenure?: Maybe<Scalars['Boolean']>;
+  maxTenureUnit?: Maybe<Frequency>;
+  maxTenureUnitNumber?: Maybe<Scalars['Int']>;
+  minAge?: Maybe<Scalars['Int']>;
+  minGraceDurationUnit?: Maybe<Frequency>;
+  minGraceDurationUnitNumber?: Maybe<Scalars['Int']>;
+  minTenure?: Maybe<Scalars['Boolean']>;
+  minTenureUnit?: Maybe<Frequency>;
+  minTenureUnitNumber?: Maybe<Scalars['Int']>;
+  minimumLoanAmount?: Maybe<Scalars['String']>;
+  modeOfPayment?: Maybe<LoanPaymentMode>;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  natureOFBusinessCoop?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  natureOfBusinessInstitution?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  objState: ObjState;
+  occupation?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  overrideInterest?: Maybe<Scalars['Boolean']>;
+  penalty?: Maybe<Penalty>;
+  problematicLoanProvision?: Maybe<Scalars['Float']>;
+  productCode?: Maybe<ProductCodeType>;
+  productCodeString?: Maybe<Scalars['String']>;
+  productName: Scalars['String'];
+  productNature: NatureOfLoanProduct;
+  productSubType: LoanProductSubType;
+  productType: LoanProductType;
+  rebate?: Maybe<Rebate>;
+  repaymentScheme: LoanRepaymentScheme;
+  requiredDocuments?: Maybe<Array<Maybe<LoanRequiredDocuments>>>;
+  serviceCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
+  supportMultipleAccounts?: Maybe<Scalars['Boolean']>;
+  typeOfMember: Array<Maybe<KymMemberTypesEnum>>;
+};
+
+export type LoanProductConnection = {
+  edges: Array<LoanProductEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type LoanProductEdge = {
+  cursor: Scalars['Cursor'];
+  node: LoanProduct;
+};
+
+export type LoanProductInput = {
+  allowPartialInstallment?: InputMaybe<Scalars['Boolean']>;
+  badLoanProvision?: InputMaybe<Scalars['Float']>;
+  cooperativeType?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  criteria?: InputMaybe<Array<InputMaybe<CriteriaSection>>>;
+  disburementOfDMV?: InputMaybe<Scalars['Float']>;
+  disburementOfFMV?: InputMaybe<Scalars['Float']>;
+  doubtfulLoanProvision?: InputMaybe<Scalars['Float']>;
+  educationQualification?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  ethnicity?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  foreignEmployment?: InputMaybe<Scalars['Boolean']>;
+  genderId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  goodLoanProvision?: InputMaybe<Scalars['Float']>;
+  installmentType?: InputMaybe<LoanPaymentInstallmentType>;
+  interest?: InputMaybe<InterestRate>;
+  isCollateralRequired?: InputMaybe<Scalars['Boolean']>;
+  isInsuranceApplicable?: InputMaybe<Scalars['Boolean']>;
+  isMonthlyInstallmentCompulsory?: InputMaybe<Scalars['Boolean']>;
+  isPenaltyApplicable?: InputMaybe<Scalars['Boolean']>;
+  isRebateApplicable?: InputMaybe<Scalars['Boolean']>;
+  isStaffProduct?: InputMaybe<Scalars['Boolean']>;
+  loanScheduleChangeOverride?: InputMaybe<Scalars['Boolean']>;
+  maritalStatusId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  maxAge?: InputMaybe<Scalars['Int']>;
+  maxGraceDurationUnit?: InputMaybe<Frequency>;
+  maxGraceDurationUnitNumber?: InputMaybe<Scalars['Int']>;
+  maxLoanAmount?: InputMaybe<Scalars['String']>;
+  maxTenure?: InputMaybe<Scalars['Boolean']>;
+  maxTenureUnit?: InputMaybe<Frequency>;
+  maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
+  minAge?: InputMaybe<Scalars['Int']>;
+  minGraceDurationUnit?: InputMaybe<Frequency>;
+  minGraceDurationUnitNumber?: InputMaybe<Scalars['Int']>;
+  minTenure?: InputMaybe<Scalars['Boolean']>;
+  minTenureUnit?: InputMaybe<Frequency>;
+  minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
+  minimumLoanAmount?: InputMaybe<Scalars['String']>;
+  modeOfPayment?: InputMaybe<LoanPaymentMode>;
+  natureOFBusinessCoop?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  overrideInterest?: InputMaybe<Scalars['Boolean']>;
+  penalty?: InputMaybe<PenaltyInput>;
+  problematicLoanProvision?: InputMaybe<Scalars['Float']>;
+  productCode?: InputMaybe<ProductCode>;
+  productName: Scalars['String'];
+  productNature: NatureOfLoanProduct;
+  productSubType: LoanProductSubType;
+  productType: LoanProductType;
+  rebate?: InputMaybe<RebateInput>;
+  repaymentScheme: LoanRepaymentScheme;
+  requiredDocuments?: InputMaybe<Array<InputMaybe<LoanRequiredDocuments>>>;
+  serviceCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
+  supportMultipleAccounts?: InputMaybe<Scalars['Boolean']>;
+  typeOfMember: Array<InputMaybe<KymMemberTypesEnum>>;
+};
+
+export type LoanProductSearchFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export enum LoanProductSubType {
+  AgricultureBusiness = 'AGRICULTURE_BUSINESS',
+  BigIndustrial = 'BIG_INDUSTRIAL',
+  BioGas = 'BIO_GAS',
+  BusinessLineOfCredit = 'BUSINESS_LINE_OF_CREDIT',
+  CashCropsFraming = 'CASH_CROPS_FRAMING',
+  ConstructionEquipmentBusiness = 'CONSTRUCTION_EQUIPMENT_BUSINESS',
+  ConsumerGoodsBusiness = 'CONSUMER_GOODS_BUSINESS',
+  CooperativePromotion = 'COOPERATIVE_PROMOTION',
+  Emergency = 'EMERGENCY',
+  ForeignEducation = 'FOREIGN_EDUCATION',
+  ForeignEmployeeDependentVisa = 'FOREIGN_EMPLOYEE_DEPENDENT_VISA',
+  ForeignEmployeeWorkingVisa = 'FOREIGN_EMPLOYEE_WORKING_VISA',
+  FruitsAndHorticulture = 'FRUITS_AND_HORTICULTURE',
+  HandicraftPromotional = 'HANDICRAFT_PROMOTIONAL',
+  HigherEducation = 'HIGHER_EDUCATION',
+  HirePurchaseLoan_2Wheeler = 'HIRE_PURCHASE_LOAN_2_WHEELER',
+  HirePurchaseLoan_4Wheeler = 'HIRE_PURCHASE_LOAN_4_WHEELER',
+  HirePurchaseLoanHeavyEquipment = 'HIRE_PURCHASE_LOAN_HEAVY_EQUIPMENT',
+  HomeAppliance = 'HOME_APPLIANCE',
+  HomeConstructionAndMaintenance = 'HOME_CONSTRUCTION_AND_MAINTENANCE',
+  HomeExpenses = 'HOME_EXPENSES',
+  HoneyBeeFarming = 'HONEY_BEE_FARMING',
+  HousePurchase = 'HOUSE_PURCHASE',
+  LandAndBuildingBusiness = 'LAND_AND_BUILDING_BUSINESS',
+  LandPurchase = 'LAND_PURCHASE',
+  LineOfCredit = 'LINE_OF_CREDIT',
+  LiquidityManagement = 'LIQUIDITY_MANAGEMENT',
+  Livestock = 'LIVESTOCK',
+  LivestockBusiness = 'LIVESTOCK_BUSINESS',
+  MicroEnterprisePromotion = 'MICRO_ENTERPRISE_PROMOTION',
+  MicroEntrepreneur = 'MICRO_ENTREPRENEUR',
+  MicroEntrepreneurGroup = 'MICRO_ENTREPRENEUR_GROUP',
+  PoultryFarming = 'POULTRY_FARMING',
+  ReligiousWork = 'RELIGIOUS_WORK',
+  ServiceBusiness = 'SERVICE_BUSINESS',
+  ShortTerm = 'SHORT_TERM',
+  SmallAndMediumEnterprises = 'SMALL_AND_MEDIUM_ENTERPRISES',
+  SmallIndustrial = 'SMALL_INDUSTRIAL',
+  SocialWork = 'SOCIAL_WORK',
+  SolarEnergy = 'SOLAR_ENERGY',
+  SpiceProduction = 'SPICE_PRODUCTION',
+  StaffHirepurchase = 'STAFF_HIREPURCHASE',
+  StaffLandAndBuilding = 'STAFF_LAND_AND_BUILDING',
+  StaffPersonal = 'STAFF_PERSONAL',
+  StationaryBusiness = 'STATIONARY_BUSINESS',
+  TechnicalEducation = 'TECHNICAL_EDUCATION',
+  VegetableAndSeasonalFarming = 'VEGETABLE_AND_SEASONAL_FARMING',
+  YouthSelfEmployment = 'YOUTH_SELF__EMPLOYMENT'
+}
+
+export enum LoanProductType {
+  Agriculture = 'AGRICULTURE',
+  AlternativeEnergy = 'ALTERNATIVE_ENERGY',
+  AssetsPurchasesAndMaintenance = 'ASSETS_PURCHASES_AND_MAINTENANCE',
+  Business = 'BUSINESS',
+  CreditUnion = 'CREDIT_UNION',
+  Educational = 'EDUCATIONAL',
+  ForeignEmployee = 'FOREIGN_EMPLOYEE',
+  HirePurchase = 'HIRE_PURCHASE',
+  Industrial = 'INDUSTRIAL',
+  MicroEntrepreneur = 'MICRO_ENTREPRENEUR',
+  SocialSector = 'SOCIAL_SECTOR',
+  Staff = 'STAFF'
+}
+
+export type LoanProductsMutation = {
+  upsert?: Maybe<LoanProductsResult>;
+};
+
+
+export type LoanProductsMutationUpsertArgs = {
+  data?: InputMaybe<LoanProductInput>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type LoanProductsQuery = {
+  formState?: Maybe<LoanProduct>;
+  list?: Maybe<LoanProductConnection>;
+};
+
+
+export type LoanProductsQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type LoanProductsQueryListArgs = {
+  filter?: InputMaybe<LoanProductSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type LoanProductsResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<Scalars['Any']>;
+  record?: Maybe<LoanProduct>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export enum LoanRepaymentScheme {
+  Emi = 'EMI',
+  Epi = 'EPI',
+  Flat = 'FLAT'
+}
+
+export enum LoanRequiredDocuments {
+  Citizenship = 'CITIZENSHIP',
+  Form = 'FORM',
+  LoanChangeDocument = 'LOAN_CHANGE_DOCUMENT',
+  PolicyDocument = 'POLICY_DOCUMENT'
+}
 
 export type LocalizationExample = {
   name?: Maybe<Scalars['Localized']>;
@@ -5189,6 +5789,18 @@ export type Name = {
   lastName?: Maybe<Scalars['String']>;
   middleName?: Maybe<Scalars['String']>;
 };
+
+export enum NatureOfDepositProduct {
+  Mandatory = 'MANDATORY',
+  RecurringSaving = 'RECURRING_SAVING',
+  TermSavingOrFd = 'TERM_SAVING_OR_FD',
+  VoluntaryOrOptional = 'VOLUNTARY_OR_OPTIONAL'
+}
+
+export enum NatureOfLoanProduct {
+  Productive = 'PRODUCTIVE',
+  Unproductive = 'UNPRODUCTIVE'
+}
 
 export type Nominee = {
   address?: Maybe<Address>;
@@ -5426,6 +6038,38 @@ export type Pagination = {
   order?: InputMaybe<Order>;
 };
 
+export type Penalty = {
+  dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
+  flatRatePenalty?: Maybe<Scalars['String']>;
+  minimumAmount?: Maybe<Scalars['String']>;
+  penaltyAmount?: Maybe<Scalars['String']>;
+  penaltyRate?: Maybe<Scalars['Float']>;
+  rateType?: Maybe<PenaltyRateType>;
+};
+
+export type PenaltyFormState = {
+  dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
+  flatRatePenalty?: Maybe<Scalars['String']>;
+  minimumAmount?: Maybe<Scalars['String']>;
+  penaltyAmount?: Maybe<Scalars['String']>;
+  penaltyRate?: Maybe<Scalars['Float']>;
+  rateType?: Maybe<PenaltyRateType>;
+};
+
+export type PenaltyInput = {
+  dayAfterInstallmentDate?: InputMaybe<Scalars['Int']>;
+  flatRatePenalty?: InputMaybe<Scalars['String']>;
+  minimumAmount?: InputMaybe<Scalars['String']>;
+  penaltyAmount?: InputMaybe<Scalars['String']>;
+  penaltyRate?: InputMaybe<Scalars['Float']>;
+  rateType: PenaltyRateType;
+};
+
+export enum PenaltyRateType {
+  FlatRate = 'FLAT_RATE',
+  RelativeRate = 'RELATIVE_RATE'
+}
+
 export type PersonalInformation = {
   citizenship?: Maybe<Citizenship>;
   dateOfBirth?: Maybe<Scalars['String']>;
@@ -5443,6 +6087,27 @@ export type PersonalInformationInNepali = {
   occupation?: Maybe<Scalars['String']>;
 };
 
+export type PrematurePenalty = {
+  noOfDays?: InputMaybe<Scalars['Int']>;
+  penaltyAmount?: InputMaybe<Scalars['String']>;
+  penaltyDateType?: InputMaybe<PrematurePenaltyDateType>;
+  penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
+  penaltyRate?: InputMaybe<Scalars['Float']>;
+};
+
+export enum PrematurePenaltyDateType {
+  EffectiveDaysFromStart = 'EFFECTIVE_DAYS_FROM_START',
+  RemainingDaysToGetMatured = 'REMAINING_DAYS_TO_GET_MATURED'
+}
+
+export type PrematurePenaltyFormState = {
+  noOfDays?: Maybe<Scalars['Int']>;
+  penaltyAmount?: Maybe<Scalars['String']>;
+  penaltyDateType?: Maybe<PrematurePenaltyDateType>;
+  penaltyLedgerMapping?: Maybe<Scalars['String']>;
+  penaltyRate?: Maybe<Scalars['Float']>;
+};
+
 export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
 };
@@ -5456,6 +6121,21 @@ export type PresignedUrlOutput = {
   filename?: Maybe<Scalars['String']>;
   getUrl?: Maybe<Scalars['String']>;
   putUrl?: Maybe<Scalars['String']>;
+};
+
+export type ProductCode = {
+  initialNo: Scalars['String'];
+  prefix: Scalars['String'];
+};
+
+export type ProductCodeFormState = {
+  initialNo: Scalars['String'];
+  prefix: Scalars['String'];
+};
+
+export type ProductCodeType = {
+  initialNo: Scalars['String'];
+  prefix: Scalars['String'];
 };
 
 export type Province = {
@@ -5482,6 +6162,27 @@ export type Query = {
 };
 
 export type QueryError = AuthorizationError | BadRequestError | NotFoundError | ServerError;
+
+export type Rebate = {
+  daysBeforeInstallmentDate?: Maybe<Scalars['Int']>;
+  noOfInstallment?: Maybe<Scalars['Int']>;
+  percentage?: Maybe<Scalars['Float']>;
+  rebateAmount?: Maybe<Scalars['String']>;
+};
+
+export type RebateFormState = {
+  daysBeforeInstallmentDate?: Maybe<Scalars['Int']>;
+  noOfInstallment?: Maybe<Scalars['Int']>;
+  percentage?: Maybe<Scalars['Float']>;
+  rebateAmount?: Maybe<Scalars['String']>;
+};
+
+export type RebateInput = {
+  daysBeforeInstallmentDate?: InputMaybe<Scalars['Int']>;
+  noOfInstallment?: InputMaybe<Scalars['Int']>;
+  percentage?: InputMaybe<Scalars['Float']>;
+  rebateAmount?: InputMaybe<Scalars['String']>;
+};
 
 export type RecentTransactionFilter = {
   limit: Scalars['Int'];
@@ -5526,6 +6227,18 @@ export enum Share_Transaction_Direction {
 export type ServerError = {
   code: Scalars['String'];
   message: Scalars['String'];
+};
+
+export type ServiceType = {
+  amount?: InputMaybe<Scalars['String']>;
+  ledgerName?: InputMaybe<Scalars['String']>;
+  serviceName?: InputMaybe<Scalars['String']>;
+};
+
+export type ServiceTypeFormState = {
+  amount?: Maybe<Scalars['String']>;
+  ledgerName?: Maybe<Scalars['String']>;
+  serviceName?: Maybe<Scalars['String']>;
 };
 
 export type Services = {
@@ -6396,7 +7109,15 @@ export type GetIndividualKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
+export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, identification?: { identificationSelection?: Array<string | null> | null, citizenshipNo?: string | null, citizenshipIssueDate?: string | null, citizenshipIssuePlace?: string | null, passportNo?: string | null, passportIssueDate?: string | null, passportIssuePlace?: string | null, nationalIDNo?: string | null, nationalIDIssueDate?: string | null, nationalIDIssuePlace?: string | null, drivingLicenseNo?: string | null, drivingLicenseIssueDate?: string | null, drivingLicenseIssuePlace?: string | null, voterCardNo?: string | null, voterPollingStation?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
+
+export type GetIndividualKymFamilyMembersListQueryVariables = Exact<{
+  id: Scalars['String'];
+  isMember?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+
+export type GetIndividualKymFamilyMembersListQuery = { members: { individual?: { listFamilyMember?: { data?: Array<{ id: string, relationshipId?: string | null, fullName?: Record<"local"|"en"|"np",string> | null, familyMemberId?: string | null, dateOfBirth?: string | null } | null> | null } | null } | null } };
 
 export type GetKymSettingsFieldsQueryVariables = Exact<{
   filter?: InputMaybe<ListKymFieldFilter>;
@@ -8203,6 +8924,23 @@ export const GetIndividualKymEditDataDocument = `
               phoneNumber
               email
             }
+            identification {
+              identificationSelection
+              citizenshipNo
+              citizenshipIssueDate
+              citizenshipIssuePlace
+              passportNo
+              passportIssueDate
+              passportIssuePlace
+              nationalIDNo
+              nationalIDIssueDate
+              nationalIDIssuePlace
+              drivingLicenseNo
+              drivingLicenseIssueDate
+              drivingLicenseIssuePlace
+              voterCardNo
+              voterPollingStation
+            }
             rentedHouse {
               landlordName
               landlordContact
@@ -8284,6 +9022,35 @@ export const useGetIndividualKymEditDataQuery = <
     useQuery<GetIndividualKymEditDataQuery, TError, TData>(
       ['getIndividualKymEditData', variables],
       useAxios<GetIndividualKymEditDataQuery, GetIndividualKymEditDataQueryVariables>(GetIndividualKymEditDataDocument).bind(null, variables),
+      options
+    );
+export const GetIndividualKymFamilyMembersListDocument = `
+    query getIndividualKymFamilyMembersList($id: String!, $isMember: Boolean) {
+  members {
+    individual(id: $id) {
+      listFamilyMember(isMember: $isMember) {
+        data {
+          id
+          relationshipId
+          fullName
+          familyMemberId
+          dateOfBirth
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymFamilyMembersListQuery = <
+      TData = GetIndividualKymFamilyMembersListQuery,
+      TError = unknown
+    >(
+      variables: GetIndividualKymFamilyMembersListQueryVariables,
+      options?: UseQueryOptions<GetIndividualKymFamilyMembersListQuery, TError, TData>
+    ) =>
+    useQuery<GetIndividualKymFamilyMembersListQuery, TError, TData>(
+      ['getIndividualKymFamilyMembersList', variables],
+      useAxios<GetIndividualKymFamilyMembersListQuery, GetIndividualKymFamilyMembersListQueryVariables>(GetIndividualKymFamilyMembersListDocument).bind(null, variables),
       options
     );
 export const GetKymSettingsFieldsDocument = `

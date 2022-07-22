@@ -212,6 +212,23 @@ query getIndividualKymEditData($id: String!) {
               phoneNumber
               email
             }
+            identification {
+              identificationSelection
+              citizenshipNo
+              citizenshipIssueDate
+              citizenshipIssuePlace
+              passportNo
+              passportIssueDate
+              passportIssuePlace
+              nationalIDNo
+              nationalIDIssueDate
+              nationalIDIssuePlace
+              drivingLicenseNo
+              drivingLicenseIssueDate
+              drivingLicenseIssuePlace
+              voterCardNo
+              voterPollingStation
+            }
             rentedHouse {
               landlordName
               landlordContact
@@ -277,6 +294,22 @@ query getIndividualKymEditData($id: String!) {
               sameTempAsPermanentAddress
             }
           }
+        }
+      }
+    }
+  }
+}
+
+query getIndividualKymFamilyMembersList($id: String!, $isMember: Boolean) {
+  members {
+    individual(id: $id) {
+      listFamilyMember(isMember: $isMember) {
+        data {
+          id
+          relationshipId
+          fullName
+          familyMemberId
+          dateOfBirth
         }
       }
     }
