@@ -12,7 +12,9 @@
         "outputPath": "dist/apps/ebanking"
       },
       "configurations": {
-        "production": {}
+        "production": {
+          "outputPath": "apps/ebanking/dist"
+        }
       }
     },
     "serve": {

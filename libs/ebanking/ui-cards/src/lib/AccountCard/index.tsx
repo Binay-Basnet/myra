@@ -88,7 +88,12 @@ export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
           </PopoverContent>
         </Popover>
       </Box>
-      <Box display="flex" justifyContent="space-between" alignItems="flex-end">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="flex-end"
+        mb="s8"
+      >
         <Box
           cursor="pointer"
           onClick={(e) => {
@@ -112,7 +117,12 @@ export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
       </Box>
 
       <Divider />
-      <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        mt="s8"
+      >
         <TextFields variant="pageHeader" color="gray.800">
           NRs. {account.amount.toLocaleString('en-IN')}
         </TextFields>

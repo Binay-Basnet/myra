@@ -51,10 +51,10 @@ query getMemberTranslation($id: ID!) {
   }
 }
 
-query getKymFormStatus($id: ID!) {
+query getKymFormStatus($id: String!) {
   members {
-    individual {
-      formState(id: $id) {
+    individual(id: $id) {
+      formState {
         data {
           sectionStatus {
             personal {
@@ -188,105 +188,93 @@ query getMemberIndividualData($id: ID!) {
   }
 }
 
-query getIndividualKymEditData($id: ID!) {
+query getIndividualKymEditData($id: String!) {
   members {
-    individual {
-      formState(id: $id) {
+    individual(id: $id) {
+      formState {
         data {
           formData {
-            firstName
-            middleName
-            lastName
-            genderId
-            dateOfBirth
-            ethnicityId
-            nationalityId
-            educationQualificationId
-            religionId
-            educationQualificationId
-            religionId
-            mobileNumber
-            phoneNumber
-            email
-            additionalContactDetails {
-              ...KYMFieldData
+            basicInformation {
+              firstName
+              middleName
+              lastName
+              genderId
+              dateOfBirth
+              ethnicityId
+              nationalityId
+              educationQualificationId
+              religionId
+              educationQualificationId
+              religionId
             }
-            identification {
-              ...KYMFieldData
+            contactDetails {
+              mobileNumber
+              phoneNumber
+              email
             }
-            permanentStateId
-            permanentDistrictId
-            permanentLocalityId
-            permanentWardId
-            permanentTole
-            permanentHouseNo
-            permanentLocation {
-              longitude
-              latitude
-            }
-            isPermanentAndTemporaryAddressSame
-            temporaryStateId
-            temporaryDistrictId
-            temporaryLocalityId
-            temporaryWardId
-            temporaryTole
-            temporaryHouseNo
-            temporaryLocation {
-              longitude
-              latitude
-            }
-            landlordName
-            landlordContact
-            familyDetails {
-              ...KYMFieldData
+            rentedHouse {
+              landlordName
+              landlordContact
             }
             maritalStatusId
-            professional
-            otherProfession
-            mainOccupation {
-              ...KYMFieldData
+            profession {
+              professionId
+              otherProfession
             }
-            spouseOccupation {
-              ...KYMFieldData
+            foreignEmployment {
+              isForeignEmployment
+              foreignEmpCountryId
+              typeOfVisaId
+              foreignEstimatedAnnualIncome
             }
-            enableForeignEmployee
-            countryId
-            typeOfVisaId
-            foreignEstimatedAnnualIncome
             annualIncomeSourceId
-            incomeSourceDetails {
-              ...KYMFieldData
+            membershipDetails {
+              purposeId
+              isMemberOfAnotherCooperative
             }
-            identityLevel
-            purposeId
-            isMemberOfAnotherCooperative
-            otherMembershipDetails {
-              ...KYMFieldData
+            estimatedTransactions {
+              estimatedAnnualTransactionAmount
+              estimatedAnnualLoanAmount
+              estimatedAnnualTransactionFrequencyId
+              estimatedAnnualDepositAmount
             }
-            familyMemberInThisCooperative
-            familyMembershipDetails {
-              ...KYMFieldData
+            declaration {
+              isPoliticallyExposed
+              politicallyExposedDetails
+              hasBeneficialOwner
+              beneficialRelationshipId
+              beneficialFullName
+              isConvicted
+              convictedDetails
+              hasForeignResidentialPermit
+              foreignResidentialPermitTypeId
             }
-            initialTransactionDetails {
-              ...KYMFieldData
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
             }
-            estimatedAnnualTransactionAmount
-            estimatedAnnualLoanAmount
-            isPoliticallyExposed
-            politicallyExposedDetails
-            hasBeneficialOwner
-            beneficialRelationshipId
-            beneficialFullName
-            isConvicted
-            convictedDetails
-            hasForeignResidentialPermit
-            foreignResidentialPermitTypeId
-            documents {
-              ...KYMFieldData
-            }
-            declarationAgree
-            customFields {
-              ...KYMFieldData
+            temporaryAddress {
+              address {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              sameTempAsPermanentAddress
             }
           }
         }

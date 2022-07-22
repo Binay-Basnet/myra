@@ -1,5 +1,7 @@
-import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import debounce from 'lodash/debounce';
 
 import {
   GroupContainer,
@@ -7,55 +9,123 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
+  KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
+  useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getKymSection, useTranslation } from '@coop/shared/utils';
 
-export const KYMFinancialTransactionDetails = () => {
+interface IKYMFinancialTransactionDetailsProps {
+  setKymCurrentSection: (section?: {
+    section: string;
+    subSection: string;
+  }) => void;
+}
+
+export const KYMFinancialTransactionDetails = ({
+  setKymCurrentSection,
+}: IKYMFinancialTransactionDetailsProps) => {
   const { t } = useTranslation();
-  const { register } = useFormContext();
-  const { data: financialTransactionDetailsData } =
-    useGetIndividualKymOptionsQuery({
-      filter: { customId: KYMOptionEnum.FinancialTransactionDetails },
-    });
+
+  const methods = useForm<KymIndMemberInput>();
+
+  const { watch } = methods;
+
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
+  // const { data: financialTransactionDetailsData } =
+  //   useGetIndividualKymOptionsQuery({
+  //     id,
+  //     filter: { customId: KYMOptionEnum.FinancialTransactionDetails },
+  //   });
+
+  const { mutate } = useSetMemberDataMutation();
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        mutate({ id, data });
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
 
   return (
-    <GroupContainer
-      id="kymAccIndFinancialTransactionDetails"
-      scrollMarginTop={'200px'}
-    >
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kynIndFINANCIALTRANSACTIONDETAILS']}
-      </Text>
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSection(e.target.id);
+          setKymCurrentSection(kymSection);
+        }}
+      >
+        <GroupContainer
+          id="kymAccIndFinancialTransactionDetails"
+          scrollMarginTop={'200px'}
+        >
+          <Text fontSize="r1" fontWeight="SemiBold">
+            {t['kynIndFINANCIALTRANSACTIONDETAILS']}
+          </Text>
 
-      <Box display="flex" flexDirection="column" gap="s16">
-        <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-          {t['kynIndDetailsoftheamount']}
-        </Text>
-        <InputGroupContainer>
-          {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
-            (option, index) => {
-              register(`initialTransactionDetails.options.${index}.id`, {
-                value: option.id,
-              });
-              return (
-                <FormInput
-                  key={index}
-                  id={`financialTransaction.${String(option?.name?.local)}`}
-                  type="number"
-                  // name={String(option?.name?.local)}
-                  name={`initialTransactionDetails.options.${index}.value`}
-                  textAlign="right"
-                  label={option?.name.local}
-                  placeholder="0.00"
-                />
-              );
-            }
-          )}
-        </InputGroupContainer>
-      </Box>
-    </GroupContainer>
+          <Box display="flex" flexDirection="column" gap="s16">
+            <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+              {t['kynIndDetailsoftheamount']}
+            </Text>
+            <InputGroupContainer>
+              <FormInput
+                type="number"
+                name="initialShare"
+                textAlign="right"
+                label="Share"
+                placeholder="0.00"
+              />
+              <FormInput
+                type="number"
+                name="initialSaving"
+                label="Savings"
+                textAlign="right"
+                placeholder="0.00"
+              />
+              <FormInput
+                type="number"
+                name="initialLoan"
+                label="Loan"
+                textAlign="right"
+                placeholder="0.00"
+              />
+              <FormInput
+                type="number"
+                name="otherFinancialAmount"
+                label="Other"
+                textAlign="right"
+                placeholder="0.00"
+              />
+              {/* {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
+                (option, index) => {
+                  register(`initialTransactionDetails.options.${index}.id`, {
+                    value: option.id,
+                  });
+                  return (
+                    <FormInput
+                      key={index}
+                      id={`financialTransaction.${String(option?.name?.local)}`}
+                      type="number"
+                      // name={String(option?.name?.local)}
+                      name={`initialTransactionDetails.options.${index}.value`}
+                      textAlign="right"
+                      label={option?.name.local}
+                      placeholder="0.00"
+                    />
+                  );
+                }
+              )} */}
+            </InputGroupContainer>
+          </Box>
+        </GroupContainer>
+      </form>
+    </FormProvider>
   );
 };

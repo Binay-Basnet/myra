@@ -87,22 +87,6 @@ export enum AccountOperationType {
   Single = 'SINGLE'
 }
 
-export type AccountOperatorDetails = {
-  contact?: InputMaybe<Scalars['String']>;
-  designation?: InputMaybe<Scalars['String']>;
-  email?: InputMaybe<Scalars['String']>;
-  fullName?: InputMaybe<Scalars['String']>;
-  isTemporaryAndPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
-  panNo?: InputMaybe<Scalars['String']>;
-  permanenetAddress?: InputMaybe<FullAddressInput>;
-  permanentLatitude?: InputMaybe<Scalars['Float']>;
-  permanentLongitude?: InputMaybe<Scalars['Float']>;
-  specimenSignature?: InputMaybe<Scalars['String']>;
-  temporaryAddress?: InputMaybe<FullAddressInput>;
-  temporaryLatitude?: InputMaybe<Scalars['Float']>;
-  temporaryLongitude?: InputMaybe<Scalars['Float']>;
-};
-
 export type AccountOperatorDetailsFormState = {
   contact?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
@@ -110,19 +94,21 @@ export type AccountOperatorDetailsFormState = {
   fullName?: Maybe<Scalars['String']>;
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   panNo?: Maybe<Scalars['String']>;
-  permanenetAddress?: Maybe<FullAddress>;
-  permanentLatitude?: Maybe<Scalars['Float']>;
-  permanentLongitude?: Maybe<Scalars['Float']>;
+  permanenetAddress?: Maybe<KymAddress>;
   specimenSignature?: Maybe<Scalars['String']>;
-  temporaryAddress?: Maybe<FullAddress>;
-  temporaryLatitude?: Maybe<Scalars['Float']>;
-  temporaryLongitude?: Maybe<Scalars['Float']>;
+  temporaryAddress?: Maybe<KymAddress>;
 };
 
 export type AccountOperatorDetailsType = {
+  contact?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
+  isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
+  panNo?: Maybe<Scalars['String']>;
+  permanenetAddress?: Maybe<KymAddress>;
   specimenSignature?: Maybe<Scalars['String']>;
+  temporaryAddress?: Maybe<KymAddress>;
 };
 
 export type AccountSummary = {
@@ -208,28 +194,30 @@ export type AdministrativeAddress = {
   wardNo: Scalars['Int'];
 };
 
-export type AffiliatedDirectorDetails = {
-  addressOfInstitution?: InputMaybe<FullAddressInput>;
-  designation?: InputMaybe<Scalars['String']>;
-  nameOfDirector?: InputMaybe<Scalars['String']>;
-  nameOfInstitution?: InputMaybe<Scalars['String']>;
-  yearlyIncome?: InputMaybe<Scalars['Float']>;
-};
-
 export type AffiliatedDirectorDetailsFormState = {
-  addressOfInstitution?: Maybe<FullAddress>;
+  address?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
-  nameOfDirector?: Maybe<Scalars['String']>;
-  nameOfInstitution?: Maybe<Scalars['String']>;
+  directorName?: Maybe<Scalars['String']>;
+  institutionName?: Maybe<Scalars['String']>;
   yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
 export type AffiliatedDirectorDetailsType = {
-  addressOfInstitution?: Maybe<FullAddress>;
+  addressOfInstitution?: Maybe<KymAddress>;
   designation?: Maybe<Scalars['String']>;
   nameOfDirector?: Maybe<Scalars['String']>;
   nameOfInstitution?: Maybe<Scalars['String']>;
   yearlyIncome?: Maybe<Scalars['Float']>;
+};
+
+export type AmountLimit = {
+  maxAmount?: InputMaybe<Scalars['String']>;
+  minAmount?: InputMaybe<Scalars['String']>;
+};
+
+export type AmountLimitFormState = {
+  maxAmount?: Maybe<Scalars['String']>;
+  minAmount?: Maybe<Scalars['String']>;
 };
 
 export enum Arrange {
@@ -661,6 +649,18 @@ export type Contact = {
   mobile?: Maybe<Scalars['String']>;
   office?: Maybe<Scalars['String']>;
   residence?: Maybe<Scalars['String']>;
+};
+
+export type CoopRelatedTraining = {
+  dateOfTraining?: InputMaybe<Scalars['Date']>;
+  subjectOfTraining?: InputMaybe<Scalars['String']>;
+  trainingOrganization?: InputMaybe<Scalars['String']>;
+};
+
+export type CoopRelatedTrainingType = {
+  dateOfTraining?: Maybe<Scalars['Date']>;
+  subjectOfTraining?: Maybe<Scalars['String']>;
+  trainingOrganization?: Maybe<Scalars['String']>;
 };
 
 export type CoopUnionAccountOperatorDetailsInput = {
@@ -1143,10 +1143,33 @@ export type CooperativeUnionMemberDetails = {
   noOfMaleMemberTarget?: Maybe<Scalars['Int']>;
 };
 
+export type Coordinate = {
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
+};
+
+export type CoordinateInput = {
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
+};
+
 export type Country = {
   code?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
+
+export enum CriteriaSection {
+  Age = 'AGE',
+  CooperativeType = 'COOPERATIVE_TYPE',
+  EducationQualification = 'EDUCATION_QUALIFICATION',
+  Ethnicity = 'ETHNICITY',
+  ForeignEmployment = 'FOREIGN_EMPLOYMENT',
+  Gender = 'GENDER',
+  MaritalStatus = 'MARITAL_STATUS',
+  NatureOfBusinessCoopunion = 'NATURE_OF_BUSINESS_COOPUNION',
+  NatureOfBusinessInstitutions = 'NATURE_OF_BUSINESS_INSTITUTIONS',
+  OccupationDetails = 'OCCUPATION_DETAILS'
+}
 
 export type DashboardData = {
   listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
@@ -1245,35 +1268,275 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
-export type DirectorAffiliationFormDetails = {
-  addressOfInstitution?: InputMaybe<FullAddressInput>;
-  designation?: InputMaybe<Scalars['String']>;
-  nameOfDirector?: InputMaybe<Scalars['String']>;
-  nameOfInstitution?: InputMaybe<Scalars['String']>;
-  yearlyIncome?: InputMaybe<Scalars['Float']>;
+export type DepositIro = {
+  id: Scalars['ID'];
+  iroAddress?: Maybe<Scalars['String']>;
+  iroCode?: Maybe<Scalars['String']>;
+  iroName?: Maybe<Scalars['String']>;
 };
 
-export type DirectorDetails = {
-  citizenshipNo?: InputMaybe<Scalars['String']>;
-  dateOfMembership?: InputMaybe<Scalars['Date']>;
-  designation?: InputMaybe<Scalars['String']>;
-  documentPhotograph?: InputMaybe<Scalars['String']>;
-  emailAddress?: InputMaybe<Scalars['String']>;
-  fullName?: InputMaybe<Scalars['String']>;
-  highestQualification?: InputMaybe<Scalars['String']>;
-  isHeadOfOrganization?: InputMaybe<Scalars['Boolean']>;
-  isTemporaryAndPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
-  mobileNo?: InputMaybe<Scalars['String']>;
-  permanentAddress?: InputMaybe<FullAddressInput>;
-  permanentLatitude?: InputMaybe<Scalars['Float']>;
-  permanentLongitude?: InputMaybe<Scalars['Float']>;
-  photograph?: InputMaybe<Scalars['String']>;
-  temporaryAddress?: InputMaybe<FullAddressInput>;
-  temporaryLatitude?: InputMaybe<Scalars['Float']>;
-  temporaryLongitude?: InputMaybe<Scalars['Float']>;
+export type DepositIroInput = {
+  iroAddress?: InputMaybe<Scalars['String']>;
+  iroCode?: InputMaybe<Scalars['String']>;
+  iroName?: InputMaybe<Scalars['String']>;
+};
+
+export type DepositIroResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<DepositIro>;
+  recordId: Scalars['ID'];
+};
+
+export type DepositProduct = Base & {
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  createdDate: Scalars['String'];
+  id: Scalars['ID'];
+  interest: Scalars['Float'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  nature: NatureOfDepositProduct;
+  objState: ObjState;
+  productCode: Scalars['String'];
+  productName: Scalars['String'];
+  typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
+};
+
+export type DepositProductConnection = {
+  edges: Array<DepositProductEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type DepositProductEdge = {
+  cursor: Scalars['Cursor'];
+  node: DepositProduct;
+};
+
+export type DepositProductFormStateData = {
+  accountType?: Maybe<Scalars['ID']>;
+  allowLoan?: Maybe<Scalars['Boolean']>;
+  alternativeChannels?: Maybe<Scalars['Boolean']>;
+  atmFacility?: Maybe<Scalars['Boolean']>;
+  autoOpen?: Maybe<Scalars['Boolean']>;
+  balanceLimit?: Maybe<AmountLimitFormState>;
+  chequeIssue?: Maybe<Scalars['Boolean']>;
+  cooperativeType?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  criteria?: Maybe<Array<Maybe<CriteriaSection>>>;
+  depositAmount?: Maybe<AmountLimitFormState>;
+  depositFrequency?: Maybe<Frequency>;
+  dormantSetup?: Maybe<Array<Maybe<DormantSetupFormState>>>;
+  educationQualification?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  ethnicity?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  foreignEmployment?: Maybe<Scalars['Boolean']>;
+  genderId?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  individualDocuments?: Maybe<Array<Maybe<IndividualRequiredDocument>>>;
+  institutionDocuments?: Maybe<Array<Maybe<InstitutionRequiredDocument>>>;
+  interest?: Maybe<InterestFormState>;
+  ladderRate?: Maybe<Scalars['Boolean']>;
+  ladderRateData: Array<Maybe<LadderRateFormState>>;
+  maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  maxAge?: Maybe<Scalars['Int']>;
+  maxPostingFreqDifference?: Maybe<Scalars['Int']>;
+  maxTenure?: Maybe<Scalars['Boolean']>;
+  maxTenureUnit?: Maybe<Frequency>;
+  maxTenureUnitNumber?: Maybe<Scalars['Int']>;
+  minAge?: Maybe<Scalars['Int']>;
+  minTenure?: Maybe<Scalars['Boolean']>;
+  minTenureUnit?: Maybe<Frequency>;
+  minTenureUnitNumber?: Maybe<Scalars['Int']>;
+  nature?: Maybe<NatureOfDepositProduct>;
+  natureOFBusinessCoop?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  natureOfBusinessInstitution?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  occupation?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  penalty?: Maybe<Scalars['Boolean']>;
+  penaltyData?: Maybe<PenaltyFormState>;
+  percentageOfDeposit?: Maybe<Scalars['Float']>;
+  postingFrequency?: Maybe<Array<Maybe<Frequency>>>;
+  prematurePenalty?: Maybe<PrematurePenaltyFormState>;
+  productCode: ProductCodeFormState;
+  productName?: Maybe<Scalars['String']>;
+  rebate?: Maybe<Scalars['Boolean']>;
+  rebateData?: Maybe<RebateFormState>;
+  serviceCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
+  specifyWithdrawRestricttion?: Maybe<Scalars['String']>;
+  staffProduct?: Maybe<Scalars['Boolean']>;
+  supportMultiple?: Maybe<Scalars['Boolean']>;
+  transactionLimit?: Maybe<AmountLimitFormState>;
+  typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
+  wealthBuildingProduct?: Maybe<Scalars['Boolean']>;
+  withdrawRestricted?: Maybe<Scalars['Boolean']>;
+};
+
+export type DepositProductFormStateResult = {
+  data?: Maybe<DepositProductFormStateData>;
+  error?: Maybe<QueryError>;
+};
+
+export type DepositProductInput = {
+  accountType?: InputMaybe<Scalars['ID']>;
+  allowLoan?: InputMaybe<Scalars['Boolean']>;
+  alternativeChannels?: InputMaybe<Scalars['Boolean']>;
+  atmFacility?: InputMaybe<Scalars['Boolean']>;
+  autoOpen?: InputMaybe<Scalars['Boolean']>;
+  balanceLimit?: InputMaybe<AmountLimit>;
+  chequeIssue?: InputMaybe<Scalars['Boolean']>;
+  cooperativeType?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  criteria?: InputMaybe<Array<InputMaybe<CriteriaSection>>>;
+  depositAmount?: InputMaybe<AmountLimit>;
+  depositFrequency?: InputMaybe<Frequency>;
+  dormantSetup?: InputMaybe<Array<InputMaybe<DormantSetup>>>;
+  educationQualification?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  ethnicity?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  foreignEmployment?: InputMaybe<Scalars['Boolean']>;
+  genderId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  individualDocuments?: InputMaybe<Array<InputMaybe<IndividualRequiredDocument>>>;
+  institutionDocuments?: InputMaybe<Array<InputMaybe<InstitutionRequiredDocument>>>;
+  interest: InterestRate;
+  ladderRate?: InputMaybe<Scalars['Boolean']>;
+  ladderRateData?: InputMaybe<Array<InputMaybe<LadderRate>>>;
+  maritalStatusId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  maxAge?: InputMaybe<Scalars['Int']>;
+  maxPostingFreqDifference?: InputMaybe<Scalars['Int']>;
+  maxTenure?: InputMaybe<Scalars['Boolean']>;
+  maxTenureUnit?: InputMaybe<Frequency>;
+  maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
+  minAge?: InputMaybe<Scalars['Int']>;
+  minTenure?: InputMaybe<Scalars['Boolean']>;
+  minTenureUnit?: InputMaybe<Frequency>;
+  minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
+  nature: NatureOfDepositProduct;
+  natureOFBusinessCoop?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  penalty?: InputMaybe<Scalars['Boolean']>;
+  penaltyData: PenaltyInput;
+  percentageOfDeposit?: InputMaybe<Scalars['Float']>;
+  postingFrequency?: InputMaybe<Array<InputMaybe<Frequency>>>;
+  prematurePenalty?: InputMaybe<PrematurePenalty>;
+  productCode: ProductCode;
+  productName: Scalars['String'];
+  rebate?: InputMaybe<Scalars['Boolean']>;
+  rebateData?: InputMaybe<RebateInput>;
+  serviceCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
+  specifyWithdrawRestricttion?: InputMaybe<Scalars['String']>;
+  staffProduct?: InputMaybe<Scalars['Boolean']>;
+  supportMultiple?: InputMaybe<Scalars['Boolean']>;
+  transactionLimit?: InputMaybe<AmountLimit>;
+  typeOfMember?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
+  wealthBuildingProduct?: InputMaybe<Scalars['Boolean']>;
+  withdrawRestricted?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type DepositProductResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<DepositProductSettingsQuery>;
+  record?: Maybe<DepositProduct>;
+  recordId: Scalars['ID'];
+};
+
+export type DepositProductSearchFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type DepositProductSettingsMutation = {
+  add?: Maybe<DepositProductResult>;
+};
+
+
+export type DepositProductSettingsMutationAddArgs = {
+  data?: InputMaybe<DepositProductInput>;
+  id: Scalars['ID'];
+};
+
+export type DepositProductSettingsQuery = {
+  formState?: Maybe<DepositProductFormStateResult>;
+  get?: Maybe<DepositProduct>;
+  list?: Maybe<DepositProductConnection>;
+};
+
+
+export type DepositProductSettingsQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type DepositProductSettingsQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type DepositProductSettingsQueryListArgs = {
+  filter?: InputMaybe<DepositProductSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositSettingsMutation = {
+  iroSetup?: Maybe<DepositIroResult>;
+  tdsSetup?: Maybe<DepositTdsResult>;
+};
+
+
+export type DepositSettingsMutationIroSetupArgs = {
+  data?: InputMaybe<DepositIroInput>;
+  id: Scalars['ID'];
+};
+
+
+export type DepositSettingsMutationTdsSetupArgs = {
+  data?: InputMaybe<DepositTdsInput>;
+  id: Scalars['ID'];
+};
+
+export type DepositTds = {
+  coopUnion?: Maybe<Scalars['Float']>;
+  cooperative?: Maybe<Scalars['Float']>;
+  id: Scalars['ID'];
+  individual?: Maybe<Scalars['Float']>;
+  insitution?: Maybe<Scalars['Float']>;
+};
+
+export type DepositTdsInput = {
+  coopUnion?: InputMaybe<Scalars['Float']>;
+  cooperative?: InputMaybe<Scalars['Float']>;
+  individual?: InputMaybe<Scalars['Float']>;
+  insitution?: InputMaybe<Scalars['Float']>;
+};
+
+export type DepositTdsResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<DepositTds>;
+  recordId: Scalars['ID'];
+};
+
+export type DirectorAffiliatedFirms = {
+  addressOfInstitution?: Maybe<Scalars['String']>;
+  contact?: Maybe<Scalars['String']>;
+  designation?: Maybe<Scalars['String']>;
+  nameOfInstitution?: Maybe<Scalars['String']>;
+  yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
 export type DirectorDetailsFormState = {
+  citizenshipNo?: Maybe<Scalars['String']>;
+  dateOfMembership?: Maybe<Scalars['Date']>;
+  designation?: Maybe<Scalars['String']>;
+  emailAddress?: Maybe<Scalars['String']>;
+  firmDetails?: Maybe<AffiliatedDirectorDetailsFormState>;
+  fullName?: Maybe<Scalars['String']>;
+  highestQualification?: Maybe<Scalars['String']>;
+  isAffiliatedWithOtherFirms?: Maybe<Scalars['Boolean']>;
+  isHeadOfOrganization?: Maybe<Scalars['Boolean']>;
+  isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
+  mobileNo?: Maybe<Scalars['String']>;
+  panNo?: Maybe<Scalars['String']>;
+  permanentAddress?: Maybe<KymAddress>;
+  temporaryAddress?: Maybe<KymAddress>;
+};
+
+export type DirectorDetailsType = {
+  affiliatedFirms?: Maybe<Array<Maybe<DirectorAffiliatedFirms>>>;
   citizenshipNo?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   designation?: Maybe<Scalars['String']>;
@@ -1281,44 +1544,14 @@ export type DirectorDetailsFormState = {
   emailAddress?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
   highestQualification?: Maybe<Scalars['String']>;
+  isAffiliatedWithOtherFirms?: Maybe<Scalars['Boolean']>;
   isHeadOfOrganization?: Maybe<Scalars['Boolean']>;
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   mobileNo?: Maybe<Scalars['String']>;
-  permanentAddress?: Maybe<FullAddress>;
-  permanentLatitude?: Maybe<Scalars['Float']>;
-  permanentLongitude?: Maybe<Scalars['Float']>;
+  panNo?: Maybe<Scalars['String']>;
+  permanenetAddress?: Maybe<KymAddress>;
   photograph?: Maybe<Scalars['String']>;
-  temporaryAddress?: Maybe<FullAddress>;
-  temporaryLatitude?: Maybe<Scalars['Float']>;
-  temporaryLongitude?: Maybe<Scalars['Float']>;
-};
-
-export type DirectorDetailsType = {
-  dateOfMembership?: Maybe<Scalars['Date']>;
-  designation?: Maybe<Scalars['String']>;
-  documentNo?: Maybe<Scalars['String']>;
-  documentPhotograph?: Maybe<Scalars['String']>;
-  emailAddress?: Maybe<Scalars['String']>;
-  fullName?: Maybe<Scalars['String']>;
-  highestQualification?: Maybe<Scalars['String']>;
-  isHeadOfOrganization?: Maybe<Scalars['Boolean']>;
-  isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
-  mobileNo?: Maybe<Scalars['String']>;
-  permanentDistrict?: Maybe<Scalars['ID']>;
-  permanentLatitude?: Maybe<Scalars['Float']>;
-  permanentLocality?: Maybe<Scalars['String']>;
-  permanentLongitude?: Maybe<Scalars['Float']>;
-  permanentMunicipality?: Maybe<Scalars['ID']>;
-  permanentState?: Maybe<Scalars['ID']>;
-  permanentWardNo?: Maybe<Scalars['Int']>;
-  photograph?: Maybe<Scalars['String']>;
-  temporaryDistrict?: Maybe<Scalars['ID']>;
-  temporaryLatitude?: Maybe<Scalars['Float']>;
-  temporaryLocality?: Maybe<Scalars['String']>;
-  temporaryLongitude?: Maybe<Scalars['Float']>;
-  temporaryMunicipality?: Maybe<Scalars['ID']>;
-  temporaryState?: Maybe<Scalars['ID']>;
-  temporaryWardNo?: Maybe<Scalars['Int']>;
+  temporaryAddress?: Maybe<KymAddress>;
 };
 
 export type District = {
@@ -1331,6 +1564,34 @@ export type District = {
 export type Document = {
   photo?: Maybe<Scalars['String']>;
   signature?: Maybe<Scalars['String']>;
+};
+
+export type DocumentMutation = {
+  KYM: KymDocumentMutation;
+};
+
+
+export type DocumentMutationKymArgs = {
+  memberId: Scalars['String'];
+};
+
+export type DocumentQuery = {
+  listKYMDocuments: KymDocumentResult;
+};
+
+
+export type DocumentQueryListKymDocumentsArgs = {
+  memberId: Scalars['String'];
+};
+
+export type DormantSetup = {
+  condition?: InputMaybe<Scalars['String']>;
+  duration?: InputMaybe<Scalars['String']>;
+};
+
+export type DormantSetupFormState = {
+  condition?: Maybe<Scalars['String']>;
+  duration?: Maybe<Scalars['String']>;
 };
 
 export type EBankingAccountQuery = {
@@ -2040,6 +2301,16 @@ export type ExampleQuery = {
   testDb: TestDbResult;
 };
 
+export enum File_Variant {
+  Doc = 'DOC',
+  Docx = 'DOCX',
+  Jpeg = 'JPEG',
+  Jpg = 'JPG',
+  Other = 'OTHER',
+  Pdf = 'PDF',
+  Png = 'PNG'
+}
+
 export type FamilyDetails = {
   fatherName?: Maybe<Scalars['String']>;
   grandFatherName?: Maybe<Scalars['String']>;
@@ -2061,23 +2332,12 @@ export type Filter = {
   orConditions: Array<OrConditions>;
 };
 
-export type FullAddress = {
-  district?: Maybe<Scalars['String']>;
-  houseNo?: Maybe<Scalars['String']>;
-  localGovernment?: Maybe<Scalars['String']>;
-  locality?: Maybe<Scalars['String']>;
-  province?: Maybe<Scalars['String']>;
-  wardNo?: Maybe<Scalars['Int']>;
-};
-
-export type FullAddressInput = {
-  district?: InputMaybe<Scalars['String']>;
-  houseNo?: InputMaybe<Scalars['String']>;
-  localGovernment?: InputMaybe<Scalars['String']>;
-  locality?: InputMaybe<Scalars['String']>;
-  province?: InputMaybe<Scalars['String']>;
-  wardNo?: InputMaybe<Scalars['Int']>;
-};
+export enum Frequency {
+  Daily = 'DAILY',
+  Monthly = 'MONTHLY',
+  Weekly = 'WEEKLY',
+  Yearly = 'YEARLY'
+}
 
 export type GeneralBranchSettingsMutation = {
   add: BranchAddResult;
@@ -2110,6 +2370,8 @@ export type GeneralSettingsMutation = {
   KYM?: Maybe<KymMutation>;
   branch?: Maybe<GeneralBranchSettingsMutation>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
+  deposit?: Maybe<DepositSettingsMutation>;
+  depositProduct?: Maybe<DepositProductSettingsMutation>;
   organization?: Maybe<OrganizationSettingsMutation>;
 };
 
@@ -2117,6 +2379,7 @@ export type GeneralSettingsQuery = {
   KYM?: Maybe<KymQuery>;
   branch?: Maybe<GeneralBranchSettingsQuery>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
+  depositProduct?: Maybe<DepositProductSettingsQuery>;
   organization?: Maybe<OrganizationSettingsQuery>;
 };
 
@@ -2139,18 +2402,30 @@ export type IndividualMember = {
   professionalInformation?: Maybe<KymIndProfessionalInformation>;
 };
 
+export enum IndividualRequiredDocument {
+  Fingerprint = 'FINGERPRINT',
+  Form = 'FORM',
+  NomineeDocument = 'NOMINEE_DOCUMENT',
+  Photo = 'PHOTO',
+  Signature = 'SIGNATURE'
+}
+
 export type InstitutionAccountOperatoionsDetails = {
   accountOperatorsDetails?: Maybe<Array<Maybe<AccountOperatorDetailsType>>>;
   accountType?: Maybe<AccountOperationType>;
   companyStamp?: Maybe<Scalars['String']>;
+  isCompanyStampCompulsory?: Maybe<Scalars['Boolean']>;
   specialInstruction?: Maybe<Scalars['String']>;
 };
 
 export type InstitutionDeclaration = {
+  accountHolderAddress?: Maybe<KymAddress>;
+  accountHolderEmail?: Maybe<Scalars['String']>;
   accountHolderName?: Maybe<Scalars['String']>;
+  accountHolderPhone?: Maybe<Scalars['String']>;
   accountHolderSignature?: Maybe<Scalars['String']>;
   accountHolderStamp?: Maybe<Scalars['String']>;
-  cooperativeDocuments?: Maybe<Array<Maybe<KymInstitutionDocumentsType>>>;
+  institutionDocuments?: Maybe<Array<Maybe<KymInstitutionDocumentsType>>>;
 };
 
 export enum InstitutionExpectedMonthlyTransaction {
@@ -2163,7 +2438,7 @@ export type InstitutionMember = {
   accoountOperationsDetails?: Maybe<InstitutionAccountOperatoionsDetails>;
   declaration?: Maybe<InstitutionDeclaration>;
   organizationInformation?: Maybe<InstitutionOrganizationInformation>;
-  propietorAndDirectorDetails?: Maybe<InstitutionPropietorAndDirectorDetails>;
+  proprietorAndDirectorDetails?: Maybe<InstitutionProprietorAndDirectorDetails>;
   transactionProfile?: Maybe<InstitutionTransactionProfile>;
 };
 
@@ -2171,23 +2446,20 @@ export type InstitutionOrganizationInformation = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
   bank?: Maybe<Scalars['ID']>;
-  branchOfficeAddress?: Maybe<FullAddress>;
+  branchOfficeAddress?: Maybe<KymAddress>;
   dateOfLastAGM?: Maybe<Scalars['Date']>;
   email?: Maybe<Scalars['String']>;
   fax?: Maybe<Scalars['String']>;
   institutionName?: Maybe<Scalars['String']>;
   institutionType?: Maybe<Scalars['String']>;
   issuingOffice?: Maybe<Scalars['String']>;
-  latitude?: Maybe<Scalars['Float']>;
-  longitude?: Maybe<Scalars['Float']>;
   natureOfBusiness?: Maybe<Scalars['String']>;
   noOfBranches?: Maybe<Scalars['Int']>;
   numberOfEmployee?: Maybe<Scalars['Int']>;
-  operatingOfficeAddress?: Maybe<FullAddress>;
+  operatingOfficeAddress?: Maybe<KymAddress>;
   phone?: Maybe<Scalars['String']>;
   postBoxNo?: Maybe<Scalars['String']>;
-  registeredAddress?: Maybe<FullAddress>;
-  registeredAddressIfChanged?: Maybe<FullAddress>;
+  registeredAddress?: Maybe<KymAddress>;
   registeredNumber?: Maybe<Scalars['String']>;
   registrationDate?: Maybe<Scalars['Date']>;
   sisterConcernDetails?: Maybe<Array<Maybe<SisterConcernDetailsType>>>;
@@ -2195,10 +2467,17 @@ export type InstitutionOrganizationInformation = {
   website?: Maybe<Scalars['String']>;
 };
 
-export type InstitutionPropietorAndDirectorDetails = {
+export type InstitutionProprietorAndDirectorDetails = {
   detailsOfDirectors?: Maybe<Array<Maybe<DirectorDetailsType>>>;
   detailsOfDirectorsWithAffiliation?: Maybe<Array<Maybe<AffiliatedDirectorDetailsType>>>;
 };
+
+export enum InstitutionRequiredDocument {
+  Decision = 'DECISION',
+  Registered = 'REGISTERED',
+  Signature = 'SIGNATURE',
+  TaxClearance = 'TAX_CLEARANCE'
+}
 
 export type InstitutionTransactionProfile = {
   annualTurnover?: Maybe<Scalars['Float']>;
@@ -2206,6 +2485,24 @@ export type InstitutionTransactionProfile = {
   expectedMonthlyTurnover?: Maybe<Scalars['String']>;
   initialDepositAmount?: Maybe<Scalars['Float']>;
   natureOfTransaction?: Maybe<Scalars['String']>;
+};
+
+export type InterestFormState = {
+  additionalRate?: Maybe<Scalars['Float']>;
+  boardAuthoriy?: Maybe<Scalars['Float']>;
+  ceoAuthority?: Maybe<Scalars['Float']>;
+  defaultRate?: Maybe<Scalars['Float']>;
+  maxRate?: Maybe<Scalars['Float']>;
+  minRate?: Maybe<Scalars['Float']>;
+};
+
+export type InterestRate = {
+  additionalRate?: InputMaybe<Scalars['Float']>;
+  boardAuthoriy?: InputMaybe<Scalars['Float']>;
+  ceoAuthority?: InputMaybe<Scalars['Float']>;
+  defaultRate: Scalars['Float'];
+  maxRate?: InputMaybe<Scalars['Float']>;
+  minRate?: InputMaybe<Scalars['Float']>;
 };
 
 export type InvItems = {
@@ -2521,6 +2818,26 @@ export type JournalChartsOfAccount = {
   journalCode: Scalars['String'];
 };
 
+export type KymAddress = {
+  coordinates?: Maybe<Coordinate>;
+  districtId?: Maybe<Scalars['Int']>;
+  houseNo?: Maybe<Scalars['String']>;
+  localGovernmentId?: Maybe<Scalars['Int']>;
+  locality?: Maybe<Scalars['Localized']>;
+  provinceId?: Maybe<Scalars['Int']>;
+  wardNo?: Maybe<Scalars['Int']>;
+};
+
+export type KymAddressInput = {
+  coordinates?: InputMaybe<CoordinateInput>;
+  districtId?: InputMaybe<Scalars['Int']>;
+  houseNo?: InputMaybe<Scalars['String']>;
+  localGovernmentId?: InputMaybe<Scalars['Int']>;
+  locality?: InputMaybe<Scalars['String']>;
+  provinceId?: InputMaybe<Scalars['Int']>;
+  wardNo?: InputMaybe<Scalars['Int']>;
+};
+
 export type KymAllowed = {
   allowed: Scalars['Boolean'];
   id: Scalars['ID'];
@@ -2582,6 +2899,83 @@ export type KymDeclarationResult = {
 
 export type KymDisplayOptionCategory = {
   display: Kym_Option_Display_Type;
+};
+
+export type KymDocument = {
+  fieldId?: Maybe<Scalars['String']>;
+  identifier: Array<Maybe<Scalars['String']>>;
+};
+
+export type KymDocumentMutation = {
+  upsert: KymDocumentMutationResult;
+};
+
+
+export type KymDocumentMutationUpsertArgs = {
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']>;
+};
+
+export type KymDocumentMutationResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<KymDocument>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type KymDocumentResult = {
+  data?: Maybe<Array<Maybe<KymDocument>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type KymDynamicEntry = {
+  fieldId: Scalars['String'];
+  id: Scalars['ID'];
+  value: Scalars['Localized'];
+};
+
+export type KymDynamicEntryFilter = {
+  fieldName?: InputMaybe<Scalars['String']>;
+  foreignId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
+  sectionId?: InputMaybe<Scalars['String']>;
+};
+
+export type KymDynamicEntryResult = {
+  data?: Maybe<Array<Maybe<KymDynamicEntry>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type KymEntryInput = {
+  fieldId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  parentSectionId: Scalars['String'];
+  value: Scalars['Localized'];
+};
+
+export type KymEntryMutation = {
+  upsertDynamic: KymEntryMutationResult;
+};
+
+
+export type KymEntryMutationUpsertDynamicArgs = {
+  data: KymEntryInput;
+};
+
+export type KymEntryMutationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<KymEntryQuery>;
+  record?: Maybe<KymDynamicEntry>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type KymEntryQuery = {
+  getDynamic?: Maybe<KymDynamicEntryResult>;
+};
+
+
+export type KymEntryQueryGetDynamicArgs = {
+  filter: KymDynamicEntryFilter;
 };
 
 export type KymField = Base & {
@@ -2733,6 +3127,246 @@ export type KymGeneralSettingsMutationUpdateRiskLevelArgs = {
 export type KymGeneralSettingsQuery = {
   allowed: Array<KymAllowed>;
   riskLevel: Array<Maybe<KymMemberRisk>>;
+};
+
+export type KymIndBasicInformation = {
+  dateOfBirth?: Maybe<Scalars['String']>;
+  educationQualificationId?: Maybe<Scalars['String']>;
+  ethnicityId?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['Localized']>;
+  genderId?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['Localized']>;
+  middleName?: Maybe<Scalars['Localized']>;
+  nationalityId?: Maybe<Scalars['String']>;
+  religionId?: Maybe<Scalars['String']>;
+};
+
+export type KymIndContactDetails = {
+  email?: Maybe<Scalars['String']>;
+  mobileNumber?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+};
+
+export type KymIndDeclaration = {
+  beneficialFullName?: Maybe<Scalars['Localized']>;
+  beneficialRelationshipId?: Maybe<Scalars['String']>;
+  convictedDetails?: Maybe<Scalars['String']>;
+  declarationAgreement?: Maybe<Scalars['Boolean']>;
+  foreignResidentialPermitTypeId?: Maybe<Scalars['String']>;
+  hasBeneficialOwner?: Maybe<Scalars['Boolean']>;
+  hasForeignResidentialPermit?: Maybe<Scalars['Boolean']>;
+  isConvicted?: Maybe<Scalars['Boolean']>;
+  isPoliticallyExposed?: Maybe<Scalars['Boolean']>;
+  politicallyExposedDetails?: Maybe<Scalars['String']>;
+};
+
+export type KymIndEstimatedTransactions = {
+  estimatedAnnualDepositAmount?: Maybe<Scalars['String']>;
+  estimatedAnnualLoanAmount?: Maybe<Scalars['String']>;
+  estimatedAnnualTransactionAmount?: Maybe<Scalars['String']>;
+  estimatedAnnualTransactionFrequencyId?: Maybe<Scalars['String']>;
+};
+
+export type KymIndFamilyMember = {
+  additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
+  dateOfBirth?: Maybe<Scalars['String']>;
+  familyMemberId?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['Localized']>;
+  id: Scalars['String'];
+  relationshipId?: Maybe<Scalars['String']>;
+};
+
+export type KymIndFamilyMemberInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  dateOfBirth?: InputMaybe<Scalars['String']>;
+  familyMemberId?: InputMaybe<Scalars['String']>;
+  fullName?: InputMaybe<Scalars['String']>;
+  id: Scalars['String'];
+  relationshipId?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndFamilyMemberMutation = {
+  delete: KymIndFamilyMemberResult;
+  upsert: KymIndFamilyMemberResult;
+};
+
+
+export type KymIndFamilyMemberMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymIndFamilyMemberMutationUpsertArgs = {
+  data: KymIndFamilyMemberInput;
+};
+
+export type KymIndFamilyMemberQueryResult = {
+  data?: Maybe<Array<Maybe<KymIndFamilyMember>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type KymIndFamilyMemberResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<KymIndQuery>;
+  record?: Maybe<KymIndFamilyMember>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type KymIndForeignEmployment = {
+  foreignEmpCountryId?: Maybe<Scalars['String']>;
+  foreignEstimatedAnnualIncome?: Maybe<Scalars['String']>;
+  isForeignEmployment?: Maybe<Scalars['Boolean']>;
+  typeOfVisaId?: Maybe<Scalars['String']>;
+};
+
+export type KymIndIdentification = {
+  citizenshipIssueDate?: Maybe<Scalars['String']>;
+  citizenshipIssuePlace?: Maybe<Scalars['String']>;
+  citizenshipNo?: Maybe<Scalars['String']>;
+  drivingLicenseIssueDate?: Maybe<Scalars['String']>;
+  drivingLicenseIssuePlace?: Maybe<Scalars['String']>;
+  drivingLicenseNo?: Maybe<Scalars['String']>;
+  identificationSelection?: Maybe<Array<Maybe<Scalars['String']>>>;
+  nationalIDIssueDate?: Maybe<Scalars['String']>;
+  nationalIDIssuePlace?: Maybe<Scalars['String']>;
+  nationalIDNo?: Maybe<Scalars['String']>;
+  passportIssueDate?: Maybe<Scalars['String']>;
+  passportIssuePlace?: Maybe<Scalars['String']>;
+  passportNo?: Maybe<Scalars['String']>;
+  voterCardNo?: Maybe<Scalars['String']>;
+  voterPollingStation?: Maybe<Scalars['String']>;
+};
+
+export type KymIndIncomeSource = {
+  additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
+  amount?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  incomeSource?: Maybe<Scalars['Localized']>;
+};
+
+export type KymIndIncomeSourceInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  amount?: InputMaybe<Scalars['String']>;
+  id: Scalars['String'];
+  incomeSource?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndIncomeSourceMutation = {
+  delete: KymIndIncomeSourceResult;
+  upsert: KymIndIncomeSourceResult;
+};
+
+
+export type KymIndIncomeSourceMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymIndIncomeSourceMutationUpsertArgs = {
+  data: KymIndIncomeSourceInput;
+};
+
+export type KymIndIncomeSourceQueryResult = {
+  data?: Maybe<Array<Maybe<KymIndIncomeSource>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type KymIndIncomeSourceResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<KymIndQuery>;
+  record?: Maybe<KymIndIncomeSource>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type KymIndInitialTransactionDetails = {
+  initialLoan?: Maybe<Scalars['String']>;
+  initialSaving?: Maybe<Scalars['String']>;
+  initialShare?: Maybe<Scalars['Int']>;
+  otherFinancialAmount?: Maybe<Scalars['String']>;
+};
+
+export type KymIndIntroducers = {
+  firstIntroducerId?: Maybe<Scalars['String']>;
+  secondIntroducerId?: Maybe<Scalars['String']>;
+};
+
+export type KymIndMembershipDetails = {
+  isMemberOfAnotherCooperative?: Maybe<Scalars['Boolean']>;
+  otherCoopBranchId?: Maybe<Scalars['String']>;
+  otherCoopMemberId?: Maybe<Scalars['String']>;
+  otherCoopName?: Maybe<Scalars['Localized']>;
+  purposeId?: Maybe<Scalars['String']>;
+};
+
+export type KymIndOccupation = {
+  additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
+  address?: Maybe<Scalars['Localized']>;
+  contact?: Maybe<Scalars['String']>;
+  establishedDate?: Maybe<Scalars['String']>;
+  estimatedAnnualIncome?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  isOwner?: Maybe<Scalars['Boolean']>;
+  occupationId?: Maybe<Scalars['String']>;
+  orgName?: Maybe<Scalars['Localized']>;
+  panVatNo?: Maybe<Scalars['String']>;
+  registrationNo?: Maybe<Scalars['String']>;
+};
+
+export type KymIndOccupationInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  address?: InputMaybe<Scalars['String']>;
+  contact?: InputMaybe<Scalars['String']>;
+  establishedDate?: InputMaybe<Scalars['String']>;
+  estimatedAnnualIncome?: InputMaybe<Scalars['String']>;
+  id: Scalars['String'];
+  isOwner?: InputMaybe<Scalars['Boolean']>;
+  occupationId?: InputMaybe<Scalars['String']>;
+  orgName?: InputMaybe<Scalars['String']>;
+  panVatNo?: InputMaybe<Scalars['String']>;
+  registrationNo?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndOccupationMutation = {
+  delete: KymIndOccupationResult;
+  upsert: KymIndOccupationResult;
+};
+
+
+export type KymIndOccupationMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymIndOccupationMutationUpsertArgs = {
+  data: KymIndOccupationInput;
+  isSpouse: Scalars['Boolean'];
+};
+
+export type KymIndOccupationQueryResult = {
+  data?: Maybe<Array<Maybe<KymIndOccupation>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type KymIndOccupationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<KymIndQuery>;
+  record?: Maybe<KymIndOccupation>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type KymIndProfession = {
+  otherProfession?: Maybe<Scalars['String']>;
+  professionId?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type KymIndRentedHouse = {
+  landlordContact?: Maybe<Scalars['String']>;
+  landlordName?: Maybe<Scalars['Localized']>;
+};
+
+export type KymIndTemporaryAddress = {
+  address?: Maybe<KymAddress>;
+  sameTempAsPermanentAddress?: Maybe<Scalars['Boolean']>;
 };
 
 export type KymIndividualSettingsQuery = {
@@ -2986,19 +3620,54 @@ export enum Kym_Option_Variant {
 }
 
 export type KymAdditionalFields = {
+  fieldId?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   value?: InputMaybe<Scalars['String']>;
 };
 
 export type KymAdditionalFieldsFormState = {
+  fieldId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Localized']>;
 };
 
 export type KymAdditionalFieldsType = {
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
+};
+
+export type KymCoopAccountOperatorDetailsFormInput = {
+  citizenshipNo?: InputMaybe<Scalars['String']>;
+  contactNumber?: InputMaybe<Scalars['String']>;
+  coopRelatedTraining?: InputMaybe<Array<InputMaybe<CoopRelatedTraining>>>;
+  cooperativeId?: InputMaybe<Scalars['ID']>;
+  dateOfMembership?: InputMaybe<Scalars['Date']>;
+  designation?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  highestQualification?: InputMaybe<Scalars['String']>;
+  isPermanentAndTemporaryAddressSame?: InputMaybe<Scalars['Boolean']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+  panNo?: InputMaybe<Scalars['String']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
+};
+
+export type KymCoopDirectorDetailsFormInput = {
+  citizenshipNo?: InputMaybe<Scalars['String']>;
+  contactNumber?: InputMaybe<Scalars['String']>;
+  cooperativeId?: InputMaybe<Scalars['ID']>;
+  dateOfMembership?: InputMaybe<Scalars['Date']>;
+  designation?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  highestQualification?: InputMaybe<Scalars['String']>;
+  isPermanentAndTemporaryAddressSame?: InputMaybe<Scalars['Boolean']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+  panNo?: InputMaybe<Scalars['String']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
 };
 
 export type KymCoopMembershipDetails = {
@@ -3732,7 +4401,9 @@ export type KymCooperativeFormData = {
   currentLiabilities?: Maybe<Scalars['Float']>;
   documents?: Maybe<Array<Maybe<KymCooperativeDocumentsFormState>>>;
   email?: Maybe<Scalars['String']>;
+  hasTCAccepted?: Maybe<Scalars['Boolean']>;
   investments?: Maybe<Scalars['Float']>;
+  isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
   lastAgmDate?: Maybe<Scalars['Date']>;
   lastAuditDate?: Maybe<Scalars['Date']>;
   loan?: Maybe<Scalars['Float']>;
@@ -3746,29 +4417,29 @@ export type KymCooperativeFormData = {
   noOfOtherMembers?: Maybe<Scalars['Int']>;
   nonCurrentAssets?: Maybe<Scalars['Float']>;
   nonCurrentLiabilities?: Maybe<Scalars['Float']>;
-  oprDistrictId?: Maybe<Scalars['ID']>;
+  operatingAddress?: Maybe<KymAddress>;
   oprLatitude?: Maybe<Scalars['Float']>;
-  oprLocality?: Maybe<Scalars['String']>;
   oprLongitude?: Maybe<Scalars['Float']>;
-  oprMunicipalityId?: Maybe<Scalars['ID']>;
-  oprProvinceId?: Maybe<Scalars['ID']>;
-  oprWardId?: Maybe<Scalars['ID']>;
   otherNonCurrentAssets?: Maybe<Scalars['Float']>;
+  permanentRepresentativeAddress?: Maybe<KymAddress>;
+  permanentRepresentativeLatitude?: Maybe<Scalars['Float']>;
+  permanentRepresentativeLongitude?: Maybe<Scalars['Float']>;
   regdDate?: Maybe<Scalars['Date']>;
-  regdDistrictId?: Maybe<Scalars['ID']>;
   regdLatitude?: Maybe<Scalars['Float']>;
-  regdLocality?: Maybe<Scalars['String']>;
   regdLongitude?: Maybe<Scalars['Float']>;
-  regdMunicipalityId?: Maybe<Scalars['ID']>;
   regdNumber?: Maybe<Scalars['Int']>;
-  regdOffice?: Maybe<Scalars['String']>;
-  regdProvinceId?: Maybe<Scalars['ID']>;
-  regdWardId?: Maybe<Scalars['ID']>;
+  registeredAddress?: Maybe<KymAddress>;
+  representativeContactNumber?: Maybe<Scalars['String']>;
   representativeDesignatiton?: Maybe<Scalars['String']>;
+  representativeEmail?: Maybe<Scalars['String']>;
   representativeFullName?: Maybe<Scalars['String']>;
+  representativePanNo?: Maybe<Scalars['String']>;
   reserveAndSurplus?: Maybe<Scalars['Float']>;
   savingDeposit?: Maybe<Scalars['Float']>;
   shareCapital?: Maybe<Scalars['Float']>;
+  temporaryRepresentativeAddress?: Maybe<KymAddress>;
+  temporaryRepresentativeLatitude?: Maybe<Scalars['Float']>;
+  temporaryRepresentativeLongitude?: Maybe<Scalars['Float']>;
   totalAssets?: Maybe<Scalars['Float']>;
   totalEmployee?: Maybe<Scalars['Int']>;
   totalEquityAndLiabilities?: Maybe<Scalars['Float']>;
@@ -3776,57 +4447,49 @@ export type KymCooperativeFormData = {
 };
 
 export type KymCooperativeFormInput = {
-  accountHolderSignature?: InputMaybe<Scalars['String']>;
-  accountHolderStamp?: InputMaybe<Scalars['String']>;
   accountHoldersName?: InputMaybe<Scalars['String']>;
-  accountOperatorsDetails?: InputMaybe<Array<InputMaybe<KymCooperativeAccountOperatorDetailsInput>>>;
   bank?: InputMaybe<Scalars['Float']>;
-  boardOfDirectorsDetails?: InputMaybe<Array<InputMaybe<KymCooperativeBodDetailsInput>>>;
   capitalGrant?: InputMaybe<Scalars['Float']>;
   cashAndCashEquivalent?: InputMaybe<Scalars['Float']>;
   contactNumber?: InputMaybe<Scalars['String']>;
   cooperativeType?: InputMaybe<CooperativeType>;
   currentLiabilities?: InputMaybe<Scalars['Float']>;
-  documents?: InputMaybe<Array<InputMaybe<KymCooperativeDocumentsInput>>>;
   email?: InputMaybe<Scalars['String']>;
+  hasTCAccepted?: InputMaybe<Scalars['Boolean']>;
   investments?: InputMaybe<Scalars['Float']>;
+  isPermanentAndTemporaryAddressSame?: InputMaybe<Scalars['Boolean']>;
   lastAgmDate?: InputMaybe<Scalars['Date']>;
   lastAuditDate?: InputMaybe<Scalars['Date']>;
   loan?: InputMaybe<Scalars['Float']>;
   loanAccount?: InputMaybe<Scalars['Float']>;
   mainServiceProduct?: InputMaybe<Scalars['String']>;
   nameOfOrganization?: InputMaybe<Scalars['String']>;
-  noOfFemaleEmloyee?: InputMaybe<Scalars['Int']>;
+  noOfFemaleEmployee?: InputMaybe<Scalars['Int']>;
   noOfFemaleMembers?: InputMaybe<Scalars['Int']>;
   noOfMaleEmployee?: InputMaybe<Scalars['Int']>;
   noOfMaleMembers?: InputMaybe<Scalars['Int']>;
   noOfOtherMembers?: InputMaybe<Scalars['Int']>;
   nonCurrentAssets?: InputMaybe<Scalars['Float']>;
   nonCurrentLiabilities?: InputMaybe<Scalars['Float']>;
-  oprDistrictId?: InputMaybe<Scalars['ID']>;
-  oprLatitude?: InputMaybe<Scalars['Float']>;
-  oprLocality?: InputMaybe<Scalars['String']>;
-  oprLongitude?: InputMaybe<Scalars['Float']>;
-  oprMunicipalityId?: InputMaybe<Scalars['ID']>;
-  oprProvinceId?: InputMaybe<Scalars['ID']>;
-  oprWardId?: InputMaybe<Scalars['ID']>;
+  operatingAddress?: InputMaybe<KymAddressInput>;
   otherNonCurrentAssets?: InputMaybe<Scalars['Float']>;
+  permanentRepresentativeAddress?: InputMaybe<KymAddressInput>;
   regdDate?: InputMaybe<Scalars['Date']>;
-  regdDistrictId?: InputMaybe<Scalars['ID']>;
-  regdLatitude?: InputMaybe<Scalars['Float']>;
-  regdLocality?: InputMaybe<Scalars['String']>;
-  regdLongitude?: InputMaybe<Scalars['Float']>;
-  regdMunicipalityId?: InputMaybe<Scalars['ID']>;
   regdNumber?: InputMaybe<Scalars['Int']>;
   regdOffice?: InputMaybe<Scalars['String']>;
-  regdProvinceId?: InputMaybe<Scalars['ID']>;
-  regdWardId?: InputMaybe<Scalars['ID']>;
+  registeredAddress?: InputMaybe<KymAddressInput>;
+  representativeContactNumber?: InputMaybe<Scalars['String']>;
   representativeDesignatiton?: InputMaybe<Scalars['String']>;
+  representativeEmail?: InputMaybe<Scalars['String']>;
   representativeFullName?: InputMaybe<Scalars['String']>;
+  representativePanNo?: InputMaybe<Scalars['String']>;
   reserveAndSurplus?: InputMaybe<Scalars['Float']>;
   savingDeposit?: InputMaybe<Scalars['Float']>;
   shareCapital?: InputMaybe<Scalars['Float']>;
+  temporaryRepresentativeAddress?: InputMaybe<KymAddressInput>;
+  totalAssets?: InputMaybe<Scalars['Float']>;
   totalEmployee?: InputMaybe<Scalars['Int']>;
+  totalEquityLiabilities?: InputMaybe<Scalars['Float']>;
   website?: InputMaybe<Scalars['String']>;
 };
 
@@ -3862,11 +4525,31 @@ export type KymCooperativeInstitutionalInformationStatus = {
 
 export type KymCooperativeMutation = {
   add?: Maybe<KymCooperativeAddResult>;
+  addCoopDetails?: Maybe<KymCooperativeAddResult>;
+  addKymCoopAccountOperatorDetails?: Maybe<KymCooperativeAddResult>;
+  addKymCoopDirectorDetails?: Maybe<KymCooperativeAddResult>;
 };
 
 
 export type KymCooperativeMutationAddArgs = {
   data: KymCooperativeFormInput;
+};
+
+
+export type KymCooperativeMutationAddCoopDetailsArgs = {
+  data: KymCooperativeFormInput;
+};
+
+
+export type KymCooperativeMutationAddKymCoopAccountOperatorDetailsArgs = {
+  accOperatorId: Scalars['ID'];
+  data: KymCoopAccountOperatorDetailsFormInput;
+};
+
+
+export type KymCooperativeMutationAddKymCoopDirectorDetailsArgs = {
+  data: KymCoopDirectorDetailsFormInput;
+  dirId: Scalars['ID'];
 };
 
 export type KymCooperativeQuery = {
@@ -4028,7 +4711,10 @@ export type KymIndDeclarationLus = {
 };
 
 export enum KymIndDeclarationSection {
-  Declaration = 'DECLARATION'
+  BeneficialOwner = 'BENEFICIAL_OWNER',
+  Conviction = 'CONVICTION',
+  FamilyMemberInPolitics = 'FAMILY_MEMBER_IN_POLITICS',
+  ForeignResidentialPermit = 'FOREIGN_RESIDENTIAL_PERMIT'
 }
 
 export type KymIndDeclarationStatus = {
@@ -4037,75 +4723,22 @@ export type KymIndDeclarationStatus = {
 };
 
 export type KymIndFormData = {
-  additionalContactDetails?: Maybe<KymFieldData>;
   annualIncomeSourceId?: Maybe<Scalars['String']>;
-  beneficialFullName?: Maybe<Scalars['String']>;
-  beneficialRelationshipId?: Maybe<Scalars['String']>;
-  convictedDetails?: Maybe<Scalars['String']>;
-  countryId?: Maybe<Scalars['String']>;
-  customFields?: Maybe<Array<Maybe<KymFieldData>>>;
-  dateOfBirth?: Maybe<Scalars['String']>;
-  declarationAgree?: Maybe<Scalars['Boolean']>;
-  documents?: Maybe<Array<Maybe<KymFieldData>>>;
-  educationQualificationId?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  enableForeignEmployee?: Maybe<Scalars['Boolean']>;
-  estimatedAnnualDepositAmount?: Maybe<Scalars['Float']>;
-  estimatedAnnualLoanAmount?: Maybe<Scalars['Float']>;
-  estimatedAnnualTransactionAmount?: Maybe<Scalars['Float']>;
-  estimatedAnnualTransactionFrequencyId?: Maybe<Scalars['String']>;
-  ethnicityId?: Maybe<Scalars['String']>;
-  familyDetails?: Maybe<Array<Maybe<KymFieldData>>>;
-  familyMemberInThisCooperative?: Maybe<Scalars['Boolean']>;
-  familyMembershipDetails?: Maybe<Array<Maybe<KymFieldData>>>;
-  firstIntroducerId?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  foreignEstimatedAnnualIncome?: Maybe<Scalars['Float']>;
-  foreignResidentialPermitTypeId?: Maybe<Scalars['String']>;
-  genderId?: Maybe<Scalars['String']>;
-  hasBeneficialOwner?: Maybe<Scalars['Boolean']>;
-  hasForeignResidentialPermit?: Maybe<Scalars['Boolean']>;
-  identification?: Maybe<Array<Maybe<KymFieldData>>>;
-  identityLevel?: Maybe<Scalars['String']>;
-  incomeSourceDetails?: Maybe<Array<Maybe<KymFieldData>>>;
-  initialTransactionDetails?: Maybe<KymFieldData>;
-  isConvicted?: Maybe<Scalars['Boolean']>;
-  isMemberOfAnotherCooperative?: Maybe<Scalars['Boolean']>;
-  isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
-  isPoliticallyExposed?: Maybe<Scalars['Boolean']>;
-  landlordContact?: Maybe<Scalars['String']>;
-  landlordName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  mainOccupation?: Maybe<Array<Maybe<KymFieldData>>>;
+  basicInformation?: Maybe<KymIndBasicInformation>;
+  contactDetails?: Maybe<KymIndContactDetails>;
+  declaration?: Maybe<KymIndDeclaration>;
+  estimatedTransactions?: Maybe<KymIndEstimatedTransactions>;
+  foreignEmployment?: Maybe<KymIndForeignEmployment>;
+  identification?: Maybe<KymIndIdentification>;
+  initialTransactionDetails?: Maybe<KymIndInitialTransactionDetails>;
+  introducers?: Maybe<KymIndIntroducers>;
+  isFamilyAMember?: Maybe<Scalars['Boolean']>;
   maritalStatusId?: Maybe<Scalars['String']>;
-  memberId?: Maybe<Scalars['String']>;
-  middleName?: Maybe<Scalars['String']>;
-  mobileNumber?: Maybe<Scalars['String']>;
-  nationalityId?: Maybe<Scalars['String']>;
-  otherMembershipDetails?: Maybe<KymFieldData>;
-  otherProfession?: Maybe<Scalars['String']>;
-  permanentDistrictId?: Maybe<Scalars['Int']>;
-  permanentHouseNo?: Maybe<Scalars['String']>;
-  permanentLocalityId?: Maybe<Scalars['Int']>;
-  permanentLocation?: Maybe<LocationCoordinate>;
-  permanentStateId?: Maybe<Scalars['Int']>;
-  permanentTole?: Maybe<Scalars['String']>;
-  permanentWardId?: Maybe<Scalars['Int']>;
-  phoneNumber?: Maybe<Scalars['String']>;
-  politicallyExposedDetails?: Maybe<Scalars['String']>;
-  professional?: Maybe<Array<Maybe<Scalars['String']>>>;
-  purposeId?: Maybe<Scalars['String']>;
-  religionId?: Maybe<Scalars['String']>;
-  secondIntroducerId?: Maybe<Scalars['String']>;
-  spouseOccupation?: Maybe<Array<Maybe<KymFieldData>>>;
-  temporaryDistrictId?: Maybe<Scalars['Int']>;
-  temporaryHouseNo?: Maybe<Scalars['String']>;
-  temporaryLocalityId?: Maybe<Scalars['Int']>;
-  temporaryLocation?: Maybe<LocationCoordinate>;
-  temporaryStateId?: Maybe<Scalars['Int']>;
-  temporaryTole?: Maybe<Scalars['String']>;
-  temporaryWardId?: Maybe<Scalars['Int']>;
-  typeOfVisaId?: Maybe<Scalars['String']>;
+  membershipDetails?: Maybe<KymIndMembershipDetails>;
+  permanentAddress?: Maybe<KymAddress>;
+  profession?: Maybe<KymIndProfession>;
+  rentedHouse?: Maybe<KymIndRentedHouse>;
+  temporaryAddress?: Maybe<KymIndTemporaryAddress>;
 };
 
 export type KymIndFormState = {
@@ -4120,78 +4753,79 @@ export type KymIndGetResult = {
 };
 
 export type KymIndMemberInput = {
-  additionalContactDetails?: InputMaybe<KymFieldInputData>;
   annualIncomeSourceId?: InputMaybe<Scalars['String']>;
   beneficialFullName?: InputMaybe<Scalars['String']>;
   beneficialRelationshipId?: InputMaybe<Scalars['String']>;
+  citizenshipIssueDate?: InputMaybe<Scalars['String']>;
+  citizenshipIssuePlace?: InputMaybe<Scalars['String']>;
+  citizenshipNo?: InputMaybe<Scalars['String']>;
   convictedDetails?: InputMaybe<Scalars['String']>;
-  countryId?: InputMaybe<Scalars['String']>;
-  customFields?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   dateOfBirth?: InputMaybe<Scalars['String']>;
-  declarationAgree?: InputMaybe<Scalars['Boolean']>;
-  documents?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
+  declarationAgreement?: InputMaybe<Scalars['Boolean']>;
+  drivingLicenseIssueDate?: InputMaybe<Scalars['String']>;
+  drivingLicenseIssuePlace?: InputMaybe<Scalars['String']>;
+  drivingLicenseNo?: InputMaybe<Scalars['String']>;
   educationQualificationId?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
-  enableForeignEmployee?: InputMaybe<Scalars['Boolean']>;
-  estimatedAnnualDepositAmount?: InputMaybe<Scalars['Float']>;
-  estimatedAnnualLoanAmount?: InputMaybe<Scalars['Float']>;
-  estimatedAnnualTransactionAmount?: InputMaybe<Scalars['Float']>;
+  estimatedAnnualDepositAmount?: InputMaybe<Scalars['String']>;
+  estimatedAnnualLoanAmount?: InputMaybe<Scalars['String']>;
+  estimatedAnnualTransactionAmount?: InputMaybe<Scalars['String']>;
   estimatedAnnualTransactionFrequencyId?: InputMaybe<Scalars['String']>;
   ethnicityId?: InputMaybe<Scalars['String']>;
-  familyDetails?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
-  familyMemberInThisCooperative?: InputMaybe<Scalars['Boolean']>;
-  familyMembershipDetails?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   firstIntroducerId?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
-  foreignEstimatedAnnualIncome?: InputMaybe<Scalars['Float']>;
+  foreignEmpCountryId?: InputMaybe<Scalars['String']>;
+  foreignEstimatedAnnualIncome?: InputMaybe<Scalars['String']>;
   foreignResidentialPermitTypeId?: InputMaybe<Scalars['String']>;
   genderId?: InputMaybe<Scalars['String']>;
   hasBeneficialOwner?: InputMaybe<Scalars['Boolean']>;
   hasForeignResidentialPermit?: InputMaybe<Scalars['Boolean']>;
-  identification?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
-  identityLevel?: InputMaybe<Scalars['String']>;
-  incomeSourceDetails?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
-  initialTransactionDetails?: InputMaybe<KymFieldInputData>;
+  identificationSelection?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  initialLoan?: InputMaybe<Scalars['String']>;
+  initialSaving?: InputMaybe<Scalars['String']>;
+  initialShare?: InputMaybe<Scalars['Int']>;
   isConvicted?: InputMaybe<Scalars['Boolean']>;
+  isFamilyAMember?: InputMaybe<Scalars['Boolean']>;
+  isForeignEmployment?: InputMaybe<Scalars['Boolean']>;
   isMemberOfAnotherCooperative?: InputMaybe<Scalars['Boolean']>;
-  isPermanentAndTemporaryAddressSame?: InputMaybe<Scalars['Boolean']>;
   isPoliticallyExposed?: InputMaybe<Scalars['Boolean']>;
   landlordContact?: InputMaybe<Scalars['String']>;
   landlordName?: InputMaybe<Scalars['String']>;
   lastName?: InputMaybe<Scalars['String']>;
-  mainOccupation?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   maritalStatusId?: InputMaybe<Scalars['String']>;
   middleName?: InputMaybe<Scalars['String']>;
   mobileNumber?: InputMaybe<Scalars['String']>;
+  nationalIDIssueDate?: InputMaybe<Scalars['String']>;
+  nationalIDIssuePlace?: InputMaybe<Scalars['String']>;
+  nationalIDNo?: InputMaybe<Scalars['String']>;
   nationalityId?: InputMaybe<Scalars['String']>;
-  otherMembershipDetails?: InputMaybe<KymFieldInputData>;
+  otherCoopBranchId?: InputMaybe<Scalars['String']>;
+  otherCoopMemberId?: InputMaybe<Scalars['String']>;
+  otherCoopName?: InputMaybe<Scalars['String']>;
+  otherFinancialAmount?: InputMaybe<Scalars['String']>;
   otherProfession?: InputMaybe<Scalars['String']>;
-  permanentDistrictId?: InputMaybe<Scalars['Int']>;
-  permanentHouseNo?: InputMaybe<Scalars['String']>;
-  permanentLocalityId?: InputMaybe<Scalars['Int']>;
-  permanentLocation?: InputMaybe<LocationCoordinateInput>;
-  permanentStateId?: InputMaybe<Scalars['Int']>;
-  permanentTole?: InputMaybe<Scalars['String']>;
-  permanentWardId?: InputMaybe<Scalars['Int']>;
+  passportIssueDate?: InputMaybe<Scalars['String']>;
+  passportIssuePlace?: InputMaybe<Scalars['String']>;
+  passportNo?: InputMaybe<Scalars['String']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
   phoneNumber?: InputMaybe<Scalars['String']>;
   politicallyExposedDetails?: InputMaybe<Scalars['String']>;
-  professional?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  professionId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   purposeId?: InputMaybe<Scalars['String']>;
   religionId?: InputMaybe<Scalars['String']>;
+  sameTempAsPermanentAddress?: InputMaybe<Scalars['Boolean']>;
   secondIntroducerId?: InputMaybe<Scalars['String']>;
-  spouseOccupation?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
-  temporaryDistrictId?: InputMaybe<Scalars['Int']>;
-  temporaryHouseNo?: InputMaybe<Scalars['String']>;
-  temporaryLocalityId?: InputMaybe<Scalars['Int']>;
-  temporaryLocation?: InputMaybe<LocationCoordinateInput>;
-  temporaryStateId?: InputMaybe<Scalars['Int']>;
-  temporaryTole?: InputMaybe<Scalars['String']>;
-  temporaryWardId?: InputMaybe<Scalars['Int']>;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
   typeOfVisaId?: InputMaybe<Scalars['String']>;
+  voterCardNo?: InputMaybe<Scalars['String']>;
+  voterPollingStation?: InputMaybe<Scalars['String']>;
 };
 
 export type KymIndMutation = {
   add?: Maybe<KymIndAddResult>;
+  familyMember: KymIndFamilyMemberMutation;
+  incomeSource: KymIndIncomeSourceMutation;
+  occupation: KymIndOccupationMutation;
 };
 
 
@@ -4264,16 +4898,37 @@ export type KymIndProfessionalStatus = {
 
 export type KymIndQuery = {
   formState?: Maybe<KymIndFormStateQuery>;
+  listFamilyMember?: Maybe<KymIndFamilyMemberQueryResult>;
+  listIncomeSource?: Maybe<KymIndIncomeSourceQueryResult>;
+  listOccupation?: Maybe<KymIndOccupationQueryResult>;
   options: KymFieldQuery;
 };
 
 
-export type KymIndQueryFormStateArgs = {
-  id: Scalars['ID'];
+export type KymIndQueryListFamilyMemberArgs = {
+  isMember?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type KymIndQueryListOccupationArgs = {
+  isSpouse: Scalars['Boolean'];
 };
 
 export type KymInsAccountLus = {
   name: KymInsAccountSection;
+};
+
+export type KymInsAccountOperatorInput = {
+  contact?: InputMaybe<Scalars['String']>;
+  designation?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  institutionId?: InputMaybe<Scalars['ID']>;
+  isTemporaryAndPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+  panNo?: InputMaybe<Scalars['String']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
 };
 
 export enum KymInsAccountSection {
@@ -4317,6 +4972,14 @@ export type KymInsDeclarationStatus = {
   error?: Maybe<Array<Maybe<KymInsDeclarationSection>>>;
 };
 
+export type KymInsDirectorAffiliatedFirmInput = {
+  address?: InputMaybe<Scalars['String']>;
+  designation?: InputMaybe<Scalars['String']>;
+  directorName?: InputMaybe<Scalars['String']>;
+  institutionName?: InputMaybe<Scalars['String']>;
+  yearlyIncome?: InputMaybe<Scalars['Float']>;
+};
+
 export type KymInsDirectorDetailsLus = {
   name: KymInsDirectorDetailsSection;
 };
@@ -4331,8 +4994,30 @@ export type KymInsDirectorDetailsStatus = {
   error?: Maybe<Array<Maybe<KymInsDirectorDetailsSection>>>;
 };
 
+export type KymInsDirectorInput = {
+  citizenshipNo?: InputMaybe<Scalars['String']>;
+  dateOfMembership?: InputMaybe<Scalars['Date']>;
+  designation?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  firmDetails?: InputMaybe<KymInsDirectorAffiliatedFirmInput>;
+  highestQualification?: InputMaybe<Scalars['String']>;
+  institutionId?: InputMaybe<Scalars['ID']>;
+  isAffiliatedWithOtherFirms?: InputMaybe<Scalars['Boolean']>;
+  isHeadOfOrganization?: InputMaybe<Scalars['Boolean']>;
+  isTemporaryAndPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
+  mobileNo?: InputMaybe<Scalars['String']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+  panNo?: InputMaybe<Scalars['String']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
+};
+
 export type KymInsFormData = {
+  accountHolderAddress?: Maybe<KymAddress>;
+  accountHolderEmail?: Maybe<Scalars['String']>;
   accountHolderName?: Maybe<Scalars['String']>;
+  accountHolderPhone?: Maybe<Scalars['String']>;
   accountHolderSignature?: Maybe<Scalars['String']>;
   accountHolderStamp?: Maybe<Scalars['String']>;
   accountName?: Maybe<Scalars['String']>;
@@ -4341,11 +5026,10 @@ export type KymInsFormData = {
   accountType?: Maybe<AccountOperationType>;
   annualTurnover?: Maybe<Scalars['Float']>;
   bank?: Maybe<Scalars['ID']>;
-  branchOfficeAddress?: Maybe<FullAddress>;
+  branchOfficeAddress?: Maybe<KymAddress>;
   companyStamp?: Maybe<Scalars['String']>;
   dateOfLastAGM?: Maybe<Scalars['Date']>;
   detailsOfDirectors?: Maybe<Array<Maybe<DirectorDetailsFormState>>>;
-  detailsOfDirectorsWithAffiliation?: Maybe<Array<Maybe<AffiliatedDirectorDetailsFormState>>>;
   documents?: Maybe<Array<Maybe<KymFieldData>>>;
   email?: Maybe<Scalars['String']>;
   expectedMonthlyTransaction?: Maybe<Scalars['String']>;
@@ -4356,17 +5040,14 @@ export type KymInsFormData = {
   institutionType?: Maybe<Scalars['String']>;
   isCompanyStampCompulsory?: Maybe<Scalars['Boolean']>;
   issuingOffice?: Maybe<Scalars['String']>;
-  latitude?: Maybe<Scalars['Float']>;
-  longitude?: Maybe<Scalars['Float']>;
   natureOfBusiness?: Maybe<Scalars['String']>;
   natureOfTransaction?: Maybe<Scalars['String']>;
   noOfBranches?: Maybe<Scalars['Int']>;
   numberOfEmployee?: Maybe<Scalars['Int']>;
-  operatingOfficeAddress?: Maybe<FullAddress>;
+  operatingOfficeAddress?: Maybe<KymAddress>;
   phone?: Maybe<Scalars['String']>;
   postBoxNo?: Maybe<Scalars['String']>;
-  registeredAddress?: Maybe<FullAddress>;
-  registeredAddressIfChanged?: Maybe<FullAddress>;
+  registeredAddress?: Maybe<KymAddress>;
   registeredNumber?: Maybe<Scalars['String']>;
   registrationDate?: Maybe<Scalars['Date']>;
   sisterConcernDetails?: Maybe<Array<Maybe<SisterConcernDetailsFormState>>>;
@@ -4403,50 +5084,39 @@ export type KymInsInformationStatus = {
 };
 
 export type KymInsInput = {
-  accountHolderAddress?: InputMaybe<FullAddressInput>;
+  accountHolderAddress?: InputMaybe<KymAddressInput>;
   accountHolderEmail?: InputMaybe<Scalars['String']>;
-  accountHolderLatitude?: InputMaybe<Scalars['Float']>;
-  accountHolderLongitude?: InputMaybe<Scalars['Float']>;
   accountHolderName?: InputMaybe<Scalars['String']>;
   accountHolderPhone?: InputMaybe<Scalars['String']>;
   accountHolderSignature?: InputMaybe<Scalars['String']>;
   accountHolderStamp?: InputMaybe<Scalars['String']>;
   accountName?: InputMaybe<Scalars['String']>;
   accountNumber?: InputMaybe<Scalars['String']>;
-  accountOperatorsDetails?: InputMaybe<Array<InputMaybe<AccountOperatorDetails>>>;
   accountType?: InputMaybe<AccountOperationType>;
   annualTurnover?: InputMaybe<Scalars['Float']>;
   bank?: InputMaybe<Scalars['ID']>;
-  branchOfficeAddress?: InputMaybe<FullAddressInput>;
+  branchOfficeAddress?: InputMaybe<KymAddressInput>;
   companyStamp?: InputMaybe<Scalars['String']>;
   dateOfLastAGM?: InputMaybe<Scalars['Date']>;
-  detailsOfDirectors?: InputMaybe<Array<InputMaybe<DirectorDetails>>>;
-  detailsOfDirectorsWithAffiliation?: InputMaybe<Array<InputMaybe<AffiliatedDirectorDetails>>>;
   email?: InputMaybe<Scalars['String']>;
   expectedMonthlyTransaction?: InputMaybe<Scalars['String']>;
   expectedMonthlyTurnover?: InputMaybe<Scalars['String']>;
   fax?: InputMaybe<Scalars['String']>;
-  hasTCAccepted?: InputMaybe<Scalars['Boolean']>;
   initialDepositAmount?: InputMaybe<Scalars['Float']>;
-  institutionDocuments?: InputMaybe<Array<InputMaybe<KymFieldInputData>>>;
   institutionName?: InputMaybe<Scalars['String']>;
   institutionType?: InputMaybe<Scalars['String']>;
   isCompanyStampCompulsory?: InputMaybe<Scalars['Boolean']>;
   issuingOffice?: InputMaybe<Scalars['String']>;
-  latitude?: InputMaybe<Scalars['Float']>;
-  longitude?: InputMaybe<Scalars['Float']>;
   natureOfBusiness?: InputMaybe<Scalars['String']>;
   natureOfTransaction?: InputMaybe<Scalars['String']>;
   noOfBranches?: InputMaybe<Scalars['Int']>;
   numberOfEmployee?: InputMaybe<Scalars['Int']>;
-  operatingOfficeAddress?: InputMaybe<FullAddressInput>;
+  operatingOfficeAddress?: InputMaybe<KymAddressInput>;
   phone?: InputMaybe<Scalars['String']>;
   postBoxNo?: InputMaybe<Scalars['String']>;
-  registeredAddress?: InputMaybe<FullAddressInput>;
-  registeredAddressIfChanged?: InputMaybe<FullAddressInput>;
+  registeredAddress?: InputMaybe<KymAddressInput>;
   registeredNumber?: InputMaybe<Scalars['String']>;
   registrationDate?: InputMaybe<Scalars['Date']>;
-  sisterConcernDetails?: InputMaybe<Array<InputMaybe<SisterConcernDetails>>>;
   specialInstruction?: InputMaybe<Scalars['String']>;
   vatOrPanNo?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;
@@ -4454,11 +5124,32 @@ export type KymInsInput = {
 
 export type KymInsMutation = {
   add?: Maybe<KymInsAddResult>;
+  addAccountOperators?: Maybe<KymInsAddResult>;
+  addDirectors?: Maybe<KymInsAddResult>;
+  addSisterConcerns?: Maybe<KymInsAddResult>;
 };
 
 
 export type KymInsMutationAddArgs = {
   data: KymInsInput;
+};
+
+
+export type KymInsMutationAddAccountOperatorsArgs = {
+  data: KymInsAccountOperatorInput;
+  operatorId: Scalars['ID'];
+};
+
+
+export type KymInsMutationAddDirectorsArgs = {
+  data: KymInsDirectorInput;
+  directorId: Scalars['ID'];
+};
+
+
+export type KymInsMutationAddSisterConcernsArgs = {
+  data: KymInsSisterConcernInput;
+  sisterConcernId: Scalars['ID'];
 };
 
 export type KymInsQuery = {
@@ -4473,6 +5164,15 @@ export type KymInsQueryFormStateArgs = {
 export type KymInsRecord = {
   member: Member;
   sectionStatus?: Maybe<KymInsFormStatus>;
+};
+
+export type KymInsSisterConcernInput = {
+  address?: InputMaybe<Scalars['String']>;
+  institutionId?: InputMaybe<Scalars['ID']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+  natureOfBusiness?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 export type KymInsTransactionLus = {
@@ -4498,8 +5198,14 @@ export type KymInstitutionDocumentsFormState = {
 };
 
 export type KymInstitutionDocumentsType = {
-  documentUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
-  id?: Maybe<Scalars['ID']>;
+  agmBodDecisionDocument?: Maybe<Scalars['String']>;
+  latestAuditReport?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
+  minuteOfCentralRep?: Maybe<Scalars['String']>;
+  moaAOA?: Maybe<Scalars['String']>;
+  panCertificate?: Maybe<Scalars['String']>;
+  registeredCertificate?: Maybe<Scalars['String']>;
+  taxClearance?: Maybe<Scalars['String']>;
 };
 
 export type KymMemberDataFilter = {
@@ -4555,6 +5261,18 @@ export type KymOccupationDetailsType = {
   idNumber?: Maybe<Scalars['String']>;
   occupation: Scalars['ID'];
   orgName?: Maybe<Scalars['String']>;
+};
+
+export type LadderRate = {
+  amount?: InputMaybe<Scalars['String']>;
+  rate?: InputMaybe<Scalars['Float']>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+export type LadderRateFormState = {
+  amount?: Maybe<Scalars['String']>;
+  rate?: Maybe<Scalars['Float']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export enum Language {
@@ -4662,6 +5380,8 @@ export enum MemberIdentityLevel {
 export type MemberMutation = {
   cooperative?: Maybe<KymCooperativeMutation>;
   cooperativeUnion?: Maybe<KymCoopUnionMutation>;
+  document: DocumentMutation;
+  entry: KymEntryMutation;
   generateExcel: Scalars['String'];
   individual?: Maybe<KymIndMutation>;
   institution?: Maybe<KymInsMutation>;
@@ -4678,6 +5398,11 @@ export type MemberMutationCooperativeArgs = {
 
 export type MemberMutationCooperativeUnionArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MemberMutationEntryArgs = {
+  memberId: Scalars['String'];
 };
 
 
@@ -4713,6 +5438,8 @@ export type MemberQuery = {
   cooperative?: Maybe<KymCooperativeQuery>;
   cooperativeUnion?: Maybe<KymCoopUnionQuery>;
   details: MemberDetailsResult;
+  document: DocumentQuery;
+  entry?: Maybe<KymEntryQuery>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
@@ -4723,6 +5450,16 @@ export type MemberQuery = {
 
 export type MemberQueryDetailsArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MemberQueryEntryArgs = {
+  membeId: Scalars['String'];
+};
+
+
+export type MemberQueryIndividualArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -4782,6 +5519,13 @@ export type Name = {
   lastName?: Maybe<Scalars['String']>;
   middleName?: Maybe<Scalars['String']>;
 };
+
+export enum NatureOfDepositProduct {
+  Mandatory = 'MANDATORY',
+  RecurringSaving = 'RECURRING_SAVING',
+  TermSavingOrFd = 'TERM_SAVING_OR_FD',
+  VoluntaryOrOptional = 'VOLUNTARY_OR_OPTIONAL'
+}
 
 export type Nominee = {
   address?: Maybe<Address>;
@@ -5019,6 +5763,29 @@ export type Pagination = {
   order?: InputMaybe<Order>;
 };
 
+export type PenaltyFormState = {
+  dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
+  flatRatePenalty?: Maybe<Scalars['String']>;
+  minimumAmount?: Maybe<Scalars['String']>;
+  penaltyAmount?: Maybe<Scalars['String']>;
+  penaltyRate?: Maybe<Scalars['Float']>;
+  rateType?: Maybe<PenaltyRateType>;
+};
+
+export type PenaltyInput = {
+  dayAfterInstallmentDate?: InputMaybe<Scalars['Int']>;
+  flatRatePenalty?: InputMaybe<Scalars['String']>;
+  minimumAmount?: InputMaybe<Scalars['String']>;
+  penaltyAmount?: InputMaybe<Scalars['String']>;
+  penaltyRate?: InputMaybe<Scalars['Float']>;
+  rateType: PenaltyRateType;
+};
+
+export enum PenaltyRateType {
+  FlatRate = 'FLAT_RATE',
+  RelativeRate = 'RELATIVE_RATE'
+}
+
 export type PersonalInformation = {
   citizenship?: Maybe<Citizenship>;
   dateOfBirth?: Maybe<Scalars['String']>;
@@ -5036,6 +5803,27 @@ export type PersonalInformationInNepali = {
   occupation?: Maybe<Scalars['String']>;
 };
 
+export type PrematurePenalty = {
+  noOfDays?: InputMaybe<Scalars['Int']>;
+  penaltyAmount?: InputMaybe<Scalars['String']>;
+  penaltyDateType?: InputMaybe<PrematurePenaltyDateType>;
+  penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
+  penaltyRate?: InputMaybe<Scalars['Float']>;
+};
+
+export enum PrematurePenaltyDateType {
+  EffectiveDaysFromStart = 'EFFECTIVE_DAYS_FROM_START',
+  RemainingDaysToGetMatured = 'REMAINING_DAYS_TO_GET_MATURED'
+}
+
+export type PrematurePenaltyFormState = {
+  noOfDays?: Maybe<Scalars['Int']>;
+  penaltyAmount?: Maybe<Scalars['String']>;
+  penaltyDateType?: Maybe<PrematurePenaltyDateType>;
+  penaltyLedgerMapping?: Maybe<Scalars['String']>;
+  penaltyRate?: Maybe<Scalars['Float']>;
+};
+
 export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
 };
@@ -5049,6 +5837,16 @@ export type PresignedUrlOutput = {
   filename?: Maybe<Scalars['String']>;
   getUrl?: Maybe<Scalars['String']>;
   putUrl?: Maybe<Scalars['String']>;
+};
+
+export type ProductCode = {
+  initialNo: Scalars['String'];
+  prefix: Scalars['String'];
+};
+
+export type ProductCodeFormState = {
+  initialNo: Scalars['String'];
+  prefix: Scalars['String'];
 };
 
 export type Province = {
@@ -5075,6 +5873,20 @@ export type Query = {
 };
 
 export type QueryError = AuthorizationError | BadRequestError | NotFoundError | ServerError;
+
+export type RebateFormState = {
+  daysBeforeInstallmentDate?: Maybe<Scalars['Int']>;
+  noOfInstallment?: Maybe<Scalars['Int']>;
+  percentage?: Maybe<Scalars['Float']>;
+  rebateAmount?: Maybe<Scalars['String']>;
+};
+
+export type RebateInput = {
+  daysBeforeInstallmentDate?: InputMaybe<Scalars['Int']>;
+  noOfInstallment?: InputMaybe<Scalars['Int']>;
+  percentage?: InputMaybe<Scalars['Float']>;
+  rebateAmount?: InputMaybe<Scalars['String']>;
+};
 
 export type RecentTransactionFilter = {
   limit: Scalars['Int'];
@@ -5119,6 +5931,18 @@ export enum Share_Transaction_Direction {
 export type ServerError = {
   code: Scalars['String'];
   message: Scalars['String'];
+};
+
+export type ServiceType = {
+  amount?: InputMaybe<Scalars['String']>;
+  ledgerName?: InputMaybe<Scalars['String']>;
+  serviceName?: InputMaybe<Scalars['String']>;
+};
+
+export type ServiceTypeFormState = {
+  amount?: Maybe<Scalars['String']>;
+  ledgerName?: Maybe<Scalars['String']>;
+  serviceName?: Maybe<Scalars['String']>;
 };
 
 export type Services = {
@@ -5546,6 +6370,13 @@ export type KymIndFormStateQuery = {
   error?: Maybe<QueryError>;
 };
 
+export type LoginMutationVariables = Exact<{
+  data: LoginInput;
+}>;
+
+
+export type LoginMutation = { auth: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, user: { id: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string> } } | null } | null } };
+
 export type SetBranchDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: BranchInput;
@@ -5637,6 +6468,55 @@ export type SetMemberDataMutationVariables = Exact<{
 
 
 export type SetMemberDataMutation = { members: { individual?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+
+export type SetMemberFamilyDetailsMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymIndFamilyMemberInput;
+}>;
+
+
+export type SetMemberFamilyDetailsMutation = { members: { individual?: { familyMember: { upsert: { recordId?: string | null } } } | null } };
+
+export type DeleteMemberFamilyDetailsMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteMemberFamilyDetailsMutation = { members: { individual?: { familyMember: { delete: { recordId?: string | null } } } | null } };
+
+export type SetMemberOccupationMutationVariables = Exact<{
+  id: Scalars['ID'];
+  isSpouse: Scalars['Boolean'];
+  data: KymIndOccupationInput;
+}>;
+
+
+export type SetMemberOccupationMutation = { members: { individual?: { occupation: { upsert: { recordId?: string | null } } } | null } };
+
+export type DeleteMemberOccupationMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteMemberOccupationMutation = { members: { individual?: { occupation: { delete: { recordId?: string | null } } } | null } };
+
+export type SetMemberIncomeSourceMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymIndIncomeSourceInput;
+}>;
+
+
+export type SetMemberIncomeSourceMutation = { members: { individual?: { incomeSource: { upsert: { recordId?: string | null } } } | null } };
+
+export type DeleteMemberIncomeSourceMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteMemberIncomeSourceMutation = { members: { individual?: { incomeSource: { delete: { recordId?: string | null } } } | null } };
 
 export type UpdateKymFieldMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -5797,7 +6677,7 @@ type MutationError_ValidationError_Fragment = {};
 
 export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
 
-export type KymFieldDataFragment = { id?: string | null, options?: Array<{ id?: string | null, value?: string | null } | null> | null };
+export type KymFieldDataFragment = { id?: string | null, options?: Array<{ id?: string | null, value?: Record<"local"|"en"|"np",string> | null } | null> | null };
 
 export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5869,6 +6749,7 @@ export type GetInventoryUnitOfMeasureQueryVariables = Exact<{ [key: string]: nev
 export type GetInventoryUnitOfMeasureQuery = { inventory: { unitOfMeasure?: { list?: { edges: Array<{ node: { name: string, shortName: string, acceptFraction: boolean } } | null> } | null } | null } };
 
 export type GetIndividualKymOptionQueryVariables = Exact<{
+  id: Scalars['String'];
   fieldName?: InputMaybe<Scalars['String']>;
 }>;
 
@@ -5876,13 +6757,16 @@ export type GetIndividualKymOptionQueryVariables = Exact<{
 export type GetIndividualKymOptionQuery = { members: { individual?: { options: { list?: { data?: Array<{ options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } } | null } };
 
 export type GetIndividualKymOptionsQueryVariables = Exact<{
+  id: Scalars['String'];
   filter?: InputMaybe<ListKymFieldFilter>;
 }>;
 
 
 export type GetIndividualKymOptionsQuery = { members: { individual?: { options: { list?: { data?: Array<{ options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } } | null } };
 
-export type GetIndIdentificationDocOptionQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetIndIdentificationDocOptionQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
 
 
 export type GetIndIdentificationDocOptionQuery = { members: { individual?: { options: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } } | null } };
@@ -5908,7 +6792,7 @@ export type GetMemberTranslationQueryVariables = Exact<{
 export type GetMemberTranslationQuery = { members: { translate: { data?: Array<{ id: string, data?: string | null, translatedValue?: string | null } | null> | null } } };
 
 export type GetKymFormStatusQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['String'];
 }>;
 
 
@@ -5932,11 +6816,11 @@ export type GetMemberIndividualDataQueryVariables = Exact<{
 export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { personalInformation?: { firstName: string, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, contact?: { mobile?: string | null, residence?: string | null, office?: string | null } | null, identification?: Array<{ id?: string | null, fields?: Array<{ name?: string | null, value?: string | null } | null> | null } | null> | null, permanentAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, temporaryAddress?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, familyDetails?: Array<{ relationshipId: string, fullName?: string | null } | null> | null } | null } | {} | null } | null } } };
 
 export type GetIndividualKymEditDataQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['String'];
 }>;
 
 
-export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { firstName?: string | null, middleName?: string | null, lastName?: string | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null, mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null, permanentStateId?: number | null, permanentDistrictId?: number | null, permanentLocalityId?: number | null, permanentWardId?: number | null, permanentTole?: string | null, permanentHouseNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, temporaryStateId?: number | null, temporaryDistrictId?: number | null, temporaryLocalityId?: number | null, temporaryWardId?: number | null, temporaryTole?: string | null, temporaryHouseNo?: string | null, landlordName?: string | null, landlordContact?: string | null, maritalStatusId?: string | null, professional?: Array<string | null> | null, otherProfession?: string | null, enableForeignEmployee?: boolean | null, countryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: number | null, annualIncomeSourceId?: string | null, identityLevel?: string | null, purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null, familyMemberInThisCooperative?: boolean | null, estimatedAnnualTransactionAmount?: number | null, estimatedAnnualLoanAmount?: number | null, isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: string | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null, declarationAgree?: boolean | null, additionalContactDetails?: KymFieldDataFragment | null, identification?: Array<KymFieldDataFragment | null> | null, permanentLocation?: { longitude?: number | null, latitude?: number | null } | null, temporaryLocation?: { longitude?: number | null, latitude?: number | null } | null, familyDetails?: Array<KymFieldDataFragment | null> | null, mainOccupation?: Array<KymFieldDataFragment | null> | null, spouseOccupation?: Array<KymFieldDataFragment | null> | null, incomeSourceDetails?: Array<KymFieldDataFragment | null> | null, otherMembershipDetails?: KymFieldDataFragment | null, familyMembershipDetails?: Array<KymFieldDataFragment | null> | null, initialTransactionDetails?: KymFieldDataFragment | null, documents?: Array<KymFieldDataFragment | null> | null, customFields?: Array<KymFieldDataFragment | null> | null } | null } | null } | null } | null } };
+export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetKymSettingsFieldsQueryVariables = Exact<{
   filter?: InputMaybe<ListKymFieldFilter>;
@@ -6005,6 +6889,38 @@ export const KymFieldDataFragmentDoc = `
   }
 }
     `;
+export const LoginDocument = `
+    mutation login($data: LoginInput!) {
+  auth {
+    login(data: $data) {
+      recordId
+      record {
+        token {
+          access
+          refresh
+        }
+        user {
+          id
+          objState
+          username
+          firstName
+          middleName
+          lastName
+        }
+      }
+    }
+  }
+}
+    `;
+export const useLoginMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>) =>
+    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+      ['login'],
+      useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
+      options
+    );
 export const SetBranchDataDocument = `
     mutation setBranchData($id: ID!, $data: BranchInput!) {
   settings {
@@ -6310,6 +7226,138 @@ export const useSetMemberDataMutation = <
     useMutation<SetMemberDataMutation, TError, SetMemberDataMutationVariables, TContext>(
       ['setMemberData'],
       useAxios<SetMemberDataMutation, SetMemberDataMutationVariables>(SetMemberDataDocument),
+      options
+    );
+export const SetMemberFamilyDetailsDocument = `
+    mutation setMemberFamilyDetails($id: ID!, $data: KYMIndFamilyMemberInput!) {
+  members {
+    individual(id: $id) {
+      familyMember {
+        upsert(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetMemberFamilyDetailsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetMemberFamilyDetailsMutation, TError, SetMemberFamilyDetailsMutationVariables, TContext>) =>
+    useMutation<SetMemberFamilyDetailsMutation, TError, SetMemberFamilyDetailsMutationVariables, TContext>(
+      ['setMemberFamilyDetails'],
+      useAxios<SetMemberFamilyDetailsMutation, SetMemberFamilyDetailsMutationVariables>(SetMemberFamilyDetailsDocument),
+      options
+    );
+export const DeleteMemberFamilyDetailsDocument = `
+    mutation deleteMemberFamilyDetails($memberId: ID!, $id: ID!) {
+  members {
+    individual(id: $memberId) {
+      familyMember {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteMemberFamilyDetailsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMemberFamilyDetailsMutation, TError, DeleteMemberFamilyDetailsMutationVariables, TContext>) =>
+    useMutation<DeleteMemberFamilyDetailsMutation, TError, DeleteMemberFamilyDetailsMutationVariables, TContext>(
+      ['deleteMemberFamilyDetails'],
+      useAxios<DeleteMemberFamilyDetailsMutation, DeleteMemberFamilyDetailsMutationVariables>(DeleteMemberFamilyDetailsDocument),
+      options
+    );
+export const SetMemberOccupationDocument = `
+    mutation setMemberOccupation($id: ID!, $isSpouse: Boolean!, $data: KYMIndOccupationInput!) {
+  members {
+    individual(id: $id) {
+      occupation {
+        upsert(isSpouse: $isSpouse, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetMemberOccupationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetMemberOccupationMutation, TError, SetMemberOccupationMutationVariables, TContext>) =>
+    useMutation<SetMemberOccupationMutation, TError, SetMemberOccupationMutationVariables, TContext>(
+      ['setMemberOccupation'],
+      useAxios<SetMemberOccupationMutation, SetMemberOccupationMutationVariables>(SetMemberOccupationDocument),
+      options
+    );
+export const DeleteMemberOccupationDocument = `
+    mutation deleteMemberOccupation($memberId: ID!, $id: ID!) {
+  members {
+    individual(id: $memberId) {
+      occupation {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteMemberOccupationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMemberOccupationMutation, TError, DeleteMemberOccupationMutationVariables, TContext>) =>
+    useMutation<DeleteMemberOccupationMutation, TError, DeleteMemberOccupationMutationVariables, TContext>(
+      ['deleteMemberOccupation'],
+      useAxios<DeleteMemberOccupationMutation, DeleteMemberOccupationMutationVariables>(DeleteMemberOccupationDocument),
+      options
+    );
+export const SetMemberIncomeSourceDocument = `
+    mutation setMemberIncomeSource($id: ID!, $data: KYMIndIncomeSourceInput!) {
+  members {
+    individual(id: $id) {
+      incomeSource {
+        upsert(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetMemberIncomeSourceMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetMemberIncomeSourceMutation, TError, SetMemberIncomeSourceMutationVariables, TContext>) =>
+    useMutation<SetMemberIncomeSourceMutation, TError, SetMemberIncomeSourceMutationVariables, TContext>(
+      ['setMemberIncomeSource'],
+      useAxios<SetMemberIncomeSourceMutation, SetMemberIncomeSourceMutationVariables>(SetMemberIncomeSourceDocument),
+      options
+    );
+export const DeleteMemberIncomeSourceDocument = `
+    mutation deleteMemberIncomeSource($memberId: ID!, $id: ID!) {
+  members {
+    individual(id: $memberId) {
+      incomeSource {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteMemberIncomeSourceMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteMemberIncomeSourceMutation, TError, DeleteMemberIncomeSourceMutationVariables, TContext>) =>
+    useMutation<DeleteMemberIncomeSourceMutation, TError, DeleteMemberIncomeSourceMutationVariables, TContext>(
+      ['deleteMemberIncomeSource'],
+      useAxios<DeleteMemberIncomeSourceMutation, DeleteMemberIncomeSourceMutationVariables>(DeleteMemberIncomeSourceDocument),
       options
     );
 export const UpdateKymFieldDocument = `
@@ -7232,9 +8280,9 @@ export const useGetInventoryUnitOfMeasureQuery = <
       options
     );
 export const GetIndividualKymOptionDocument = `
-    query getIndividualKYMOption($fieldName: String) {
+    query getIndividualKYMOption($id: String!, $fieldName: String) {
   members {
-    individual {
+    individual(id: $id) {
       options {
         list(filter: {name: $fieldName}) {
           data {
@@ -7255,18 +8303,18 @@ export const useGetIndividualKymOptionQuery = <
       TData = GetIndividualKymOptionQuery,
       TError = unknown
     >(
-      variables?: GetIndividualKymOptionQueryVariables,
+      variables: GetIndividualKymOptionQueryVariables,
       options?: UseQueryOptions<GetIndividualKymOptionQuery, TError, TData>
     ) =>
     useQuery<GetIndividualKymOptionQuery, TError, TData>(
-      variables === undefined ? ['getIndividualKYMOption'] : ['getIndividualKYMOption', variables],
+      ['getIndividualKYMOption', variables],
       useAxios<GetIndividualKymOptionQuery, GetIndividualKymOptionQueryVariables>(GetIndividualKymOptionDocument).bind(null, variables),
       options
     );
 export const GetIndividualKymOptionsDocument = `
-    query getIndividualKYMOptions($filter: ListKYMFieldFilter) {
+    query getIndividualKYMOptions($id: String!, $filter: ListKYMFieldFilter) {
   members {
-    individual {
+    individual(id: $id) {
       options {
         list(filter: $filter) {
           data {
@@ -7287,18 +8335,18 @@ export const useGetIndividualKymOptionsQuery = <
       TData = GetIndividualKymOptionsQuery,
       TError = unknown
     >(
-      variables?: GetIndividualKymOptionsQueryVariables,
+      variables: GetIndividualKymOptionsQueryVariables,
       options?: UseQueryOptions<GetIndividualKymOptionsQuery, TError, TData>
     ) =>
     useQuery<GetIndividualKymOptionsQuery, TError, TData>(
-      variables === undefined ? ['getIndividualKYMOptions'] : ['getIndividualKYMOptions', variables],
+      ['getIndividualKYMOptions', variables],
       useAxios<GetIndividualKymOptionsQuery, GetIndividualKymOptionsQueryVariables>(GetIndividualKymOptionsDocument).bind(null, variables),
       options
     );
 export const GetIndIdentificationDocOptionDocument = `
-    query getIndIdentificationDocOption {
+    query getIndIdentificationDocOption($id: String!) {
   members {
-    individual {
+    individual(id: $id) {
       options {
         list(filter: {parent: IDENTIFICATION}) {
           data {
@@ -7321,11 +8369,11 @@ export const useGetIndIdentificationDocOptionQuery = <
       TData = GetIndIdentificationDocOptionQuery,
       TError = unknown
     >(
-      variables?: GetIndIdentificationDocOptionQueryVariables,
+      variables: GetIndIdentificationDocOptionQueryVariables,
       options?: UseQueryOptions<GetIndIdentificationDocOptionQuery, TError, TData>
     ) =>
     useQuery<GetIndIdentificationDocOptionQuery, TError, TData>(
-      variables === undefined ? ['getIndIdentificationDocOption'] : ['getIndIdentificationDocOption', variables],
+      ['getIndIdentificationDocOption', variables],
       useAxios<GetIndIdentificationDocOptionQuery, GetIndIdentificationDocOptionQueryVariables>(GetIndIdentificationDocOptionDocument).bind(null, variables),
       options
     );
@@ -7422,10 +8470,10 @@ export const useGetMemberTranslationQuery = <
       options
     );
 export const GetKymFormStatusDocument = `
-    query getKymFormStatus($id: ID!) {
+    query getKymFormStatus($id: String!) {
   members {
-    individual {
-      formState(id: $id) {
+    individual(id: $id) {
+      formState {
         data {
           sectionStatus {
             personal {
@@ -7587,105 +8635,93 @@ export const useGetMemberIndividualDataQuery = <
       options
     );
 export const GetIndividualKymEditDataDocument = `
-    query getIndividualKymEditData($id: ID!) {
+    query getIndividualKymEditData($id: String!) {
   members {
-    individual {
-      formState(id: $id) {
+    individual(id: $id) {
+      formState {
         data {
           formData {
-            firstName
-            middleName
-            lastName
-            genderId
-            dateOfBirth
-            ethnicityId
-            nationalityId
-            educationQualificationId
-            religionId
-            educationQualificationId
-            religionId
-            mobileNumber
-            phoneNumber
-            email
-            additionalContactDetails {
-              ...KYMFieldData
+            basicInformation {
+              firstName
+              middleName
+              lastName
+              genderId
+              dateOfBirth
+              ethnicityId
+              nationalityId
+              educationQualificationId
+              religionId
+              educationQualificationId
+              religionId
             }
-            identification {
-              ...KYMFieldData
+            contactDetails {
+              mobileNumber
+              phoneNumber
+              email
             }
-            permanentStateId
-            permanentDistrictId
-            permanentLocalityId
-            permanentWardId
-            permanentTole
-            permanentHouseNo
-            permanentLocation {
-              longitude
-              latitude
-            }
-            isPermanentAndTemporaryAddressSame
-            temporaryStateId
-            temporaryDistrictId
-            temporaryLocalityId
-            temporaryWardId
-            temporaryTole
-            temporaryHouseNo
-            temporaryLocation {
-              longitude
-              latitude
-            }
-            landlordName
-            landlordContact
-            familyDetails {
-              ...KYMFieldData
+            rentedHouse {
+              landlordName
+              landlordContact
             }
             maritalStatusId
-            professional
-            otherProfession
-            mainOccupation {
-              ...KYMFieldData
+            profession {
+              professionId
+              otherProfession
             }
-            spouseOccupation {
-              ...KYMFieldData
+            foreignEmployment {
+              isForeignEmployment
+              foreignEmpCountryId
+              typeOfVisaId
+              foreignEstimatedAnnualIncome
             }
-            enableForeignEmployee
-            countryId
-            typeOfVisaId
-            foreignEstimatedAnnualIncome
             annualIncomeSourceId
-            incomeSourceDetails {
-              ...KYMFieldData
+            membershipDetails {
+              purposeId
+              isMemberOfAnotherCooperative
             }
-            identityLevel
-            purposeId
-            isMemberOfAnotherCooperative
-            otherMembershipDetails {
-              ...KYMFieldData
+            estimatedTransactions {
+              estimatedAnnualTransactionAmount
+              estimatedAnnualLoanAmount
+              estimatedAnnualTransactionFrequencyId
+              estimatedAnnualDepositAmount
             }
-            familyMemberInThisCooperative
-            familyMembershipDetails {
-              ...KYMFieldData
+            declaration {
+              isPoliticallyExposed
+              politicallyExposedDetails
+              hasBeneficialOwner
+              beneficialRelationshipId
+              beneficialFullName
+              isConvicted
+              convictedDetails
+              hasForeignResidentialPermit
+              foreignResidentialPermitTypeId
             }
-            initialTransactionDetails {
-              ...KYMFieldData
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
             }
-            estimatedAnnualTransactionAmount
-            estimatedAnnualLoanAmount
-            isPoliticallyExposed
-            politicallyExposedDetails
-            hasBeneficialOwner
-            beneficialRelationshipId
-            beneficialFullName
-            isConvicted
-            convictedDetails
-            hasForeignResidentialPermit
-            foreignResidentialPermitTypeId
-            documents {
-              ...KYMFieldData
-            }
-            declarationAgree
-            customFields {
-              ...KYMFieldData
+            temporaryAddress {
+              address {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              sameTempAsPermanentAddress
             }
           }
         }
@@ -7693,7 +8729,7 @@ export const GetIndividualKymEditDataDocument = `
     }
   }
 }
-    ${KymFieldDataFragmentDoc}`;
+    `;
 export const useGetIndividualKymEditDataQuery = <
       TData = GetIndividualKymEditDataQuery,
       TError = unknown

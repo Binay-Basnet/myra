@@ -1,6 +1,6 @@
-query getIndividualKYMOption($fieldName: String) {
+query getIndividualKYMOption($id: String!, $fieldName: String) {
   members {
-    individual {
+    individual(id: $id) {
       options {
         list(filter: { name: $fieldName }) {
           data {
@@ -17,9 +17,9 @@ query getIndividualKYMOption($fieldName: String) {
   }
 }
 
-query getIndividualKYMOptions($filter: ListKYMFieldFilter) {
+query getIndividualKYMOptions($id: String!, $filter: ListKYMFieldFilter) {
   members {
-    individual {
+    individual(id: $id) {
       options {
         list(filter: $filter) {
           data {
@@ -36,9 +36,9 @@ query getIndividualKYMOptions($filter: ListKYMFieldFilter) {
   }
 }
 
-query getIndIdentificationDocOption {
+query getIndIdentificationDocOption($id: String!) {
   members {
-    individual {
+    individual(id: $id) {
       options {
         list(filter: { parent: IDENTIFICATION }) {
           data {
