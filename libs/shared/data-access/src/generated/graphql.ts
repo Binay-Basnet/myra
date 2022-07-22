@@ -3239,8 +3239,6 @@ export type KymIndIdentification = {
   drivingLicenseIssuePlace?: Maybe<Scalars['String']>;
   drivingLicenseNo?: Maybe<Scalars['String']>;
   identificationSelection?: Maybe<Array<Maybe<Scalars['String']>>>;
-  nationalIDIssueDate?: Maybe<Scalars['String']>;
-  nationalIDIssuePlace?: Maybe<Scalars['String']>;
   nationalIDNo?: Maybe<Scalars['String']>;
   passportIssueDate?: Maybe<Scalars['String']>;
   passportIssuePlace?: Maybe<Scalars['String']>;
@@ -4807,8 +4805,6 @@ export type KymIndMemberInput = {
   maritalStatusId?: InputMaybe<Scalars['String']>;
   middleName?: InputMaybe<Scalars['String']>;
   mobileNumber?: InputMaybe<Scalars['String']>;
-  nationalIDIssueDate?: InputMaybe<Scalars['String']>;
-  nationalIDIssuePlace?: InputMaybe<Scalars['String']>;
   nationalIDNo?: InputMaybe<Scalars['String']>;
   nationalityId?: InputMaybe<Scalars['String']>;
   otherCoopBranchId?: InputMaybe<Scalars['String']>;
@@ -6666,6 +6662,13 @@ export type KymIndFormStateQuery = {
   error?: Maybe<QueryError>;
 };
 
+export type LoginMutationVariables = Exact<{
+  data: LoginInput;
+}>;
+
+
+export type LoginMutation = { auth: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, user: { id: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string> } } | null } | null } };
+
 export type SetBranchDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: BranchInput;
@@ -7109,7 +7112,7 @@ export type GetIndividualKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, identification?: { identificationSelection?: Array<string | null> | null, citizenshipNo?: string | null, citizenshipIssueDate?: string | null, citizenshipIssuePlace?: string | null, passportNo?: string | null, passportIssueDate?: string | null, passportIssuePlace?: string | null, nationalIDNo?: string | null, nationalIDIssueDate?: string | null, nationalIDIssuePlace?: string | null, drivingLicenseNo?: string | null, drivingLicenseIssueDate?: string | null, drivingLicenseIssuePlace?: string | null, voterCardNo?: string | null, voterPollingStation?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
+export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, identification?: { identificationSelection?: Array<string | null> | null, citizenshipNo?: string | null, citizenshipIssueDate?: string | null, citizenshipIssuePlace?: string | null, passportNo?: string | null, passportIssueDate?: string | null, passportIssuePlace?: string | null, nationalIDNo?: string | null, drivingLicenseNo?: string | null, drivingLicenseIssueDate?: string | null, drivingLicenseIssuePlace?: string | null, voterCardNo?: string | null, voterPollingStation?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetIndividualKymFamilyMembersListQueryVariables = Exact<{
   id: Scalars['String'];
@@ -7186,6 +7189,38 @@ export const KymFieldDataFragmentDoc = `
   }
 }
     `;
+export const LoginDocument = `
+    mutation login($data: LoginInput!) {
+  auth {
+    login(data: $data) {
+      recordId
+      record {
+        token {
+          access
+          refresh
+        }
+        user {
+          id
+          objState
+          username
+          firstName
+          middleName
+          lastName
+        }
+      }
+    }
+  }
+}
+    `;
+export const useLoginMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>) =>
+    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+      ['login'],
+      useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
+      options
+    );
 export const SetBranchDataDocument = `
     mutation setBranchData($id: ID!, $data: BranchInput!) {
   settings {
@@ -8933,8 +8968,6 @@ export const GetIndividualKymEditDataDocument = `
               passportIssueDate
               passportIssuePlace
               nationalIDNo
-              nationalIDIssueDate
-              nationalIDIssuePlace
               drivingLicenseNo
               drivingLicenseIssueDate
               drivingLicenseIssuePlace

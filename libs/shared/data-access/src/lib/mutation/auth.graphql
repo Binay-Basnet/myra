@@ -1,36 +1,21 @@
-#mutation login($data: LoginInput!) {
-#  auth {
-#    login(data: $data) {
-#      recordId
-#      record {
-#        token {
-#          access
-#          refresh
-#        }
-#        user {
-#          id
-#          createdBy {
-#            id
-#            name
-#            username
-#            password
-#            userType
-#          }
-#          modifiedBy {
-#            id
-#            name
-#            username
-#            password
-#            userType
-#          }
-#          modifiedAt
-#          objState
-#          username
-#          firstName
-#          middleName
-#          lastName
-#        }
-#      }
-#    }
-#  }
-#}
+mutation login($data: LoginInput!) {
+  auth {
+    login(data: $data) {
+      recordId
+      record {
+        token {
+          access
+          refresh
+        }
+        user {
+          id
+          objState
+          username
+          firstName
+          middleName
+          lastName
+        }
+      }
+    }
+  }
+}

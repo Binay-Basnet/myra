@@ -221,8 +221,6 @@ query getIndividualKymEditData($id: String!) {
               passportIssueDate
               passportIssuePlace
               nationalIDNo
-              nationalIDIssueDate
-              nationalIDIssuePlace
               drivingLicenseNo
               drivingLicenseIssueDate
               drivingLicenseIssuePlace
