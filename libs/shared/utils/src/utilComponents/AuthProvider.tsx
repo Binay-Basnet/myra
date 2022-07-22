@@ -3,8 +3,8 @@ import { createContext, useState } from 'react';
 import { User } from '@coop/shared/data-access';
 
 type AuthType = Partial<{
-  user: User;
-  acessToken: string;
+  user: Partial<User>;
+  accessToken: string;
 }>;
 
 export const AuthContext = createContext<{

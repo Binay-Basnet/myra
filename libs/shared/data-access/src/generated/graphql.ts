@@ -4700,22 +4700,6 @@ export type KymIndCooperativeMemberStatus = {
   error?: Maybe<Array<Maybe<KymIndCooperativeMemberSection>>>;
 };
 
-export type KymIndDeclaration = {
-  beneficialFullName?: Maybe<Scalars['String']>;
-  beneficialRelationshipId?: Maybe<Scalars['ID']>;
-  convictionDetails?: Maybe<Scalars['String']>;
-  documents?: Maybe<Array<Maybe<KymDocumentsType>>>;
-  foreignResidentialPermitDetails?: Maybe<Array<Maybe<KymIdentificationType>>>;
-  hasBeneficialOwner?: Maybe<Scalars['Boolean']>;
-  hasForeignResidentialPermit?: Maybe<Scalars['Boolean']>;
-  isConvicted?: Maybe<Scalars['Boolean']>;
-  isPoliticallyExposed?: Maybe<Scalars['Boolean']>;
-  localKinAddress?: Maybe<Scalars['String']>;
-  localKinContact?: Maybe<Scalars['String']>;
-  localKinName?: Maybe<Scalars['String']>;
-  localKinRelationshipId?: Maybe<Scalars['ID']>;
-};
-
 export type KymIndDeclarationLus = {
   name: KymIndPersonalSection;
 };

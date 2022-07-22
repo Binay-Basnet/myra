@@ -35,7 +35,8 @@ export const Login = () => {
         const accessToken = res?.auth?.login?.record?.token?.access;
         const refreshToken = res?.auth?.login?.record?.token?.refresh;
         const user = res?.auth?.login?.record?.user;
-        auth?.setAuthentication({ accessToken: accessToken, user: user });
+        auth.setAuthentication &&
+          auth?.setAuthentication({ accessToken: accessToken, user: user });
         localStorage.setItem('refreshToken', refreshToken ?? '');
       }
 
