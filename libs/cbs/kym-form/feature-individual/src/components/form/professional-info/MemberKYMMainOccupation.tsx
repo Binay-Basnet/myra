@@ -184,10 +184,12 @@ const MainOccupation = ({
                     label={t['kymIndOccupation']}
                     placeholder={t['kymIndSelectOccupation']}
                     options={
-                      profession?.map((data: string) => ({
-                        label: getFieldOption(occupationData)?.find(
-                          (prev) => prev.value === data
-                        )?.label,
+                      (profession as string[])?.map((data: string) => ({
+                        label: String(
+                          getFieldOption(occupationData)?.find(
+                            (prev) => prev.value === data
+                          )?.label
+                        ),
                         value: data,
                       })) ?? []
                     }
