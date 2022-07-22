@@ -406,6 +406,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           alignItems="center"
                           gap="s8"
                           p="s4"
+                          cursor="pointer"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
                           onClick={() => router.push('/members/list')}
@@ -432,6 +433,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           textAlign="center"
                           alignItems="center"
                           gap="s8"
+                          cursor="pointer"
                           p="s4"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
@@ -460,6 +462,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           alignItems="center"
                           gap="s8"
                           p="s4"
+                          cursor="pointer"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
                           onClick={() => router.push('/loan')}
@@ -493,6 +496,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           alignItems="center"
                           gap="s8"
                           p="s4"
+                          cursor="pointer"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
                           onClick={() => router.push('/accounting/sales/list')}

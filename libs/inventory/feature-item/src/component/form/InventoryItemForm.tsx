@@ -102,7 +102,7 @@ export const InventoryItemForm = () => {
       options: string;
     }[];
 
-    const z = variantProduct.reduce(
+    const tableData = variantProduct.reduce(
       (accumulator, currentVal) =>
         accumulator.concat(
           currentVal.options.split(',').map((option: string) => {
@@ -114,7 +114,7 @@ export const InventoryItemForm = () => {
 
     reset({
       ...getValues(),
-      data: z.slice(1),
+      data: tableData.slice(1),
     });
   };
 
