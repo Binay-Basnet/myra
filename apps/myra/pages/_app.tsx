@@ -10,8 +10,9 @@ import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { Login } from '@coop/myra/components';
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import { useSnap } from '@coop/shared/utils';
+import { AuthProvider, useSnap } from '@coop/shared/utils';
 import { store, theme } from '@coop/shared/utils';
+import { useAuth } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
@@ -58,6 +59,7 @@ interface ManAppProps extends AppInitialProps {
 }
 
 function MainApp({ Component, pageProps }: ManAppProps) {
+  const auth = useAuth();
   const getLayout = Component.getLayout || ((page) => page);
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -77,7 +79,7 @@ function MainApp({ Component, pageProps }: ManAppProps) {
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
       <ToastContainer />
-      {isLoggedIn === true ? (
+      {auth?.auth?.user ? (
         <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       ) : (
         <main className="app">
@@ -101,12 +103,14 @@ function MainApp({ Component, pageProps }: ManAppProps) {
 function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <ChakraProvider theme={theme}>
-          <MainApp Component={Component} pageProps={pageProps} />
-        </ChakraProvider>
-        <ReactQueryDevtools />
-      </QueryClientProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <ChakraProvider theme={theme}>
+            <MainApp Component={Component} pageProps={pageProps} />
+          </ChakraProvider>
+          <ReactQueryDevtools />
+        </QueryClientProvider>
+      </AuthProvider>
     </Provider>
   );
 }
