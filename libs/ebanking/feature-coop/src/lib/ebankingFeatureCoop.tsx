@@ -6,8 +6,8 @@ import { SiFormstack } from 'react-icons/si';
 import { TbCalendarTime } from 'react-icons/tb';
 import Link from 'next/link';
 import { ChevronRightIcon } from '@chakra-ui/icons';
-import { AccountPopover } from 'libs/ebanking/feature-accounts/src/components/AccountPopover';
 
+import { AccountPopover } from '@coop/ebanking/accounts';
 import {
   CoopCard,
   CoopDownloadCard,
