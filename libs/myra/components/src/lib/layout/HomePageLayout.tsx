@@ -24,7 +24,7 @@ const myraAppn = [
   {
     title: 'loanManagementSystem',
     img: '/theta.svg',
-    link: '/members/list',
+    link: '/loan',
   },
   {
     title: 'accountingSystem',

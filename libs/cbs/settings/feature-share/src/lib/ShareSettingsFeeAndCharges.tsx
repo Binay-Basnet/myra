@@ -64,21 +64,21 @@ export const ShareSettingsFeeAndCharges = () => {
                 columns={[
                   {
                     accessor: 'type',
-                    header: 'Type',
+                    header: t['shareSettingsFeesType'],
                     fieldType: 'select',
                     selectOptions: type,
                   },
                   {
                     accessor: 'minShareQuantity',
-                    header: 'Minimum Share Quantity',
+                    header: t['shareSettingsFeesMinQuantity'],
                   },
                   {
                     accessor: 'maxShareQuantity',
-                    header: 'Maximum Share Quantity',
+                    header: t['shareSettingsFeesMaxQuantity'],
                   },
                   {
                     accessor: 'charge',
-                    header: 'Charge',
+                    header: t['shareSettingsFeesCharge'],
                     isNumeric: true,
                   },
                 ]}
@@ -107,25 +107,25 @@ export const ShareSettingsFeeAndCharges = () => {
                 columns={[
                   {
                     accessor: 'name',
-                    header: 'Name',
+                    header: t['shareSettingsFeesName'],
                   },
                   {
                     accessor: 'type',
-                    header: 'Type',
+                    header: t['shareSettingsFeesType'],
                     fieldType: 'select',
                     selectOptions: type,
                   },
                   {
                     accessor: 'minShareQuantity',
-                    header: 'Minimum Share Quantity',
+                    header: t['shareSettingsFeesMinQuantity'],
                   },
                   {
                     accessor: 'maxShareQuantity',
-                    header: 'Maximum Share Quantity',
+                    header: t['shareSettingsFeesMaxQuantity'],
                   },
                   {
                     accessor: 'charge',
-                    header: 'Charge',
+                    header: t['shareSettingsFeesCharge'],
                     isNumeric: true,
                   },
                 ]}

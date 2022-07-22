@@ -1,0 +1,11 @@
+query getUtilityList{
+  eBanking {
+    utilityPayments {
+      id
+      name
+      enabled
+      icon
+      service_id
+    }
+  }
+}

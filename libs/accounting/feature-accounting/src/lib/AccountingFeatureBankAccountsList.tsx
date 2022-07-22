@@ -58,60 +58,37 @@ export function AccountingFeatureBankAccountsList(
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['accountingBankAccountsListItemId'],
+        header: t['bankAccountsCode'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: t['accountingBankAccountsListName'],
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue()}
-              </Text>
-            </Box>
-          );
-        },
+        header: t['bankAccountsBankName'],
 
         meta: {
           width: '60%',
         },
       },
       {
-        header: t['accountingBankAccountsListType'],
+        header: t['bankAccountsBookBalance'],
         accessorFn: (row) => row?.node?.code,
         meta: {
           width: '30%',
         },
       },
       {
-        header: t['accountingBankAccountsListUnitPrice'],
+        header: t['bankAccountsBankBalance'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
       },
       {
-        header: t['accountingBankAccountsListTotalCost'],
+        header: t['bankAccountsDifference'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
-      },
-      {
-        header: t['accountingBankAccountsListItemQuantity'],
-        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
         id: '_actions',

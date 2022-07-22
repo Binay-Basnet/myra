@@ -69,6 +69,8 @@ export function SettingsDepositProductsAdd(
   } = methods;
   const depositNature = watch('nameOfDepositProduct');
 
+  console.log(depositNature);
+
   return (
     <>
       <Container height="fit-content" minW="container.lg" p="0">
