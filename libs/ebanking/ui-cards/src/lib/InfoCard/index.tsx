@@ -30,7 +30,7 @@ export function InfoCard({ title, subtitle, children, btn }: InfoCardProps) {
         <Box display="flex" flexDir="column" gap="s4">
           <Text
             fontSize="r1"
-            color="gray.700"
+            color="gray.800"
             fontWeight="600"
             lineHeight={'125%'}
           >

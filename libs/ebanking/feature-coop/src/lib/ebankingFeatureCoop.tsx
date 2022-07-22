@@ -1,67 +1,181 @@
-import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
+import { BsCash } from 'react-icons/bs';
+import { FiBook } from 'react-icons/fi';
+import { ImBlocked } from 'react-icons/im';
+import { IoCashOutline } from 'react-icons/io5';
+import { SiFormstack } from 'react-icons/si';
+import { TbCalendarTime } from 'react-icons/tb';
+import Link from 'next/link';
+import { ChevronRightIcon } from '@chakra-ui/icons';
+import { AccountPopover } from 'libs/ebanking/feature-accounts/src/components/AccountPopover';
 
-import { Box, Grid, Icon, TextFields } from '@coop/shared/ui';
+import {
+  CoopCard,
+  CoopDownloadCard,
+  COOPHeaderCard,
+  InfoCard,
+} from '@coop/ebanking/cards';
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Icon,
+  Text,
+  VStack,
+} from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
 export interface EbankingFeatureCoopProps {}
 
 export function EbankingFeatureCoop(props: EbankingFeatureCoopProps) {
   return (
-    <Box>
-      <Box
-        display="flex"
-        flexDir="column"
-        p="s16"
-        bg="primary.500"
-        color="white"
-        gap="s24"
-        borderRadius="br2"
-        position="sticky"
-        top="92px"
-      >
-        <TextFields variant="stickyCardHeader">Accounts</TextFields>
-
-        <Grid templateColumns="repeat(2, 1fr)">
-          <Box display="flex" gap="s12">
-            <Box
-              borderRadius="br2"
-              bg="primary.100"
-              w="s32"
-              h="s32"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Icon as={AiOutlineArrowUp} color="primary.500" size="lg" />
-            </Box>
-            <Box display="flex" flexDir="column">
-              <TextFields color="primary.200" variant="tableHeader">
-                Total Saving
-              </TextFields>
-              <TextFields variant="stickyCardHeader">1,64,742</TextFields>
-            </Box>
+    <Box display="flex" flexDir="column" gap="s16">
+      <COOPHeaderCard />
+      <Divider />
+      <Box px="s16" py="s4" bg="white" borderRadius="br2">
+        <VStack divider={<Divider />}>
+          <Box
+            py="s12"
+            display="flex"
+            alignItems="center"
+            w="100%"
+            justifyContent="space-between"
+            cursor="pointer"
+          >
+            <Text fontSize="r1" fontWeight="600" color="gray.800">
+              My Share Information
+            </Text>
+            <Icon as={ChevronRightIcon} size="lg" color="gray.500" />
           </Box>
-          <Box display="flex" gap="s12">
-            <Box
-              borderRadius="br2"
-              bg="danger.100"
-              w="s32"
-              h="s32"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Icon as={AiOutlineArrowDown} color="danger.500" size="lg" />
-            </Box>
-            <Box display="flex" gap="s4" flexDir="column">
-              <TextFields color="primary.200" variant="tableHeader">
-                Total Loan
-              </TextFields>
-              <TextFields variant="stickyCardHeader">74,560</TextFields>
-            </Box>
+          <Box
+            py="s12"
+            display="flex"
+            alignItems="center"
+            w="100%"
+            justifyContent="space-between"
+            cursor="pointer"
+          >
+            <Text fontSize="r1" fontWeight="600" color="gray.800">
+              My KYM Details
+            </Text>
+            <Icon as={ChevronRightIcon} size="lg" color="gray.500" />
           </Box>
-        </Grid>
+          <Box
+            py="s8"
+            display="flex"
+            alignItems="center"
+            w="100%"
+            justifyContent="space-between"
+          >
+            <Text fontSize="r1" fontWeight="600" color="gray.800">
+              Default Account
+            </Text>
+            <AccountPopover />
+          </Box>
+        </VStack>
       </Box>
+      <InfoCard
+        title="Cheque Services"
+        btn={
+          <Link href="/coop/cheque/all">
+            <Box mr="-s12">
+              <Button variant="ghost">
+                View all applications
+                <Icon as={ChevronRightIcon} color="priamry.500" />
+              </Button>
+            </Box>
+          </Link>
+        }
+      >
+        <Grid templateColumns="repeat(3, 1fr)" p="s16" gap="s16">
+          <CoopCard
+            icon={FiBook}
+            title={'Request Chequebook'}
+            link={'/coop/cheque/request'}
+          />
+          <CoopCard
+            icon={IoCashOutline}
+            title={'Withdraw Via Collector'}
+            link={'/coop/cheque/withdraw'}
+          />
+          <CoopCard
+            icon={ImBlocked}
+            title={'Block Cheque'}
+            link={'/coop/cheque/block'}
+          />
+        </Grid>
+      </InfoCard>
+      <InfoCard
+        title="Loan Services"
+        btn={
+          <Link href="/coop/loan/all">
+            <Box mr="-s12">
+              <Button variant="ghost">
+                View all applications
+                <Icon as={ChevronRightIcon} color="priamry.500" />
+              </Button>
+            </Box>
+          </Link>
+        }
+      >
+        <Grid templateColumns="repeat(3, 1fr)" p="s16" gap="s16">
+          <CoopCard
+            icon={BsCash}
+            title={'Apply for Loan'}
+            link={'/coop/loan/apply'}
+          />
+          <CoopCard
+            icon={TbCalendarTime}
+            title={'View Loan Schedule'}
+            link={'/coop/cheque/withdraw'}
+          />
+        </Grid>
+      </InfoCard>
+      <InfoCard
+        title="Complaints"
+        btn={
+          <Link href="/coop/complaints/all">
+            <Box mr="-s12">
+              <Button variant="ghost">
+                View all applications
+                <Icon as={ChevronRightIcon} color="priamry.500" />
+              </Button>
+            </Box>
+          </Link>
+        }
+      >
+        <Grid templateColumns="repeat(3, 1fr)" p="s16" gap="s16">
+          <CoopCard
+            icon={BsCash}
+            title={'Register New complaint'}
+            link={'/coop/complaints/new'}
+          />
+        </Grid>
+      </InfoCard>
+      <InfoCard title="Downloads">
+        <Grid templateColumns="repeat(2, 1fr)" p="s16" gap="s16">
+          <CoopDownloadCard
+            icon={SiFormstack}
+            title={'Forms'}
+            link={'/coop/downloads/forms'}
+          />
+          <CoopDownloadCard
+            icon={SiFormstack}
+            title={'Guidelines'}
+            link={'/coop/downloads/guidelines'}
+          />
+          <CoopDownloadCard
+            icon={SiFormstack}
+            title={'Reports'}
+            link={'/coop/downloads/reports'}
+          />
+          <CoopDownloadCard
+            icon={SiFormstack}
+            title={'Directives'}
+            link={'/coop/downloads/directives'}
+          />
+        </Grid>
+      </InfoCard>
     </Box>
   );
 }
