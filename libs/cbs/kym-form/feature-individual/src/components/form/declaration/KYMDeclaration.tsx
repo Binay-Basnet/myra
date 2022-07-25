@@ -11,6 +11,7 @@ import {
 import {
   Kym_Field_Custom_Id,
   KymIndMemberInput,
+  useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
@@ -56,7 +57,7 @@ export const KYMDeclaration = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -83,6 +84,29 @@ export const KYMDeclaration = ({
   const isConvicted = watch('isConvicted');
 
   const hasForeignResidentialPermit = watch('hasForeignResidentialPermit');
+
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      console.log({
+        ...editValueData?.declaration,
+        beneficialFullName:
+          editValueData?.declaration?.beneficialFullName?.local,
+      });
+
+      reset({
+        ...editValueData?.declaration,
+        beneficialFullName:
+          editValueData?.declaration?.beneficialFullName?.local,
+      });
+    }
+  }, [editValues]);
 
   const { mutate } = useSetMemberDataMutation();
 

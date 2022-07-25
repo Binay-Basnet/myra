@@ -19,6 +19,7 @@ import {
   useDeleteMemberOccupationMutation,
   useGetConfigQuery,
   useGetIndividualKymEditDataQuery,
+  useGetIndividualKymFamilyOccupationListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
   useSetMemberDataMutation,
@@ -97,7 +98,7 @@ const MainOccupation = ({
 
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   // const profession = watch('profession');
 
@@ -134,7 +135,40 @@ const MainOccupation = ({
   //   occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]
   //     ?.options ?? [];
 
-  const { mutate } = useSetMemberOccupationMutation();
+  const { data: familyOccupationListData, refetch } =
+    useGetIndividualKymFamilyOccupationListQuery({
+      id: id,
+      isSpouse: false,
+    });
+
+  useEffect(() => {
+    if (familyOccupationListData) {
+      const editValueData =
+        familyOccupationListData?.members?.individual?.listOccupation?.data;
+
+      const occupationDetail = editValueData?.find(
+        (data) => data?.id === occupationId
+      );
+
+      if (occupationDetail) {
+        reset({
+          occupationId: occupationDetail?.occupationId,
+          orgName: occupationDetail?.orgName?.local,
+          panVatNo: occupationDetail?.panVatNo,
+          address: occupationDetail?.address?.local,
+          estimatedAnnualIncome: occupationDetail?.estimatedAnnualIncome,
+          establishedDate: occupationDetail?.establishedDate,
+          registrationNo: occupationDetail?.registrationNo,
+          contact: occupationDetail?.contact,
+          isOwner: occupationDetail?.isOwner,
+        });
+      }
+    }
+  }, [familyOccupationListData]);
+
+  const { mutate } = useSetMemberOccupationMutation({
+    onSuccess: () => refetch(),
+  });
 
   useEffect(() => {
     const subscription = watch(
@@ -301,7 +335,7 @@ export const MemberKYMMainOccupation = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch, control } = methods;
+  const { watch, control, reset } = methods;
 
   const isForeignEmployee = watch('isForeignEmployment');
 
@@ -314,6 +348,40 @@ export const MemberKYMMainOccupation = ({
     : [];
 
   const [occupationIds, setOccupationIds] = useState<string[]>([]);
+
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData
+          ?.foreignEmployment;
+
+      reset({ ...editValueData });
+    }
+  }, [editValues]);
+
+  const { data: occupationListEditValues } =
+    useGetIndividualKymFamilyOccupationListQuery({
+      id: id,
+      isSpouse: false,
+    });
+
+  useEffect(() => {
+    if (occupationListEditValues) {
+      const editValueData =
+        occupationListEditValues?.members?.individual?.listOccupation?.data;
+
+      setOccupationIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
+        ) ?? []
+      );
+    }
+  }, [occupationListEditValues]);
 
   const { mutate: newIDMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

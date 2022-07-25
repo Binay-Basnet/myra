@@ -10,6 +10,7 @@ import {
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
   KymIndMemberInput,
+  useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
@@ -31,7 +32,7 @@ export const KYMFinancialTransactionDetails = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -41,6 +42,21 @@ export const KYMFinancialTransactionDetails = ({
   //     id,
   //     filter: { customId: KYMOptionEnum.FinancialTransactionDetails },
   //   });
+
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      reset({
+        ...editValueData?.initialTransactionDetails,
+      });
+    }
+  }, [editValues]);
 
   const { mutate } = useSetMemberDataMutation();
 
