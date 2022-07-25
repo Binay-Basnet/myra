@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
+import { Member } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/table';
 import {
   Avatar,
@@ -42,16 +43,16 @@ export function MemberListPage() {
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
-  console.log({ rowData });
-
   const popoverTitle = [
     {
       title: 'memberListTableViewMemberProfile',
     },
     {
       title: 'memberListTableEditMember',
-      onClick: (memberId?: string) =>
-        router.push(`/members/individual/edit/${memberId}`),
+      onClick: (member?: Member | null) =>
+        router.push(
+          `/members/${member?.type.toLowerCase()}/edit/${member?.id}`
+        ),
     },
     {
       title: 'memberListTableMakeInactive',
@@ -114,7 +115,7 @@ export function MemberListPage() {
         cell: (cell) => (
           <PopoverComponent
             items={popoverTitle}
-            memberId={cell?.row?.original?.node?.id}
+            member={cell?.row?.original?.node}
           />
         ),
         meta: {

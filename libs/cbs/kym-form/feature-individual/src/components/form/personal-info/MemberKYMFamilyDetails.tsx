@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
-import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
@@ -18,11 +12,8 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id,
-  Kym_Field_Custom_Id as KYMOptionEnum,
-  Kym_Option_Field_Type,
+  FormFieldSearchTerm,
   KymIndMemberInput,
-  KymOption,
   useDeleteMemberFamilyDetailsMutation,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymFamilyMembersListQuery,
@@ -81,20 +72,43 @@ const AddFamilyMember = ({
 }: IAddFamilyMember) => {
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const router = useRouter();
 
   const id = String(router?.query?.['id']);
 
   const { data: relationshipData } = useGetIndividualKymOptionsQuery({
-    id,
-    filter: {
-      customId: Kym_Field_Custom_Id.Relationship,
-    },
+    searchTerm: FormFieldSearchTerm.Relationship,
   });
 
-  const { mutate } = useSetMemberFamilyDetailsMutation();
+  const { data: editValues, refetch } =
+    useGetIndividualKymFamilyMembersListQuery({
+      id: id,
+    });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.listFamilyMember?.data;
+
+      const familyMemberDetail = editValueData?.find(
+        (data) => data?.id === familyMemberId
+      );
+
+      if (familyMemberDetail) {
+        reset({
+          relationshipId: familyMemberDetail?.relationshipId,
+          fullName: familyMemberDetail?.fullName?.local,
+          dateOfBirth: familyMemberDetail?.dateOfBirth,
+        });
+      }
+    }
+  }, [editValues]);
+
+  const { mutate } = useSetMemberFamilyDetailsMutation({
+    onSuccess: () => refetch(),
+  });
 
   useEffect(() => {
     const subscription = watch(
@@ -196,14 +210,12 @@ const MemberMaritalStatus = ({
 
   const { data: maritalStatusData, isLoading: maritalStatusLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.MaritalStatus },
+      searchTerm: FormFieldSearchTerm.MaritalStatus,
     });
 
-  const { data: editValues, isLoading: editLoading } =
-    useGetIndividualKymEditDataQuery({
-      id: id,
-    });
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
 
   console.log({
     ind: 'marital status info',
@@ -283,11 +295,7 @@ const MemberFamilyDetails = ({
 
   const [familyMemberIds, setFamilyMemberIds] = useState<string[]>([]);
 
-  const {
-    data: editValues,
-    isLoading: editLoading,
-    refetch,
-  } = useGetIndividualKymFamilyMembersListQuery({
+  const { data: editValues } = useGetIndividualKymFamilyMembersListQuery({
     id: id,
   });
 
@@ -295,7 +303,13 @@ const MemberFamilyDetails = ({
     if (editValues) {
       const editValueData =
         editValues?.members?.individual?.listFamilyMember?.data;
-      console.log('edit value', editValueData);
+
+      setFamilyMemberIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
+        ) ?? []
+      );
     }
   }, [editValues]);
 
@@ -307,6 +321,7 @@ const MemberFamilyDetails = ({
 
   const { mutate: deleteMutate } = useDeleteMemberFamilyDetailsMutation({
     onSuccess: (res) => {
+      // refetch();
       const deletedId = String(
         res?.members?.individual?.familyMember?.delete?.recordId
       );

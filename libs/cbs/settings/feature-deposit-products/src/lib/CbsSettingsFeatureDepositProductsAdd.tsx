@@ -11,6 +11,7 @@ import {
 import {
   DepositProductInput,
   NatureOfDepositProduct,
+  useGetDepositProductSettingsEditDataQuery,
   useSetDepositProductMutation,
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
@@ -52,6 +53,7 @@ export function SettingsDepositProductsAdd(
 ) {
   const router = useRouter();
   const { t } = useTranslation();
+  const id = String(router?.query?.['id']);
 
   const { mutate } = useSetDepositProductMutation();
 
@@ -93,8 +95,15 @@ export function SettingsDepositProductsAdd(
   const submitForm = () => {
     console.log(getValues());
     mutate({ id: '', data: getValues() });
-    // router.push(`/members/translation`);
   };
+
+  const {
+    data: editValues,
+    isLoading: editLoading,
+    refetch,
+  } = useGetDepositProductSettingsEditDataQuery({
+    id: id,
+  });
 
   return (
     <>

@@ -1,10 +1,5 @@
-import { Fragment, useEffect, useState } from 'react';
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -17,11 +12,11 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id as KYMOptionEnum,
-  KymIndMemberInput,
+  FormFieldSearchTerm,
   KymOption,
   useDeleteMemberOccupationMutation,
   useGetIndividualKymEditDataQuery,
+  useGetIndividualKymFamilyOccupationListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
   useSetMemberOccupationMutation,
@@ -36,13 +31,6 @@ interface DynamicInputProps {
   fieldIndex: number;
   optionIndex: number;
   option: Partial<KymOption>;
-}
-
-interface IMemberKYMHusbandWifeOccupationProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
 }
 
 export const SpouseOccupationInput = ({
@@ -71,14 +59,23 @@ export const SpouseOccupationInput = ({
   );
 };
 
+interface IHusbandWifeOccupationProps {
+  removeHusbandWifeOccupation: (occupationId: string) => void;
+  occupationId: string;
+  setKymCurrentSection: (section?: {
+    section: string;
+    subSection: string;
+  }) => void;
+}
+
 const HusbandWifeOccupation = ({
   removeHusbandWifeOccupation,
   setKymCurrentSection,
   occupationId,
-}: any) => {
+}: IHusbandWifeOccupationProps) => {
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
   // const profession = watch('profession');
 
   const isOwner = watch(`isOwner`);
@@ -95,8 +92,7 @@ const HusbandWifeOccupation = ({
       ?.professionId ?? [];
 
   const { data: occupationData } = useGetIndividualKymOptionsQuery({
-    id,
-    filter: { customId: KYMOptionEnum.Occupation },
+    searchTerm: FormFieldSearchTerm.Occupation,
   });
 
   const { t } = useTranslation();
@@ -104,7 +100,40 @@ const HusbandWifeOccupation = ({
   // const occupationFieldNames =
   //   occupationData?.members.individual?.options.list?.data?.[0]?.options ?? [];
 
-  const { mutate } = useSetMemberOccupationMutation();
+  const { data: familyOccupationListData, refetch } =
+    useGetIndividualKymFamilyOccupationListQuery({
+      id: id,
+      isSpouse: true,
+    });
+
+  useEffect(() => {
+    if (familyOccupationListData) {
+      const editValueData =
+        familyOccupationListData?.members?.individual?.listOccupation?.data;
+
+      const occupationDetail = editValueData?.find(
+        (data) => data?.id === occupationId
+      );
+
+      if (occupationDetail) {
+        reset({
+          occupationId: occupationDetail?.occupationId,
+          orgName: occupationDetail?.orgName?.local,
+          panVatNo: occupationDetail?.panVatNo,
+          address: occupationDetail?.address?.local,
+          estimatedAnnualIncome: occupationDetail?.estimatedAnnualIncome,
+          establishedDate: occupationDetail?.establishedDate,
+          registrationNo: occupationDetail?.registrationNo,
+          contact: occupationDetail?.contact,
+          isOwner: occupationDetail?.isOwner,
+        });
+      }
+    }
+  }, [familyOccupationListData]);
+
+  const { mutate } = useSetMemberOccupationMutation({
+    onSuccess: () => refetch(),
+  });
 
   useEffect(() => {
     const subscription = watch(
@@ -252,6 +281,13 @@ const HusbandWifeOccupation = ({
   );
 };
 
+interface IMemberKYMHusbandWifeOccupationProps {
+  setKymCurrentSection: (section?: {
+    section: string;
+    subSection: string;
+  }) => void;
+}
+
 export const MemberKYMHusbandWifeOccupation = ({
   setKymCurrentSection,
 }: IMemberKYMHusbandWifeOccupationProps) => {
@@ -262,6 +298,26 @@ export const MemberKYMHusbandWifeOccupation = ({
   const id = String(router?.query?.['id']);
 
   const [occupationIds, setOccupationIds] = useState<string[]>([]);
+
+  const { data: editValues } = useGetIndividualKymFamilyOccupationListQuery({
+    id: id,
+    isSpouse: true,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.listOccupation?.data;
+
+      setOccupationIds(
+        editValueData?.reduce(
+          (prevVal, curVal) =>
+            curVal ? [...prevVal, curVal.id] : [...prevVal],
+          [] as string[]
+        ) ?? []
+      );
+    }
+  }, [editValues]);
 
   const { mutate: newIDMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

@@ -1,7 +1,5 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { Control, useFieldArray } from 'react-hook-form';
-import { FormProvider, useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -11,15 +9,13 @@ import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
-  InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { KymInsInput } from '@coop/shared/data-access';
 import {
-  useGetKymFormStatusInstitutionQuery,
+  KymInsInput,
   useGetNewIdMutation,
   useSetInstitutionDataMutation,
 } from '@coop/shared/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { FormInput } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
@@ -123,7 +119,7 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
     fields: sisterFields,
     append: sisterAppend,
     remove: sisterRemove,
-  } = useFieldArray({ control, name: 'sisterConcernDetails' });
+  } = useFieldArray<any>({ control, name: 'sisterConcernDetails' });
 
   const [sisterIds, setSisterIds] = useState<string[]>([]);
 
