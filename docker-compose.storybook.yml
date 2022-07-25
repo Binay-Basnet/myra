@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  storybook:
+    build:
+      context: .
+      dockerfile: Dockerfile.storybook
+    container_name: ${STORYBOOK_CONTAINER_NAME}
+    # ports:
+    #   - ${STORYBOOK_PORT}:4400
+    restart: unless-stopped
+    network_mode: host
