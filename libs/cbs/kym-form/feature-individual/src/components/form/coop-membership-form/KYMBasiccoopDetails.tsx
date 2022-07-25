@@ -18,6 +18,7 @@ import {
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
   KymIndMemberInput,
+  useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
@@ -66,13 +67,30 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
     useGetIndividualKymOptionsQuery({
       id,
       filter: { customId: KYMOptionEnum.Relationship },
     });
+
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+
+  console.log({ isFamilyAMember: watch('isFamilyAMember') });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      reset({
+        isFamilyAMember: editValueData?.isFamilyAMember,
+      });
+    }
+  }, [editValues]);
 
   const { mutate } = useSetMemberDataMutation();
 
@@ -341,7 +359,7 @@ const KYMBasiccoopDetailsBasic = ({
 
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const { data: purposeData, isLoading: purposeLoading } =
     useGetIndividualKymOptionsQuery({
@@ -351,7 +369,23 @@ const KYMBasiccoopDetailsBasic = ({
 
   const isMemberOfAnotherCooperative = watch('isMemberOfAnotherCooperative');
 
-  const { mutate } = useSetMemberDataMutation();
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      reset({
+        ...editValueData?.membershipDetails,
+        otherCoopName: editValueData?.membershipDetails?.otherCoopName?.local,
+      });
+    }
+  }, [editValues]);
+
+  const { mutate } = useSetMemberDataMutation({ onSuccess: () => refetch() });
 
   useEffect(() => {
     const subscription = watch(
@@ -466,7 +500,22 @@ const KYMBasiccoopDetailsIntroducer = ({
 
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
+
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      reset({
+        ...editValueData?.introducers,
+      });
+    }
+  }, [editValues]);
 
   const { mutate } = useSetMemberDataMutation();
 

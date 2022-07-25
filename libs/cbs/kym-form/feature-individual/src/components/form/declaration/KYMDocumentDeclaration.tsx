@@ -8,60 +8,63 @@ import {
   Kym_Field_Custom_Id,
   KymIndMemberInput,
   useGetIndividualKymOptionsQuery,
+  useGetKymDocumentsListQuery,
+  useSetKymDocumentDataMutation,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormFileInput } from '@coop/shared/form';
 import { Grid, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
-interface IKYMDocumentDeclarationProps {
+interface IKYMDocumentDeclarationFieldProps {
   setKymCurrentSection: (section?: {
     section: string;
     subSection: string;
   }) => void;
+  name: string;
+  label: string;
 }
 
-export const KYMDocumentDeclaration = ({
+const KYMDocumentDeclarationField = ({
   setKymCurrentSection,
-}: IKYMDocumentDeclarationProps) => {
-  const { t } = useTranslation();
-
+  name,
+  label,
+}: IKYMDocumentDeclarationFieldProps) => {
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
-  const { data: fileUploadsData, isLoading: fileUploadsLoading } =
-    useGetIndividualKymOptionsQuery({
-      id,
-      filter: {
-        customId: Kym_Field_Custom_Id.FileUploads,
-      },
-    });
+  const { data: editValues, refetch } = useGetKymDocumentsListQuery({
+    memberId: id,
+  });
 
-  // console.log(
-  //   fileUploadsData?.members?.individual?.options?.list?.data?.[0]?.options
-  // );
+  useEffect(() => {
+    if (editValues) {
+      const kymDocumentsList =
+        editValues?.members?.document?.listKYMDocuments?.data;
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      // setError('firstName', {
-      //   type: 'custom',
-      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      // });
-      console.log(res);
-    },
-    //   onError: () => {
-    //     setError('firstName', { type: 'custom', message: 'gg' });
-    //   },
+      const documentData = kymDocumentsList?.find(
+        (doc) => doc?.fieldId === name
+      );
+
+      if (documentData) {
+        reset({ [name]: documentData.identifier });
+      }
+    }
+  }, [editValues]);
+
+  const { mutate } = useSetKymDocumentDataMutation({
+    onSuccess: () => refetch(),
   });
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id: router.query['id'] as string, data });
+        console.log({ data });
+        mutate({ memberId: id, fieldId: name, identifiers: data[name] });
       }, 800)
     );
 
@@ -76,13 +79,55 @@ export const KYMDocumentDeclaration = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer>
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kynIndDOCUMENTDECLARATION']}
-          </Text>
+        <FormFileInput size="lg" label={label} name={name} />
+      </form>
+    </FormProvider>
+  );
+};
 
-          <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
-            {fileUploadsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
+interface IKYMDocumentDeclarationProps {
+  setKymCurrentSection: (section?: {
+    section: string;
+    subSection: string;
+  }) => void;
+}
+
+export const KYMDocumentDeclaration = ({
+  setKymCurrentSection,
+}: IKYMDocumentDeclarationProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <GroupContainer>
+      <Text fontSize="r1" fontWeight="SemiBold">
+        {t['kynIndDOCUMENTDECLARATION']}
+      </Text>
+
+      <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
+        <KYMDocumentDeclarationField
+          label="Passport Size Photo"
+          name="passportSizePhoto"
+          setKymCurrentSection={setKymCurrentSection}
+        />
+
+        <KYMDocumentDeclarationField
+          label="Signature"
+          name="signaturePhoto"
+          setKymCurrentSection={setKymCurrentSection}
+        />
+
+        <KYMDocumentDeclarationField
+          label="Citizenship Photo"
+          name="citizenshipPhoto"
+          setKymCurrentSection={setKymCurrentSection}
+        />
+
+        <KYMDocumentDeclarationField
+          label="Fingerprint Photo"
+          name="fingerprintPhoto"
+          setKymCurrentSection={setKymCurrentSection}
+        />
+        {/* {fileUploadsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
               (option, index) => (
                 <FormFileInput
                   key={index}
@@ -91,10 +136,8 @@ export const KYMDocumentDeclaration = ({
                   name="documentsTemp"
                 />
               )
-            )}
-          </Grid>
-        </GroupContainer>
-      </form>
-    </FormProvider>
+            )} */}
+      </Grid>
+    </GroupContainer>
   );
 };

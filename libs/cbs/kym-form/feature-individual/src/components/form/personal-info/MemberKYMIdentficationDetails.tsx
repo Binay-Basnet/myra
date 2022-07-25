@@ -65,10 +65,9 @@ export const MemberKYMIdentificationDetails = ({
   //   checkedIds.length !== 0 && setCurrentDetailsShown([...checkedIds]);
   // }, [JSON.stringify(checkedIds)]);
 
-  const { data: editValues, isLoading: editLoading } =
-    useGetIndividualKymEditDataQuery({
-      id: id,
-    });
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
 
   console.log({
     ind: 'identification details info',
@@ -76,10 +75,14 @@ export const MemberKYMIdentificationDetails = ({
       ?.identification,
   });
 
+  console.log({ identificationSelection: watch('identificationSelection') });
+
   useEffect(() => {
     if (editValues) {
       const editValueData =
         editValues?.members?.individual?.formState?.data?.formData;
+
+      console.log({ editValueData });
 
       reset({
         ...editValueData?.identification,
@@ -87,18 +90,7 @@ export const MemberKYMIdentificationDetails = ({
     }
   }, [editValues]);
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      // setError('firstName', {
-      //   type: 'custom',
-      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      // });
-      console.log(res);
-    },
-    //   onError: () => {
-    //     setError('firstName', { type: 'custom', message: 'gg' });
-    //   },
-  });
+  const { mutate } = useSetMemberDataMutation();
 
   useEffect(() => {
     const subscription = watch(

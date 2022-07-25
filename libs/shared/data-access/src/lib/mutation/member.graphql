@@ -165,3 +165,19 @@ mutation setKymCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
     }
   }
 }
+
+mutation setKYMDocumentData(
+  $memberId: String!
+  $fieldId: String!
+  $identifiers: [String!]!
+) {
+  members {
+    document {
+      KYM(memberId: $memberId) {
+        upsert(fieldId: $fieldId, identifiers: $identifiers) {
+          recordId
+        }
+      }
+    }
+  }
+}
