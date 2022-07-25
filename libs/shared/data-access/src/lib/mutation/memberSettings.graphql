@@ -80,9 +80,7 @@ mutation addCustomField($data: KYMFieldInput!) {
   settings {
     kymForm {
       field {
-        add(
-          data: $data
-        ) {
+        add(data: $data) {
           record {
             id
             name

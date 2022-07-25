@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { NatureOfDepositProduct } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -13,7 +14,7 @@ export const BalanceLimit = () => {
   const { resetField, watch } = useFormContext();
 
   const frequencyUnit = watch('frequencyUnit');
-  const depositNature = watch('nameOfDepositProduct');
+  const depositNature = watch('nature');
 
   useEffect(() => {
     resetField('unitDays');
@@ -22,29 +23,10 @@ export const BalanceLimit = () => {
 
   const { t } = useTranslation();
 
-  const unitOptions = [
-    {
-      label: t['daily'],
-      value: 'Daily',
-    },
-    {
-      label: t['weekly'],
-      value: 'Weekly',
-    },
-    {
-      label: t['monthly'],
-      value: 'Monthly',
-    },
-    {
-      label: t['yearly'],
-      value: 'Yearly',
-    },
-  ];
-
   return (
     <BoxContainer>
       <TextBoxContainer>
-        {depositNature === 'recurringSaving' ? (
+        {depositNature === NatureOfDepositProduct.RecurringSaving ? (
           <TopText>{t['depositProductTransactionLimit']} </TopText>
         ) : (
           <TopText>{t['depositProdictBalanceLimit']}</TopText>
@@ -52,16 +34,16 @@ export const BalanceLimit = () => {
       </TextBoxContainer>
       <InputGroupContainer>
         <FormInput
-          name="minimunBalaneAmount"
+          name="balanceLimit.minAmount"
           label={t['depositProductMinimumAmount']}
           placeholder={t['depositProductEnterMinimumAmount']}
         />
         <FormInput
-          name="maximumBalaneAmount"
+          name="balanceLimit.maxAmount"
           label={t['depositProductMaximumAmount']}
           placeholder={t['depositProductEnterMaximumAmount']}
         />
-        {depositNature !== 'recurringSaving' && (
+        {/* {depositNature !== NatureOfDepositProduct.RecurringSaving && (
           <FormInput
             type="number"
             name="average"
@@ -69,7 +51,7 @@ export const BalanceLimit = () => {
             textAlign="right"
             placeholder="0"
           />
-        )}
+        )} */}
       </InputGroupContainer>
       {/* <Box display="flex" flexDirection="column" gap="s8">
         <Text fontSize={'s3'} fontWeight="Medium">

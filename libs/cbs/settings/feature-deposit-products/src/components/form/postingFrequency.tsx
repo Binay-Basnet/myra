@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Frequency } from '@coop/shared/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -20,26 +21,25 @@ export const PostingFrequency = () => {
     setRightElementMin(postingFrequencyUnit);
   }, [postingFrequencyUnit]);
 
-  console.log(rightElementMin, postingFrequencyUnit);
-
   const postingFrequency = [
     {
+      label: t['daily'],
+      value: Frequency.Daily,
+    },
+    {
+      label: t['weekly'],
+      value: Frequency.Weekly,
+    },
+    {
       label: t['monthly'],
-      value: 'monthly',
-    },
-    {
-      label: t['quatrerly'],
-      value: 'quatrerly',
-    },
-    {
-      label: t['halfYearly'],
-      value: 'halfYearly',
+      value: Frequency.Monthly,
     },
     {
       label: t['yearly'],
-      value: 'yearly',
+      value: Frequency.Yearly,
     },
   ];
+
   return (
     <BoxContainer>
       <TextBoxContainer>
@@ -48,7 +48,7 @@ export const PostingFrequency = () => {
       <FormSwitchTab name={'postingFrequency'} options={postingFrequency} />
       <Box w="290px">
         <FormInput
-          name="maxFreqDifference"
+          name="maxPostingFreqDifference"
           textAlign={'right'}
           label={t['depositProductMaximumPostingFrequencyDifference']}
           placeholder="0"

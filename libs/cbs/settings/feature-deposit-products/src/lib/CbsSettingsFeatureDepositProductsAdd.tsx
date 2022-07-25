@@ -8,7 +8,12 @@ import {
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
+import {
+  DepositProductInput,
+  NatureOfDepositProduct,
+  useSetDepositProductMutation,
+} from '@coop/shared/data-access';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -42,34 +47,54 @@ import {
 /* eslint-disable-next-line */
 export interface SettingsDepositProductsAddProps {}
 
-const optionsSaving = [
-  { label: 'Recurring Saving', value: 'recurringSaving' },
-  { label: 'Mandatory', value: 'mandatory' },
-  { label: 'Voluntary/Optional', value: 'voluntary' },
-  { label: 'Term Saving', value: 'termSaving' },
-];
-
 export function SettingsDepositProductsAdd(
   props: SettingsDepositProductsAddProps
 ) {
   const router = useRouter();
   const { t } = useTranslation();
-  const methods = useForm({
+
+  const { mutate } = useSetDepositProductMutation();
+
+  const optionsSaving = [
+    {
+      label: t['depositProductRecurringSaving'],
+      value: NatureOfDepositProduct.RecurringSaving,
+    },
+    {
+      label: t['depositProductMandatory'],
+      value: NatureOfDepositProduct.Mandatory,
+    },
+    {
+      label: t['depositProductVoluntaryOptional'],
+      value: NatureOfDepositProduct.VoluntaryOrOptional,
+    },
+    {
+      label: t['depositProductTermSaving'],
+      value: NatureOfDepositProduct.TermSavingOrFd,
+    },
+  ];
+
+  const methods = useForm<DepositProductInput>({
     defaultValues: {
-      nameOfDepositProduct: 'recurringSaving',
-      minimunTenureNumber: 0,
-      maximumTenureNumber: 0,
+      nature: NatureOfDepositProduct.RecurringSaving,
+      minTenureUnitNumber: 0,
+      maxTenureUnitNumber: 0,
     },
   });
 
   const {
-    // control, handleSubmit, getValues,
+    // control, handleSubmit,
+    getValues,
     watch,
     //  setError
   } = methods;
-  const depositNature = watch('nameOfDepositProduct');
+  const depositNature = watch('nature');
 
-  console.log(depositNature);
+  const submitForm = () => {
+    console.log(getValues());
+    mutate({ id: '', data: getValues() });
+    // router.push(`/members/translation`);
+  };
 
   return (
     <>
@@ -118,10 +143,9 @@ export function SettingsDepositProductsAdd(
                         label={t['depositProductProductName']}
                         placeholder={t['depositProductEnterProductName']}
                       />
-                      {/* <FormSelect name={'duhjisdfsd'} /> */}
                     </GridItem>
                     <FormSelect
-                      name={'nameOfDepositProduct'}
+                      name="nature"
                       options={optionsSaving}
                       label={t['depositProductNatureofDepositProduct']}
                       placeholder={
@@ -141,45 +165,56 @@ export function SettingsDepositProductsAdd(
                     <FormInput
                       label={t['depositProductPrefix']}
                       placeholder={t['depositProductEnterPrefix']}
-                      name="prefix"
+                      name="productCode.prefix"
                     />
                     <FormInput
                       label={t['depositProductIntitialNumber']}
                       placeholder={t['depositProductIntitialNumber']}
-                      name="initialNumber"
-                    />
-                    <Box></Box>
-                    <FormSwitch
-                      name="resetSwitch"
-                      label={t['depositProductReseteveryfiscalyear']}
+                      name="productCode.initialNo"
                     />
                   </InputGroupContainer>
                 </Box>
-                {depositNature !== 'mandatory' && (
-                  <TypesOfMember watch={watch} />
+                {depositNature !== NatureOfDepositProduct.Mandatory && (
+                  <TypesOfMember />
                 )}
 
-                {depositNature !== 'mandatory' && (
+                {depositNature !== NatureOfDepositProduct.Mandatory && (
                   <Box display="flex" flexDirection={'column'} gap="s16">
-                    <Critera watch={watch} />
-                    <GridItems watch={watch} />
+                    <Critera />
+                    <GridItems />
                   </Box>
                 )}
-                {depositNature !== 'voluntary' && (
-                  <DepositFrequency watch={watch} />
+                {depositNature !==
+                  NatureOfDepositProduct.VoluntaryOrOptional && (
+                  <DepositFrequency />
                 )}
-                {depositNature !== 'voluntary' && <MinimunTenure />}
-                {depositNature !== 'voluntary' && <MaximumTenure />}
+                {depositNature !==
+                  NatureOfDepositProduct.VoluntaryOrOptional && (
+                  <MinimunTenure />
+                )}
+                {depositNature !==
+                  NatureOfDepositProduct.VoluntaryOrOptional && (
+                  <MaximumTenure />
+                )}
                 <BalanceLimit />
                 <Interest />
                 <PostingFrequency />
-                {depositNature !== 'termSaving' && <AccountServicesCharge />}
+                {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (
+                  <AccountServicesCharge />
+                )}
 
-                {depositNature === 'termSaving' && <DefaultAccountName />}
+                {depositNature === NatureOfDepositProduct.TermSavingOrFd && (
+                  <DefaultAccountName />
+                )}
                 <Questions />
-                {depositNature === 'mandatory' && <DormantSetup />}
+                {depositNature === NatureOfDepositProduct.Mandatory && (
+                  <DormantSetup />
+                )}
                 <RequiredDocumentSetup />
-                {depositNature !== 'voluntary' && <PrematuredPenalty />}
+                {depositNature !==
+                  NatureOfDepositProduct.VoluntaryOrOptional && (
+                  <PrematuredPenalty />
+                )}
               </ContainerWithDivider>
             </Box>
           </form>
@@ -215,7 +250,7 @@ export function SettingsDepositProductsAdd(
                 </Button>
               }
               mainButtonLabel={t['saveAccount']}
-              mainButtonHandler={() => router.push(`/members/translation`)}
+              mainButtonHandler={() => submitForm()}
             />
           </Container>
         </Box>
