@@ -9,16 +9,12 @@ import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { Login } from '@coop/myra/components';
+import { useGetMeQuery } from '@coop/shared/data-access';
+import { AuthProvider, useAuth } from '@coop/shared/data-access';
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import {
-  AuthProvider,
-  store,
-  theme,
-  useAuth,
-  useSnap,
-} from '@coop/shared/utils';
+import { useSnap } from '@coop/shared/utils';
+import { store, theme } from '@coop/shared/utils';
 
-// import '../styles/feedback.css';
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
 const { ToastContainer } = createStandaloneToast();
@@ -65,6 +61,9 @@ interface ManAppProps extends AppInitialProps {
 
 function MainApp({ Component, pageProps }: ManAppProps) {
   const auth = useAuth();
+  const getMe = useGetMeQuery();
+  console.log('get me', getMe);
+
   const getLayout = Component.getLayout || ((page) => page);
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);

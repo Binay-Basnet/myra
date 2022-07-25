@@ -3,6 +3,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 
+import { Member } from '@coop/shared/data-access';
 import {
   Box,
   Popover,
@@ -18,13 +19,13 @@ type popoverType = {
 
   items?: {
     title: string;
-    onClick?: (memberId?: string) => void;
+    onClick?: (member?: Partial<Member> | null) => void;
   }[];
 
-  memberId?: string;
+  member?: Partial<Member> | null;
 };
 
-export const PopoverComponent = ({ title, items, memberId }: popoverType) => {
+export const PopoverComponent = ({ title, items, member }: popoverType) => {
   const initialFocusRef = useRef<HTMLButtonElement | null>(null);
   const { t } = useTranslation();
   const router = useRouter();
@@ -53,7 +54,7 @@ export const PopoverComponent = ({ title, items, memberId }: popoverType) => {
                     width="100%"
                     _hover={{ bg: 'gray.100' }}
                     cursor="pointer"
-                    onClick={() => item?.onClick && item?.onClick(memberId)}
+                    onClick={() => item?.onClick && item?.onClick(member)}
                     key={`${item.title}${index}`}
                   >
                     <Text
