@@ -69,7 +69,7 @@ function MainApp({ Component, pageProps }: ManAppProps) {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const isLoggedIn = localStorage.getItem('refreshToken');
 
     typeof window !== 'undefined' &&
       setIsLoggedIn(Boolean(isLoggedIn || false));
@@ -83,7 +83,7 @@ function MainApp({ Component, pageProps }: ManAppProps) {
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
       <ToastContainer />
-      {auth?.auth?.user ? (
+      {isLoggedIn ? (
         <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       ) : (
         <main className="app">
