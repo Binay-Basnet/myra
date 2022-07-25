@@ -1,0 +1,14 @@
+FROM node:14-alpine
+
+WORKDIR /app
+
+COPY package* .
+COPY yarn.lock .
+
+RUN yarn
+
+COPY . .
+
+EXPOSE 4400
+
+CMD ["npx", "nx", "run", "shared-ui:storybook"]
