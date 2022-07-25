@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Snipping } from '@raralabs/web-feedback';
 import axios from 'axios';
 
@@ -12,12 +13,18 @@ const snap = new Snipping({
 });
 export const useSnap = () => {
   const toast = useChakraToast();
+  const router = useRouter();
+
+  console.log(router);
+
   useEffect(() => {
     snap.init(async (data) => {
       const { image } = data;
       const formData = new FormData();
 
-      const query = `mutation ($file: Upload!) {createPublicFeedback(input: {appSlug: "MYRA", userEmail: "pk@pk.com"}, imageInput: $file) {success data {userEmail description appSlugID { name }} errors {__typename ... on ValidationError { message field } ... on BadRequestError {  message } ... on NotFoundError { message } ... on InternalServerError { message } } } }`;
+      if (!router.isReady) return;
+
+      const query = `mutation ($file: Upload!) {createPublicFeedback(input: {appSlug: "MYRA", userEmail: "${router.query['td_user_email']}"}, imageInput: $file) {success data {userEmail description appSlugID { name }} errors {__typename ... on ValidationError { message field } ... on BadRequestError {  message } ... on NotFoundError { message } ... on InternalServerError { message } } } }`;
 
       formData.append(
         'operations',
@@ -63,6 +70,6 @@ export const useSnap = () => {
         });
       }
     });
-  }, []);
+  }, [router]);
   return;
 };

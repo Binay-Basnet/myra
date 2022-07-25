@@ -227,11 +227,17 @@ export enum Arrange {
 
 export type AuthMutation = {
   login?: Maybe<LoginResult>;
+  token?: Maybe<AuthToken>;
 };
 
 
 export type AuthMutationLoginArgs = {
   data: LoginInput;
+};
+
+
+export type AuthMutationTokenArgs = {
+  refreshToken: Scalars['String'];
 };
 
 export type AuthQuery = {
@@ -1171,6 +1177,15 @@ export enum CriteriaSection {
   OccupationDetails = 'OCCUPATION_DETAILS'
 }
 
+export type CustomFormListQueryResult = {
+  data?: Maybe<Array<Maybe<FormElement>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type CustomFormQuery = {
+  list: CustomFormListQueryResult;
+};
+
 export type DashboardData = {
   listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
   listTodayTrend?: Maybe<Array<Maybe<TodayTrend>>>;
@@ -1352,7 +1367,7 @@ export type DepositProductFormStateData = {
   penalty?: Maybe<Scalars['Boolean']>;
   penaltyData?: Maybe<PenaltyFormState>;
   percentageOfDeposit?: Maybe<Scalars['Float']>;
-  postingFrequency?: Maybe<Array<Maybe<Frequency>>>;
+  postingFrequency?: Maybe<Frequency>;
   prematurePenalty?: Maybe<PrematurePenaltyFormState>;
   productCode: ProductCodeFormState;
   productName?: Maybe<Scalars['String']>;
@@ -1362,7 +1377,6 @@ export type DepositProductFormStateData = {
   specifyWithdrawRestriction?: Maybe<Scalars['String']>;
   staffProduct?: Maybe<Scalars['Boolean']>;
   supportMultiple?: Maybe<Scalars['Boolean']>;
-  transactionLimit?: Maybe<AmountLimitFormState>;
   typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: Maybe<Scalars['Boolean']>;
   withdrawRestricted?: Maybe<Scalars['Boolean']>;
@@ -1412,7 +1426,7 @@ export type DepositProductInput = {
   penalty?: InputMaybe<Scalars['Boolean']>;
   penaltyData: PenaltyInput;
   percentageOfDeposit?: InputMaybe<Scalars['Float']>;
-  postingFrequency?: InputMaybe<Array<InputMaybe<Frequency>>>;
+  postingFrequency?: InputMaybe<Frequency>;
   prematurePenalty?: InputMaybe<PrematurePenalty>;
   productCode: ProductCode;
   productName: Scalars['String'];
@@ -1422,7 +1436,6 @@ export type DepositProductInput = {
   specifyWithdrawRestriction?: InputMaybe<Scalars['String']>;
   staffProduct?: InputMaybe<Scalars['Boolean']>;
   supportMultiple?: InputMaybe<Scalars['Boolean']>;
-  transactionLimit?: InputMaybe<AmountLimit>;
   typeOfMember?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: InputMaybe<Scalars['Boolean']>;
   withdrawRestricted?: InputMaybe<Scalars['Boolean']>;
@@ -2328,8 +2341,414 @@ export type FamilyDetailsInNepali = {
   spouseName?: Maybe<Scalars['String']>;
 };
 
+export type FieldDetailsQueryResult = {
+  data?: Maybe<FormField>;
+  error?: Maybe<QueryError>;
+};
+
 export type Filter = {
   orConditions: Array<OrConditions>;
+};
+
+export enum FormCategory {
+  KymCoop = 'KYM_COOP',
+  KymCoopUnion = 'KYM_COOP_UNION',
+  KymIndividual = 'KYM_INDIVIDUAL',
+  KymInstitution = 'KYM_INSTITUTION'
+}
+
+export type FormElement = FormField | FormSection;
+
+export type FormElementResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<FormElement>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormField = Base & {
+  category: FormCategory;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  dependsOn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  enabled: Scalars['Boolean'];
+  fieldType: FormFieldType;
+  hasOtherField: Scalars['Boolean'];
+  id: Scalars['ID'];
+  isCustom: Scalars['Boolean'];
+  isDefault: Scalars['Boolean'];
+  maxSize?: Maybe<Scalars['Int']>;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  name: Scalars['Localized'];
+  objState: ObjState;
+  options?: Maybe<Array<FormOption>>;
+  order: Scalars['Int'];
+  search_term?: Maybe<FormFieldSearchTerm>;
+  section?: Maybe<FormSection>;
+};
+
+export type FormFieldDeleteResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormFieldInput = {
+  category: FormCategory;
+  dependsOn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  enabled: Scalars['Boolean'];
+  fieldType: FormFieldType;
+  hasOtherField: Scalars['Boolean'];
+  maxSize?: InputMaybe<Scalars['Int']>;
+  nameEn: Scalars['String'];
+  nameNp?: InputMaybe<Scalars['String']>;
+  options?: InputMaybe<FormOptionInput>;
+};
+
+export type FormFieldMutation = {
+  /**  Condition of fields should always be depended on options only  */
+  condition: FormFieldMutationResult;
+  delete: FormFieldDeleteResult;
+  move: FormFieldMutationResult;
+  update: FormFieldMutationResult;
+  /**
+   *  If SectionId is given then the field is wrapped by a section and this field won't have any options.
+   *    if sectionID isn't given then this field will have options so, its type will only be   SINGLE_SELECT & MULTIPLE_SELECT
+   */
+  upsert: FormFieldMutationResult;
+};
+
+
+export type FormFieldMutationConditionArgs = {
+  dependsOn: Array<InputMaybe<Scalars['ID']>>;
+  fieldId: Scalars['ID'];
+};
+
+
+export type FormFieldMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type FormFieldMutationMoveArgs = {
+  id: Scalars['ID'];
+  to: Scalars['Int'];
+};
+
+
+export type FormFieldMutationUpdateArgs = {
+  data: FormFieldUpdateInput;
+  id: Scalars['ID'];
+};
+
+
+export type FormFieldMutationUpsertArgs = {
+  data: FormFieldUpsertInput;
+  sectionId?: InputMaybe<Scalars['ID']>;
+};
+
+export type FormFieldMutationResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<FormField>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormFieldQuery = {
+  details: FieldDetailsQueryResult;
+};
+
+
+export type FormFieldQueryDetailsArgs = {
+  id: Scalars['ID'];
+};
+
+export enum FormFieldSearchTerm {
+  EducationQualification = 'EDUCATION_QUALIFICATION',
+  EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
+  Ethnicity = 'ETHNICITY',
+  FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
+  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
+  Gender = 'GENDER',
+  MaritalStatus = 'MARITAL_STATUS',
+  Nationality = 'NATIONALITY',
+  Occupation = 'OCCUPATION',
+  Purpose = 'PURPOSE',
+  Relationship = 'RELATIONSHIP',
+  Religion = 'RELIGION'
+}
+
+export enum FormFieldType {
+  /**  For Custom Variant  */
+  Address = 'ADDRESS',
+  Amount = 'AMOUNT',
+  Bank = 'BANK',
+  Date = 'DATE',
+  District = 'DISTRICT',
+  Email = 'EMAIL',
+  Fax = 'FAX',
+  /**  These are for SEARCH fields  */
+  LocalLevel = 'LOCAL_LEVEL',
+  MultipleFile = 'MULTIPLE_FILE',
+  MultipleSelect = 'MULTIPLE_SELECT',
+  NumberInput = 'NUMBER_INPUT',
+  Paragraph = 'PARAGRAPH',
+  PhoneNumber = 'PHONE_NUMBER',
+  PoBox = 'PO_BOX',
+  Province = 'PROVINCE',
+  /**  These are for file   */
+  SingleFile = 'SINGLE_FILE',
+  /**  These are for SINGLE_SELECT, MULTI_SELECT  */
+  SingleSelect = 'SINGLE_SELECT',
+  TextInput = 'TEXT_INPUT',
+  Url = 'URL'
+}
+
+export type FormFieldUpdateInput = {
+  dependsOn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  enabled?: InputMaybe<Scalars['Boolean']>;
+  fieldType?: InputMaybe<FormFieldType>;
+  hasOtherField?: InputMaybe<Scalars['Boolean']>;
+  maxSize?: InputMaybe<Scalars['Int']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+};
+
+/**  This option will be always be added in last order */
+export type FormFieldUpsertInput = {
+  data?: InputMaybe<FormFieldInput>;
+  /**  If id is supplied then it will be update operation else it will be insert operation  */
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type FormOption = Base & {
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  enabled: Scalars['Boolean'];
+  field: FormField;
+  id: Scalars['ID'];
+  isDefault: Scalars['Boolean'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  name: Scalars['Localized'];
+  objState: ObjState;
+  order: Scalars['Int'];
+};
+
+export type FormOptionDeleteResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormOptionInput = {
+  enabled: Scalars['Boolean'];
+  nameEn: Scalars['String'];
+  nameNp?: InputMaybe<Scalars['String']>;
+};
+
+export type FormOptionMutation = {
+  delete: FormOptionDeleteResult;
+  move: FormOptionResult;
+  update: FormOptionResult;
+  upsert: FormOptionResult;
+};
+
+
+export type FormOptionMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type FormOptionMutationMoveArgs = {
+  id: Scalars['ID'];
+  to: Scalars['Int'];
+};
+
+
+export type FormOptionMutationUpdateArgs = {
+  data: FormOptionUpdateInput;
+  id: Scalars['ID'];
+};
+
+
+export type FormOptionMutationUpsertArgs = {
+  data: FormOptionUpsertInput;
+  fieldId: Scalars['ID'];
+};
+
+export type FormOptionResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<FormOption>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormOptionUpdateInput = {
+  enabled?: InputMaybe<Scalars['Boolean']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+};
+
+/**  This option will be always be added in last order */
+export type FormOptionUpsertInput = {
+  data?: InputMaybe<FormOptionInput>;
+  /**  If Id is Present then this will be an update operation.. else it will be an insert operation  */
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export enum FormSearchTerm {
+  Certificate = 'CERTIFICATE',
+  ContactDetails = 'CONTACT_DETAILS',
+  DrivingLicense = 'DRIVING_LICENSE',
+  EducationQualification = 'EDUCATION_QUALIFICATION',
+  EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
+  Ethnicity = 'ETHNICITY',
+  FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
+  FamilyInformation = 'FAMILY_INFORMATION',
+  FileUploads = 'FILE_UPLOADS',
+  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
+  ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
+  Gender = 'GENDER',
+  Identification = 'IDENTIFICATION',
+  IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
+  MaritalStatus = 'MARITAL_STATUS',
+  Nationality = 'NATIONALITY',
+  NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
+  Occupation = 'OCCUPATION',
+  OccupationDetails = 'OCCUPATION_DETAILS',
+  OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
+  Passport = 'PASSPORT',
+  Purpose = 'PURPOSE',
+  Relationship = 'RELATIONSHIP',
+  Religion = 'RELIGION',
+  VoterId = 'VOTER_ID'
+}
+
+export type FormSection = Base & {
+  category: FormCategory;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  enabled: Scalars['Boolean'];
+  fields?: Maybe<Array<FormField>>;
+  id: Scalars['ID'];
+  isCustom: Scalars['Boolean'];
+  isDefault: Scalars['Boolean'];
+  maxSize?: Maybe<Scalars['Int']>;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  name: Scalars['Localized'];
+  objState: ObjState;
+  parent?: Maybe<FormSection>;
+  search_term?: Maybe<FormSectionSearchTerm>;
+  sectionType: FormSectionType;
+  subSections?: Maybe<Array<FormSection>>;
+};
+
+export type FormSectionDeleteResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormSectionInput = {
+  category: FormCategory;
+  enabled: Scalars['Boolean'];
+  nameEn: Scalars['String'];
+  nameNp?: InputMaybe<Scalars['String']>;
+};
+
+export type FormSectionMutation = {
+  delete: FormSectionDeleteResult;
+  /**  The new section will always be an INPUT section. UPLOAD and GROUP type aren't allowed to be created  */
+  subSection: FormSectionMutationResult;
+  update: FormSectionMutationResult;
+  /**  The new section will always be an INPUT section. UPLOAD and GROUP type aren't allowed to be created  */
+  upsert: FormSectionMutationResult;
+};
+
+
+export type FormSectionMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type FormSectionMutationSubSectionArgs = {
+  data?: InputMaybe<FormSectionInput>;
+  sectionId: Scalars['ID'];
+};
+
+
+export type FormSectionMutationUpdateArgs = {
+  data: FormSectionUpdateInput;
+  id: Scalars['ID'];
+};
+
+
+export type FormSectionMutationUpsertArgs = {
+  data: FormSectionUpsertInput;
+};
+
+export type FormSectionMutationResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<FormSection>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormSectionQuery = {
+  details: SectionDetailsQueryResult;
+};
+
+
+export type FormSectionQueryDetailsArgs = {
+  id: Scalars['ID'];
+};
+
+export enum FormSectionSearchTerm {
+  Certificate = 'CERTIFICATE',
+  ContactDetails = 'CONTACT_DETAILS',
+  DrivingLicense = 'DRIVING_LICENSE',
+  FamilyInformation = 'FAMILY_INFORMATION',
+  Identification = 'IDENTIFICATION',
+  IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
+  NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
+  OccupationDetails = 'OCCUPATION_DETAILS',
+  OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
+  Passport = 'PASSPORT',
+  VoterId = 'VOTER_ID'
+}
+
+export enum FormSectionType {
+  Group = 'GROUP',
+  Input = 'INPUT',
+  Upload = 'UPLOAD'
+}
+
+export type FormSectionUpdateInput = {
+  enabled?: InputMaybe<Scalars['Boolean']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+};
+
+export type FormSectionUpsertInput = {
+  data?: InputMaybe<FormSectionInput>;
+  /**  If id is supplied then it will be update operation else it will be insert operation  */
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type FormSettingMutation = {
+  field: FormFieldMutation;
+  maxSize: FormElementResult;
+  option: FormOptionMutation;
+  section: FormSectionMutation;
+};
+
+
+export type FormSettingMutationMaxSizeArgs = {
+  id: Scalars['ID'];
+  maxSize: Scalars['Int'];
+};
+
+export type FormSettingQuery = {
+  custom: CustomFormQuery;
+  field: FormFieldQuery;
+  predefined: PredefinedFormQuery;
+  section: FormSectionQuery;
 };
 
 export enum Frequency {
@@ -3543,7 +3962,6 @@ export enum Kym_Field_Custom_Id {
 }
 
 export enum Kym_Field_Type {
-  Declaration = 'DECLARATION',
   Group = 'GROUP',
   MultiSelect = 'MULTI_SELECT',
   SingleSelect = 'SINGLE_SELECT',
@@ -3577,7 +3995,7 @@ export enum Kym_Option_Field_Type {
   Amount = 'AMOUNT',
   Bank = 'BANK',
   Date = 'DATE',
-  /**  These are for DECLARATION, SINGLE_SELECT, MULTI_SELECT  */
+  /**  These are for SINGLE_SELECT, MULTI_SELECT  */
   Display = 'DISPLAY',
   District = 'DISTRICT',
   Email = 'EMAIL',
@@ -6083,6 +6501,25 @@ export type PersonalInformationInNepali = {
   occupation?: Maybe<Scalars['String']>;
 };
 
+export type PredefinedElementFilter = {
+  category: FormCategory;
+  searchTerm: FormSearchTerm;
+};
+
+export type PredefinedElementQueryResult = {
+  data?: Maybe<FormElement>;
+  error?: Maybe<QueryError>;
+};
+
+export type PredefinedFormQuery = {
+  details: PredefinedElementQueryResult;
+};
+
+
+export type PredefinedFormQueryDetailsArgs = {
+  filter: PredefinedElementFilter;
+};
+
 export type PrematurePenalty = {
   noOfDays?: InputMaybe<Scalars['Int']>;
   penaltyAmount?: InputMaybe<Scalars['String']>;
@@ -6220,6 +6657,15 @@ export enum Share_Transaction_Direction {
   Return = 'RETURN'
 }
 
+export type SectionDetailsFilter = {
+  id: Scalars['ID'];
+};
+
+export type SectionDetailsQueryResult = {
+  data?: Maybe<FormSection>;
+  error?: Maybe<QueryError>;
+};
+
 export type ServerError = {
   code: Scalars['String'];
   message: Scalars['String'];
@@ -6248,6 +6694,7 @@ export type Services = {
 export type SettingsMutation = {
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
   declaration: DeclarationMutation;
+  form?: Maybe<FormSettingMutation>;
   general?: Maybe<GeneralSettingsMutation>;
   kymForm: KymFormSettingMutation;
 };
@@ -6255,6 +6702,7 @@ export type SettingsMutation = {
 export type SettingsQuery = {
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
   declaration: DeclarationQuery;
+  form?: Maybe<FormSettingQuery>;
   general?: Maybe<GeneralSettingsQuery>;
   kymForm: KymFormSettingQuery;
 };
