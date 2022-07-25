@@ -320,7 +320,7 @@ const MemberFamilyDetails = ({
       setFamilyMemberIds(
         editValueData?.reduce(
           (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
-          []
+          [] as string[]
         ) ?? []
       );
     }

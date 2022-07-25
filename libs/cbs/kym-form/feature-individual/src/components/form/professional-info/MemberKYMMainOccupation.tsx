@@ -335,7 +335,7 @@ export const MemberKYMMainOccupation = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch, control } = methods;
+  const { watch, control, reset } = methods;
 
   const isForeignEmployee = watch('isForeignEmployment');
 
@@ -349,24 +349,39 @@ export const MemberKYMMainOccupation = ({
 
   const [occupationIds, setOccupationIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetIndividualKymFamilyOccupationListQuery({
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
     id: id,
-    isSpouse: false,
   });
 
   useEffect(() => {
     if (editValues) {
       const editValueData =
-        editValues?.members?.individual?.listOccupation?.data;
+        editValues?.members?.individual?.formState?.data?.formData
+          ?.foreignEmployment;
+
+      reset({ ...editValueData });
+    }
+  }, [editValues]);
+
+  const { data: occupationListEditValues } =
+    useGetIndividualKymFamilyOccupationListQuery({
+      id: id,
+      isSpouse: false,
+    });
+
+  useEffect(() => {
+    if (occupationListEditValues) {
+      const editValueData =
+        occupationListEditValues?.members?.individual?.listOccupation?.data;
 
       setOccupationIds(
         editValueData?.reduce(
-          (prevVal, curVal) => [...prevVal, curVal.id],
-          []
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
         ) ?? []
       );
     }
-  }, [editValues]);
+  }, [occupationListEditValues]);
 
   const { mutate: newIDMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

@@ -246,6 +246,20 @@ query getIndividualKymEditData($id: String!) {
             membershipDetails {
               purposeId
               isMemberOfAnotherCooperative
+              otherCoopName
+              otherCoopBranchId
+              otherCoopMemberId
+            }
+            introducers {
+              firstIntroducerId
+              secondIntroducerId
+            }
+            isFamilyAMember
+            initialTransactionDetails {
+              initialShare
+              initialSaving
+              initialLoan
+              otherFinancialAmount
             }
             estimatedTransactions {
               estimatedAnnualTransactionAmount
@@ -263,6 +277,7 @@ query getIndividualKymEditData($id: String!) {
               convictedDetails
               hasForeignResidentialPermit
               foreignResidentialPermitTypeId
+              declarationAgreement
             }
             permanentAddress {
               provinceId

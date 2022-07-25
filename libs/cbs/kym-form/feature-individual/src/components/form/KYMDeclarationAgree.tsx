@@ -5,6 +5,7 @@ import debounce from 'lodash/debounce';
 
 import {
   KymIndMemberInput,
+  useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormCheckbox } from '@coop/shared/form';
@@ -17,7 +18,22 @@ export const KYMDeclarationAgree = () => {
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
+
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      reset({
+        declarationAgreement: editValueData?.declaration?.declarationAgreement,
+      });
+    }
+  }, [editValues]);
 
   const { mutate } = useSetMemberDataMutation();
 

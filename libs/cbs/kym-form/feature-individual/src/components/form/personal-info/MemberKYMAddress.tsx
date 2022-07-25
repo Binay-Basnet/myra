@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
+import pickBy from 'lodash/pickBy';
 
 import {
   GroupContainer,
@@ -127,10 +128,16 @@ export const MemberKYMAddress = ({
       console.log({
         permanentAddress: {
           ...editValueData?.permanentAddress,
+          districtId: editValueData?.permanentAddress?.districtId
+            ? editValueData?.permanentAddress?.districtId
+            : '',
           locality: editValueData?.permanentAddress?.locality?.local,
         },
         temporaryAddress: {
           ...editValueData?.temporaryAddress?.address,
+          provinceId: editValueData?.temporaryAddress?.address?.provinceId
+            ? editValueData?.temporaryAddress?.address?.provinceId
+            : '',
           locality: editValueData?.temporaryAddress?.address?.locality?.local,
         },
         sameTempAsPermanentAddress:
@@ -159,7 +166,18 @@ export const MemberKYMAddress = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id: router.query['id'] as string, data });
+        mutate({
+          id,
+          data: {
+            ...data,
+            permanentAddress: {
+              ...pickBy(data?.permanentAddress ?? {}, (v) => v !== 0),
+            },
+            temporaryAddress: {
+              ...pickBy(data?.temporaryAddress ?? {}, (v) => v !== 0),
+            },
+          },
+        });
       }, 800)
     );
 

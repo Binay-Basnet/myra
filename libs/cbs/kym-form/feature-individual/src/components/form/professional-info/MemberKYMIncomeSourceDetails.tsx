@@ -21,6 +21,7 @@ import {
   Kym_Field_Custom_Id as KYMOptionEnum,
   KymIndMemberInput,
   useDeleteMemberIncomeSourceMutation,
+  useGetIndividualKymEditDataQuery,
   useGetIndividualKymIncomeSourceListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
@@ -221,23 +222,38 @@ export const MemberKYMIncomeSourceDetails = ({
 
   const [incomeSourceIds, setIncomeSourceIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetIndividualKymIncomeSourceListQuery({
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
     id: id,
   });
 
   useEffect(() => {
     if (editValues) {
+      reset({
+        annualIncomeSourceId:
+          editValues?.members?.individual?.formState?.data?.formData
+            ?.annualIncomeSourceId,
+      });
+    }
+  }, [editValues]);
+
+  const { data: incomeSourceListEditValues } =
+    useGetIndividualKymIncomeSourceListQuery({
+      id: id,
+    });
+
+  useEffect(() => {
+    if (incomeSourceListEditValues) {
       const editValueData =
-        editValues?.members?.individual?.listIncomeSource?.data;
+        incomeSourceListEditValues?.members?.individual?.listIncomeSource?.data;
 
       setIncomeSourceIds(
         editValueData?.reduce(
-          (prevVal, curVal) => [...prevVal, curVal.id],
-          []
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
         ) ?? []
       );
     }
-  }, [editValues]);
+  }, [incomeSourceListEditValues]);
 
   const { mutate: newIDMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

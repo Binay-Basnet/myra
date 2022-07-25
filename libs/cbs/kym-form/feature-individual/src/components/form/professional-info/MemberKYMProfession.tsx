@@ -44,11 +44,9 @@ export const MemberKYMProfession = ({
       filter: { customId: KYMOptionEnum.Occupation },
     });
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: () => refetch(),
-  });
+  const { mutate } = useSetMemberDataMutation();
 
-  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery({
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
     id: id,
   });
 
