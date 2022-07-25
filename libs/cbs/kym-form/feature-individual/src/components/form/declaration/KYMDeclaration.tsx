@@ -9,7 +9,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id,
+  FormFieldSearchTerm,
   KymIndMemberInput,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
@@ -64,17 +64,14 @@ export const KYMDeclaration = ({
 
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: {
-        customId: Kym_Field_Custom_Id.Relationship,
-      },
+      searchTerm: FormFieldSearchTerm.Relationship,
     });
   const {
     data: foreignEmploymentOptions,
     isLoading: foreignEmploymentOptionsLoading,
   } = useGetIndividualKymOptionsQuery({
-    id,
-    filter: { customId: Kym_Field_Custom_Id.ForeignEmploymentOptions },
+    searchTerm: FormFieldSearchTerm.Occupation,
+    // filter: { se: Kym_Field_Custom_Id.ForeignEmploymentOptions },
   });
 
   const hasBeneficialOwner = watch('hasBeneficialOwner');

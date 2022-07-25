@@ -9,15 +9,13 @@ import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
-import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   ContainerWithDivider,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id as KYMOptionEnum,
-  KymIndMemberInput,
+  FormFieldSearchTerm,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
@@ -71,8 +69,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.Relationship },
+      searchTerm: FormFieldSearchTerm.Relationship,
     });
 
   const { data: editValues } = useGetIndividualKymEditDataQuery({
@@ -363,8 +360,7 @@ const KYMBasiccoopDetailsBasic = ({
 
   const { data: purposeData, isLoading: purposeLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.Purpose },
+      searchTerm: FormFieldSearchTerm.Purpose,
     });
 
   const isMemberOfAnotherCooperative = watch('isMemberOfAnotherCooperative');

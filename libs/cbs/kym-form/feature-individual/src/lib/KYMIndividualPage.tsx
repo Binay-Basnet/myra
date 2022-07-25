@@ -1,17 +1,8 @@
 /* eslint-disable-next-line */
-import { getKymSection, useTranslation } from '@coop/shared/utils';
-import React, { useEffect } from 'react';
+import { useTranslation } from '@coop/shared/utils';
+import React from 'react';
 import { useRouter } from 'next/router';
-import {
-  Kym_Field_Custom_Id,
-  Kym_Field_Custom_Id as KYMOptionEnum,
-  KymIndMemberInput,
-  useGetIndividualKymEditDataQuery,
-  useGetIndividualKymOptionsQuery,
-  useGetKymFormStatusQuery,
-  useSetMemberDataMutation,
-} from '@coop/shared/data-access';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useGetKymFormStatusQuery } from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -20,13 +11,12 @@ import {
   Icon,
   IconButton,
   Text,
-  TextFields,
 } from '@coop/shared/ui';
 import { IoCloseOutline } from 'react-icons/io5';
-import debounce from 'lodash/debounce';
 import {
   KYMBasiccoopDetails,
   KYMDeclaration,
+  KYMDeclarationAgree,
   KYMDocumentDeclaration,
   KYMEstimatedAmount,
   KYMFinancialTransactionDetails,
@@ -39,7 +29,6 @@ import {
   MemberKYMIncomeSourceDetails,
   MemberKYMMainOccupation,
   MemberKYMProfession,
-  KYMDeclarationAgree,
 } from '../components/form';
 import {
   ContainerWithDivider,
@@ -47,8 +36,6 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccorrdianAddMember } from '@coop/myra/components';
-import { FormCheckbox } from '@coop/shared/form';
-import { identity, pickBy } from 'lodash';
 
 export function KYMIndividualPage() {
   const { t } = useTranslation();
@@ -56,66 +43,10 @@ export function KYMIndividualPage() {
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  const { data: occupationDetailsDefaultFields } =
-    useGetIndividualKymOptionsQuery({
-      id,
-      filter: {
-        customId: Kym_Field_Custom_Id.OccupationDetails,
-      },
-    });
-
-  const occupationFieldNames =
-    occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]?.options?.map(
-      (option) => ({ id: option.id, value: '' })
-    ) ?? [];
-
-  const { data: familyDetailsFieldsData } = useGetIndividualKymOptionsQuery({
-    id,
-    filter: {
-      customId: Kym_Field_Custom_Id.FamilyInformation,
-    },
-  });
-
-  const familyDetailsFieldNames =
-    familyDetailsFieldsData?.members.individual?.options.list?.data?.[0]?.options?.map(
-      (option) => ({ id: option.id, value: '' })
-    ) ?? [];
-
-  const { data: incomeSourceDetailsField, isLoading } =
-    useGetIndividualKymOptionsQuery({
-      id,
-      filter: {
-        customId: Kym_Field_Custom_Id.IncomeSourceDetails,
-      },
-    });
-
-  const incomeSourceDetailFieldNames =
-    incomeSourceDetailsField?.members.individual?.options.list?.data?.[0]?.options?.map(
-      (option) => ({ id: option.id, value: '' })
-    ) ?? [];
-
-  const { data: nationalityFields, isLoading: nationalityLoading } =
-    useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.Nationality },
-    });
-
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
     subSection: string;
   }>();
-
-  // const { mutate } = useSetMemberDataMutation({
-  //   onSuccess: (res) => {
-  //     setError('firstName', {
-  //       type: 'custom',
-  //       message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-  //     });
-  //   },
-  //   onError: () => {
-  //     setError('firstName', { type: 'custom', message: 'gg' });
-  //   },
-  // });
 
   const kymFormStatusQuery = useGetKymFormStatusQuery(
     { id },
@@ -124,106 +55,6 @@ export function KYMIndividualPage() {
   const kymFormStatus =
     kymFormStatusQuery?.data?.members?.individual?.formState?.data
       ?.sectionStatus;
-
-  // const methods = useForm<KymIndMemberInput>();
-
-  // const {
-  //   data: editValues,
-  //   isLoading: editLoading,
-  //   refetch,
-  // } = useGetIndividualKymEditDataQuery(
-  //   {
-  //     id: id,
-  //   },
-  //   { enabled: id !== 'undefined' }
-  // );
-
-  // console.log('ind page');
-  // console.log({ editValues });
-
-  // const { watch, setError, reset } = methods;
-
-  // useEffect(() => {
-  //   const subscription = watch(
-  //     debounce((data) => {
-  //       console.log(editValues);
-  //       if (editValues && data) {
-  //         mutate({ id: router.query['id'] as string, data });
-  //         refetch();
-  //       }
-  //     }, 800)
-  //   );
-
-  //   return () => subscription.unsubscribe();
-  // }, [watch, router.isReady, editValues]);
-
-  // useEffect(() => {
-  //   if (editValues) {
-  //     console.log(
-  //       pickBy(
-  //         editValues?.members?.individual?.formState?.data?.formData ?? {},
-  //         (v) => v !== null
-  //       )
-  //     );
-  //     const editValueData =
-  //       editValues?.members?.individual?.formState?.data?.formData;
-  //     console.log('edit value', editValueData);
-  //     const permanentLocationData =
-  //       editValueData?.permanentAddress?.coordinates?.latitude === null
-  //         ? { latitude: 27.71, longitude: 85.31 }
-  //         : editValueData?.permanentAddress;
-
-  //     const temporaryLocationData =
-  //       editValueData?.temporaryAddress?.coordinates?.latitude === null
-  //         ? { latitude: 27.71, longitude: 85.31 }
-  //         : editValueData?.temporaryAddress;
-  //     console.log(
-  //       'location',
-  //       editValueData,
-  //       permanentLocationData,
-  //       temporaryLocationData,
-  //       {
-  //         ...editValueData,
-  //         permanentLocation: permanentLocationData,
-  //         temporaryLocation: temporaryLocationData,
-  //       }
-  //     );
-  //     reset({
-  //       mainOccupation: [
-  //         {
-  //           options: occupationFieldNames,
-  //         },
-  //       ],
-  //       spouseOccupation: [
-  //         {
-  //           options: occupationFieldNames,
-  //         },
-  //       ],
-  //       incomeSourceDetails: [
-  //         {
-  //           options: incomeSourceDetailFieldNames,
-  //         },
-  //       ],
-  //       familyDetails: [
-  //         {
-  //           options: familyDetailsFieldNames,
-  //         },
-  //       ],
-  //       nationalityId:
-  //         nationalityFields?.members?.individual?.options?.list?.data?.[0]
-  //           ?.options?.[0]?.id,
-
-  //       ...pickBy(
-  //         {
-  //           ...editValueData,
-  //           permanentLocation: permanentLocationData,
-  //           temporaryLocation: temporaryLocationData,
-  //         } ?? {},
-  //         identity
-  //       ),
-  //     });
-  //   }
-  // }, [isLoading, nationalityLoading, editLoading]);
 
   return (
     <>
