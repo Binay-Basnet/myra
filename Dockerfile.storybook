@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:14-alpine AS builder
 
 WORKDIR /app
 
@@ -9,6 +9,15 @@ RUN yarn
 
 COPY . .
 
-EXPOSE 4400
+RUN npx nx run shared-ui:build-storybook
 
-CMD ["npx", "nx", "run", "shared-ui:storybook"]
+FROM nginx:alpine AS server
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY --from=builder /app/dist/storybook/myra-ui /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
