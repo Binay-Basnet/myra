@@ -4205,11 +4205,13 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.5.tgz"
   integrity sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==
 
-"@raralabs/web-feedback@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@raralabs/web-feedback/-/web-feedback-1.0.1.tgz#1566b20c3920dac1560b9f2c53a47904c849849a"
-  integrity sha512-cantnziucKsoIkW0KuGRwUZnz5BBm2/VFIMPJ/IQgtQtLBZXz3mj+DenRbHdNHXbnCUFef+A7Y52dG8vfttGFQ==
+"@raralabs/web-feedback@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@raralabs/web-feedback/-/web-feedback-1.0.2.tgz#9f7572a745955a7b223178f3b6efd2e9c969f7f1"
+  integrity sha512-OhftDzhhBYLmIIHOlTcqVHP2C8onTsULbWlLsbX3IK03Tjd3QghmESkONcWHvayjSUcyisSM4xAs89Ij0R4lgQ==
   dependencies:
+    dom-to-image "^2.6.0"
+    dom-to-image-more "^2.11.1"
     html2canvas "^1.4.1"
 
 "@react-leaflet/core@^2.0.0":
@@ -10502,6 +10504,16 @@ dom-serializer@^1.0.1:
     domelementtype "^2.0.1"
     domhandler "^4.2.0"
     entities "^2.0.0"
+
+dom-to-image-more@^2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/dom-to-image-more/-/dom-to-image-more-2.11.1.tgz#bd2e87aaa07ac310d147df1f9579547ca14d9179"
+  integrity sha512-Y72mPFhkAPjAbzfUkG/r5SFHt0Kwo39anye0AHwS7yGVysgDIv8i9yo/RD/f9R5FA7wnC5Sus4HJ2r+mL43btg==
+
+dom-to-image@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/dom-to-image/-/dom-to-image-2.6.0.tgz#8a503608088c87b1c22f9034ae032e1898955867"
+  integrity sha512-Dt0QdaHmLpjURjU7Tnu3AgYSF2LuOmksSGsUcE6ItvJoCWTBEmiMXcqBdNSAm9+QbbwD7JMoVsuuKX6ZVQv1qA==
 
 dom-walk@^0.1.0:
   version "0.1.2"

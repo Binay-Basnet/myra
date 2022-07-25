@@ -227,7 +227,10 @@ export enum Arrange {
 
 export type AuthMutation = {
   login?: Maybe<LoginResult>;
+<<<<<<< HEAD
   token?: Maybe<AuthToken>;
+=======
+>>>>>>> 6ba5c9cfe455879570603ebdd4e0114c8dedbaa8
 };
 
 
@@ -235,11 +238,14 @@ export type AuthMutationLoginArgs = {
   data: LoginInput;
 };
 
+<<<<<<< HEAD
 
 export type AuthMutationTokenArgs = {
   refreshToken: Scalars['String'];
 };
 
+=======
+>>>>>>> 6ba5c9cfe455879570603ebdd4e0114c8dedbaa8
 export type AuthQuery = {
   me: MeResult;
 };
@@ -6857,6 +6863,7 @@ export type SetInstitutionSisterDetailsMutationVariables = Exact<{
 
 export type SetInstitutionSisterDetailsMutation = { members: { institution?: { addSisterConcerns?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
+<<<<<<< HEAD
 export type SetInstitutionAddDirectorsMutationVariables = Exact<{
   id: Scalars['ID'];
   dir: Scalars['ID'];
@@ -6866,6 +6873,8 @@ export type SetInstitutionAddDirectorsMutationVariables = Exact<{
 
 export type SetInstitutionAddDirectorsMutation = { members: { institution?: { addDirectors?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
+=======
+>>>>>>> 6ba5c9cfe455879570603ebdd4e0114c8dedbaa8
 export type UpsertKymOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   option: KymOptionInput;
@@ -7829,6 +7838,7 @@ export const useSetInstitutionSisterDetailsMutation = <
       useAxios<SetInstitutionSisterDetailsMutation, SetInstitutionSisterDetailsMutationVariables>(SetInstitutionSisterDetailsDocument),
       options
     );
+<<<<<<< HEAD
 export const SetInstitutionAddDirectorsDocument = `
     mutation setInstitutionAddDirectors($id: ID!, $dir: ID!, $data: KymInsDirectorInput!) {
   members {
@@ -7854,6 +7864,8 @@ export const useSetInstitutionAddDirectorsMutation = <
       useAxios<SetInstitutionAddDirectorsMutation, SetInstitutionAddDirectorsMutationVariables>(SetInstitutionAddDirectorsDocument),
       options
     );
+=======
+>>>>>>> 6ba5c9cfe455879570603ebdd4e0114c8dedbaa8
 export const UpsertKymOptionDocument = `
     mutation upsertKYMOption($fieldId: ID!, $option: KYMOptionInput!) {
   settings {
