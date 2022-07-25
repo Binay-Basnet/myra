@@ -51,9 +51,16 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
   );
 
   return (
-    <Box display="flex" flexDirection="column" p="s16" gap="s32">
-      <Box display="flex" gap="s16">
-        <Image height="40px" width="34px" src={'/standard.png'} alt={'title'} />
+    <Box display="flex" flexDirection="column" gap="s16">
+      <Box display="flex" p="s16">
+        <Box px="s16" py="s8">
+          <Image
+            height="48px"
+            width="34px"
+            src={'/standard.png'}
+            alt={'title'}
+          />
+        </Box>
         <Box display="flex" gap="s10">
           <Box>
             <Text
@@ -91,7 +98,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
 
       <Divider />
 
-      <Tabs variant="unstyled" index={currentIndex}>
+      <Tabs p="s16" variant="unstyled" index={currentIndex}>
         {tablinks.map(({ title, to }, index) => {
           return (
             <Link href={to} key={`${title}${index}`}>

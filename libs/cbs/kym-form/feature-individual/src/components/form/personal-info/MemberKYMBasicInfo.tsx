@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
+import pickBy from 'lodash/pickBy';
 
 import {
   GroupContainer,
@@ -10,10 +11,9 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   Kym_Field_Custom_Id as KYMOptionEnum,
-  useGetIndividualKymOptionsQuery,
-} from '@coop/shared/data-access';
-import {
   KymIndMemberInput,
+  useGetIndividualKymEditDataQuery,
+  useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
@@ -38,33 +38,11 @@ export const MemberKYMBasicInfo = ({
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  // const {
-  //   data: editValues,
-  //   isLoading: editLoading,
-  //   refetch,
-  // } = useGetIndividualKymEditDataQuery(
-  //   {
-  //     id: id,
-  //   },
-  //   { enabled: id !== 'undefined' }
-  // );
-
-  const methods = useForm<KymIndMemberInput>();
+  const methods = useForm<KymIndMemberInput>({});
 
   const { watch, reset } = methods;
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      // setError('firstName', {
-      //   type: 'custom',
-      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      // });
-      console.log(res);
-    },
-    // onError: () => {
-    //   setError('firstName', { type: 'custom', message: 'gg' });
-    // },
-  });
+  const { mutate } = useSetMemberDataMutation();
 
   const { data: genderFields, isLoading: genderLoading } =
     useGetIndividualKymOptionsQuery({
@@ -96,16 +74,6 @@ export const MemberKYMBasicInfo = ({
       filter: { customId: KYMOptionEnum.Nationality },
     });
 
-  console.log({ nationalityFields });
-
-  useEffect(() => {
-    reset({
-      nationalityId:
-        nationalityFields?.members?.individual?.options?.list?.data?.[0]
-          ?.options?.[0]?.id,
-    });
-  }, [nationalityLoading]);
-
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
@@ -115,6 +83,31 @@ export const MemberKYMBasicInfo = ({
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
+
+  const {
+    data: editValues,
+    isLoading: editLoading,
+    refetch,
+  } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      reset({
+        ...editValueData?.basicInformation,
+        firstName: editValueData?.basicInformation?.firstName?.local,
+        middleName: editValueData?.basicInformation?.middleName?.local,
+        lastName: editValueData?.basicInformation?.lastName?.local,
+        nationalityId:
+          nationalityFields?.members?.individual?.options?.list?.data?.[0]
+            ?.options?.[0]?.id,
+      });
+    }
+  }, [nationalityFields, editValues]);
 
   return (
     <FormProvider {...methods}>

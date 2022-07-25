@@ -1,9 +1,14 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
-import { Box } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Box, PathBar } from '@coop/shared/ui';
 
-import { DetailPageHeader, DetailPageSideBar } from '../components';
+import { DetailPageSideBar } from '../components';
+
+interface AccountsDetailLayout {
+  children: React.ReactNode;
+  // tabList: { title: string; to: string }[];
+}
 
 const tabList = [
   {
@@ -40,23 +45,34 @@ const tabList = [
   },
 ];
 
-interface AccountsDetailLayout {
-  children: React.ReactNode;
-}
-
 export const AccountsDetailPageLayout = ({
   children,
 }: AccountsDetailLayout) => {
-  const { t } = useTranslation();
+  const router = useRouter();
 
   return (
     <>
-      <DetailPageHeader heading={t['settingsMember']} />
+      <Box bg="white" zIndex="10" ml="s20" top="110px" position="sticky">
+        <PathBar
+          paths={[
+            {
+              label: 'Bank Accounts',
+              link: '/accounting/accounting/bank-accounts/list',
+            },
+            {
+              label: 'Standard Chartered Bank Nepal Ltd.',
+              link: router.asPath,
+            },
+            // {
+            //   label: String(router.query['name']),
+            //   link: router.asPath,
+            // },
+          ]}
+        />
+      </Box>
       <Box
         w="300px"
-        px="s8"
         position="fixed"
-        py="s16"
         borderRight={'1px'}
         borderRightColor="border.layout"
         minHeight="100vh"

@@ -2858,6 +2858,8 @@ const en: Record<string, string> = {
   bankAccountChequeChequeEnd: 'Cheque End',
   bankAccountChequeEg00050: 'Eg. 00050',
   bankAccountChequeTotalLeafs: 'Total no of cheque leafs',
+
+  bankAccountBankStatementImportBankStatement:'Import Bank Statement',
 };
 
 export default en;

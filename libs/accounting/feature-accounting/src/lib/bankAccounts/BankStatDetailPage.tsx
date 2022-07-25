@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
+import { FiCornerLeftDown } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
+import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export function BankStatDetailPage() {
@@ -97,8 +98,12 @@ export function BankStatDetailPage() {
         borderBottom="1px solid"
         borderColor="border.layout"
         bg="gray.0"
-        p="s16"
+        px="s16"
+        py="s4"
         borderRadius="br2"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
       >
         <Text
           fontSize="r1"
@@ -107,6 +112,10 @@ export function BankStatDetailPage() {
         >
           {t['bankAccountStatementBankStatement']}
         </Text>
+
+        <Button leftIcon={<FiCornerLeftDown />}>
+          {t['bankAccountBankStatementImportBankStatement']}
+        </Button>
       </Box>
       <Box>
         <Table

@@ -1,3 +1,4 @@
+export * from './components';
 export * from './lib/AccountingPageHeader';
 export * from './lib/AccountingTabMenu';
 export * from './lib/AccountingUiComponents';

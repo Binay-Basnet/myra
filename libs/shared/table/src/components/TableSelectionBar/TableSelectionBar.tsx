@@ -44,8 +44,6 @@ export const TableSelectionBar = <T extends Record<string, unknown>>({
     }
   }, [rowIds, table]);
 
-  console.log(rowIds);
-
   return (
     <Box
       bg="primary.0"
