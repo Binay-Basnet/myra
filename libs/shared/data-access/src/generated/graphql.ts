@@ -7218,7 +7218,7 @@ export type RefreshMutationVariables = Exact<{
 }>;
 
 
-export type RefreshMutation = { auth: { token?: { access: string, refresh: string } | null } };
+export type RefreshMutation = { auth: { token?: { token?: { access: string, refresh: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
 
 export type SetBranchDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -7838,12 +7838,17 @@ export const RefreshDocument = `
     mutation refresh($refreshToken: String!) {
   auth {
     token(refreshToken: $refreshToken) {
-      access
-      refresh
+      token {
+        access
+        refresh
+      }
+      error {
+        ...MutationError
+      }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useRefreshMutation = <
       TError = unknown,
       TContext = unknown

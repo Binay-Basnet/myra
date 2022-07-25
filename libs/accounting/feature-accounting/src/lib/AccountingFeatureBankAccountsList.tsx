@@ -41,20 +41,6 @@ export function AccountingFeatureBankAccountsList(
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
-  const popoverTitle = [
-    {
-      title: 'memberListTableViewMemberProfile',
-    },
-    {
-      title: 'memberListTableEditMember',
-      onClick: (member?: string) =>
-        router.push(`/members/individual/edit/${member?.id}`),
-    },
-    {
-      title: 'memberListTableMakeInactive',
-    },
-  ];
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -120,7 +106,19 @@ export function AccountingFeatureBankAccountsList(
         accessorKey: 'actions',
         cell: (cell) => (
           <PopoverComponent
-            items={popoverTitle}
+            items={[
+              {
+                title: 'memberListTableViewMemberProfile',
+              },
+              {
+                title: 'memberListTableEditMember',
+                onClick: (member) =>
+                  router.push(`/members/individual/edit/${member?.id}`),
+              },
+              {
+                title: 'memberListTableMakeInactive',
+              },
+            ]}
             member={cell?.row?.original?.node}
           />
         ),

@@ -46,8 +46,6 @@ export const CbsSettingsFeatureValuatorList = (
     },
     {
       title: 'memberListTableEditMember',
-      onClick: (memberId?: string) =>
-        router.push(`/members/individual/edit/${memberId}`),
     },
     {
       title: 'memberListTableMakeInactive',
@@ -110,7 +108,7 @@ export const CbsSettingsFeatureValuatorList = (
         cell: (cell) => (
           <PopoverComponent
             items={popoverTitle}
-            memberId={cell?.row?.original?.node?.id}
+            member={cell?.row?.original?.node}
           />
         ),
         meta: {
