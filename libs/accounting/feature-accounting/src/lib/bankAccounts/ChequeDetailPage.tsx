@@ -1,17 +1,6 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import {
-  IoAddOutline,
-  IoCloseOutline,
-  IoInformationCircleOutline,
-} from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-} from '@chakra-ui/react';
 import {
   Modal,
   ModalBody,
@@ -21,20 +10,14 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import { DetailPageTopCard } from 'libs/accounting/ui-components/src/components';
 
+import { DetailPageTopCard } from '@coop/accounting/ui-components';
 import { PopoverComponent } from '@coop/myra/components';
+import { AlertContainer } from '@coop/shared/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Column, Table } from '@coop/shared/table';
-import {
-  Box,
-  Button,
-  DEFAULT_PAGE_SIZE,
-  Divider,
-  Icon,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, DEFAULT_PAGE_SIZE, Divider, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export function ChequeDetailPage() {
@@ -236,48 +219,12 @@ export function ChequeDetailPage() {
 
   return (
     <Box display="flex" flexDirection="column" p="s16" gap="s16">
-      {/* <TableModalHeader
-        heading="bankAccountNewChequeBook"
+      <AlertContainer
+        title="bankAccountNewChequeBook"
+        description="It looks like you are run out of cheque leafs. Consider Creating new cheque book"
         buttonLabel="bankAccountNewChequeBook"
-        buttonHandler={() => onOpenModal()}
-      /> */}
-
-      <Alert status="success">
-        <Box display="flex" flexDirection="column" gap="s16">
-          <Box>
-            <AlertTitle display="flex" justifyContent="space-between">
-              <Box display="flex" gap="s12">
-                <Icon as={IoInformationCircleOutline} />
-                <Text
-                  color="neutralColorLight.Gray-80"
-                  fontWeight="SemiBold"
-                  fontSize="r2"
-                >
-                  {t['bankAccountNewChequeBook']}
-                </Text>
-              </Box>
-              <Icon size="md" color="grey" as={IoCloseOutline} />
-            </AlertTitle>
-            <AlertDescription>
-              It looks like you are run out of cheque leafs. Consider Creating
-              new cheque book
-            </AlertDescription>
-          </Box>
-
-          <Box alignSelf="flex-end">
-            <Button
-              alignSelf="flex-start"
-              position="relative"
-              right={-1}
-              top={-1}
-              leftIcon={<IoAddOutline />}
-              onClick={onOpenModal}
-            >
-              {t['bankAccountNewChequeBook']}
-            </Button>
-          </Box>
-        </Box>
-      </Alert>
+        onClick={onOpenModal}
+      />
 
       <DetailPageTopCard>
         <Box display="flex" flexDirection="column" gap="s4">

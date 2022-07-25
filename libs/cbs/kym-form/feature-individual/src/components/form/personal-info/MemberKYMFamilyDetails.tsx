@@ -24,6 +24,8 @@ import {
   KymIndMemberInput,
   KymOption,
   useDeleteMemberFamilyDetailsMutation,
+  useGetIndividualKymEditDataQuery,
+  useGetIndividualKymFamilyMembersListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
   useSetMemberDataMutation,
@@ -186,7 +188,7 @@ const MemberMaritalStatus = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { register, getValues, watch, control } = methods;
+  const { watch, reset } = methods;
 
   const router = useRouter();
 
@@ -198,18 +200,29 @@ const MemberMaritalStatus = ({
       filter: { customId: KYMOptionEnum.MaritalStatus },
     });
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      // setError('firstName', {
-      //   type: 'custom',
-      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      // });
-      console.log(res);
-    },
-    //   onError: () => {
-    //     setError('firstName', { type: 'custom', message: 'gg' });
-    //   },
+  const { data: editValues, isLoading: editLoading } =
+    useGetIndividualKymEditDataQuery({
+      id: id,
+    });
+
+  console.log({
+    ind: 'marital status info',
+    data: editValues?.members?.individual?.formState?.data?.formData
+      ?.maritalStatusId,
   });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      reset({
+        maritalStatusId: editValueData?.maritalStatusId,
+      });
+    }
+  }, [editValues]);
+
+  const { mutate } = useSetMemberDataMutation();
 
   useEffect(() => {
     const subscription = watch(
@@ -269,6 +282,22 @@ const MemberFamilyDetails = ({
   // } = useFieldArray({ control, name: 'familyDetails' });
 
   const [familyMemberIds, setFamilyMemberIds] = useState<string[]>([]);
+
+  const {
+    data: editValues,
+    isLoading: editLoading,
+    refetch,
+  } = useGetIndividualKymFamilyMembersListQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.listFamilyMember?.data;
+      console.log('edit value', editValueData);
+    }
+  }, [editValues]);
 
   const { mutate: newIDMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

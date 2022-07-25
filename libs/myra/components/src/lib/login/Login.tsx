@@ -7,9 +7,14 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 
+import { useLoginMutation } from '@coop/shared/data-access';
 import { Box, Button } from '@coop/shared/ui';
+import { useAuth } from '@coop/shared/utils';
 
 export const Login = () => {
+  const { mutateAsync } = useLoginMutation();
+  const auth = useAuth();
+  console.log('auth', auth);
   const [show, setShow] = React.useState(false);
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -25,10 +30,22 @@ export const Login = () => {
     setPassword(e.target.value);
   };
   const handleSubmit = () => {
-    if (userName === 'neosys' && password === 'neosys@123') {
-      localStorage.setItem('isLoggedIn', 'true');
-      typeof window !== 'undefined' && window.location.reload();
-    }
+    mutateAsync({ data: { username: userName, password } }).then(
+      (res) => {
+        const accessToken = res?.auth?.login?.record?.token?.access;
+        const refreshToken = res?.auth?.login?.record?.token?.refresh;
+        const user = res?.auth?.login?.record?.user;
+        auth.setAuthentication &&
+          auth?.setAuthentication({ accessToken: accessToken, user: user });
+        localStorage.setItem('refreshToken', refreshToken ?? '');
+      }
+
+      // auth.setAuth({acces})
+    );
+    // if (userName === 'neosys' && password === 'neosys@123') {
+    //   localStorage.setItem('isLoggedIn', 'true');
+    //   typeof window !== 'undefined' && window.location.reload();
+    // }
   };
 
   return (

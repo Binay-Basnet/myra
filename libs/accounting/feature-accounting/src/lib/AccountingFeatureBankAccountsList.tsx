@@ -5,7 +5,7 @@ import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
+import { Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -64,6 +64,30 @@ export function AccountingFeatureBankAccountsList(
       {
         accessorFn: (row) => row?.node?.name?.local,
         header: t['bankAccountsBankName'],
+        cell: (props) => {
+          return (
+            <Box
+              display="flex"
+              alignItems="center"
+              cursor={'pointer'}
+              gap="s12"
+              onClick={() => {
+                router.push(
+                  '/accounting/accounting/bank-accounts/12123/overview'
+                );
+              }}
+            >
+              <Text
+                fontSize="s3"
+                textTransform="capitalize"
+                textOverflow="ellipsis"
+                overflow="hidden"
+              >
+                {props.getValue()}
+              </Text>
+            </Box>
+          );
+        },
 
         meta: {
           width: '60%',
