@@ -26,5 +26,8 @@ mutation refresh($refreshToken: String!) {
       access
       refresh
     }
+    error {
+      ...MutationError
+    }
   }
 }
