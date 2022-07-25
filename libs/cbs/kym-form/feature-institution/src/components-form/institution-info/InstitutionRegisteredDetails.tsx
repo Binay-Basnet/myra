@@ -19,6 +19,8 @@ import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
+import { useInstitution } from '../hooks/institutionHook';
+
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
@@ -30,37 +32,8 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
   });
   const { setSection } = props;
 
-  const router = useRouter();
-
   const { control, handleSubmit, getValues, watch, setError } = methods;
-  const { mutate } = useSetInstitutionDataMutation({
-    onSuccess: (res) => {
-      setError('institutionName', {
-        type: 'custom',
-        message:
-          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
-      });
-    },
-    onError: () => {
-      setError('institutionName', {
-        type: 'custom',
-        message: 'it is what it is',
-      });
-    },
-  });
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        // console.log(editValues);
-        // if (editValues && data) {
-        mutate({ id: router.query['id'] as string, data });
-        //   refetch();
-        // }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  useInstitution({ methods });
 
   const { data } = useAllAdministrationQuery();
 

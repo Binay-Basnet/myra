@@ -35,3 +35,22 @@ mutation setInstitutionSisterDetails(
     }
   }
 }
+
+mutation setInstitutionAddDirectors(
+  $id: ID!
+  $dir: ID!
+  $data: KymInsDirectorInput!
+) {
+  members {
+    institution(id: $id) {
+      addDirectors(directorId: $dir, data: $data) {
+        recordId
+        error {
+          ... on KymIndAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}

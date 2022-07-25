@@ -362,6 +362,7 @@ const MemberFamilyDetails = ({
 
 interface IMemberKYMFamilyDetailsProps {
   setKymCurrentSection: (section?: {
+    ERR_CONNECTION_REFUSED;
     section: string;
     subSection: string;
   }) => void;

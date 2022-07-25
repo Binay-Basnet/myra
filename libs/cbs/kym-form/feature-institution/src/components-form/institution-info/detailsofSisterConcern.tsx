@@ -47,28 +47,28 @@ const AddSister = ({ index, removeSister }: IAddSisterConcern) => {
         <FormInput
           type="text"
           bg="white"
-          name={`sisterConcernDetails.${index}.name`}
+          name={`nameEn`}
           label={t['kymInsNameofSisterConcern']}
           placeholder={t['kymInsEnterNameofSisterConcern']}
         />
         <FormInput
           type="text"
           bg="white"
-          name={`sisterConcernDetails.${index}.natureOfBusiness`}
+          name={`natureOfBusiness`}
           label={t['kymInsNatureofBusiness']}
           placeholder={t['kymInsNatureofBusiness']}
         />
         <FormInput
           type="text"
           bg="white"
-          name={`sisterConcernDetails.${index}.address`}
+          name={`address`}
           label={t['kymInsAddress']}
           placeholder={t['kymInsAddress']}
         />
         <FormInput
           type="text"
           bg="white"
-          name={`sisterConcernDetails.${index}.phoneNo`}
+          name={`phone`}
           label={t['kymInsPhoneNo']}
           placeholder={t['kymInsEnterPhoneNumber']}
         />
