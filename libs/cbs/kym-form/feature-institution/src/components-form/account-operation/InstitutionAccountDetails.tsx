@@ -1,7 +1,10 @@
-import React, { useMemo } from 'react';
-import { useEffect, useState } from 'react';
-import { Control, useFieldArray, useFormContext } from 'react-hook-form';
-import { FormProvider, useForm } from 'react-hook-form';
+import React, { useEffect, useMemo } from 'react';
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  useFormContext,
+} from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { GrRotateRight } from 'react-icons/gr';
@@ -11,17 +14,14 @@ import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
 import {
-  AccordianContainer,
-  DynamicBoxContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { KymInsInput } from '@coop/shared/data-access';
 import {
-  useGetKymFormStatusInstitutionQuery,
+  KymInsInput,
+  useAllAdministrationQuery,
   useSetInstitutionDataMutation,
 } from '@coop/shared/data-access';
 import {
@@ -32,16 +32,7 @@ import {
   FormSwitch,
 } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
-import {
-  Box,
-  Button,
-  Collapse,
-  Grid,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
-import { GridItem } from '@coop/shared/ui';
+import { Box, Button, Collapse, Icon, IconButton, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IAddAccountDetailsConcern {
@@ -438,7 +429,7 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
     fields: accountFields,
     append: accountAppend,
     remove: accountRemove,
-  } = useFieldArray({ control, name: 'accountOperatorsDetails' });
+  } = useFieldArray<any>({ control, name: 'accountOperatorsDetails' });
 
   return (
     <FormProvider {...methods}>

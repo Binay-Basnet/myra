@@ -1359,7 +1359,7 @@ export type DepositProductFormStateData = {
   rebate?: Maybe<Scalars['Boolean']>;
   rebateData?: Maybe<RebateFormState>;
   serviceCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
-  specifyWithdrawRestricttion?: Maybe<Scalars['String']>;
+  specifyWithdrawRestriction?: Maybe<Scalars['String']>;
   staffProduct?: Maybe<Scalars['Boolean']>;
   supportMultiple?: Maybe<Scalars['Boolean']>;
   transactionLimit?: Maybe<AmountLimitFormState>;
@@ -1419,7 +1419,7 @@ export type DepositProductInput = {
   rebate?: InputMaybe<Scalars['Boolean']>;
   rebateData?: InputMaybe<RebateInput>;
   serviceCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
-  specifyWithdrawRestricttion?: InputMaybe<Scalars['String']>;
+  specifyWithdrawRestriction?: InputMaybe<Scalars['String']>;
   staffProduct?: InputMaybe<Scalars['Boolean']>;
   supportMultiple?: InputMaybe<Scalars['Boolean']>;
   transactionLimit?: InputMaybe<AmountLimit>;

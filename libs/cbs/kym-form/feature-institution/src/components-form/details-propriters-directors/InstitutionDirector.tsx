@@ -1,7 +1,10 @@
-import React, { useMemo, useState } from 'react';
-import { useEffect } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import { FormProvider, useForm } from 'react-hook-form';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  useFormContext,
+} from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { GrRotateRight } from 'react-icons/gr';
@@ -15,10 +18,9 @@ import {
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { KymInsInput } from '@coop/shared/data-access';
 import {
-  useGetKymFormStatusInstitutionQuery,
+  KymInsInput,
+  useAllAdministrationQuery,
   useSetInstitutionDataMutation,
 } from '@coop/shared/data-access';
 import {
@@ -37,10 +39,9 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
-import { GridItem } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
-const AddDirector = ({ watch, index, removeDirector }) => {
+const AddDirector = ({ watch, index, removeDirector }: any) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
 
@@ -530,7 +531,7 @@ export const BoardDirectorInfo = (props: IProps) => {
     fields: directorFields,
     append: directorAppend,
     remove: directorRemove,
-  } = useFieldArray({ control, name: 'detailsOfDirectors' });
+  } = useFieldArray<any>({ control, name: 'detailsOfDirectors' });
   return (
     <FormProvider {...methods}>
       <form
