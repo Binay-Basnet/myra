@@ -1,26 +1,29 @@
-import React, { useMemo } from 'react';
-import { Control, useFieldArray, useFormContext } from 'react-hook-form';
+import React, { useEffect, useMemo } from 'react';
 import {
-  AiFillCloseCircle,
-  AiOutlineCaretDown,
-  AiOutlineCaretRight,
-  AiOutlineDelete,
-  AiOutlinePlus,
-} from 'react-icons/ai';
+  FormProvider,
+  useFieldArray,
+  useForm,
+  useFormContext,
+} from 'react-hook-form';
+import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
+import debounce from 'lodash/debounce';
 
 import {
-  AccordianContainer,
-  DynamicBoxContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import {
+  KymInsInput,
+  useAllAdministrationQuery,
+  useSetInstitutionDataMutation,
+} from '@coop/shared/data-access';
 import {
   FormFileInput,
   FormInput,
@@ -29,16 +32,8 @@ import {
   FormSwitch,
 } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
-import {
-  Box,
-  Button,
-  Collapse,
-  Grid,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Box, Button, Collapse, Icon, IconButton, Text } from '@coop/shared/ui';
+import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IAddAccountDetailsConcern {
   index: number;
@@ -389,56 +384,111 @@ const AddAccountDetails = ({
   );
 };
 
-export const InstitutionKYMAccountDetail = () => {
+interface IProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+export const InstitutionKYMAccountDetail = (props: IProps) => {
   const { t } = useTranslation();
+  const methods = useForm<KymInsInput>({
+    defaultValues: {},
+  });
+  const { setSection } = props;
+
+  const router = useRouter();
+
+  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const { mutate } = useSetInstitutionDataMutation({
+    onSuccess: (res) => {
+      setError('institutionName', {
+        type: 'custom',
+        message:
+          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
+      });
+    },
+    onError: () => {
+      setError('institutionName', {
+        type: 'custom',
+        message: 'it is what it is',
+      });
+    },
+  });
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        // console.log(editValues);
+        // if (editValues && data) {
+        mutate({ id: router.query['id'] as string, data });
+        //   refetch();
+        // }
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
   const {
     fields: accountFields,
     append: accountAppend,
     remove: accountRemove,
-  } = useFieldArray({ name: 'accountOperatorsDetails' });
+  } = useFieldArray<any>({ control, name: 'accountOperatorsDetails' });
 
   return (
-    <GroupContainer
-      gap="s16"
-      id="kymInsDetailsofAccountOperators"
-      scrollMarginTop="200px"
-    >
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymInsDetailsofAccountOperators']}
-      </Text>
+    <FormProvider {...methods}>
+      <form
+        // onChange={debounce(() => {
+        //   console.log('hello', getValues());
+        //   mutate({ id, data: getValues() });
+        // }, 800)}
+        // onSubmit={handleSubmit((data) => {
+        //   console.log('data', data);
+        // })}
+        onFocus={(e) => {
+          const kymSection = getKymSectionInstitution(e.target.id);
+          setSection(kymSection);
+        }}
+      >
+        <GroupContainer
+          gap="s16"
+          id="kymInsDetailsofAccountOperators"
+          scrollMarginTop="200px"
+        >
+          <Text fontSize="r1" fontWeight="SemiBold">
+            {t['kymInsDetailsofAccountOperators']}
+          </Text>
 
-      <div>
-        <DynamicBoxGroupContainer>
-          {accountFields.map((item, index) => {
-            return (
-              <Box
-                key={item.id}
-                display="flex"
-                flexDirection={'column'}
-                // gap="s16"
-                // border="1px solid"
-                // borderColor="border.layout"
+          <div>
+            <DynamicBoxGroupContainer>
+              {accountFields.map((item, index) => {
+                return (
+                  <Box
+                    key={item.id}
+                    display="flex"
+                    flexDirection={'column'}
+                    // gap="s16"
+                    // border="1px solid"
+                    // borderColor="border.layout"
+                  >
+                    <AddAccountDetails
+                      index={index}
+                      removeAccountDetails={() => accountRemove(index)}
+                    />
+                  </Box>
+                );
+              })}
+              <Button
+                id="accountOperatorDetailsButton"
+                alignSelf="start"
+                leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+                variant="outline"
+                onClick={() => {
+                  accountAppend({});
+                }}
               >
-                <AddAccountDetails
-                  index={index}
-                  removeAccountDetails={() => accountRemove(index)}
-                />
-              </Box>
-            );
-          })}
-          <Button
-            id="accountOperatorDetailsButton"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              accountAppend({});
-            }}
-          >
-            {t['kymInsNewOperator']}
-          </Button>
-        </DynamicBoxGroupContainer>
-      </div>
-    </GroupContainer>
+                {t['kymInsNewOperator']}
+              </Button>
+            </DynamicBoxGroupContainer>
+          </div>
+        </GroupContainer>
+      </form>
+    </FormProvider>
   );
 };

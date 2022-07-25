@@ -12438,7 +12438,7 @@
             "deprecationReason": null
           },
           {
-            "name": "specifyWithdrawRestricttion",
+            "name": "specifyWithdrawRestriction",
             "description": null,
             "args": [],
             "type": {
@@ -13193,7 +13193,7 @@
             "deprecationReason": null
           },
           {
-            "name": "specifyWithdrawRestricttion",
+            "name": "specifyWithdrawRestriction",
             "description": null,
             "type": {
               "kind": "SCALAR",

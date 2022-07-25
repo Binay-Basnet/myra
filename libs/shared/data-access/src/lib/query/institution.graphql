@@ -30,3 +30,107 @@ query getKymFormStatusInstitution($id: ID!) {
     }
   }
 }
+
+query getInstitutionKymEditData($id: ID!) {
+  members {
+    institution {
+      formState(id: $id) {
+        data {
+          lastUpdated {
+            ... on KymInsInformationLUS {
+              information: name
+            }
+            ... on KymInsTransactionLUS {
+              transaction: name
+            }
+            ... on KymInsDirectorDetailsLUS {
+              directorDetails: name
+            }
+            ... on KymInsAccountLUS {
+              account: name
+            }
+            ... on KymInsDeclarationLUS {
+              declaration: name
+            }
+          }
+          sectionStatus {
+            information {
+              completed
+              error
+            }
+            transaction {
+              completed
+              error
+            }
+            directorDetails {
+              completed
+              error
+            }
+          }
+          formData {
+            institutionName
+            institutionType
+            natureOfBusiness
+            registrationDate
+            vatOrPanNo
+            operatingOfficeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            noOfBranches
+            branchOfficeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            registeredAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            registeredNumber
+            issuingOffice
+            phone
+            fax
+            email
+            website
+            postBoxNo
+            numberOfEmployee
+            dateOfLastAGM
+            bank
+            accountNumber
+            accountName
+            natureOfTransaction
+            annualTurnover
+            initialDepositAmount
+            expectedMonthlyTurnover
+            expectedMonthlyTransaction
+            accountType
+            isCompanyStampCompulsory
+            specialInstruction
+            # companyStamp
+            accountHolderName
+            accountHolderPhone
+            accountHolderEmail
+            accountHolderAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            accountHolderSignature
+            # accountHolderStamp
+          }
+        }
+      }
+    }
+  }
+}

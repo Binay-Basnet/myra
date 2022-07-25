@@ -30,20 +30,20 @@ export const LoanRepayment = () => {
 
   const unitOptions = [
     {
-      label: t['daily'],
-      value: 'Daily',
+      label: t['dai'],
+      value: 'day',
     },
     {
-      label: t['weekly'],
-      value: 'Weekly',
+      label: t['week'],
+      value: 'week',
     },
     {
-      label: t['monthly'],
-      value: 'Monthly',
+      label: t['month'],
+      value: 'month',
     },
     {
-      label: t['yearly'],
-      value: 'Yearly',
+      label: t['year'],
+      value: 'year',
     },
   ];
 

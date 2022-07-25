@@ -1359,7 +1359,7 @@ export type DepositProductFormStateData = {
   rebate?: Maybe<Scalars['Boolean']>;
   rebateData?: Maybe<RebateFormState>;
   serviceCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
-  specifyWithdrawRestricttion?: Maybe<Scalars['String']>;
+  specifyWithdrawRestriction?: Maybe<Scalars['String']>;
   staffProduct?: Maybe<Scalars['Boolean']>;
   supportMultiple?: Maybe<Scalars['Boolean']>;
   transactionLimit?: Maybe<AmountLimitFormState>;
@@ -1419,7 +1419,7 @@ export type DepositProductInput = {
   rebate?: InputMaybe<Scalars['Boolean']>;
   rebateData?: InputMaybe<RebateInput>;
   serviceCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
-  specifyWithdrawRestricttion?: InputMaybe<Scalars['String']>;
+  specifyWithdrawRestriction?: InputMaybe<Scalars['String']>;
   staffProduct?: InputMaybe<Scalars['Boolean']>;
   supportMultiple?: InputMaybe<Scalars['Boolean']>;
   transactionLimit?: InputMaybe<AmountLimit>;
@@ -6851,6 +6851,15 @@ export type SetInstitutionDataMutationVariables = Exact<{
 
 export type SetInstitutionDataMutation = { members: { institution?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
+export type SetInstitutionSisterDetailsMutationVariables = Exact<{
+  id: Scalars['ID'];
+  sis: Scalars['ID'];
+  data: KymInsSisterConcernInput;
+}>;
+
+
+export type SetInstitutionSisterDetailsMutation = { members: { institution?: { addSisterConcerns?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+
 export type UpsertKymOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   option: KymOptionInput;
@@ -7002,6 +7011,26 @@ export type GetAccountDetailsQueryVariables = Exact<{
 
 export type GetAccountDetailsQuery = { eBanking: { account?: { get?: { id: string, name: string, accountNumber: string, isDefault: boolean, amount: number, interestRate: number, accountType: Account_Type, interestBooked: number, interestEarned: number, subscribedDate: string, history?: Array<{ id: string, date: string, balance: number }> | null, transactions?: Array<{ id: string, name: string, date: string, amount: number, transactionType: Transaction_Type, transactionDirection: Transaction_Direction }> | null } | null } | null } };
 
+export type GetCoopChequeServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopChequeServicesQuery = { eBanking: { cooperativeServices?: { cheque?: { options: Array<{ name: string, enabled: boolean }> } | null } | null } };
+
+export type GetCoopLoanServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopLoanServicesQuery = { eBanking: { cooperativeServices?: { loan?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
+
+export type GetCoopComplaintServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopComplaintServicesQuery = { eBanking: { cooperativeServices?: { complaint?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
+
+export type GetCoopDownloadsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopDownloadsQuery = { eBanking: { cooperativeServices?: { downloads?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
+
 export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7028,6 +7057,13 @@ export type GetKymFormStatusInstitutionQueryVariables = Exact<{
 
 
 export type GetKymFormStatusInstitutionQuery = { members: { institution?: { formState?: { data?: { sectionStatus?: { information?: { completed?: Array<KymInsInformationSection | null> | null, error?: Array<KymInsInformationSection | null> | null } | null, transaction?: { completed?: Array<KymInsTransactionSection | null> | null, error?: Array<KymInsTransactionSection | null> | null } | null, directorDetails?: { completed?: Array<KymInsDirectorDetailsSection | null> | null, error?: Array<KymInsDirectorDetailsSection | null> | null } | null, account?: { completed?: Array<KymInsAccountSection | null> | null, error?: Array<KymInsAccountSection | null> | null } | null, declaration?: { completed?: Array<KymInsDeclarationSection | null> | null, error?: Array<KymInsDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
+
+export type GetInstitutionKymEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInstitutionKymEditDataQuery = { members: { institution?: { formState?: { data?: { lastUpdated: { account: KymInsAccountSection } | { declaration: KymInsDeclarationSection } | { directorDetails: KymInsDirectorDetailsSection } | { information: KymInsInformationSection } | { transaction: KymInsTransactionSection }, sectionStatus?: { information?: { completed?: Array<KymInsInformationSection | null> | null, error?: Array<KymInsInformationSection | null> | null } | null, transaction?: { completed?: Array<KymInsTransactionSection | null> | null, error?: Array<KymInsTransactionSection | null> | null } | null, directorDetails?: { completed?: Array<KymInsDirectorDetailsSection | null> | null, error?: Array<KymInsDirectorDetailsSection | null> | null } | null } | null, formData?: { institutionName?: string | null, institutionType?: string | null, natureOfBusiness?: string | null, registrationDate?: string | null, vatOrPanNo?: string | null, noOfBranches?: number | null, registeredNumber?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, email?: string | null, website?: string | null, postBoxNo?: string | null, numberOfEmployee?: number | null, dateOfLastAGM?: string | null, bank?: string | null, accountNumber?: string | null, accountName?: string | null, natureOfTransaction?: string | null, annualTurnover?: number | null, initialDepositAmount?: number | null, expectedMonthlyTurnover?: string | null, expectedMonthlyTransaction?: string | null, accountType?: AccountOperationType | null, isCompanyStampCompulsory?: boolean | null, specialInstruction?: string | null, accountHolderName?: string | null, accountHolderPhone?: string | null, accountHolderEmail?: string | null, accountHolderSignature?: string | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null, accountHolderAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null } | null } | null } };
 
 export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7806,6 +7842,31 @@ export const useSetInstitutionDataMutation = <
       useAxios<SetInstitutionDataMutation, SetInstitutionDataMutationVariables>(SetInstitutionDataDocument),
       options
     );
+export const SetInstitutionSisterDetailsDocument = `
+    mutation setInstitutionSisterDetails($id: ID!, $sis: ID!, $data: KymInsSisterConcernInput!) {
+  members {
+    institution(id: $id) {
+      addSisterConcerns(sisterConcernId: $sis, data: $data) {
+        recordId
+        error {
+          ... on KymIndAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetInstitutionSisterDetailsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetInstitutionSisterDetailsMutation, TError, SetInstitutionSisterDetailsMutationVariables, TContext>) =>
+    useMutation<SetInstitutionSisterDetailsMutation, TError, SetInstitutionSisterDetailsMutationVariables, TContext>(
+      ['setInstitutionSisterDetails'],
+      useAxios<SetInstitutionSisterDetailsMutation, SetInstitutionSisterDetailsMutationVariables>(SetInstitutionSisterDetailsDocument),
+      options
+    );
 export const UpsertKymOptionDocument = `
     mutation upsertKYMOption($fieldId: ID!, $option: KYMOptionInput!) {
   settings {
@@ -8359,6 +8420,113 @@ export const useGetAccountDetailsQuery = <
       useAxios<GetAccountDetailsQuery, GetAccountDetailsQueryVariables>(GetAccountDetailsDocument).bind(null, variables),
       options
     );
+export const GetCoopChequeServicesDocument = `
+    query getCoopChequeServices {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        options {
+          name
+          enabled
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopChequeServicesQuery = <
+      TData = GetCoopChequeServicesQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopChequeServicesQueryVariables,
+      options?: UseQueryOptions<GetCoopChequeServicesQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopChequeServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopChequeServices'] : ['getCoopChequeServices', variables],
+      useAxios<GetCoopChequeServicesQuery, GetCoopChequeServicesQueryVariables>(GetCoopChequeServicesDocument).bind(null, variables),
+      options
+    );
+export const GetCoopLoanServicesDocument = `
+    query getCoopLoanServices {
+  eBanking {
+    cooperativeServices {
+      loan {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopLoanServicesQuery = <
+      TData = GetCoopLoanServicesQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopLoanServicesQueryVariables,
+      options?: UseQueryOptions<GetCoopLoanServicesQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopLoanServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopLoanServices'] : ['getCoopLoanServices', variables],
+      useAxios<GetCoopLoanServicesQuery, GetCoopLoanServicesQueryVariables>(GetCoopLoanServicesDocument).bind(null, variables),
+      options
+    );
+export const GetCoopComplaintServicesDocument = `
+    query getCoopComplaintServices {
+  eBanking {
+    cooperativeServices {
+      complaint {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopComplaintServicesQuery = <
+      TData = GetCoopComplaintServicesQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopComplaintServicesQueryVariables,
+      options?: UseQueryOptions<GetCoopComplaintServicesQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopComplaintServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopComplaintServices'] : ['getCoopComplaintServices', variables],
+      useAxios<GetCoopComplaintServicesQuery, GetCoopComplaintServicesQueryVariables>(GetCoopComplaintServicesDocument).bind(null, variables),
+      options
+    );
+export const GetCoopDownloadsDocument = `
+    query getCoopDownloads {
+  eBanking {
+    cooperativeServices {
+      downloads {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopDownloadsQuery = <
+      TData = GetCoopDownloadsQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopDownloadsQueryVariables,
+      options?: UseQueryOptions<GetCoopDownloadsQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopDownloadsQuery, TError, TData>(
+      variables === undefined ? ['getCoopDownloads'] : ['getCoopDownloads', variables],
+      useAxios<GetCoopDownloadsQuery, GetCoopDownloadsQueryVariables>(GetCoopDownloadsDocument).bind(null, variables),
+      options
+    );
 export const GetAnnouncementListDocument = `
     query getAnnouncementList {
   eBanking {
@@ -8510,6 +8678,121 @@ export const useGetKymFormStatusInstitutionQuery = <
     useQuery<GetKymFormStatusInstitutionQuery, TError, TData>(
       ['getKymFormStatusInstitution', variables],
       useAxios<GetKymFormStatusInstitutionQuery, GetKymFormStatusInstitutionQueryVariables>(GetKymFormStatusInstitutionDocument).bind(null, variables),
+      options
+    );
+export const GetInstitutionKymEditDataDocument = `
+    query getInstitutionKymEditData($id: ID!) {
+  members {
+    institution {
+      formState(id: $id) {
+        data {
+          lastUpdated {
+            ... on KymInsInformationLUS {
+              information: name
+            }
+            ... on KymInsTransactionLUS {
+              transaction: name
+            }
+            ... on KymInsDirectorDetailsLUS {
+              directorDetails: name
+            }
+            ... on KymInsAccountLUS {
+              account: name
+            }
+            ... on KymInsDeclarationLUS {
+              declaration: name
+            }
+          }
+          sectionStatus {
+            information {
+              completed
+              error
+            }
+            transaction {
+              completed
+              error
+            }
+            directorDetails {
+              completed
+              error
+            }
+          }
+          formData {
+            institutionName
+            institutionType
+            natureOfBusiness
+            registrationDate
+            vatOrPanNo
+            operatingOfficeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            noOfBranches
+            branchOfficeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            registeredAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            registeredNumber
+            issuingOffice
+            phone
+            fax
+            email
+            website
+            postBoxNo
+            numberOfEmployee
+            dateOfLastAGM
+            bank
+            accountNumber
+            accountName
+            natureOfTransaction
+            annualTurnover
+            initialDepositAmount
+            expectedMonthlyTurnover
+            expectedMonthlyTransaction
+            accountType
+            isCompanyStampCompulsory
+            specialInstruction
+            accountHolderName
+            accountHolderPhone
+            accountHolderEmail
+            accountHolderAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            accountHolderSignature
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInstitutionKymEditDataQuery = <
+      TData = GetInstitutionKymEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetInstitutionKymEditDataQueryVariables,
+      options?: UseQueryOptions<GetInstitutionKymEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetInstitutionKymEditDataQuery, TError, TData>(
+      ['getInstitutionKymEditData', variables],
+      useAxios<GetInstitutionKymEditDataQuery, GetInstitutionKymEditDataQueryVariables>(GetInstitutionKymEditDataDocument).bind(null, variables),
       options
     );
 export const GetInventoryItemsDocument = `
