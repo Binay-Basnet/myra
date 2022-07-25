@@ -7,6 +7,7 @@ query getMemberList($objState: ObjState, $pagination: Pagination) {
           id
           name
           code
+          type
           address {
             state
             district

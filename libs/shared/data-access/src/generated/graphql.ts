@@ -7117,6 +7117,13 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { auth: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, user: { id: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string> } } | null } | null } };
 
+export type RefreshMutationVariables = Exact<{
+  refreshToken: Scalars['String'];
+}>;
+
+
+export type RefreshMutation = { auth: { token?: { access: string, refresh: string } | null } };
+
 export type SetBranchDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: BranchInput;
@@ -7423,6 +7430,11 @@ export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string, wards: Array<number> }> }> }> } };
 
+export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeQuery = { auth: { me: { data?: { id: string, username: string, email?: string | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
+
 type MutationError_AuthorizationError_Fragment = {};
 
 type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', message: string, code: string };
@@ -7562,7 +7574,7 @@ export type GetMemberListQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, createdAt: string, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, contact?: string | null, createdAt: string, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7734,6 +7746,25 @@ export const useLoginMutation = <
     useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
       ['login'],
       useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
+      options
+    );
+export const RefreshDocument = `
+    mutation refresh($refreshToken: String!) {
+  auth {
+    token(refreshToken: $refreshToken) {
+      access
+      refresh
+    }
+  }
+}
+    `;
+export const useRefreshMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>) =>
+    useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
+      ['refresh'],
+      useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
       options
     );
 export const SetBranchDataDocument = `
@@ -8745,6 +8776,34 @@ export const useAllAdministrationQuery = <
       useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
       options
     );
+export const GetMeDocument = `
+    query getMe {
+  auth {
+    me {
+      data {
+        id
+        username
+        email
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetMeQuery = <
+      TData = GetMeQuery,
+      TError = unknown
+    >(
+      variables?: GetMeQueryVariables,
+      options?: UseQueryOptions<GetMeQuery, TError, TData>
+    ) =>
+    useQuery<GetMeQuery, TError, TData>(
+      variables === undefined ? ['getMe'] : ['getMe', variables],
+      useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
+      options
+    );
 export const GetConfigDocument = `
     query getConfig {
   config {
@@ -9471,6 +9530,7 @@ export const GetMemberListDocument = `
           id
           name
           code
+          type
           address {
             state
             district

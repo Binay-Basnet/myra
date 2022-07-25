@@ -19,3 +19,15 @@ mutation login($data: LoginInput!) {
     }
   }
 }
+
+mutation refresh($refreshToken: String!) {
+  auth {
+    token(refreshToken: $refreshToken) {
+      access
+      refresh
+    }
+    error {
+      ...MutationError
+    }
+  }
+}
