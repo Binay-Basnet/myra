@@ -2399,7 +2399,7 @@ export type Identity = {
 
 export type IndividualMember = {
   cooperativeMembership?: Maybe<KymCoopMembershipDetails>;
-  declaration?: Maybe<KymIndDeclaration>;
+  declaration?: Maybe<KymIndDeclarations>;
   personalInformation?: Maybe<KymIndPersonalInformation>;
   professionalInformation?: Maybe<KymIndProfessionalInformation>;
 };
@@ -4716,6 +4716,22 @@ export type KymIndDeclarationStatus = {
   error?: Maybe<Array<Maybe<KymIndDeclarationSection>>>;
 };
 
+export type KymIndDeclarations = {
+  beneficialFullName?: Maybe<Scalars['String']>;
+  beneficialRelationshipId?: Maybe<Scalars['ID']>;
+  convictionDetails?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<KymDocumentsType>>>;
+  foreignResidentialPermitDetails?: Maybe<Array<Maybe<KymIdentificationType>>>;
+  hasBeneficialOwner?: Maybe<Scalars['Boolean']>;
+  hasForeignResidentialPermit?: Maybe<Scalars['Boolean']>;
+  isConvicted?: Maybe<Scalars['Boolean']>;
+  isPoliticallyExposed?: Maybe<Scalars['Boolean']>;
+  localKinAddress?: Maybe<Scalars['String']>;
+  localKinContact?: Maybe<Scalars['String']>;
+  localKinName?: Maybe<Scalars['String']>;
+  localKinRelationshipId?: Maybe<Scalars['ID']>;
+};
+
 export type KymIndFormData = {
   annualIncomeSourceId?: Maybe<Scalars['String']>;
   basicInformation?: Maybe<KymIndBasicInformation>;
@@ -6977,6 +6993,26 @@ export type GetAccountDetailsQueryVariables = Exact<{
 
 export type GetAccountDetailsQuery = { eBanking: { account?: { get?: { id: string, name: string, accountNumber: string, isDefault: boolean, amount: number, interestRate: number, accountType: Account_Type, interestBooked: number, interestEarned: number, subscribedDate: string, history?: Array<{ id: string, date: string, balance: number }> | null, transactions?: Array<{ id: string, name: string, date: string, amount: number, transactionType: Transaction_Type, transactionDirection: Transaction_Direction }> | null } | null } | null } };
 
+export type GetCoopChequeServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopChequeServicesQuery = { eBanking: { cooperativeServices?: { cheque?: { options: Array<{ name: string, enabled: boolean }> } | null } | null } };
+
+export type GetCoopLoanServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopLoanServicesQuery = { eBanking: { cooperativeServices?: { loan?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
+
+export type GetCoopComplaintServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopComplaintServicesQuery = { eBanking: { cooperativeServices?: { complaint?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
+
+export type GetCoopDownloadsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopDownloadsQuery = { eBanking: { cooperativeServices?: { downloads?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
+
 export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -8288,6 +8324,113 @@ export const useGetAccountDetailsQuery = <
     useQuery<GetAccountDetailsQuery, TError, TData>(
       ['getAccountDetails', variables],
       useAxios<GetAccountDetailsQuery, GetAccountDetailsQueryVariables>(GetAccountDetailsDocument).bind(null, variables),
+      options
+    );
+export const GetCoopChequeServicesDocument = `
+    query getCoopChequeServices {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        options {
+          name
+          enabled
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopChequeServicesQuery = <
+      TData = GetCoopChequeServicesQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopChequeServicesQueryVariables,
+      options?: UseQueryOptions<GetCoopChequeServicesQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopChequeServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopChequeServices'] : ['getCoopChequeServices', variables],
+      useAxios<GetCoopChequeServicesQuery, GetCoopChequeServicesQueryVariables>(GetCoopChequeServicesDocument).bind(null, variables),
+      options
+    );
+export const GetCoopLoanServicesDocument = `
+    query getCoopLoanServices {
+  eBanking {
+    cooperativeServices {
+      loan {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopLoanServicesQuery = <
+      TData = GetCoopLoanServicesQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopLoanServicesQueryVariables,
+      options?: UseQueryOptions<GetCoopLoanServicesQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopLoanServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopLoanServices'] : ['getCoopLoanServices', variables],
+      useAxios<GetCoopLoanServicesQuery, GetCoopLoanServicesQueryVariables>(GetCoopLoanServicesDocument).bind(null, variables),
+      options
+    );
+export const GetCoopComplaintServicesDocument = `
+    query getCoopComplaintServices {
+  eBanking {
+    cooperativeServices {
+      complaint {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopComplaintServicesQuery = <
+      TData = GetCoopComplaintServicesQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopComplaintServicesQueryVariables,
+      options?: UseQueryOptions<GetCoopComplaintServicesQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopComplaintServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopComplaintServices'] : ['getCoopComplaintServices', variables],
+      useAxios<GetCoopComplaintServicesQuery, GetCoopComplaintServicesQueryVariables>(GetCoopComplaintServicesDocument).bind(null, variables),
+      options
+    );
+export const GetCoopDownloadsDocument = `
+    query getCoopDownloads {
+  eBanking {
+    cooperativeServices {
+      downloads {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopDownloadsQuery = <
+      TData = GetCoopDownloadsQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopDownloadsQueryVariables,
+      options?: UseQueryOptions<GetCoopDownloadsQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopDownloadsQuery, TError, TData>(
+      variables === undefined ? ['getCoopDownloads'] : ['getCoopDownloads', variables],
+      useAxios<GetCoopDownloadsQuery, GetCoopDownloadsQueryVariables>(GetCoopDownloadsDocument).bind(null, variables),
       options
     );
 export const GetAnnouncementListDocument = `

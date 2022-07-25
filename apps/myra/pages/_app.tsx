@@ -3,17 +3,22 @@ import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
-import type { NextComponentType, NextPage, NextPageContext } from 'next';
+import type { NextPage } from 'next';
 import type { AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { Login } from '@coop/myra/components';
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import { AuthProvider, useSnap } from '@coop/shared/utils';
-import { store, theme } from '@coop/shared/utils';
-import { useAuth } from '@coop/shared/utils';
+import {
+  AuthProvider,
+  store,
+  theme,
+  useAuth,
+  useSnap,
+} from '@coop/shared/utils';
 
+// import '../styles/feedback.css';
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
 const { ToastContainer } = createStandaloneToast();
