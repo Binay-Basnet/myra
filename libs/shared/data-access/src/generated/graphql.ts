@@ -2399,7 +2399,7 @@ export type Identity = {
 
 export type IndividualMember = {
   cooperativeMembership?: Maybe<KymCoopMembershipDetails>;
-  declaration?: Maybe<KymIndDeclaration>;
+  declaration?: Maybe<KymIndDeclarations>;
   personalInformation?: Maybe<KymIndPersonalInformation>;
   professionalInformation?: Maybe<KymIndProfessionalInformation>;
 };
@@ -4716,6 +4716,22 @@ export type KymIndDeclarationStatus = {
   error?: Maybe<Array<Maybe<KymIndDeclarationSection>>>;
 };
 
+export type KymIndDeclarations = {
+  beneficialFullName?: Maybe<Scalars['String']>;
+  beneficialRelationshipId?: Maybe<Scalars['ID']>;
+  convictionDetails?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<KymDocumentsType>>>;
+  foreignResidentialPermitDetails?: Maybe<Array<Maybe<KymIdentificationType>>>;
+  hasBeneficialOwner?: Maybe<Scalars['Boolean']>;
+  hasForeignResidentialPermit?: Maybe<Scalars['Boolean']>;
+  isConvicted?: Maybe<Scalars['Boolean']>;
+  isPoliticallyExposed?: Maybe<Scalars['Boolean']>;
+  localKinAddress?: Maybe<Scalars['String']>;
+  localKinContact?: Maybe<Scalars['String']>;
+  localKinName?: Maybe<Scalars['String']>;
+  localKinRelationshipId?: Maybe<Scalars['ID']>;
+};
+
 export type KymIndFormData = {
   annualIncomeSourceId?: Maybe<Scalars['String']>;
   basicInformation?: Maybe<KymIndBasicInformation>;
@@ -6818,6 +6834,15 @@ export type SetKymCooperativeDataMutationVariables = Exact<{
 
 export type SetKymCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string } | null } | null } };
 
+export type SetKymDocumentDataMutationVariables = Exact<{
+  memberId: Scalars['String'];
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type SetKymDocumentDataMutation = { members: { document: { KYM: { upsert: { recordId?: string | null } } } } };
+
 export type SetInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymInsInput;
@@ -7105,6 +7130,28 @@ export type GetIndividualKymFamilyMembersListQueryVariables = Exact<{
 
 
 export type GetIndividualKymFamilyMembersListQuery = { members: { individual?: { listFamilyMember?: { data?: Array<{ id: string, relationshipId?: string | null, fullName?: Record<"local"|"en"|"np",string> | null, familyMemberId?: string | null, dateOfBirth?: string | null } | null> | null } | null } | null } };
+
+export type GetIndividualKymFamilyOccupationListQueryVariables = Exact<{
+  id: Scalars['String'];
+  isSpouse: Scalars['Boolean'];
+}>;
+
+
+export type GetIndividualKymFamilyOccupationListQuery = { members: { individual?: { listOccupation?: { data?: Array<{ id: string, occupationId?: string | null, orgName?: Record<"local"|"en"|"np",string> | null, panVatNo?: string | null, address?: Record<"local"|"en"|"np",string> | null, estimatedAnnualIncome?: string | null, establishedDate?: string | null, registrationNo?: string | null, contact?: string | null, isOwner?: boolean | null } | null> | null } | null } | null } };
+
+export type GetIndividualKymIncomeSourceListQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetIndividualKymIncomeSourceListQuery = { members: { individual?: { listIncomeSource?: { data?: Array<{ id: string, incomeSource?: Record<"local"|"en"|"np",string> | null, amount?: string | null } | null> | null } | null } | null } };
+
+export type GetKymDocumentsListQueryVariables = Exact<{
+  memberId: Scalars['String'];
+}>;
+
+
+export type GetKymDocumentsListQuery = { members: { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, identifier: Array<string | null> } | null> | null } } } };
 
 export type GetKymSettingsFieldsQueryVariables = Exact<{
   filter?: InputMaybe<ListKymFieldFilter>;
@@ -7710,6 +7757,28 @@ export const useSetKymCooperativeDataMutation = <
     useMutation<SetKymCooperativeDataMutation, TError, SetKymCooperativeDataMutationVariables, TContext>(
       ['setKymCooperativeData'],
       useAxios<SetKymCooperativeDataMutation, SetKymCooperativeDataMutationVariables>(SetKymCooperativeDataDocument),
+      options
+    );
+export const SetKymDocumentDataDocument = `
+    mutation setKYMDocumentData($memberId: String!, $fieldId: String!, $identifiers: [String!]!) {
+  members {
+    document {
+      KYM(memberId: $memberId) {
+        upsert(fieldId: $fieldId, identifiers: $identifiers) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetKymDocumentDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetKymDocumentDataMutation, TError, SetKymDocumentDataMutationVariables, TContext>) =>
+    useMutation<SetKymDocumentDataMutation, TError, SetKymDocumentDataMutationVariables, TContext>(
+      ['setKYMDocumentData'],
+      useAxios<SetKymDocumentDataMutation, SetKymDocumentDataMutationVariables>(SetKymDocumentDataDocument),
       options
     );
 export const SetInstitutionDataDocument = `
@@ -9068,6 +9137,93 @@ export const useGetIndividualKymFamilyMembersListQuery = <
     useQuery<GetIndividualKymFamilyMembersListQuery, TError, TData>(
       ['getIndividualKymFamilyMembersList', variables],
       useAxios<GetIndividualKymFamilyMembersListQuery, GetIndividualKymFamilyMembersListQueryVariables>(GetIndividualKymFamilyMembersListDocument).bind(null, variables),
+      options
+    );
+export const GetIndividualKymFamilyOccupationListDocument = `
+    query getIndividualKymFamilyOccupationList($id: String!, $isSpouse: Boolean!) {
+  members {
+    individual(id: $id) {
+      listOccupation(isSpouse: $isSpouse) {
+        data {
+          id
+          occupationId
+          orgName
+          panVatNo
+          address
+          estimatedAnnualIncome
+          establishedDate
+          registrationNo
+          contact
+          isOwner
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymFamilyOccupationListQuery = <
+      TData = GetIndividualKymFamilyOccupationListQuery,
+      TError = unknown
+    >(
+      variables: GetIndividualKymFamilyOccupationListQueryVariables,
+      options?: UseQueryOptions<GetIndividualKymFamilyOccupationListQuery, TError, TData>
+    ) =>
+    useQuery<GetIndividualKymFamilyOccupationListQuery, TError, TData>(
+      ['getIndividualKymFamilyOccupationList', variables],
+      useAxios<GetIndividualKymFamilyOccupationListQuery, GetIndividualKymFamilyOccupationListQueryVariables>(GetIndividualKymFamilyOccupationListDocument).bind(null, variables),
+      options
+    );
+export const GetIndividualKymIncomeSourceListDocument = `
+    query getIndividualKymIncomeSourceList($id: String!) {
+  members {
+    individual(id: $id) {
+      listIncomeSource {
+        data {
+          id
+          incomeSource
+          amount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymIncomeSourceListQuery = <
+      TData = GetIndividualKymIncomeSourceListQuery,
+      TError = unknown
+    >(
+      variables: GetIndividualKymIncomeSourceListQueryVariables,
+      options?: UseQueryOptions<GetIndividualKymIncomeSourceListQuery, TError, TData>
+    ) =>
+    useQuery<GetIndividualKymIncomeSourceListQuery, TError, TData>(
+      ['getIndividualKymIncomeSourceList', variables],
+      useAxios<GetIndividualKymIncomeSourceListQuery, GetIndividualKymIncomeSourceListQueryVariables>(GetIndividualKymIncomeSourceListDocument).bind(null, variables),
+      options
+    );
+export const GetKymDocumentsListDocument = `
+    query getKYMDocumentsList($memberId: String!) {
+  members {
+    document {
+      listKYMDocuments(memberId: $memberId) {
+        data {
+          fieldId
+          identifier
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetKymDocumentsListQuery = <
+      TData = GetKymDocumentsListQuery,
+      TError = unknown
+    >(
+      variables: GetKymDocumentsListQueryVariables,
+      options?: UseQueryOptions<GetKymDocumentsListQuery, TError, TData>
+    ) =>
+    useQuery<GetKymDocumentsListQuery, TError, TData>(
+      ['getKYMDocumentsList', variables],
+      useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(GetKymDocumentsListDocument).bind(null, variables),
       options
     );
 export const GetKymSettingsFieldsDocument = `

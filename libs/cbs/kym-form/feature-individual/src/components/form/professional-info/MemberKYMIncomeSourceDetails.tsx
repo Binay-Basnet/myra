@@ -21,6 +21,7 @@ import {
   Kym_Field_Custom_Id as KYMOptionEnum,
   KymIndMemberInput,
   useDeleteMemberIncomeSourceMutation,
+  useGetIndividualKymIncomeSourceListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
   useSetMemberDataMutation,
@@ -76,7 +77,7 @@ const IncomeSource = ({
 
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   // const { data: familyIncomeData, isLoading: familyIncomeLoading } =
   //   useGetIndividualKymOptionsQuery({
@@ -84,7 +85,32 @@ const IncomeSource = ({
   //     filter: { customId: KYMOptionEnum.IncomeSourceDetails },
   //   });
 
-  const { mutate } = useSetMemberIncomeSourceMutation();
+  const { data: editValues, refetch } =
+    useGetIndividualKymIncomeSourceListQuery({
+      id: id,
+    });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.listIncomeSource?.data;
+
+      const incomeSourceDetail = editValueData?.find(
+        (data) => data?.id === incomeSourceId
+      );
+
+      if (incomeSourceDetail) {
+        reset({
+          incomeSource: incomeSourceDetail?.incomeSource?.local,
+          amount: incomeSourceDetail?.amount,
+        });
+      }
+    }
+  }, [editValues]);
+
+  const { mutate } = useSetMemberIncomeSourceMutation({
+    onSuccess: () => refetch(),
+  });
 
   useEffect(() => {
     const subscription = watch(
@@ -173,7 +199,7 @@ export const MemberKYMIncomeSourceDetails = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const { mutate } = useSetMemberDataMutation();
 
@@ -194,6 +220,24 @@ export const MemberKYMIncomeSourceDetails = ({
     });
 
   const [incomeSourceIds, setIncomeSourceIds] = useState<string[]>([]);
+
+  const { data: editValues } = useGetIndividualKymIncomeSourceListQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.listIncomeSource?.data;
+
+      setIncomeSourceIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => [...prevVal, curVal.id],
+          []
+        ) ?? []
+      );
+    }
+  }, [editValues]);
 
   const { mutate: newIDMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

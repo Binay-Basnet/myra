@@ -313,3 +313,51 @@ query getIndividualKymFamilyMembersList($id: String!, $isMember: Boolean) {
     }
   }
 }
+
+query getIndividualKymFamilyOccupationList($id: String!, $isSpouse: Boolean!) {
+  members {
+    individual(id: $id) {
+      listOccupation(isSpouse: $isSpouse) {
+        data {
+          id
+          occupationId
+          orgName
+          panVatNo
+          address
+          estimatedAnnualIncome
+          establishedDate
+          registrationNo
+          contact
+          isOwner
+        }
+      }
+    }
+  }
+}
+
+query getIndividualKymIncomeSourceList($id: String!) {
+  members {
+    individual(id: $id) {
+      listIncomeSource {
+        data {
+          id
+          incomeSource
+          amount
+        }
+      }
+    }
+  }
+}
+
+query getKYMDocumentsList($memberId: String!) {
+  members {
+    document {
+      listKYMDocuments(memberId: $memberId) {
+        data {
+          fieldId
+          identifier
+        }
+      }
+    }
+  }
+}

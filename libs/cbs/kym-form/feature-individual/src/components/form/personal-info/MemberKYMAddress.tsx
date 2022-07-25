@@ -99,10 +99,9 @@ export const MemberKYMAddress = ({
     [currentTempLocalityId]
   );
 
-  const { data: editValues, isLoading: editLoading } =
-    useGetIndividualKymEditDataQuery({
-      id: id,
-    });
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
 
   console.log({
     ind: 'address info',
@@ -155,18 +154,7 @@ export const MemberKYMAddress = ({
     }
   }, [editValues]);
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      // setError('firstName', {
-      //   type: 'custom',
-      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      // });
-      console.log(res);
-    },
-    //   onError: () => {
-    //     setError('firstName', { type: 'custom', message: 'gg' });
-    //   },
-  });
+  const { mutate } = useSetMemberDataMutation();
 
   useEffect(() => {
     const subscription = watch(
