@@ -52,7 +52,7 @@ export const AccountPopover = () => {
               display="flex"
               alignItems="center"
               justifyContent="space-between"
-              bg={account.node.id === router.query['id'] ? 'gray.100' : 'white'}
+              bg={account.node.isDefault ? 'gray.100' : 'white'}
               _hover={{ bg: 'gray.100' }}
             >
               <Box display="flex" flexDir="column" gap="s4">
@@ -64,7 +64,7 @@ export const AccountPopover = () => {
                 </Text>
               </Box>
 
-              {account.node.id === router.query['id'] && (
+              {account.node.isDefault && (
                 <Icon as={IoCheckmark} color="primary.500" gap="s4" />
               )}
             </Box>

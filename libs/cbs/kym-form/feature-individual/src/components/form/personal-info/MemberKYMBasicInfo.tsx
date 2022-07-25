@@ -84,11 +84,7 @@ export const MemberKYMBasicInfo = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
-  const {
-    data: editValues,
-    isLoading: editLoading,
-    refetch,
-  } = useGetIndividualKymEditDataQuery({
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
     id: id,
   });
 

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
-import type { NextComponentType, NextPage, NextPageContext } from 'next';
+import type { NextPage } from 'next';
 import type { AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';

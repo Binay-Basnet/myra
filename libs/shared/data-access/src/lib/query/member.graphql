@@ -247,6 +247,20 @@ query getIndividualKymEditData($id: String!) {
             membershipDetails {
               purposeId
               isMemberOfAnotherCooperative
+              otherCoopName
+              otherCoopBranchId
+              otherCoopMemberId
+            }
+            introducers {
+              firstIntroducerId
+              secondIntroducerId
+            }
+            isFamilyAMember
+            initialTransactionDetails {
+              initialShare
+              initialSaving
+              initialLoan
+              otherFinancialAmount
             }
             estimatedTransactions {
               estimatedAnnualTransactionAmount
@@ -264,6 +278,7 @@ query getIndividualKymEditData($id: String!) {
               convictedDetails
               hasForeignResidentialPermit
               foreignResidentialPermitTypeId
+              declarationAgreement
             }
             permanentAddress {
               provinceId
@@ -309,6 +324,54 @@ query getIndividualKymFamilyMembersList($id: String!, $isMember: Boolean) {
           fullName
           familyMemberId
           dateOfBirth
+        }
+      }
+    }
+  }
+}
+
+query getIndividualKymFamilyOccupationList($id: String!, $isSpouse: Boolean!) {
+  members {
+    individual(id: $id) {
+      listOccupation(isSpouse: $isSpouse) {
+        data {
+          id
+          occupationId
+          orgName
+          panVatNo
+          address
+          estimatedAnnualIncome
+          establishedDate
+          registrationNo
+          contact
+          isOwner
+        }
+      }
+    }
+  }
+}
+
+query getIndividualKymIncomeSourceList($id: String!) {
+  members {
+    individual(id: $id) {
+      listIncomeSource {
+        data {
+          id
+          incomeSource
+          amount
+        }
+      }
+    }
+  }
+}
+
+query getKYMDocumentsList($memberId: String!) {
+  members {
+    document {
+      listKYMDocuments(memberId: $memberId) {
+        data {
+          fieldId
+          identifier
         }
       }
     }

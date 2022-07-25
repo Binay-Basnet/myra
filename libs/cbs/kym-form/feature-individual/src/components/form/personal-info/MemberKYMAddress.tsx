@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
+import pickBy from 'lodash/pickBy';
 
 import {
   GroupContainer,
@@ -99,10 +100,9 @@ export const MemberKYMAddress = ({
     [currentTempLocalityId]
   );
 
-  const { data: editValues, isLoading: editLoading } =
-    useGetIndividualKymEditDataQuery({
-      id: id,
-    });
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
 
   console.log({
     ind: 'address info',
@@ -128,10 +128,16 @@ export const MemberKYMAddress = ({
       console.log({
         permanentAddress: {
           ...editValueData?.permanentAddress,
+          districtId: editValueData?.permanentAddress?.districtId
+            ? editValueData?.permanentAddress?.districtId
+            : '',
           locality: editValueData?.permanentAddress?.locality?.local,
         },
         temporaryAddress: {
           ...editValueData?.temporaryAddress?.address,
+          provinceId: editValueData?.temporaryAddress?.address?.provinceId
+            ? editValueData?.temporaryAddress?.address?.provinceId
+            : '',
           locality: editValueData?.temporaryAddress?.address?.locality?.local,
         },
         sameTempAsPermanentAddress:
@@ -155,23 +161,23 @@ export const MemberKYMAddress = ({
     }
   }, [editValues]);
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      // setError('firstName', {
-      //   type: 'custom',
-      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      // });
-      console.log(res);
-    },
-    //   onError: () => {
-    //     setError('firstName', { type: 'custom', message: 'gg' });
-    //   },
-  });
+  const { mutate } = useSetMemberDataMutation();
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id: router.query['id'] as string, data });
+        mutate({
+          id,
+          data: {
+            ...data,
+            permanentAddress: {
+              ...pickBy(data?.permanentAddress ?? {}, (v) => v !== 0),
+            },
+            temporaryAddress: {
+              ...pickBy(data?.temporaryAddress ?? {}, (v) => v !== 0),
+            },
+          },
+        });
       }, 800)
     );
 

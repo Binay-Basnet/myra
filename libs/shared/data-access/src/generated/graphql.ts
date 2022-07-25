@@ -7289,6 +7289,15 @@ export type SetKymCooperativeDataMutationVariables = Exact<{
 
 export type SetKymCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string } | null } | null } };
 
+export type SetKymDocumentDataMutationVariables = Exact<{
+  memberId: Scalars['String'];
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type SetKymDocumentDataMutation = { members: { document: { KYM: { upsert: { recordId?: string | null } } } } };
+
 export type SetInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymInsInput;
@@ -7296,6 +7305,15 @@ export type SetInstitutionDataMutationVariables = Exact<{
 
 
 export type SetInstitutionDataMutation = { members: { institution?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+
+export type SetInstitutionSisterDetailsMutationVariables = Exact<{
+  id: Scalars['ID'];
+  sis: Scalars['ID'];
+  data: KymInsSisterConcernInput;
+}>;
+
+
+export type SetInstitutionSisterDetailsMutation = { members: { institution?: { addSisterConcerns?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
 export type UpsertKymOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
@@ -7453,6 +7471,26 @@ export type GetAccountDetailsQueryVariables = Exact<{
 
 export type GetAccountDetailsQuery = { eBanking: { account?: { get?: { id: string, name: string, accountNumber: string, isDefault: boolean, amount: number, interestRate: number, accountType: Account_Type, interestBooked: number, interestEarned: number, subscribedDate: string, history?: Array<{ id: string, date: string, balance: number }> | null, transactions?: Array<{ id: string, name: string, date: string, amount: number, transactionType: Transaction_Type, transactionDirection: Transaction_Direction }> | null } | null } | null } };
 
+export type GetCoopChequeServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopChequeServicesQuery = { eBanking: { cooperativeServices?: { cheque?: { options: Array<{ name: string, enabled: boolean }> } | null } | null } };
+
+export type GetCoopLoanServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopLoanServicesQuery = { eBanking: { cooperativeServices?: { loan?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
+
+export type GetCoopComplaintServicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopComplaintServicesQuery = { eBanking: { cooperativeServices?: { complaint?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
+
+export type GetCoopDownloadsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCoopDownloadsQuery = { eBanking: { cooperativeServices?: { downloads?: { options: Array<{ name: string, enabled: boolean, requestType?: string | null }> } | null } | null } };
+
 export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7479,6 +7517,13 @@ export type GetKymFormStatusInstitutionQueryVariables = Exact<{
 
 
 export type GetKymFormStatusInstitutionQuery = { members: { institution?: { formState?: { data?: { sectionStatus?: { information?: { completed?: Array<KymInsInformationSection | null> | null, error?: Array<KymInsInformationSection | null> | null } | null, transaction?: { completed?: Array<KymInsTransactionSection | null> | null, error?: Array<KymInsTransactionSection | null> | null } | null, directorDetails?: { completed?: Array<KymInsDirectorDetailsSection | null> | null, error?: Array<KymInsDirectorDetailsSection | null> | null } | null, account?: { completed?: Array<KymInsAccountSection | null> | null, error?: Array<KymInsAccountSection | null> | null } | null, declaration?: { completed?: Array<KymInsDeclarationSection | null> | null, error?: Array<KymInsDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
+
+export type GetInstitutionKymEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInstitutionKymEditDataQuery = { members: { institution?: { formState?: { data?: { lastUpdated: { account: KymInsAccountSection } | { declaration: KymInsDeclarationSection } | { directorDetails: KymInsDirectorDetailsSection } | { information: KymInsInformationSection } | { transaction: KymInsTransactionSection }, sectionStatus?: { information?: { completed?: Array<KymInsInformationSection | null> | null, error?: Array<KymInsInformationSection | null> | null } | null, transaction?: { completed?: Array<KymInsTransactionSection | null> | null, error?: Array<KymInsTransactionSection | null> | null } | null, directorDetails?: { completed?: Array<KymInsDirectorDetailsSection | null> | null, error?: Array<KymInsDirectorDetailsSection | null> | null } | null } | null, formData?: { institutionName?: string | null, institutionType?: string | null, natureOfBusiness?: string | null, registrationDate?: string | null, vatOrPanNo?: string | null, noOfBranches?: number | null, registeredNumber?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, email?: string | null, website?: string | null, postBoxNo?: string | null, numberOfEmployee?: number | null, dateOfLastAGM?: string | null, bank?: string | null, accountNumber?: string | null, accountName?: string | null, natureOfTransaction?: string | null, annualTurnover?: number | null, initialDepositAmount?: number | null, expectedMonthlyTurnover?: string | null, expectedMonthlyTransaction?: string | null, accountType?: AccountOperationType | null, isCompanyStampCompulsory?: boolean | null, specialInstruction?: string | null, accountHolderName?: string | null, accountHolderPhone?: string | null, accountHolderEmail?: string | null, accountHolderSignature?: string | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null, accountHolderAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null } | null } | null } };
 
 export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7572,7 +7617,7 @@ export type GetIndividualKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, identification?: { identificationSelection?: Array<string | null> | null, citizenshipNo?: string | null, citizenshipIssueDate?: string | null, citizenshipIssuePlace?: string | null, passportNo?: string | null, passportIssueDate?: string | null, passportIssuePlace?: string | null, nationalIDNo?: string | null, drivingLicenseNo?: string | null, drivingLicenseIssueDate?: string | null, drivingLicenseIssuePlace?: string | null, voterCardNo?: string | null, voterPollingStation?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
+export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, isFamilyAMember?: boolean | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, identification?: { identificationSelection?: Array<string | null> | null, citizenshipNo?: string | null, citizenshipIssueDate?: string | null, citizenshipIssuePlace?: string | null, passportNo?: string | null, passportIssueDate?: string | null, passportIssuePlace?: string | null, nationalIDNo?: string | null, drivingLicenseNo?: string | null, drivingLicenseIssueDate?: string | null, drivingLicenseIssuePlace?: string | null, voterCardNo?: string | null, voterPollingStation?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null, otherCoopName?: Record<"local"|"en"|"np",string> | null, otherCoopBranchId?: string | null, otherCoopMemberId?: string | null } | null, introducers?: { firstIntroducerId?: string | null, secondIntroducerId?: string | null } | null, initialTransactionDetails?: { initialShare?: number | null, initialSaving?: string | null, initialLoan?: string | null, otherFinancialAmount?: string | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null, declarationAgreement?: boolean | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetIndividualKymFamilyMembersListQueryVariables = Exact<{
   id: Scalars['String'];
@@ -7581,6 +7626,28 @@ export type GetIndividualKymFamilyMembersListQueryVariables = Exact<{
 
 
 export type GetIndividualKymFamilyMembersListQuery = { members: { individual?: { listFamilyMember?: { data?: Array<{ id: string, relationshipId?: string | null, fullName?: Record<"local"|"en"|"np",string> | null, familyMemberId?: string | null, dateOfBirth?: string | null } | null> | null } | null } | null } };
+
+export type GetIndividualKymFamilyOccupationListQueryVariables = Exact<{
+  id: Scalars['String'];
+  isSpouse: Scalars['Boolean'];
+}>;
+
+
+export type GetIndividualKymFamilyOccupationListQuery = { members: { individual?: { listOccupation?: { data?: Array<{ id: string, occupationId?: string | null, orgName?: Record<"local"|"en"|"np",string> | null, panVatNo?: string | null, address?: Record<"local"|"en"|"np",string> | null, estimatedAnnualIncome?: string | null, establishedDate?: string | null, registrationNo?: string | null, contact?: string | null, isOwner?: boolean | null } | null> | null } | null } | null } };
+
+export type GetIndividualKymIncomeSourceListQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetIndividualKymIncomeSourceListQuery = { members: { individual?: { listIncomeSource?: { data?: Array<{ id: string, incomeSource?: Record<"local"|"en"|"np",string> | null, amount?: string | null } | null> | null } | null } | null } };
+
+export type GetKymDocumentsListQueryVariables = Exact<{
+  memberId: Scalars['String'];
+}>;
+
+
+export type GetKymDocumentsListQuery = { members: { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, identifier: Array<string | null> } | null> | null } } } };
 
 export type GetKymSettingsFieldsQueryVariables = Exact<{
   filter?: InputMaybe<ListKymFieldFilter>;
@@ -8207,6 +8274,28 @@ export const useSetKymCooperativeDataMutation = <
       useAxios<SetKymCooperativeDataMutation, SetKymCooperativeDataMutationVariables>(SetKymCooperativeDataDocument),
       options
     );
+export const SetKymDocumentDataDocument = `
+    mutation setKYMDocumentData($memberId: String!, $fieldId: String!, $identifiers: [String!]!) {
+  members {
+    document {
+      KYM(memberId: $memberId) {
+        upsert(fieldId: $fieldId, identifiers: $identifiers) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetKymDocumentDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetKymDocumentDataMutation, TError, SetKymDocumentDataMutationVariables, TContext>) =>
+    useMutation<SetKymDocumentDataMutation, TError, SetKymDocumentDataMutationVariables, TContext>(
+      ['setKYMDocumentData'],
+      useAxios<SetKymDocumentDataMutation, SetKymDocumentDataMutationVariables>(SetKymDocumentDataDocument),
+      options
+    );
 export const SetInstitutionDataDocument = `
     mutation setInstitutionData($id: ID!, $data: KymInsInput!) {
   members {
@@ -8230,6 +8319,31 @@ export const useSetInstitutionDataMutation = <
     useMutation<SetInstitutionDataMutation, TError, SetInstitutionDataMutationVariables, TContext>(
       ['setInstitutionData'],
       useAxios<SetInstitutionDataMutation, SetInstitutionDataMutationVariables>(SetInstitutionDataDocument),
+      options
+    );
+export const SetInstitutionSisterDetailsDocument = `
+    mutation setInstitutionSisterDetails($id: ID!, $sis: ID!, $data: KymInsSisterConcernInput!) {
+  members {
+    institution(id: $id) {
+      addSisterConcerns(sisterConcernId: $sis, data: $data) {
+        recordId
+        error {
+          ... on KymIndAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetInstitutionSisterDetailsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetInstitutionSisterDetailsMutation, TError, SetInstitutionSisterDetailsMutationVariables, TContext>) =>
+    useMutation<SetInstitutionSisterDetailsMutation, TError, SetInstitutionSisterDetailsMutationVariables, TContext>(
+      ['setInstitutionSisterDetails'],
+      useAxios<SetInstitutionSisterDetailsMutation, SetInstitutionSisterDetailsMutationVariables>(SetInstitutionSisterDetailsDocument),
       options
     );
 export const UpsertKymOptionDocument = `
@@ -8813,6 +8927,113 @@ export const useGetAccountDetailsQuery = <
       useAxios<GetAccountDetailsQuery, GetAccountDetailsQueryVariables>(GetAccountDetailsDocument).bind(null, variables),
       options
     );
+export const GetCoopChequeServicesDocument = `
+    query getCoopChequeServices {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        options {
+          name
+          enabled
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopChequeServicesQuery = <
+      TData = GetCoopChequeServicesQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopChequeServicesQueryVariables,
+      options?: UseQueryOptions<GetCoopChequeServicesQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopChequeServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopChequeServices'] : ['getCoopChequeServices', variables],
+      useAxios<GetCoopChequeServicesQuery, GetCoopChequeServicesQueryVariables>(GetCoopChequeServicesDocument).bind(null, variables),
+      options
+    );
+export const GetCoopLoanServicesDocument = `
+    query getCoopLoanServices {
+  eBanking {
+    cooperativeServices {
+      loan {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopLoanServicesQuery = <
+      TData = GetCoopLoanServicesQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopLoanServicesQueryVariables,
+      options?: UseQueryOptions<GetCoopLoanServicesQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopLoanServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopLoanServices'] : ['getCoopLoanServices', variables],
+      useAxios<GetCoopLoanServicesQuery, GetCoopLoanServicesQueryVariables>(GetCoopLoanServicesDocument).bind(null, variables),
+      options
+    );
+export const GetCoopComplaintServicesDocument = `
+    query getCoopComplaintServices {
+  eBanking {
+    cooperativeServices {
+      complaint {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopComplaintServicesQuery = <
+      TData = GetCoopComplaintServicesQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopComplaintServicesQueryVariables,
+      options?: UseQueryOptions<GetCoopComplaintServicesQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopComplaintServicesQuery, TError, TData>(
+      variables === undefined ? ['getCoopComplaintServices'] : ['getCoopComplaintServices', variables],
+      useAxios<GetCoopComplaintServicesQuery, GetCoopComplaintServicesQueryVariables>(GetCoopComplaintServicesDocument).bind(null, variables),
+      options
+    );
+export const GetCoopDownloadsDocument = `
+    query getCoopDownloads {
+  eBanking {
+    cooperativeServices {
+      downloads {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopDownloadsQuery = <
+      TData = GetCoopDownloadsQuery,
+      TError = unknown
+    >(
+      variables?: GetCoopDownloadsQueryVariables,
+      options?: UseQueryOptions<GetCoopDownloadsQuery, TError, TData>
+    ) =>
+    useQuery<GetCoopDownloadsQuery, TError, TData>(
+      variables === undefined ? ['getCoopDownloads'] : ['getCoopDownloads', variables],
+      useAxios<GetCoopDownloadsQuery, GetCoopDownloadsQueryVariables>(GetCoopDownloadsDocument).bind(null, variables),
+      options
+    );
 export const GetAnnouncementListDocument = `
     query getAnnouncementList {
   eBanking {
@@ -8964,6 +9185,121 @@ export const useGetKymFormStatusInstitutionQuery = <
     useQuery<GetKymFormStatusInstitutionQuery, TError, TData>(
       ['getKymFormStatusInstitution', variables],
       useAxios<GetKymFormStatusInstitutionQuery, GetKymFormStatusInstitutionQueryVariables>(GetKymFormStatusInstitutionDocument).bind(null, variables),
+      options
+    );
+export const GetInstitutionKymEditDataDocument = `
+    query getInstitutionKymEditData($id: ID!) {
+  members {
+    institution {
+      formState(id: $id) {
+        data {
+          lastUpdated {
+            ... on KymInsInformationLUS {
+              information: name
+            }
+            ... on KymInsTransactionLUS {
+              transaction: name
+            }
+            ... on KymInsDirectorDetailsLUS {
+              directorDetails: name
+            }
+            ... on KymInsAccountLUS {
+              account: name
+            }
+            ... on KymInsDeclarationLUS {
+              declaration: name
+            }
+          }
+          sectionStatus {
+            information {
+              completed
+              error
+            }
+            transaction {
+              completed
+              error
+            }
+            directorDetails {
+              completed
+              error
+            }
+          }
+          formData {
+            institutionName
+            institutionType
+            natureOfBusiness
+            registrationDate
+            vatOrPanNo
+            operatingOfficeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            noOfBranches
+            branchOfficeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            registeredAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            registeredNumber
+            issuingOffice
+            phone
+            fax
+            email
+            website
+            postBoxNo
+            numberOfEmployee
+            dateOfLastAGM
+            bank
+            accountNumber
+            accountName
+            natureOfTransaction
+            annualTurnover
+            initialDepositAmount
+            expectedMonthlyTurnover
+            expectedMonthlyTransaction
+            accountType
+            isCompanyStampCompulsory
+            specialInstruction
+            accountHolderName
+            accountHolderPhone
+            accountHolderEmail
+            accountHolderAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+            }
+            accountHolderSignature
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInstitutionKymEditDataQuery = <
+      TData = GetInstitutionKymEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetInstitutionKymEditDataQueryVariables,
+      options?: UseQueryOptions<GetInstitutionKymEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetInstitutionKymEditDataQuery, TError, TData>(
+      ['getInstitutionKymEditData', variables],
+      useAxios<GetInstitutionKymEditDataQuery, GetInstitutionKymEditDataQueryVariables>(GetInstitutionKymEditDataDocument).bind(null, variables),
       options
     );
 export const GetInventoryItemsDocument = `
@@ -9501,6 +9837,20 @@ export const GetIndividualKymEditDataDocument = `
             membershipDetails {
               purposeId
               isMemberOfAnotherCooperative
+              otherCoopName
+              otherCoopBranchId
+              otherCoopMemberId
+            }
+            introducers {
+              firstIntroducerId
+              secondIntroducerId
+            }
+            isFamilyAMember
+            initialTransactionDetails {
+              initialShare
+              initialSaving
+              initialLoan
+              otherFinancialAmount
             }
             estimatedTransactions {
               estimatedAnnualTransactionAmount
@@ -9518,6 +9868,7 @@ export const GetIndividualKymEditDataDocument = `
               convictedDetails
               hasForeignResidentialPermit
               foreignResidentialPermitTypeId
+              declarationAgreement
             }
             permanentAddress {
               provinceId
@@ -9592,6 +9943,93 @@ export const useGetIndividualKymFamilyMembersListQuery = <
     useQuery<GetIndividualKymFamilyMembersListQuery, TError, TData>(
       ['getIndividualKymFamilyMembersList', variables],
       useAxios<GetIndividualKymFamilyMembersListQuery, GetIndividualKymFamilyMembersListQueryVariables>(GetIndividualKymFamilyMembersListDocument).bind(null, variables),
+      options
+    );
+export const GetIndividualKymFamilyOccupationListDocument = `
+    query getIndividualKymFamilyOccupationList($id: String!, $isSpouse: Boolean!) {
+  members {
+    individual(id: $id) {
+      listOccupation(isSpouse: $isSpouse) {
+        data {
+          id
+          occupationId
+          orgName
+          panVatNo
+          address
+          estimatedAnnualIncome
+          establishedDate
+          registrationNo
+          contact
+          isOwner
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymFamilyOccupationListQuery = <
+      TData = GetIndividualKymFamilyOccupationListQuery,
+      TError = unknown
+    >(
+      variables: GetIndividualKymFamilyOccupationListQueryVariables,
+      options?: UseQueryOptions<GetIndividualKymFamilyOccupationListQuery, TError, TData>
+    ) =>
+    useQuery<GetIndividualKymFamilyOccupationListQuery, TError, TData>(
+      ['getIndividualKymFamilyOccupationList', variables],
+      useAxios<GetIndividualKymFamilyOccupationListQuery, GetIndividualKymFamilyOccupationListQueryVariables>(GetIndividualKymFamilyOccupationListDocument).bind(null, variables),
+      options
+    );
+export const GetIndividualKymIncomeSourceListDocument = `
+    query getIndividualKymIncomeSourceList($id: String!) {
+  members {
+    individual(id: $id) {
+      listIncomeSource {
+        data {
+          id
+          incomeSource
+          amount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymIncomeSourceListQuery = <
+      TData = GetIndividualKymIncomeSourceListQuery,
+      TError = unknown
+    >(
+      variables: GetIndividualKymIncomeSourceListQueryVariables,
+      options?: UseQueryOptions<GetIndividualKymIncomeSourceListQuery, TError, TData>
+    ) =>
+    useQuery<GetIndividualKymIncomeSourceListQuery, TError, TData>(
+      ['getIndividualKymIncomeSourceList', variables],
+      useAxios<GetIndividualKymIncomeSourceListQuery, GetIndividualKymIncomeSourceListQueryVariables>(GetIndividualKymIncomeSourceListDocument).bind(null, variables),
+      options
+    );
+export const GetKymDocumentsListDocument = `
+    query getKYMDocumentsList($memberId: String!) {
+  members {
+    document {
+      listKYMDocuments(memberId: $memberId) {
+        data {
+          fieldId
+          identifier
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetKymDocumentsListQuery = <
+      TData = GetKymDocumentsListQuery,
+      TError = unknown
+    >(
+      variables: GetKymDocumentsListQueryVariables,
+      options?: UseQueryOptions<GetKymDocumentsListQuery, TError, TData>
+    ) =>
+    useQuery<GetKymDocumentsListQuery, TError, TData>(
+      ['getKYMDocumentsList', variables],
+      useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(GetKymDocumentsListDocument).bind(null, variables),
       options
     );
 export const GetKymSettingsFieldsDocument = `

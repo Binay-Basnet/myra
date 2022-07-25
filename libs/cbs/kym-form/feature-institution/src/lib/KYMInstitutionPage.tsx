@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
@@ -14,6 +15,7 @@ import {
   useGetKymFormStatusInstitutionQuery,
   useSetInstitutionDataMutation,
 } from '@coop/shared/data-access';
+import { KymInsInput } from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -58,73 +60,88 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
     kymFormStatusQuery?.data?.members?.institution?.formState?.data
       ?.sectionStatus;
 
-  const methods = useForm<any>({
-    defaultValues: {
-      sisterConcernDetails: [
-        {
-          name: '',
-          natureOfBusiness: '',
-          address: '',
-          phoneNo: '',
-        },
-      ],
-      detailsOfDirectorsWithAffiliation: [
-        {
-          addressOfInstitution: '',
-          designation: '',
-          nameOfDirector: '',
-          nameOfInstitution: '',
-          yearlyIncome: 0,
-        },
-      ],
-      accountOperatorsDetails: [
-        {
-          designation: '',
-          fullName: '',
-          specimenSignature: '',
-        },
-      ],
-      detailsOfDirectors: [
-        {
-          fullName: '',
-          designation: '',
-          permanentState: '',
-          permanentDistrict: '',
-          permanentMunicipality: '',
-          permanentWardNo: 0,
-          permanentLocality: '',
-          temporaryState: '',
-          temporaryDistrict: '',
-          temporaryMunicipality: '',
-          temporaryWardNo: 0,
-          temporaryLocality: '',
-          dateOfMembership: '',
-          highestQualification: '',
-          mobileNo: '',
-          emailAddress: '',
-          documentNo: '',
-          photograph: '',
-          documentPhotograph: '',
-        },
-      ],
-    },
-  });
-  const { mutate } = useSetInstitutionDataMutation({
-    onSuccess: (res) => {
-      setError('institutionName', {
-        type: 'custom',
-        message:
-          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
-      });
-    },
-    onError: () => {
-      setError('institutionName', {
-        type: 'custom',
-        message: 'it is what it is',
-      });
-    },
-  });
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+  // const methods = useForm<KymInsInput>({
+  //   defaultValues: {
+  //     sisterConcernDetails: [
+  //       {
+  //         name: '',
+  //         natureOfBusiness: '',
+  //         address: '',
+  //         phoneNo: '',
+  //       },
+  //     ],
+  //     detailsOfDirectorsWithAffiliation: [
+  //       {
+  //         addressOfInstitution: '',
+  //         designation: '',
+  //         nameOfDirector: '',
+  //         nameOfInstitution: '',
+  //         yearlyIncome: 0,
+  //       },
+  //     ],
+  //     accountOperatorsDetails: [
+  //       {
+  //         designation: '',
+  //         fullName: '',
+  //         specimenSignature: '',
+  //       },
+  //     ],
+  //     detailsOfDirectors: [
+  //       {
+  //         fullName: '',
+  //         designation: '',
+  //         permanentState: '',
+  //         permanentDistrict: '',
+  //         permanentMunicipality: '',
+  //         permanentWardNo: 0,
+  //         permanentLocality: '',
+  //         temporaryState: '',
+  //         temporaryDistrict: '',
+  //         temporaryMunicipality: '',
+  //         temporaryWardNo: 0,
+  //         temporaryLocality: '',
+  //         dateOfMembership: '',
+  //         highestQualification: '',
+  //         mobileNo: '',
+  //         emailAddress: '',
+  //         documentNo: '',
+  //         photograph: '',
+  //         documentPhotograph: '',
+  //       },
+  //     ],
+  //   },
+  // });
+  // const { control, handleSubmit, getValues, watch, setError } = methods;
+
+  // const { mutate } = useSetInstitutionDataMutation({
+  //   onSuccess: (res) => {
+  //     setError('institutionName', {
+  //       type: 'custom',
+  //       message:
+  //         res?.members?.institution?.add?.error?.error?.['institutionName'][0],
+  //     });
+  //   },
+  //   onError: () => {
+  //     setError('institutionName', {
+  //       type: 'custom',
+  //       message: 'it is what it is',
+  //     });
+  //   },
+  // });
+
+  // useEffect(() => {
+  //   const subscription = watch(
+  //     debounce((data) => {
+  //       // console.log(editValues);
+  //       // if (editValues && data) {
+  //       mutate({ id: router.query['id'] as string, data });
+  //       //   refetch();
+  //       // }
+  //     }, 800)
+  //   );
+
+  //   return () => subscription.unsubscribe();
+  // }, [watch, router.isReady]);
 
   return (
     <>
@@ -160,105 +177,125 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
         </Box>
       </Box>
       <Container minW="container.xl" height="fit-content">
-        <FormProvider {...methods}>
+        {/* <FormProvider {...methods}>
           <form
-            onChange={debounce(() => {
-              console.log('hello', getValues());
-              mutate({ id, data: getValues() });
-            }, 800)}
-            onSubmit={handleSubmit((data) => {
-              console.log('data', data);
-            })}
+            // onChange={debounce(() => {
+            //   console.log('hello', getValues());
+            //   mutate({ id, data: getValues() });
+            // }, 800)}
+            // onSubmit={handleSubmit((data) => {
+            //   console.log('data', data);
+            // })}
             onFocus={(e) => {
               const kymSection = getKymSectionInstitution(e.target.id);
               setKymCurrentSection(kymSection);
             }}
-          >
-            {/* main */}
-            <Box pb="s40" display="flex" width="100%">
-              <Box display="flex">
-                <Box
-                  w={320}
-                  p={2}
-                  position="fixed"
-                  borderRight="1px solid #E6E6E6"
-                  minHeight="100%"
-                  bg="white"
-                >
-                  <AccorrdianAddInstitution
-                    formStatus={kymFormStatus}
-                    kymCurrentSection={kymCurrentSection}
-                  />
-                </Box>
-
-                <Box
-                  background="white"
-                  ml={320}
-                  px="s20"
-                  mt="60px"
-                  pt="s20"
-                  pb="120px"
-                >
-                  <SectionContainer>
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymIns1InformationofInstitution']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <BasicDetailsInstitution />
-                        <RegisteredDetailsInstitution />
-                        <OperatorOfficeAddress />
-                        <BranchOfficeAddress />
-                        <ContactDetailsInstitution />
-                        <BankAccountDetailsInstitution />
-                        <InstitutionKYMSisterConcernDetails />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymIns2TransactionProfile']}
-                      </Text>
-                      <ContainerWithDivider>
-                        {' '}
-                        <TransactionProfileInstitution />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymIns3DetailsofProprietorpartnersDirectors']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <BoardDirectorInfo watch={watch} />
-                        {/* <InstitutionKYMDirectorWithAffiliation /> */}
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymIns4AccountOperations']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <InstitutionKYMAccountDetail />
-                        <AccountOperationInstitution />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymIns5Declaration']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <DocumentDeclarationInstitution />
-                        <AccountHolderDeclarationInstitution />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-                  </SectionContainer>
-                </Box>
-              </Box>
+          > */}
+        {/* main */}
+        <Box pb="s40" display="flex" width="100%">
+          <Box display="flex">
+            <Box
+              w={320}
+              p={2}
+              position="fixed"
+              borderRight="1px solid #E6E6E6"
+              minHeight="100%"
+              bg="white"
+            >
+              <AccorrdianAddInstitution
+                formStatus={kymFormStatus}
+                kymCurrentSection={kymCurrentSection}
+              />
             </Box>
-          </form>
-        </FormProvider>
+
+            <Box
+              background="white"
+              ml={320}
+              px="s20"
+              mt="60px"
+              pt="s20"
+              pb="120px"
+            >
+              <SectionContainer>
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymIns1InformationofInstitution']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <BasicDetailsInstitution
+                      setSection={setKymCurrentSection}
+                    />
+                    <RegisteredDetailsInstitution
+                      setSection={setKymCurrentSection}
+                    />
+                    <OperatorOfficeAddress setSection={setKymCurrentSection} />
+                    <BranchOfficeAddress setSection={setKymCurrentSection} />
+                    <ContactDetailsInstitution
+                      setSection={setKymCurrentSection}
+                    />
+                    <BankAccountDetailsInstitution
+                      setSection={setKymCurrentSection}
+                    />
+                    <InstitutionKYMSisterConcernDetails
+                      setSection={setKymCurrentSection}
+                    />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymIns2TransactionProfile']}
+                  </Text>
+                  <ContainerWithDivider>
+                    {' '}
+                    <TransactionProfileInstitution
+                      setSection={setKymCurrentSection}
+                    />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymIns3DetailsofProprietorpartnersDirectors']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <BoardDirectorInfo setSection={setKymCurrentSection} />
+                    {/* <InstitutionKYMDirectorWithAffiliation /> */}
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymIns4AccountOperations']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <InstitutionKYMAccountDetail
+                      setSection={setKymCurrentSection}
+                    />
+                    <AccountOperationInstitution
+                      setSection={setKymCurrentSection}
+                    />
+                  </ContainerWithDivider>
+                </SectionContainer>
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymIns5Declaration']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <DocumentDeclarationInstitution
+                      setSection={setKymCurrentSection}
+                    />
+                    <AccountHolderDeclarationInstitution
+                      setSection={setKymCurrentSection}
+                    />
+                  </ContainerWithDivider>
+                </SectionContainer>
+              </SectionContainer>
+            </Box>
+          </Box>
+        </Box>
+        {/* </form>
+        </FormProvider> */}
       </Container>
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>

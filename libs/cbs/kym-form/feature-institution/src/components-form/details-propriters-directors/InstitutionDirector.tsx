@@ -1,17 +1,28 @@
-import React, { useMemo, useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  useFormContext,
+} from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { FaMap } from 'react-icons/fa';
 import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
+import debounce from 'lodash/debounce';
 
 import {
   GroupContainer,
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import {
+  KymInsInput,
+  useAllAdministrationQuery,
+  useSetInstitutionDataMutation,
+} from '@coop/shared/data-access';
 import {
   FormFileInput,
   FormInput,
@@ -28,9 +39,9 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
-const AddDirector = ({ watch, index, removeDirector }) => {
+const AddDirector = ({ watch, index, removeDirector }: any) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
 
@@ -473,51 +484,101 @@ const AddDirector = ({ watch, index, removeDirector }) => {
   );
 };
 
-export const BoardDirectorInfo = ({ watch }: any) => {
+interface IProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+
+export const BoardDirectorInfo = (props: IProps) => {
   const { t } = useTranslation();
+  const methods = useForm<KymInsInput>({
+    defaultValues: {},
+  });
+  const { setSection } = props;
+
+  const router = useRouter();
+
+  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const { mutate } = useSetInstitutionDataMutation({
+    onSuccess: (res) => {
+      setError('institutionName', {
+        type: 'custom',
+        message:
+          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
+      });
+    },
+    onError: () => {
+      setError('institutionName', {
+        type: 'custom',
+        message: 'it is what it is',
+      });
+    },
+  });
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        // console.log(editValues);
+        // if (editValues && data) {
+        mutate({ id: router.query['id'] as string, data });
+        //   refetch();
+        // }
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
+
   const {
     fields: directorFields,
     append: directorAppend,
     remove: directorRemove,
-  } = useFieldArray({ name: 'detailsOfDirectors' });
+  } = useFieldArray<any>({ control, name: 'detailsOfDirectors' });
   return (
-    <GroupContainer
-      gap={'s16'}
-      id="kymInsDetailsofProprietorPartnersDirectors"
-      scrollMarginTop={'200px'}
-    >
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymInsDetailsofProprietorPartnersDirectors']}
-      </Text>
-      {directorFields.map((item, index) => {
-        return (
-          <Box
-            key={item.id}
-            display="flex"
-            flexDirection={'column'}
-            // gap="s16"
-            // border="1px solid"
-            // borderColor="border.layout"
-          >
-            <AddDirector
-              watch={watch}
-              index={index}
-              removeDirector={() => directorRemove(index)}
-            />
-          </Box>
-        );
-      })}
-      <Button
-        id="addDirectorButton"
-        alignSelf="start"
-        leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-        variant="outline"
-        onClick={() => {
-          directorAppend({});
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSectionInstitution(e.target.id);
+          setSection(kymSection);
         }}
       >
-        {t['kymInsAddDirector']}
-      </Button>
-    </GroupContainer>
+        <GroupContainer
+          gap={'s16'}
+          id="kymInsDetailsofProprietorPartnersDirectors"
+          scrollMarginTop={'200px'}
+        >
+          <Text fontSize="r1" fontWeight="SemiBold">
+            {t['kymInsDetailsofProprietorPartnersDirectors']}
+          </Text>
+          {directorFields.map((item, index) => {
+            return (
+              <Box
+                key={item.id}
+                display="flex"
+                flexDirection={'column'}
+                // gap="s16"
+                // border="1px solid"
+                // borderColor="border.layout"
+              >
+                <AddDirector
+                  watch={watch}
+                  index={index}
+                  removeDirector={() => directorRemove(index)}
+                />
+              </Box>
+            );
+          })}
+          <Button
+            id="addDirectorButton"
+            alignSelf="start"
+            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+            variant="outline"
+            onClick={() => {
+              directorAppend({});
+            }}
+          >
+            {t['kymInsAddDirector']}
+          </Button>
+        </GroupContainer>
+      </form>
+    </FormProvider>
   );
 };
