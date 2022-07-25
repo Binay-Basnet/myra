@@ -8,13 +8,12 @@ import {
 } from '@chakra-ui/react';
 
 import { useLoginMutation } from '@coop/shared/data-access';
+import { useAuth } from '@coop/shared/data-access';
 import { Box, Button } from '@coop/shared/ui';
-import { useAuth } from '@coop/shared/utils';
 
 export const Login = () => {
   const { mutateAsync } = useLoginMutation();
   const auth = useAuth();
-  console.log('auth', auth);
   const [show, setShow] = React.useState(false);
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
