@@ -1,9 +1,12 @@
-import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
+import React from 'react';
+import { FaUsers } from 'react-icons/fa';
+import { IoCashOutline } from 'react-icons/io5';
+import Image from 'next/image';
 
 import { useGetAccountSummaryQuery } from '@coop/shared/data-access';
 import { Box, Grid, Icon, TextFields } from '@coop/shared/ui';
 
-export const AccountHeaderCard = () => {
+export const COOPHeaderCard = () => {
   const { data: accountSummary } = useGetAccountSummaryQuery();
 
   return (
@@ -16,7 +19,14 @@ export const AccountHeaderCard = () => {
       gap="s24"
       borderRadius="br2"
     >
-      <TextFields variant="stickyCardHeader">Accounts</TextFields>
+      <Box display="flex" alignItems="center" gap="s12">
+        <Box w="s48" h="s48" position="relative">
+          <Image src="/logo1.svg" layout="fill" alt="Logo Image" />
+        </Box>
+        <TextFields variant="stickyCardHeader">
+          Namuna Saving and Credit Co-operative Limited
+        </TextFields>
+      </Box>
 
       <Grid templateColumns="repeat(2, 1fr)" gap="s16">
         <Box display="flex" alignItems="center" gap="s12">
@@ -29,11 +39,11 @@ export const AccountHeaderCard = () => {
             alignItems="center"
             justifyContent="center"
           >
-            <Icon as={AiOutlineArrowDown} color="primary.500" size="lg" />
+            <Icon as={FaUsers} color="primary.500" size="sm" />
           </Box>
           <Box display="flex" flexDir="column">
             <TextFields color="primary.200" variant="tableHeader">
-              Total Saving
+              Members
             </TextFields>
             <TextFields variant="stickyCardHeader">
               {accountSummary?.eBanking?.account?.summary?.totalSaving.toLocaleString(
@@ -46,18 +56,18 @@ export const AccountHeaderCard = () => {
         <Box display="flex" alignItems="center" gap="s12">
           <Box
             borderRadius="br2"
-            bg="danger.100"
+            bg="primary.100"
             w="s32"
             h="s32"
             display="flex"
             alignItems="center"
             justifyContent="center"
           >
-            <Icon as={AiOutlineArrowUp} color="danger.500" size="lg" />
+            <Icon as={IoCashOutline} color="primary.500" size="lg" />
           </Box>
           <Box display="flex" gap="s4" flexDir="column">
             <TextFields color="primary.200" variant="tableHeader">
-              Total Loan
+              Total Capital
             </TextFields>
             <TextFields variant="stickyCardHeader">
               {accountSummary?.eBanking?.account?.summary?.totalLoan.toLocaleString(
