@@ -17,19 +17,32 @@ query getIndividualKYMOption($id: String!, $fieldName: String) {
   }
 }
 
-query getIndividualKYMOptions($id: String!, $filter: ListKYMFieldFilter) {
-  members {
-    individual(id: $id) {
-      options {
-        list(filter: $filter) {
-          data {
-            options {
-              id
-              name
-              fieldType
-              enabled
-            }
-          }
+query getIndividualKYMOptions($searchTerm: FormFieldSearchTerm!) {
+  #    members {
+  #      individual(id: $id) {
+  #        options {
+  #          list(filter: $filter) {
+  #            data {
+  #              options {
+  #                id
+  #                name
+  #                fieldType
+  #                enabled
+  #              }
+  #            }
+  #          }
+  #        }
+  #      }
+  #    }
+
+  form {
+    options {
+      predefined(
+        filter: { searchTerm: $searchTerm, category: KYM_INDIVIDUAL }
+      ) {
+        data {
+          id
+          name
         }
       }
     }

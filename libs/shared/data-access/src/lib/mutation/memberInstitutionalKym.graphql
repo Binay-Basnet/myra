@@ -17,21 +17,21 @@ mutation setInstitutionData($id: ID!, $data: KymInsInput!) {
   }
 }
 
-mutation setInstitutionSisterDetails(
-  $id: ID!
-  $sis: ID!
-  $data: KymInsSisterConcernInput!
-) {
-  members {
-    institution(id: $id) {
-      addSisterConcerns(sisterConcernId: $sis, data: $data) {
-        recordId
-        error {
-          ... on KymIndAddInvalidDataError {
-            error
-          }
-        }
-      }
-    }
-  }
-}
+#mutation setInstitutionSisterDetails(
+#  $id: ID!
+#  $sis: ID!
+#  $data: KymInsSisterConcernInput!
+#) {
+#  members {
+#    institution(id: $id) {
+#      sisterConcern(sisterConcernId: $sis, data: $data) {
+#        recordId
+#        error {
+#          ... on KymIndAddInvalidDataError {
+#            error
+#          }
+#        }
+#      }
+#    }
+#  }
+#}

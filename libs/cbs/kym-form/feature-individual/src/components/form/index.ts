@@ -3,7 +3,6 @@ export * from './coop-membership-form/KYMEstimatedAmount';
 export * from './coop-membership-form/KYMFinancialTransactionDetails';
 export * from './declaration/KYMDeclaration';
 export * from './declaration/KYMDocumentDeclaration';
-export * from './declaration/KYMLocation';
 export * from './KYMDeclarationAgree';
 export * from './personal-info/MemberKYMAddress';
 export * from './personal-info/MemberKYMBasicInfo';

@@ -1,15 +1,19 @@
-import { GetIndividualKymOptionQuery } from '@coop/shared/data-access';
+import { GetIndividualKymOptionsQuery } from '@coop/shared/data-access';
 
 export const getFieldOption = (
-  data?: GetIndividualKymOptionQuery,
+  data?: GetIndividualKymOptionsQuery,
   labelFormatter?: (label: string) => string
 ) => {
-  return data?.members?.individual?.options?.list?.data?.[0]?.options?.map(
-    (option) => ({
-      label: labelFormatter
-        ? labelFormatter(option.name.local)
-        : option.name.local,
-      value: option.id,
-    })
-  );
+  return data?.form?.options?.predefined?.data?.reduce((newArr, option) => {
+    if (option?.name.local && option?.id) {
+      newArr.push({
+        label: labelFormatter
+          ? labelFormatter(option.name.local)
+          : option.name.local,
+        value: option.id,
+      });
+    }
+
+    return newArr;
+  }, [] as { label: string; value: string }[]);
 };
