@@ -47,8 +47,8 @@ export function AccountingFeatureBankAccountsList(
     },
     {
       title: 'memberListTableEditMember',
-      onClick: (memberId?: string) =>
-        router.push(`/members/individual/edit/${memberId}`),
+      onClick: (member?: string) =>
+        router.push(`/members/individual/edit/${member?.id}`),
     },
     {
       title: 'memberListTableMakeInactive',
@@ -121,7 +121,7 @@ export function AccountingFeatureBankAccountsList(
         cell: (cell) => (
           <PopoverComponent
             items={popoverTitle}
-            memberId={cell?.row?.original?.node?.id}
+            member={cell?.row?.original?.node}
           />
         ),
         meta: {
