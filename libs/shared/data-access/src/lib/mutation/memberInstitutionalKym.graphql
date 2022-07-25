@@ -20,7 +20,7 @@ mutation setInstitutionData($id: ID!, $data: KymInsInput!) {
 mutation setInstitutionSisterDetails(
   $id: ID!
   $sis: ID!
-  $data: KymInsSisterConcernInput
+  $data: KymInsSisterConcernInput!
 ) {
   members {
     institution(id: $id) {
