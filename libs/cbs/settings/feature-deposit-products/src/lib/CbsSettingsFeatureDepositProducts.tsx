@@ -4,9 +4,11 @@ import { AddIcon } from '@chakra-ui/icons';
 import format from 'date-fns/format';
 
 import { PopoverComponent } from '@coop/myra/components';
-import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import {
-  Avatar,
+  useGetDepositProductSettingsListQuery,
+  useGetNewIdMutation,
+} from '@coop/shared/data-access';
+import {
   Box,
   Button,
   Column,
@@ -24,18 +26,18 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
 
   const { t } = useTranslation();
 
-  const { data, isLoading } = useGetMemberListQuery(
+  const newId = useGetNewIdMutation();
+
+  const { data, isLoading } = useGetDepositProductSettingsListQuery(
     router.query['before']
       ? {
-          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          pagination: {
+          paginate: {
             last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
             before: router.query['before'] as string,
           },
         }
       : {
-          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          pagination: {
+          paginate: {
             first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
             after: (router.query['after'] ?? '') as string,
           },
@@ -45,58 +47,48 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
     }
   );
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(
+    () => data?.settings?.general?.depositProduct?.list?.edges ?? [],
+    [data]
+  );
+  console.log(rowData);
 
-  const popoverTitle = ['View Member Profile', 'Edit Member', 'Make Inactive'];
+  const popoverTitle = ['depositProductEdit'];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         Header: t['depositProductCode'],
-        accessor: 'node.id',
+        accessor: 'node.productCode',
         maxWidth: 4,
         disableSortBy: false,
       },
 
       {
         Header: t['depositProductName'],
-        accessor: 'node.name.local',
+        accessor: 'node.productName',
         width: '80%',
-
-        Cell: ({ value, row }) => {
-          return (
-            <Box display="flex" alignItems="center" gap="2">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <span>{value}</span>
-            </Box>
-          );
-        },
       },
-
       {
         Header: t['depositNature'],
-        accessor: 'node.address.locality.local',
+        accessor: 'node.nature',
         maxWidth: 48,
 
         Cell: ({ value, row }) => {
           return (
             <span>
-              {value}, {row?.original?.node?.address?.locality?.local}
+              {value}, {row?.original?.node?.nature}
             </span>
           );
         },
       },
       {
         Header: t['depositInterest'],
-        accessor: 'node.contact',
+        accessor: 'node.interest',
       },
       {
         Header: t['depositCreatedDate'],
-        accessor: 'node.createdAt',
+        accessor: 'node.createdDate',
         Cell: ({ value }) => {
           return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
@@ -126,8 +118,13 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
           <Button
             leftIcon={<AddIcon h="11px" />}
             onClick={() =>
-              // router.push('/settings/general/deposit-products/[action]')
-              router.push('/settings/general/deposit-products/add')
+              newId
+                .mutateAsync({})
+                .then((res) =>
+                  router.push(
+                    `/settings/general/deposit-products/add/${res?.newId}`
+                  )
+                )
             }
           >
             {t['settingsDepositProductNew']}
@@ -144,8 +141,12 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
         filter={true}
         pagination={{
           total: 1200,
-          endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
-          startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
+          endCursor:
+            data?.settings?.general?.depositProduct?.list?.pageInfo
+              ?.startCursor ?? '',
+          startCursor:
+            data?.settings?.general?.depositProduct?.list?.pageInfo
+              ?.endCursor ?? '',
         }}
       />
     </>

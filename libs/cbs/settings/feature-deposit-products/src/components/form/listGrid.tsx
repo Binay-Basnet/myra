@@ -2,7 +2,12 @@
 import { useFormContext } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckboxGroup, FormInput, FormSelect } from '@coop/shared/form';
+import {
+  FormCheckboxGroup,
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+} from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -45,8 +50,8 @@ const OccupationalOptions = [
 ];
 
 const CheckboxYesNo = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
+  { label: 'Yes', value: true },
+  { label: 'No', value: false },
 ];
 const CoOperativeType = [
   {
@@ -203,10 +208,9 @@ export const GridItems = () => {
                 <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                   {t['depositProductForeignEmploymentDetails']}
                 </Text>
-                <FormCheckboxGroup
+                <FormSwitchTab
                   name="foreignEmployment"
-                  orientation="column"
-                  list={CheckboxYesNo}
+                  options={CheckboxYesNo}
                 />
               </BoxContainer>
             )}
