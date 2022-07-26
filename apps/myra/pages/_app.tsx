@@ -2,7 +2,7 @@ import type { ReactElement, ReactNode } from 'react';
 import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import type { NextPage } from 'next';
 import type { AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
@@ -13,10 +13,10 @@ import axios from 'axios';
 
 import { Login } from '@coop/myra/components';
 import { useGetMeQuery } from '@coop/shared/data-access';
-import { AuthProvider, useAuth } from '@coop/shared/data-access';
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import { useSnap } from '@coop/shared/utils';
+import { RootState, useSnap } from '@coop/shared/utils';
 import { store, theme } from '@coop/shared/utils';
+import { authenticate, logout } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
@@ -94,7 +94,8 @@ const useRefreshToken = (url: string) => {
 
 function MainApp({ Component, pageProps }: ManAppProps) {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
-  const auth = useAuth();
+  const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state?.auth);
   const getMe = useGetMeQuery(
     {},
     {
@@ -111,7 +112,7 @@ function MainApp({ Component, pageProps }: ManAppProps) {
   console.log('get me', 'hello', getMe);
 
   const hasDataReturned = getMe?.data?.auth;
-  const isDatasuccessfull = getMe?.data?.auth?.me?.data;
+  const isDatasuccessful = getMe?.data?.auth?.me?.data;
 
   useEffect(() => {
     console.log('hello123');
@@ -120,13 +121,13 @@ function MainApp({ Component, pageProps }: ManAppProps) {
   }, []);
   useEffect(() => {
     if (hasDataReturned) {
-      if (isDatasuccessfull) {
-        auth.authenticate(auth?.auth);
+      if (isDatasuccessful) {
+        dispatch(authenticate(auth?.auth));
       } else {
-        auth.logout();
+        dispatch(logout());
       }
     }
-  }, [hasDataReturned, isDatasuccessfull]);
+  }, [hasDataReturned, isDatasuccessful]);
   // getMe.data.auth.me
   const getLayout = Component.getLayout || ((page) => page);
 

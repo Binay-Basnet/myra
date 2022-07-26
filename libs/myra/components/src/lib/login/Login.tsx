@@ -1,5 +1,6 @@
-import React, { ChangeEventHandler } from 'react';
+import React from 'react';
 import { IoEyeOffOutline, IoEyeOutline, IoLockClosed } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
 import {
   Input,
   InputGroup,
@@ -8,12 +9,12 @@ import {
 } from '@chakra-ui/react';
 
 import { useLoginMutation } from '@coop/shared/data-access';
-import { useAuth } from '@coop/shared/data-access';
 import { Box, Button } from '@coop/shared/ui';
+import { authenticate } from '@coop/shared/utils';
 
 export const Login = () => {
   const { mutateAsync } = useLoginMutation();
-  const auth = useAuth();
+  const dispatch = useDispatch();
   const [show, setShow] = React.useState(false);
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -33,8 +34,7 @@ export const Login = () => {
       const accessToken = res?.auth?.login?.record?.token?.access;
       const refreshToken = res?.auth?.login?.record?.token?.refresh;
       const user = res?.auth?.login?.record?.user;
-      auth.authenticate &&
-        auth?.authenticate({ accessToken: accessToken, user: user });
+      dispatch(authenticate({ accessToken: accessToken, user: user }));
       localStorage.setItem('refreshToken', refreshToken ?? '');
     });
   };

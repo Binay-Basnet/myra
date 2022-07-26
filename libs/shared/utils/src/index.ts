@@ -6,6 +6,7 @@ export * from './lib/myra-util';
 export * from './lib/neosystheme';
 export * from './lib/theme';
 export * from './locales';
+export * from './redux/authSlice';
 export * from './redux/counterSlice';
 export * from './redux/store';
 export * from './utilFunctions/amountConverter';
