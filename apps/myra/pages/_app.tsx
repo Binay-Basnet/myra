@@ -7,6 +7,7 @@ import type { NextPage } from 'next';
 import type { AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
 
 import { Login } from '@coop/myra/components';
 import { useGetMeQuery } from '@coop/shared/data-access';
@@ -66,7 +67,7 @@ function MainApp({ Component, pageProps }: ManAppProps) {
 
   const getLayout = Component.getLayout || ((page) => page);
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(null);
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('refreshToken');
@@ -83,7 +84,16 @@ function MainApp({ Component, pageProps }: ManAppProps) {
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
       <ToastContainer />
-      {isLoggedIn ? (
+      {isLoggedIn === null ? (
+        <Box
+          h="100vh"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Spinner />
+        </Box>
+      ) : isLoggedIn ? (
         <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       ) : (
         <main className="app">
