@@ -51,7 +51,7 @@ export const MemberKYMContactDetails = ({
     }
   }, [editValues]);
 
-  const { mutate } = useSetMemberDataMutation({ onSuccess: () => refetch() });
+  const { mutate } = useSetMemberDataMutation();
 
   useEffect(() => {
     const subscription = watch(
@@ -62,6 +62,10 @@ export const MemberKYMContactDetails = ({
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <FormProvider {...methods}>

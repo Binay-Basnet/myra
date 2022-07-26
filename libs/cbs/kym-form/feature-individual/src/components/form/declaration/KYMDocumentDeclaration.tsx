@@ -46,12 +46,21 @@ const KYMDocumentDeclarationField = ({
       const kymDocumentsList =
         editValues?.members?.document?.listKYMDocuments?.data;
 
+      console.log({ kymDocumentsList });
+
       const documentData = kymDocumentsList?.find(
         (doc) => doc?.fieldId === name
       );
 
+      // console.log({ documentData });
+
       if (documentData) {
-        reset({ [name]: documentData.identifier });
+        reset({
+          [name]: documentData.docData.map((file) => ({
+            url: file?.url,
+            fileName: file?.identifier,
+          })),
+        });
       }
     }
   }, [editValues]);
