@@ -91,12 +91,6 @@ export const KYMDeclaration = ({
       const editValueData =
         editValues?.members?.individual?.formState?.data?.formData;
 
-      console.log({
-        ...editValueData?.declaration,
-        beneficialFullName:
-          editValueData?.declaration?.beneficialFullName?.local,
-      });
-
       reset({
         ...editValueData?.declaration,
         beneficialFullName:

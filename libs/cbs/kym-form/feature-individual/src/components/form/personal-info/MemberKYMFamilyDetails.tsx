@@ -70,6 +70,8 @@ const AddFamilyMember = ({
   setKymCurrentSection,
   familyMemberId,
 }: IAddFamilyMember) => {
+  const { t } = useTranslation();
+
   const methods = useForm();
 
   const { watch, reset } = methods;
@@ -145,23 +147,23 @@ const AddFamilyMember = ({
           <InputGroupContainer>
             <FormSelect
               name="relationshipId"
-              label="Relationship"
-              placeholder="Select Relationship"
+              label={t['kymIndRelationship']}
+              placeholder={t['kymIndSelectRelationship']}
               options={getFieldOption(relationshipData)}
             />
 
             <FormInput
               type="text"
               name="fullName"
-              label="Full Name"
-              placeholder="Full Name"
+              label={t['kymIndFullName']}
+              placeholder={t['kymIndEnterFullName']}
             />
 
             <FormInput
               type="date"
               name="dateOfBirth"
               id="familyDetailsDateOfBirth"
-              label="Date of Birth (BS)"
+              label={t['kymIndDateofBirthBS']}
             />
 
             {/* {familyDetailsFieldsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(

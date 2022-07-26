@@ -50,9 +50,16 @@ const KYMDocumentDeclarationField = ({
         (doc) => doc?.fieldId === name
       );
 
-      if (documentData) {
-        reset({ [name]: documentData.identifier });
-      }
+      console.log({ [name]: documentData?.identifier });
+
+      // if (documentData) {
+      //   reset({
+      //     [name]: documentData.identifier.map((file) => ({
+      //       url: '',
+      //       fileName: file.fileName,
+      //     })),
+      //   });
+      // }
     }
   }, [editValues]);
 

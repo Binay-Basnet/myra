@@ -114,7 +114,21 @@ export function MemberListPage() {
         accessorKey: 'actions',
         cell: (cell) => (
           <PopoverComponent
-            items={popoverTitle}
+            items={[
+              {
+                title: 'memberListTableViewMemberProfile',
+              },
+              {
+                title: 'memberListTableEditMember',
+                onClick: (member) =>
+                  router.push(
+                    `/members/${member?.type?.toLowerCase()}/edit/${member?.id}`
+                  ),
+              },
+              {
+                title: 'memberListTableMakeInactive',
+              },
+            ]}
             member={cell?.row?.original?.node}
           />
         ),

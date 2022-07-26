@@ -181,28 +181,28 @@ export const MemberKYMIdentificationDetails = ({
                   fontWeight="medium"
                   color="neutralColorLight.Gray-70"
                 >
-                  Citizenship
+                  {t['kynIndCitizenship']}
                 </Text>
                 <Grid templateColumns="repeat(3, 1fr)" gap="s20">
                   <FormInput
                     type="text"
                     name="citizenshipNo"
-                    label="Citizenship No"
-                    placeholder="Citizenship No"
+                    label={t['kynIndCitizenshipNo']}
+                    placeholder={t['kynIndCitizenshipNo']}
                   />
 
                   <FormInput
                     type="text"
                     name="citizenshipIssuePlace"
-                    label="Place of Issue"
-                    placeholder="Place of Issue"
+                    label={t['kynIndCitizenshipIssuePlace']}
+                    placeholder={t['kynIndCitizenshipIssuePlace']}
                   />
 
                   <FormInput
                     type="date"
                     name="citizenshipIssueDate"
-                    label="Issued Date"
-                    placeholder="Issued Date"
+                    label={t['kynIndCitizenshipIssueDate']}
+                    placeholder={t['kynIndCitizenshipIssueDate']}
                   />
                 </Grid>
               </Box>
@@ -215,28 +215,28 @@ export const MemberKYMIdentificationDetails = ({
                   fontWeight="medium"
                   color="neutralColorLight.Gray-70"
                 >
-                  Driving License
+                  {t['kymIndDrivingLicense']}
                 </Text>
                 <Grid templateColumns="repeat(3, 1fr)" gap="s20">
                   <FormInput
                     type="text"
                     name="drivingLicenseNo"
-                    label="Driving License No"
-                    placeholder="Driving License No"
+                    label={t['kymIndDrivingLicenseNo']}
+                    placeholder={t['kymIndDrivingLicenseNo']}
                   />
 
                   <FormInput
                     type="text"
                     name="drivingLicenseIssuePlace"
-                    label="Place of Issue"
-                    placeholder="Place of Issue"
+                    label={t['kymIndDrivingLicenseIssuePlace']}
+                    placeholder={t['kymIndDrivingLicenseIssuePlace']}
                   />
 
                   <FormInput
                     type="date"
                     name="drivingLicenseIssueDate"
-                    label="Issued Date"
-                    placeholder="Issued Date"
+                    label={t['kymIndDrivingLicenseIssueDate']}
+                    placeholder={t['kymIndDrivingLicenseIssueDate']}
                   />
                 </Grid>
               </Box>
@@ -249,28 +249,28 @@ export const MemberKYMIdentificationDetails = ({
                   fontWeight="medium"
                   color="neutralColorLight.Gray-70"
                 >
-                  Passport
+                  {t['kymIndPassport']}
                 </Text>
                 <Grid templateColumns="repeat(3, 1fr)" gap="s20">
                   <FormInput
                     type="text"
                     name="passportNo"
-                    label="Passport No"
-                    placeholder="Passport No"
+                    label={t['kymIndPassportNo']}
+                    placeholder={t['kymIndPassportNo']}
                   />
 
                   <FormInput
                     type="text"
                     name="passportIssuePlace"
-                    label="Place of Issue"
-                    placeholder="Place of Issue"
+                    label={t['kymIndPassportIssuePlace']}
+                    placeholder={t['kymIndPassportIssuePlace']}
                   />
 
                   <FormInput
                     type="date"
                     name="passportIssueDate"
-                    label="Issued Date"
-                    placeholder="Issued Date"
+                    label={t['kymIndPassportIssueDate']}
+                    placeholder={t['kymIndPassportIssueDate']}
                   />
                 </Grid>
               </Box>
@@ -283,21 +283,21 @@ export const MemberKYMIdentificationDetails = ({
                   fontWeight="medium"
                   color="neutralColorLight.Gray-70"
                 >
-                  Voter Card
+                  {t['kymIndVoterCard']}
                 </Text>
                 <Grid templateColumns="repeat(3, 1fr)" gap="s20">
                   <FormInput
                     type="text"
                     name="voterCardNo"
-                    label="Voter Card No"
-                    placeholder="Voter Card No"
+                    label={t['kymIndVoterCardNo']}
+                    placeholder={t['kymIndVoterCardNo']}
                   />
 
                   <FormInput
                     type="text"
                     name="voterPollingStation"
-                    label="Polling Station"
-                    placeholder="Polling Station"
+                    label={t['kymIndVoterCardPollingStation']}
+                    placeholder={t['kymIndVoterCardPollingStation']}
                   />
                 </Grid>
               </Box>
@@ -310,14 +310,14 @@ export const MemberKYMIdentificationDetails = ({
                   fontWeight="medium"
                   color="neutralColorLight.Gray-70"
                 >
-                  National ID
+                  {t['kymIndNationalID']}
                 </Text>
                 <Grid templateColumns="repeat(3, 1fr)" gap="s20">
                   <FormInput
                     type="text"
                     name="nationalIDNo"
-                    label="National ID No"
-                    placeholder="National ID No"
+                    label={t['kymIndNationalIDNo']}
+                    placeholder={t['kymIndNationalIDNo']}
                   />
                 </Grid>
               </Box>

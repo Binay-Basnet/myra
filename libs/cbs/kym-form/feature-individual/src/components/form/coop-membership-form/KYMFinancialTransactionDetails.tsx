@@ -95,27 +95,27 @@ export const KYMFinancialTransactionDetails = ({
                 type="number"
                 name="initialShare"
                 textAlign="right"
-                label="Share"
+                label={t['kymIndFinancialShare']}
                 placeholder="0.00"
               />
               <FormInput
                 type="number"
                 name="initialSaving"
-                label="Savings"
+                label={t['kymIndFinancialSavings']}
                 textAlign="right"
                 placeholder="0.00"
               />
               <FormInput
                 type="number"
                 name="initialLoan"
-                label="Loan"
+                label={t['kymIndFinancialLoan']}
                 textAlign="right"
                 placeholder="0.00"
               />
               <FormInput
                 type="number"
                 name="otherFinancialAmount"
-                label="Other"
+                label={t['kymIndFinancialOther']}
                 textAlign="right"
                 placeholder="0.00"
               />
