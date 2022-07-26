@@ -1716,6 +1716,18 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "avgAmount",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maxAmount",
             "description": null,
             "type": {
@@ -1749,6 +1761,18 @@
         "name": "AmountLimitFormState",
         "description": null,
         "fields": [
+          {
+            "name": "avgAmount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "maxAmount",
             "description": null,
@@ -3786,13 +3810,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Branch",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "Branch",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -12239,16 +12259,12 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "LadderRateFormState",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "LadderRateFormState",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -13185,13 +13201,9 @@
             "name": "penaltyData",
             "description": null,
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "PenaltyInput",
-                "ofType": null
-              }
+              "kind": "INPUT_OBJECT",
+              "name": "PenaltyInput",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -56606,13 +56618,9 @@
             "name": "rateType",
             "description": null,
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "PenaltyRateType",
-                "ofType": null
-              }
+              "kind": "ENUM",
+              "name": "PenaltyRateType",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,

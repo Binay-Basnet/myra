@@ -17,6 +17,8 @@ import {
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
+
+import { useInstitution } from '../hooks/institutionHook';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
@@ -27,91 +29,9 @@ export const BasicDetailsInstitution = (props: IProps) => {
   });
   const { setSection } = props;
 
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
-
   const { control, handleSubmit, getValues, watch, setError, reset } = methods;
-  const { mutate } = useSetInstitutionDataMutation({
-    onSuccess: (res) => {
-      setError('institutionName', {
-        type: 'custom',
-        message:
-          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
-      });
-    },
-    onError: () => {
-      setError('institutionName', {
-        type: 'custom',
-        message: 'it is what it is',
-      });
-    },
-  });
+  useInstitution({ methods });
 
-  const {
-    data: editValues,
-    isLoading: editLoading,
-    refetch,
-  } = useGetInstitutionKymEditDataQuery(
-    {
-      id: id,
-    },
-    { enabled: id !== 'undefined' }
-  );
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        console.log(editValues);
-        if (editValues && data) {
-          mutate({ id: router.query['id'] as string, data });
-          refetch();
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady, editValues]);
-
-  useEffect(() => {
-    if (editValues) {
-      console.log(
-        pickBy(
-          editValues?.members?.institution?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        )
-      );
-      console.log('pick', pickBy);
-      const editValueData =
-        editValues?.members?.institution?.formState?.data?.formData;
-      console.log('edit value', editValueData);
-      // const permanentLocationData =
-      //   editValueData?.permanentLocation?.latitude === null
-      //     ? { latitude: 27.71, longitude: 85.31 }
-      //     : editValueData?.permanentLocation;
-
-      // const temporaryLocationData =
-      //   editValueData?.temporaryLocation?.latitude === null
-      //     ? { latitude: 27.71, longitude: 85.31 }
-      //     : editValueData?.temporaryLocation;
-      // console.log(
-      //   'location',
-      //   editValueData,
-      //   permanentLocationData,
-      //   temporaryLocationData,
-      //   {
-      //     ...editValueData,
-      //     permanentLocation: permanentLocationData,
-      //     temporaryLocation: temporaryLocationData,
-      //   }
-      // );
-      reset({
-        ...pickBy(
-          editValues?.members?.institution?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        ),
-      });
-    }
-  }, [editLoading]);
   return (
     <FormProvider {...methods}>
       <form
