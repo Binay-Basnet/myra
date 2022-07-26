@@ -1,4 +1,6 @@
 // import debounce from 'lodash/debounce';
+import { useFormContext } from 'react-hook-form';
+
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup, FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
@@ -77,18 +79,20 @@ const CoOperativeType = [
   },
 ];
 
-export const GridItems = ({ watch }: any) => {
-  const ageCheck = watch('criteria.age');
-  const genderCheck = watch('criteria.gender');
-  const marriageCheck = watch('criteria.maritalStatus');
-  const occupationCheck = watch('criteria.occupationalDetails');
-  const educationCheck = watch('criteria.educationalQualification');
-  const ethnicityCheck = watch('criteria.ethnicity');
-  const foreignCheck = watch('criteria.foreignEmployment');
-  const nobusInstitution = watch('criteria.nobInstitution');
-  const cooperativeUnionstatus = watch('criteria.nobCOOPUnion');
-  const coperativeStatus = watch('criteria.cooperativeType');
+export const GridItems = () => {
+  const { watch } = useFormContext();
+  const ageCheck = watch('criteria');
+  const genderCheck = watch('criteria');
+  const marriageCheck = watch('criteria');
+  const occupationCheck = watch('criteria');
+  const educationCheck = watch('criteria');
+  const ethnicityCheck = watch('criteria');
+  const foreignCheck = watch('criteria');
+  const nobusInstitution = watch('criteria');
+  const cooperativeUnionstatus = watch('criteria');
+  const coperativeStatus = watch('criteria');
   const memberType = watch('typeOfMember');
+
   const { t } = useTranslation();
 
   if (
@@ -112,9 +116,9 @@ export const GridItems = ({ watch }: any) => {
       >
         <InputGroupContainer rowGap={'s32'}>
           {memberType &&
-            memberType?.indexOf('individual') !== -1 &&
+            memberType?.indexOf('INDIVIDUAL') !== -1 &&
             ageCheck &&
-            ageCheck.indexOf('age') !== -1 && (
+            ageCheck.indexOf('AGE') !== -1 && (
               <FormInput
                 name="maxAge"
                 placeholder="Enter Minimum Age"
@@ -122,9 +126,9 @@ export const GridItems = ({ watch }: any) => {
               />
             )}
           {memberType &&
-            memberType?.indexOf('individual') !== -1 &&
+            memberType?.indexOf('INDIVIDUAL') !== -1 &&
             ageCheck &&
-            ageCheck.indexOf('age') !== -1 && (
+            ageCheck.indexOf('AGE') !== -1 && (
               <FormInput
                 name="minAge"
                 placeholder="Enter Maxinum Age"
@@ -132,11 +136,11 @@ export const GridItems = ({ watch }: any) => {
               />
             )}
           {memberType &&
-            memberType?.indexOf('individual') !== -1 &&
+            memberType?.indexOf('INDIVIDUAL') !== -1 &&
             genderCheck &&
-            genderCheck.indexOf('gender') !== -1 && (
+            genderCheck.indexOf('GENDER') !== -1 && (
               <FormSelect
-                name="selectGender"
+                name="genderId"
                 options={GenderOptions}
                 label={t['depositProductGender']}
                 placeholder={t['depositProductSelectGender']}
@@ -144,11 +148,11 @@ export const GridItems = ({ watch }: any) => {
               />
             )}
           {memberType &&
-            memberType?.indexOf('individual') !== -1 &&
+            memberType?.indexOf('INDIVIDUAL') !== -1 &&
             marriageCheck &&
-            marriageCheck.indexOf('martialStatus') !== -1 && (
+            marriageCheck.indexOf('MARITAL_STATUS') !== -1 && (
               <FormSelect
-                name="selectMarialOptions"
+                name="maritalStatusId"
                 options={MartialOptions}
                 label={t['depositProductMaritalStatus']}
                 placeholder={t['depositProductSelectMaritalStatus']}
@@ -156,11 +160,11 @@ export const GridItems = ({ watch }: any) => {
               />
             )}
           {memberType &&
-            memberType?.indexOf('individual') !== -1 &&
+            memberType?.indexOf('INDIVIDUAL') !== -1 &&
             educationCheck &&
-            educationCheck.indexOf('educationQualification') !== -1 && (
+            educationCheck.indexOf('EDUCATION_QUALIFICATION') !== -1 && (
               <FormSelect
-                name="selectEducationOptions"
+                name="educationQualification"
                 options={EducationalOptions}
                 label={t['depositProductEducationQualification']}
                 placeholder={t['depositProductSelectEducationQualification']}
@@ -168,11 +172,11 @@ export const GridItems = ({ watch }: any) => {
               />
             )}
           {memberType &&
-            memberType?.indexOf('individual') !== -1 &&
+            memberType?.indexOf('INDIVIDUAL') !== -1 &&
             ethnicityCheck &&
-            ethnicityCheck.indexOf('ethinicity') !== -1 && (
+            ethnicityCheck.indexOf('ETHNICITY') !== -1 && (
               <FormSelect
-                name="selectEthniciyOptions"
+                name="ethnicity"
                 options={EthnicityOptions}
                 label={t['depositProductEthinicity']}
                 placeholder={t['depositProductSelectEthinicity']}
@@ -180,11 +184,11 @@ export const GridItems = ({ watch }: any) => {
               />
             )}
           {memberType &&
-            memberType?.indexOf('individual') !== -1 &&
+            memberType?.indexOf('INDIVIDUAL') !== -1 &&
             occupationCheck &&
-            occupationCheck.indexOf('occupationDetails') !== -1 && (
+            occupationCheck.indexOf('OCCUPATION_DETAILS') !== -1 && (
               <FormSelect
-                name="selectOccupationalOptions"
+                name="occupation"
                 options={OccupationalOptions}
                 label={t['depositProductOccupationDetails']}
                 placeholder={t['depositProductSelectOccupationDetails']}
@@ -192,26 +196,27 @@ export const GridItems = ({ watch }: any) => {
               />
             )}
           {memberType &&
-            memberType?.indexOf('individual') !== -1 &&
+            memberType?.indexOf('INDIVIDUAL') !== -1 &&
             foreignCheck &&
-            foreignCheck.indexOf('foreignEmployment') !== -1 && (
+            foreignCheck.indexOf('FOREIGN_EMPLOYMENT') !== -1 && (
               <BoxContainer>
                 <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                   {t['depositProductForeignEmploymentDetails']}
                 </Text>
                 <FormCheckboxGroup
-                  name="foreignEmploymentRequired"
+                  name="foreignEmployment"
                   orientation="column"
                   list={CheckboxYesNo}
                 />
               </BoxContainer>
             )}
           {memberType &&
-            memberType?.indexOf('institiutional') !== -1 &&
+            memberType?.indexOf('INSTITUTION') !== -1 &&
             nobusInstitution &&
-            nobusInstitution.indexOf('nOBInstitution') !== -1 && (
+            nobusInstitution.indexOf('NATURE_OF_BUSINESS_INSTITUTIONS') !==
+              -1 && (
               <FormSelect
-                name="selectbusinessInstitution"
+                name="natureOfBusinessInstitution"
                 options={OccupationalOptions}
                 label={t['depositProductNatureofBusinessIns']}
                 placeholder={t['depositProductSelectNatureofBusiness']}
@@ -219,11 +224,12 @@ export const GridItems = ({ watch }: any) => {
               />
             )}
           {memberType &&
-            memberType?.indexOf('cooperativeUnion') !== -1 &&
+            memberType?.indexOf('COOPERATIVE_UNION') !== -1 &&
             cooperativeUnionstatus &&
-            cooperativeUnionstatus.indexOf('noBCOOPunion') !== -1 && (
+            cooperativeUnionstatus.indexOf('NATURE_OF_BUSINESS_COOPUNION') !==
+              -1 && (
               <FormSelect
-                name="selectbusinessInstitution"
+                name="natureOFBusinessCoop"
                 options={OccupationalOptions}
                 label={t['depositProductNatureofBusinessCoopUnion']}
                 placeholder={t['depositProductSelectNatureofBusiness']}
@@ -231,15 +237,15 @@ export const GridItems = ({ watch }: any) => {
               />
             )}
           {memberType &&
-            memberType?.indexOf('cooperative') !== -1 &&
+            memberType?.indexOf('COOPERATIVE') !== -1 &&
             coperativeStatus &&
-            coperativeStatus.indexOf('cooperativeType') !== -1 && (
+            coperativeStatus.indexOf('COOPERATIVE_TYPE') !== -1 && (
               <BoxContainer>
                 <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                   {t['depositProductCoorperativeType']}
                 </Text>
                 <FormCheckboxGroup
-                  name="selectCooperativeType"
+                  name="cooperativeType"
                   label={t['depositProductCoorperativeType']}
                   list={CoOperativeType}
                   orientation="column"

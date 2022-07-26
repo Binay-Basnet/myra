@@ -1,9 +1,7 @@
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormEditableTable } from '@coop/shared/form';
-// import { KymIndMemberInput } from '@coop/shared/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
-// import { useTranslation } from '@coop/shared/utils';
 import { SubText, TextBoxContainer, TopText } from '../formui';
 
 type AccountServiceTable = {
@@ -43,7 +41,7 @@ export const AccountServicesCharge = () => {
         <SubText>{t['depositProductAdddifferentservicecharges']} </SubText>
       </TextBoxContainer>
       <FormEditableTable<AccountServiceTable>
-        name="data"
+        name="serviceCharge"
         debug={false}
         columns={[
           {
@@ -55,7 +53,7 @@ export const AccountServicesCharge = () => {
           },
           {
             accessor: 'ledgerName',
-            header: t['depositProductAccServiceTableServiceName'],
+            header: t['depositProductAccServiceTableLedgerName'],
             fieldType: 'select',
             cellWidth: 'auto',
             selectOptions: ledger_name,

@@ -34,7 +34,11 @@ export const FormSelect = <T,>({
       name={name}
       render={({ field: { onChange, value } }) => {
         const foundValue = options?.find((option) => option.value === value);
-
+        console.log(value);
+        // if (rest?.isMulti) {
+        //   const multiValue = value?.map((val: Option) => val.value);
+        //   console.log(multiValue);
+        // }
         return (
           <Select
             errorText={errors[name]?.message}

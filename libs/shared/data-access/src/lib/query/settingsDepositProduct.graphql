@@ -1,0 +1,106 @@
+query getDepositProductSettingsEditData($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        formState(id: $id) {
+          data {
+            productName
+            nature
+            productCode {
+              prefix
+              initialNo
+            }
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            depositAmount {
+              minAmount
+              maxAmount
+            }
+            depositFrequency
+            penalty
+            penaltyData {
+              dayAfterInstallmentDate
+              minimumAmount
+              rateType
+              flatRatePenalty
+              penaltyRate
+
+              penaltyAmount
+            }
+            rebate
+            rebateData {
+              daysBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              percentage
+            }
+            minTenure
+            minTenureUnit
+            minTenureUnitNumber
+            balanceLimit {
+              minAmount
+              maxAmount
+            }
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthoriy
+              additionalRate
+            }
+            ladderRate
+            ladderRateData {
+              type
+              amount
+              rate
+            }
+            postingFrequency
+            maxPostingFreqDifference
+            accountType
+            serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            dormantSetup {
+              duration
+              condition
+            }
+            autoOpen
+            allowLoan
+            percentageOfDeposit
+            alternativeChannels
+            atmFacility
+            chequeIssue
+            supportMultiple
+            staffProduct
+            withdrawRestricted
+            specifyWithdrawRestriction
+            wealthBuildingProduct
+            individualDocuments
+            institutionDocuments
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+          }
+        }
+      }
+    }
+  }
+}
