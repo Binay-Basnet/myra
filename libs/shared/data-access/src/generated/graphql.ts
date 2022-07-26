@@ -7472,6 +7472,57 @@ export type SetInstitutionDataMutationVariables = Exact<{
 
 export type SetInstitutionDataMutation = { members: { institution?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
+export type SetSisterConcernsMutationVariables = Exact<{
+  id: Scalars['ID'];
+  sis: Scalars['ID'];
+  data: KymInsSisterConcernInput;
+}>;
+
+
+export type SetSisterConcernsMutation = { members: { institution?: { sisterConcern?: { Upsert?: { recordId: string } | null } | null } | null } };
+
+export type DeleteSisterConcernsMutationVariables = Exact<{
+  insId: Scalars['ID'];
+  sis: Scalars['ID'];
+}>;
+
+
+export type DeleteSisterConcernsMutation = { members: { institution?: { sisterConcern?: { Delete?: { recordId: string } | null } | null } | null } };
+
+export type SetAddDirectorInstitutionMutationVariables = Exact<{
+  id: Scalars['ID'];
+  dir: Scalars['ID'];
+  data: KymInsDirectorInput;
+}>;
+
+
+export type SetAddDirectorInstitutionMutation = { members: { institution?: { director?: { Upsert?: { recordId: string } | null } | null } | null } };
+
+export type DeleteDirectorInstitutionMutationVariables = Exact<{
+  insId: Scalars['ID'];
+  dir: Scalars['ID'];
+}>;
+
+
+export type DeleteDirectorInstitutionMutation = { members: { institution?: { director?: { Delete?: { recordId: string } | null } | null } | null } };
+
+export type SetAddAccountOperatorInstitutionMutationVariables = Exact<{
+  id: Scalars['ID'];
+  acc: Scalars['ID'];
+  data: KymInsAccountOperatorInput;
+}>;
+
+
+export type SetAddAccountOperatorInstitutionMutation = { members: { institution?: { accountOperator?: { Upsert?: { recordId: string } | null } | null } | null } };
+
+export type DeleteAccountOperatorInstitutionMutationVariables = Exact<{
+  insId: Scalars['ID'];
+  acc: Scalars['ID'];
+}>;
+
+
+export type DeleteAccountOperatorInstitutionMutation = { members: { institution?: { accountOperator?: { Delete?: { recordId: string } | null } | null } | null } };
+
 export type UpsertKymOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   option: KymOptionInput;
@@ -8541,6 +8592,138 @@ export const useSetInstitutionDataMutation = <
     useMutation<SetInstitutionDataMutation, TError, SetInstitutionDataMutationVariables, TContext>(
       ['setInstitutionData'],
       useAxios<SetInstitutionDataMutation, SetInstitutionDataMutationVariables>(SetInstitutionDataDocument),
+      options
+    );
+export const SetSisterConcernsDocument = `
+    mutation setSisterConcerns($id: ID!, $sis: ID!, $data: KymInsSisterConcernInput!) {
+  members {
+    institution(id: $id) {
+      sisterConcern {
+        Upsert(sisterConcernId: $sis, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSisterConcernsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetSisterConcernsMutation, TError, SetSisterConcernsMutationVariables, TContext>) =>
+    useMutation<SetSisterConcernsMutation, TError, SetSisterConcernsMutationVariables, TContext>(
+      ['setSisterConcerns'],
+      useAxios<SetSisterConcernsMutation, SetSisterConcernsMutationVariables>(SetSisterConcernsDocument),
+      options
+    );
+export const DeleteSisterConcernsDocument = `
+    mutation deleteSisterConcerns($insId: ID!, $sis: ID!) {
+  members {
+    institution(id: $insId) {
+      sisterConcern {
+        Delete(sisterConcernId: $sis) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteSisterConcernsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteSisterConcernsMutation, TError, DeleteSisterConcernsMutationVariables, TContext>) =>
+    useMutation<DeleteSisterConcernsMutation, TError, DeleteSisterConcernsMutationVariables, TContext>(
+      ['deleteSisterConcerns'],
+      useAxios<DeleteSisterConcernsMutation, DeleteSisterConcernsMutationVariables>(DeleteSisterConcernsDocument),
+      options
+    );
+export const SetAddDirectorInstitutionDocument = `
+    mutation setAddDirectorInstitution($id: ID!, $dir: ID!, $data: KymInsDirectorInput!) {
+  members {
+    institution(id: $id) {
+      director {
+        Upsert(directorId: $dir, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetAddDirectorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetAddDirectorInstitutionMutation, TError, SetAddDirectorInstitutionMutationVariables, TContext>) =>
+    useMutation<SetAddDirectorInstitutionMutation, TError, SetAddDirectorInstitutionMutationVariables, TContext>(
+      ['setAddDirectorInstitution'],
+      useAxios<SetAddDirectorInstitutionMutation, SetAddDirectorInstitutionMutationVariables>(SetAddDirectorInstitutionDocument),
+      options
+    );
+export const DeleteDirectorInstitutionDocument = `
+    mutation deleteDirectorInstitution($insId: ID!, $dir: ID!) {
+  members {
+    institution(id: $insId) {
+      director {
+        Delete(directorId: $dir) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteDirectorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteDirectorInstitutionMutation, TError, DeleteDirectorInstitutionMutationVariables, TContext>) =>
+    useMutation<DeleteDirectorInstitutionMutation, TError, DeleteDirectorInstitutionMutationVariables, TContext>(
+      ['deleteDirectorInstitution'],
+      useAxios<DeleteDirectorInstitutionMutation, DeleteDirectorInstitutionMutationVariables>(DeleteDirectorInstitutionDocument),
+      options
+    );
+export const SetAddAccountOperatorInstitutionDocument = `
+    mutation setAddAccountOperatorInstitution($id: ID!, $acc: ID!, $data: KymInsAccountOperatorInput!) {
+  members {
+    institution(id: $id) {
+      accountOperator {
+        Upsert(operatorId: $acc, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetAddAccountOperatorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetAddAccountOperatorInstitutionMutation, TError, SetAddAccountOperatorInstitutionMutationVariables, TContext>) =>
+    useMutation<SetAddAccountOperatorInstitutionMutation, TError, SetAddAccountOperatorInstitutionMutationVariables, TContext>(
+      ['setAddAccountOperatorInstitution'],
+      useAxios<SetAddAccountOperatorInstitutionMutation, SetAddAccountOperatorInstitutionMutationVariables>(SetAddAccountOperatorInstitutionDocument),
+      options
+    );
+export const DeleteAccountOperatorInstitutionDocument = `
+    mutation deleteAccountOperatorInstitution($insId: ID!, $acc: ID!) {
+  members {
+    institution(id: $insId) {
+      accountOperator {
+        Delete(operatorId: $acc) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteAccountOperatorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteAccountOperatorInstitutionMutation, TError, DeleteAccountOperatorInstitutionMutationVariables, TContext>) =>
+    useMutation<DeleteAccountOperatorInstitutionMutation, TError, DeleteAccountOperatorInstitutionMutationVariables, TContext>(
+      ['deleteAccountOperatorInstitution'],
+      useAxios<DeleteAccountOperatorInstitutionMutation, DeleteAccountOperatorInstitutionMutationVariables>(DeleteAccountOperatorInstitutionDocument),
       options
     );
 export const UpsertKymOptionDocument = `
