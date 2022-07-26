@@ -84,13 +84,13 @@ function MainApp({ Component, pageProps }: ManAppProps) {
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
       <ToastContainer />
-      {auth?.auth?.user ? (
-        <main className="app">{getLayout(<Component {...pageProps} />)}</main>
-      ) : (
+      {/* {auth?.auth?.user ? ( */}
+      <main className="app">{getLayout(<Component {...pageProps} />)}</main>
+      {/* ) : (
         <main className="app">
           <Login />
         </main>
-      )}
+      )} */}
       <Box
         position="fixed"
         bottom={'40px'}
@@ -108,14 +108,14 @@ function MainApp({ Component, pageProps }: ManAppProps) {
 function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <Provider store={store}>
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <ChakraProvider theme={theme}>
-            <MainApp Component={Component} pageProps={pageProps} />
-          </ChakraProvider>
-          <ReactQueryDevtools />
-        </QueryClientProvider>
-      </AuthProvider>
+      {/* <AuthProvider> */}
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
+          <MainApp Component={Component} pageProps={pageProps} />
+        </ChakraProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+      {/* </AuthProvider> */}
     </Provider>
   );
 }

@@ -95,7 +95,6 @@ export type AccountOperatorDetailsFormState = {
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   panNo?: Maybe<Scalars['String']>;
   permanenetAddress?: Maybe<KymAddress>;
-  specimenSignature?: Maybe<Scalars['String']>;
   temporaryAddress?: Maybe<KymAddress>;
 };
 
@@ -227,10 +226,7 @@ export enum Arrange {
 
 export type AuthMutation = {
   login?: Maybe<LoginResult>;
-<<<<<<< HEAD
-  token?: Maybe<AuthToken>;
-=======
->>>>>>> 6ba5c9cfe455879570603ebdd4e0114c8dedbaa8
+  token?: Maybe<AuthTokenResult>;
 };
 
 
@@ -238,14 +234,11 @@ export type AuthMutationLoginArgs = {
   data: LoginInput;
 };
 
-<<<<<<< HEAD
 
 export type AuthMutationTokenArgs = {
   refreshToken: Scalars['String'];
 };
 
-=======
->>>>>>> 6ba5c9cfe455879570603ebdd4e0114c8dedbaa8
 export type AuthQuery = {
   me: MeResult;
 };
@@ -253,6 +246,11 @@ export type AuthQuery = {
 export type AuthToken = {
   access: Scalars['String'];
   refresh: Scalars['String'];
+};
+
+export type AuthTokenResult = {
+  error?: Maybe<MutationError>;
+  token?: Maybe<AuthToken>;
 };
 
 export type AuthorizationError = {
@@ -1183,6 +1181,15 @@ export enum CriteriaSection {
   OccupationDetails = 'OCCUPATION_DETAILS'
 }
 
+export type CustomFormListQueryResult = {
+  data?: Maybe<Array<Maybe<FormElement>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type CustomFormQuery = {
+  list: CustomFormListQueryResult;
+};
+
 export type DashboardData = {
   listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
   listTodayTrend?: Maybe<Array<Maybe<TodayTrend>>>;
@@ -1364,7 +1371,7 @@ export type DepositProductFormStateData = {
   penalty?: Maybe<Scalars['Boolean']>;
   penaltyData?: Maybe<PenaltyFormState>;
   percentageOfDeposit?: Maybe<Scalars['Float']>;
-  postingFrequency?: Maybe<Array<Maybe<Frequency>>>;
+  postingFrequency?: Maybe<Frequency>;
   prematurePenalty?: Maybe<PrematurePenaltyFormState>;
   productCode: ProductCodeFormState;
   productName?: Maybe<Scalars['String']>;
@@ -1374,7 +1381,6 @@ export type DepositProductFormStateData = {
   specifyWithdrawRestriction?: Maybe<Scalars['String']>;
   staffProduct?: Maybe<Scalars['Boolean']>;
   supportMultiple?: Maybe<Scalars['Boolean']>;
-  transactionLimit?: Maybe<AmountLimitFormState>;
   typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: Maybe<Scalars['Boolean']>;
   withdrawRestricted?: Maybe<Scalars['Boolean']>;
@@ -1424,7 +1430,7 @@ export type DepositProductInput = {
   penalty?: InputMaybe<Scalars['Boolean']>;
   penaltyData: PenaltyInput;
   percentageOfDeposit?: InputMaybe<Scalars['Float']>;
-  postingFrequency?: InputMaybe<Array<InputMaybe<Frequency>>>;
+  postingFrequency?: InputMaybe<Frequency>;
   prematurePenalty?: InputMaybe<PrematurePenalty>;
   productCode: ProductCode;
   productName: Scalars['String'];
@@ -1434,7 +1440,6 @@ export type DepositProductInput = {
   specifyWithdrawRestriction?: InputMaybe<Scalars['String']>;
   staffProduct?: InputMaybe<Scalars['Boolean']>;
   supportMultiple?: InputMaybe<Scalars['Boolean']>;
-  transactionLimit?: InputMaybe<AmountLimit>;
   typeOfMember?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: InputMaybe<Scalars['Boolean']>;
   withdrawRestricted?: InputMaybe<Scalars['Boolean']>;
@@ -2340,8 +2345,463 @@ export type FamilyDetailsInNepali = {
   spouseName?: Maybe<Scalars['String']>;
 };
 
+export type FieldDetailsQueryResult = {
+  data?: Maybe<FormField>;
+  error?: Maybe<QueryError>;
+};
+
 export type Filter = {
   orConditions: Array<OrConditions>;
+};
+
+export enum FormCategory {
+  KymCoop = 'KYM_COOP',
+  KymCoopUnion = 'KYM_COOP_UNION',
+  KymIndividual = 'KYM_INDIVIDUAL',
+  KymInstitution = 'KYM_INSTITUTION'
+}
+
+export type FormDynamicFieldsFilter = {
+  category: FormCategory;
+  searchTerm: FormSectionSearchTerm;
+};
+
+export type FormElement = FormField | FormSection;
+
+export type FormElementResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<FormElement>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormField = Base & {
+  category: FormCategory;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  dependsOn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  enabled: Scalars['Boolean'];
+  fieldType: FormFieldType;
+  hasOtherField: Scalars['Boolean'];
+  id: Scalars['ID'];
+  isCustom: Scalars['Boolean'];
+  isDefault: Scalars['Boolean'];
+  maxSize?: Maybe<Scalars['Int']>;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  name: Scalars['Localized'];
+  objState: ObjState;
+  options?: Maybe<Array<FormOption>>;
+  order: Scalars['Int'];
+  search_term?: Maybe<FormFieldSearchTerm>;
+  section?: Maybe<FormSection>;
+};
+
+export type FormFieldDeleteResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormFieldInput = {
+  category: FormCategory;
+  dependsOn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  enabled: Scalars['Boolean'];
+  fieldType: FormFieldType;
+  hasOtherField: Scalars['Boolean'];
+  maxSize?: InputMaybe<Scalars['Int']>;
+  nameEn: Scalars['String'];
+  nameNp?: InputMaybe<Scalars['String']>;
+  options?: InputMaybe<FormOptionInput>;
+};
+
+export type FormFieldMutation = {
+  /**  Condition of fields should always be depended on options only  */
+  condition: FormFieldMutationResult;
+  delete: FormFieldDeleteResult;
+  move: FormFieldMutationResult;
+  update: FormFieldMutationResult;
+  /**
+   *  If SectionId is given then the field is wrapped by a section and this field won't have any options.
+   *    if sectionID isn't given then this field will have options so, its type will only be   SINGLE_SELECT & MULTIPLE_SELECT
+   */
+  upsert: FormFieldMutationResult;
+};
+
+
+export type FormFieldMutationConditionArgs = {
+  dependsOn: Array<InputMaybe<Scalars['ID']>>;
+  fieldId: Scalars['ID'];
+};
+
+
+export type FormFieldMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type FormFieldMutationMoveArgs = {
+  id: Scalars['ID'];
+  to: Scalars['Int'];
+};
+
+
+export type FormFieldMutationUpdateArgs = {
+  data: FormFieldUpdateInput;
+  id: Scalars['ID'];
+};
+
+
+export type FormFieldMutationUpsertArgs = {
+  data: FormFieldUpsertInput;
+  sectionId?: InputMaybe<Scalars['ID']>;
+};
+
+export type FormFieldMutationResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<FormField>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormFieldQuery = {
+  details: FieldDetailsQueryResult;
+};
+
+
+export type FormFieldQueryDetailsArgs = {
+  id: Scalars['ID'];
+};
+
+export type FormFieldQueryResult = {
+  data?: Maybe<Array<Maybe<FormField>>>;
+  error?: Maybe<QueryError>;
+};
+
+export enum FormFieldSearchTerm {
+  EducationQualification = 'EDUCATION_QUALIFICATION',
+  EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
+  Ethnicity = 'ETHNICITY',
+  FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
+  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
+  Gender = 'GENDER',
+  MaritalStatus = 'MARITAL_STATUS',
+  Nationality = 'NATIONALITY',
+  Occupation = 'OCCUPATION',
+  Purpose = 'PURPOSE',
+  Relationship = 'RELATIONSHIP',
+  Religion = 'RELIGION'
+}
+
+export enum FormFieldType {
+  /**  For Custom Variant  */
+  Address = 'ADDRESS',
+  Amount = 'AMOUNT',
+  Bank = 'BANK',
+  Date = 'DATE',
+  District = 'DISTRICT',
+  Email = 'EMAIL',
+  Fax = 'FAX',
+  /**  These are for SEARCH fields  */
+  LocalLevel = 'LOCAL_LEVEL',
+  MultipleFile = 'MULTIPLE_FILE',
+  MultipleSelect = 'MULTIPLE_SELECT',
+  NumberInput = 'NUMBER_INPUT',
+  Paragraph = 'PARAGRAPH',
+  PhoneNumber = 'PHONE_NUMBER',
+  PoBox = 'PO_BOX',
+  Province = 'PROVINCE',
+  /**  These are for file   */
+  SingleFile = 'SINGLE_FILE',
+  /**  These are for SINGLE_SELECT, MULTI_SELECT  */
+  SingleSelect = 'SINGLE_SELECT',
+  TextInput = 'TEXT_INPUT',
+  Url = 'URL'
+}
+
+export type FormFieldUpdateInput = {
+  dependsOn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  enabled?: InputMaybe<Scalars['Boolean']>;
+  fieldType?: InputMaybe<FormFieldType>;
+  hasOtherField?: InputMaybe<Scalars['Boolean']>;
+  maxSize?: InputMaybe<Scalars['Int']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+};
+
+/**  This option will be always be added in last order */
+export type FormFieldUpsertInput = {
+  data?: InputMaybe<FormFieldInput>;
+  /**  If id is supplied then it will be update operation else it will be insert operation  */
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type FormOption = Base & {
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  enabled: Scalars['Boolean'];
+  field: FormField;
+  id: Scalars['ID'];
+  isDefault: Scalars['Boolean'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  name: Scalars['Localized'];
+  objState: ObjState;
+  order: Scalars['Int'];
+};
+
+export type FormOptionDeleteResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormOptionInput = {
+  enabled: Scalars['Boolean'];
+  nameEn: Scalars['String'];
+  nameNp?: InputMaybe<Scalars['String']>;
+};
+
+export type FormOptionMutation = {
+  delete: FormOptionDeleteResult;
+  move: FormOptionResult;
+  update: FormOptionResult;
+  upsert: FormOptionResult;
+};
+
+
+export type FormOptionMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type FormOptionMutationMoveArgs = {
+  id: Scalars['ID'];
+  to: Scalars['Int'];
+};
+
+
+export type FormOptionMutationUpdateArgs = {
+  data: FormOptionUpdateInput;
+  id: Scalars['ID'];
+};
+
+
+export type FormOptionMutationUpsertArgs = {
+  data: FormOptionUpsertInput;
+  fieldId: Scalars['ID'];
+};
+
+export type FormOptionResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<FormOption>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormOptionUpdateInput = {
+  enabled?: InputMaybe<Scalars['Boolean']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+};
+
+/**  This option will be always be added in last order */
+export type FormOptionUpsertInput = {
+  data?: InputMaybe<FormOptionInput>;
+  /**  If Id is Present then this will be an update operation.. else it will be an insert operation  */
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type FormOptionsGetFilter = {
+  fieldId: Scalars['ID'];
+};
+
+export type FormOptionsPredefinedFilter = {
+  category: FormCategory;
+  searchTerm: FormFieldSearchTerm;
+};
+
+export type FormOptionsQuery = {
+  get?: Maybe<FormOptionsQueryResult>;
+  predefined?: Maybe<FormOptionsQueryResult>;
+};
+
+
+export type FormOptionsQueryGetArgs = {
+  filter: FormOptionsGetFilter;
+};
+
+
+export type FormOptionsQueryPredefinedArgs = {
+  filter: FormOptionsPredefinedFilter;
+};
+
+export type FormOptionsQueryResult = {
+  data?: Maybe<Array<Maybe<FormOption>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type FormQuery = {
+  dynamicFields?: Maybe<FormFieldQueryResult>;
+  options: FormOptionsQuery;
+};
+
+
+export type FormQueryDynamicFieldsArgs = {
+  filter: FormOptionsPredefinedFilter;
+};
+
+export enum FormSearchTerm {
+  Certificate = 'CERTIFICATE',
+  ContactDetails = 'CONTACT_DETAILS',
+  DrivingLicense = 'DRIVING_LICENSE',
+  EducationQualification = 'EDUCATION_QUALIFICATION',
+  EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
+  Ethnicity = 'ETHNICITY',
+  FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
+  FamilyInformation = 'FAMILY_INFORMATION',
+  FileUploads = 'FILE_UPLOADS',
+  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
+  ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
+  Gender = 'GENDER',
+  Identification = 'IDENTIFICATION',
+  IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
+  MaritalStatus = 'MARITAL_STATUS',
+  Nationality = 'NATIONALITY',
+  NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
+  Occupation = 'OCCUPATION',
+  OccupationDetails = 'OCCUPATION_DETAILS',
+  OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
+  Passport = 'PASSPORT',
+  Purpose = 'PURPOSE',
+  Relationship = 'RELATIONSHIP',
+  Religion = 'RELIGION',
+  VoterId = 'VOTER_ID'
+}
+
+export type FormSection = Base & {
+  category: FormCategory;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  enabled: Scalars['Boolean'];
+  fields?: Maybe<Array<FormField>>;
+  id: Scalars['ID'];
+  isCustom: Scalars['Boolean'];
+  isDefault: Scalars['Boolean'];
+  maxSize?: Maybe<Scalars['Int']>;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  name: Scalars['Localized'];
+  objState: ObjState;
+  parent?: Maybe<FormSection>;
+  search_term?: Maybe<FormSectionSearchTerm>;
+  sectionType: FormSectionType;
+  subSections?: Maybe<Array<FormSection>>;
+};
+
+export type FormSectionDeleteResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormSectionInput = {
+  category: FormCategory;
+  enabled: Scalars['Boolean'];
+  nameEn: Scalars['String'];
+  nameNp?: InputMaybe<Scalars['String']>;
+};
+
+export type FormSectionMutation = {
+  delete: FormSectionDeleteResult;
+  /**  The new section will always be an INPUT section. UPLOAD and GROUP type aren't allowed to be created  */
+  subSection: FormSectionMutationResult;
+  update: FormSectionMutationResult;
+  /**  The new section will always be an INPUT section. UPLOAD and GROUP type aren't allowed to be created  */
+  upsert: FormSectionMutationResult;
+};
+
+
+export type FormSectionMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type FormSectionMutationSubSectionArgs = {
+  data?: InputMaybe<FormSectionInput>;
+  sectionId: Scalars['ID'];
+};
+
+
+export type FormSectionMutationUpdateArgs = {
+  data: FormSectionUpdateInput;
+  id: Scalars['ID'];
+};
+
+
+export type FormSectionMutationUpsertArgs = {
+  data: FormSectionUpsertInput;
+};
+
+export type FormSectionMutationResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<FormSection>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type FormSectionQuery = {
+  details: SectionDetailsQueryResult;
+};
+
+
+export type FormSectionQueryDetailsArgs = {
+  id: Scalars['ID'];
+};
+
+export enum FormSectionSearchTerm {
+  Certificate = 'CERTIFICATE',
+  ContactDetails = 'CONTACT_DETAILS',
+  DrivingLicense = 'DRIVING_LICENSE',
+  FamilyInformation = 'FAMILY_INFORMATION',
+  Identification = 'IDENTIFICATION',
+  IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
+  NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
+  OccupationDetails = 'OCCUPATION_DETAILS',
+  OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
+  Passport = 'PASSPORT',
+  VoterId = 'VOTER_ID'
+}
+
+export enum FormSectionType {
+  Group = 'GROUP',
+  Input = 'INPUT',
+  Upload = 'UPLOAD'
+}
+
+export type FormSectionUpdateInput = {
+  enabled?: InputMaybe<Scalars['Boolean']>;
+  nameEn?: InputMaybe<Scalars['String']>;
+  nameNp?: InputMaybe<Scalars['String']>;
+};
+
+export type FormSectionUpsertInput = {
+  data?: InputMaybe<FormSectionInput>;
+  /**  If id is supplied then it will be update operation else it will be insert operation  */
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type FormSettingMutation = {
+  field: FormFieldMutation;
+  maxSize: FormElementResult;
+  option: FormOptionMutation;
+  section: FormSectionMutation;
+};
+
+
+export type FormSettingMutationMaxSizeArgs = {
+  id: Scalars['ID'];
+  maxSize: Scalars['Int'];
+};
+
+export type FormSettingQuery = {
+  custom: CustomFormQuery;
+  field: FormFieldQuery;
+  predefined: PredefinedFormQuery;
+  section: FormSectionQuery;
 };
 
 export enum Frequency {
@@ -3555,7 +4015,6 @@ export enum Kym_Field_Custom_Id {
 }
 
 export enum Kym_Field_Type {
-  Declaration = 'DECLARATION',
   Group = 'GROUP',
   MultiSelect = 'MULTI_SELECT',
   SingleSelect = 'SINGLE_SELECT',
@@ -3589,7 +4048,7 @@ export enum Kym_Option_Field_Type {
   Amount = 'AMOUNT',
   Bank = 'BANK',
   Date = 'DATE',
-  /**  These are for DECLARATION, SINGLE_SELECT, MULTI_SELECT  */
+  /**  These are for SINGLE_SELECT, MULTI_SELECT  */
   Display = 'DISPLAY',
   District = 'DISTRICT',
   Email = 'EMAIL',
@@ -3659,6 +4118,22 @@ export type KymAdditionalFieldsType = {
   value?: Maybe<Scalars['String']>;
 };
 
+export type KymCoopAccountOperatorDetails = {
+  Delete?: Maybe<KymCooperativeAddResult>;
+  Upsert?: Maybe<KymCooperativeAddResult>;
+};
+
+
+export type KymCoopAccountOperatorDetailsDeleteArgs = {
+  accOperatorId: Scalars['ID'];
+};
+
+
+export type KymCoopAccountOperatorDetailsUpsertArgs = {
+  accOperatorId: Scalars['ID'];
+  data: KymCoopAccountOperatorDetailsFormInput;
+};
+
 export type KymCoopAccountOperatorDetailsFormInput = {
   citizenshipNo?: InputMaybe<Scalars['String']>;
   contactNumber?: InputMaybe<Scalars['String']>;
@@ -3674,6 +4149,22 @@ export type KymCoopAccountOperatorDetailsFormInput = {
   panNo?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
+};
+
+export type KymCoopDirectorDetails = {
+  Delete?: Maybe<KymCooperativeAddResult>;
+  Upsert?: Maybe<KymCooperativeAddResult>;
+};
+
+
+export type KymCoopDirectorDetailsDeleteArgs = {
+  dirId: Scalars['ID'];
+};
+
+
+export type KymCoopDirectorDetailsUpsertArgs = {
+  data: KymCoopDirectorDetailsFormInput;
+  dirId: Scalars['ID'];
 };
 
 export type KymCoopDirectorDetailsFormInput = {
@@ -4546,32 +5037,14 @@ export type KymCooperativeInstitutionalInformationStatus = {
 };
 
 export type KymCooperativeMutation = {
+  accountOperatorDetail?: Maybe<KymCoopAccountOperatorDetails>;
   add?: Maybe<KymCooperativeAddResult>;
-  addCoopDetails?: Maybe<KymCooperativeAddResult>;
-  addKymCoopAccountOperatorDetails?: Maybe<KymCooperativeAddResult>;
-  addKymCoopDirectorDetails?: Maybe<KymCooperativeAddResult>;
+  directorDetails?: Maybe<KymCoopDirectorDetails>;
 };
 
 
 export type KymCooperativeMutationAddArgs = {
   data: KymCooperativeFormInput;
-};
-
-
-export type KymCooperativeMutationAddCoopDetailsArgs = {
-  data: KymCooperativeFormInput;
-};
-
-
-export type KymCooperativeMutationAddKymCoopAccountOperatorDetailsArgs = {
-  accOperatorId: Scalars['ID'];
-  data: KymCoopAccountOperatorDetailsFormInput;
-};
-
-
-export type KymCooperativeMutationAddKymCoopDirectorDetailsArgs = {
-  data: KymCoopDirectorDetailsFormInput;
-  dirId: Scalars['ID'];
 };
 
 export type KymCooperativeQuery = {
@@ -4938,14 +5411,29 @@ export type KymInsAccountLus = {
   name: KymInsAccountSection;
 };
 
+export type KymInsAccountOperator = {
+  Delete?: Maybe<KymInsAddResult>;
+  Upsert?: Maybe<KymInsAddResult>;
+};
+
+
+export type KymInsAccountOperatorDeleteArgs = {
+  operatorId: Scalars['ID'];
+};
+
+
+export type KymInsAccountOperatorUpsertArgs = {
+  data: KymInsAccountOperatorInput;
+  operatorId: Scalars['ID'];
+};
+
 export type KymInsAccountOperatorInput = {
   contact?: InputMaybe<Scalars['String']>;
   designation?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   institutionId?: InputMaybe<Scalars['ID']>;
   isTemporaryAndPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
-  nameEn?: InputMaybe<Scalars['String']>;
-  nameNp?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
   panNo?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
@@ -4992,6 +5480,22 @@ export type KymInsDeclarationStatus = {
   error?: Maybe<Array<Maybe<KymInsDeclarationSection>>>;
 };
 
+export type KymInsDirector = {
+  Delete?: Maybe<KymInsAddResult>;
+  Upsert?: Maybe<KymInsAddResult>;
+};
+
+
+export type KymInsDirectorDeleteArgs = {
+  directorId: Scalars['ID'];
+};
+
+
+export type KymInsDirectorUpsertArgs = {
+  data: KymInsDirectorInput;
+  directorId: Scalars['ID'];
+};
+
 export type KymInsDirectorAffiliatedFirmInput = {
   address?: InputMaybe<Scalars['String']>;
   designation?: InputMaybe<Scalars['String']>;
@@ -5026,8 +5530,7 @@ export type KymInsDirectorInput = {
   isHeadOfOrganization?: InputMaybe<Scalars['Boolean']>;
   isTemporaryAndPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
   mobileNo?: InputMaybe<Scalars['String']>;
-  nameEn?: InputMaybe<Scalars['String']>;
-  nameNp?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
   panNo?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
@@ -5142,11 +5645,26 @@ export type KymInsInput = {
   website?: InputMaybe<Scalars['String']>;
 };
 
+export type KymInsListAccountOperatorsQuery = {
+  data?: Maybe<Array<Maybe<AccountOperatorDetailsFormState>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type KymInsListDirectorsQuery = {
+  data?: Maybe<Array<Maybe<DirectorDetailsFormState>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type KymInsListSisterConcernQuery = {
+  data?: Maybe<Array<Maybe<SisterConcernDetailsFormState>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type KymInsMutation = {
+  accountOperator?: Maybe<KymInsAccountOperator>;
   add?: Maybe<KymInsAddResult>;
-  addAccountOperators?: Maybe<KymInsAddResult>;
-  addDirectors?: Maybe<KymInsAddResult>;
-  addSisterConcerns?: Maybe<KymInsAddResult>;
+  director?: Maybe<KymInsDirector>;
+  sisterConcern?: Maybe<KymInsSisterConcern>;
 };
 
 
@@ -5154,30 +5672,30 @@ export type KymInsMutationAddArgs = {
   data: KymInsInput;
 };
 
-
-export type KymInsMutationAddAccountOperatorsArgs = {
-  data: KymInsAccountOperatorInput;
-  operatorId: Scalars['ID'];
-};
-
-
-export type KymInsMutationAddDirectorsArgs = {
-  data: KymInsDirectorInput;
-  directorId: Scalars['ID'];
-};
-
-
-export type KymInsMutationAddSisterConcernsArgs = {
-  data: KymInsSisterConcernInput;
-  sisterConcernId: Scalars['ID'];
-};
-
 export type KymInsQuery = {
   formState?: Maybe<KymInsFormStateQuery>;
+  listAccountOperators?: Maybe<KymInsListAccountOperatorsQuery>;
+  listDirectors?: Maybe<KymInsListDirectorsQuery>;
+  listSisterConcerns?: Maybe<KymInsListSisterConcernQuery>;
 };
 
 
 export type KymInsQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymInsQueryListAccountOperatorsArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymInsQueryListDirectorsArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymInsQueryListSisterConcernsArgs = {
   id: Scalars['ID'];
 };
 
@@ -5186,11 +5704,26 @@ export type KymInsRecord = {
   sectionStatus?: Maybe<KymInsFormStatus>;
 };
 
+export type KymInsSisterConcern = {
+  Delete?: Maybe<KymInsAddResult>;
+  Upsert?: Maybe<KymInsAddResult>;
+};
+
+
+export type KymInsSisterConcernDeleteArgs = {
+  sisterConcernId: Scalars['ID'];
+};
+
+
+export type KymInsSisterConcernUpsertArgs = {
+  data: KymInsSisterConcernInput;
+  sisterConcernId: Scalars['ID'];
+};
+
 export type KymInsSisterConcernInput = {
   address?: InputMaybe<Scalars['String']>;
   institutionId?: InputMaybe<Scalars['ID']>;
-  nameEn?: InputMaybe<Scalars['String']>;
-  nameNp?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
   natureOfBusiness?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
 };
@@ -6095,6 +6628,25 @@ export type PersonalInformationInNepali = {
   occupation?: Maybe<Scalars['String']>;
 };
 
+export type PredefinedElementFilter = {
+  category: FormCategory;
+  searchTerm: FormSearchTerm;
+};
+
+export type PredefinedElementQueryResult = {
+  data?: Maybe<FormElement>;
+  error?: Maybe<QueryError>;
+};
+
+export type PredefinedFormQuery = {
+  details: PredefinedElementQueryResult;
+};
+
+
+export type PredefinedFormQueryDetailsArgs = {
+  filter: PredefinedElementFilter;
+};
+
 export type PrematurePenalty = {
   noOfDays?: InputMaybe<Scalars['Int']>;
   penaltyAmount?: InputMaybe<Scalars['String']>;
@@ -6161,6 +6713,7 @@ export type Query = {
   dashboard: DashboardQuery;
   eBanking: EBankingQuery;
   example: ExampleQuery;
+  form: FormQuery;
   inventory: InventoryQuery;
   members: MemberQuery;
   routesAndCodes: RoutesAndCodesQuery;
@@ -6232,6 +6785,15 @@ export enum Share_Transaction_Direction {
   Return = 'RETURN'
 }
 
+export type SectionDetailsFilter = {
+  id: Scalars['ID'];
+};
+
+export type SectionDetailsQueryResult = {
+  data?: Maybe<FormSection>;
+  error?: Maybe<QueryError>;
+};
+
 export type ServerError = {
   code: Scalars['String'];
   message: Scalars['String'];
@@ -6260,6 +6822,7 @@ export type Services = {
 export type SettingsMutation = {
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
   declaration: DeclarationMutation;
+  form?: Maybe<FormSettingMutation>;
   general?: Maybe<GeneralSettingsMutation>;
   kymForm: KymFormSettingMutation;
 };
@@ -6267,6 +6830,7 @@ export type SettingsMutation = {
 export type SettingsQuery = {
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
   declaration: DeclarationQuery;
+  form?: Maybe<FormSettingQuery>;
   general?: Maybe<GeneralSettingsQuery>;
   kymForm: KymFormSettingQuery;
 };
@@ -6854,27 +7418,57 @@ export type SetInstitutionDataMutationVariables = Exact<{
 
 export type SetInstitutionDataMutation = { members: { institution?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
 
-export type SetInstitutionSisterDetailsMutationVariables = Exact<{
+export type SetSisterConcernsMutationVariables = Exact<{
   id: Scalars['ID'];
   sis: Scalars['ID'];
   data: KymInsSisterConcernInput;
 }>;
 
 
-export type SetInstitutionSisterDetailsMutation = { members: { institution?: { addSisterConcerns?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+export type SetSisterConcernsMutation = { members: { institution?: { sisterConcern?: { Upsert?: { recordId: string } | null } | null } | null } };
 
-<<<<<<< HEAD
-export type SetInstitutionAddDirectorsMutationVariables = Exact<{
+export type DeleteSisterConcernsMutationVariables = Exact<{
+  insId: Scalars['ID'];
+  sis: Scalars['ID'];
+}>;
+
+
+export type DeleteSisterConcernsMutation = { members: { institution?: { sisterConcern?: { Delete?: { recordId: string } | null } | null } | null } };
+
+export type SetAddDirectorInstitutionMutationVariables = Exact<{
   id: Scalars['ID'];
   dir: Scalars['ID'];
   data: KymInsDirectorInput;
 }>;
 
 
-export type SetInstitutionAddDirectorsMutation = { members: { institution?: { addDirectors?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+export type SetAddDirectorInstitutionMutation = { members: { institution?: { director?: { Upsert?: { recordId: string } | null } | null } | null } };
 
-=======
->>>>>>> 6ba5c9cfe455879570603ebdd4e0114c8dedbaa8
+export type DeleteDirectorInstitutionMutationVariables = Exact<{
+  insId: Scalars['ID'];
+  dir: Scalars['ID'];
+}>;
+
+
+export type DeleteDirectorInstitutionMutation = { members: { institution?: { director?: { Delete?: { recordId: string } | null } | null } | null } };
+
+export type SetAddAccountOperatorInstitutionMutationVariables = Exact<{
+  id: Scalars['ID'];
+  acc: Scalars['ID'];
+  data: KymInsAccountOperatorInput;
+}>;
+
+
+export type SetAddAccountOperatorInstitutionMutation = { members: { institution?: { accountOperator?: { Upsert?: { recordId: string } | null } | null } | null } };
+
+export type DeleteAccountOperatorInstitutionMutationVariables = Exact<{
+  insId: Scalars['ID'];
+  acc: Scalars['ID'];
+}>;
+
+
+export type DeleteAccountOperatorInstitutionMutation = { members: { institution?: { accountOperator?: { Delete?: { recordId: string } | null } | null } | null } };
+
 export type UpsertKymOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   option: KymOptionInput;
@@ -7813,59 +8407,138 @@ export const useSetInstitutionDataMutation = <
       useAxios<SetInstitutionDataMutation, SetInstitutionDataMutationVariables>(SetInstitutionDataDocument),
       options
     );
-export const SetInstitutionSisterDetailsDocument = `
-    mutation setInstitutionSisterDetails($id: ID!, $sis: ID!, $data: KymInsSisterConcernInput!) {
+export const SetSisterConcernsDocument = `
+    mutation setSisterConcerns($id: ID!, $sis: ID!, $data: KymInsSisterConcernInput!) {
   members {
     institution(id: $id) {
-      addSisterConcerns(sisterConcernId: $sis, data: $data) {
-        recordId
-        error {
-          ... on KymIndAddInvalidDataError {
-            error
-          }
+      sisterConcern {
+        Upsert(sisterConcernId: $sis, data: $data) {
+          recordId
         }
       }
     }
   }
 }
     `;
-export const useSetInstitutionSisterDetailsMutation = <
+export const useSetSisterConcernsMutation = <
       TError = unknown,
       TContext = unknown
-    >(options?: UseMutationOptions<SetInstitutionSisterDetailsMutation, TError, SetInstitutionSisterDetailsMutationVariables, TContext>) =>
-    useMutation<SetInstitutionSisterDetailsMutation, TError, SetInstitutionSisterDetailsMutationVariables, TContext>(
-      ['setInstitutionSisterDetails'],
-      useAxios<SetInstitutionSisterDetailsMutation, SetInstitutionSisterDetailsMutationVariables>(SetInstitutionSisterDetailsDocument),
+    >(options?: UseMutationOptions<SetSisterConcernsMutation, TError, SetSisterConcernsMutationVariables, TContext>) =>
+    useMutation<SetSisterConcernsMutation, TError, SetSisterConcernsMutationVariables, TContext>(
+      ['setSisterConcerns'],
+      useAxios<SetSisterConcernsMutation, SetSisterConcernsMutationVariables>(SetSisterConcernsDocument),
       options
     );
-<<<<<<< HEAD
-export const SetInstitutionAddDirectorsDocument = `
-    mutation setInstitutionAddDirectors($id: ID!, $dir: ID!, $data: KymInsDirectorInput!) {
+export const DeleteSisterConcernsDocument = `
+    mutation deleteSisterConcerns($insId: ID!, $sis: ID!) {
   members {
-    institution(id: $id) {
-      addDirectors(directorId: $dir, data: $data) {
-        recordId
-        error {
-          ... on KymIndAddInvalidDataError {
-            error
-          }
+    institution(id: $insId) {
+      sisterConcern {
+        Delete(sisterConcernId: $sis) {
+          recordId
         }
       }
     }
   }
 }
     `;
-export const useSetInstitutionAddDirectorsMutation = <
+export const useDeleteSisterConcernsMutation = <
       TError = unknown,
       TContext = unknown
-    >(options?: UseMutationOptions<SetInstitutionAddDirectorsMutation, TError, SetInstitutionAddDirectorsMutationVariables, TContext>) =>
-    useMutation<SetInstitutionAddDirectorsMutation, TError, SetInstitutionAddDirectorsMutationVariables, TContext>(
-      ['setInstitutionAddDirectors'],
-      useAxios<SetInstitutionAddDirectorsMutation, SetInstitutionAddDirectorsMutationVariables>(SetInstitutionAddDirectorsDocument),
+    >(options?: UseMutationOptions<DeleteSisterConcernsMutation, TError, DeleteSisterConcernsMutationVariables, TContext>) =>
+    useMutation<DeleteSisterConcernsMutation, TError, DeleteSisterConcernsMutationVariables, TContext>(
+      ['deleteSisterConcerns'],
+      useAxios<DeleteSisterConcernsMutation, DeleteSisterConcernsMutationVariables>(DeleteSisterConcernsDocument),
       options
     );
-=======
->>>>>>> 6ba5c9cfe455879570603ebdd4e0114c8dedbaa8
+export const SetAddDirectorInstitutionDocument = `
+    mutation setAddDirectorInstitution($id: ID!, $dir: ID!, $data: KymInsDirectorInput!) {
+  members {
+    institution(id: $id) {
+      director {
+        Upsert(directorId: $dir, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetAddDirectorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetAddDirectorInstitutionMutation, TError, SetAddDirectorInstitutionMutationVariables, TContext>) =>
+    useMutation<SetAddDirectorInstitutionMutation, TError, SetAddDirectorInstitutionMutationVariables, TContext>(
+      ['setAddDirectorInstitution'],
+      useAxios<SetAddDirectorInstitutionMutation, SetAddDirectorInstitutionMutationVariables>(SetAddDirectorInstitutionDocument),
+      options
+    );
+export const DeleteDirectorInstitutionDocument = `
+    mutation deleteDirectorInstitution($insId: ID!, $dir: ID!) {
+  members {
+    institution(id: $insId) {
+      director {
+        Delete(directorId: $dir) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteDirectorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteDirectorInstitutionMutation, TError, DeleteDirectorInstitutionMutationVariables, TContext>) =>
+    useMutation<DeleteDirectorInstitutionMutation, TError, DeleteDirectorInstitutionMutationVariables, TContext>(
+      ['deleteDirectorInstitution'],
+      useAxios<DeleteDirectorInstitutionMutation, DeleteDirectorInstitutionMutationVariables>(DeleteDirectorInstitutionDocument),
+      options
+    );
+export const SetAddAccountOperatorInstitutionDocument = `
+    mutation setAddAccountOperatorInstitution($id: ID!, $acc: ID!, $data: KymInsAccountOperatorInput!) {
+  members {
+    institution(id: $id) {
+      accountOperator {
+        Upsert(operatorId: $acc, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetAddAccountOperatorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetAddAccountOperatorInstitutionMutation, TError, SetAddAccountOperatorInstitutionMutationVariables, TContext>) =>
+    useMutation<SetAddAccountOperatorInstitutionMutation, TError, SetAddAccountOperatorInstitutionMutationVariables, TContext>(
+      ['setAddAccountOperatorInstitution'],
+      useAxios<SetAddAccountOperatorInstitutionMutation, SetAddAccountOperatorInstitutionMutationVariables>(SetAddAccountOperatorInstitutionDocument),
+      options
+    );
+export const DeleteAccountOperatorInstitutionDocument = `
+    mutation deleteAccountOperatorInstitution($insId: ID!, $acc: ID!) {
+  members {
+    institution(id: $insId) {
+      accountOperator {
+        Delete(operatorId: $acc) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteAccountOperatorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteAccountOperatorInstitutionMutation, TError, DeleteAccountOperatorInstitutionMutationVariables, TContext>) =>
+    useMutation<DeleteAccountOperatorInstitutionMutation, TError, DeleteAccountOperatorInstitutionMutationVariables, TContext>(
+      ['deleteAccountOperatorInstitution'],
+      useAxios<DeleteAccountOperatorInstitutionMutation, DeleteAccountOperatorInstitutionMutationVariables>(DeleteAccountOperatorInstitutionDocument),
+      options
+    );
 export const UpsertKymOptionDocument = `
     mutation upsertKYMOption($fieldId: ID!, $option: KYMOptionInput!) {
   settings {

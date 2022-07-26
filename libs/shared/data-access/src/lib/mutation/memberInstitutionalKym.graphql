@@ -17,38 +17,83 @@ mutation setInstitutionData($id: ID!, $data: KymInsInput!) {
   }
 }
 
-mutation setInstitutionSisterDetails(
+mutation setSisterConcerns(
   $id: ID!
   $sis: ID!
   $data: KymInsSisterConcernInput!
 ) {
   members {
     institution(id: $id) {
-      addSisterConcerns(sisterConcernId: $sis, data: $data) {
-        recordId
-        error {
-          ... on KymIndAddInvalidDataError {
-            error
-          }
+      sisterConcern {
+        Upsert(sisterConcernId: $sis, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+mutation deleteSisterConcerns($insId: ID!, $sis: ID!) {
+  members {
+    institution(id: $insId) {
+      sisterConcern {
+        Delete(sisterConcernId: $sis) {
+          recordId
         }
       }
     }
   }
 }
 
-mutation setInstitutionAddDirectors(
+mutation setAddDirectorInstitution(
   $id: ID!
   $dir: ID!
   $data: KymInsDirectorInput!
 ) {
   members {
     institution(id: $id) {
-      addDirectors(directorId: $dir, data: $data) {
-        recordId
-        error {
-          ... on KymIndAddInvalidDataError {
-            error
-          }
+      director {
+        Upsert(directorId: $dir, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteDirectorInstitution($insId: ID!, $dir: ID!) {
+  members {
+    institution(id: $insId) {
+      director {
+        Delete(directorId: $dir) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setAddAccountOperatorInstitution(
+  $id: ID!
+  $acc: ID!
+  $data: KymInsAccountOperatorInput!
+) {
+  members {
+    institution(id: $id) {
+      accountOperator {
+        Upsert(operatorId: $acc, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteAccountOperatorInstitution($insId: ID!, $acc: ID!) {
+  members {
+    institution(id: $insId) {
+      accountOperator {
+        Delete(operatorId: $acc) {
+          recordId
         }
       }
     }

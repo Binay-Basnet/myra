@@ -148,25 +148,6 @@ const AddFamilyMember = ({
               name="dateOfBirth"
               label="Date of Birth (BS)"
             />
-
-            {/* {familyDetailsFieldsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
-          (option, optionIndex) => (
-            <FamilyMemberInput
-              key={optionIndex}
-              fieldIndex={index}
-              optionIndex={optionIndex}
-              option={option}
-            />
-            //  <FormInputWithType
-            //               formType={option?.fieldType}
-            //               id="identificationFields"
-            //               type={option?.fieldType}
-            //               name={`identification.${fieldIndex}.options.${optionIndex}.value`}
-            //               label={String(option?.name?.local)}
-            //               placeholder={String(option?.name?.local)}
-            //             />
-          )
-        )} */}
           </InputGroupContainer>
         </form>
       </FormProvider>
