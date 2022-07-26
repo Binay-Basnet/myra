@@ -107,9 +107,8 @@ export const Interest = () => {
               </Text>
             }
           />
-          // spelling check
           <FormInput
-            name="interest.boardAuthoriy"
+            name="interest.boardAuthority"
             type="number"
             label={t['depositProductBoardAuthority']}
             textAlign={'right'}
