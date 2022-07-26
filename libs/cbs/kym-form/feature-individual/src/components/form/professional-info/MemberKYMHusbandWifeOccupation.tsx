@@ -210,7 +210,7 @@ const HusbandWifeOccupation = ({
                 />
               </GridItem>
               <FormInput
-                type="text"
+                type="number"
                 name={`panVatNo`}
                 id="spousePanVatNo"
                 label={t['kymIndPanVATNo']}
