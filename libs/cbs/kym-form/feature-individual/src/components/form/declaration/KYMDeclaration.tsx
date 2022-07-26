@@ -70,7 +70,7 @@ export const KYMDeclaration = ({
     data: foreignEmploymentOptions,
     isLoading: foreignEmploymentOptionsLoading,
   } = useGetIndividualKymOptionsQuery({
-    searchTerm: FormFieldSearchTerm.Occupation,
+    searchTerm: FormFieldSearchTerm.ForeignEmploymentOptions,
     // filter: { se: Kym_Field_Custom_Id.ForeignEmploymentOptions },
   });
 

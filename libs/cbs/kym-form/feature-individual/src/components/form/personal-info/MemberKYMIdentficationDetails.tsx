@@ -41,14 +41,14 @@ export const MemberKYMIdentificationDetails = ({
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  const { data: identificationDocsData } =
-    useGetIndIdentificationDocOptionQuery({ id });
+  // const { data: identificationDocsData } =
+  //   useGetIndIdentificationDocOptionQuery({ id });
 
-  const identificationDocs = useMemo(
-    () =>
-      identificationDocsData?.members?.individual?.options?.list?.data ?? [],
-    [identificationDocsData]
-  );
+  // const identificationDocs = useMemo(
+  //   () =>
+  //     identificationDocsData?.members?.individual?.options?.list?.data ?? [],
+  //   [identificationDocsData]
+  // );
 
   const identificationValues = getValues()?.identificationSelection;
 
@@ -57,7 +57,7 @@ export const MemberKYMIdentificationDetails = ({
   //     String(item?.options?.[0] && item?.id)
   //   ) ?? [];
 
-  const [currentShownDetails, setCurrentDetailsShown] = useState<string[]>([]);
+  // const [currentShownDetails, setCurrentDetailsShown] = useState<string[]>([]);
 
   // console.log({ currentShownDetails });
 
