@@ -43,9 +43,9 @@ export const MemberKYMProfession = ({
       searchTerm: FormFieldSearchTerm.Occupation,
     });
 
-  const { mutate } = useSetMemberDataMutation();
+  const { mutate } = useSetMemberDataMutation({ onSuccess: () => refetch() });
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery({
     id: id,
   });
 

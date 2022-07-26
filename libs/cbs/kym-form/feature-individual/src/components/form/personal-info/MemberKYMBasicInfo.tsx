@@ -76,7 +76,7 @@ export const MemberKYMBasicInfo = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery({
     id: id,
   });
 
@@ -95,6 +95,10 @@ export const MemberKYMBasicInfo = ({
       });
     }
   }, [nationalityFields, editValues]);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <FormProvider {...methods}>
