@@ -7,18 +7,15 @@ import type { NextPage } from 'next';
 import type { AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
 
 import { Login } from '@coop/myra/components';
+import { useGetMeQuery } from '@coop/shared/data-access';
+import { AuthProvider, useAuth } from '@coop/shared/data-access';
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import {
-  AuthProvider,
-  store,
-  theme,
-  useAuth,
-  useSnap,
-} from '@coop/shared/utils';
+import { useSnap } from '@coop/shared/utils';
+import { store, theme } from '@coop/shared/utils';
 
-// import '../styles/feedback.css';
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
 const { ToastContainer } = createStandaloneToast();
@@ -65,12 +62,15 @@ interface ManAppProps extends AppInitialProps {
 
 function MainApp({ Component, pageProps }: ManAppProps) {
   const auth = useAuth();
+  const getMe = useGetMeQuery();
+  console.log('get me', getMe);
+
   const getLayout = Component.getLayout || ((page) => page);
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(null);
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const isLoggedIn = localStorage.getItem('refreshToken');
 
     typeof window !== 'undefined' &&
       setIsLoggedIn(Boolean(isLoggedIn || false));
@@ -84,13 +84,22 @@ function MainApp({ Component, pageProps }: ManAppProps) {
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
       <ToastContainer />
-      {/* {auth?.auth?.user ? ( */}
-      <main className="app">{getLayout(<Component {...pageProps} />)}</main>
-      {/* ) : (
+      {isLoggedIn === null ? (
+        <Box
+          h="100vh"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Spinner />
+        </Box>
+      ) : isLoggedIn ? (
+        <main className="app">{getLayout(<Component {...pageProps} />)}</main>
+      ) : (
         <main className="app">
           <Login />
         </main>
-      )} */}
+      )}
       <Box
         position="fixed"
         bottom={'40px'}

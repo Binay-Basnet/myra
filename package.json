@@ -29,7 +29,7 @@
     "@fontsource/inter": "^4.5.10",
     "@hookform/resolvers": "^2.8.8",
     "@nrwl/next": "13.10.5",
-    "@raralabs/web-feedback": "^1.0.2",
+    "@raralabs/web-feedback": "^1.0.4",
     "@reduxjs/toolkit": "^1.8.2",
     "@tanstack/react-table": "^8.2.2",
     "@types/react-beautiful-dnd": "^13.1.2",

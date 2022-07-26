@@ -34,7 +34,6 @@ export const FormSelect = <T,>({
       name={name}
       render={({ field: { onChange, value } }) => {
         const foundValue = options?.find((option) => option.value === value);
-
         return (
           <Select
             errorText={errors[name]?.message}

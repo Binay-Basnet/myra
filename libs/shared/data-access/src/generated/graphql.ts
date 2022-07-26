@@ -210,11 +210,13 @@ export type AffiliatedDirectorDetailsType = {
 };
 
 export type AmountLimit = {
+  avgAmount?: InputMaybe<Scalars['String']>;
   maxAmount?: InputMaybe<Scalars['String']>;
   minAmount?: InputMaybe<Scalars['String']>;
 };
 
 export type AmountLimitFormState = {
+  avgAmount?: Maybe<Scalars['String']>;
   maxAmount?: Maybe<Scalars['String']>;
   minAmount?: Maybe<Scalars['String']>;
 };
@@ -463,7 +465,7 @@ export type Branch = {
 export type BranchAddResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<GeneralBranchSettingsQuery>;
-  record: Branch;
+  record?: Maybe<Branch>;
   recordId: Scalars['ID'];
 };
 
@@ -1353,7 +1355,7 @@ export type DepositProductFormStateData = {
   institutionDocuments?: Maybe<Array<Maybe<InstitutionRequiredDocument>>>;
   interest?: Maybe<InterestFormState>;
   ladderRate?: Maybe<Scalars['Boolean']>;
-  ladderRateData: Array<Maybe<LadderRateFormState>>;
+  ladderRateData?: Maybe<Array<Maybe<LadderRateFormState>>>;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxAge?: Maybe<Scalars['Int']>;
   maxPostingFreqDifference?: Maybe<Scalars['Int']>;
@@ -1428,7 +1430,7 @@ export type DepositProductInput = {
   natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   penalty?: InputMaybe<Scalars['Boolean']>;
-  penaltyData: PenaltyInput;
+  penaltyData?: InputMaybe<PenaltyInput>;
   percentageOfDeposit?: InputMaybe<Scalars['Float']>;
   postingFrequency?: InputMaybe<Frequency>;
   prematurePenalty?: InputMaybe<PrematurePenalty>;
@@ -2963,7 +2965,7 @@ export type InstitutionTransactionProfile = {
 
 export type InterestFormState = {
   additionalRate?: Maybe<Scalars['Float']>;
-  boardAuthoriy?: Maybe<Scalars['Float']>;
+  boardAuthority?: Maybe<Scalars['Float']>;
   ceoAuthority?: Maybe<Scalars['Float']>;
   defaultRate?: Maybe<Scalars['Float']>;
   maxRate?: Maybe<Scalars['Float']>;
@@ -2972,7 +2974,7 @@ export type InterestFormState = {
 
 export type InterestRate = {
   additionalRate?: InputMaybe<Scalars['Float']>;
-  boardAuthoriy?: InputMaybe<Scalars['Float']>;
+  boardAuthority?: InputMaybe<Scalars['Float']>;
   ceoAuthority?: InputMaybe<Scalars['Float']>;
   defaultRate: Scalars['Float'];
   maxRate?: InputMaybe<Scalars['Float']>;
@@ -6603,7 +6605,7 @@ export type PenaltyInput = {
   minimumAmount?: InputMaybe<Scalars['String']>;
   penaltyAmount?: InputMaybe<Scalars['String']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
-  rateType: PenaltyRateType;
+  rateType?: InputMaybe<PenaltyRateType>;
 };
 
 export enum PenaltyRateType {
@@ -7245,13 +7247,20 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { auth: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, user: { id: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string> } } | null } | null } };
 
+export type RefreshMutationVariables = Exact<{
+  refreshToken: Scalars['String'];
+}>;
+
+
+export type RefreshMutation = { auth: { token?: { token?: { access: string, refresh: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+
 export type SetBranchDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: BranchInput;
 }>;
 
 
-export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record: { id: string }, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
+export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
 export type SetNewCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
@@ -7323,6 +7332,14 @@ export type SetDeclarationDataMutationVariables = Exact<{
 
 
 export type SetDeclarationDataMutation = { members: { cooperativeUnion?: { add?: { declaration?: { recordId: string } | null } | null } | null } };
+
+export type SetDepositProductMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<DepositProductInput>;
+}>;
+
+
+export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate: string, interest: number } | null, error?: { message: Record<string, Array<string>> } | { data: string } | { hm: string } | { info: string } | { message: Record<string, Array<string>> } | null } | null } | null } | null } };
 
 export type GetNewIdMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -7409,6 +7426,15 @@ export type SetKymCooperativeDataMutationVariables = Exact<{
 
 
 export type SetKymCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string } | null } | null } };
+
+export type SetKymDocumentDataMutationVariables = Exact<{
+  memberId: Scalars['String'];
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type SetKymDocumentDataMutation = { members: { document: { KYM: { upsert: { recordId?: string | null } } } } };
 
 export type SetInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -7584,6 +7610,11 @@ export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string, wards: Array<number> }> }> }> } };
 
+export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeQuery = { auth: { me: { data?: { id: string, username: string, email?: string | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
+
 type MutationError_AuthorizationError_Fragment = {};
 
 type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', message: string, code: string };
@@ -7703,12 +7734,11 @@ export type GetIndividualKymOptionQueryVariables = Exact<{
 export type GetIndividualKymOptionQuery = { members: { individual?: { options: { list?: { data?: Array<{ options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } } | null } };
 
 export type GetIndividualKymOptionsQueryVariables = Exact<{
-  id: Scalars['String'];
-  filter?: InputMaybe<ListKymFieldFilter>;
+  searchTerm: FormFieldSearchTerm;
 }>;
 
 
-export type GetIndividualKymOptionsQuery = { members: { individual?: { options: { list?: { data?: Array<{ options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } } | null } };
+export type GetIndividualKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
 
 export type GetIndIdentificationDocOptionQueryVariables = Exact<{
   id: Scalars['String'];
@@ -7723,7 +7753,7 @@ export type GetMemberListQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, createdAt: string, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, contact?: string | null, createdAt: string, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localLevel?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7766,7 +7796,7 @@ export type GetIndividualKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, identification?: { identificationSelection?: Array<string | null> | null, citizenshipNo?: string | null, citizenshipIssueDate?: string | null, citizenshipIssuePlace?: string | null, passportNo?: string | null, passportIssueDate?: string | null, passportIssuePlace?: string | null, nationalIDNo?: string | null, drivingLicenseNo?: string | null, drivingLicenseIssueDate?: string | null, drivingLicenseIssuePlace?: string | null, voterCardNo?: string | null, voterPollingStation?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
+export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, isFamilyAMember?: boolean | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, identification?: { identificationSelection?: Array<string | null> | null, citizenshipNo?: string | null, citizenshipIssueDate?: string | null, citizenshipIssuePlace?: string | null, passportNo?: string | null, passportIssueDate?: string | null, passportIssuePlace?: string | null, nationalIDNo?: string | null, drivingLicenseNo?: string | null, drivingLicenseIssueDate?: string | null, drivingLicenseIssuePlace?: string | null, voterCardNo?: string | null, voterPollingStation?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null, otherCoopName?: Record<"local"|"en"|"np",string> | null, otherCoopBranchId?: string | null, otherCoopMemberId?: string | null } | null, introducers?: { firstIntroducerId?: string | null, secondIntroducerId?: string | null } | null, initialTransactionDetails?: { initialShare?: number | null, initialSaving?: string | null, initialLoan?: string | null, otherFinancialAmount?: string | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null, declarationAgreement?: boolean | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetIndividualKymFamilyMembersListQueryVariables = Exact<{
   id: Scalars['String'];
@@ -7775,6 +7805,28 @@ export type GetIndividualKymFamilyMembersListQueryVariables = Exact<{
 
 
 export type GetIndividualKymFamilyMembersListQuery = { members: { individual?: { listFamilyMember?: { data?: Array<{ id: string, relationshipId?: string | null, fullName?: Record<"local"|"en"|"np",string> | null, familyMemberId?: string | null, dateOfBirth?: string | null } | null> | null } | null } | null } };
+
+export type GetIndividualKymFamilyOccupationListQueryVariables = Exact<{
+  id: Scalars['String'];
+  isSpouse: Scalars['Boolean'];
+}>;
+
+
+export type GetIndividualKymFamilyOccupationListQuery = { members: { individual?: { listOccupation?: { data?: Array<{ id: string, occupationId?: string | null, orgName?: Record<"local"|"en"|"np",string> | null, panVatNo?: string | null, address?: Record<"local"|"en"|"np",string> | null, estimatedAnnualIncome?: string | null, establishedDate?: string | null, registrationNo?: string | null, contact?: string | null, isOwner?: boolean | null } | null> | null } | null } | null } };
+
+export type GetIndividualKymIncomeSourceListQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetIndividualKymIncomeSourceListQuery = { members: { individual?: { listIncomeSource?: { data?: Array<{ id: string, incomeSource?: Record<"local"|"en"|"np",string> | null, amount?: string | null } | null> | null } | null } | null } };
+
+export type GetKymDocumentsListQueryVariables = Exact<{
+  memberId: Scalars['String'];
+}>;
+
+
+export type GetKymDocumentsListQuery = { members: { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, identifier: Array<string | null> } | null> | null } } } };
 
 export type GetKymSettingsFieldsQueryVariables = Exact<{
   filter?: InputMaybe<ListKymFieldFilter>;
@@ -7792,6 +7844,21 @@ export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCustomFieldsQuery = { settings: { kymForm: { field?: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: Kym_Field_Type, isCustom: boolean, hasOtherField: boolean, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } | null } } };
+
+export type GetDepositProductSettingsListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<DepositProductSearchFilter>;
+}>;
+
+
+export type GetDepositProductSettingsListQuery = { settings: { general?: { depositProduct?: { list?: { edges: Array<{ node: { id: string, objState: ObjState, productCode: string, productName: string, nature: NatureOfDepositProduct, interest: number, createdDate: string, typeOfMember?: Array<KymMemberTypesEnum | null> | null, createdAt: string, modifiedAt: string, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType } } }> } | null } | null } | null } };
+
+export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: string | null, maxAmount?: string | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: string | null, penaltyRate?: number | null, penaltyAmount?: string | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: string | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: string | null, maxAmount?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: string | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: string | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: string | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7873,6 +7940,30 @@ export const useLoginMutation = <
     useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
       ['login'],
       useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
+      options
+    );
+export const RefreshDocument = `
+    mutation refresh($refreshToken: String!) {
+  auth {
+    token(refreshToken: $refreshToken) {
+      token {
+        access
+        refresh
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useRefreshMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>) =>
+    useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
+      ['refresh'],
+      useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
       options
     );
 export const SetBranchDataDocument = `
@@ -8143,6 +8234,52 @@ export const useSetDeclarationDataMutation = <
       useAxios<SetDeclarationDataMutation, SetDeclarationDataMutationVariables>(SetDeclarationDataDocument),
       options
     );
+export const SetDepositProductDocument = `
+    mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
+  settings {
+    general {
+      depositProduct {
+        add(id: $id, data: $data) {
+          recordId
+          record {
+            id
+            productCode
+            productName
+            createdDate
+            interest
+          }
+          error {
+            ... on NotFoundError {
+              hm: message
+            }
+            ... on AuthorizationError {
+              message
+            }
+            ... on BadRequestError {
+              data: message
+            }
+            ... on ServerError {
+              info: message
+            }
+            ... on ValidationError {
+              message
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetDepositProductMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetDepositProductMutation, TError, SetDepositProductMutationVariables, TContext>) =>
+    useMutation<SetDepositProductMutation, TError, SetDepositProductMutationVariables, TContext>(
+      ['setDepositProduct'],
+      useAxios<SetDepositProductMutation, SetDepositProductMutationVariables>(SetDepositProductDocument),
+      options
+    );
 export const GetNewIdDocument = `
     mutation getNewId {
   newId
@@ -8380,6 +8517,28 @@ export const useSetKymCooperativeDataMutation = <
     useMutation<SetKymCooperativeDataMutation, TError, SetKymCooperativeDataMutationVariables, TContext>(
       ['setKymCooperativeData'],
       useAxios<SetKymCooperativeDataMutation, SetKymCooperativeDataMutationVariables>(SetKymCooperativeDataDocument),
+      options
+    );
+export const SetKymDocumentDataDocument = `
+    mutation setKYMDocumentData($memberId: String!, $fieldId: String!, $identifiers: [String!]!) {
+  members {
+    document {
+      KYM(memberId: $memberId) {
+        upsert(fieldId: $fieldId, identifiers: $identifiers) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetKymDocumentDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetKymDocumentDataMutation, TError, SetKymDocumentDataMutationVariables, TContext>) =>
+    useMutation<SetKymDocumentDataMutation, TError, SetKymDocumentDataMutationVariables, TContext>(
+      ['setKYMDocumentData'],
+      useAxios<SetKymDocumentDataMutation, SetKymDocumentDataMutationVariables>(SetKymDocumentDataDocument),
       options
     );
 export const SetInstitutionDataDocument = `
@@ -8967,6 +9126,34 @@ export const useAllAdministrationQuery = <
     useQuery<AllAdministrationQuery, TError, TData>(
       variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
       useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
+      options
+    );
+export const GetMeDocument = `
+    query getMe {
+  auth {
+    me {
+      data {
+        id
+        username
+        email
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetMeQuery = <
+      TData = GetMeQuery,
+      TError = unknown
+    >(
+      variables?: GetMeQueryVariables,
+      options?: UseQueryOptions<GetMeQuery, TError, TData>
+    ) =>
+    useQuery<GetMeQuery, TError, TData>(
+      variables === undefined ? ['getMe'] : ['getMe', variables],
+      useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
       options
     );
 export const GetConfigDocument = `
@@ -9620,19 +9807,13 @@ export const useGetIndividualKymOptionQuery = <
       options
     );
 export const GetIndividualKymOptionsDocument = `
-    query getIndividualKYMOptions($id: String!, $filter: ListKYMFieldFilter) {
-  members {
-    individual(id: $id) {
-      options {
-        list(filter: $filter) {
-          data {
-            options {
-              id
-              name
-              fieldType
-              enabled
-            }
-          }
+    query getIndividualKYMOptions($searchTerm: FormFieldSearchTerm!) {
+  form {
+    options {
+      predefined(filter: {searchTerm: $searchTerm, category: KYM_INDIVIDUAL}) {
+        data {
+          id
+          name
         }
       }
     }
@@ -9695,6 +9876,7 @@ export const GetMemberListDocument = `
           id
           name
           code
+          type
           address {
             state
             district
@@ -10001,6 +10183,20 @@ export const GetIndividualKymEditDataDocument = `
             membershipDetails {
               purposeId
               isMemberOfAnotherCooperative
+              otherCoopName
+              otherCoopBranchId
+              otherCoopMemberId
+            }
+            introducers {
+              firstIntroducerId
+              secondIntroducerId
+            }
+            isFamilyAMember
+            initialTransactionDetails {
+              initialShare
+              initialSaving
+              initialLoan
+              otherFinancialAmount
             }
             estimatedTransactions {
               estimatedAnnualTransactionAmount
@@ -10018,6 +10214,7 @@ export const GetIndividualKymEditDataDocument = `
               convictedDetails
               hasForeignResidentialPermit
               foreignResidentialPermitTypeId
+              declarationAgreement
             }
             permanentAddress {
               provinceId
@@ -10092,6 +10289,93 @@ export const useGetIndividualKymFamilyMembersListQuery = <
     useQuery<GetIndividualKymFamilyMembersListQuery, TError, TData>(
       ['getIndividualKymFamilyMembersList', variables],
       useAxios<GetIndividualKymFamilyMembersListQuery, GetIndividualKymFamilyMembersListQueryVariables>(GetIndividualKymFamilyMembersListDocument).bind(null, variables),
+      options
+    );
+export const GetIndividualKymFamilyOccupationListDocument = `
+    query getIndividualKymFamilyOccupationList($id: String!, $isSpouse: Boolean!) {
+  members {
+    individual(id: $id) {
+      listOccupation(isSpouse: $isSpouse) {
+        data {
+          id
+          occupationId
+          orgName
+          panVatNo
+          address
+          estimatedAnnualIncome
+          establishedDate
+          registrationNo
+          contact
+          isOwner
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymFamilyOccupationListQuery = <
+      TData = GetIndividualKymFamilyOccupationListQuery,
+      TError = unknown
+    >(
+      variables: GetIndividualKymFamilyOccupationListQueryVariables,
+      options?: UseQueryOptions<GetIndividualKymFamilyOccupationListQuery, TError, TData>
+    ) =>
+    useQuery<GetIndividualKymFamilyOccupationListQuery, TError, TData>(
+      ['getIndividualKymFamilyOccupationList', variables],
+      useAxios<GetIndividualKymFamilyOccupationListQuery, GetIndividualKymFamilyOccupationListQueryVariables>(GetIndividualKymFamilyOccupationListDocument).bind(null, variables),
+      options
+    );
+export const GetIndividualKymIncomeSourceListDocument = `
+    query getIndividualKymIncomeSourceList($id: String!) {
+  members {
+    individual(id: $id) {
+      listIncomeSource {
+        data {
+          id
+          incomeSource
+          amount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymIncomeSourceListQuery = <
+      TData = GetIndividualKymIncomeSourceListQuery,
+      TError = unknown
+    >(
+      variables: GetIndividualKymIncomeSourceListQueryVariables,
+      options?: UseQueryOptions<GetIndividualKymIncomeSourceListQuery, TError, TData>
+    ) =>
+    useQuery<GetIndividualKymIncomeSourceListQuery, TError, TData>(
+      ['getIndividualKymIncomeSourceList', variables],
+      useAxios<GetIndividualKymIncomeSourceListQuery, GetIndividualKymIncomeSourceListQueryVariables>(GetIndividualKymIncomeSourceListDocument).bind(null, variables),
+      options
+    );
+export const GetKymDocumentsListDocument = `
+    query getKYMDocumentsList($memberId: String!) {
+  members {
+    document {
+      listKYMDocuments(memberId: $memberId) {
+        data {
+          fieldId
+          identifier
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetKymDocumentsListQuery = <
+      TData = GetKymDocumentsListQuery,
+      TError = unknown
+    >(
+      variables: GetKymDocumentsListQueryVariables,
+      options?: UseQueryOptions<GetKymDocumentsListQuery, TError, TData>
+    ) =>
+    useQuery<GetKymDocumentsListQuery, TError, TData>(
+      ['getKYMDocumentsList', variables],
+      useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(GetKymDocumentsListDocument).bind(null, variables),
       options
     );
 export const GetKymSettingsFieldsDocument = `
@@ -10195,6 +10479,176 @@ export const useGetCustomFieldsQuery = <
     useQuery<GetCustomFieldsQuery, TError, TData>(
       variables === undefined ? ['getCustomFields'] : ['getCustomFields', variables],
       useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
+      options
+    );
+export const GetDepositProductSettingsListDocument = `
+    query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProductSearchFilter) {
+  settings {
+    general {
+      depositProduct {
+        list(paginate: $paginate, filter: $filter) {
+          edges {
+            node {
+              id
+              objState
+              productCode
+              productName
+              nature
+              interest
+              interest
+              createdDate
+              typeOfMember
+              createdAt
+              createdBy {
+                id
+                name
+                username
+                userType
+              }
+              modifiedAt
+              modifiedBy {
+                id
+                name
+                username
+                userType
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositProductSettingsListQuery = <
+      TData = GetDepositProductSettingsListQuery,
+      TError = unknown
+    >(
+      variables?: GetDepositProductSettingsListQueryVariables,
+      options?: UseQueryOptions<GetDepositProductSettingsListQuery, TError, TData>
+    ) =>
+    useQuery<GetDepositProductSettingsListQuery, TError, TData>(
+      variables === undefined ? ['getDepositProductSettingsList'] : ['getDepositProductSettingsList', variables],
+      useAxios<GetDepositProductSettingsListQuery, GetDepositProductSettingsListQueryVariables>(GetDepositProductSettingsListDocument).bind(null, variables),
+      options
+    );
+export const GetDepositProductSettingsEditDataDocument = `
+    query getDepositProductSettingsEditData($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        formState(id: $id) {
+          data {
+            productName
+            nature
+            productCode {
+              prefix
+              initialNo
+            }
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            depositAmount {
+              minAmount
+              maxAmount
+            }
+            depositFrequency
+            penalty
+            penaltyData {
+              dayAfterInstallmentDate
+              minimumAmount
+              rateType
+              flatRatePenalty
+              penaltyRate
+              penaltyAmount
+            }
+            rebate
+            rebateData {
+              daysBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              percentage
+            }
+            minTenure
+            minTenureUnit
+            minTenureUnitNumber
+            balanceLimit {
+              minAmount
+              maxAmount
+            }
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthority
+              additionalRate
+            }
+            ladderRate
+            ladderRateData {
+              type
+              amount
+              rate
+            }
+            postingFrequency
+            maxPostingFreqDifference
+            accountType
+            serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            dormantSetup {
+              duration
+              condition
+            }
+            autoOpen
+            allowLoan
+            percentageOfDeposit
+            alternativeChannels
+            atmFacility
+            chequeIssue
+            supportMultiple
+            staffProduct
+            withdrawRestricted
+            specifyWithdrawRestriction
+            wealthBuildingProduct
+            individualDocuments
+            institutionDocuments
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositProductSettingsEditDataQuery = <
+      TData = GetDepositProductSettingsEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetDepositProductSettingsEditDataQueryVariables,
+      options?: UseQueryOptions<GetDepositProductSettingsEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetDepositProductSettingsEditDataQuery, TError, TData>(
+      ['getDepositProductSettingsEditData', variables],
+      useAxios<GetDepositProductSettingsEditDataQuery, GetDepositProductSettingsEditDataQueryVariables>(GetDepositProductSettingsEditDataDocument).bind(null, variables),
       options
     );
 export const GetBranchesListDocument = `

@@ -2,12 +2,8 @@
 import { useFormContext } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormEditableTable,
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-} from '@coop/shared/form';
+import { NatureOfDepositProduct } from '@coop/shared/data-access';
+import { FormEditableTable, FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -16,29 +12,18 @@ import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 const ladderSwitch = [
   {
     label: 'Yes',
-    value: 'yes',
+    value: true,
   },
   {
     label: 'No',
-    value: 'no',
-  },
-];
-
-const postingFreq = [
-  {
-    label: 'Max 1',
-    value: 'max1',
-  },
-  {
-    label: 'Max 2',
-    value: 'max2',
+    value: false,
   },
 ];
 
 type SalesTable = {
   type: string;
-  ladderAmount: number;
-  ladderRate: number;
+  amount: number;
+  rate: number;
 };
 
 const type = [
@@ -49,9 +34,9 @@ const type = [
 export const Interest = () => {
   const { watch } = useFormContext();
   const { t } = useTranslation();
-  const depositNature = watch('nameOfDepositProduct');
+  const depositNature = watch('nature');
 
-  const ladderOptions = watch('ladderOptions');
+  const ladderRate = watch('ladderRate');
 
   return (
     <>
@@ -61,7 +46,7 @@ export const Interest = () => {
         </TextBoxContainer>
         <InputGroupContainer>
           <FormInput
-            name="minimumInterestRate"
+            name="interest.minRate"
             type="number"
             label={t['depositProductMinimumAmount']}
             textAlign={'right'}
@@ -73,7 +58,7 @@ export const Interest = () => {
             }
           />
           <FormInput
-            name="maximumInterestRate"
+            name="interest.maxRate"
             type="number"
             label={t['depositProductMaximumAmount']}
             textAlign={'right'}
@@ -85,7 +70,7 @@ export const Interest = () => {
             }
           />
           <FormInput
-            name="defaultInterestRate"
+            name="interest.defaultRate"
             type="number"
             label={t['depositProductDefaultRate']}
             textAlign={'right'}
@@ -96,10 +81,10 @@ export const Interest = () => {
               </Text>
             }
           />
-          {depositNature !== 'recurringSaving' && (
+          {depositNature !== NatureOfDepositProduct.RecurringSaving && (
             <FormInput
               type="number"
-              name="additionalToBaseRate"
+              name="interest.additionalRate"
               label={t['depositProductAdditionalBaseRate']}
               textAlign={'right'}
               placeholder="0.00"
@@ -110,9 +95,8 @@ export const Interest = () => {
               }
             />
           )}
-
           <FormInput
-            name="ceoAuthenticationRate"
+            name="interest.ceoAuthority"
             type="number"
             label={t['depositProductCEOAuthority']}
             textAlign={'right'}
@@ -124,7 +108,7 @@ export const Interest = () => {
             }
           />
           <FormInput
-            name="boardAuthenticationRate"
+            name="interest.boardAuthority"
             type="number"
             label={t['depositProductBoardAuthority']}
             textAlign={'right'}
@@ -135,16 +119,9 @@ export const Interest = () => {
               </Text>
             }
           />
-          {depositNature !== 'recurringSaving' && (
-            <FormSelect
-              name="minimumInterestRate"
-              label={t['depositProductPostingFrequency']}
-              placeholder={t['depositProductSelectPostingFrequency']}
-              options={postingFreq}
-            />
-          )}
         </InputGroupContainer>
       </BoxContainer>
+
       <Box display={'flex'} flexDirection="column" gap="s20">
         <Box
           alignItems="center"
@@ -158,11 +135,11 @@ export const Interest = () => {
           >
             {t['depositProductLadderRate']}
           </Text>
-          <FormSwitchTab name={'ladderOptions'} options={ladderSwitch} />
+          <FormSwitchTab name="ladderRate" options={ladderSwitch} />
         </Box>
-        {ladderOptions === 'yes' && (
+        {ladderRate && (
           <FormEditableTable<SalesTable>
-            name="data"
+            name="ladderRateData"
             debug={false}
             columns={[
               {
@@ -172,12 +149,12 @@ export const Interest = () => {
                 selectOptions: type,
               },
               {
-                accessor: 'ladderAmount',
+                accessor: 'amount',
                 header: t['depositProductInterestLadderAmount'],
                 isNumeric: true,
               },
               {
-                accessor: 'ladderRate',
+                accessor: 'rate',
                 header: t['depositProductInterestLadderRate'],
                 fieldType: 'percentage',
                 isNumeric: true,

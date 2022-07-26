@@ -9,8 +9,9 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id,
+  FormFieldSearchTerm,
   KymIndMemberInput,
+  useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
@@ -56,24 +57,21 @@ export const KYMDeclaration = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: {
-        customId: Kym_Field_Custom_Id.Relationship,
-      },
+      searchTerm: FormFieldSearchTerm.Relationship,
     });
   const {
     data: foreignEmploymentOptions,
     isLoading: foreignEmploymentOptionsLoading,
   } = useGetIndividualKymOptionsQuery({
-    id,
-    filter: { customId: Kym_Field_Custom_Id.ForeignEmploymentOptions },
+    searchTerm: FormFieldSearchTerm.Occupation,
+    // filter: { se: Kym_Field_Custom_Id.ForeignEmploymentOptions },
   });
 
   const hasBeneficialOwner = watch('hasBeneficialOwner');
@@ -83,6 +81,29 @@ export const KYMDeclaration = ({
   const isConvicted = watch('isConvicted');
 
   const hasForeignResidentialPermit = watch('hasForeignResidentialPermit');
+
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      console.log({
+        ...editValueData?.declaration,
+        beneficialFullName:
+          editValueData?.declaration?.beneficialFullName?.local,
+      });
+
+      reset({
+        ...editValueData?.declaration,
+        beneficialFullName:
+          editValueData?.declaration?.beneficialFullName?.local,
+      });
+    }
+  }, [editValues]);
 
   const { mutate } = useSetMemberDataMutation();
 

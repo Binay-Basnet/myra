@@ -4205,10 +4205,10 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.5.tgz"
   integrity sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==
 
-"@raralabs/web-feedback@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@raralabs/web-feedback/-/web-feedback-1.0.2.tgz#9f7572a745955a7b223178f3b6efd2e9c969f7f1"
-  integrity sha512-OhftDzhhBYLmIIHOlTcqVHP2C8onTsULbWlLsbX3IK03Tjd3QghmESkONcWHvayjSUcyisSM4xAs89Ij0R4lgQ==
+"@raralabs/web-feedback@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@raralabs/web-feedback/-/web-feedback-1.0.4.tgz#aab0d5d21c3ecaff1f6d21749e9a434e9d0ae240"
+  integrity sha512-CcN0/eGSxxrmG7vZ3E2B5LUBw0Nwu3IMrS16b/q57qbHZO7Us2e4DRt3myo7l0Iy7wdlK6igQnEP2kld7goGyg==
   dependencies:
     dom-to-image "^2.6.0"
     dom-to-image-more "^2.11.1"

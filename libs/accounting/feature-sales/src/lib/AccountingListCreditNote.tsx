@@ -45,8 +45,6 @@ export function AccountingListCreditNote(props: AccountingListCreditNoteProps) {
     },
     {
       title: 'memberListTableEditMember',
-      onClick: (memberId?: string) =>
-        router.push(`/members/individual/edit/${memberId}`),
     },
     {
       title: 'memberListTableMakeInactive',
@@ -104,7 +102,7 @@ export function AccountingListCreditNote(props: AccountingListCreditNoteProps) {
         cell: (cell) => (
           <PopoverComponent
             items={popoverTitle}
-            memberId={cell?.row?.original?.node?.id}
+            member={cell?.row?.original?.node}
           />
         ),
         meta: {

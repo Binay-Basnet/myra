@@ -1,0 +1,35 @@
+mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
+  settings {
+    general {
+      depositProduct {
+        add(id: $id, data: $data) {
+          recordId
+          record {
+            id
+            productCode
+            productName
+            createdDate
+            interest
+          }
+          error {
+            ... on NotFoundError {
+              hm: message
+            }
+            ... on AuthorizationError {
+              message
+            }
+            ... on BadRequestError {
+              data: message
+            }
+            ... on ServerError {
+              info: message
+            }
+            ... on ValidationError {
+              message
+            }
+          }
+        }
+      }
+    }
+  }
+}

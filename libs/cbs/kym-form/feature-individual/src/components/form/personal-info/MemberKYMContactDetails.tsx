@@ -36,15 +36,8 @@ export const MemberKYMContactDetails = ({
 
   const { watch, reset } = methods;
 
-  const { data: editValues, isLoading: editLoading } =
-    useGetIndividualKymEditDataQuery({
-      id: id,
-    });
-
-  console.log({
-    ind: 'contact details info',
-    data: editValues?.members?.individual?.formState?.data?.formData
-      ?.contactDetails,
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery({
+    id: id,
   });
 
   useEffect(() => {
@@ -58,7 +51,7 @@ export const MemberKYMContactDetails = ({
     }
   }, [editValues]);
 
-  const { mutate } = useSetMemberDataMutation();
+  const { mutate } = useSetMemberDataMutation({ onSuccess: () => refetch() });
 
   useEffect(() => {
     const subscription = watch(

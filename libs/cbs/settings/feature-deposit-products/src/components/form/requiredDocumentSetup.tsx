@@ -1,42 +1,72 @@
-import React from 'react';
-
 // import debounce from 'lodash/debounce';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckboxGroup, FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, Grid, Text } from '@coop/shared/ui';
+import {
+  IndividualRequiredDocument,
+  InstitutionRequiredDocument,
+} from '@coop/shared/data-access';
+import { FormCheckboxGroup } from '@coop/shared/form';
+import { Box, Grid } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TopText } from '../formui';
-const individualList = [
-  { label: 'Form ', value: 'form' },
-  { label: 'Photo ', value: 'photo' },
-  { label: 'Signature', value: 'signature' },
-  { label: 'Fingerprint', value: 'fingerprint' },
-  { label: 'Nominee Document', value: 'nomineeDocument' },
-];
 
-const instutionList = [
-  { label: 'Decision', value: 'decision' },
-  { label: 'Registered', value: 'registered' },
-  { label: 'Signature', value: 'signature' },
-  { label: 'Tax Clearance', value: 'taxClearance' },
-];
 export const RequiredDocumentSetup = () => {
+  const { t } = useTranslation();
+
+  const individualList = [
+    { label: t['depositProductForm'], value: IndividualRequiredDocument.Form },
+    {
+      label: t['depositProductPhoto'],
+      value: IndividualRequiredDocument.Photo,
+    },
+    {
+      label: t['depositProductSignature'],
+      value: IndividualRequiredDocument.Signature,
+    },
+    {
+      label: t['depositProductFingerprint'],
+      value: IndividualRequiredDocument.Fingerprint,
+    },
+    {
+      label: t['depositProductNomineeDocument'],
+      value: IndividualRequiredDocument.NomineeDocument,
+    },
+  ];
+
+  const instutionList = [
+    {
+      label: t['depositProductDecision'],
+      value: InstitutionRequiredDocument.Decision,
+    },
+    {
+      label: t['depositProductRegistered'],
+      value: InstitutionRequiredDocument.Registered,
+    },
+    {
+      label: t['depositProductSignature'],
+      value: InstitutionRequiredDocument.Signature,
+    },
+    {
+      label: t['depositProductTaxClearance'],
+      value: InstitutionRequiredDocument.TaxClearance,
+    },
+  ];
+
   return (
     <BoxContainer>
-      <TopText> Required Document Setup</TopText>
+      <TopText> {t['depositProductRequiredDocumentSetup']} </TopText>
       <Grid templateColumns={'repeat(2,1fr)'}>
         <Box display="flex" flexDirection="column" gap="s16">
-          <TopText>Individual</TopText>
+          <TopText>{t['depositProductIndividual']} </TopText>
           <FormCheckboxGroup
-            name="individualRequiredDocuments"
+            name="individualDocuments"
             list={individualList}
             orientation="column"
           />
         </Box>
         <Box display="flex" flexDirection="column" gap="s16">
-          <TopText>Institutional</TopText>
+          <TopText>{t['depositProductInstitutional']} </TopText>
           <FormCheckboxGroup
-            name="indstitutionalRequiredDocuments"
+            name="institutionDocuments"
             list={instutionList}
             orientation="column"
           />

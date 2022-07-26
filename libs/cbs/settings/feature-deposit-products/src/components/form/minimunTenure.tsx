@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Frequency } from '@coop/shared/data-access';
 // import debounce from 'lodash/debounce';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -12,45 +12,44 @@ import {
   SubHeadingText,
   SubText,
   TextBoxContainer,
-  TopText,
 } from '../formui';
 
 export const MinimunTenure = () => {
   const [rightElement, setRightElement] = useState('days');
   const { resetField, watch } = useFormContext();
-  const minimumTenure = watch('enableminimumTenure');
+  const minimumTenure = watch('minTenure');
 
-  const minimumTenureUnit = watch('minimumTenureUnit');
+  const minimumTenureUnit = watch('minTenureUnit');
 
   const { t } = useTranslation();
 
   const unitOptions = [
     {
       label: t['daily'],
-      value: 'Daily',
+      value: Frequency.Daily,
     },
     {
       label: t['weekly'],
-      value: 'Weekly',
+      value: Frequency.Weekly,
     },
     {
       label: t['monthly'],
-      value: 'Monthly',
+      value: Frequency.Monthly,
     },
     {
       label: t['yearly'],
-      value: 'Yearly',
+      value: Frequency.Yearly,
     },
   ];
 
   const applicableSwitch = [
     {
       label: t['depositProductApplicable'],
-      value: 'applicable',
+      value: true,
     },
     {
       label: t['depositProductNotApplicable'],
-      value: 'notApplicable',
+      value: false,
     },
   ];
 
@@ -58,27 +57,17 @@ export const MinimunTenure = () => {
     resetField('minimunTenureNumber');
     setRightElement(minimumTenureUnit);
   }, [minimumTenureUnit]);
+
   return (
     <BoxContainer>
-      {/* <TextBoxContainer>
-        <TopText>Minimum Tenure</TopText>
-        <SubText>
-          Note: Week is equal to 7 days, Month is equal to 30 days & year is
-          equal to 365days.minimumTenureUnit
-        </SubText>
-      </TextBoxContainer>
-      <FormSwitchTab name={'depositFrequency'} options={applicableSwitch} /> */}
       <Box display={'flex'} justifyContent="space-between">
         <TextBoxContainer>
           <SubHeadingText>{t['depositProductMinimumTenure']} </SubHeadingText>
           <SubText>{t['depositProductNoteWeek']}</SubText>
         </TextBoxContainer>
-        <FormSwitchTab
-          name={'enableminimumTenure'}
-          options={applicableSwitch}
-        />
+        <FormSwitchTab name="minTenure" options={applicableSwitch} />
       </Box>
-      {minimumTenure && minimumTenure === 'applicable' && (
+      {minimumTenure && (
         <BoxContainer
           p="s16"
           border={'1px solid'}
@@ -92,11 +81,11 @@ export const MinimunTenure = () => {
             <Text fontSize={'s3'} fontWeight="500">
               {t['depositProductUnit']}
             </Text>
-            <FormSwitchTab name={'minimumTenureUnit'} options={unitOptions} />
+            <FormSwitchTab name="minTenureUnit" options={unitOptions} />
           </Box>
           <Box w="290px">
             <FormInput
-              name="minimunTenureNumber"
+              name="minTenureUnitNumber"
               textAlign={'right'}
               label={t['depositProductNumber']}
               placeholder="0"

@@ -6,8 +6,9 @@ import debounce from 'lodash/debounce';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id as KYMOptionEnum,
+  FormFieldSearchTerm,
   KymIndMemberInput,
+  useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
@@ -35,26 +36,35 @@ export const MemberKYMProfession = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const { data: occupationData, isLoading: occupationLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.Occupation },
+      searchTerm: FormFieldSearchTerm.Occupation,
     });
 
-  const { mutate } = useSetMemberDataMutation({
-    onSuccess: (res) => {
-      // setError('firstName', {
-      //   type: 'custom',
-      //   message: res?.members?.individual?.add?.error?.error?.['firstName'][0],
-      // });
-      console.log(res);
-    },
-    //   onError: () => {
-    //     setError('firstName', { type: 'custom', message: 'gg' });
-    //   },
+  const { mutate } = useSetMemberDataMutation();
+
+  const { data: editValues } = useGetIndividualKymEditDataQuery({
+    id: id,
   });
+
+  console.log({
+    ind: 'identification details info',
+    data: editValues?.members?.individual?.formState?.data?.formData
+      ?.profession,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.individual?.formState?.data?.formData;
+
+      reset({
+        ...editValueData?.profession,
+      });
+    }
+  }, [editValues]);
 
   useEffect(() => {
     const subscription = watch(

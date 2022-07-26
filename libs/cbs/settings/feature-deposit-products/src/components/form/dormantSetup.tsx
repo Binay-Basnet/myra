@@ -8,7 +8,6 @@ import {
   GroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect } from '@coop/shared/form';
-// import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Grid, GridItem, Icon } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -28,6 +27,7 @@ const AddServiceCharge = ({
   removeAccountServices,
 }: IAddAccountServices) => {
   const { t } = useTranslation();
+
   return (
     <DynamicBoxContainer>
       <CloseIcon
