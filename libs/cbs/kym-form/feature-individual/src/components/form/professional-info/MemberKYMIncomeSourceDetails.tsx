@@ -137,6 +137,7 @@ const IncomeSource = ({
             onClick={() => {
               removeIncomeSource(incomeSourceId);
             }}
+            id="removeIncomeSourceButton"
             color="gray.500"
             _hover={{
               color: 'gray.900',

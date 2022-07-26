@@ -178,6 +178,7 @@ const HusbandWifeOccupation = ({
               onClick={() => {
                 removeHusbandWifeOccupation(occupationId);
               }}
+              id="removeSpouseOccupationButton"
               color="gray.500"
               _hover={{
                 color: 'gray.900',
@@ -190,6 +191,7 @@ const HusbandWifeOccupation = ({
               <GridItem colSpan={1}>
                 <FormSelect
                   name={`occupationId`}
+                  id="spouseOccupationId"
                   label={t['kymIndOccupation']}
                   placeholder={t['kymIndSelectOccupation']}
                   options={
@@ -208,6 +210,7 @@ const HusbandWifeOccupation = ({
                 <FormInput
                   type="text"
                   name={`orgName`}
+                  id="spouseOrgName"
                   label={t['kymIndOrgFirmName']}
                   placeholder={t['kymIndOrgFirmName']}
                   bg="white"
@@ -216,6 +219,7 @@ const HusbandWifeOccupation = ({
               <FormInput
                 type="text"
                 name={`panVatNo`}
+                id="spousePanVatNo"
                 label={t['kymIndPanVATNo']}
                 placeholder={t['kymIndPanVATNumber']}
                 bg="white"
@@ -223,6 +227,7 @@ const HusbandWifeOccupation = ({
               <FormInput
                 type="text"
                 name={`address`}
+                id="spouseAddress"
                 label={t['kymIndAddress']}
                 placeholder={t['kymIndEnterAddress']}
                 bg="white"
@@ -230,6 +235,7 @@ const HusbandWifeOccupation = ({
               <FormInput
                 type="number"
                 textAlign={'right'}
+                id="spouseEstimatedAnnualIncome"
                 name={`estimatedAnnualIncome`}
                 label={t['kymIndEstimatedAnnualIncome']}
                 bg="white"
@@ -251,7 +257,7 @@ const HusbandWifeOccupation = ({
 
           <Box display="flex" gap="9px" alignItems="center">
             {/*TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
-            <FormCheckbox name={`isOwner`} />
+            <FormCheckbox name={`isOwner`} id="spouseIsOwner" />
             <TextFields variant="formLabel">
               {t['kymIndAreyouowner']}
             </TextFields>
@@ -262,6 +268,7 @@ const HusbandWifeOccupation = ({
               <FormInput
                 bg="white"
                 type="date"
+                id="spouseEstablishedDate"
                 name={`establishedDate`}
                 label={t['kymIndEstablishedDate']}
                 placeholder={t['kymIndEstablishedDate']}
@@ -269,6 +276,7 @@ const HusbandWifeOccupation = ({
               <FormInput
                 bg="white"
                 type="number"
+                id="spouseRegistrationNo"
                 name={`registrationNo`}
                 label={t['kymIndRegistrationNo']}
                 placeholder={t['kymIndRegistrationNo']}
@@ -276,6 +284,7 @@ const HusbandWifeOccupation = ({
               <FormInput
                 bg="white"
                 type="number"
+                id="spouseContact"
                 name={`contact`}
                 label={t['kymIndContactNo']}
                 placeholder={t['kymIndContactNo']}
@@ -318,8 +327,8 @@ export const MemberKYMHusbandWifeOccupation = ({
 
       setOccupationIds(
         editValueData?.reduce(
-          (prevVal, curVal) => [...prevVal, curVal.id],
-          []
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
         ) ?? []
       );
     }

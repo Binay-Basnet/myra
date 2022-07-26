@@ -172,6 +172,7 @@ const AddFamilyMember = ({
             <FormInput
               type="date"
               name="dateOfBirth"
+              id="familyDetailsDateOfBirth"
               label="Date of Birth (BS)"
             />
 
@@ -228,12 +229,6 @@ const MemberMaritalStatus = ({
 
   const { data: editValues } = useGetIndividualKymEditDataQuery({
     id: id,
-  });
-
-  console.log({
-    ind: 'marital status info',
-    data: editValues?.members?.individual?.formState?.data?.formData
-      ?.maritalStatusId,
   });
 
   useEffect(() => {

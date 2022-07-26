@@ -69,20 +69,10 @@ export const MemberKYMIdentificationDetails = ({
     id: id,
   });
 
-  console.log({
-    ind: 'identification details info',
-    data: editValues?.members?.individual?.formState?.data?.formData
-      ?.identification,
-  });
-
-  console.log({ identificationSelection: watch('identificationSelection') });
-
   useEffect(() => {
     if (editValues) {
       const editValueData =
         editValues?.members?.individual?.formState?.data?.formData;
-
-      console.log({ editValueData });
 
       reset({
         ...editValueData?.identification,

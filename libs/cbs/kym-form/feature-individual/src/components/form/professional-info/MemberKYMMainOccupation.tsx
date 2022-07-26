@@ -209,6 +209,7 @@ const MainOccupation = ({
                 }}
                 aria-label="close"
                 alignSelf="flex-end"
+                id="removeMainOccupationButton"
               />
 
               <InputGroupContainer>

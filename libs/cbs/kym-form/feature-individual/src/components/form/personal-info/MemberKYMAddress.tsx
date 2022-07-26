@@ -104,45 +104,10 @@ export const MemberKYMAddress = ({
     id: id,
   });
 
-  console.log({
-    ind: 'address info',
-    data: {
-      permanentAddress:
-        editValues?.members?.individual?.formState?.data?.formData
-          ?.permanentAddress,
-      temporaryAddress:
-        editValues?.members?.individual?.formState?.data?.formData
-          ?.temporaryAddress,
-      sameTempAsPermanentAddress:
-        editValues?.members?.individual?.formState?.data?.formData
-          ?.temporaryAddress?.sameTempAsPermanentAddress,
-    },
-  });
-
   useEffect(() => {
     if (editValues) {
       const editValueData =
         editValues?.members?.individual?.formState?.data?.formData;
-      console.log('edit value', editValueData);
-
-      console.log({
-        permanentAddress: {
-          ...editValueData?.permanentAddress,
-          districtId: editValueData?.permanentAddress?.districtId
-            ? editValueData?.permanentAddress?.districtId
-            : '',
-          locality: editValueData?.permanentAddress?.locality?.local,
-        },
-        temporaryAddress: {
-          ...editValueData?.temporaryAddress?.address,
-          provinceId: editValueData?.temporaryAddress?.address?.provinceId
-            ? editValueData?.temporaryAddress?.address?.provinceId
-            : '',
-          locality: editValueData?.temporaryAddress?.address?.locality?.local,
-        },
-        sameTempAsPermanentAddress:
-          editValueData?.temporaryAddress?.sameTempAsPermanentAddress,
-      });
 
       reset({
         permanentAddress: {

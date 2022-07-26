@@ -50,12 +50,6 @@ export const MemberKYMProfession = ({
     id: id,
   });
 
-  console.log({
-    ind: 'identification details info',
-    data: editValues?.members?.individual?.formState?.data?.formData
-      ?.profession,
-  });
-
   useEffect(() => {
     if (editValues) {
       const editValueData =
