@@ -95,7 +95,6 @@ export type AccountOperatorDetailsFormState = {
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   panNo?: Maybe<Scalars['String']>;
   permanenetAddress?: Maybe<KymAddress>;
-  specimenSignature?: Maybe<Scalars['String']>;
   temporaryAddress?: Maybe<KymAddress>;
 };
 
@@ -2964,7 +2963,7 @@ export type InstitutionTransactionProfile = {
 
 export type InterestFormState = {
   additionalRate?: Maybe<Scalars['Float']>;
-  boardAuthoriy?: Maybe<Scalars['Float']>;
+  boardAuthority?: Maybe<Scalars['Float']>;
   ceoAuthority?: Maybe<Scalars['Float']>;
   defaultRate?: Maybe<Scalars['Float']>;
   maxRate?: Maybe<Scalars['Float']>;
@@ -2973,7 +2972,7 @@ export type InterestFormState = {
 
 export type InterestRate = {
   additionalRate?: InputMaybe<Scalars['Float']>;
-  boardAuthoriy?: InputMaybe<Scalars['Float']>;
+  boardAuthority?: InputMaybe<Scalars['Float']>;
   ceoAuthority?: InputMaybe<Scalars['Float']>;
   defaultRate: Scalars['Float'];
   maxRate?: InputMaybe<Scalars['Float']>;
@@ -5646,6 +5645,21 @@ export type KymInsInput = {
   website?: InputMaybe<Scalars['String']>;
 };
 
+export type KymInsListAccountOperatorsQuery = {
+  data?: Maybe<Array<Maybe<AccountOperatorDetailsFormState>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type KymInsListDirectorsQuery = {
+  data?: Maybe<Array<Maybe<DirectorDetailsFormState>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type KymInsListSisterConcernQuery = {
+  data?: Maybe<Array<Maybe<SisterConcernDetailsFormState>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type KymInsMutation = {
   accountOperator?: Maybe<KymInsAccountOperator>;
   add?: Maybe<KymInsAddResult>;
@@ -5660,10 +5674,28 @@ export type KymInsMutationAddArgs = {
 
 export type KymInsQuery = {
   formState?: Maybe<KymInsFormStateQuery>;
+  listAccountOperators?: Maybe<KymInsListAccountOperatorsQuery>;
+  listDirectors?: Maybe<KymInsListDirectorsQuery>;
+  listSisterConcerns?: Maybe<KymInsListSisterConcernQuery>;
 };
 
 
 export type KymInsQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymInsQueryListAccountOperatorsArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymInsQueryListDirectorsArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymInsQueryListSisterConcernsArgs = {
   id: Scalars['ID'];
 };
 
@@ -7760,12 +7792,20 @@ export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCustomFieldsQuery = { settings: { kymForm: { field?: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: Kym_Field_Type, isCustom: boolean, hasOtherField: boolean, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } | null } } };
 
+export type GetDepositProductSettingsListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<DepositProductSearchFilter>;
+}>;
+
+
+export type GetDepositProductSettingsListQuery = { settings: { general?: { depositProduct?: { list?: { edges: Array<{ node: { id: string, objState: ObjState, productCode: string, productName: string, nature: NatureOfDepositProduct, interest: number, createdDate: string, typeOfMember?: Array<KymMemberTypesEnum | null> | null, createdAt: string, modifiedAt: string, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType } } }> } | null } | null } | null } };
+
 export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: string | null, maxAmount?: string | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: string | null, penaltyRate?: number | null, penaltyAmount?: string | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: string | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: string | null, maxAmount?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthoriy?: number | null, additionalRate?: number | null } | null, ladderRateData: Array<{ type?: string | null, amount?: string | null, rate?: number | null } | null>, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: string | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: string | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: string | null, maxAmount?: string | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: string | null, penaltyRate?: number | null, penaltyAmount?: string | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: string | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: string | null, maxAmount?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData: Array<{ type?: string | null, amount?: string | null, rate?: number | null } | null>, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: string | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: string | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10256,6 +10296,57 @@ export const useGetCustomFieldsQuery = <
       useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
       options
     );
+export const GetDepositProductSettingsListDocument = `
+    query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProductSearchFilter) {
+  settings {
+    general {
+      depositProduct {
+        list(paginate: $paginate, filter: $filter) {
+          edges {
+            node {
+              id
+              objState
+              productCode
+              productName
+              nature
+              interest
+              interest
+              createdDate
+              typeOfMember
+              createdAt
+              createdBy {
+                id
+                name
+                username
+                userType
+              }
+              modifiedAt
+              modifiedBy {
+                id
+                name
+                username
+                userType
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositProductSettingsListQuery = <
+      TData = GetDepositProductSettingsListQuery,
+      TError = unknown
+    >(
+      variables?: GetDepositProductSettingsListQueryVariables,
+      options?: UseQueryOptions<GetDepositProductSettingsListQuery, TError, TData>
+    ) =>
+    useQuery<GetDepositProductSettingsListQuery, TError, TData>(
+      variables === undefined ? ['getDepositProductSettingsList'] : ['getDepositProductSettingsList', variables],
+      useAxios<GetDepositProductSettingsListQuery, GetDepositProductSettingsListQueryVariables>(GetDepositProductSettingsListDocument).bind(null, variables),
+      options
+    );
 export const GetDepositProductSettingsEditDataDocument = `
     query getDepositProductSettingsEditData($id: ID!) {
   settings {
@@ -10315,7 +10406,7 @@ export const GetDepositProductSettingsEditDataDocument = `
               maxRate
               defaultRate
               ceoAuthority
-              boardAuthoriy
+              boardAuthority
               additionalRate
             }
             ladderRate
