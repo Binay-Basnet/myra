@@ -2560,10 +2560,8 @@ const ne: Record<string, string> = {
   depositProductEnterPenaltydetails: 'Enter Penalty details.',
   depositProductDayfromenddate: 'Day from end date',
   depositProductFlatratePenalty: 'Flat-rate Penalty',
-  depositProductPenaltyAmount: 'Penalty Amount',
   depositProductRebate: 'Rebate',
   depositProductEnterRebatedetails: 'Enter Rebate details.',
-  depositProductDaysfromenddate: 'Days from end date',
   depositProductRebateAmount: 'Rebate Amount',
   depositProductPercentageDepositedAmount: 'Percentage of Deposited Amount',
   depositProductNoInstallment: 'No. of Installment',
@@ -2621,7 +2619,6 @@ const ne: Record<string, string> = {
   depositProductTaxClearance: 'Tax Clearance',
   depositProductPrematuredPenaltySetup: 'Prematured Penalty Setup',
   depositProductEffectiveDaysfromStart: 'Effective Days from Start',
-  depositProductRemainingDaysTogetmatured: 'Remaining Days To get matured',
   depositProductPenaltyRs: 'Penalty Rs',
   depositProductPenaltyRate: 'Penalty Rate',
   depositProductPenaltyLedgerMapping: 'Penalty Ledger Mapping',
@@ -2826,6 +2823,23 @@ const ne: Record<string, string> = {
   bankAccountChequeTotalLeafs: 'Total no of cheque leafs',
 
   bankAccountBankStatementImportBankStatement: 'Import Bank Statement',
+
+  depositProductPenaltyDateType: 'Penalty Date Type',
+  depositProductNumberofDays: 'Number  of Days',
+  depositProductNoofdays: 'No of days',
+  depositProductCooperative: 'Cooperative',
+  depositProductCooperativeUnion: 'Cooperative Union',
+  depositProductRecurringSaving: 'Recurring Saving',
+  depositProductMandatory: 'Mandatory',
+  depositProductVoluntaryOptional: 'Voluntary/Optional',
+  depositProductTermSaving: 'Term Saving',
+  depositProductPenaltyType: 'Penalty Type',
+  depositProductFlatRate: 'Flat Rate',
+  depositProductRelativeRate: 'Relative Rate',
+  depositProductDayaftertheinstallmentdate: 'Day after the installment date',
+  depositProductEffectiveDaysFromStart: 'Effective Days From Start',
+  depositProductRemainingDaystoGetMatured: 'Remaining Days to Get Matured',
+  depositProductForeignEmployment: 'Foreign Employment',
 };
 
 export default ne;

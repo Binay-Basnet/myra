@@ -2,37 +2,40 @@ import { useFormContext } from 'react-hook-form';
 
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { NatureOfDepositProduct } from '@coop/shared/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { DividerContainer, SubHeadingText } from '../formui';
 
-const yesNo = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
-];
 export const Questions = () => {
   const { watch } = useFormContext();
-  const depositNature = watch('nameOfDepositProduct');
+  const depositNature = watch('nature');
   const allowLoan = watch('allowLoan');
   const withdrawRestricted = watch('withdrawRestricted');
   const { t } = useTranslation();
+
+  const yesNo = [
+    { label: t['yes'], value: true },
+    { label: t['no'], value: false },
+  ];
+
   return (
     <DividerContainer>
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>
-          {t['depositProductAutoOpenwhenmemberjoins']}{' '}
+          {t['depositProductAutoOpenwhenmemberjoins']}
         </SubHeadingText>
-        <FormSwitchTab name={'autoOpenWhenJoin'} options={yesNo} />
+        <FormSwitchTab name="autoOpen" options={yesNo} />
       </Box>
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>
-          {t['depositProductAlternativeChannels']}{' '}
+          {t['depositProductAlternativeChannels']}
         </SubHeadingText>
         <FormSwitchTab name={'alternativeChannels'} options={yesNo} />
       </Box>
-      {depositNature === 'voluntary' && (
+      {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
         <Box
           display="flex"
           flexDirection={'row'}
@@ -42,13 +45,13 @@ export const Questions = () => {
           <FormSwitchTab name={'atmFacility'} options={yesNo} />
         </Box>
       )}
-      {depositNature === 'voluntary' && (
+      {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
         <Box
           display="flex"
           flexDirection={'row'}
           justifyContent="space-between"
         >
-          <SubHeadingText>Cheque Issue</SubHeadingText>
+          <SubHeadingText>{t['depositProductChequeIssue']}</SubHeadingText>
           <FormSwitchTab name={'chequeIssue'} options={yesNo} />
         </Box>
       )}
@@ -62,8 +65,8 @@ export const Questions = () => {
           <FormSwitchTab name={'allowLoan'} options={yesNo} />
         </Box>
 
-        {(depositNature === 'recurringSaving' ||
-          depositNature === 'termSaving') &&
+        {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+          depositNature === NatureOfDepositProduct.TermSavingOrFd) &&
           allowLoan &&
           allowLoan === 'yes' && (
             <Box
@@ -91,7 +94,7 @@ export const Questions = () => {
             </Box>
           )}
       </Box>
-      {depositNature !== 'mandatory' && (
+      {depositNature !== NatureOfDepositProduct.Mandatory && (
         <Box
           display="flex"
           flexDirection={'row'}
@@ -100,14 +103,14 @@ export const Questions = () => {
           <SubHeadingText>
             {t['depositProductSupportMultipleAccount']}
           </SubHeadingText>
-          <FormSwitchTab name={'supportMultipleAccount'} options={yesNo} />
+          <FormSwitchTab name={'supportMultiple'} options={yesNo} />
         </Box>
       )}
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>{t['depositProductStaffProduct']} </SubHeadingText>
         <FormSwitchTab name={'staffProduct'} options={yesNo} />
       </Box>
-      {depositNature === 'recurringSaving' && (
+      {depositNature === NatureOfDepositProduct.RecurringSaving && (
         <Box display={'flex'} flexDirection="column" gap="s16">
           <Box
             display="flex"
@@ -119,7 +122,7 @@ export const Questions = () => {
             </SubHeadingText>
             <FormSwitchTab name={'withdrawRestricted'} options={yesNo} />
           </Box>
-          {withdrawRestricted && withdrawRestricted === 'yes' && (
+          {withdrawRestricted && (
             <Box
               border="1px solid"
               borderColor="border.layout"
@@ -130,16 +133,16 @@ export const Questions = () => {
               <Box>
                 <FormInput
                   type="text"
-                  name="specifyRestrictedwithdraw"
+                  name="specifyWithdrawRestriction"
                   label={t['depositProductSpecify']}
                   minH={'100px'}
-                />{' '}
+                />
               </Box>
             </Box>
           )}
         </Box>
       )}
-      {depositNature === 'recurringSaving' && (
+      {depositNature === NatureOfDepositProduct.RecurringSaving && (
         <Box
           display="flex"
           flexDirection={'row'}
@@ -148,7 +151,7 @@ export const Questions = () => {
           <SubHeadingText>
             {t['depositProductWealthBuildingProduct']}
           </SubHeadingText>
-          <FormSwitchTab name={'wealthBuildingProject'} options={yesNo} />
+          <FormSwitchTab name={'wealthBuildingProduct'} options={yesNo} />
         </Box>
       )}
     </DividerContainer>
