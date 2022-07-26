@@ -1,4 +1,3 @@
-export * from './hooks/useAuth';
 export * from './hooks/useChakraToast';
 export * from './hooks/useSnap';
 export * from './hooks/useTableHook';
@@ -9,7 +8,6 @@ export * from './lib/theme';
 export * from './locales';
 export * from './redux/counterSlice';
 export * from './redux/store';
-export * from './utilComponents/AuthProvider';
 export * from './utilFunctions/amountConverter';
 export * from './utilFunctions/getKymCoopSection';
 export * from './utilFunctions/getKymSection';

@@ -1,0 +1,14 @@
+query getMe {
+  auth {
+    me {
+      data {
+        id
+        username
+        email
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

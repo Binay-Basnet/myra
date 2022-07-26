@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
-import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
@@ -18,11 +12,8 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id,
-  Kym_Field_Custom_Id as KYMOptionEnum,
-  Kym_Option_Field_Type,
+  FormFieldSearchTerm,
   KymIndMemberInput,
-  KymOption,
   useDeleteMemberFamilyDetailsMutation,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymFamilyMembersListQuery,
@@ -88,10 +79,7 @@ const AddFamilyMember = ({
   const id = String(router?.query?.['id']);
 
   const { data: relationshipData } = useGetIndividualKymOptionsQuery({
-    id,
-    filter: {
-      customId: Kym_Field_Custom_Id.Relationship,
-    },
+    searchTerm: FormFieldSearchTerm.Relationship,
   });
 
   const { data: editValues, refetch } =
@@ -223,8 +211,7 @@ const MemberMaritalStatus = ({
 
   const { data: maritalStatusData, isLoading: maritalStatusLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.MaritalStatus },
+      searchTerm: FormFieldSearchTerm.MaritalStatus,
     });
 
   const { data: editValues } = useGetIndividualKymEditDataQuery({

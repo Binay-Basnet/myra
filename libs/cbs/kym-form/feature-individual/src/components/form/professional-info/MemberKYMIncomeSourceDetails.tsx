@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -18,7 +13,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id as KYMOptionEnum,
+  FormFieldSearchTerm,
   KymIndMemberInput,
   useDeleteMemberIncomeSourceMutation,
   useGetIndividualKymEditDataQuery,
@@ -217,8 +212,7 @@ export const MemberKYMIncomeSourceDetails = ({
 
   const { data: familyIncomeData, isLoading: familyIncomeLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.FamilyIncomeSource },
+      searchTerm: FormFieldSearchTerm.FamilyIncomeSource,
     });
 
   const [incomeSourceIds, setIncomeSourceIds] = useState<string[]>([]);

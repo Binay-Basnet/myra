@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
@@ -13,7 +13,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id,
+  FormFieldSearchTerm,
   KymIndMemberInput,
   KymOption,
   useDeleteMemberOccupationMutation,
@@ -117,10 +117,7 @@ const MainOccupation = ({
       ?.professionId ?? [];
 
   const { data: occupationData } = useGetIndividualKymOptionsQuery({
-    id,
-    filter: {
-      customId: Kym_Field_Custom_Id.Occupation,
-    },
+    searchTerm: FormFieldSearchTerm.Occupation,
   });
 
   // const { data: occupationDetailsDefaultFields } =

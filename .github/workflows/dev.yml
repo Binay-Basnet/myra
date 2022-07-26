@@ -54,5 +54,7 @@ jobs:
             echo "Neosys admin app deployed successfully"
             docker-compose -f docker-compose.ebanking.yml up --build --force-recreate -d
             echo "Ebanking app deployed successfully"
+            docker-compose -f docker-compose.storybook.yml up --build --force-recreate -d
+            echo "Storybook deployed successfully"
             docker image prune -f || true
             docker container prune -f || true

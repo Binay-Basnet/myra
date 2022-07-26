@@ -35,19 +35,6 @@ export const ClientsTable = () => {
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
-  const popoverTitle = [
-    {
-      title: 'neoClientTableViewClientProfile',
-      onClick: (clientId?: string) => router.push(`/clients/${clientId}`),
-    },
-    {
-      title: 'neoClientTableEditClient',
-    },
-    {
-      title: 'neoClientTableMakeInactive',
-    },
-  ];
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -101,8 +88,19 @@ export const ClientsTable = () => {
         accessor: 'actions',
         Cell: (cell) => (
           <PopoverComponent
-            items={popoverTitle}
-            memberId={cell?.row?.original?.node?.id}
+            items={[
+              {
+                title: 'neoClientTableViewClientProfile',
+                onClick: (client) => router.push(`/clients/${client?.id}`),
+              },
+              {
+                title: 'neoClientTableEditClient',
+              },
+              {
+                title: 'neoClientTableMakeInactive',
+              },
+            ]}
+            member={cell?.row?.original?.node}
           />
         ),
         disableFilters: true,

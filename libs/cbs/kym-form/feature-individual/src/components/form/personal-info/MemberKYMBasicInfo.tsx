@@ -2,15 +2,13 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
-import isEmpty from 'lodash/isEmpty';
-import pickBy from 'lodash/pickBy';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id as KYMOptionEnum,
+  FormFieldSearchTerm,
   KymIndMemberInput,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
@@ -18,8 +16,7 @@ import {
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
-import { getKymSection } from '@coop/shared/utils';
+import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -46,32 +43,27 @@ export const MemberKYMBasicInfo = ({
 
   const { data: genderFields, isLoading: genderLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.Gender },
+      searchTerm: FormFieldSearchTerm.Gender,
     });
 
   const { data: ethnicityFields, isLoading: ethnicityLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.Ethnicity },
+      searchTerm: FormFieldSearchTerm.Ethnicity,
     });
 
   const { data: educationFields, isLoading: educationLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.EducationQualification },
+      searchTerm: FormFieldSearchTerm.EducationQualification,
     });
 
   const { data: religionFields, isLoading: religionLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.Religion },
+      searchTerm: FormFieldSearchTerm.Religion,
     });
 
   const { data: nationalityFields, isLoading: nationalityLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.Nationality },
+      searchTerm: FormFieldSearchTerm.Nationality,
     });
 
   useEffect(() => {
@@ -99,8 +91,7 @@ export const MemberKYMBasicInfo = ({
         middleName: editValueData?.basicInformation?.middleName?.local,
         lastName: editValueData?.basicInformation?.lastName?.local,
         nationalityId:
-          nationalityFields?.members?.individual?.options?.list?.data?.[0]
-            ?.options?.[0]?.id,
+          nationalityFields?.form?.options?.predefined?.data?.[0]?.id,
       });
     }
   }, [nationalityFields, editValues]);

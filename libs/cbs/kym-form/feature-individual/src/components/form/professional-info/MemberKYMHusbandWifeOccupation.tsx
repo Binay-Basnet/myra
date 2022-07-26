@@ -1,10 +1,5 @@
-import { Fragment, useEffect, useState } from 'react';
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -17,8 +12,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id as KYMOptionEnum,
-  KymIndMemberInput,
+  FormFieldSearchTerm,
   KymOption,
   useDeleteMemberOccupationMutation,
   useGetIndividualKymEditDataQuery,
@@ -98,8 +92,7 @@ const HusbandWifeOccupation = ({
       ?.professionId ?? [];
 
   const { data: occupationData } = useGetIndividualKymOptionsQuery({
-    id,
-    filter: { customId: KYMOptionEnum.Occupation },
+    searchTerm: FormFieldSearchTerm.Occupation,
   });
 
   const { t } = useTranslation();
@@ -327,7 +320,8 @@ export const MemberKYMHusbandWifeOccupation = ({
 
       setOccupationIds(
         editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          (prevVal, curVal) =>
+            curVal ? [...prevVal, curVal.id] : [...prevVal],
           [] as string[]
         ) ?? []
       );

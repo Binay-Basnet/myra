@@ -41,20 +41,6 @@ export function AccountingFeatureCashTransferList(
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
-  const popoverTitle = [
-    {
-      title: 'memberListTableViewMemberProfile',
-    },
-    {
-      title: 'memberListTableEditMember',
-      onClick: (memberId?: string) =>
-        router.push(`/members/individual/edit/${memberId}`),
-    },
-    {
-      title: 'memberListTableMakeInactive',
-    },
-  ];
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -119,8 +105,20 @@ export function AccountingFeatureCashTransferList(
         accessorKey: 'actions',
         cell: (cell) => (
           <PopoverComponent
-            items={popoverTitle}
-            memberId={cell?.row?.original?.node?.id}
+            items={[
+              {
+                title: 'memberListTableViewMemberProfile',
+              },
+              {
+                title: 'memberListTableEditMember',
+                onClick: (member) =>
+                  router.push(`/members/individual/edit/${member?.id}`),
+              },
+              {
+                title: 'memberListTableMakeInactive',
+              },
+            ]}
+            member={cell?.row?.original?.node}
           />
         ),
         meta: {

@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id as KYMOptionEnum,
+  FormFieldSearchTerm,
   KymIndMemberInput,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
@@ -40,8 +40,7 @@ export const MemberKYMProfession = ({
 
   const { data: occupationData, isLoading: occupationLoading } =
     useGetIndividualKymOptionsQuery({
-      id,
-      filter: { customId: KYMOptionEnum.Occupation },
+      searchTerm: FormFieldSearchTerm.Occupation,
     });
 
   const { mutate } = useSetMemberDataMutation();
