@@ -12,8 +12,9 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   KymInsInput,
+  useDeleteSisterConcernsMutation,
   useGetNewIdMutation,
-  useSetInstitutionDataMutation,
+  useSetSisterConcernsMutation,
 } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 // import { KymIndMemberInput } from '@coop/shared/data-access';
@@ -21,55 +22,93 @@ import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IAddSisterConcern {
-  index: number;
-  removeSister: () => void;
+  removeSister: (sisterId: string) => void;
+  setKymCurrentSection: (section?: {
+    section: string;
+    subSection: string;
+  }) => void;
+  sisterId: string;
 }
 
-const AddSister = ({ index, removeSister }: IAddSisterConcern) => {
+const AddSister = ({
+  removeSister,
+  setKymCurrentSection,
+  sisterId,
+}: IAddSisterConcern) => {
   const { t } = useTranslation();
+  const methods = useForm();
+
+  const { watch } = methods;
+
+  const router = useRouter();
+
+  const id = String(router?.query?.['id']);
+
+  const { mutate } = useSetSisterConcernsMutation();
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        mutate({ id, sis: sisterId, data: { ...data } });
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
   return (
-    <DynamicBoxContainer>
-      <CloseIcon
-        cursor="pointer"
-        onClick={removeSister}
-        color="gray.500"
-        _hover={{
-          color: 'gray.900',
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSectionInstitution(e.target.id);
+          setKymCurrentSection(kymSection);
         }}
-        aria-label="close"
-        alignSelf="flex-end"
-      />
-      <Grid templateColumns={'repeat(2, 1fr)'} gap="s20">
-        <FormInput
-          type="text"
-          bg="white"
-          name={`sisterConcernDetails.${index}.name`}
-          label={t['kymInsNameofSisterConcern']}
-          placeholder={t['kymInsEnterNameofSisterConcern']}
-        />
-        <FormInput
-          type="text"
-          bg="white"
-          name={`sisterConcernDetails.${index}.natureOfBusiness`}
-          label={t['kymInsNatureofBusiness']}
-          placeholder={t['kymInsNatureofBusiness']}
-        />
-        <FormInput
-          type="text"
-          bg="white"
-          name={`sisterConcernDetails.${index}.address`}
-          label={t['kymInsAddress']}
-          placeholder={t['kymInsAddress']}
-        />
-        <FormInput
-          type="text"
-          bg="white"
-          name={`sisterConcernDetails.${index}.phoneNo`}
-          label={t['kymInsPhoneNo']}
-          placeholder={t['kymInsEnterPhoneNumber']}
-        />
-      </Grid>
-    </DynamicBoxContainer>
+      >
+        <DynamicBoxContainer>
+          <CloseIcon
+            cursor="pointer"
+            onClick={() => {
+              removeSister(sisterId);
+            }}
+            color="gray.500"
+            _hover={{
+              color: 'gray.900',
+            }}
+            aria-label="close"
+            alignSelf="flex-end"
+          />
+          <Grid templateColumns={'repeat(2, 1fr)'} gap="s20">
+            <FormInput
+              type="text"
+              bg="white"
+              name={'name'}
+              label={t['kymInsNameofSisterConcern']}
+              placeholder={t['kymInsEnterNameofSisterConcern']}
+            />
+            <FormInput
+              type="text"
+              bg="white"
+              name={`natureOfBusiness`}
+              label={t['kymInsNatureofBusiness']}
+              placeholder={t['kymInsNatureofBusiness']}
+            />
+            <FormInput
+              type="text"
+              bg="white"
+              name={`address`}
+              label={t['kymInsAddress']}
+              placeholder={t['kymInsAddress']}
+            />
+            <FormInput
+              type="text"
+              bg="white"
+              name={`phone`}
+              label={t['kymInsPhoneNo']}
+              placeholder={t['kymInsEnterPhoneNumber']}
+            />
+          </Grid>
+        </DynamicBoxContainer>
+      </form>
+    </FormProvider>
   );
 };
 
@@ -85,52 +124,37 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
   const { setSection } = props;
 
   const router = useRouter();
+  const id = String(router?.query?.['id']);
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
-  const { mutate } = useSetInstitutionDataMutation({
-    onSuccess: (res) => {
-      setError('institutionName', {
-        type: 'custom',
-        message:
-          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
-      });
-    },
-    onError: () => {
-      setError('institutionName', {
-        type: 'custom',
-        message: 'it is what it is',
-      });
-    },
-  });
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        // console.log(editValues);
-        // if (editValues && data) {
-        mutate({ id: router.query['id'] as string, data });
-        //   refetch();
-        // }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-  const {
-    fields: sisterFields,
-    append: sisterAppend,
-    remove: sisterRemove,
-  } = useFieldArray<any>({ control, name: 'sisterConcernDetails' });
 
   const [sisterIds, setSisterIds] = useState<string[]>([]);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
-      setSisterIds([...sisterIds, 'asdasdas']);
+      setSisterIds([...sisterIds, res.newId]);
+    },
+  });
+
+  const { mutate: deleteMutate } = useDeleteSisterConcernsMutation({
+    onSuccess: (res) => {
+      const deletedId = String(
+        res?.members?.institution?.sisterConcern?.Delete?.recordId
+      );
+
+      const tempSisterIds = [...sisterIds];
+
+      tempSisterIds.splice(tempSisterIds.indexOf(deletedId), 1);
+
+      setSisterIds([...tempSisterIds]);
     },
   });
 
   const addSister = () => {
     newIdMutate({});
+  };
+  const removeSister = (sisterId: string) => {
+    deleteMutate({ insId: id, sis: sisterId });
   };
 
   return (
@@ -151,12 +175,13 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
 
           <div>
             <DynamicBoxGroupContainer>
-              {sisterFields.map((item, index) => {
+              {sisterIds.map((id) => {
                 return (
-                  <Box key={item.id}>
+                  <Box key={id}>
                     <AddSister
-                      index={index}
-                      removeSister={() => sisterRemove(index)}
+                      removeSister={removeSister}
+                      setKymCurrentSection={setSection}
+                      sisterId={id}
                     />
                   </Box>
                 );
@@ -167,7 +192,7 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
                 leftIcon={<Icon size="md" as={AiOutlinePlus} />}
                 variant="outline"
                 onClick={() => {
-                  sisterAppend({});
+                  addSister();
                 }}
               >
                 {t['kymInsNewDetail']}

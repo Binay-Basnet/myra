@@ -16,64 +16,105 @@ const profession = ['professionId', 'profession', 'professional'];
 const mainOccupation = [
   'mainOccupation',
   'mainOccupationButton',
+  'removeMainOccupationButton',
   'isForeignEmployee',
-  'nameOfCountry',
-  'typeOfVisa',
+  'foreignEmpCountryId',
+  'typeOfVisaId',
+  'foreignEstimatedAnnualIncome',
   'estimatedAnnualIncome',
+  'occupationId',
+  'orgName',
+  'panVatNo',
+  'address',
+  'establishedDate',
+  'registrationNo',
+  'contact',
+  'isOwner',
 ];
-const spouceOccupation = ['spouseOccupation', 'spouseOccupationButton'];
+const spouceOccupation = [
+  'spouseOccupation',
+  'spouseOccupationButton',
+  'removeSpouseOccupationButton',
+  'spouseIsForeignEmployee',
+  'spouseForeignEmpCountryId',
+  'spouseTypeOfVisaId',
+  'spouseForeignEstimatedAnnualIncome',
+  'spouseEstimatedAnnualIncome',
+  'spouseOccupationId',
+  'spouseOrgName',
+  'spousePanVatNo',
+  'spouseAddress',
+  'spouseEstablishedDate',
+  'spouseRegistrationNo',
+  'spouseContact',
+  'spouseIsOwner',
+];
 const incomeSource = [
   'annualIncomeSourceId',
   'incomeSourceDetails',
   'incomeSourceDetailsButton',
+  'removeIncomeSourceButton',
+  'incomeSource',
+  'amount',
 ];
 const identificationDetails = [
   'identificationDetailsPersonal',
   'identificationFields',
   'citizenshipNo',
-  'citizenshipPlaceOfIssue',
+  'citizenshipIssuePlace',
   'citizenshipIssueDate',
-  'divingLicenseNo',
-  'divingLicensePlaceOfIssue',
-  'divingLicenseIssuedDate',
-  'passportNumber',
-  'passportPlaceOfIssue',
+  'drivingLicenseNo',
+  'drivingLicenseIssuePlace',
+  'drivingLicenseIssueDate',
+  'passportNo',
+  'passportIssuePlace',
   'passportIssueDate',
   'voterCardNo',
-  'pollingStation',
-  'nationalId',
+  'voterPollingStation',
+  'nationalIDNo',
+  'identificationSelection',
 ];
 const permanentAddress = [
   'permanentAddress.provinceId',
   'permanentAddress.districtId',
-  'permanentAddress.localLevelId',
+  'permanentAddress.localGovernmentId',
   'permanentAddress.wardNo',
   'permanentAddress.locality',
   'permanentAddress.houseNo',
-  'permanentAddress.coordinate',
+  'permanentAddress.coordinates',
 ];
 const temporaryAddress = [
   'sameTempAsPermanentAddress',
   'temporaryAddress.provinceId',
   'temporaryAddress.districtId',
-  'temporaryAddress.localLevelId',
+  'temporaryAddress.localGovernmentId',
   'temporaryAddress.wardNo',
   'temporaryAddress.locality',
   'temporaryAddress.houseNo',
-  'temporaryAddress.coordinate',
+  'temporaryAddress.coordinates',
 ];
 const incaseRented = ['landlordName', 'landlordContact'];
 const familyDetails = [
   'maritalStatusId',
   'familyDetails',
   'addFamilyMemberButton',
+  'relationshipId',
+  'fullName',
+  'familyDetailsDateOfBirth',
 ];
-const COOPmembership = ['purposeId', 'memberIdentityLevel'];
+const COOPmembership = [
+  'purposeId',
+  'memberIdentityLevel',
+  'kymAccIndMainPurposeofBecomingMember',
+];
 const anotherCoop = [
   'isMemberOfAnotherCooperative',
   'nameAddressCooperative',
   'memberNo',
   'otherMembershipDetails',
+  'otherCoopName',
+  'otherCoopBranchId',
+  'otherCoopMemberId',
 ];
 const familyInCoop = [
   'kymIndRelationship',
@@ -85,7 +126,13 @@ const familyInCoop = [
   'secondIntroducerId',
   'findmemberButton',
 ];
-const FinancialTransaction = ['financialTransaction'];
+const FinancialTransaction = [
+  'financialTransaction',
+  'initialShare',
+  'initialSaving',
+  'initialLoan',
+  'otherFinancialAmount',
+];
 const estimatedWithdrawal = [
   'estimatedAnnualTransactionAmount',
   'estimatedAnnualTransactionFrequencyId',

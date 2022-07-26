@@ -432,21 +432,21 @@ const KYMBasiccoopDetailsBasic = ({
                   <FormInput
                     type="text"
                     name="otherCoopName"
-                    label="Cooperative Name"
-                    placeholder="Cooperative Name"
+                    label={t['kymIndCooperativeName']}
+                    placeholder={t['kymIndCooperativeName']}
                   />
 
                   <FormSelect
                     name="otherCoopBranchId"
-                    label="Branch"
-                    placeholder="Select Branch"
+                    label={t['kymIndCooperativeBranch']}
+                    placeholder={t['kymIndCooperativeSelectBranch']}
                   />
 
                   <FormInput
                     type="text"
                     name="otherCoopMemberId"
-                    label="Member ID"
-                    placeholder="Member ID"
+                    label={t['kymIndCooperativeMemberID']}
+                    placeholder={t['kymIndCooperativeMemberID']}
                   />
                   {/* {otherCooperative?.members?.individual?.options?.list?.data?.[0]?.options?.map(
                     (option, optionIndex) => {
@@ -535,8 +535,7 @@ const KYMBasiccoopDetailsIntroducer = ({
       >
         <GroupContainer>
           <Text fontWeight="600" fontSize="r1">
-            {' '}
-            Introducers
+            {t['kymIndIntroducers']}
           </Text>
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
             <FormInput

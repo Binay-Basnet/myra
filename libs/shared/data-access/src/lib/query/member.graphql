@@ -371,7 +371,10 @@ query getKYMDocumentsList($memberId: String!) {
       listKYMDocuments(memberId: $memberId) {
         data {
           fieldId
-          identifier
+          docData {
+            identifier
+            url
+          }
         }
       }
     }
