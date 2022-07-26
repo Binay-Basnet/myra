@@ -14,6 +14,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import { isEmpty, isEqual, xorWith } from 'lodash';
 
 import { useGetPreSignedUrlMutation } from '@coop/shared/data-access';
 
@@ -44,6 +45,9 @@ const DefaultFileIcon = () => {
   );
 };
 
+export const isArrayEqual = <T,>(x: T[], y: T[]) =>
+  isEmpty(xorWith(x, y, isEqual));
+
 export interface FileInputProps extends Omit<DropzoneOptions, 'maxFiles'> {
   size?: 'sm' | 'md' | 'lg';
   dropText?: string;
@@ -63,8 +67,12 @@ export function FileInput({
   const [files, setFiles] = useState<File[]>([]);
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [alreadyAddedFiles, setAlreadyAddedFiles] = useState<
-    { url?: string; fileName: string }[]
-  >([...(value ?? [])]);
+    { url?: string; fileName: string }[] | null
+  >(null);
+
+  // console.log(JSON.stringify(alreadyAddedFiles, null, 2), 'files-already');
+  // console.log(JSON.stringify(value, null, 2), 'files-value');
+  // console.log(fileNames, 'files-name');
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles((prev) => [...prev, ...acceptedFiles]);
@@ -95,7 +103,21 @@ export function FileInput({
     if (onChange) {
       onChange(fileNames);
     }
-  }, [fileNames]);
+  }, [fileNames.length]);
+
+  useEffect(() => {
+    if (
+      (!alreadyAddedFiles || alreadyAddedFiles?.length === 0) &&
+      !files.some((file) =>
+        value?.some((valueFile) => valueFile.fileName === file.name)
+      ) &&
+      files.length === 0
+    ) {
+      if (value) {
+        setAlreadyAddedFiles(value);
+      }
+    }
+  }, [JSON.stringify(value)]);
 
   return (
     <Box display="flex" flexDirection="column" gap="s12">
@@ -153,18 +175,20 @@ export function FileInput({
         </Fragment>
       ))}
 
-      {alreadyAddedFiles.map((fileUrl) => (
-        <Fragment key={fileUrl.url}>
+      {alreadyAddedFiles?.map((fileUrl) => (
+        <Fragment key={fileUrl?.url}>
           <FileUrlPreview
             setFileNames={setFileNames}
-            fileName={fileUrl.fileName}
-            fileUrl={String(fileUrl.url)}
+            fileName={fileUrl?.fileName}
+            fileUrl={String(fileUrl?.url)}
             size={size}
-            remove={() =>
+            remove={() => {
               setAlreadyAddedFiles((prev) =>
-                prev.filter((f) => f.fileName !== fileUrl.fileName)
-              )
-            }
+                prev
+                  ? prev.filter((f) => f.fileName !== fileUrl.fileName)
+                  : null
+              );
+            }}
           />
         </Fragment>
       ))}
@@ -302,19 +326,17 @@ export const FilePreview = ({
               )}
             </Box>
           )}
-          <Icon
-            as={IoClose}
-            size="lg"
-            cursor="pointer"
-            onClick={() => {
-              remove && remove();
-              setFileNames &&
-                setFileNames((prev) =>
-                  prev.filter((name) => name !== fileName)
-                );
-            }}
-          />
         </Box>
+        <Icon
+          as={IoClose}
+          size="lg"
+          cursor="pointer"
+          onClick={() => {
+            remove && remove();
+            setFileNames &&
+              setFileNames((prev) => prev.filter((name) => name !== fileName));
+          }}
+        />
 
         <Modal isOpen={isOpen} onClose={onClose} size="xl">
           <ModalOverlay />
@@ -360,11 +382,14 @@ export const FileUrlPreview = ({
       if (!fileUrl) return;
 
       const response = await fetch(fileUrl);
+
       const contentType = response.headers.get('content-type');
       const blob = await response.blob();
-      const file = new File([blob], 'image.jpg', { type: contentType! });
+      const file = new File([blob], fileName, {
+        // Todo use switch case for this type using extension of filename
+        type: 'image/jpeg',
+      });
 
-      console.log(file);
       setFile(file);
     };
 
@@ -439,7 +464,6 @@ export const FileUrlPreview = ({
             setFileNames((prev) => prev.filter((name) => name !== fileName));
           }}
         />
-
         <Modal isOpen={isOpen} onClose={onClose} size="xl">
           <ModalOverlay />
 
