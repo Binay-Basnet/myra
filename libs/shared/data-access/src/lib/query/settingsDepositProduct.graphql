@@ -1,3 +1,44 @@
+query getDepositProductSettingsList(
+  $paginate: Pagination
+  $filter: DepositProductSearchFilter
+) {
+  settings {
+    general {
+      depositProduct {
+        list(paginate: $paginate, filter: $filter) {
+          edges {
+            node {
+              id
+              objState
+              productCode
+              productName
+              nature
+              interest
+              interest
+              createdDate
+              typeOfMember
+              createdAt
+              createdBy {
+                id
+                name
+                username
+                userType
+              }
+              modifiedAt
+              modifiedBy {
+                id
+                name
+                username
+                userType
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 query getDepositProductSettingsEditData($id: ID!) {
   settings {
     general {
@@ -57,7 +98,7 @@ query getDepositProductSettingsEditData($id: ID!) {
               maxRate
               defaultRate
               ceoAuthority
-              boardAuthoriy
+              boardAuthority
               additionalRate
             }
             ladderRate

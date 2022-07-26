@@ -12,6 +12,7 @@ import {
   DepositProductInput,
   NatureOfDepositProduct,
   useGetDepositProductSettingsEditDataQuery,
+  useGetDepositProductSettingsListQuery,
   useSetDepositProductMutation,
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
@@ -19,6 +20,7 @@ import {
   Box,
   Button,
   Container,
+  DEFAULT_PAGE_SIZE,
   FormFooter,
   GridItem,
   Icon,
@@ -57,6 +59,10 @@ export function SettingsDepositProductsAdd(
 
   const { mutate } = useSetDepositProductMutation();
 
+  const { data, isFetching } = useGetDepositProductSettingsListQuery();
+
+  console.log(data);
+
   const optionsSaving = [
     {
       label: t['depositProductRecurringSaving'],
@@ -87,12 +93,49 @@ export function SettingsDepositProductsAdd(
   const {
     // control, handleSubmit,
     getValues,
+    setValue,
     watch,
     //  setError
   } = methods;
   const depositNature = watch('nature');
 
   const submitForm = () => {
+    const values = getValues();
+
+    setValue(
+      'genderId',
+      values?.genderId?.map((data) => data?.value)
+    );
+
+    setValue(
+      'maritalStatusId',
+      values?.maritalStatusId?.map((data) => data?.value)
+    );
+
+    setValue(
+      'educationQualification',
+      values?.educationQualification?.map((data) => data?.value)
+    );
+
+    setValue(
+      'occupation',
+      values?.occupation?.map((data) => data?.value)
+    );
+
+    setValue(
+      'ethnicity',
+      values?.ethnicity?.map((data) => data?.value)
+    );
+
+    setValue(
+      'natureOFBusinessCoop',
+      values?.natureOFBusinessCoop?.map((data) => data?.value)
+    );
+
+    setValue(
+      'natureOfBusinessInstitution',
+      values?.natureOfBusinessInstitution?.map((data) => data?.value)
+    );
     console.log(getValues());
     mutate({ id: '', data: getValues() });
   };
