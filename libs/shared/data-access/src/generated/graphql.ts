@@ -210,11 +210,13 @@ export type AffiliatedDirectorDetailsType = {
 };
 
 export type AmountLimit = {
+  avgAmount?: InputMaybe<Scalars['String']>;
   maxAmount?: InputMaybe<Scalars['String']>;
   minAmount?: InputMaybe<Scalars['String']>;
 };
 
 export type AmountLimitFormState = {
+  avgAmount?: Maybe<Scalars['String']>;
   maxAmount?: Maybe<Scalars['String']>;
   minAmount?: Maybe<Scalars['String']>;
 };
@@ -463,7 +465,7 @@ export type Branch = {
 export type BranchAddResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<GeneralBranchSettingsQuery>;
-  record: Branch;
+  record?: Maybe<Branch>;
   recordId: Scalars['ID'];
 };
 
@@ -1353,7 +1355,7 @@ export type DepositProductFormStateData = {
   institutionDocuments?: Maybe<Array<Maybe<InstitutionRequiredDocument>>>;
   interest?: Maybe<InterestFormState>;
   ladderRate?: Maybe<Scalars['Boolean']>;
-  ladderRateData: Array<Maybe<LadderRateFormState>>;
+  ladderRateData?: Maybe<Array<Maybe<LadderRateFormState>>>;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxAge?: Maybe<Scalars['Int']>;
   maxPostingFreqDifference?: Maybe<Scalars['Int']>;
@@ -1428,7 +1430,7 @@ export type DepositProductInput = {
   natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   penalty?: InputMaybe<Scalars['Boolean']>;
-  penaltyData: PenaltyInput;
+  penaltyData?: InputMaybe<PenaltyInput>;
   percentageOfDeposit?: InputMaybe<Scalars['Float']>;
   postingFrequency?: InputMaybe<Frequency>;
   prematurePenalty?: InputMaybe<PrematurePenalty>;
@@ -2481,6 +2483,7 @@ export enum FormFieldSearchTerm {
   Ethnicity = 'ETHNICITY',
   FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
   FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
+  ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
   Gender = 'GENDER',
   MaritalStatus = 'MARITAL_STATUS',
   Nationality = 'NATIONALITY',
@@ -3386,8 +3389,13 @@ export type KymDisplayOptionCategory = {
 };
 
 export type KymDocument = {
+  docData: Array<Maybe<KymDocumentData>>;
   fieldId?: Maybe<Scalars['String']>;
-  identifier: Array<Maybe<Scalars['String']>>;
+};
+
+export type KymDocumentData = {
+  identifier: Scalars['String'];
+  url: Scalars['String'];
 };
 
 export type KymDocumentMutation = {
@@ -6603,7 +6611,7 @@ export type PenaltyInput = {
   minimumAmount?: InputMaybe<Scalars['String']>;
   penaltyAmount?: InputMaybe<Scalars['String']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
-  rateType: PenaltyRateType;
+  rateType?: InputMaybe<PenaltyRateType>;
 };
 
 export enum PenaltyRateType {
@@ -7258,7 +7266,7 @@ export type SetBranchDataMutationVariables = Exact<{
 }>;
 
 
-export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record: { id: string }, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
+export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
 export type SetNewCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
@@ -7773,7 +7781,7 @@ export type GetKymDocumentsListQueryVariables = Exact<{
 }>;
 
 
-export type GetKymDocumentsListQuery = { members: { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, identifier: Array<string | null> } | null> | null } } } };
+export type GetKymDocumentsListQuery = { members: { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, docData: Array<{ identifier: string, url: string } | null> } | null> | null } } } };
 
 export type GetKymSettingsFieldsQueryVariables = Exact<{
   filter?: InputMaybe<ListKymFieldFilter>;
@@ -7805,7 +7813,7 @@ export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: string | null, maxAmount?: string | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: string | null, penaltyRate?: number | null, penaltyAmount?: string | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: string | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: string | null, maxAmount?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData: Array<{ type?: string | null, amount?: string | null, rate?: number | null } | null>, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: string | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: string | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: string | null, maxAmount?: string | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: string | null, penaltyRate?: number | null, penaltyAmount?: string | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: string | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: string | null, maxAmount?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: string | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: string | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: string | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10174,7 +10182,10 @@ export const GetKymDocumentsListDocument = `
       listKYMDocuments(memberId: $memberId) {
         data {
           fieldId
-          identifier
+          docData {
+            identifier
+            url
+          }
         }
       }
     }
