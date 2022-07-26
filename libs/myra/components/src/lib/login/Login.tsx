@@ -29,22 +29,14 @@ export const Login = () => {
     setPassword(e.target.value);
   };
   const handleSubmit = () => {
-    mutateAsync({ data: { username: userName, password } }).then(
-      (res) => {
-        const accessToken = res?.auth?.login?.record?.token?.access;
-        const refreshToken = res?.auth?.login?.record?.token?.refresh;
-        const user = res?.auth?.login?.record?.user;
-        auth.setAuthentication &&
-          auth?.setAuthentication({ accessToken: accessToken, user: user });
-        localStorage.setItem('refreshToken', refreshToken ?? '');
-      }
-
-      // auth.setAuth({acces})
-    );
-    // if (userName === 'neosys' && password === 'neosys@123') {
-    //   localStorage.setItem('isLoggedIn', 'true');
-    //   typeof window !== 'undefined' && window.location.reload();
-    // }
+    mutateAsync({ data: { username: userName, password } }).then((res) => {
+      const accessToken = res?.auth?.login?.record?.token?.access;
+      const refreshToken = res?.auth?.login?.record?.token?.refresh;
+      const user = res?.auth?.login?.record?.user;
+      auth.authenticate &&
+        auth?.authenticate({ accessToken: accessToken, user: user });
+      localStorage.setItem('refreshToken', refreshToken ?? '');
+    });
   };
 
   return (

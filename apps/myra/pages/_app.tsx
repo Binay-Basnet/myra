@@ -6,8 +6,10 @@ import { Provider } from 'react-redux';
 import type { NextPage } from 'next';
 import type { AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 import { Spinner } from '@chakra-ui/react';
+import axios from 'axios';
 
 import { Login } from '@coop/myra/components';
 import { useGetMeQuery } from '@coop/shared/data-access';
@@ -60,31 +62,83 @@ interface ManAppProps extends AppInitialProps {
   Component: NextPageWithLayout;
 }
 
+const useRefreshToken = (url: string) => {
+  const history = useRouter();
+
+  const refreshToken = () => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!refreshToken) return Promise.reject(() => 'No refresh Token');
+    return axios
+      .post(url, {
+        query: `mutation{
+          auth{
+            token(refreshToken:"${refreshToken}"){
+            token{
+              refresh
+              access
+            }
+            }
+          }
+        }`,
+      })
+      .then((res) => {
+        return res.data?.access;
+      })
+      .catch((err) => {
+        history.replace('/');
+      });
+  };
+
+  return refreshToken;
+};
+
 function MainApp({ Component, pageProps }: ManAppProps) {
+  const [triggerQuery, setTriggerQuery] = React.useState(false);
   const auth = useAuth();
-  const getMe = useGetMeQuery();
-  console.log('get me', getMe);
+  const getMe = useGetMeQuery(
+    {},
+    {
+      enabled: triggerQuery,
+      onSuccess: () => {
+        setTriggerQuery(false);
+      },
+    }
+  );
 
-  const getLayout = Component.getLayout || ((page) => page);
+  const url = process.env['NX_SCHEMA_PATH'] ?? '';
+  const refreshToken = useRefreshToken(url);
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(null);
+  console.log('get me', 'hello', getMe);
+
+  const hasDataReturned = getMe?.data?.auth;
+  const isDatasuccessfull = getMe?.data?.auth?.me?.data;
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('refreshToken');
-
-    typeof window !== 'undefined' &&
-      setIsLoggedIn(Boolean(isLoggedIn || false));
+    console.log('hello123');
+    refreshToken().then((res) => setTriggerQuery(true));
+    // const localStorage.getItem("refreshToken")
   }, []);
+  useEffect(() => {
+    if (hasDataReturned) {
+      if (isDatasuccessfull) {
+        auth.authenticate(auth?.auth);
+      } else {
+        auth.logout();
+      }
+    }
+  }, [hasDataReturned, isDatasuccessfull]);
+  // getMe.data.auth.me
+  const getLayout = Component.getLayout || ((page) => page);
 
   useSnap();
-  console.log('auth', auth);
+  console.log('hello123', auth?.isLogged);
   return (
     <>
       <Head>
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
       <ToastContainer />
-      {isLoggedIn === null ? (
+      {auth.isLogged === null ? (
         <Box
           h="100vh"
           display="flex"
@@ -93,7 +147,7 @@ function MainApp({ Component, pageProps }: ManAppProps) {
         >
           <Spinner />
         </Box>
-      ) : isLoggedIn ? (
+      ) : auth?.isLogged ? (
         <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       ) : (
         <main className="app">

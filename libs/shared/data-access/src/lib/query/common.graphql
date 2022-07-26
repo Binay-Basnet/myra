@@ -9,6 +9,12 @@ fragment MutationError on MutationError {
     message
     code
   }
+
+  ... on AuthorizationError {
+    __typename
+    message
+    code
+  }
 }
 
 fragment KYMFieldData on KYMFieldData {
