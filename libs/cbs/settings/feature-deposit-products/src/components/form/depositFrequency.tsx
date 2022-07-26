@@ -19,6 +19,7 @@ export const DepositFrequency = () => {
   const { watch } = useFormContext();
   const penalty = watch('penalty');
   const rebate = watch('rebate');
+  const penaltyType = watch('penaltyData.rateType');
   const { t } = useTranslation();
 
   const DepositFrequencyOptions = [
@@ -78,6 +79,11 @@ export const DepositFrequency = () => {
           label={t['depositProductMaximumAmount']}
           placeholder={t['depositProductEnterMaximumAmount']}
         />
+        <FormInput
+          name="depositAmount.avgAmount"
+          label={t['depositProductAverage']}
+          placeholder={t['depositProductAverage']}
+        />
       </InputGroupContainer>
 
       <TextBoxContainer>
@@ -120,12 +126,37 @@ export const DepositFrequency = () => {
             </GridItem>
           </Grid>
           <InputGroupContainer>
-            <FormInput
-              name="penaltyData.flatRatePenalty"
-              type="number"
-              label={t['depositProductFlatratePenalty']}
-              placeholder={t['depositProductFlatratePenalty']}
-            />
+            {penaltyType === PenaltyRateType.FlatRate && (
+              <FormInput
+                name="penaltyData.flatRatePenalty"
+                type="number"
+                label={t['depositProductFlatratePenalty']}
+                placeholder={t['depositProductFlatratePenalty']}
+              />
+            )}
+            {penaltyType === PenaltyRateType.RelativeRate && (
+              <FormInput
+                name="penaltyData.penaltyRate"
+                type="number"
+                label={t['depositProductPenalty']}
+                textAlign={'right'}
+                placeholder="0.00"
+                rightElement={
+                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                    %
+                  </Text>
+                }
+              />
+            )}
+
+            {penaltyType === PenaltyRateType.RelativeRate && (
+              <FormInput
+                name="penaltyData.penaltyAmount"
+                type="number"
+                label={t['depositProductPenaltyAmount']}
+                placeholder={t['depositProductPenaltyAmount']}
+              />
+            )}
           </InputGroupContainer>
         </BoxContainer>
       )}

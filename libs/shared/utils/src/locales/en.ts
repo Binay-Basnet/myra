@@ -2878,6 +2878,9 @@ const en: Record<string, string> = {
   depositProductEffectiveDaysFromStart: 'Effective Days From Start',
   depositProductRemainingDaystoGetMatured: 'Remaining Days to Get Matured',
   depositProductForeignEmployment: 'Foreign Employment',
+  depositProductPenalty: 'Penalty',
+  depositProductPenaltyAmount: 'Penalty Amount',
+  depositProductEdit: 'Edit',
 };
 
 export default en;
