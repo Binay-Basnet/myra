@@ -70,6 +70,8 @@ const AddFamilyMember = ({
   setKymCurrentSection,
   familyMemberId,
 }: IAddFamilyMember) => {
+  const { t } = useTranslation();
+
   const methods = useForm();
 
   const { watch, reset } = methods;
@@ -145,42 +147,24 @@ const AddFamilyMember = ({
           <InputGroupContainer>
             <FormSelect
               name="relationshipId"
-              label="Relationship"
-              placeholder="Select Relationship"
+              label={t['kymIndRelationship']}
+              placeholder={t['kymIndSelectRelationship']}
               options={getFieldOption(relationshipData)}
             />
 
             <FormInput
               type="text"
               name="fullName"
-              label="Full Name"
-              placeholder="Full Name"
+              label={t['kymIndFullName']}
+              placeholder={t['kymIndEnterFullName']}
             />
 
             <FormInput
               type="date"
               name="dateOfBirth"
-              label="Date of Birth (BS)"
+              id="familyDetailsDateOfBirth"
+              label={t['kymIndDateofBirthBS']}
             />
-
-            {/* {familyDetailsFieldsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
-          (option, optionIndex) => (
-            <FamilyMemberInput
-              key={optionIndex}
-              fieldIndex={index}
-              optionIndex={optionIndex}
-              option={option}
-            />
-            //  <FormInputWithType
-            //               formType={option?.fieldType}
-            //               id="identificationFields"
-            //               type={option?.fieldType}
-            //               name={`identification.${fieldIndex}.options.${optionIndex}.value`}
-            //               label={String(option?.name?.local)}
-            //               placeholder={String(option?.name?.local)}
-            //             />
-          )
-        )} */}
           </InputGroupContainer>
         </form>
       </FormProvider>
@@ -215,12 +199,6 @@ const MemberMaritalStatus = ({
 
   const { data: editValues } = useGetIndividualKymEditDataQuery({
     id: id,
-  });
-
-  console.log({
-    ind: 'marital status info',
-    data: editValues?.members?.individual?.formState?.data?.formData
-      ?.maritalStatusId,
   });
 
   useEffect(() => {
@@ -377,6 +355,7 @@ const MemberFamilyDetails = ({
 
 interface IMemberKYMFamilyDetailsProps {
   setKymCurrentSection: (section?: {
+    ERR_CONNECTION_REFUSED;
     section: string;
     subSection: string;
   }) => void;

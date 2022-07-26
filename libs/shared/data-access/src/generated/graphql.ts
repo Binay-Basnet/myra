@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Amount: any;
   Any: unknown;
   Cursor: string;
   Date: string;
@@ -210,13 +211,15 @@ export type AffiliatedDirectorDetailsType = {
 };
 
 export type AmountLimit = {
-  maxAmount?: InputMaybe<Scalars['String']>;
-  minAmount?: InputMaybe<Scalars['String']>;
+  avgAmount?: InputMaybe<Scalars['Amount']>;
+  maxAmount?: InputMaybe<Scalars['Amount']>;
+  minAmount?: InputMaybe<Scalars['Amount']>;
 };
 
 export type AmountLimitFormState = {
-  maxAmount?: Maybe<Scalars['String']>;
-  minAmount?: Maybe<Scalars['String']>;
+  avgAmount?: Maybe<Scalars['Amount']>;
+  maxAmount?: Maybe<Scalars['Amount']>;
+  minAmount?: Maybe<Scalars['Amount']>;
 };
 
 export enum Arrange {
@@ -463,7 +466,7 @@ export type Branch = {
 export type BranchAddResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<GeneralBranchSettingsQuery>;
-  record: Branch;
+  record?: Maybe<Branch>;
   recordId: Scalars['ID'];
 };
 
@@ -1353,7 +1356,7 @@ export type DepositProductFormStateData = {
   institutionDocuments?: Maybe<Array<Maybe<InstitutionRequiredDocument>>>;
   interest?: Maybe<InterestFormState>;
   ladderRate?: Maybe<Scalars['Boolean']>;
-  ladderRateData: Array<Maybe<LadderRateFormState>>;
+  ladderRateData?: Maybe<Array<Maybe<LadderRateFormState>>>;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxAge?: Maybe<Scalars['Int']>;
   maxPostingFreqDifference?: Maybe<Scalars['Int']>;
@@ -1428,7 +1431,7 @@ export type DepositProductInput = {
   natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   penalty?: InputMaybe<Scalars['Boolean']>;
-  penaltyData: PenaltyInput;
+  penaltyData?: InputMaybe<PenaltyInput>;
   percentageOfDeposit?: InputMaybe<Scalars['Float']>;
   postingFrequency?: InputMaybe<Frequency>;
   prematurePenalty?: InputMaybe<PrematurePenalty>;
@@ -2481,6 +2484,7 @@ export enum FormFieldSearchTerm {
   Ethnicity = 'ETHNICITY',
   FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
   FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
+  ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
   Gender = 'GENDER',
   MaritalStatus = 'MARITAL_STATUS',
   Nationality = 'NATIONALITY',
@@ -2647,30 +2651,51 @@ export type FormQueryDynamicFieldsArgs = {
 };
 
 export enum FormSearchTerm {
+  AccountHolderDeclaration = 'ACCOUNT_HOLDER_DECLARATION',
+  AccountHolderDetails = 'ACCOUNT_HOLDER_DETAILS',
+  AccountHolderDocuments = 'ACCOUNT_HOLDER_DOCUMENTS',
+  AccountOperator = 'ACCOUNT_OPERATOR',
+  AccountOperatorDetails = 'ACCOUNT_OPERATOR_DETAILS',
+  AccountOperatorDocument = 'ACCOUNT_OPERATOR_DOCUMENT',
+  BankAccountDetails = 'BANK_ACCOUNT_DETAILS',
   Certificate = 'CERTIFICATE',
   ContactDetails = 'CONTACT_DETAILS',
+  Director = 'DIRECTOR',
+  DirectorsAffiliationDetails = 'DIRECTORS_AFFILIATION_DETAILS',
+  DirectorDetails = 'DIRECTOR_DETAILS',
+  DirectorDocument = 'DIRECTOR_DOCUMENT',
   DrivingLicense = 'DRIVING_LICENSE',
   EducationQualification = 'EDUCATION_QUALIFICATION',
   EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
   Ethnicity = 'ETHNICITY',
+  ExpectedMonthlyTransaction = 'EXPECTED_MONTHLY_TRANSACTION',
+  ExpectedMonthlyTurnover = 'EXPECTED_MONTHLY_TURNOVER',
   FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
   FamilyInformation = 'FAMILY_INFORMATION',
   FileUploads = 'FILE_UPLOADS',
   FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
   ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
+  /**  KYM_INDIVIDUAL  */
   Gender = 'GENDER',
   Identification = 'IDENTIFICATION',
   IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
+  InstitutionFileUpload = 'INSTITUTION_FILE_UPLOAD',
   MaritalStatus = 'MARITAL_STATUS',
   Nationality = 'NATIONALITY',
   NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
   Occupation = 'OCCUPATION',
+  /**  KYM_INDIVIDUAL && KYM_INSTITUTION */
   OccupationDetails = 'OCCUPATION_DETAILS',
+  /** KYM_INSTITUTION  */
+  OrganizationType = 'ORGANIZATION_TYPE',
   OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
   Passport = 'PASSPORT',
   Purpose = 'PURPOSE',
+  RegisteredDetails = 'REGISTERED_DETAILS',
   Relationship = 'RELATIONSHIP',
   Religion = 'RELIGION',
+  SisterConcernDetails = 'SISTER_CONCERN_DETAILS',
+  TransactionDetails = 'TRANSACTION_DETAILS',
   VoterId = 'VOTER_ID'
 }
 
@@ -3386,8 +3411,13 @@ export type KymDisplayOptionCategory = {
 };
 
 export type KymDocument = {
+  docData: Array<Maybe<KymDocumentData>>;
   fieldId?: Maybe<Scalars['String']>;
-  identifier: Array<Maybe<Scalars['String']>>;
+};
+
+export type KymDocumentData = {
+  identifier: Scalars['String'];
+  url: Scalars['String'];
 };
 
 export type KymDocumentMutation = {
@@ -5817,13 +5847,13 @@ export type KymOccupationDetailsType = {
 };
 
 export type LadderRate = {
-  amount?: InputMaybe<Scalars['String']>;
+  amount?: InputMaybe<Scalars['Amount']>;
   rate?: InputMaybe<Scalars['Float']>;
   type?: InputMaybe<Scalars['String']>;
 };
 
 export type LadderRateFormState = {
-  amount?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['Amount']>;
   rate?: Maybe<Scalars['Float']>;
   type?: Maybe<Scalars['String']>;
 };
@@ -5905,7 +5935,7 @@ export type LoanProduct = Base & {
   maxAge?: Maybe<Scalars['Int']>;
   maxGraceDurationUnit?: Maybe<Frequency>;
   maxGraceDurationUnitNumber?: Maybe<Scalars['Int']>;
-  maxLoanAmount?: Maybe<Scalars['String']>;
+  maxLoanAmount?: Maybe<Scalars['Amount']>;
   maxTenure?: Maybe<Scalars['Boolean']>;
   maxTenureUnit?: Maybe<Frequency>;
   maxTenureUnitNumber?: Maybe<Scalars['Int']>;
@@ -5915,7 +5945,7 @@ export type LoanProduct = Base & {
   minTenure?: Maybe<Scalars['Boolean']>;
   minTenureUnit?: Maybe<Frequency>;
   minTenureUnitNumber?: Maybe<Scalars['Int']>;
-  minimumLoanAmount?: Maybe<Scalars['String']>;
+  minimumLoanAmount?: Maybe<Scalars['Amount']>;
   modeOfPayment?: Maybe<LoanPaymentMode>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -5977,7 +6007,7 @@ export type LoanProductInput = {
   maxAge?: InputMaybe<Scalars['Int']>;
   maxGraceDurationUnit?: InputMaybe<Frequency>;
   maxGraceDurationUnitNumber?: InputMaybe<Scalars['Int']>;
-  maxLoanAmount?: InputMaybe<Scalars['String']>;
+  maxLoanAmount?: InputMaybe<Scalars['Amount']>;
   maxTenure?: InputMaybe<Scalars['Boolean']>;
   maxTenureUnit?: InputMaybe<Frequency>;
   maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
@@ -5987,7 +6017,7 @@ export type LoanProductInput = {
   minTenure?: InputMaybe<Scalars['Boolean']>;
   minTenureUnit?: InputMaybe<Frequency>;
   minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
-  minimumLoanAmount?: InputMaybe<Scalars['String']>;
+  minimumLoanAmount?: InputMaybe<Scalars['Amount']>;
   modeOfPayment?: InputMaybe<LoanPaymentMode>;
   natureOFBusinessCoop?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -6581,29 +6611,29 @@ export type Pagination = {
 
 export type Penalty = {
   dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
-  flatRatePenalty?: Maybe<Scalars['String']>;
-  minimumAmount?: Maybe<Scalars['String']>;
-  penaltyAmount?: Maybe<Scalars['String']>;
+  flatRatePenalty?: Maybe<Scalars['Float']>;
+  minimumAmount?: Maybe<Scalars['Amount']>;
+  penaltyAmount?: Maybe<Scalars['Amount']>;
   penaltyRate?: Maybe<Scalars['Float']>;
   rateType?: Maybe<PenaltyRateType>;
 };
 
 export type PenaltyFormState = {
   dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
-  flatRatePenalty?: Maybe<Scalars['String']>;
+  flatRatePenalty?: Maybe<Scalars['Float']>;
   minimumAmount?: Maybe<Scalars['String']>;
-  penaltyAmount?: Maybe<Scalars['String']>;
+  penaltyAmount?: Maybe<Scalars['Amount']>;
   penaltyRate?: Maybe<Scalars['Float']>;
   rateType?: Maybe<PenaltyRateType>;
 };
 
 export type PenaltyInput = {
   dayAfterInstallmentDate?: InputMaybe<Scalars['Int']>;
-  flatRatePenalty?: InputMaybe<Scalars['String']>;
-  minimumAmount?: InputMaybe<Scalars['String']>;
-  penaltyAmount?: InputMaybe<Scalars['String']>;
+  flatRatePenalty?: InputMaybe<Scalars['Float']>;
+  minimumAmount?: InputMaybe<Scalars['Amount']>;
+  penaltyAmount?: InputMaybe<Scalars['Amount']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
-  rateType: PenaltyRateType;
+  rateType?: InputMaybe<PenaltyRateType>;
 };
 
 export enum PenaltyRateType {
@@ -6649,7 +6679,7 @@ export type PredefinedFormQueryDetailsArgs = {
 
 export type PrematurePenalty = {
   noOfDays?: InputMaybe<Scalars['Int']>;
-  penaltyAmount?: InputMaybe<Scalars['String']>;
+  penaltyAmount?: InputMaybe<Scalars['Amount']>;
   penaltyDateType?: InputMaybe<PrematurePenaltyDateType>;
   penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
@@ -6662,7 +6692,7 @@ export enum PrematurePenaltyDateType {
 
 export type PrematurePenaltyFormState = {
   noOfDays?: Maybe<Scalars['Int']>;
-  penaltyAmount?: Maybe<Scalars['String']>;
+  penaltyAmount?: Maybe<Scalars['Amount']>;
   penaltyDateType?: Maybe<PrematurePenaltyDateType>;
   penaltyLedgerMapping?: Maybe<Scalars['String']>;
   penaltyRate?: Maybe<Scalars['Float']>;
@@ -6728,21 +6758,21 @@ export type Rebate = {
   daysBeforeInstallmentDate?: Maybe<Scalars['Int']>;
   noOfInstallment?: Maybe<Scalars['Int']>;
   percentage?: Maybe<Scalars['Float']>;
-  rebateAmount?: Maybe<Scalars['String']>;
+  rebateAmount?: Maybe<Scalars['Amount']>;
 };
 
 export type RebateFormState = {
   daysBeforeInstallmentDate?: Maybe<Scalars['Int']>;
   noOfInstallment?: Maybe<Scalars['Int']>;
   percentage?: Maybe<Scalars['Float']>;
-  rebateAmount?: Maybe<Scalars['String']>;
+  rebateAmount?: Maybe<Scalars['Amount']>;
 };
 
 export type RebateInput = {
   daysBeforeInstallmentDate?: InputMaybe<Scalars['Int']>;
   noOfInstallment?: InputMaybe<Scalars['Int']>;
   percentage?: InputMaybe<Scalars['Float']>;
-  rebateAmount?: InputMaybe<Scalars['String']>;
+  rebateAmount?: InputMaybe<Scalars['Amount']>;
 };
 
 export type RecentTransactionFilter = {
@@ -6800,13 +6830,13 @@ export type ServerError = {
 };
 
 export type ServiceType = {
-  amount?: InputMaybe<Scalars['String']>;
+  amount?: InputMaybe<Scalars['Amount']>;
   ledgerName?: InputMaybe<Scalars['String']>;
   serviceName?: InputMaybe<Scalars['String']>;
 };
 
 export type ServiceTypeFormState = {
-  amount?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['Amount']>;
   ledgerName?: Maybe<Scalars['String']>;
   serviceName?: Maybe<Scalars['String']>;
 };
@@ -7258,7 +7288,7 @@ export type SetBranchDataMutationVariables = Exact<{
 }>;
 
 
-export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record: { id: string }, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
+export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
 export type SetNewCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
@@ -7441,6 +7471,57 @@ export type SetInstitutionDataMutationVariables = Exact<{
 
 
 export type SetInstitutionDataMutation = { members: { institution?: { add?: { recordId: string, error?: { error?: Record<string, Array<string>> | null } | null } | null } | null } };
+
+export type SetSisterConcernsMutationVariables = Exact<{
+  id: Scalars['ID'];
+  sis: Scalars['ID'];
+  data: KymInsSisterConcernInput;
+}>;
+
+
+export type SetSisterConcernsMutation = { members: { institution?: { sisterConcern?: { Upsert?: { recordId: string } | null } | null } | null } };
+
+export type DeleteSisterConcernsMutationVariables = Exact<{
+  insId: Scalars['ID'];
+  sis: Scalars['ID'];
+}>;
+
+
+export type DeleteSisterConcernsMutation = { members: { institution?: { sisterConcern?: { Delete?: { recordId: string } | null } | null } | null } };
+
+export type SetAddDirectorInstitutionMutationVariables = Exact<{
+  id: Scalars['ID'];
+  dir: Scalars['ID'];
+  data: KymInsDirectorInput;
+}>;
+
+
+export type SetAddDirectorInstitutionMutation = { members: { institution?: { director?: { Upsert?: { recordId: string } | null } | null } | null } };
+
+export type DeleteDirectorInstitutionMutationVariables = Exact<{
+  insId: Scalars['ID'];
+  dir: Scalars['ID'];
+}>;
+
+
+export type DeleteDirectorInstitutionMutation = { members: { institution?: { director?: { Delete?: { recordId: string } | null } | null } | null } };
+
+export type SetAddAccountOperatorInstitutionMutationVariables = Exact<{
+  id: Scalars['ID'];
+  acc: Scalars['ID'];
+  data: KymInsAccountOperatorInput;
+}>;
+
+
+export type SetAddAccountOperatorInstitutionMutation = { members: { institution?: { accountOperator?: { Upsert?: { recordId: string } | null } | null } | null } };
+
+export type DeleteAccountOperatorInstitutionMutationVariables = Exact<{
+  insId: Scalars['ID'];
+  acc: Scalars['ID'];
+}>;
+
+
+export type DeleteAccountOperatorInstitutionMutation = { members: { institution?: { accountOperator?: { Delete?: { recordId: string } | null } | null } | null } };
 
 export type UpsertKymOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
@@ -7773,7 +7854,7 @@ export type GetKymDocumentsListQueryVariables = Exact<{
 }>;
 
 
-export type GetKymDocumentsListQuery = { members: { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, identifier: Array<string | null> } | null> | null } } } };
+export type GetKymDocumentsListQuery = { members: { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, docData: Array<{ identifier: string, url: string } | null> } | null> | null } } } };
 
 export type GetKymSettingsFieldsQueryVariables = Exact<{
   filter?: InputMaybe<ListKymFieldFilter>;
@@ -7798,14 +7879,14 @@ export type GetDepositProductSettingsListQueryVariables = Exact<{
 }>;
 
 
-export type GetDepositProductSettingsListQuery = { settings: { general?: { depositProduct?: { list?: { edges: Array<{ node: { id: string, objState: ObjState, productCode: string, productName: string, nature: NatureOfDepositProduct, interest: number, createdDate: string, typeOfMember?: Array<KymMemberTypesEnum | null> | null, createdAt: string, modifiedAt: string, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType } } }> } | null } | null } | null } };
+export type GetDepositProductSettingsListQuery = { settings: { general?: { depositProduct?: { list?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { id: string, objState: ObjState, productCode: string, productName: string, nature: NatureOfDepositProduct, interest: number, createdDate: string, typeOfMember?: Array<KymMemberTypesEnum | null> | null, createdAt: string, modifiedAt: string, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType } } }> } | null } | null } | null } };
 
 export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: string | null, maxAmount?: string | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: string | null, penaltyRate?: number | null, penaltyAmount?: string | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: string | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: string | null, maxAmount?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData: Array<{ type?: string | null, amount?: string | null, rate?: number | null } | null>, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: string | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: string | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8511,6 +8592,138 @@ export const useSetInstitutionDataMutation = <
     useMutation<SetInstitutionDataMutation, TError, SetInstitutionDataMutationVariables, TContext>(
       ['setInstitutionData'],
       useAxios<SetInstitutionDataMutation, SetInstitutionDataMutationVariables>(SetInstitutionDataDocument),
+      options
+    );
+export const SetSisterConcernsDocument = `
+    mutation setSisterConcerns($id: ID!, $sis: ID!, $data: KymInsSisterConcernInput!) {
+  members {
+    institution(id: $id) {
+      sisterConcern {
+        Upsert(sisterConcernId: $sis, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSisterConcernsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetSisterConcernsMutation, TError, SetSisterConcernsMutationVariables, TContext>) =>
+    useMutation<SetSisterConcernsMutation, TError, SetSisterConcernsMutationVariables, TContext>(
+      ['setSisterConcerns'],
+      useAxios<SetSisterConcernsMutation, SetSisterConcernsMutationVariables>(SetSisterConcernsDocument),
+      options
+    );
+export const DeleteSisterConcernsDocument = `
+    mutation deleteSisterConcerns($insId: ID!, $sis: ID!) {
+  members {
+    institution(id: $insId) {
+      sisterConcern {
+        Delete(sisterConcernId: $sis) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteSisterConcernsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteSisterConcernsMutation, TError, DeleteSisterConcernsMutationVariables, TContext>) =>
+    useMutation<DeleteSisterConcernsMutation, TError, DeleteSisterConcernsMutationVariables, TContext>(
+      ['deleteSisterConcerns'],
+      useAxios<DeleteSisterConcernsMutation, DeleteSisterConcernsMutationVariables>(DeleteSisterConcernsDocument),
+      options
+    );
+export const SetAddDirectorInstitutionDocument = `
+    mutation setAddDirectorInstitution($id: ID!, $dir: ID!, $data: KymInsDirectorInput!) {
+  members {
+    institution(id: $id) {
+      director {
+        Upsert(directorId: $dir, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetAddDirectorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetAddDirectorInstitutionMutation, TError, SetAddDirectorInstitutionMutationVariables, TContext>) =>
+    useMutation<SetAddDirectorInstitutionMutation, TError, SetAddDirectorInstitutionMutationVariables, TContext>(
+      ['setAddDirectorInstitution'],
+      useAxios<SetAddDirectorInstitutionMutation, SetAddDirectorInstitutionMutationVariables>(SetAddDirectorInstitutionDocument),
+      options
+    );
+export const DeleteDirectorInstitutionDocument = `
+    mutation deleteDirectorInstitution($insId: ID!, $dir: ID!) {
+  members {
+    institution(id: $insId) {
+      director {
+        Delete(directorId: $dir) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteDirectorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteDirectorInstitutionMutation, TError, DeleteDirectorInstitutionMutationVariables, TContext>) =>
+    useMutation<DeleteDirectorInstitutionMutation, TError, DeleteDirectorInstitutionMutationVariables, TContext>(
+      ['deleteDirectorInstitution'],
+      useAxios<DeleteDirectorInstitutionMutation, DeleteDirectorInstitutionMutationVariables>(DeleteDirectorInstitutionDocument),
+      options
+    );
+export const SetAddAccountOperatorInstitutionDocument = `
+    mutation setAddAccountOperatorInstitution($id: ID!, $acc: ID!, $data: KymInsAccountOperatorInput!) {
+  members {
+    institution(id: $id) {
+      accountOperator {
+        Upsert(operatorId: $acc, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetAddAccountOperatorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetAddAccountOperatorInstitutionMutation, TError, SetAddAccountOperatorInstitutionMutationVariables, TContext>) =>
+    useMutation<SetAddAccountOperatorInstitutionMutation, TError, SetAddAccountOperatorInstitutionMutationVariables, TContext>(
+      ['setAddAccountOperatorInstitution'],
+      useAxios<SetAddAccountOperatorInstitutionMutation, SetAddAccountOperatorInstitutionMutationVariables>(SetAddAccountOperatorInstitutionDocument),
+      options
+    );
+export const DeleteAccountOperatorInstitutionDocument = `
+    mutation deleteAccountOperatorInstitution($insId: ID!, $acc: ID!) {
+  members {
+    institution(id: $insId) {
+      accountOperator {
+        Delete(operatorId: $acc) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteAccountOperatorInstitutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteAccountOperatorInstitutionMutation, TError, DeleteAccountOperatorInstitutionMutationVariables, TContext>) =>
+    useMutation<DeleteAccountOperatorInstitutionMutation, TError, DeleteAccountOperatorInstitutionMutationVariables, TContext>(
+      ['deleteAccountOperatorInstitution'],
+      useAxios<DeleteAccountOperatorInstitutionMutation, DeleteAccountOperatorInstitutionMutationVariables>(DeleteAccountOperatorInstitutionDocument),
       options
     );
 export const UpsertKymOptionDocument = `
@@ -10174,7 +10387,10 @@ export const GetKymDocumentsListDocument = `
       listKYMDocuments(memberId: $memberId) {
         data {
           fieldId
-          identifier
+          docData {
+            identifier
+            url
+          }
         }
       }
     }
@@ -10302,6 +10518,13 @@ export const GetDepositProductSettingsListDocument = `
     general {
       depositProduct {
         list(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
           edges {
             node {
               id
