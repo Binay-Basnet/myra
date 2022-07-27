@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
@@ -171,7 +170,7 @@ export function SettingsDepositProductsAdd(
       <Container height="fit-content" minW="container.lg" p="0">
         <Box position="relative" margin="0px auto">
           <Box
-            position="fixed"
+            position=" "
             margin="0px auto"
             bg="gray.100"
             minW="container.lg"
@@ -199,7 +198,13 @@ export function SettingsDepositProductsAdd(
           </Box>
         </Box>
       </Container>
-      <Container bg="white" height="fit-content" minW="container.lg" pb="120px">
+      <Container
+        bg="white"
+        height="fit-content"
+        minW="container.lg"
+        p="0"
+        pb="120px"
+      >
         <FormProvider {...methods}>
           <form>
             {/* main */}

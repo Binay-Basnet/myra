@@ -3,8 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
-import { en } from '@coop/shared/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { en, useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
@@ -16,6 +15,9 @@ const TabCol = chakra(Tab, {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    _hover: {
+      bg: 'highlight.500',
+    },
     _focus: {
       boxShadow: 'none',
     },

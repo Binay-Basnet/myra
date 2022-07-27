@@ -151,7 +151,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
         display={'flex'}
         alignItems={'asdcenter'}
         justifyContent={'flex-start'}
-        pr={'s16'}
+        px={'s16'}
       >
         <Box
           h="100%"
@@ -160,8 +160,6 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
           justifyContent={'flex-start'}
           alignItems={'center'}
           flexDirection={'row'}
-          pl="s16"
-          pr="s16"
         >
           <Image boxSize={'32px'} src={'/logo.svg'} alt="logo" />
           <Link href="/">
@@ -225,6 +223,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                       _hover={{ backgroundColor: 'secondary.900' }}
                       px="s12"
                       py="s10"
+                      borderRadius={'br1'}
                     >
                       <Text
                         p="s10 s12"

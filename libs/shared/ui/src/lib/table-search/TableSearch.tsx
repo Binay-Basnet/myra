@@ -136,13 +136,17 @@ export function TableSearch({
           variant="outline"
           h="50px"
           borderRadius={0}
+          outline="none"
           border="none"
           borderBottom="1px"
           borderBottomColor="border.layout"
           color="gray.600"
-          _hover={{ border: 'solid 1px', borderColor: 'gray.300' }}
-          _focus={{ border: 'solid 2px', borderColor: 'primary.300' }}
-          _active={{ border: 'solid 2px', borderColor: 'primary.500' }}
+          _hover={{
+            border: 'solid 1px',
+            borderColor: 'gray.300',
+          }}
+          _focus={{ border: 'solid 1px', borderColor: 'primary.300' }}
+          _active={{ border: 'solid 1px', borderColor: 'primary.500' }}
         />
       </InputGroup>
       <Box
