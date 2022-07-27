@@ -10,7 +10,7 @@ query getBranchesList {
               address {
                 state
                 district
-                localLevel
+                localGovernment
                 wardNo
                 locality
               }

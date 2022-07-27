@@ -329,7 +329,7 @@ export const MemberKYMMainOccupation = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>();
 
@@ -347,9 +347,12 @@ export const MemberKYMMainOccupation = ({
 
   const [occupationIds, setOccupationIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -362,10 +365,13 @@ export const MemberKYMMainOccupation = ({
   }, [editValues]);
 
   const { data: occupationListEditValues } =
-    useGetIndividualKymFamilyOccupationListQuery({
-      id: id,
-      isSpouse: false,
-    });
+    useGetIndividualKymFamilyOccupationListQuery(
+      {
+        id: String(id),
+        isSpouse: false,
+      },
+      { enabled: !!id }
+    );
 
   useEffect(() => {
     if (occupationListEditValues) {
@@ -406,7 +412,7 @@ export const MemberKYMMainOccupation = ({
   };
 
   const removeOccuapation = (occupationId: string) => {
-    deleteMutate({ memberId: id, id: occupationId });
+    deleteMutate({ memberId: String(id), id: occupationId });
   };
 
   const { mutate } = useSetMemberDataMutation();
@@ -414,7 +420,9 @@ export const MemberKYMMainOccupation = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 

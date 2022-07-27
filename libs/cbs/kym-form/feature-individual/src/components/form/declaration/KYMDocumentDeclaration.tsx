@@ -34,11 +34,7 @@ const KYMDocumentDeclarationField = ({
 
   const { watch, reset } = methods;
 
-  const {
-    data: editValues,
-    isFetching,
-    refetch,
-  } = useGetKymDocumentsListQuery({
+  const { data: editValues, isFetching } = useGetKymDocumentsListQuery({
     memberId: String(id),
   });
 
@@ -66,9 +62,7 @@ const KYMDocumentDeclarationField = ({
     }
   }, [isFetching]);
 
-  const { mutate } = useSetKymDocumentDataMutation({
-    onSuccess: () => refetch(),
-  });
+  const { mutate } = useSetKymDocumentDataMutation();
 
   useEffect(() => {
     const subscription = watch(

@@ -30,15 +30,18 @@ export const MemberKYMContactDetails = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>();
 
   const { watch, reset } = methods;
 
-  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -56,7 +59,9 @@ export const MemberKYMContactDetails = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id: router.query['id'] as string, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 

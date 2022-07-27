@@ -39,7 +39,7 @@ export const MemberKYMIdentificationDetails = ({
   const { reset, getValues, watch } = methods;
 
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   // const { data: identificationDocsData } =
   //   useGetIndIdentificationDocOptionQuery({ id });
@@ -65,9 +65,12 @@ export const MemberKYMIdentificationDetails = ({
   //   checkedIds.length !== 0 && setCurrentDetailsShown([...checkedIds]);
   // }, [JSON.stringify(checkedIds)]);
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -85,7 +88,9 @@ export const MemberKYMIdentificationDetails = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id: router.query['id'] as string, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 

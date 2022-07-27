@@ -76,8 +76,6 @@ const KYMBasiccoopDetailsFamilyMember = ({
     id: id,
   });
 
-  console.log({ isFamilyAMember: watch('isFamilyAMember') });
-
   useEffect(() => {
     if (editValues) {
       const editValueData =
