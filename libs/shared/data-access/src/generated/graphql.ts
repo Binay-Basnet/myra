@@ -93,6 +93,7 @@ export type AccountOperatorDetailsFormState = {
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   panNo?: Maybe<Scalars['String']>;
   permanenetAddress?: Maybe<KymAddress>;
@@ -1546,6 +1547,7 @@ export type DirectorDetailsFormState = {
   firmDetails?: Maybe<AffiliatedDirectorDetailsFormState>;
   fullName?: Maybe<Scalars['String']>;
   highestQualification?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   isAffiliatedWithOtherFirms?: Maybe<Scalars['Boolean']>;
   isHeadOfOrganization?: Maybe<Scalars['Boolean']>;
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
@@ -7044,6 +7046,7 @@ export type SisterConcernDetails = {
 
 export type SisterConcernDetailsFormState = {
   address?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   natureOfBusiness?: Maybe<Scalars['String']>;
   phoneNo?: Maybe<Scalars['String']>;
@@ -7643,15 +7646,15 @@ export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeQuery = { auth: { me: { data?: { id: string, username: string, email?: string | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
 
-type MutationError_AuthorizationError_Fragment = {};
+type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: string, authorizationErrorMsg: Record<string, Array<string>> };
 
-type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', message: string, code: string };
+type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: string, badRequestErrorMessage: string };
 
-type MutationError_NotFoundError_Fragment = {};
+type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: string, notFoundErrorMsg: string };
 
-type MutationError_ServerError_Fragment = { __typename: 'ServerError', message: string, code: string };
+type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: string, serverErrorMessage: string };
 
-type MutationError_ValidationError_Fragment = {};
+type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: string, validationErrorMsg: Record<string, Array<string>> };
 
 export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
 
@@ -7919,12 +7922,27 @@ export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
   ... on BadRequestError {
     __typename
-    message
+    badRequestErrorMessage: message
     code
   }
   ... on ServerError {
     __typename
-    message
+    serverErrorMessage: message
+    code
+  }
+  ... on AuthorizationError {
+    __typename
+    authorizationErrorMsg: message
+    code
+  }
+  ... on ValidationError {
+    __typename
+    validationErrorMsg: message
+    code
+  }
+  ... on NotFoundError {
+    __typename
+    notFoundErrorMsg: message
     code
   }
 }

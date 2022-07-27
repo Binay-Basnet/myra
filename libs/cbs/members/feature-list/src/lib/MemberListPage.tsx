@@ -44,6 +44,7 @@ export function MemberListPage() {
   console.log(data);
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  console.log('hello', rowData);
 
   const popoverTitle = [
     {
