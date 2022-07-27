@@ -79,6 +79,11 @@ query getInstitutionKymEditData($id: ID!) {
               localGovernmentId
               wardNo
               locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
             }
             noOfBranches
             branchOfficeAddress {
@@ -87,6 +92,11 @@ query getInstitutionKymEditData($id: ID!) {
               localGovernmentId
               wardNo
               locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
             }
             registeredAddress {
               provinceId
@@ -94,6 +104,11 @@ query getInstitutionKymEditData($id: ID!) {
               localGovernmentId
               wardNo
               locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
             }
             registeredNumber
             issuingOffice
@@ -125,10 +140,30 @@ query getInstitutionKymEditData($id: ID!) {
               localGovernmentId
               wardNo
               locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
             }
-            accountHolderSignature
+            # accountHolderSignature
             # accountHolderStamp
           }
+        }
+      }
+    }
+  }
+}
+
+query getInstitutionSisterDetailsEditList($id: ID!) {
+  members {
+    institution {
+      listSisterConcerns(id: $id) {
+        data {
+          name
+          natureOfBusiness
+          address
+          phoneNo
         }
       }
     }

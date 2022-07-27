@@ -7,8 +7,9 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { KymInsInput } from '@coop/shared/data-access';
+import { KymInsInput, useGetBankListQuery } from '@coop/shared/data-access';
 import {
+  GetBankListQuery,
   useGetKymFormStatusInstitutionQuery,
   useSetInstitutionDataMutation,
 } from '@coop/shared/data-access';
@@ -27,6 +28,16 @@ export const BankAccountDetailsInstitution = (props: IProps) => {
     defaultValues: {},
   });
   const { setSection } = props;
+
+  const { data: BankList } = useGetBankListQuery();
+
+  console.log({ BankList });
+
+  type optionType = { label: string; value: string };
+
+  const Options = BankList?.bank?.bank?.list?.reduce((prevVal, curVal) => {
+    return [...prevVal, { label: curVal?.name, value: curVal?.id }];
+  }, [] as optionType[]);
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
   useInstitution({ methods });
@@ -51,11 +62,7 @@ export const BankAccountDetailsInstitution = (props: IProps) => {
               name="bank"
               label={t['kymInsNameofBank']}
               placeholder={t['kymInsSelectBank']}
-              options={[
-                { label: 'NIC AISA BANK ', value: 'NICA' },
-                { label: 'JYOTI BIKAS BANK LIMITED', value: 'JBBL' },
-                { label: 'NIBL BANK ', value: 'NIBL' },
-              ]}
+              options={Options}
             />
             <FormInput
               type="text"

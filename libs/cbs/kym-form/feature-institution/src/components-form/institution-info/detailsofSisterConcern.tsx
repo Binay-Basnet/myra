@@ -49,7 +49,7 @@ const AddSister = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, sis: sisterId, data: { ...data } });
+        mutate({ id, sis: sisterId, data: { institutionId: id, ...data } });
       }, 800)
     );
 
