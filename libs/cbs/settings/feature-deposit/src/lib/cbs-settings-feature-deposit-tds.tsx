@@ -1,5 +1,12 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import { debounce } from 'lodash';
 
+import {
+  useGetDepositSettingsTdsQuery,
+  useSetDepositTdsMutation,
+} from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -13,11 +20,34 @@ export function CbsSettingsFeatureDepositTDS(
   const { t } = useTranslation();
 
   const methods = useForm({});
+  const router = useRouter();
 
-  const {
-    control,
-    //  handleSubmit, getValues, watch, setError
-  } = methods;
+  const { mutate } = useSetDepositTdsMutation();
+
+  const { data: editValues, refetch } = useGetDepositSettingsTdsQuery();
+
+  const { control, watch, reset } = methods;
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        mutate({ data });
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  useEffect(() => {
+    refetch();
+    if (editValues) {
+      const editValueData =
+        editValues?.settings?.general?.deposit?.tdsFormState?.data;
+      reset({
+        ...editValueData,
+      });
+    }
+  }, [editValues, router.asPath, refetch]);
 
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
@@ -111,7 +141,7 @@ export function CbsSettingsFeatureDepositTDS(
                       </TextFields>
                       <Box flexBasis="35%">
                         <FormInput
-                          name="institutional"
+                          name="institution"
                           type="text"
                           control={control}
                         />
@@ -153,7 +183,7 @@ export function CbsSettingsFeatureDepositTDS(
                       </TextFields>
                       <Box flexBasis="35%">
                         <FormInput
-                          name="cooperativeUnion"
+                          name="coopUnion"
                           type="text"
                           control={control}
                         />

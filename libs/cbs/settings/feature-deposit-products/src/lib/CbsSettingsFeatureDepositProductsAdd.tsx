@@ -29,6 +29,7 @@ import { useTranslation } from '@coop/shared/utils';
 
 import {
   AccountServicesCharge,
+  BalanceLimit,
   Critera,
   DefaultAccountName,
   DepositFrequency,
@@ -133,6 +134,22 @@ export function SettingsDepositProductsAdd(
     const natureOfBusinessInstitutionList =
       values?.natureOfBusinessInstitution?.map((data) => data?.value);
 
+    const ladderRateDataList = values?.ladderRateData?.map((data) => {
+      return {
+        type: data?.type,
+        rate: data?.rate,
+        amount: data?.amount.toString(),
+      };
+    });
+
+    const serviceChargeList = values?.serviceCharge?.map((data) => {
+      return {
+        serviceName: data?.serviceName,
+        ledgerName: data?.ledgerName,
+        amount: data?.amount.toString(),
+      };
+    });
+
     const updatedData = {
       ...values,
       genderId: genderList,
@@ -142,28 +159,40 @@ export function SettingsDepositProductsAdd(
       occupation: occupationList,
       natureOfBusinessInstitution: natureOfBusinessInstitutionList,
       natureOFBusinessCoop: natureOFBusinessCoopList,
+      ladderRateData: ladderRateDataList,
+      serviceCharge: serviceChargeList,
     };
 
-    console.log(updatedData);
-    mutate({ id, data: updatedData });
+    mutate(
+      { id, data: updatedData },
+      {
+        onSuccess: () => router.push('/settings/general/deposit-products'),
+      }
+    );
   };
 
-  const { data: editValues } = useGetDepositProductSettingsEditDataQuery({
-    id: '01G8WZBJB0YC2B6M502BY5dppr',
-  });
+  const { data: editValues, refetch } =
+    useGetDepositProductSettingsEditDataQuery({
+      id,
+    });
 
-  console.log(editValues);
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.settings?.general?.depositProduct?.formState?.data;
+      if (editValueData) {
+        reset({
+          ...editValueData,
+        });
+      }
+    }
+  }, [editValues, id]);
 
-  // useEffect(() => {
-  //   if (editValues) {
-  //     const editValueData =
-  //       editValues?.settings?.general?.depositProduct?.formState?.data;
-
-  //     reset({
-  //       ...editValueData,
-  //     });
-  //   }
-  // }, [editValues]);
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [refetch]);
 
   return (
     <>
@@ -271,6 +300,10 @@ export function SettingsDepositProductsAdd(
                   NatureOfDepositProduct.VoluntaryOrOptional && (
                   <MaximumTenure />
                 )}
+                {depositNature !== NatureOfDepositProduct.RecurringSaving && (
+                  <BalanceLimit />
+                )}
+
                 <Interest />
                 <PostingFrequency />
                 {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (

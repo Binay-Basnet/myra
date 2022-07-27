@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Frequency } from '@coop/shared/data-access';
-// import debounce from 'lodash/debounce';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -18,7 +17,6 @@ export const MinimunTenure = () => {
   const [rightElement, setRightElement] = useState('days');
   const { resetField, watch } = useFormContext();
   const minimumTenure = watch('minTenure');
-
   const minimumTenureUnit = watch('minTenureUnit');
 
   const { t } = useTranslation();

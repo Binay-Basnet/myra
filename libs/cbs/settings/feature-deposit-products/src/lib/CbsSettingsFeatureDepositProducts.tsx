@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 import format from 'date-fns/format';
 
-import { PopoverComponent } from '@coop/myra/components';
+import { ActionPopoverComponent } from '@coop/myra/components';
 import {
   useGetDepositProductSettingsListQuery,
   useGetNewIdMutation,
@@ -53,7 +53,13 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
   );
   console.log(rowData);
 
-  const popoverTitle = ['depositProductEdit'];
+  const popoverTitle = [
+    {
+      title: 'depositProductEdit',
+      onClick: (id: string) =>
+        router.push(`/settings/general/deposit-products/edit/${id}`),
+    },
+  ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -96,11 +102,16 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
       {
         Header: '',
         accessor: 'actions',
-        Cell: () => <PopoverComponent title={popoverTitle} />,
         disableFilters: true,
+        Cell: ({ value, row }) => (
+          <ActionPopoverComponent
+            items={popoverTitle}
+            id={row?.original?.node?.id}
+          />
+        ),
       },
     ],
-    []
+    [t]
   );
 
   return (

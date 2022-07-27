@@ -7440,6 +7440,20 @@ export type SetDepositProductMutationVariables = Exact<{
 
 export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate: string, interest: number } | null, error?: { message: Record<string, Array<string>> } | { data: string } | { hm: string } | { info: string } | { message: Record<string, Array<string>> } | null } | null } | null } | null } };
 
+export type SetDepositIroMutationVariables = Exact<{
+  data?: InputMaybe<DepositIroInput>;
+}>;
+
+
+export type SetDepositIroMutation = { settings: { general?: { deposit?: { iroSetup?: { recordId: string, record?: { id: string, iroName?: string | null, iroAddress?: string | null, iroCode?: string | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | { __typename: 'ValidationError' } | null } | null } | null } | null } };
+
+export type SetDepositTdsMutationVariables = Exact<{
+  data?: InputMaybe<DepositTdsInput>;
+}>;
+
+
+export type SetDepositTdsMutation = { settings: { general?: { deposit?: { tdsSetup?: { recordId: string, record?: { id: string, individual?: number | null, institution?: number | null, cooperative?: number | null, coopUnion?: number | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | { __typename: 'ValidationError' } | null } | null } | null } | null } };
+
 export type GetNewIdMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7944,6 +7958,16 @@ export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCustomFieldsQuery = { settings: { kymForm: { field?: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: Kym_Field_Type, isCustom: boolean, hasOtherField: boolean, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } | null } } };
 
+export type GetDepositSettingsIroQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDepositSettingsIroQuery = { settings: { general?: { deposit?: { iroFormState?: { data?: { iroName?: string | null, iroAddress?: string | null, iroCode?: string | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | null } | null } | null } | null } };
+
+export type GetDepositSettingsTdsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDepositSettingsTdsQuery = { settings: { general?: { deposit?: { tdsFormState?: { data?: { individual?: number | null, institution?: number | null, cooperative?: number | null, coopUnion?: number | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | null } | null } | null } | null } };
+
 export type GetDepositProductSettingsListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<DepositProductSearchFilter>;
@@ -7957,7 +7981,7 @@ export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: Frequency | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8392,6 +8416,73 @@ export const useSetDepositProductMutation = <
     useMutation<SetDepositProductMutation, TError, SetDepositProductMutationVariables, TContext>(
       ['setDepositProduct'],
       useAxios<SetDepositProductMutation, SetDepositProductMutationVariables>(SetDepositProductDocument),
+      options
+    );
+export const SetDepositIroDocument = `
+    mutation setDepositIro($data: DepositIroInput) {
+  settings {
+    general {
+      deposit {
+        ... on DepositSettingsMutation {
+          iroSetup(data: $data) {
+            recordId
+            record {
+              id
+              iroName
+              iroAddress
+              iroCode
+            }
+            error {
+              __typename
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetDepositIroMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetDepositIroMutation, TError, SetDepositIroMutationVariables, TContext>) =>
+    useMutation<SetDepositIroMutation, TError, SetDepositIroMutationVariables, TContext>(
+      ['setDepositIro'],
+      useAxios<SetDepositIroMutation, SetDepositIroMutationVariables>(SetDepositIroDocument),
+      options
+    );
+export const SetDepositTdsDocument = `
+    mutation setDepositTds($data: DepositTdsInput) {
+  settings {
+    general {
+      deposit {
+        ... on DepositSettingsMutation {
+          tdsSetup(data: $data) {
+            recordId
+            record {
+              id
+              individual
+              institution
+              cooperative
+              coopUnion
+            }
+            error {
+              __typename
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetDepositTdsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetDepositTdsMutation, TError, SetDepositTdsMutationVariables, TContext>) =>
+    useMutation<SetDepositTdsMutation, TError, SetDepositTdsMutationVariables, TContext>(
+      ['setDepositTds'],
+      useAxios<SetDepositTdsMutation, SetDepositTdsMutationVariables>(SetDepositTdsDocument),
       options
     );
 export const GetNewIdDocument = `
@@ -10598,6 +10689,75 @@ export const useGetCustomFieldsQuery = <
       useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
       options
     );
+export const GetDepositSettingsIroDocument = `
+    query getDepositSettingsIro {
+  settings {
+    general {
+      deposit {
+        ... on DepositSettingsQuery {
+          iroFormState {
+            data {
+              iroName
+              iroAddress
+              iroCode
+            }
+            error {
+              __typename
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositSettingsIroQuery = <
+      TData = GetDepositSettingsIroQuery,
+      TError = unknown
+    >(
+      variables?: GetDepositSettingsIroQueryVariables,
+      options?: UseQueryOptions<GetDepositSettingsIroQuery, TError, TData>
+    ) =>
+    useQuery<GetDepositSettingsIroQuery, TError, TData>(
+      variables === undefined ? ['getDepositSettingsIro'] : ['getDepositSettingsIro', variables],
+      useAxios<GetDepositSettingsIroQuery, GetDepositSettingsIroQueryVariables>(GetDepositSettingsIroDocument).bind(null, variables),
+      options
+    );
+export const GetDepositSettingsTdsDocument = `
+    query getDepositSettingsTds {
+  settings {
+    general {
+      deposit {
+        ... on DepositSettingsQuery {
+          tdsFormState {
+            data {
+              individual
+              institution
+              cooperative
+              coopUnion
+            }
+            error {
+              __typename
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositSettingsTdsQuery = <
+      TData = GetDepositSettingsTdsQuery,
+      TError = unknown
+    >(
+      variables?: GetDepositSettingsTdsQueryVariables,
+      options?: UseQueryOptions<GetDepositSettingsTdsQuery, TError, TData>
+    ) =>
+    useQuery<GetDepositSettingsTdsQuery, TError, TData>(
+      variables === undefined ? ['getDepositSettingsTds'] : ['getDepositSettingsTds', variables],
+      useAxios<GetDepositSettingsTdsQuery, GetDepositSettingsTdsQueryVariables>(GetDepositSettingsTdsDocument).bind(null, variables),
+      options
+    );
 export const GetDepositProductSettingsListDocument = `
     query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProductSearchFilter) {
   settings {
@@ -10706,9 +10866,13 @@ export const GetDepositProductSettingsEditDataDocument = `
             minTenure
             minTenureUnit
             minTenureUnitNumber
+            maxTenure
+            maxTenureUnit
+            maxTenureUnitNumber
             balanceLimit {
               minAmount
               maxAmount
+              avgAmount
             }
             interest {
               minRate

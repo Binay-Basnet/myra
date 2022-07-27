@@ -2609,9 +2609,7 @@ const en: Record<string, string> = {
   depositProductUnit: 'Unit',
   depositProductNumber: 'Number',
   depositProductMaxinumTenure: 'Maximum Tenure',
-  depositProductTransactionLimit: 'Transaction Limit',
   depositProductInterest: 'Interest',
-  depositProdictBalanceLimit: 'Balance Limit',
   depositProductMininumRate: 'Mininum Rate',
   depositProductMaximumRate: 'Maximum Rate',
   depositProductDefaultRate: 'Default Rate',
@@ -2881,6 +2879,7 @@ const en: Record<string, string> = {
   depositProductPenalty: 'Penalty',
   depositProductPenaltyAmount: 'Penalty Amount',
   depositProductEdit: 'Edit',
+  depositProductBalanceLimit: 'Balance Limit',
 
   kynIndCitizenship: 'Citizenship',
   kynIndCitizenshipIssuePlace: 'Place of Issue',
