@@ -1,4 +1,5 @@
 export * from './hooks/useChakraToast';
+export * from './hooks/useRefreshToken';
 export * from './hooks/useSnap';
 export * from './hooks/useTableHook';
 export * from './hooks/useTranslation';

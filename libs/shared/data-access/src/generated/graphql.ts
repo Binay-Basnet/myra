@@ -93,6 +93,7 @@ export type AccountOperatorDetailsFormState = {
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   panNo?: Maybe<Scalars['String']>;
   permanenetAddress?: Maybe<KymAddress>;
@@ -1546,6 +1547,7 @@ export type DirectorDetailsFormState = {
   firmDetails?: Maybe<AffiliatedDirectorDetailsFormState>;
   fullName?: Maybe<Scalars['String']>;
   highestQualification?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   isAffiliatedWithOtherFirms?: Maybe<Scalars['Boolean']>;
   isHeadOfOrganization?: Maybe<Scalars['Boolean']>;
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
@@ -2482,13 +2484,18 @@ export enum FormFieldSearchTerm {
   EducationQualification = 'EDUCATION_QUALIFICATION',
   EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
   Ethnicity = 'ETHNICITY',
+  ExpectedMonthlyTransaction = 'EXPECTED_MONTHLY_TRANSACTION',
+  ExpectedMonthlyTurnover = 'EXPECTED_MONTHLY_TURNOVER',
   FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
   FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
   ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
+  /** KYM_INDIVIDUAL */
   Gender = 'GENDER',
   MaritalStatus = 'MARITAL_STATUS',
   Nationality = 'NATIONALITY',
   Occupation = 'OCCUPATION',
+  /**  KYM_INSTITUTION */
+  OrganizationType = 'ORGANIZATION_TYPE',
   Purpose = 'PURPOSE',
   Relationship = 'RELATIONSHIP',
   Religion = 'RELIGION'
@@ -2658,7 +2665,8 @@ export enum FormSearchTerm {
   AccountOperatorDetails = 'ACCOUNT_OPERATOR_DETAILS',
   AccountOperatorDocument = 'ACCOUNT_OPERATOR_DOCUMENT',
   BankAccountDetails = 'BANK_ACCOUNT_DETAILS',
-  Certificate = 'CERTIFICATE',
+  Citizenship = 'CITIZENSHIP',
+  /**  KYM_INDIVIDUAL && KYM_INSTITUTION */
   ContactDetails = 'CONTACT_DETAILS',
   Director = 'DIRECTOR',
   DirectorsAffiliationDetails = 'DIRECTORS_AFFILIATION_DETAILS',
@@ -2672,6 +2680,7 @@ export enum FormSearchTerm {
   ExpectedMonthlyTurnover = 'EXPECTED_MONTHLY_TURNOVER',
   FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
   FamilyInformation = 'FAMILY_INFORMATION',
+  /**  KYM_INDIVIDUAL && KYM_INSTITUTION */
   FileUploads = 'FILE_UPLOADS',
   FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
   ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
@@ -2679,7 +2688,6 @@ export enum FormSearchTerm {
   Gender = 'GENDER',
   Identification = 'IDENTIFICATION',
   IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
-  InstitutionFileUpload = 'INSTITUTION_FILE_UPLOAD',
   MaritalStatus = 'MARITAL_STATUS',
   Nationality = 'NATIONALITY',
   NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
@@ -2778,16 +2786,34 @@ export type FormSectionQueryDetailsArgs = {
 };
 
 export enum FormSectionSearchTerm {
-  Certificate = 'CERTIFICATE',
+  AccountHolderDeclaration = 'ACCOUNT_HOLDER_DECLARATION',
+  AccountHolderDetails = 'ACCOUNT_HOLDER_DETAILS',
+  AccountHolderDocuments = 'ACCOUNT_HOLDER_DOCUMENTS',
+  AccountOperator = 'ACCOUNT_OPERATOR',
+  AccountOperatorDetails = 'ACCOUNT_OPERATOR_DETAILS',
+  AccountOperatorDocument = 'ACCOUNT_OPERATOR_DOCUMENT',
+  BankAccountDetails = 'BANK_ACCOUNT_DETAILS',
+  Citizenship = 'CITIZENSHIP',
   ContactDetails = 'CONTACT_DETAILS',
+  Director = 'DIRECTOR',
+  DirectorsAffiliationDetails = 'DIRECTORS_AFFILIATION_DETAILS',
+  DirectorDetails = 'DIRECTOR_DETAILS',
+  DirectorDocument = 'DIRECTOR_DOCUMENT',
   DrivingLicense = 'DRIVING_LICENSE',
   FamilyInformation = 'FAMILY_INFORMATION',
+  /** KYM_INDIVIDUAL && KYM_INSTITUTION */
+  FileUploads = 'FILE_UPLOADS',
   Identification = 'IDENTIFICATION',
   IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
   NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
   OccupationDetails = 'OCCUPATION_DETAILS',
   OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
+  /** KYM_INDIVIDUAL */
   Passport = 'PASSPORT',
+  /**  KYM_INSTITUTION */
+  RegisteredDetails = 'REGISTERED_DETAILS',
+  SisterConcernDetails = 'SISTER_CONCERN_DETAILS',
+  TransactionDetails = 'TRANSACTION_DETAILS',
   VoterId = 'VOTER_ID'
 }
 
@@ -6663,6 +6689,15 @@ export type PredefinedElementFilter = {
   searchTerm: FormSearchTerm;
 };
 
+export type PredefinedElementListFilter = {
+  category?: InputMaybe<FormCategory>;
+};
+
+export type PredefinedElementListQueryResult = {
+  data?: Maybe<Array<Maybe<FormElement>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type PredefinedElementQueryResult = {
   data?: Maybe<FormElement>;
   error?: Maybe<QueryError>;
@@ -6670,11 +6705,17 @@ export type PredefinedElementQueryResult = {
 
 export type PredefinedFormQuery = {
   details: PredefinedElementQueryResult;
+  list: PredefinedElementListQueryResult;
 };
 
 
 export type PredefinedFormQueryDetailsArgs = {
   filter: PredefinedElementFilter;
+};
+
+
+export type PredefinedFormQueryListArgs = {
+  filter: PredefinedElementListFilter;
 };
 
 export type PrematurePenalty = {
@@ -7044,6 +7085,7 @@ export type SisterConcernDetails = {
 
 export type SisterConcernDetailsFormState = {
   address?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   natureOfBusiness?: Maybe<Scalars['String']>;
   phoneNo?: Maybe<Scalars['String']>;
@@ -7643,15 +7685,15 @@ export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeQuery = { auth: { me: { data?: { id: string, username: string, email?: string | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
 
-type MutationError_AuthorizationError_Fragment = {};
+type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: string, authorizationErrorMsg: Record<string, Array<string>> };
 
-type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', message: string, code: string };
+type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: string, badRequestErrorMessage: string };
 
-type MutationError_NotFoundError_Fragment = {};
+type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: string, notFoundErrorMsg: string };
 
-type MutationError_ServerError_Fragment = { __typename: 'ServerError', message: string, code: string };
+type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: string, serverErrorMessage: string };
 
-type MutationError_ValidationError_Fragment = {};
+type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: string, validationErrorMsg: Record<string, Array<string>> };
 
 export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
 
@@ -7919,12 +7961,27 @@ export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
   ... on BadRequestError {
     __typename
-    message
+    badRequestErrorMessage: message
     code
   }
   ... on ServerError {
     __typename
-    message
+    serverErrorMessage: message
+    code
+  }
+  ... on AuthorizationError {
+    __typename
+    authorizationErrorMsg: message
+    code
+  }
+  ... on ValidationError {
+    __typename
+    validationErrorMsg: message
+    code
+  }
+  ... on NotFoundError {
+    __typename
+    notFoundErrorMsg: message
     code
   }
 }

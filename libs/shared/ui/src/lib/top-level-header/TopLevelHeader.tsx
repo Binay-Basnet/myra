@@ -6,6 +6,7 @@ import { CgMenuGridO } from 'react-icons/cg';
 import { IoSearchSharp } from 'react-icons/io5';
 import { MdOutlineHelpOutline } from 'react-icons/md';
 import { RiHistoryFill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -34,7 +35,7 @@ import {
   ShortcutTab,
   SwitchTabs,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { logout, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
@@ -83,6 +84,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
   const router = useRouter();
   const [isClose, setIsClose] = useState(true);
   const [numLines, setNumLines] = useState([1, 2]);
+  const dispatch = useDispatch();
 
   const helpOptions = [
     {
@@ -695,6 +697,10 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                             px="s16"
                             display="flex"
                             alignItems="center"
+                            onClick={() => {
+                              dispatch(logout());
+                              localStorage.clear();
+                            }}
                           >
                             <Text
                               fontWeight="Regular"

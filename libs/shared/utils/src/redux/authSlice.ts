@@ -12,12 +12,14 @@ type AuthType = Partial<{
 interface AuthState {
   auth: AuthType;
   isLogged: boolean | null;
+  token: string | null;
 }
 
 // Define the initial state using that type
 const initialState: AuthState = {
   auth: {},
   isLogged: null,
+  token: null,
 };
 
 export const authSlice = createSlice({
@@ -25,18 +27,22 @@ export const authSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    saveToken: (state, action) => {
+      state.token = action.payload;
+    },
     // Use the PayloadAction type to declare the contents of `action.payload`
     authenticate: (state, action: PayloadAction<AuthType>) => {
       state.auth = action.payload;
       state.isLogged = true;
     },
     logout: (state) => {
+      localStorage.clear();
       state.isLogged = false;
     },
   },
 });
 
-export const { authenticate, logout } = authSlice.actions;
+export const { authenticate, logout, saveToken } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectAuth = (state: RootState) => state;

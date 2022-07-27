@@ -1,18 +1,27 @@
 fragment MutationError on MutationError {
   ... on BadRequestError {
     __typename
-    message
+    badRequestErrorMessage: message
     code
   }
   ... on ServerError {
     __typename
-    message
+    serverErrorMessage: message
     code
   }
-
   ... on AuthorizationError {
     __typename
-    message
+    authorizationErrorMsg: message
+    code
+  }
+  ... on ValidationError {
+    __typename
+    validationErrorMsg: message
+    code
+  }
+  ... on NotFoundError {
+    __typename
+    notFoundErrorMsg: message
     code
   }
 }

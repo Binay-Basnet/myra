@@ -1,4 +1,4 @@
-import type { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useCallback } from 'react';
 import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -14,9 +14,9 @@ import axios from 'axios';
 import { Login } from '@coop/myra/components';
 import { useGetMeQuery } from '@coop/shared/data-access';
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import { RootState, useSnap } from '@coop/shared/utils';
+import { RootState, useRefreshToken, useSnap } from '@coop/shared/utils';
 import { store, theme } from '@coop/shared/utils';
-import { authenticate, logout } from '@coop/shared/utils';
+import { authenticate, logout, saveToken } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
@@ -62,40 +62,61 @@ interface ManAppProps extends AppInitialProps {
   Component: NextPageWithLayout;
 }
 
-const useRefreshToken = (url: string) => {
-  const history = useRouter();
-
-  const refreshToken = () => {
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (!refreshToken) return Promise.reject(() => 'No refresh Token');
-    return axios
-      .post(url, {
-        query: `mutation{
-          auth{
-            token(refreshToken:"${refreshToken}"){
-            token{
-              refresh
-              access
-            }
-            }
-          }
-        }`,
-      })
-      .then((res) => {
-        return res.data?.access;
-      })
-      .catch((err) => {
-        history.replace('/');
-      });
+interface IToken {
+  access: string;
+  refresh: string;
+}
+interface RefreshTokenResponse {
+  data: {
+    auth: {
+      token: {
+        token: IToken;
+      };
+    };
   };
+}
 
-  return refreshToken;
-};
+// const useRefreshToken = (url: string) => {
+//   const history = useRouter();
+//   const dispatch = useDispatch();
 
-function MainApp({ Component, pageProps }: ManAppProps) {
+//   const refreshToken = useCallback(() => {
+//     const refreshToken = localStorage.getItem('refreshToken');
+//     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
+//     return axios
+//       .post<RefreshTokenResponse>(url, {
+//         query: `mutation{
+//           auth{
+//             token(refreshToken:"${refreshToken}"){
+//             token{
+//               refresh
+//               access
+//             }
+//             }
+//           }
+//         }`,
+//       })
+//       .then((res) => {
+//         console.log('fuck o res', res);
+//         localStorage.setItem(
+//           'refreshToken',
+//           res.data.data.auth?.token?.token?.refresh
+//         );
+//         dispatch(saveToken(res.data.data.auth?.token?.token?.access));
+//         return true;
+//       })
+//       .catch((err) => {
+//         history.replace('/');
+//       });
+//   }, [dispatch, history, url]);
+
+//   return refreshToken;
+// };
+
+function useInit() {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useDispatch();
-  const auth = useSelector((state: RootState) => state?.auth);
+
   const getMe = useGetMeQuery(
     {},
     {
@@ -109,27 +130,41 @@ function MainApp({ Component, pageProps }: ManAppProps) {
   const url = process.env['NX_SCHEMA_PATH'] ?? '';
   const refreshToken = useRefreshToken(url);
 
-  console.log('get me', 'hello', getMe);
-
   const hasDataReturned = getMe?.data?.auth;
   const isDatasuccessful = getMe?.data?.auth?.me?.data;
+  const authData = getMe?.data?.auth;
 
   useEffect(() => {
-    console.log('hello123');
-    refreshToken().then((res) => setTriggerQuery(true));
-    // const localStorage.getItem("refreshToken")
-  }, []);
+    console.log('fuck o');
+    refreshToken()
+      .then((res) => {
+        console.log('fuck o response', res);
+        if (res) {
+          setTriggerQuery(true);
+        }
+      })
+      .catch((err) => {
+        dispatch(logout());
+      });
+  }, [dispatch]);
+
   useEffect(() => {
     if (hasDataReturned) {
       if (isDatasuccessful) {
-        dispatch(authenticate(auth?.auth));
+        dispatch(authenticate(authData));
       } else {
         dispatch(logout());
       }
     }
-  }, [hasDataReturned, isDatasuccessful]);
+  }, [authData, dispatch, hasDataReturned, isDatasuccessful]);
+}
+
+function MainApp({ Component, pageProps }: ManAppProps) {
   // getMe.data.auth.me
   const getLayout = Component.getLayout || ((page) => page);
+  const auth = useSelector((state: RootState) => state?.auth);
+
+  useInit();
 
   useSnap();
   console.log('hello123', auth?.isLogged);
