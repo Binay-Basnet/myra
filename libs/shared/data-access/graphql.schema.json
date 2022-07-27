@@ -1722,17 +1722,39 @@
         "possibleTypes": null
       },
       {
+        "kind": "SCALAR",
+        "name": "Amount",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "AmountLimit",
         "description": null,
         "fields": null,
         "inputFields": [
           {
+            "name": "avgAmount",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Amount",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maxAmount",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -1744,7 +1766,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -1762,12 +1784,24 @@
         "description": null,
         "fields": [
           {
+            "name": "avgAmount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Amount",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maxAmount",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -1779,7 +1813,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3798,13 +3832,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Branch",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "Branch",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -12251,16 +12281,12 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "LadderRateFormState",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "LadderRateFormState",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -13197,13 +13223,9 @@
             "name": "penaltyData",
             "description": null,
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "PenaltyInput",
-                "ofType": null
-              }
+              "kind": "INPUT_OBJECT",
+              "name": "PenaltyInput",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -13674,22 +13696,6 @@
                 "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
-              },
-              {
-                "name": "id",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
               }
             ],
             "type": {
@@ -13711,22 +13717,6 @@
                   "kind": "INPUT_OBJECT",
                   "name": "DepositTdsInput",
                   "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "id",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -13805,7 +13795,7 @@
             "deprecationReason": null
           },
           {
-            "name": "insitution",
+            "name": "institution",
             "description": null,
             "args": [],
             "type": {
@@ -13865,7 +13855,7 @@
             "deprecationReason": null
           },
           {
-            "name": "insitution",
+            "name": "institution",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -21810,6 +21800,18 @@
             "deprecationReason": null
           },
           {
+            "name": "EXPECTED_MONTHLY_TRANSACTION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EXPECTED_MONTHLY_TURNOVER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "FAMILY_INCOME_SOURCE",
             "description": null,
             "isDeprecated": false,
@@ -21822,8 +21824,14 @@
             "deprecationReason": null
           },
           {
-            "name": "GENDER",
+            "name": "FOREIGN_EMPLOYMENT_OPTIONS",
             "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GENDER",
+            "description": "KYM_INDIVIDUAL",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -21842,6 +21850,12 @@
           {
             "name": "OCCUPATION",
             "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORGANIZATION_TYPE",
+            "description": " KYM_INSTITUTION",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -22971,13 +22985,79 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "CERTIFICATE",
+            "name": "ACCOUNT_HOLDER_DECLARATION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_HOLDER_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_HOLDER_DOCUMENTS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_OPERATOR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_OPERATOR_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_OPERATOR_DOCUMENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "BANK_ACCOUNT_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CITIZENSHIP",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "CONTACT_DETAILS",
+            "description": " KYM_INDIVIDUAL && KYM_INSTITUTION",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DIRECTOR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DIRECTORS_AFFILIATION_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DIRECTOR_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DIRECTOR_DOCUMENT",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -23007,6 +23087,18 @@
             "deprecationReason": null
           },
           {
+            "name": "EXPECTED_MONTHLY_TRANSACTION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EXPECTED_MONTHLY_TURNOVER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "FAMILY_INCOME_SOURCE",
             "description": null,
             "isDeprecated": false,
@@ -23020,7 +23112,7 @@
           },
           {
             "name": "FILE_UPLOADS",
-            "description": null,
+            "description": " KYM_INDIVIDUAL && KYM_INSTITUTION",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -23038,7 +23130,7 @@
           },
           {
             "name": "GENDER",
-            "description": null,
+            "description": " KYM_INDIVIDUAL ",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -23080,7 +23172,13 @@
           },
           {
             "name": "OCCUPATION_DETAILS",
-            "description": null,
+            "description": " KYM_INDIVIDUAL && KYM_INSTITUTION",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORGANIZATION_TYPE",
+            "description": "KYM_INSTITUTION ",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -23103,6 +23201,12 @@
             "deprecationReason": null
           },
           {
+            "name": "REGISTERED_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "RELATIONSHIP",
             "description": null,
             "isDeprecated": false,
@@ -23110,6 +23214,18 @@
           },
           {
             "name": "RELIGION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SISTER_CONCERN_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRANSACTION_DETAILS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -23785,13 +23901,79 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "CERTIFICATE",
+            "name": "ACCOUNT_HOLDER_DECLARATION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_HOLDER_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_HOLDER_DOCUMENTS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_OPERATOR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_OPERATOR_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ACCOUNT_OPERATOR_DOCUMENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "BANK_ACCOUNT_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CITIZENSHIP",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "CONTACT_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DIRECTOR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DIRECTORS_AFFILIATION_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DIRECTOR_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DIRECTOR_DOCUMENT",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -23805,6 +23987,12 @@
           {
             "name": "FAMILY_INFORMATION",
             "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FILE_UPLOADS",
+            "description": "KYM_INDIVIDUAL && KYM_INSTITUTION",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -23840,6 +24028,24 @@
           },
           {
             "name": "PASSPORT",
+            "description": "KYM_INDIVIDUAL",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REGISTERED_DETAILS",
+            "description": " KYM_INSTITUTION",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SISTER_CONCERN_DETAILS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRANSACTION_DETAILS",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -49984,7 +50190,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -50031,7 +50237,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -50729,7 +50935,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -50849,7 +51055,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -51636,7 +51842,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -51756,7 +51962,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -56460,7 +56666,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Float",
               "ofType": null
             },
             "isDeprecated": false,
@@ -56472,7 +56678,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -56484,7 +56690,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -56543,7 +56749,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Float",
               "ofType": null
             },
             "isDeprecated": false,
@@ -56567,7 +56773,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -56626,7 +56832,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Float",
               "ofType": null
             },
             "defaultValue": null,
@@ -56638,7 +56844,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -56650,7 +56856,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -56673,13 +56879,9 @@
             "name": "rateType",
             "description": null,
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "PenaltyRateType",
-                "ofType": null
-              }
+              "kind": "ENUM",
+              "name": "PenaltyRateType",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -56911,6 +57113,68 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "PredefinedElementListFilter",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "category",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "FormCategory",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PredefinedElementListQueryResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "UNION",
+                "name": "FormElement",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "PredefinedElementQueryResult",
         "description": null,
@@ -56982,6 +57246,39 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "list",
+            "description": null,
+            "args": [
+              {
+                "name": "filter",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "PredefinedElementListFilter",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PredefinedElementListQueryResult",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -57012,7 +57309,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -57106,7 +57403,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -57766,7 +58063,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -57825,7 +58122,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -57884,7 +58181,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -58268,7 +58565,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -58315,7 +58612,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
