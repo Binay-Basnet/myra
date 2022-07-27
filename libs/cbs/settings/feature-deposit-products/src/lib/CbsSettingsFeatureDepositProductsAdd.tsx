@@ -185,7 +185,7 @@ export function SettingsDepositProductsAdd(
         ...editValueData,
       });
     }
-  }, [editValues]);
+  }, [editValues, id]);
 
   return (
     <>

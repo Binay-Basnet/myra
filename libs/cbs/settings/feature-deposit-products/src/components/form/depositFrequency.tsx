@@ -22,8 +22,6 @@ export const DepositFrequency = () => {
   const penaltyType = watch('penaltyData.rateType');
   const { t } = useTranslation();
 
-  console.log(watch('depositFrequency'));
-
   const DepositFrequencyOptions = [
     {
       label: t['daily'],

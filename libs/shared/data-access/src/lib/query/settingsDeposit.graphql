@@ -1,12 +1,10 @@
-mutation setDepositIro($data: DepositIroInput) {
+query getDepositSettingsIro {
   settings {
     general {
       deposit {
-        ... on DepositSettingsMutation {
-          iroSetup(data: $data) {
-            recordId
-            record {
-              id
+        ... on DepositSettingsQuery {
+          iroFormState {
+            data {
               iroName
               iroAddress
               iroCode
@@ -21,15 +19,13 @@ mutation setDepositIro($data: DepositIroInput) {
   }
 }
 
-mutation setDepositTds($data: DepositTdsInput) {
+query getDepositSettingsTds {
   settings {
     general {
       deposit {
-        ... on DepositSettingsMutation {
-          tdsSetup(data: $data) {
-            recordId
-            record {
-              id
+        ... on DepositSettingsQuery {
+          tdsFormState {
+            data {
               individual
               institution
               cooperative
