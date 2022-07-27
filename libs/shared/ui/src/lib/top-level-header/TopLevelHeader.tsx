@@ -3,19 +3,11 @@ import { GlobalHotKeys } from 'react-hotkeys';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BiBell } from 'react-icons/bi';
 import { CgMenuGridO } from 'react-icons/cg';
-import { IoSearchSharp } from 'react-icons/io5';
 import { MdOutlineHelpOutline } from 'react-icons/md';
 import { RiHistoryFill } from 'react-icons/ri';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import {
-  Image,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  Text,
-} from '@chakra-ui/react';
+import { Image, Text } from '@chakra-ui/react';
 import { format } from 'date-fns';
 
 import {
@@ -35,6 +27,8 @@ import {
   SwitchTabs,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+
+import SearchBar from '../search-bar/SearchBar';
 
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
@@ -189,6 +183,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             </Box>
           </Link>
         </Box>
+
         <Box
           h="100%"
           flex={1}
@@ -212,45 +207,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               color={'gray.0'}
               _hover={{ backgroundColor: 'secondary.800' }}
             />
-            <InputGroup
-              ml={'s16'}
-              borderRadius={'6px'}
-              border="none"
-              onFocus={() => {
-                setIsClose(false);
-              }}
-              onBlur={() => setIsClose(true)}
-              flex={1}
-              borderColor="secondary.700"
-              bg={isClose ? 'secondary.800' : 'gray.0'}
-              color={isClose ? 'gray.500' : 'gray.800'}
-              // color="gray.500"
-              _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
-            >
-              <InputLeftElement
-                pointerEvents="none"
-                color={'currentColor'}
-                children={<IoSearchSharp />}
-              />
-              <Input
-                type="search"
-                placeholder="खोज्नुहोस्"
-                // color={'gray.500'}
-                fontSize="r1"
-                ref={inputRef}
-              />
-              {isClose && (
-                <InputRightElement
-                  pointerEvents="none"
-                  color={'currentcolor'}
-                  children={
-                    <Text fontSize={'r1'} alignItems="center" pr="s12">
-                      Ctrl+/
-                    </Text>
-                  }
-                />
-              )}
-            </InputGroup>
+            <SearchBar />
           </Box>
           <Box
             flex={1}
@@ -283,14 +240,16 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                   <PopoverContent
                     bg="gray.0"
                     w="260px"
-                    border="2px"
-                    borderColor="#E0E5EB"
-                    boxShadow={'none'}
+                    border="none"
+                    boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
                     outline={'none'}
-                    _focus={{ boxShadow: 'none' }}
+                    _focus={{
+                      boxShadow:
+                        '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
+                    }}
                   >
                     {currentDate !== closingDate && (
-                      <PopoverBody border="1px" borderColor="#E0E5EB">
+                      <PopoverBody>
                         <Text
                           fontSize={'r1'}
                           fontWeight="400"
@@ -300,7 +259,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         </Text>
                       </PopoverBody>
                     )}
-                    <PopoverBody border="1px" borderColor="#E0E5EB">
+                    <PopoverBody borderBottom="1px" borderColor="#E0E5EB">
                       <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                         Transaction Date
                       </Text>
@@ -308,7 +267,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                         {closingDate}
                       </Text>
                     </PopoverBody>
-                    <PopoverBody border="1px" borderColor="#E0E5EB">
+                    <PopoverBody borderBottom="1px" borderColor="#E0E5EB">
                       <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                         Calender Date
                       </Text>

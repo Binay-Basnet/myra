@@ -1298,6 +1298,17 @@ export type DepositIro = {
   iroName?: Maybe<Scalars['String']>;
 };
 
+export type DepositIroFormStateData = {
+  iroAddress?: Maybe<Scalars['String']>;
+  iroCode?: Maybe<Scalars['String']>;
+  iroName?: Maybe<Scalars['String']>;
+};
+
+export type DepositIroFormStateResult = {
+  data?: Maybe<DepositIroFormStateData>;
+  error?: Maybe<QueryError>;
+};
+
 export type DepositIroInput = {
   iroAddress?: InputMaybe<Scalars['String']>;
   iroCode?: InputMaybe<Scalars['String']>;
@@ -1306,6 +1317,7 @@ export type DepositIroInput = {
 
 export type DepositIroResult = {
   error?: Maybe<MutationError>;
+  query?: Maybe<DepositSettingsQuery>;
   record?: Maybe<DepositIro>;
   recordId: Scalars['ID'];
 };
@@ -1508,12 +1520,29 @@ export type DepositSettingsMutationTdsSetupArgs = {
   data?: InputMaybe<DepositTdsInput>;
 };
 
+export type DepositSettingsQuery = {
+  iroFormState?: Maybe<DepositIroFormStateResult>;
+  tdsFormState?: Maybe<DepositTdsFormStateResult>;
+};
+
 export type DepositTds = {
   coopUnion?: Maybe<Scalars['Float']>;
   cooperative?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
   individual?: Maybe<Scalars['Float']>;
   institution?: Maybe<Scalars['Float']>;
+};
+
+export type DepositTdsFormStateData = {
+  coopUnion?: Maybe<Scalars['Float']>;
+  cooperative?: Maybe<Scalars['Float']>;
+  individual?: Maybe<Scalars['Float']>;
+  institution?: Maybe<Scalars['Float']>;
+};
+
+export type DepositTdsFormStateResult = {
+  data?: Maybe<DepositTdsFormStateData>;
+  error?: Maybe<QueryError>;
 };
 
 export type DepositTdsInput = {
@@ -1525,6 +1554,7 @@ export type DepositTdsInput = {
 
 export type DepositTdsResult = {
   error?: Maybe<MutationError>;
+  query?: Maybe<DepositSettingsQuery>;
   record?: Maybe<DepositTds>;
   recordId: Scalars['ID'];
 };
@@ -2901,6 +2931,7 @@ export type GeneralSettingsQuery = {
   KYM?: Maybe<KymQuery>;
   branch?: Maybe<GeneralBranchSettingsQuery>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
+  deposit?: Maybe<DepositSettingsQuery>;
   depositProduct?: Maybe<DepositProductSettingsQuery>;
   loanProducts?: Maybe<LoanProductsQuery>;
   organization?: Maybe<OrganizationSettingsQuery>;
