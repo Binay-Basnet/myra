@@ -32,7 +32,7 @@ export const MemberKYMAddress = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>();
 
@@ -100,9 +100,12 @@ export const MemberKYMAddress = ({
     [currentTempLocalityId]
   );
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -131,18 +134,20 @@ export const MemberKYMAddress = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({
-          id,
-          data: {
-            ...data,
-            permanentAddress: {
-              ...pickBy(data?.permanentAddress ?? {}, (v) => v !== 0),
+        if (id) {
+          mutate({
+            id: String(id),
+            data: {
+              ...data,
+              permanentAddress: {
+                ...pickBy(data?.permanentAddress ?? {}, (v) => v !== 0),
+              },
+              temporaryAddress: {
+                ...pickBy(data?.temporaryAddress ?? {}, (v) => v !== 0),
+              },
             },
-            temporaryAddress: {
-              ...pickBy(data?.temporaryAddress ?? {}, (v) => v !== 0),
-            },
-          },
-        });
+          });
+        }
       }, 800)
     );
 

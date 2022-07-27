@@ -32,7 +32,7 @@ export const MemberKYMProfession = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>();
 
@@ -45,9 +45,12 @@ export const MemberKYMProfession = ({
 
   const { mutate } = useSetMemberDataMutation({ onSuccess: () => refetch() });
 
-  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -63,7 +66,9 @@ export const MemberKYMProfession = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 
