@@ -172,20 +172,28 @@ export function SettingsDepositProductsAdd(
     );
   };
 
-  const { data: editValues } = useGetDepositProductSettingsEditDataQuery({
-    id,
-  });
+  const { data: editValues, refetch } =
+    useGetDepositProductSettingsEditDataQuery({
+      id,
+    });
 
   useEffect(() => {
     if (editValues) {
       const editValueData =
         editValues?.settings?.general?.depositProduct?.formState?.data;
-      console.log(editValueData);
-      reset({
-        ...editValueData,
-      });
+      if (editValueData) {
+        reset({
+          ...editValueData,
+        });
+      }
     }
   }, [editValues, id]);
+
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [refetch]);
 
   return (
     <>

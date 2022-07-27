@@ -1518,14 +1518,11 @@ export type DepositSettingsMutationIroSetupArgs = {
 
 export type DepositSettingsMutationTdsSetupArgs = {
   data?: InputMaybe<DepositTdsInput>;
-<<<<<<< HEAD
 };
 
 export type DepositSettingsQuery = {
   iroFormState?: Maybe<DepositIroFormStateResult>;
   tdsFormState?: Maybe<DepositTdsFormStateResult>;
-=======
->>>>>>> 6c52dce7b1b2671d0c5990d3041c36cb467777c6
 };
 
 export type DepositTds = {
@@ -1534,7 +1531,6 @@ export type DepositTds = {
   id: Scalars['ID'];
   individual?: Maybe<Scalars['Float']>;
   institution?: Maybe<Scalars['Float']>;
-<<<<<<< HEAD
 };
 
 export type DepositTdsFormStateData = {
@@ -1547,8 +1543,6 @@ export type DepositTdsFormStateData = {
 export type DepositTdsFormStateResult = {
   data?: Maybe<DepositTdsFormStateData>;
   error?: Maybe<QueryError>;
-=======
->>>>>>> 6c52dce7b1b2671d0c5990d3041c36cb467777c6
 };
 
 export type DepositTdsInput = {
