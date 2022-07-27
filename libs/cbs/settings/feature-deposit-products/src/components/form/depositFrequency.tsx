@@ -79,11 +79,6 @@ export const DepositFrequency = () => {
           label={t['depositProductMaximumAmount']}
           placeholder={t['depositProductEnterMaximumAmount']}
         />
-        <FormInput
-          name="depositAmount.avgAmount"
-          label={t['depositProductAverage']}
-          placeholder={t['depositProductAverage']}
-        />
       </InputGroupContainer>
 
       <TextBoxContainer>

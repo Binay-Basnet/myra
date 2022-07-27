@@ -3,6 +3,7 @@ export * from './accordion/AccordianInstitutionKym';
 export * from './accordion/AccordianMemberPage';
 export * from './accordion/AccordionComponent';
 export * from './accordion/AccordionKymCoopForm';
+export * from './actionPopover/ActionPopover';
 export * from './addMemberForms';
 export * from './chartOfAccounts';
 export * from './form/components';
