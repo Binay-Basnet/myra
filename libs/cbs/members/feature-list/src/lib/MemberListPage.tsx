@@ -41,6 +41,8 @@ export function MemberListPage() {
     }
   );
 
+  console.log(data);
+
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
   const popoverTitle = [
@@ -95,7 +97,9 @@ export function MemberListPage() {
       {
         header: t['memberListTableAddress'],
         accessorFn: (row) =>
-          `${row?.node?.address?.locality?.local}, ${row?.node?.address?.district?.local}, ${row?.node?.address?.state?.local}`,
+          `${row?.node?.address?.locality?.local ?? '--'}, ${
+            row?.node?.address?.district?.local ?? '--'
+          }, ${row?.node?.address?.state?.local ?? '--'}`,
       },
       {
         header: t['memberListTablePhoneNo'],

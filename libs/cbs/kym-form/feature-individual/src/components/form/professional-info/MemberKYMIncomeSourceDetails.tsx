@@ -144,7 +144,7 @@ const IncomeSource = ({
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormInput
-                type="text"
+                type="number"
                 bg="white"
                 name={`incomeSource`}
                 label={t['kymIndIncomeSource']}

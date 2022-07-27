@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
@@ -12,7 +13,6 @@ import {
   DepositProductInput,
   NatureOfDepositProduct,
   useGetDepositProductSettingsEditDataQuery,
-  useGetDepositProductSettingsListQuery,
   useSetDepositProductMutation,
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
@@ -20,7 +20,6 @@ import {
   Box,
   Button,
   Container,
-  DEFAULT_PAGE_SIZE,
   FormFooter,
   GridItem,
   Icon,
@@ -31,7 +30,6 @@ import { useTranslation } from '@coop/shared/utils';
 
 import {
   AccountServicesCharge,
-  BalanceLimit,
   Critera,
   DefaultAccountName,
   DepositFrequency,
@@ -50,6 +48,11 @@ import {
 /* eslint-disable-next-line */
 export interface SettingsDepositProductsAddProps {}
 
+type SelectOption = {
+  label: string;
+  value: string;
+}[];
+
 export function SettingsDepositProductsAdd(
   props: SettingsDepositProductsAddProps
 ) {
@@ -58,10 +61,6 @@ export function SettingsDepositProductsAdd(
   const id = String(router?.query?.['id']);
 
   const { mutate } = useSetDepositProductMutation();
-
-  const { data, isFetching } = useGetDepositProductSettingsListQuery();
-
-  console.log(data);
 
   const optionsSaving = [
     {
@@ -82,7 +81,26 @@ export function SettingsDepositProductsAdd(
     },
   ];
 
-  const methods = useForm<DepositProductInput>({
+  const methods = useForm<
+    Omit<
+      DepositProductInput,
+      | 'genderId'
+      | 'maritalStatusId'
+      | 'educationQualification'
+      | 'occupation'
+      | 'ethnicity'
+      | 'natureOFBusinessCoop'
+      | 'natureOfBusinessInstitution'
+    > & {
+      genderId: SelectOption;
+      maritalStatusId: SelectOption;
+      educationQualification: SelectOption;
+      occupation: SelectOption;
+      ethnicity: SelectOption;
+      natureOFBusinessCoop: SelectOption;
+      natureOfBusinessInstitution: SelectOption;
+    }
+  >({
     defaultValues: {
       nature: NatureOfDepositProduct.RecurringSaving,
       minTenureUnitNumber: 0,
@@ -93,60 +111,60 @@ export function SettingsDepositProductsAdd(
   const {
     // control, handleSubmit,
     getValues,
-    setValue,
     watch,
+    reset,
     //  setError
   } = methods;
   const depositNature = watch('nature');
 
   const submitForm = () => {
     const values = getValues();
-
-    setValue(
-      'genderId',
-      values?.genderId?.map((data) => data?.value)
+    const genderList = values?.genderId?.map((data) => data?.value);
+    const maritalStatusList = values?.maritalStatusId?.map(
+      (data) => data?.value
     );
-
-    setValue(
-      'maritalStatusId',
-      values?.maritalStatusId?.map((data) => data?.value)
+    const educationQualificationList = values?.educationQualification?.map(
+      (data) => data?.value
     );
-
-    setValue(
-      'educationQualification',
-      values?.educationQualification?.map((data) => data?.value)
+    const occupationList = values?.occupation?.map((data) => data?.value);
+    const ethnicityList = values?.ethnicity?.map((data) => data?.value);
+    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map(
+      (data) => data?.value
     );
+    const natureOfBusinessInstitutionList =
+      values?.natureOfBusinessInstitution?.map((data) => data?.value);
 
-    setValue(
-      'occupation',
-      values?.occupation?.map((data) => data?.value)
-    );
+    const updatedData = {
+      ...values,
+      genderId: genderList,
+      maritalStatusId: maritalStatusList,
+      educationQualification: educationQualificationList,
+      ethnicity: ethnicityList,
+      occupation: occupationList,
+      natureOfBusinessInstitution: natureOfBusinessInstitutionList,
+      natureOFBusinessCoop: natureOFBusinessCoopList,
+    };
 
-    setValue(
-      'ethnicity',
-      values?.ethnicity?.map((data) => data?.value)
-    );
-
-    setValue(
-      'natureOFBusinessCoop',
-      values?.natureOFBusinessCoop?.map((data) => data?.value)
-    );
-
-    setValue(
-      'natureOfBusinessInstitution',
-      values?.natureOfBusinessInstitution?.map((data) => data?.value)
-    );
-    console.log(getValues());
-    mutate({ id: '', data: getValues() });
+    console.log(updatedData);
+    mutate({ id, data: updatedData });
   };
 
-  const {
-    data: editValues,
-    isLoading: editLoading,
-    refetch,
-  } = useGetDepositProductSettingsEditDataQuery({
-    id: id,
+  const { data: editValues } = useGetDepositProductSettingsEditDataQuery({
+    id: '01G8WZBJB0YC2B6M502BY5dppr',
   });
+
+  console.log(editValues);
+
+  // useEffect(() => {
+  //   if (editValues) {
+  //     const editValueData =
+  //       editValues?.settings?.general?.depositProduct?.formState?.data;
+
+  //     reset({
+  //       ...editValueData,
+  //     });
+  //   }
+  // }, [editValues]);
 
   return (
     <>
@@ -248,7 +266,6 @@ export function SettingsDepositProductsAdd(
                   NatureOfDepositProduct.VoluntaryOrOptional && (
                   <MaximumTenure />
                 )}
-                <BalanceLimit />
                 <Interest />
                 <PostingFrequency />
                 {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (

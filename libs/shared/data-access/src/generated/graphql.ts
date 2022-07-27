@@ -7879,7 +7879,7 @@ export type GetDepositProductSettingsListQueryVariables = Exact<{
 }>;
 
 
-export type GetDepositProductSettingsListQuery = { settings: { general?: { depositProduct?: { list?: { edges: Array<{ node: { id: string, objState: ObjState, productCode: string, productName: string, nature: NatureOfDepositProduct, interest: number, createdDate: string, typeOfMember?: Array<KymMemberTypesEnum | null> | null, createdAt: string, modifiedAt: string, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType } } }> } | null } | null } | null } };
+export type GetDepositProductSettingsListQuery = { settings: { general?: { depositProduct?: { list?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { id: string, objState: ObjState, productCode: string, productName: string, nature: NatureOfDepositProduct, interest: number, createdDate: string, typeOfMember?: Array<KymMemberTypesEnum | null> | null, createdAt: string, modifiedAt: string, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType } } }> } | null } | null } | null } };
 
 export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -10518,6 +10518,13 @@ export const GetDepositProductSettingsListDocument = `
     general {
       depositProduct {
         list(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
           edges {
             node {
               id

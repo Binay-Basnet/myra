@@ -221,7 +221,7 @@ export const MemberKYMAddress = ({
                   placeholder={t['kymIndEnterLocality']}
                 />
                 <FormInput
-                  type="text"
+                  type="number"
                   name="permanentAddress.houseNo"
                   label={t['kymIndHouseNo']}
                   placeholder={t['kymIndEnterHouseNo']}
@@ -292,7 +292,7 @@ export const MemberKYMAddress = ({
                     placeholder={t['kymIndEnterLocality']}
                   />
                   <FormInput
-                    type="text"
+                    type="number"
                     name="temporaryAddress.houseNo"
                     label={t['kymIndHouseNo']}
                     placeholder={t['kymIndEnterHouseNo']}
@@ -324,7 +324,7 @@ export const MemberKYMAddress = ({
               />
               <FormInput
                 control={control}
-                type="text"
+                type="number"
                 name={'landlordContact'}
                 label={t['kymIndContactNo']}
                 placeholder={t['kymIndContactNo']}

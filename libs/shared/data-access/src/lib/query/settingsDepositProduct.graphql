@@ -6,6 +6,13 @@ query getDepositProductSettingsList(
     general {
       depositProduct {
         list(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
           edges {
             node {
               id

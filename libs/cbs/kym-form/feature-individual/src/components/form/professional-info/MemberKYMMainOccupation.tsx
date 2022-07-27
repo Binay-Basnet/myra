@@ -239,7 +239,7 @@ const MainOccupation = ({
 
                 <FormInput
                   bg="white"
-                  type="text"
+                  type="number"
                   name={`panVatNo`}
                   label={t['kymIndPanVATNo']}
                   placeholder={t['kymIndPanVATNumber']}
