@@ -14,15 +14,18 @@ import { Box, TextFields } from '@coop/shared/ui';
 export const KYMDeclarationAgree = () => {
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>();
 
   const { watch, reset } = methods;
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -40,7 +43,9 @@ export const KYMDeclarationAgree = () => {
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 

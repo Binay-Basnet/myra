@@ -69,8 +69,10 @@ export const MemberKYMContactDetails = ({
   }, [watch, router.isReady]);
 
   useEffect(() => {
-    refetch();
-  }, []);
+    if (id) {
+      refetch();
+    }
+  }, [id]);
 
   return (
     <FormProvider {...methods}>
