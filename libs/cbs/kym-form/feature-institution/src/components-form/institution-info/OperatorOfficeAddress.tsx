@@ -128,7 +128,7 @@ export const OperatorOfficeAddress = (props: IProps) => {
             </InputGroupContainer>
 
             <Box>
-              <FormMap name="operatingOfficeAddress.coordinate" />
+              <FormMap name="operatingOfficeAddress.coordinates" />
             </Box>
           </Box>
         </GroupContainer>

@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { identity, pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
 import {
@@ -11,6 +12,7 @@ import {
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import { KymInsInput } from '@coop/shared/data-access';
 import {
+  useGetInstitutionKymEditDataQuery,
   useGetKymFormStatusInstitutionQuery,
   useSetInstitutionDataMutation,
 } from '@coop/shared/data-access';
@@ -30,9 +32,10 @@ export const BranchOfficeAddress = (props: IProps) => {
   });
   const { setSection } = props;
 
-  const router = useRouter();
+  const { control, handleSubmit, getValues, watch, setError, reset } = methods;
 
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
   const { mutate } = useSetInstitutionDataMutation({
     onSuccess: (res) => {
       setError('institutionName', {
@@ -48,19 +51,51 @@ export const BranchOfficeAddress = (props: IProps) => {
       });
     },
   });
+
+  const {
+    data: editValues,
+    isLoading: editLoading,
+    refetch,
+  } = useGetInstitutionKymEditDataQuery(
+    {
+      id: id,
+    },
+    { enabled: id !== 'undefined' }
+  );
+
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        // console.log(editValues);
-        // if (editValues && data) {
-        mutate({ id: router.query['id'] as string, data });
-        //   refetch();
-        // }
+        console.log(editValues);
+        if (editValues && data) {
+          mutate({
+            id: router.query['id'] as string,
+            data,
+          });
+          refetch();
+        }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  }, [watch, router.isReady, editLoading]);
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.institution?.formState?.data?.formData;
+      const branchAddressLocality =
+        editValueData?.branchOfficeAddress?.locality?.local;
+
+      reset({
+        ...pickBy(editValueData ?? {}, (v) => v !== null),
+        branchOfficeAddress: {
+          ...editValueData?.branchOfficeAddress,
+          locality: branchAddressLocality,
+        },
+      });
+    }
+  }, [editLoading]);
 
   const province = useMemo(() => {
     return (
@@ -72,8 +107,8 @@ export const BranchOfficeAddress = (props: IProps) => {
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentprovinceId = watch('branchOfficeAddress.provinceId');
-  const currentdistrictId = watch('branchOfficeAddress.districtId');
+  const currentprovinceId = watch(`branchOfficeAddress.provinceId`);
+  const currentdistrictId = watch(`branchOfficeAddress.districtId`);
 
   const districtList = useMemo(
     () =>
@@ -142,13 +177,13 @@ export const BranchOfficeAddress = (props: IProps) => {
           >
             <InputGroupContainer>
               <FormSelect
-                name="branchOfficeAddress.provinceId"
+                name={`branchOfficeAddress.provinceId`}
                 label={t['kymIndProvince']}
                 placeholder={t['kymIndSelectProvince']}
                 options={province}
               />
               <FormSelect
-                name="branchOfficeAddress.districtId"
+                name={`branchOfficeAddress.districtId`}
                 label={t['kymIndDistrict']}
                 placeholder={t['kymIndSelectDistrict']}
                 options={districtList.map((d) => ({
@@ -179,14 +214,14 @@ export const BranchOfficeAddress = (props: IProps) => {
               />
               <FormInput
                 type="text"
-                name="branchOfficeAddress.HouseNo"
+                name="branchOfficeAddress.houseNo"
                 label={t['kymIndHouseNo']}
                 placeholder={t['kymIndEnterHouseNo']}
               />
             </InputGroupContainer>
 
             <Box>
-              <FormMap name="branchOfficeAddress" />
+              <FormMap name="branchOfficeAddress.coordinates" />
             </Box>
           </Box>
         </GroupContainer>

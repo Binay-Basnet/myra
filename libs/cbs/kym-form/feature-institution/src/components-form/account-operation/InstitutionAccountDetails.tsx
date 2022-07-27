@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import {
   FormProvider,
   useFieldArray,
@@ -22,7 +23,9 @@ import {
 import {
   KymInsInput,
   useAllAdministrationQuery,
-  useSetInstitutionDataMutation,
+  useDeleteAccountOperatorInstitutionMutation,
+  useGetNewIdMutation,
+  useSetAddAccountOperatorInstitutionMutation,
 } from '@coop/shared/data-access';
 import {
   FormFileInput,
@@ -35,19 +38,40 @@ import {
 import { Box, Button, Collapse, Icon, IconButton, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
-interface IAddAccountDetailsConcern {
-  index: number;
-  removeAccountDetails: () => void;
+interface IAddDirector {
+  removeDirector: (directorId: string) => void;
+  setKymCurrentSection: (section?: {
+    section: string;
+    subSection: string;
+  }) => void;
+  directorId: string;
 }
 
 const AddAccountDetails = ({
-  index,
-  removeAccountDetails,
-}: IAddAccountDetailsConcern) => {
+  removeDirector,
+  setKymCurrentSection,
+  directorId,
+}: IAddDirector) => {
   const { t } = useTranslation();
-  const { data } = useAllAdministrationQuery();
-
+  const methods = useForm();
   const { getValues, reset, watch } = useFormContext();
+
+  const router = useRouter();
+
+  const id = String(router?.query?.['id']);
+
+  const { mutate } = useSetAddAccountOperatorInstitutionMutation();
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        mutate({ id, acc: directorId, data: { ...data } });
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
+  const { data } = useAllAdministrationQuery();
 
   const [isOpen, setIsOpen] = React.useState(true);
 
@@ -61,12 +85,8 @@ const AddAccountDetails = ({
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch(
-    `accountOperatorsDetails.${index}.permanentState`
-  );
-  const currentDistrictId = watch(
-    `accountOperatorsDetails.${index}.permanentDistrict`
-  );
+  const currentProvinceId = watch(`permanentAddress.provinceId`);
+  const currentDistrictId = watch(`permanentAddress.districtId`);
 
   const districtList = useMemo(
     () =>
@@ -83,12 +103,8 @@ const AddAccountDetails = ({
   );
 
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch(
-    `accountOperatorsDetails.${index}.temporaryState`
-  );
-  const currentTemptDistrictId = watch(
-    `accountOperatorsDetails.${index}.temporaryDistrict`
-  );
+  const currentTempProvinceId = watch(`temporaryAddress.provinceId`);
+  const currentTemptDistrictId = watch(`temporaryAddress.districtId`);
 
   const districtTempList = useMemo(
     () =>
@@ -105,16 +121,16 @@ const AddAccountDetails = ({
   );
 
   const isPermanentAndTemporaryAddressSame = watch(
-    `accountOperatorsDetails.${index}.isPermanentAndTemporaryAddressSame`
+    `isTemporaryAndPermanentAddressSame`
   );
 
-  const resetDirectorForm = () => {
-    const values = getValues();
+  // const resetDirectorForm = () => {
+  //   const values = getValues();
 
-    values['accountOperatorsDetails'][index] = {};
+  //   values['accountOperatorsDetails'][index] = {};
 
-    reset({ accountOperatorsDetails: values['accountOperatorsDetails'] });
-  };
+  //   reset({ accountOperatorsDetails: values['accountOperatorsDetails'] });
+  // };
 
   return (
     <>
@@ -130,7 +146,7 @@ const AddAccountDetails = ({
           cursor={'pointer'}
           onClick={() => setIsOpen(!isOpen)}
         >
-          <Text fontSize="r1">{`Account Operator ${index + 1}`}</Text>
+          <Text fontSize="r1">{`Account Operator`}</Text>
           <Box>
             {isOpen ? (
               <IconButton
@@ -156,7 +172,9 @@ const AddAccountDetails = ({
             aria-label="close"
             icon={<CloseIcon />}
             ml="s16"
-            onClick={removeAccountDetails}
+            onClick={() => {
+              removeDirector(directorId);
+            }}
           />
         )}
       </Box>
@@ -175,19 +193,19 @@ const AddAccountDetails = ({
           <InputGroupContainer>
             <FormInput
               type="text"
-              name={`accountOperatorsDetails.${index}.fullName`}
+              name={`name`}
               label={t['kymInsFullName']}
               placeholder={t['kymInsEnterFullName']}
             />
             <FormInput
               type="text"
-              name={`accountOperatorsDetails.${index}.contact`}
+              name={`contact`}
               label={t['kymInsContactNo']}
               placeholder={t['kymInsContactNoPlaceholder']}
             />
             <FormInput
               type="text"
-              name={`accountOperatorsDetails.${index}.email`}
+              name={`email`}
               label={t['kymInsEmail']}
               placeholder={t['kymInsEnterEmailAddress']}
             />
@@ -198,13 +216,13 @@ const AddAccountDetails = ({
           </Text>
           <InputGroupContainer>
             <FormSelect
-              name={`accountOperatorsDetails.${index}.permanentState`}
+              name={`permanentAddress.provinceId`}
               label={t['kymInsState']}
               placeholder={t['kymInsSelectState']}
               options={province}
             />
             <FormSelect
-              name={`accountOperatorsDetails.${index}.permanentDistrict`}
+              name={`permanentAddress.districtId`}
               label={t['kymInsDistrict']}
               placeholder={t['kymInsSelectDistrict']}
               options={districtList.map((d) => ({
@@ -213,7 +231,7 @@ const AddAccountDetails = ({
               }))}
             />
             <FormSelect
-              name={`accountOperatorsDetails.${index}.permanentMunicipality`}
+              name={`permanentAddress.localGovernmentId`}
               label={t['kymInsVDCMunicipality']}
               placeholder={t['kymInsSelectVDCMunicipality']}
               options={localityList.map((d) => ({
@@ -223,28 +241,26 @@ const AddAccountDetails = ({
             />
             <FormInput
               type="number"
-              name={`accountOperatorsDetails.${index}.permanentWardNo`}
+              name={`permanentAddress.wardNo`}
               label={t['kymInsWardNo']}
               placeholder={t['kymInsEnterWardNo']}
             />
             <FormInput
               type="text"
-              name={`accountOperatorsDetails.${index}.permanentLocality`}
+              name={`permanentAddress.locality`}
               label={t['kymInsLocality']}
               placeholder={t['kymInsEnterLocality']}
             />
             <FormInput
               type="text"
-              name={`accountOperatorsDetails.${index}.permanentHouseNo`}
+              name={`permanentAddress.houseNo`}
               label={t['kymInsHouseNo']}
               placeholder={t['kymInsEnterHouseNo']}
             />
           </InputGroupContainer>
 
           <Box>
-            <FormMap
-              name={`boardOfDirectorsDetails.${index}.permanentLocation`}
-            />
+            <FormMap name={`permanentAddress.coordinates`} />
           </Box>
 
           <Box
@@ -260,7 +276,7 @@ const AddAccountDetails = ({
 
             <FormSwitch
               id="isPermanentAndTemporaryAddressSame"
-              name={`accountOperatorsDetails.${index}.isPermanentAndTemporaryAddressSame`}
+              name={`isTemporaryAndPermanentAddressSame`}
               label={t['kymInsTemporaryAddressPermanent']}
             />
 
@@ -268,13 +284,13 @@ const AddAccountDetails = ({
               <>
                 <InputGroupContainer>
                   <FormSelect
-                    name={`accountOperatorsDetails.${index}.temporaryState`}
+                    name={`temporaryAddress.provinceId`}
                     label={t['kymInsState']}
                     placeholder={t['kymInsSelectState']}
                     options={province}
                   />
                   <FormSelect
-                    name={`accountOperatorsDetails.${index}.temporaryDistrict`}
+                    name={`temporaryAddress.districtId`}
                     label={t['kymInsDistrict']}
                     placeholder={t['kymInsSelectDistrict']}
                     options={districtTempList.map((d) => ({
@@ -283,7 +299,7 @@ const AddAccountDetails = ({
                     }))}
                   />
                   <FormSelect
-                    name={`accountOperatorsDetails.${index}.temporaryMunicipality`}
+                    name={`temporaryAddress.localGovernmentId`}
                     label={t['kymInsVDCMunicipality']}
                     placeholder={t['kymInsSelectVDCMunicipality']}
                     options={localityTempList.map((d) => ({
@@ -293,19 +309,19 @@ const AddAccountDetails = ({
                   />
                   <FormInput
                     type="number"
-                    name={`accountOperatorsDetails.${index}.temporaryWardNo`}
+                    name={`temporaryAddress.wardNo`}
                     label={t['kymInsWardNo']}
                     placeholder={t['kymInsEnterWardNo']}
                   />
                   <FormInput
                     type="text"
-                    name={`accountOperatorsDetails.${index}.temporaryLocality`}
+                    name={`temporaryAddress.locality`}
                     label={t['kymInsLocality']}
                     placeholder={t['kymInsEnterLocality']}
                   />
                   <FormInput
                     type="text"
-                    name={`accountOperatorsDetails.${index}.temporaryHouseNo`}
+                    name={`temporaryAddress.houseNo`}
                     label={t['kymInsHouseNo']}
                     placeholder={t['kymInsEnterHouseNo']}
                   />
@@ -324,7 +340,7 @@ const AddAccountDetails = ({
           <Box>
             <InputGroupContainer>
               <FormSelect
-                name={`accountOperatorsDetails.${index}.designation`}
+                name={`designation`}
                 label={t['kymInsDesignation']}
                 placeholder={t['kymInsSelectposition']}
                 options={[
@@ -339,16 +355,14 @@ const AddAccountDetails = ({
                 placeholder={t['kymInsPanNoPlaceholder']}
                 label={t['kymInsPanNo']}
               />
-              <Box display="flex" flexDirection={'column'} gap="s4">
+              {/* <Box display="flex" flexDirection={'column'} gap="s4">
                 <Text fontSize={'s3'} fontWeight="500">
                   {t['kymInsSpecimenSignature']}
                 </Text>
                 <Box w="124px" display="flex" flexDirection={'column'} gap="s4">
-                  <FormFileInput
-                    name={`accountOperatorsDetails.${index}.specimenSignature`}
-                  />
+                  <FormFileInput name={`specimenSignature`} />
                 </Box>
-              </Box>
+              </Box> */}
             </InputGroupContainer>
           </Box>
         </SectionContainer>
@@ -365,7 +379,7 @@ const AddAccountDetails = ({
             id="accountOperatorReset"
             variant="ghost"
             leftIcon={<GrRotateRight />}
-            onClick={resetDirectorForm}
+            // onClick={resetDirectorForm}
           >
             {t['kymInsReset']}
           </Button>
@@ -374,7 +388,9 @@ const AddAccountDetails = ({
             variant="outline"
             shade="danger"
             leftIcon={<AiOutlineDelete height="11px" />}
-            onClick={removeAccountDetails}
+            onClick={() => {
+              removeDirector(directorId);
+            }}
           >
             {t['kymInsDelete']}
           </Button>
@@ -395,52 +411,39 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
   const { setSection } = props;
 
   const router = useRouter();
+  const id = String(router?.query?.['id']);
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
-  const { mutate } = useSetInstitutionDataMutation({
+  const [directorIds, setDirectorIds] = useState<string[]>([]);
+
+  const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
-      setError('institutionName', {
-        type: 'custom',
-        message:
-          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
-      });
-    },
-    onError: () => {
-      setError('institutionName', {
-        type: 'custom',
-        message: 'it is what it is',
-      });
+      setDirectorIds([...directorIds, res.newId]);
     },
   });
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        // console.log(editValues);
-        // if (editValues && data) {
-        mutate({ id: router.query['id'] as string, data });
-        //   refetch();
-        // }
-      }, 800)
-    );
+  const { mutate: deleteMutate } = useDeleteAccountOperatorInstitutionMutation({
+    onSuccess: (res) => {
+      const deletedId = String(
+        res?.members?.institution?.accountOperator?.Delete?.recordId
+      );
 
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-  const {
-    fields: accountFields,
-    append: accountAppend,
-    remove: accountRemove,
-  } = useFieldArray<any>({ control, name: 'accountOperatorsDetails' });
+      const tempDirectorIds = [...directorIds];
 
+      tempDirectorIds.splice(tempDirectorIds.indexOf(deletedId), 1);
+
+      setDirectorIds([...tempDirectorIds]);
+    },
+  });
+  const addDirector = () => {
+    newIdMutate({});
+  };
+
+  const removeDirector = (directorId: string) => {
+    deleteMutate({ insId: id, acc: directorId });
+  };
   return (
     <FormProvider {...methods}>
       <form
-        // onChange={debounce(() => {
-        //   console.log('hello', getValues());
-        //   mutate({ id, data: getValues() });
-        // }, 800)}
-        // onSubmit={handleSubmit((data) => {
-        //   console.log('data', data);
-        // })}
         onFocus={(e) => {
           const kymSection = getKymSectionInstitution(e.target.id);
           setSection(kymSection);
@@ -457,19 +460,13 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
 
           <div>
             <DynamicBoxGroupContainer>
-              {accountFields.map((item, index) => {
+              {directorIds.map((id) => {
                 return (
-                  <Box
-                    key={item.id}
-                    display="flex"
-                    flexDirection={'column'}
-                    // gap="s16"
-                    // border="1px solid"
-                    // borderColor="border.layout"
-                  >
+                  <Box key={id} display="flex" flexDirection={'column'}>
                     <AddAccountDetails
-                      index={index}
-                      removeAccountDetails={() => accountRemove(index)}
+                      setKymCurrentSection={setSection}
+                      removeDirector={removeDirector}
+                      directorId={id}
                     />
                   </Box>
                 );
@@ -480,7 +477,7 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
                 leftIcon={<Icon size="md" as={AiOutlinePlus} />}
                 variant="outline"
                 onClick={() => {
-                  accountAppend({});
+                  addDirector();
                 }}
               >
                 {t['kymInsNewOperator']}

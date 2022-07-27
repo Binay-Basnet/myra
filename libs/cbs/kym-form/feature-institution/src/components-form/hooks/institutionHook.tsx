@@ -72,6 +72,8 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
         editValues?.members?.institution?.formState?.data?.formData;
       const registeredAddressLocality =
         editValueData?.registeredAddress?.locality?.local;
+      const operatingAddressLocality =
+        editValueData?.operatingOfficeAddress?.locality?.local;
       console.log('edit value', editValueData);
 
       reset({
@@ -82,6 +84,10 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
         registeredAddress: {
           ...editValueData?.registeredAddress,
           locality: registeredAddressLocality,
+        },
+        operatingOfficeAddress: {
+          ...editValueData?.operatingOfficeAddress,
+          locality: operatingAddressLocality,
         },
       });
     }

@@ -30,70 +30,68 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
   const { setSection } = props;
 
   const { watch, setError, reset } = methods;
-  useInstitution({ methods });
 
-  // const router = useRouter();
-  // const id = String(router?.query?.['id']);
-  // const { mutate } = useSetInstitutionDataMutation({
-  //   onSuccess: (res) => {
-  //     setError('institutionName', {
-  //       type: 'custom',
-  //       message:
-  //         res?.members?.institution?.add?.error?.error?.['institutionName'][0],
-  //     });
-  //   },
-  //   onError: () => {
-  //     setError('institutionName', {
-  //       type: 'custom',
-  //       message: 'it is what it is',
-  //     });
-  //   },
-  // });
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+  const { mutate } = useSetInstitutionDataMutation({
+    onSuccess: (res) => {
+      setError('institutionName', {
+        type: 'custom',
+        message:
+          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
+      });
+    },
+    onError: () => {
+      setError('institutionName', {
+        type: 'custom',
+        message: 'it is what it is',
+      });
+    },
+  });
 
-  // const {
-  //   data: editValues,
-  //   isLoading: editLoading,
-  //   refetch,
-  // } = useGetInstitutionKymEditDataQuery(
-  //   {
-  //     id: id,
-  //   },
-  //   { enabled: id !== 'undefined' }
-  // );
+  const {
+    data: editValues,
+    isLoading: editLoading,
+    refetch,
+  } = useGetInstitutionKymEditDataQuery(
+    {
+      id: id,
+    },
+    { enabled: id !== 'undefined' }
+  );
 
-  // useEffect(() => {
-  //   const subscription = watch(
-  //     debounce((data) => {
-  //       console.log(editValues);
-  //       if (editValues && data) {
-  //         mutate({
-  //           id: router.query['id'] as string,
-  //           data,
-  //         });
-  //         refetch();
-  //       }
-  //     }, 800)
-  //   );
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        console.log(editValues);
+        if (editValues && data) {
+          mutate({
+            id: router.query['id'] as string,
+            data,
+          });
+          refetch();
+        }
+      }, 800)
+    );
 
-  //   return () => subscription.unsubscribe();
-  // }, [watch, router.isReady, editLoading]);
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady, editLoading]);
 
-  // useEffect(() => {
-  //   if (editValues) {
-  //     const editValueData =
-  //       editValues?.members?.institution?.formState?.data?.formData;
-  //     const registeredAddressLocality =
-  //       editValueData?.registeredAddress?.locality?.local;
-  //     reset({
-  //       ...pickBy(editValueData ?? {}, (v) => v !== null),
-  //       registeredAddress: {
-  //         ...editValueData?.registeredAddress,
-  //         locality: registeredAddressLocality,
-  //       },
-
-  //     });
-  //   }
-  // }, [editLoading]);
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.institution?.formState?.data?.formData;
+      const registeredAddressLocality =
+        editValueData?.registeredAddress?.locality?.local;
+      reset({
+        ...pickBy(editValueData ?? {}, (v) => v !== null),
+        registeredAddress: {
+          ...editValueData?.registeredAddress,
+          locality: registeredAddressLocality,
+        },
+      });
+    }
+  }, [editLoading]);
 
   const { data } = useAllAdministrationQuery();
 
@@ -205,7 +203,7 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
           </InputGroupContainer>
 
           <Box mt="-16px">
-            <FormMap name="registeredAddress.coordinate" />
+            <FormMap name="registeredAddress.coordinates" />
           </Box>
         </GroupContainer>
       </form>
