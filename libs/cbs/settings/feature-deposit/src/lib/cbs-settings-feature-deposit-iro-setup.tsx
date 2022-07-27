@@ -63,7 +63,7 @@ export function CbsSettingsFeatureDepositIROSetup(
                   >
                     <Box>
                       <FormInput
-                        name="individual"
+                        name="iroName"
                         type="text"
                         control={control}
                         label={t['settingsDepositIroName']}

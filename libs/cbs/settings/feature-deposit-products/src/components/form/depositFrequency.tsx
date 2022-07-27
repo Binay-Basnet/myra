@@ -22,6 +22,8 @@ export const DepositFrequency = () => {
   const penaltyType = watch('penaltyData.rateType');
   const { t } = useTranslation();
 
+  console.log(watch('depositFrequency'));
+
   const DepositFrequencyOptions = [
     {
       label: t['daily'],
@@ -78,11 +80,6 @@ export const DepositFrequency = () => {
           name="depositAmount.maxAmount"
           label={t['depositProductMaximumAmount']}
           placeholder={t['depositProductEnterMaximumAmount']}
-        />
-        <FormInput
-          name="depositAmount.avgAmount"
-          label={t['depositProductAverage']}
-          placeholder={t['depositProductAverage']}
         />
       </InputGroupContainer>
 

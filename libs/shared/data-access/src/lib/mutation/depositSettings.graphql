@@ -1,0 +1,46 @@
+mutation setDepositIro($data: DepositIroInput) {
+  settings {
+    general {
+      deposit {
+        ... on DepositSettingsMutation {
+          iroSetup(data: $data) {
+            recordId
+            record {
+              id
+              iroName
+              iroAddress
+              iroCode
+            }
+            error {
+              __typename
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setDepositTds($data: DepositIroInput) {
+  settings {
+    general {
+      deposit {
+        ... on DepositSettingsMutation {
+          tdsSetup {
+            recordId
+            record {
+              id
+              individual
+              institution
+              cooperative
+              coopUnion
+            }
+            error {
+              __typename
+            }
+          }
+        }
+      }
+    }
+  }
+}
