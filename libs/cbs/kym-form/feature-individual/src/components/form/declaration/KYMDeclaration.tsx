@@ -60,7 +60,7 @@ export const KYMDeclaration = ({
   const { watch, reset } = methods;
 
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
     useGetIndividualKymOptionsQuery({
@@ -82,9 +82,12 @@ export const KYMDeclaration = ({
 
   const hasForeignResidentialPermit = watch('hasForeignResidentialPermit');
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -104,7 +107,9 @@ export const KYMDeclaration = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id: router.query['id'] as string, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 

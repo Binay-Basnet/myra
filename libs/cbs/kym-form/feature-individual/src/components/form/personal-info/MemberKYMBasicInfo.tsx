@@ -102,8 +102,10 @@ export const MemberKYMBasicInfo = ({
   }, [nationalityFields, editValues]);
 
   useEffect(() => {
-    refetch();
-  }, []);
+    if (id) {
+      refetch();
+    }
+  }, [id]);
 
   return (
     <FormProvider {...methods}>

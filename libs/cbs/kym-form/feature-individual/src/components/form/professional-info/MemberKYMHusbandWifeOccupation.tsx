@@ -304,14 +304,17 @@ export const MemberKYMHusbandWifeOccupation = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const [occupationIds, setOccupationIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetIndividualKymFamilyOccupationListQuery({
-    id: id,
-    isSpouse: true,
-  });
+  const { data: editValues } = useGetIndividualKymFamilyOccupationListQuery(
+    {
+      id: String(id),
+      isSpouse: true,
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -353,7 +356,7 @@ export const MemberKYMHusbandWifeOccupation = ({
   };
 
   const removeOccuapation = (occupationId: string) => {
-    deleteMutate({ memberId: id, id: occupationId });
+    deleteMutate({ memberId: String(id), id: occupationId });
   };
 
   return (

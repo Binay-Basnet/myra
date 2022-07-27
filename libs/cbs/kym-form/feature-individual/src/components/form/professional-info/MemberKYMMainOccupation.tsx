@@ -106,11 +106,14 @@ const MainOccupation = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   const profession =
     editValues?.members?.individual?.formState?.data?.formData?.profession
@@ -132,11 +135,14 @@ const MainOccupation = ({
   //   occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]
   //     ?.options ?? [];
 
-  const { data: familyOccupationListData, refetch } =
-    useGetIndividualKymFamilyOccupationListQuery({
-      id: id,
-      isSpouse: false,
-    });
+  const { data: familyOccupationListData } =
+    useGetIndividualKymFamilyOccupationListQuery(
+      {
+        id: String(id),
+        isSpouse: false,
+      },
+      { enabled: !!id }
+    );
 
   useEffect(() => {
     if (familyOccupationListData) {
@@ -163,14 +169,18 @@ const MainOccupation = ({
     }
   }, [familyOccupationListData]);
 
-  const { mutate } = useSetMemberOccupationMutation({
-    onSuccess: () => refetch(),
-  });
+  const { mutate } = useSetMemberOccupationMutation();
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, isSpouse: false, data: { id: occupationId, ...data } });
+        if (id) {
+          mutate({
+            id: String(id),
+            isSpouse: false,
+            data: { id: occupationId, ...data },
+          });
+        }
       }, 800)
     );
 

@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Amount: any;
   Any: unknown;
   Cursor: string;
   Date: string;
@@ -211,13 +212,15 @@ export type AffiliatedDirectorDetailsType = {
 };
 
 export type AmountLimit = {
-  maxAmount?: InputMaybe<Scalars['String']>;
-  minAmount?: InputMaybe<Scalars['String']>;
+  avgAmount?: InputMaybe<Scalars['Amount']>;
+  maxAmount?: InputMaybe<Scalars['Amount']>;
+  minAmount?: InputMaybe<Scalars['Amount']>;
 };
 
 export type AmountLimitFormState = {
-  maxAmount?: Maybe<Scalars['String']>;
-  minAmount?: Maybe<Scalars['String']>;
+  avgAmount?: Maybe<Scalars['Amount']>;
+  maxAmount?: Maybe<Scalars['Amount']>;
+  minAmount?: Maybe<Scalars['Amount']>;
 };
 
 export enum Arrange {
@@ -464,7 +467,7 @@ export type Branch = {
 export type BranchAddResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<GeneralBranchSettingsQuery>;
-  record: Branch;
+  record?: Maybe<Branch>;
   recordId: Scalars['ID'];
 };
 
@@ -1354,7 +1357,7 @@ export type DepositProductFormStateData = {
   institutionDocuments?: Maybe<Array<Maybe<InstitutionRequiredDocument>>>;
   interest?: Maybe<InterestFormState>;
   ladderRate?: Maybe<Scalars['Boolean']>;
-  ladderRateData: Array<Maybe<LadderRateFormState>>;
+  ladderRateData?: Maybe<Array<Maybe<LadderRateFormState>>>;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxAge?: Maybe<Scalars['Int']>;
   maxPostingFreqDifference?: Maybe<Scalars['Int']>;
@@ -1429,7 +1432,7 @@ export type DepositProductInput = {
   natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   penalty?: InputMaybe<Scalars['Boolean']>;
-  penaltyData: PenaltyInput;
+  penaltyData?: InputMaybe<PenaltyInput>;
   percentageOfDeposit?: InputMaybe<Scalars['Float']>;
   postingFrequency?: InputMaybe<Frequency>;
   prematurePenalty?: InputMaybe<PrematurePenalty>;
@@ -1498,13 +1501,11 @@ export type DepositSettingsMutation = {
 
 export type DepositSettingsMutationIroSetupArgs = {
   data?: InputMaybe<DepositIroInput>;
-  id: Scalars['ID'];
 };
 
 
 export type DepositSettingsMutationTdsSetupArgs = {
   data?: InputMaybe<DepositTdsInput>;
-  id: Scalars['ID'];
 };
 
 export type DepositTds = {
@@ -1512,14 +1513,14 @@ export type DepositTds = {
   cooperative?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
   individual?: Maybe<Scalars['Float']>;
-  insitution?: Maybe<Scalars['Float']>;
+  institution?: Maybe<Scalars['Float']>;
 };
 
 export type DepositTdsInput = {
   coopUnion?: InputMaybe<Scalars['Float']>;
   cooperative?: InputMaybe<Scalars['Float']>;
   individual?: InputMaybe<Scalars['Float']>;
-  insitution?: InputMaybe<Scalars['Float']>;
+  institution?: InputMaybe<Scalars['Float']>;
 };
 
 export type DepositTdsResult = {
@@ -2481,12 +2482,18 @@ export enum FormFieldSearchTerm {
   EducationQualification = 'EDUCATION_QUALIFICATION',
   EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
   Ethnicity = 'ETHNICITY',
+  ExpectedMonthlyTransaction = 'EXPECTED_MONTHLY_TRANSACTION',
+  ExpectedMonthlyTurnover = 'EXPECTED_MONTHLY_TURNOVER',
   FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
   FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
+  ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
+  /** KYM_INDIVIDUAL */
   Gender = 'GENDER',
   MaritalStatus = 'MARITAL_STATUS',
   Nationality = 'NATIONALITY',
   Occupation = 'OCCUPATION',
+  /**  KYM_INSTITUTION */
+  OrganizationType = 'ORGANIZATION_TYPE',
   Purpose = 'PURPOSE',
   Relationship = 'RELATIONSHIP',
   Religion = 'RELIGION'
@@ -2649,17 +2656,33 @@ export type FormQueryDynamicFieldsArgs = {
 };
 
 export enum FormSearchTerm {
-  Certificate = 'CERTIFICATE',
+  AccountHolderDeclaration = 'ACCOUNT_HOLDER_DECLARATION',
+  AccountHolderDetails = 'ACCOUNT_HOLDER_DETAILS',
+  AccountHolderDocuments = 'ACCOUNT_HOLDER_DOCUMENTS',
+  AccountOperator = 'ACCOUNT_OPERATOR',
+  AccountOperatorDetails = 'ACCOUNT_OPERATOR_DETAILS',
+  AccountOperatorDocument = 'ACCOUNT_OPERATOR_DOCUMENT',
+  BankAccountDetails = 'BANK_ACCOUNT_DETAILS',
+  Citizenship = 'CITIZENSHIP',
+  /**  KYM_INDIVIDUAL && KYM_INSTITUTION */
   ContactDetails = 'CONTACT_DETAILS',
+  Director = 'DIRECTOR',
+  DirectorsAffiliationDetails = 'DIRECTORS_AFFILIATION_DETAILS',
+  DirectorDetails = 'DIRECTOR_DETAILS',
+  DirectorDocument = 'DIRECTOR_DOCUMENT',
   DrivingLicense = 'DRIVING_LICENSE',
   EducationQualification = 'EDUCATION_QUALIFICATION',
   EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
   Ethnicity = 'ETHNICITY',
+  ExpectedMonthlyTransaction = 'EXPECTED_MONTHLY_TRANSACTION',
+  ExpectedMonthlyTurnover = 'EXPECTED_MONTHLY_TURNOVER',
   FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
   FamilyInformation = 'FAMILY_INFORMATION',
+  /**  KYM_INDIVIDUAL && KYM_INSTITUTION */
   FileUploads = 'FILE_UPLOADS',
   FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
   ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
+  /**  KYM_INDIVIDUAL  */
   Gender = 'GENDER',
   Identification = 'IDENTIFICATION',
   IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
@@ -2667,12 +2690,18 @@ export enum FormSearchTerm {
   Nationality = 'NATIONALITY',
   NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
   Occupation = 'OCCUPATION',
+  /**  KYM_INDIVIDUAL && KYM_INSTITUTION */
   OccupationDetails = 'OCCUPATION_DETAILS',
+  /** KYM_INSTITUTION  */
+  OrganizationType = 'ORGANIZATION_TYPE',
   OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
   Passport = 'PASSPORT',
   Purpose = 'PURPOSE',
+  RegisteredDetails = 'REGISTERED_DETAILS',
   Relationship = 'RELATIONSHIP',
   Religion = 'RELIGION',
+  SisterConcernDetails = 'SISTER_CONCERN_DETAILS',
+  TransactionDetails = 'TRANSACTION_DETAILS',
   VoterId = 'VOTER_ID'
 }
 
@@ -2755,16 +2784,34 @@ export type FormSectionQueryDetailsArgs = {
 };
 
 export enum FormSectionSearchTerm {
-  Certificate = 'CERTIFICATE',
+  AccountHolderDeclaration = 'ACCOUNT_HOLDER_DECLARATION',
+  AccountHolderDetails = 'ACCOUNT_HOLDER_DETAILS',
+  AccountHolderDocuments = 'ACCOUNT_HOLDER_DOCUMENTS',
+  AccountOperator = 'ACCOUNT_OPERATOR',
+  AccountOperatorDetails = 'ACCOUNT_OPERATOR_DETAILS',
+  AccountOperatorDocument = 'ACCOUNT_OPERATOR_DOCUMENT',
+  BankAccountDetails = 'BANK_ACCOUNT_DETAILS',
+  Citizenship = 'CITIZENSHIP',
   ContactDetails = 'CONTACT_DETAILS',
+  Director = 'DIRECTOR',
+  DirectorsAffiliationDetails = 'DIRECTORS_AFFILIATION_DETAILS',
+  DirectorDetails = 'DIRECTOR_DETAILS',
+  DirectorDocument = 'DIRECTOR_DOCUMENT',
   DrivingLicense = 'DRIVING_LICENSE',
   FamilyInformation = 'FAMILY_INFORMATION',
+  /** KYM_INDIVIDUAL && KYM_INSTITUTION */
+  FileUploads = 'FILE_UPLOADS',
   Identification = 'IDENTIFICATION',
   IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
   NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
   OccupationDetails = 'OCCUPATION_DETAILS',
   OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
+  /** KYM_INDIVIDUAL */
   Passport = 'PASSPORT',
+  /**  KYM_INSTITUTION */
+  RegisteredDetails = 'REGISTERED_DETAILS',
+  SisterConcernDetails = 'SISTER_CONCERN_DETAILS',
+  TransactionDetails = 'TRANSACTION_DETAILS',
   VoterId = 'VOTER_ID'
 }
 
@@ -5824,13 +5871,13 @@ export type KymOccupationDetailsType = {
 };
 
 export type LadderRate = {
-  amount?: InputMaybe<Scalars['String']>;
+  amount?: InputMaybe<Scalars['Amount']>;
   rate?: InputMaybe<Scalars['Float']>;
   type?: InputMaybe<Scalars['String']>;
 };
 
 export type LadderRateFormState = {
-  amount?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['Amount']>;
   rate?: Maybe<Scalars['Float']>;
   type?: Maybe<Scalars['String']>;
 };
@@ -5912,7 +5959,7 @@ export type LoanProduct = Base & {
   maxAge?: Maybe<Scalars['Int']>;
   maxGraceDurationUnit?: Maybe<Frequency>;
   maxGraceDurationUnitNumber?: Maybe<Scalars['Int']>;
-  maxLoanAmount?: Maybe<Scalars['String']>;
+  maxLoanAmount?: Maybe<Scalars['Amount']>;
   maxTenure?: Maybe<Scalars['Boolean']>;
   maxTenureUnit?: Maybe<Frequency>;
   maxTenureUnitNumber?: Maybe<Scalars['Int']>;
@@ -5922,7 +5969,7 @@ export type LoanProduct = Base & {
   minTenure?: Maybe<Scalars['Boolean']>;
   minTenureUnit?: Maybe<Frequency>;
   minTenureUnitNumber?: Maybe<Scalars['Int']>;
-  minimumLoanAmount?: Maybe<Scalars['String']>;
+  minimumLoanAmount?: Maybe<Scalars['Amount']>;
   modeOfPayment?: Maybe<LoanPaymentMode>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -5984,7 +6031,7 @@ export type LoanProductInput = {
   maxAge?: InputMaybe<Scalars['Int']>;
   maxGraceDurationUnit?: InputMaybe<Frequency>;
   maxGraceDurationUnitNumber?: InputMaybe<Scalars['Int']>;
-  maxLoanAmount?: InputMaybe<Scalars['String']>;
+  maxLoanAmount?: InputMaybe<Scalars['Amount']>;
   maxTenure?: InputMaybe<Scalars['Boolean']>;
   maxTenureUnit?: InputMaybe<Frequency>;
   maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
@@ -5994,7 +6041,7 @@ export type LoanProductInput = {
   minTenure?: InputMaybe<Scalars['Boolean']>;
   minTenureUnit?: InputMaybe<Frequency>;
   minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
-  minimumLoanAmount?: InputMaybe<Scalars['String']>;
+  minimumLoanAmount?: InputMaybe<Scalars['Amount']>;
   modeOfPayment?: InputMaybe<LoanPaymentMode>;
   natureOFBusinessCoop?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -6588,29 +6635,29 @@ export type Pagination = {
 
 export type Penalty = {
   dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
-  flatRatePenalty?: Maybe<Scalars['String']>;
-  minimumAmount?: Maybe<Scalars['String']>;
-  penaltyAmount?: Maybe<Scalars['String']>;
+  flatRatePenalty?: Maybe<Scalars['Float']>;
+  minimumAmount?: Maybe<Scalars['Amount']>;
+  penaltyAmount?: Maybe<Scalars['Amount']>;
   penaltyRate?: Maybe<Scalars['Float']>;
   rateType?: Maybe<PenaltyRateType>;
 };
 
 export type PenaltyFormState = {
   dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
-  flatRatePenalty?: Maybe<Scalars['String']>;
+  flatRatePenalty?: Maybe<Scalars['Float']>;
   minimumAmount?: Maybe<Scalars['String']>;
-  penaltyAmount?: Maybe<Scalars['String']>;
+  penaltyAmount?: Maybe<Scalars['Amount']>;
   penaltyRate?: Maybe<Scalars['Float']>;
   rateType?: Maybe<PenaltyRateType>;
 };
 
 export type PenaltyInput = {
   dayAfterInstallmentDate?: InputMaybe<Scalars['Int']>;
-  flatRatePenalty?: InputMaybe<Scalars['String']>;
-  minimumAmount?: InputMaybe<Scalars['String']>;
-  penaltyAmount?: InputMaybe<Scalars['String']>;
+  flatRatePenalty?: InputMaybe<Scalars['Float']>;
+  minimumAmount?: InputMaybe<Scalars['Amount']>;
+  penaltyAmount?: InputMaybe<Scalars['Amount']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
-  rateType: PenaltyRateType;
+  rateType?: InputMaybe<PenaltyRateType>;
 };
 
 export enum PenaltyRateType {
@@ -6640,6 +6687,15 @@ export type PredefinedElementFilter = {
   searchTerm: FormSearchTerm;
 };
 
+export type PredefinedElementListFilter = {
+  category?: InputMaybe<FormCategory>;
+};
+
+export type PredefinedElementListQueryResult = {
+  data?: Maybe<Array<Maybe<FormElement>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type PredefinedElementQueryResult = {
   data?: Maybe<FormElement>;
   error?: Maybe<QueryError>;
@@ -6647,6 +6703,7 @@ export type PredefinedElementQueryResult = {
 
 export type PredefinedFormQuery = {
   details: PredefinedElementQueryResult;
+  list: PredefinedElementListQueryResult;
 };
 
 
@@ -6654,9 +6711,14 @@ export type PredefinedFormQueryDetailsArgs = {
   filter: PredefinedElementFilter;
 };
 
+
+export type PredefinedFormQueryListArgs = {
+  filter: PredefinedElementListFilter;
+};
+
 export type PrematurePenalty = {
   noOfDays?: InputMaybe<Scalars['Int']>;
-  penaltyAmount?: InputMaybe<Scalars['String']>;
+  penaltyAmount?: InputMaybe<Scalars['Amount']>;
   penaltyDateType?: InputMaybe<PrematurePenaltyDateType>;
   penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
@@ -6669,7 +6731,7 @@ export enum PrematurePenaltyDateType {
 
 export type PrematurePenaltyFormState = {
   noOfDays?: Maybe<Scalars['Int']>;
-  penaltyAmount?: Maybe<Scalars['String']>;
+  penaltyAmount?: Maybe<Scalars['Amount']>;
   penaltyDateType?: Maybe<PrematurePenaltyDateType>;
   penaltyLedgerMapping?: Maybe<Scalars['String']>;
   penaltyRate?: Maybe<Scalars['Float']>;
@@ -6735,21 +6797,21 @@ export type Rebate = {
   daysBeforeInstallmentDate?: Maybe<Scalars['Int']>;
   noOfInstallment?: Maybe<Scalars['Int']>;
   percentage?: Maybe<Scalars['Float']>;
-  rebateAmount?: Maybe<Scalars['String']>;
+  rebateAmount?: Maybe<Scalars['Amount']>;
 };
 
 export type RebateFormState = {
   daysBeforeInstallmentDate?: Maybe<Scalars['Int']>;
   noOfInstallment?: Maybe<Scalars['Int']>;
   percentage?: Maybe<Scalars['Float']>;
-  rebateAmount?: Maybe<Scalars['String']>;
+  rebateAmount?: Maybe<Scalars['Amount']>;
 };
 
 export type RebateInput = {
   daysBeforeInstallmentDate?: InputMaybe<Scalars['Int']>;
   noOfInstallment?: InputMaybe<Scalars['Int']>;
   percentage?: InputMaybe<Scalars['Float']>;
-  rebateAmount?: InputMaybe<Scalars['String']>;
+  rebateAmount?: InputMaybe<Scalars['Amount']>;
 };
 
 export type RecentTransactionFilter = {
@@ -6807,13 +6869,13 @@ export type ServerError = {
 };
 
 export type ServiceType = {
-  amount?: InputMaybe<Scalars['String']>;
+  amount?: InputMaybe<Scalars['Amount']>;
   ledgerName?: InputMaybe<Scalars['String']>;
   serviceName?: InputMaybe<Scalars['String']>;
 };
 
 export type ServiceTypeFormState = {
-  amount?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['Amount']>;
   ledgerName?: Maybe<Scalars['String']>;
   serviceName?: Maybe<Scalars['String']>;
 };
@@ -7266,7 +7328,7 @@ export type SetBranchDataMutationVariables = Exact<{
 }>;
 
 
-export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record: { id: string }, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
+export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
 export type SetNewCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
@@ -7864,7 +7926,7 @@ export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: string | null, maxAmount?: string | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: string | null, penaltyRate?: number | null, penaltyAmount?: string | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: string | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: string | null, maxAmount?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData: Array<{ type?: string | null, amount?: string | null, rate?: number | null } | null>, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: string | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: string | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: Frequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, rebateData?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, percentage?: number | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
