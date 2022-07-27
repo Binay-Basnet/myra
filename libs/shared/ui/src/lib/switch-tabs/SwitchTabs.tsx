@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -79,13 +79,19 @@ export function SwitchTabs({
   errorText,
   helperText,
 }: SwitchTabsProps) {
-  const { getRootProps, getRadioProps } = useRadioGroup({
+  const { getRootProps, getRadioProps, setValue } = useRadioGroup({
     name: name,
     defaultValue: value?.toString(),
     onChange: onChange,
   });
 
   const group = getRootProps();
+
+  useEffect(() => {
+    if (value) {
+      setValue(value.toString());
+    }
+  }, [value]);
 
   return (
     <Box display="flex" flexDir="column" gap="s4">
