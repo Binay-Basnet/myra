@@ -170,7 +170,7 @@ export function SettingsDepositProductsAdd(
       <Container height="fit-content" minW="container.lg" p="0">
         <Box position="relative" margin="0px auto">
           <Box
-            position=" "
+            position="fixed"
             margin="0px auto"
             bg="gray.100"
             minW="container.lg"
