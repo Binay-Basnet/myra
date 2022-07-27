@@ -48,6 +48,8 @@ export const OperatorOfficeAddress = (props: IProps) => {
 
   const currentProvinceId = watch('operatingOfficeAddress.provinceId');
   const currentDistrictId = watch('operatingOfficeAddress.districtId');
+  const currentLocalityId = watch('operatingOfficeAddress.localGovernmentId');
+
   console.log({ currentProvinceId });
   const districtList = useMemo(
     () =>
@@ -61,6 +63,10 @@ export const OperatorOfficeAddress = (props: IProps) => {
       districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
       [],
     [currentDistrictId]
+  );
+  const wardList = useMemo(
+    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
   );
   return (
     <FormProvider {...methods}>
@@ -107,11 +113,14 @@ export const OperatorOfficeAddress = (props: IProps) => {
                   value: d.id,
                 }))}
               />
-              <FormInput
-                type="number"
+              <FormSelect
                 name="operatingOfficeAddress.wardNo"
                 label={t['kymIndWardNo']}
                 placeholder={t['kymIndEnterWardNo']}
+                options={wardList?.map((d) => ({
+                  label: d,
+                  value: d,
+                }))}
               />
               <FormInput
                 type="text"

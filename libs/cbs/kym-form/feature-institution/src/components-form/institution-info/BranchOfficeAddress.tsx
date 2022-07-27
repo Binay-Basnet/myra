@@ -109,7 +109,7 @@ export const BranchOfficeAddress = (props: IProps) => {
   // FOR PERMANENT ADDRESS
   const currentprovinceId = watch(`branchOfficeAddress.provinceId`);
   const currentdistrictId = watch(`branchOfficeAddress.districtId`);
-
+  const currentLocalityId = watch('branchOfficeAddress.localGovernmentId');
   const districtList = useMemo(
     () =>
       data?.administration.all.find((d) => d.id === currentprovinceId)
@@ -122,6 +122,11 @@ export const BranchOfficeAddress = (props: IProps) => {
       districtList.find((d) => d.id === currentdistrictId)?.municipalities ??
       [],
     [currentdistrictId]
+  );
+
+  const wardList = useMemo(
+    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
   );
 
   // useEffect(() => {
@@ -200,10 +205,13 @@ export const BranchOfficeAddress = (props: IProps) => {
                   value: d.id,
                 }))}
               />
-              <FormInput
-                type="number"
+              <FormSelect
                 name="branchOfficeAddress.wardNo"
                 label={t['kymIndWardNo']}
+                options={wardList?.map((d) => ({
+                  label: d,
+                  value: d,
+                }))}
                 placeholder={t['kymIndEnterWardNo']}
               />
               <FormInput
