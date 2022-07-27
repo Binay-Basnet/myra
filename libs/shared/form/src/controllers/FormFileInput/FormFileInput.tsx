@@ -31,7 +31,9 @@ export const FormFileInput = ({ name, label, ...rest }: FormFileInputProps) => {
         control={control}
         name={name}
         render={({ field: { onChange, value } }) => {
-          return <FileInput {...rest} value={value} onChange={onChange} />;
+          console.log(value, name, 'already');
+
+          return <FileInput value={value} onChange={onChange} {...rest} />;
         }}
       />
     </Box>

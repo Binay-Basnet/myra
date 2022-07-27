@@ -70,6 +70,8 @@ const AddFamilyMember = ({
   setKymCurrentSection,
   familyMemberId,
 }: IAddFamilyMember) => {
+  const { t } = useTranslation();
+
   const methods = useForm();
 
   const { watch, reset } = methods;
@@ -82,10 +84,9 @@ const AddFamilyMember = ({
     searchTerm: FormFieldSearchTerm.Relationship,
   });
 
-  const { data: editValues, refetch } =
-    useGetIndividualKymFamilyMembersListQuery({
-      id: id,
-    });
+  const { data: editValues } = useGetIndividualKymFamilyMembersListQuery({
+    id: id,
+  });
 
   useEffect(() => {
     if (editValues) {
@@ -106,9 +107,7 @@ const AddFamilyMember = ({
     }
   }, [editValues]);
 
-  const { mutate } = useSetMemberFamilyDetailsMutation({
-    onSuccess: () => refetch(),
-  });
+  const { mutate } = useSetMemberFamilyDetailsMutation();
 
   useEffect(() => {
     const subscription = watch(
@@ -145,22 +144,23 @@ const AddFamilyMember = ({
           <InputGroupContainer>
             <FormSelect
               name="relationshipId"
-              label="Relationship"
-              placeholder="Select Relationship"
+              label={t['kymIndRelationship']}
+              placeholder={t['kymIndSelectRelationship']}
               options={getFieldOption(relationshipData)}
             />
 
             <FormInput
               type="text"
               name="fullName"
-              label="Full Name"
-              placeholder="Full Name"
+              label={t['kymIndFullName']}
+              placeholder={t['kymIndEnterFullName']}
             />
 
             <FormInput
               type="date"
               name="dateOfBirth"
-              label="Date of Birth (BS)"
+              id="familyDetailsDateOfBirth"
+              label={t['kymIndDateofBirthBS']}
             />
           </InputGroupContainer>
         </form>
@@ -196,12 +196,6 @@ const MemberMaritalStatus = ({
 
   const { data: editValues } = useGetIndividualKymEditDataQuery({
     id: id,
-  });
-
-  console.log({
-    ind: 'marital status info',
-    data: editValues?.members?.individual?.formState?.data?.formData
-      ?.maritalStatusId,
   });
 
   useEffect(() => {

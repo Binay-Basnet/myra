@@ -27,7 +27,7 @@ export const FormPhoneNumber = <T,>({
       render={({ field: { onChange, value, ...fieldProps } }) => (
         <Input
           id={name}
-          type="tel"
+          type="number"
           onChange={onChange}
           value={value}
           leftElement={<Icon as={HiPhone} size="sm" />}

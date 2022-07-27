@@ -132,6 +132,7 @@ const IncomeSource = ({
             onClick={() => {
               removeIncomeSource(incomeSourceId);
             }}
+            id="removeIncomeSourceButton"
             color="gray.500"
             _hover={{
               color: 'gray.900',
@@ -143,7 +144,7 @@ const IncomeSource = ({
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormInput
-                type="text"
+                type="number"
                 bg="white"
                 name={`incomeSource`}
                 label={t['kymIndIncomeSource']}

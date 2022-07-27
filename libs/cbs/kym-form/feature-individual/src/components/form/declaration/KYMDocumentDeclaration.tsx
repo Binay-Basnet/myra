@@ -5,12 +5,9 @@ import debounce from 'lodash/debounce';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id,
   KymIndMemberInput,
-  useGetIndividualKymOptionsQuery,
   useGetKymDocumentsListQuery,
   useSetKymDocumentDataMutation,
-  useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormFileInput } from '@coop/shared/form';
 import { Grid, Text } from '@coop/shared/ui';
@@ -31,14 +28,18 @@ const KYMDocumentDeclarationField = ({
   label,
 }: IKYMDocumentDeclarationFieldProps) => {
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>();
 
   const { watch, reset } = methods;
 
-  const { data: editValues, refetch } = useGetKymDocumentsListQuery({
-    memberId: id,
+  const {
+    data: editValues,
+    isFetching,
+    refetch,
+  } = useGetKymDocumentsListQuery({
+    memberId: String(id),
   });
 
   useEffect(() => {
@@ -46,15 +47,24 @@ const KYMDocumentDeclarationField = ({
       const kymDocumentsList =
         editValues?.members?.document?.listKYMDocuments?.data;
 
+      console.log({ kymDocumentsList });
+
       const documentData = kymDocumentsList?.find(
         (doc) => doc?.fieldId === name
       );
 
+      // console.log({ documentData });
+
       if (documentData) {
-        reset({ [name]: documentData.identifier });
+        reset({
+          [name]: documentData.docData.map((file) => ({
+            url: file?.url,
+            fileName: file?.identifier,
+          })),
+        });
       }
     }
-  }, [editValues]);
+  }, [isFetching]);
 
   const { mutate } = useSetKymDocumentDataMutation({
     onSuccess: () => refetch(),
@@ -63,8 +73,15 @@ const KYMDocumentDeclarationField = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        console.log({ data });
-        mutate({ memberId: id, fieldId: name, identifiers: data[name] });
+        if (!data[name]?.[0]?.url) {
+          if (id) {
+            mutate({
+              memberId: id as string,
+              fieldId: name,
+              identifiers: data[name],
+            });
+          }
+        }
       }, 800)
     );
 

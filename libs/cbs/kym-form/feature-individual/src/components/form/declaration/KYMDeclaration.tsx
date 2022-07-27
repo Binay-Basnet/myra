@@ -70,7 +70,7 @@ export const KYMDeclaration = ({
     data: foreignEmploymentOptions,
     isLoading: foreignEmploymentOptionsLoading,
   } = useGetIndividualKymOptionsQuery({
-    searchTerm: FormFieldSearchTerm.Occupation,
+    searchTerm: FormFieldSearchTerm.ForeignEmploymentOptions,
     // filter: { se: Kym_Field_Custom_Id.ForeignEmploymentOptions },
   });
 
@@ -90,12 +90,6 @@ export const KYMDeclaration = ({
     if (editValues) {
       const editValueData =
         editValues?.members?.individual?.formState?.data?.formData;
-
-      console.log({
-        ...editValueData?.declaration,
-        beneficialFullName:
-          editValueData?.declaration?.beneficialFullName?.local,
-      });
 
       reset({
         ...editValueData?.declaration,
