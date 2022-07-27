@@ -160,6 +160,7 @@ query getInstitutionSisterDetailsEditList($id: ID!) {
     institution {
       listSisterConcerns(id: $id) {
         data {
+          id
           name
           natureOfBusiness
           address

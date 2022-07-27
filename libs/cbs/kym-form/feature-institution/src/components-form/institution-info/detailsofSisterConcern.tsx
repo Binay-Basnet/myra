@@ -13,6 +13,7 @@ import {
 import {
   KymInsInput,
   useDeleteSisterConcernsMutation,
+  useGetInstitutionSisterDetailsEditListQuery,
   useGetNewIdMutation,
   useSetSisterConcernsMutation,
 } from '@coop/shared/data-access';
@@ -38,7 +39,7 @@ const AddSister = ({
   const { t } = useTranslation();
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const router = useRouter();
 
@@ -46,10 +47,37 @@ const AddSister = ({
 
   const { mutate } = useSetSisterConcernsMutation();
 
+  const { data: editValues } = useGetInstitutionSisterDetailsEditListQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.institution?.listSisterConcerns?.data;
+
+      const familyMemberDetail = editValueData?.find(
+        (data) => data?.id === sisterId
+      );
+
+      if (familyMemberDetail) {
+        reset({
+          name: familyMemberDetail?.name,
+          natureOfBusiness: familyMemberDetail?.natureOfBusiness,
+          address: familyMemberDetail?.address,
+          phoneNo: familyMemberDetail?.phoneNo,
+        });
+      }
+    }
+  }, [editValues]);
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, sis: sisterId, data: { institutionId: id, ...data } });
+        mutate({
+          id,
+          sis: sisterId,
+          data: { institutionId: id, ...data },
+        });
       }, 800)
     );
 
