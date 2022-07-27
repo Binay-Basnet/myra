@@ -11,7 +11,7 @@ query getMemberList($objState: ObjState, $pagination: Pagination) {
           address {
             state
             district
-            localLevel
+            localGovernment
             wardNo
             locality
           }
@@ -130,7 +130,7 @@ query getMemberIndividualData($id: ID!) {
         address {
           state
           district
-          localLevel
+          localGovernment
           wardNo
           locality
         }
@@ -163,14 +163,14 @@ query getMemberIndividualData($id: ID!) {
               permanentAddress {
                 state
                 district
-                localLevel
+                localGovernment
                 wardNo
                 locality
               }
               temporaryAddress {
                 state
                 district
-                localLevel
+                localGovernment
                 wardNo
                 locality
               }

@@ -33,7 +33,7 @@ export const MemberKYMBasicInfo = ({
   const { t } = useTranslation();
 
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>({});
 
@@ -69,16 +69,21 @@ export const MemberKYMBasicInfo = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id: router.query['id'] as string, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
-  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {

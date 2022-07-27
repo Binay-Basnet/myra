@@ -187,16 +187,19 @@ const MemberMaritalStatus = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const { data: maritalStatusData, isLoading: maritalStatusLoading } =
     useGetIndividualKymOptionsQuery({
       searchTerm: FormFieldSearchTerm.MaritalStatus,
     });
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -214,7 +217,9 @@ const MemberMaritalStatus = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 
@@ -260,7 +265,7 @@ const MemberFamilyDetails = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   // const {
   //   fields: familyFields,
@@ -270,9 +275,12 @@ const MemberFamilyDetails = ({
 
   const [familyMemberIds, setFamilyMemberIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetIndividualKymFamilyMembersListQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymFamilyMembersListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -314,7 +322,7 @@ const MemberFamilyDetails = ({
   };
 
   const removeFamilyMember = (familyMemberId: string) => {
-    deleteMutate({ memberId: id, id: familyMemberId });
+    deleteMutate({ memberId: String(id), id: familyMemberId });
   };
 
   return (
