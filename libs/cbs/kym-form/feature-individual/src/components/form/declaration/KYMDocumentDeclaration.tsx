@@ -34,9 +34,12 @@ const KYMDocumentDeclarationField = ({
 
   const { watch, reset } = methods;
 
-  const { data: editValues, isFetching } = useGetKymDocumentsListQuery({
-    memberId: String(id),
-  });
+  const { data: editValues, isFetching } = useGetKymDocumentsListQuery(
+    {
+      memberId: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {

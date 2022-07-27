@@ -33,7 +33,7 @@ export const KYMEstimatedAmount = ({
   const { t } = useTranslation();
 
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>();
 
@@ -44,9 +44,12 @@ export const KYMEstimatedAmount = ({
       searchTerm: FormFieldSearchTerm.EstimatedAnnualTransaction,
     });
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -64,7 +67,9 @@ export const KYMEstimatedAmount = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 

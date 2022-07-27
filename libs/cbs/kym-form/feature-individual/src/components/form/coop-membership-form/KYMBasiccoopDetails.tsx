@@ -61,7 +61,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm();
 
@@ -72,9 +72,12 @@ const KYMBasiccoopDetailsFamilyMember = ({
       searchTerm: FormFieldSearchTerm.Relationship,
     });
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -92,7 +95,9 @@ const KYMBasiccoopDetailsFamilyMember = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 
@@ -350,7 +355,7 @@ const KYMBasiccoopDetailsBasic = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm();
 
@@ -363,9 +368,12 @@ const KYMBasiccoopDetailsBasic = ({
 
   const isMemberOfAnotherCooperative = watch('isMemberOfAnotherCooperative');
 
-  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -384,7 +392,9 @@ const KYMBasiccoopDetailsBasic = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 
@@ -490,15 +500,18 @@ const KYMBasiccoopDetailsIntroducer = ({
 
   const router = useRouter();
 
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm();
 
   const { watch, reset } = methods;
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -516,7 +529,9 @@ const KYMBasiccoopDetailsIntroducer = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 
