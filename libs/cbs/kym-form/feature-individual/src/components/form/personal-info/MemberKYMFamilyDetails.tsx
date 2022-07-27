@@ -84,10 +84,9 @@ const AddFamilyMember = ({
     searchTerm: FormFieldSearchTerm.Relationship,
   });
 
-  const { data: editValues, refetch } =
-    useGetIndividualKymFamilyMembersListQuery({
-      id: id,
-    });
+  const { data: editValues } = useGetIndividualKymFamilyMembersListQuery({
+    id: id,
+  });
 
   useEffect(() => {
     if (editValues) {
@@ -108,9 +107,7 @@ const AddFamilyMember = ({
     }
   }, [editValues]);
 
-  const { mutate } = useSetMemberFamilyDetailsMutation({
-    onSuccess: () => refetch(),
-  });
+  const { mutate } = useSetMemberFamilyDetailsMutation();
 
   useEffect(() => {
     const subscription = watch(
@@ -355,7 +352,6 @@ const MemberFamilyDetails = ({
 
 interface IMemberKYMFamilyDetailsProps {
   setKymCurrentSection: (section?: {
-    ERR_CONNECTION_REFUSED;
     section: string;
     subSection: string;
   }) => void;
