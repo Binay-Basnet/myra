@@ -44,7 +44,7 @@ export const useSnap = () => {
       formData.append('0', image);
 
       const response = await axios({
-        url: 'https://portal-backend.raralabs.live/query',
+        url: 'https://api-feedback.erpmyra.com/query',
         method: 'post',
         data: formData,
       });
