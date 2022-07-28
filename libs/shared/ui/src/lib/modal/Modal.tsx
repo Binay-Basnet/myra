@@ -1,3 +1,5 @@
+import React from 'react';
+import { IoCloseOutline } from 'react-icons/io5';
 import {
   Modal as ChakraModal,
   ModalBody,
@@ -9,7 +11,7 @@ import {
   ModalProps as ChakraModalProps,
 } from '@chakra-ui/react';
 
-import { Button, Divider } from '@coop/shared/ui';
+import { Button, Divider, Icon, IconButton } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
 export interface ModalProps
@@ -52,7 +54,14 @@ export function Modal(props: ModalProps) {
           </>
         )}
 
-        <ModalCloseButton _focus={{ bg: 'none' }} />
+        <ModalCloseButton _focus={{}}>
+          <IconButton
+            variant={'ghost'}
+            aria-label="close"
+            icon={<Icon as={IoCloseOutline} size="lg" />}
+          />
+        </ModalCloseButton>
+        {/*<ModalCloseButton  _focus={{ bg: 'none' }} />*/}
         <ModalBody>{children}</ModalBody>
         {/* <Divider /> */}
         {footerPrimary1Props ||

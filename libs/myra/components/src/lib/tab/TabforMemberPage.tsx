@@ -3,8 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
-import { en } from '@coop/shared/utils';
-import { useTranslation } from '@coop/shared/utils';
+import { en, useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
@@ -16,6 +15,9 @@ const TabCol = chakra(Tab, {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    _hover: {
+      bg: 'highlight.500',
+    },
     _focus: {
       boxShadow: 'none',
     },
@@ -36,12 +38,15 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
 
   const router = useRouter();
 
-  const currentIndex = useMemo(
-    () => list.findIndex((link) => router.pathname.includes(link?.name ?? '')),
-    [router.pathname]
-  );
+  // const currentIndex = useMemo(
+  //   () => list.findIndex((link) => router.pathname.includes(link?.name ?? '')),
+  //   [router.pathname]
+  // );
   return (
-    <Tabs variant="unstyled" index={currentIndex}>
+    <Tabs
+      variant="unstyled"
+      index={list.findIndex((value) => router.asPath.includes(value.link)) ?? 0}
+    >
       {list.map((item, index) => {
         return (
           <Link href={item.link} key={`${item}${index}`}>

@@ -483,6 +483,7 @@ const ne: Record<string, string> = {
   settingsMemberIdentificationDocuments: 'Identification Documents',
   settingsMemberCitizenship: 'Citizenship',
   settingsMemberVoterId: 'Voter Id',
+  settingsMemberPassport: 'Passport',
   settingsMemberDrivingLicense: 'Driving License',
   settingsMemberMaritalStatus: 'Marital Status',
   settingsMemberFamilyRelationship: 'Family Relationship',
@@ -2574,9 +2575,7 @@ const ne: Record<string, string> = {
   depositProductUnit: 'Unit',
   depositProductNumber: 'Number',
   depositProductMaxinumTenure: 'Maximum Tenure',
-  depositProductTransactionLimit: 'Transaction Limit',
   depositProductInterest: 'Interest',
-  depositProdictBalanceLimit: 'Balance Limit',
   depositProductMininumRate: 'Mininum Rate',
   depositProductMaximumRate: 'Maximum Rate',
   depositProductDefaultRate: 'Default Rate',
@@ -2843,6 +2842,7 @@ const ne: Record<string, string> = {
   depositProductPenalty: 'Penalty',
   depositProductPenaltyAmount: 'Penalty Amount',
   depositProductEdit: 'Edit',
+  depositProductBalanceLimit: 'Balance Limit',
 
   kynIndCitizenship: 'Citizenship',
   kynIndCitizenshipIssuePlace: 'Place of Issue',
@@ -2869,6 +2869,50 @@ const ne: Record<string, string> = {
   kymIndFinancialSavings: 'Savings',
   kymIndFinancialLoan: 'Loan',
   kymIndFinancialOther: 'Other',
+
+  loanProductsLoanProducts: 'Loan Products',
+  loanProductsNewLoanProduct: 'New Loan Product',
+  loanProductsProductCode: 'Product Code',
+  loanProductsProductName: 'Product Name',
+  loanProductsProductType: 'Product Type',
+  loanProductsProductSubType: 'Product Sub Type',
+  loanProductsInterest: 'Interest',
+  loanProductsCreatedDate: 'Created Date',
+  loanProductGeneralInformation: 'General Information',
+  loanProductDetailCriteria: 'Criteria',
+  loanProductAdditionalFeatures: 'Additional Features, Booleans',
+  /* KYM Institution */
+  settingsMemberInstitutionSection1: 'Section 1: Information of Organization',
+  settingsMemberInstitutionSection2: 'Section 2: Transaction Profile',
+  settingsMemberInstitutionSection3:
+    'Section 3: Details of Proprietor, partners, Directors ',
+  settingsMemberInstitutionSection4: 'Section 4: Account Operations',
+  settingsMemberInstitutionSection5: 'Section 5: Declaration',
+  settingsMemberInstitutionSection6: 'Section 6: Custom Fields',
+
+  settingInstitutionOrgType: 'Organization Type',
+  settingInstitutionRegisteredDetails: 'Registered Details',
+  settingContactDetails: 'Contact Details',
+  settingBankAccountDetails: 'Bank Account Details',
+  settingDetailsOfSisterConcern: 'Details of Sister Concern',
+
+  settingsInstitutionTransactionDetails: 'Transaction Details',
+  settingsExpectedMonthlyTurnover: 'Expected Monthly Turnover',
+  settingsExpectedMonthlyTransaction: 'Expected Monthly Transaction',
+
+  settingsDirector: 'Directors',
+  settingsDirectorDetails: 'Director Details',
+  settingsDocumentDeclaration: 'Document Declaration',
+  settingsDeclarationOfDirectionAffiliated:
+    'Details of directors affiliated with other firms',
+
+  settingsAccountOperator: 'Account Operator',
+  settingsAccountDetailsOfAccountOperator: 'Details of Account Operators',
+
+  settingsAccountHolderDeclaration: 'Account Holder Declaration',
+  settingsAccountHolderDetails: 'Account Holder Details',
+  settingsAccountHolderDeclarationDocuments:
+    'Account Holder Declaration Documents',
 };
 
 export default ne;

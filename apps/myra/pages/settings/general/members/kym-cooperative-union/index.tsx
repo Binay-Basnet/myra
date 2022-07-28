@@ -1,4 +1,4 @@
-import { KYMIndividualSettingsPage } from '@coop/cbs/settings/feature-member';
+import { IndividualSettings } from '@coop/cbs/settings/members';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
@@ -30,7 +30,7 @@ const KYMCoperativeUnion = () => {
           </Text>
         </Box>
         <Box mt="s16">
-          <KYMIndividualSettingsPage />
+          <IndividualSettings />
         </Box>
       </Box>
     </Box>

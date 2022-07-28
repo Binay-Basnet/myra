@@ -1,4 +1,5 @@
 export * from './accountServices';
+export * from './balanceLimit';
 export * from './criteria';
 export * from './defaultAccount';
 export * from './depositFrequency';

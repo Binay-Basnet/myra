@@ -96,9 +96,13 @@ query getDepositProductSettingsEditData($id: ID!) {
             minTenure
             minTenureUnit
             minTenureUnitNumber
+            maxTenure
+            maxTenureUnit
+            maxTenureUnitNumber
             balanceLimit {
               minAmount
               maxAmount
+              avgAmount
             }
             interest {
               minRate

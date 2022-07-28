@@ -29,27 +29,27 @@ import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
-const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
-  const { register, unregister } = useFormContext();
+// const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
+//   const { register, unregister } = useFormContext();
 
-  useEffect(() => {
-    register(`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.id`, {
-      value: option.id,
-    });
-    register(`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`, {
-      value: '',
-    });
-  }, []);
+//   useEffect(() => {
+//     register(`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.id`, {
+//       value: option.id,
+//     });
+//     register(`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`, {
+//       value: '',
+//     });
+//   }, []);
 
-  return (
-    <FormInputWithType
-      formType={option?.fieldType}
-      name={`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`}
-      label={String(option?.name?.local)}
-      placeholder={String(option?.name?.local)}
-    />
-  );
-};
+//   return (
+//     <FormInputWithType
+//       formType={option?.fieldType}
+//       name={`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`}
+//       label={String(option?.name?.local)}
+//       placeholder={String(option?.name?.local)}
+//     />
+//   );
+// };
 
 interface IIncomeSourceProps {
   incomeSourceId: string;
@@ -104,9 +104,7 @@ const IncomeSource = ({
     }
   }, [editValues]);
 
-  const { mutate } = useSetMemberIncomeSourceMutation({
-    onSuccess: () => refetch(),
-  });
+  const { mutate } = useSetMemberIncomeSourceMutation();
 
   useEffect(() => {
     const subscription = watch(
@@ -144,7 +142,7 @@ const IncomeSource = ({
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormInput
-                type="number"
+                type="text"
                 bg="white"
                 name={`incomeSource`}
                 label={t['kymIndIncomeSource']}
@@ -192,7 +190,7 @@ export const MemberKYMIncomeSourceDetails = ({
   const { t } = useTranslation();
 
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>();
 
@@ -203,7 +201,9 @@ export const MemberKYMIncomeSourceDetails = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, data });
+        if (id) {
+          mutate({ id: String(id), data });
+        }
       }, 800)
     );
 
@@ -217,9 +217,12 @@ export const MemberKYMIncomeSourceDetails = ({
 
   const [incomeSourceIds, setIncomeSourceIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id: id,
-  });
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
@@ -232,9 +235,12 @@ export const MemberKYMIncomeSourceDetails = ({
   }, [editValues]);
 
   const { data: incomeSourceListEditValues } =
-    useGetIndividualKymIncomeSourceListQuery({
-      id: id,
-    });
+    useGetIndividualKymIncomeSourceListQuery(
+      {
+        id: String(id),
+      },
+      { enabled: !!id }
+    );
 
   useEffect(() => {
     if (incomeSourceListEditValues) {
@@ -275,7 +281,7 @@ export const MemberKYMIncomeSourceDetails = ({
   };
 
   const removeIncomeSource = (incomeSourceId: string) => {
-    deleteMutate({ memberId: id, id: incomeSourceId });
+    deleteMutate({ memberId: String(id), id: incomeSourceId });
   };
 
   return (

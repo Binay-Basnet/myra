@@ -30,6 +30,7 @@ import { useTranslation } from '@coop/shared/utils';
 
 import {
   AccountServicesCharge,
+  BalanceLimit,
   Critera,
   DefaultAccountName,
   DepositFrequency,
@@ -52,6 +53,25 @@ type SelectOption = {
   label: string;
   value: string;
 }[];
+
+type DepositForm = Omit<
+  DepositProductInput,
+  | 'genderId'
+  | 'maritalStatusId'
+  | 'educationQualification'
+  | 'occupation'
+  | 'ethnicity'
+  | 'natureOFBusinessCoop'
+  | 'natureOfBusinessInstitution'
+> & {
+  genderId: SelectOption;
+  maritalStatusId: SelectOption;
+  educationQualification: SelectOption;
+  occupation: SelectOption;
+  ethnicity: SelectOption;
+  natureOFBusinessCoop: SelectOption;
+  natureOfBusinessInstitution: SelectOption;
+};
 
 export function SettingsDepositProductsAdd(
   props: SettingsDepositProductsAddProps
@@ -81,26 +101,7 @@ export function SettingsDepositProductsAdd(
     },
   ];
 
-  const methods = useForm<
-    Omit<
-      DepositProductInput,
-      | 'genderId'
-      | 'maritalStatusId'
-      | 'educationQualification'
-      | 'occupation'
-      | 'ethnicity'
-      | 'natureOFBusinessCoop'
-      | 'natureOfBusinessInstitution'
-    > & {
-      genderId: SelectOption;
-      maritalStatusId: SelectOption;
-      educationQualification: SelectOption;
-      occupation: SelectOption;
-      ethnicity: SelectOption;
-      natureOFBusinessCoop: SelectOption;
-      natureOfBusinessInstitution: SelectOption;
-    }
-  >({
+  const methods = useForm<DepositForm>({
     defaultValues: {
       nature: NatureOfDepositProduct.RecurringSaving,
       minTenureUnitNumber: 0,
@@ -134,6 +135,22 @@ export function SettingsDepositProductsAdd(
     const natureOfBusinessInstitutionList =
       values?.natureOfBusinessInstitution?.map((data) => data?.value);
 
+    const ladderRateDataList = values?.ladderRateData?.map((data) => {
+      return {
+        type: data?.type,
+        rate: data?.rate,
+        amount: data?.amount.toString(),
+      };
+    });
+
+    const serviceChargeList = values?.serviceCharge?.map((data) => {
+      return {
+        serviceName: data?.serviceName,
+        ledgerName: data?.ledgerName,
+        amount: data?.amount.toString(),
+      };
+    });
+
     const updatedData = {
       ...values,
       genderId: genderList,
@@ -143,28 +160,48 @@ export function SettingsDepositProductsAdd(
       occupation: occupationList,
       natureOfBusinessInstitution: natureOfBusinessInstitutionList,
       natureOFBusinessCoop: natureOFBusinessCoopList,
+      ladderRateData: ladderRateDataList,
+      serviceCharge: serviceChargeList,
+      minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
+      maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
+      depositFrequency: values?.depositFrequency
+        ? values?.depositFrequency
+        : null,
+      postingFrequency: values?.postingFrequency
+        ? values?.depositFrequency
+        : null,
     };
 
-    console.log(updatedData);
-    mutate({ id, data: updatedData });
+    mutate(
+      { id, data: updatedData },
+      {
+        onSuccess: () => router.push('/settings/general/deposit-products'),
+      }
+    );
   };
 
-  const { data: editValues } = useGetDepositProductSettingsEditDataQuery({
-    id: '01G8WZBJB0YC2B6M502BY5dppr',
-  });
+  const { data: editValues, refetch } =
+    useGetDepositProductSettingsEditDataQuery({
+      id,
+    });
 
-  console.log(editValues);
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.settings?.general?.depositProduct?.formState?.data;
+      if (editValueData) {
+        reset({
+          ...(editValueData as unknown as DepositForm),
+        });
+      }
+    }
+  }, [editValues, id]);
 
-  // useEffect(() => {
-  //   if (editValues) {
-  //     const editValueData =
-  //       editValues?.settings?.general?.depositProduct?.formState?.data;
-
-  //     reset({
-  //       ...editValueData,
-  //     });
-  //   }
-  // }, [editValues]);
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [refetch]);
 
   return (
     <>
@@ -266,6 +303,10 @@ export function SettingsDepositProductsAdd(
                   NatureOfDepositProduct.VoluntaryOrOptional && (
                   <MaximumTenure />
                 )}
+                {depositNature !== NatureOfDepositProduct.RecurringSaving && (
+                  <BalanceLimit />
+                )}
+
                 <Interest />
                 <PostingFrequency />
                 {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (

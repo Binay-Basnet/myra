@@ -69,7 +69,8 @@ export function KYMIndividualPage() {
             alignItems={'center'}
             px="5"
             background="white"
-            borderBottom="1px solid #E6E6E6"
+            borderBottom="1px"
+            borderBottomColor="border.layout"
           >
             <Text fontSize="r2" fontWeight="SemiBold">
               {t['membersFormAddNewMembers']}
@@ -77,7 +78,7 @@ export function KYMIndividualPage() {
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              icon={<Icon as={IoCloseOutline} size="md" />}
+              icon={<Icon as={IoCloseOutline} size="lg" />}
               onClick={() => router.push('/members/list')}
             />
           </Box>

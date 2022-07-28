@@ -93,10 +93,10 @@ export function TabMenu() {
       display="flex"
     >
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
-        <TabList border="none" height="100%">
+        <TabList border="none" height="100%" display="flex" gap="s8">
           {demotabs.map(({ title, icon, link }, index) => {
             const isActive = router?.asPath.includes(title.toLowerCase());
-            console.log(router?.asPath, title);
+
             return (
               <Link href={link} key={index}>
                 <Tab

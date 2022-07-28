@@ -1,7 +1,4 @@
-import {
-  MemberRiskLevel,
-  TypeOfMember,
-} from '@coop/cbs/settings/feature-member';
+import { MemberRiskLevel, TypeOfMember } from '@coop/cbs/settings/members';
 import {
   SettingsGeneralLayout,
   SettingsLayout,

@@ -1,4 +1,4 @@
-import { KYMIndividualSettingsPage } from '@coop/cbs/settings/feature-member';
+import { InstitutionSettings } from '@coop/cbs/settings/members';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
@@ -30,7 +30,7 @@ const KYMInstitutional = () => {
           </Text>
         </Box>
         <Box mt="s16">
-          <KYMIndividualSettingsPage />
+          <InstitutionSettings />
         </Box>
       </Box>
     </Box>
