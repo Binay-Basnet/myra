@@ -53,13 +53,17 @@ export const useRefreshToken = (url: string) => {
         }`,
       })
       .then((res) => {
-        const accessToken = res.data?.data?.auth?.token?.token?.access;
-        localStorage.setItem(
-          'refreshToken',
-          res.data.data.auth?.token?.token?.refresh
-        );
-        dispatch(saveToken(accessToken));
-        return accessToken;
+        if (res.data.data.auth?.token?.token) {
+          const accessToken = res.data?.data?.auth?.token?.token?.access;
+          localStorage.setItem(
+            'refreshToken',
+            res.data.data.auth?.token?.token?.refresh
+          );
+          dispatch(saveToken(accessToken));
+          return accessToken;
+        }
+        replace('/');
+        throw new Error('error');
       })
       .catch((err) => {
         replace('/');
