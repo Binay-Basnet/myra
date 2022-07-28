@@ -4236,6 +4236,11 @@ export type KymCoopAccountOperatorDetailsFormInput = {
   temporaryAddress?: InputMaybe<KymAddressInput>;
 };
 
+export type KymCoopAccountOperatorQuery = {
+  data?: Maybe<Array<Maybe<KymCooperativeAccountOperatorDetailsFormState>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type KymCoopDirectorDetails = {
   Delete?: Maybe<KymCooperativeAddResult>;
   Upsert?: Maybe<KymCooperativeAddResult>;
@@ -4266,6 +4271,11 @@ export type KymCoopDirectorDetailsFormInput = {
   panNo?: InputMaybe<Scalars['String']>;
   permanentAddress?: InputMaybe<KymAddressInput>;
   temporaryAddress?: InputMaybe<KymAddressInput>;
+};
+
+export type KymCoopDirectorQuery = {
+  data?: Maybe<Array<Maybe<KymCooperativeBodDetailsFormState>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type KymCoopMembershipDetails = {
@@ -4781,34 +4791,18 @@ export type KymCoopUnionSectionMutationMemberDetailsArgs = {
 };
 
 export type KymCooperativeAccountOperatorDetailsFormState = {
-  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['Int']>;
+  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
-  dateofTrainig?: Maybe<Scalars['Date']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
   highestQualification?: Maybe<Scalars['String']>;
-  identityDocumentPhoto?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
-  permanentDistrictId?: Maybe<Scalars['ID']>;
-  permanentLatitude?: Maybe<Scalars['String']>;
-  permanentLocalityId?: Maybe<Scalars['ID']>;
-  permanentLongitude?: Maybe<Scalars['String']>;
-  permanentStateId?: Maybe<Scalars['ID']>;
-  permanentTole?: Maybe<Scalars['String']>;
-  permanentWardId?: Maybe<Scalars['ID']>;
-  photograph?: Maybe<Scalars['String']>;
-  signature?: Maybe<Scalars['String']>;
-  subjectOfTraining?: Maybe<Scalars['String']>;
-  temporaryDistrictId?: Maybe<Scalars['ID']>;
-  temporaryLatitude?: Maybe<Scalars['String']>;
-  temporaryLocalityId?: Maybe<Scalars['ID']>;
-  temporaryLongitude?: Maybe<Scalars['String']>;
-  temporaryStateId?: Maybe<Scalars['ID']>;
-  temporaryTole?: Maybe<Scalars['String']>;
-  temporaryWardId?: Maybe<Scalars['ID']>;
-  trainingOrganization?: Maybe<Scalars['String']>;
+  permanentAddress?: Maybe<KymAddress>;
+  temporaryAddress?: Maybe<KymAddress>;
+  trainings?: Maybe<Array<Maybe<CoopRelatedTrainingType>>>;
 };
 
 export type KymCooperativeAccountOperatorDetailsInput = {
@@ -4879,31 +4873,17 @@ export type KymCooperativeAddSectionStatus = {
 };
 
 export type KymCooperativeBodDetailsFormState = {
-  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['Int']>;
+  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
   highestQualification?: Maybe<Scalars['String']>;
-  identityDocumentPhoto?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
-  permanentDistrictId?: Maybe<Scalars['ID']>;
-  permanentLatitude?: Maybe<Scalars['String']>;
-  permanentLocalityId?: Maybe<Scalars['ID']>;
-  permanentLongitude?: Maybe<Scalars['String']>;
-  permanentStateId?: Maybe<Scalars['ID']>;
-  permanentTole?: Maybe<Scalars['String']>;
-  permanentWardId?: Maybe<Scalars['ID']>;
-  photograph?: Maybe<Scalars['String']>;
-  signature?: Maybe<Scalars['String']>;
-  temporaryDistrictId?: Maybe<Scalars['ID']>;
-  temporaryLatitude?: Maybe<Scalars['String']>;
-  temporaryLocalityId?: Maybe<Scalars['ID']>;
-  temporaryLongitude?: Maybe<Scalars['String']>;
-  temporaryStateId?: Maybe<Scalars['ID']>;
-  temporaryTole?: Maybe<Scalars['String']>;
-  temporaryWardId?: Maybe<Scalars['ID']>;
+  permanentAddress?: Maybe<KymAddress>;
+  temporaryAddress?: Maybe<KymAddress>;
 };
 
 export type KymCooperativeBodDetailsInput = {
@@ -4989,15 +4969,12 @@ export type KymCooperativeFormData = {
   accountHolderSignature?: Maybe<Scalars['String']>;
   accountHolderStamp?: Maybe<Scalars['String']>;
   accountHoldersName?: Maybe<Scalars['String']>;
-  accountOperatorsDetails?: Maybe<Array<Maybe<KymCooperativeAccountOperatorDetailsFormState>>>;
   bank?: Maybe<Scalars['Float']>;
-  boardOfDirectorsDetails?: Maybe<Array<Maybe<KymCooperativeBodDetailsFormState>>>;
   capitalGrant?: Maybe<Scalars['Float']>;
   cashAndCashEquivalent?: Maybe<Scalars['Float']>;
   contactNumber?: Maybe<Scalars['String']>;
-  cooperativeType?: Maybe<CooperativeType>;
+  cooperativeTypeId?: Maybe<Scalars['String']>;
   currentLiabilities?: Maybe<Scalars['Float']>;
-  documents?: Maybe<Array<Maybe<KymCooperativeDocumentsFormState>>>;
   email?: Maybe<Scalars['String']>;
   hasTCAccepted?: Maybe<Scalars['Boolean']>;
   investments?: Maybe<Scalars['Float']>;
@@ -5016,15 +4993,9 @@ export type KymCooperativeFormData = {
   nonCurrentAssets?: Maybe<Scalars['Float']>;
   nonCurrentLiabilities?: Maybe<Scalars['Float']>;
   operatingAddress?: Maybe<KymAddress>;
-  oprLatitude?: Maybe<Scalars['Float']>;
-  oprLongitude?: Maybe<Scalars['Float']>;
   otherNonCurrentAssets?: Maybe<Scalars['Float']>;
   permanentRepresentativeAddress?: Maybe<KymAddress>;
-  permanentRepresentativeLatitude?: Maybe<Scalars['Float']>;
-  permanentRepresentativeLongitude?: Maybe<Scalars['Float']>;
   regdDate?: Maybe<Scalars['Date']>;
-  regdLatitude?: Maybe<Scalars['Float']>;
-  regdLongitude?: Maybe<Scalars['Float']>;
   regdNumber?: Maybe<Scalars['Int']>;
   registeredAddress?: Maybe<KymAddress>;
   representativeContactNumber?: Maybe<Scalars['String']>;
@@ -5036,8 +5007,6 @@ export type KymCooperativeFormData = {
   savingDeposit?: Maybe<Scalars['Float']>;
   shareCapital?: Maybe<Scalars['Float']>;
   temporaryRepresentativeAddress?: Maybe<KymAddress>;
-  temporaryRepresentativeLatitude?: Maybe<Scalars['Float']>;
-  temporaryRepresentativeLongitude?: Maybe<Scalars['Float']>;
   totalAssets?: Maybe<Scalars['Float']>;
   totalEmployee?: Maybe<Scalars['Int']>;
   totalEquityAndLiabilities?: Maybe<Scalars['Float']>;
@@ -5134,10 +5103,22 @@ export type KymCooperativeMutationAddArgs = {
 
 export type KymCooperativeQuery = {
   formState?: Maybe<KymCooperativeFormStateQuery>;
+  listAccountOperators?: Maybe<KymCoopAccountOperatorQuery>;
+  listDirectors?: Maybe<KymCoopDirectorQuery>;
 };
 
 
 export type KymCooperativeQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymCooperativeQueryListAccountOperatorsArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type KymCooperativeQueryListDirectorsArgs = {
   id: Scalars['ID'];
 };
 
@@ -7738,6 +7719,13 @@ export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetConfigQuery = { config: { countries?: Array<{ name?: string | null, code?: string | null } | null> | null } };
 
+export type GetCoOperativeKymEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetCoOperativeKymEditDataQuery = { members: { cooperative?: { formState?: { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null, email?: string | null, website?: string | null, contactNumber?: string | null, noOfMaleMembers?: number | null, noOfFemaleMembers?: number | null, noOfOtherMembers?: number | null, lastAuditDate?: string | null, lastAgmDate?: string | null, representativeFullName?: string | null, representativeDesignatiton?: string | null, representativeEmail?: string | null, representativeContactNumber?: string | null, representativePanNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, cooperativeTypeId?: string | null, mainServiceProduct?: string | null, noOfMaleEmployee?: number | null, noOfFemaleEmloyee?: number | null, totalEmployee?: number | null, shareCapital?: number | null, reserveAndSurplus?: number | null, savingDeposit?: number | null, loanAccount?: number | null, capitalGrant?: number | null, currentLiabilities?: number | null, nonCurrentLiabilities?: number | null, totalEquityAndLiabilities?: number | null, cashAndCashEquivalent?: number | null, bank?: number | null, investments?: number | null, loan?: number | null, nonCurrentAssets?: number | null, otherNonCurrentAssets?: number | null, totalAssets?: number | null, accountHoldersName?: string | null, accountHolderSignature?: string | null, accountHolderStamp?: string | null, hasTCAccepted?: boolean | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, permanentRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
+
 export type GetAccountListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -9326,6 +9314,121 @@ export const useGetConfigQuery = <
     useQuery<GetConfigQuery, TError, TData>(
       variables === undefined ? ['getConfig'] : ['getConfig', variables],
       useAxios<GetConfigQuery, GetConfigQueryVariables>(GetConfigDocument).bind(null, variables),
+      options
+    );
+export const GetCoOperativeKymEditDataDocument = `
+    query getCoOperativeKymEditData($id: ID!) {
+  members {
+    cooperative {
+      formState(id: $id) {
+        data {
+          formData {
+            nameOfOrganization
+            regdNumber
+            regdDate
+            registeredAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            operatingAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            email
+            website
+            contactNumber
+            noOfMaleMembers
+            noOfFemaleMembers
+            noOfOtherMembers
+            lastAuditDate
+            lastAgmDate
+            representativeFullName
+            representativeDesignatiton
+            representativeEmail
+            representativeContactNumber
+            representativePanNo
+            permanentRepresentativeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            isPermanentAndTemporaryAddressSame
+            temporaryRepresentativeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            cooperativeTypeId
+            mainServiceProduct
+            noOfMaleEmployee
+            noOfFemaleEmloyee
+            totalEmployee
+            shareCapital
+            reserveAndSurplus
+            savingDeposit
+            loanAccount
+            capitalGrant
+            currentLiabilities
+            nonCurrentLiabilities
+            totalEquityAndLiabilities
+            cashAndCashEquivalent
+            bank
+            investments
+            loan
+            nonCurrentAssets
+            otherNonCurrentAssets
+            totalAssets
+            accountHoldersName
+            accountHolderSignature
+            accountHolderStamp
+            hasTCAccepted
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoOperativeKymEditDataQuery = <
+      TData = GetCoOperativeKymEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetCoOperativeKymEditDataQueryVariables,
+      options?: UseQueryOptions<GetCoOperativeKymEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetCoOperativeKymEditDataQuery, TError, TData>(
+      ['getCoOperativeKymEditData', variables],
+      useAxios<GetCoOperativeKymEditDataQuery, GetCoOperativeKymEditDataQueryVariables>(GetCoOperativeKymEditDataDocument).bind(null, variables),
       options
     );
 export const GetAccountListDocument = `

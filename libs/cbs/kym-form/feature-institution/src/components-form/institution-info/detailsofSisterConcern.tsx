@@ -158,6 +158,27 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
 
   const [sisterIds, setSisterIds] = useState<string[]>([]);
 
+  const { data: editValues } = useGetInstitutionSisterDetailsEditListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.institution?.listSisterConcerns?.data;
+
+      setSisterIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
+        ) ?? []
+      );
+    }
+  }, [editValues]);
+
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
       setSisterIds([...sisterIds, res.newId]);

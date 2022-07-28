@@ -23,15 +23,11 @@ import {
   FormMap,
   FormSelect,
 } from '@coop/shared/form';
-import {
-  Box,
-  Checkbox,
-  Grid,
-  GridItem,
-  Text,
-  TextFields,
-} from '@coop/shared/ui';
+import { Box, Checkbox, Text, TextFields } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
+
+import { useInstitution } from '../hooks/institutionHook';
+
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
@@ -95,13 +91,33 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
     if (editValues) {
       const editValueData =
         editValues?.members?.institution?.formState?.data?.formData;
-      const accountholderLocality =
+
+      const registeredAddressLocality =
+        editValueData?.registeredAddress?.locality?.local;
+      const operatingAddressLocality =
+        editValueData?.operatingOfficeAddress?.locality?.local;
+      console.log('edit value', editValueData);
+      const branchOfficeAddress =
+        editValueData?.branchOfficeAddress?.locality?.local;
+      const accountHoldersAddress =
         editValueData?.accountHolderAddress?.locality?.local;
       reset({
         ...pickBy(editValueData ?? {}, (v) => v !== null),
+        registeredAddress: {
+          ...editValueData?.registeredAddress,
+          locality: registeredAddressLocality,
+        },
+        operatingOfficeAddress: {
+          ...editValueData?.operatingOfficeAddress,
+          locality: operatingAddressLocality,
+        },
+        branchOfficeAddress: {
+          ...editValueData?.branchOfficeAddress,
+          locality: branchOfficeAddress,
+        },
         accountHolderAddress: {
           ...editValueData?.accountHolderAddress,
-          locality: accountholderLocality,
+          locality: accountHoldersAddress,
         },
       });
     }

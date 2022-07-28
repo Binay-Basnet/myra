@@ -1,17 +1,31 @@
-import React, { useMemo } from 'react';
-import { FaMap } from 'react-icons/fa';
+import { useMemo } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import {
+  KymCooperativeFormInput,
+  useAllAdministrationQuery,
+} from '@coop/shared/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Box, Text } from '@coop/shared/ui';
+import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
-export const KymCoopOpAddress = ({ watch }: any) => {
+import { useCooperative } from '../../hooks/customCooperative';
+interface IProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+export const KymCoopOpAddress = (props: IProps) => {
   const { t } = useTranslation();
+
+  const { setSection } = props;
+  const methods = useForm<KymCooperativeFormInput>({
+    defaultValues: {},
+  });
+  const { control, handleSubmit, getValues, watch, setError } = methods;
+  useCooperative({ methods });
   const { data } = useAllAdministrationQuery();
 
   const province = useMemo(() => {
@@ -24,8 +38,8 @@ export const KymCoopOpAddress = ({ watch }: any) => {
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('oprProvinceId');
-  const currentDistrictId = watch('oprDistrictId');
+  const currentProvinceId = watch('operatingAddress.provinceId');
+  const currentDistrictId = watch('operatingAddress.districtId');
 
   const districtList = useMemo(
     () =>
@@ -42,63 +56,75 @@ export const KymCoopOpAddress = ({ watch }: any) => {
   );
 
   return (
-    <GroupContainer id="kymCoopAccOperatingAddress" scrollMarginTop={'200px'}>
-      <Text
-        fontSize="r1"
-        fontWeight="semibold"
-        color="neutralColorLight.Gray-80"
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymCoopSection(e.target.id);
+          setSection(kymSection);
+        }}
       >
-        {t['kymCoopOperatingAddress']}
-      </Text>
-      <InputGroupContainer>
-        <FormSelect
-          name="oprProvinceId"
-          label={t['kymCoopProvince']}
-          placeholder={t['kymCoopSelectState']}
-          options={province}
-        />
-        <FormSelect
-          name="oprDistrictId"
-          label={t['kymCoopDistrict']}
-          placeholder={t['kymCoopSelectDistrict']}
-          options={districtList.map((d) => ({
-            label: d.name,
-            value: d.id,
-          }))}
-        />
-        <FormSelect
-          name="oprMunicipalityId"
-          label={t['kymCoopVDCLocalGov']}
-          placeholder={t['kymCoopSelectLocalGov']}
-          options={muncipalityList.map((d) => ({
-            label: d.name,
-            value: d.id,
-          }))}
-        />
+        <GroupContainer
+          id="kymCoopAccOperatingAddress"
+          scrollMarginTop={'200px'}
+        >
+          <Text
+            fontSize="r1"
+            fontWeight="semibold"
+            color="neutralColorLight.Gray-80"
+          >
+            {t['kymCoopOperatingAddress']}
+          </Text>
+          <InputGroupContainer>
+            <FormSelect
+              name="operatingAddress.provinceId"
+              label={t['kymCoopProvince']}
+              placeholder={t['kymCoopSelectState']}
+              options={province}
+            />
+            <FormSelect
+              name="operatingAddress.districtId"
+              label={t['kymCoopDistrict']}
+              placeholder={t['kymCoopSelectDistrict']}
+              options={districtList.map((d) => ({
+                label: d.name,
+                value: d.id,
+              }))}
+            />
+            <FormSelect
+              name="operatingAddress.localGovernmentId"
+              label={t['kymCoopVDCLocalGov']}
+              placeholder={t['kymCoopSelectLocalGov']}
+              options={muncipalityList.map((d) => ({
+                label: d.name,
+                value: d.id,
+              }))}
+            />
 
-        <FormInput
-          type="text"
-          name="oprWardId"
-          label={t['kymCoopWardNo']}
-          placeholder={t['kymCoopEnterWardNo']}
-        />
-        <FormInput
-          type="text"
-          name="oprLocality"
-          label={t['kymCoopLocality']}
-          placeholder={t['kymCoopEnterLocality']}
-        />
-        <FormInput
-          type="text"
-          name="representativeTemporaryHouseNo"
-          label={t['kymCoopRepresentativeHouseNo']}
-          placeholder={t['kymCoopRepresentativeEnterHouseNo']}
-        />
-      </InputGroupContainer>
+            <FormInput
+              type="text"
+              name="operatingAddress.wardNo"
+              label={t['kymCoopWardNo']}
+              placeholder={t['kymCoopEnterWardNo']}
+            />
+            <FormInput
+              type="text"
+              name="operatingAddress.locality"
+              label={t['kymCoopLocality']}
+              placeholder={t['kymCoopEnterLocality']}
+            />
+            <FormInput
+              type="text"
+              name="operatingAddress.houseNo"
+              label={t['kymCoopRepresentativeHouseNo']}
+              placeholder={t['kymCoopRepresentativeEnterHouseNo']}
+            />
+          </InputGroupContainer>
 
-      <Box mt="-16px">
-        <FormMap name="kymCoopLocation" />
-      </Box>
-    </GroupContainer>
+          <Box mt="-16px">
+            <FormMap name="operatingAddress.coordinates" />
+          </Box>
+        </GroupContainer>
+      </form>
+    </FormProvider>
   );
 };

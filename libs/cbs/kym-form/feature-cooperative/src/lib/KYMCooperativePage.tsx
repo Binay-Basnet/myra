@@ -53,7 +53,7 @@ export function KYMCooperativePage() {
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { mutate } = useSetKymCooperativeDataMutation({});
+
   // const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
   // const kymFormStatus =
   //   kymFormStatusQuery?.data?.members?.individual?.formState?.data
@@ -98,120 +98,104 @@ export function KYMCooperativePage() {
       </Box>
 
       <Container minW="container.xl" height="fit-content">
-        <FormProvider {...methods}>
-          <form
-            onChange={debounce(() => {
-              mutate({ id, data: getValues() });
-            }, 800)}
-            onSubmit={handleSubmit((data) => {
-              console.log('data', data);
-            })}
-            onFocus={(e) => {
-              const kymSection = getKymCoopSection(e.target.id);
-              setKymCurrentSection(kymSection);
-            }}
-          >
-            {/* main */}
-            <Box pb="s40" display="flex" width="100%">
-              <Box display="flex">
-                <Box
-                  w={320}
-                  p={2}
-                  position="fixed"
-                  borderRight="1px solid #E6E6E6"
-                  minHeight="100%"
-                  bg="white"
-                >
-                  <AccordionKymCoopForm kymCurrentSection={kymCurrentSection} />
-                </Box>
-
-                <Box
-                  background="white"
-                  ml={320}
-                  px="s20"
-                  mt="60px"
-                  pt="s20"
-                  pb="120px"
-                >
-                  <SectionContainer>
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymCoop1InformationofOrganization']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <KymCoopBasicInfo />
-                        <KymCoopRegdAddress watch={watch} />
-                        <KymCoopOpAddress watch={watch} />
-                        <KymCoopContactDetails />
-                        <KymCoopCurrentMembers />
-                        <KymCoopDate />
-                        <KymCoopRepresentative />
-                        <KymCoopAddCoopDetails />
-                        <KymCoopNoEmployee />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymCoop2EconomicDetails']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <KymEquityLiabilities watch={watch} />
-                        <KymCoopAssets watch={watch} />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymCoop3DetailsofBoardDirectors']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <KymCoopBoardDirectorDetail
-                          watch={watch}
-                          control={control}
-                        />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymCoop4DetailsofAccountOperators']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <KymCoopAccountOperatorDetail
-                          watch={watch}
-                          control={control}
-                        />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-                    <SectionContainer>
-                      <Text fontSize="r3" fontWeight="600">
-                        {t['kymCoop5Declaration']}
-                      </Text>
-                      <ContainerWithDivider>
-                        <KymAccountHolderDeclaration />
-                        <KymCoopDocumentDeclarationForm />
-                      </ContainerWithDivider>
-                    </SectionContainer>
-                    <Box display="flex" gap="s16" alignItems="start">
-                      <Checkbox fontSize="s3">{''}</Checkbox>
-                      <TextFields variant="formInput" mt="-6px">
-                        I/We hereby confirm that the information provede by
-                        me/us in this form and documents provided to the Bank
-                        are true and corrent. I/We further confirm that I/We
-                        have read and understood to the Bank's terms and
-                        conditions governing account opening/operations and
-                        shall abide and be bound by present/future rules Nepal
-                        Rastra Bank, Himalayan Bank Limited and Laws of the
-                        country. In the event I/We fail to abide by the terms
-                        and conditions, I/We shall bear the damage and/or
-                        penalties resulting as a consequence thereof.
-                      </TextFields>
-                    </Box>
-                  </SectionContainer>
-                </Box>
-              </Box>
+        {/* main */}
+        <Box pb="s40" display="flex" width="100%">
+          <Box display="flex">
+            <Box
+              w={320}
+              p={2}
+              position="fixed"
+              borderRight="1px solid #E6E6E6"
+              minHeight="100%"
+              bg="white"
+            >
+              <AccordionKymCoopForm kymCurrentSection={kymCurrentSection} />
             </Box>
-          </form>
-        </FormProvider>
+
+            <Box
+              background="white"
+              ml={320}
+              px="s20"
+              mt="60px"
+              pt="s20"
+              pb="120px"
+            >
+              <SectionContainer>
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymCoop1InformationofOrganization']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <KymCoopBasicInfo setSection={setKymCurrentSection} />
+                    <KymCoopRegdAddress setSection={setKymCurrentSection} />
+                    <KymCoopOpAddress setSection={setKymCurrentSection} />
+                    <KymCoopContactDetails setSection={setKymCurrentSection} />
+                    <KymCoopCurrentMembers setSection={setKymCurrentSection} />
+                    <KymCoopDate setSection={setKymCurrentSection} />
+                    <KymCoopRepresentative setSection={setKymCurrentSection} />
+                    <KymCoopAddCoopDetails setSection={setKymCurrentSection} />
+                    <KymCoopNoEmployee setSection={setKymCurrentSection} />
+                  </ContainerWithDivider>
+                </SectionContainer>
+                {/* <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymCoop2EconomicDetails']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <KymEquityLiabilities watch={watch} />
+                    <KymCoopAssets watch={watch} />
+                  </ContainerWithDivider>
+                </SectionContainer>
+
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymCoop3DetailsofBoardDirectors']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <KymCoopBoardDirectorDetail
+                      watch={watch}
+                      control={control}
+                    />
+                  </ContainerWithDivider>
+                </SectionContainer>
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymCoop4DetailsofAccountOperators']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <KymCoopAccountOperatorDetail
+                      watch={watch}
+                      control={control}
+                    />
+                  </ContainerWithDivider>
+                </SectionContainer>
+                <SectionContainer>
+                  <Text fontSize="r3" fontWeight="600">
+                    {t['kymCoop5Declaration']}
+                  </Text>
+                  <ContainerWithDivider>
+                    <KymAccountHolderDeclaration />
+                    <KymCoopDocumentDeclarationForm />
+                  </ContainerWithDivider>
+                </SectionContainer>
+                <Box display="flex" gap="s16" alignItems="start">
+                  <Checkbox fontSize="s3">{''}</Checkbox>
+                  <TextFields variant="formInput" mt="-6px">
+                    I/We hereby confirm that the information provede by me/us in
+                    this form and documents provided to the Bank are true and
+                    corrent. I/We further confirm that I/We have read and
+                    understood to the Bank's terms and conditions governing
+                    account opening/operations and shall abide and be bound by
+                    present/future rules Nepal Rastra Bank, Himalayan Bank
+                    Limited and Laws of the country. In the event I/We fail to
+                    abide by the terms and conditions, I/We shall bear the
+                    damage and/or penalties resulting as a consequence thereof.
+                  </TextFields>
+                </Box> */}
+              </SectionContainer>
+            </Box>
+          </Box>
+        </Box>
       </Container>
 
       <Box position="relative" margin="0px auto">
