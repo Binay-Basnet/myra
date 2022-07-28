@@ -12,7 +12,13 @@ import { Spinner } from '@chakra-ui/react';
 
 import { useGetMeQuery } from '@coop/shared/data-access';
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import { RootState, useRefreshToken, useSnap } from '@coop/shared/utils';
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+  useRefreshToken,
+  useSnap,
+} from '@coop/shared/utils';
 import { store, theme } from '@coop/shared/utils';
 import { authenticate, logout, saveToken } from '@coop/shared/utils';
 
@@ -75,7 +81,7 @@ function useReplace() {
 
 function useInit() {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const replace = useReplace();
 
   const getMe = useGetMeQuery(
@@ -96,6 +102,7 @@ function useInit() {
       .then((res) => {
         if (res) {
           setTriggerQuery(true);
+          return;
         }
       })
       .catch((err) => {
@@ -118,7 +125,7 @@ function useInit() {
 
 function MainApp({ Component, pageProps }: any) {
   const getLayout = Component.getLayout || ((page) => page);
-  const auth = useSelector((state) => state?.auth);
+  const auth = useAppSelector((state) => state?.auth);
 
   useInit();
 

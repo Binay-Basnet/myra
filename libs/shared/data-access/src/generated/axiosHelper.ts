@@ -4,7 +4,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { useAuth } from '@coop/shared/data-access';
 
-import { RootState } from '../../../utils/src/redux/store';
+import { RootState, useAppSelector } from '../../../utils/src/redux/store';
 import { useRefreshToken } from '../../../utils/src/hooks/useRefreshToken';
 
 export const useAxios = <TData, TVariables>(
@@ -18,7 +18,7 @@ export const useAxios = <TData, TVariables>(
   const url = process.env['NX_SCHEMA_PATH'] ?? '';
   // return axios.post<TData>(url,data:{query,variables}).then((res) => res.data);
 
-  const auth = useSelector((state: RootState) => state?.auth);
+  const auth = useAppSelector((state: RootState) => state?.auth);
 
   const refreshToken = useRefreshToken(url);
   const accessToken = auth.token;
