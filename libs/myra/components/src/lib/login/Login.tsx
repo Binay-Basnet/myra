@@ -10,7 +10,6 @@ import {
 
 import { useLoginMutation } from '@coop/shared/data-access';
 import { Box, Button } from '@coop/shared/ui';
-import { authenticate } from '@coop/shared/utils';
 
 export const Login = () => {
   const { mutateAsync } = useLoginMutation();
@@ -19,24 +18,10 @@ export const Login = () => {
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const onUserNameChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    setUserName(e.target.value);
-  };
   const onPasswordChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     setPassword(e.target.value);
-  };
-  const handleSubmit = () => {
-    mutateAsync({ data: { username: userName, password } }).then((res) => {
-      const accessToken = res?.auth?.login?.record?.token?.access;
-      const refreshToken = res?.auth?.login?.record?.token?.refresh;
-      const user = res?.auth?.login?.record?.user;
-      dispatch(authenticate({ accessToken: accessToken, user: user }));
-      localStorage.setItem('refreshToken', refreshToken ?? '');
-    });
   };
 
   return (
@@ -49,7 +34,12 @@ export const Login = () => {
     >
       <img src="/dashboardhome/MyraLogo.png" alt="Main Logo" />
       <br />
-      <Input w={300} placeholder="Enter Username" onChange={onUserNameChange} />
+      <input />
+      <Input
+        w={300}
+        placeholder="Enter Username"
+        onChange={(e) => setUserName(e.target.value)}
+      />
       <br />
       <InputGroup h="44px" mt="s4" w={300}>
         <InputLeftElement children={<IoLockClosed />} />
@@ -69,9 +59,9 @@ export const Login = () => {
         </InputRightElement>
       </InputGroup>
       <br />
-      <Button w={300} onClick={handleSubmit}>
+      {/* <Button w={300} onClick={handleSubmit}>
         Login
-      </Button>
+      </Button> */}
     </Box>
   );
 };

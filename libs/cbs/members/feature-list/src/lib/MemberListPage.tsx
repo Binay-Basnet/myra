@@ -41,7 +41,7 @@ export function MemberListPage() {
     }
   );
 
-  console.log(data);
+  console.log('this is data', data);
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 

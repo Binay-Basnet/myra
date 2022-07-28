@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import axios from 'axios';
 
 import { saveToken } from '../redux/authSlice';
@@ -18,8 +18,22 @@ interface RefreshTokenResponse {
     };
   };
 }
+
+// https://github.com/vercel/next.js/issues/18127#issuecomment-950907739
+// Nextjs Seems to have router memoization problem. so had to create this hook
+function useReplace() {
+  const router = useRouter();
+  const routerRef = useRef(router);
+  routerRef.current = router;
+
+  const [{ replace }] = useState<Pick<NextRouter, 'replace'>>({
+    replace: (path) => routerRef.current.replace(path),
+  });
+  return replace;
+}
+
 export const useRefreshToken = (url: string) => {
-  const history = useRouter();
+  const replace = useReplace();
   const dispatch = useDispatch();
 
   const refreshToken = useCallback(() => {
@@ -39,8 +53,6 @@ export const useRefreshToken = (url: string) => {
         }`,
       })
       .then((res) => {
-        console.log('fuck o res', res);
-
         const accessToken = res.data?.data?.auth?.token?.token?.access;
         localStorage.setItem(
           'refreshToken',
@@ -50,9 +62,9 @@ export const useRefreshToken = (url: string) => {
         return accessToken;
       })
       .catch((err) => {
-        history.replace('/');
+        replace('/');
       });
-  }, [dispatch, history, url]);
+  }, [dispatch, replace, url]);
 
   return refreshToken;
 };

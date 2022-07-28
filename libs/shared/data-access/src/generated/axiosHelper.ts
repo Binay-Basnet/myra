@@ -7,35 +7,6 @@ import { useAuth } from '@coop/shared/data-access';
 import { RootState } from '../../../utils/src/redux/store';
 import { useRefreshToken } from '../../../utils/src/hooks/useRefreshToken';
 
-// const useRefreshToken = (url: string) => {
-//   const history = useRouter();
-
-//   const refreshToken = () => {
-//     const refreshToken = localStorage.getItem('refreshToken');
-//     return axios
-//       .post(url, {
-//         query: `mutation{
-//   auth{
-//     token(refreshToken:"${refreshToken}"){
-//       token{
-//         access
-//         refresh
-//       }
-//     }
-//   }
-// }`,
-//       })
-//       .then((res) => {
-//         return res.data?.access;
-//       })
-//       .catch((err) => {
-//         history.replace('/');
-//       });
-//   };
-
-//   return refreshToken;
-// };
-
 export const useAxios = <TData, TVariables>(
   query: string
 ): ((
@@ -50,8 +21,9 @@ export const useAxios = <TData, TVariables>(
   const auth = useSelector((state: RootState) => state?.auth);
 
   const refreshToken = useRefreshToken(url);
-  const accessToken = auth?.token;
-  console.log('access', accessToken); // get this token from redux
+  const accessToken = auth.token;
+
+  // alert('chalyo');
 
   return async (variables?: TVariables, config?: AxiosRequestConfig<TData>) => {
     if (accessToken) {
@@ -74,21 +46,11 @@ export const useAxios = <TData, TVariables>(
     return axios
       .post<{ data: TData }>(url, { query, variables }, config)
       .then((res: AxiosResponse<{ data: TData; errors?: any[] }>) => {
-        console.log('hello');
-        // IF access token is invalid
-        // if()
-
-        console.log('this is response', res.status);
-        // // if(res.data)
-
-        console.log('res', res.status);
-
         return res.data.data;
       })
       .catch((err) => {
-        // if (res.status === 401) {
-        refreshToken().then((accessToken) => {
-          console.log('token', accessToken);
+        //assumin that whenever catch blocked is executed this means that the access token is invalid
+        return refreshToken().then((accessToken) => {
           if (accessToken) {
             const headers = {
               Authorization: `Bearer ${accessToken}`,
@@ -112,9 +74,13 @@ export const useAxios = <TData, TVariables>(
               return res.data.data;
             });
         });
-        // }
 
         return err;
       });
   };
 };
+
+axios.interceptors.response.use(function (response) {
+  console.log('response status', response.status);
+  return response;
+});
