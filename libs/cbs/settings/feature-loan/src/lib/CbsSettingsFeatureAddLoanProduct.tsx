@@ -45,7 +45,7 @@ const optionsSaving = [
   { label: 'Term Saving', value: 'termSaving' },
 ];
 
-export function SettingsLoanForm(props: loanProductsAdd) {
+export function SettingsLoanProductForm(props: loanProductsAdd) {
   const router = useRouter();
   const { t } = useTranslation();
   const methods = useForm({
@@ -235,4 +235,4 @@ export function SettingsLoanForm(props: loanProductsAdd) {
   );
 }
 
-export default SettingsLoanForm;
+export default SettingsLoanProductForm;

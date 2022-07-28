@@ -18,7 +18,7 @@ import { Pagination, TableSearch, Text } from '@coop/shared/ui';
 
 import { TableSelectionBar } from '../components';
 import { useTable } from '../hooks/useTable';
-import { TableProps } from '../types/Table';
+import { Column, TableProps } from '../types/Table';
 
 export const Table = <T extends Record<string, unknown>>({
   columns,
@@ -48,7 +48,10 @@ export const Table = <T extends Record<string, unknown>>({
   return (
     <>
       <Collapse in={Object.keys(rowSelection).length !== 0} animateOpacity>
-        <TableSelectionBar tableInstance={table} columns={columns} />
+        <TableSelectionBar
+          tableInstance={table}
+          columns={columns as Column<T>[]}
+        />
       </Collapse>
       {!isStatic && (
         <TableSearch

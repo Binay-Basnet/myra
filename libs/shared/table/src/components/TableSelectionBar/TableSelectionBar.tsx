@@ -16,11 +16,17 @@ import {
 import { uniqBy } from 'lodash';
 
 import { Table } from '../../lib/shared-table';
-import { Row, TableInstance, TableProps } from '../../types/Table';
+import {
+  Column,
+  Maybe,
+  Row,
+  TableInstance,
+  TableProps,
+} from '../../types/Table';
 
-interface TableSelectionBarProps<T extends Record<string, unknown>>
-  extends Pick<TableProps<T>, 'columns'> {
+interface TableSelectionBarProps<T extends Maybe<Record<string, unknown>>> {
   tableInstance: TableInstance<T>;
+  columns: Column<T>[];
 }
 export const TableSelectionBar = <T extends Record<string, unknown>>({
   tableInstance: table,
