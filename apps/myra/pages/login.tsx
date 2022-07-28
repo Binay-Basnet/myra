@@ -14,13 +14,13 @@ import {
 
 import { useLoginMutation } from '@coop/shared/data-access';
 import { Box, Button } from '@coop/shared/ui';
-import { login } from '@coop/shared/utils';
+import { login, useAppDispatch } from '@coop/shared/utils';
 
 import logo from '../../myra/public/MyraLogo.png';
 
 export default function Login() {
   const { mutateAsync, isLoading } = useLoginMutation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const router = useRouter();
 
@@ -30,7 +30,6 @@ export default function Login() {
   const onSubmit = (data) => {
     mutateAsync({ data }).then((res) => {
       if (res.auth.login.recordId === null) {
-        alert('failed');
         return;
       }
       const accessToken = res?.auth?.login?.record?.token?.access;

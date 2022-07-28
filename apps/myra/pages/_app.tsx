@@ -1,20 +1,17 @@
-import { ReactElement, ReactNode, useCallback, useRef, useState } from 'react';
-import React, { useEffect } from 'react';
+import { ReactElement, ReactNode } from 'react';
+import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import type { NextPage } from 'next';
-import type { AppInitialProps, AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { NextRouter, useRouter } from 'next/router';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 import { Spinner } from '@chakra-ui/react';
 
-import { useGetMeQuery } from '@coop/shared/data-access';
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import { RootState, useRefreshToken, useSnap } from '@coop/shared/utils';
+import { useAppSelector, useInit, useSnap } from '@coop/shared/utils';
 import { store, theme } from '@coop/shared/utils';
-import { authenticate, logout, saveToken } from '@coop/shared/utils';
 
 import Login from './login';
 
@@ -58,73 +55,13 @@ const queryClient = new QueryClient({
   },
 });
 
-const url = process.env['NX_SCHEMA_PATH'] ?? '';
-
-// https://github.com/vercel/next.js/issues/18127#issuecomment-950907739
-// Nextjs Seems to have router memoization problem. so had to create this hook
-function useReplace() {
-  const router = useRouter();
-  const routerRef = useRef(router);
-  routerRef.current = router;
-
-  const [{ replace }] = useState<Pick<NextRouter, 'replace'>>({
-    replace: (path) => routerRef.current.replace(path),
-  });
-  return replace;
-}
-
-function useInit() {
-  const [triggerQuery, setTriggerQuery] = React.useState(false);
-  const dispatch = useDispatch();
-  const replace = useReplace();
-
-  const getMe = useGetMeQuery(
-    {},
-    {
-      enabled: triggerQuery,
-    }
-  );
-
-  const refreshToken = useRefreshToken(url);
-
-  const hasDataReturned = getMe?.data?.auth;
-  const isDatasuccessful = getMe?.data?.auth?.me?.data;
-  const userData = getMe?.data?.auth?.me?.data;
-
-  useEffect(() => {
-    refreshToken()
-      .then((res) => {
-        if (res) {
-          setTriggerQuery(true);
-        }
-      })
-      .catch((err) => {
-        dispatch(logout());
-        replace('/login');
-      });
-  }, [dispatch, refreshToken, replace]);
-
-  useEffect(() => {
-    if (hasDataReturned) {
-      if (userData) {
-        dispatch(authenticate({ user: userData }));
-      } else {
-        dispatch(logout());
-        replace('/login');
-      }
-    }
-  }, [dispatch, hasDataReturned, isDatasuccessful, userData, replace]);
-}
-
 function MainApp({ Component, pageProps }: any) {
   const getLayout = Component.getLayout || ((page) => page);
-  const auth = useSelector((state) => state?.auth);
+  const auth = useAppSelector((state) => state?.auth);
 
   useInit();
 
   useSnap();
-
-  console.log('rfeekk main');
 
   if (auth.isLogged === null) {
     return (
