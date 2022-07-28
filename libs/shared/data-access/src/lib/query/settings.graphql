@@ -1,37 +1,37 @@
 query getKYMDeclaration {
-    settings {
-        kymForm {
-            declaration {
-                id
-                content
-            }
-        }
+  settings {
+    kymForm {
+      declaration {
+        id
+        content
+      }
     }
+  }
 
 }
 
-query getCustomFields {
-    settings {
-        kymForm {
-            field {
-                list(filter: { isCustom: true }) {
-                    data {
-                        id
-                        name
-                        enabled
-                        fieldType
-                        isCustom
-                        hasOtherField
-                        options {
-                            id
-                            name
-                            fieldType
-                            enabled
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-}
+#query getCustomFields {
+#    settings {
+#        kymForm {
+#            field {
+#                list(filter: { isCustom: true }) {
+#                    data {
+#                        id
+#                        name
+#                        enabled
+#                        fieldType
+#                        isCustom
+#                        hasOtherField
+#                        options {
+#                            id
+#                            name
+#                            fieldType
+#                            enabled
+#                        }
+#                    }
+#                }
+#            }
+#
+#        }
+#    }
+#}

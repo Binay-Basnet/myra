@@ -7683,6 +7683,127 @@ export type DeleteCustomFieldMutationVariables = Exact<{
 
 export type DeleteCustomFieldMutation = { settings: { kymForm: { field: { delete: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } } };
 
+export type UpsertNewOptionMutationVariables = Exact<{
+  fieldId: Scalars['ID'];
+  data: FormOptionUpsertInput;
+}>;
+
+
+export type UpsertNewOptionMutation = { settings: { form?: { option: { upsert: { recordId?: string | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, order: number } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+
+export type DeleteOptionMutationVariables = Exact<{
+  optionId: Scalars['ID'];
+}>;
+
+
+export type DeleteOptionMutation = { settings: { form?: { option: { delete: { recordId?: string | null } } } | null } };
+
+export type MoveOptionMutationVariables = Exact<{
+  optionId: Scalars['ID'];
+  to: Scalars['Int'];
+}>;
+
+
+export type MoveOptionMutation = { settings: { form?: { option: { move: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+
+export type ToggleFieldOtherOptionMutationVariables = Exact<{
+  fieldId: Scalars['ID'];
+  hasOtherField?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+
+export type ToggleFieldOtherOptionMutation = { settings: { form?: { field: { update: { record?: { name: Record<"local"|"en"|"np",string>, hasOtherField: boolean } | null } } } | null } };
+
+export type UpsertSectionOptionMutationVariables = Exact<{
+  sectionId: Scalars['ID'];
+  data: FormFieldUpsertInput;
+}>;
+
+
+export type UpsertSectionOptionMutation = { settings: { form?: { field: { upsert: { recordId?: string | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, order: number } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+
+export type DeleteFieldMutationVariables = Exact<{
+  fieldId: Scalars['ID'];
+}>;
+
+
+export type DeleteFieldMutation = { settings: { form?: { field: { delete: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+
+export type MoveFieldMutationVariables = Exact<{
+  fieldId: Scalars['ID'];
+  to: Scalars['Int'];
+}>;
+
+
+export type MoveFieldMutation = { settings: { form?: { field: { move: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+
+export type AddConditionOptionMutationVariables = Exact<{
+  fieldId: Scalars['ID'];
+  dependsOn: Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type AddConditionOptionMutation = { settings: { form?: { field: { condition: { recordId?: string | null, record?: { id: string, dependsOn?: Array<string | null> | null, name: Record<"local"|"en"|"np",string> } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+
+export type AddFileSizeToSectionMutationVariables = Exact<{
+  sectionId: Scalars['ID'];
+  maxSize: Scalars['Int'];
+}>;
+
+
+export type AddFileSizeToSectionMutation = { settings: { form?: { maxSize: { error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, maxSize?: number | null } | {} | null } } | null } };
+
+export type UpsertCustomSectionMutationVariables = Exact<{
+  data: FormSectionUpsertInput;
+}>;
+
+
+export type UpsertCustomSectionMutation = { settings: { form?: { section: { upsert: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, isCustom: boolean } | null } } } | null } };
+
+export type UpsertCustomFieldMutationVariables = Exact<{
+  data: FormFieldUpsertInput;
+}>;
+
+
+export type UpsertCustomFieldMutation = { settings: { form?: { field: { upsert: { record?: { id: string } | null } } } | null } };
+
+export type DeleteCustomSectionMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteCustomSectionMutation = { settings: { form?: { section: { delete: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+
+export type DeleteCustomSectionFieldMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteCustomSectionFieldMutation = { settings: { form?: { field: { delete: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+
+export type UpdateCustomSectionMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: FormSectionUpdateInput;
+}>;
+
+
+export type UpdateCustomSectionMutation = { settings: { form?: { section: { update: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, isCustom: boolean } | null } } } | null } };
+
+export type UpdateCustomSectionFieldMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: FormFieldUpdateInput;
+}>;
+
+
+export type UpdateCustomSectionFieldMutation = { settings: { form?: { field: { update: { record?: { id: string } | null } } } | null } };
+
+export type UpdateDeclarationMutationVariables = Exact<{
+  data: DeclarationInput;
+}>;
+
+
+export type UpdateDeclarationMutation = { settings: { declaration: { update: { record?: { content: Record<"local"|"en"|"np",string> } | null } } } };
+
 export type AddSharePurchaseMutationVariables = Exact<{
   id: Scalars['ID'];
   data: SharePurchaseInput;
@@ -7934,10 +8055,24 @@ export type GetKymDeclarationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetKymDeclarationQuery = { settings: { kymForm: { declaration: { id: string, content: Record<"local"|"en"|"np",string> } } } };
 
+export type GetPreDefinedFieldsQueryVariables = Exact<{
+  filter: PredefinedElementFilter;
+}>;
+
+
+export type GetPreDefinedFieldsQuery = { settings: { form?: { predefined: { details: { data?: { __typename: 'FormField', id: string, name: Record<"local"|"en"|"np",string>, fieldType: FormFieldType, hasOtherField: boolean, order: number, dependsOn?: Array<string | null> | null, isDefault: boolean, options?: Array<{ order: number, id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, isDefault: boolean }> | null } | { __typename: 'FormSection', id: string, name: Record<"local"|"en"|"np",string>, isDefault: boolean, sectionType: FormSectionType, maxSize?: number | null, fields?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, isDefault: boolean }> | null, subSections?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, search_term?: FormSectionSearchTerm | null }> | null } | null } } } | null } };
+
 export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomFieldsQuery = { settings: { kymForm: { field?: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: Kym_Field_Type, isCustom: boolean, hasOtherField: boolean, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } | null } } };
+export type GetCustomFieldsQuery = { settings: { form?: { custom: { list: { data?: Array<{ __typename: 'FormField', id: string, name: Record<"local"|"en"|"np",string>, fieldType: FormFieldType, hasOtherField: boolean, order: number, dependsOn?: Array<string | null> | null, isDefault: boolean, options?: Array<{ order: number, id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, isDefault: boolean }> | null } | { __typename: 'FormSection', id: string, name: Record<"local"|"en"|"np",string>, isDefault: boolean, sectionType: FormSectionType, maxSize?: number | null, fields?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, isDefault: boolean }> | null, subSections?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, search_term?: FormSectionSearchTerm | null }> | null } | null> | null } } } | null } };
+
+export type GetDeclarationQueryVariables = Exact<{
+  kymType: DeclarationFor;
+}>;
+
+
+export type GetDeclarationQuery = { settings: { declaration: { get?: { data?: { content: Record<"local"|"en"|"np",string> } | null } | null } } };
 
 export type GetDepositSettingsIroQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9197,6 +9332,430 @@ export const useDeleteCustomFieldMutation = <
     useMutation<DeleteCustomFieldMutation, TError, DeleteCustomFieldMutationVariables, TContext>(
       ['deleteCustomField'],
       useAxios<DeleteCustomFieldMutation, DeleteCustomFieldMutationVariables>(DeleteCustomFieldDocument),
+      options
+    );
+export const UpsertNewOptionDocument = `
+    mutation upsertNewOption($fieldId: ID!, $data: FormOptionUpsertInput!) {
+  settings {
+    form {
+      option {
+        upsert(fieldId: $fieldId, data: $data) {
+          recordId
+          record {
+            id
+            name
+            enabled
+            order
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpsertNewOptionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpsertNewOptionMutation, TError, UpsertNewOptionMutationVariables, TContext>) =>
+    useMutation<UpsertNewOptionMutation, TError, UpsertNewOptionMutationVariables, TContext>(
+      ['upsertNewOption'],
+      useAxios<UpsertNewOptionMutation, UpsertNewOptionMutationVariables>(UpsertNewOptionDocument),
+      options
+    );
+export const DeleteOptionDocument = `
+    mutation deleteOption($optionId: ID!) {
+  settings {
+    form {
+      option {
+        delete(id: $optionId) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteOptionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteOptionMutation, TError, DeleteOptionMutationVariables, TContext>) =>
+    useMutation<DeleteOptionMutation, TError, DeleteOptionMutationVariables, TContext>(
+      ['deleteOption'],
+      useAxios<DeleteOptionMutation, DeleteOptionMutationVariables>(DeleteOptionDocument),
+      options
+    );
+export const MoveOptionDocument = `
+    mutation moveOption($optionId: ID!, $to: Int!) {
+  settings {
+    form {
+      option {
+        move(id: $optionId, to: $to) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useMoveOptionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<MoveOptionMutation, TError, MoveOptionMutationVariables, TContext>) =>
+    useMutation<MoveOptionMutation, TError, MoveOptionMutationVariables, TContext>(
+      ['moveOption'],
+      useAxios<MoveOptionMutation, MoveOptionMutationVariables>(MoveOptionDocument),
+      options
+    );
+export const ToggleFieldOtherOptionDocument = `
+    mutation toggleFieldOtherOption($fieldId: ID!, $hasOtherField: Boolean) {
+  settings {
+    form {
+      field {
+        update(id: $fieldId, data: {hasOtherField: $hasOtherField}) {
+          record {
+            name
+            hasOtherField
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useToggleFieldOtherOptionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<ToggleFieldOtherOptionMutation, TError, ToggleFieldOtherOptionMutationVariables, TContext>) =>
+    useMutation<ToggleFieldOtherOptionMutation, TError, ToggleFieldOtherOptionMutationVariables, TContext>(
+      ['toggleFieldOtherOption'],
+      useAxios<ToggleFieldOtherOptionMutation, ToggleFieldOtherOptionMutationVariables>(ToggleFieldOtherOptionDocument),
+      options
+    );
+export const UpsertSectionOptionDocument = `
+    mutation upsertSectionOption($sectionId: ID!, $data: FormFieldUpsertInput!) {
+  settings {
+    form {
+      field {
+        upsert(sectionId: $sectionId, data: $data) {
+          recordId
+          record {
+            id
+            name
+            enabled
+            fieldType
+            order
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpsertSectionOptionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpsertSectionOptionMutation, TError, UpsertSectionOptionMutationVariables, TContext>) =>
+    useMutation<UpsertSectionOptionMutation, TError, UpsertSectionOptionMutationVariables, TContext>(
+      ['upsertSectionOption'],
+      useAxios<UpsertSectionOptionMutation, UpsertSectionOptionMutationVariables>(UpsertSectionOptionDocument),
+      options
+    );
+export const DeleteFieldDocument = `
+    mutation deleteField($fieldId: ID!) {
+  settings {
+    form {
+      field {
+        delete(id: $fieldId) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteFieldMutation, TError, DeleteFieldMutationVariables, TContext>) =>
+    useMutation<DeleteFieldMutation, TError, DeleteFieldMutationVariables, TContext>(
+      ['deleteField'],
+      useAxios<DeleteFieldMutation, DeleteFieldMutationVariables>(DeleteFieldDocument),
+      options
+    );
+export const MoveFieldDocument = `
+    mutation moveField($fieldId: ID!, $to: Int!) {
+  settings {
+    form {
+      field {
+        move(id: $fieldId, to: $to) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useMoveFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<MoveFieldMutation, TError, MoveFieldMutationVariables, TContext>) =>
+    useMutation<MoveFieldMutation, TError, MoveFieldMutationVariables, TContext>(
+      ['moveField'],
+      useAxios<MoveFieldMutation, MoveFieldMutationVariables>(MoveFieldDocument),
+      options
+    );
+export const AddConditionOptionDocument = `
+    mutation addConditionOption($fieldId: ID!, $dependsOn: [ID]!) {
+  settings {
+    form {
+      field {
+        condition(fieldId: $fieldId, dependsOn: $dependsOn) {
+          recordId
+          record {
+            id
+            dependsOn
+            name
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddConditionOptionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<AddConditionOptionMutation, TError, AddConditionOptionMutationVariables, TContext>) =>
+    useMutation<AddConditionOptionMutation, TError, AddConditionOptionMutationVariables, TContext>(
+      ['addConditionOption'],
+      useAxios<AddConditionOptionMutation, AddConditionOptionMutationVariables>(AddConditionOptionDocument),
+      options
+    );
+export const AddFileSizeToSectionDocument = `
+    mutation addFileSizeToSection($sectionId: ID!, $maxSize: Int!) {
+  settings {
+    form {
+      maxSize(id: $sectionId, maxSize: $maxSize) {
+        error {
+          ...MutationError
+        }
+        record {
+          ... on FormSection {
+            id
+            name
+            maxSize
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddFileSizeToSectionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<AddFileSizeToSectionMutation, TError, AddFileSizeToSectionMutationVariables, TContext>) =>
+    useMutation<AddFileSizeToSectionMutation, TError, AddFileSizeToSectionMutationVariables, TContext>(
+      ['addFileSizeToSection'],
+      useAxios<AddFileSizeToSectionMutation, AddFileSizeToSectionMutationVariables>(AddFileSizeToSectionDocument),
+      options
+    );
+export const UpsertCustomSectionDocument = `
+    mutation upsertCustomSection($data: FormSectionUpsertInput!) {
+  settings {
+    form {
+      section {
+        upsert(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+          record {
+            id
+            name
+            isCustom
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpsertCustomSectionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpsertCustomSectionMutation, TError, UpsertCustomSectionMutationVariables, TContext>) =>
+    useMutation<UpsertCustomSectionMutation, TError, UpsertCustomSectionMutationVariables, TContext>(
+      ['upsertCustomSection'],
+      useAxios<UpsertCustomSectionMutation, UpsertCustomSectionMutationVariables>(UpsertCustomSectionDocument),
+      options
+    );
+export const UpsertCustomFieldDocument = `
+    mutation upsertCustomField($data: FormFieldUpsertInput!) {
+  settings {
+    form {
+      field {
+        upsert(data: $data) {
+          record {
+            id
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useUpsertCustomFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpsertCustomFieldMutation, TError, UpsertCustomFieldMutationVariables, TContext>) =>
+    useMutation<UpsertCustomFieldMutation, TError, UpsertCustomFieldMutationVariables, TContext>(
+      ['upsertCustomField'],
+      useAxios<UpsertCustomFieldMutation, UpsertCustomFieldMutationVariables>(UpsertCustomFieldDocument),
+      options
+    );
+export const DeleteCustomSectionDocument = `
+    mutation deleteCustomSection($id: ID!) {
+  settings {
+    form {
+      section {
+        delete(id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteCustomSectionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCustomSectionMutation, TError, DeleteCustomSectionMutationVariables, TContext>) =>
+    useMutation<DeleteCustomSectionMutation, TError, DeleteCustomSectionMutationVariables, TContext>(
+      ['deleteCustomSection'],
+      useAxios<DeleteCustomSectionMutation, DeleteCustomSectionMutationVariables>(DeleteCustomSectionDocument),
+      options
+    );
+export const DeleteCustomSectionFieldDocument = `
+    mutation deleteCustomSectionField($id: ID!) {
+  settings {
+    form {
+      field {
+        delete(id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useDeleteCustomSectionFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCustomSectionFieldMutation, TError, DeleteCustomSectionFieldMutationVariables, TContext>) =>
+    useMutation<DeleteCustomSectionFieldMutation, TError, DeleteCustomSectionFieldMutationVariables, TContext>(
+      ['deleteCustomSectionField'],
+      useAxios<DeleteCustomSectionFieldMutation, DeleteCustomSectionFieldMutationVariables>(DeleteCustomSectionFieldDocument),
+      options
+    );
+export const UpdateCustomSectionDocument = `
+    mutation updateCustomSection($id: ID!, $data: FormSectionUpdateInput!) {
+  settings {
+    form {
+      section {
+        update(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+          record {
+            id
+            name
+            isCustom
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useUpdateCustomSectionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCustomSectionMutation, TError, UpdateCustomSectionMutationVariables, TContext>) =>
+    useMutation<UpdateCustomSectionMutation, TError, UpdateCustomSectionMutationVariables, TContext>(
+      ['updateCustomSection'],
+      useAxios<UpdateCustomSectionMutation, UpdateCustomSectionMutationVariables>(UpdateCustomSectionDocument),
+      options
+    );
+export const UpdateCustomSectionFieldDocument = `
+    mutation updateCustomSectionField($id: ID!, $data: FormFieldUpdateInput!) {
+  settings {
+    form {
+      field {
+        update(id: $id, data: $data) {
+          record {
+            id
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useUpdateCustomSectionFieldMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCustomSectionFieldMutation, TError, UpdateCustomSectionFieldMutationVariables, TContext>) =>
+    useMutation<UpdateCustomSectionFieldMutation, TError, UpdateCustomSectionFieldMutationVariables, TContext>(
+      ['updateCustomSectionField'],
+      useAxios<UpdateCustomSectionFieldMutation, UpdateCustomSectionFieldMutationVariables>(UpdateCustomSectionFieldDocument),
+      options
+    );
+export const UpdateDeclarationDocument = `
+    mutation updateDeclaration($data: DeclarationInput!) {
+  settings {
+    declaration {
+      update(data: $data) {
+        record {
+          content
+        }
+      }
+    }
+  }
+}
+    `;
+export const useUpdateDeclarationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateDeclarationMutation, TError, UpdateDeclarationMutationVariables, TContext>) =>
+    useMutation<UpdateDeclarationMutation, TError, UpdateDeclarationMutationVariables, TContext>(
+      ['updateDeclaration'],
+      useAxios<UpdateDeclarationMutation, UpdateDeclarationMutationVariables>(UpdateDeclarationDocument),
       options
     );
 export const AddSharePurchaseDocument = `
@@ -10632,24 +11191,112 @@ export const useGetKymDeclarationQuery = <
       useAxios<GetKymDeclarationQuery, GetKymDeclarationQueryVariables>(GetKymDeclarationDocument).bind(null, variables),
       options
     );
-export const GetCustomFieldsDocument = `
-    query getCustomFields {
+export const GetPreDefinedFieldsDocument = `
+    query getPreDefinedFields($filter: PredefinedElementFilter!) {
   settings {
-    kymForm {
-      field {
-        list(filter: {isCustom: true}) {
+    form {
+      predefined {
+        details(filter: $filter) {
           data {
-            id
-            name
-            enabled
-            fieldType
-            isCustom
-            hasOtherField
-            options {
+            ... on FormField {
+              __typename
               id
               name
               fieldType
-              enabled
+              hasOtherField
+              order
+              dependsOn
+              isDefault
+              options {
+                order
+                id
+                name
+                enabled
+                isDefault
+              }
+            }
+            ... on FormSection {
+              __typename
+              id
+              name
+              isDefault
+              sectionType
+              maxSize
+              fields {
+                id
+                name
+                enabled
+                fieldType
+                isDefault
+              }
+              subSections {
+                id
+                name
+                search_term
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetPreDefinedFieldsQuery = <
+      TData = GetPreDefinedFieldsQuery,
+      TError = unknown
+    >(
+      variables: GetPreDefinedFieldsQueryVariables,
+      options?: UseQueryOptions<GetPreDefinedFieldsQuery, TError, TData>
+    ) =>
+    useQuery<GetPreDefinedFieldsQuery, TError, TData>(
+      ['getPreDefinedFields', variables],
+      useAxios<GetPreDefinedFieldsQuery, GetPreDefinedFieldsQueryVariables>(GetPreDefinedFieldsDocument).bind(null, variables),
+      options
+    );
+export const GetCustomFieldsDocument = `
+    query getCustomFields {
+  settings {
+    form {
+      custom {
+        list {
+          data {
+            ... on FormField {
+              __typename
+              id
+              name
+              fieldType
+              hasOtherField
+              order
+              dependsOn
+              isDefault
+              options {
+                order
+                id
+                name
+                enabled
+                isDefault
+              }
+            }
+            ... on FormSection {
+              __typename
+              id
+              name
+              isDefault
+              sectionType
+              maxSize
+              fields {
+                id
+                name
+                enabled
+                fieldType
+                isDefault
+              }
+              subSections {
+                id
+                name
+                search_term
+              }
             }
           }
         }
@@ -10668,6 +11315,31 @@ export const useGetCustomFieldsQuery = <
     useQuery<GetCustomFieldsQuery, TError, TData>(
       variables === undefined ? ['getCustomFields'] : ['getCustomFields', variables],
       useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
+      options
+    );
+export const GetDeclarationDocument = `
+    query getDeclaration($kymType: DeclarationFor!) {
+  settings {
+    declaration {
+      get(for: $kymType) {
+        data {
+          content
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDeclarationQuery = <
+      TData = GetDeclarationQuery,
+      TError = unknown
+    >(
+      variables: GetDeclarationQueryVariables,
+      options?: UseQueryOptions<GetDeclarationQuery, TError, TData>
+    ) =>
+    useQuery<GetDeclarationQuery, TError, TData>(
+      ['getDeclaration', variables],
+      useAxios<GetDeclarationQuery, GetDeclarationQueryVariables>(GetDeclarationDocument).bind(null, variables),
       options
     );
 export const GetDepositSettingsIroDocument = `

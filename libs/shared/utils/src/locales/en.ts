@@ -495,6 +495,7 @@ const en: Record<string, string> = {
   settingsMemberCitizenship: 'Citizenship',
   settingsMemberVoterId: 'Voter Id',
   settingsMemberDrivingLicense: 'Driving License',
+  settingsMemberPassport: 'Passport',
   settingsMemberMaritalStatus: 'Marital Status',
   settingsMemberFamilyRelationship: 'Family Relationship',
   settingsMemberFamilyInformation: 'Family Information',
@@ -2920,6 +2921,38 @@ const en: Record<string, string> = {
   loanProductAdditionalFeatures: 'Additional Features, Booleans',
   // loanProduct: '',
   // loanProduct: '',
+  /* KYM Institution */
+  settingsMemberInstitutionSection1: 'Section 1: Information of Organization',
+  settingsMemberInstitutionSection2: 'Section 2: Transaction Profile',
+  settingsMemberInstitutionSection3:
+    'Section 3: Details of Proprietor, partners, Directors ',
+  settingsMemberInstitutionSection4: 'Section 4: Account Operations',
+  settingsMemberInstitutionSection5: 'Section 5: Declaration',
+  settingsMemberInstitutionSection6: 'Section 6: Custom Fields',
+
+  settingInstitutionOrgType: 'Organization Type',
+  settingInstitutionRegisteredDetails: 'Registered Details',
+  settingContactDetails: 'Contact Details',
+  settingBankAccountDetails: 'Bank Account Details',
+  settingDetailsOfSisterConcern: 'Details of Sister Concern',
+
+  settingsInstitutionTransactionDetails: 'Transaction Details',
+  settingsExpectedMonthlyTurnover: 'Expected Monthly Turnover',
+  settingsExpectedMonthlyTransaction: 'Expected Monthly Transaction',
+
+  settingsDirector: 'Directors',
+  settingsDirectorDetails: 'Director Details',
+  settingsDocumentDeclaration: 'Document Declaration',
+  settingsDeclarationOfDirectionAffiliated:
+    'Details of directors affiliated with other firms',
+
+  settingsAccountOperator: 'Account Operator',
+  settingsAccountDetailsOfAccountOperator: 'Details of Account Operators',
+
+  settingsAccountHolderDeclaration: 'Account Holder Declaration',
+  settingsAccountHolderDetails: 'Account Holder Details',
+  settingsAccountHolderDeclarationDocuments:
+    'Account Holder Declaration Documents',
 };
 
 export default en;

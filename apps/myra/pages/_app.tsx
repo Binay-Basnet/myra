@@ -1,20 +1,19 @@
-import type { ReactElement, ReactNode } from 'react';
-import React, { useEffect } from 'react';
+import { ReactElement, ReactNode } from 'react';
+import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
 import type { NextPage } from 'next';
-import type { AppInitialProps, AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 import { Spinner } from '@chakra-ui/react';
 
-import { Login } from '@coop/myra/components';
-import { useGetMeQuery } from '@coop/shared/data-access';
-import { AuthProvider, useAuth } from '@coop/shared/data-access';
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import { useSnap } from '@coop/shared/utils';
+import { useAppSelector, useInit, useSnap } from '@coop/shared/utils';
 import { store, theme } from '@coop/shared/utils';
+
+import Login from './login';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
@@ -56,50 +55,32 @@ const queryClient = new QueryClient({
   },
 });
 
-interface ManAppProps extends AppInitialProps {
-  Component: NextPageWithLayout;
-}
-
-function MainApp({ Component, pageProps }: ManAppProps) {
-  const auth = useAuth();
-  const getMe = useGetMeQuery();
-  console.log('get me', getMe);
-
+function MainApp({ Component, pageProps }: any) {
   const getLayout = Component.getLayout || ((page) => page);
+  const auth = useAppSelector((state) => state?.auth);
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(null);
-
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem('refreshToken');
-
-    typeof window !== 'undefined' &&
-      setIsLoggedIn(Boolean(isLoggedIn || false));
-  }, []);
+  useInit();
 
   useSnap();
-  console.log('auth', auth);
+
+  if (auth.isLogged === null) {
+    return (
+      <Box h="100vh" display="flex" alignItems="center" justifyContent="center">
+        <Spinner />
+      </Box>
+    );
+  }
+
+  if (!auth.isLogged) {
+    return <Login />;
+  }
   return (
     <>
       <Head>
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
       <ToastContainer />
-      {isLoggedIn === null ? (
-        <Box
-          h="100vh"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Spinner />
-        </Box>
-      ) : isLoggedIn ? (
-        <main className="app">{getLayout(<Component {...pageProps} />)}</main>
-      ) : (
-        <main className="app">
-          <Login />
-        </main>
-      )}
+      <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       <Box
         position="fixed"
         bottom={'40px'}

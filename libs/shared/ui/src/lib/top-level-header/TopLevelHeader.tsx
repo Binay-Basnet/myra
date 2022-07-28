@@ -5,6 +5,7 @@ import { BiBell } from 'react-icons/bi';
 import { CgMenuGridO } from 'react-icons/cg';
 import { MdOutlineHelpOutline } from 'react-icons/md';
 import { RiHistoryFill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Image, Text } from '@chakra-ui/react';
@@ -26,7 +27,7 @@ import {
   ShortcutTab,
   SwitchTabs,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { logout, useTranslation } from '@coop/shared/utils';
 
 import SearchBar from '../search-bar/SearchBar';
 
@@ -77,6 +78,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
   const router = useRouter();
   const [isClose, setIsClose] = useState(true);
   const [numLines, setNumLines] = useState([1, 2]);
+  const dispatch = useDispatch();
 
   const helpOptions = [
     {
@@ -653,6 +655,10 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                             px="s16"
                             display="flex"
                             alignItems="center"
+                            onClick={() => {
+                              dispatch(logout());
+                              localStorage.clear();
+                            }}
                           >
                             <Text
                               fontWeight="Regular"

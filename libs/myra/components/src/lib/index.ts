@@ -9,7 +9,6 @@ export * from './chartOfAccounts';
 export * from './form/components';
 export * from './form/Form';
 export * from './layout';
-export * from './login/Login';
 export * from './popover/Popover';
 export * from './tab/settings';
 export * from './tab/settingsGeneral';
