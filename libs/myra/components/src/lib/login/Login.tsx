@@ -1,5 +1,6 @@
-import React, { ChangeEventHandler } from 'react';
+import React from 'react';
 import { IoEyeOffOutline, IoEyeOutline, IoLockClosed } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
 import {
   Input,
   InputGroup,
@@ -8,43 +9,19 @@ import {
 } from '@chakra-ui/react';
 
 import { useLoginMutation } from '@coop/shared/data-access';
-import { useAuth } from '@coop/shared/data-access';
 import { Box, Button } from '@coop/shared/ui';
 
 export const Login = () => {
   const { mutateAsync } = useLoginMutation();
-  const auth = useAuth();
+  const dispatch = useDispatch();
   const [show, setShow] = React.useState(false);
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const onUserNameChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    setUserName(e.target.value);
-  };
   const onPasswordChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     setPassword(e.target.value);
-  };
-  const handleSubmit = () => {
-    mutateAsync({ data: { username: userName, password } }).then(
-      (res) => {
-        const accessToken = res?.auth?.login?.record?.token?.access;
-        const refreshToken = res?.auth?.login?.record?.token?.refresh;
-        const user = res?.auth?.login?.record?.user;
-        auth.setAuthentication &&
-          auth?.setAuthentication({ accessToken: accessToken, user: user });
-        localStorage.setItem('refreshToken', refreshToken ?? '');
-      }
-
-      // auth.setAuth({acces})
-    );
-    // if (userName === 'neosys' && password === 'neosys@123') {
-    //   localStorage.setItem('isLoggedIn', 'true');
-    //   typeof window !== 'undefined' && window.location.reload();
-    // }
   };
 
   return (
@@ -57,7 +34,12 @@ export const Login = () => {
     >
       <img src="/dashboardhome/MyraLogo.png" alt="Main Logo" />
       <br />
-      <Input w={300} placeholder="Enter Username" onChange={onUserNameChange} />
+      <input />
+      <Input
+        w={300}
+        placeholder="Enter Username"
+        onChange={(e) => setUserName(e.target.value)}
+      />
       <br />
       <InputGroup h="44px" mt="s4" w={300}>
         <InputLeftElement children={<IoLockClosed />} />
@@ -77,9 +59,9 @@ export const Login = () => {
         </InputRightElement>
       </InputGroup>
       <br />
-      <Button w={300} onClick={handleSubmit}>
+      {/* <Button w={300} onClick={handleSubmit}>
         Login
-      </Button>
+      </Button> */}
     </Box>
   );
 };
