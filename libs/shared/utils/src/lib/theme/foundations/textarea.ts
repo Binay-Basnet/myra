@@ -8,12 +8,14 @@ import Input from './input';
 
 const baseStyle: SystemStyleObject = {
   ...Input.baseStyle.field,
-  paddingX: '12px',
-  paddingY: '8px',
+  paddingX: 's12',
+  paddingY: 's12',
   minHeight: '64px',
   lineHeight: 'short',
   verticalAlign: 'top',
   borderRadius: 'br2',
+  color: 'gray.900',
+  fontSize: '16px',
 };
 
 const variants: Record<string, SystemStyleInterpolation> = {
