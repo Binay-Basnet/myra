@@ -2870,6 +2870,17 @@ const ne: Record<string, string> = {
   kymIndFinancialLoan: 'Loan',
   kymIndFinancialOther: 'Other',
 
+  loanProductsLoanProducts: 'Loan Products',
+  loanProductsNewLoanProduct: 'New Loan Product',
+  loanProductsProductCode: 'Product Code',
+  loanProductsProductName: 'Product Name',
+  loanProductsProductType: 'Product Type',
+  loanProductsProductSubType: 'Product Sub Type',
+  loanProductsInterest: 'Interest',
+  loanProductsCreatedDate: 'Created Date',
+  loanProductGeneralInformation: 'General Information',
+  loanProductDetailCriteria: 'Criteria',
+  loanProductAdditionalFeatures: 'Additional Features, Booleans',
   /* KYM Institution */
   settingsMemberInstitutionSection1: 'Section 1: Information of Organization',
   settingsMemberInstitutionSection2: 'Section 2: Transaction Profile',
