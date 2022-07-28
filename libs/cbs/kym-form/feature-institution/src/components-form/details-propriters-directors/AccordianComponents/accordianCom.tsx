@@ -12,6 +12,7 @@ import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   useAllAdministrationQuery,
+  useGetInsBoardDirectorEditListQuery,
   useSetAddDirectorInstitutionMutation,
 } from '@coop/shared/data-access';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
@@ -35,14 +36,56 @@ export const DirectorTopPart = ({
   const { t } = useTranslation();
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const router = useRouter();
 
   const id = String(router?.query?.['id']);
 
   const { mutate } = useSetAddDirectorInstitutionMutation();
+  const { data: editValues } = useGetInsBoardDirectorEditListQuery({
+    id: id,
+  });
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.institution?.listDirectors?.data;
 
+      const familyMemberDetail = editValueData?.find(
+        (data) => data?.id === directorId
+      );
+
+      if (familyMemberDetail) {
+        reset({
+          name: familyMemberDetail?.fullName,
+          designation: familyMemberDetail?.designation,
+          permanentAddress: {
+            ...familyMemberDetail?.permanentAddress,
+
+            locality: familyMemberDetail?.permanentAddress?.locality?.local,
+
+            // }
+          },
+          temporaryAddress: {
+            ...familyMemberDetail?.temporaryAddress,
+
+            locality: familyMemberDetail?.permanentAddress?.locality?.local,
+
+            // }
+          },
+          isTemporaryAndPermanentAddressSame:
+            familyMemberDetail?.isTemporaryAndPermanentAddressSame,
+          dateOfMembership: familyMemberDetail?.dateOfMembership,
+          highestQualification: familyMemberDetail?.highestQualification,
+          mobileNo: familyMemberDetail?.mobileNo,
+          email: familyMemberDetail?.emailAddress,
+          citizenshipNo: familyMemberDetail?.citizenshipNo,
+          panNo: familyMemberDetail?.panNo,
+          isHeadOfOrganization: familyMemberDetail?.isHeadOfOrganization,
+        });
+      }
+    }
+  }, [editValues]);
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {

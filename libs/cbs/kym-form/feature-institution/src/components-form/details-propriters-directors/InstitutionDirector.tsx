@@ -19,9 +19,10 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  KymInsInput,
+  KymInsDirectorInput,
   useAllAdministrationQuery,
   useDeleteDirectorInstitutionMutation,
+  useGetInsBoardDirectorEditListQuery,
   useGetNewIdMutation,
   useSetAddDirectorInstitutionMutation,
 } from '@coop/shared/data-access';
@@ -209,7 +210,7 @@ interface IProps {
 
 export const BoardDirectorInfo = (props: IProps) => {
   const { t } = useTranslation();
-  const methods = useForm<KymInsInput>({
+  const methods = useForm<KymInsDirectorInput>({
     defaultValues: {},
   });
   const { setSection } = props;
@@ -220,6 +221,26 @@ export const BoardDirectorInfo = (props: IProps) => {
   const { control, handleSubmit, getValues, watch, setError } = methods;
 
   const [directorIds, setDirectorIds] = useState<string[]>([]);
+
+  const { data: editValues } = useGetInsBoardDirectorEditListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.institution?.listDirectors?.data;
+
+      setDirectorIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
+        ) ?? []
+      );
+    }
+  }, [editValues]);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

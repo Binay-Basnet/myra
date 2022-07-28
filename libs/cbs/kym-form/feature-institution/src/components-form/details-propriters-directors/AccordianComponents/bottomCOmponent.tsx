@@ -22,6 +22,7 @@ import {
   KymInsInput,
   useAllAdministrationQuery,
   useDeleteDirectorInstitutionMutation,
+  useGetInsBoardDirectorEditListQuery,
   useGetNewIdMutation,
   useSetAddDirectorInstitutionMutation,
 } from '@coop/shared/data-access';
@@ -59,14 +60,36 @@ export const DirectorsWithAffliation = ({
   const { t } = useTranslation();
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const router = useRouter();
 
   const id = String(router?.query?.['id']);
 
   const { mutate } = useSetAddDirectorInstitutionMutation();
+  const { data: editValues } = useGetInsBoardDirectorEditListQuery({
+    id: id,
+  });
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.institution?.listDirectors?.data;
 
+      const familyMemberDetail = editValueData?.find(
+        (data) => data?.id === directorId
+      );
+
+      if (familyMemberDetail) {
+        reset({
+          isAffiliatedWithOtherFirms:
+            familyMemberDetail?.isAffiliatedWithOtherFirms,
+          firmDetails: {
+            ...familyMemberDetail?.firmDetails,
+          },
+        });
+      }
+    }
+  }, [editValues]);
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {

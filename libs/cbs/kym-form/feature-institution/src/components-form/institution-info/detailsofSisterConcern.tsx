@@ -11,7 +11,7 @@ import {
   GroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  KymInsInput,
+  KymInsSisterConcernInput,
   useDeleteSisterConcernsMutation,
   useGetInstitutionSisterDetailsEditListQuery,
   useGetNewIdMutation,
@@ -146,7 +146,7 @@ interface IProps {
 
 export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
   const { t } = useTranslation();
-  const methods = useForm<KymInsInput>({
+  const methods = useForm<KymInsSisterConcernInput>({
     defaultValues: {},
   });
   const { setSection } = props;

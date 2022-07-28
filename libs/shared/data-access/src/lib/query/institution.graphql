@@ -170,3 +170,57 @@ query getInstitutionSisterDetailsEditList($id: ID!) {
     }
   }
 }
+
+query getInsBoardDirectorEditList($id: ID!) {
+  members {
+    institution {
+      listDirectors(id: $id) {
+        data {
+          id
+          fullName
+          designation
+          permanentAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isTemporaryAndPermanentAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          dateOfMembership
+          highestQualification
+          mobileNo
+          emailAddress
+          citizenshipNo
+          panNo
+          isHeadOfOrganization
+          isAffiliatedWithOtherFirms
+          firmDetails {
+            directorName
+            institutionName
+            address
+            designation
+            yearlyIncome
+          }
+        }
+      }
+    }
+  }
+}

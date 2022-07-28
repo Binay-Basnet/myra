@@ -7804,6 +7804,13 @@ export type GetInstitutionSisterDetailsEditListQueryVariables = Exact<{
 
 export type GetInstitutionSisterDetailsEditListQuery = { members: { institution?: { listSisterConcerns?: { data?: Array<{ id?: string | null, name?: string | null, natureOfBusiness?: string | null, address?: string | null, phoneNo?: string | null } | null> | null } | null } | null } };
 
+export type GetInsBoardDirectorEditListQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInsBoardDirectorEditListQuery = { members: { institution?: { listDirectors?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isTemporaryAndPermanentAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNo?: string | null, emailAddress?: string | null, citizenshipNo?: string | null, panNo?: string | null, isHeadOfOrganization?: boolean | null, isAffiliatedWithOtherFirms?: boolean | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, firmDetails?: { directorName?: string | null, institutionName?: string | null, address?: string | null, designation?: string | null, yearlyIncome?: number | null } | null } | null> | null } | null } | null } };
+
 export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -9953,6 +9960,73 @@ export const useGetInstitutionSisterDetailsEditListQuery = <
     useQuery<GetInstitutionSisterDetailsEditListQuery, TError, TData>(
       ['getInstitutionSisterDetailsEditList', variables],
       useAxios<GetInstitutionSisterDetailsEditListQuery, GetInstitutionSisterDetailsEditListQueryVariables>(GetInstitutionSisterDetailsEditListDocument).bind(null, variables),
+      options
+    );
+export const GetInsBoardDirectorEditListDocument = `
+    query getInsBoardDirectorEditList($id: ID!) {
+  members {
+    institution {
+      listDirectors(id: $id) {
+        data {
+          id
+          fullName
+          designation
+          permanentAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isTemporaryAndPermanentAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          dateOfMembership
+          highestQualification
+          mobileNo
+          emailAddress
+          citizenshipNo
+          panNo
+          isHeadOfOrganization
+          isAffiliatedWithOtherFirms
+          firmDetails {
+            directorName
+            institutionName
+            address
+            designation
+            yearlyIncome
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInsBoardDirectorEditListQuery = <
+      TData = GetInsBoardDirectorEditListQuery,
+      TError = unknown
+    >(
+      variables: GetInsBoardDirectorEditListQueryVariables,
+      options?: UseQueryOptions<GetInsBoardDirectorEditListQuery, TError, TData>
+    ) =>
+    useQuery<GetInsBoardDirectorEditListQuery, TError, TData>(
+      ['getInsBoardDirectorEditList', variables],
+      useAxios<GetInsBoardDirectorEditListQuery, GetInsBoardDirectorEditListQueryVariables>(GetInsBoardDirectorEditListDocument).bind(null, variables),
       options
     );
 export const GetInventoryItemsDocument = `

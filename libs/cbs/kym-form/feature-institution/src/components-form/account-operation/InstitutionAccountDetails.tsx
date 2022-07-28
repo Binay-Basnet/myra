@@ -85,8 +85,8 @@ const AddAccountDetails = ({
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch(`permanentAddress.provinceId`);
-  const currentDistrictId = watch(`permanentAddress.districtId`);
+  const currentProvinceId = watch('permanentAddress.provinceId');
+  const currentDistrictId = watch('permanentAddress.districtId');
 
   const districtList = useMemo(
     () =>
@@ -103,8 +103,8 @@ const AddAccountDetails = ({
   );
 
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch(`temporaryAddress.provinceId`);
-  const currentTemptDistrictId = watch(`temporaryAddress.districtId`);
+  const currentTempProvinceId = watch('temporaryAddress.provinceId');
+  const currentTemptDistrictId = watch('temporaryAddress.districtId');
 
   const districtTempList = useMemo(
     () =>
@@ -121,7 +121,7 @@ const AddAccountDetails = ({
   );
 
   const isPermanentAndTemporaryAddressSame = watch(
-    `isTemporaryAndPermanentAddressSame`
+    'isTemporaryAndPermanentAddressSame'
   );
 
   // const resetDirectorForm = () => {
@@ -146,7 +146,7 @@ const AddAccountDetails = ({
           cursor={'pointer'}
           onClick={() => setIsOpen(!isOpen)}
         >
-          <Text fontSize="r1">{`Account Operator`}</Text>
+          <Text fontSize="r1">{'Account Operator'}</Text>
           <Box>
             {isOpen ? (
               <IconButton
@@ -193,19 +193,19 @@ const AddAccountDetails = ({
           <InputGroupContainer>
             <FormInput
               type="text"
-              name={`name`}
+              name={'name'}
               label={t['kymInsFullName']}
               placeholder={t['kymInsEnterFullName']}
             />
             <FormInput
               type="text"
-              name={`contact`}
+              name={'contact'}
               label={t['kymInsContactNo']}
               placeholder={t['kymInsContactNoPlaceholder']}
             />
             <FormInput
               type="text"
-              name={`email`}
+              name={'email'}
               label={t['kymInsEmail']}
               placeholder={t['kymInsEnterEmailAddress']}
             />
@@ -216,13 +216,13 @@ const AddAccountDetails = ({
           </Text>
           <InputGroupContainer>
             <FormSelect
-              name={`permanentAddress.provinceId`}
+              name={'permanentAddress.provinceId'}
               label={t['kymInsState']}
               placeholder={t['kymInsSelectState']}
               options={province}
             />
             <FormSelect
-              name={`permanentAddress.districtId`}
+              name={'permanentAddress.districtId'}
               label={t['kymInsDistrict']}
               placeholder={t['kymInsSelectDistrict']}
               options={districtList.map((d) => ({
@@ -231,7 +231,7 @@ const AddAccountDetails = ({
               }))}
             />
             <FormSelect
-              name={`permanentAddress.localGovernmentId`}
+              name={'permanentAddress.localGovernmentId'}
               label={t['kymInsVDCMunicipality']}
               placeholder={t['kymInsSelectVDCMunicipality']}
               options={localityList.map((d) => ({
@@ -241,26 +241,26 @@ const AddAccountDetails = ({
             />
             <FormInput
               type="number"
-              name={`permanentAddress.wardNo`}
+              name={'permanentAddress.wardNo'}
               label={t['kymInsWardNo']}
               placeholder={t['kymInsEnterWardNo']}
             />
             <FormInput
               type="text"
-              name={`permanentAddress.locality`}
+              name={'permanentAddress.locality'}
               label={t['kymInsLocality']}
               placeholder={t['kymInsEnterLocality']}
             />
             <FormInput
               type="text"
-              name={`permanentAddress.houseNo`}
+              name={'permanentAddress.houseNo'}
               label={t['kymInsHouseNo']}
               placeholder={t['kymInsEnterHouseNo']}
             />
           </InputGroupContainer>
 
           <Box>
-            <FormMap name={`permanentAddress.coordinates`} />
+            <FormMap name={'permanentAddress.coordinates'} />
           </Box>
 
           <Box
@@ -276,7 +276,7 @@ const AddAccountDetails = ({
 
             <FormSwitch
               id="isPermanentAndTemporaryAddressSame"
-              name={`isTemporaryAndPermanentAddressSame`}
+              name={'isTemporaryAndPermanentAddressSame'}
               label={t['kymInsTemporaryAddressPermanent']}
             />
 
@@ -284,13 +284,13 @@ const AddAccountDetails = ({
               <>
                 <InputGroupContainer>
                   <FormSelect
-                    name={`temporaryAddress.provinceId`}
+                    name={'temporaryAddress.provinceId'}
                     label={t['kymInsState']}
                     placeholder={t['kymInsSelectState']}
                     options={province}
                   />
                   <FormSelect
-                    name={`temporaryAddress.districtId`}
+                    name={'temporaryAddress.districtId'}
                     label={t['kymInsDistrict']}
                     placeholder={t['kymInsSelectDistrict']}
                     options={districtTempList.map((d) => ({
@@ -299,7 +299,7 @@ const AddAccountDetails = ({
                     }))}
                   />
                   <FormSelect
-                    name={`temporaryAddress.localGovernmentId`}
+                    name={'temporaryAddress.localGovernmentId'}
                     label={t['kymInsVDCMunicipality']}
                     placeholder={t['kymInsSelectVDCMunicipality']}
                     options={localityTempList.map((d) => ({
@@ -309,19 +309,19 @@ const AddAccountDetails = ({
                   />
                   <FormInput
                     type="number"
-                    name={`temporaryAddress.wardNo`}
+                    name={'temporaryAddress.wardNo'}
                     label={t['kymInsWardNo']}
                     placeholder={t['kymInsEnterWardNo']}
                   />
                   <FormInput
                     type="text"
-                    name={`temporaryAddress.locality`}
+                    name={'temporaryAddress.locality'}
                     label={t['kymInsLocality']}
                     placeholder={t['kymInsEnterLocality']}
                   />
                   <FormInput
                     type="text"
-                    name={`temporaryAddress.houseNo`}
+                    name={'temporaryAddress.houseNo'}
                     label={t['kymInsHouseNo']}
                     placeholder={t['kymInsEnterHouseNo']}
                   />
@@ -340,7 +340,7 @@ const AddAccountDetails = ({
           <Box>
             <InputGroupContainer>
               <FormSelect
-                name={`designation`}
+                name={'designation'}
                 label={t['kymInsDesignation']}
                 placeholder={t['kymInsSelectposition']}
                 options={[
@@ -360,7 +360,7 @@ const AddAccountDetails = ({
                   {t['kymInsSpecimenSignature']}
                 </Text>
                 <Box w="124px" display="flex" flexDirection={'column'} gap="s4">
-                  <FormFileInput name={`specimenSignature`} />
+                  <FormFileInput name={"specimenSignature"} />
                 </Box>
               </Box> */}
             </InputGroupContainer>
