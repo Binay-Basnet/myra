@@ -1,4 +1,6 @@
 // import debounce from 'lodash/debounce';
+import { useFormContext } from 'react-hook-form';
+
 import {
   IndividualRequiredDocument,
   InstitutionRequiredDocument,
@@ -11,7 +13,9 @@ import { BoxContainer, TopText } from '../formui';
 
 export const RequiredDocumentSetup = () => {
   const { t } = useTranslation();
-
+  const { watch } = useFormContext();
+  const typesOfMember = watch('typeOfMember');
+  console.log(typesOfMember);
   const individualList = [
     { label: t['depositProductForm'], value: IndividualRequiredDocument.Form },
     {
@@ -55,6 +59,16 @@ export const RequiredDocumentSetup = () => {
     <BoxContainer>
       <TopText> {t['depositProductRequiredDocumentSetup']} </TopText>
       <Grid templateColumns={'repeat(2,1fr)'}>
+        {/* {typesOfMember.includes('INDIVIDUAL') && (
+          <Box display="flex" flexDirection="column" gap="s16">
+            <TopText>{t['depositProductIndividual']} </TopText>
+            <FormCheckboxGroup
+              name="individualDocuments"
+              list={individualList}
+              orientation="column"
+            />
+          </Box>
+        )} */}
         <Box display="flex" flexDirection="column" gap="s16">
           <TopText>{t['depositProductIndividual']} </TopText>
           <FormCheckboxGroup
@@ -63,6 +77,17 @@ export const RequiredDocumentSetup = () => {
             orientation="column"
           />
         </Box>
+
+        {/* {typesOfMember.includes('INSTITUTION') && (
+          <Box display="flex" flexDirection="column" gap="s16">
+            <TopText>{t['depositProductInstitutional']} </TopText>
+            <FormCheckboxGroup
+              name="institutionDocuments"
+              list={instutionList}
+              orientation="column"
+            />
+          </Box>
+        )} */}
         <Box display="flex" flexDirection="column" gap="s16">
           <TopText>{t['depositProductInstitutional']} </TopText>
           <FormCheckboxGroup

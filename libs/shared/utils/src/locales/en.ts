@@ -2906,6 +2906,20 @@ const en: Record<string, string> = {
   kymIndFinancialSavings: 'Savings',
   kymIndFinancialLoan: 'Loan',
   kymIndFinancialOther: 'Other',
+
+  loanProductsLoanProducts: 'Loan Products',
+  loanProductsNewLoanProduct: 'New Loan Product',
+  loanProductsProductCode: 'Product Code',
+  loanProductsProductName: 'Product Name',
+  loanProductsProductType: 'Product Type',
+  loanProductsProductSubType: 'Product Sub Type',
+  loanProductsInterest: 'Interest',
+  loanProductsCreatedDate: 'Created Date',
+  loanProductGeneralInformation: 'General Information',
+  loanProductDetailCriteria: 'Criteria',
+  loanProductAdditionalFeatures: 'Additional Features, Booleans',
+  // loanProduct: '',
+  // loanProduct: '',
 };
 
 export default en;

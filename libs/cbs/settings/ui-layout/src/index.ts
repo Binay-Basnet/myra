@@ -1,4 +1,6 @@
+export * from './components/detailPage';
 export * from './lib/SettingsDepositLayout';
+export * from './lib/SettingsDetailPageLayout';
 export * from './lib/SettingsGeneralLayout';
 export * from './lib/SettingsLayout';
 export * from './lib/SettingsLoanLayout';
