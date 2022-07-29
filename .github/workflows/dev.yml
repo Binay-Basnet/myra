@@ -41,7 +41,6 @@ jobs:
           script: |
             mkdir -p myra/myra-ui
             cd myra/myra-ui
-            [ ! -d myra-ui-dev ] && mkdir myra-ui-dev && git clone git@github.com:raralabs/myra-ui.git myra-ui-dev
             echo "Successfully cloned the repo"
             cd myra-ui-dev
             git pull origin dev
