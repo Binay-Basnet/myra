@@ -1,9 +1,3 @@
-import {
-  AccountOperationType as API_AccountOperationOption,
-  Bank as bankId,
-} from '@coop/shared/data-access';
+import { AccountOperationType as API_AccountOperationOption } from '@coop/shared/data-access';
 
-export {
-  API_AccountOperationOption as KymInsAccountOperationType,
-  bankId as KymInsBankId,
-};
+export { API_AccountOperationOption as KymInsAccountOperationType };
