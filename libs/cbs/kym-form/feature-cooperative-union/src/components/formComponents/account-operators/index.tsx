@@ -62,7 +62,7 @@ export const AccountOperatorDetails = (props: directorDetailsProps) => {
       <form
         onChange={debounce(() => {
           console.log('hello', getValues());
-          mutate({ id, data: getValues() });
+          // mutate({ id, data: getValues() });
         }, 800)}
         onSubmit={handleSubmit((data) => {
           console.log('data', data);

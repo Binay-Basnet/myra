@@ -32,25 +32,39 @@ export const CooperativeMemberInformation = ({
 
   const { watch } = methods;
 
-  const noOfMaleMemberCurrent = watch('noOfMaleMemberCurrent');
-  const noOfFemaleMemberCurrent = watch('noOfFemaleMemberCurrent');
-  const noOfInstitutionalMemberCurrent = watch(
-    'noOfInstitutionalMemberCurrent'
-  );
+  const noOfMaleMemberCurrent = isNaN(watch('noOfMaleMemberCurrent'))
+    ? 0
+    : watch('noOfMaleMemberCurrent');
+  const noOfFemaleMemberCurrent = isNaN(watch('noOfFemaleMemberCurrent'))
+    ? 0
+    : watch('noOfFemaleMemberCurrent');
+  const noOfInstitutionalMemberCurrent = isNaN(
+    watch('noOfInstitutionalMemberCurrent')
+  )
+    ? 0
+    : watch('noOfInstitutionalMemberCurrent');
 
-  const noOfMaleMemberTarget = watch('noOfMaleMemberTarget');
-  const noOfFemaleMemberTarget = watch('noOfFemaleMemberTarget');
-  const noOfInstitutionalMemberTarget = watch('noOfInstitutionalMemberTarget');
+  const noOfMaleMemberTarget = isNaN(watch('noOfMaleMemberTarget'))
+    ? 0
+    : watch('noOfMaleMemberTarget');
+  const noOfFemaleMemberTarget = isNaN(watch('noOfFemaleMemberTarget'))
+    ? 0
+    : watch('noOfFemaleMemberTarget');
+  const noOfInstitutionalMemberTarget = isNaN(
+    watch('noOfInstitutionalMemberTarget')
+  )
+    ? 0
+    : watch('noOfInstitutionalMemberTarget');
 
   const currentTotal =
-    (parseInt(noOfMaleMemberCurrent) || 0) +
-    (parseInt(noOfFemaleMemberCurrent) || 0) +
-    (parseInt(noOfInstitutionalMemberCurrent) || 0);
+    Number(noOfMaleMemberCurrent) +
+    Number(noOfFemaleMemberCurrent) +
+    Number(noOfInstitutionalMemberCurrent);
 
   const targetTotal =
-    (parseInt(noOfMaleMemberTarget) || 0) +
-    (parseInt(noOfFemaleMemberTarget) || 0) +
-    (parseInt(noOfInstitutionalMemberTarget) || 0);
+    Number(noOfMaleMemberTarget) +
+    Number(noOfFemaleMemberTarget) +
+    Number(noOfInstitutionalMemberTarget);
 
   // useEffect(() => {
   //   setCurrentTotal(
