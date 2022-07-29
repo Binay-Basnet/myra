@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
-import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,

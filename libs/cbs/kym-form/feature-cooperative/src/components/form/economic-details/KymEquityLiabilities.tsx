@@ -1,9 +1,24 @@
+import { FormProvider, useForm } from 'react-hook-form';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
-import { FormInput } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
 
-export const KymEquityLiabilities = ({ watch }: any) => {
+import { KymCooperativeFormInput } from '@coop/shared/data-access';
+import { FormInput } from '@coop/shared/form';
+import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
+
+import { useCooperative } from '../../hooks/customCooperative';
+
+interface IProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+export const KymEquityLiabilities = (props: IProps) => {
   const { t } = useTranslation();
+  const { setSection } = props;
+  const methods = useForm<KymCooperativeFormInput>({
+    defaultValues: {},
+  });
+
+  const { watch } = methods;
+  useCooperative({ methods });
   const shareCapital = watch('shareCapital');
   const reserveAndSurplus = watch('reserveAndSurplus');
   const savingDeposit = watch('savingDeposit');
@@ -22,263 +37,272 @@ export const KymEquityLiabilities = ({ watch }: any) => {
     Number(nonCurrentLiabilities);
 
   return (
-    <Box
-      id="kymCoopAccEquityandLiabilities"
-      display="flex"
-      flexDirection="column"
-    >
-      <Grid
-        columnGap={40}
-        alignItems="center"
-        px="s14"
-        templateColumns="repeat(2,1fr)"
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymCoopSection(e.target.id);
+          setSection(kymSection);
+        }}
       >
-        <GridItem>
-          <Text
-            mb="s16"
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="SemiBold"
+        <Box
+          id="kymCoopAccEquityandLiabilities"
+          display="flex"
+          flexDirection="column"
+        >
+          <Grid
+            columnGap={40}
+            alignItems="center"
+            px="s14"
+            templateColumns="repeat(2,1fr)"
           >
-            Equity and Liabilities
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                mb="s16"
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="SemiBold"
+              >
+                Equity and Liabilities
+              </Text>
+            </GridItem>
 
-        <GridItem>
-          <Text
-            mb="s16"
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="SemiBold"
+            <GridItem>
+              <Text
+                mb="s16"
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="SemiBold"
+              >
+                {t['kymCoopAmount']}
+              </Text>
+            </GridItem>
+          </Grid>
+
+          <Divider />
+
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            {t['kymCoopAmount']}
-          </Text>
-        </GridItem>
-      </Grid>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                Share Capital
+              </Text>
+            </GridItem>
 
-      <Divider />
-
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="shareCapital"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            Share Capital
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                Reserve and surplus
+              </Text>
+            </GridItem>
 
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="shareCapital"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="reserveAndSurplus"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            Reserve and surplus
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                Saving/Deposit
+              </Text>
+            </GridItem>
 
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="reserveAndSurplus"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="savingDeposit"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            Saving/Deposit
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                Loan Account (External Loan)
+              </Text>
+            </GridItem>
 
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="savingDeposit"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="loanAccount"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            Loan Account (External Loan)
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                Capital Grant
+              </Text>
+            </GridItem>
 
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="loanAccount"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="capitalGrant"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            Capital Grant
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                Current Liabilities and payable
+              </Text>
+            </GridItem>
 
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="capitalGrant"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="currentLiabilities"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            Current Liabilities and payable
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                Non-current liabilities
+              </Text>
+            </GridItem>
 
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="currentLiabilities"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="nonCurrentLiabilities"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+
+          <Divider />
+
+          <Grid
+            alignItems="center"
+            px="14px"
+            py="s16"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            Non-current liabilities
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                mb="s16"
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="SemiBold"
+              >
+                {t['kymCoopTotal']}
+              </Text>
+            </GridItem>
 
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="nonCurrentLiabilities"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-
-      <Divider />
-
-      <Grid
-        alignItems="center"
-        px="14px"
-        py="s16"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            mb="s16"
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="SemiBold"
-          >
-            {t['kymCoopTotal']}
-          </Text>
-        </GridItem>
-
-        <GridItem>
-          <FormInput
-            isDisabled={true}
-            bg="neutralColorLight.Gray-20"
-            border="1px solid"
-            borderColor="disabled.disabled"
-            textAlign="right"
-            type="text"
-            name="totalEquityAndLiabilities"
-            value={
-              isNaN(totalEquityAndLiabilities)
-                ? '0.00'
-                : totalEquityAndLiabilities
-            }
-            placeholder={t['kymCoopEnterTotalEquityandliabilities']}
-          />
-        </GridItem>
-      </Grid>
-    </Box>
+            <GridItem>
+              <FormInput
+                isDisabled={true}
+                bg="neutralColorLight.Gray-20"
+                border="1px solid"
+                borderColor="disabled.disabled"
+                textAlign="right"
+                type="text"
+                name="totalEquityAndLiabilities"
+                value={
+                  isNaN(totalEquityAndLiabilities)
+                    ? '0.00'
+                    : totalEquityAndLiabilities
+                }
+                placeholder={t['kymCoopEnterTotalEquityandliabilities']}
+              />
+            </GridItem>
+          </Grid>
+        </Box>
+      </form>
+    </FormProvider>
   );
 };

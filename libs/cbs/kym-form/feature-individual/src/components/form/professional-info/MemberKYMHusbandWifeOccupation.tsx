@@ -13,7 +13,6 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormFieldSearchTerm,
-  KymOption,
   useDeleteMemberOccupationMutation,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymFamilyOccupationListQuery,
@@ -30,7 +29,7 @@ import { getFieldOption } from '../../../utils/getFieldOption';
 interface DynamicInputProps {
   fieldIndex: number;
   optionIndex: number;
-  option: Partial<KymOption>;
+  option: any;
 }
 
 export const SpouseOccupationInput = ({

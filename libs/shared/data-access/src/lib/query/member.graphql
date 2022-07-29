@@ -81,45 +81,7 @@ query getKymFormStatus($id: String!) {
   }
 }
 
-query getKYMIndItemDetails(
-  $id: ID
-  $name: String
-  $customId: KYM_FIELD_CUSTOM_ID
-  $isIdentificationDoc: KYM_Field_Parent
-) {
-  settings {
-    kymForm {
-      field {
-        list(
-          filter: {
-            id: $id
-            name: $name
-            kymType: INDIVIDUAL
-            customId: $customId
-            parent: $isIdentificationDoc
-          }
-        ) {
-          data {
-            id
-            name
-            enabled
-            options {
-              id
-              name
-              fieldType
-              enabled
-            }
-            hasOtherField
-            dependsOn
-            isCustom
-            maxSize
-            fieldType
-          }
-        }
-      }
-    }
-  }
-}
+
 
 query getMemberIndividualData($id: ID!) {
   members {

@@ -1,20 +1,34 @@
 import React from 'react';
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { KymCooperativeFormInput } from '@coop/shared/data-access';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AddOperator } from '../../accordion-component/KymCoopAccountOperator';
 
-export const KymCoopAccountOperatorDetail = ({ watch, control }) => {
+interface IProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+
+export const KymCoopAccountOperatorDetail = (props: IProps) => {
   const { t } = useTranslation();
+  const { setSection } = props;
+  const methods = useForm<KymCooperativeFormInput>({
+    defaultValues: {},
+  });
+  const { control, watch } = methods;
   const {
     fields: accountFields,
     append: accountAppend,
     remove: accountRemove,
-  } = useFieldArray({ control, name: 'accountOperatorsDetails' });
+    // TODO Remove this
+  } = useFieldArray<any>({
+    control,
+    name: 'accountOperatorsDetails',
+  });
   return (
     <GroupContainer
       id="kymCoopAccAccountOperatorDetail"
