@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
 import axios from 'axios';
 
-import { saveToken } from '../redux/authSlice';
+import { logout, saveToken } from '../redux/authSlice';
 
 interface IToken {
   access: string;
@@ -48,6 +48,33 @@ export const useRefreshToken = (url: string) => {
               refresh
               access
             }
+              error {
+                  ... on BadRequestError {
+                  __typename
+                  badRequestErrorMessage: message
+                  jpt:code
+                }
+                ... on ServerError {
+                  __typename
+                  serverErrorMessage: message
+                  yes:code
+                }
+                ... on AuthorizationError {
+                  __typename
+                  authorizationErrorMsg: message
+                  no:code
+                }
+                ... on ValidationError {
+                  __typename
+                  validationErrorMsg: message
+                  haha:code
+                }
+                ... on NotFoundError {
+                  __typename
+                  notFoundErrorMsg: message
+                  hey:code
+                }
+            }
             }
           }
         }`,
@@ -67,6 +94,7 @@ export const useRefreshToken = (url: string) => {
       })
       .catch((err) => {
         replace('/');
+        dispatch(logout());
       });
   }, [dispatch, replace, url]);
 
