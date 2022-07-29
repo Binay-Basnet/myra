@@ -16,7 +16,7 @@ mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
               hm: message
             }
             ... on AuthorizationError {
-              message
+              test: message
             }
             ... on BadRequestError {
               data: message
@@ -25,7 +25,7 @@ mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
               info: message
             }
             ... on ValidationError {
-              message
+              test2: message
             }
           }
         }

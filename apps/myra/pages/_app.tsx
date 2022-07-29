@@ -63,17 +63,17 @@ function MainApp({ Component, pageProps }: any) {
 
   useSnap();
 
-  if (auth.isLogged === null) {
-    return (
-      <Box h="100vh" display="flex" alignItems="center" justifyContent="center">
-        <Spinner />
-      </Box>
-    );
-  }
+  // if (auth.isLogged === null) {
+  //   return (
+  //     <Box h="100vh" display="flex" alignItems="center" justifyContent="center">
+  //       <Spinner />
+  //     </Box>
+  //   );
+  // }
 
-  if (!auth.isLogged) {
-    return <Login />;
-  }
+  // if (!auth.isLogged) {
+  //   return <Login />;
+  // }
   return (
     <>
       <Head>

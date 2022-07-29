@@ -211,20 +211,6 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
                   </Text>
                 </Box>
               }
-              // draftButton={
-              //   <Button type="submit" variant="ghost">
-              //     <Icon as={BiSave} color="primary.500" />
-              //     <Text
-              //       alignSelf="center"
-              //       color="primary.500"
-              //       fontWeight="Medium"
-              //       fontSize="s2"
-              //       ml="5px"
-              //     >
-              //       {t['saveDraft']}
-              //     </Text>
-              //   </Button>
-              // }
               mainButtonLabel={t['saveAccount']}
               mainButtonHandler={() => router.push(`/members/translation`)}
             />

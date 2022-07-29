@@ -51,7 +51,6 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
     () => data?.settings?.general?.depositProduct?.list?.edges ?? [],
     [data]
   );
-  console.log(rowData);
 
   const popoverTitle = [
     {
