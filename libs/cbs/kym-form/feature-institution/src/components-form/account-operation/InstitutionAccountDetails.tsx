@@ -21,6 +21,7 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
+  KymInsAccountOperatorInput,
   KymInsInput,
   useAllAdministrationQuery,
   useDeleteAccountOperatorInstitutionMutation,
@@ -412,7 +413,7 @@ interface IProps {
 }
 export const InstitutionKYMAccountDetail = (props: IProps) => {
   const { t } = useTranslation();
-  const methods = useForm<KymInsInput>({
+  const methods = useForm<KymInsAccountOperatorInput>({
     defaultValues: {},
   });
   const { setSection } = props;
@@ -421,11 +422,11 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
   const id = String(router?.query?.['id']);
 
   const { control, handleSubmit, getValues, watch, setError } = methods;
-  const [directorIds, setDirectorIds] = useState<string[]>([]);
+  const [accOperatorIds, setAccOperatorIds] = useState<string[]>([]);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
-      setDirectorIds([...directorIds, res.newId]);
+      setAccOperatorIds([...accOperatorIds, res.newId]);
     },
   });
   const { mutate: deleteMutate } = useDeleteAccountOperatorInstitutionMutation({
@@ -434,11 +435,14 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
         res?.members?.institution?.accountOperator?.Delete?.recordId
       );
 
-      const tempDirectorIds = [...directorIds];
+      const tempAccountOperatorIds = [...accOperatorIds];
 
-      tempDirectorIds.splice(tempDirectorIds.indexOf(deletedId), 1);
+      tempAccountOperatorIds.splice(
+        tempAccountOperatorIds.indexOf(deletedId),
+        1
+      );
 
-      setDirectorIds([...tempDirectorIds]);
+      setAccOperatorIds([...tempAccountOperatorIds]);
     },
   });
   const addDirector = () => {
@@ -460,7 +464,7 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
 
       <div>
         <DynamicBoxGroupContainer>
-          {directorIds.map((id) => {
+          {accOperatorIds.map((id) => {
             return (
               <Box key={id} display="flex" flexDirection={'column'}>
                 <AddAccountDetails

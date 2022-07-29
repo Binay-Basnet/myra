@@ -1,11 +1,29 @@
 import { useMemo } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
+import { CoopUnionEconomicDetailsInput } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import {
+  getKymSectionCoOperativeUnion,
+  useTranslation,
+} from '@coop/shared/utils';
 
-export const IncomeDetails = ({ watch }: any) => {
+import { useCooperativeUnionEconomicDetails } from '../../../hooks';
+
+interface IIncomeDetailsProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+
+export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
   const { t } = useTranslation();
+
+  const methods = useForm<CoopUnionEconomicDetailsInput>();
+
+  const { watch } = methods;
+
+  useCooperativeUnionEconomicDetails({ methods });
+
   //   const cashEquivalent = watch('cashAndCashEquivalent');
   //   const bank = watch('bank');
   //   const investments = watch('investments');
@@ -50,9 +68,9 @@ export const IncomeDetails = ({ watch }: any) => {
     ? 0
     : watch('incomeFromSales');
   const otherIncome = isNaN(watch('otherIncome')) ? 0 : watch('otherIncome');
-  const miscIncome = isNaN(watch('miscellnousIncome'))
+  const miscIncome = isNaN(watch('miscellaneousIncome'))
     ? 0
-    : watch('miscellnousIncome');
+    : watch('miscellaneousIncome');
 
   const totalIncome =
     Number(incomeFromFinancialInvestments) +
@@ -64,262 +82,272 @@ export const IncomeDetails = ({ watch }: any) => {
     Number(miscIncome);
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      id="kymCoopUnionAccIncomeDetails"
-      scrollMarginTop={'200px'}
-    >
-      <Grid
-        columnGap={40}
-        alignItems="center"
-        px="s14"
-        templateColumns="repeat(2,1fr)"
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSectionCoOperativeUnion(e.target.id);
+
+          setSection(kymSection);
+        }}
       >
-        <GridItem>
-          <Text
-            mb="s16"
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="SemiBold"
+        <Box
+          display="flex"
+          flexDirection="column"
+          id="kymCoopUnionAccIncomeDetails"
+          scrollMarginTop={'200px'}
+        >
+          <Grid
+            columnGap={40}
+            alignItems="center"
+            px="s14"
+            templateColumns="repeat(2,1fr)"
           >
-            {t['kymCoopUnionIncIncomeDetails']}
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                mb="s16"
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="SemiBold"
+              >
+                {t['kymCoopUnionIncIncomeDetails']}
+              </Text>
+            </GridItem>
 
-        <GridItem>
-          <Text
-            mb="s16"
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="SemiBold"
+            <GridItem>
+              <Text
+                mb="s16"
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="SemiBold"
+              >
+                {t['kymCoopUnionIncAmount']}
+              </Text>
+            </GridItem>
+          </Grid>
+
+          <Divider />
+
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            {t['kymCoopUnionIncAmount']}
-          </Text>
-        </GridItem>
-      </Grid>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionIncIncomeFromFinancialInvestment']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="incomeFromFinancialInvestment"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
 
-      <Divider />
-
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            {t['kymCoopUnionIncIncomeFromFinancialInvestment']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="incomeFromFinancialInvestment"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionIncIncomeFromNonFinancialInvestment']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="incomeFromNonFinancialInvestment"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
 
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            {t['kymCoopUnionIncIncomeFromNonFinancialInvestment']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="incomeFromNonFinancialInvestment"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionIncIncomeFromInvestment']}
+              </Text>
+            </GridItem>
 
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="incomeFromInvestment"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            {t['kymCoopUnionIncIncomeFromInvestment']}
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionIncIncomeFromServiceOperations']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="incomeFromServiceOperation"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
 
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="incomeFromInvestment"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            {t['kymCoopUnionIncIncomeFromServiceOperations']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="incomeFromServiceOperation"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionIncIncomeFromSales']}
+              </Text>
+            </GridItem>
 
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="incomeFromSales"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            {t['kymCoopUnionIncIncomeFromSales']}
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionIncOtherIncome']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="otherIncome"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
 
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="incomeFromSales"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+          <Divider />
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            {t['kymCoopUnionIncOtherIncome']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="otherIncome"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionIncMiscellanousIncome']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="text"
+                name="miscellaneousIncome"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
 
-      <Divider />
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
+          <Divider />
+
+          <Grid
+            alignItems="center"
+            px="14px"
+            py="s16"
+            templateColumns="repeat(2,1fr)"
+            columnGap={40}
           >
-            {t['kymCoopUnionIncMiscellanousIncome']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="text"
-            name="miscellnousIncome"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
+            <GridItem>
+              <Text
+                mb="s16"
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="SemiBold"
+              >
+                {t['kymCoopUnionIncTotal']}
+              </Text>
+            </GridItem>
 
-      <Divider />
-
-      <Grid
-        alignItems="center"
-        px="14px"
-        py="s16"
-        templateColumns="repeat(2,1fr)"
-        columnGap={40}
-      >
-        <GridItem>
-          <Text
-            mb="s16"
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="SemiBold"
-          >
-            {t['kymCoopUnionIncTotal']}
-          </Text>
-        </GridItem>
-
-        <GridItem>
-          <FormInput
-            isDisabled={true}
-            bg="neutralColorLight.Gray-20"
-            border="1px solid"
-            borderColor="disabled.disabled"
-            textAlign="right"
-            type="text"
-            name="totalIncome"
-            value={totalIncome}
-            placeholder={t['kymCoopUnionIncTotalIncome']}
-          />
-        </GridItem>
-      </Grid>
-    </Box>
+            <GridItem>
+              <FormInput
+                isDisabled={true}
+                bg="neutralColorLight.Gray-20"
+                border="1px solid"
+                borderColor="disabled.disabled"
+                textAlign="right"
+                type="text"
+                name="totalIncome"
+                value={totalIncome}
+                placeholder={t['kymCoopUnionIncTotalIncome']}
+              />
+            </GridItem>
+          </Grid>
+        </Box>
+      </form>
+    </FormProvider>
   );
 };

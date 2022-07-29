@@ -210,7 +210,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                             .mutateAsync({})
                             .then((res) =>
                               router.push(
-                                `/members/cooperative-union/add/${res?.newId}`
+                                `/members/coop_union/add/${res?.newId}`
                               )
                             );
                       }}

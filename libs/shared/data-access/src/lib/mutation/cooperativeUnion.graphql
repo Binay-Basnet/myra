@@ -3,7 +3,7 @@ mutation setCooperativeUnionInstitutionData(
   $data: CoopUnionInstitutionInformationInput
 ) {
   members {
-    cooperativeUnion(id: $id) {
+    cooperativeUnion {
       add(id: $id) {
         institutionInformation(data: $data) {
           recordId
@@ -13,56 +13,20 @@ mutation setCooperativeUnionInstitutionData(
   }
 }
 
-mutation setCooperativeUnionBoardOfDirectorData(
+mutation setPersonnelDetails(
   $id: ID!
-  $data: CoopUnionBODDetailsInput
+  $personnelId: String!
+  $sectionType: CooperativeUnionPersonnelSection!
+  $data: CoopUnionPersonnelInput
 ) {
   members {
-    cooperativeUnion(id: $id) {
+    cooperativeUnion {
       add(id: $id) {
-        boardOfDirectorsDetails(data: $data) {
-          recordId
-        }
-      }
-    }
-  }
-}
-
-mutation setAccountOperatorDetailsData(
-  $id: ID!
-  $data: CoopUnionAccountOperatorDetailsInput
-) {
-  members {
-    cooperativeUnion(id: $id) {
-      add(id: $id) {
-        accountOperatorsDetails(data: $data) {
-          recordId
-        }
-      }
-    }
-  }
-}
-
-mutation setCentralRepresentationDetailsData(
-  $id: ID!
-  $data: CoopUnionCentralRepresentativeDetailsInput
-) {
-  members {
-    cooperativeUnion(id: $id) {
-      add(id: $id) {
-        centralRepresentativeDetails(data: $data) {
-          recordId
-        }
-      }
-    }
-  }
-}
-
-mutation setMemberDetailsData($id: ID!, $data: CoopUnionMemberDetailsInput) {
-  members {
-    cooperativeUnion(id: $id) {
-      add(id: $id) {
-        memberDetails(data: $data) {
+        personnelDetails(
+          recordId: $personnelId
+          sectionType: $sectionType
+          data: $data
+        ) {
           recordId
         }
       }
@@ -75,7 +39,7 @@ mutation setEconomicDetailsData(
   $data: CoopUnionEconomicDetailsInput
 ) {
   members {
-    cooperativeUnion(id: $id) {
+    cooperativeUnion {
       add(id: $id) {
         economicDetails(data: $data) {
           recordId
@@ -87,7 +51,7 @@ mutation setEconomicDetailsData(
 
 mutation setDeclarationData($id: ID!, $data: CoopUnionDeclarationInput) {
   members {
-    cooperativeUnion(id: $id) {
+    cooperativeUnion {
       add(id: $id) {
         declaration(data: $data) {
           recordId

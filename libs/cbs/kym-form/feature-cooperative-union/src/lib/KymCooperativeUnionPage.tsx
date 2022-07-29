@@ -174,7 +174,7 @@ export function KYMCooperativeUnionPage() {
                 </Button>
               }
               mainButtonLabel={t['next']}
-              mainButtonHandler={() => {}}
+              mainButtonHandler={() => console.log('save')}
             />
           </Container>
         </Box>

@@ -1,15 +1,30 @@
-import { useMemo } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { CoopUnionEconomicDetailsInput } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import {
+  getKymSectionCoOperativeUnion,
+  useTranslation,
+} from '@coop/shared/utils';
 
-export const KymAssestsAndtarget = ({ watch }: any) => {
+import { useCooperativeUnionEconomicDetails } from '../../../hooks';
+
+interface IKymAssestsAndtargetProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+
+export const KymAssestsAndtarget = ({
+  setSection,
+}: IKymAssestsAndtargetProps) => {
   const { t } = useTranslation();
+
+  const methods = useForm<CoopUnionEconomicDetailsInput>();
+
+  const { watch } = methods;
+
+  useCooperativeUnionEconomicDetails({ methods });
+
   const cashCurrent = watch('cashAndCashEquivalentCurrent');
   const cashCurrent2 = isNaN(cashCurrent) == true ? 0 : cashCurrent;
   const bankCurrent = watch('bankCurrent');
@@ -60,304 +75,314 @@ export const KymAssestsAndtarget = ({ watch }: any) => {
     Number(nonCurrentAssetsTarget);
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      id="kymCoopUnionAccAssets"
-      scrollMarginTop={'200px'}
-    >
-      <Grid
-        columnGap={40}
-        alignItems="center"
-        px="s14"
-        templateColumns="repeat(3,1fr)"
-      >
-        <GridItem>
-          <Text
-            mb="s16"
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="SemiBold"
-          >
-            {t['kymCoopUnionEcoAssets']}
-          </Text>
-        </GridItem>
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
-        <GridItem>
-          <Text
-            mb="s16"
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="SemiBold"
+          setSection(kymSection);
+        }}
+      >
+        <Box
+          display="flex"
+          flexDirection="column"
+          id="kymCoopUnionAccAssets"
+          scrollMarginTop={'200px'}
+        >
+          <Grid
+            columnGap={40}
+            alignItems="center"
+            px="s14"
+            templateColumns="repeat(3,1fr)"
           >
-            {t['kymCoopUnionEcoCurrent']}
-          </Text>
-        </GridItem>
+            <GridItem>
+              <Text
+                mb="s16"
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="SemiBold"
+              >
+                {t['kymCoopUnionEcoAssets']}
+              </Text>
+            </GridItem>
 
-        <GridItem>
-          <Text
-            mb="s16"
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="SemiBold"
-          >
-            {t['kymCoopUnionEcoTarget']}
-          </Text>
-        </GridItem>
-      </Grid>
+            <GridItem>
+              <Text
+                mb="s16"
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="SemiBold"
+              >
+                {t['kymCoopUnionEcoCurrent']}
+              </Text>
+            </GridItem>
 
-      <Divider />
+            <GridItem>
+              <Text
+                mb="s16"
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="SemiBold"
+              >
+                {t['kymCoopUnionEcoTarget']}
+              </Text>
+            </GridItem>
+          </Grid>
 
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(3,1fr)"
-        gap="s40"
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
-          >
-            {t['kymCoopUnionEcoCashAndCashEquivalents']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="cashAndCashEquivalentCurrent"
-            placeholder="0.00"
-          />
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="cashAndCashEquivalentTarget"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Divider />
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(3,1fr)"
-        gap="s40"
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
-          >
-            {t['kymCoopUnionEcoBank']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="bankCurrent"
-            placeholder="0.00"
-          />
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="bankTarget"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Divider />
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(3,1fr)"
-        gap="s40"
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
-          >
-            {t['kymCoopUnionEcoInvestments']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="investmentsCurrent"
-            placeholder="0.00"
-          />
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="investmentsTarget"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Divider />
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(3,1fr)"
-        gap="s40"
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
-          >
-            {t['kymCoopUnionEcoLoanInv']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="loanCurrent"
-            placeholder="0.00"
-          />
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="loanTarget"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Divider />
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(3,1fr)"
-        gap="s40"
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
-          >
-            {t['kymCoopUnionEcoNonCurrentAssets']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="nonCurrentAssetsCurrent"
-            placeholder="0.00"
-          />
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="nonCurrentAssetsTarget"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Divider />
-      <Grid
-        alignItems="center"
-        px="s8"
-        py="s12"
-        templateColumns="repeat(3,1fr)"
-        gap="s40"
-      >
-        <GridItem>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Regular"
-          >
-            {t['kymCoopUnionEcootherNonCurrentAssets']}
-          </Text>
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="otherNonCurrentAssetsCurrent"
-            placeholder="0.00"
-          />
-        </GridItem>
-        <GridItem>
-          <FormInput
-            textAlign="right"
-            type="number"
-            name="otherNonCurrentAssetsTarget"
-            placeholder="0.00"
-          />
-        </GridItem>
-      </Grid>
-      <Divider />
-      {/* .................................last part ............................... */}
-      <Grid
-        alignItems="center"
-        px="14px"
-        py="s16"
-        templateColumns="repeat(3,1fr)"
-        gap="s40"
-      >
-        <GridItem>
-          <Text
-            mb="s16"
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="SemiBold"
-          >
-            {t['kymCoopUnionRepTotal']}
-          </Text>
-        </GridItem>
+          <Divider />
 
-        <GridItem>
-          <FormInput
-            isDisabled={true}
-            bg="neutralColorLight.Gray-20"
-            border="1px solid"
-            borderColor="disabled.disabled"
-            textAlign="right"
-            type="text"
-            name="totalAssetsCurrent"
-            value={totalassestscurrent}
-            placeholder={t['kymCoopUnionEcoTotalAssets']}
-          />
-        </GridItem>
-        <GridItem>
-          <FormInput
-            isDisabled={true}
-            bg="neutralColorLight.Gray-20"
-            border="1px solid"
-            borderColor="disabled.disabled"
-            textAlign="right"
-            type="text"
-            name="totalAssetsTarget"
-            value={totalassestsTARGET}
-            placeholder={t['kymCoopUnionEcoTotal']}
-          />
-        </GridItem>
-      </Grid>
-    </Box>
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(3,1fr)"
+            gap="s40"
+          >
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionEcoCashAndCashEquivalents']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="cashAndCashEquivalentCurrent"
+                placeholder="0.00"
+              />
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="cashAndCashEquivalentTarget"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Divider />
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(3,1fr)"
+            gap="s40"
+          >
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionEcoBank']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="bankCurrent"
+                placeholder="0.00"
+              />
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="bankTarget"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Divider />
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(3,1fr)"
+            gap="s40"
+          >
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionEcoInvestments']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="investmentsCurrent"
+                placeholder="0.00"
+              />
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="investmentsTarget"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Divider />
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(3,1fr)"
+            gap="s40"
+          >
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionEcoLoanInv']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="loanCurrent"
+                placeholder="0.00"
+              />
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="loanTarget"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Divider />
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(3,1fr)"
+            gap="s40"
+          >
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionEcoNonCurrentAssets']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="nonCurrentAssetsCurrent"
+                placeholder="0.00"
+              />
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="nonCurrentAssetsTarget"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Divider />
+          <Grid
+            alignItems="center"
+            px="s8"
+            py="s12"
+            templateColumns="repeat(3,1fr)"
+            gap="s40"
+          >
+            <GridItem>
+              <Text
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="Regular"
+              >
+                {t['kymCoopUnionEcootherNonCurrentAssets']}
+              </Text>
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="otherNonCurrentAssetsCurrent"
+                placeholder="0.00"
+              />
+            </GridItem>
+            <GridItem>
+              <FormInput
+                textAlign="right"
+                type="number"
+                name="otherNonCurrentAssetsTarget"
+                placeholder="0.00"
+              />
+            </GridItem>
+          </Grid>
+          <Divider />
+          {/* .................................last part ............................... */}
+          <Grid
+            alignItems="center"
+            px="14px"
+            py="s16"
+            templateColumns="repeat(3,1fr)"
+            gap="s40"
+          >
+            <GridItem>
+              <Text
+                mb="s16"
+                color="neutralColorLight.Gray-80"
+                fontSize="s3"
+                fontWeight="SemiBold"
+              >
+                {t['kymCoopUnionRepTotal']}
+              </Text>
+            </GridItem>
+
+            <GridItem>
+              <FormInput
+                isDisabled={true}
+                bg="neutralColorLight.Gray-20"
+                border="1px solid"
+                borderColor="disabled.disabled"
+                textAlign="right"
+                type="text"
+                name="totalAssetsCurrent"
+                value={totalassestscurrent}
+                placeholder={t['kymCoopUnionEcoTotalAssets']}
+              />
+            </GridItem>
+            <GridItem>
+              <FormInput
+                isDisabled={true}
+                bg="neutralColorLight.Gray-20"
+                border="1px solid"
+                borderColor="disabled.disabled"
+                textAlign="right"
+                type="text"
+                name="totalAssetsTarget"
+                value={totalassestsTARGET}
+                placeholder={t['kymCoopUnionEcoTotal']}
+              />
+            </GridItem>
+          </Grid>
+        </Box>
+      </form>
+    </FormProvider>
   );
 };
