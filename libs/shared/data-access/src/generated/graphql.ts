@@ -7770,7 +7770,7 @@ export type UpsertCustomFieldMutationVariables = Exact<{
 }>;
 
 
-export type UpsertCustomFieldMutation = { settings: { form?: { field: { upsert: { record?: { id: string } | null } } } | null } };
+export type UpsertCustomFieldMutation = { settings: { form?: { field: { upsert: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
 
 export type DeleteCustomSectionMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9608,12 +9608,15 @@ export const UpsertCustomFieldDocument = `
           record {
             id
           }
+          error {
+            ...MutationError
+          }
         }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useUpsertCustomFieldMutation = <
       TError = unknown,
       TContext = unknown
