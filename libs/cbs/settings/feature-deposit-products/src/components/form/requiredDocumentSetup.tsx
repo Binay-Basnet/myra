@@ -1,9 +1,9 @@
-// import debounce from 'lodash/debounce';
 import { useFormContext } from 'react-hook-form';
 
 import {
   IndividualRequiredDocument,
   InstitutionRequiredDocument,
+  KymMemberTypesEnum,
 } from '@coop/shared/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { Box, Grid } from '@coop/shared/ui';
@@ -15,7 +15,7 @@ export const RequiredDocumentSetup = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const typesOfMember = watch('typeOfMember');
-  console.log(typesOfMember);
+
   const individualList = [
     { label: t['depositProductForm'], value: IndividualRequiredDocument.Form },
     {
@@ -59,7 +59,7 @@ export const RequiredDocumentSetup = () => {
     <BoxContainer>
       <TopText> {t['depositProductRequiredDocumentSetup']} </TopText>
       <Grid templateColumns={'repeat(2,1fr)'}>
-        {/* {typesOfMember.includes('INDIVIDUAL') && (
+        {typesOfMember?.includes(KymMemberTypesEnum.Individual) && (
           <Box display="flex" flexDirection="column" gap="s16">
             <TopText>{t['depositProductIndividual']} </TopText>
             <FormCheckboxGroup
@@ -68,17 +68,13 @@ export const RequiredDocumentSetup = () => {
               orientation="column"
             />
           </Box>
-        )} */}
-        <Box display="flex" flexDirection="column" gap="s16">
-          <TopText>{t['depositProductIndividual']} </TopText>
-          <FormCheckboxGroup
-            name="individualDocuments"
-            list={individualList}
-            orientation="column"
-          />
-        </Box>
+        )}
 
-        {/* {typesOfMember.includes('INSTITUTION') && (
+        {typesOfMember?.includes(
+          KymMemberTypesEnum.Institution ||
+            KymMemberTypesEnum.Cooperative ||
+            KymMemberTypesEnum.CooperativeUnion
+        ) && (
           <Box display="flex" flexDirection="column" gap="s16">
             <TopText>{t['depositProductInstitutional']} </TopText>
             <FormCheckboxGroup
@@ -87,15 +83,7 @@ export const RequiredDocumentSetup = () => {
               orientation="column"
             />
           </Box>
-        )} */}
-        <Box display="flex" flexDirection="column" gap="s16">
-          <TopText>{t['depositProductInstitutional']} </TopText>
-          <FormCheckboxGroup
-            name="institutionDocuments"
-            list={instutionList}
-            orientation="column"
-          />
-        </Box>
+        )}
       </Grid>
     </BoxContainer>
   );

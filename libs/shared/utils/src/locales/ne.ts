@@ -25,6 +25,11 @@ const ne: Record<string, string> = {
   new: 'New',
   quatrerly: 'Quarterly',
   halfYearly: 'Half-Yearly',
+  daily: 'Daily',
+  weekly: 'Weekly',
+  monthly: 'Monthly',
+  yearly: 'Yearly',
+  settings: 'Settings',
 
   // navbar
   searchMembersNameReportsEtc: 'सदस्यहरूको नाम, रिपोर्टहरू, आदि खोज्नुहोस्',

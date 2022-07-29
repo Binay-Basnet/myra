@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-// import debounce from 'lodash/debounce';
+import { Frequency } from '@coop/shared/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -12,35 +12,7 @@ import {
   SubText,
   TextBoxContainer,
 } from '../formui';
-const unitOptions = [
-  {
-    label: 'Day',
-    value: 'Day',
-  },
-  {
-    label: 'Week',
-    value: 'Week',
-  },
-  {
-    label: 'Month',
-    value: 'Month',
-  },
-  {
-    label: 'Year',
-    value: 'Year',
-  },
-];
 
-const applicableSwitch = [
-  {
-    label: 'Applicable',
-    value: 'applicable',
-  },
-  {
-    label: 'Not Applicable',
-    value: 'notApplicable',
-  },
-];
 export const MaximumTenure = () => {
   const [rightElement, setRightElement] = useState('days');
   const { resetField, watch } = useFormContext();
@@ -48,6 +20,36 @@ export const MaximumTenure = () => {
 
   const maxTenureUnit = watch('maximumTenureUnit');
   const { t } = useTranslation();
+
+  const unitOptions = [
+    {
+      label: t['daily'],
+      value: Frequency.Daily,
+    },
+    {
+      label: t['weekly'],
+      value: Frequency.Weekly,
+    },
+    {
+      label: t['monthly'],
+      value: Frequency.Monthly,
+    },
+    {
+      label: t['yearly'],
+      value: Frequency.Yearly,
+    },
+  ];
+
+  const applicableSwitch = [
+    {
+      label: t['depositProductApplicable'],
+      value: true,
+    },
+    {
+      label: t['depositProductNotApplicable'],
+      value: false,
+    },
+  ];
 
   useEffect(() => {
     resetField('maximumTenureNumber');
@@ -66,7 +68,7 @@ export const MaximumTenure = () => {
           options={applicableSwitch}
         />
       </Box>
-      {maximumTenure && maximumTenure === 'applicable' && (
+      {maximumTenure && (
         <BoxContainer
           p="s16"
           border={'1px solid'}

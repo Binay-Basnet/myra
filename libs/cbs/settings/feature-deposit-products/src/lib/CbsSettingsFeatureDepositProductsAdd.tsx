@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
@@ -109,13 +108,7 @@ export function SettingsDepositProductsAdd(
     },
   });
 
-  const {
-    // control, handleSubmit,
-    getValues,
-    watch,
-    reset,
-    //  setError
-  } = methods;
+  const { getValues, watch, reset } = methods;
   const depositNature = watch('nature');
 
   const submitForm = () => {
@@ -168,8 +161,15 @@ export function SettingsDepositProductsAdd(
         ? values?.depositFrequency
         : null,
       postingFrequency: values?.postingFrequency
-        ? values?.depositFrequency
+        ? values?.postingFrequency
         : null,
+      accountType: values?.accountType ? values?.accountType : null,
+      penaltyData: {
+        ...values?.penaltyData,
+        rateType: values?.penaltyData?.rateType
+          ? values?.penaltyData?.rateType
+          : null,
+      },
     };
 
     mutate(
@@ -344,20 +344,6 @@ export function SettingsDepositProductsAdd(
                     09:41 AM
                   </Text>
                 </Box>
-              }
-              draftButton={
-                <Button type="submit" variant="ghost">
-                  <Icon as={BiSave} color="primary.500" />
-                  <Text
-                    alignSelf="center"
-                    color="primary.500"
-                    fontWeight="Medium"
-                    fontSize="s2"
-                    ml="5px"
-                  >
-                    {t['saveDraft']}
-                  </Text>
-                </Button>
               }
               mainButtonLabel={t['saveAccount']}
               mainButtonHandler={() => submitForm()}

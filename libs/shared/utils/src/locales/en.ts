@@ -32,6 +32,7 @@ const en: Record<string, string> = {
   weekly: 'Weekly',
   monthly: 'Monthly',
   yearly: 'Yearly',
+  settings: 'Settings',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',

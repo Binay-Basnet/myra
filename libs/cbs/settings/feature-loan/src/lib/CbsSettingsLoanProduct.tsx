@@ -68,7 +68,6 @@ export function SettingsLoanProduct(props: SettingsLoanProductProps) {
         accessorFn: (row) => row?.node.productCode,
         meta: {
           width: 4,
-          // disableSortBy: false,
         },
       },
 

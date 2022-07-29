@@ -89,7 +89,15 @@ export function LoanProductOverviewDetailPage() {
                     color="neutralColorLight.Gray-70"
                     fontWeight="Regular"
                   >
-                    Minimum Age: <b>12</b>
+                    Minimum Age:
+                    <Text
+                      as="span"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                      fontWeight="Medium"
+                    >
+                      12
+                    </Text>
                   </Text>
                 </li>
 
@@ -99,7 +107,15 @@ export function LoanProductOverviewDetailPage() {
                     color="neutralColorLight.Gray-70"
                     fontWeight="Regular"
                   >
-                    Maximum Age: <b>35</b>
+                    Maximum Age:
+                    <Text
+                      as="span"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                      fontWeight="Medium"
+                    >
+                      35
+                    </Text>
                   </Text>
                 </li>
 
@@ -109,7 +125,15 @@ export function LoanProductOverviewDetailPage() {
                     color="neutralColorLight.Gray-70"
                     fontWeight="Regular"
                   >
-                    Gender: <b>Male, Female</b>
+                    Gender:
+                    <Text
+                      as="span"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                      fontWeight="Medium"
+                    >
+                      Male, Female
+                    </Text>
                   </Text>
                 </li>
 
@@ -119,7 +143,15 @@ export function LoanProductOverviewDetailPage() {
                     color="neutralColorLight.Gray-70"
                     fontWeight="Regular"
                   >
-                    Marital Status: <b>Married</b>
+                    Marital Status:
+                    <Text
+                      as="span"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                      fontWeight="Medium"
+                    >
+                      Married
+                    </Text>
                   </Text>
                 </li>
 
@@ -129,7 +161,15 @@ export function LoanProductOverviewDetailPage() {
                     color="neutralColorLight.Gray-70"
                     fontWeight="Regular"
                   >
-                    Occupation Detail: <b>Business, Agriculture</b>
+                    Occupation Detail:
+                    <Text
+                      as="span"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                      fontWeight="Medium"
+                    >
+                      Business, Agriculture
+                    </Text>
                   </Text>
                 </li>
 
@@ -139,7 +179,15 @@ export function LoanProductOverviewDetailPage() {
                     color="neutralColorLight.Gray-70"
                     fontWeight="Regular"
                   >
-                    Education Qualification: <b>SEE</b>
+                    Education Qualification:
+                    <Text
+                      as="span"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                      fontWeight="Medium"
+                    >
+                      SEE
+                    </Text>
                   </Text>
                 </li>
               </ul>
@@ -171,7 +219,7 @@ export function LoanProductOverviewDetailPage() {
                     color="neutralColorLight.Gray-70"
                     fontWeight="Regular"
                   >
-                    Nature of Business (Institutions):{' '}
+                    Nature of Business (Institutions):
                     <Text
                       as="span"
                       fontSize="r1"
@@ -189,7 +237,15 @@ export function LoanProductOverviewDetailPage() {
                     color="neutralColorLight.Gray-70"
                     fontWeight="Regular"
                   >
-                    Nature of Business ( COOP Union): <b>Club</b>
+                    Nature of Business ( COOP Union):
+                    <Text
+                      as="span"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                      fontWeight="Medium"
+                    >
+                      Club
+                    </Text>
                   </Text>
                 </li>
 
@@ -199,7 +255,15 @@ export function LoanProductOverviewDetailPage() {
                     color="neutralColorLight.Gray-70"
                     fontWeight="Regular"
                   >
-                    Cooperative Type: <b>Saving & Loan</b>
+                    Cooperative Type:
+                    <Text
+                      as="span"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                      fontWeight="Medium"
+                    >
+                      Saving & Loan
+                    </Text>
                   </Text>
                 </li>
 
@@ -209,7 +273,15 @@ export function LoanProductOverviewDetailPage() {
                     color="neutralColorLight.Gray-70"
                     fontWeight="Regular"
                   >
-                    Ethinicity: <b>Buddhist</b>
+                    Ethinicity:
+                    <Text
+                      as="span"
+                      fontSize="r1"
+                      color="neutralColorLight.Gray-70"
+                      fontWeight="Medium"
+                    >
+                      Buddhist
+                    </Text>
                   </Text>
                 </li>
               </ul>

@@ -3,7 +3,6 @@ import { GlobalHotKeys } from 'react-hotkeys';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BiBell } from 'react-icons/bi';
 import { CgMenuGridO } from 'react-icons/cg';
-import { MdOutlineHelpOutline } from 'react-icons/md';
 import { RiHistoryFill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
@@ -15,6 +14,7 @@ import {
   Avatar,
   Box,
   Button,
+  Divider,
   Grid,
   Icon,
   IconButton,
@@ -300,27 +300,6 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
               borderRadius={'br1'}
               _hover={{ backgroundColor: 'secondary.900' }}
             />
-            <IconButton
-              icon={<Icon size="md" as={MdOutlineHelpOutline} />}
-              aria-label="help"
-              variant={'ghost'}
-              color={'gray.0'}
-              onClick={handleModalOpen}
-              bg={isModalOpen ? 'secondary.900' : 'secondary.700'}
-              borderRadius={'br1'}
-              _hover={{ backgroundColor: 'secondary.900' }}
-              ref={helpIconRef}
-            />
-            <Link href={'/settings/general/organization'}>
-              <IconButton
-                _hover={{ backgroundColor: 'secondary.900' }}
-                icon={<Icon size="md" as={AiOutlineSetting} />}
-                aria-label="settings"
-                variant={'ghost'}
-                color={'white'}
-                borderRadius={'br1'}
-              />
-            </Link>
 
             <Popover placement="bottom-end" gutter={3}>
               {({ isOpen }) => (
@@ -477,15 +456,47 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           </Text>
                         </Box>
                       </Box>
-                      <Box textAlign="right" mt="s16">
-                        <Text
-                          fontSize="s3"
-                          fontWeight="Medium"
-                          color="primary.500"
-                          lineHeight="116%"
+                      <Divider mt="s24" mb="s24" />
+                      <Box>
+                        <Box
+                          display={'flex'}
+                          flexDirection="column"
+                          w="100px"
+                          gap="s8"
+                          px="s24"
+                          cursor="pointer"
+                          borderRadius="br2"
+                          _hover={{ bg: 'primary.0' }}
+                          onClick={() =>
+                            router.push('/settings/general/organization')
+                          }
                         >
-                          {t['exploreAllApplications']} --&gt;
-                        </Text>
+                          <Image
+                            width={12}
+                            height={12}
+                            src="/settings.svg"
+                            alt="Settings"
+                          />
+                          <Text
+                            fontSize="s3"
+                            fontWeight="Medium"
+                            color="neutralColorLight.Gray-60"
+                            lineHeight="125%"
+                          >
+                            {t['settings']}
+                          </Text>
+                        </Box>
+
+                        <Box textAlign="right" mt="s16">
+                          <Text
+                            fontSize="s3"
+                            fontWeight="Medium"
+                            color="primary.500"
+                            lineHeight="116%"
+                          >
+                            {t['exploreAllApplications']} --&gt;
+                          </Text>
+                        </Box>
                       </Box>
                     </PopoverBody>
                   </PopoverContent>
