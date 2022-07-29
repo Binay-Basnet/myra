@@ -50,11 +50,11 @@ query getPreDefinedFields($filter: PredefinedElementFilter!){
   }
 }
 
-query getCustomFields{
+query getCustomFields($kymType: FormCategory!){
   settings {
     form {
       custom {
-        list {
+        list(filter: {category: $kymType}) {
           data {
             ... on FormField {
               __typename

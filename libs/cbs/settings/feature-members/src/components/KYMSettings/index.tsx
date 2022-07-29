@@ -8,7 +8,6 @@ import {
   IoClose,
 } from 'react-icons/io5';
 import { useQueryClient } from 'react-query';
-import { useToast } from '@chakra-ui/react';
 import { debounce } from 'lodash';
 
 import {
@@ -38,7 +37,6 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
 
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 import { KYMSettingsField } from '../KYMSettingsField';
@@ -121,10 +119,9 @@ interface KYMSettingsCustomSectionProps {
 export const KYMSettingsCustomSection = ({
   kymType,
 }: KYMSettingsCustomSectionProps) => {
-  const { t } = useTranslation();
-  const queryClient = useQueryClient();
-  const toast = useToast();
-  const { data: customFieldsData } = useGetCustomFieldsQuery();
+  console.log(kymType);
+
+  const { data: customFieldsData } = useGetCustomFieldsQuery({ kymType });
 
   return (
     <AccordionPanel p="0">
