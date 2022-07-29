@@ -164,6 +164,12 @@ export function SettingsDepositProductsAdd(
         ? values?.postingFrequency
         : null,
       accountType: values?.accountType ? values?.accountType : null,
+      penaltyData: {
+        ...values?.penaltyData,
+        rateType: values?.penaltyData?.rateType
+          ? values?.penaltyData?.rateType
+          : null,
+      },
     };
 
     mutate(

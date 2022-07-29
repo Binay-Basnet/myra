@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   AiOutlineBug,
   AiOutlineExclamation,
@@ -13,22 +13,21 @@ import {
   BsTwitter,
 } from 'react-icons/bs';
 import { TbMessageDots } from 'react-icons/tb';
-import { AddIcon } from '@chakra-ui/icons';
 import {
   Box,
-  Button,
   Divider,
   Icon,
   IconButton,
+  ListItem,
   Popover,
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
   Text,
+  UnorderedList,
 } from '@chakra-ui/react';
-import { ListItem, UnorderedList } from '@chakra-ui/react';
 
-import { Grid, GridItem, Modal, ShortcutTab } from '@coop/shared/ui';
+import { Grid, Modal, ShortcutTab } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -106,7 +105,14 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
           </Box>
 
           <UnorderedList>
-            <ListItem fontSize="s3">Dynamic field error</ListItem>
+            <ListItem fontSize="s3">UI fixes</ListItem>
+            <ListItem fontSize="s3">
+              Active state bugs on navigation tabs
+            </ListItem>
+            <ListItem fontSize="s3">
+              Frequency input field right item alignment
+            </ListItem>
+            <ListItem fontSize="s3">File document upload</ListItem>
           </UnorderedList>
         </Box>
         <Box>
@@ -117,7 +123,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             </Text>
           </Box>
           <UnorderedList>
-            <ListItem fontSize="s3">Dynamic field error</ListItem>
+            <ListItem fontSize="s3">UI issue when map is opened</ListItem>
           </UnorderedList>
         </Box>
       </Box>
