@@ -1,9 +1,9 @@
 import React from 'react';
 import { Path } from 'react-hook-form';
 
-import { Kym_Option_Field_Type as FIELD_TYPE } from '@coop/shared/data-access';
-import { FormEmailInput, FormInput, FormTextArea } from '@coop/shared/form';
-import { InputProps, TextAreaInputProps } from '@coop/shared/ui';
+import { FormFieldType as FIELD_TYPE } from '@coop/shared/data-access';
+import { FormEmailInput, FormInput } from '@coop/shared/form';
+import { InputProps } from '@coop/shared/ui';
 
 interface FormInputTypeProps<T> extends InputProps {
   formType?: FIELD_TYPE;
@@ -32,7 +32,7 @@ export const FormInputWithType = <T,>(props: FormInputTypeProps<T>) => {
     //   return <FormTextArea {...rest} />;
     case FIELD_TYPE?.Address:
     case FIELD_TYPE?.Bank:
-    case FIELD_TYPE?.Display:
+    // case FIELD_TYPE?.Display:
     case FIELD_TYPE?.Fax:
     case FIELD_TYPE?.LocalLevel:
     case FIELD_TYPE?.MultipleFile:

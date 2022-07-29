@@ -15,6 +15,7 @@ import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const DocumentComponent = ({ setSection }: IProps) => {
   const { t } = useTranslation();
 
@@ -68,7 +69,8 @@ const KYMDocumentDeclarationField = ({
       );
 
       if (documentData) {
-        reset({ [name]: documentData.identifier });
+        // TODO! fix
+        reset({ [name]: (documentData as any).identifier });
       }
     }
   }, [editValues]);

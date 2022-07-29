@@ -93,69 +93,6 @@ mutation deleteMemberIncomeSource($memberId: ID!, $id: ID!) {
   }
 }
 
-mutation updateKYMField($id: ID!, $enabled: Boolean, $name: String) {
-  settings {
-    kymForm {
-      field {
-        update(id: $id, data: { enabled: $enabled, name: $name }) {
-          record {
-            id
-            enabled
-            name
-          }
-        }
-      }
-    }
-  }
-}
-
-mutation deleteKYMField($optionId: ID!) {
-  settings {
-    kymForm {
-      option {
-        delete(optionId: $optionId) {
-          recordId
-        }
-      }
-    }
-  }
-}
-
-#mutation addKYMField(
-#    $name: String!
-#    $enabled: Boolean!
-#    $hasOtherField: Boolean!
-#    $fieldType: KYM_FIELD_TYPE!
-#) {
-#    settings {
-#        kymForm {
-#            field {
-#                [action](
-#                    data: {
-#                        kymType: INDIVIDUAL
-#                        name: $name
-#                        enabled: $enabled
-#                        hasOtherField: $hasOtherField
-#                        fieldType: $fieldType
-#                        options: { name: $name, enabled: $enabled, fieldType: $fieldType }
-#                    }
-#                ) {
-#                    record {
-#                        id
-#                        options {
-#                            id
-#                            name
-#                            enabled
-#                            variant
-#                            optionType
-#                        }
-#                    }
-#                }
-#            }
-#        }
-#    }
-#}
-
 mutation setKymCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
   members {
     cooperative(id: $id) {
@@ -173,10 +110,12 @@ mutation setKYMDocumentData(
 ) {
   members {
     document {
-      KYM(memberId: $memberId) {
-        upsert(fieldId: $fieldId, identifiers: $identifiers) {
-          recordId
-        }
+      KYMUpsert(
+        memberId: $memberId
+        fieldId: $fieldId
+        identifiers: $identifiers
+      ) {
+        recordId
       }
     }
   }

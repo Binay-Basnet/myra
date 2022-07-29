@@ -3441,24 +3441,6 @@ export type KymAllowedResult = {
   recordId: Scalars['ID'];
 };
 
-export type KymConditionalOptionResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<KymGeneralSettingsQuery>;
-  record?: Maybe<KymField>;
-  recordId: Scalars['ID'];
-};
-
-export type KymCustomFieldResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<KymQuery>;
-  record?: Maybe<KymField>;
-  recordId: Scalars['ID'];
-};
-
-export type KymCustomOptionCategory = {
-  custom: Kym_Option_Custom_Type;
-};
-
 export type KymDeclaration = Base & {
   content: Scalars['Localized'];
   createdAt: Scalars['Time'];
@@ -3468,16 +3450,6 @@ export type KymDeclaration = Base & {
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
-};
-
-export type KymDeclarationResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<KymQuery>;
-  record?: Maybe<KymDeclaration>;
-};
-
-export type KymDisplayOptionCategory = {
-  display: Kym_Option_Display_Type;
 };
 
 export type KymDocument = {
@@ -3552,129 +3524,14 @@ export type KymEntryQueryGetDynamicArgs = {
   filter: KymDynamicEntryFilter;
 };
 
-export type KymField = Base & {
-  createdAt: Scalars['Time'];
-  createdBy: Identity;
-  dependsOn?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  enabled: Scalars['Boolean'];
-  fieldType: Kym_Field_Type;
-  hasOtherField: Scalars['Boolean'];
-  id: Scalars['ID'];
-  isCustom: Scalars['Boolean'];
-  kymType: KymMemberTypesEnum;
-  maxSize?: Maybe<Scalars['Int']>;
-  modifiedAt: Scalars['Time'];
-  modifiedBy: Identity;
-  name: Scalars['Localized'];
-  objState: ObjState;
-  options?: Maybe<Array<KymOption>>;
-  parent?: Maybe<Kym_Field_Parent>;
-};
-
 export type KymFieldData = {
   id?: Maybe<Scalars['String']>;
   options?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
 };
 
-export type KymFieldDeleteResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<KymFieldQuery>;
-  recordId?: Maybe<Scalars['ID']>;
-};
-
-export type KymFieldInput = {
-  enabled: Scalars['Boolean'];
-  fieldType: Kym_Field_Type;
-  hasOtherField: Scalars['Boolean'];
-  kymType: KymMemberTypesEnum;
-  name: Scalars['String'];
-  options?: InputMaybe<Array<InputMaybe<KymOptionInput>>>;
-  parent?: InputMaybe<Kym_Field_Parent>;
-};
-
 export type KymFieldInputData = {
   id?: InputMaybe<Scalars['String']>;
   options?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
-};
-
-export type KymFieldMutation = {
-  add: KymFieldMutationResult;
-  delete: KymFieldDeleteResult;
-  update: KymFieldMutationResult;
-};
-
-
-export type KymFieldMutationAddArgs = {
-  data: KymFieldInput;
-};
-
-
-export type KymFieldMutationDeleteArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type KymFieldMutationUpdateArgs = {
-  data: KymFieldUpdateInput;
-  id: Scalars['ID'];
-};
-
-export type KymFieldMutationResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<KymFieldQuery>;
-  record?: Maybe<KymField>;
-  recordId?: Maybe<Scalars['ID']>;
-};
-
-export type KymFieldQuery = {
-  list?: Maybe<KymListFieldResult>;
-};
-
-
-export type KymFieldQueryListArgs = {
-  filter?: InputMaybe<ListKymFieldFilter>;
-};
-
-export type KymFieldResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<KymQuery>;
-  record?: Maybe<KymField>;
-  recordId: Scalars['ID'];
-};
-
-export type KymFieldUpdateInput = {
-  enabled?: InputMaybe<Scalars['Boolean']>;
-  fieldType?: InputMaybe<Kym_Field_Type>;
-  hasOtherField?: InputMaybe<Scalars['Boolean']>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type KymFileOptionCategory = {
-  file: Kym_Option_File_Type;
-};
-
-export type KymFormSettingMutation = {
-  condition: KymConditionalOptionResult;
-  field: KymFieldMutation;
-  maxSize: KymMaxSizeResult;
-  option: KymOptionMutation;
-};
-
-
-export type KymFormSettingMutationConditionArgs = {
-  dependsOn: Array<InputMaybe<Scalars['ID']>>;
-  fieldId: Scalars['ID'];
-};
-
-
-export type KymFormSettingMutationMaxSizeArgs = {
-  fieldId: Scalars['ID'];
-  maxSize: Scalars['Int'];
-};
-
-export type KymFormSettingQuery = {
-  declaration: KymDeclaration;
-  field?: Maybe<KymFieldQuery>;
 };
 
 export type KymGeneralSettingsMutation = {
@@ -3941,27 +3798,6 @@ export type KymIndTemporaryAddress = {
   sameTempAsPermanentAddress?: Maybe<Scalars['Boolean']>;
 };
 
-export type KymIndividualSettingsQuery = {
-  declaration: KymDeclaration;
-  field?: Maybe<KymFieldQuery>;
-};
-
-export type KymInputOptionCategory = {
-  input: Kym_Option_Input_Type;
-};
-
-export type KymListFieldResult = {
-  data?: Maybe<Array<Maybe<KymField>>>;
-  error?: Maybe<QueryError>;
-};
-
-export type KymMaxSizeResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<KymGeneralSettingsQuery>;
-  record?: Maybe<KymField>;
-  recordId: Scalars['ID'];
-};
-
 export type KymMemberRisk = {
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -3991,204 +3827,9 @@ export type KymMutation = {
   general?: Maybe<KymGeneralSettingsMutation>;
 };
 
-export type KymOption = Base & {
-  category: KymOptionCategory;
-  createdAt: Scalars['Time'];
-  createdBy: Identity;
-  enabled: Scalars['Boolean'];
-  field?: Maybe<KymField>;
-  /**  This fieldType is a combination of category field only to be used by frontend  */
-  fieldType: Kym_Option_Field_Type;
-  id: Scalars['ID'];
-  modifiedAt: Scalars['Time'];
-  modifiedBy: Identity;
-  name: Scalars['Localized'];
-  objState: ObjState;
-  order: Scalars['Int'];
-};
-
-export type KymOptionCategory = KymCustomOptionCategory | KymDisplayOptionCategory | KymFileOptionCategory | KymInputOptionCategory | KymSearchOptionCategory;
-
-export type KymOptionDeleteResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<KymQuery>;
-  recordId: Scalars['ID'];
-};
-
-export type KymOptionInput = {
-  enabled: Scalars['Boolean'];
-  /**  This type is to be used by frontend only. In backend this will be divided into variant and optionType  */
-  fieldType?: InputMaybe<Kym_Option_Field_Type>;
-  id?: InputMaybe<Scalars['ID']>;
-  name: Scalars['String'];
-};
-
-export type KymOptionMutation = {
-  delete: KymOptionDeleteResult;
-  move: KymOptionResult;
-  update: KymOptionResult;
-  upsert: KymOptionResult;
-};
-
-
-export type KymOptionMutationDeleteArgs = {
-  optionId: Scalars['ID'];
-};
-
-
-export type KymOptionMutationMoveArgs = {
-  optionId: Scalars['ID'];
-  to: Scalars['Int'];
-};
-
-
-export type KymOptionMutationUpdateArgs = {
-  data: KymOptionUpdateInput;
-  fieldId: Scalars['ID'];
-};
-
-
-export type KymOptionMutationUpsertArgs = {
-  data: KymOptionInput;
-  fieldId: Scalars['ID'];
-};
-
-export type KymOptionResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<KymQuery>;
-  record?: Maybe<KymOption>;
-  recordId: Scalars['ID'];
-};
-
-export type KymOptionUpdateInput = {
-  enabled?: InputMaybe<Scalars['Boolean']>;
-  /**  This type is to be used by frontend only. In backend this will be divided into variant and optionType.if fieldType is absent it will default to DISPLAY. Only SINGLE_SELECT, MULTI_SELECT AND DECLARATION can have DISPLAY options   */
-  fieldType?: InputMaybe<Kym_Option_Field_Type>;
-  id: Scalars['ID'];
-  name?: InputMaybe<Scalars['String']>;
-};
-
 export type KymQuery = {
   general?: Maybe<KymGeneralSettingsQuery>;
 };
-
-export type KymSearchOptionCategory = {
-  search: Kym_Option_Search_Type;
-};
-
-/**  These are system defined fields which are pre-populated  */
-export enum Kym_Field_Custom_Id {
-  Certificate = 'CERTIFICATE',
-  ContactDetails = 'CONTACT_DETAILS',
-  DrivingLicense = 'DRIVING_LICENSE',
-  EducationQualification = 'EDUCATION_QUALIFICATION',
-  EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
-  Ethnicity = 'ETHNICITY',
-  FamilyIncomeSource = 'FAMILY_INCOME_SOURCE',
-  FamilyInformation = 'FAMILY_INFORMATION',
-  FileUploads = 'FILE_UPLOADS',
-  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
-  ForeignEmploymentOptions = 'FOREIGN_EMPLOYMENT_OPTIONS',
-  Gender = 'GENDER',
-  IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
-  MaritalStatus = 'MARITAL_STATUS',
-  Nationality = 'NATIONALITY',
-  NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
-  Occupation = 'OCCUPATION',
-  OccupationDetails = 'OCCUPATION_DETAILS',
-  OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
-  Passport = 'PASSPORT',
-  Purpose = 'PURPOSE',
-  Relationship = 'RELATIONSHIP',
-  Religion = 'RELIGION',
-  VoterId = 'VOTER_ID'
-}
-
-export enum Kym_Field_Type {
-  Group = 'GROUP',
-  MultiSelect = 'MULTI_SELECT',
-  SingleSelect = 'SINGLE_SELECT',
-  Upload = 'UPLOAD'
-}
-
-export enum Kym_Field_Parent {
-  Identification = 'IDENTIFICATION'
-}
-
-export enum Kym_Option_Custom_Type {
-  Address = 'ADDRESS'
-}
-
-export enum Kym_Option_Display_Type {
-  Amount = 'AMOUNT',
-  Date = 'DATE',
-  Email = 'EMAIL',
-  Fax = 'FAX',
-  Number = 'NUMBER',
-  Paragraph = 'PARAGRAPH',
-  Phone = 'PHONE',
-  PoBox = 'PO_BOX',
-  Text = 'TEXT',
-  Url = 'URL'
-}
-
-export enum Kym_Option_Field_Type {
-  /**  For Custom Variant  */
-  Address = 'ADDRESS',
-  Amount = 'AMOUNT',
-  Bank = 'BANK',
-  Date = 'DATE',
-  /**  These are for SINGLE_SELECT, MULTI_SELECT  */
-  Display = 'DISPLAY',
-  District = 'DISTRICT',
-  Email = 'EMAIL',
-  Fax = 'FAX',
-  /**  These are for SEARCH fields  */
-  LocalLevel = 'LOCAL_LEVEL',
-  MultipleFile = 'MULTIPLE_FILE',
-  NumberInput = 'NUMBER_INPUT',
-  Paragraph = 'PARAGRAPH',
-  PhoneNumber = 'PHONE_NUMBER',
-  PoBox = 'PO_BOX',
-  Province = 'PROVINCE',
-  /**  These are for file   */
-  SingleFile = 'SINGLE_FILE',
-  TextInput = 'TEXT_INPUT',
-  Url = 'URL'
-}
-
-export enum Kym_Option_File_Type {
-  Multiple = 'MULTIPLE',
-  Single = 'SINGLE'
-}
-
-export enum Kym_Option_Input_Type {
-  Amount = 'AMOUNT',
-  Date = 'DATE',
-  Email = 'EMAIL',
-  Fax = 'FAX',
-  Number = 'NUMBER',
-  Paragraph = 'PARAGRAPH',
-  Phone = 'PHONE',
-  PoBox = 'PO_BOX',
-  Text = 'TEXT',
-  Url = 'URL'
-}
-
-export enum Kym_Option_Search_Type {
-  Bank = 'BANK',
-  District = 'DISTRICT',
-  LocalLevel = 'LOCAL_LEVEL',
-  Province = 'PROVINCE'
-}
-
-export enum Kym_Option_Variant {
-  Custom = 'CUSTOM',
-  Display = 'DISPLAY',
-  File = 'FILE',
-  Input = 'INPUT',
-  Search = 'SEARCH'
-}
 
 export type KymAdditionalFields = {
   fieldId?: InputMaybe<Scalars['String']>;
@@ -5465,7 +5106,6 @@ export type KymIndQuery = {
   listFamilyMember?: Maybe<KymIndFamilyMemberQueryResult>;
   listIncomeSource?: Maybe<KymIndIncomeSourceQueryResult>;
   listOccupation?: Maybe<KymIndOccupationQueryResult>;
-  options: KymFieldQuery;
 };
 
 
@@ -5926,16 +5566,6 @@ export type Level2AddArgs = {
 
 export type Level2HelloArgs = {
   data: ExampleInput;
-};
-
-export type ListKymFieldFilter = {
-  customId?: InputMaybe<Kym_Field_Custom_Id>;
-  id?: InputMaybe<Scalars['ID']>;
-  isCustom?: InputMaybe<Scalars['Boolean']>;
-  kymType?: InputMaybe<KymMemberTypesEnum>;
-  name?: InputMaybe<Scalars['String']>;
-  parent?: InputMaybe<Kym_Field_Parent>;
-  query?: InputMaybe<Scalars['String']>;
 };
 
 export enum LoanPaymentInstallmentType {
@@ -6910,7 +6540,6 @@ export type SettingsMutation = {
   declaration: DeclarationMutation;
   form?: Maybe<FormSettingMutation>;
   general?: Maybe<GeneralSettingsMutation>;
-  kymForm: KymFormSettingMutation;
 };
 
 export type SettingsQuery = {
@@ -6918,7 +6547,6 @@ export type SettingsQuery = {
   declaration: DeclarationQuery;
   form?: Maybe<FormSettingQuery>;
   general?: Maybe<GeneralSettingsQuery>;
-  kymForm: KymFormSettingQuery;
 };
 
 export type ShareBalance = Base & {
@@ -7424,7 +7052,7 @@ export type SetDepositProductMutationVariables = Exact<{
 }>;
 
 
-export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate: string, interest: number } | null } | null } | null } | null } };
+export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate: string, interest: number } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
 export type SetDepositIroMutationVariables = Exact<{
   data?: InputMaybe<DepositIroInput>;
@@ -7502,22 +7130,6 @@ export type DeleteMemberIncomeSourceMutationVariables = Exact<{
 
 export type DeleteMemberIncomeSourceMutation = { members: { individual?: { incomeSource: { delete: { recordId?: string | null } } } | null } };
 
-export type UpdateKymFieldMutationVariables = Exact<{
-  id: Scalars['ID'];
-  enabled?: InputMaybe<Scalars['Boolean']>;
-  name?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type UpdateKymFieldMutation = { settings: { kymForm: { field: { update: { record?: { id: string, enabled: boolean, name: Record<"local"|"en"|"np",string> } | null } } } } };
-
-export type DeleteKymFieldMutationVariables = Exact<{
-  optionId: Scalars['ID'];
-}>;
-
-
-export type DeleteKymFieldMutation = { settings: { kymForm: { option: { delete: { recordId: string } } } } };
-
 export type SetKymCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCooperativeFormInput;
@@ -7594,44 +7206,6 @@ export type DeleteAccountOperatorInstitutionMutationVariables = Exact<{
 
 export type DeleteAccountOperatorInstitutionMutation = { members: { institution?: { accountOperator?: { Delete?: { recordId: string } | null } | null } | null } };
 
-export type UpsertKymOptionMutationVariables = Exact<{
-  fieldId: Scalars['ID'];
-  option: KymOptionInput;
-}>;
-
-
-export type UpsertKymOptionMutation = { settings: { kymForm: { option: { upsert: { recordId: string, record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: Kym_Option_Field_Type } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } } };
-
-export type ArrangeKymFieldMutationVariables = Exact<{
-  optionId: Scalars['ID'];
-  to: Scalars['Int'];
-}>;
-
-
-export type ArrangeKymFieldMutation = { settings: { kymForm: { option: { move: { recordId: string } } } } };
-
-export type ToggleOtherOptionMutationVariables = Exact<{
-  groupId: Scalars['ID'];
-  hasOtherField: Scalars['Boolean'];
-}>;
-
-
-export type ToggleOtherOptionMutation = { settings: { kymForm: { field: { update: { record?: { name: Record<"local"|"en"|"np",string>, hasOtherField: boolean } | null } } } } };
-
-export type AddNewFieldMutationVariables = Exact<{
-  data: KymFieldInput;
-}>;
-
-
-export type AddNewFieldMutation = { settings: { kymForm: { field: { add: { recordId?: string | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, hasOtherField: boolean, parent?: Kym_Field_Parent | null } | null } } } } };
-
-export type AddCustomFieldMutationVariables = Exact<{
-  data: KymFieldInput;
-}>;
-
-
-export type AddCustomFieldMutation = { settings: { kymForm: { field: { add: { record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: Kym_Field_Type, isCustom: boolean, hasOtherField: boolean, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null } } } } };
-
 export type SetOrganizationDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: OrganizationInput;
@@ -7646,47 +7220,6 @@ export type GetPreSignedUrlMutationVariables = Exact<{
 
 
 export type GetPreSignedUrlMutation = { presignedUrl: { upload: { filename?: string | null, getUrl?: string | null, putUrl?: string | null } } };
-
-export type AddKymOptionMutationVariables = Exact<{
-  fieldId: Scalars['ID'];
-  data: KymOptionInput;
-}>;
-
-
-export type AddKymOptionMutation = { settings: { kymForm: { option: { upsert: { recordId: string, record?: { id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } } };
-
-export type AddConditionFieldMutationVariables = Exact<{
-  fieldId: Scalars['ID'];
-  dependsOn: Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>;
-}>;
-
-
-export type AddConditionFieldMutation = { settings: { kymForm: { condition: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
-
-export type AddFileSizeMutationVariables = Exact<{
-  fieldId: Scalars['ID'];
-  maxSize: Scalars['Int'];
-}>;
-
-
-export type AddFileSizeMutation = { settings: { kymForm: { maxSize: { recordId: string } } } };
-
-export type UpdateCustomFieldMutationVariables = Exact<{
-  fieldId: Scalars['ID'];
-  fieldName?: InputMaybe<Scalars['String']>;
-  fieldType?: InputMaybe<Kym_Field_Type>;
-  fieldEnabled?: InputMaybe<Scalars['Boolean']>;
-}>;
-
-
-export type UpdateCustomFieldMutation = { settings: { kymForm: { field: { update: { recordId?: string | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean } | null } } } } };
-
-export type DeleteCustomFieldMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type DeleteCustomFieldMutation = { settings: { kymForm: { field: { delete: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } } };
 
 export type UpsertNewOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
@@ -7770,7 +7303,7 @@ export type UpsertCustomFieldMutationVariables = Exact<{
 }>;
 
 
-export type UpsertCustomFieldMutation = { settings: { form?: { field: { upsert: { record?: { id: string } | null } } } | null } };
+export type UpsertCustomFieldMutation = { settings: { form?: { field: { upsert: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
 
 export type DeleteCustomSectionMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -7840,15 +7373,15 @@ export type GetBankListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetBankListQuery = { bank: { bank?: { list?: Array<{ id: string, name?: string | null } | null> | null } | null } };
 
-type MutationError_AuthorizationError_Fragment = {};
+type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
 
 type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
 
-type MutationError_NotFoundError_Fragment = {};
+type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
 
-type MutationError_ServerError_Fragment = {};
+type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
 
-type MutationError_ValidationError_Fragment = {};
+type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> };
 
 export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
 
@@ -7971,27 +7504,12 @@ export type GetInventoryUnitOfMeasureQueryVariables = Exact<{ [key: string]: nev
 
 export type GetInventoryUnitOfMeasureQuery = { inventory: { unitOfMeasure?: { list?: { edges: Array<{ node: { name: string, shortName: string, acceptFraction: boolean } } | null> } | null } | null } };
 
-export type GetIndividualKymOptionQueryVariables = Exact<{
-  id: Scalars['String'];
-  fieldName?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type GetIndividualKymOptionQuery = { members: { individual?: { options: { list?: { data?: Array<{ options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } } | null } };
-
 export type GetIndividualKymOptionsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
 }>;
 
 
 export type GetIndividualKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
-
-export type GetIndIdentificationDocOptionQueryVariables = Exact<{
-  id: Scalars['String'];
-}>;
-
-
-export type GetIndIdentificationDocOptionQuery = { members: { individual?: { options: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } } | null } };
 
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
@@ -8019,16 +7537,6 @@ export type GetKymFormStatusQueryVariables = Exact<{
 
 
 export type GetKymFormStatusQuery = { members: { individual?: { formState?: { data?: { sectionStatus?: { personal?: { completed?: Array<KymIndPersonalSection | null> | null, error?: Array<KymIndPersonalSection | null> | null } | null, professional?: { completed?: Array<KymIndProfessionalSection | null> | null, error?: Array<KymIndProfessionalSection | null> | null } | null, cooperativeMembership?: { completed?: Array<KymIndCooperativeMemberSection | null> | null, error?: Array<KymIndCooperativeMemberSection | null> | null } | null, declaration?: { completed?: Array<KymIndDeclarationSection | null> | null, error?: Array<KymIndDeclarationSection | null> | null } | null } | null } | null } | null } | null } };
-
-export type GetKymIndItemDetailsQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
-  name?: InputMaybe<Scalars['String']>;
-  customId?: InputMaybe<Kym_Field_Custom_Id>;
-  isIdentificationDoc?: InputMaybe<Kym_Field_Parent>;
-}>;
-
-
-export type GetKymIndItemDetailsQuery = { settings: { kymForm: { field?: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, hasOtherField: boolean, dependsOn?: Array<string | null> | null, isCustom: boolean, maxSize?: number | null, fieldType: Kym_Field_Type, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } | null } } };
 
 export type GetMemberIndividualDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -8074,24 +7582,19 @@ export type GetKymDocumentsListQueryVariables = Exact<{
 
 export type GetKymDocumentsListQuery = { members: { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, docData: Array<{ identifier: string, url: string } | null> } | null> | null } } } };
 
-export type GetKymSettingsFieldsQueryVariables = Exact<{
-  filter?: InputMaybe<ListKymFieldFilter>;
-}>;
-
-
-export type GetKymSettingsFieldsQuery = { settings: { kymForm: { field?: { list?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: Kym_Field_Type, hasOtherField: boolean, dependsOn?: Array<string | null> | null, isCustom: boolean, maxSize?: number | null, parent?: Kym_Field_Parent | null, options?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, fieldType: Kym_Option_Field_Type, enabled: boolean }> | null } | null> | null } | null } | null } } };
-
-export type GetKymDeclarationQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetKymDeclarationQuery = { settings: { kymForm: { declaration: { id: string, content: Record<"local"|"en"|"np",string> } } } };
-
 export type GetPreDefinedFieldsQueryVariables = Exact<{
   filter: PredefinedElementFilter;
 }>;
 
 
 export type GetPreDefinedFieldsQuery = { settings: { form?: { predefined: { details: { data?: { __typename: 'FormField', id: string, name: Record<"local"|"en"|"np",string>, fieldType: FormFieldType, hasOtherField: boolean, order: number, dependsOn?: Array<string | null> | null, isDefault: boolean, options?: Array<{ order: number, id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, isDefault: boolean }> | null } | { __typename: 'FormSection', id: string, name: Record<"local"|"en"|"np",string>, isDefault: boolean, sectionType: FormSectionType, maxSize?: number | null, fields?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, isDefault: boolean }> | null, subSections?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, search_term?: FormSectionSearchTerm | null }> | null } | null } } } | null } };
+
+export type GetCustomFieldsQueryVariables = Exact<{
+  kymType: FormCategory;
+}>;
+
+
+export type GetCustomFieldsQuery = { settings: { form?: { custom: { list: { data?: Array<{ __typename: 'FormField', id: string, name: Record<"local"|"en"|"np",string>, fieldType: FormFieldType, hasOtherField: boolean, order: number, dependsOn?: Array<string | null> | null, isDefault: boolean, options?: Array<{ order: number, id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, isDefault: boolean }> | null } | { __typename: 'FormSection', id: string, name: Record<"local"|"en"|"np",string>, isDefault: boolean, sectionType: FormSectionType, maxSize?: number | null, fields?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, isDefault: boolean }> | null, subSections?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, search_term?: FormSectionSearchTerm | null }> | null } | null> | null } } } | null } };
 
 export type GetDeclarationQueryVariables = Exact<{
   kymType: DeclarationFor;
@@ -8157,6 +7660,26 @@ export const MutationErrorFragmentDoc = `
   ... on BadRequestError {
     __typename
     badRequestErrorMessage: message
+    code
+  }
+  ... on ServerError {
+    __typename
+    serverErrorMessage: message
+    code
+  }
+  ... on AuthorizationError {
+    __typename
+    authorizationErrorMsg: message
+    code
+  }
+  ... on ValidationError {
+    __typename
+    validationErrorMsg: message
+    code
+  }
+  ... on NotFoundError {
+    __typename
+    notFoundErrorMsg: message
     code
   }
 }
@@ -8508,12 +8031,15 @@ export const SetDepositProductDocument = `
             createdDate
             interest
           }
+          error {
+            ...MutationError
+          }
         }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetDepositProductMutation = <
       TError = unknown,
       TContext = unknown
@@ -8761,54 +8287,6 @@ export const useDeleteMemberIncomeSourceMutation = <
       useAxios<DeleteMemberIncomeSourceMutation, DeleteMemberIncomeSourceMutationVariables>(DeleteMemberIncomeSourceDocument),
       options
     );
-export const UpdateKymFieldDocument = `
-    mutation updateKYMField($id: ID!, $enabled: Boolean, $name: String) {
-  settings {
-    kymForm {
-      field {
-        update(id: $id, data: {enabled: $enabled, name: $name}) {
-          record {
-            id
-            enabled
-            name
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useUpdateKymFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateKymFieldMutation, TError, UpdateKymFieldMutationVariables, TContext>) =>
-    useMutation<UpdateKymFieldMutation, TError, UpdateKymFieldMutationVariables, TContext>(
-      ['updateKYMField'],
-      useAxios<UpdateKymFieldMutation, UpdateKymFieldMutationVariables>(UpdateKymFieldDocument),
-      options
-    );
-export const DeleteKymFieldDocument = `
-    mutation deleteKYMField($optionId: ID!) {
-  settings {
-    kymForm {
-      option {
-        delete(optionId: $optionId) {
-          recordId
-        }
-      }
-    }
-  }
-}
-    `;
-export const useDeleteKymFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteKymFieldMutation, TError, DeleteKymFieldMutationVariables, TContext>) =>
-    useMutation<DeleteKymFieldMutation, TError, DeleteKymFieldMutationVariables, TContext>(
-      ['deleteKYMField'],
-      useAxios<DeleteKymFieldMutation, DeleteKymFieldMutationVariables>(DeleteKymFieldDocument),
-      options
-    );
 export const SetKymCooperativeDataDocument = `
     mutation setKymCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
   members {
@@ -9006,147 +8484,6 @@ export const useDeleteAccountOperatorInstitutionMutation = <
       useAxios<DeleteAccountOperatorInstitutionMutation, DeleteAccountOperatorInstitutionMutationVariables>(DeleteAccountOperatorInstitutionDocument),
       options
     );
-export const UpsertKymOptionDocument = `
-    mutation upsertKYMOption($fieldId: ID!, $option: KYMOptionInput!) {
-  settings {
-    kymForm {
-      option {
-        upsert(fieldId: $fieldId, data: $option) {
-          recordId
-          record {
-            id
-            name
-            enabled
-            fieldType
-          }
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useUpsertKymOptionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpsertKymOptionMutation, TError, UpsertKymOptionMutationVariables, TContext>) =>
-    useMutation<UpsertKymOptionMutation, TError, UpsertKymOptionMutationVariables, TContext>(
-      ['upsertKYMOption'],
-      useAxios<UpsertKymOptionMutation, UpsertKymOptionMutationVariables>(UpsertKymOptionDocument),
-      options
-    );
-export const ArrangeKymFieldDocument = `
-    mutation arrangeKYMField($optionId: ID!, $to: Int!) {
-  settings {
-    kymForm {
-      option {
-        move(optionId: $optionId, to: $to) {
-          recordId
-        }
-      }
-    }
-  }
-}
-    `;
-export const useArrangeKymFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<ArrangeKymFieldMutation, TError, ArrangeKymFieldMutationVariables, TContext>) =>
-    useMutation<ArrangeKymFieldMutation, TError, ArrangeKymFieldMutationVariables, TContext>(
-      ['arrangeKYMField'],
-      useAxios<ArrangeKymFieldMutation, ArrangeKymFieldMutationVariables>(ArrangeKymFieldDocument),
-      options
-    );
-export const ToggleOtherOptionDocument = `
-    mutation toggleOtherOption($groupId: ID!, $hasOtherField: Boolean!) {
-  settings {
-    kymForm {
-      field {
-        update(id: $groupId, data: {hasOtherField: $hasOtherField}) {
-          record {
-            name
-            hasOtherField
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useToggleOtherOptionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<ToggleOtherOptionMutation, TError, ToggleOtherOptionMutationVariables, TContext>) =>
-    useMutation<ToggleOtherOptionMutation, TError, ToggleOtherOptionMutationVariables, TContext>(
-      ['toggleOtherOption'],
-      useAxios<ToggleOtherOptionMutation, ToggleOtherOptionMutationVariables>(ToggleOtherOptionDocument),
-      options
-    );
-export const AddNewFieldDocument = `
-    mutation addNewField($data: KYMFieldInput!) {
-  settings {
-    kymForm {
-      field {
-        add(data: $data) {
-          recordId
-          record {
-            id
-            name
-            hasOtherField
-            parent
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useAddNewFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddNewFieldMutation, TError, AddNewFieldMutationVariables, TContext>) =>
-    useMutation<AddNewFieldMutation, TError, AddNewFieldMutationVariables, TContext>(
-      ['addNewField'],
-      useAxios<AddNewFieldMutation, AddNewFieldMutationVariables>(AddNewFieldDocument),
-      options
-    );
-export const AddCustomFieldDocument = `
-    mutation addCustomField($data: KYMFieldInput!) {
-  settings {
-    kymForm {
-      field {
-        add(data: $data) {
-          record {
-            id
-            name
-            enabled
-            fieldType
-            isCustom
-            hasOtherField
-            options {
-              id
-              name
-              fieldType
-              enabled
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useAddCustomFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddCustomFieldMutation, TError, AddCustomFieldMutationVariables, TContext>) =>
-    useMutation<AddCustomFieldMutation, TError, AddCustomFieldMutationVariables, TContext>(
-      ['addCustomField'],
-      useAxios<AddCustomFieldMutation, AddCustomFieldMutationVariables>(AddCustomFieldDocument),
-      options
-    );
 export const SetOrganizationDataDocument = `
     mutation setOrganizationData($id: ID!, $data: OrganizationInput!) {
   settings {
@@ -9190,135 +8527,6 @@ export const useGetPreSignedUrlMutation = <
     useMutation<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>(
       ['getPreSignedUrl'],
       useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(GetPreSignedUrlDocument),
-      options
-    );
-export const AddKymOptionDocument = `
-    mutation addKYMOption($fieldId: ID!, $data: KYMOptionInput!) {
-  settings {
-    kymForm {
-      option {
-        upsert(fieldId: $fieldId, data: $data) {
-          recordId
-          record {
-            id
-            name
-            fieldType
-            enabled
-          }
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useAddKymOptionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddKymOptionMutation, TError, AddKymOptionMutationVariables, TContext>) =>
-    useMutation<AddKymOptionMutation, TError, AddKymOptionMutationVariables, TContext>(
-      ['addKYMOption'],
-      useAxios<AddKymOptionMutation, AddKymOptionMutationVariables>(AddKymOptionDocument),
-      options
-    );
-export const AddConditionFieldDocument = `
-    mutation addConditionField($fieldId: ID!, $dependsOn: [ID]!) {
-  settings {
-    kymForm {
-      condition(fieldId: $fieldId, dependsOn: $dependsOn) {
-        recordId
-        error {
-          ...MutationError
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useAddConditionFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddConditionFieldMutation, TError, AddConditionFieldMutationVariables, TContext>) =>
-    useMutation<AddConditionFieldMutation, TError, AddConditionFieldMutationVariables, TContext>(
-      ['addConditionField'],
-      useAxios<AddConditionFieldMutation, AddConditionFieldMutationVariables>(AddConditionFieldDocument),
-      options
-    );
-export const AddFileSizeDocument = `
-    mutation addFileSize($fieldId: ID!, $maxSize: Int!) {
-  settings {
-    kymForm {
-      maxSize(fieldId: $fieldId, maxSize: $maxSize) {
-        recordId
-      }
-    }
-  }
-}
-    `;
-export const useAddFileSizeMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddFileSizeMutation, TError, AddFileSizeMutationVariables, TContext>) =>
-    useMutation<AddFileSizeMutation, TError, AddFileSizeMutationVariables, TContext>(
-      ['addFileSize'],
-      useAxios<AddFileSizeMutation, AddFileSizeMutationVariables>(AddFileSizeDocument),
-      options
-    );
-export const UpdateCustomFieldDocument = `
-    mutation updateCustomField($fieldId: ID!, $fieldName: String, $fieldType: KYM_FIELD_TYPE, $fieldEnabled: Boolean) {
-  settings {
-    kymForm {
-      field {
-        update(
-          id: $fieldId
-          data: {name: $fieldName, fieldType: $fieldType, enabled: $fieldEnabled}
-        ) {
-          recordId
-          record {
-            id
-            name
-            enabled
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useUpdateCustomFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateCustomFieldMutation, TError, UpdateCustomFieldMutationVariables, TContext>) =>
-    useMutation<UpdateCustomFieldMutation, TError, UpdateCustomFieldMutationVariables, TContext>(
-      ['updateCustomField'],
-      useAxios<UpdateCustomFieldMutation, UpdateCustomFieldMutationVariables>(UpdateCustomFieldDocument),
-      options
-    );
-export const DeleteCustomFieldDocument = `
-    mutation deleteCustomField($id: ID!) {
-  settings {
-    kymForm {
-      field {
-        delete(id: $id) {
-          recordId
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useDeleteCustomFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCustomFieldMutation, TError, DeleteCustomFieldMutationVariables, TContext>) =>
-    useMutation<DeleteCustomFieldMutation, TError, DeleteCustomFieldMutationVariables, TContext>(
-      ['deleteCustomField'],
-      useAxios<DeleteCustomFieldMutation, DeleteCustomFieldMutationVariables>(DeleteCustomFieldDocument),
       options
     );
 export const UpsertNewOptionDocument = `
@@ -9604,12 +8812,15 @@ export const UpsertCustomFieldDocument = `
           record {
             id
           }
+          error {
+            ...MutationError
+          }
         }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useUpsertCustomFieldMutation = <
       TError = unknown,
       TContext = unknown
@@ -10760,38 +9971,6 @@ export const useGetInventoryUnitOfMeasureQuery = <
       useAxios<GetInventoryUnitOfMeasureQuery, GetInventoryUnitOfMeasureQueryVariables>(GetInventoryUnitOfMeasureDocument).bind(null, variables),
       options
     );
-export const GetIndividualKymOptionDocument = `
-    query getIndividualKYMOption($id: String!, $fieldName: String) {
-  members {
-    individual(id: $id) {
-      options {
-        list(filter: {name: $fieldName}) {
-          data {
-            options {
-              id
-              name
-              fieldType
-              enabled
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetIndividualKymOptionQuery = <
-      TData = GetIndividualKymOptionQuery,
-      TError = unknown
-    >(
-      variables: GetIndividualKymOptionQueryVariables,
-      options?: UseQueryOptions<GetIndividualKymOptionQuery, TError, TData>
-    ) =>
-    useQuery<GetIndividualKymOptionQuery, TError, TData>(
-      ['getIndividualKYMOption', variables],
-      useAxios<GetIndividualKymOptionQuery, GetIndividualKymOptionQueryVariables>(GetIndividualKymOptionDocument).bind(null, variables),
-      options
-    );
 export const GetIndividualKymOptionsDocument = `
     query getIndividualKYMOptions($searchTerm: FormFieldSearchTerm!) {
   form {
@@ -10816,40 +9995,6 @@ export const useGetIndividualKymOptionsQuery = <
     useQuery<GetIndividualKymOptionsQuery, TError, TData>(
       ['getIndividualKYMOptions', variables],
       useAxios<GetIndividualKymOptionsQuery, GetIndividualKymOptionsQueryVariables>(GetIndividualKymOptionsDocument).bind(null, variables),
-      options
-    );
-export const GetIndIdentificationDocOptionDocument = `
-    query getIndIdentificationDocOption($id: String!) {
-  members {
-    individual(id: $id) {
-      options {
-        list(filter: {parent: IDENTIFICATION}) {
-          data {
-            id
-            name
-            options {
-              id
-              name
-              fieldType
-              enabled
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetIndIdentificationDocOptionQuery = <
-      TData = GetIndIdentificationDocOptionQuery,
-      TError = unknown
-    >(
-      variables: GetIndIdentificationDocOptionQueryVariables,
-      options?: UseQueryOptions<GetIndIdentificationDocOptionQuery, TError, TData>
-    ) =>
-    useQuery<GetIndIdentificationDocOptionQuery, TError, TData>(
-      ['getIndIdentificationDocOption', variables],
-      useAxios<GetIndIdentificationDocOptionQuery, GetIndIdentificationDocOptionQueryVariables>(GetIndIdentificationDocOptionDocument).bind(null, variables),
       options
     );
 export const GetMemberListDocument = `
@@ -10985,48 +10130,6 @@ export const useGetKymFormStatusQuery = <
     useQuery<GetKymFormStatusQuery, TError, TData>(
       ['getKymFormStatus', variables],
       useAxios<GetKymFormStatusQuery, GetKymFormStatusQueryVariables>(GetKymFormStatusDocument).bind(null, variables),
-      options
-    );
-export const GetKymIndItemDetailsDocument = `
-    query getKYMIndItemDetails($id: ID, $name: String, $customId: KYM_FIELD_CUSTOM_ID, $isIdentificationDoc: KYM_Field_Parent) {
-  settings {
-    kymForm {
-      field {
-        list(
-          filter: {id: $id, name: $name, kymType: INDIVIDUAL, customId: $customId, parent: $isIdentificationDoc}
-        ) {
-          data {
-            id
-            name
-            enabled
-            options {
-              id
-              name
-              fieldType
-              enabled
-            }
-            hasOtherField
-            dependsOn
-            isCustom
-            maxSize
-            fieldType
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetKymIndItemDetailsQuery = <
-      TData = GetKymIndItemDetailsQuery,
-      TError = unknown
-    >(
-      variables?: GetKymIndItemDetailsQueryVariables,
-      options?: UseQueryOptions<GetKymIndItemDetailsQuery, TError, TData>
-    ) =>
-    useQuery<GetKymIndItemDetailsQuery, TError, TData>(
-      variables === undefined ? ['getKYMIndItemDetails'] : ['getKYMIndItemDetails', variables],
-      useAxios<GetKymIndItemDetailsQuery, GetKymIndItemDetailsQueryVariables>(GetKymIndItemDetailsDocument).bind(null, variables),
       options
     );
 export const GetMemberIndividualDataDocument = `
@@ -11367,71 +10470,6 @@ export const useGetKymDocumentsListQuery = <
       useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(GetKymDocumentsListDocument).bind(null, variables),
       options
     );
-export const GetKymSettingsFieldsDocument = `
-    query getKYMSettingsFields($filter: ListKYMFieldFilter) {
-  settings {
-    kymForm {
-      field {
-        list(filter: $filter) {
-          data {
-            id
-            name
-            enabled
-            fieldType
-            hasOtherField
-            options {
-              id
-              name
-              fieldType
-              enabled
-            }
-            dependsOn
-            isCustom
-            maxSize
-            parent
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetKymSettingsFieldsQuery = <
-      TData = GetKymSettingsFieldsQuery,
-      TError = unknown
-    >(
-      variables?: GetKymSettingsFieldsQueryVariables,
-      options?: UseQueryOptions<GetKymSettingsFieldsQuery, TError, TData>
-    ) =>
-    useQuery<GetKymSettingsFieldsQuery, TError, TData>(
-      variables === undefined ? ['getKYMSettingsFields'] : ['getKYMSettingsFields', variables],
-      useAxios<GetKymSettingsFieldsQuery, GetKymSettingsFieldsQueryVariables>(GetKymSettingsFieldsDocument).bind(null, variables),
-      options
-    );
-export const GetKymDeclarationDocument = `
-    query getKYMDeclaration {
-  settings {
-    kymForm {
-      declaration {
-        id
-        content
-      }
-    }
-  }
-}
-    `;
-export const useGetKymDeclarationQuery = <
-      TData = GetKymDeclarationQuery,
-      TError = unknown
-    >(
-      variables?: GetKymDeclarationQueryVariables,
-      options?: UseQueryOptions<GetKymDeclarationQuery, TError, TData>
-    ) =>
-    useQuery<GetKymDeclarationQuery, TError, TData>(
-      variables === undefined ? ['getKYMDeclaration'] : ['getKYMDeclaration', variables],
-      useAxios<GetKymDeclarationQuery, GetKymDeclarationQueryVariables>(GetKymDeclarationDocument).bind(null, variables),
-      options
-    );
 export const GetPreDefinedFieldsDocument = `
     query getPreDefinedFields($filter: PredefinedElementFilter!) {
   settings {
@@ -11493,6 +10531,69 @@ export const useGetPreDefinedFieldsQuery = <
     useQuery<GetPreDefinedFieldsQuery, TError, TData>(
       ['getPreDefinedFields', variables],
       useAxios<GetPreDefinedFieldsQuery, GetPreDefinedFieldsQueryVariables>(GetPreDefinedFieldsDocument).bind(null, variables),
+      options
+    );
+export const GetCustomFieldsDocument = `
+    query getCustomFields($kymType: FormCategory!) {
+  settings {
+    form {
+      custom {
+        list(filter: {category: $kymType}) {
+          data {
+            ... on FormField {
+              __typename
+              id
+              name
+              fieldType
+              hasOtherField
+              order
+              dependsOn
+              isDefault
+              options {
+                order
+                id
+                name
+                enabled
+                isDefault
+              }
+            }
+            ... on FormSection {
+              __typename
+              id
+              name
+              isDefault
+              sectionType
+              maxSize
+              fields {
+                id
+                name
+                enabled
+                fieldType
+                isDefault
+              }
+              subSections {
+                id
+                name
+                search_term
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCustomFieldsQuery = <
+      TData = GetCustomFieldsQuery,
+      TError = unknown
+    >(
+      variables: GetCustomFieldsQueryVariables,
+      options?: UseQueryOptions<GetCustomFieldsQuery, TError, TData>
+    ) =>
+    useQuery<GetCustomFieldsQuery, TError, TData>(
+      ['getCustomFields', variables],
+      useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
       options
     );
 export const GetDeclarationDocument = `

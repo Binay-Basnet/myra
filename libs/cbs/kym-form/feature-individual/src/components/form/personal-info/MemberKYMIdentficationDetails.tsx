@@ -1,18 +1,16 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
-import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   KymIndMemberInput,
-  useGetIndIdentificationDocOptionQuery,
   useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormCheckboxGroup, FormInput } from '@coop/shared/form';
-import { Box, Checkbox, Grid, Text } from '@coop/shared/ui';
+import { Box, Grid, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 interface IMemberKYMIdentificationDetailsProps {

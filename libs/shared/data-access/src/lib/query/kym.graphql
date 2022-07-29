@@ -1,40 +1,4 @@
-query getIndividualKYMOption($id: String!, $fieldName: String) {
-  members {
-    individual(id: $id) {
-      options {
-        list(filter: { name: $fieldName }) {
-          data {
-            options {
-              id
-              name
-              fieldType
-              enabled
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 query getIndividualKYMOptions($searchTerm: FormFieldSearchTerm!) {
-  #    members {
-  #      individual(id: $id) {
-  #        options {
-  #          list(filter: $filter) {
-  #            data {
-  #              options {
-  #                id
-  #                name
-  #                fieldType
-  #                enabled
-  #              }
-  #            }
-  #          }
-  #        }
-  #      }
-  #    }
-
   form {
     options {
       predefined(
@@ -49,23 +13,3 @@ query getIndividualKYMOptions($searchTerm: FormFieldSearchTerm!) {
   }
 }
 
-query getIndIdentificationDocOption($id: String!) {
-  members {
-    individual(id: $id) {
-      options {
-        list(filter: { parent: IDENTIFICATION }) {
-          data {
-            id
-            name
-            options {
-              id
-              name
-              fieldType
-              enabled
-            }
-          }
-        }
-      }
-    }
-  }
-}
