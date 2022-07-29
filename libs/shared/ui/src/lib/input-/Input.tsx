@@ -5,6 +5,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputProps as ChakraInputProps,
+  InputRightAddon,
   InputRightElement,
 } from '@chakra-ui/react';
 
@@ -18,6 +19,7 @@ export interface InputProps extends ChakraInputProps {
   errorText?: string;
   label?: string;
   placeholder?: string;
+  rightAddonText?: string;
 }
 
 type ForwardRefInputProps = React.DetailedHTMLProps<
@@ -38,6 +40,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       placeholder,
       size = 'default',
       fontWeight,
+      rightAddonText,
       ...rest
     }: InputProps,
     ref
@@ -64,6 +67,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             isInvalid={!!errorText}
             placeholder={String(placeholder ?? '')}
             autoComplete="none"
+            borderRight={rightAddonText && 'none'}
             {...rest}
           />
           {rightElement && (
@@ -72,6 +76,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               children={rightElement}
               ml="s4"
               px="s12"
+            />
+          )}
+          {rightAddonText && (
+            <InputRightAddon
+              children={rightAddonText}
+              bg="white"
+              color="accent.debit"
             />
           )}
         </InputGroup>
