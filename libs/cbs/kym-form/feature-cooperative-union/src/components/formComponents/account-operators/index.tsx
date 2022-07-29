@@ -7,7 +7,7 @@ import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useSetAccountOperatorDetailsDataMutation } from '@coop/shared/data-access';
+import { useSetPersonnelDetailsMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 import { useTranslation } from '@coop/shared/utils';
@@ -23,7 +23,7 @@ export const AccountOperatorDetails = (props: directorDetailsProps) => {
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { mutate } = useSetAccountOperatorDetailsDataMutation({});
+  const { mutate } = useSetPersonnelDetailsMutation({});
   const methods = useForm({
     defaultValues: {
       accountOperatorsDetails: [

@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import {
+  CoopUnionInstitutionInformationInput,
+  useAllAdministrationQuery,
+} from '@coop/shared/data-access';
 import {
   FormFileInput,
   FormInput,
@@ -15,14 +18,25 @@ import {
 } from '@coop/shared/form';
 import { Box, Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
-export const ApplicantDetails = () => {
+import { useCooperativeUnionInstitution } from '../../../hooks';
+
+interface IApplicantDetailsProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+
+export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
   const { t } = useTranslation();
 
-  const { watch } = useFormContext();
+  const methods = useForm<CoopUnionInstitutionInformationInput>();
+
+  useCooperativeUnionInstitution({ methods });
+
+  const { watch } = methods;
 
   const isPermanentAndTemporaryAddressSame = watch(
-    'applicantIsPermanentAndTemporaryAddressSame'
+    'applicantIsPermanentAndTemporaryAddrSame'
   );
   const { data } = useAllAdministrationQuery();
 
@@ -36,8 +50,11 @@ export const ApplicantDetails = () => {
   }, [data?.administration?.all]);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('applicantPermanentStateId');
-  const currentDistrictId = watch('applicantPermanentDistrictId');
+  const currentProvinceId = watch('applicantPermanentAddress.provinceId');
+  const currentDistrictId = watch('applicantPermanentAddress.districtId');
+  const currentLocalGovernmentId = watch(
+    'applicantPermanentAddress.localGovernmentId'
+  );
 
   const districtList = useMemo(
     () =>
@@ -53,9 +70,18 @@ export const ApplicantDetails = () => {
     [currentDistrictId]
   );
 
+  const permanentWardList = useMemo(
+    () =>
+      localityList.find((d) => d.id === currentLocalGovernmentId)?.wards ?? [],
+    [currentLocalGovernmentId]
+  );
+
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('applicantTemporaryStateId');
-  const currentTemptDistrictId = watch('applicantTemporaryDistrictId');
+  const currentTempProvinceId = watch('applicantTemporaryAddress.provinceId');
+  const currentTemptDistrictId = watch('applicantTemporaryAddress.districtId');
+  const currentTempLocalGovernmentId = watch(
+    'applicantTemporaryAddress.localGovernmentId'
+  );
 
   const districtTempList = useMemo(
     () =>
@@ -70,206 +96,242 @@ export const ApplicantDetails = () => {
         ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
+
+  const temporaryWardList = useMemo(
+    () =>
+      localityTempList.find((d) => d.id === currentTempLocalGovernmentId)
+        ?.wards ?? [],
+    [currentTempLocalGovernmentId]
+  );
+
   return (
     <>
-      <GroupContainer id="Current Member Details" scrollMarginTop={'200px'}>
-        <Text
-          fontSize="r1"
-          fontWeight="semibold"
-          color="neutralColorLight.Gray-80"
-        >
-          {t['kymCoopUnionApplicant']}
-        </Text>
-        <InputGroupContainer>
-          <FormInput
-            type="text"
-            name="applicantName"
-            label={t['kymCoopUnionName']}
-            placeholder={t['kymCoopUnionEnterName']}
-          />
-          <FormInput
-            type="text"
-            name="applicantDesignation"
-            label={t['kymCoopUnionDesignation']}
-            placeholder={t['kymCoopUnionEnterDesignation']}
-          />
-          <Box></Box>
-          <FormInput
-            type="text"
-            name="applicantEmail"
-            label={t['kymCoopUnionEmailAddress']}
-            placeholder={t['kymCoopUnionEmailAddressPlaceholder']}
-          />
-          <FormInput
-            type="text"
-            name="applicantContactNo"
-            label={t['kymCoopUnionContactNo']}
-            placeholder={t['kymCoopUnionContactNoPlaceholder']}
-          />
-          <FormInput
-            type="text"
-            name="applicantPANNo"
-            label={t['kymCoopUnionPANNo']}
-            placeholder={t['kymCoopUnionPANNoPlaceholder']}
-          />
-        </InputGroupContainer>
+      <FormProvider {...methods}>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
-        <Box
-          id="kymAccIndPermanentAddress"
-          gap="s32"
-          display={'flex'}
-          flexDirection="column"
-          scrollMarginTop={'200px'}
+            setSection(kymSection);
+          }}
         >
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kymIndPermanentAddress']}
-          </Text>
-          <Box
-            id="Permanent Address"
-            gap="s32"
-            display={'flex'}
-            flexDirection="column"
-          >
+          <GroupContainer id="Current Member Details" scrollMarginTop={'200px'}>
+            <Text
+              fontSize="r1"
+              fontWeight="semibold"
+              color="neutralColorLight.Gray-80"
+            >
+              {t['kymCoopUnionApplicant']}
+            </Text>
             <InputGroupContainer>
-              <FormSelect
-                name="applicantPermanentStateId"
-                label={t['kymIndProvince']}
-                placeholder={t['kymIndSelectProvince']}
-                options={province}
-              />
-              <FormSelect
-                name="applicantPermanentDistrictId"
-                label={t['kymIndDistrict']}
-                placeholder={t['kymIndSelectDistrict']}
-                options={districtList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                name="applicantPermanentLocalityId"
-                label={t['kymIndLocalGovernment']}
-                placeholder={t['kymIndSelectLocalGovernment']}
-                options={localityList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
               <FormInput
-                type="number"
-                name="applicantPermanentWardId"
-                label={t['kymIndWardNo']}
-                placeholder={t['kymIndEnterWardNo']}
+                type="text"
+                name="applicantName"
+                label={t['kymCoopUnionName']}
+                placeholder={t['kymCoopUnionEnterName']}
               />
               <FormInput
                 type="text"
-                name="applicantPermanentTole"
-                label={t['kymIndLocality']}
-                placeholder={t['kymIndEnterLocality']}
+                name="applicantDesignationEn"
+                label={t['kymCoopUnionDesignation']}
+                placeholder={t['kymCoopUnionEnterDesignation']}
               />
-              {/* <FormInput
+              <Box></Box>
+              <FormInput
                 type="text"
-                name="applicantPermanentHouseNo"
+                name="applicantEmail"
+                label={t['kymCoopUnionEmailAddress']}
+                placeholder={t['kymCoopUnionEmailAddressPlaceholder']}
+              />
+              <FormInput
+                type="text"
+                name="applicantContactNo"
+                label={t['kymCoopUnionContactNo']}
+                placeholder={t['kymCoopUnionContactNoPlaceholder']}
+              />
+              <FormInput
+                type="text"
+                name="applicantPanNo"
+                label={t['kymCoopUnionPANNo']}
+                placeholder={t['kymCoopUnionPANNoPlaceholder']}
+              />
+            </InputGroupContainer>
+
+            <Box
+              id="kymAccIndPermanentAddress"
+              gap="s32"
+              display={'flex'}
+              flexDirection="column"
+              scrollMarginTop={'200px'}
+            >
+              <Text fontSize="r1" fontWeight="SemiBold">
+                {t['kymIndPermanentAddress']}
+              </Text>
+              <Box
+                id="Permanent Address"
+                gap="s32"
+                display={'flex'}
+                flexDirection="column"
+              >
+                <InputGroupContainer>
+                  <FormSelect
+                    name="applicantPermanentAddress.provinceId"
+                    label={t['kymIndProvince']}
+                    placeholder={t['kymIndSelectProvince']}
+                    options={province}
+                  />
+                  <FormSelect
+                    name="applicantPermanentAddress.districtId"
+                    label={t['kymIndDistrict']}
+                    placeholder={t['kymIndSelectDistrict']}
+                    options={districtList.map((d) => ({
+                      label: d.name,
+                      value: d.id,
+                    }))}
+                  />
+                  <FormSelect
+                    name="applicantPermanentAddress.localGovernmentId"
+                    label={t['kymIndLocalGovernment']}
+                    placeholder={t['kymIndSelectLocalGovernment']}
+                    options={localityList.map((d) => ({
+                      label: d.name,
+                      value: d.id,
+                    }))}
+                  />
+
+                  <FormSelect
+                    name="applicantPermanentAddress.wardNo"
+                    label={t['kymIndWardNo']}
+                    placeholder={t['kymIndEnterWardNo']}
+                    options={permanentWardList?.map((d) => ({
+                      label: d,
+                      value: d,
+                    }))}
+                  />
+                  <FormInput
+                    type="text"
+                    name="applicantPermanentAddress.locality"
+                    label={t['kymIndLocality']}
+                    placeholder={t['kymIndEnterLocality']}
+                  />
+                  {/* <FormInput
+                type="text"
+                name="applicantPermanentAddress.HouseNo"
                 label={t['kymIndHouseNo']}
                 placeholder={t['kymIndEnterHouseNo']}
               /> */}
-            </InputGroupContainer>
+                </InputGroupContainer>
 
-            <Box mt="-16px">
-              <FormMap name="applicantPermanentAddressLocation" />
+                <Box mt="-16px">
+                  <FormMap name="applicantPermanentAddress.coordinates" />
+                </Box>
+              </Box>
             </Box>
-          </Box>
-        </Box>
-        <Box
-          id="kymAccIndTemporaryAddress"
-          gap="s32"
-          display={'flex'}
-          flexDirection="column"
-          scrollMarginTop={'200px'}
-        >
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kymIndTemporaryAddress']}
-          </Text>
+            <Box
+              id="kymAccIndTemporaryAddress"
+              gap="s32"
+              display={'flex'}
+              flexDirection="column"
+              scrollMarginTop={'200px'}
+            >
+              <Text fontSize="r1" fontWeight="SemiBold">
+                {t['kymIndTemporaryAddress']}
+              </Text>
 
-          <FormSwitch
-            name="applicantIsPermanentAndTemporaryAddressSame"
-            label={t['kymIndTemporaryAddressPermanent']}
-          />
+              <FormSwitch
+                name="applicantIsPermanentAndTemporaryAddrSame"
+                label={t['kymIndTemporaryAddressPermanent']}
+              />
 
-          {!isPermanentAndTemporaryAddressSame && (
-            <>
-              <InputGroupContainer>
-                <FormSelect
-                  name="applicantTemporaryStateId"
-                  label={t['kymIndProvince']}
-                  placeholder={t['kymIndSelectProvince']}
-                  options={province}
-                />
-                <FormSelect
-                  name="applicantTemporaryDistrictId"
-                  label={t['kymIndDistrict']}
-                  placeholder={t['kymIndSelectDistrict']}
-                  options={districtTempList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name="applicantTemporaryLocalityId"
-                  label={t['kymIndLocalGovernment']}
-                  placeholder={t['kymIndSelectLocalGovernment']}
-                  options={localityTempList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormInput
-                  type="number"
-                  name="applicantTemporaryWardId"
-                  label={t['kymIndWardNo']}
-                  placeholder={t['kymIndEnterWardNo']}
-                />
-                <FormInput
+              {!isPermanentAndTemporaryAddressSame && (
+                <>
+                  <InputGroupContainer>
+                    <FormSelect
+                      name="applicantTemporaryAddress.provinceId"
+                      label={t['kymIndProvince']}
+                      placeholder={t['kymIndSelectProvince']}
+                      options={province}
+                    />
+                    <FormSelect
+                      name="applicantTemporaryAddress.districtId"
+                      label={t['kymIndDistrict']}
+                      placeholder={t['kymIndSelectDistrict']}
+                      options={districtTempList.map((d) => ({
+                        label: d.name,
+                        value: d.id,
+                      }))}
+                    />
+                    <FormSelect
+                      name="applicantTemporaryAddress.localGovernmentId"
+                      label={t['kymIndLocalGovernment']}
+                      placeholder={t['kymIndSelectLocalGovernment']}
+                      options={localityTempList.map((d) => ({
+                        label: d.name,
+                        value: d.id,
+                      }))}
+                    />
+                    <FormSelect
+                      name="applicantTemporaryAddress.wardNo"
+                      label={t['kymIndWardNo']}
+                      placeholder={t['kymIndEnterWardNo']}
+                      options={temporaryWardList?.map((d) => ({
+                        label: d,
+                        value: d,
+                      }))}
+                    />
+                    <FormInput
+                      type="text"
+                      name="applicantTemporaryAddress.locality"
+                      label={t['kymIndLocality']}
+                      placeholder={t['kymIndEnterLocality']}
+                    />
+                    {/* <FormInput
                   type="text"
-                  name="applicantTemporaryTole"
-                  label={t['kymIndLocality']}
-                  placeholder={t['kymIndEnterLocality']}
-                />
-                {/* <FormInput
-                  type="text"
-                  name="applicantTemporaryHouseNo"
+                  name="applicantTemporaryAddress.HouseNo"
                   label={t['kymIndHouseNo']}
                   placeholder={t['kymIndEnterHouseNo']}
                 /> */}
-              </InputGroupContainer>
+                  </InputGroupContainer>
 
-              <Box mt="-16px">
-                <FormMap name="applicantTemporaryAddressLocation" />
-              </Box>
-            </>
-          )}
-        </Box>
-      </GroupContainer>
-      <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
-        <FormFileInput
-          size="md"
-          label={t['kymCoopUnionSignature']}
-          // control={control}
-          name="applicantSign"
-        />
-        <FormFileInput
-          size="md"
-          label={t['kymCoopUnionStamp']}
-          // control={control}
-          name="applicantStamp"
-        />
-        <FormFileInput
+                  <Box mt="-16px">
+                    <FormMap name="applicantTemporaryAddress.coordinates" />
+                  </Box>
+                </>
+              )}
+            </Box>
+          </GroupContainer>
+        </form>
+      </FormProvider>
+
+      <FormProvider {...methods}>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSectionCoOperativeUnion(e.target.id);
+
+            setSection(kymSection);
+          }}
+        >
+          <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
+            <FormFileInput
+              size="md"
+              label={t['kymCoopUnionSignature']}
+              // control={control}
+              name="applicantSign"
+            />
+            <FormFileInput
+              size="md"
+              label={t['kymCoopUnionStamp']}
+              // control={control}
+              name="applicantStamp"
+            />
+            {/* <FormFileInput
           size="md"
           label={'Applicant Decision Document'}
           // control={control}
           name="applicantDecisionDocument"
-        />
-      </Grid>
+        /> */}
+          </Grid>
+        </form>
+      </FormProvider>
     </>
   );
 };

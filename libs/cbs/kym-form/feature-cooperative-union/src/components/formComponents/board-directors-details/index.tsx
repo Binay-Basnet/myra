@@ -7,7 +7,7 @@ import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useSetCooperativeUnionBoardOfDirectorDataMutation } from '@coop/shared/data-access';
+import { useSetPersonnelDetailsMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 import { useTranslation } from '@coop/shared/utils';
@@ -23,7 +23,7 @@ export const DirectorDetails = (props: directorDetailsProps) => {
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { mutate } = useSetCooperativeUnionBoardOfDirectorDataMutation({});
+  const { mutate } = useSetPersonnelDetailsMutation({});
   const methods = useForm({
     defaultValues: {
       boardOfDirectorsDetails: [
