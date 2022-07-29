@@ -137,13 +137,13 @@ export function KYMCooperativePage() {
                     <KymCoopNoEmployee setSection={setKymCurrentSection} />
                   </ContainerWithDivider>
                 </SectionContainer>
-                {/* <SectionContainer>
+                <SectionContainer>
                   <Text fontSize="r3" fontWeight="600">
                     {t['kymCoop2EconomicDetails']}
                   </Text>
                   <ContainerWithDivider>
-                    <KymEquityLiabilities watch={watch} />
-                    <KymCoopAssets watch={watch} />
+                    <KymEquityLiabilities setSection={setKymCurrentSection} />
+                    <KymCoopAssets setSection={setKymCurrentSection} />
                   </ContainerWithDivider>
                 </SectionContainer>
 
@@ -153,8 +153,7 @@ export function KYMCooperativePage() {
                   </Text>
                   <ContainerWithDivider>
                     <KymCoopBoardDirectorDetail
-                      watch={watch}
-                      control={control}
+                      setSection={setKymCurrentSection}
                     />
                   </ContainerWithDivider>
                 </SectionContainer>
@@ -164,8 +163,7 @@ export function KYMCooperativePage() {
                   </Text>
                   <ContainerWithDivider>
                     <KymCoopAccountOperatorDetail
-                      watch={watch}
-                      control={control}
+                      setSection={setKymCurrentSection}
                     />
                   </ContainerWithDivider>
                 </SectionContainer>
@@ -174,8 +172,12 @@ export function KYMCooperativePage() {
                     {t['kymCoop5Declaration']}
                   </Text>
                   <ContainerWithDivider>
-                    <KymAccountHolderDeclaration />
-                    <KymCoopDocumentDeclarationForm />
+                    <KymAccountHolderDeclaration
+                      setSection={setKymCurrentSection}
+                    />
+                    <KymCoopDocumentDeclarationForm
+                      setSection={setKymCurrentSection}
+                    />
                   </ContainerWithDivider>
                 </SectionContainer>
                 <Box display="flex" gap="s16" alignItems="start">
@@ -191,7 +193,7 @@ export function KYMCooperativePage() {
                     abide by the terms and conditions, I/We shall bear the
                     damage and/or penalties resulting as a consequence thereof.
                   </TextFields>
-                </Box> */}
+                </Box>
               </SectionContainer>
             </Box>
           </Box>

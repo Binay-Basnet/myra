@@ -302,13 +302,7 @@ export const DirectorTopPart = ({
                     placeholder={t['kymInsEnterHouseNo']}
                   />
                 </InputGroupContainer>
-                <Button
-                  mt="-16px"
-                  alignSelf="start"
-                  leftIcon={<Icon size="md" as={FaMap} />}
-                >
-                  {t['pinOnMap']}
-                </Button>
+                <FormMap name={`temporaryAddress.coordinates`} />
               </>
             )}
           </Box>
@@ -340,9 +334,6 @@ export const DirectorTopPart = ({
                 placeholder={t['kymInsEnterEmail']}
               />
               <FormInput
-                onClick={() => {
-                  removeDirector(directorId);
-                }}
                 type="string"
                 name={`citizenshipNo`}
                 label={t['kymInsCitizenshipPassportDrivingLicenseNo']}

@@ -170,20 +170,20 @@ const AddDirector = ({
 
           <Box
             display="flex"
-            justifyContent="space-between"
+            justifyContent="flex-end"
             border="1px solid"
             borderColor="border.layout"
             alignItems={'center'}
             h="60px"
             px="s20"
           >
-            <Button
+            {/* <Button
               variant="ghost"
               leftIcon={<GrRotateRight />}
               // onClick={resetDirectorForm}
             >
               {t['kymInsReset']}
-            </Button>
+            </Button> */}
             <Button
               variant="outline"
               shade="danger"

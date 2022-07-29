@@ -49,7 +49,7 @@ export const KymCoopBasicInfo = (props: IProps) => {
           />
           <InputGroupContainer>
             <FormInput
-              type="text"
+              type="number"
               name="regdNumber"
               label={t['kymCoopRegisrationNo']}
               placeholder={t['kymCoopEnterRegisteredNumber']}

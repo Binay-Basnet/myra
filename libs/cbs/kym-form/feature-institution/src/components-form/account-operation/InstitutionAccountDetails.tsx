@@ -54,7 +54,7 @@ const AddAccountDetails = ({
 }: IAddDirector) => {
   const { t } = useTranslation();
   const methods = useForm();
-  const { getValues, reset, watch } = useFormContext();
+  const { watch, reset } = methods;
 
   const router = useRouter();
 
@@ -133,229 +133,235 @@ const AddAccountDetails = ({
   // };
 
   return (
-    <>
-      <Box display="flex" alignItems="center">
-        <Box
-          flex={1}
-          px={'s16'}
-          h="60px"
-          bg="gray.200"
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          cursor={'pointer'}
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <Text fontSize="r1">{'Account Operator'}</Text>
-          <Box>
-            {isOpen ? (
-              <IconButton
-                size="xs"
-                variant={'ghost'}
-                aria-label="close"
-                icon={<Icon as={IoChevronUpOutline} />}
-              />
-            ) : (
-              <IconButton
-                size="xs"
-                variant={'ghost'}
-                aria-label="close"
-                icon={<Icon as={IoChevronDownOutline} />}
-              />
-            )}
-          </Box>
-        </Box>
-        {!isOpen && (
-          <IconButton
-            size="sm"
-            variant={'ghost'}
-            aria-label="close"
-            icon={<CloseIcon />}
-            ml="s16"
-            onClick={() => {
-              removeDirector(directorId);
-            }}
-          />
-        )}
-      </Box>
-
-      <Collapse in={isOpen} style={{ marginTop: '0px' }}>
-        <SectionContainer
-          mt="0"
-          pt="s16"
-          border={'1px solid'}
-          borderColor="border.layout"
-          borderRadius={'4px'}
-          gap="s32"
-          px="s20"
-          pb="s20"
-        >
-          <InputGroupContainer>
-            <FormInput
-              type="text"
-              name={'name'}
-              label={t['kymInsFullName']}
-              placeholder={t['kymInsEnterFullName']}
-            />
-            <FormInput
-              type="text"
-              name={'contact'}
-              label={t['kymInsContactNo']}
-              placeholder={t['kymInsContactNoPlaceholder']}
-            />
-            <FormInput
-              type="text"
-              name={'email'}
-              label={t['kymInsEmail']}
-              placeholder={t['kymInsEnterEmailAddress']}
-            />
-          </InputGroupContainer>
-
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kymInsPermanentAddress']}
-          </Text>
-          <InputGroupContainer>
-            <FormSelect
-              name={'permanentAddress.provinceId'}
-              label={t['kymInsState']}
-              placeholder={t['kymInsSelectState']}
-              options={province}
-            />
-            <FormSelect
-              name={'permanentAddress.districtId'}
-              label={t['kymInsDistrict']}
-              placeholder={t['kymInsSelectDistrict']}
-              options={districtList.map((d) => ({
-                label: d.name,
-                value: d.id,
-              }))}
-            />
-            <FormSelect
-              name={'permanentAddress.localGovernmentId'}
-              label={t['kymInsVDCMunicipality']}
-              placeholder={t['kymInsSelectVDCMunicipality']}
-              options={localityList.map((d) => ({
-                label: d.name,
-                value: d.id,
-              }))}
-            />
-            <FormInput
-              type="number"
-              name={'permanentAddress.wardNo'}
-              label={t['kymInsWardNo']}
-              placeholder={t['kymInsEnterWardNo']}
-            />
-            <FormInput
-              type="text"
-              name={'permanentAddress.locality'}
-              label={t['kymInsLocality']}
-              placeholder={t['kymInsEnterLocality']}
-            />
-            <FormInput
-              type="text"
-              name={'permanentAddress.houseNo'}
-              label={t['kymInsHouseNo']}
-              placeholder={t['kymInsEnterHouseNo']}
-            />
-          </InputGroupContainer>
-
-          <Box>
-            <FormMap name={'permanentAddress.coordinates'} />
-          </Box>
-
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSectionInstitution(e.target.id);
+          setKymCurrentSection(kymSection);
+        }}
+      >
+        <Box display="flex" alignItems="center">
           <Box
-            id="Temporary Address"
-            gap="s32"
-            display={'flex'}
-            flexDirection="column"
-            scrollMarginTop={'200px'}
+            flex={1}
+            px={'s16'}
+            h="60px"
+            bg="gray.200"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            cursor={'pointer'}
+            onClick={() => setIsOpen(!isOpen)}
           >
-            <Text fontSize="r1" fontWeight="SemiBold">
-              {t['kymInsTemporaryAddress']}
-            </Text>
-
-            <FormSwitch
-              id="isPermanentAndTemporaryAddressSame"
-              name={'isTemporaryAndPermanentAddressSame'}
-              label={t['kymInsTemporaryAddressPermanent']}
-            />
-
-            {!isPermanentAndTemporaryAddressSame && (
-              <>
-                <InputGroupContainer>
-                  <FormSelect
-                    name={'temporaryAddress.provinceId'}
-                    label={t['kymInsState']}
-                    placeholder={t['kymInsSelectState']}
-                    options={province}
-                  />
-                  <FormSelect
-                    name={'temporaryAddress.districtId'}
-                    label={t['kymInsDistrict']}
-                    placeholder={t['kymInsSelectDistrict']}
-                    options={districtTempList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    name={'temporaryAddress.localGovernmentId'}
-                    label={t['kymInsVDCMunicipality']}
-                    placeholder={t['kymInsSelectVDCMunicipality']}
-                    options={localityTempList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormInput
-                    type="number"
-                    name={'temporaryAddress.wardNo'}
-                    label={t['kymInsWardNo']}
-                    placeholder={t['kymInsEnterWardNo']}
-                  />
-                  <FormInput
-                    type="text"
-                    name={'temporaryAddress.locality'}
-                    label={t['kymInsLocality']}
-                    placeholder={t['kymInsEnterLocality']}
-                  />
-                  <FormInput
-                    type="text"
-                    name={'temporaryAddress.houseNo'}
-                    label={t['kymInsHouseNo']}
-                    placeholder={t['kymInsEnterHouseNo']}
-                  />
-                </InputGroupContainer>
-                <Button
-                  mt="-16px"
-                  alignSelf="start"
-                  leftIcon={<Icon size="md" as={FaMap} />}
-                >
-                  {t['pinOnMap']}
-                </Button>
-              </>
-            )}
+            <Text fontSize="r1">{'Account Operator'}</Text>
+            <Box>
+              {isOpen ? (
+                <IconButton
+                  size="xs"
+                  variant={'ghost'}
+                  aria-label="close"
+                  icon={<Icon as={IoChevronUpOutline} />}
+                />
+              ) : (
+                <IconButton
+                  size="xs"
+                  variant={'ghost'}
+                  aria-label="close"
+                  icon={<Icon as={IoChevronDownOutline} />}
+                />
+              )}
+            </Box>
           </Box>
+          {!isOpen && (
+            <IconButton
+              size="sm"
+              variant={'ghost'}
+              aria-label="close"
+              icon={<CloseIcon />}
+              ml="s16"
+              onClick={() => {
+                removeDirector(directorId);
+              }}
+            />
+          )}
+        </Box>
 
-          <Box>
+        <Collapse in={isOpen} style={{ marginTop: '0px' }}>
+          <SectionContainer
+            mt="0"
+            pt="s16"
+            border={'1px solid'}
+            borderColor="border.layout"
+            borderRadius={'4px'}
+            gap="s32"
+            px="s20"
+            pb="s20"
+          >
             <InputGroupContainer>
-              <FormSelect
-                name={'designation'}
-                label={t['kymInsDesignation']}
-                placeholder={t['kymInsSelectposition']}
-                options={[
-                  { value: 'precident', label: 'President' },
-                  { value: 'viceprecident', label: 'Vice-President' },
-                  { value: 'secretary', label: 'Secretary' },
-                  { value: 'treasurer', label: 'Treasurer' },
-                ]}
+              <FormInput
+                type="text"
+                name={'name'}
+                label={t['kymInsFullName']}
+                placeholder={t['kymInsEnterFullName']}
               />
               <FormInput
-                name="panNo"
-                placeholder={t['kymInsPanNoPlaceholder']}
-                label={t['kymInsPanNo']}
+                type="text"
+                name={'contact'}
+                label={t['kymInsContactNo']}
+                placeholder={t['kymInsContactNoPlaceholder']}
               />
-              {/* <Box display="flex" flexDirection={'column'} gap="s4">
+              <FormInput
+                type="text"
+                name={'email'}
+                label={t['kymInsEmail']}
+                placeholder={t['kymInsEnterEmailAddress']}
+              />
+            </InputGroupContainer>
+
+            <Text fontSize="r1" fontWeight="SemiBold">
+              {t['kymInsPermanentAddress']}
+            </Text>
+            <InputGroupContainer>
+              <FormSelect
+                name={'permanentAddress.provinceId'}
+                label={t['kymInsState']}
+                placeholder={t['kymInsSelectState']}
+                options={province}
+              />
+              <FormSelect
+                name={'permanentAddress.districtId'}
+                label={t['kymInsDistrict']}
+                placeholder={t['kymInsSelectDistrict']}
+                options={districtList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormSelect
+                name={'permanentAddress.localGovernmentId'}
+                label={t['kymInsVDCMunicipality']}
+                placeholder={t['kymInsSelectVDCMunicipality']}
+                options={localityList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormInput
+                type="number"
+                name={'permanentAddress.wardNo'}
+                label={t['kymInsWardNo']}
+                placeholder={t['kymInsEnterWardNo']}
+              />
+              <FormInput
+                type="text"
+                name={'permanentAddress.locality'}
+                label={t['kymInsLocality']}
+                placeholder={t['kymInsEnterLocality']}
+              />
+              <FormInput
+                type="text"
+                name={'permanentAddress.houseNo'}
+                label={t['kymInsHouseNo']}
+                placeholder={t['kymInsEnterHouseNo']}
+              />
+            </InputGroupContainer>
+
+            <Box>
+              <FormMap name={'permanentAddress.coordinates'} />
+            </Box>
+
+            <Box
+              id="Temporary Address"
+              gap="s32"
+              display={'flex'}
+              flexDirection="column"
+              scrollMarginTop={'200px'}
+            >
+              <Text fontSize="r1" fontWeight="SemiBold">
+                {t['kymInsTemporaryAddress']}
+              </Text>
+
+              <FormSwitch
+                id="isPermanentAndTemporaryAddressSame"
+                name={'isTemporaryAndPermanentAddressSame'}
+                label={t['kymInsTemporaryAddressPermanent']}
+              />
+
+              {!isPermanentAndTemporaryAddressSame && (
+                <>
+                  <InputGroupContainer>
+                    <FormSelect
+                      name={'temporaryAddress.provinceId'}
+                      label={t['kymInsState']}
+                      placeholder={t['kymInsSelectState']}
+                      options={province}
+                    />
+                    <FormSelect
+                      name={'temporaryAddress.districtId'}
+                      label={t['kymInsDistrict']}
+                      placeholder={t['kymInsSelectDistrict']}
+                      options={districtTempList.map((d) => ({
+                        label: d.name,
+                        value: d.id,
+                      }))}
+                    />
+                    <FormSelect
+                      name={'temporaryAddress.localGovernmentId'}
+                      label={t['kymInsVDCMunicipality']}
+                      placeholder={t['kymInsSelectVDCMunicipality']}
+                      options={localityTempList.map((d) => ({
+                        label: d.name,
+                        value: d.id,
+                      }))}
+                    />
+                    <FormInput
+                      type="number"
+                      name={'temporaryAddress.wardNo'}
+                      label={t['kymInsWardNo']}
+                      placeholder={t['kymInsEnterWardNo']}
+                    />
+                    <FormInput
+                      type="text"
+                      name={'temporaryAddress.locality'}
+                      label={t['kymInsLocality']}
+                      placeholder={t['kymInsEnterLocality']}
+                    />
+                    <FormInput
+                      type="text"
+                      name={'temporaryAddress.houseNo'}
+                      label={t['kymInsHouseNo']}
+                      placeholder={t['kymInsEnterHouseNo']}
+                    />
+                  </InputGroupContainer>
+                  <Button
+                    mt="-16px"
+                    alignSelf="start"
+                    leftIcon={<Icon size="md" as={FaMap} />}
+                  >
+                    {t['pinOnMap']}
+                  </Button>
+                </>
+              )}
+            </Box>
+
+            <Box>
+              <InputGroupContainer>
+                <FormSelect
+                  name={'designation'}
+                  label={t['kymInsDesignation']}
+                  placeholder={t['kymInsSelectposition']}
+                  options={[
+                    { value: 'precident', label: 'President' },
+                    { value: 'viceprecident', label: 'Vice-President' },
+                    { value: 'secretary', label: 'Secretary' },
+                    { value: 'treasurer', label: 'Treasurer' },
+                  ]}
+                />
+                <FormInput
+                  name="panNo"
+                  placeholder={t['kymInsPanNoPlaceholder']}
+                  label={t['kymInsPanNo']}
+                />
+                {/* <Box display="flex" flexDirection={'column'} gap="s4">
                 <Text fontSize={'s3'} fontWeight="500">
                   {t['kymInsSpecimenSignature']}
                 </Text>
@@ -363,40 +369,41 @@ const AddAccountDetails = ({
                   <FormFileInput name={"specimenSignature"} />
                 </Box>
               </Box> */}
-            </InputGroupContainer>
+              </InputGroupContainer>
+            </Box>
+          </SectionContainer>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            border="1px solid"
+            borderColor="border.layout"
+            alignItems={'center'}
+            h="60px"
+            px="s20"
+          >
+            <Button
+              id="accountOperatorReset"
+              variant="ghost"
+              leftIcon={<GrRotateRight />}
+              // onClick={resetDirectorForm}
+            >
+              {t['kymInsReset']}
+            </Button>
+            <Button
+              id="accountOperatorClose"
+              variant="outline"
+              shade="danger"
+              leftIcon={<AiOutlineDelete height="11px" />}
+              onClick={() => {
+                removeDirector(directorId);
+              }}
+            >
+              {t['kymInsDelete']}
+            </Button>
           </Box>
-        </SectionContainer>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          border="1px solid"
-          borderColor="border.layout"
-          alignItems={'center'}
-          h="60px"
-          px="s20"
-        >
-          <Button
-            id="accountOperatorReset"
-            variant="ghost"
-            leftIcon={<GrRotateRight />}
-            // onClick={resetDirectorForm}
-          >
-            {t['kymInsReset']}
-          </Button>
-          <Button
-            id="accountOperatorClose"
-            variant="outline"
-            shade="danger"
-            leftIcon={<AiOutlineDelete height="11px" />}
-            onClick={() => {
-              removeDirector(directorId);
-            }}
-          >
-            {t['kymInsDelete']}
-          </Button>
-        </Box>
-      </Collapse>
-    </>
+        </Collapse>
+      </form>
+    </FormProvider>
   );
 };
 
@@ -442,50 +449,41 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
     deleteMutate({ insId: id, acc: directorId });
   };
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSectionInstitution(e.target.id);
-          setSection(kymSection);
-        }}
-      >
-        <GroupContainer
-          gap="s16"
-          id="kymInsDetailsofAccountOperators"
-          scrollMarginTop="200px"
-        >
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kymInsDetailsofAccountOperators']}
-          </Text>
+    <GroupContainer
+      gap="s16"
+      id="kymInsDetailsofAccountOperators"
+      scrollMarginTop="200px"
+    >
+      <Text fontSize="r1" fontWeight="SemiBold">
+        {t['kymInsDetailsofAccountOperators']}
+      </Text>
 
-          <div>
-            <DynamicBoxGroupContainer>
-              {directorIds.map((id) => {
-                return (
-                  <Box key={id} display="flex" flexDirection={'column'}>
-                    <AddAccountDetails
-                      setKymCurrentSection={setSection}
-                      removeDirector={removeDirector}
-                      directorId={id}
-                    />
-                  </Box>
-                );
-              })}
-              <Button
-                id="accountOperatorDetailsButton"
-                alignSelf="start"
-                leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-                variant="outline"
-                onClick={() => {
-                  addDirector();
-                }}
-              >
-                {t['kymInsNewOperator']}
-              </Button>
-            </DynamicBoxGroupContainer>
-          </div>
-        </GroupContainer>
-      </form>
-    </FormProvider>
+      <div>
+        <DynamicBoxGroupContainer>
+          {directorIds.map((id) => {
+            return (
+              <Box key={id} display="flex" flexDirection={'column'}>
+                <AddAccountDetails
+                  setKymCurrentSection={setSection}
+                  removeDirector={removeDirector}
+                  directorId={id}
+                />
+              </Box>
+            );
+          })}
+          <Button
+            id="accountOperatorDetailsButton"
+            alignSelf="start"
+            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+            variant="outline"
+            onClick={() => {
+              addDirector();
+            }}
+          >
+            {t['kymInsNewOperator']}
+          </Button>
+        </DynamicBoxGroupContainer>
+      </div>
+    </GroupContainer>
   );
 };
