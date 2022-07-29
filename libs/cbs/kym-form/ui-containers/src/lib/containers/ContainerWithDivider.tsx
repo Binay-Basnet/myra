@@ -1,12 +1,14 @@
 import React from 'react';
-import { Divider, VStack } from '@coop/shared/ui';
 
-interface IContainerWithDividerProps {
+import { Divider, VStack, VStackProps } from '@coop/shared/ui';
+
+interface IContainerWithDividerProps extends VStackProps {
   children: React.ReactNode;
 }
 
 export const ContainerWithDivider = ({
   children,
+  ...rest
 }: IContainerWithDividerProps) => {
   return (
     <VStack
@@ -17,6 +19,7 @@ export const ContainerWithDivider = ({
       divider={
         <Divider my="s32" border="1px solid" borderColor="background.500" />
       }
+      {...rest}
     >
       {children}
     </VStack>

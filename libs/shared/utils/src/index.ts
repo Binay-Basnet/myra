@@ -17,4 +17,5 @@ export * from './utilFunctions/getKymCoopSection';
 export * from './utilFunctions/getKymSection';
 export * from './utilFunctions/getKymSectionsCoopUnion';
 export * from './utilFunctions/getKymSectionsInstitutions';
+export * from './utilFunctions/isDeepEmpty';
 export * from './validationSchema/memberForm';

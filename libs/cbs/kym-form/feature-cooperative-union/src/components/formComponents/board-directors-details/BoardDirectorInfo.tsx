@@ -17,6 +17,7 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
+  FormEmailInput,
   FormFileInput,
   FormInput,
   FormMap,
@@ -330,7 +331,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
                 label={t['kymCoopUnionMobileNo']}
                 placeholder={t['kymCoopUnionEnterMobileNo']}
               />
-              <FormInput
+              <FormEmailInput
                 type="text"
                 name={`boardOfDirectorsDetails.${index}.email`}
                 label={t['kymCoopUnionEmail']}

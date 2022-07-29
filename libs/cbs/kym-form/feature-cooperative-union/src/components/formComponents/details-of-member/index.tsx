@@ -6,11 +6,12 @@ import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useSetMemberDetailsDataMutation } from '@coop/shared/data-access';
+import { useSetPersonnelDetailsMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
-import { KymMemberdetailsCOOP } from './memberDetails';
 import { useTranslation } from '@coop/shared/utils';
+
+import { KymMemberdetailsCOOP } from './memberDetails';
 
 interface memberDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -21,7 +22,7 @@ export const MemberDetails = (props: memberDetailsProps) => {
   const { setSection } = props;
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { mutate } = useSetMemberDetailsDataMutation({});
+  const { mutate } = useSetPersonnelDetailsMutation({});
   const methods = useForm({});
   const { handleSubmit, getValues, watch } = methods;
   return (
@@ -29,7 +30,7 @@ export const MemberDetails = (props: memberDetailsProps) => {
       <form
         onChange={debounce(() => {
           console.log('hello', getValues());
-          mutate({ id, data: getValues() });
+          // mutate({ id, data: getValues() });
         }, 800)}
         onSubmit={handleSubmit((data) => {
           console.log('data', data);
