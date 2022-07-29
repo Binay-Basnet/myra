@@ -8,10 +8,8 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  Kym_Field_Custom_Id as KYMOptionEnum,
   KymIndMemberInput,
   useGetIndividualKymEditDataQuery,
-  useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';

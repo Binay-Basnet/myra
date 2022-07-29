@@ -14,8 +14,8 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormFieldSearchTerm,
+  FormOption,
   KymIndMemberInput,
-  KymOption,
   useDeleteMemberOccupationMutation,
   useGetConfigQuery,
   useGetIndividualKymEditDataQuery,
@@ -47,7 +47,7 @@ import { getFieldOption } from '../../../utils/getFieldOption';
 interface DynamicInputProps {
   fieldIndex: number;
   optionIndex: number;
-  option: Partial<KymOption>;
+  option: Partial<FormOption>;
 }
 
 interface IMemberKYMMainOccupationProps {
@@ -72,7 +72,7 @@ export const MainOccupationInput = ({
 
   return (
     <FormInputWithType
-      formType={option?.fieldType}
+      formType={option?.field?.fieldType}
       name={`mainOccupation.${fieldIndex}.options.${optionIndex}.value`}
       label={String(option?.name?.local)}
       placeholder={String(option?.name?.local)}

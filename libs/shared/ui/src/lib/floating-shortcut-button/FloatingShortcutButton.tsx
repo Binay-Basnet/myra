@@ -1,10 +1,23 @@
 import { useRef, useState } from 'react';
-import { BsBook, BsHeart, BsQuestionLg } from 'react-icons/bs';
+import {
+  AiOutlineBug,
+  AiOutlineExclamation,
+  AiOutlineStar,
+} from 'react-icons/ai';
+import {
+  BsBook,
+  BsFacebook,
+  BsHeart,
+  BsInstagram,
+  BsQuestionLg,
+  BsTwitter,
+} from 'react-icons/bs';
 import { TbMessageDots } from 'react-icons/tb';
 import { AddIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
+  Divider,
   Icon,
   IconButton,
   Popover,
@@ -13,12 +26,105 @@ import {
   PopoverTrigger,
   Text,
 } from '@chakra-ui/react';
+import { ListItem, UnorderedList } from '@chakra-ui/react';
 
 import { Grid, GridItem, Modal, ShortcutTab } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface FloatingShortcutButtonProps {}
+
+interface WhatsNewModalProps {
+  whatsNewModalOpen: boolean;
+  handleWhatsNewModalClose: () => void;
+}
+
+const WhatsNewModal = (props: WhatsNewModalProps) => {
+  const { whatsNewModalOpen, handleWhatsNewModalClose } = props;
+  return (
+    <Modal
+      open={whatsNewModalOpen}
+      onClose={handleWhatsNewModalClose}
+      isCentered={true}
+      title={
+        <Text
+          fontSize="r2"
+          color="neutralColorLight.Gray-80"
+          fontWeight="SemiBold"
+        >
+          What's New
+        </Text>
+      }
+      modalContentProps={{ minW: '60vw' }}
+      footerPrimary1Props={
+        <Box
+          p={3}
+          w="100%"
+          display="flex"
+          gap={2}
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Box display="flex" gap={3}>
+            <BsFacebook size={21} />
+            <BsInstagram size={21} />
+            <BsTwitter size={21} />
+          </Box>
+          <Text>Follow us for more update!</Text>
+        </Box>
+      }
+    >
+      <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
+        <Box display="flex" justifyContent="space-between">
+          <Text fontSize="r2">Version 1.0.0</Text>
+          <Text fontSize="s3">July 28, 2022</Text>
+        </Box>
+        <Box>
+          <Box display="flex" alignItems="center" gap={2}>
+            <AiOutlineStar size={18} />
+            <Text fontSize="r2" fontWeight="medium">
+              New Features
+            </Text>
+          </Box>
+          <UnorderedList>
+            <ListItem fontSize="s3">Individual Form Crud operation</ListItem>
+            <ListItem fontSize="s3">Institution Form Crud operation</ListItem>
+            <ListItem fontSize="s3">Deposit From connect with BE</ListItem>
+            <ListItem fontSize="s3">
+              Deposit product form Crud operation
+            </ListItem>
+            <ListItem fontSize="s3">Authentication</ListItem>
+            <ListItem fontSize="s3">Loan product detail page</ListItem>
+          </UnorderedList>
+        </Box>
+        <Box>
+          <Box display="flex" alignItems="center" gap={2}>
+            <AiOutlineBug size={18} />
+            <Text fontSize="r2" fontWeight="medium">
+              Bug Squashed
+            </Text>
+          </Box>
+
+          <UnorderedList>
+            <ListItem fontSize="s3">Dynamic field error</ListItem>
+          </UnorderedList>
+        </Box>
+        <Box>
+          <Box display="flex" alignItems="center" gap={2}>
+            <AiOutlineExclamation size={18} />
+            <Text fontSize="r2" fontWeight="medium">
+              Known Bugs
+            </Text>
+          </Box>
+          <UnorderedList>
+            <ListItem fontSize="s3">Dynamic field error</ListItem>
+          </UnorderedList>
+        </Box>
+      </Box>
+      <Divider />
+    </Modal>
+  );
+};
 
 export function FloatingShortcutButton(props: FloatingShortcutButtonProps) {
   const { t } = useTranslation();
@@ -59,6 +165,7 @@ export function FloatingShortcutButton(props: FloatingShortcutButtonProps) {
   ];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [whatsNewModalOpen, setWhatsNewModalOpen] = useState(false);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -67,6 +174,15 @@ export function FloatingShortcutButton(props: FloatingShortcutButtonProps) {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+
+  const handleWhatsNewModalOpen = () => {
+    setWhatsNewModalOpen(true);
+  };
+
+  const handleWhatsNewModalClose = () => {
+    setWhatsNewModalOpen(false);
+  };
+
   return (
     <>
       <Popover placement="top-start" gutter={3}>
@@ -150,11 +266,19 @@ export function FloatingShortcutButton(props: FloatingShortcutButtonProps) {
                   Alt + l
                 </Text>
               </Box>
-
-              <Text fontSize="s3" fontWeight="500" cursor="pointer">
-                {' '}
-                What's New?
-              </Text>
+              <Box
+                display={'flex'}
+                flexDirection="row"
+                justifyContent={'space-between'}
+                cursor="pointer"
+                onClick={handleWhatsNewModalOpen}
+                alignItems={'center'}
+              >
+                <Text fontSize="s3" fontWeight="500" cursor="pointer">
+                  {' '}
+                  What's New?
+                </Text>
+              </Box>
 
               <Text fontSize="s3" fontWeight="500" cursor="pointer">
                 {' '}
@@ -219,6 +343,10 @@ export function FloatingShortcutButton(props: FloatingShortcutButtonProps) {
           ))}
         </Grid>
       </Modal>
+      <WhatsNewModal
+        whatsNewModalOpen={whatsNewModalOpen}
+        handleWhatsNewModalClose={handleWhatsNewModalClose}
+      />
     </>
   );
 }

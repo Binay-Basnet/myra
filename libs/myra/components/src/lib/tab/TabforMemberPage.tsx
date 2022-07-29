@@ -38,12 +38,15 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
 
   const router = useRouter();
 
-  const currentIndex = useMemo(
-    () => list.findIndex((link) => router.pathname.includes(link?.name ?? '')),
-    [router.pathname]
-  );
+  // const currentIndex = useMemo(
+  //   () => list.findIndex((link) => router.pathname.includes(link?.name ?? '')),
+  //   [router.pathname]
+  // );
   return (
-    <Tabs variant="unstyled" index={currentIndex}>
+    <Tabs
+      variant="unstyled"
+      index={list.findIndex((value) => router.asPath.includes(value.link)) ?? 0}
+    >
       {list.map((item, index) => {
         return (
           <Link href={item.link} key={`${item}${index}`}>

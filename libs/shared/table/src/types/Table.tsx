@@ -13,8 +13,8 @@ export type Column<TData extends Maybe<Record<string, unknown>>> =
   ColumnDef<TData>;
 
 export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
-  data: Maybe<Array<Maybe<TData>>>;
-  columns: Maybe<Array<Maybe<Column<Maybe<TData>>>>>;
+  data: Maybe<Array<Maybe<TData>>> | TData;
+  columns: Maybe<Array<Maybe<Column<Maybe<TData>>>>> | Column<TData>[];
 
   pagination?: {
     total: number | string;

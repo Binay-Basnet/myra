@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { DetailPageTopCard } from 'libs/accounting/ui-components/src/components';
 
+import { DetailPageTopCard } from '@coop/accounting/ui-components';
 import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/table';

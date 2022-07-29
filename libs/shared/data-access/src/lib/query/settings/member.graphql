@@ -1,0 +1,118 @@
+query getPreDefinedFields($filter: PredefinedElementFilter!){
+  settings {
+    form {
+      predefined {
+        details(filter: $filter) {
+          data {
+            ... on FormField {
+              __typename
+              id
+              name
+              fieldType
+              hasOtherField
+              order
+              dependsOn
+              isDefault
+              options {
+                order
+                id
+                name
+                enabled
+                isDefault
+              }
+            }
+            ... on FormSection {
+              __typename
+              id
+              name
+              isDefault
+              sectionType
+              maxSize
+
+              fields {
+                id
+                name
+                enabled
+                fieldType
+                isDefault
+              }
+
+              subSections {
+                id
+                name
+                search_term
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCustomFields($kymType: FormCategory!){
+  settings {
+    form {
+      custom {
+        list(filter: {category: $kymType}) {
+          data {
+            ... on FormField {
+              __typename
+              id
+              name
+              fieldType
+              hasOtherField
+              order
+              dependsOn
+              isDefault
+              options {
+                order
+                id
+                name
+                enabled
+                isDefault
+              }
+            }
+            ... on FormSection {
+              __typename
+              id
+              name
+              isDefault
+              sectionType
+              maxSize
+
+              fields {
+                id
+                name
+                enabled
+                fieldType
+                isDefault
+              }
+
+              subSections {
+                id
+                name
+                search_term
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+#Declaration
+query getDeclaration($kymType: DeclarationFor!) {
+  settings {
+    declaration {
+      get(for: $kymType){
+        data {
+          content
+        }
+      }
+    }
+  }
+}
+
