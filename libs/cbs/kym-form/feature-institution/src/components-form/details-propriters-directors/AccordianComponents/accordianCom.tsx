@@ -112,6 +112,7 @@ export const DirectorTopPart = ({
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch(`permanentAddress.provinceId`);
   const currentDistrictId = watch(`permanentAddress.districtId`);
+  const currentLocalityId = watch('permanentAddress.localGovernmentId');
 
   const districtList = useMemo(
     () =>
@@ -126,10 +127,15 @@ export const DirectorTopPart = ({
       [],
     [currentDistrictId]
   );
+  const wardList = useMemo(
+    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
+  );
 
   // FOR TEMPORARY ADDRESS
   const currentTempProvinceId = watch(`temporaryAddress.provinceId`);
   const currentTemptDistrictId = watch(`temporaryAddress.districtId`);
+  const currentTemptLocalityId = watch('temporaryAddress.localGovernmentId');
 
   const districtTempList = useMemo(
     () =>
@@ -143,6 +149,10 @@ export const DirectorTopPart = ({
       districtTempList.find((d) => d.id === currentTemptDistrictId)
         ?.municipalities ?? [],
     [currentTemptDistrictId]
+  );
+  const wardTemptList = useMemo(
+    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
   );
 
   const isPermanentAndTemporaryAddressSame = watch(
@@ -215,11 +225,14 @@ export const DirectorTopPart = ({
                 value: d.id,
               }))}
             />
-            <FormInput
-              type="number"
+            <FormSelect
               name={`permanentAddress.wardNo`}
               label={t['kymInsWardNo']}
               placeholder={t['kymInsEnterWardNo']}
+              options={wardList?.map((d) => ({
+                label: d,
+                value: d,
+              }))}
             />
             <FormInput
               type="text"
@@ -283,11 +296,14 @@ export const DirectorTopPart = ({
                       value: d.id,
                     }))}
                   />
-                  <FormInput
-                    type="number"
+                  <FormSelect
                     name={`temporaryAddress.wardNo`}
                     label={t['kymInsWardNo']}
                     placeholder={t['kymInsEnterWardNo']}
+                    options={wardTemptList?.map((d) => ({
+                      label: d,
+                      value: d,
+                    }))}
                   />
                   <FormInput
                     type="text"

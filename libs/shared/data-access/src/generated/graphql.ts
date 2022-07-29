@@ -6990,6 +6990,24 @@ export type SetCooperativeDataMutationVariables = Exact<{
 
 export type SetCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string } | null } | null } };
 
+export type SetCoopAccOperatorDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  acc: Scalars['ID'];
+  data: KymCoopAccountOperatorDetailsFormInput;
+}>;
+
+
+export type SetCoopAccOperatorDataMutation = { members: { cooperative?: { accountOperatorDetail?: { Upsert?: { recordId: string } | null } | null } | null } };
+
+export type SetCooPdirectorDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  dir: Scalars['ID'];
+  data: KymCoopDirectorDetailsFormInput;
+}>;
+
+
+export type SetCooPdirectorDataMutation = { members: { cooperative?: { directorDetails?: { Upsert?: { recordId: string } | null } | null } | null } };
+
 export type SetCooperativeUnionInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<CoopUnionInstitutionInformationInput>;
@@ -7861,6 +7879,50 @@ export const useSetCooperativeDataMutation = <
     useMutation<SetCooperativeDataMutation, TError, SetCooperativeDataMutationVariables, TContext>(
       ['setCooperativeData'],
       useAxios<SetCooperativeDataMutation, SetCooperativeDataMutationVariables>(SetCooperativeDataDocument),
+      options
+    );
+export const SetCoopAccOperatorDataDocument = `
+    mutation setCOOPAccOperatorData($id: ID!, $acc: ID!, $data: KymCoopAccountOperatorDetailsFormInput!) {
+  members {
+    cooperative(id: $id) {
+      accountOperatorDetail {
+        Upsert(accOperatorId: $acc, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetCoopAccOperatorDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetCoopAccOperatorDataMutation, TError, SetCoopAccOperatorDataMutationVariables, TContext>) =>
+    useMutation<SetCoopAccOperatorDataMutation, TError, SetCoopAccOperatorDataMutationVariables, TContext>(
+      ['setCOOPAccOperatorData'],
+      useAxios<SetCoopAccOperatorDataMutation, SetCoopAccOperatorDataMutationVariables>(SetCoopAccOperatorDataDocument),
+      options
+    );
+export const SetCooPdirectorDataDocument = `
+    mutation setCOOPdirectorData($id: ID!, $dir: ID!, $data: KymCoopDirectorDetailsFormInput!) {
+  members {
+    cooperative(id: $id) {
+      directorDetails {
+        Upsert(dirId: $dir, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetCooPdirectorDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetCooPdirectorDataMutation, TError, SetCooPdirectorDataMutationVariables, TContext>) =>
+    useMutation<SetCooPdirectorDataMutation, TError, SetCooPdirectorDataMutationVariables, TContext>(
+      ['setCOOPdirectorData'],
+      useAxios<SetCooPdirectorDataMutation, SetCooPdirectorDataMutationVariables>(SetCooPdirectorDataDocument),
       options
     );
 export const SetCooperativeUnionInstitutionDataDocument = `

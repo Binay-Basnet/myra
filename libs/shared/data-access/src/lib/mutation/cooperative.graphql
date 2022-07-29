@@ -7,3 +7,35 @@ mutation setCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
     }
   }
 }
+
+mutation setCOOPAccOperatorData(
+  $id: ID!
+  $acc: ID!
+  $data: KymCoopAccountOperatorDetailsFormInput!
+) {
+  members {
+    cooperative(id: $id) {
+      accountOperatorDetail {
+        Upsert(accOperatorId: $acc, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setCOOPdirectorData(
+  $id: ID!
+  $dir: ID!
+  $data: KymCoopDirectorDetailsFormInput!
+) {
+  members {
+    cooperative(id: $id) {
+      directorDetails {
+        Upsert(dirId: $dir, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}

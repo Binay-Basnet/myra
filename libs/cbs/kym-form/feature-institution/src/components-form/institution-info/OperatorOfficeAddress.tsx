@@ -118,6 +118,12 @@ export const OperatorOfficeAddress = (props: IProps) => {
     }
   }, [editLoading]);
 
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [id]);
+
   const { data } = useAllAdministrationQuery();
 
   const province = useMemo(() => {
