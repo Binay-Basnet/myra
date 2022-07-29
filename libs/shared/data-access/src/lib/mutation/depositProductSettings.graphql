@@ -12,21 +12,7 @@ mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
             interest
           }
           error {
-            ... on NotFoundError {
-              hm: message
-            }
-            ... on AuthorizationError {
-              test: message
-            }
-            ... on BadRequestError {
-              data: message
-            }
-            ... on ServerError {
-              info: message
-            }
-            ... on ValidationError {
-              test2: message
-            }
+            ...MutationError
           }
         }
       }

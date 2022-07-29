@@ -1,5 +1,5 @@
-// import debounce from 'lodash/debounce';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import {
   IndividualRequiredDocument,
@@ -12,13 +12,14 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TopText } from '../formui';
 
-export const RequiredDocumentSetup = (
-  typeOfNature: (KymMemberTypesEnum | null)[]
-) => {
+export const RequiredDocumentSetup = () => {
+  const router = useRouter();
+  const url = router.asPath.split('/');
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const typesOfMember = watch('typeOfMember');
-  const nature = watch('typeOfMember');
+
+  console.log(typesOfMember);
 
   const individualList = [
     { label: t['depositProductForm'], value: IndividualRequiredDocument.Form },
@@ -59,17 +60,43 @@ export const RequiredDocumentSetup = (
     },
   ];
 
-  // console.log(
-  //   typeOfNature && typeOfNature?.includes(KymMemberTypesEnum.Individual)
-  // );
-
-  console.log(typeOfNature[0]);
-
   return (
     <BoxContainer>
       <TopText> {t['depositProductRequiredDocumentSetup']} </TopText>
       <Grid templateColumns={'repeat(2,1fr)'}>
-        {/* {typeOfNature?.includes(KymMemberTypesEnum.Individual) && (
+        {url.includes('edit') && (
+          <>
+            {typesOfMember?.includes(KymMemberTypesEnum.Individual) && (
+              <Box display="flex" flexDirection="column" gap="s16">
+                <TopText>{t['depositProductIndividual']} </TopText>
+                <FormCheckboxGroup
+                  name="individualDocuments"
+                  list={individualList}
+                  orientation="column"
+                />
+              </Box>
+            )}
+
+            {typesOfMember?.includes(
+              KymMemberTypesEnum.Institution ||
+                KymMemberTypesEnum.Cooperative ||
+                KymMemberTypesEnum.CooperativeUnion
+            ) && (
+              <Box display="flex" flexDirection="column" gap="s16">
+                <TopText>{t['depositProductInstitutional']} </TopText>
+                <FormCheckboxGroup
+                  name="institutionDocuments"
+                  list={instutionList}
+                  orientation="column"
+                />
+              </Box>
+            )}
+          </>
+        )}
+        {/* {(typesOfMember ||
+          typeOfNature?.typeOfNature?.includes(
+            KymMemberTypesEnum.Individual
+          )) && (
           <Box display="flex" flexDirection="column" gap="s16">
             <TopText>{t['depositProductIndividual']} </TopText>
             <FormCheckboxGroup
@@ -80,7 +107,12 @@ export const RequiredDocumentSetup = (
           </Box>
         )}
 
-        {typeOfNature?.includes(KymMemberTypesEnum.Institution) && (
+        {(typesOfMember ||
+          typeOfNature?.typeOfNature?.includes(
+            KymMemberTypesEnum.Institution ||
+              KymMemberTypesEnum.Cooperative ||
+              KymMemberTypesEnum.CooperativeUnion
+          )) && (
           <Box display="flex" flexDirection="column" gap="s16">
             <TopText>{t['depositProductInstitutional']} </TopText>
             <FormCheckboxGroup

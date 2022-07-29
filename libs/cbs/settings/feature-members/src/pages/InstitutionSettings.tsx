@@ -13,7 +13,7 @@ export const InstitutionSettings = () => {
         <Fragment key={index}>
           <KYMSettings
             fields={groupFields}
-            kymType={FormCategory.KymIndividual}
+            kymType={FormCategory.KymInstitution}
           />
         </Fragment>
       ))}

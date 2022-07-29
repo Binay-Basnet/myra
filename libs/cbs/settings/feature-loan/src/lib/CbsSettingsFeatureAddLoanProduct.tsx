@@ -56,7 +56,7 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
     },
   });
 
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const { watch } = methods;
 
   return (
     <>

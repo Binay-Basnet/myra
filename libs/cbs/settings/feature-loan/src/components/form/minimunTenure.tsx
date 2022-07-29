@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Frequency } from '@coop/shared/data-access';
 // import debounce from 'lodash/debounce';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
@@ -12,35 +13,7 @@ import {
   SubText,
   TextBoxContainer,
 } from '../formui';
-const unitOptions = [
-  {
-    label: 'Day',
-    value: 'Day',
-  },
-  {
-    label: 'Week',
-    value: 'Week',
-  },
-  {
-    label: 'Month',
-    value: 'Month',
-  },
-  {
-    label: 'Year',
-    value: 'Year',
-  },
-];
 
-const applicableSwitch = [
-  {
-    label: 'Applicable',
-    value: 'applicable',
-  },
-  {
-    label: 'Not Applicable',
-    value: 'notApplicable',
-  },
-];
 export const MinimunTenure = () => {
   const [rightElement, setRightElement] = useState('days');
   const { resetField, watch } = useFormContext();
@@ -48,6 +21,36 @@ export const MinimunTenure = () => {
 
   const minimumTenureUnit = watch('minimumTenureUnit');
   const { t } = useTranslation();
+
+  const unitOptions = [
+    {
+      label: t['daily'],
+      value: Frequency.Daily,
+    },
+    {
+      label: t['weekly'],
+      value: Frequency.Weekly,
+    },
+    {
+      label: t['monthly'],
+      value: Frequency.Monthly,
+    },
+    {
+      label: t['yearly'],
+      value: Frequency.Yearly,
+    },
+  ];
+
+  const applicableSwitch = [
+    {
+      label: t['depositProductApplicable'],
+      value: true,
+    },
+    {
+      label: t['depositProductNotApplicable'],
+      value: false,
+    },
+  ];
 
   useEffect(() => {
     resetField('minimunTenureNumber');
@@ -74,7 +77,7 @@ export const MinimunTenure = () => {
           options={applicableSwitch}
         />
       </Box>
-      {minimumTenure && minimumTenure === 'applicable' && (
+      {minimumTenure && (
         <BoxContainer
           p="s16"
           border={'1px solid'}

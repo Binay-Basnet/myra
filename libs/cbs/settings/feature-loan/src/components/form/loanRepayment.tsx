@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Frequency } from '@coop/shared/data-access';
 // import debounce from 'lodash/debounce';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
@@ -30,20 +31,20 @@ export const LoanRepayment = () => {
 
   const unitOptions = [
     {
-      label: t['dai'],
-      value: 'day',
+      label: t['daily'],
+      value: Frequency.Daily,
     },
     {
-      label: t['week'],
-      value: 'week',
+      label: t['weekly'],
+      value: Frequency.Weekly,
     },
     {
-      label: t['month'],
-      value: 'month',
+      label: t['monthly'],
+      value: Frequency.Monthly,
     },
     {
-      label: t['year'],
-      value: 'year',
+      label: t['yearly'],
+      value: Frequency.Yearly,
     },
   ];
 

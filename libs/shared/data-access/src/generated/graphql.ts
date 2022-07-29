@@ -258,12 +258,12 @@ export type AuthTokenResult = {
 };
 
 export type AuthorizationError = {
-  code: Scalars['String'];
-  message: Scalars['InvalidData'];
+  code: Scalars['Int'];
+  message: Scalars['String'];
 };
 
 export type BadRequestError = {
-  code: Scalars['String'];
+  code: Scalars['Int'];
   message: Scalars['String'];
 };
 
@@ -1194,6 +1194,15 @@ export type CustomFormQuery = {
   list: CustomFormListQueryResult;
 };
 
+
+export type CustomFormQueryListArgs = {
+  filter: CustomListFilter;
+};
+
+export type CustomListFilter = {
+  category: FormCategory;
+};
+
 export type DashboardData = {
   listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
   listTodayTrend?: Maybe<Array<Maybe<TodayTrend>>>;
@@ -1617,11 +1626,13 @@ export type Document = {
 };
 
 export type DocumentMutation = {
-  KYM: KymDocumentMutation;
+  KYMUpsert: KymDocumentMutationResult;
 };
 
 
-export type DocumentMutationKymArgs = {
+export type DocumentMutationKymUpsertArgs = {
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']>;
   memberId: Scalars['String'];
 };
 
@@ -2327,8 +2338,6 @@ export type EbankingShareHistory = {
   transactionDirection: Transaction_Direction;
 };
 
-export type Errors = Invalid_Data;
-
 export type Example = {
   age: Scalars['Int'];
   enrolledAt: Scalars['Time'];
@@ -2401,6 +2410,11 @@ export type FormDynamicFieldsFilter = {
 
 export type FormElement = FormField | FormSection;
 
+export type FormElementDeleteResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type FormElementResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<FormElement>;
@@ -2443,7 +2457,7 @@ export type FormFieldInput = {
   maxSize?: InputMaybe<Scalars['Int']>;
   nameEn: Scalars['String'];
   nameNp?: InputMaybe<Scalars['String']>;
-  options?: InputMaybe<FormOptionInput>;
+  options?: InputMaybe<Array<FormOptionInput>>;
 };
 
 export type FormFieldMutation = {
@@ -2864,10 +2878,16 @@ export type FormSectionUpsertInput = {
 };
 
 export type FormSettingMutation = {
+  delete: FormElementDeleteResult;
   field: FormFieldMutation;
   maxSize: FormElementResult;
   option: FormOptionMutation;
   section: FormSectionMutation;
+};
+
+
+export type FormSettingMutationDeleteArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -2935,11 +2955,6 @@ export type GeneralSettingsQuery = {
   depositProduct?: Maybe<DepositProductSettingsQuery>;
   loanProducts?: Maybe<LoanProductsQuery>;
   organization?: Maybe<OrganizationSettingsQuery>;
-};
-
-export type Invalid_Data = {
-  code: Scalars['String'];
-  message: Scalars['InvalidData'];
 };
 
 export type Identity = {
@@ -3473,16 +3488,6 @@ export type KymDocument = {
 export type KymDocumentData = {
   identifier: Scalars['String'];
   url: Scalars['String'];
-};
-
-export type KymDocumentMutation = {
-  upsert: KymDocumentMutationResult;
-};
-
-
-export type KymDocumentMutationUpsertArgs = {
-  fieldId: Scalars['String'];
-  identifiers: Array<Scalars['String']>;
 };
 
 export type KymDocumentMutationResult = {
@@ -6429,7 +6434,7 @@ export type NomineeInNepali = {
 };
 
 export type NotFoundError = {
-  code: Scalars['String'];
+  code: Scalars['Int'];
   message: Scalars['String'];
 };
 
@@ -6876,7 +6881,7 @@ export type SectionDetailsQueryResult = {
 };
 
 export type ServerError = {
-  code: Scalars['String'];
+  code: Scalars['Int'];
   message: Scalars['String'];
 };
 
@@ -7311,7 +7316,7 @@ export type UtilityPayments = {
 };
 
 export type ValidationError = {
-  code: Scalars['String'];
+  code: Scalars['Int'];
   message: Scalars['InvalidData'];
 };
 
@@ -7419,7 +7424,7 @@ export type SetDepositProductMutationVariables = Exact<{
 }>;
 
 
-export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate: string, interest: number } | null, error?: { message: Record<string, Array<string>> } | { data: string } | { hm: string } | { info: string } | { message: Record<string, Array<string>> } | null } | null } | null } | null } };
+export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate: string, interest: number } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
 export type SetDepositIroMutationVariables = Exact<{
   data?: InputMaybe<DepositIroInput>;
@@ -7528,7 +7533,7 @@ export type SetKymDocumentDataMutationVariables = Exact<{
 }>;
 
 
-export type SetKymDocumentDataMutation = { members: { document: { KYM: { upsert: { recordId?: string | null } } } } };
+export type SetKymDocumentDataMutation = { members: { document: { KYMUpsert: { recordId?: string | null } } } };
 
 export type SetInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -7830,15 +7835,15 @@ export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeQuery = { auth: { me: { data?: { id: string, username: string, email?: string | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
 
-type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: string, authorizationErrorMsg: Record<string, Array<string>> };
+type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
 
-type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: string, badRequestErrorMessage: string };
+type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
 
-type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: string, notFoundErrorMsg: string };
+type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
 
-type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: string, serverErrorMessage: string };
+type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
 
-type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: string, validationErrorMsg: Record<string, Array<string>> };
+type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> };
 
 export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
 
@@ -8062,7 +8067,9 @@ export type GetPreDefinedFieldsQueryVariables = Exact<{
 
 export type GetPreDefinedFieldsQuery = { settings: { form?: { predefined: { details: { data?: { __typename: 'FormField', id: string, name: Record<"local"|"en"|"np",string>, fieldType: FormFieldType, hasOtherField: boolean, order: number, dependsOn?: Array<string | null> | null, isDefault: boolean, options?: Array<{ order: number, id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, isDefault: boolean }> | null } | { __typename: 'FormSection', id: string, name: Record<"local"|"en"|"np",string>, isDefault: boolean, sectionType: FormSectionType, maxSize?: number | null, fields?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, isDefault: boolean }> | null, subSections?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, search_term?: FormSectionSearchTerm | null }> | null } | null } } } | null } };
 
-export type GetCustomFieldsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetCustomFieldsQueryVariables = Exact<{
+  kymType: FormCategory;
+}>;
 
 
 export type GetCustomFieldsQuery = { settings: { form?: { custom: { list: { data?: Array<{ __typename: 'FormField', id: string, name: Record<"local"|"en"|"np",string>, fieldType: FormFieldType, hasOtherField: boolean, order: number, dependsOn?: Array<string | null> | null, isDefault: boolean, options?: Array<{ order: number, id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, isDefault: boolean }> | null } | { __typename: 'FormSection', id: string, name: Record<"local"|"en"|"np",string>, isDefault: boolean, sectionType: FormSectionType, maxSize?: number | null, fields?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, isDefault: boolean }> | null, subSections?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, search_term?: FormSectionSearchTerm | null }> | null } | null> | null } } } | null } };
@@ -8503,28 +8510,14 @@ export const SetDepositProductDocument = `
             interest
           }
           error {
-            ... on NotFoundError {
-              hm: message
-            }
-            ... on AuthorizationError {
-              message
-            }
-            ... on BadRequestError {
-              data: message
-            }
-            ... on ServerError {
-              info: message
-            }
-            ... on ValidationError {
-              message
-            }
+            ...MutationError
           }
         }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetDepositProductMutation = <
       TError = unknown,
       TContext = unknown
@@ -8844,10 +8837,8 @@ export const SetKymDocumentDataDocument = `
     mutation setKYMDocumentData($memberId: String!, $fieldId: String!, $identifiers: [String!]!) {
   members {
     document {
-      KYM(memberId: $memberId) {
-        upsert(fieldId: $fieldId, identifiers: $identifiers) {
-          recordId
-        }
+      KYMUpsert(memberId: $memberId, fieldId: $fieldId, identifiers: $identifiers) {
+        recordId
       }
     }
   }
@@ -11255,11 +11246,11 @@ export const useGetPreDefinedFieldsQuery = <
       options
     );
 export const GetCustomFieldsDocument = `
-    query getCustomFields {
+    query getCustomFields($kymType: FormCategory!) {
   settings {
     form {
       custom {
-        list {
+        list(filter: {category: $kymType}) {
           data {
             ... on FormField {
               __typename
@@ -11309,11 +11300,11 @@ export const useGetCustomFieldsQuery = <
       TData = GetCustomFieldsQuery,
       TError = unknown
     >(
-      variables?: GetCustomFieldsQueryVariables,
+      variables: GetCustomFieldsQueryVariables,
       options?: UseQueryOptions<GetCustomFieldsQuery, TError, TData>
     ) =>
     useQuery<GetCustomFieldsQuery, TError, TData>(
-      variables === undefined ? ['getCustomFields'] : ['getCustomFields', variables],
+      ['getCustomFields', variables],
       useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
       options
     );
