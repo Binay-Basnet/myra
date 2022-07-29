@@ -123,6 +123,12 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
     }
   }, [editLoading]);
 
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [id]);
+
   const province = useMemo(() => {
     return (
       data?.administration?.all?.map((d) => ({
@@ -134,6 +140,7 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
 
   const currentProvinceId = watch('accountHolderAddress.provinceId');
   const currentDistrictId = watch('accountHolderAddress.districtId');
+  const currentLocalityId = watch('accountHolderAddress.localGovernmentId');
 
   const districtList = useMemo(
     () =>
@@ -147,6 +154,11 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
       districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
       [],
     [currentDistrictId]
+  );
+
+  const wardList = useMemo(
+    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
   );
 
   return (
@@ -215,11 +227,14 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
                   value: d.id,
                 }))}
               />
-              <FormInput
-                type="number"
+              <FormSelect
                 name="accountHolderAddress.wardNo"
                 label={t['kymInsWardNo']}
                 placeholder={t['kymInsEnterWardNo']}
+                options={wardList?.map((d) => ({
+                  label: d,
+                  value: d,
+                }))}
               />
               <FormInput
                 type="text"

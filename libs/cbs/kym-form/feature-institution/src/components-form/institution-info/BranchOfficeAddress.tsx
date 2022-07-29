@@ -118,6 +118,12 @@ export const BranchOfficeAddress = (props: IProps) => {
     }
   }, [editLoading]);
 
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [id]);
+
   const province = useMemo(() => {
     return (
       data?.administration?.all?.map((d) => ({

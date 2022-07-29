@@ -104,4 +104,10 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
       });
     }
   }, [editLoading]);
+
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [id]);
 };
