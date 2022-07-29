@@ -186,6 +186,9 @@ mutation upsertCustomField($data: FormFieldUpsertInput!) {
           record {
             id
           }
+          error {
+            ...MutationError
+          }
         }
       }
     }

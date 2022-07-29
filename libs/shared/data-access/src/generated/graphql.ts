@@ -7424,7 +7424,7 @@ export type SetDepositProductMutationVariables = Exact<{
 }>;
 
 
-export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate: string, interest: number } | null } | null } | null } | null } };
+export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate: string, interest: number } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
 export type SetDepositIroMutationVariables = Exact<{
   data?: InputMaybe<DepositIroInput>;
@@ -7770,7 +7770,7 @@ export type UpsertCustomFieldMutationVariables = Exact<{
 }>;
 
 
-export type UpsertCustomFieldMutation = { settings: { form?: { field: { upsert: { record?: { id: string } | null } } } | null } };
+export type UpsertCustomFieldMutation = { settings: { form?: { field: { upsert: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
 
 export type DeleteCustomSectionMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -7840,15 +7840,15 @@ export type GetBankListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetBankListQuery = { bank: { bank?: { list?: Array<{ id: string, name?: string | null } | null> | null } | null } };
 
-type MutationError_AuthorizationError_Fragment = {};
+type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
 
 type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
 
-type MutationError_NotFoundError_Fragment = {};
+type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
 
-type MutationError_ServerError_Fragment = {};
+type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
 
-type MutationError_ValidationError_Fragment = {};
+type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> };
 
 export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
 
@@ -8093,6 +8093,13 @@ export type GetPreDefinedFieldsQueryVariables = Exact<{
 
 export type GetPreDefinedFieldsQuery = { settings: { form?: { predefined: { details: { data?: { __typename: 'FormField', id: string, name: Record<"local"|"en"|"np",string>, fieldType: FormFieldType, hasOtherField: boolean, order: number, dependsOn?: Array<string | null> | null, isDefault: boolean, options?: Array<{ order: number, id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, isDefault: boolean }> | null } | { __typename: 'FormSection', id: string, name: Record<"local"|"en"|"np",string>, isDefault: boolean, sectionType: FormSectionType, maxSize?: number | null, fields?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, isDefault: boolean }> | null, subSections?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, search_term?: FormSectionSearchTerm | null }> | null } | null } } } | null } };
 
+export type GetCustomFieldsQueryVariables = Exact<{
+  kymType: FormCategory;
+}>;
+
+
+export type GetCustomFieldsQuery = { settings: { form?: { custom: { list: { data?: Array<{ __typename: 'FormField', id: string, name: Record<"local"|"en"|"np",string>, fieldType: FormFieldType, hasOtherField: boolean, order: number, dependsOn?: Array<string | null> | null, isDefault: boolean, options?: Array<{ order: number, id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, isDefault: boolean }> | null } | { __typename: 'FormSection', id: string, name: Record<"local"|"en"|"np",string>, isDefault: boolean, sectionType: FormSectionType, maxSize?: number | null, fields?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, isDefault: boolean }> | null, subSections?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, search_term?: FormSectionSearchTerm | null }> | null } | null> | null } } } | null } };
+
 export type GetDeclarationQueryVariables = Exact<{
   kymType: DeclarationFor;
 }>;
@@ -8157,6 +8164,26 @@ export const MutationErrorFragmentDoc = `
   ... on BadRequestError {
     __typename
     badRequestErrorMessage: message
+    code
+  }
+  ... on ServerError {
+    __typename
+    serverErrorMessage: message
+    code
+  }
+  ... on AuthorizationError {
+    __typename
+    authorizationErrorMsg: message
+    code
+  }
+  ... on ValidationError {
+    __typename
+    validationErrorMsg: message
+    code
+  }
+  ... on NotFoundError {
+    __typename
+    notFoundErrorMsg: message
     code
   }
 }
@@ -8508,12 +8535,15 @@ export const SetDepositProductDocument = `
             createdDate
             interest
           }
+          error {
+            ...MutationError
+          }
         }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetDepositProductMutation = <
       TError = unknown,
       TContext = unknown
@@ -9604,12 +9634,15 @@ export const UpsertCustomFieldDocument = `
           record {
             id
           }
+          error {
+            ...MutationError
+          }
         }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useUpsertCustomFieldMutation = <
       TError = unknown,
       TContext = unknown
@@ -11493,6 +11526,69 @@ export const useGetPreDefinedFieldsQuery = <
     useQuery<GetPreDefinedFieldsQuery, TError, TData>(
       ['getPreDefinedFields', variables],
       useAxios<GetPreDefinedFieldsQuery, GetPreDefinedFieldsQueryVariables>(GetPreDefinedFieldsDocument).bind(null, variables),
+      options
+    );
+export const GetCustomFieldsDocument = `
+    query getCustomFields($kymType: FormCategory!) {
+  settings {
+    form {
+      custom {
+        list(filter: {category: $kymType}) {
+          data {
+            ... on FormField {
+              __typename
+              id
+              name
+              fieldType
+              hasOtherField
+              order
+              dependsOn
+              isDefault
+              options {
+                order
+                id
+                name
+                enabled
+                isDefault
+              }
+            }
+            ... on FormSection {
+              __typename
+              id
+              name
+              isDefault
+              sectionType
+              maxSize
+              fields {
+                id
+                name
+                enabled
+                fieldType
+                isDefault
+              }
+              subSections {
+                id
+                name
+                search_term
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCustomFieldsQuery = <
+      TData = GetCustomFieldsQuery,
+      TError = unknown
+    >(
+      variables: GetCustomFieldsQueryVariables,
+      options?: UseQueryOptions<GetCustomFieldsQuery, TError, TData>
+    ) =>
+    useQuery<GetCustomFieldsQuery, TError, TData>(
+      ['getCustomFields', variables],
+      useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
       options
     );
 export const GetDeclarationDocument = `

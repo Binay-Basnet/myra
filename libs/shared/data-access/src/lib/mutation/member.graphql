@@ -173,10 +173,12 @@ mutation setKYMDocumentData(
 ) {
   members {
     document {
-      KYM(memberId: $memberId) {
-        upsert(fieldId: $fieldId, identifiers: $identifiers) {
-          recordId
-        }
+      KYMUpsert(
+        memberId: $memberId
+        fieldId: $fieldId
+        identifiers: $identifiers
+      ) {
+        recordId
       }
     }
   }
