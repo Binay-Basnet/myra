@@ -1,9 +1,6 @@
 import React from 'react';
-import { useFieldArray } from 'react-hook-form';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { GrRotateRight } from 'react-icons/gr';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { KymCooperativeFormInput } from '@coop/shared/data-access';
@@ -16,6 +13,7 @@ import { useCooperative } from '../../hooks/customCooperative';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const KymCoopBoardDirectorDetail = (props: IProps) => {
   const { t } = useTranslation();
   const { setSection } = props;
@@ -27,7 +25,7 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
     fields: directorFields,
     append: directorAppend,
     remove: directorRemove,
-  } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
+  } = useFieldArray<any>({ control, name: 'boardOfDirectorsDetails' });
 
   useCooperative({ methods });
   return (
