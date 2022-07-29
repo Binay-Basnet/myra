@@ -5,7 +5,7 @@ import { IconButton } from '@chakra-ui/react';
 
 import { InventoryPageHeader } from '@coop/myra/inventory/ui-layout';
 import { useGetShareRegisterListQuery } from '@coop/shared/data-access';
-import { Column, Table } from '@coop/shared/ui';
+import { Column } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const WarehouseTransferTable = () => {
@@ -72,12 +72,12 @@ export const WarehouseTransferTable = () => {
         buttonHandler={() => router.push('/inventory/warehouse/transfer/add')}
       />
 
-      <Table
-        data={rowItems}
-        isLoading={isFetching}
-        columns={columns}
-        sort={true}
-      />
+      {/*<Table*/}
+      {/*  data={rowItems}*/}
+      {/*  isLoading={isFetching}*/}
+      {/*  columns={columns}*/}
+      {/*  sort={true}*/}
+      {/*/>*/}
     </>
   );
 };
