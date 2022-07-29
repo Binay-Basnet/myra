@@ -1,0 +1,106 @@
+query getCoOperativeKymEditData($id: ID!) {
+  members {
+    cooperative {
+      formState(id: $id) {
+        data {
+          formData {
+            nameOfOrganization
+            regdNumber
+            regdDate
+            registeredAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+
+            operatingAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+
+            email
+            website
+            contactNumber
+            noOfMaleMembers
+            noOfFemaleMembers
+            noOfOtherMembers
+            lastAuditDate
+            lastAgmDate
+            representativeFullName
+            representativeDesignatiton
+            representativeEmail
+            representativeContactNumber
+            representativePanNo
+            permanentRepresentativeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+
+            isPermanentAndTemporaryAddressSame
+            temporaryRepresentativeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+
+            cooperativeTypeId
+            mainServiceProduct
+            noOfMaleEmployee
+            noOfFemaleEmloyee
+            totalEmployee
+            shareCapital
+            reserveAndSurplus
+            savingDeposit
+            loanAccount
+            capitalGrant
+            currentLiabilities
+            nonCurrentLiabilities
+            totalEquityAndLiabilities
+            cashAndCashEquivalent
+            bank
+            investments
+            loan
+            nonCurrentAssets
+            otherNonCurrentAssets
+            totalAssets
+
+            accountHoldersName
+            accountHolderSignature
+            accountHolderStamp
+            hasTCAccepted
+          }
+        }
+      }
+    }
+  }
+}

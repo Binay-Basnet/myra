@@ -17,6 +17,8 @@ import { FormInput, FormSelect } from '@coop/shared/form';
 // import { InstitutionExpectedMonthlyTurnover } from '@coop/shared/data-access';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
+
+import { useInstitution } from '../hooks/institutionHook';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
@@ -36,48 +38,12 @@ export const TransactionProfileInstitution = (props: IProps) => {
   });
   const { setSection } = props;
 
-  const router = useRouter();
-
   const { control, handleSubmit, getValues, watch, setError } = methods;
-  const { mutate } = useSetInstitutionDataMutation({
-    onSuccess: (res) => {
-      setError('institutionName', {
-        type: 'custom',
-        message:
-          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
-      });
-    },
-    onError: () => {
-      setError('institutionName', {
-        type: 'custom',
-        message: 'it is what it is',
-      });
-    },
-  });
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        // console.log(editValues);
-        // if (editValues && data) {
-        mutate({ id: router.query['id'] as string, data });
-        //   refetch();
-        // }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  useInstitution({ methods });
 
   return (
     <FormProvider {...methods}>
       <form
-        // onChange={debounce(() => {
-        //   console.log('hello', getValues());
-        //   mutate({ id, data: getValues() });
-        // }, 800)}
-        // onSubmit={handleSubmit((data) => {
-        //   console.log('data', data);
-        // })}
         onFocus={(e) => {
           const kymSection = getKymSectionInstitution(e.target.id);
           setSection(kymSection);
@@ -85,14 +51,11 @@ export const TransactionProfileInstitution = (props: IProps) => {
       >
         <GroupContainer>
           <>
-            {/* {console.log('hello world', InstitutionExpectedMonthlyTurnover)} */}
-
             <InputGroupContainer
               id="kymInsTransactionProfile"
               scrollMarginTop={'200px'}
             >
               <FormInput
-                // control={control}
                 type="text"
                 name="natureOfTransaction"
                 label={t['kymInsNatureofTransaction']}

@@ -72,7 +72,13 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
         editValues?.members?.institution?.formState?.data?.formData;
       const registeredAddressLocality =
         editValueData?.registeredAddress?.locality?.local;
+      const operatingAddressLocality =
+        editValueData?.operatingOfficeAddress?.locality?.local;
       console.log('edit value', editValueData);
+      const branchOfficeAddress =
+        editValueData?.branchOfficeAddress?.locality?.local;
+      const accountHoldersAddress =
+        editValueData?.accountHolderAddress?.locality?.local;
 
       reset({
         ...pickBy(
@@ -82,6 +88,18 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
         registeredAddress: {
           ...editValueData?.registeredAddress,
           locality: registeredAddressLocality,
+        },
+        operatingOfficeAddress: {
+          ...editValueData?.operatingOfficeAddress,
+          locality: operatingAddressLocality,
+        },
+        branchOfficeAddress: {
+          ...editValueData?.branchOfficeAddress,
+          locality: branchOfficeAddress,
+        },
+        accountHolderAddress: {
+          ...editValueData?.accountHolderAddress,
+          locality: accountHoldersAddress,
         },
       });
     }

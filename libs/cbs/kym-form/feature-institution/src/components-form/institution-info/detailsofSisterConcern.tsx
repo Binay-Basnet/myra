@@ -11,8 +11,9 @@ import {
   GroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  KymInsInput,
+  KymInsSisterConcernInput,
   useDeleteSisterConcernsMutation,
+  useGetInstitutionSisterDetailsEditListQuery,
   useGetNewIdMutation,
   useSetSisterConcernsMutation,
 } from '@coop/shared/data-access';
@@ -38,7 +39,7 @@ const AddSister = ({
   const { t } = useTranslation();
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const router = useRouter();
 
@@ -46,10 +47,37 @@ const AddSister = ({
 
   const { mutate } = useSetSisterConcernsMutation();
 
+  const { data: editValues } = useGetInstitutionSisterDetailsEditListQuery({
+    id: id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.institution?.listSisterConcerns?.data;
+
+      const familyMemberDetail = editValueData?.find(
+        (data) => data?.id === sisterId
+      );
+
+      if (familyMemberDetail) {
+        reset({
+          name: familyMemberDetail?.name,
+          natureOfBusiness: familyMemberDetail?.natureOfBusiness,
+          address: familyMemberDetail?.address,
+          phoneNo: familyMemberDetail?.phoneNo,
+        });
+      }
+    }
+  }, [editValues]);
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        mutate({ id, sis: sisterId, data: { ...data } });
+        mutate({
+          id,
+          sis: sisterId,
+          data: { institutionId: id, ...data },
+        });
       }, 800)
     );
 
@@ -118,7 +146,7 @@ interface IProps {
 
 export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
   const { t } = useTranslation();
-  const methods = useForm<KymInsInput>({
+  const methods = useForm<KymInsSisterConcernInput>({
     defaultValues: {},
   });
   const { setSection } = props;
@@ -129,6 +157,27 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
   const { control, handleSubmit, getValues, watch, setError } = methods;
 
   const [sisterIds, setSisterIds] = useState<string[]>([]);
+
+  const { data: editValues } = useGetInstitutionSisterDetailsEditListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.institution?.listSisterConcerns?.data;
+
+      setSisterIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
+        ) ?? []
+      );
+    }
+  }, [editValues]);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
