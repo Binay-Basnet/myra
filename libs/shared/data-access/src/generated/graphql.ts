@@ -7835,6 +7835,11 @@ export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeQuery = { auth: { me: { data?: { id: string, username: string, email?: string | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
 
+export type GetBankListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBankListQuery = { bank: { bank?: { list?: Array<{ id: string, name?: string | null } | null> | null } | null } };
+
 type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
 
 type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
@@ -7853,6 +7858,13 @@ export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetConfigQuery = { config: { countries?: Array<{ name?: string | null, code?: string | null } | null> | null } };
+
+export type GetCoOperativeKymEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetCoOperativeKymEditDataQuery = { members: { cooperative?: { formState?: { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null, email?: string | null, website?: string | null, contactNumber?: string | null, noOfMaleMembers?: number | null, noOfFemaleMembers?: number | null, noOfOtherMembers?: number | null, lastAuditDate?: string | null, lastAgmDate?: string | null, representativeFullName?: string | null, representativeDesignatiton?: string | null, representativeEmail?: string | null, representativeContactNumber?: string | null, representativePanNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, cooperativeTypeId?: string | null, mainServiceProduct?: string | null, noOfMaleEmployee?: number | null, noOfFemaleEmloyee?: number | null, totalEmployee?: number | null, shareCapital?: number | null, reserveAndSurplus?: number | null, savingDeposit?: number | null, loanAccount?: number | null, capitalGrant?: number | null, currentLiabilities?: number | null, nonCurrentLiabilities?: number | null, totalEquityAndLiabilities?: number | null, cashAndCashEquivalent?: number | null, bank?: number | null, investments?: number | null, loan?: number | null, nonCurrentAssets?: number | null, otherNonCurrentAssets?: number | null, totalAssets?: number | null, accountHoldersName?: string | null, accountHolderSignature?: string | null, accountHolderStamp?: string | null, hasTCAccepted?: boolean | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, permanentRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetAccountListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7923,7 +7935,21 @@ export type GetInstitutionKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetInstitutionKymEditDataQuery = { members: { institution?: { formState?: { data?: { lastUpdated: { account: KymInsAccountSection } | { declaration: KymInsDeclarationSection } | { directorDetails: KymInsDirectorDetailsSection } | { information: KymInsInformationSection } | { transaction: KymInsTransactionSection }, sectionStatus?: { information?: { completed?: Array<KymInsInformationSection | null> | null, error?: Array<KymInsInformationSection | null> | null } | null, transaction?: { completed?: Array<KymInsTransactionSection | null> | null, error?: Array<KymInsTransactionSection | null> | null } | null, directorDetails?: { completed?: Array<KymInsDirectorDetailsSection | null> | null, error?: Array<KymInsDirectorDetailsSection | null> | null } | null } | null, formData?: { institutionName?: string | null, institutionType?: string | null, natureOfBusiness?: string | null, registrationDate?: string | null, vatOrPanNo?: string | null, noOfBranches?: number | null, registeredNumber?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, email?: string | null, website?: string | null, postBoxNo?: string | null, numberOfEmployee?: number | null, dateOfLastAGM?: string | null, bank?: string | null, accountNumber?: string | null, accountName?: string | null, natureOfTransaction?: string | null, annualTurnover?: number | null, initialDepositAmount?: number | null, expectedMonthlyTurnover?: string | null, expectedMonthlyTransaction?: string | null, accountType?: AccountOperationType | null, isCompanyStampCompulsory?: boolean | null, specialInstruction?: string | null, accountHolderName?: string | null, accountHolderPhone?: string | null, accountHolderEmail?: string | null, accountHolderSignature?: string | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null, accountHolderAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null } | null } | null } };
+export type GetInstitutionKymEditDataQuery = { members: { institution?: { formState?: { data?: { lastUpdated: { account: KymInsAccountSection } | { declaration: KymInsDeclarationSection } | { directorDetails: KymInsDirectorDetailsSection } | { information: KymInsInformationSection } | { transaction: KymInsTransactionSection }, sectionStatus?: { information?: { completed?: Array<KymInsInformationSection | null> | null, error?: Array<KymInsInformationSection | null> | null } | null, transaction?: { completed?: Array<KymInsTransactionSection | null> | null, error?: Array<KymInsTransactionSection | null> | null } | null, directorDetails?: { completed?: Array<KymInsDirectorDetailsSection | null> | null, error?: Array<KymInsDirectorDetailsSection | null> | null } | null } | null, formData?: { institutionName?: string | null, institutionType?: string | null, natureOfBusiness?: string | null, registrationDate?: string | null, vatOrPanNo?: string | null, noOfBranches?: number | null, registeredNumber?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, email?: string | null, website?: string | null, postBoxNo?: string | null, numberOfEmployee?: number | null, dateOfLastAGM?: string | null, bank?: string | null, accountNumber?: string | null, accountName?: string | null, natureOfTransaction?: string | null, annualTurnover?: number | null, initialDepositAmount?: number | null, expectedMonthlyTurnover?: string | null, expectedMonthlyTransaction?: string | null, accountType?: AccountOperationType | null, isCompanyStampCompulsory?: boolean | null, specialInstruction?: string | null, accountHolderName?: string | null, accountHolderPhone?: string | null, accountHolderEmail?: string | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, accountHolderAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
+
+export type GetInstitutionSisterDetailsEditListQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInstitutionSisterDetailsEditListQuery = { members: { institution?: { listSisterConcerns?: { data?: Array<{ id?: string | null, name?: string | null, natureOfBusiness?: string | null, address?: string | null, phoneNo?: string | null } | null> | null } | null } | null } };
+
+export type GetInsBoardDirectorEditListQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInsBoardDirectorEditListQuery = { members: { institution?: { listDirectors?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isTemporaryAndPermanentAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNo?: string | null, emailAddress?: string | null, citizenshipNo?: string | null, panNo?: string | null, isHeadOfOrganization?: boolean | null, isAffiliatedWithOtherFirms?: boolean | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, firmDetails?: { directorName?: string | null, institutionName?: string | null, address?: string | null, designation?: string | null, yearlyIncome?: number | null } | null } | null> | null } | null } | null } };
 
 export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9895,6 +9921,30 @@ export const useGetMeQuery = <
       useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
       options
     );
+export const GetBankListDocument = `
+    query getBankList {
+  bank {
+    bank {
+      list {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export const useGetBankListQuery = <
+      TData = GetBankListQuery,
+      TError = unknown
+    >(
+      variables?: GetBankListQueryVariables,
+      options?: UseQueryOptions<GetBankListQuery, TError, TData>
+    ) =>
+    useQuery<GetBankListQuery, TError, TData>(
+      variables === undefined ? ['getBankList'] : ['getBankList', variables],
+      useAxios<GetBankListQuery, GetBankListQueryVariables>(GetBankListDocument).bind(null, variables),
+      options
+    );
 export const GetConfigDocument = `
     query getConfig {
   config {
@@ -9915,6 +9965,121 @@ export const useGetConfigQuery = <
     useQuery<GetConfigQuery, TError, TData>(
       variables === undefined ? ['getConfig'] : ['getConfig', variables],
       useAxios<GetConfigQuery, GetConfigQueryVariables>(GetConfigDocument).bind(null, variables),
+      options
+    );
+export const GetCoOperativeKymEditDataDocument = `
+    query getCoOperativeKymEditData($id: ID!) {
+  members {
+    cooperative {
+      formState(id: $id) {
+        data {
+          formData {
+            nameOfOrganization
+            regdNumber
+            regdDate
+            registeredAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            operatingAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            email
+            website
+            contactNumber
+            noOfMaleMembers
+            noOfFemaleMembers
+            noOfOtherMembers
+            lastAuditDate
+            lastAgmDate
+            representativeFullName
+            representativeDesignatiton
+            representativeEmail
+            representativeContactNumber
+            representativePanNo
+            permanentRepresentativeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            isPermanentAndTemporaryAddressSame
+            temporaryRepresentativeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            cooperativeTypeId
+            mainServiceProduct
+            noOfMaleEmployee
+            noOfFemaleEmloyee
+            totalEmployee
+            shareCapital
+            reserveAndSurplus
+            savingDeposit
+            loanAccount
+            capitalGrant
+            currentLiabilities
+            nonCurrentLiabilities
+            totalEquityAndLiabilities
+            cashAndCashEquivalent
+            bank
+            investments
+            loan
+            nonCurrentAssets
+            otherNonCurrentAssets
+            totalAssets
+            accountHoldersName
+            accountHolderSignature
+            accountHolderStamp
+            hasTCAccepted
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoOperativeKymEditDataQuery = <
+      TData = GetCoOperativeKymEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetCoOperativeKymEditDataQueryVariables,
+      options?: UseQueryOptions<GetCoOperativeKymEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetCoOperativeKymEditDataQuery, TError, TData>(
+      ['getCoOperativeKymEditData', variables],
+      useAxios<GetCoOperativeKymEditDataQuery, GetCoOperativeKymEditDataQueryVariables>(GetCoOperativeKymEditDataDocument).bind(null, variables),
       options
     );
 export const GetAccountListDocument = `
@@ -10327,6 +10492,11 @@ export const GetInstitutionKymEditDataDocument = `
               localGovernmentId
               wardNo
               locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
             }
             noOfBranches
             branchOfficeAddress {
@@ -10335,6 +10505,11 @@ export const GetInstitutionKymEditDataDocument = `
               localGovernmentId
               wardNo
               locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
             }
             registeredAddress {
               provinceId
@@ -10342,6 +10517,11 @@ export const GetInstitutionKymEditDataDocument = `
               localGovernmentId
               wardNo
               locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
             }
             registeredNumber
             issuingOffice
@@ -10372,8 +10552,12 @@ export const GetInstitutionKymEditDataDocument = `
               localGovernmentId
               wardNo
               locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
             }
-            accountHolderSignature
           }
         }
       }
@@ -10391,6 +10575,102 @@ export const useGetInstitutionKymEditDataQuery = <
     useQuery<GetInstitutionKymEditDataQuery, TError, TData>(
       ['getInstitutionKymEditData', variables],
       useAxios<GetInstitutionKymEditDataQuery, GetInstitutionKymEditDataQueryVariables>(GetInstitutionKymEditDataDocument).bind(null, variables),
+      options
+    );
+export const GetInstitutionSisterDetailsEditListDocument = `
+    query getInstitutionSisterDetailsEditList($id: ID!) {
+  members {
+    institution {
+      listSisterConcerns(id: $id) {
+        data {
+          id
+          name
+          natureOfBusiness
+          address
+          phoneNo
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInstitutionSisterDetailsEditListQuery = <
+      TData = GetInstitutionSisterDetailsEditListQuery,
+      TError = unknown
+    >(
+      variables: GetInstitutionSisterDetailsEditListQueryVariables,
+      options?: UseQueryOptions<GetInstitutionSisterDetailsEditListQuery, TError, TData>
+    ) =>
+    useQuery<GetInstitutionSisterDetailsEditListQuery, TError, TData>(
+      ['getInstitutionSisterDetailsEditList', variables],
+      useAxios<GetInstitutionSisterDetailsEditListQuery, GetInstitutionSisterDetailsEditListQueryVariables>(GetInstitutionSisterDetailsEditListDocument).bind(null, variables),
+      options
+    );
+export const GetInsBoardDirectorEditListDocument = `
+    query getInsBoardDirectorEditList($id: ID!) {
+  members {
+    institution {
+      listDirectors(id: $id) {
+        data {
+          id
+          fullName
+          designation
+          permanentAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isTemporaryAndPermanentAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          dateOfMembership
+          highestQualification
+          mobileNo
+          emailAddress
+          citizenshipNo
+          panNo
+          isHeadOfOrganization
+          isAffiliatedWithOtherFirms
+          firmDetails {
+            directorName
+            institutionName
+            address
+            designation
+            yearlyIncome
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInsBoardDirectorEditListQuery = <
+      TData = GetInsBoardDirectorEditListQuery,
+      TError = unknown
+    >(
+      variables: GetInsBoardDirectorEditListQueryVariables,
+      options?: UseQueryOptions<GetInsBoardDirectorEditListQuery, TError, TData>
+    ) =>
+    useQuery<GetInsBoardDirectorEditListQuery, TError, TData>(
+      ['getInsBoardDirectorEditList', variables],
+      useAxios<GetInsBoardDirectorEditListQuery, GetInsBoardDirectorEditListQueryVariables>(GetInsBoardDirectorEditListDocument).bind(null, variables),
       options
     );
 export const GetInventoryItemsDocument = `

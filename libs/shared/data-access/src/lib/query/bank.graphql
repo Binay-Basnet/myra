@@ -1,0 +1,10 @@
+query getBankList {
+  bank {
+    bank {
+      list {
+        id
+        name
+      }
+    }
+  }
+}

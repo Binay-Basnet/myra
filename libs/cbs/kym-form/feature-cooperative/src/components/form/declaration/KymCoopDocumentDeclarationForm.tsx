@@ -1,57 +1,79 @@
+import { FormProvider, useForm } from 'react-hook-form';
+
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { KymCooperativeFormInput } from '@coop/shared/data-access';
 import { FormFileInput } from '@coop/shared/form';
 import { Grid, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
-export const KymCoopDocumentDeclarationForm = () => {
+import { useCooperative } from '../../hooks/customCooperative';
+
+interface IProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+export const KymCoopDocumentDeclarationForm = (props: IProps) => {
   const { t } = useTranslation();
+  const { setSection } = props;
+  const methods = useForm<KymCooperativeFormInput>({
+    defaultValues: {},
+  });
+  useCooperative({ methods });
   return (
-    <GroupContainer id="Document Declaration">
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymCoopDOCUMENTDECLARATION']}
-      </Text>
-      <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
-        <FormFileInput
-          size="lg"
-          label={t['kymCoopAGMDecisionDocument']}
-          name="passportSizePhoto"
-        />
-        <FormFileInput
-          size="lg"
-          label={t['kymCoopRegisteredCertificate']}
-          name="signaturePhoto"
-        />
-        <FormFileInput size="lg" label="MOA/AOA" name="citizenshipPhoto" />
-        <FormFileInput
-          size="lg"
-          label={t['kymCoopPANCertificate']}
-          name="fingerprintPhoto"
-        />
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymCoopSection(e.target.id);
+          setSection(kymSection);
+        }}
+      >
+        <GroupContainer id="Document Declaration">
+          <Text fontSize="r1" fontWeight="SemiBold">
+            {t['kymCoopDOCUMENTDECLARATION']}
+          </Text>
+          <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
+            <FormFileInput
+              size="lg"
+              label={t['kymCoopAGMDecisionDocument']}
+              name="passportSizePhoto"
+            />
+            <FormFileInput
+              size="lg"
+              label={t['kymCoopRegisteredCertificate']}
+              name="signaturePhoto"
+            />
+            <FormFileInput size="lg" label="MOA/AOA" name="citizenshipPhoto" />
+            <FormFileInput
+              size="lg"
+              label={t['kymCoopPANCertificate']}
+              name="fingerprintPhoto"
+            />
 
-        <FormFileInput
-          size="lg"
-          label={t['kymCoopTaxClearance']}
-          name="citizenshipPhoto"
-        />
+            <FormFileInput
+              size="lg"
+              label={t['kymCoopTaxClearance']}
+              name="citizenshipPhoto"
+            />
 
-        <FormFileInput
-          size="lg"
-          label={t['kymCoopLatestAuditReport']}
-          name="citizenshipPhoto"
-        />
+            <FormFileInput
+              size="lg"
+              label={t['kymCoopLatestAuditReport']}
+              name="citizenshipPhoto"
+            />
 
-        <FormFileInput
-          size="lg"
-          label={t['kymCoopLogo']}
-          name="citizenshipPhoto"
-        />
+            <FormFileInput
+              size="lg"
+              label={t['kymCoopLogo']}
+              name="citizenshipPhoto"
+            />
 
-        <FormFileInput
-          size="lg"
-          label={t['kymCoopMinuteofCentralRep']}
-          name="citizenshipPhoto"
-        />
-      </Grid>
-    </GroupContainer>
+            <FormFileInput
+              size="lg"
+              label={t['kymCoopMinuteofCentralRep']}
+              name="citizenshipPhoto"
+            />
+          </Grid>
+        </GroupContainer>
+      </form>
+    </FormProvider>
   );
 };
