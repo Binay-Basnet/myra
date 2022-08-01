@@ -1,4 +1,3 @@
-// import debounce from 'lodash/debounce';
 import { useFormContext } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
@@ -126,7 +125,13 @@ export const DepositFrequency = () => {
                 name="penaltyData.flatRatePenalty"
                 type="number"
                 label={t['depositProductFlatratePenalty']}
-                placeholder={t['depositProductFlatratePenalty']}
+                textAlign={'right'}
+                placeholder="0.00"
+                rightElement={
+                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                    %
+                  </Text>
+                }
               />
             )}
             {penaltyType === PenaltyRateType.RelativeRate && (

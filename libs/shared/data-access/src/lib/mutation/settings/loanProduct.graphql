@@ -1,0 +1,23 @@
+mutation setLoanProduct($id: ID!, $data: LoanProductInput) {
+  settings {
+    general {
+      loanProducts {
+        upsert(id: $id, data: $data) {
+          recordId
+          record {
+            id
+            objState
+            createdAt
+            modifiedAt
+            productName
+            productType
+          }
+          error {
+            ...MutationError
+          }
+          query
+        }
+      }
+    }
+  }
+}

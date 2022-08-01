@@ -3,7 +3,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-// import debounce from 'lodash/debounce';
 import {
   ContainerWithDivider,
   InputGroupContainer,
@@ -17,7 +16,6 @@ import {
 import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
-  Button,
   Container,
   FormFooter,
   GridItem,
@@ -175,7 +173,7 @@ export function SettingsDepositProductsAdd(
     mutate(
       { id, data: updatedData },
       {
-        onSuccess: () => router.push('/settings/general/deposit-products'),
+        onSuccess: () => router.push('/settings/general/loan-products'),
       }
     );
   };

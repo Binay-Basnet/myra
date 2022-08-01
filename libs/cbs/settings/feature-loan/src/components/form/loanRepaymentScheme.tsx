@@ -1,26 +1,26 @@
 import { useFormContext } from 'react-hook-form';
 
-// import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { LoanRepaymentScheme } from '@coop/shared/data-access';
 import { FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, SubHeadingText, TopText } from '../formui';
 
-export const LoanRepaymentScheme = () => {
+export const LoanRepaymentSchemes = () => {
   const { watch } = useFormContext();
-  const loanScheme = watch('loanRepaymentScheme');
+  const loanScheme = watch('repaymentScheme');
   const { t } = useTranslation();
 
   const loanschemeOptions = [
-    { label: t['loanProductEPI'], value: 'epi' },
-    { label: t['loanProductEMI'], value: 'emi' },
-    { label: t['loanProductFlat'], value: 'flat' },
+    { label: t['loanProductEPI'], value: LoanRepaymentScheme.Epi },
+    { label: t['loanProductEMI'], value: LoanRepaymentScheme.Emi },
+    { label: t['loanProductFlat'], value: LoanRepaymentScheme.Flat },
   ];
   const YesNoOptions = [
-    { label: t['yes'], value: 'yes' },
-    { label: t['no'], value: 'no' },
+    { label: t['yes'], value: true },
+    { label: t['no'], value: false },
   ];
 
   return (
@@ -31,24 +31,27 @@ export const LoanRepaymentScheme = () => {
         justifyContent={'space-between'}
       >
         <TopText>{t['loanProductLoanRepaymentScheme']}</TopText>
-        <FormSwitchTab name="loanRepaymentScheme" options={loanschemeOptions} />
+        <FormSwitchTab name="repaymentScheme" options={loanschemeOptions} />
       </Box>
-      <InputGroupContainer>
-        {loanScheme && (loanScheme === 'epi' || loanScheme === 'emi') && (
-          <FormSelect
-            name="modeOfPayment"
-            label={t['loanProductModePayment']}
-            placeholder={t['loanProductSelectModePayment']}
-            // options={loanschemeOptions}
-          />
+
+      {loanScheme &&
+        (loanScheme === LoanRepaymentScheme.Epi ||
+          loanScheme === LoanRepaymentScheme.Emi) && (
+          <InputGroupContainer>
+            <FormSelect
+              name="modeOfPayment"
+              label={t['loanProductModePayment']}
+              placeholder={t['loanProductSelectModePayment']}
+              // options={loanschemeOptions}
+            />
+            <FormSelect
+              name="installmentType"
+              label={t['loanProductInstallmentType']}
+              placeholder={t['loanProductSelectInstallmentType']}
+            />
+          </InputGroupContainer>
         )}
 
-        <FormSelect
-          name="installmentType"
-          label={t['loanProductInstallmentType']}
-          placeholder={t['loanProductSelectInstallmentType']}
-        />
-      </InputGroupContainer>
       <Box
         display={'flex'}
         flexDirection="row"
@@ -72,7 +75,7 @@ export const LoanRepaymentScheme = () => {
           {t['loanProductIsMonthlyInterestCompulsory']}
         </SubHeadingText>
         <FormSwitchTab
-          name="monthlyInterestCompulsory"
+          name="isMonthlyInstallmentCompulsory"
           options={YesNoOptions}
         />
       </Box>

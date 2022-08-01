@@ -16,11 +16,11 @@ import {
 
 export const MinimunTenure = () => {
   const [rightElement, setRightElement] = useState('days');
-  const { resetField, watch } = useFormContext();
-  const minimumTenure = watch('enableminimumTenure');
-
-  const minimumTenureUnit = watch('minimumTenureUnit');
   const { t } = useTranslation();
+  const { resetField, watch } = useFormContext();
+
+  const minimumTenure = watch('minTenure');
+  const minimumTenureUnit = watch('minTenureUnit');
 
   const unitOptions = [
     {
@@ -59,23 +59,12 @@ export const MinimunTenure = () => {
 
   return (
     <BoxContainer>
-      {/* <TextBoxContainer>
-        <TopText>Minimum Tenure</TopText>
-        <SubText>
-          Note: Week is equal to 7 days, Month is equal to 30 days & year is
-          equal to 365days.minimumTenureUnit
-        </SubText>
-      </TextBoxContainer>
-      <FormSwitchTab name={'depositFrequency'} options={applicableSwitch} /> */}
       <Box display={'flex'} justifyContent="space-between">
         <TextBoxContainer>
           <SubHeadingText>{t['loanProductMinimumTenure']} </SubHeadingText>
           <SubText>{t['loanProductNoteWeek']}</SubText>
         </TextBoxContainer>
-        <FormSwitchTab
-          name={'enableminimumTenure'}
-          options={applicableSwitch}
-        />
+        <FormSwitchTab name={'minTenure'} options={applicableSwitch} />
       </Box>
       {minimumTenure && (
         <BoxContainer
@@ -91,11 +80,11 @@ export const MinimunTenure = () => {
             <Text fontSize={'s3'} fontWeight="500">
               {t['loanProductUnit']}
             </Text>
-            <FormSwitchTab name={'minimumTenureUnit'} options={unitOptions} />
+            <FormSwitchTab name="minTenureUnit" options={unitOptions} />
           </Box>
           <Box w="290px">
             <FormInput
-              name="minimunTenureNumber"
+              name="minTenureUnitNumber"
               textAlign={'right'}
               label={t['loanProductNumber']}
               placeholder={t['loanProductEnterNumber']}

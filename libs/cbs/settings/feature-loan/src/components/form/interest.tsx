@@ -15,8 +15,8 @@ export const Interest = () => {
   const { t } = useTranslation();
 
   const yesNo = [
-    { label: t['yes'], value: 'yes' },
-    { label: t['no'], value: 'no' },
+    { label: t['yes'], value: true },
+    { label: t['no'], value: false },
   ];
 
   return (
@@ -26,7 +26,7 @@ export const Interest = () => {
       </TextBoxContainer>
       <InputGroupContainer>
         <FormInput
-          name="minimumInterestRate"
+          name="interest.minRate"
           type="number"
           label={t['loanProductMinimumRate']}
           textAlign={'right'}
@@ -38,7 +38,7 @@ export const Interest = () => {
           }
         />
         <FormInput
-          name="maximumInterestRate"
+          name="interest.maxRate"
           type="number"
           label={t['loanProductMaximumRate']}
           textAlign={'right'}
@@ -50,7 +50,7 @@ export const Interest = () => {
           }
         />
         <FormInput
-          name="defaultInterestRate"
+          name="interest.defaultRate"
           type="number"
           label={t['loanProductDefaultRate']}
           textAlign={'right'}
@@ -62,7 +62,7 @@ export const Interest = () => {
           }
         />
         <FormInput
-          name="ceoAuthenticationRate"
+          name="interest.ceoAuthority"
           type="number"
           label={t['loanProductCEOAuthority']}
           textAlign={'right'}
@@ -74,7 +74,7 @@ export const Interest = () => {
           }
         />
         <FormInput
-          name="boardAuthenticationRate"
+          name="interest.boardAuthority"
           type="number"
           label={t['loanProductBoardAuthority']}
           textAlign={'right'}
@@ -85,11 +85,7 @@ export const Interest = () => {
             </Text>
           }
         />
-        <FormSelect
-          name="postingFrequency"
-          label={t['loanProductPostingFrequency']}
-          placeholder={t['loanProductSelectPostingFrequency']}
-        />
+
         <FormSelect
           name="interestMethod"
           label={t['loanProductInterestMethod']}
@@ -99,15 +95,12 @@ export const Interest = () => {
       <Box
         display={'flex'}
         flexDirection="row"
-        border="1px solid"
-        borderColor={'border.layout'}
         justifyContent="space-between"
-        p="s16"
         alignItems={'center'}
-        borderRadius="4px"
+        mt="s16"
       >
         <SubHeadingText>{t['loanProductOverrideInterest']} </SubHeadingText>
-        <FormSwitchTab name={'overrideInterest'} options={yesNo} />
+        <FormSwitchTab name="overrideInterest" options={yesNo} />
       </Box>
     </BoxContainer>
   );

@@ -1,4 +1,6 @@
 // import debounce from 'lodash/debounce';
+import { useFormContext } from 'react-hook-form';
+
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
@@ -6,20 +8,21 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { DividerContainer, SubHeadingText } from '../formui';
 
-export const Questions = ({ watch }: any) => {
+export const Questions = () => {
+  const { watch } = useFormContext();
   const { t } = useTranslation();
   const collateral = watch('collateral');
 
   const yesNo = [
-    { label: t['yes'], value: 'yes' },
-    { label: t['no'], value: 'no' },
+    { label: t['yes'], value: true },
+    { label: t['no'], value: false },
   ];
 
   return (
     <DividerContainer>
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>{t['loanProductInsurance']} </SubHeadingText>
-        <FormSwitchTab name={'autoOpenWhenJoin'} options={yesNo} />
+        <FormSwitchTab name="isInsuranceApplicable" options={yesNo} />
       </Box>
       <Box display={'flex'} flexDirection="column" gap="s16">
         <Box
@@ -28,9 +31,9 @@ export const Questions = ({ watch }: any) => {
           justifyContent="space-between"
         >
           <SubHeadingText>{t['loanProductCollateral']} </SubHeadingText>
-          <FormSwitchTab name={'collateral'} options={yesNo} />
+          <FormSwitchTab name="isCollateralRequired" options={yesNo} />
         </Box>
-        {collateral && collateral === 'yes' && (
+        {collateral && (
           <Box
             p="s16"
             border={'1px solid'}
@@ -56,26 +59,22 @@ export const Questions = ({ watch }: any) => {
       </Box>
 
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>{t['loanProductRebate']} </SubHeadingText>
-        <FormSwitchTab name={'rebate'} options={yesNo} />
-      </Box>
-
-      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>{t['loanProductStaffProduct']} </SubHeadingText>
-        <FormSwitchTab name={'staffProduct'} options={yesNo} />
+        <FormSwitchTab name="isStaffProduct" options={yesNo} />
       </Box>
 
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>
           {t['loanProductSupportMultipleAccount']}t
         </SubHeadingText>
-        <FormSwitchTab name={'supportMultipleAcc'} options={yesNo} />
+        <FormSwitchTab name="supportMultipleAccounts" options={yesNo} />
       </Box>
+
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>
           {t['loanProductLoanScheduleChangeOverride']}
         </SubHeadingText>
-        <FormSwitchTab name={'loanScheduleChangeOverride'} options={yesNo} />
+        <FormSwitchTab name="loanScheduleChangeOverride" options={yesNo} />
       </Box>
     </DividerContainer>
   );
