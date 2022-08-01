@@ -1,5 +1,5 @@
 import { DetailPageContentCard } from '@coop/cbs/settings/ui-layout';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, ListItem, Text, UnorderedList } from '@coop/shared/ui';
 
 export function LoanProductOverviewDetailPage() {
   return (
@@ -82,8 +82,8 @@ export function LoanProductOverviewDetailPage() {
         <Box p="s16">
           <Box px="s16" display="grid" gridTemplateColumns="repeat(2,1fr)">
             <Box>
-              <ul>
-                <li>
+              <UnorderedList>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -99,9 +99,9 @@ export function LoanProductOverviewDetailPage() {
                       12
                     </Text>
                   </Text>
-                </li>
+                </ListItem>
 
-                <li>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -117,9 +117,9 @@ export function LoanProductOverviewDetailPage() {
                       35
                     </Text>
                   </Text>
-                </li>
+                </ListItem>
 
-                <li>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -135,9 +135,9 @@ export function LoanProductOverviewDetailPage() {
                       Male, Female
                     </Text>
                   </Text>
-                </li>
+                </ListItem>
 
-                <li>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -153,9 +153,9 @@ export function LoanProductOverviewDetailPage() {
                       Married
                     </Text>
                   </Text>
-                </li>
+                </ListItem>
 
-                <li>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -171,9 +171,9 @@ export function LoanProductOverviewDetailPage() {
                       Business, Agriculture
                     </Text>
                   </Text>
-                </li>
+                </ListItem>
 
-                <li>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -189,13 +189,13 @@ export function LoanProductOverviewDetailPage() {
                       SEE
                     </Text>
                   </Text>
-                </li>
-              </ul>
+                </ListItem>
+              </UnorderedList>
             </Box>
 
             <Box>
-              <ul>
-                <li>
+              <UnorderedList>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -211,9 +211,9 @@ export function LoanProductOverviewDetailPage() {
                       No
                     </Text>
                   </Text>
-                </li>
+                </ListItem>
 
-                <li>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -229,9 +229,9 @@ export function LoanProductOverviewDetailPage() {
                       Club
                     </Text>
                   </Text>
-                </li>
+                </ListItem>
 
-                <li>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -247,9 +247,9 @@ export function LoanProductOverviewDetailPage() {
                       Club
                     </Text>
                   </Text>
-                </li>
+                </ListItem>
 
-                <li>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -265,9 +265,9 @@ export function LoanProductOverviewDetailPage() {
                       Saving & Loan
                     </Text>
                   </Text>
-                </li>
+                </ListItem>
 
-                <li>
+                <ListItem>
                   <Text
                     fontSize="r1"
                     color="neutralColorLight.Gray-70"
@@ -283,8 +283,8 @@ export function LoanProductOverviewDetailPage() {
                       Buddhist
                     </Text>
                   </Text>
-                </li>
-              </ul>
+                </ListItem>
+              </UnorderedList>
             </Box>
           </Box>
         </Box>

@@ -1,4 +1,5 @@
 import { chakra, Tab, TabList, Tabs, TabsProps } from '@chakra-ui/react';
+
 import { TextFields } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
