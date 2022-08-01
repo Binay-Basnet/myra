@@ -83,6 +83,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               children={rightAddonText}
               bg="white"
               color="accent.debit"
+              border="1px solid"
+              borderColor="gray.300"
             />
           )}
         </InputGroup>

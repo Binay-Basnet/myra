@@ -666,9 +666,10 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                             px="s16"
                             display="flex"
                             alignItems="center"
+                            cursor="pointer"
                             onClick={() => {
                               dispatch(logout());
-                              localStorage.clear();
+                              router.push('/login');
                             }}
                           >
                             <Text

@@ -455,7 +455,7 @@ export type Branch = {
   category?: Maybe<BranchCategory>;
   contactNumber?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  estDate?: Maybe<Scalars['Date']>;
+  estDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   location?: Maybe<LocationCoordinate>;
   manager?: Maybe<Member>;
@@ -480,8 +480,8 @@ export enum BranchCategory {
 }
 
 export type BranchConnection = {
-  edges: Array<BranchEdge>;
-  pageInfo: PageInfo;
+  edges?: Maybe<Array<BranchEdge>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -493,11 +493,33 @@ export type BranchDeleteResult = {
 
 export type BranchEdge = {
   cursor: Scalars['Cursor'];
-  node: Branch;
+  node?: Maybe<Branch>;
+};
+
+export type BranchFormData = {
+  abbsStatus?: Maybe<Status>;
+  branchCode?: Maybe<Scalars['String']>;
+  branchStatus?: Maybe<Status>;
+  category?: Maybe<BranchCategory>;
+  districtId?: Maybe<Scalars['Int']>;
+  email?: Maybe<Scalars['String']>;
+  estDate?: Maybe<Scalars['Date']>;
+  localGovernmentId?: Maybe<Scalars['Int']>;
+  locality?: Maybe<Scalars['String']>;
+  location?: Maybe<LocationCoordinate>;
+  managerId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  payableAccountId?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  plTransferId?: Maybe<Scalars['String']>;
+  provinceId?: Maybe<Scalars['Int']>;
+  receivableAccountId?: Maybe<Scalars['String']>;
+  tdsTransaferId?: Maybe<Scalars['String']>;
+  wardNo?: Maybe<Scalars['Int']>;
 };
 
 export type BranchGetResult = {
-  data?: Maybe<Branch>;
+  data?: Maybe<BranchFormData>;
   error?: Maybe<QueryError>;
 };
 
@@ -508,7 +530,7 @@ export type BranchInput = {
   category?: InputMaybe<BranchCategory>;
   districtId?: InputMaybe<Scalars['Int']>;
   email?: InputMaybe<Scalars['String']>;
-  estDate?: InputMaybe<Scalars['Date']>;
+  estDate?: InputMaybe<Scalars['String']>;
   localGovernmentId?: InputMaybe<Scalars['Int']>;
   locality?: InputMaybe<Scalars['String']>;
   location?: InputMaybe<LocationCoordinateInput>;
@@ -3106,8 +3128,14 @@ export type GeneralBranchSettingsMutationDeleteArgs = {
 };
 
 export type GeneralBranchSettingsQuery = {
+  formState?: Maybe<BranchGetResult>;
   list?: Maybe<BranchConnection>;
-  mine?: Maybe<BranchGetResult>;
+  mine?: Maybe<Branch>;
+};
+
+
+export type GeneralBranchSettingsQueryFormStateArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -7676,7 +7704,7 @@ export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { d
 export type GetBranchesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges: Array<{ node: { id: string, branchCode?: string | null, contactNumber?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, manager?: { id: string } | null } }> } | null } | null } | null } };
+export type GetBranchesListQuery = { settings: { general?: { branch?: { list?: { edges?: Array<{ node?: { id: string, branchCode?: string | null, contactNumber?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, manager?: { id: string } | null } | null }> | null } | null } | null } | null } };
 
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
