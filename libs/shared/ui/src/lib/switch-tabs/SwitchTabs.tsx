@@ -88,13 +88,8 @@ export function SwitchTabs({
   const group = getRootProps();
 
   useEffect(() => {
-<<<<<<< HEAD
     if (value !== undefined) {
       setValue(value?.toString());
-=======
-    if (value !== undefined && value !== null) {
-      setValue(value.toString());
->>>>>>> e42beabdb877b9f72237753a8d782c75e08ee15d
     }
   }, [value]);
 
