@@ -14,13 +14,11 @@ import { useTranslation } from '@coop/shared/utils';
 
 interface IAddRelatedTrainingConcern {
   index: number;
-  bodIndex: number;
   removeRelatedTraining: () => void;
 }
 
 const AddRelatedTraining = ({
   index,
-  bodIndex,
   removeRelatedTraining,
 }: IAddRelatedTrainingConcern) => {
   const { t } = useTranslation();
@@ -39,19 +37,19 @@ const AddRelatedTraining = ({
       <InputGroupContainer>
         <FormInput
           type="text"
-          name={`boardOfDirectorsDetails.${bodIndex}.relatedTraining.${index}.subjectOfTraining`}
+          name={`trainingAttended.${index}.subjectOfTraining`}
           label={t['kymCoopUnionSubjectOfTraining']}
           placeholder={t['kymCoopUnionEnterSubjectOfTraining']}
         />
         <FormInput
           type="date"
-          name={`boardOfDirectorsDetails.${bodIndex}.relatedTraining.${index}.dateOfTraining`}
+          name={`trainingAttended.${index}.dateOfTraining`}
           label={t['kymCoopUnionDateOfTraining']}
           placeholder={t['kymCoopUnionEnterDateOfTraining']}
         />
         <FormInput
           type="text"
-          name={`boardOfDirectorsDetails.${bodIndex}.relatedTraining.${index}.trainingOrganization`}
+          name={`trainingAttended.${index}.trainingOrganization`}
           label={t['kymCoopUnionTrainingOrganization']}
           placeholder={t['kymCoopUnionEnterTrainingOrganization']}
         />
@@ -60,20 +58,20 @@ const AddRelatedTraining = ({
   );
 };
 
-interface BoardOfDirectorRelatedTrainingConcern {
+interface IBoardOfDirectorRelatedTrainingConcernProps {
   bodIndex: number;
 }
 
 export const BoardOfDirectorRelatedTraining = ({
   bodIndex,
-}: BoardOfDirectorRelatedTrainingConcern) => {
+}: IBoardOfDirectorRelatedTrainingConcernProps) => {
   const { t } = useTranslation();
   const {
     fields: relatedFields,
     append: relatedAppend,
     remove: relatedRemove,
   } = useFieldArray({
-    name: `boardOfDirectorsDetails.${bodIndex}.relatedTraining`,
+    name: `trainingAttended`,
   });
 
   return (
@@ -97,7 +95,6 @@ export const BoardOfDirectorRelatedTraining = ({
               <Box key={item.id}>
                 <AddRelatedTraining
                   index={index}
-                  bodIndex={bodIndex}
                   removeRelatedTraining={() => relatedRemove(index)}
                 />
               </Box>

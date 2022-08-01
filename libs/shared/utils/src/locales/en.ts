@@ -872,8 +872,7 @@ const en: Record<string, string> = {
   kymCoopUnionMobileNo: 'Mobile No',
   kymCoopUnionEnterMobileNo: 'Enter Mobile No',
   kymCoopUnionEnterEmail: 'Enter Email',
-  kymCoopUnionCitizenshipPassportDrivingLicenseNo:
-    'Citizenship/Passport/Driving License No',
+  kymCoopUnionCitizenshipPassportDrivingLicenseNo: 'Citizenship No',
   kymCoopUnionEnterNo: 'Enter No',
   kymCoopUnionTrainingRelatedToCoop: 'Training related to Co-operatives',
   kymCoopUnionSubjectOfTraining: 'Subject of Training',

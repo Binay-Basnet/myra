@@ -34,6 +34,16 @@ mutation setPersonnelDetails(
   }
 }
 
+mutation deletePersonnelDetails($personnelId: ID!) {
+  members {
+    cooperativeUnion {
+      deletePersonnel(id: $personnelId) {
+        recordId
+      }
+    }
+  }
+}
+
 mutation setEconomicDetailsData(
   $id: ID!
   $data: CoopUnionEconomicDetailsInput

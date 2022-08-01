@@ -81,8 +81,6 @@ query getKymFormStatus($id: String!) {
   }
 }
 
-
-
 query getMemberIndividualData($id: ID!) {
   members {
     details(id: $id) {
