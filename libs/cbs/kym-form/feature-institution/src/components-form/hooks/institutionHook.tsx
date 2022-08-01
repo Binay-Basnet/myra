@@ -33,6 +33,7 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
       });
     },
   });
+  console.log('idjpt', id);
 
   const {
     data: editValues,
@@ -44,7 +45,9 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
     },
     { enabled: id !== 'undefined' }
   );
-  console.log('editLoading', editLoading);
+
+  console.log('edit values', editValues);
+
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
@@ -58,33 +61,25 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady, editValues]);
+  const lastEditValues =
+    editValues?.members?.institution?.formState?.data?.formData;
 
   useEffect(() => {
-    if (editValues) {
-      console.log(
-        pickBy(
-          editValues?.members?.institution?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        )
-      );
-      console.log('pick', pickBy);
+    if (lastEditValues) {
+      const truthyEditValue = pickBy(lastEditValues ?? {}, (v) => v !== null);
       const editValueData =
         editValues?.members?.institution?.formState?.data?.formData;
       const registeredAddressLocality =
         editValueData?.registeredAddress?.locality?.local;
       const operatingAddressLocality =
         editValueData?.operatingOfficeAddress?.locality?.local;
-      console.log('edit value', editValueData);
       const branchOfficeAddress =
         editValueData?.branchOfficeAddress?.locality?.local;
       const accountHoldersAddress =
         editValueData?.accountHolderAddress?.locality?.local;
 
       reset({
-        ...pickBy(
-          editValues?.members?.institution?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        ),
+        ...truthyEditValue,
         registeredAddress: {
           ...editValueData?.registeredAddress,
           locality: registeredAddressLocality,
@@ -103,12 +98,12 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
         },
       });
     }
-  }, [editLoading]);
+  }, [editLoading, lastEditValues]);
 
-  useEffect(() => {
-    if (id) {
-      refetch();
-      console.log({ id });
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id) {
+  //     refetch();
+  //     console.log({ id });
+  //   }
+  // }, [id]);
 };
