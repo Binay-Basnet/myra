@@ -57,7 +57,7 @@ export const DirectorTopPart = ({
 
       if (familyMemberDetail) {
         reset({
-          name: familyMemberDetail?.fullName,
+          name: familyMemberDetail?.name,
           designation: familyMemberDetail?.designation,
           permanentAddress: {
             ...familyMemberDetail?.permanentAddress,

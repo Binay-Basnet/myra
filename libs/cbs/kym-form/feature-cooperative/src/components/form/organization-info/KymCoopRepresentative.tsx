@@ -1,14 +1,23 @@
 import React from 'react';
 import { useMemo, useState } from 'react';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import { GridItem } from '@chakra-ui/react';
+import { identity, pickBy } from 'lodash';
+import debounce from 'lodash/debounce';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import {
+  useGetCoOperativeKymEditDataQuery,
+  useSetCooperativeDataMutation,
+} from '@coop/shared/data-access';
 import { KymCooperativeFormInput } from '@coop/shared/data-access';
 import {
   FormEmailInput,
@@ -31,8 +40,72 @@ export const KymCoopRepresentative = (props: IProps) => {
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
   });
-  const { control, handleSubmit, getValues, watch, setError } = methods;
-  useCooperative({ methods });
+  const { control, handleSubmit, getValues, watch, setError, reset } = methods;
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
+  const { mutate } = useSetCooperativeDataMutation();
+  const {
+    data: editValues,
+    isLoading: editLoading,
+    refetch,
+  } = useGetCoOperativeKymEditDataQuery(
+    {
+      id: id,
+    },
+    { enabled: id !== 'undefined' }
+  );
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        console.log(editValues);
+        if (editValues && data) {
+          mutate({ id: router.query['id'] as string, data });
+          refetch();
+        }
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady, editValues]);
+
+  useEffect(() => {
+    if (editValues) {
+      console.log(
+        pickBy(
+          editValues?.members?.cooperative?.formState?.data?.formData ?? {},
+          (v) => v !== null
+        )
+      );
+      console.log('pick', pickBy);
+      const editValueData =
+        editValues?.members?.cooperative?.formState?.data?.formData;
+
+      reset({
+        ...pickBy(
+          editValues?.members?.cooperative?.formState?.data?.formData ?? {},
+          (v) => v !== null
+        ),
+        permanentRepresentativeAddress: {
+          ...editValueData?.permanentRepresentativeAddress,
+          locality:
+            editValueData?.permanentRepresentativeAddress?.locality?.local,
+        },
+        temporaryRepresentativeAddress: {
+          ...editValueData?.temporaryRepresentativeAddress,
+          locality:
+            editValueData?.temporaryRepresentativeAddress?.locality?.local,
+        },
+      });
+    }
+  }, [editLoading]);
+  // useEffect(() => {
+  //   if (id) {
+  //     refetch();
+  //     console.log({ id });
+  //   }
+  // }, [id]);
   const isPermanentAndTemporaryAddressSame = watch(
     'isPermanentAndTemporaryAddressSame'
   );

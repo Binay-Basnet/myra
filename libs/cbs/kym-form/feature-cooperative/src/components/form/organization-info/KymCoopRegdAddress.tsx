@@ -1,12 +1,21 @@
 import React, { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 import { FaMap } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import { identity, pickBy } from 'lodash';
+import debounce from 'lodash/debounce';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import {
+  useGetCoOperativeKymEditDataQuery,
+  useSetCooperativeDataMutation,
+} from '@coop/shared/data-access';
 import { KymCooperativeFormInput } from '@coop/shared/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
@@ -22,8 +31,64 @@ export const KymCoopRegdAddress = (props: IProps) => {
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
   });
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const { control, handleSubmit, getValues, watch, setError, reset } = methods;
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
+  const { mutate } = useSetCooperativeDataMutation();
   useCooperative({ methods });
+  const {
+    data: editValues,
+    isLoading: editLoading,
+    refetch,
+  } = useGetCoOperativeKymEditDataQuery(
+    {
+      id: id,
+    },
+    { enabled: id !== 'undefined' }
+  );
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        console.log(editValues);
+        if (editValues && data) {
+          mutate({ id: router.query['id'] as string, data });
+          refetch();
+        }
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady, editValues]);
+
+  useEffect(() => {
+    if (editValues) {
+      console.log(
+        pickBy(
+          editValues?.members?.cooperative?.formState?.data?.formData ?? {},
+          (v) => v !== null
+        )
+      );
+      console.log('pick', pickBy);
+      const editValueData =
+        editValues?.members?.cooperative?.formState?.data?.formData;
+
+      reset({
+        ...pickBy(
+          editValues?.members?.cooperative?.formState?.data?.formData ?? {},
+          (v) => v !== null
+        ),
+      });
+    }
+  }, [editLoading]);
+
+  // useEffect(() => {
+  //   if (id) {
+  //     refetch();
+  //     console.log({ id });
+  //   }
+  // }, [id]);
   const { data } = useAllAdministrationQuery();
 
   const province = useMemo(() => {

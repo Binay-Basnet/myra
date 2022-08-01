@@ -44,7 +44,7 @@ export const KymCoopAddCoopDetails = (props: IProps) => {
           </Text>
           <InputGroupContainer>
             <FormSelect
-              name="economicDetailType"
+              name="cooperativeTypeId"
               label={t['kymCoopType']}
               placeholder={t['kymCoopSelectType']}
               options={[

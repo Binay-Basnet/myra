@@ -57,7 +57,6 @@ export const BasicDetailsInstitution = (props: IProps) => {
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormInput
-                // control={control}
                 type="text"
                 name={'institutionName'}
                 label={t['kymInsNameofInstitution']}
@@ -65,7 +64,7 @@ export const BasicDetailsInstitution = (props: IProps) => {
               />
             </GridItem>
             <FormSelect
-              name="institutionType"
+              name="institutionTypeId"
               label={t['kymInsOrganizationType']}
               placeholder={t['kymInsSelectOrganizationType']}
               options={getOption(organizationFields)}

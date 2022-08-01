@@ -100,10 +100,10 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
     }
   }, [editLoading, lastEditValues]);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     refetch();
-  //     console.log({ id });
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id) {
+      refetch();
+      console.log({ id });
+    }
+  }, [id]);
 };

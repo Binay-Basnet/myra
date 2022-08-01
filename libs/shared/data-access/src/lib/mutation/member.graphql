@@ -108,15 +108,13 @@ mutation setKYMDocumentData(
   $fieldId: String!
   $identifiers: [String!]!
 ) {
-  members {
-    document {
-      KYMUpsert(
-        memberId: $memberId
-        fieldId: $fieldId
-        identifiers: $identifiers
-      ) {
-        recordId
-      }
+  document {
+    KYMUpsert(
+      memberId: $memberId
+      fieldId: $fieldId
+      identifiers: $identifiers
+    ) {
+      recordId
     }
   }
 }

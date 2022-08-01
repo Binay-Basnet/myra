@@ -101,8 +101,7 @@ const KYMDocumentDeclarationField = ({
 
   useEffect(() => {
     if (editValues) {
-      const kymDocumentsList =
-        editValues?.members?.document?.listKYMDocuments?.data;
+      const kymDocumentsList = editValues?.document?.listKYMDocuments?.data;
 
       console.log({ kymDocumentsList });
 

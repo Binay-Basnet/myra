@@ -69,7 +69,7 @@ query getInstitutionKymEditData($id: ID!) {
           }
           formData {
             institutionName
-            institutionType
+            institutionTypeId
             natureOfBusiness
             registrationDate
             vatOrPanNo
@@ -177,7 +177,7 @@ query getInsBoardDirectorEditList($id: ID!) {
       listDirectors(id: $id) {
         data {
           id
-          fullName
+          name
           designation
           permanentAddress {
             provinceId
@@ -231,7 +231,7 @@ query getInsAccountOperatorEditList($id: ID!) {
       listAccountOperators(id: $id) {
         data {
           id
-          fullName
+          name
           contact
           email
           permanenetAddress {

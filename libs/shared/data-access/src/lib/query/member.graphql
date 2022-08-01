@@ -326,15 +326,13 @@ query getIndividualKymIncomeSourceList($id: String!) {
 }
 
 query getKYMDocumentsList($memberId: String!) {
-  members {
-    document {
-      listKYMDocuments(memberId: $memberId) {
-        data {
-          fieldId
-          docData {
-            identifier
-            url
-          }
+  document {
+    listKYMDocuments(memberId: $memberId) {
+      data {
+        fieldId
+        docData {
+          identifier
+          url
         }
       }
     }

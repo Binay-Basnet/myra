@@ -64,4 +64,11 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
       });
     }
   }, [editLoading]);
+
+  // useEffect(() => {
+  //   if (id) {
+  //     refetch();
+  //     console.log({ id });
+  //   }
+  // }, [id]);
 };

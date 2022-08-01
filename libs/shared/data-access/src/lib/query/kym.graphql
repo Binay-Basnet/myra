@@ -27,3 +27,16 @@ query getInstitutionKYMOptions($searchTerm: FormFieldSearchTerm!) {
     }
   }
 }
+
+query getCooperativeKYMOptions($searchTerm: FormFieldSearchTerm!) {
+  form {
+    options {
+      predefined(filter: { searchTerm: $searchTerm, category: KYM_COOP }) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}

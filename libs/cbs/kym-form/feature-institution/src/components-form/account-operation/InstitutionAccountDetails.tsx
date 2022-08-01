@@ -76,7 +76,7 @@ const AddAccountDetails = ({
 
       if (familyMemberDetail) {
         reset({
-          fullName: familyMemberDetail?.fullName,
+          name: familyMemberDetail?.name,
           contact: familyMemberDetail?.contact,
           email: familyMemberDetail?.email,
           permanentAddress: {
