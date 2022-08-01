@@ -29,11 +29,10 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
     onError: () => {
       setError('institutionName', {
         type: 'custom',
-        message: 'it is what it is',
+        message: 'mutation error',
       });
     },
   });
-  console.log('idjpt', id);
 
   const {
     data: editValues,
@@ -53,7 +52,13 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
       debounce((data) => {
         console.log({ data, id });
         if (data && id !== 'undefined') {
-          mutate({ id: router.query['id'] as string, data });
+          mutate({
+            id: router.query['id'] as string,
+            data: {
+              ...data,
+              accountType: data?.accountType === '' ? null : data?.accountType,
+            },
+          });
           refetch();
         }
       }, 800)
