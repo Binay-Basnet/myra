@@ -8,11 +8,10 @@ import {
   Button,
   Container,
   FormFooter,
+  FormHeader,
   Icon,
-  IconButton,
   Text,
 } from '@coop/shared/ui';
-import { IoCloseOutline } from 'react-icons/io5';
 import {
   KYMBasiccoopDetails,
   KYMDeclaration,
@@ -62,38 +61,14 @@ export function KYMIndividualPage() {
 
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <Box
-            height="60px"
-            display="flex"
-            justifyContent="space-between"
-            alignItems={'center'}
-            px="5"
-            background="white"
-            borderBottom="1px"
-            borderBottomColor="border.layout"
-          >
-            <Text fontSize="r2" fontWeight="SemiBold">
-              {t['membersFormAddNewMembers']}
-            </Text>
-            <IconButton
-              variant={'ghost'}
-              aria-label="close"
-              icon={<Icon as={IoCloseOutline} size="lg" />}
-              onClick={() => router.push('/members/list')}
-            />
-          </Box>
+          <FormHeader
+            title={t['membersFormAddNewMembers']}
+            closeLink="/members/list"
+          />
         </Container>
       </Box>
 
       <Container minW="container.xl" height="fit-content">
-        {/* <FormProvider {...methods}>
-          <form
-            onFocus={(e) => {
-              const kymSection = getKymSection(e.target.id);
-              setKymCurrentSection(kymSection);
-            }}
-          > */}
-        {/* main */}
         <Box pb="s40" display="flex" width="100%">
           <Box display="flex">
             <Box
@@ -110,7 +85,7 @@ export function KYMIndividualPage() {
               />
             </Box>
 
-            <Box background="white" ml={320} px="s20" pt="s20" pb="120px">
+            <Box background="white" px="s20" ml="320" pt="s20" pb="120px">
               <SectionContainer>
                 <SectionContainer>
                   <Text fontSize="r3" fontWeight="600">
@@ -186,87 +161,13 @@ export function KYMIndividualPage() {
                   </ContainerWithDivider>
                 </SectionContainer>
 
-                {/* <Box display="flex" gap="s16" alignItems="start">
-                  <FormCheckbox name="declarationAgree" fontSize="s3">
-                    {''}
-                  </FormCheckbox>
-                  <TextFields variant="formInput" mt="-6px">
-                    I hereby declare that the information provided by me/us in
-                    this form and documents provided to the co-operative are
-                    true and correct. All transaction in this account are from
-                    legitimate source. If found otherwise, I shall bear the
-                    consequences thereof.
-                  </TextFields>
-                </Box> */}
-
                 <KYMDeclarationAgree />
               </SectionContainer>
             </Box>
           </Box>
         </Box>
-        {/* </Box> */}
-
-        {/* footer */}
-        {/* </form>
-        </FormProvider> */}
       </Container>
-      {/* <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <Box
-              display="flex"
-              height="60px"
-              justifyContent="space-between"
-              alignItems="center"
-              background="white"
-              px="5"
-              borderTop="1px"
-              borderColor="border.layout"
-            >
-              <Box display="flex" gap="s8">
-                <Text as="i" fontSize="r1">
-                  {t['formDetails']}
-                </Text>
-                <Text as="i" fontSize="r1">
-                  09:41 AM
-                </Text>
-              </Box>
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="flex-end"
-                alignSelf="center"
-              >
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignSelf="center"
-                >
-                  <Button type="submit" variant="ghost" minW="160px">
-                    <Icon as={BiSave} color="primary.500" />
-                    <Text
-                      alignSelf="center"
-                      color="primary.500"
-                      fontWeight="Medium"
-                      fontSize="s2"
-                      ml="5px"
-                    >
-                      {t['saveDraft']}
-                    </Text>
-                  </Button>
-                </Box>
-                &nbsp;
-                <Button
-                  minW="160px"
-                  onClick={() => router.push(`/members/translation/${id}`)}
-                >
-                  {t['next']}
-                </Button>
-              </Box>
-            </Box>
-          </Container>
-        </Box>
-      </Box> */}
+
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">

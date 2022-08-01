@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
 
-import { KymCooperativeInstitutionInformationSection } from '@coop/shared/data-access';
-import { useTranslation } from '@coop/shared/utils';
 import { Box, Collapse, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const OrganizationInformation = [
   'kymCoopAccBasicInformation',
@@ -89,7 +88,6 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenOrganization(!isOpenOrganization)}
-        _hover={{ bg: '#EEF2F7' }}
       >
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopAcc1OrganizationDetails']}
@@ -137,7 +135,6 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenEconomic(!isOpenEconomic)}
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -177,7 +174,6 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenBoardOfDirectors(!isOpenBoardOfDirectors)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -217,7 +213,6 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenAccountOperator(!isOpenAccountOperator)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -257,7 +252,6 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenDeclaration(!isOpenDeclaration)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">

@@ -1,4 +1,6 @@
-import { Story, Meta } from '@storybook/react';
+import * as React from 'react';
+import { Meta, Story } from '@storybook/react';
+
 import { FormHeader, FormHeaderProps } from './FormHeader';
 
 export default {
@@ -9,4 +11,6 @@ export default {
 const Template: Story<FormHeaderProps> = (args) => <FormHeader {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  title: 'Hello World',
+};

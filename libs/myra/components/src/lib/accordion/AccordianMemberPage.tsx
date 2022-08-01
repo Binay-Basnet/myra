@@ -91,7 +91,6 @@ export function AccorrdianAddMember(props: AccordianProps) {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenPersonal(!isOpenPersonal)}
-        _hover={{ bg: '#EEF2F7' }}
       >
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymAccInd1PersonalDetails']}
@@ -139,7 +138,6 @@ export function AccorrdianAddMember(props: AccordianProps) {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenProfessional(!isOpenProfessional)}
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -179,7 +177,6 @@ export function AccorrdianAddMember(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenCoopMembership(!isOpenCoopMemberShip)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -219,7 +216,6 @@ export function AccorrdianAddMember(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenDeclaration(!isOpenDeclaration)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">

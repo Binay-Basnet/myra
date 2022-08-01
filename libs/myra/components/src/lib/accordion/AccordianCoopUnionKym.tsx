@@ -75,7 +75,6 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenOrganizational(!isOpenOrganizational)}
-        _hover={{ bg: '#EEF2F7' }}
       >
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopUnionAcc1InstitutionInformation']}
@@ -123,7 +122,6 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsopenDirector(!isopenDirector)}
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -163,7 +161,6 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsopenAccountOperators(!isopenAccountOperators)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -205,7 +202,6 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
           setIsopenCentralRepresentatives(!isopenCentralRepresentatives)
         }
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -244,7 +240,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenMemberDetails(!isOpenmemberDetails)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
+
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -283,7 +279,6 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenEconomicDetails(!isOpenEconmoicDetails)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -322,7 +317,6 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenDeclaration(!isOpenDeclaration)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">

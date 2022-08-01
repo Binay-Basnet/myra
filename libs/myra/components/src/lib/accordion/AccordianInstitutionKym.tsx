@@ -84,7 +84,6 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenOrganizational(!isOpenOrganizational)}
-        _hover={{ bg: '#EEF2F7' }}
       >
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymIns1InformationofInstitution']}
@@ -132,7 +131,6 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         alignItems="center"
         cursor="pointer"
         onClick={() => setIsOpenTransaction(!isOpenTransaction)}
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -172,7 +170,6 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenDetails(!isOpenDetails)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -212,7 +209,6 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenAccountOperations(!isOpenAccountOperations)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
@@ -251,7 +247,6 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         alignItems="center"
         onClick={() => setIsOpenDeclaration(!isOpenDeclaration)}
         cursor="pointer"
-        _hover={{ bg: '#EEF2F7' }}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="600">
