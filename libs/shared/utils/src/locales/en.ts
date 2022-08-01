@@ -2940,6 +2940,66 @@ const en: Record<string, string> = {
   settingsExpectedMonthlyTurnover: 'Expected Monthly Turnover',
   settingsExpectedMonthlyTransaction: 'Expected Monthly Transaction',
 
+  /* KYM Settings - Cooperative */
+  settingsMemberCooperativeSection1: 'Section 1: Information of Institution',
+  settingsCooperativeContactDetails: 'Contact Details',
+  settingsCooperativeCurrentMembers: 'Current Members',
+  settingsCooperativeRepresentative: 'Representative',
+  settingsCooperativeType: 'Cooperative Type',
+  settingsNumberOfEmployee: 'Number of Employee',
+
+  settingsMemberCooperativeSection2: 'Section 2: Economic Details',
+
+  settingsMemberCooperativeSection3:
+    'Section 3: Details of Proprietary, Partners, Directors',
+  settingsCooperativeDirectors: 'Directors',
+  settingsCooperativeDirectorDetails: 'Director Details',
+  settingsCooperativeDocumentDeclaration: 'Document Declaration',
+
+  settingsMemberCooperativeSection4: 'Section 4: Details of Account Operators',
+  settingsCooperativeAccountOperators: 'Account Operators',
+  settingsCooperativeAccountOperatorDetails: 'Account Operator Detail',
+
+  settingsMemberCooperativeSection5: 'Section 5: Declaration',
+  settingsCooperativeAccountHolderDeclaration: 'Account Holder Declaration',
+  settingsCooperativeAccountHolderDeclarationDetails:
+    'Account Holder Declaration Details',
+  settingsCooperativeAccountHolderDeclarationDocuments:
+    'Account Holder Declaration Documents',
+  settingsCooperativeFileUploads: 'File Uploads',
+  settingsCooperativeDeclaration: 'Declaration',
+
+  /* KYM Settings - Cooperative Union */
+  settingsCoopUnionSection1: 'Section 1: Institution Information',
+  settingsCoopUnionOrganizationType: 'Organization Type',
+  settingsCoopUnionRegisteredDetails: 'Registered Details',
+  settingsCoopUnionContactDetails: 'Contact Details',
+  settingsCoopUnionCurrentMembers: 'Current Members',
+  settingsCoopUnionBankAccountDetails: 'Bank Account Details',
+  settingsCoopUnionApplicant: 'Applicant',
+  settingsCoopUnionApplicantDetails: 'Applicant Details',
+  settingsCoopUnionApplicantDocumentDeclaration: 'Document Declaration',
+
+  settingsCoopUnionSection2:
+    'Section 2: Details of Proprietary, Partners, Directors',
+  settingsCoopDirectors: 'Directors',
+  settingsCoopDirectorDetails: 'Director Details',
+  settingsCoopTrainingRelatedToCoop: 'Training Related to Co-operatives',
+  settingsCoopDocumentDeclaration: 'Document Declaration',
+
+  settingsCoopUnionSection3: 'Details of Account Operators',
+  settingsCoopUnionAccountOperators: 'Account Operators',
+  settingsCoopUnionAccountOperatorDetails: 'Account Operator Details',
+
+  settingsCoopUnionSection4: 'Section 4: Details of Concern',
+  settingsCoopCentralRepresentative: 'Central Representative',
+  settingsCoopCentralRepresentativeDetails: 'Central Representative Details',
+
+  settingsCoopUnionSection5: 'Section 5: Economic Details',
+
+  settingsCoopUnionSection6: 'Section 6: Declaration',
+  settingsCoopUnionSection7: 'Section 7: Custom Fields',
+
   settingsDirector: 'Directors',
   settingsDirectorDetails: 'Director Details',
   settingsDocumentDeclaration: 'Document Declaration',

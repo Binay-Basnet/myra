@@ -1,10 +1,12 @@
 const ne: Record<string, string> = {
-  home: 'गृहपृष्ठ',
-  dashboard: 'ड्यासबोर्ड',
+  home: 'Home',
+  dashboard: 'Dashboard',
   yes: 'Yes',
   no: 'No',
+  rs: 'Rs.',
   sn: 'SN',
   next: 'Next',
+  save: 'Save',
   saveDraft: 'Save Draft',
   formDetails: 'Form Details saved to draft',
   pinOnMap: 'Pin on Map',
@@ -12,6 +14,7 @@ const ne: Record<string, string> = {
   memberSince: 'Member since',
   branch: 'Branch',
   complete: 'Complete',
+  submit: 'Submit',
   applyChanges: 'Apply Changes',
   done: 'Done',
   saveAccount: 'Save Account',
@@ -29,122 +32,124 @@ const ne: Record<string, string> = {
   weekly: 'Weekly',
   monthly: 'Monthly',
   yearly: 'Yearly',
-  settings: 'Settings',
 
   // navbar
-  searchMembersNameReportsEtc: 'सदस्यहरूको नाम, रिपोर्टहरू, आदि खोज्नुहोस्',
-  navbarDashboard: 'ड्यासबोर्ड',
-  navbarMembers: 'सदस्यहरू',
-  navbarShare: 'भाग',
-  navbarAccounts: 'खाताहरू',
-  navbarInventory: 'खाताहरू',
-  navbarTransactions: 'लेनदेन',
-  navbarLoan: 'ऋण',
-  navbarReports: 'प्रतिवेदन',
-  navbarUtilities: 'उपयोगिताहरू',
+  searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
+  navbarDashboard: 'Dashboard',
+  navbarMembers: 'Members',
+  navbarShare: 'Share',
+  navbarAccounts: 'Accounts',
+  navbarTransactions: 'Transactions',
+  navbarInventory: 'Inventory',
+  navbarLoan: 'Loan',
+  navbarReports: 'Reports',
+  navbarUtilities: 'Utilities',
 
   // table navbar
-  default: 'पूर्वनिर्धारित',
-  options: 'विकल्पहरू',
+  default: 'Default',
+  options: 'Options',
 
   // home page
-  yourDashboard: 'तपाईंको ड्यासबोर्ड',
+  yourDashboard: 'Your Dashboard',
   yourMyraApplication: 'Your Myra Applications',
-  corebankingSystems: 'मुख्य बैंकिङ प्रणाली',
-  inventoryManagement: 'सूची व्यवस्थापन',
-  loanManagementSystem: 'ऋण व्यवस्थापन प्रणाली',
-  accountingSystem: 'लेखा प्रणाली',
-  otherApplications: 'अन्य अनुप्रयोगहरू',
-  assetsAndInventoryManagement: 'सम्पत्ति र सूची व्यवस्थापन',
-  memberAndShareManagement: 'सदस्य र साझेदारी व्यवस्थापन',
-  hrTrainingAndCapacityManagement: 'मानव संसाधन प्रशिक्षण र क्षमता व्यवस्थापन',
-  mobileApp: 'मोबाइल आवेदन',
-  documentManagement: 'कागजात व्यवस्थापन',
-  alternativeChannelsAndCrossConnectivity: 'वैकल्पिक च्यानलहरू र क्रस जडान',
-  reconciliationSoftware: 'मेलमिलाप सफ्टवेयर',
-  crm: 'सी आर एम',
+  moreFromMyra: 'More from Myra',
+  corebankingSystems: 'Core Banking Systems',
+  inventoryManagement: 'Inventory Management',
+  loanManagementSystem: 'Loan Management System',
+  accountingSystem: 'Accounting System',
+  otherApplications: 'OTHER APPLICATIONS',
+  assetsAndInventoryManagement: 'Assets and Inventory Management',
+  memberAndShareManagement: 'Member and Share Management',
+  hrTrainingAndCapacityManagement: 'HR Training and Capacity Management',
+  mobileApp: 'Mobile App',
+  documentManagement: 'Document Management',
+  alternativeChannelsAndCrossConnectivity:
+    'Alternative Channels and Cross Connectivity',
+  reconciliationSoftware: 'Reconciliation Software',
+  crm: 'CRM',
+  exploreAllApplications: 'Explore All Applications',
 
-  //main dashboard
-  quickLinks: 'द्रुत लिङ्कहरू',
-  editLinks: 'लिङ्क सम्पादन गर्नुहोस्',
-  addNewMember: 'नयाँ सदस्य थप्नुहोस्',
-  transactionHistory: 'लेनदेन इतिहास',
-  transactionHistoryReport: 'प्रतिवेदन',
-  memberProfile: 'सदस्य प्रोफाइल',
-  shareInformation: 'जानकारी सेयर गर्नुहोस्',
-  shareInformationReport: 'प्रतिवेदन',
-  addNewLoan: 'नयाँ ऋण थप्नुहोस्',
-  addDeposit: 'निक्षेप थप्नुहोस्',
-  today: 'आज',
-  deposits: 'निक्षेपहरू',
-  withdraws: 'निकाल्नु',
-  loan: 'ऋण',
-  transactions: 'लेनदेन',
-  tasks: 'कार्यहरू',
+  // main dashboard
+  quickLinks: 'QUICK LINKS',
+  editLinks: 'EDIT LINKS',
+  addNewMember: 'Add New Member',
+  transactionHistory: 'Transaction History',
+  transactionHistoryReport: 'Report',
+  memberProfile: 'Member Profile',
+  shareInformation: 'Share Information',
+  shareInformationReport: 'Report',
+  addNewLoan: 'Add New Loan',
+  addDeposit: 'Add Deposit',
+  today: 'TODAY',
+  deposits: 'Deposits',
+  withdraws: 'Withdraws',
+  loan: 'Loan',
+  transactions: 'Transactions',
+  tasks: 'Tasks',
 
   // member page
-  members: 'सदस्यहरू',
-  membersAddNewMembers: 'नयाँ सदस्यहरू थप्नुहोस्',
-  memberList: 'सदस्य सूची',
-  balanceReport: 'सन्तुलन प्रतिवेदन',
-  memberDetails: 'सदस्य विवरण',
-  memberSettings: 'सदस्य सेटिङहरू',
+  members: 'Members',
+  membersAddNewMembers: 'Add New Members',
+  memberList: 'Member List',
+  balanceReport: 'Member Reports',
+  memberDetails: 'Member Details',
+  memberSettings: 'Member Settings',
 
-  navMemberList: 'सदस्य सूची',
-  memberNavActive: 'क्रियाशील',
-  memberNavInactive: 'निष्क्रिय',
-  memberNavWip: 'डब्लु आइ पी',
-  memberNavDraft: 'मस्यौदा',
-  searchMembers: 'सदस्यहरू खोज्नुहोस्',
+  navMemberList: 'Member List',
+  memberNavActive: 'Active',
+  memberNavInactive: 'Submitted',
+  memberNavWip: 'WIP',
+  memberNavDraft: 'Draft',
+  searchMembers: 'Search Members',
 
-  // member [action] form page
-  membersFormAddNewMembers: 'नयाँ सदस्यहरू थप्नुहोस्',
-  memberPersonalInformation: 'व्यक्तिगत जानकारी',
-  memberFirstName: 'पहिलो नाम',
-  memberMiddleName: 'बीचको नाम',
-  memberLastName: 'थर',
-  memberGender: 'लिङ्ग',
-  memberTitle: 'शीर्षक',
-  memberDateOfBirth: 'जन्म मिति',
-  memberNationality: 'राष्ट्रियता',
-  memberCitizenshipNo: 'नागरिकता नं',
-  memberPlaceOfIssue: 'मुद्दा को स्थान',
-  memberCitizenshipIssueDate: 'नागरिकता जारी मिति',
-  memberOccupation: 'पेशा',
-  memberPanNumber: 'प्यान नम्बर',
+  // member add form page
+  membersFormAddNewMembers: 'Add New Member',
+  memberPersonalInformation: 'Personal Information',
+  memberFirstName: 'First Name',
+  memberMiddleName: 'Middle Name',
+  memberLastName: 'Last Name',
+  memberGender: 'Gender',
+  memberTitle: 'Title',
+  memberDateOfBirth: 'Date of Birth',
+  memberNationality: 'Nationality',
+  memberCitizenshipNo: 'Citizenship No.',
+  memberPlaceOfIssue: 'Place of Issue',
+  memberCitizenshipIssueDate: 'Citizenship Issue Date',
+  memberOccupation: 'Occupation',
+  memberPanNumber: 'PAN Number',
 
-  memberFamilyInformation: 'पारिवारिक जानकारी',
-  memberFatherName: 'बुबाको नाम',
-  memberMotherName: 'आमाको नाम',
-  memberGrandfatherName: 'हजुरबुबाको नाम',
-  memberGrandmotherName: 'हजुरआमाको नाम',
-  memberSpouseName: 'दम्पतिको नाम',
+  memberFamilyInformation: 'Family Information',
+  memberFatherName: 'Father Name',
+  memberMotherName: 'Mother Name',
+  memberGrandfatherName: 'Grandfather Name',
+  memberGrandmotherName: 'Grandmother Name',
+  memberSpouseName: 'Spouse Name',
 
-  memberPermanentAddress: 'स्थाई ठेगाना',
-  memberState: 'राज्य',
-  memberDistrict: 'जिल्ला',
-  memberVdcMuncipality: 'गाविस नगरपालिका',
-  memberWardNo: 'वडा नं.',
-  memberLocality: 'इलाका',
+  memberPermanentAddress: 'Permanent Address',
+  memberState: 'State',
+  memberDistrict: 'District',
+  memberVdcMuncipality: 'VDC Muncipality',
+  memberWardNo: 'Ward No.',
+  memberLocality: 'Locality',
 
-  memberContactInformation: 'सम्पर्क जानकारी',
-  memberOfficeNo: 'कार्यालय नं',
-  memberResidenceNo: 'बसोबास नं',
-  memberMobileNo: 'मोबाइल नम्बर',
+  memberContactInformation: 'Contact Information',
+  memberOfficeNo: 'Office No.',
+  memberResidenceNo: 'Residence No.',
+  memberMobileNo: 'Mobile No.',
 
-  memberNomineeInformation: 'मनोनीत जानकारी',
-  memberRelation: 'सम्बन्ध',
-  memberContactNumber: 'सम्पर्क नम्बर',
+  memberNomineeInformation: 'Nominee Information',
+  memberRelation: 'Relation',
+  memberContactNumber: 'Contact Number',
 
-  memberPhoto: 'तस्बिर',
-  memberPhotoUpload: 'सदस्य तस्बिर',
-  memberSignature: 'सदस्यको हस्ताक्षर',
-  memberDropOrClickToUploadPhoto: 'तस्बिर अपलोड गर्न ड्रप वा क्लिक गर्नुहोस्',
+  memberPhoto: 'Photo',
+  memberPhotoUpload: 'Member Photo',
+  memberSignature: 'Member Signature',
+  memberDropOrClickToUploadPhoto: 'Drop or Click to upload photo',
 
-  saveMember: 'सदस्य दर्ता गर्नुहोस्',
+  saveMember: 'Save Member',
 
   // SHARE PAGE
-  share: 'साझेदारी',
+  share: 'Share',
   shareActive: 'Active',
   shareSubmitted: 'Submitted',
   shareDraft: 'Draft',
@@ -224,17 +229,17 @@ const ne: Record<string, string> = {
   // Inventory Page TODO ( Update Translations )
   inventoryItems: 'Items',
   inventoryItemGroup: 'Item Group',
-  inventoryUnitOfMeasure: 'Unit of Measure',
+  inventoryUnitOfMeasure: 'Unit of Measurement List',
   inventoryVendor: 'Vendor',
 
   //Accounts Page
-  accounts: 'खाताहरू',
+  accounts: 'Accounts',
 
   //Report Page
-  reports: 'प्रतिवेदन',
+  reports: 'Reports',
 
   //Utilities Page
-  utilities: 'उपयोगिताहरू',
+  utilities: 'Utilities',
 
   //member detail
   memberOverview: 'Overview',
@@ -370,6 +375,7 @@ const ne: Record<string, string> = {
   settingsBranchCategoriesService: 'Service Center',
   settingsBranchCategoriesContact: 'Contact Office',
   settingsBranchSave: 'Save Account',
+  settingsBranchBranchCodePlaceholder: 'Enter Branch Code',
 
   // SETTINGS PAGE
 
@@ -409,11 +415,11 @@ const ne: Record<string, string> = {
   settingsOrgAddressEnterWard: 'Enter Ward',
   settingsOrgAddressLocality: 'Locality',
 
-  settingsOrgRegRegdOffice: 'Regd Office',
+  settingsOrgRegRegdOffice: 'Registered Office',
   settingsOrgRegEnterRegdOffice: 'Registered Office',
-  settingsOrgRegRegdNo: 'Regd No',
+  settingsOrgRegRegdNo: 'Registered No',
   settingsOrgRegEnterRegdNo: 'Registered No',
-  settingsOrgRegRegdAddress: 'Regd Address',
+  settingsOrgRegRegdAddress: 'Registered Address',
   settingsOrgRegEnterRegdAddress: 'Registered Address',
   settingsOrgRegPANVATNo: 'PAN/VAT No',
 
@@ -453,14 +459,14 @@ const ne: Record<string, string> = {
   settingsCoaPLAccount: 'P/L Account',
   settingsCoaAllowFreeEntry: 'Allow Free Entry',
   settingsCoaAllowFreeEntryHelper: 'This option allows manual journal entry',
-
   settingsCoaAllowTransaction: 'Allow Transaction',
   settingsCoaListCash: 'Cash',
   settingsCoaListBank: 'Bank',
   settingsCoaListJournal: 'Journal',
+  settingsSaveButton: 'Save Account',
 
   // settings general members individual
-  settingsMember: 'Members',
+  settingsMember: 'Member Settings',
   settingsIndividual: 'Individuals',
   settingsInstitutional: 'Institutionals',
   settingsCooperative: 'Cooperative',
@@ -475,7 +481,7 @@ const ne: Record<string, string> = {
   settingsChooseMember: 'Choose which type of member is allowed',
   settingsMemberRisk: 'Member Risk Level',
   settingsMemberRiskLevel: 'Risk Level',
-  settingsMemberYearsTillKYMUpdate: 'Years till KYM Update',
+  settingsMemberYearsTillKYMUpdate: 'Months till KYM Update',
   settingsMemberAddNewOption: 'Add New Option',
 
   settingsMemberSection1PersonalInformation: 'Section 1: Personal Information',
@@ -488,8 +494,8 @@ const ne: Record<string, string> = {
   settingsMemberIdentificationDocuments: 'Identification Documents',
   settingsMemberCitizenship: 'Citizenship',
   settingsMemberVoterId: 'Voter Id',
-  settingsMemberPassport: 'Passport',
   settingsMemberDrivingLicense: 'Driving License',
+  settingsMemberPassport: 'Passport',
   settingsMemberMaritalStatus: 'Marital Status',
   settingsMemberFamilyRelationship: 'Family Relationship',
   settingsMemberFamilyInformation: 'Family Information',
@@ -507,6 +513,7 @@ const ne: Record<string, string> = {
     'Purpose of becoming a member of this cooperative',
   settingsMemberOtherCooperativeDetails: 'Other Cooperative Details',
   settingsMemberFinancialTransactionDetails: 'Financial Transaction Details',
+
   settingsMemberSection4Declaration: 'Section 4: Declaration',
   settingsMemberForeignEmploymentOptions: 'Foreign Employment Options',
   settingsMemberFileUploads: 'File Uploads',
@@ -541,8 +548,8 @@ const ne: Record<string, string> = {
   settingsSideGeneral: 'General',
   settingsSideIndividual: 'KYM Form - Individual',
   settingsSideInstitutional: 'KYM Form - Institutional',
-  settingsSideCoop: 'KYM Form - CoOperative',
-  settingsSideCoopUnion: 'KYM Form - CoOperative Union',
+  settingsSideCoop: 'KYM Form - Cooperative',
+  settingsSideCoopUnion: 'KYM Form - Cooperative Union',
 
   // settings side bar
   settingsSideBarOrganization: 'Organization',
@@ -612,7 +619,6 @@ const ne: Record<string, string> = {
   settingsLoanGoods: 'Goods, Other Setup',
   settingsLoanAccepted: 'Accepted Collateral List',
   settingsLoanChecklist: 'Checklist is configured from Document Master',
-
   // KYM FORM
 
   // kym coop
@@ -629,7 +635,7 @@ const ne: Record<string, string> = {
   kymCoopStamp: 'Stamp',
 
   kymCoopDOCUMENTDECLARATION: 'DOCUMENT DECLARATION',
-  kymCoopAGMDecisionDocument: 'AGM Decision Document',
+  kymCoopAGMDecisionDocument: 'AGM/BOD Decision Document',
   kymCoopRegisteredCertificate: 'Registered Certificate',
   kymCoopPANCertificate: 'PAN Certificate',
   kymCoopTaxClearance: 'Tax Clearance',
@@ -650,6 +656,7 @@ const ne: Record<string, string> = {
   kymCoopSelectState: 'Select State',
   kymCoopDistrict: 'District',
   kymCoopSelectDistrict: 'Select District',
+  kymCoopMunicipality: 'Muncipality',
   kymCoopWardNo: 'Ward No',
   kymCoopEnterWardNo: 'Enter Ward No',
   kymCoopLocality: 'Locality',
@@ -674,11 +681,11 @@ const ne: Record<string, string> = {
   kymCoopEnterDateOfTraining: 'Enter date of Training',
   kymCoopTrainingOrganization: 'Training Organization',
   kymCoopEnterTrainingOrganization: 'Enter Training Organization',
+  kymCoopPanOrVatNo: 'PAN No',
+  kymCoopEnterPanOrVat: 'Enter Pan No',
   kymCoopPhotograph: 'Photograph',
   kymCoopPhotographOfIdentityProofDocument:
     'Photograph of identity proof document',
-  kymCoopPanOrVatNo: 'PAN No',
-  kymCoopEnterPanOrVat: 'Enter Pan No',
 
   kymCoopAssets: 'Assets',
   kymCoopAmount: 'Amount',
@@ -716,7 +723,6 @@ const ne: Record<string, string> = {
   kymCoopSelectMunicipality: 'Select Municipality',
   kymCoopLocalGovernment: 'Local Government',
   kymCoopSelectLocal: 'Select Local Government',
-
   kymCoopOperatingAddress: 'Operating Address',
   kymCoopContactDetails: 'Contact Details',
   kymCoopOfficialEmail: 'Official Email',
@@ -724,6 +730,7 @@ const ne: Record<string, string> = {
   kymCoopWebsiteLink: 'Website Link',
   kymCoopEnterWebsiteURL: 'Enter Website URL',
   kymCoopPhoneno: 'Phone no.',
+
   kymCoopEnterPhoneNumber: 'Enter Phone Number',
 
   kymCoopCurrentMembers: 'Current Members',
@@ -737,7 +744,7 @@ const ne: Record<string, string> = {
   kymCoopLastAuditDate: 'Last Audit Date',
   kymCoopLastAGMDate: 'Last AGM Date',
 
-  kymCoopRepresentative: 'Representative',
+  kymCoopRepresentative: 'Representative Details',
   kymCoopName: 'Name',
   kymCoopEnterName: 'Enter Name',
   kymCoopDesignation: 'Designation',
@@ -760,6 +767,7 @@ const ne: Record<string, string> = {
   kymCoopRepresentativeLocality: 'Locality',
   kymCoopRepresentativeEnterLocality: 'Enter Locality',
   kymCoopRepresentativeHouseNo: 'House No',
+
   kymCoopRepresentativeEnterHouseNo: 'Enter House No',
   kymCoopRepresentativeTemporaryAddress: 'Temporary Address',
   kymCoopRepresentativeTemporaryAddressPermanent:
@@ -950,6 +958,7 @@ const ne: Record<string, string> = {
   kymCoopUnionDirEnterEmail: 'Enter Email',
   kymCoopUnionDirCitizenshipPassportDrivingLicenseNo:
     'Citizenship/Passport/Driving License No',
+  keyCoopUnionDirEnterNo: 'Enter No',
   kymCoopUnionDirTrainingRelatedtoCoop: 'Training related to Co-operatives',
   kymCoopUnionDirSubjectOfTraining: 'Subject of Training',
   kymCoopUnionDirEnterSubjectOfTraining: 'Enter Subject of Training',
@@ -1042,6 +1051,10 @@ const ne: Record<string, string> = {
 
   kymCoopUnionEmailAddress: 'Email Address',
   kymCoopUnionEmailAddressPlaceholder: 'Enter Email Address',
+  kymCoopUnionContactNo: 'Contact No',
+  kymCoopUnionContactNoPlaceholder: 'Enter Contact No',
+  kymCoopUnionPANNo: 'PAN No',
+  kymCoopUnionPANNoPlaceholder: 'Enter PAN No',
 
   // kym individual
   kymInd1PersonalInformation: '1. Personal Information',
@@ -1306,7 +1319,7 @@ const ne: Record<string, string> = {
   kymInsNewDetail: 'New Detail',
 
   kymInAccountHolderDeclarations: 'Account Holder Declaration',
-  kymInsAccountHolderName: 'Account Holder Name',
+  kymInsAccountHolderName: "Account Holder's Name",
   kymInsEnterAccountHolderName: "Enter Account Holder's Name",
   kymInsSignature: 'Signature',
   kymInsStamp: 'Stamp',
@@ -1341,9 +1354,8 @@ const ne: Record<string, string> = {
   kymInsMobileNo: 'Mobile No.',
   kymInsEnterMobileNo: 'Enter Mobile No',
   kymInsEnterEmail: 'Enter Email Address',
-  kymInsCitizenshipPassportDrivingLicenseNoIns: 'Citizenship No.',
+  kymInsCitizenshipPassportDrivingLicenseNo: 'Citizenship No.',
   kymInsPanEnterNo: 'Enter PAN No',
-
   kymInsEnterNo: 'Enter Number',
   kymInsPhotograph: 'Photograph',
   kymInsPhotographOfIdentityProofDocument:
@@ -1361,8 +1373,8 @@ const ne: Record<string, string> = {
   kymInsInitialDepositAmount: 'Initial Deposit Amount',
 
   kymInsPermanentAddress: 'Permanent Address',
-  kymInsState: 'State',
-  kymInsSelectState: 'Select State',
+  kymInsState: 'Province',
+  kymInsSelectState: 'Select Province',
   kymInsDistrict: 'District',
   kymInsSelectDistrict: 'Select District',
   kymInsVDCMunicipality: 'Local Government',
@@ -1443,6 +1455,7 @@ const ne: Record<string, string> = {
   // Settings Share
   shareSettings: 'Share Settings',
 
+  // SIDEBAR
   settingsShareGeneral: 'General',
   settingsShareBonus: 'Share Bonus',
   settingsShareMigration: 'Share Migration',
@@ -1591,7 +1604,7 @@ const ne: Record<string, string> = {
   accRebate: 'Rebate',
   accMonthly: 'Monthly',
   accAddfrequencydayorweek:
-    'Either Pick a day or manually [action] frequency day or day of the week.',
+    'Either Pick a day or manually add frequency day or day of the week.',
   accDay: 'Day',
   accDayOfWeek: 'Day of the week',
   accEnterDay: 'Enter Day',
@@ -1879,6 +1892,10 @@ const ne: Record<string, string> = {
   warehouseFormEnterAddress: 'Enter Address',
   warehouseFormAddWarehouse: 'Add Warehouse',
 
+  // warehouse list
+  warehouseListView: 'List View',
+  warehouseTreeView: 'Tree View',
+
   // warehouse transfer table
   warehouseTransferWarehouseTransfer: 'Warehouse Transfer',
   warehouseTransferNewWarehouseTransfer: 'New Warehouse Transfer',
@@ -1892,7 +1909,7 @@ const ne: Record<string, string> = {
   // warehouseTransferDestinationWarehouse: 'Destination Warehouse',
   warehouseTransferStatus: 'Status',
 
-  // [action] vendor
+  // add vendor
   addVendorAddNewVendor: 'Add New Vendor',
   addVendorName: 'Name',
   addVendorEnterName: 'Select Name',
@@ -2015,6 +2032,18 @@ const ne: Record<string, string> = {
   shareFundAccountName: 'Share Account Name',
   shareFund: 'Share Fund',
 
+  warehouseTableReceived: 'Received',
+  warehouseTableEditMember: 'Edit Member',
+  warehouseTableMakeInactive: 'Make Inactive',
+
+  // warehouseTransferTable
+  warehouseTranserDate: 'Date',
+  warehouseTranserEntryNo: 'Entry No',
+  warehouseTranserReference: 'Reference',
+  warehouseTranserSourceWarehouse: 'Source Warehouse',
+  warehouseTranserDestinationWarehouse: 'Destination Warehouse',
+  warehouseTranserStatus: 'Status ',
+
   kymCoopVDCLocalGov: 'Local Government',
   kymCoopSelectLocalGov: 'Select Local Government',
   kymIndWriteStudentVISA: 'Write 0 if Student VISA',
@@ -2036,6 +2065,7 @@ const ne: Record<string, string> = {
   accountingAccountingSidebarCreate: 'Create',
   accountingAccountingSidebarJournalVouchers: 'Journal Vouchers',
   accountingAccountingSidebarCashTransfer: 'Cash Transfer',
+  accountingAccountingSidebarQuickPayment: 'Quick Payment',
   accountingAccountingSidebarQuickReceipt: 'Quick Receipt',
   accountingAccountingSidebarBankAccounts: 'Bank Accounts',
   accountingAccountingSidebarChartsOfAccounts: 'Charts of Account',
@@ -2217,7 +2247,7 @@ const ne: Record<string, string> = {
   accountingQuickPaymentListTotalCost: 'Total Cost',
   accountingQuickPaymentListItemQuantity: 'Item Quantity',
 
-  //accounting quick payment add
+  //accounting cash transfer add
   accountingQuickPaymentAddNewQuickPayment: 'New Quick Payment',
   accountingQuickPaymentAddPaidFrom: 'Paid From',
   accountingQuickPaymentAddSelectLedgerName: 'Select Ledger Name',
@@ -2351,15 +2381,15 @@ const ne: Record<string, string> = {
   invItemsOptions: 'Options',
   invItemsSml: 'S.M,L',
   invItemAddNewVariant: 'Add New Variant',
-  //accounting purchase form table
-  accountingPurchaseFormTableProduct: 'Product',
-  accountingPurchaseFormTableQuantity: 'Quantity',
-  accountingPurchaseFormTableRate: 'Rate',
-  accountingPurchaseFormTableTax: 'Tax',
-  accountingPurchaseFormTableAmount: 'Amount',
-  accountingPurchaseFormTableProductDescription: 'Product Description',
-  accountingPurchaseFormTablePurchaseLedger: 'Purchase Ledger',
-  accountingPurchaseFormTableWarehousePartition: 'Warehouse Partition',
+  //accounting purchase table
+  accountingPurchaseTableProduct: 'Product',
+  accountingPurchaseTableQuantity: 'Quantity',
+  accountingPurchaseTableRate: 'Rate',
+  accountingPurchaseTableTax: 'Tax',
+  accountingPurchaseTableAmount: 'Amount',
+  accountingPurchaseTableProductDescription: 'Product Description',
+  accountingPurchaseTablePurchaseLedger: 'Purchase Ledger',
+  accountingPurchaseTableWarehousePartition: 'Warehouse Partition',
 
   //accounting expenses form table
   accountingExpensesFormTableTransferredTo: 'Transferred To (Select Ledger)',
@@ -2455,7 +2485,7 @@ const ne: Record<string, string> = {
   accountOpenCEOAuthority: 'CEO Authority',
   accountOpenBoardAuthority: 'Board Authority',
   accountOpenInterestRate: 'Interest Rate',
-  accoutnOpenLadderRateInfo: 'Ladder Rate Info:',
+  accoutnOpenLadderRateInfo: 'Ladder Rate Info: ',
   accountOpenUnit: 'Unit',
   accountOpenTenure: 'Tenure',
   //settings general sidebar
@@ -2717,8 +2747,10 @@ const ne: Record<string, string> = {
   loanProductLoanRepaymentStartGraceDuration:
     'Loan Repayment Start Grace Duration',
   loanProductMinimumDuration: 'Minimum Duration',
+  loanProductMaximumDuration: 'Maximum Duration',
   loanProductInterest: 'Interest',
   loanProductMaximumRate: 'Maximum Rate',
+  loanProductMinimumRate: 'Minimum Rate',
   loanProductDefaultRate: 'Default Rate',
   loanProductCEOAuthority: 'CEO Authority',
   loanProductBoardAuthority: 'Board Authority',
@@ -2741,6 +2773,7 @@ const ne: Record<string, string> = {
   loanProductDisburementofFMV: 'Disburement % of FMV',
   loanProductLoanProvisionFrequency: 'Loan Provision Frequency',
   loanProductDisburementDMV: 'Disburement % of DMV',
+  loanProductRebate: 'Rebate',
   loanProductStaffProduct: 'Staff Product',
   loanProductSupportMultipleAccount: 'Support Multiple Account',
   loanProductLoanScheduleChangeOverride: 'Loan Schedule Change Override',
@@ -2886,6 +2919,8 @@ const ne: Record<string, string> = {
   loanProductGeneralInformation: 'General Information',
   loanProductDetailCriteria: 'Criteria',
   loanProductAdditionalFeatures: 'Additional Features, Booleans',
+  // loanProduct: '',
+  // loanProduct: '',
   /* KYM Institution */
   settingsMemberInstitutionSection1: 'Section 1: Information of Organization',
   settingsMemberInstitutionSection2: 'Section 2: Transaction Profile',
@@ -2904,6 +2939,66 @@ const ne: Record<string, string> = {
   settingsInstitutionTransactionDetails: 'Transaction Details',
   settingsExpectedMonthlyTurnover: 'Expected Monthly Turnover',
   settingsExpectedMonthlyTransaction: 'Expected Monthly Transaction',
+
+  /* KYM Settings - Cooperative */
+  settingsMemberCooperativeSection1: 'Section 1: Information of Institution',
+  settingsCooperativeContactDetails: 'Contact Details',
+  settingsCooperativeCurrentMembers: 'Current Members',
+  settingsCooperativeRepresentative: 'Representative',
+  settingsCooperativeType: 'Cooperative Type',
+  settingsNumberOfEmployee: 'Number of Employee',
+
+  settingsMemberCooperativeSection2: 'Section 2: Economic Details',
+
+  settingsMemberCooperativeSection3:
+    'Section 3: Details of Proprietary, Partners, Directors',
+  settingsCooperativeDirectors: 'Directors',
+  settingsCooperativeDirectorDetails: 'Director Details',
+  settingsCooperativeDocumentDeclaration: 'Document Declaration',
+
+  settingsMemberCooperativeSection4: 'Section 4: Details of Account Operators',
+  settingsCooperativeAccountOperators: 'Account Operators',
+  settingsCooperativeAccountOperatorDetails: 'Account Operator Detail',
+
+  settingsMemberCooperativeSection5: 'Section 5: Declaration',
+  settingsCooperativeAccountHolderDeclaration: 'Account Holder Declaration',
+  settingsCooperativeAccountHolderDeclarationDetails:
+    'Account Holder Declaration Details',
+  settingsCooperativeAccountHolderDeclarationDocuments:
+    'Account Holder Declaration Documents',
+  settingsCooperativeFileUploads: 'File Uploads',
+  settingsCooperativeDeclaration: 'Declaration',
+
+  /* KYM Settings - Cooperative Union */
+  settingsCoopUnionSection1: 'Section 1: Institution Information',
+  settingsCoopUnionOrganizationType: 'Organization Type',
+  settingsCoopUnionRegisteredDetails: 'Registered Details',
+  settingsCoopUnionContactDetails: 'Contact Details',
+  settingsCoopUnionCurrentMembers: 'Current Members',
+  settingsCoopUnionBankAccountDetails: 'Bank Account Details',
+  settingsCoopUnionApplicant: 'Applicant',
+  settingsCoopUnionApplicantDetails: 'Applicant Details',
+  settingsCoopUnionApplicantDocumentDeclaration: 'Document Declaration',
+
+  settingsCoopUnionSection2:
+    'Section 2: Details of Proprietary, Partners, Directors',
+  settingsCoopDirectors: 'Directors',
+  settingsCoopDirectorDetails: 'Director Details',
+  settingsCoopTrainingRelatedToCoop: 'Training Related to Co-operatives',
+  settingsCoopDocumentDeclaration: 'Document Declaration',
+
+  settingsCoopUnionSection3: 'Details of Account Operators',
+  settingsCoopUnionAccountOperators: 'Account Operators',
+  settingsCoopUnionAccountOperatorDetails: 'Account Operator Details',
+
+  settingsCoopUnionSection4: 'Section 4: Details of Concern',
+  settingsCoopCentralRepresentative: 'Central Representative',
+  settingsCoopCentralRepresentativeDetails: 'Central Representative Details',
+
+  settingsCoopUnionSection5: 'Economic Details',
+
+  settingsCoopUnionSection6: 'Declaration',
+  settingsCoopUnionSection7: 'Section 7: Custom Fields',
 
   settingsDirector: 'Directors',
   settingsDirectorDetails: 'Director Details',
