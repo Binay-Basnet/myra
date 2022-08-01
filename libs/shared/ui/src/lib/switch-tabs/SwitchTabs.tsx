@@ -89,7 +89,7 @@ export function SwitchTabs({
 
   useEffect(() => {
     if (value !== undefined) {
-      setValue(value.toString());
+      setValue(value?.toString());
     }
   }, [value]);
 
