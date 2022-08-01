@@ -4,7 +4,10 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { CoopUnionInstitutionInformationInput } from '@coop/shared/data-access';
+import {
+  CoopUnionInstitutionInformationInput,
+  useGetBankListQuery,
+} from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -24,6 +27,8 @@ export const BankAccountDetails = ({
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
   useCooperativeUnionInstitution({ methods });
+
+  const { data: bankList } = useGetBankListQuery();
 
   return (
     <FormProvider {...methods}>
@@ -50,11 +55,10 @@ export const BankAccountDetails = ({
               name="nameOfBank"
               label={t['kymCoopUnionNameOfBank']}
               placeholder={t['kymCoopUnionSelectBank']}
-              options={[
-                { label: 'NIC AISA BANK ', value: 'NICA' },
-                { label: 'JYOTI BIKAS BANK LIMITED', value: 'JBBL' },
-                { label: 'NIBL BANK ', value: 'NIBL' },
-              ]}
+              options={bankList?.bank?.bank?.list?.map((bank) => ({
+                label: bank?.name,
+                value: bank?.id,
+              }))}
             />
             <FormInput
               type="text"

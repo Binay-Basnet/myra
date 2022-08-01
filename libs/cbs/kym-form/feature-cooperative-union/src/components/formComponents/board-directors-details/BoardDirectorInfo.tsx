@@ -1,21 +1,31 @@
-import React, { useMemo, useState } from 'react';
-import { Control, useFieldArray } from 'react-hook-form';
-import { useFormContext } from 'react-hook-form';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { FaMap } from 'react-icons/fa';
+import React, { useEffect, useMemo, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
+import debounce from 'lodash/debounce';
+import omit from 'lodash/omit';
 
+import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import {
-  AccordianContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import {
+  CooperativeUnionPersonnelSection,
+  CoopUnionPersonnelDetails,
+  CoopUnionPersonnelInput,
+  KymAddress,
+  useAllAdministrationQuery,
+  useDeletePersonnelDetailsMutation,
+  useGetBoardOfDirectorsDetailsListQuery,
+  useGetNewIdMutation,
+  useSetPersonnelDetailsMutation,
+} from '@coop/shared/data-access';
 import {
   FormEmailInput,
   FormFileInput,
@@ -33,36 +43,95 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import {
+  getKymSectionCoOperativeUnion,
+  isDeepEmpty,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { BoardOfDirectorRelatedTraining } from './TrainingRelatedToCooperatives';
 
-const AddDirector = ({ watch, index, control, removeDirector }) => {
+interface IAddDirectorProps {
+  removeDirector: (directorId: string) => void;
+  index: number;
+  directorId: string;
+  setSection: (section?: { section: string; subSection: string }) => void;
+  directorDetail: CoopUnionPersonnelDetails | null | undefined;
+}
+
+const AddDirector = ({
+  removeDirector,
+  index,
+  directorId,
+  setSection,
+  directorDetail,
+}: IAddDirectorProps) => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
+  const id = String(router?.query?.['id']);
+
   const { data } = useAllAdministrationQuery();
-  const { getValues, reset } = useFormContext();
+
+  const methods = useForm<CoopUnionPersonnelInput>();
+
+  const { getValues, reset, watch, control } = methods;
+
+  const { mutate } = useSetPersonnelDetailsMutation();
+
+  useEffect(() => {
+    if (directorDetail) {
+      if (directorDetail) {
+        reset({
+          ...omit(directorDetail, ['id', 'cooperativeUnionId']),
+          permanentAddress: {
+            ...directorDetail?.permanentAddress,
+            locality: directorDetail?.permanentAddress?.locality?.local,
+          },
+          temporaryAddress: {
+            ...directorDetail?.temporaryAddress,
+            locality: directorDetail?.temporaryAddress?.locality?.local,
+          },
+        });
+      }
+    }
+  }, [directorDetail]);
+
+  useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        if (id && data && !isDeepEmpty(data)) {
+          mutate({
+            id,
+            personnelId: directorId,
+            sectionType: CooperativeUnionPersonnelSection.Directors,
+            data: { id, ...data },
+          });
+          // refetch();
+        }
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
 
   const isPermanentAndTemporaryAddressSame = watch(
-    `boardOfDirectorsDetails.${index}.isPermanentAndTemporaryAddressSame`
+    `isPermanentAndTemporaryAddressSame`
   );
 
-  const [temporaryAddress, setTemporaryAddress] = useState(false);
   const [isOpen, setIsOpen] = React.useState(true);
 
   // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch(
-    `boardOfDirectorsDetails.${index}.permanentStateId`
-  );
-  const currentDistrictId = watch(
-    `boardOfDirectorsDetails.${index}.permanentDistrictId`
-  );
+  const currentProvinceId = watch(`permanentAddress.provinceId`);
+  const currentDistrictId = watch(`permanentAddress.districtId`);
+  const currentLocalGovernmentId = watch('permanentAddress.localGovernmentId');
 
   // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch(
-    `boardOfDirectorsDetails.${index}.temporaryStateId`
-  );
-  const currentTemptDistrictId = watch(
-    `boardOfDirectorsDetails.${index}.temporaryDistrictId`
+  const currentTempProvinceId = watch(`temporaryAddress.provinceId`);
+  const currentTemptDistrictId = watch(`temporaryAddress.districtId`);
+  const currentTempLocalGovernmentId = watch(
+    'temporaryAddress.localGovernmentId'
   );
 
   const province = useMemo(() => {
@@ -88,6 +157,12 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
     [currentDistrictId]
   );
 
+  const wardList = useMemo(
+    () =>
+      localityList.find((d) => d.id === currentLocalGovernmentId)?.wards ?? [],
+    [currentLocalGovernmentId]
+  );
+
   const districtTempList = useMemo(
     () =>
       data?.administration.all.find((d) => d.id === currentTempProvinceId)
@@ -101,15 +176,24 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
         ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
+
+  const wardTempList = useMemo(
+    () =>
+      localityTempList.find((d) => d.id === currentTempLocalGovernmentId)
+        ?.wards ?? [],
+    [currentTempLocalGovernmentId]
+  );
+
   const resetDirectorForm = () => {
     const values = getValues();
 
-    values['boardOfDirectorsDetails'][index] = {};
+    // values['boardOfDirectorsDetails'][index] = {};
 
-    reset({
-      boardOfDirectorsDetails: values['boardOfDirectorsDetails'],
-    });
+    // reset({
+    //   boardOfDirectorsDetails: values['boardOfDirectorsDetails'],
+    // });
   };
+
   return (
     <>
       <Box display="flex" alignItems="center">
@@ -151,7 +235,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             aria-label="close"
             icon={<CloseIcon />}
             ml="s16"
-            onClick={removeDirector}
+            onClick={() => removeDirector(directorId)}
           />
         )}
       </Box>
@@ -164,211 +248,226 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
           borderColor="border.layout"
         >
           <SectionContainer>
-            <InputGroupContainer>
-              <FormInput
-                type="text"
-                name={`boardOfDirectorsDetails.${index}.fullName`}
-                label={t['kymCoopUnionFullName']}
-                placeholder={t['kymCoopUnionEnterFullName']}
-              />
-              <FormInput
-                type="text"
-                name={`boardOfDirectorsDetails.${index}.designation`}
-                label={t['kymCoopUnionDesignation']}
-                placeholder={t['kymCoopUnionEnterDesignation']}
-              />
-            </InputGroupContainer>
+            <FormProvider {...methods}>
+              <form
+                onFocus={(e) => {
+                  const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
-            <Text fontSize="r1" fontWeight="SemiBold">
-              {t['kymCoopUnionPermanentAddress']}
-            </Text>
-            {/* <Box
+                  setSection(kymSection);
+                }}
+              >
+                <SectionContainer>
+                  <InputGroupContainer>
+                    <FormInput
+                      type="text"
+                      name={`fullName`}
+                      label={t['kymCoopUnionFullName']}
+                      placeholder={t['kymCoopUnionEnterFullName']}
+                    />
+                    <FormInput
+                      type="text"
+                      name={`designationEn`}
+                      label={t['kymCoopUnionDesignation']}
+                      placeholder={t['kymCoopUnionEnterDesignation']}
+                    />
+                  </InputGroupContainer>
+
+                  <Text fontSize="r1" fontWeight="SemiBold">
+                    {t['kymCoopUnionPermanentAddress']}
+                  </Text>
+                  {/* <Box
               id="Permanent Address"
               gap="s32"
               display={'flex'}
               flexDirection="column"
             > */}
-            <InputGroupContainer>
-              <FormSelect
-                name={`boardOfDirectorsDetails.${index}.permanentStateId`}
-                label={t['kymCoopUnionState']}
-                placeholder={t['kymCoopUnionSelectState']}
-                options={province}
-              />
-              <FormSelect
-                name={`boardOfDirectorsDetails.${index}.permanentDistrictId`}
-                label={t['kymCoopUnionDistrict']}
-                placeholder={t['kymCoopUnionSelectDistrict']}
-                options={districtList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                name={`boardOfDirectorsDetails.${index}.permanentVdcOrMunicId`}
-                label={t['kymCoopUnionVDCMunicipality']}
-                placeholder={t['kymCoopUnionSelectVDCMunicipality']}
-                options={localityList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormInput
-                type="number"
-                name={`boardOfDirectorsDetails.${index}.permanentWardId`}
-                label={t['kymCoopUnionWardNo']}
-                placeholder={t['kymCoopUnionEnterWardNo']}
-              />
-              <FormInput
-                type="text"
-                name={`boardOfDirectorsDetails.${index}.permanentLocality`}
-                label={t['kymCoopUnionLocality']}
-                placeholder={t['kymCoopUnionEnterLocality']}
-              />
-              <FormInput
-                type="text"
-                name={`boardOfDirectorsDetails.${index}.permanentHouseNo`}
-                label={t['kymIndHouseNo']}
-                placeholder={t['kymIndEnterHouseNo']}
-              />
-            </InputGroupContainer>
-
-            <Box>
-              <FormMap
-                name={`boardOfDirectorsDetails.${index}.permanentLocation`}
-              />
-            </Box>
-            {/* </Box> */}
-
-            <Box
-              id="Temporary Address"
-              gap="s32"
-              display={'flex'}
-              flexDirection="column"
-              scrollMarginTop={'200px'}
-            >
-              <Text fontSize="r1" fontWeight="SemiBold">
-                {t['kymCoopUnionTemporaryAddress']}
-              </Text>
-
-              <FormSwitch
-                control={control}
-                id="boardOfDirectorsDetails"
-                name={`boardOfDirectorsDetails.${index}.isPermanentAndTemporaryAddressSame`}
-                label={t['kymCoopUnionTemporaryAddressPermanent']}
-              />
-              {!isPermanentAndTemporaryAddressSame && (
-                <>
                   <InputGroupContainer>
                     <FormSelect
-                      name={`boardOfDirectorsDetails.${index}.temporaryStateId`}
+                      name={`permanentAddress.provinceId`}
                       label={t['kymCoopUnionState']}
                       placeholder={t['kymCoopUnionSelectState']}
                       options={province}
                     />
                     <FormSelect
-                      name={`boardOfDirectorsDetails.${index}.temporaryDistrictId`}
+                      name={`permanentAddress.districtId`}
                       label={t['kymCoopUnionDistrict']}
                       placeholder={t['kymCoopUnionSelectDistrict']}
-                      options={districtTempList.map((d) => ({
+                      options={districtList.map((d) => ({
                         label: d.name,
                         value: d.id,
                       }))}
                     />
                     <FormSelect
-                      name={`boardOfDirectorsDetails.${index}.temporaryVdcOrMunicId`}
+                      name={`permanentAddress.localGovernmentId`}
                       label={t['kymCoopUnionVDCMunicipality']}
                       placeholder={t['kymCoopUnionSelectVDCMunicipality']}
-                      options={localityTempList.map((d) => ({
+                      options={localityList.map((d) => ({
                         label: d.name,
                         value: d.id,
                       }))}
                     />
-                    <FormInput
-                      type="number"
-                      name={`boardOfDirectorsDetails.${index}.temporaryWardId`}
+                    <FormSelect
+                      name={`permanentAddress.wardNo`}
                       label={t['kymCoopUnionWardNo']}
                       placeholder={t['kymCoopUnionEnterWardNo']}
+                      options={wardList?.map((d) => ({ label: d, value: d }))}
                     />
                     <FormInput
                       type="text"
-                      name={`boardOfDirectorsDetails.${index}.temporaryLocality`}
+                      name={`permanentAddress.locality`}
                       label={t['kymCoopUnionLocality']}
                       placeholder={t['kymCoopUnionEnterLocality']}
                     />
                     <FormInput
                       type="text"
-                      name={`boardOfDirectorsDetails.${index}.temporaryHouseNo`}
+                      name={`permanentAddress.houseNo`}
                       label={t['kymIndHouseNo']}
                       placeholder={t['kymIndEnterHouseNo']}
                     />
                   </InputGroupContainer>
 
-                  <Box mt="-16px">
-                    <FormMap
-                      name={`boardOfDirectorsDetails.${index}.temporaryLocation`}
-                    />
+                  <Box mt="-32px">
+                    <FormMap name={`permanentAddress.coordinates`} />
                   </Box>
-                </>
-              )}
-            </Box>
-            <InputGroupContainer>
-              <FormInput
-                type="date"
-                name={`boardOfDirectorsDetails.${index}.dateOfMembership`}
-                label={t['kymCoopUnionDateOfMembership']}
-                placeholder="DD-MM-YYYY"
-              />
-              <FormInput
-                type="text"
-                name={`boardOfDirectorsDetails.${index}.highestQualification`}
-                label={t['kymCoopUnionHighestQualification']}
-                placeholder={t['kymCoopUnionEnterHigestQualification']}
-              />
-              <FormInput
-                type="number"
-                name={`boardOfDirectorsDetails.${index}.contactNumber`}
-                label={t['kymCoopUnionMobileNo']}
-                placeholder={t['kymCoopUnionEnterMobileNo']}
-              />
-              <FormEmailInput
-                type="text"
-                name={`boardOfDirectorsDetails.${index}.email`}
-                label={t['kymCoopUnionEmail']}
-                placeholder={t['kymCoopUnionEnterEmail']}
-              />
-              <FormInput
-                type="string"
-                name={`boardOfDirectorsDetails.${index}.citizenshipOrPassportOrLisenceNo`}
-                label={t['kymCoopUnionCitizenshipPassportDrivingLicenseNo']}
-                placeholder={t['kymCoopUnionEnterNo']}
-              />
-              <FormInput
-                type="string"
-                name={`boardOfDirectorsDetails.${index}.panNo`}
-                label={'PAN No'}
-                placeholder={'Enter PAN No'}
-              />
-            </InputGroupContainer>
 
-            <BoardOfDirectorRelatedTraining bodIndex={index} />
+                  {/* </Box> */}
+
+                  <Box
+                    id="Temporary Address"
+                    gap="s32"
+                    display={'flex'}
+                    flexDirection="column"
+                    scrollMarginTop={'200px'}
+                  >
+                    <Text fontSize="r1" fontWeight="SemiBold">
+                      {t['kymCoopUnionTemporaryAddress']}
+                    </Text>
+
+                    <FormSwitch
+                      control={control}
+                      id="boardOfDirectorsDetails"
+                      name={`isPermanentAndTemporaryAddressSame`}
+                      label={t['kymCoopUnionTemporaryAddressPermanent']}
+                    />
+                    {!isPermanentAndTemporaryAddressSame && (
+                      <>
+                        <InputGroupContainer>
+                          <FormSelect
+                            name={`temporaryAddress.provinceId`}
+                            label={t['kymCoopUnionState']}
+                            placeholder={t['kymCoopUnionSelectState']}
+                            options={province}
+                          />
+                          <FormSelect
+                            name={`temporaryAddress.districtId`}
+                            label={t['kymCoopUnionDistrict']}
+                            placeholder={t['kymCoopUnionSelectDistrict']}
+                            options={districtTempList.map((d) => ({
+                              label: d.name,
+                              value: d.id,
+                            }))}
+                          />
+                          <FormSelect
+                            name={`temporaryAddress.localGovernmentId`}
+                            label={t['kymCoopUnionVDCMunicipality']}
+                            placeholder={t['kymCoopUnionSelectVDCMunicipality']}
+                            options={localityTempList.map((d) => ({
+                              label: d.name,
+                              value: d.id,
+                            }))}
+                          />
+                          <FormSelect
+                            name={`temporaryAddress.wardNo`}
+                            label={t['kymCoopUnionWardNo']}
+                            placeholder={t['kymCoopUnionEnterWardNo']}
+                            options={wardTempList?.map((d) => ({
+                              label: d,
+                              value: d,
+                            }))}
+                          />
+                          <FormInput
+                            type="text"
+                            name={`temporaryAddress.locality`}
+                            label={t['kymCoopUnionLocality']}
+                            placeholder={t['kymCoopUnionEnterLocality']}
+                          />
+                          <FormInput
+                            type="text"
+                            name={`temporaryAddress.houseNo`}
+                            label={t['kymIndHouseNo']}
+                            placeholder={t['kymIndEnterHouseNo']}
+                          />
+                        </InputGroupContainer>
+
+                        <Box mt="-16px">
+                          <FormMap name={`temporaryAddress.coordinates`} />
+                        </Box>
+                      </>
+                    )}
+                  </Box>
+                  <InputGroupContainer>
+                    <FormInput
+                      type="date"
+                      name={`dateOfMembership`}
+                      label={t['kymCoopUnionDateOfMembership']}
+                      placeholder="DD-MM-YYYY"
+                    />
+                    <FormInput
+                      type="text"
+                      name={`highestQualification`}
+                      label={t['kymCoopUnionHighestQualification']}
+                      placeholder={t['kymCoopUnionEnterHigestQualification']}
+                    />
+                    <FormInput
+                      type="number"
+                      name={`mobileNumber`}
+                      label={t['kymCoopUnionMobileNo']}
+                      placeholder={t['kymCoopUnionEnterMobileNo']}
+                    />
+                    <FormEmailInput
+                      type="text"
+                      name={`email`}
+                      label={t['kymCoopUnionEmail']}
+                      placeholder={t['kymCoopUnionEnterEmail']}
+                    />
+                    <FormInput
+                      type="string"
+                      name={`citizenshipNo`}
+                      label={
+                        t['kymCoopUnionCitizenshipPassportDrivingLicenseNo']
+                      }
+                      placeholder={t['kymCoopUnionEnterNo']}
+                    />
+                    <FormInput
+                      type="string"
+                      name={`panNo`}
+                      label={'PAN No'}
+                      placeholder={'Enter PAN No'}
+                    />
+                  </InputGroupContainer>
+
+                  <BoardOfDirectorRelatedTraining bodIndex={index} />
+                </SectionContainer>
+              </form>
+            </FormProvider>
 
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
-              <FormFileInput
-                size="lg"
+              <KYMDocumentField
                 label={t['kymCoopUnionPhotograph']}
                 // control={control}
-                name={`boardOfDirectorsDetails.${index}.photograph`}
+                name={`photograph`}
+                setKymCurrentSection={setSection}
               />
-              <FormFileInput
-                size="lg"
+              <KYMDocumentField
                 label={t['kymCoopUnionPhotographOfIdentityProofDocument']}
                 // control={control}
-                name={`boardOfDirectorsDetails.${index}.identityDocumentPhoto`}
+                name={`identityDocumentPhoto`}
+                setKymCurrentSection={setSection}
               />
             </Grid>
           </SectionContainer>
         </DynamicBoxGroupContainer>
+
         <Box
           display="flex"
           justifyContent="space-between"
@@ -389,7 +488,7 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
             variant="outline"
             shade="danger"
             leftIcon={<AiOutlineDelete height="11px" />}
-            onClick={removeDirector}
+            onClick={() => removeDirector(directorId)}
           >
             {t['kymInsDelete']}
           </Button>
@@ -400,13 +499,73 @@ const AddDirector = ({ watch, index, control, removeDirector }) => {
   );
 };
 
-export const BoardDirectorInfo = ({ watch, control }) => {
-  const {
-    fields: directorFields,
-    append: directorAppend,
-    remove: directorRemove,
-  } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
+interface IBoardDirectorInfoProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
+  // const {
+  //   fields: directorFields,
+  //   append: directorAppend,
+  //   remove: directorRemove,
+  // } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
   const { t } = useTranslation();
+
+  const router = useRouter();
+
+  const id = router?.query?.['id'];
+
+  const [directorIds, setDirectorIds] = useState<string[]>([]);
+
+  const { data: bodEditValues } = useGetBoardOfDirectorsDetailsListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
+
+  useEffect(() => {
+    if (bodEditValues) {
+      const editValueData =
+        bodEditValues?.members?.cooperativeUnion?.formState?.data?.formData
+          ?.boardOfDirectorsDetails?.personnelDetails;
+
+      setDirectorIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
+        ) ?? []
+      );
+    }
+  }, [bodEditValues]);
+
+  const { mutate: newIdMutate } = useGetNewIdMutation({
+    onSuccess: (res) => {
+      setDirectorIds([...directorIds, res.newId]);
+    },
+  });
+
+  const { mutate: deleteMutation } = useDeletePersonnelDetailsMutation({
+    onSuccess: (res) => {
+      const deletedId = String(
+        res?.members?.cooperativeUnion?.deletePersonnel?.recordId
+      );
+
+      const tempDirectorIds = [...directorIds];
+
+      tempDirectorIds.splice(tempDirectorIds.indexOf(deletedId), 1);
+
+      setDirectorIds([...tempDirectorIds]);
+    },
+  });
+
+  const addDirector = () => {
+    newIdMutate({});
+  };
+
+  const removeDirector = (directorId: string) => {
+    deleteMutation({ personnelId: directorId });
+  };
+
   return (
     <GroupContainer
       id="kymCoopUnionAccDetailsofProprietor"
@@ -415,20 +574,23 @@ export const BoardDirectorInfo = ({ watch, control }) => {
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymCoopUnionBoardOfDirectorDetails']}
       </Text>
-      {directorFields.map((item, index) => {
+      {directorIds.map((directorId, index) => {
         return (
           <Box
-            key={item.id}
+            key={directorId}
             display="flex"
             flexDirection={'column'}
             id="Details of Proprietor, Partners, Directors."
             scrollMarginTop={'200px'}
           >
             <AddDirector
-              watch={watch}
               index={index}
-              control={control}
-              removeDirector={() => directorRemove(index)}
+              directorId={directorId}
+              removeDirector={removeDirector}
+              setSection={setSection}
+              directorDetail={bodEditValues?.members?.cooperativeUnion?.formState?.data?.formData?.boardOfDirectorsDetails?.personnelDetails?.find(
+                (bod) => bod?.id === directorId
+              )}
             />
           </Box>
         );
@@ -438,9 +600,7 @@ export const BoardDirectorInfo = ({ watch, control }) => {
         alignSelf="start"
         leftIcon={<Icon size="md" as={AiOutlinePlus} />}
         variant="outline"
-        onClick={() => {
-          directorAppend({});
-        }}
+        onClick={addDirector}
       >
         {t['kymCoopUnionAddDirector']}
       </Button>
