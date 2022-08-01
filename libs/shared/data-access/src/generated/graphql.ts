@@ -7515,6 +7515,13 @@ export type GetInsBoardDirectorEditListQueryVariables = Exact<{
 
 export type GetInsBoardDirectorEditListQuery = { members: { institution?: { listDirectors?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isTemporaryAndPermanentAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNo?: string | null, emailAddress?: string | null, citizenshipNo?: string | null, panNo?: string | null, isHeadOfOrganization?: boolean | null, isAffiliatedWithOtherFirms?: boolean | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, firmDetails?: { directorName?: string | null, institutionName?: string | null, address?: string | null, designation?: string | null, yearlyIncome?: number | null } | null } | null> | null } | null } | null } };
 
+export type GetInsAccountOperatorEditListQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInsAccountOperatorEditListQuery = { members: { institution?: { listAccountOperators?: { data?: Array<{ id?: string | null, fullName?: string | null, contact?: string | null, email?: string | null, isTemporaryAndPermanentAddressSame?: boolean | null, designation?: string | null, panNo?: string | null, permanenetAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null> | null } | null } | null } };
+
 export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7541,6 +7548,13 @@ export type GetIndividualKymOptionsQueryVariables = Exact<{
 
 
 export type GetIndividualKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
+
+export type GetInstitutionKymOptionsQueryVariables = Exact<{
+  searchTerm: FormFieldSearchTerm;
+}>;
+
+
+export type GetInstitutionKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
 
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
@@ -10051,6 +10065,61 @@ export const useGetInsBoardDirectorEditListQuery = <
       useAxios<GetInsBoardDirectorEditListQuery, GetInsBoardDirectorEditListQueryVariables>(GetInsBoardDirectorEditListDocument).bind(null, variables),
       options
     );
+export const GetInsAccountOperatorEditListDocument = `
+    query getInsAccountOperatorEditList($id: ID!) {
+  members {
+    institution {
+      listAccountOperators(id: $id) {
+        data {
+          id
+          fullName
+          contact
+          email
+          permanenetAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isTemporaryAndPermanentAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          designation
+          panNo
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInsAccountOperatorEditListQuery = <
+      TData = GetInsAccountOperatorEditListQuery,
+      TError = unknown
+    >(
+      variables: GetInsAccountOperatorEditListQueryVariables,
+      options?: UseQueryOptions<GetInsAccountOperatorEditListQuery, TError, TData>
+    ) =>
+    useQuery<GetInsAccountOperatorEditListQuery, TError, TData>(
+      ['getInsAccountOperatorEditList', variables],
+      useAxios<GetInsAccountOperatorEditListQuery, GetInsAccountOperatorEditListQueryVariables>(GetInsAccountOperatorEditListDocument).bind(null, variables),
+      options
+    );
 export const GetInventoryItemsDocument = `
     query getInventoryItems {
   inventory {
@@ -10195,6 +10264,32 @@ export const useGetIndividualKymOptionsQuery = <
     useQuery<GetIndividualKymOptionsQuery, TError, TData>(
       ['getIndividualKYMOptions', variables],
       useAxios<GetIndividualKymOptionsQuery, GetIndividualKymOptionsQueryVariables>(GetIndividualKymOptionsDocument).bind(null, variables),
+      options
+    );
+export const GetInstitutionKymOptionsDocument = `
+    query getInstitutionKYMOptions($searchTerm: FormFieldSearchTerm!) {
+  form {
+    options {
+      predefined(filter: {searchTerm: $searchTerm, category: KYM_INSTITUTION}) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInstitutionKymOptionsQuery = <
+      TData = GetInstitutionKymOptionsQuery,
+      TError = unknown
+    >(
+      variables: GetInstitutionKymOptionsQueryVariables,
+      options?: UseQueryOptions<GetInstitutionKymOptionsQuery, TError, TData>
+    ) =>
+    useQuery<GetInstitutionKymOptionsQuery, TError, TData>(
+      ['getInstitutionKYMOptions', variables],
+      useAxios<GetInstitutionKymOptionsQuery, GetInstitutionKymOptionsQueryVariables>(GetInstitutionKymOptionsDocument).bind(null, variables),
       options
     );
 export const GetMemberListDocument = `

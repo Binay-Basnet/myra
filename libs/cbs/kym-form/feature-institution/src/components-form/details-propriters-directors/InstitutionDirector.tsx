@@ -56,12 +56,14 @@ interface IAddDirector {
     subSection: string;
   }) => void;
   directorId: string;
+  index: number;
 }
 
 const AddDirector = ({
   removeDirector,
   setKymCurrentSection,
   directorId,
+  index,
 }: IAddDirector) => {
   const { t } = useTranslation();
   const methods = useForm();
@@ -110,7 +112,7 @@ const AddDirector = ({
             cursor={'pointer'}
             onClick={() => setIsOpen(!isOpen)}
           >
-            <Text fontSize="r1">{`Director`}</Text>
+            <Text fontSize="r1">{`Director${index}`}</Text>
             <Box>
               {isOpen ? (
                 <IconButton
@@ -283,7 +285,7 @@ export const BoardDirectorInfo = (props: IProps) => {
           <Text fontSize="r1" fontWeight="SemiBold">
             {t['kymInsDetailsofProprietorPartnersDirectors']}
           </Text>
-          {directorIds.map((id) => {
+          {directorIds.map((id, index) => {
             return (
               <Box
                 key={id}
@@ -297,6 +299,7 @@ export const BoardDirectorInfo = (props: IProps) => {
                   setKymCurrentSection={setSection}
                   removeDirector={removeDirector}
                   directorId={id}
+                  index={index + 1}
                 />
               </Box>
             );

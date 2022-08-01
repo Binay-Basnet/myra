@@ -119,21 +119,21 @@ interface KYMSettingsCustomSectionProps {
 export const KYMSettingsCustomSection = ({
   kymType,
 }: KYMSettingsCustomSectionProps) => {
-  console.log(kymType);
-
   const { data: customFieldsData } = useGetCustomFieldsQuery({ kymType });
+  const customFields = customFieldsData?.settings?.form?.custom?.list?.data;
 
   return (
     <AccordionPanel p="0">
-      <Accordion
-        allowMultiple
-        allowToggle
-        display="flex"
-        flexDirection="column"
-        gap="s12"
-      >
-        {customFieldsData?.settings?.form?.custom?.list?.data?.map(
-          (section, index) => (
+      {customFields && customFields?.length !== 0 && (
+        <Accordion
+          allowMultiple
+          allowToggle
+          display="flex"
+          flexDirection="column"
+          gap="s12"
+          mb="s16"
+        >
+          {customFields?.map((section, index) => (
             <Fragment key={section?.id}>
               <AccordionItem>
                 {({ isExpanded }) => (
@@ -167,9 +167,9 @@ export const KYMSettingsCustomSection = ({
                 )}
               </AccordionItem>
             </Fragment>
-          )
-        )}
-      </Accordion>
+          ))}
+        </Accordion>
+      )}
 
       <KYMCustomFieldAdd kymType={kymType} />
     </AccordionPanel>
@@ -313,107 +313,125 @@ export const KYMCustomFieldAdd = ({ kymType }: { kymType: KYMCategory }) => {
       | FormFieldType.SingleSelect
       | FormFieldType.MultipleSelect
       | 'FormSection';
-  }>();
+  }>({});
   const { mutateAsync: addNewCustomSection, isLoading } =
     useUpsertCustomSectionMutation();
   const { mutateAsync: addNewCustomField, isLoading: fieldLoading } =
     useUpsertCustomFieldMutation();
 
   return (
-    <Box
-      mt="s16"
-      as="form"
-      display="flex"
-      flexDir="column"
-      gap="s16"
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const fieldType = methods.getValues().fieldType;
+    <>
+      <Box
+        as="form"
+        display="flex"
+        flexDir="column"
+        gap="s16"
+        onSubmit={methods.handleSubmit(async () => {
+          const fieldType = methods.getValues().fieldType;
 
-        if (fieldType === 'FormSection') {
-          const response = await addNewCustomSection({
-            data: {
+          if (fieldType === 'FormSection') {
+            const response = await addNewCustomSection({
               data: {
-                enabled: true,
-                category: kymType,
-                nameEn: methods.getValues().name,
+                data: {
+                  enabled: true,
+                  category: kymType,
+                  nameEn: methods.getValues().name,
+                },
               },
-            },
-          });
+            });
 
-          if (response) {
-            methods.reset();
-            queryClient.invalidateQueries('getCustomFields');
-            setHasNewField(false);
-          }
-        } else {
-          const response = await addNewCustomField({
-            data: {
+            if (response) {
+              methods.reset();
+              queryClient.invalidateQueries('getCustomFields');
+              setHasNewField(false);
+            }
+          } else {
+            const response = await addNewCustomField({
               data: {
-                nameEn: methods.getValues().name,
-                category: kymType,
-                enabled: true,
-                fieldType,
-                hasOtherField: false,
+                data: {
+                  nameEn: methods.getValues().name,
+                  category: kymType,
+                  enabled: true,
+                  fieldType,
+                  hasOtherField: false,
+                },
               },
-            },
-          });
-          if (response) {
-            methods.reset();
-            queryClient.invalidateQueries('getCustomFields');
-            setHasNewField(false);
+            });
+            if (response) {
+              methods.reset();
+              queryClient.invalidateQueries('getCustomFields');
+              setHasNewField(false);
+            }
           }
-        }
-      }}
-    >
-      {hasNewField && (
-        <FormProvider {...methods}>
-          <Box display="flex" alignItems="center" gap="s16">
-            <Box w="50%">
-              <FormInput name="name" placeholder="Name of Custom Field" />
-            </Box>
-            <Box w="50%">
-              <FormSelect
-                name="fieldType"
-                placeholder="Field Type"
-                options={[
-                  { label: 'Single Select', value: FormFieldType.SingleSelect },
-                  {
-                    label: 'Multi Select',
-                    value: FormFieldType.MultipleSelect,
-                  },
-                  { label: 'Group Fields', value: 'FormSection' },
-                ]}
+        })}
+      >
+        {hasNewField && (
+          <FormProvider {...methods}>
+            <Box display="flex" alignItems="flex-start" gap="s16">
+              <Box w="50%">
+                <FormInput
+                  name="name"
+                  rules={{
+                    required: 'This field is required!',
+                  }}
+                  placeholder="Name of Custom Field"
+                />
+              </Box>
+              <Box w="50%">
+                <FormSelect
+                  name="fieldType"
+                  placeholder="Select Field Type"
+                  rules={{
+                    required: 'This field is required!',
+                  }}
+                  options={[
+                    {
+                      label: 'Single Select',
+                      value: FormFieldType.SingleSelect,
+                    },
+                    {
+                      label: 'Multi Select',
+                      value: FormFieldType.MultipleSelect,
+                    },
+                    { label: 'Group Fields', value: 'FormSection' },
+                  ]}
+                />
+              </Box>
+
+              <Icon
+                onClick={async () => {
+                  setHasNewField(false);
+                }}
+                h="44px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                as={IoClose}
+                size="md"
+                color="gray.500"
+                cursor="pointer"
+                _hover={{ color: 'gray.800' }}
               />
             </Box>
+          </FormProvider>
+        )}
 
-            <Icon
-              onClick={async () => {
-                setHasNewField(false);
-              }}
-              as={IoClose}
-              size="md"
-              color="gray.500"
-              cursor="pointer"
-              _hover={{ color: 'gray.800' }}
-            />
-          </Box>
-        </FormProvider>
-      )}
+        {hasNewField ? (
+          <Button
+            size="md"
+            alignSelf="flex-start"
+            display="flex"
+            alignItems="center"
+            type="submit"
+            isLoading={isLoading || fieldLoading}
+          >
+            <Icon as={IoIosCheckmark} size="lg" />
+            <Box lineHeight={0}>Done</Box>
+          </Button>
+        ) : null}
+      </Box>
 
-      {hasNewField ? (
-        <Button
-          size="md"
-          alignSelf="flex-start"
-          display="flex"
-          alignItems="center"
-          type="submit"
-          isLoading={isLoading || fieldLoading}
-        >
-          <Icon as={IoIosCheckmark} size="lg" />
-          <Box lineHeight={0}>Done</Box>
-        </Button>
-      ) : (
+      {!hasNewField && (
         <Button
           size="md"
           variant="outline"
@@ -423,13 +441,13 @@ export const KYMCustomFieldAdd = ({ kymType }: { kymType: KYMCategory }) => {
           gap="s8"
           type="button"
           onClick={(e) => {
-            setHasNewField(true);
+            setHasNewField((prev) => !prev);
           }}
         >
           <Icon as={AiOutlinePlus} />
           <Box lineHeight={0}>Add New Field</Box>
         </Button>
       )}
-    </Box>
+    </>
   );
 };

@@ -9,8 +9,8 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { KymInsInput } from '@coop/shared/data-access';
 import {
-  useGetKymFormStatusInstitutionQuery,
-  useSetInstitutionDataMutation,
+  FormFieldSearchTerm,
+  useGetInstitutionKymOptionsQuery,
 } from '@coop/shared/data-access';
 import { FormRadioGroup } from '@coop/shared/form';
 import { FormInput, FormSelect } from '@coop/shared/form';
@@ -19,6 +19,7 @@ import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/institutionHook';
+import { getOption } from '../../utils/getOptionsInstitution';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
@@ -37,7 +38,14 @@ export const TransactionProfileInstitution = (props: IProps) => {
     defaultValues: {},
   });
   const { setSection } = props;
-
+  const { data: monthlyTransaction, isLoading: monthlyTransactionLoading } =
+    useGetInstitutionKymOptionsQuery({
+      searchTerm: FormFieldSearchTerm.ExpectedMonthlyTransaction,
+    });
+  const { data: monthlyTurnover, isLoading: monthlyTurnoverLoading } =
+    useGetInstitutionKymOptionsQuery({
+      searchTerm: FormFieldSearchTerm.ExpectedMonthlyTurnover,
+    });
   const { control, handleSubmit, getValues, watch, setError } = methods;
   useInstitution({ methods });
 
@@ -86,7 +94,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
                 <FormRadioGroup
                   name="expectedMonthlyTurnover"
                   label={t['kymInsExpectedMonthlyTurnover']}
-                  radioList={radioList1}
+                  options={getOption(monthlyTurnover)}
                   orientation="vertical"
                   gap={'s8'}
                 />
@@ -100,7 +108,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
                 <FormRadioGroup
                   name="expectedMonthlyTransaction"
                   label={t['kymInsExpectedMonthlyTransaction']}
-                  radioList={radioList2}
+                  options={getOption(monthlyTransaction)}
                   orientation="vertical"
                   gap={'s8'}
                 />

@@ -8,26 +8,31 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { KymInsInput } from '@coop/shared/data-access';
+import { FormFieldSearchTerm, KymInsInput } from '@coop/shared/data-access';
 import {
   useGetInstitutionKymEditDataQuery,
-  useGetKymFormStatusInstitutionQuery,
-  useSetInstitutionDataMutation,
+  useGetInstitutionKymOptionsQuery,
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/institutionHook';
+import { getOption } from '../../utils/getOptionsInstitution';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const BasicDetailsInstitution = (props: IProps) => {
   const { t } = useTranslation();
   const methods = useForm<KymInsInput>({
     defaultValues: {},
   });
   const { setSection } = props;
+  const { data: organizationFields, isLoading: OrganizationLoading } =
+    useGetInstitutionKymOptionsQuery({
+      searchTerm: FormFieldSearchTerm.OrganizationType,
+    });
 
   const { control, handleSubmit, getValues, watch, setError, reset } = methods;
   useInstitution({ methods });
@@ -63,11 +68,8 @@ export const BasicDetailsInstitution = (props: IProps) => {
               name="institutionType"
               label={t['kymInsOrganizationType']}
               placeholder={t['kymInsSelectOrganizationType']}
-              options={[
-                { label: 'Banking', value: 'Male' },
-                { label: 'Ngo', value: 'Female' },
-                { label: 'Other', value: 'Other' },
-              ]}
+              options={getOption(organizationFields)}
+              isLoading={OrganizationLoading}
             />
             <FormInput
               type="text"
