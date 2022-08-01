@@ -12,8 +12,13 @@ import {
   useGetKymFormStatusInstitutionQuery,
   useSetInstitutionDataMutation,
 } from '@coop/shared/data-access';
-import { FormFileInput } from '@coop/shared/form';
+import {
+  KymIndMemberInput,
+  useGetKymDocumentsListQuery,
+  useSetKymDocumentDataMutation,
+} from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
+import { FormFileInput } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 interface IProps {
@@ -26,32 +31,112 @@ export const DocumentDeclarationInstitution = (props: IProps) => {
   });
   const { setSection } = props;
 
+  return (
+    <GroupContainer id="Documents Declaration" scrollMarginTop={'200px'}>
+      <Text
+        fontSize="r1"
+        fontWeight="semibold"
+        color="neutralColorLight.Gray-80"
+      >
+        {t['kymInsDocumentsDeclaration']}
+      </Text>
+      <Grid templateColumns={'repeat(2, 1fr)'} gap="s32">
+        <KYMDocumentDeclarationField
+          name="cooperativeDocuments"
+          label={t['kymInsAGMDecisionDocument']}
+          setSection={setSection}
+        />
+        <KYMDocumentDeclarationField
+          name="cooperativeDocuments"
+          label={t['kymInsRegisteredCertificate']}
+          setSection={setSection}
+        />
+        <KYMDocumentDeclarationField
+          name="cooperativeDocuments0"
+          label="MOA/AOA"
+          setSection={setSection}
+        />
+        <KYMDocumentDeclarationField
+          name="cooperativeDocuments"
+          label={t['kymInsPANCertificate']}
+          setSection={setSection}
+        />
+        <KYMDocumentDeclarationField
+          name="cooperativeDocuments"
+          label={t['kymInsTaxClearance']}
+          setSection={setSection}
+        />
+        <KYMDocumentDeclarationField
+          name="cooperativeDocuments"
+          label={t['kymInsLatestAuditReport']}
+          setSection={setSection}
+        />
+      </Grid>
+    </GroupContainer>
+  );
+};
+interface IKYMDocumentDeclarationFieldProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+  name: string;
+  label: string;
+}
+const KYMDocumentDeclarationField = ({
+  setSection,
+  name,
+  label,
+}: IKYMDocumentDeclarationFieldProps) => {
   const router = useRouter();
+  const id = router?.query?.['id'];
 
-  const { control, handleSubmit, getValues, watch, setError } = methods;
-  const { mutate } = useSetInstitutionDataMutation({
-    onSuccess: (res) => {
-      setError('institutionName', {
-        type: 'custom',
-        message:
-          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
-      });
+  const methods = useForm<KymIndMemberInput>();
+
+  const { watch, reset } = methods;
+
+  const { data: editValues, isFetching } = useGetKymDocumentsListQuery(
+    {
+      memberId: String(id),
     },
-    onError: () => {
-      setError('institutionName', {
-        type: 'custom',
-        message: 'it is what it is',
-      });
-    },
-  });
+    { enabled: !!id }
+  );
+
+  useEffect(() => {
+    if (editValues) {
+      const kymDocumentsList =
+        editValues?.members?.document?.listKYMDocuments?.data;
+
+      console.log({ kymDocumentsList });
+
+      const documentData = kymDocumentsList?.find(
+        (doc) => doc?.fieldId === name
+      );
+
+      // console.log({ documentData });
+
+      if (documentData) {
+        reset({
+          [name]: documentData.docData.map((file) => ({
+            url: file?.url,
+            fileName: file?.identifier,
+          })),
+        });
+      }
+    }
+  }, [isFetching]);
+
+  const { mutate } = useSetKymDocumentDataMutation();
+
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        // console.log(editValues);
-        // if (editValues && data) {
-        mutate({ id: router.query['id'] as string, data });
-        //   refetch();
-        // }
+        if (!data[name]?.[0]?.url) {
+          if (id) {
+            mutate({
+              memberId: id as string,
+              fieldId: name,
+              identifiers: data[name],
+            });
+          }
+        }
       }, 800)
     );
 
@@ -66,47 +151,7 @@ export const DocumentDeclarationInstitution = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer id="Documents Declaration" scrollMarginTop={'200px'}>
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymInsDocumentsDeclaration']}
-          </Text>
-          <Grid templateColumns={'repeat(2, 1fr)'} gap="s32">
-            <FormFileInput
-              name="cooperativeDocuments"
-              label={t['kymInsAGMDecisionDocument']}
-              size="lg"
-            />
-            <FormFileInput
-              name="cooperativeDocuments"
-              label={t['kymInsRegisteredCertificate']}
-              size="lg"
-            />
-            <FormFileInput
-              name="cooperativeDocuments0"
-              label="MOA/AOA"
-              size="lg"
-            />
-            <FormFileInput
-              name="cooperativeDocuments"
-              label={t['kymInsPANCertificate']}
-              size="lg"
-            />
-            <FormFileInput
-              name="cooperativeDocuments"
-              label={t['kymInsTaxClearance']}
-              size="lg"
-            />
-            <FormFileInput
-              name="cooperativeDocuments"
-              label={t['kymInsLatestAuditReport']}
-              size="lg"
-            />
-          </Grid>
-        </GroupContainer>
+        <FormFileInput size="lg" label={label} name={name} />
       </form>
     </FormProvider>
   );

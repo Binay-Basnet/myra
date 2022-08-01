@@ -49,41 +49,57 @@ const KYMDocumentDeclarationField = ({
   label,
 }: IKYMDocumentDeclarationFieldProps) => {
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>();
 
   const { watch, reset } = methods;
 
-  const { data: editValues, refetch } = useGetKymDocumentsListQuery({
-    memberId: id,
-  });
+  const { data: editValues, isFetching } = useGetKymDocumentsListQuery(
+    {
+      memberId: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
       const kymDocumentsList =
         editValues?.members?.document?.listKYMDocuments?.data;
 
+      console.log({ kymDocumentsList });
+
       const documentData = kymDocumentsList?.find(
         (doc) => doc?.fieldId === name
       );
 
+      // console.log({ documentData });
+
       if (documentData) {
-        // TODO! fix
-        reset({ [name]: (documentData as any).identifier });
+        reset({
+          [name]: documentData.docData.map((file) => ({
+            url: file?.url,
+            fileName: file?.identifier,
+          })),
+        });
       }
     }
-  }, [editValues]);
+  }, [isFetching]);
 
-  const { mutate } = useSetKymDocumentDataMutation({
-    onSuccess: () => refetch(),
-  });
+  const { mutate } = useSetKymDocumentDataMutation();
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        console.log({ data });
-        mutate({ memberId: id, fieldId: name, identifiers: data[name] });
+        if (!data[name]?.[0]?.url) {
+          if (id) {
+            mutate({
+              memberId: id as string,
+              fieldId: name,
+              identifiers: data[name],
+            });
+          }
+        }
       }, 800)
     );
 

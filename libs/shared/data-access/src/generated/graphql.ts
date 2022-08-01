@@ -1360,6 +1360,116 @@ export type DepositIroResult = {
   recordId: Scalars['ID'];
 };
 
+export type DepositLoanAccount = Base & {
+  agentId?: Maybe<Scalars['ID']>;
+  atmFacility?: Maybe<Scalars['Boolean']>;
+  boardAuthority?: Maybe<Scalars['Boolean']>;
+  ceoAuthority?: Maybe<Scalars['Boolean']>;
+  chequeIssue?: Maybe<Scalars['Boolean']>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  depositFrequencyDay?: Maybe<Scalars['Int']>;
+  depositFrequencyDayOfWeek?: Maybe<Week>;
+  depositFrequencyFrequencyDay?: Maybe<Scalars['String']>;
+  depositFrequencyMonthly?: Maybe<WeeklyFrequency>;
+  depositFrequencyWeekly?: Maybe<Week>;
+  depositFrequencyYearlyDay?: Maybe<Week>;
+  depositFrequencyYearlyMonth?: Maybe<Months>;
+  id: Scalars['ID'];
+  interestRate?: Maybe<Scalars['Float']>;
+  interestSanctionedById?: Maybe<Scalars['Float']>;
+  interestSanctionedByName?: Maybe<Scalars['Float']>;
+  memberId: Scalars['ID'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
+  productId: Scalars['ID'];
+  tenure?: Maybe<FrequencyTenure>;
+  tenureNumber?: Maybe<Scalars['Int']>;
+};
+
+export type DepositLoanAccountConnection = {
+  edges: Array<DepositLoanAccountEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type DepositLoanAccountEdge = {
+  cursor: Scalars['Cursor'];
+  node: DepositLoanAccount;
+};
+
+export type DepositLoanAccountFormStateResult = {
+  data?: Maybe<DepositLoanAccount>;
+  error?: Maybe<QueryError>;
+};
+
+export type DepositLoanAccountInput = {
+  agentId?: InputMaybe<Scalars['ID']>;
+  atmFacility?: InputMaybe<Scalars['Boolean']>;
+  boardAuthority?: InputMaybe<Scalars['Boolean']>;
+  ceoAuthority?: InputMaybe<Scalars['Boolean']>;
+  chequeIssue?: InputMaybe<Scalars['Boolean']>;
+  depositFrequencyDay?: InputMaybe<Scalars['Int']>;
+  depositFrequencyDayOfWeek?: InputMaybe<Week>;
+  depositFrequencyFrequencyDay?: InputMaybe<Scalars['String']>;
+  depositFrequencyMonthly?: InputMaybe<WeeklyFrequency>;
+  depositFrequencyWeekly?: InputMaybe<Week>;
+  depositFrequencyYearlyDay?: InputMaybe<Week>;
+  depositFrequencyYearlyMonth?: InputMaybe<Months>;
+  interestRate?: InputMaybe<Scalars['Float']>;
+  interestSanctionedById?: InputMaybe<Scalars['Float']>;
+  interestSanctionedByName?: InputMaybe<Scalars['Float']>;
+  memberId: Scalars['ID'];
+  productId: Scalars['ID'];
+  tenure?: InputMaybe<FrequencyTenure>;
+  tenureNumber?: InputMaybe<Scalars['Int']>;
+};
+
+export type DepositLoanAccountMutation = {
+  add?: Maybe<DepositLoanAccountResult>;
+};
+
+
+export type DepositLoanAccountMutationAddArgs = {
+  data?: InputMaybe<DepositLoanAccountInput>;
+  id: Scalars['ID'];
+};
+
+export type DepositLoanAccountQuery = {
+  formState?: Maybe<DepositLoanAccountFormStateResult>;
+  get?: Maybe<DepositLoanAccount>;
+  list?: Maybe<DepositLoanAccountConnection>;
+};
+
+
+export type DepositLoanAccountQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type DepositLoanAccountQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type DepositLoanAccountQueryListArgs = {
+  filter?: InputMaybe<DepositLoanAccountSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositLoanAccountResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<DepositLoanAccountQuery>;
+  record?: Maybe<DepositLoanAccount>;
+  recordId: Scalars['ID'];
+};
+
+export type DepositLoanAccountSearchFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
 export type DepositProduct = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -2552,6 +2662,8 @@ export type FormFieldQueryResult = {
 };
 
 export enum FormFieldSearchTerm {
+  /**  KYM_COOP  */
+  CooperativeType = 'COOPERATIVE_TYPE',
   EducationQualification = 'EDUCATION_QUALIFICATION',
   EstimatedAnnualTransaction = 'ESTIMATED_ANNUAL_TRANSACTION',
   Ethnicity = 'ETHNICITY',
@@ -2729,18 +2841,30 @@ export type FormQueryDynamicFieldsArgs = {
 };
 
 export enum FormSearchTerm {
+  AccountCoopTraining = 'ACCOUNT_COOP_TRAINING',
   AccountHolderDeclaration = 'ACCOUNT_HOLDER_DECLARATION',
   AccountHolderDetails = 'ACCOUNT_HOLDER_DETAILS',
   AccountHolderDocuments = 'ACCOUNT_HOLDER_DOCUMENTS',
   AccountOperator = 'ACCOUNT_OPERATOR',
   AccountOperatorDetails = 'ACCOUNT_OPERATOR_DETAILS',
   AccountOperatorDocument = 'ACCOUNT_OPERATOR_DOCUMENT',
+  /**  KYM_COOP_UNION  */
+  Applicant = 'APPLICANT',
+  ApplicantDetails = 'APPLICANT_DETAILS',
+  ApplicantDocument = 'APPLICANT_DOCUMENT',
   BankAccountDetails = 'BANK_ACCOUNT_DETAILS',
+  CentralRepresentativeCoopTraining = 'CENTRAL_REPRESENTATIVE_COOP_TRAINING',
+  CentralRepresentativeDetails = 'CENTRAL_REPRESENTATIVE_DETAILS',
+  CentralRepresentativeDocument = 'CENTRAL_REPRESENTATIVE_DOCUMENT',
   Citizenship = 'CITIZENSHIP',
-  /**  KYM_INDIVIDUAL && KYM_INSTITUTION */
+  /**  KYM_INDIVIDUAL && KYM_INSTITUTION && KYM_COOP && KYM_COOP_UNION */
   ContactDetails = 'CONTACT_DETAILS',
+  CooperativeType = 'COOPERATIVE_TYPE',
+  /**  KYM_COOP && KYM_COOP_UNION  */
+  CurrentMembers = 'CURRENT_MEMBERS',
   Director = 'DIRECTOR',
   DirectorsAffiliationDetails = 'DIRECTORS_AFFILIATION_DETAILS',
+  DirectorCoopTraining = 'DIRECTOR_COOP_TRAINING',
   DirectorDetails = 'DIRECTOR_DETAILS',
   DirectorDocument = 'DIRECTOR_DOCUMENT',
   DrivingLicense = 'DRIVING_LICENSE',
@@ -2761,7 +2885,9 @@ export enum FormSearchTerm {
   IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
   MaritalStatus = 'MARITAL_STATUS',
   Nationality = 'NATIONALITY',
+  NationalIdentity = 'NATIONAL_IDENTITY',
   NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
+  NumberOfEmployee = 'NUMBER_OF_EMPLOYEE',
   Occupation = 'OCCUPATION',
   /**  KYM_INDIVIDUAL && KYM_INSTITUTION */
   OccupationDetails = 'OCCUPATION_DETAILS',
@@ -2773,6 +2899,8 @@ export enum FormSearchTerm {
   RegisteredDetails = 'REGISTERED_DETAILS',
   Relationship = 'RELATIONSHIP',
   Religion = 'RELIGION',
+  /**  KYM_COOP  */
+  Representative = 'REPRESENTATIVE',
   SisterConcernDetails = 'SISTER_CONCERN_DETAILS',
   TransactionDetails = 'TRANSACTION_DETAILS',
   VoterId = 'VOTER_ID'
@@ -2857,32 +2985,47 @@ export type FormSectionQueryDetailsArgs = {
 };
 
 export enum FormSectionSearchTerm {
+  AccountCoopTraining = 'ACCOUNT_COOP_TRAINING',
   AccountHolderDeclaration = 'ACCOUNT_HOLDER_DECLARATION',
   AccountHolderDetails = 'ACCOUNT_HOLDER_DETAILS',
   AccountHolderDocuments = 'ACCOUNT_HOLDER_DOCUMENTS',
   AccountOperator = 'ACCOUNT_OPERATOR',
   AccountOperatorDetails = 'ACCOUNT_OPERATOR_DETAILS',
   AccountOperatorDocument = 'ACCOUNT_OPERATOR_DOCUMENT',
+  /**  KYM_COOP_UNION  */
+  Applicant = 'APPLICANT',
+  ApplicantDetails = 'APPLICANT_DETAILS',
+  ApplicantDocument = 'APPLICANT_DOCUMENT',
   BankAccountDetails = 'BANK_ACCOUNT_DETAILS',
+  CentralRepresentativeCoopTraining = 'CENTRAL_REPRESENTATIVE_COOP_TRAINING',
+  CentralRepresentativeDetails = 'CENTRAL_REPRESENTATIVE_DETAILS',
+  CentralRepresentativeDocument = 'CENTRAL_REPRESENTATIVE_DOCUMENT',
   Citizenship = 'CITIZENSHIP',
   ContactDetails = 'CONTACT_DETAILS',
+  /**  KYM_COOP  */
+  CurrentMembers = 'CURRENT_MEMBERS',
+  /**  KYM_INSTITUTION && KYM_COOP  */
   Director = 'DIRECTOR',
   DirectorsAffiliationDetails = 'DIRECTORS_AFFILIATION_DETAILS',
+  DirectorCoopTraining = 'DIRECTOR_COOP_TRAINING',
   DirectorDetails = 'DIRECTOR_DETAILS',
   DirectorDocument = 'DIRECTOR_DOCUMENT',
   DrivingLicense = 'DRIVING_LICENSE',
   FamilyInformation = 'FAMILY_INFORMATION',
-  /** KYM_INDIVIDUAL && KYM_INSTITUTION */
+  /** KYM_INDIVIDUAL && KYM_INSTITUTION && KYM_COOP */
   FileUploads = 'FILE_UPLOADS',
   Identification = 'IDENTIFICATION',
   IncomeSourceDetails = 'INCOME_SOURCE_DETAILS',
+  NationalIdentity = 'NATIONAL_IDENTITY',
   NextToKinInformation = 'NEXT_TO_KIN_INFORMATION',
+  NumberOfEmployee = 'NUMBER_OF_EMPLOYEE',
   OccupationDetails = 'OCCUPATION_DETAILS',
   OtherCooperativeDetails = 'OTHER_COOPERATIVE_DETAILS',
   /** KYM_INDIVIDUAL */
   Passport = 'PASSPORT',
   /**  KYM_INSTITUTION */
   RegisteredDetails = 'REGISTERED_DETAILS',
+  Representative = 'REPRESENTATIVE',
   SisterConcernDetails = 'SISTER_CONCERN_DETAILS',
   TransactionDetails = 'TRANSACTION_DETAILS',
   VoterId = 'VOTER_ID'
@@ -2937,6 +3080,13 @@ export enum Frequency {
   Monthly = 'MONTHLY',
   Weekly = 'WEEKLY',
   Yearly = 'YEARLY'
+}
+
+export enum FrequencyTenure {
+  Day = 'DAY',
+  Month = 'MONTH',
+  Week = 'WEEK',
+  Year = 'YEAR'
 }
 
 export type GeneralBranchSettingsMutation = {
@@ -4272,7 +4422,7 @@ export type KymCoopUnionSectionMutationInstitutionInformationArgs = {
 
 export type KymCoopUnionSectionMutationPersonnelDetailsArgs = {
   data?: InputMaybe<CoopUnionPersonnelInput>;
-  recordId?: InputMaybe<Scalars['String']>;
+  recordId: Scalars['String'];
   sectionType: CooperativeUnionPersonnelSection;
 };
 
@@ -5841,6 +5991,21 @@ export type MonthlyTransactions = {
   transactions: Array<Maybe<Transactions>>;
 };
 
+export enum Months {
+  April = 'APRIL',
+  August = 'AUGUST',
+  December = 'DECEMBER',
+  February = 'FEBRUARY',
+  January = 'JANUARY',
+  July = 'JULY',
+  June = 'JUNE',
+  March = 'MARCH',
+  May = 'MAY',
+  November = 'NOVEMBER',
+  October = 'OCTOBER',
+  September = 'SEPTEMBER'
+}
+
 export type Municipality = {
   id: Scalars['Int'];
   name: Scalars['String'];
@@ -5849,6 +6014,7 @@ export type Municipality = {
 };
 
 export type Mutation = {
+  account: DepositLoanAccountMutation;
   auth: AuthMutation;
   bank: BankMutation;
   eBanking: EBankingMutation;
@@ -6261,6 +6427,7 @@ export type Province = {
 };
 
 export type Query = {
+  account: DepositLoanAccountQuery;
   administration: AdministrationQuery;
   auth: AuthQuery;
   bank: BankQuery;
@@ -6786,6 +6953,21 @@ export type ValidationError = {
   code: Scalars['Int'];
   message: Scalars['InvalidData'];
 };
+
+export enum Week {
+  Friday = 'FRIDAY',
+  Monday = 'MONDAY',
+  Saturday = 'SATURDAY',
+  Sunday = 'SUNDAY',
+  Thursaday = 'THURSADAY',
+  Tuesday = 'TUESDAY',
+  Wednesday = 'WEDNESDAY'
+}
+
+export enum WeeklyFrequency {
+  Day = 'DAY',
+  DayOfTheWeek = 'DAY_OF_THE_WEEK'
+}
 
 export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;
@@ -7333,6 +7515,13 @@ export type GetInsBoardDirectorEditListQueryVariables = Exact<{
 
 export type GetInsBoardDirectorEditListQuery = { members: { institution?: { listDirectors?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isTemporaryAndPermanentAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNo?: string | null, emailAddress?: string | null, citizenshipNo?: string | null, panNo?: string | null, isHeadOfOrganization?: boolean | null, isAffiliatedWithOtherFirms?: boolean | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, firmDetails?: { directorName?: string | null, institutionName?: string | null, address?: string | null, designation?: string | null, yearlyIncome?: number | null } | null } | null> | null } | null } | null } };
 
+export type GetInsAccountOperatorEditListQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInsAccountOperatorEditListQuery = { members: { institution?: { listAccountOperators?: { data?: Array<{ id?: string | null, fullName?: string | null, contact?: string | null, email?: string | null, isTemporaryAndPermanentAddressSame?: boolean | null, designation?: string | null, panNo?: string | null, permanenetAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null> | null } | null } | null } };
+
 export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7359,6 +7548,13 @@ export type GetIndividualKymOptionsQueryVariables = Exact<{
 
 
 export type GetIndividualKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
+
+export type GetInstitutionKymOptionsQueryVariables = Exact<{
+  searchTerm: FormFieldSearchTerm;
+}>;
+
+
+export type GetInstitutionKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
 
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
@@ -9869,6 +10065,61 @@ export const useGetInsBoardDirectorEditListQuery = <
       useAxios<GetInsBoardDirectorEditListQuery, GetInsBoardDirectorEditListQueryVariables>(GetInsBoardDirectorEditListDocument).bind(null, variables),
       options
     );
+export const GetInsAccountOperatorEditListDocument = `
+    query getInsAccountOperatorEditList($id: ID!) {
+  members {
+    institution {
+      listAccountOperators(id: $id) {
+        data {
+          id
+          fullName
+          contact
+          email
+          permanenetAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isTemporaryAndPermanentAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          designation
+          panNo
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInsAccountOperatorEditListQuery = <
+      TData = GetInsAccountOperatorEditListQuery,
+      TError = unknown
+    >(
+      variables: GetInsAccountOperatorEditListQueryVariables,
+      options?: UseQueryOptions<GetInsAccountOperatorEditListQuery, TError, TData>
+    ) =>
+    useQuery<GetInsAccountOperatorEditListQuery, TError, TData>(
+      ['getInsAccountOperatorEditList', variables],
+      useAxios<GetInsAccountOperatorEditListQuery, GetInsAccountOperatorEditListQueryVariables>(GetInsAccountOperatorEditListDocument).bind(null, variables),
+      options
+    );
 export const GetInventoryItemsDocument = `
     query getInventoryItems {
   inventory {
@@ -10013,6 +10264,32 @@ export const useGetIndividualKymOptionsQuery = <
     useQuery<GetIndividualKymOptionsQuery, TError, TData>(
       ['getIndividualKYMOptions', variables],
       useAxios<GetIndividualKymOptionsQuery, GetIndividualKymOptionsQueryVariables>(GetIndividualKymOptionsDocument).bind(null, variables),
+      options
+    );
+export const GetInstitutionKymOptionsDocument = `
+    query getInstitutionKYMOptions($searchTerm: FormFieldSearchTerm!) {
+  form {
+    options {
+      predefined(filter: {searchTerm: $searchTerm, category: KYM_INSTITUTION}) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInstitutionKymOptionsQuery = <
+      TData = GetInstitutionKymOptionsQuery,
+      TError = unknown
+    >(
+      variables: GetInstitutionKymOptionsQueryVariables,
+      options?: UseQueryOptions<GetInstitutionKymOptionsQuery, TError, TData>
+    ) =>
+    useQuery<GetInstitutionKymOptionsQuery, TError, TData>(
+      ['getInstitutionKYMOptions', variables],
+      useAxios<GetInstitutionKymOptionsQuery, GetInstitutionKymOptionsQueryVariables>(GetInstitutionKymOptionsDocument).bind(null, variables),
       options
     );
 export const GetMemberListDocument = `

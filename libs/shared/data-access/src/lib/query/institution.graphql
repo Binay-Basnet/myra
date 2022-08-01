@@ -224,3 +224,45 @@ query getInsBoardDirectorEditList($id: ID!) {
     }
   }
 }
+
+query getInsAccountOperatorEditList($id: ID!) {
+  members {
+    institution {
+      listAccountOperators(id: $id) {
+        data {
+          id
+          fullName
+          contact
+          email
+          permanenetAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isTemporaryAndPermanentAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          designation
+          panNo
+        }
+      }
+    }
+  }
+}
