@@ -42,32 +42,32 @@ export const DocumentDeclarationInstitution = (props: IProps) => {
       </Text>
       <Grid templateColumns={'repeat(2, 1fr)'} gap="s32">
         <KYMDocumentDeclarationField
-          name="cooperativeDocuments"
+          name="institutionAgmDocument"
           label={t['kymInsAGMDecisionDocument']}
           setSection={setSection}
         />
         <KYMDocumentDeclarationField
-          name="cooperativeDocuments"
+          name="InsRegisteredCertificate"
           label={t['kymInsRegisteredCertificate']}
           setSection={setSection}
         />
         <KYMDocumentDeclarationField
-          name="cooperativeDocuments0"
+          name="InsMOA/AOA"
           label="MOA/AOA"
           setSection={setSection}
         />
         <KYMDocumentDeclarationField
-          name="cooperativeDocuments"
+          name="InsPanCertificate"
           label={t['kymInsPANCertificate']}
           setSection={setSection}
         />
         <KYMDocumentDeclarationField
-          name="cooperativeDocuments"
+          name="InsTaxClearance"
           label={t['kymInsTaxClearance']}
           setSection={setSection}
         />
         <KYMDocumentDeclarationField
-          name="cooperativeDocuments"
+          name="InsLatestAuditReport"
           label={t['kymInsLatestAuditReport']}
           setSection={setSection}
         />
@@ -86,7 +86,7 @@ const KYMDocumentDeclarationField = ({
   label,
 }: IKYMDocumentDeclarationFieldProps) => {
   const router = useRouter();
-  const id = router?.query?.['id'];
+  const id = String(router?.query?.['id']);
 
   const methods = useForm<KymIndMemberInput>();
 

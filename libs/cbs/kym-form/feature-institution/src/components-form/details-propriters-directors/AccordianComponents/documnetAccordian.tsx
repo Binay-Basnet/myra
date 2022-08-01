@@ -49,7 +49,7 @@ const KYMDocumentDeclarationField = ({
   label,
 }: IKYMDocumentDeclarationFieldProps) => {
   const router = useRouter();
-  const id = router?.query?.['id'];
+  const id = String(router?.query?.['id']);
 
   const methods = useForm<KymIndMemberInput>();
 
