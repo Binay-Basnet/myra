@@ -40,6 +40,7 @@ export const KymCoopOpAddress = (props: IProps) => {
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('operatingAddress.provinceId');
   const currentDistrictId = watch('operatingAddress.districtId');
+  const currentLocalityId = watch('operatingAddress.localGovernmentId');
 
   const districtList = useMemo(
     () =>
@@ -54,7 +55,10 @@ export const KymCoopOpAddress = (props: IProps) => {
       [],
     [currentDistrictId]
   );
-
+  const wardList = useMemo(
+    () => muncipalityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
+  );
   return (
     <FormProvider {...methods}>
       <form
@@ -100,11 +104,14 @@ export const KymCoopOpAddress = (props: IProps) => {
               }))}
             />
 
-            <FormInput
-              type="text"
+            <FormSelect
               name="operatingAddress.wardNo"
               label={t['kymCoopWardNo']}
               placeholder={t['kymCoopEnterWardNo']}
+              options={wardList?.map((d) => ({
+                label: d,
+                value: d,
+              }))}
             />
             <FormInput
               type="text"

@@ -38,6 +38,7 @@ export const KymCoopRegdAddress = (props: IProps) => {
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('registeredAddress.provinceId');
   const currentDistrictId = watch('registeredAddress.districtId');
+  const currentLocalityId = watch('registeredAddress.localGovernmentId');
 
   const districtList = useMemo(
     () =>
@@ -52,7 +53,10 @@ export const KymCoopRegdAddress = (props: IProps) => {
       [],
     [currentDistrictId]
   );
-
+  const wardList = useMemo(
+    () => muncipalityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
+  );
   return (
     <FormProvider {...methods}>
       <form

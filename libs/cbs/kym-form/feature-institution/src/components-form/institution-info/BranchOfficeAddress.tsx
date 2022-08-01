@@ -70,7 +70,7 @@ export const BranchOfficeAddress = (props: IProps) => {
     const subscription = watch(
       debounce((data) => {
         console.log(editValues);
-        if (editValues && data) {
+        if (editValues && data && id !== 'undefined') {
           mutate({
             id: router.query['id'] as string,
             data,
@@ -119,7 +119,7 @@ export const BranchOfficeAddress = (props: IProps) => {
   }, [editLoading]);
 
   useEffect(() => {
-    if (id) {
+    if (id !== 'undefined') {
       refetch();
     }
   }, [id]);

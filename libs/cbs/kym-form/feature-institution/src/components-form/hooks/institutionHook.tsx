@@ -44,12 +44,12 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
     },
     { enabled: id !== 'undefined' }
   );
-
+  console.log('editLoading', editLoading);
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        console.log(editValues);
-        if (editValues && data) {
+        console.log({ data, id });
+        if (data && id !== 'undefined') {
           mutate({ id: router.query['id'] as string, data });
           refetch();
         }
@@ -108,6 +108,7 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
   useEffect(() => {
     if (id) {
       refetch();
+      console.log({ id });
     }
   }, [id]);
 };
