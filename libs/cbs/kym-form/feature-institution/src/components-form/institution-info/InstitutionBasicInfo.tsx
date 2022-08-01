@@ -1,20 +1,13 @@
-import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import { identity, pickBy } from 'lodash';
-import debounce from 'lodash/debounce';
 
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormFieldSearchTerm, KymInsInput } from '@coop/shared/data-access';
-import {
-  useGetInstitutionKymEditDataQuery,
-  useGetInstitutionKymOptionsQuery,
-} from '@coop/shared/data-access';
+import { useGetInstitutionKymOptionsQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/institutionHook';
@@ -33,8 +26,6 @@ export const BasicDetailsInstitution = (props: IProps) => {
     useGetInstitutionKymOptionsQuery({
       searchTerm: FormFieldSearchTerm.OrganizationType,
     });
-
-  const { control, handleSubmit, getValues, watch, setError, reset } = methods;
   useInstitution({ methods });
 
   return (

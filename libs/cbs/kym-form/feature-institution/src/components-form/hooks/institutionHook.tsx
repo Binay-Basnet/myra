@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { identity, pickBy } from 'lodash';
+import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
 import {
@@ -59,7 +59,7 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
               accountType: data?.accountType === '' ? null : data?.accountType,
             },
           });
-          refetch();
+          // refetch();
         }
       }, 800)
     );
