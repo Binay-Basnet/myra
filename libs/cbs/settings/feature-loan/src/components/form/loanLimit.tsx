@@ -1,8 +1,5 @@
 // import debounce from 'lodash/debounce';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { FormEditableTable } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
@@ -12,10 +9,6 @@ type AccountServiceTable = {
   provision: number;
 };
 
-const yesNo = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
-];
 const search_options = [
   { label: 'Good Loan', value: 'good' },
   { label: 'Doubtful Loan (after 1-30 Days)', value: 'doubtful' },
@@ -25,6 +18,7 @@ const search_options = [
   },
   { label: 'Bad Loan (1 year above)', value: 'bad' },
 ];
+
 export const LoanLimit = () => {
   const { t } = useTranslation();
 

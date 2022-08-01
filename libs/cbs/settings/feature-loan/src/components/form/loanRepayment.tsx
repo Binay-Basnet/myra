@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Frequency } from '@coop/shared/data-access';
-// import debounce from 'lodash/debounce';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -62,7 +61,6 @@ export const LoanRepayment = () => {
           <TopText>{t['loanProductMinimumDuration']}</TopText>
         </TextBoxContainer>
 
-        {/* {minimumDuration && minimumDuration === 'applicable' && ( */}
         <Box
           display={'flex'}
           flexDirection="row"
@@ -73,14 +71,11 @@ export const LoanRepayment = () => {
             <Text fontSize={'s3'} fontWeight="500">
               {t['loanProductUnit']}
             </Text>
-            <FormSwitchTab
-              name={'minimumDurationUnitLoan'}
-              options={unitOptions}
-            />
+            <FormSwitchTab name="minGraceDurationUnit" options={unitOptions} />
           </Box>
           <Box w="290px">
             <FormInput
-              name="minimunDurationNumberLoan"
+              name="minGraceDurationUnitNumber"
               textAlign={'right'}
               label={t['loanProductNumber']}
               placeholder="0"
@@ -95,7 +90,6 @@ export const LoanRepayment = () => {
           </Box>
         </Box>
       </Box>
-      {/* )} */}
       <Box
         display={'flex'}
         justifyContent="space-between"
@@ -106,7 +100,6 @@ export const LoanRepayment = () => {
           <TopText>{t['loanProductMaximumDuration']}</TopText>
         </TextBoxContainer>
 
-        {/* {maximumDuration && maximumDuration === 'applicable' && ( */}
         <BoxContainer
           display={'flex'}
           flexDirection="row"
@@ -116,14 +109,11 @@ export const LoanRepayment = () => {
             <Text fontSize={'s3'} fontWeight="500">
               {t['loanProductUnit']}
             </Text>
-            <FormSwitchTab
-              name={'maximumDurationUnitLoan'}
-              options={unitOptions}
-            />
+            <FormSwitchTab name="maxGraceDurationUnit" options={unitOptions} />
           </Box>
           <Box w="290px">
             <FormInput
-              name="maximumDurationNumberLoan"
+              name="maxGraceDurationUnitNumber"
               textAlign={'right'}
               label={t['loanProductNumber']}
               placeholder="0"
@@ -138,7 +128,6 @@ export const LoanRepayment = () => {
           </Box>
         </BoxContainer>
       </Box>
-      {/* )} */}
     </BoxContainer>
   );
 };

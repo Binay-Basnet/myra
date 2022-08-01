@@ -44,7 +44,7 @@ export const AccountServicesCharge = () => {
       </TextBoxContainer>
       <Box>
         <FormEditableTable<AccountServiceTable>
-          name="data"
+          name="serviceCharge"
           debug={false}
           columns={[
             {

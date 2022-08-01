@@ -1,13 +1,22 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
+import omit from 'lodash/omit';
 
-// import debounce from 'lodash/debounce';
 import {
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
+import {
+  LoanProductInput,
+  LoanProductSubType,
+  LoanProductType,
+  NatureOfLoanProduct,
+  useGetDepositProductSettingsEditDataQuery,
+  useSetLoanProductMutation,
+} from '@coop/shared/data-access';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
   Container,
@@ -27,10 +36,12 @@ import {
   Interest,
   LoanLimit,
   LoanRepayment,
-  LoanRepaymentScheme,
+  LoanRepaymentSchemes,
   MaximumTenure,
   MinimunTenure,
+  Penalty,
   Questions,
+  Rebate,
   RequiredDocumentSetup,
   TypesOfMember,
 } from '../components/form';
@@ -38,25 +49,224 @@ import {
 /* eslint-disable-next-line */
 export interface loanProductsAdd {}
 
-const optionsSaving = [
-  { label: 'Recurring Saving', value: 'recurringSaving' },
-  { label: 'Mandatory', value: 'mandatory' },
-  { label: 'Voluntary/Optional', value: 'voluntary' },
-  { label: 'Term Saving', value: 'termSaving' },
-];
-
 export function SettingsLoanProductForm(props: loanProductsAdd) {
   const router = useRouter();
   const { t } = useTranslation();
-  const methods = useForm({
+  const id = String(router?.query?.['id']);
+  const { mutate } = useSetLoanProductMutation();
+
+  type SelectOption = {
+    label: string;
+    value: string;
+  }[];
+
+  type LoanProvisionType = {
+    loanProvision: string;
+    provision: string;
+  }[];
+
+  type LoanProductForm = Omit<
+    LoanProductInput,
+    | 'genderId'
+    | 'maritalStatusId'
+    | 'educationQualification'
+    | 'occupation'
+    | 'ethnicity'
+    | 'natureOFBusinessCoop'
+    | 'natureOfBusinessInstitution'
+    | 'loanProvisiontable'
+  > & {
+    genderId: SelectOption;
+    maritalStatusId: SelectOption;
+    educationQualification: SelectOption;
+    occupation: SelectOption;
+    ethnicity: SelectOption;
+    natureOFBusinessCoop: SelectOption;
+    natureOfBusinessInstitution: SelectOption;
+    loanProvisiontable: LoanProvisionType;
+  };
+
+  const methods = useForm<LoanProductForm>({
     defaultValues: {
-      nameOfDepositProduct: 'recurringSaving',
-      minimunTenureNumber: 0,
-      maximumTenureNumber: 0,
+      productType: LoanProductType.Agriculture,
     },
   });
 
-  const { watch } = methods;
+  const { getValues, reset } = methods;
+
+  const productType = [
+    {
+      label: t['loanProductAgriculture'],
+      value: LoanProductType.Agriculture,
+    },
+    {
+      label: t['loanProductAlternativeEnergy'],
+      value: LoanProductType.AlternativeEnergy,
+    },
+    {
+      label: t['loanProductAssetsPurchasesAndMaintenance'],
+      value: LoanProductType.AssetsPurchasesAndMaintenance,
+    },
+    {
+      label: t['loanProductTypeBusiness'],
+      value: LoanProductType.Business,
+    },
+    {
+      label: t['loanProductCreditUnion'],
+      value: LoanProductType.CreditUnion,
+    },
+    {
+      label: t['loanProductEducational'],
+      value: LoanProductType.Educational,
+    },
+    {
+      label: t['loanProductForeignEmployee'],
+      value: LoanProductType.ForeignEmployee,
+    },
+    {
+      label: t['loanProductHirePurchase'],
+      value: LoanProductType.HirePurchase,
+    },
+    {
+      label: t['loanProductTypeIndustrial'],
+      value: LoanProductType.Industrial,
+    },
+    {
+      label: t['loanProductMicroEntrepreneur'],
+      value: LoanProductType.MicroEntrepreneur,
+    },
+    {
+      label: t['loanProductSocialSector'],
+      value: LoanProductType.SocialSector,
+    },
+    {
+      label: t['loanProductStaff'],
+      value: LoanProductType.Staff,
+    },
+  ];
+
+  const productSubType = [
+    {
+      label: 'Agriculture Business',
+      value: LoanProductSubType.AgricultureBusiness,
+    },
+    {
+      label: 'Big Industrial',
+      value: LoanProductSubType.BigIndustrial,
+    },
+    {
+      label: 'Bio Gas',
+      value: LoanProductSubType.BioGas,
+    },
+    {
+      label: 'Business Line Of Credit',
+      value: LoanProductSubType.BusinessLineOfCredit,
+    },
+  ];
+
+  const productNature = [
+    {
+      label: t['loanProductProductive'],
+      value: NatureOfLoanProduct.Productive,
+    },
+    {
+      label: t['loanProductUnproductive'],
+      value: NatureOfLoanProduct.Unproductive,
+    },
+  ];
+
+  const submitForm = () => {
+    const values = getValues();
+
+    const genderList = values?.genderId?.map((data) => data?.value);
+    const maritalStatusList = values?.maritalStatusId?.map(
+      (data) => data?.value
+    );
+    const educationQualificationList = values?.educationQualification?.map(
+      (data) => data?.value
+    );
+    const occupationList = values?.occupation?.map((data) => data?.value);
+    const ethnicityList = values?.ethnicity?.map((data) => data?.value);
+    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map(
+      (data) => data?.value
+    );
+    const natureOfBusinessInstitutionList =
+      values?.natureOfBusinessInstitution?.map((data) => data?.value);
+
+    const serviceChargeList = values?.serviceCharge?.map((data) => {
+      return {
+        serviceName: data?.serviceName,
+        ledgerName: data?.ledgerName,
+        amount: data?.amount.toString(),
+      };
+    });
+    const goodLoanProvision = values?.loanProvisiontable?.filter(
+      (item) => item?.loanProvision === 'good'
+    );
+    const doubtfulLoanProvision = values?.loanProvisiontable?.filter(
+      (item) => item?.loanProvision === 'doubtful'
+    );
+    const problematicLoanProvision = values?.loanProvisiontable?.filter(
+      (item) => item?.loanProvision === 'problematic'
+    );
+    const badLoanProvision = values?.loanProvisiontable?.filter(
+      (item) => item?.loanProvision === 'bad'
+    );
+
+    const updatedData = {
+      ...omit(values, ['loanProvisiontable']),
+      genderId: genderList,
+      maritalStatusId: maritalStatusList,
+      educationQualification: educationQualificationList,
+      ethnicity: ethnicityList,
+      occupation: occupationList,
+      natureOfBusinessInstitution: natureOfBusinessInstitutionList,
+      natureOFBusinessCoop: natureOFBusinessCoopList,
+      serviceCharge: serviceChargeList,
+      minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
+      maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
+      penalty: {
+        ...values?.penalty,
+        rateType: values?.penalty?.rateType ? values?.penalty?.rateType : null,
+      },
+      goodLoanProvision: Number(goodLoanProvision[0].provision),
+      doubtfulLoanProvision: Number(doubtfulLoanProvision[0].provision),
+      problematicLoanProvision: Number(problematicLoanProvision[0].provision),
+      badLoanProvision: Number(badLoanProvision[0].provision),
+    };
+
+    console.log(updatedData);
+
+    mutate(
+      { id, data: updatedData },
+      {
+        onSuccess: () => router.push('/settings/general/deposit-products'),
+      }
+    );
+  };
+
+  const { data: editValues, refetch } =
+    useGetDepositProductSettingsEditDataQuery({
+      id,
+    });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.settings?.general?.depositProduct?.formState?.data;
+      if (editValueData) {
+        reset({
+          ...(editValueData as unknown as LoanProductForm),
+        });
+      }
+    }
+  }, [editValues, id]);
+
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [refetch]);
 
   return (
     <>
@@ -114,27 +324,27 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
                         placeholder={t['loanProductEnterProductName']}
                       />
                     </GridItem>
-                    {/* <FormSelect name={'duhjisdfsd'} /> */}
 
                     <FormSelect
-                      name={'nameOfDepositProductType'}
-                      options={optionsSaving}
+                      name="productType"
+                      options={productType}
                       label={t['loanProductProductType']}
                       placeholder={t['loanProductSelectProductType']}
                     />
                     <GridItem colSpan={2}>
                       <FormSelect
-                        name={'nameOfDepositProductSubtype'}
-                        options={optionsSaving}
+                        name="productSubType"
+                        options={productSubType}
                         label={t['loanProductProductSubtype']}
                         placeholder={t['loanProductSelectProductType']}
                       />
                     </GridItem>
 
                     <FormSelect
-                      name={'nameOfDepositProduct'}
-                      options={optionsSaving}
+                      name="productNature"
+                      options={productNature}
                       label={t['loanProductNatureLoanProduct']}
+                      placeholder={t['loanProductSelectNatureofDepositProduct']}
                     />
                   </InputGroupContainer>
                 </Box>
@@ -154,41 +364,39 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
                     <FormInput
                       label={t['loanProductPrefix']}
                       placeholder={t['loanProductEnterPrefix']}
-                      name="prefix"
+                      name="productCode.prefix"
                     />
                     <FormInput
                       label={t['loanProductIntitialNumber']}
                       placeholder={t['loanProductIntitialNumber']}
-                      name="initialNumber"
+                      name="productCode.initialNo"
                     />
                     <Box></Box>
-                    <FormSwitch
-                      name="resetSwitch"
-                      label={t['loanProductReseteveryfiscalyear']}
-                    />
                   </InputGroupContainer>
                 </Box>
-                <TypesOfMember watch={watch} />
+                <TypesOfMember />
 
                 <Box display="flex" flexDirection={'column'} gap="s16">
-                  <Critera watch={watch} />
-                  <GridItems watch={watch} />
+                  <Critera />
+                  <GridItems />
                 </Box>
 
                 {/* {depositNature !== 'voluntary' && (
-                  <DepositFrequency watch={watch} />
+                  <DepositFrequency  />
                 )} */}
                 <MinimunTenure />
                 <MaximumTenure />
                 <AmountLimit />
-                <LoanRepaymentScheme />
+                <LoanRepaymentSchemes />
+                <Penalty />
+                <Rebate />
                 <LoanRepayment />
                 <Interest />
                 <AccountServicesCharge />
                 <LoanLimit />
                 {/* {(depositNature === 'recurringSaving' ||
                   depositNature === 'termSaving') && <DefaultAccountName />} */}
-                <Questions watch={watch} />
+                <Questions />
                 <RequiredDocumentSetup />
                 {/* {depositNature !== 'termSaving' && <PrematuredPenalty />} */}
               </ContainerWithDivider>
@@ -212,7 +420,7 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
                 </Box>
               }
               mainButtonLabel={t['saveAccount']}
-              mainButtonHandler={() => router.push(`/members/translation`)}
+              mainButtonHandler={() => submitForm()}
             />
           </Container>
         </Box>

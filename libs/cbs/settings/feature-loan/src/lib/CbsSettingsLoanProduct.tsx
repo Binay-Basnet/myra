@@ -3,8 +3,6 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
 import { PopoverComponent } from '@coop/myra/components';
-// import format from 'date-fns/format';
-// import { ActionPopoverComponent } from '@coop/myra/components';
 import {
   useGetDepositProductSettingsListQuery,
   useGetNewIdMutation,

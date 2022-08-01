@@ -15,11 +15,11 @@ import {
 
 export const MaximumTenure = () => {
   const [rightElement, setRightElement] = useState('days');
-  const { resetField, watch } = useFormContext();
-  const maximumTenure = watch('enablemaximumTenure');
-
-  const maxTenureUnit = watch('maximumTenureUnit');
   const { t } = useTranslation();
+  const { resetField, watch } = useFormContext();
+
+  const maximumTenure = watch('maxTenure');
+  const maxTenureUnit = watch('maxTenureUnit');
 
   const unitOptions = [
     {
@@ -63,10 +63,7 @@ export const MaximumTenure = () => {
           <SubHeadingText>{t['loanProductMaxinumTenure']} </SubHeadingText>
           <SubText>{t['loanProductNoteWeek']}</SubText>
         </TextBoxContainer>
-        <FormSwitchTab
-          name={'enablemaximumTenure'}
-          options={applicableSwitch}
-        />
+        <FormSwitchTab name="maxTenure" options={applicableSwitch} />
       </Box>
       {maximumTenure && (
         <BoxContainer
@@ -82,11 +79,11 @@ export const MaximumTenure = () => {
             <Text fontSize={'s3'} fontWeight="500">
               {t['loanProductUnit']}
             </Text>
-            <FormSwitchTab name={'maximumTenureUnit'} options={unitOptions} />
+            <FormSwitchTab name="maxTenureUnit" options={unitOptions} />
           </Box>
           <Box w="290px">
             <FormInput
-              name="maximumTenureNumber"
+              name="maxTenureUnitNumber"
               textAlign={'right'}
               label={t['loanProductNumber']}
               placeholder={t['loanProductEnterNumber']}

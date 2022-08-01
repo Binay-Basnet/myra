@@ -10,18 +10,18 @@ export const AmountLimit = () => {
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>{t['loanProductMaxinumTenure']}</TopText>
+        <TopText>{t['loanProductLoanAmountLimit']}</TopText>
       </TextBoxContainer>
       <InputGroupContainer>
         <FormInput
           textAlign={'right'}
-          name="minimunBalaneAmount"
+          name="minimumLoanAmount"
           label={t['loanProductMinimumAmount']}
           placeholder="0.00"
         />
         <FormInput
           textAlign={'right'}
-          name="maximumBalaneAmount"
+          name="maxLoanAmount"
           label={t['loanProductMaximumAmount']}
           placeholder="0.00"
         />

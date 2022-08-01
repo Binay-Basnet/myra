@@ -7323,6 +7323,14 @@ export type GetPreSignedUrlMutationVariables = Exact<{
 
 export type GetPreSignedUrlMutation = { presignedUrl: { upload: { filename?: string | null, getUrl?: string | null, putUrl?: string | null } } };
 
+export type SetLoanProductMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<LoanProductInput>;
+}>;
+
+
+export type SetLoanProductMutation = { settings: { general?: { loanProducts?: { upsert?: { recordId?: string | null, query?: unknown | null, record?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: LoanProductType } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+
 export type UpsertNewOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   data: FormOptionUpsertInput;
@@ -7725,6 +7733,21 @@ export type GetKymDocumentsListQueryVariables = Exact<{
 
 
 export type GetKymDocumentsListQuery = { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, docData: Array<{ identifier: string, url: string } | null> } | null> | null } } };
+
+export type GetLoanProductListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<LoanProductSearchFilter>;
+}>;
+
+
+export type GetLoanProductListQuery = { settings: { general?: { loanProducts?: { list?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: LoanProductType, productSubType: LoanProductSubType, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType }, productCode?: { prefix: string, initialNo: string } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null } }> } | null } | null } | null } };
+
+export type GetLoanProductEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetLoanProductEditDataQuery = { settings: { general?: { loanProducts?: { formState?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: LoanProductType, productSubType: LoanProductSubType, productNature: NatureOfLoanProduct, productCodeString?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: Frequency | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, repaymentScheme: LoanRepaymentScheme, modeOfPayment?: LoanPaymentMode | null, installmentType?: LoanPaymentInstallmentType | null, allowPartialInstallment?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, isPenaltyApplicable?: boolean | null, isRebateApplicable?: boolean | null, minGraceDurationUnit?: Frequency | null, minGraceDurationUnitNumber?: number | null, maxGraceDurationUnit?: Frequency | null, maxGraceDurationUnitNumber?: number | null, overrideInterest?: boolean | null, goodLoanProvision?: number | null, doubtfulLoanProvision?: number | null, problematicLoanProvision?: number | null, badLoanProvision?: number | null, isInsuranceApplicable?: boolean | null, isCollateralRequired?: boolean | null, disburementOfFMV?: number | null, disburementOfDMV?: number | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType }, productCode?: { prefix: string, initialNo: string } | null, penalty?: { dayAfterInstallmentDate?: number | null, minimumAmount?: any | null, rateType?: PenaltyRateType | null, flatRatePenalty?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, rebate?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, percentage?: number | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null } | null } | null } | null } };
 
 export type GetPreDefinedFieldsQueryVariables = Exact<{
   filter: PredefinedElementFilter;
@@ -8667,6 +8690,40 @@ export const useGetPreSignedUrlMutation = <
     useMutation<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>(
       ['getPreSignedUrl'],
       useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(GetPreSignedUrlDocument),
+      options
+    );
+export const SetLoanProductDocument = `
+    mutation setLoanProduct($id: ID!, $data: LoanProductInput) {
+  settings {
+    general {
+      loanProducts {
+        upsert(id: $id, data: $data) {
+          recordId
+          record {
+            id
+            objState
+            createdAt
+            modifiedAt
+            productName
+            productType
+          }
+          error {
+            ...MutationError
+          }
+          query
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanProductMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetLoanProductMutation, TError, SetLoanProductMutationVariables, TContext>) =>
+    useMutation<SetLoanProductMutation, TError, SetLoanProductMutationVariables, TContext>(
+      ['setLoanProduct'],
+      useAxios<SetLoanProductMutation, SetLoanProductMutationVariables>(SetLoanProductDocument),
       options
     );
 export const UpsertNewOptionDocument = `
@@ -10976,6 +11033,191 @@ export const useGetKymDocumentsListQuery = <
     useQuery<GetKymDocumentsListQuery, TError, TData>(
       ['getKYMDocumentsList', variables],
       useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(GetKymDocumentsListDocument).bind(null, variables),
+      options
+    );
+export const GetLoanProductListDocument = `
+    query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter) {
+  settings {
+    general {
+      loanProducts {
+        list(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              objState
+              createdAt
+              createdBy {
+                id
+                name
+                username
+                userType
+              }
+              modifiedAt
+              modifiedBy {
+                id
+                name
+                username
+                userType
+              }
+              productName
+              productCode {
+                prefix
+                initialNo
+              }
+              productType
+              productSubType
+              interest {
+                minRate
+                maxRate
+                defaultRate
+                ceoAuthority
+                boardAuthority
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductListQuery = <
+      TData = GetLoanProductListQuery,
+      TError = unknown
+    >(
+      variables?: GetLoanProductListQueryVariables,
+      options?: UseQueryOptions<GetLoanProductListQuery, TError, TData>
+    ) =>
+    useQuery<GetLoanProductListQuery, TError, TData>(
+      variables === undefined ? ['getLoanProductList'] : ['getLoanProductList', variables],
+      useAxios<GetLoanProductListQuery, GetLoanProductListQueryVariables>(GetLoanProductListDocument).bind(null, variables),
+      options
+    );
+export const GetLoanProductEditDataDocument = `
+    query getLoanProductEditData($id: ID!) {
+  settings {
+    general {
+      loanProducts {
+        formState(id: $id) {
+          id
+          objState
+          createdAt
+          createdBy {
+            id
+            name
+            username
+            userType
+          }
+          modifiedAt
+          modifiedBy {
+            id
+            name
+            username
+            userType
+          }
+          productName
+          productType
+          productSubType
+          productNature
+          productCode {
+            prefix
+            initialNo
+          }
+          productCodeString
+          typeOfMember
+          criteria
+          minAge
+          maxAge
+          genderId
+          maritalStatusId
+          educationQualification
+          ethnicity
+          occupation
+          foreignEmployment
+          natureOfBusinessInstitution
+          natureOFBusinessCoop
+          cooperativeType
+          minTenure
+          minTenureUnit
+          minTenureUnitNumber
+          maxTenure
+          maxTenureUnit
+          maxTenureUnitNumber
+          minimumLoanAmount
+          maxLoanAmount
+          repaymentScheme
+          modeOfPayment
+          installmentType
+          allowPartialInstallment
+          isMonthlyInstallmentCompulsory
+          isPenaltyApplicable
+          penalty {
+            dayAfterInstallmentDate
+            minimumAmount
+            rateType
+            flatRatePenalty
+            penaltyRate
+            penaltyAmount
+          }
+          isRebateApplicable
+          rebate {
+            daysBeforeInstallmentDate
+            noOfInstallment
+            rebateAmount
+            percentage
+          }
+          minGraceDurationUnit
+          minGraceDurationUnitNumber
+          maxGraceDurationUnit
+          maxGraceDurationUnitNumber
+          interest {
+            minRate
+            maxRate
+            defaultRate
+            ceoAuthority
+            boardAuthority
+          }
+          overrideInterest
+          serviceCharge {
+            serviceName
+            ledgerName
+            amount
+          }
+          goodLoanProvision
+          doubtfulLoanProvision
+          problematicLoanProvision
+          badLoanProvision
+          isInsuranceApplicable
+          isCollateralRequired
+          disburementOfFMV
+          disburementOfDMV
+          isStaffProduct
+          supportMultipleAccounts
+          loanScheduleChangeOverride
+          requiredDocuments
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductEditDataQuery = <
+      TData = GetLoanProductEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetLoanProductEditDataQueryVariables,
+      options?: UseQueryOptions<GetLoanProductEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetLoanProductEditDataQuery, TError, TData>(
+      ['getLoanProductEditData', variables],
+      useAxios<GetLoanProductEditDataQuery, GetLoanProductEditDataQueryVariables>(GetLoanProductEditDataDocument).bind(null, variables),
       options
     );
 export const GetPreDefinedFieldsDocument = `
