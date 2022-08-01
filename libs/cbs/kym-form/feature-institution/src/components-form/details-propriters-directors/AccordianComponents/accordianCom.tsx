@@ -151,7 +151,8 @@ export const DirectorTopPart = ({
     [currentTemptDistrictId]
   );
   const wardTemptList = useMemo(
-    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    () =>
+      localityList.find((d) => d.id === currentTemptLocalityId)?.wards ?? [],
     [currentLocalityId]
   );
 

@@ -13,3 +13,17 @@ query getIndividualKYMOptions($searchTerm: FormFieldSearchTerm!) {
   }
 }
 
+query getInstitutionKYMOptions($searchTerm: FormFieldSearchTerm!) {
+  form {
+    options {
+      predefined(
+        filter: { searchTerm: $searchTerm, category: KYM_INSTITUTION }
+      ) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
