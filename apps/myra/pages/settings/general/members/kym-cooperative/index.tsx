@@ -1,4 +1,4 @@
-import { IndividualSettings } from '@coop/cbs/settings/members';
+import { CooperativeSettings } from '@coop/cbs/settings/members';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
@@ -30,7 +30,7 @@ const KYMCoperative = () => {
           </Text>
         </Box>
         <Box mt="s16">
-          <IndividualSettings />
+          <CooperativeSettings />
         </Box>
       </Box>
     </Box>

@@ -378,6 +378,288 @@ export const INSTITUTION_KYM_FIELDS: FieldType[] = [
   },
 ];
 
+export const COOP_KYM_FIELDS: FieldType[] = [
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsMemberCooperativeSection1',
+    children: [
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsCooperativeContactDetails',
+        search_term: FormSearchTerm.ContactDetails,
+      },
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsCooperativeCurrentMembers',
+        search_term: FormSearchTerm.CurrentMembers,
+      },
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsCooperativeRepresentative',
+        search_term: FormSearchTerm.Representative,
+      },
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsCooperativeType',
+        search_term: FormSearchTerm.CooperativeType,
+      },
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsNumberOfEmployee',
+        search_term: FormSearchTerm.NumberOfEmployee,
+      },
+    ],
+  },
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsMemberCooperativeSection2',
+    children: [],
+  },
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsMemberCooperativeSection3',
+    children: [
+      {
+        type: FieldTypeEnum.Group,
+        label: 'settingsCooperativeDirectors',
+        children: [
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCooperativeDirectorDetails',
+            search_term: FormSearchTerm.DirectorDetails,
+          },
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCooperativeDocumentDeclaration',
+            search_term: FormSearchTerm.DirectorDocument,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsMemberCooperativeSection4',
+    children: [
+      {
+        type: FieldTypeEnum.Group,
+        label: 'settingsCooperativeAccountOperators',
+        children: [
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCooperativeAccountOperatorDetails',
+            search_term: FormSearchTerm.AccountOperatorDetails,
+          },
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCooperativeDocumentDeclaration',
+            search_term: FormSearchTerm.AccountOperatorDocument,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsMemberCooperativeSection5',
+    children: [
+      {
+        type: FieldTypeEnum.Group,
+        label: 'settingsCooperativeAccountHolderDeclaration',
+        children: [
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCooperativeAccountHolderDeclarationDetails',
+            search_term: FormSearchTerm.AccountHolderDetails,
+          },
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCooperativeAccountHolderDeclarationDocuments',
+            search_term: FormSearchTerm.AccountHolderDocuments,
+          },
+        ],
+      },
+      {
+        type: FieldTypeEnum.CustomComponent,
+        label: 'settingsMemberDeclaration',
+        search_term: FormSearchTerm.AccountOperator,
+
+        component: ({ kymType, isExpanded }) => (
+          <Declaration kymType={kymType} isExpanded={isExpanded} />
+        ),
+      },
+    ],
+  },
+  {
+    type: FieldTypeEnum.Custom,
+    label: 'settingsMemberInstitutionSection6',
+    children: [],
+    search_term: FormSearchTerm.AccountOperatorDetails,
+  },
+];
+
+export const COOP_UNION_FIELDS: FieldType[] = [
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsCoopUnionSection1',
+    children: [
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsCoopUnionOrganizationType',
+        search_term: FormSearchTerm.OrganizationType,
+      },
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsCoopUnionRegisteredDetails',
+        search_term: FormSearchTerm.RegisteredDetails,
+      },
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsCoopUnionContactDetails',
+        search_term: FormSearchTerm.ContactDetails,
+      },
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsCoopUnionCurrentMembers',
+        search_term: FormSearchTerm.CurrentMembers,
+      },
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsCoopUnionBankAccountDetails',
+        search_term: FormSearchTerm.BankAccountDetails,
+      },
+      {
+        type: FieldTypeEnum.Group,
+        label: 'settingsCoopUnionApplicant',
+        children: [
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopUnionApplicantDetails',
+            search_term: FormSearchTerm.ApplicantDetails,
+          },
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopUnionApplicantDocumentDeclaration',
+            search_term: FormSearchTerm.ApplicantDocument,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsCoopUnionSection2',
+    children: [
+      {
+        type: FieldTypeEnum.Group,
+        label: 'settingsCoopDirectors',
+        children: [
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopDirectorDetails',
+            search_term: FormSearchTerm.DirectorDetails,
+          },
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopTrainingRelatedToCoop',
+            search_term: FormSearchTerm.DirectorCoopTraining,
+          },
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopDocumentDeclaration',
+            search_term: FormSearchTerm.DirectorDocument,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsCoopUnionSection3',
+    children: [
+      {
+        type: FieldTypeEnum.Group,
+        label: 'settingsCoopUnionAccountOperators',
+        children: [
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopUnionAccountOperatorDetails',
+            search_term: FormSearchTerm.AccountOperatorDetails,
+          },
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopTrainingRelatedToCoop',
+            search_term: FormSearchTerm.AccountCoopTraining,
+          },
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopDocumentDeclaration',
+            search_term: FormSearchTerm.AccountOperatorDocument,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsCoopUnionSection4',
+    children: [
+      {
+        type: FieldTypeEnum.Group,
+        label: 'settingsCoopCentralRepresentative',
+        children: [
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopCentralRepresentativeDetails',
+            search_term: FormSearchTerm.CentralRepresentativeDetails,
+          },
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopTrainingRelatedToCoop',
+            search_term: FormSearchTerm.CentralRepresentativeCoopTraining,
+          },
+          {
+            type: FieldTypeEnum.FormField,
+            label: 'settingsCoopDocumentDeclaration',
+            search_term: FormSearchTerm.CentralRepresentativeDocument,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsCoopUnionSection5',
+    children: [],
+  },
+  {
+    type: FieldTypeEnum.Group,
+    label: 'settingsCoopUnionSection6',
+    children: [
+      {
+        type: FieldTypeEnum.FormField,
+        label: 'settingsCooperativeAccountHolderDeclarationDocuments',
+        search_term: FormSearchTerm.FileUploads,
+      },
+      {
+        type: FieldTypeEnum.CustomComponent,
+        label: 'settingsMemberDeclaration',
+        search_term: FormSearchTerm.AccountOperator,
+
+        component: ({ kymType, isExpanded }) => (
+          <Declaration kymType={kymType} isExpanded={isExpanded} />
+        ),
+      },
+    ],
+  },
+  {
+    type: FieldTypeEnum.Custom,
+    label: 'settingsCoopUnionSection7',
+    children: [],
+    search_term: FormSearchTerm.AccountOperatorDetails,
+  },
+];
+
 export const Declaration = ({
   kymType,
   isExpanded,

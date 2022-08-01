@@ -18,16 +18,20 @@ import {
   Divider,
   Icon,
   IconButton,
-  ListItem,
   Popover,
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
   Text,
-  UnorderedList,
 } from '@chakra-ui/react';
 
-import { Grid, Modal, ShortcutTab } from '@coop/shared/ui';
+import {
+  Grid,
+  ListItem,
+  Modal,
+  ShortcutTab,
+  UnorderedList,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

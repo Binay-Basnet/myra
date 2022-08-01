@@ -19,6 +19,7 @@ export const IncomeSourceDetailsComponent = (props: {
   kymType: KYMCategory;
   section: FormSection;
 }) => {
+  console.log(props.section);
   const { data: field, isLoading } = useGetPreDefinedFields({
     searchTerm: FormSearchTerm.FamilyIncomeSource,
     category: props.kymType,
