@@ -1,21 +1,15 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
-import format from 'date-fns/format';
 
 import { ActionPopoverComponent } from '@coop/myra/components';
 import {
+  NatureOfDepositProduct,
   useGetDepositProductSettingsListQuery,
   useGetNewIdMutation,
 } from '@coop/shared/data-access';
-import {
-  Box,
-  Button,
-  Column,
-  DEFAULT_PAGE_SIZE,
-  Table,
-  Text,
-} from '@coop/shared/ui';
+import { Column, Table } from '@coop/shared/table';
+import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -63,51 +57,60 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: t['depositProductCode'],
-        accessor: 'node.productCode',
-        maxWidth: 4,
-        disableSortBy: false,
+        header: t['depositProductCode'],
+        accessorFn: (row) => row?.node?.productCode,
       },
 
       {
-        Header: t['depositProductName'],
-        accessor: 'node.productName',
-        width: '80%',
+        header: t['depositProductName'],
+        accessorFn: (row) => row?.node?.productName,
       },
       {
-        Header: t['depositNature'],
-        accessor: 'node.nature',
-        maxWidth: 48,
-
-        Cell: ({ value, row }) => {
+        header: t['depositNature'],
+        accessorFn: (row) => row?.node?.nature,
+        cell: (props) => {
           return (
             <span>
-              {value}, {row?.original?.node?.nature}
+              {props?.row?.original?.node?.nature ===
+              NatureOfDepositProduct.Mandatory
+                ? t['depositProductMandatory']
+                : props?.row?.original?.node?.nature ===
+                  NatureOfDepositProduct.RecurringSaving
+                ? t['depositProductRecurringSaving']
+                : props?.row?.original?.node?.nature ===
+                  NatureOfDepositProduct.TermSavingOrFd
+                ? t['depositProductTermSaving']
+                : props?.row?.original?.node?.nature ===
+                  NatureOfDepositProduct.VoluntaryOrOptional
+                ? t['depositProductVoluntaryOptional']
+                : ' '}
             </span>
           );
         },
       },
       {
-        Header: t['depositInterest'],
-        accessor: 'node.interest',
-      },
-      {
-        Header: t['depositCreatedDate'],
-        accessor: 'node.createdDate',
-        Cell: ({ value }) => {
-          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
+        header: t['depositInterest'],
+        accessorFn: (row) => row?.node?.interest,
+        cell: (props) => {
+          return <span>{props?.row?.original?.node?.interest} %</span>;
         },
       },
       {
-        Header: '',
-        accessor: 'actions',
-        disableFilters: true,
-        Cell: ({ value, row }) => (
+        header: t['depositCreatedDate'],
+        accessorFn: (row) => row?.node?.createdDate,
+      },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) => (
           <ActionPopoverComponent
             items={popoverTitle}
-            id={row?.original?.node?.id}
+            id={props?.row?.original?.node?.id}
           />
         ),
+        meta: {
+          width: '50px',
+        },
       },
     ],
     [t]
@@ -146,9 +149,6 @@ export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
         isLoading={isLoading}
         data={rowData}
         columns={columns}
-        sort={true}
-        disableSortAll={true}
-        filter={true}
         pagination={{
           total: 1200,
           endCursor:

@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { PopoverComponent } from '@coop/myra/components';
+import { ActionPopoverComponent } from '@coop/myra/components';
 import {
-  useGetDepositProductSettingsListQuery,
+  useGetLoanProductListQuery,
   useGetNewIdMutation,
 } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/table';
@@ -14,12 +14,6 @@ import { useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface SettingsLoanProductProps {}
 
-const popoverTitle = [
-  {
-    title: 'neoClientDetailOverviewEdit',
-  },
-];
-
 export function SettingsLoanProduct(props: SettingsLoanProductProps) {
   const router = useRouter();
 
@@ -27,7 +21,7 @@ export function SettingsLoanProduct(props: SettingsLoanProductProps) {
 
   const newId = useGetNewIdMutation();
 
-  const { data, isLoading } = useGetDepositProductSettingsListQuery(
+  const { data, isLoading } = useGetLoanProductListQuery(
     router.query['before']
       ? {
           paginate: {
@@ -47,34 +41,28 @@ export function SettingsLoanProduct(props: SettingsLoanProductProps) {
   );
 
   const rowData = useMemo(
-    () => data?.settings?.general?.depositProduct?.list?.edges ?? [],
+    () => data?.settings?.general?.loanProducts?.list?.edges ?? [],
     [data]
   );
 
-  // const popoverTitle = [
-  //   {
-  //     title: 'depositProductEdit',
-  //     onClick: (id: string) =>
-  //       router.push(`/settings/general/deposit-products/edit/${id}`),
-  //   },
-  // ];
+  const popoverTitle = [
+    {
+      title: 'edit',
+      onClick: (id: string) =>
+        router.push(`/settings/general/loan-products/edit/${id}`),
+    },
+  ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: t['loanProductsProductCode'],
-        accessorFn: (row) => row?.node.productCode,
-        meta: {
-          width: 4,
-        },
+        accessorFn: (row) => row?.node.productCode?.initialNo,
       },
 
       {
         header: t['loanProductsProductName'],
         accessorFn: (row) => row?.node.productName,
-        meta: {
-          width: '80%',
-        },
         cell: (props) => {
           return (
             <Box
@@ -102,7 +90,7 @@ export function SettingsLoanProduct(props: SettingsLoanProductProps) {
       },
       {
         header: t['loanProductsProductType'],
-        accessorFn: (row) => row?.node.nature,
+        accessorFn: (row) => row?.node.productType,
         meta: {
           width: '20%',
         },
@@ -114,26 +102,32 @@ export function SettingsLoanProduct(props: SettingsLoanProductProps) {
 
       {
         header: t['loanProductsProductSubType'],
-        accessorFn: (row) => row?.node.createdAt,
+        accessorFn: (row) => row?.node.productSubType,
       },
       {
         header: t['loanProductsInterest'],
-        accessorFn: (row) => row?.node.interest,
+        accessorFn: (row) => row?.node.interest?.defaultRate,
+        cell: (props) => {
+          return (
+            <span>{props?.row?.original?.node?.interest?.defaultRate} %</span>
+          );
+        },
       },
       {
         header: t['loanProductsCreatedDate'],
         accessorFn: (row) => row?.node.createdDate,
-        cell: (value) => {
-          return <span>'2020/01/20' </span>;
-          // return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
-        },
       },
       {
         id: '_actions',
         header: '',
-        cell: (row) => <PopoverComponent items={popoverTitle} />,
+        cell: (props) => (
+          <ActionPopoverComponent
+            items={popoverTitle}
+            id={props?.row?.original?.node?.id}
+          />
+        ),
         meta: {
-          width: '60px',
+          width: '50px',
         },
       },
     ],
@@ -176,11 +170,11 @@ export function SettingsLoanProduct(props: SettingsLoanProductProps) {
         pagination={{
           total: 1200,
           endCursor:
-            data?.settings?.general?.depositProduct?.list?.pageInfo
+            data?.settings?.general?.loanProducts?.list?.pageInfo
               ?.startCursor ?? '',
           startCursor:
-            data?.settings?.general?.depositProduct?.list?.pageInfo
-              ?.endCursor ?? '',
+            data?.settings?.general?.loanProducts?.list?.pageInfo?.endCursor ??
+            '',
         }}
       />
     </>

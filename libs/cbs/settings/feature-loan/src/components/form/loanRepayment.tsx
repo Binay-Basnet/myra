@@ -15,13 +15,13 @@ export const LoanRepayment = () => {
 
   const { resetField, watch } = useFormContext();
 
-  const maxDurationUnit = watch('maximumDurationUnitLoan');
+  const maxDurationUnit = watch('maxGraceDurationUnit');
   useEffect(() => {
     resetField('maximumDurationNumberLoan');
     setRightElementMax(maxDurationUnit);
   }, [maxDurationUnit]);
 
-  const minimumDurationUnit = watch('minimumDurationUnitLoan');
+  const minimumDurationUnit = watch('minGraceDurationUnit');
 
   useEffect(() => {
     resetField('minimunDurationNumberLoan');
@@ -79,13 +79,7 @@ export const LoanRepayment = () => {
               textAlign={'right'}
               label={t['loanProductNumber']}
               placeholder="0"
-              rightElement={
-                <Box mr="s24">
-                  <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
-                    {rightElementMin}
-                  </Text>
-                </Box>
-              }
+              rightAddonText={rightElementMin && rightElementMin.toLowerCase()}
             />
           </Box>
         </Box>
@@ -117,13 +111,7 @@ export const LoanRepayment = () => {
               textAlign={'right'}
               label={t['loanProductNumber']}
               placeholder="0"
-              rightElement={
-                <Box>
-                  <Text fontWeight="Medium" fontSize="r1" color="accent.debit">
-                    {rightElementMax}
-                  </Text>
-                </Box>
-              }
+              rightAddonText={rightElementMax && rightElementMax.toLowerCase()}
             />
           </Box>
         </BoxContainer>

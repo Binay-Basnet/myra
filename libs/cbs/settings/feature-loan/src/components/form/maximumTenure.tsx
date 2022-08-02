@@ -87,7 +87,7 @@ export const MaximumTenure = () => {
               textAlign={'right'}
               label={t['loanProductNumber']}
               placeholder={t['loanProductEnterNumber']}
-              rightAddonText={rightElement}
+              rightAddonText={rightElement && rightElement.toLowerCase()}
             />
           </Box>
         </BoxContainer>

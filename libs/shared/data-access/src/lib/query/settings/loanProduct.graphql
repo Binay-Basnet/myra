@@ -25,7 +25,7 @@ query getLoanProductList(
                 userType
               }
               modifiedAt
-
+              createdDate
               modifiedBy {
                 id
                 name
@@ -62,19 +62,7 @@ query getLoanProductEditData($id: ID!) {
           id
           objState
           createdAt
-          createdBy {
-            id
-            name
-            username
-            userType
-          }
           modifiedAt
-          modifiedBy {
-            id
-            name
-            username
-            userType
-          }
           productName
           productType
           productSubType

@@ -32,6 +32,7 @@ const ne: Record<string, string> = {
   weekly: 'Weekly',
   monthly: 'Monthly',
   yearly: 'Yearly',
+  edit: 'Edit',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
@@ -345,7 +346,6 @@ const ne: Record<string, string> = {
   settingsBranchAddress: 'Address',
   settingsBranchDistrict: 'District',
   settingsBranchManager: 'Manager',
-  settingsBranchContactNumber: 'Contact Number',
   settingsBranchNew: 'New Branch',
   settingsBranchAdd: 'Add Branch',
   settingsBranchName: 'Branch Name',
@@ -3028,18 +3028,19 @@ const ne: Record<string, string> = {
   loanProductPercentageDepositedAmount: 'Percentage of Deposited Amount',
   loanProductNoInstallment: 'No. of Installment',
   loanProductEnterNumberInstallments: 'Enter Number of Installments',
-  loanProductAgriculture: 'Agriculture',
-  loanProductAlternativeEnergy: 'Alternative Energy',
-  loanProductAssetsPurchasesAndMaintenance: 'Assets Purchases And Maintenance',
-  loanProductTypeBusiness: 'Business',
-  loanProductCreditUnion: 'Credit Union',
-  loanProductEducational: 'Educational',
-  loanProductForeignEmployee: 'Foreign Employee',
-  loanProductHirePurchase: 'Hire Purchase',
-  loanProductTypeIndustrial: 'Industrial',
-  loanProductMicroEntrepreneur: 'Micro Entrepreneur',
-  loanProductSocialSector: 'Social Sector',
-  loanProductStaff: 'Staff',
+  loanProductAgriculture: 'Agriculture Loan',
+  loanProductAlternativeEnergy: 'Alternative Energy Loan',
+  loanProductAssetsPurchasesAndMaintenance:
+    'Assets Purchases And Maintenance Loan',
+  loanProductTypeBusiness: 'Business Loan',
+  loanProductCreditUnion: 'Credit Union Loan',
+  loanProductEducational: 'Educational Loan',
+  loanProductForeignEmployee: 'Foreign Employee Loan',
+  loanProductHirePurchase: 'Hire Purchase Loan',
+  loanProductTypeIndustrial: 'Industrial Loan',
+  loanProductMicroEntrepreneur: 'Micro Entrepreneur Loan',
+  loanProductSocialSector: 'Social Sector Loan',
+  loanProductStaff: 'Staff Loan',
   loanProductProductive: 'Productive',
   loanProductUnproductive: 'Unproductive',
   loanProductSelectNatureofDepositProduct: 'Select Nature of Deposit Product',
@@ -3051,9 +3052,13 @@ const ne: Record<string, string> = {
   loanProductSelectNatureofBusiness: 'Select Nature of Business',
   loanProductNatureofBusinessCoopUnion: 'Nature of Business (COOP Union)',
   loanProductPenaltyType: 'Penalty Type',
+  loanProductDifferentLoanProvisionTreatment:
+    ' Different Loan Provision Treatment',
 
   depositProductMinAge: 'Minimum Age',
   depositProductMaxAge: 'Maximum Age',
+
+  settingsBranchContactNumber: 'Contact No',
 };
 
 export default ne;

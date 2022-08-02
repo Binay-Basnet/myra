@@ -1,7 +1,12 @@
 // import debounce from 'lodash/debounce';
 import { useFormContext } from 'react-hook-form';
+import { getOption } from 'libs/cbs/kym-form/feature-institution/src/utils/getOptionsInstitution';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import {
+  FormFieldSearchTerm,
+  useGetInstitutionKymOptionsQuery,
+} from '@coop/shared/data-access';
 import {
   FormCheckboxGroup,
   FormInput,
@@ -84,6 +89,21 @@ const CoOperativeType = [
   },
 ];
 
+const coopUnion = [
+  {
+    label: 'Saccos',
+    value: 'saccos',
+  },
+  {
+    label: 'District union',
+    value: 'districtUnion',
+  },
+  {
+    label: 'Coop',
+    value: 'coop',
+  },
+];
+
 export const GridItems = () => {
   const { watch } = useFormContext();
   const ageCheck = watch('criteria');
@@ -99,6 +119,11 @@ export const GridItems = () => {
   const memberType = watch('typeOfMember');
 
   const { t } = useTranslation();
+
+  const { data: organizationFields, isLoading: OrganizationLoading } =
+    useGetInstitutionKymOptionsQuery({
+      searchTerm: FormFieldSearchTerm.OrganizationType,
+    });
 
   if (
     ageCheck ||
@@ -221,9 +246,10 @@ export const GridItems = () => {
               -1 && (
               <FormSelect
                 name="natureOfBusinessInstitution"
-                options={OccupationalOptions}
                 label={t['depositProductNatureofBusinessIns']}
                 placeholder={t['depositProductSelectNatureofBusiness']}
+                options={getOption(organizationFields)}
+                isLoading={OrganizationLoading}
                 isMulti
               />
             )}
@@ -234,7 +260,7 @@ export const GridItems = () => {
               -1 && (
               <FormSelect
                 name="natureOFBusinessCoop"
-                options={OccupationalOptions}
+                options={coopUnion}
                 label={t['depositProductNatureofBusinessCoopUnion']}
                 placeholder={t['depositProductSelectNatureofBusiness']}
                 isMulti

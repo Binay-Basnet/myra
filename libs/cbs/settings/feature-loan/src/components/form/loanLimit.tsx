@@ -1,4 +1,3 @@
-// import debounce from 'lodash/debounce';
 import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -19,14 +18,14 @@ const search_options = [
   { label: 'Bad Loan (1 year above)', value: 'bad' },
 ];
 
-export const LoanLimit = () => {
+export const LoanLimit = ({ data }: any) => {
   const { t } = useTranslation();
-
+  console.log(data);
   return (
     <BoxContainer>
       <TextBoxContainer>
-        <TopText>Loan Provision Treatment</TopText>
-        <SubText> Different Loan Provision Treatment</SubText>
+        <TopText>{t['loanProductLoanProvisionTreatment']} </TopText>
+        <SubText>{t['loanProductDifferentLoanProvisionTreatment']} </SubText>
       </TextBoxContainer>
       {/* <InputGroupContainer>
         <FormInput
@@ -46,19 +45,23 @@ export const LoanLimit = () => {
         defaultData={[
           {
             loanProvision: 'good',
-            provision: 0,
+            provision: data?.goodLoanProvision ? data?.goodLoanProvision : 0,
           },
           {
             loanProvision: 'doubtful',
-            provision: 0,
+            provision: data?.doubtfulLoanProvision
+              ? data?.doubtfulLoanProvision
+              : 0,
           },
           {
             loanProvision: 'problematic',
-            provision: 0,
+            provision: data?.problematicLoanProvision
+              ? data?.problematicLoanProvision
+              : 0,
           },
           {
             loanProvision: 'bad',
-            provision: 0,
+            provision: data?.badLoanProvision ? data?.badLoanProvision : 0,
           },
         ]}
         debug={false}

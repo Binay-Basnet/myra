@@ -7062,14 +7062,6 @@ export type RefreshMutationVariables = Exact<{
 
 export type RefreshMutation = { auth: { token?: { token?: { access: string, refresh: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
 
-export type SetBranchDataMutationVariables = Exact<{
-  id: Scalars['ID'];
-  data: BranchInput;
-}>;
-
-
-export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
-
 export type SetNewCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -7159,28 +7151,6 @@ export type SetDeclarationDataMutationVariables = Exact<{
 
 
 export type SetDeclarationDataMutation = { members: { cooperativeUnion?: { add?: { declaration?: { recordId: string } | null } | null } | null } };
-
-export type SetDepositProductMutationVariables = Exact<{
-  id: Scalars['ID'];
-  data?: InputMaybe<DepositProductInput>;
-}>;
-
-
-export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate: string, interest: number } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
-
-export type SetDepositIroMutationVariables = Exact<{
-  data?: InputMaybe<DepositIroInput>;
-}>;
-
-
-export type SetDepositIroMutation = { settings: { general?: { deposit?: { iroSetup?: { recordId: string, record?: { id: string, iroName?: string | null, iroAddress?: string | null, iroCode?: string | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | { __typename: 'ValidationError' } | null } | null } | null } | null } };
-
-export type SetDepositTdsMutationVariables = Exact<{
-  data?: InputMaybe<DepositTdsInput>;
-}>;
-
-
-export type SetDepositTdsMutation = { settings: { general?: { deposit?: { tdsSetup?: { recordId: string, record?: { id: string, individual?: number | null, institution?: number | null, cooperative?: number | null, coopUnion?: number | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | { __typename: 'ValidationError' } | null } | null } | null } | null } };
 
 export type GetNewIdMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -7335,13 +7305,43 @@ export type GetPreSignedUrlMutationVariables = Exact<{
 
 export type GetPreSignedUrlMutation = { presignedUrl: { upload: { filename?: string | null, getUrl?: string | null, putUrl?: string | null } } };
 
+export type SetBranchDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: BranchInput;
+}>;
+
+
+export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
+
+export type SetDepositProductMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<DepositProductInput>;
+}>;
+
+
+export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate: string, interest: number } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+
+export type SetDepositIroMutationVariables = Exact<{
+  data?: InputMaybe<DepositIroInput>;
+}>;
+
+
+export type SetDepositIroMutation = { settings: { general?: { deposit?: { iroSetup?: { recordId: string, record?: { id: string, iroName?: string | null, iroAddress?: string | null, iroCode?: string | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | { __typename: 'ValidationError' } | null } | null } | null } | null } };
+
+export type SetDepositTdsMutationVariables = Exact<{
+  data?: InputMaybe<DepositTdsInput>;
+}>;
+
+
+export type SetDepositTdsMutation = { settings: { general?: { deposit?: { tdsSetup?: { recordId: string, record?: { id: string, individual?: number | null, institution?: number | null, cooperative?: number | null, coopUnion?: number | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | { __typename: 'ValidationError' } | null } | null } | null } | null } };
+
 export type SetLoanProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<LoanProductInput>;
 }>;
 
 
-export type SetLoanProductMutation = { settings: { general?: { loanProducts?: { upsert?: { recordId?: string | null, query?: unknown | null, record?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: LoanProductType } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+export type SetLoanProductMutation = { settings: { general?: { loanProducts?: { upsert?: { recordId?: string | null, query?: unknown | null, record?: { id: string, objState: ObjState, productName: string, productType: LoanProductType } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
 export type UpsertNewOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
@@ -7774,20 +7774,35 @@ export type GetKymDocumentsListQueryVariables = Exact<{
 
 export type GetKymDocumentsListQuery = { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, docData: Array<{ identifier: string, url: string } | null> } | null> | null } } };
 
+export type GetBranchListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<BranchSearchFilter>;
+}>;
+
+
+export type GetBranchListQuery = { settings: { general?: { branch?: { list?: { totalCount: number, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ node?: { id: string, branchCode?: string | null, name?: string | null, category?: BranchCategory | null, estDate?: string | null, contactNumber?: string | null, email?: string | null, plTransferId?: string | null, tdsTransaferId?: string | null, branchStatus?: boolean | null, manager?: { code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, share?: { summary?: { id: string, count: number, member: { code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null } | null } } | null, history?: Array<{ status: Share_Status, transactionDate: string, transactionDirection: Share_Transaction_Direction, credit?: number | null, member: { code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null } | null } } | null> | null } | null, profile?: { __typename: 'CooperativeMember' } | { __typename: 'CooperativeUnionMember' } | { __typename: 'IndividualMember' } | { __typename: 'InstitutionMember' } | null } | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, location?: { longitude?: number | null, latitude?: number | null } | null, abbsTransaction?: { abbsStatus?: boolean | null, receivableAccountId?: string | null, payableAccountId?: string | null } | null } | null }> | null } | null } | null } | null } };
+
+export type GetBranchEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetBranchEditDataQuery = { settings: { general?: { branch?: { formState?: { data?: { branchCode?: string | null, name?: string | null, category?: BranchCategory | null, estDate?: string | null, managerId?: string | null, provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: string | null, phoneNumber?: string | null, email?: string | null, abbsStatus?: boolean | null, receivableAccountId?: string | null, payableAccountId?: string | null, plTransferId?: string | null, tdsTransaferId?: string | null, branchStatus?: boolean | null, location?: { longitude?: number | null, latitude?: number | null } | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | null } | null } | null } | null } };
+
 export type GetLoanProductListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<LoanProductSearchFilter>;
 }>;
 
 
-export type GetLoanProductListQuery = { settings: { general?: { loanProducts?: { list?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: LoanProductType, productSubType: LoanProductSubType, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType }, productCode?: { prefix: string, initialNo: string } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null } }> } | null } | null } | null } };
+export type GetLoanProductListQuery = { settings: { general?: { loanProducts?: { list?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, createdDate: string, productName: string, productType: LoanProductType, productSubType: LoanProductSubType, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType }, productCode?: { prefix: string, initialNo: string } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null } }> } | null } | null } | null } };
 
 export type GetLoanProductEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetLoanProductEditDataQuery = { settings: { general?: { loanProducts?: { formState?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: LoanProductType, productSubType: LoanProductSubType, productNature: NatureOfLoanProduct, productCodeString?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: Frequency | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, repaymentScheme: LoanRepaymentScheme, modeOfPayment?: LoanPaymentMode | null, installmentType?: LoanPaymentInstallmentType | null, allowPartialInstallment?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, isPenaltyApplicable?: boolean | null, isRebateApplicable?: boolean | null, minGraceDurationUnit?: Frequency | null, minGraceDurationUnitNumber?: number | null, maxGraceDurationUnit?: Frequency | null, maxGraceDurationUnitNumber?: number | null, overrideInterest?: boolean | null, goodLoanProvision?: number | null, doubtfulLoanProvision?: number | null, problematicLoanProvision?: number | null, badLoanProvision?: number | null, isInsuranceApplicable?: boolean | null, isCollateralRequired?: boolean | null, disburementOfFMV?: number | null, disburementOfDMV?: number | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType }, productCode?: { prefix: string, initialNo: string } | null, penalty?: { dayAfterInstallmentDate?: number | null, minimumAmount?: any | null, rateType?: PenaltyRateType | null, flatRatePenalty?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, rebate?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, percentage?: number | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null } | null } | null } | null } };
+export type GetLoanProductEditDataQuery = { settings: { general?: { loanProducts?: { formState?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: LoanProductType, productSubType: LoanProductSubType, productNature: NatureOfLoanProduct, productCodeString?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: Frequency | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, repaymentScheme: LoanRepaymentScheme, modeOfPayment?: LoanPaymentMode | null, installmentType?: LoanPaymentInstallmentType | null, allowPartialInstallment?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, isPenaltyApplicable?: boolean | null, isRebateApplicable?: boolean | null, minGraceDurationUnit?: Frequency | null, minGraceDurationUnitNumber?: number | null, maxGraceDurationUnit?: Frequency | null, maxGraceDurationUnitNumber?: number | null, overrideInterest?: boolean | null, goodLoanProvision?: number | null, doubtfulLoanProvision?: number | null, problematicLoanProvision?: number | null, badLoanProvision?: number | null, isInsuranceApplicable?: boolean | null, isCollateralRequired?: boolean | null, disburementOfFMV?: number | null, disburementOfDMV?: number | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, productCode?: { prefix: string, initialNo: string } | null, penalty?: { dayAfterInstallmentDate?: number | null, minimumAmount?: any | null, rateType?: PenaltyRateType | null, flatRatePenalty?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, rebate?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, percentage?: number | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null } | null } | null } | null } };
 
 export type GetPreDefinedFieldsQueryVariables = Exact<{
   filter: PredefinedElementFilter;
@@ -7954,33 +7969,6 @@ export const useRefreshMutation = <
     useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
       ['refresh'],
       useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
-      options
-    );
-export const SetBranchDataDocument = `
-    mutation setBranchData($id: ID!, $data: BranchInput!) {
-  settings {
-    general {
-      branch {
-        add(id: $id, data: $data) {
-          record {
-            id
-          }
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetBranchDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>) =>
-    useMutation<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>(
-      ['setBranchData'],
-      useAxios<SetBranchDataMutation, SetBranchDataMutationVariables>(SetBranchDataDocument),
       options
     );
 export const SetNewCoaDocument = `
@@ -8264,105 +8252,6 @@ export const useSetDeclarationDataMutation = <
     useMutation<SetDeclarationDataMutation, TError, SetDeclarationDataMutationVariables, TContext>(
       ['setDeclarationData'],
       useAxios<SetDeclarationDataMutation, SetDeclarationDataMutationVariables>(SetDeclarationDataDocument),
-      options
-    );
-export const SetDepositProductDocument = `
-    mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
-  settings {
-    general {
-      depositProduct {
-        add(id: $id, data: $data) {
-          recordId
-          record {
-            id
-            productCode
-            productName
-            createdDate
-            interest
-          }
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetDepositProductMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetDepositProductMutation, TError, SetDepositProductMutationVariables, TContext>) =>
-    useMutation<SetDepositProductMutation, TError, SetDepositProductMutationVariables, TContext>(
-      ['setDepositProduct'],
-      useAxios<SetDepositProductMutation, SetDepositProductMutationVariables>(SetDepositProductDocument),
-      options
-    );
-export const SetDepositIroDocument = `
-    mutation setDepositIro($data: DepositIroInput) {
-  settings {
-    general {
-      deposit {
-        ... on DepositSettingsMutation {
-          iroSetup(data: $data) {
-            recordId
-            record {
-              id
-              iroName
-              iroAddress
-              iroCode
-            }
-            error {
-              __typename
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useSetDepositIroMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetDepositIroMutation, TError, SetDepositIroMutationVariables, TContext>) =>
-    useMutation<SetDepositIroMutation, TError, SetDepositIroMutationVariables, TContext>(
-      ['setDepositIro'],
-      useAxios<SetDepositIroMutation, SetDepositIroMutationVariables>(SetDepositIroDocument),
-      options
-    );
-export const SetDepositTdsDocument = `
-    mutation setDepositTds($data: DepositTdsInput) {
-  settings {
-    general {
-      deposit {
-        ... on DepositSettingsMutation {
-          tdsSetup(data: $data) {
-            recordId
-            record {
-              id
-              individual
-              institution
-              cooperative
-              coopUnion
-            }
-            error {
-              __typename
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useSetDepositTdsMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetDepositTdsMutation, TError, SetDepositTdsMutationVariables, TContext>) =>
-    useMutation<SetDepositTdsMutation, TError, SetDepositTdsMutationVariables, TContext>(
-      ['setDepositTds'],
-      useAxios<SetDepositTdsMutation, SetDepositTdsMutationVariables>(SetDepositTdsDocument),
       options
     );
 export const GetNewIdDocument = `
@@ -8776,6 +8665,132 @@ export const useGetPreSignedUrlMutation = <
       useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(GetPreSignedUrlDocument),
       options
     );
+export const SetBranchDataDocument = `
+    mutation setBranchData($id: ID!, $data: BranchInput!) {
+  settings {
+    general {
+      branch {
+        add(id: $id, data: $data) {
+          record {
+            id
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBranchDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>) =>
+    useMutation<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>(
+      ['setBranchData'],
+      useAxios<SetBranchDataMutation, SetBranchDataMutationVariables>(SetBranchDataDocument),
+      options
+    );
+export const SetDepositProductDocument = `
+    mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
+  settings {
+    general {
+      depositProduct {
+        add(id: $id, data: $data) {
+          recordId
+          record {
+            id
+            productCode
+            productName
+            createdDate
+            interest
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDepositProductMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetDepositProductMutation, TError, SetDepositProductMutationVariables, TContext>) =>
+    useMutation<SetDepositProductMutation, TError, SetDepositProductMutationVariables, TContext>(
+      ['setDepositProduct'],
+      useAxios<SetDepositProductMutation, SetDepositProductMutationVariables>(SetDepositProductDocument),
+      options
+    );
+export const SetDepositIroDocument = `
+    mutation setDepositIro($data: DepositIroInput) {
+  settings {
+    general {
+      deposit {
+        ... on DepositSettingsMutation {
+          iroSetup(data: $data) {
+            recordId
+            record {
+              id
+              iroName
+              iroAddress
+              iroCode
+            }
+            error {
+              __typename
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetDepositIroMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetDepositIroMutation, TError, SetDepositIroMutationVariables, TContext>) =>
+    useMutation<SetDepositIroMutation, TError, SetDepositIroMutationVariables, TContext>(
+      ['setDepositIro'],
+      useAxios<SetDepositIroMutation, SetDepositIroMutationVariables>(SetDepositIroDocument),
+      options
+    );
+export const SetDepositTdsDocument = `
+    mutation setDepositTds($data: DepositTdsInput) {
+  settings {
+    general {
+      deposit {
+        ... on DepositSettingsMutation {
+          tdsSetup(data: $data) {
+            recordId
+            record {
+              id
+              individual
+              institution
+              cooperative
+              coopUnion
+            }
+            error {
+              __typename
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetDepositTdsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetDepositTdsMutation, TError, SetDepositTdsMutationVariables, TContext>) =>
+    useMutation<SetDepositTdsMutation, TError, SetDepositTdsMutationVariables, TContext>(
+      ['setDepositTds'],
+      useAxios<SetDepositTdsMutation, SetDepositTdsMutationVariables>(SetDepositTdsDocument),
+      options
+    );
 export const SetLoanProductDocument = `
     mutation setLoanProduct($id: ID!, $data: LoanProductInput) {
   settings {
@@ -8786,8 +8801,6 @@ export const SetLoanProductDocument = `
           record {
             id
             objState
-            createdAt
-            modifiedAt
             productName
             productType
           }
@@ -11377,6 +11390,175 @@ export const useGetKymDocumentsListQuery = <
       useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(GetKymDocumentsListDocument).bind(null, variables),
       options
     );
+export const GetBranchListDocument = `
+    query getBranchList($paginate: Pagination, $filter: BranchSearchFilter) {
+  settings {
+    general {
+      branch {
+        list(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              branchCode
+              name
+              category
+              estDate
+              manager {
+                code
+                type
+                name
+                address {
+                  state
+                  district
+                  localGovernment
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                contact
+                dateJoined
+                share {
+                  summary {
+                    id
+                    member {
+                      code
+                      type
+                      name
+                      address {
+                        state
+                        district
+                      }
+                      contact
+                      dateJoined
+                    }
+                    count
+                  }
+                  history {
+                    member {
+                      code
+                      type
+                      name
+                      address {
+                        state
+                        district
+                      }
+                      contact
+                      dateJoined
+                    }
+                    status
+                    transactionDate
+                    transactionDirection
+                    credit
+                  }
+                }
+                profile {
+                  __typename
+                }
+              }
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              location {
+                longitude
+                latitude
+              }
+              contactNumber
+              email
+              abbsTransaction {
+                abbsStatus
+                receivableAccountId
+                payableAccountId
+              }
+              plTransferId
+              tdsTransaferId
+              branchStatus
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBranchListQuery = <
+      TData = GetBranchListQuery,
+      TError = unknown
+    >(
+      variables?: GetBranchListQueryVariables,
+      options?: UseQueryOptions<GetBranchListQuery, TError, TData>
+    ) =>
+    useQuery<GetBranchListQuery, TError, TData>(
+      variables === undefined ? ['getBranchList'] : ['getBranchList', variables],
+      useAxios<GetBranchListQuery, GetBranchListQueryVariables>(GetBranchListDocument).bind(null, variables),
+      options
+    );
+export const GetBranchEditDataDocument = `
+    query getBranchEditData($id: ID!) {
+  settings {
+    general {
+      branch {
+        formState(id: $id) {
+          data {
+            branchCode
+            name
+            category
+            estDate
+            managerId
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            location {
+              longitude
+              latitude
+            }
+            phoneNumber
+            email
+            abbsStatus
+            receivableAccountId
+            payableAccountId
+            plTransferId
+            tdsTransaferId
+            branchStatus
+          }
+          error {
+            __typename
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBranchEditDataQuery = <
+      TData = GetBranchEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetBranchEditDataQueryVariables,
+      options?: UseQueryOptions<GetBranchEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetBranchEditDataQuery, TError, TData>(
+      ['getBranchEditData', variables],
+      useAxios<GetBranchEditDataQuery, GetBranchEditDataQueryVariables>(GetBranchEditDataDocument).bind(null, variables),
+      options
+    );
 export const GetLoanProductListDocument = `
     query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter) {
   settings {
@@ -11402,6 +11584,7 @@ export const GetLoanProductListDocument = `
                 userType
               }
               modifiedAt
+              createdDate
               modifiedBy {
                 id
                 name
@@ -11451,19 +11634,7 @@ export const GetLoanProductEditDataDocument = `
           id
           objState
           createdAt
-          createdBy {
-            id
-            name
-            username
-            userType
-          }
           modifiedAt
-          modifiedBy {
-            id
-            name
-            username
-            userType
-          }
           productName
           productType
           productSubType

@@ -14,6 +14,7 @@ import {
   LoanProductType,
   NatureOfLoanProduct,
   useGetDepositProductSettingsEditDataQuery,
+  useGetLoanProductEditDataQuery,
   useSetLoanProductMutation,
 } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
@@ -93,6 +94,14 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
   });
 
   const { getValues, reset } = methods;
+  const { data: editValues, refetch } = useGetLoanProductEditDataQuery({
+    id,
+  });
+  console.log(
+    'data',
+    editValues,
+    editValues?.settings?.general?.loanProducts?.formState
+  );
 
   const productType = [
     {
@@ -147,19 +156,19 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
 
   const productSubType = [
     {
-      label: 'Agriculture Business',
+      label: 'Agriculture Business Loan',
       value: LoanProductSubType.AgricultureBusiness,
     },
     {
-      label: 'Big Industrial',
+      label: 'Big Industrial Loan',
       value: LoanProductSubType.BigIndustrial,
     },
     {
-      label: 'Bio Gas',
+      label: 'Bio Gas Loan',
       value: LoanProductSubType.BioGas,
     },
     {
-      label: 'Business Line Of Credit',
+      label: 'Business Line Of Credit Loan',
       value: LoanProductSubType.BusinessLineOfCredit,
     },
   ];
@@ -177,6 +186,8 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
 
   const submitForm = () => {
     const values = getValues();
+
+    console.log(values);
 
     const genderList = values?.genderId?.map((data) => data?.value);
     const maritalStatusList = values?.maritalStatusId?.map(
@@ -200,18 +211,27 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
         amount: data?.amount.toString(),
       };
     });
-    const goodLoanProvision = values?.loanProvisiontable?.filter(
-      (item) => item?.loanProvision === 'good'
-    );
-    const doubtfulLoanProvision = values?.loanProvisiontable?.filter(
-      (item) => item?.loanProvision === 'doubtful'
-    );
-    const problematicLoanProvision = values?.loanProvisiontable?.filter(
-      (item) => item?.loanProvision === 'problematic'
-    );
-    const badLoanProvision = values?.loanProvisiontable?.filter(
-      (item) => item?.loanProvision === 'bad'
-    );
+
+    const goodLoanProvision =
+      values?.loanProvisiontable &&
+      values?.loanProvisiontable?.filter(
+        (item) => item?.loanProvision === 'good'
+      );
+    const doubtfulLoanProvision =
+      values?.loanProvisiontable &&
+      values?.loanProvisiontable?.filter(
+        (item) => item?.loanProvision === 'doubtful'
+      );
+    const problematicLoanProvision =
+      values?.loanProvisiontable &&
+      values?.loanProvisiontable?.filter(
+        (item) => item?.loanProvision === 'problematic'
+      );
+    const badLoanProvision =
+      values?.loanProvisiontable &&
+      values?.loanProvisiontable?.filter(
+        (item) => item?.loanProvision === 'bad'
+      );
 
     const updatedData = {
       ...omit(values, ['loanProvisiontable']),
@@ -225,35 +245,38 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
       serviceCharge: serviceChargeList,
       minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
       maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
+      installmentType: values?.installmentType ? values?.installmentType : null,
       penalty: {
         ...values?.penalty,
         rateType: values?.penalty?.rateType ? values?.penalty?.rateType : null,
       },
-      goodLoanProvision: Number(goodLoanProvision[0].provision),
-      doubtfulLoanProvision: Number(doubtfulLoanProvision[0].provision),
-      problematicLoanProvision: Number(problematicLoanProvision[0].provision),
-      badLoanProvision: Number(badLoanProvision[0].provision),
+      goodLoanProvision: goodLoanProvision[0].provision
+        ? Number(goodLoanProvision[0].provision)
+        : null,
+      doubtfulLoanProvision: doubtfulLoanProvision[0].provision
+        ? Number(doubtfulLoanProvision[0].provision)
+        : 0,
+      problematicLoanProvision: problematicLoanProvision[0].provision
+        ? Number(problematicLoanProvision[0].provision)
+        : 0,
+      badLoanProvision: badLoanProvision[0].provision
+        ? Number(badLoanProvision[0].provision)
+        : 0,
     };
-
-    console.log(updatedData);
 
     mutate(
       { id, data: updatedData },
       {
-        onSuccess: () => router.push('/settings/general/deposit-products'),
+        onSuccess: () => router.push('/settings/general/loan-products'),
       }
     );
   };
 
-  const { data: editValues, refetch } =
-    useGetDepositProductSettingsEditDataQuery({
-      id,
-    });
-
   useEffect(() => {
     if (editValues) {
       const editValueData =
-        editValues?.settings?.general?.depositProduct?.formState?.data;
+        editValues?.settings?.general?.loanProducts?.formState;
+      console.log(editValueData);
       if (editValueData) {
         reset({
           ...(editValueData as unknown as LoanProductForm),
@@ -393,7 +416,9 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
                 <LoanRepayment />
                 <Interest />
                 <AccountServicesCharge />
-                <LoanLimit />
+                <LoanLimit
+                  data={editValues?.settings?.general?.loanProducts?.formState}
+                />
                 {/* {(depositNature === 'recurringSaving' ||
                   depositNature === 'termSaving') && <DefaultAccountName />} */}
                 <Questions />
@@ -419,7 +444,7 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
                   </Text>
                 </Box>
               }
-              mainButtonLabel={t['saveAccount']}
+              mainButtonLabel={t['complete']}
               mainButtonHandler={() => submitForm()}
             />
           </Container>

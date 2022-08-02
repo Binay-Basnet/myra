@@ -88,7 +88,7 @@ export const MinimunTenure = () => {
               textAlign={'right'}
               label={t['loanProductNumber']}
               placeholder={t['loanProductEnterNumber']}
-              rightAddonText={rightElement}
+              rightAddonText={rightElement && rightElement.toLowerCase()}
             />
           </Box>
         </BoxContainer>

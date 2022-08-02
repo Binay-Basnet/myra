@@ -52,7 +52,7 @@ export const PostingFrequency = () => {
           textAlign={'right'}
           label={t['depositProductMaximumPostingFrequencyDifference']}
           placeholder="0"
-          rightAddonText={rightElementMin}
+          rightAddonText={rightElementMin && rightElementMin.toLowerCase()}
         />
       </Box>
     </BoxContainer>

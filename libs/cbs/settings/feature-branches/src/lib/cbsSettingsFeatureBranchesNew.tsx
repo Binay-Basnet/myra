@@ -1,15 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
 import {
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
+  BranchCategory,
   useAllAdministrationQuery,
+  useGetBranchEditDataQuery,
   useSetBranchDataMutation,
 } from '@coop/shared/data-access';
 import {
@@ -42,22 +43,15 @@ export function CbsSettingsFeatureBranchesNew(
 
   const methods = useForm({});
 
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const { getValues, watch, reset } = methods;
+
+  const id = String(router?.query?.['id']);
 
   const abbsStatus = watch('abbsStatus');
 
   const { data } = useAllAdministrationQuery();
 
-  const [branchId, setBranchId] = useState<string>('');
-
-  const { mutate } = useSetBranchDataMutation({
-    onSuccess: (res) => {
-      if (res?.settings?.general?.branch?.add?.record?.id) {
-        setBranchId(res?.settings?.general?.branch?.add?.record?.id);
-      }
-    },
-    // onError: () => {},
-  });
+  const { mutate } = useSetBranchDataMutation();
 
   const province = useMemo(() => {
     return (
@@ -87,17 +81,70 @@ export function CbsSettingsFeatureBranchesNew(
   );
 
   const booleanList = [
-    { label: t['settingsBranchStatusActive'], value: 'ACTIVE' },
-    { label: t['settingsBranchStatusInactive'], value: 'INACTIVE' },
+    { label: t['settingsBranchStatusActive'], value: true },
+    { label: t['settingsBranchStatusInactive'], value: false },
   ];
 
   const branchCategories = [
-    { label: t['settingsBranchCategoriesHead'], value: 'HEAD_OFFICE' },
-    { label: t['settingsBranchCategoriesBranch'], value: 'BRANCH_OFFICE' },
-    { label: t['settingsBranchCategoriesRegional'], value: 'REGIONAL_OFFICE' },
-    { label: t['settingsBranchCategoriesService'], value: 'SERVICE_CENTER' },
-    { label: t['settingsBranchCategoriesContact'], value: 'CONTACT_OFFICE' },
+    {
+      label: t['settingsBranchCategoriesHead'],
+      value: BranchCategory.HeadOffice,
+    },
+    {
+      label: t['settingsBranchCategoriesBranch'],
+      value: BranchCategory.BranchOffice,
+    },
+    {
+      label: t['settingsBranchCategoriesRegional'],
+      value: BranchCategory.RegionalOffice,
+    },
+    {
+      label: t['settingsBranchCategoriesService'],
+      value: BranchCategory.ServiceCenter,
+    },
+    {
+      label: t['settingsBranchCategoriesContact'],
+      value: BranchCategory.ContactOffice,
+    },
   ];
+
+  const submitForm = () => {
+    const values = getValues();
+
+    const updatedValues = {
+      ...values,
+      managerId: '123456789',
+    };
+    mutate(
+      {
+        id,
+        data: updatedValues,
+      },
+      { onSuccess: () => router.push('/settings/general/branches') }
+    );
+  };
+
+  const { data: editValues, refetch } = useGetBranchEditDataQuery({
+    id,
+  });
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.settings?.general?.branch?.formState?.data;
+      if (editValueData) {
+        reset({
+          ...editValueData,
+        });
+      }
+    }
+  }, [editValues, id]);
+
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [refetch]);
 
   return (
     <>
@@ -124,7 +171,6 @@ export function CbsSettingsFeatureBranchesNew(
             <IconButton
               variant={'ghost'}
               aria-label="close"
-              // icon={<IoCloseOutline />}
               icon={<Icon as={IoCloseOutline} w="s20" h="s20" />}
               onClick={() => router.back()}
             />
@@ -133,14 +179,7 @@ export function CbsSettingsFeatureBranchesNew(
 
         <Box bg="white" pb="100px">
           <FormProvider {...methods}>
-            <form
-              onChange={debounce(() => {
-                mutate({
-                  id: branchId,
-                  data: getValues(),
-                });
-              }, 500)}
-            >
+            <form>
               <Box px="s20" py="s24">
                 <Box>
                   <ContainerWithDivider>
@@ -263,25 +302,31 @@ export function CbsSettingsFeatureBranchesNew(
                         name="abbsStatus"
                       />
 
-                      {abbsStatus === 'ACTIVE' && (
-                        <InputGroupContainer>
-                          <FormSelect
-                            label={t['settingsBranchRecievableAccount']}
-                            placeholder={
-                              t['settingsBranchRecievableAccountPlaceholder']
-                            }
-                            name="receivableAccountId"
-                            options={[]}
-                          />
-                          <FormSelect
-                            label={t['settingsBranchPayableAccount']}
-                            placeholder={
-                              t['settingsBranchPayableAccountPlaceholder']
-                            }
-                            name="payableAccountId"
-                            options={[]}
-                          />
-                        </InputGroupContainer>
+                      {abbsStatus && (
+                        <Box
+                          p="s16"
+                          border="1px solid"
+                          borderColor="border.layout"
+                        >
+                          <InputGroupContainer>
+                            <FormSelect
+                              label={t['settingsBranchRecievableAccount']}
+                              placeholder={
+                                t['settingsBranchRecievableAccountPlaceholder']
+                              }
+                              name="receivableAccountId"
+                              options={[]}
+                            />
+                            <FormSelect
+                              label={t['settingsBranchPayableAccount']}
+                              placeholder={
+                                t['settingsBranchPayableAccountPlaceholder']
+                              }
+                              name="payableAccountId"
+                              options={[]}
+                            />
+                          </InputGroupContainer>
+                        </Box>
                       )}
                     </Box>
 
@@ -340,7 +385,7 @@ export function CbsSettingsFeatureBranchesNew(
               }
               draftButton={null}
               mainButtonLabel={t['settingsBranchSave']}
-              mainButtonHandler={() => {}}
+              mainButtonHandler={submitForm}
             />
           </Container>
         </Box>

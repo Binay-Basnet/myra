@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
+import { mapValues } from 'lodash';
 
 import {
   ContainerWithDivider,
@@ -173,7 +174,7 @@ export function SettingsDepositProductsAdd(
     mutate(
       { id, data: updatedData },
       {
-        onSuccess: () => router.push('/settings/general/loan-products'),
+        onSuccess: () => router.push('/settings/general/deposit-products'),
       }
     );
   };
@@ -343,7 +344,7 @@ export function SettingsDepositProductsAdd(
                   </Text>
                 </Box>
               }
-              mainButtonLabel={t['saveAccount']}
+              mainButtonLabel={t['complete']}
               mainButtonHandler={() => submitForm()}
             />
           </Container>

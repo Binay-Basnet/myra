@@ -2,15 +2,38 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
-import { PopoverComponent } from '@coop/myra/components';
-import { useGetBranchesListQuery } from '@coop/shared/data-access';
-import { Column, Table } from '@coop/shared/ui';
+import { ActionPopoverComponent } from '@coop/myra/components';
+import {
+  useGetBranchListQuery,
+  useGetNewIdMutation,
+} from '@coop/shared/data-access';
+import { Column, Table } from '@coop/shared/table';
+import { DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const SettingsBranchesTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { data, isFetching } = useGetBranchesListQuery();
+  const newId = useGetNewIdMutation();
+
+  const { data, isFetching } = useGetBranchListQuery(
+    router.query['before']
+      ? {
+          paginate: {
+            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+            before: router.query['before'] as string,
+          },
+        }
+      : {
+          paginate: {
+            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+            after: (router.query['after'] ?? '') as string,
+          },
+        },
+    {
+      staleTime: 0,
+    }
+  );
 
   const rowData = useMemo(
     () => data?.settings?.general?.branch?.list?.edges ?? [],
@@ -18,44 +41,69 @@ export const SettingsBranchesTable = () => {
   );
 
   const popoverTitle = [
-    'settingsBranchViewDetail',
-    'settingsBranchViewBranchProfile',
+    {
+      title: 'depositProductEdit',
+      onClick: (id: string) =>
+        router.push(`/settings/general/branches/edit/${id}`),
+    },
   ];
 
   // TODO (Update this, API HAS BEEN CHANGED)
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: t['settingsBranchBranchCode'],
-        accessor: 'node.branchCode',
+        header: t['settingsBranchBranchCode'],
+        accessorFn: (row) => row?.node?.branchCode,
+      },
+      {
+        header: t['settingsBranchAddress'],
+        accessorFn: (row) => row?.node?.address?.district?.local,
+        cell: (props) => (
+          <span>
+            {props?.row?.original?.node?.address?.district?.local} -
+            {props?.row?.original?.node?.address?.wardNo}
+          </span>
+        ),
       },
 
       {
-        Header: t['settingsBranchAddress'],
-        accessor: 'node.address.locality.local',
-        maxWidth: 4,
+        header: t['settingsBranchDistrict'],
+        accessorFn: (row) => row?.node?.address?.district?.local,
+        meta: {
+          width: '40%',
+        },
+      },
+      {
+        header: t['settingsBranchManager'],
+        accessorFn: (row) => row?.node?.manager,
+        cell: (props) => (
+          <>
+            {props?.row?.original?.node?.manager?.name
+              ? props?.row?.original?.node?.manager?.name
+              : '-'}
+          </>
+        ),
+        meta: {
+          width: '30%',
+        },
       },
 
       {
-        Header: t['settingsBranchDistrict'],
-        accessor: 'node.address.district.local',
+        header: t['settingsBranchContactNumber'],
+        accessorFn: (row) => row?.node?.contactNumber,
       },
       {
-        Header: t['settingsBranchManager'],
-        accessor: 'node.manager.id',
-        width: '25%',
-      },
-
-      {
-        Header: t['settingsBranchContactNumber'],
-        accessor: 'node.contactNumber',
-        maxWidth: 48,
-      },
-
-      {
-        accessor: 'actions',
-        width: '10%',
-        Cell: () => <PopoverComponent title={popoverTitle} />,
+        id: '_actions',
+        header: '',
+        cell: (props) => (
+          <ActionPopoverComponent
+            items={popoverTitle}
+            id={props?.row?.original?.node?.id}
+          />
+        ),
+        meta: {
+          width: '60px',
+        },
       },
     ],
     [router.locale]
@@ -66,15 +114,26 @@ export const SettingsBranchesTable = () => {
       <SettingsPageHeader
         heading={t['settingsBranch']}
         buttonLabel={t['settingsBranchNew']}
-        // buttonHandler={() => router.push('/settings/general/branches/[action]')}
-        buttonHandler={() => router.push('/settings/general/branches/add')}
+        buttonHandler={() =>
+          newId
+            .mutateAsync({})
+            .then((res) =>
+              router.push(`/settings/general/branches/add/${res?.newId}`)
+            )
+        }
       />
 
       <Table
         isLoading={isFetching}
         data={rowData ?? []}
         columns={columns}
-        sort={true}
+        pagination={{
+          total: 1200,
+          endCursor:
+            data?.settings?.general?.branch?.list?.pageInfo?.startCursor ?? '',
+          startCursor:
+            data?.settings?.general?.branch?.list?.pageInfo?.endCursor ?? '',
+        }}
       />
     </>
   );

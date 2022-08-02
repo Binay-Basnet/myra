@@ -16,22 +16,16 @@ import { en, useTranslation } from '@coop/shared/utils';
 export interface TabMenuProps {}
 
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
-  '/dashboard': 0,
-  '/members': 1,
-  '/share': 2,
-  '/accounts': 3,
-  '/transactions': 4,
-  '/loan': 5,
-  '/reports': 6,
-  '/utilities': 7,
+  '/members': 0,
+  '/share': 1,
+  '/accounts': 2,
+  '/transactions': 3,
+  '/loan': 4,
+  '/reports': 5,
+  '/utilities': 6,
 };
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
-  {
-    title: 'navbarDashboard',
-    icon: AiOutlineAppstore,
-    link: '/',
-  },
   {
     title: 'members',
     icon: IoPerson,
