@@ -186,16 +186,7 @@ const HusbandWifeOccupation = ({
                   id="spouseOccupationId"
                   label={t['kymIndOccupation']}
                   placeholder={t['kymIndSelectOccupation']}
-                  options={
-                    (profession as string[])?.map((data: string) => ({
-                      label: String(
-                        getFieldOption(occupationData)?.find(
-                          (prev) => prev.value === data
-                        )?.label
-                      ),
-                      value: data,
-                    })) ?? []
-                  }
+                  options={getFieldOption(occupationData)}
                 />
               </GridItem>
               <GridItem colSpan={2}>

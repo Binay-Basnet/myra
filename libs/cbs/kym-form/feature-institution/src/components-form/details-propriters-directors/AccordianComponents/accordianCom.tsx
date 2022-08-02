@@ -135,7 +135,7 @@ export const DirectorTopPart = ({
   // FOR TEMPORARY ADDRESS
   const currentTempProvinceId = watch(`temporaryAddress.provinceId`);
   const currentTemptDistrictId = watch(`temporaryAddress.districtId`);
-  const currentTemptLocalityId = watch('temporaryAddress.localGovernmentId');
+  const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
 
   const districtTempList = useMemo(
     () =>
@@ -150,10 +150,11 @@ export const DirectorTopPart = ({
         ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
-  const wardTemptList = useMemo(
+
+  const wardTempList = useMemo(
     () =>
-      localityList.find((d) => d.id === currentTemptLocalityId)?.wards ?? [],
-    [currentLocalityId]
+      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+    [currentTempLocalityId]
   );
 
   const isPermanentAndTemporaryAddressSame = watch(
@@ -316,7 +317,7 @@ export const DirectorTopPart = ({
                     name={`temporaryAddress.wardNo`}
                     label={t['kymInsWardNo']}
                     placeholder={t['kymInsEnterWardNo']}
-                    options={wardTemptList?.map((d) => ({
+                    options={wardTempList?.map((d) => ({
                       label: d,
                       value: d,
                     }))}

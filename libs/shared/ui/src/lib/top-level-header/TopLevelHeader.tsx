@@ -413,7 +413,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                             w={12}
                             h={12}
                             src="/theta.svg"
-                            alt="Loan Management System"
+                            alt="Fixed Asset Management"
                           />
                           <Text
                             fontSize="s3"
@@ -424,7 +424,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                             textOverflow="ellipsis"
                             noOfLines={numLines}
                           >
-                            {t['loanManagementSystem']}
+                            {t['fixedAssetManagement']}
                           </Text>
                         </Box>
 

@@ -22,7 +22,7 @@ const myraAppn = [
     link: '/inventory/register',
   },
   {
-    title: 'loanManagementSystem',
+    title: 'fixedAssetManagement',
     img: '/theta.svg',
     link: '/loan',
   },

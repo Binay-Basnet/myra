@@ -57,6 +57,7 @@ const ne: Record<string, string> = {
   inventoryManagement: 'Inventory Management',
   loanManagementSystem: 'Loan Management System',
   accountingSystem: 'Accounting System',
+  fixedAssetManagement: 'Fixed Asset Management',
   otherApplications: 'OTHER APPLICATIONS',
   assetsAndInventoryManagement: 'Assets and Inventory Management',
   memberAndShareManagement: 'Member and Share Management',

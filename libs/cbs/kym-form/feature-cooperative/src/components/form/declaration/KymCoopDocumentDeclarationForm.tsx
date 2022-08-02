@@ -1,8 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { KymCooperativeFormInput } from '@coop/shared/data-access';
-import { FormFileInput } from '@coop/shared/form';
 import { Grid, Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
@@ -31,45 +31,57 @@ export const KymCoopDocumentDeclarationForm = (props: IProps) => {
             {t['kymCoopDOCUMENTDECLARATION']}
           </Text>
           <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
-            <FormFileInput
-              size="lg"
+            <KYMDocumentField
               label={t['kymCoopAGMDecisionDocument']}
               name="passportSizePhoto"
+              setKymCurrentSection={setSection}
+              getKymSection={getKymCoopSection}
             />
-            <FormFileInput
-              size="lg"
+            <KYMDocumentField
               label={t['kymCoopRegisteredCertificate']}
               name="signaturePhoto"
+              setKymCurrentSection={setSection}
+              getKymSection={getKymCoopSection}
             />
-            <FormFileInput size="lg" label="MOA/AOA" name="citizenshipPhoto" />
-            <FormFileInput
-              size="lg"
+            <KYMDocumentField
+              label="MOA/AOA"
+              name="citizenshipPhoto"
+              setKymCurrentSection={setSection}
+              getKymSection={getKymCoopSection}
+            />
+            <KYMDocumentField
               label={t['kymCoopPANCertificate']}
               name="fingerprintPhoto"
+              setKymCurrentSection={setSection}
+              getKymSection={getKymCoopSection}
             />
 
-            <FormFileInput
-              size="lg"
+            <KYMDocumentField
               label={t['kymCoopTaxClearance']}
               name="citizenshipPhoto"
+              setKymCurrentSection={setSection}
+              getKymSection={getKymCoopSection}
             />
 
-            <FormFileInput
-              size="lg"
+            <KYMDocumentField
               label={t['kymCoopLatestAuditReport']}
               name="citizenshipPhoto"
+              setKymCurrentSection={setSection}
+              getKymSection={getKymCoopSection}
             />
 
-            <FormFileInput
-              size="lg"
+            <KYMDocumentField
               label={t['kymCoopLogo']}
               name="citizenshipPhoto"
+              setKymCurrentSection={setSection}
+              getKymSection={getKymCoopSection}
             />
 
-            <FormFileInput
-              size="lg"
+            <KYMDocumentField
               label={t['kymCoopMinuteofCentralRep']}
               name="citizenshipPhoto"
+              setKymCurrentSection={setSection}
+              getKymSection={getKymCoopSection}
             />
           </Grid>
         </GroupContainer>
