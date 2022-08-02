@@ -65,12 +65,12 @@ const moreFromMyra = [
     link: '/members/list',
   },
   {
-    title: 'crm',
+    title: 'complainceManagement',
     img: '/bnty.svg',
     link: '/members/list',
   },
   {
-    title: 'reconciliationSoftware',
+    title: 'businessProcessManagement',
     img: '/rvn.svg',
     link: '/members/list',
   },

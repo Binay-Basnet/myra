@@ -69,6 +69,8 @@ const en: Record<string, string> = {
     'Alternative Channels and Cross Connectivity',
   reconciliationSoftware: 'Reconciliation Software',
   crm: 'CRM',
+  complainceManagement: 'Complaince Management',
+  businessProcessManagement: 'Business Process Management',
   exploreAllApplications: 'Explore All Applications',
 
   // main dashboard

@@ -84,8 +84,10 @@ export const KymCoopOpAddress = (props: IProps) => {
               label={t['kymCoopProvince']}
               placeholder={t['kymCoopSelectState']}
               options={province}
+              id="operatingAddressCOOP"
             />
             <FormSelect
+              id="operatingAddressCOOP"
               name="operatingAddress.districtId"
               label={t['kymCoopDistrict']}
               placeholder={t['kymCoopSelectDistrict']}
@@ -95,6 +97,7 @@ export const KymCoopOpAddress = (props: IProps) => {
               }))}
             />
             <FormSelect
+              id="operatingAddressCOOP"
               name="operatingAddress.localGovernmentId"
               label={t['kymCoopVDCLocalGov']}
               placeholder={t['kymCoopSelectLocalGov']}
@@ -105,6 +108,7 @@ export const KymCoopOpAddress = (props: IProps) => {
             />
 
             <FormSelect
+              id="operatingAddressCOOP"
               name="operatingAddress.wardNo"
               label={t['kymCoopWardNo']}
               placeholder={t['kymCoopEnterWardNo']}
@@ -114,12 +118,14 @@ export const KymCoopOpAddress = (props: IProps) => {
               }))}
             />
             <FormInput
+              id="operatingAddressCOOP"
               type="text"
               name="operatingAddress.locality"
               label={t['kymCoopLocality']}
               placeholder={t['kymCoopEnterLocality']}
             />
             <FormInput
+              id="operatingAddressCOOP"
               type="text"
               name="operatingAddress.houseNo"
               label={t['kymCoopRepresentativeHouseNo']}
@@ -128,7 +134,10 @@ export const KymCoopOpAddress = (props: IProps) => {
           </InputGroupContainer>
 
           <Box mt="-16px">
-            <FormMap name="operatingAddress.coordinates" />
+            <FormMap
+              name="operatingAddress.coordinates"
+              id="operatingAddressCOOP"
+            />
           </Box>
         </GroupContainer>
       </form>

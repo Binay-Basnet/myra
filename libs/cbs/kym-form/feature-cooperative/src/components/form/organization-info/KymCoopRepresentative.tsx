@@ -215,6 +215,7 @@ export const KymCoopRepresentative = (props: IProps) => {
             display={'flex'}
             flexDirection="column"
             scrollMarginTop={'200px'}
+            pt="s32"
           >
             <Text fontSize="r1" fontWeight="SemiBold">
               {t['kymCoopRepresentativePermanentAddress']}

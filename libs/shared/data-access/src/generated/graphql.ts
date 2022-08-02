@@ -5502,6 +5502,7 @@ export type LoanProduct = Base & {
   cooperativeType?: Maybe<Array<Maybe<Scalars['ID']>>>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
+  createdDate: Scalars['String'];
   criteria?: Maybe<Array<Maybe<CriteriaSection>>>;
   disburementOfDMV?: Maybe<Scalars['Float']>;
   disburementOfFMV?: Maybe<Scalars['Float']>;

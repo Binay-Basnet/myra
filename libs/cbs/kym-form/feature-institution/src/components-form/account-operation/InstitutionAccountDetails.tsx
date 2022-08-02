@@ -278,7 +278,9 @@ const AddAccountDetails = ({
                     id="AccountOperatorInstitution"
                     name={'permanentAddress.provinceId'}
                     label={t['kymInsState']}
-                    placeholder={t['kymInsSelectState']}
+                    placeholder={
+                      t['kymInsSelInstitutionAccountDetails.selectState']
+                    }
                     options={province}
                   />
                   <FormSelect
@@ -425,20 +427,53 @@ const AddAccountDetails = ({
                 >
                   <FormSelect
                     id="AccountOperatorInstitution"
-                    name={'designation'}
-                    label={t['kymInsDesignation']}
-                    placeholder={t['kymInsSelectposition']}
-                    options={[
-                      { value: 'precident', label: 'President' },
-                      { value: 'viceprecident', label: 'Vice-President' },
-                      { value: 'secretary', label: 'Secretary' },
-                      { value: 'treasurer', label: 'Treasurer' },
-                    ]}
+                    name={'permanentAddress.provinceId'}
+                    label={t['kymInsState']}
+                    placeholder={t['kymInsSelectState']}
+                    options={province}
+                  />
+                  <FormSelect
+                    id="AccountOperatorInstitution"
+                    name={'permanentAddress.districtId'}
+                    label={t['kymInsDistrict']}
+                    placeholder={t['kymInsSelectDistrict']}
+                    options={districtList.map((d) => ({
+                      label: d.name,
+                      value: d.id,
+                    }))}
+                  />
+                  <FormSelect
+                    id="AccountOperatorInstitution"
+                    name={'permanentAddress.localGovernmentId'}
+                    label={t['kymInsVDCMunicipality']}
+                    placeholder={t['kymInsSelectVDCMunicipality']}
+                    options={localityList.map((d) => ({
+                      label: d.name,
+                      value: d.id,
+                    }))}
+                  />
+                  <FormSelect
+                    id="AccountOperatorInstitution"
+                    name={'permanentAddress.wardNo'}
+                    label={t['kymInsWardNo']}
+                    placeholder={t['kymInsEnterWardNo']}
+                    options={wardList?.map((d) => ({
+                      label: d,
+                      value: d,
+                    }))}
                   />
                   <FormInput
-                    name="panNo"
-                    placeholder={t['kymInsPanNoPlaceholder']}
-                    label={t['kymInsPanNo']}
+                    id="AccountOperatorInstitution"
+                    type="text"
+                    name={'permanentAddress.locality'}
+                    label={t['kymInsLocality']}
+                    placeholder={t['kymInsEnterLocality']}
+                  />
+                  <FormInput
+                    type="text"
+                    name={'permanentAddress.houseNo'}
+                    label={t['kymInsHouseNo']}
+                    placeholder={t['kymInsEnterHouseNo']}
                   />
                 </form>
               </FormProvider>
@@ -459,21 +494,13 @@ const AddAccountDetails = ({
         </SectionContainer>
         <Box
           display="flex"
-          justifyContent="space-between"
+          justifyContent="flex-end"
           border="1px solid"
           borderColor="border.layout"
           alignItems={'center'}
           h="60px"
           px="s20"
         >
-          <Button
-            id="accountOperatorReset"
-            variant="ghost"
-            leftIcon={<GrRotateRight />}
-            // onClick={resetDirectorForm}
-          >
-            {t['kymInsReset']}
-          </Button>
           <Button
             id="accountOperatorClose"
             variant="outline"

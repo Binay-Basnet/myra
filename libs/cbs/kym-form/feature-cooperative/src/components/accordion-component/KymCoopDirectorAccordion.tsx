@@ -40,6 +40,8 @@ import {
 } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
+import { Bottomdirectorcoop } from './boardDirectorDocuments';
+
 interface ICOOPDirector {
   removeDirector: (sisterId: string) => void;
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -134,6 +136,7 @@ export const AddDirector = ({
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch(`permanentAddress.provinceId`);
   const currentDistrictId = watch(`permanentAddress.districtId`);
+  const currentLocalityId = watch('permanentAddress.localGovernmentId');
 
   const districtList = useMemo(
     () =>
@@ -148,10 +151,14 @@ export const AddDirector = ({
       [],
     [currentDistrictId]
   );
-
+  const wardList = useMemo(
+    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
+  );
   // FOR TEMPORARY ADDRESS
   const currentTempProvinceId = watch(`temporaryAddress.provinceId`);
   const currentTemptDistrictId = watch(`temporaryAddress.districtId`);
+  const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
 
   const districtTempList = useMemo(
     () =>
@@ -165,6 +172,11 @@ export const AddDirector = ({
       districtList.find((d) => d.id === currentTemptDistrictId)
         ?.municipalities ?? [],
     [currentTemptDistrictId]
+  );
+  const wardTempList = useMemo(
+    () =>
+      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+    [currentTempLocalityId]
   );
 
   return (
@@ -224,179 +236,212 @@ export const AddDirector = ({
           p="s20"
         >
           {' '}
-          <FormProvider {...methods}>
-            <form
-              onFocus={(e) => {
-                const kymSection = getKymCoopSection(e.target.id);
-                setSection(kymSection);
-              }}
-            >
-              <SectionContainer>
-                <InputGroupContainer>
-                  <FormInput
-                    type="text"
-                    name={`nameEn`}
-                    label={t['kymCoopFullName']}
-                    placeholder={t['kymCoopEnterFullName']}
-                  />
-                  <FormInput
-                    type="text"
-                    name={`designation`}
-                    label={t['kymCoopDesignation']}
-                    placeholder={t['kymCoopEnterDesignation']}
-                  />
-                </InputGroupContainer>
+          <SectionContainer>
+            <FormProvider {...methods}>
+              <form
+                onFocus={(e) => {
+                  const kymSection = getKymCoopSection(e.target.id);
+                  setSection(kymSection);
+                }}
+              >
+                <Box display={'flex'} flexDirection="column" gap="s48">
+                  <InputGroupContainer>
+                    <FormInput
+                      id="boardDirectorCoop"
+                      type="text"
+                      name={`nameEn`}
+                      label={t['kymCoopFullName']}
+                      placeholder={t['kymCoopEnterFullName']}
+                    />
+                    <FormInput
+                      id="boardDirectorCoop"
+                      type="text"
+                      name={`designation`}
+                      label={t['kymCoopDesignation']}
+                      placeholder={t['kymCoopEnterDesignation']}
+                    />
+                  </InputGroupContainer>
 
-                <Text fontSize="r1" fontWeight="SemiBold">
-                  {t['kymCoopPermanentAddress']}
-                </Text>
-                <InputGroupContainer>
-                  <FormSelect
-                    name={`permanentAddress.provinceId`}
-                    label={t['kymCoopState']}
-                    placeholder={t['kymCoopSelectState']}
-                    options={province}
-                  />
-                  <FormSelect
-                    name={`permanentAddress.districtId`}
-                    label={t['kymCoopDistrict']}
-                    placeholder={t['kymCoopSelectDistrict']}
-                    options={districtList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    name={`permanentAddress.localGovernmentId`}
-                    label={t['kymCoopLocalGovernment']}
-                    placeholder={t['kymCoopSelectLocal']}
-                    options={localityList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormInput
-                    type="number"
-                    name={`permanentAddress.wardNo`}
-                    label={t['kymCoopWardNo']}
-                    placeholder={t['kymCoopEnterWardNo']}
-                  />
-                  <FormInput
-                    type="text"
-                    name={`permanentAddress.locality`}
-                    label={t['kymCoopLocality']}
-                    placeholder={t['kymCoopEnterLocality']}
-                  />
-                </InputGroupContainer>
-
-                <Box>
-                  <FormMap name={`permanentAddress.coordinates`} />
-                </Box>
-
-                <Box
-                  id="Temporary Address"
-                  gap="s32"
-                  display={'flex'}
-                  flexDirection="column"
-                  scrollMarginTop={'200px'}
-                >
                   <Text fontSize="r1" fontWeight="SemiBold">
-                    {t['kymCoopTemporaryAddress']}
+                    {t['kymCoopPermanentAddress']}
                   </Text>
+                  <InputGroupContainer>
+                    <FormSelect
+                      id="boardDirectorCoop"
+                      name={`permanentAddress.provinceId`}
+                      label={t['kymCoopState']}
+                      placeholder={t['kymCoopSelectState']}
+                      options={province}
+                    />
+                    <FormSelect
+                      id="boardDirectorCoop"
+                      name={`permanentAddress.districtId`}
+                      label={t['kymCoopDistrict']}
+                      placeholder={t['kymCoopSelectDistrict']}
+                      options={districtList.map((d) => ({
+                        label: d.name,
+                        value: d.id,
+                      }))}
+                    />
+                    <FormSelect
+                      id="boardDirectorCoop"
+                      name={`permanentAddress.localGovernmentId`}
+                      label={t['kymCoopLocalGovernment']}
+                      placeholder={t['kymCoopSelectLocal']}
+                      options={localityList.map((d) => ({
+                        label: d.name,
+                        value: d.id,
+                      }))}
+                    />
+                    <FormSelect
+                      id="boardDirectorCoop"
+                      name={`permanentAddress.wardNo`}
+                      label={t['kymCoopWardNo']}
+                      placeholder={t['kymCoopEnterWardNo']}
+                      options={wardList?.map((d) => ({
+                        label: d,
+                        value: d,
+                      }))}
+                    />
+                    <FormInput
+                      id="boardDirectorCoop"
+                      type="text"
+                      name={`permanentAddress.locality`}
+                      label={t['kymCoopLocality']}
+                      placeholder={t['kymCoopEnterLocality']}
+                    />
+                  </InputGroupContainer>
 
-                  <FormSwitch
-                    id="boardOfDirectorsDetails"
-                    name={`isPermanentAndTemporaryAddressSame`}
-                    label={t['kymCoopTemporaryAddressPermanent']}
-                  />
+                  <Box>
+                    <FormMap
+                      name={`permanentAddress.coordinates`}
+                      id="boardDirectorCoop"
+                    />
+                  </Box>
 
-                  {!isPermanentAndTemporaryAddressSame && (
-                    <>
-                      <InputGroupContainer>
-                        <FormSelect
-                          name={`temporaryAddress.provinceId`}
-                          label={t['kymCoopState']}
-                          placeholder={t['kymCoopSelectState']}
-                          options={province}
-                        />
-                        <FormSelect
-                          name={`temporaryAddress.districtId`}
-                          label={t['kymCoopDistrict']}
-                          placeholder={t['kymCoopSelectDistrict']}
-                          options={districtTempList.map((d) => ({
-                            label: d.name,
-                            value: d.id,
-                          }))}
-                        />
-                        <FormSelect
-                          name={`temporaryAddress.localGovernmentId`}
-                          label={t['kymCoopLocalGovernment']}
-                          placeholder={t['kymCoopSelectLocal']}
-                          options={localityTempList.map((d) => ({
-                            label: d.name,
-                            value: d.id,
-                          }))}
-                        />
-                        <FormInput
-                          type="number"
-                          name={`temporaryAddress.wardNo`}
-                          label={t['kymCoopWardNo']}
-                          placeholder={t['kymCoopEnterWardNo']}
-                        />
-                        <FormInput
-                          type="text"
-                          name={`temporaryAddress.locality`}
-                          label={t['kymCoopLocality']}
-                          placeholder={t['kymCoopEnterLocality']}
-                        />
-                      </InputGroupContainer>
+                  <Box
+                    id="Temporary Address"
+                    gap="s32"
+                    display={'flex'}
+                    flexDirection="column"
+                    scrollMarginTop={'200px'}
+                  >
+                    <Text fontSize="r1" fontWeight="SemiBold">
+                      {t['kymCoopTemporaryAddress']}
+                    </Text>
 
-                      <Box mt="-16px">
-                        <FormMap name={`temporaryAddress.coordinates`} />
-                      </Box>
-                    </>
-                  )}
+                    <FormSwitch
+                      id="boardOfDirectorsDetails"
+                      name={`isPermanentAndTemporaryAddressSame`}
+                      label={t['kymCoopTemporaryAddressPermanent']}
+                    />
+
+                    {!isPermanentAndTemporaryAddressSame && (
+                      <>
+                        <InputGroupContainer>
+                          <FormSelect
+                            id="boardDirectorCoop"
+                            name={`temporaryAddress.provinceId`}
+                            label={t['kymCoopState']}
+                            placeholder={t['kymCoopSelectState']}
+                            options={province}
+                          />
+                          <FormSelect
+                            id="boardDirectorCoop"
+                            name={`temporaryAddress.districtId`}
+                            label={t['kymCoopDistrict']}
+                            placeholder={t['kymCoopSelectDistrict']}
+                            options={districtTempList.map((d) => ({
+                              label: d.name,
+                              value: d.id,
+                            }))}
+                          />
+                          <FormSelect
+                            id="boardDirectorCoop"
+                            name={`temporaryAddress.localGovernmentId`}
+                            label={t['kymCoopLocalGovernment']}
+                            placeholder={t['kymCoopSelectLocal']}
+                            options={localityTempList.map((d) => ({
+                              label: d.name,
+                              value: d.id,
+                            }))}
+                          />
+                          <FormSelect
+                            id="boardDirectorCoop"
+                            name={`temporaryAddress.wardNo`}
+                            label={t['kymCoopWardNo']}
+                            placeholder={t['kymCoopEnterWardNo']}
+                            options={wardTempList.map((d) => ({
+                              label: d,
+                              value: d,
+                            }))}
+                          />
+                          <FormInput
+                            id="boardDirectorCoop"
+                            type="text"
+                            name={`temporaryAddress.locality`}
+                            label={t['kymCoopLocality']}
+                            placeholder={t['kymCoopEnterLocality']}
+                          />
+                        </InputGroupContainer>
+
+                        <Box mt="-16px">
+                          <FormMap name={`temporaryAddress.coordinates`} />
+                        </Box>
+                      </>
+                    )}
+                  </Box>
+                  <InputGroupContainer>
+                    <FormInput
+                      id="boardDirectorCoop"
+                      type="date"
+                      name={`dateOfMembership`}
+                      label={t['kymCoopDateOfMembership']}
+                      placeholder="DD-MM-YYYY"
+                    />
+                    <FormInput
+                      id="boardDirectorCoop"
+                      type="text"
+                      name={`highestQualification`}
+                      label={t['kymCoopHighestQualification']}
+                      placeholder={t['kymCoopEnterHigestQualification']}
+                    />
+                    <FormInput
+                      id="boardDirectorCoop"
+                      type="number"
+                      name={`contactNumber`}
+                      label={t['kymCoopMobileNo']}
+                      placeholder={t['kymCoopEnterMobileNo']}
+                    />
+                    <FormInput
+                      id="boardDirectorCoop"
+                      type="text"
+                      name={`email`}
+                      label={t['kymCoopEmail']}
+                      placeholder={t['kymCoopEnterEmail']}
+                    />
+                    <FormInput
+                      id="boardDirectorCoop"
+                      type="string"
+                      name={`citizenshipNo`}
+                      label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
+                      placeholder={t['kymCoopEnterNo']}
+                    />
+                    <FormInput
+                      id="boardDirectorCoop"
+                      type="string"
+                      name={`panNo`}
+                      label={t['kymCoopPanOrVatNo']}
+                      placeholder={t['kymCoopEnterPanOrVat']}
+                    />
+                  </InputGroupContainer>
                 </Box>
-                <InputGroupContainer>
-                  <FormInput
-                    type="date"
-                    name={`dateOfMembership`}
-                    label={t['kymCoopDateOfMembership']}
-                    placeholder="DD-MM-YYYY"
-                  />
-                  <FormInput
-                    type="text"
-                    name={`highestQualification`}
-                    label={t['kymCoopHighestQualification']}
-                    placeholder={t['kymCoopEnterHigestQualification']}
-                  />
-                  <FormInput
-                    type="number"
-                    name={`contactNumber`}
-                    label={t['kymCoopMobileNo']}
-                    placeholder={t['kymCoopEnterMobileNo']}
-                  />
-                  <FormInput
-                    type="text"
-                    name={`email`}
-                    label={t['kymCoopEmail']}
-                    placeholder={t['kymCoopEnterEmail']}
-                  />
-                  <FormInput
-                    type="string"
-                    name={`citizenshipNo`}
-                    label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
-                    placeholder={t['kymCoopEnterNo']}
-                  />
-                  <FormInput
-                    type="string"
-                    name={`panNo`}
-                    label={t['kymCoopPanOrVatNo']}
-                    placeholder={t['kymCoopEnterPanOrVat']}
-                  />
-                </InputGroupContainer>
+              </form>
+            </FormProvider>
 
-                {/* <Grid
+            <Bottomdirectorcoop setKymCurrentSection={setSection} />
+
+            {/* <Grid
                   templateColumns="repeat(2, 1fr)"
                   rowGap="s32"
                   columnGap="s20"
@@ -423,9 +468,7 @@ export const AddDirector = ({
                     />
                   </Box>
                 </Grid> */}
-              </SectionContainer>
-            </form>
-          </FormProvider>
+          </SectionContainer>
         </DynamicBoxGroupContainer>
         <Box
           display="flex"

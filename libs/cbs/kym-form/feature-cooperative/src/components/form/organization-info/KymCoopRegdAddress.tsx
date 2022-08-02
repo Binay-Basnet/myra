@@ -143,12 +143,14 @@ export const KymCoopRegdAddress = (props: IProps) => {
           </Text>
           <InputGroupContainer>
             <FormSelect
+              id="registeredCoopAddress"
               name="registeredAddress.provinceId"
               label={t['kymCoopProvince']}
               placeholder={t['kymCoopSelectState']}
               options={province}
             />
             <FormSelect
+              id="registeredCoopAddress"
               name="registeredAddress.districtId"
               label={t['kymCoopDistrict']}
               placeholder={t['kymCoopSelectDistrict']}
@@ -158,6 +160,7 @@ export const KymCoopRegdAddress = (props: IProps) => {
               }))}
             />
             <FormSelect
+              id="registeredCoopAddress"
               name="registeredAddress.localGovernmentId"
               label={t['kymCoopMunicipality']}
               placeholder={t['kymCoopSelectMunicipality']}
@@ -167,19 +170,25 @@ export const KymCoopRegdAddress = (props: IProps) => {
               }))}
             />
 
-            <FormInput
-              type="text"
+            <FormSelect
+              id="registeredCoopAddress"
               name="registeredAddress.wardNo"
               label={t['kymCoopWardNo']}
               placeholder={t['kymCoopEnterWardNo']}
+              options={wardList?.map((d) => ({
+                label: d,
+                value: d,
+              }))}
             />
             <FormInput
+              id="registeredCoopAddress"
               type="text"
               name="registeredAddress.locality"
               label={t['kymCoopLocality']}
               placeholder={t['kymCoopEnterLocality']}
             />
             <FormInput
+              id="registeredCoopAddress"
               type="text"
               name="registeredAddress.houseNo"
               label={t['kymCoopRepresentativeHouseNo']}

@@ -12,6 +12,7 @@ const registeredAddress = [
   'regdMunicipalityId',
   'regdWardId',
   'regdLocality',
+  'registeredCoopAddress',
 ];
 
 const operatingAddress = [
@@ -20,6 +21,7 @@ const operatingAddress = [
   'oprMunicipalityId',
   'oprWardId',
   'oprLocality',
+  'operatingAddressCOOP',
 ];
 
 const contactDetails = ['email', 'website', 'contactNumber'];
@@ -91,6 +93,7 @@ const boardOfDirectorrDetails = [
   'kymCOOPdirectorResetButton',
   'kymCOOPdirectorRemoveButton',
   'boardDirectorCloseIcon',
+  'boardDirectorCoop',
 ];
 const accountOperatorDetail = [
   'accountOperatorsDetails',
@@ -98,6 +101,7 @@ const accountOperatorDetail = [
   'accountOperatorResetButton',
   'accountOperatorCloseButton',
   'accountOperatorCloseIcon',
+  'accountOperatorCoop',
 ];
 
 const accountHolderDeclaration = [
