@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { KymCooperativeFormInput } from '@coop/shared/data-access';
+import {
+  KymCooperativeAccountOperatorDetailsInput,
+  KymCooperativeFormInput,
+  useDeleteCoopAccOperatorDataMutation,
+  useGetCoOperativeAccountOperatorEditDataQuery,
+  useGetNewIdMutation,
+} from '@coop/shared/data-access';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -16,19 +23,65 @@ interface IProps {
 export const KymCoopAccountOperatorDetail = (props: IProps) => {
   const { t } = useTranslation();
   const { setSection } = props;
-  const methods = useForm<KymCooperativeFormInput>({
+  const methods = useForm<KymCooperativeAccountOperatorDetailsInput>({
     defaultValues: {},
   });
-  const { control, watch } = methods;
-  const {
-    fields: accountFields,
-    append: accountAppend,
-    remove: accountRemove,
-    // TODO Remove this
-  } = useFieldArray<any>({
-    control,
-    name: 'accountOperatorsDetails',
+
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
+  const { control, handleSubmit, getValues, watch, setError, reset } = methods;
+  const [accOperatorIds, setAccOperatorIds] = useState<string[]>([]);
+
+  const { data: editValues } = useGetCoOperativeAccountOperatorEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.cooperative?.listAccountOperators?.data;
+
+      setAccOperatorIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
+        ) ?? []
+      );
+    }
+  }, [editValues]);
+  const { mutate: newIdMutate } = useGetNewIdMutation({
+    onSuccess: (res) => {
+      setAccOperatorIds([...accOperatorIds, res.newId]);
+    },
   });
+  const { mutate: deleteMutate } = useDeleteCoopAccOperatorDataMutation({
+    onSuccess: (res) => {
+      const deletedId = String(
+        res?.members?.cooperative?.accountOperatorDetail?.Delete?.recordId
+      );
+
+      const tempAccountOperatorIds = [...accOperatorIds];
+
+      tempAccountOperatorIds.splice(
+        tempAccountOperatorIds.indexOf(deletedId),
+        1
+      );
+
+      setAccOperatorIds([...tempAccountOperatorIds]);
+    },
+  });
+  const addAccountOperator = () => {
+    newIdMutate({});
+  };
+
+  const removeAccountOperator = (accOperatorId: string) => {
+    deleteMutate({ accOperatorId: accOperatorId, id: id });
+  };
+
   return (
     <GroupContainer
       id="kymCoopAccAccountOperatorDetail"
@@ -37,14 +90,14 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymCoopDetailsofAccountOperators']}
       </Text>
-      {accountFields.map((item, index) => {
+      {accOperatorIds.map((id, index) => {
         return (
-          <Box key={item.id} display="flex" flexDirection={'column'}>
+          <Box key={id} display="flex" flexDirection={'column'}>
             <AddOperator
-              watch={watch}
+              setKymCurrentSection={setSection}
+              removeDirector={removeAccountOperator}
+              accountId={id}
               index={index}
-              control={control}
-              removeAccount={() => accountRemove(index)}
             />
           </Box>
         );
@@ -55,7 +108,7 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
         leftIcon={<Icon size="md" as={AiOutlinePlus} />}
         variant="outline"
         onClick={() => {
-          accountAppend({});
+          addAccountOperator();
         }}
       >
         {t['kymCoopAddOperator']}

@@ -10,13 +10,25 @@ mutation setCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
 
 mutation setCOOPAccOperatorData(
   $id: ID!
-  $acc: ID!
+  $accOperatorId: ID!
   $data: KymCoopAccountOperatorDetailsFormInput!
 ) {
   members {
     cooperative(id: $id) {
       accountOperatorDetail {
-        Upsert(accOperatorId: $acc, data: $data) {
+        Upsert(accOperatorId: $accOperatorId, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteCOOPAccOperatorData($id: ID!, $accOperatorId: ID!) {
+  members {
+    cooperative(id: $id) {
+      accountOperatorDetail {
+        Delete(accOperatorId: $accOperatorId) {
           recordId
         }
       }
@@ -26,13 +38,25 @@ mutation setCOOPAccOperatorData(
 
 mutation setCOOPdirectorData(
   $id: ID!
-  $dir: ID!
+  $dirId: ID!
   $data: KymCoopDirectorDetailsFormInput!
 ) {
   members {
     cooperative(id: $id) {
       directorDetails {
-        Upsert(dirId: $dir, data: $data) {
+        Upsert(dirId: $dirId, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteCOOPdirectorData($id: ID!, $dirId: ID!) {
+  members {
+    cooperative(id: $id) {
+      directorDetails {
+        Delete(dirId: $dirId) {
           recordId
         }
       }

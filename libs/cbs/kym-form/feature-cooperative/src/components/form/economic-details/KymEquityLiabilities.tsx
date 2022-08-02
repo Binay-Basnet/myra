@@ -291,7 +291,7 @@ export const KymEquityLiabilities = (props: IProps) => {
                 borderColor="disabled.disabled"
                 textAlign="right"
                 type="text"
-                name="totalEquityAndLiabilities"
+                name="totalEquityLiabilities"
                 value={
                   isNaN(totalEquityAndLiabilities)
                     ? '0.00'

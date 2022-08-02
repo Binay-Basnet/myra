@@ -106,6 +106,7 @@ const AddSister = ({
           />
           <Grid templateColumns={'repeat(2, 1fr)'} gap="s20">
             <FormInput
+              id="sisterConcernsDetails"
               type="text"
               bg="white"
               name={'name'}
@@ -113,6 +114,7 @@ const AddSister = ({
               placeholder={t['kymInsEnterNameofSisterConcern']}
             />
             <FormInput
+              id="sisterConcernsDetails"
               type="text"
               bg="white"
               name={`natureOfBusiness`}
@@ -120,6 +122,7 @@ const AddSister = ({
               placeholder={t['kymInsNatureofBusiness']}
             />
             <FormInput
+              id="sisterConcernsDetails"
               type="text"
               bg="white"
               name={`address`}
@@ -127,6 +130,7 @@ const AddSister = ({
               placeholder={t['kymInsAddress']}
             />
             <FormInput
+              id="sisterConcernsDetails"
               type="text"
               bg="white"
               name={`phone`}
@@ -158,12 +162,13 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
 
   const [sisterIds, setSisterIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetInstitutionSisterDetailsEditListQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
+  const { data: editValues, refetch } =
+    useGetInstitutionSisterDetailsEditListQuery(
+      {
+        id: String(id),
+      },
+      { enabled: !!id }
+    );
 
   useEffect(() => {
     if (editValues) {
@@ -178,6 +183,13 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
       );
     }
   }, [editValues]);
+
+  useEffect(() => {
+    if (id) {
+      refetch();
+      console.log({ id });
+    }
+  }, [id]);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

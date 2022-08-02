@@ -16,10 +16,11 @@ import { useTranslation } from '@coop/shared/utils';
 
 interface IAddTraining {
   index: number;
+  operatorIndex: number;
   removeTraining: () => void;
 }
 
-const AddSister = ({ index, removeTraining }: IAddTraining) => {
+const AddSister = ({ index, removeTraining, operatorIndex }: IAddTraining) => {
   const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
@@ -36,19 +37,19 @@ const AddSister = ({ index, removeTraining }: IAddTraining) => {
       <InputGroupContainer>
         <FormInput
           type="text"
-          name={`accountOperatorsDetails.${index}.subjectOfTraining.${index}`}
+          name={`coopRelatedTraining.${index}.subjectOfTraining`}
           label={t['kymCoopSubjectOfTraining']}
           placeholder={t['kymCoopEnterSubjectOfTraining']}
         />
         <FormInput
           type="date"
-          name={`accountOperatorsDetails.${index}.dateOfTraining.${index}`}
+          name={`coopRelatedTraining.${index}.dateOfTraining`}
           label={t['kymCoopDateOfTraining']}
           placeholder={t['kymCoopEnterDateOfTraining']}
         />
         <FormInput
           type="number"
-          name={`accountOperatorsDetails.${index}.trainingOrganization.${index}`}
+          name={`coopRelatedTraining.${index}.trainingOrganization}`}
           label={t['kymCoopTrainingOrganization']}
           placeholder={t['kymCoopEnterTrainingOrganization']}
         />
@@ -57,13 +58,16 @@ const AddSister = ({ index, removeTraining }: IAddTraining) => {
   );
 };
 
-export const DynamicAddtraining = () => {
+interface IProps {
+  operatorIndex: number;
+}
+export const DynamicAddtraining = ({ operatorIndex }: IProps) => {
   const { t } = useTranslation();
   const {
     fields: trainingFields,
     append: trainingAppend,
     remove: trainingRemove,
-  } = useFieldArray({ name: 'accountOperatorsDetails' });
+  } = useFieldArray({ name: 'coopRelatedTraining' });
 
   return (
     <GroupContainer>
@@ -83,6 +87,7 @@ export const DynamicAddtraining = () => {
                 <AddSister
                   index={index}
                   removeTraining={() => trainingRemove(index)}
+                  operatorIndex={operatorIndex}
                 />
               </Box>
             );

@@ -65,11 +65,13 @@ export const TransactionProfileInstitution = (props: IProps) => {
             >
               <FormInput
                 type="text"
+                id="institutionTransactionProfile"
                 name="natureOfTransaction"
                 label={t['kymInsNatureofTransaction']}
                 placeholder={t['kymInsEnterNatureofTransaction']}
               />
               <FormInput
+                id="institutionTransactionProfile"
                 type="number"
                 name="annualTurnover"
                 label={t['kymInsAnnualTurnover']}
@@ -78,6 +80,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
               />
 
               <FormInput
+                id="institutionTransactionProfile"
                 type="number"
                 name="initialDepositAmount"
                 label={t['kymInsInitialDepositAmount']}

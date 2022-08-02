@@ -84,6 +84,7 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
           </Text>
           <InputGroupContainer>
             <FormInput
+              id="registeredDetailsInstitution"
               type="number"
               name="registeredNumber"
               label={t['kymInsRegisteredNumber']}
@@ -91,6 +92,7 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
             />
             <GridItem colSpan={2}>
               <FormInput
+                id="registeredDetailsInstitution"
                 type="text"
                 name="issuingOffice"
                 label={t['kymInsIssuingOffice']}
@@ -99,12 +101,14 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
             </GridItem>
             <FormSelect
               name="registeredAddress.provinceId"
+              id="registeredDetailsInstitution"
               label={t['kymIndProvince']}
               placeholder={t['kymIndSelectProvince']}
               options={province}
             />
             <FormSelect
               name="registeredAddress.districtId"
+              id="registeredDetailsInstitution"
               label={t['kymIndDistrict']}
               placeholder={t['kymIndSelectDistrict']}
               options={districtList.map((d) => ({
@@ -113,6 +117,7 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
               }))}
             />
             <FormSelect
+              id="registeredDetailsInstitution"
               name="registeredAddress.localGovernmentId"
               label={t['kymIndLocalGovernment']}
               placeholder={t['kymIndSelectLocalGovernment']}
@@ -122,6 +127,7 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
               }))}
             />
             <FormSelect
+              id="registeredDetailsInstitution"
               name="registeredAddress.wardNo"
               label={t['kymIndWardNo']}
               placeholder={t['kymIndEnterWardNo']}
@@ -131,12 +137,14 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
               }))}
             />
             <FormInput
+              id="registeredDetailsInstitution"
               type="text"
               name="registeredAddress.locality"
               label={t['kymIndLocality']}
               placeholder={t['kymIndEnterLocality']}
             />
             <FormInput
+              id="registeredDetailsInstitution"
               type="text"
               name="registeredAddress.houseNo"
               label={t['kymIndHouseNo']}
@@ -145,7 +153,10 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
           </InputGroupContainer>
 
           <Box mt="-16px">
-            <FormMap name="registeredAddress.coordinates" />
+            <FormMap
+              id="registeredDetailsInstitution"
+              name="registeredAddress.coordinates"
+            />
           </Box>
         </GroupContainer>
       </form>

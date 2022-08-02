@@ -56,7 +56,7 @@ export const KymCoopNoEmployee = (props: IProps) => {
             <FormInput
               type="number"
               textAlign={'right'}
-              name="noOfMaleEmployee"
+              name="noOfMaleMembers"
               label={t['kymCoopMale']}
               placeholder="0"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -66,7 +66,7 @@ export const KymCoopNoEmployee = (props: IProps) => {
             <FormInput
               type="number"
               textAlign={'right'}
-              name="noOfFemaleEmloyee"
+              name="noOfFemaleMembers"
               label={t['kymCoopFemale']}
               placeholder="0"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -81,7 +81,7 @@ export const KymCoopNoEmployee = (props: IProps) => {
               isDisabled={true}
               type="number"
               textAlign={'right'}
-              name="totalEmployee"
+              name="noOfOtherMembers"
               label={t['kymCoopTotal']}
               placeholder="0"
               value={totalEmployee}

@@ -41,93 +41,7 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
   const { setSection } = props;
   const { watch, setError, reset } = methods;
 
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
-  const { mutate } = useSetInstitutionDataMutation({
-    onSuccess: (res) => {
-      setError('institutionName', {
-        type: 'custom',
-        message:
-          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
-      });
-    },
-    onError: () => {
-      setError('institutionName', {
-        type: 'custom',
-        message: 'it is what it is',
-      });
-    },
-  });
-
-  const {
-    data: editValues,
-    isLoading: editLoading,
-    refetch,
-  } = useGetInstitutionKymEditDataQuery(
-    {
-      id: id,
-    },
-    { enabled: id !== 'undefined' }
-  );
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        console.log(editValues);
-        if (editValues && data && id !== 'undefined') {
-          mutate({
-            id: router.query['id'] as string,
-            data,
-          });
-          refetch();
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady, editLoading]);
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData =
-        editValues?.members?.institution?.formState?.data?.formData;
-
-      const registeredAddressLocality =
-        editValueData?.registeredAddress?.locality?.local;
-      const operatingAddressLocality =
-        editValueData?.operatingOfficeAddress?.locality?.local;
-      console.log('edit value', editValueData);
-      const branchOfficeAddress =
-        editValueData?.branchOfficeAddress?.locality?.local;
-      const accountHoldersAddress =
-        editValueData?.accountHolderAddress?.locality?.local;
-      reset({
-        ...pickBy(editValueData ?? {}, (v) => v !== null),
-        registeredAddress: {
-          ...editValueData?.registeredAddress,
-          locality: registeredAddressLocality,
-        },
-        operatingOfficeAddress: {
-          ...editValueData?.operatingOfficeAddress,
-          locality: operatingAddressLocality,
-        },
-        branchOfficeAddress: {
-          ...editValueData?.branchOfficeAddress,
-          locality: branchOfficeAddress,
-        },
-        accountHolderAddress: {
-          ...editValueData?.accountHolderAddress,
-          locality: accountHoldersAddress,
-        },
-      });
-    }
-  }, [editLoading]);
-
-  useEffect(() => {
-    if (id !== 'undefined') {
-      refetch();
-    }
-  }, [id]);
+  useInstitution({ methods });
 
   const province = useMemo(() => {
     return (
@@ -204,12 +118,14 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
             </Text>
             <InputGroupContainer>
               <FormSelect
+                id="accountHolderAddress"
                 name={`accountHolderAddress.provinceId`}
                 label={t['kymInsState']}
                 placeholder={t['kymInsSelectState']}
                 options={province}
               />
               <FormSelect
+                id="accountHolderAddress"
                 name="accountHolderAddress.districtId"
                 label={t['kymInsDistrict']}
                 placeholder={t['kymInsSelectDistrict']}
@@ -219,6 +135,7 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
                 }))}
               />
               <FormSelect
+                id="accountHolderAddress"
                 name="accountHolderAddress.localGovernmentId"
                 label={t['kymInsVDCMunicipality']}
                 placeholder={t['kymInsSelectVDCMunicipality']}
@@ -228,6 +145,7 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
                 }))}
               />
               <FormSelect
+                id="accountHolderAddress"
                 name="accountHolderAddress.wardNo"
                 label={t['kymInsWardNo']}
                 placeholder={t['kymInsEnterWardNo']}
@@ -237,12 +155,14 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
                 }))}
               />
               <FormInput
+                id="accountHolderAddress"
                 type="text"
                 name="accountHolderAddress.locality"
                 label={t['kymInsLocality']}
                 placeholder={t['kymInsEnterLocality']}
               />
               <FormInput
+                id="accountHolderAddress"
                 type="text"
                 name="accountHolderAddress.houseNo"
                 label={t['kymInsHouseNo']}
@@ -251,7 +171,10 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
             </InputGroupContainer>
 
             <Box>
-              <FormMap name="accountHolderAddress.coordinates" />
+              <FormMap
+                name="accountHolderAddress.coordinates"
+                id="accountHolderAddress"
+              />
             </Box>
           </Box>
           {/* <Grid templateColumns={'repeat(2, 1fr)'} gap="s32">

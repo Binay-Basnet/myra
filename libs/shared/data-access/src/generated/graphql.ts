@@ -1351,8 +1351,6 @@ export type DepositLoanAccount = Base & {
   depositFrequencyYearlyMonth?: Maybe<Months>;
   id: Scalars['ID'];
   interestRate?: Maybe<Scalars['Float']>;
-  interestSanctionedById?: Maybe<Scalars['Float']>;
-  interestSanctionedByName?: Maybe<Scalars['Float']>;
   memberId: Scalars['ID'];
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -1392,8 +1390,6 @@ export type DepositLoanAccountInput = {
   depositFrequencyYearlyDay?: InputMaybe<Week>;
   depositFrequencyYearlyMonth?: InputMaybe<Months>;
   interestRate?: InputMaybe<Scalars['Float']>;
-  interestSanctionedById?: InputMaybe<Scalars['Float']>;
-  interestSanctionedByName?: InputMaybe<Scalars['Float']>;
   memberId: Scalars['ID'];
   productId: Scalars['ID'];
   tenure?: InputMaybe<FrequencyTenure>;
@@ -6685,6 +6681,7 @@ export type SubscriptionMutation = {
 
 
 export type SubscriptionMutationReferenceKymArgs = {
+  deference?: InputMaybe<Scalars['Boolean']>;
   fieldId: Scalars['String'];
   memberId: Scalars['String'];
 };
@@ -7091,21 +7088,37 @@ export type SetCooperativeDataMutation = { members: { cooperative?: { add?: { re
 
 export type SetCoopAccOperatorDataMutationVariables = Exact<{
   id: Scalars['ID'];
-  acc: Scalars['ID'];
+  accOperatorId: Scalars['ID'];
   data: KymCoopAccountOperatorDetailsFormInput;
 }>;
 
 
 export type SetCoopAccOperatorDataMutation = { members: { cooperative?: { accountOperatorDetail?: { Upsert?: { recordId: string } | null } | null } | null } };
 
+export type DeleteCoopAccOperatorDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  accOperatorId: Scalars['ID'];
+}>;
+
+
+export type DeleteCoopAccOperatorDataMutation = { members: { cooperative?: { accountOperatorDetail?: { Delete?: { recordId: string } | null } | null } | null } };
+
 export type SetCooPdirectorDataMutationVariables = Exact<{
   id: Scalars['ID'];
-  dir: Scalars['ID'];
+  dirId: Scalars['ID'];
   data: KymCoopDirectorDetailsFormInput;
 }>;
 
 
 export type SetCooPdirectorDataMutation = { members: { cooperative?: { directorDetails?: { Upsert?: { recordId: string } | null } | null } | null } };
+
+export type DeleteCooPdirectorDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  dirId: Scalars['ID'];
+}>;
+
+
+export type DeleteCooPdirectorDataMutation = { members: { cooperative?: { directorDetails?: { Delete?: { recordId: string } | null } | null } | null } };
 
 export type SetCooperativeUnionInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -7507,7 +7520,21 @@ export type GetCoOperativeKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetCoOperativeKymEditDataQuery = { members: { cooperative?: { formState?: { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null, email?: string | null, website?: string | null, contactNumber?: string | null, noOfMaleMembers?: number | null, noOfFemaleMembers?: number | null, noOfOtherMembers?: number | null, lastAuditDate?: string | null, lastAgmDate?: string | null, representativeFullName?: string | null, representativeDesignatiton?: string | null, representativeEmail?: string | null, representativeContactNumber?: string | null, representativePanNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, cooperativeTypeId?: string | null, mainServiceProduct?: string | null, noOfMaleEmployee?: number | null, noOfFemaleEmloyee?: number | null, totalEmployee?: number | null, shareCapital?: number | null, reserveAndSurplus?: number | null, savingDeposit?: number | null, loanAccount?: number | null, capitalGrant?: number | null, currentLiabilities?: number | null, nonCurrentLiabilities?: number | null, totalEquityAndLiabilities?: number | null, cashAndCashEquivalent?: number | null, bank?: number | null, investments?: number | null, loan?: number | null, nonCurrentAssets?: number | null, otherNonCurrentAssets?: number | null, totalAssets?: number | null, accountHoldersName?: string | null, accountHolderSignature?: string | null, accountHolderStamp?: string | null, hasTCAccepted?: boolean | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, permanentRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
+export type GetCoOperativeKymEditDataQuery = { members: { cooperative?: { formState?: { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null, email?: string | null, website?: string | null, contactNumber?: string | null, noOfMaleMembers?: number | null, noOfFemaleMembers?: number | null, noOfOtherMembers?: number | null, lastAuditDate?: string | null, lastAgmDate?: string | null, representativeFullName?: string | null, representativeDesignatiton?: string | null, representativeEmail?: string | null, representativeContactNumber?: string | null, representativePanNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, cooperativeTypeId?: string | null, mainServiceProduct?: string | null, noOfMaleEmployee?: number | null, noOfFemaleEmloyee?: number | null, totalEmployee?: number | null, shareCapital?: number | null, reserveAndSurplus?: number | null, savingDeposit?: number | null, loanAccount?: number | null, capitalGrant?: number | null, currentLiabilities?: number | null, nonCurrentLiabilities?: number | null, totalEquityAndLiabilities?: number | null, cashAndCashEquivalent?: number | null, bank?: number | null, investments?: number | null, loan?: number | null, nonCurrentAssets?: number | null, otherNonCurrentAssets?: number | null, totalAssets?: number | null, hasTCAccepted?: boolean | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, permanentRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
+
+export type GetCoOperativeDirectorEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetCoOperativeDirectorEditDataQuery = { members: { cooperative?: { listDirectors?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipOrPassportOrLisenceNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null> | null } | null } | null } };
+
+export type GetCoOperativeAccountOperatorEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetCoOperativeAccountOperatorEditDataQuery = { members: { cooperative?: { listAccountOperators?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipOrPassportOrLisenceNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainings?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null } | null } };
 
 export type GetCooperativeUnionKymEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -8031,11 +8058,11 @@ export const useSetCooperativeDataMutation = <
       options
     );
 export const SetCoopAccOperatorDataDocument = `
-    mutation setCOOPAccOperatorData($id: ID!, $acc: ID!, $data: KymCoopAccountOperatorDetailsFormInput!) {
+    mutation setCOOPAccOperatorData($id: ID!, $accOperatorId: ID!, $data: KymCoopAccountOperatorDetailsFormInput!) {
   members {
     cooperative(id: $id) {
       accountOperatorDetail {
-        Upsert(accOperatorId: $acc, data: $data) {
+        Upsert(accOperatorId: $accOperatorId, data: $data) {
           recordId
         }
       }
@@ -8052,12 +8079,34 @@ export const useSetCoopAccOperatorDataMutation = <
       useAxios<SetCoopAccOperatorDataMutation, SetCoopAccOperatorDataMutationVariables>(SetCoopAccOperatorDataDocument),
       options
     );
+export const DeleteCoopAccOperatorDataDocument = `
+    mutation deleteCOOPAccOperatorData($id: ID!, $accOperatorId: ID!) {
+  members {
+    cooperative(id: $id) {
+      accountOperatorDetail {
+        Delete(accOperatorId: $accOperatorId) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteCoopAccOperatorDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCoopAccOperatorDataMutation, TError, DeleteCoopAccOperatorDataMutationVariables, TContext>) =>
+    useMutation<DeleteCoopAccOperatorDataMutation, TError, DeleteCoopAccOperatorDataMutationVariables, TContext>(
+      ['deleteCOOPAccOperatorData'],
+      useAxios<DeleteCoopAccOperatorDataMutation, DeleteCoopAccOperatorDataMutationVariables>(DeleteCoopAccOperatorDataDocument),
+      options
+    );
 export const SetCooPdirectorDataDocument = `
-    mutation setCOOPdirectorData($id: ID!, $dir: ID!, $data: KymCoopDirectorDetailsFormInput!) {
+    mutation setCOOPdirectorData($id: ID!, $dirId: ID!, $data: KymCoopDirectorDetailsFormInput!) {
   members {
     cooperative(id: $id) {
       directorDetails {
-        Upsert(dirId: $dir, data: $data) {
+        Upsert(dirId: $dirId, data: $data) {
           recordId
         }
       }
@@ -8072,6 +8121,28 @@ export const useSetCooPdirectorDataMutation = <
     useMutation<SetCooPdirectorDataMutation, TError, SetCooPdirectorDataMutationVariables, TContext>(
       ['setCOOPdirectorData'],
       useAxios<SetCooPdirectorDataMutation, SetCooPdirectorDataMutationVariables>(SetCooPdirectorDataDocument),
+      options
+    );
+export const DeleteCooPdirectorDataDocument = `
+    mutation deleteCOOPdirectorData($id: ID!, $dirId: ID!) {
+  members {
+    cooperative(id: $id) {
+      directorDetails {
+        Delete(dirId: $dirId) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useDeleteCooPdirectorDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCooPdirectorDataMutation, TError, DeleteCooPdirectorDataMutationVariables, TContext>) =>
+    useMutation<DeleteCooPdirectorDataMutation, TError, DeleteCooPdirectorDataMutationVariables, TContext>(
+      ['deleteCOOPdirectorData'],
+      useAxios<DeleteCooPdirectorDataMutation, DeleteCooPdirectorDataMutationVariables>(DeleteCooPdirectorDataDocument),
       options
     );
 export const SetCooperativeUnionInstitutionDataDocument = `
@@ -9434,9 +9505,6 @@ export const GetCoOperativeKymEditDataDocument = `
             nonCurrentAssets
             otherNonCurrentAssets
             totalAssets
-            accountHoldersName
-            accountHolderSignature
-            accountHolderStamp
             hasTCAccepted
           }
         }
@@ -9455,6 +9523,125 @@ export const useGetCoOperativeKymEditDataQuery = <
     useQuery<GetCoOperativeKymEditDataQuery, TError, TData>(
       ['getCoOperativeKymEditData', variables],
       useAxios<GetCoOperativeKymEditDataQuery, GetCoOperativeKymEditDataQueryVariables>(GetCoOperativeKymEditDataDocument).bind(null, variables),
+      options
+    );
+export const GetCoOperativeDirectorEditDataDocument = `
+    query getCoOperativeDirectorEditData($id: ID!) {
+  members {
+    cooperative {
+      listDirectors(id: $id) {
+        data {
+          id
+          fullName
+          designation
+          permanentAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isPermanentAndTemporaryAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          dateOfMembership
+          highestQualification
+          contactNumber
+          email
+          citizenshipOrPassportOrLisenceNo
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoOperativeDirectorEditDataQuery = <
+      TData = GetCoOperativeDirectorEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetCoOperativeDirectorEditDataQueryVariables,
+      options?: UseQueryOptions<GetCoOperativeDirectorEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetCoOperativeDirectorEditDataQuery, TError, TData>(
+      ['getCoOperativeDirectorEditData', variables],
+      useAxios<GetCoOperativeDirectorEditDataQuery, GetCoOperativeDirectorEditDataQueryVariables>(GetCoOperativeDirectorEditDataDocument).bind(null, variables),
+      options
+    );
+export const GetCoOperativeAccountOperatorEditDataDocument = `
+    query getCoOperativeAccountOperatorEditData($id: ID!) {
+  members {
+    cooperative {
+      listAccountOperators(id: $id) {
+        data {
+          id
+          fullName
+          designation
+          permanentAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isPermanentAndTemporaryAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          dateOfMembership
+          highestQualification
+          contactNumber
+          email
+          citizenshipOrPassportOrLisenceNo
+          trainings {
+            subjectOfTraining
+            dateOfTraining
+            trainingOrganization
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoOperativeAccountOperatorEditDataQuery = <
+      TData = GetCoOperativeAccountOperatorEditDataQuery,
+      TError = unknown
+    >(
+      variables: GetCoOperativeAccountOperatorEditDataQueryVariables,
+      options?: UseQueryOptions<GetCoOperativeAccountOperatorEditDataQuery, TError, TData>
+    ) =>
+    useQuery<GetCoOperativeAccountOperatorEditDataQuery, TError, TData>(
+      ['getCoOperativeAccountOperatorEditData', variables],
+      useAxios<GetCoOperativeAccountOperatorEditDataQuery, GetCoOperativeAccountOperatorEditDataQueryVariables>(GetCoOperativeAccountOperatorEditDataDocument).bind(null, variables),
       options
     );
 export const GetCooperativeUnionKymEditDataDocument = `

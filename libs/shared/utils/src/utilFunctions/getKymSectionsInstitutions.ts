@@ -10,18 +10,11 @@ const InstitutionalInfo = [
 ];
 
 const Registerdetails = [
+  'registeredDetailsInstitution',
   'registeredAddress',
   'registeredAddressIfChanged',
   'registeredNumber',
   'issuingOffice',
-  'registeredProvinceId',
-  'registeredDistrictId',
-  'registeredLocalityId',
-  'registeredWardId',
-  'registeredTole',
-  'registeredHouseNo',
-  'registeredInstitutionLocation',
-  'registeredAddress',
 ];
 const contactDetails = [
   'phone',
@@ -56,7 +49,8 @@ const branchOfficeAddress = [
 const TransactionDetails = [
   'natureOfTransaction',
   'annualTurnover',
-  'initialDepositAmount',
+
+  'institutionTransactionProfile',
 ];
 const monthlyTurnover = [
   'Less than 20 Lakhs',
@@ -64,17 +58,23 @@ const monthlyTurnover = [
   'Above 50 Lakhs',
 ];
 const monthlyTransactions = ['Less than 10', 'Less than 25', 'Above 25'];
-const sisterConcern = ['sisterConcernDetails', 'sisterConcernButton'];
+const sisterConcern = [
+  'sisterConcernDetails',
+  'sisterConcernButton',
+  'sisterConcernsDetails',
+];
 
 const BankAccDetails = ['bank', 'accountNumber', 'accountName'];
 const directorDetails = [
   'detailsOfDirectors',
   'addDirectorButton',
   'isPermanentAndTemporaryAddressSame',
+  'DirectorInstitutionId',
 ];
 const directoswithAffiliation = [
   'detailsOfDirectorsWithAffiliation',
   'newDetailButton',
+  'DirectorInstitutionAffiliationId',
 ];
 
 const accountOperator = [
@@ -82,6 +82,7 @@ const accountOperator = [
   'accountOperatorDetailsButton',
   'accountOperatorReset',
   'accountOperatorClose',
+  'AccountOperatorInstitution',
 ];
 const accountInstruction = [
   'accountType',
@@ -92,6 +93,7 @@ const accontDecleration = [
   'accountHolderName',
   'accountHolderPhone',
   'accountHolderEmail',
+  'accountHolderAddress',
   'accountHolderProvinceId',
   'accountHolderDistrictId',
   'accountHolderMunicipality',

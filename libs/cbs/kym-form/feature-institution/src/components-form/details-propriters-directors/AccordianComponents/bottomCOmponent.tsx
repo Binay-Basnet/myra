@@ -111,6 +111,7 @@ export const DirectorsWithAffliation = ({
       >
         <Box display="flex" flexDirection="column" gap="s16">
           <FormSwitch
+            id="DirectorInstitutionAffiliationId"
             name={`isAffiliatedWithOtherFirms`}
             label={t['kymInsIsaffiliatedwithotherfirms']}
           />
@@ -118,6 +119,7 @@ export const DirectorsWithAffliation = ({
             <Box>
               <Grid templateColumns={'repeat(2, 1fr)'} gap="s20">
                 <FormInput
+                  id="DirectorInstitutionAffiliationId"
                   type="text"
                   bg="white"
                   name={`firmDetails.directorName`}
@@ -125,6 +127,7 @@ export const DirectorsWithAffliation = ({
                   placeholder={t['kymInsEnterNameofDirector']}
                 />
                 <FormInput
+                  id="DirectorInstitutionAffiliationId"
                   type="text"
                   bg="white"
                   name={`firmDetails.institutionName`}
@@ -134,6 +137,7 @@ export const DirectorsWithAffliation = ({
               </Grid>
               <InputGroupContainer mt="s16">
                 <FormInput
+                  id="DirectorInstitutionAffiliationId"
                   type="text"
                   bg="white"
                   name={`firmDetails.address`}
@@ -141,6 +145,7 @@ export const DirectorsWithAffliation = ({
                   placeholder={t['kymInsEnterAddressofInstitution']}
                 />
                 <FormInput
+                  id="DirectorInstitutionAffiliationId"
                   type="text"
                   bg="white"
                   name={`firmDetails.designation`}
@@ -148,6 +153,7 @@ export const DirectorsWithAffliation = ({
                   placeholder={t['kymInsEnterDesignation']}
                 />
                 <FormInput
+                  id="DirectorInstitutionAffiliationId"
                   type="number"
                   textAlign={'right'}
                   bg="white"

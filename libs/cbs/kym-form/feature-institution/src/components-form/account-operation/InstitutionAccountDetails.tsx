@@ -243,18 +243,21 @@ const AddAccountDetails = ({
             >
               <InputGroupContainer>
                 <FormInput
+                  id="AccountOperatorInstitution"
                   type="text"
                   name={'name'}
                   label={t['kymInsFullName']}
                   placeholder={t['kymInsEnterFullName']}
                 />
                 <FormInput
+                  id="AccountOperatorInstitution"
                   type="text"
                   name={'contact'}
                   label={t['kymInsContactNo']}
                   placeholder={t['kymInsContactNoPlaceholder']}
                 />
                 <FormInput
+                  id="AccountOperatorInstitution"
                   type="text"
                   name={'email'}
                   label={t['kymInsEmail']}
@@ -267,12 +270,14 @@ const AddAccountDetails = ({
               </Text>
               <InputGroupContainer>
                 <FormSelect
+                  id="AccountOperatorInstitution"
                   name={'permanentAddress.provinceId'}
                   label={t['kymInsState']}
                   placeholder={t['kymInsSelectState']}
                   options={province}
                 />
                 <FormSelect
+                  id="AccountOperatorInstitution"
                   name={'permanentAddress.districtId'}
                   label={t['kymInsDistrict']}
                   placeholder={t['kymInsSelectDistrict']}
@@ -282,6 +287,7 @@ const AddAccountDetails = ({
                   }))}
                 />
                 <FormSelect
+                  id="AccountOperatorInstitution"
                   name={'permanentAddress.localGovernmentId'}
                   label={t['kymInsVDCMunicipality']}
                   placeholder={t['kymInsSelectVDCMunicipality']}
@@ -291,6 +297,7 @@ const AddAccountDetails = ({
                   }))}
                 />
                 <FormSelect
+                  id="AccountOperatorInstitution"
                   name={'permanentAddress.wardNo'}
                   label={t['kymInsWardNo']}
                   placeholder={t['kymInsEnterWardNo']}
@@ -300,6 +307,7 @@ const AddAccountDetails = ({
                   }))}
                 />
                 <FormInput
+                  id="AccountOperatorInstitution"
                   type="text"
                   name={'permanentAddress.locality'}
                   label={t['kymInsLocality']}
@@ -314,7 +322,10 @@ const AddAccountDetails = ({
               </InputGroupContainer>
 
               <Box>
-                <FormMap name={'permanentAddress.coordinates'} />
+                <FormMap
+                  name={'permanentAddress.coordinates'}
+                  id="AccountOperatorInstitution"
+                />
               </Box>
 
               <Box
@@ -329,7 +340,7 @@ const AddAccountDetails = ({
                 </Text>
 
                 <FormSwitch
-                  id="isPermanentAndTemporaryAddressSame"
+                  id="AccountOperatorInstitution"
                   name={'isTemporaryAndPermanentAddressSame'}
                   label={t['kymInsTemporaryAddressPermanent']}
                 />
@@ -338,12 +349,14 @@ const AddAccountDetails = ({
                   <>
                     <InputGroupContainer>
                       <FormSelect
+                        id="AccountOperatorInstitution"
                         name={'temporaryAddress.provinceId'}
                         label={t['kymInsState']}
                         placeholder={t['kymInsSelectState']}
                         options={province}
                       />
                       <FormSelect
+                        id="AccountOperatorInstitution"
                         name={'temporaryAddress.districtId'}
                         label={t['kymInsDistrict']}
                         placeholder={t['kymInsSelectDistrict']}
@@ -353,6 +366,7 @@ const AddAccountDetails = ({
                         }))}
                       />
                       <FormSelect
+                        id="AccountOperatorInstitution"
                         name={'temporaryAddress.localGovernmentId'}
                         label={t['kymInsVDCMunicipality']}
                         placeholder={t['kymInsSelectVDCMunicipality']}
@@ -362,6 +376,7 @@ const AddAccountDetails = ({
                         }))}
                       />
                       <FormSelect
+                        id="AccountOperatorInstitution"
                         name={'temporaryAddress.wardNo'}
                         label={t['kymInsWardNo']}
                         options={wardTemptList?.map((d) => ({
@@ -370,19 +385,24 @@ const AddAccountDetails = ({
                         }))}
                       />
                       <FormInput
+                        id="AccountOperatorInstitution"
                         type="text"
                         name={'temporaryAddress.locality'}
                         label={t['kymInsLocality']}
                         placeholder={t['kymInsEnterLocality']}
                       />
                       <FormInput
+                        id="AccountOperatorInstitution"
                         type="text"
                         name={'temporaryAddress.houseNo'}
                         label={t['kymInsHouseNo']}
                         placeholder={t['kymInsEnterHouseNo']}
                       />
                     </InputGroupContainer>
-                    <FormMap name={'temporaryAddress.coordinates'} />
+                    <FormMap
+                      name={'temporaryAddress.coordinates'}
+                      id="AccountOperatorInstitution"
+                    />
                   </>
                 )}
               </Box>
@@ -390,6 +410,7 @@ const AddAccountDetails = ({
               <Box>
                 <InputGroupContainer>
                   <FormSelect
+                    id="AccountOperatorInstitution"
                     name={'designation'}
                     label={t['kymInsDesignation']}
                     placeholder={t['kymInsSelectposition']}

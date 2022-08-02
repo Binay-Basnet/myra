@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { KymCooperativeFormInput } from '@coop/shared/data-access';
+import {
+  KymCooperativeFormInput,
+  useDeleteCooPdirectorDataMutation,
+  useGetCoOperativeDirectorEditDataQuery,
+  useGetNewIdMutation,
+} from '@coop/shared/data-access';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
@@ -20,54 +26,96 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
   });
-  const { control, watch } = methods;
-  const {
-    fields: directorFields,
-    append: directorAppend,
-    remove: directorRemove,
-  } = useFieldArray<any>({ control, name: 'boardOfDirectorsDetails' });
 
-  useCooperative({ methods });
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
+  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const [coopDirectorIds, setCoopDirectorIds] = useState<string[]>([]);
+
+  const { data: editValues, refetch } = useGetCoOperativeDirectorEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
+
+  useEffect(() => {
+    if (editValues) {
+      const editValueData =
+        editValues?.members?.cooperative?.listDirectors?.data;
+
+      setCoopDirectorIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
+        ) ?? []
+      );
+    }
+  }, [editValues]);
+  useEffect(() => {
+    if (id) {
+      refetch();
+      console.log({ id });
+    }
+  }, [id]);
+
+  const { mutate: newIdMutate } = useGetNewIdMutation({
+    onSuccess: (res) => {
+      setCoopDirectorIds([...coopDirectorIds, res.newId]);
+    },
+  });
+  const { mutate: deleteMutate } = useDeleteCooPdirectorDataMutation({
+    onSuccess: (res) => {
+      const deletedId = String(
+        res?.members?.cooperative?.directorDetails?.Delete?.recordId
+      );
+
+      const tempDirectorIds = [...coopDirectorIds];
+
+      tempDirectorIds.splice(tempDirectorIds.indexOf(deletedId), 1);
+
+      setCoopDirectorIds([...tempDirectorIds]);
+    },
+  });
+  const addCoopDirector = () => {
+    newIdMutate({});
+  };
+
+  const removeDirector = (directorId: string) => {
+    deleteMutate({ id: id, dirId: directorId });
+  };
+
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymCoopSection(e.target.id);
-          setSection(kymSection);
+    <GroupContainer
+      id="kymCoopAccBoardOfDirectorDetails"
+      scrollMarginTop={'200px'}
+    >
+      <Text fontSize="r1" fontWeight="SemiBold">
+        {t['kymCoopBoardofdirectordetails']}
+      </Text>
+      {coopDirectorIds.map((id, index) => {
+        return (
+          <Box key={id} display="flex" flexDirection={'column'}>
+            <AddDirector
+              setSection={setSection}
+              directorId={id}
+              removeDirector={removeDirector}
+            />
+          </Box>
+        );
+      })}
+      <Button
+        id="directorButton"
+        alignSelf="start"
+        leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+        variant="outline"
+        onClick={() => {
+          addCoopDirector();
         }}
       >
-        <GroupContainer
-          id="kymCoopAccBoardOfDirectorDetails"
-          scrollMarginTop={'200px'}
-        >
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kymCoopBoardofdirectordetails']}
-          </Text>
-          {directorFields.map((item, index) => {
-            return (
-              <Box key={item.id} display="flex" flexDirection={'column'}>
-                <AddDirector
-                  watch={watch}
-                  index={index}
-                  control={control}
-                  removeDirector={() => directorRemove(index)}
-                />
-              </Box>
-            );
-          })}
-          <Button
-            id="directorButton"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              directorAppend({});
-            }}
-          >
-            {t['kymCoopAddDirector']}
-          </Button>
-        </GroupContainer>
-      </form>
-    </FormProvider>
+        {t['kymCoopAddDirector']}
+      </Button>
+    </GroupContainer>
   );
 };

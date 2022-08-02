@@ -179,12 +179,14 @@ export const DirectorTopPart = ({
         <Box display={'flex'} flexDirection="column" gap={'s32'}>
           <InputGroupContainer>
             <FormInput
+              id="DirectorInstitutionId"
               type="text"
               name={`name`}
               label={t['kymInsFullName']}
               placeholder={t['kymInsEnterFullName']}
             />
             <FormInput
+              id="DirectorInstitutionId"
               type="text"
               name={`designation`}
               label={t['kymInsDesignation']}
@@ -204,12 +206,14 @@ export const DirectorTopPart = ({
           <InputGroupContainer>
             <FormSelect
               name={`permanentAddress.provinceId`}
+              id="DirectorInstitutionId"
               label={t['kymInsState']}
               placeholder={t['kymInsSelectState']}
               options={province}
             />
             <FormSelect
               name={`permanentAddress.districtId`}
+              id="DirectorInstitutionId"
               label={t['kymInsDistrict']}
               placeholder={t['kymInsSelectDistrict']}
               options={districtList.map((d) => ({
@@ -218,6 +222,7 @@ export const DirectorTopPart = ({
               }))}
             />
             <FormSelect
+              id="DirectorInstitutionId"
               name={`permanentAddress.localGovernmentId`}
               label={t['kymInsVDCMunicipality']}
               placeholder={t['kymInsSelectVDCMunicipality']}
@@ -227,6 +232,7 @@ export const DirectorTopPart = ({
               }))}
             />
             <FormSelect
+              id="DirectorInstitutionId"
               name={`permanentAddress.wardNo`}
               label={t['kymInsWardNo']}
               placeholder={t['kymInsEnterWardNo']}
@@ -236,12 +242,14 @@ export const DirectorTopPart = ({
               }))}
             />
             <FormInput
+              id="DirectorInstitutionId"
               type="text"
               name={`permanentAddress.locality`}
               label={t['kymInsLocality']}
               placeholder={t['kymInsEnterLocality']}
             />
             <FormInput
+              id="DirectorInstitutionId"
               type="text"
               name={`permanentAddress.houseNo`}
               label={t['kymInsHouseNo']}
@@ -250,7 +258,10 @@ export const DirectorTopPart = ({
           </InputGroupContainer>
 
           <Box>
-            <FormMap name={`permanentAddress.coordinates`} />
+            <FormMap
+              name={`permanentAddress.coordinates`}
+              id="DirectorInstitutionId"
+            />
           </Box>
 
           <Box
@@ -274,12 +285,14 @@ export const DirectorTopPart = ({
               <>
                 <InputGroupContainer>
                   <FormSelect
+                    id="DirectorInstitutionId"
                     name={`temporaryAddress.provinceId`}
                     label={t['kymInsState']}
                     placeholder={t['kymInsSelectState']}
                     options={province}
                   />
                   <FormSelect
+                    id="DirectorInstitutionId"
                     name={`temporaryAddress.districtId`}
                     label={t['kymInsDistrict']}
                     placeholder={t['kymInsSelectDistrict']}
@@ -289,6 +302,7 @@ export const DirectorTopPart = ({
                     }))}
                   />
                   <FormSelect
+                    id="DirectorInstitutionId"
                     name={`temporaryAddress.localGovernmentId`}
                     label={t['kymInsVDCMunicipality']}
                     placeholder={t['kymInsSelectVDCMunicipality']}
@@ -298,6 +312,7 @@ export const DirectorTopPart = ({
                     }))}
                   />
                   <FormSelect
+                    id="DirectorInstitutionId"
                     name={`temporaryAddress.wardNo`}
                     label={t['kymInsWardNo']}
                     placeholder={t['kymInsEnterWardNo']}
@@ -307,19 +322,24 @@ export const DirectorTopPart = ({
                     }))}
                   />
                   <FormInput
+                    id="DirectorInstitutionId"
                     type="text"
                     name={`temporaryAddress.locality`}
                     label={t['kymInsLocality']}
                     placeholder={t['kymInsEnterLocality']}
                   />
                   <FormInput
+                    id="DirectorInstitutionId"
                     type="text"
                     name={`temporaryAddress.houseNo`}
                     label={t['kymInsHouseNo']}
                     placeholder={t['kymInsEnterHouseNo']}
                   />
                 </InputGroupContainer>
-                <FormMap name={`temporaryAddress.coordinates`} />
+                <FormMap
+                  id="DirectorInstitutionId"
+                  name={`temporaryAddress.coordinates`}
+                />
               </>
             )}
           </Box>
@@ -327,36 +347,42 @@ export const DirectorTopPart = ({
           <Box>
             <InputGroupContainer>
               <FormInput
+                id="DirectorInstitutionId"
                 type="date"
                 name={`dateOfMembership`}
                 label={t['kymInsDateOfMembership']}
                 placeholder="DD-MM-YYYY"
               />
               <FormInput
+                id="DirectorInstitutionId"
                 type="text"
                 name={`highestQualification`}
                 label={t['kymInsHighestQualification']}
                 placeholder={t['kymInsEnterHigestQualification']}
               />
               <FormInput
+                id="DirectorInstitutionId"
                 type="string"
                 name={`mobileNo`}
                 label={t['kymInsMobileNo']}
                 placeholder={t['kymInsEnterMobileNo']}
               />
               <FormInput
+                id="DirectorInstitutionId"
                 type="text"
                 name={`email`}
                 label={t['kymInsEmail']}
                 placeholder={t['kymInsEnterEmail']}
               />
               <FormInput
+                id="DirectorInstitutionId"
                 type="string"
                 name={`citizenshipNo`}
                 label={t['kymInsCitizenshipPassportDrivingLicenseNo']}
                 placeholder={t['kymInsEnterNo']}
               />
               <FormInput
+                id="DirectorInstitutionId"
                 type="string"
                 name={`panNo`}
                 label={t['kymInsPanNo']}

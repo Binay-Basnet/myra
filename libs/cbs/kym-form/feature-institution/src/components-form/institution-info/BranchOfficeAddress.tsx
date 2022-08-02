@@ -88,12 +88,14 @@ export const BranchOfficeAddress = (props: IProps) => {
           >
             <InputGroupContainer>
               <FormSelect
+                id="branchOfficeAddress"
                 name={`branchOfficeAddress.provinceId`}
                 label={t['kymIndProvince']}
                 placeholder={t['kymIndSelectProvince']}
                 options={province}
               />
               <FormSelect
+                id="branchOfficeAddress"
                 name={`branchOfficeAddress.districtId`}
                 label={t['kymIndDistrict']}
                 placeholder={t['kymIndSelectDistrict']}
@@ -103,6 +105,7 @@ export const BranchOfficeAddress = (props: IProps) => {
                 }))}
               />
               <FormSelect
+                id="branchOfficeAddress"
                 name="branchOfficeAddress.localGovernmentId"
                 label={t['kymIndLocalGovernment']}
                 placeholder={t['kymIndSelectLocalGovernment']}
@@ -112,6 +115,7 @@ export const BranchOfficeAddress = (props: IProps) => {
                 }))}
               />
               <FormSelect
+                id="branchOfficeAddress"
                 name="branchOfficeAddress.wardNo"
                 label={t['kymIndWardNo']}
                 options={wardList?.map((d) => ({
@@ -121,12 +125,14 @@ export const BranchOfficeAddress = (props: IProps) => {
                 placeholder={t['kymIndEnterWardNo']}
               />
               <FormInput
+                id="branchOfficeAddress"
                 type="text"
                 name="branchOfficeAddress.locality"
                 label={t['kymIndLocality']}
                 placeholder={t['kymIndEnterLocality']}
               />
               <FormInput
+                id="branchOfficeAddress"
                 type="text"
                 name="branchOfficeAddress.houseNo"
                 label={t['kymIndHouseNo']}
@@ -135,7 +141,10 @@ export const BranchOfficeAddress = (props: IProps) => {
             </InputGroupContainer>
 
             <Box>
-              <FormMap name="branchOfficeAddress.coordinates" />
+              <FormMap
+                name="branchOfficeAddress.coordinates"
+                id="branchOfficeAddress"
+              />
             </Box>
           </Box>
         </GroupContainer>

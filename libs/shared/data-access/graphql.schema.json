@@ -12165,30 +12165,6 @@
             "deprecationReason": null
           },
           {
-            "name": "interestSanctionedById",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "interestSanctionedByName",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "memberId",
             "description": null,
             "args": [],
@@ -12601,30 +12577,6 @@
           },
           {
             "name": "interestRate",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "interestSanctionedById",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "interestSanctionedByName",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -56722,6 +56674,18 @@
             "name": "ReferenceKYM",
             "description": null,
             "args": [
+              {
+                "name": "deference",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
               {
                 "name": "fieldId",
                 "description": null,
