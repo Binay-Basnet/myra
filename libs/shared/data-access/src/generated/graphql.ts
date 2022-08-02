@@ -7128,7 +7128,7 @@ export type SetCooperativeUnionInstitutionDataMutation = { members: { cooperativ
 
 export type SetPersonnelDetailsMutationVariables = Exact<{
   id: Scalars['ID'];
-  personnelId: Scalars['String'];
+  personnelId?: InputMaybe<Scalars['String']>;
   sectionType: CooperativeUnionPersonnelSection;
   data?: InputMaybe<CoopUnionPersonnelInput>;
 }>;
@@ -8180,7 +8180,7 @@ export const useSetCooperativeUnionInstitutionDataMutation = <
       options
     );
 export const SetPersonnelDetailsDocument = `
-    mutation setPersonnelDetails($id: ID!, $personnelId: String!, $sectionType: CooperativeUnionPersonnelSection!, $data: CoopUnionPersonnelInput) {
+    mutation setPersonnelDetails($id: ID!, $personnelId: String, $sectionType: CooperativeUnionPersonnelSection!, $data: CoopUnionPersonnelInput) {
   members {
     cooperativeUnion {
       add(id: $id) {

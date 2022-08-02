@@ -15,7 +15,7 @@ mutation setCooperativeUnionInstitutionData(
 
 mutation setPersonnelDetails(
   $id: ID!
-  $personnelId: String!
+  $personnelId: String
   $sectionType: CooperativeUnionPersonnelSection!
   $data: CoopUnionPersonnelInput
 ) {

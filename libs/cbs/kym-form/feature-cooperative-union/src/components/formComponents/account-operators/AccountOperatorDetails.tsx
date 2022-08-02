@@ -530,7 +530,7 @@ export const AccountOperatorInfo = ({
 
   const [accountOperatorIds, setAccountOperatorIds] = useState<string[]>([]);
 
-  const { data: accountOperatorEditValues } =
+  const { data: accountOperatorEditValues, refetch } =
     useGetAccountOperatorDetailsListQuery(
       {
         id: String(id),
@@ -552,6 +552,10 @@ export const AccountOperatorInfo = ({
       );
     }
   }, [accountOperatorEditValues]);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

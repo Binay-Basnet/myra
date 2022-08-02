@@ -545,6 +545,10 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
     }
   }, [bodEditValues]);
 
+  useEffect(() => {
+    refetch();
+  }, []);
+
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
       setDirectorIds([...directorIds, res.newId]);
