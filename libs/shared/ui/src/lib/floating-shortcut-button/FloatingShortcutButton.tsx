@@ -90,14 +90,26 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             </Text>
           </Box>
           <UnorderedList>
-            <ListItem fontSize="s3">Individual Form Crud operation</ListItem>
-            <ListItem fontSize="s3">Institution Form Crud operation</ListItem>
-            <ListItem fontSize="s3">Deposit From connect with BE</ListItem>
             <ListItem fontSize="s3">
-              Deposit product form Crud operation
+              All 4 type of members can be added and seen in member list.
             </ListItem>
-            <ListItem fontSize="s3">Authentication</ListItem>
-            <ListItem fontSize="s3">Loan product detail page</ListItem>
+            <ListItem fontSize="s3">
+              Deposit product can be created and seen in deposit list.
+            </ListItem>
+            <ListItem fontSize="s3">
+              Deposit Settings (TDS/IRO Setup) can be done.
+            </ListItem>
+            <ListItem fontSize="s3">
+              Loan product can be created and seen in deposit list.
+            </ListItem>
+            <ListItem fontSize="s3">
+              New branch can be added and seen in branch list
+            </ListItem>
+            <ListItem fontSize="s3">User Authentication is done.</ListItem>
+            <ListItem fontSize="s3">
+              All 4 Kym settings can be mended which reflects in actual Kym
+              form.
+            </ListItem>
           </UnorderedList>
         </Box>
         <Box>
@@ -127,7 +139,33 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             </Text>
           </Box>
           <UnorderedList>
-            <ListItem fontSize="s3">UI issue when map is opened</ListItem>
+            <ListItem fontSize="s3">
+              Drop down list might not be relevant.
+            </ListItem>
+            <ListItem fontSize="s3">
+              Validation not applicable at any where.
+            </ListItem>
+            <ListItem fontSize="s3">
+              Multiple upload on edit not applicable.
+            </ListItem>
+            <ListItem fontSize="s3">Map ui issue.</ListItem>
+            <ListItem fontSize="s3">
+              All kym form fields cannot be updated in kym setting however new
+              can be added and reflected.
+            </ListItem>
+            <ListItem fontSize="s3">
+              Some input contains zero value as default.
+            </ListItem>
+            <ListItem fontSize="s3">
+              Find members in kym form individuals is not working.
+            </ListItem>
+            <ListItem fontSize="s3">
+              All fields in deposit/loan product must be filled for the product
+              to be created
+            </ListItem>
+            <ListItem fontSize="s3">
+              Remaining 2 kym form coop and coop union might contain bugs.
+            </ListItem>
           </UnorderedList>
         </Box>
       </Box>
