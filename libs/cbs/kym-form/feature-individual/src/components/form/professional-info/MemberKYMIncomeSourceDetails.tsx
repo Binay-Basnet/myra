@@ -228,7 +228,7 @@ export const MemberKYMIncomeSourceDetails = ({
       reset({
         annualIncomeSourceId:
           editValues?.members?.individual?.formState?.data?.formData
-            ?.annualIncomeSourceId,
+            ?.annualIncomeSourceId ?? '',
       });
     }
   }, [editValues]);

@@ -50,16 +50,18 @@ interface ICRDirectorsSelectionProps {
   setSection: (section?: { section: string; subSection: string }) => void;
   refetch: any;
   crId: string;
-  notAmongDirectors: boolean;
+  setCRId: any;
 }
 
 const CRDirectorsSelection = ({
   setSection,
   refetch,
   crId,
-  notAmongDirectors,
+  setCRId,
 }: ICRDirectorsSelectionProps) => {
   const { t } = useTranslation();
+
+  const [notAmongDirectors, setNotAmongDirectors] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -68,6 +70,32 @@ const CRDirectorsSelection = ({
   const methods = useForm<CoopUnionPersonnelInput>();
 
   const { getValues, reset, watch, control } = methods;
+
+  const { mutate: newIdMutate } = useGetNewIdMutation({
+    onSuccess: (res) => {
+      setCRId(res.newId);
+    },
+  });
+
+  useEffect(() => {
+    if (watch('notAmongDirectors')) {
+      newIdMutate({});
+    }
+  }, [watch('notAmongDirectors')]);
+
+  useEffect(() => {
+    if (crId) {
+      const data = getValues();
+      if (data?.notAmongDirectors) {
+        mutate({
+          id,
+          personnelId: data?.notAmongDirectors ? crId : null,
+          sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
+          data,
+        });
+      }
+    }
+  }, [crId]);
 
   const { data: bodEditValues } = useGetBoardOfDirectorsDetailsListQuery(
     {
@@ -81,16 +109,38 @@ const CRDirectorsSelection = ({
       (personnel) => ({ name: personnel?.fullName, id: personnel?.id })
     );
 
-  const { data: crDetailsEditData } = useGetCentralRepresentativeDetailsQuery(
+  const {
+    data: crDetailsEditData,
+    refetch: refetchCentralRepresentativeDetail,
+  } = useGetCentralRepresentativeDetailsQuery(
     {
       id: String(id),
     },
     { enabled: !!id }
   );
 
-  console.log({ notAmongDirectors });
+  useEffect(() => {
+    if (crDetailsEditData) {
+      const crDetail =
+        crDetailsEditData?.members?.cooperativeUnion?.formState?.data?.formData
+          ?.centralRepresentativeDetails;
 
-  console.log({ directorArray });
+      if (crDetail) {
+        reset({
+          ...omit(
+            pickBy(crDetail, (v) => v !== null),
+            ['id']
+          ),
+        });
+
+        setNotAmongDirectors(crDetail.notAmongDirectors ?? false);
+      }
+    }
+  }, [crDetailsEditData]);
+
+  useEffect(() => {
+    refetchCentralRepresentativeDetail();
+  }, []);
 
   const { mutate } = useSetPersonnelDetailsMutation({
     onSuccess: () => refetch(),
@@ -100,19 +150,31 @@ const CRDirectorsSelection = ({
     const subscription = watch(
       debounce((data) => {
         if (id && data && !isDeepEmpty(data)) {
-          mutate({
-            id,
-            personnelId: data?.notAmongDirectors ? crId : '',
-            sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
-            data,
-          });
-          // refetch();
+          if (!data?.notAmongDirectors) {
+            mutate({
+              id,
+              personnelId: null,
+              sectionType:
+                CooperativeUnionPersonnelSection.CentralRepresentative,
+              data,
+            });
+          }
+
+          if (data?.notAmongDirectors && crId) {
+            mutate({
+              id,
+              personnelId: crId,
+              sectionType:
+                CooperativeUnionPersonnelSection.CentralRepresentative,
+              data: omit(data, ['centralRepID']),
+            });
+          }
         }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  }, [watch, router.isReady, crId]);
 
   return (
     <FormProvider {...methods}>
@@ -176,13 +238,13 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
     },
   });
 
-  useEffect(() => {
-    if (!crId) {
-      newIdMutate({});
-    }
+  // useEffect(() => {
+  //   if (!crId) {
+  //     newIdMutate({});
+  //   }
 
-    return () => setCRId('');
-  }, []);
+  //   return () => setCRId('');
+  // }, []);
 
   const { mutate } = useSetPersonnelDetailsMutation({
     onSuccess: () => refetch(),
@@ -192,19 +254,32 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
     const subscription = watch(
       debounce((data) => {
         if (id && data && !isDeepEmpty(data)) {
-          mutate({
-            id,
-            personnelId: crId,
-            sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
-            data,
-          });
+          if (!data?.notAmongDirectors) {
+            mutate({
+              id,
+              personnelId: null,
+              sectionType:
+                CooperativeUnionPersonnelSection.CentralRepresentative,
+              data,
+            });
+          }
+
+          if (data?.notAmongDirectors && crId) {
+            mutate({
+              id,
+              personnelId: crId,
+              sectionType:
+                CooperativeUnionPersonnelSection.CentralRepresentative,
+              data: omit(data, ['centralRepID']),
+            });
+          }
           // refetch();
         }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  }, [watch, router.isReady, crId]);
 
   const { data: crDetailsEditData, refetch } =
     useGetCentralRepresentativeDetailsQuery(
@@ -227,6 +302,10 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
             ['id']
           ),
         });
+
+        if (crDetail?.id) {
+          setCRId(crDetail?.id);
+        }
 
         setNotAmongDirectors(crDetail.notAmongDirectors ?? false);
       }
@@ -309,7 +388,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
           crId={crId}
           setSection={setSection}
           refetch={refetch}
-          notAmongDirectors={notAmongDirectors}
+          setCRId={setCRId}
         />
 
         {notAmongDirectors && (

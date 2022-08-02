@@ -58,6 +58,9 @@ export const KYMEstimatedAmount = ({
 
       reset({
         ...editValueData?.estimatedTransactions,
+        estimatedAnnualTransactionFrequencyId:
+          editValueData?.estimatedTransactions
+            ?.estimatedAnnualTransactionFrequencyId ?? '',
       });
     }
   }, [editValues]);
