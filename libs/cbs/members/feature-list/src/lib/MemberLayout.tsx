@@ -201,9 +201,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                           newId
                             .mutateAsync({})
                             .then((res) =>
-                              router.push(
-                                `/members/cooperative/add/${res?.newId}`
-                              )
+                              router.push(`/members/coop/add/${res?.newId}`)
                             );
                         item === 'COOPERATIVE_UNION' &&
                           newId

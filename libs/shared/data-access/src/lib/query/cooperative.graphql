@@ -76,7 +76,7 @@ query getCoOperativeKymEditData($id: ID!) {
             cooperativeTypeId
             mainServiceProduct
             noOfMaleEmployee
-            noOfFemaleEmloyee
+            # noOfFemaleEmloyee
             totalEmployee
             shareCapital
             reserveAndSurplus
@@ -85,7 +85,7 @@ query getCoOperativeKymEditData($id: ID!) {
             capitalGrant
             currentLiabilities
             nonCurrentLiabilities
-            totalEquityAndLiabilities
+            # totalEquityAndLiabilities
             cashAndCashEquivalent
             bank
             investments

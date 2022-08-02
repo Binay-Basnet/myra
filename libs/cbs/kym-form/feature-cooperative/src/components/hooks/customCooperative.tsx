@@ -35,7 +35,10 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
       debounce((data) => {
         console.log(editValues);
         if (editValues && data) {
-          mutate({ id: router.query['id'] as string, data });
+          mutate({
+            id: router.query['id'] as string,
+            data: pickBy(data, (v) => v !== 0 && v !== '' && v !== null),
+          });
           refetch();
         }
       }, 800)
@@ -43,24 +46,19 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady, editValues]);
+  const editLastValues =
+    editValues?.members?.cooperative?.formState?.data?.formData;
 
   useEffect(() => {
-    if (editValues) {
-      console.log(
-        pickBy(
-          editValues?.members?.cooperative?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        )
-      );
+    if (editLastValues) {
       console.log('pick', pickBy);
-      const editValueData =
-        editValues?.members?.cooperative?.formState?.data?.formData;
-
+      const editTruthyData = pickBy(
+        editLastValues,
+        (v) => v !== 0 && v !== '' && v !== null
+      );
+      console.log('truthy', editTruthyData);
       reset({
-        ...pickBy(
-          editValues?.members?.cooperative?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        ),
+        ...editTruthyData,
       });
     }
   }, [editLoading]);
