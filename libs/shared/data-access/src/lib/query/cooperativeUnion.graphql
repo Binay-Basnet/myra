@@ -221,3 +221,121 @@ query getBoardOfDirectorsDetailsList($id: ID!) {
     }
   }
 }
+
+query getAccountOperatorDetailsList($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        data {
+          formData {
+            accountOperatorsDetails {
+              personnelDetails {
+                id
+                cooperativeUnionId
+                fullName
+                fullNameNp
+                designationEn
+                designationNp
+                permanentAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                isPermanentAndTemporaryAddressSame
+                temporaryAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                dateOfMembership
+                highestQualification
+                mobileNumber
+                email
+                citizenshipNo
+                trainingAttended {
+                  subjectOfTraining
+                  dateOfTraining
+                  trainingOrganization
+                }
+                panNo
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCentralRepresentativeDetails($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        data {
+          formData {
+            centralRepresentativeDetails {
+              id
+              cooperativeUnionId
+              fullName
+              fullNameNp
+              designationEn
+              designationNp
+              permanentAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              isPermanentAndTemporaryAddressSame
+              temporaryAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              dateOfMembership
+              highestQualification
+              mobileNumber
+              email
+              citizenshipNo
+              trainingAttended {
+                subjectOfTraining
+                dateOfTraining
+                trainingOrganization
+              }
+              panNo
+              notAmongDirectors
+              centralRepID
+            }
+          }
+        }
+      }
+    }
+  }
+}

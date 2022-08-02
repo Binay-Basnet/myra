@@ -2,6 +2,7 @@ import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+import { getKymSection } from '@coop/shared/utils';
 
 interface IKYMDocumentDeclarationProps {
   setKymCurrentSection: (section?: {
@@ -26,24 +27,28 @@ export const KYMDocumentDeclaration = ({
           label="Passport Size Photo"
           name="passportSizePhoto"
           setKymCurrentSection={setKymCurrentSection}
+          getKymSection={getKymSection}
         />
 
         <KYMDocumentField
           label="Signature"
           name="signaturePhoto"
           setKymCurrentSection={setKymCurrentSection}
+          getKymSection={getKymSection}
         />
 
         <KYMDocumentField
           label="Citizenship Photo"
           name="citizenshipPhoto"
           setKymCurrentSection={setKymCurrentSection}
+          getKymSection={getKymSection}
         />
 
         <KYMDocumentField
           label="Fingerprint Photo"
           name="fingerprintPhoto"
           setKymCurrentSection={setKymCurrentSection}
+          getKymSection={getKymSection}
         />
         {/* {fileUploadsData?.members?.individual?.options?.list?.data?.[0]?.options?.map(
               (option, index) => (

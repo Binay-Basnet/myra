@@ -1,13 +1,30 @@
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import { FormFileInput } from '@coop/shared/form';
-import { Box, Checkbox, Grid, Text, TextFields } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { FormProvider, useForm } from 'react-hook-form';
 
-export const DocumentDeclarationInstitutionCOOPUnion = () => {
+import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { CoopUnionInstitutionInformationInput } from '@coop/shared/data-access';
+import { FormCheckbox } from '@coop/shared/form';
+import { Box, Grid, Text, TextFields } from '@coop/shared/ui';
+import {
+  getKymSectionCoOperativeUnion,
+  useTranslation,
+} from '@coop/shared/utils';
+
+import { useCooperativeUnionInstitution } from '../../../hooks';
+
+interface IDocumentDeclarationInstitutionCOOPUnionProps {
+  setSection: (section?: { section: string; subSection: string }) => void;
+}
+
+export const DocumentDeclarationInstitutionCOOPUnion = ({
+  setSection,
+}: IDocumentDeclarationInstitutionCOOPUnionProps) => {
   const { t } = useTranslation();
+
+  const methods = useForm<CoopUnionInstitutionInformationInput>();
+
+  useCooperativeUnionInstitution({ methods });
+
   return (
     <GroupContainer
       scrollMarginTop={'200px'}
@@ -21,41 +38,53 @@ export const DocumentDeclarationInstitutionCOOPUnion = () => {
         {t['kymCoopUnionDecDocumentsDeclaration']}
       </Text>
       <Grid templateColumns={'repeat(2, 1fr)'} gap="s32">
-        <FormFileInput
+        <KYMDocumentField
           name="documents"
           label={t['kymCoopUnionDecAGMDecisionDocument']}
-          size="lg"
+          setKymCurrentSection={setSection}
+          getKymSection={getKymSectionCoOperativeUnion}
         />
-        <FormFileInput
+        <KYMDocumentField
           name="documents"
           label={t['kymCoopUnionDecRegisteredCertificate']}
-          size="lg"
+          setKymCurrentSection={setSection}
+          getKymSection={getKymSectionCoOperativeUnion}
         />
-        <FormFileInput
+        <KYMDocumentField
           name="documents"
           label={t['kymCoopUnionDecMOAAOA']}
-          size="lg"
+          setKymCurrentSection={setSection}
+          getKymSection={getKymSectionCoOperativeUnion}
         />
-        <FormFileInput
+        <KYMDocumentField
           name="documents"
           label={t['kymCoopUnionDecPANCertificate']}
-          size="lg"
+          setKymCurrentSection={setSection}
+          getKymSection={getKymSectionCoOperativeUnion}
         />
-        <FormFileInput
+        <KYMDocumentField
           name="documents"
           label={t['kymCoopUnionDecTaxClearance']}
-          size="lg"
+          setKymCurrentSection={setSection}
+          getKymSection={getKymSectionCoOperativeUnion}
         />
-        <FormFileInput
+        <KYMDocumentField
           name="documents"
           label={t['kymCoopUnionDecLatestAuditReport']}
-          size="lg"
+          setKymCurrentSection={setSection}
+          getKymSection={getKymSectionCoOperativeUnion}
         />
-        <FormFileInput name="documents" label="Logo" size="lg" />
-        <FormFileInput
+        <KYMDocumentField
+          name="documents"
+          label="Logo"
+          setKymCurrentSection={setSection}
+          getKymSection={getKymSectionCoOperativeUnion}
+        />
+        <KYMDocumentField
           name="documents"
           label={t['kymCoopUnionDecMinuteofCentralRep']}
-          size="lg"
+          setKymCurrentSection={setSection}
+          getKymSection={getKymSectionCoOperativeUnion}
         />
       </Grid>
       <Box
@@ -65,12 +94,26 @@ export const DocumentDeclarationInstitutionCOOPUnion = () => {
         id="kymCoopUnionAccAccountHolderDeclaration"
         scrollMarginTop={'200px'}
       >
-        <Checkbox fontSize="s3" id="weAgree" mt="2px">
-          {''}
-        </Checkbox>
-        <TextFields variant="formInput">
-          I/We agree to the Terms and condition
-        </TextFields>
+        <FormProvider {...methods}>
+          <form
+            onFocus={(e) => {
+              const kymSection = getKymSectionCoOperativeUnion(e.target.id);
+
+              setSection(kymSection);
+            }}
+          >
+            <Box display="flex" gap="s16" alignItems="center">
+              <FormCheckbox
+                name="declarationAgreement"
+                fontSize="s3"
+                id="weAgree"
+              />
+              <TextFields variant="formInput">
+                I/We agree to the Terms and condition
+              </TextFields>
+            </Box>
+          </form>
+        </FormProvider>
       </Box>
     </GroupContainer>
   );

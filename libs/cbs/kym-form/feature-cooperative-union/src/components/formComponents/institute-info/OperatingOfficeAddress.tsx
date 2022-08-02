@@ -45,7 +45,7 @@ export const OperatingOfficeAddress = ({
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('operatingOfficeAddress.provinceId');
   const currentDistrictId = watch('operatingOfficeAddress.districtId');
-  const localGovernmentId = watch('operatingOfficeAddress');
+  const localGovernmentId = watch('operatingOfficeAddress.localGovernmentId');
 
   const districtList = useMemo(
     () =>
@@ -62,7 +62,7 @@ export const OperatingOfficeAddress = ({
   );
 
   const wardList = useMemo(
-    () => localityList.find((d) => d.id === currentDistrictId)?.wards ?? [],
+    () => localityList.find((d) => d.id === localGovernmentId)?.wards ?? [],
     [localGovernmentId]
   );
   return (

@@ -6,6 +6,7 @@ import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
+import omit from 'lodash/omit';
 
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import {
@@ -16,8 +17,11 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import {
   CooperativeUnionPersonnelSection,
+  CoopUnionPersonnelDetails,
   CoopUnionPersonnelInput,
   useAllAdministrationQuery,
+  useDeletePersonnelDetailsMutation,
+  useGetAccountOperatorDetailsListQuery,
   useGetNewIdMutation,
   useSetPersonnelDetailsMutation,
 } from '@coop/shared/data-access';
@@ -44,6 +48,7 @@ interface IAddDirectorProps {
   removeAccount: (accountOperatorId: string) => void;
   index: number;
   accountOperatorId: string;
+  accountOperatorDetail: CoopUnionPersonnelDetails | null | undefined;
 }
 
 const AddDirector = ({
@@ -51,6 +56,7 @@ const AddDirector = ({
   setSection,
   index,
   accountOperatorId,
+  accountOperatorDetail,
 }: IAddDirectorProps) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
@@ -81,6 +87,24 @@ const AddDirector = ({
   const { mutate } = useSetPersonnelDetailsMutation();
 
   useEffect(() => {
+    if (accountOperatorDetail) {
+      if (accountOperatorDetail) {
+        reset({
+          ...omit(accountOperatorDetail, ['id', 'cooperativeUnionId']),
+          permanentAddress: {
+            ...accountOperatorDetail?.permanentAddress,
+            locality: accountOperatorDetail?.permanentAddress?.locality?.local,
+          },
+          temporaryAddress: {
+            ...accountOperatorDetail?.temporaryAddress,
+            locality: accountOperatorDetail?.temporaryAddress?.locality?.local,
+          },
+        });
+      }
+    }
+  }, [accountOperatorDetail]);
+
+  useEffect(() => {
     const subscription = watch(
       debounce((data) => {
         if (id && data && !isDeepEmpty(data)) {
@@ -88,7 +112,7 @@ const AddDirector = ({
             id,
             personnelId: accountOperatorId,
             sectionType: CooperativeUnionPersonnelSection.AccountOperators,
-            data: { id, ...data },
+            data,
           });
           // refetch();
         }
@@ -429,7 +453,7 @@ const AddDirector = ({
               />
             </InputGroupContainer> */}
 
-                  {/* <AccountOperatorTraining bodIndex={index} /> */}
+                  <AccountOperatorTraining />
                 </SectionContainer>
               </form>
             </FormProvider>
@@ -439,11 +463,13 @@ const AddDirector = ({
                 label={t['kymCoopUnionOpPhotograph']}
                 name={`photograph`}
                 setKymCurrentSection={setSection}
+                getKymSection={getKymSectionCoOperativeUnion}
               />
               <KYMDocumentField
                 label={t['kymCoopUnionOpPhotographOfIdentityProofDocument']}
                 name={`identityDocumentPhoto`}
                 setKymCurrentSection={setSection}
+                getKymSection={getKymSectionCoOperativeUnion}
               />
             </Grid>
             <InputGroupContainer>
@@ -452,6 +478,7 @@ const AddDirector = ({
                   name={`signature`}
                   label={t['kymCoopUnionOpSpecimenSignature']}
                   setKymCurrentSection={setSection}
+                  getKymSection={getKymSectionCoOperativeUnion}
                 />
               </Box>
             </InputGroupContainer>
@@ -459,20 +486,20 @@ const AddDirector = ({
         </DynamicBoxGroupContainer>
         <Box
           display="flex"
-          justifyContent="space-between"
+          justifyContent="flex-end"
           border="1px solid"
           borderColor="border.layout"
           alignItems={'center'}
           h="60px"
           px="s20"
         >
-          <Button
+          {/* <Button
             variant="ghost"
             leftIcon={<GrRotateRight />}
             onClick={resetDirectorForm}
           >
             {t['kymInsReset']}
-          </Button>
+          </Button> */}
           <Button
             variant="outline"
             shade="danger"
@@ -497,7 +524,34 @@ export const AccountOperatorInfo = ({
 }: IAccountOperatorInfoProps) => {
   const { t } = useTranslation();
 
+  const router = useRouter();
+
+  const id = router?.query?.['id'];
+
   const [accountOperatorIds, setAccountOperatorIds] = useState<string[]>([]);
+
+  const { data: accountOperatorEditValues } =
+    useGetAccountOperatorDetailsListQuery(
+      {
+        id: String(id),
+      },
+      { enabled: !!id }
+    );
+
+  useEffect(() => {
+    if (accountOperatorEditValues) {
+      const editValueData =
+        accountOperatorEditValues?.members?.cooperativeUnion?.formState?.data
+          ?.formData?.accountOperatorsDetails?.personnelDetails;
+
+      setAccountOperatorIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
+        ) ?? []
+      );
+    }
+  }, [accountOperatorEditValues]);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
@@ -505,27 +559,26 @@ export const AccountOperatorInfo = ({
     },
   });
 
-  // const { mutate: deleteMutate } = useDeleteDirectorInstitutionMutation({
-  //   onSuccess: (res) => {
-  //     const deletedId = String(
-  //       res?.members?.institution?.director?.Delete?.recordId
-  //     );
-
-  //     const tempDirectorIds = [...accountOperatorIds];
-
-  //     tempDirectorIds.splice(tempDirectorIds.indexOf(deletedId), 1);
-
-  //     setAccountOperatorIds([...tempDirectorIds]);
-  //   },
-  // });
-
   const addAccountOperator = () => {
     newIdMutate({});
   };
 
+  const { mutate: deleteMutation } = useDeletePersonnelDetailsMutation({
+    onSuccess: (res) => {
+      const deletedId = String(
+        res?.members?.cooperativeUnion?.deletePersonnel?.recordId
+      );
+
+      const tempAccOperatorIds = [...accountOperatorIds];
+
+      tempAccOperatorIds.splice(tempAccOperatorIds.indexOf(deletedId), 1);
+
+      setAccountOperatorIds([...tempAccOperatorIds]);
+    },
+  });
+
   const removeAccountOperator = (accountOperatorId: string) => {
-    console.log({ accountOperatorId });
-    // deleteMutate({ insId: id, dir: directorId });
+    deleteMutation({ personnelId: accountOperatorId });
   };
 
   return (
@@ -536,10 +589,10 @@ export const AccountOperatorInfo = ({
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymCoopUnionDetailsOfAccountOperators']}
       </Text>
-      {accountOperatorIds.map((item, index) => {
+      {accountOperatorIds.map((accountOperatorId, index) => {
         return (
           <Box
-            key={item}
+            key={accountOperatorId}
             display="flex"
             flexDirection={'column'}
             id="Details of Account Operators"
@@ -548,8 +601,11 @@ export const AccountOperatorInfo = ({
             <AddDirector
               index={index}
               setSection={setSection}
-              accountOperatorId={item}
-              removeAccount={() => removeAccountOperator(item)}
+              accountOperatorId={accountOperatorId}
+              removeAccount={() => removeAccountOperator(accountOperatorId)}
+              accountOperatorDetail={accountOperatorEditValues?.members?.cooperativeUnion?.formState?.data?.formData?.accountOperatorsDetails?.personnelDetails?.find(
+                (accOperator) => accOperator?.id === accountOperatorId
+              )}
             />
           </Box>
         );

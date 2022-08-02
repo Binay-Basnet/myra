@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import {
   GroupContainer,
   InputGroupContainer,
@@ -302,36 +303,28 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
         </form>
       </FormProvider>
 
-      <FormProvider {...methods}>
-        <form
-          onFocus={(e) => {
-            const kymSection = getKymSectionCoOperativeUnion(e.target.id);
-
-            setSection(kymSection);
-          }}
-        >
-          <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
-            <FormFileInput
-              size="md"
-              label={t['kymCoopUnionSignature']}
-              // control={control}
-              name="applicantSign"
-            />
-            <FormFileInput
-              size="md"
-              label={t['kymCoopUnionStamp']}
-              // control={control}
-              name="applicantStamp"
-            />
-            {/* <FormFileInput
+      <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
+        <KYMDocumentField
+          size="md"
+          label={t['kymCoopUnionSignature']}
+          name="applicantSign"
+          setKymCurrentSection={setSection}
+          getKymSection={getKymSectionCoOperativeUnion}
+        />
+        <KYMDocumentField
+          size="md"
+          label={t['kymCoopUnionStamp']}
+          name="applicantStamp"
+          setKymCurrentSection={setSection}
+          getKymSection={getKymSectionCoOperativeUnion}
+        />
+        {/* <FormFileInput
           size="md"
           label={'Applicant Decision Document'}
           // control={control}
           name="applicantDecisionDocument"
         /> */}
-          </Grid>
-        </form>
-      </FormProvider>
+      </Grid>
     </>
   );
 };

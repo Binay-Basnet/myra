@@ -42,7 +42,7 @@ export enum Account_Type {
 }
 
 export type AbbsTransaction = {
-  abbsStatus?: Maybe<Status>;
+  abbsStatus?: Maybe<Scalars['Boolean']>;
   payableAccountId?: Maybe<Scalars['String']>;
   receivableAccountId?: Maybe<Scalars['String']>;
 };
@@ -453,7 +453,7 @@ export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
   address?: Maybe<Address>;
   branchCode?: Maybe<Scalars['String']>;
-  branchStatus?: Maybe<Status>;
+  branchStatus?: Maybe<Scalars['Boolean']>;
   category?: Maybe<BranchCategory>;
   contactNumber?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -499,9 +499,9 @@ export type BranchEdge = {
 };
 
 export type BranchFormData = {
-  abbsStatus?: Maybe<Status>;
+  abbsStatus?: Maybe<Scalars['Boolean']>;
   branchCode?: Maybe<Scalars['String']>;
-  branchStatus?: Maybe<Status>;
+  branchStatus?: Maybe<Scalars['Boolean']>;
   category?: Maybe<BranchCategory>;
   districtId?: Maybe<Scalars['Int']>;
   email?: Maybe<Scalars['String']>;
@@ -526,9 +526,9 @@ export type BranchGetResult = {
 };
 
 export type BranchInput = {
-  abbsStatus?: InputMaybe<Status>;
+  abbsStatus?: InputMaybe<Scalars['Boolean']>;
   branchCode?: InputMaybe<Scalars['String']>;
-  branchStatus?: InputMaybe<Status>;
+  branchStatus?: InputMaybe<Scalars['Boolean']>;
   category?: InputMaybe<BranchCategory>;
   districtId?: InputMaybe<Scalars['Int']>;
   email?: InputMaybe<Scalars['String']>;
@@ -808,6 +808,7 @@ export type CoopUnionInstitutionInformationInput = {
   applicantTemporaryAddress?: InputMaybe<KymAddressInput>;
   branchOfficeAddress?: InputMaybe<KymAddressInput>;
   contactEmail?: InputMaybe<Scalars['String']>;
+  declarationAgreement?: InputMaybe<Scalars['Boolean']>;
   fax?: InputMaybe<Scalars['String']>;
   institutionType?: InputMaybe<Scalars['ID']>;
   issuingOffice?: InputMaybe<Scalars['String']>;
@@ -843,6 +844,7 @@ export type CoopUnionInstitutionInformationResult = {
 };
 
 export type CoopUnionPersonnelDetails = {
+  centralRepID?: Maybe<Scalars['ID']>;
   citizenshipNo?: Maybe<Scalars['String']>;
   cooperativeUnionId?: Maybe<Scalars['ID']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
@@ -855,6 +857,7 @@ export type CoopUnionPersonnelDetails = {
   id?: Maybe<Scalars['ID']>;
   isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
   mobileNumber?: Maybe<Scalars['String']>;
+  notAmongDirectors?: Maybe<Scalars['Boolean']>;
   panNo?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
   temporaryAddress?: Maybe<KymAddress>;
@@ -878,7 +881,6 @@ export type CoopUnionPersonnelInput = {
   fullName?: InputMaybe<Scalars['String']>;
   fullNameNp?: InputMaybe<Scalars['String']>;
   highestQualification?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['ID']>;
   isPermanentAndTemporaryAddressSame?: InputMaybe<Scalars['Boolean']>;
   mobileNumber?: InputMaybe<Scalars['String']>;
   /**  The two fields below are only applicable for Central representative section  */
@@ -1118,6 +1120,7 @@ export type CooperativeUnionInstitutionInformation = {
   applicantTemporaryAddress?: Maybe<KymAddress>;
   branchOfficeAddress?: Maybe<KymAddress>;
   contactEmail?: Maybe<Scalars['String']>;
+  declarationAgreement?: Maybe<Scalars['Boolean']>;
   fax?: Maybe<Scalars['String']>;
   institutionType?: Maybe<Scalars['ID']>;
   issuingOffice?: Maybe<Scalars['String']>;
@@ -4344,7 +4347,7 @@ export type KymCoopUnionSectionMutationInstitutionInformationArgs = {
 
 export type KymCoopUnionSectionMutationPersonnelDetailsArgs = {
   data?: InputMaybe<CoopUnionPersonnelInput>;
-  recordId: Scalars['String'];
+  recordId?: InputMaybe<Scalars['String']>;
   sectionType: CooperativeUnionPersonnelSection;
 };
 
@@ -6669,11 +6672,6 @@ export type SisterConcernDetailsType = {
   phoneNo?: Maybe<Scalars['String']>;
 };
 
-export enum Status {
-  Active = 'ACTIVE',
-  Inactive = 'INACTIVE'
-}
-
 export type SubscriptionMutation = {
   ReferenceKYM: DocumentMutationResult;
   Upsert: DocumentMutationResult;
@@ -7556,6 +7554,20 @@ export type GetBoardOfDirectorsDetailsListQueryVariables = Exact<{
 
 
 export type GetBoardOfDirectorsDetailsListQuery = { members: { cooperativeUnion?: { formState?: { data?: { formData?: { boardOfDirectorsDetails?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null } | null } | null } | null } | null } };
+
+export type GetAccountOperatorDetailsListQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetAccountOperatorDetailsListQuery = { members: { cooperativeUnion?: { formState?: { data?: { formData?: { accountOperatorsDetails?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null } | null } | null } | null } | null } };
+
+export type GetCentralRepresentativeDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetCentralRepresentativeDetailsQuery = { members: { cooperativeUnion?: { formState?: { data?: { formData?: { centralRepresentativeDetails?: { id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, notAmongDirectors?: boolean | null, centralRepID?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null } | null } | null } | null } | null } };
 
 export type GetAccountListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9905,6 +9917,150 @@ export const useGetBoardOfDirectorsDetailsListQuery = <
     useQuery<GetBoardOfDirectorsDetailsListQuery, TError, TData>(
       ['getBoardOfDirectorsDetailsList', variables],
       useAxios<GetBoardOfDirectorsDetailsListQuery, GetBoardOfDirectorsDetailsListQueryVariables>(GetBoardOfDirectorsDetailsListDocument).bind(null, variables),
+      options
+    );
+export const GetAccountOperatorDetailsListDocument = `
+    query getAccountOperatorDetailsList($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        data {
+          formData {
+            accountOperatorsDetails {
+              personnelDetails {
+                id
+                cooperativeUnionId
+                fullName
+                fullNameNp
+                designationEn
+                designationNp
+                permanentAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                isPermanentAndTemporaryAddressSame
+                temporaryAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                dateOfMembership
+                highestQualification
+                mobileNumber
+                email
+                citizenshipNo
+                trainingAttended {
+                  subjectOfTraining
+                  dateOfTraining
+                  trainingOrganization
+                }
+                panNo
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOperatorDetailsListQuery = <
+      TData = GetAccountOperatorDetailsListQuery,
+      TError = unknown
+    >(
+      variables: GetAccountOperatorDetailsListQueryVariables,
+      options?: UseQueryOptions<GetAccountOperatorDetailsListQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountOperatorDetailsListQuery, TError, TData>(
+      ['getAccountOperatorDetailsList', variables],
+      useAxios<GetAccountOperatorDetailsListQuery, GetAccountOperatorDetailsListQueryVariables>(GetAccountOperatorDetailsListDocument).bind(null, variables),
+      options
+    );
+export const GetCentralRepresentativeDetailsDocument = `
+    query getCentralRepresentativeDetails($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        data {
+          formData {
+            centralRepresentativeDetails {
+              id
+              cooperativeUnionId
+              fullName
+              fullNameNp
+              designationEn
+              designationNp
+              permanentAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              isPermanentAndTemporaryAddressSame
+              temporaryAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              dateOfMembership
+              highestQualification
+              mobileNumber
+              email
+              citizenshipNo
+              trainingAttended {
+                subjectOfTraining
+                dateOfTraining
+                trainingOrganization
+              }
+              panNo
+              notAmongDirectors
+              centralRepID
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCentralRepresentativeDetailsQuery = <
+      TData = GetCentralRepresentativeDetailsQuery,
+      TError = unknown
+    >(
+      variables: GetCentralRepresentativeDetailsQueryVariables,
+      options?: UseQueryOptions<GetCentralRepresentativeDetailsQuery, TError, TData>
+    ) =>
+    useQuery<GetCentralRepresentativeDetailsQuery, TError, TData>(
+      ['getCentralRepresentativeDetails', variables],
+      useAxios<GetCentralRepresentativeDetailsQuery, GetCentralRepresentativeDetailsQueryVariables>(GetCentralRepresentativeDetailsDocument).bind(null, variables),
       options
     );
 export const GetAccountListDocument = `

@@ -57,6 +57,7 @@ interface IAddDirectorProps {
   directorId: string;
   setSection: (section?: { section: string; subSection: string }) => void;
   directorDetail: CoopUnionPersonnelDetails | null | undefined;
+  refetch: () => void;
 }
 
 const AddDirector = ({
@@ -65,6 +66,7 @@ const AddDirector = ({
   directorId,
   setSection,
   directorDetail,
+  refetch,
 }: IAddDirectorProps) => {
   const { t } = useTranslation();
 
@@ -78,7 +80,9 @@ const AddDirector = ({
 
   const { getValues, reset, watch, control } = methods;
 
-  const { mutate } = useSetPersonnelDetailsMutation();
+  const { mutate } = useSetPersonnelDetailsMutation({
+    onSuccess: () => refetch(),
+  });
 
   useEffect(() => {
     if (directorDetail) {
@@ -106,7 +110,7 @@ const AddDirector = ({
             id,
             personnelId: directorId,
             sectionType: CooperativeUnionPersonnelSection.Directors,
-            data: { id, ...data },
+            data,
           });
           // refetch();
         }
@@ -446,7 +450,7 @@ const AddDirector = ({
                     />
                   </InputGroupContainer>
 
-                  <BoardOfDirectorRelatedTraining bodIndex={index} />
+                  <BoardOfDirectorRelatedTraining />
                 </SectionContainer>
               </form>
             </FormProvider>
@@ -457,12 +461,14 @@ const AddDirector = ({
                 // control={control}
                 name={`photograph`}
                 setKymCurrentSection={setSection}
+                getKymSection={getKymSectionCoOperativeUnion}
               />
               <KYMDocumentField
                 label={t['kymCoopUnionPhotographOfIdentityProofDocument']}
                 // control={control}
                 name={`identityDocumentPhoto`}
                 setKymCurrentSection={setSection}
+                getKymSection={getKymSectionCoOperativeUnion}
               />
             </Grid>
           </SectionContainer>
@@ -470,20 +476,20 @@ const AddDirector = ({
 
         <Box
           display="flex"
-          justifyContent="space-between"
+          justifyContent="flex-end"
           border="1px solid"
           borderColor="border.layout"
           alignItems={'center'}
           h="60px"
           px="s20"
         >
-          <Button
+          {/* <Button
             variant="ghost"
             leftIcon={<GrRotateRight />}
             onClick={resetDirectorForm}
           >
             {t['kymInsReset']}
-          </Button>
+          </Button> */}
           <Button
             variant="outline"
             shade="danger"
@@ -516,12 +522,13 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
 
   const [directorIds, setDirectorIds] = useState<string[]>([]);
 
-  const { data: bodEditValues } = useGetBoardOfDirectorsDetailsListQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
+  const { data: bodEditValues, refetch } =
+    useGetBoardOfDirectorsDetailsListQuery(
+      {
+        id: String(id),
+      },
+      { enabled: !!id }
+    );
 
   useEffect(() => {
     if (bodEditValues) {
@@ -591,6 +598,7 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
               directorDetail={bodEditValues?.members?.cooperativeUnion?.formState?.data?.formData?.boardOfDirectorsDetails?.personnelDetails?.find(
                 (bod) => bod?.id === directorId
               )}
+              refetch={refetch}
             />
           </Box>
         );

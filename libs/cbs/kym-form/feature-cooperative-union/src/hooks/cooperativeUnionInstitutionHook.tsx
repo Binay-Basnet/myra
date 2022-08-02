@@ -19,7 +19,7 @@ export const useCooperativeUnionInstitution = ({
   methods,
 }: ICooperativeUnionHookProps) => {
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'];
   const { setError, watch, reset } = methods;
   const { mutate } = useSetCooperativeUnionInstitutionDataMutation();
 
@@ -29,16 +29,16 @@ export const useCooperativeUnionInstitution = ({
     refetch,
   } = useGetCooperativeUnionKymEditDataQuery(
     {
-      id: id,
+      id: String(id),
     },
-    { enabled: id !== 'undefined' }
+    { enabled: !!id }
   );
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
         if (id && data && !isDeepEmpty(data)) {
-          mutate({ id, data });
+          mutate({ id: String(id), data });
           // refetch();
         }
       }, 800)
@@ -82,4 +82,10 @@ export const useCooperativeUnionInstitution = ({
       });
     }
   }, [editLoading]);
+
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [id]);
 };

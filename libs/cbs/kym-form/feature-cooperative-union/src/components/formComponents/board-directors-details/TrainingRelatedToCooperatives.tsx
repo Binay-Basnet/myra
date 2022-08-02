@@ -58,13 +58,7 @@ const AddRelatedTraining = ({
   );
 };
 
-interface IBoardOfDirectorRelatedTrainingConcernProps {
-  bodIndex: number;
-}
-
-export const BoardOfDirectorRelatedTraining = ({
-  bodIndex,
-}: IBoardOfDirectorRelatedTrainingConcernProps) => {
+export const BoardOfDirectorRelatedTraining = () => {
   const { t } = useTranslation();
   const {
     fields: relatedFields,

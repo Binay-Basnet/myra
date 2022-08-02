@@ -9,9 +9,9 @@ import {
 import { useSetDeclarationDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { DocumentDeclarationInstitutionCOOPUnion } from './COOPUnionDeclaration';
-import { useTranslation } from '@coop/shared/utils';
 
 interface declarationProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -46,7 +46,7 @@ export const Declaration = (props: declarationProps) => {
             {t['kymCoopUnionDec7Declaration']}
           </Text>
           <ContainerWithDivider>
-            <DocumentDeclarationInstitutionCOOPUnion />
+            <DocumentDeclarationInstitutionCOOPUnion setSection={setSection} />
           </ContainerWithDivider>
         </SectionContainer>
       </form>

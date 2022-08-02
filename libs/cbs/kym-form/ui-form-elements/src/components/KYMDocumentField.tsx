@@ -9,7 +9,6 @@ import {
   useSetKymDocumentDataMutation,
 } from '@coop/shared/data-access';
 import { FormFileInput } from '@coop/shared/form';
-import { getKymSection } from '@coop/shared/utils';
 
 interface IKYMDocumentFieldProps {
   setKymCurrentSection: (section?: {
@@ -18,12 +17,21 @@ interface IKYMDocumentFieldProps {
   }) => void;
   name: string;
   label?: string;
+  size?: 'sm' | 'md' | 'lg';
+  getKymSection: (id: string) =>
+    | {
+        section: string;
+        subSection: string;
+      }
+    | undefined;
 }
 
 export const KYMDocumentField = ({
   setKymCurrentSection,
   name,
   label,
+  size,
+  getKymSection,
 }: IKYMDocumentFieldProps) => {
   const router = useRouter();
   const id = router?.query?.['id'];
@@ -90,7 +98,7 @@ export const KYMDocumentField = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormFileInput size="lg" label={label} name={name} />
+        <FormFileInput size={size ?? 'lg'} label={label} name={name} />
       </form>
     </FormProvider>
   );
