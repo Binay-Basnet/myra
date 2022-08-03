@@ -8,8 +8,12 @@ import { useTranslation } from '@coop/shared/utils';
 const OrganizationInformation = [
   'kymCoopUnionAccBasicInformation',
   'kymCoopUnionAccRegisteredDetails',
+  'kymCoopUnionAccOperatingOfficeAddress',
+  'kymCoopUnionAccBranchOfficeAddress',
   'kymCoopUnionAccContactDetails',
   'kymCoopUnionAccBankAccountDetails',
+  'kymCoopUnionAccApplicant',
+  'kymCoopUnionAccCooperativeMemberInformation',
 ];
 const DirectorDetails = ['kymCoopUnionAccDetailsofProprietor'];
 const AccountOperators = ['kymCoopUnionAccDetailsofAccountOperators'];

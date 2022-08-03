@@ -3057,7 +3057,24 @@ const en: Record<string, string> = {
   depositProductMinAge: 'Minimum Age',
   depositProductMaxAge: 'Maximum Age',
 
+  kymCoopUnionAccOperatingOfficeAddress: 'Operating Office Address',
+  kymCoopUnionAccBranchOfficeAddress: 'Branch Office Address',
+  kymCoopUnionAccApplicant: 'Applicant',
+  kymCoopUnionAccCooperativeMemberInformation: 'Cooperative Member Information',
+
   settingsBranchContactNumber: 'Contact No',
+
+  kymCoopUnionCooperativeMemberInformation: 'Cooperative Member Information',
+  kymCoopUnionMemberDetails: 'Member Details',
+  kymCoopUnionCurrent: 'Current',
+  kymCoopUnionTargetFiscalYear: 'Target for next fiscal year',
+  kymCoopUnionNoMaleMembers: 'No. of Male Members',
+  kymCoopUnionEnterNoMaleMembers: 'Enter No. of Male Members',
+  kymCoopUnionNoFemaleMembers: 'No. of Female Members',
+  kymCoopUnionEnterNoFemaleMembers: 'Enter No. of Female Members',
+  kymCoopUnionNoInstitutionalMembers: 'No. of Institutional Members',
+  kymCoopUnionEnterNoInstitutionalMembers: 'Enter No. of Institutional Members',
+  kymCoopUnionTotalCurrentMembers: 'Total Current Members',
 };
 
 export default en;

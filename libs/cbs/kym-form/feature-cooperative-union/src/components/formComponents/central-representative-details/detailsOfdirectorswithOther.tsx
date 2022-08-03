@@ -105,7 +105,7 @@ const CRDirectorsSelection = ({
   );
 
   const directorArray =
-    bodEditValues?.members?.cooperativeUnion?.formState?.data?.formData?.boardOfDirectorsDetails?.personnelDetails?.map(
+    bodEditValues?.members?.cooperativeUnion?.formState?.formData?.boardOfDirectorsDetails?.personnelDetails?.map(
       (personnel) => ({ name: personnel?.fullName, id: personnel?.id })
     );
 
@@ -122,7 +122,7 @@ const CRDirectorsSelection = ({
   useEffect(() => {
     if (crDetailsEditData) {
       const crDetail =
-        crDetailsEditData?.members?.cooperativeUnion?.formState?.data?.formData
+        crDetailsEditData?.members?.cooperativeUnion?.formState?.formData
           ?.centralRepresentativeDetails;
 
       if (crDetail) {
@@ -292,7 +292,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
   useEffect(() => {
     if (crDetailsEditData) {
       const crDetail =
-        crDetailsEditData?.members?.cooperativeUnion?.formState?.data?.formData
+        crDetailsEditData?.members?.cooperativeUnion?.formState?.formData
           ?.centralRepresentativeDetails;
 
       if (crDetail) {
@@ -412,12 +412,14 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         <FormInput
                           type="text"
                           name={`fullName`}
+                          id="centralRepresentative.fullName"
                           label={t['kymCoopUnionDirFullName']}
                           placeholder={t['kymCoopUnionDirEnterFullName']}
                         />
                         <FormInput
                           type="text"
                           name={`designationEn`}
+                          id="centralRepresentative.designationEn"
                           label={t['kymCoopUnionDirDesignation']}
                           placeholder={t['kymCoopUnionDirEnterDesignation']}
                         />
@@ -435,12 +437,14 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                       <InputGroupContainer>
                         <FormSelect
                           name={`permanentAddress.provinceId`}
+                          id="centralRepresentative.permanentAddress.provinceId"
                           label={t['kymCoopUnionDirState']}
                           placeholder={t['kymCoopUnionDirSelectState']}
                           options={province}
                         />
                         <FormSelect
                           name={`permanentAddress.districtId`}
+                          id="centralRepresentative.permanentAddress.districtId"
                           label={t['kymCoopUnionDirDistrict']}
                           placeholder={t['kymCoopUnionDirSelectDistrict']}
                           options={districtList.map((d) => ({
@@ -450,6 +454,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         />
                         <FormSelect
                           name={`permanentAddress.localGovernmentId`}
+                          id="centralRepresentative.permanentAddress.localGovernmentId"
                           label={t['kymCoopUnionDirVDCMunicipality']}
                           placeholder={
                             t['kymCoopUnionDirSelectVDCMunicipality']
@@ -461,6 +466,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         />
                         <FormSelect
                           name={`permanentAddress.wardNo`}
+                          id="centralRepresentative.permanentAddress.wardNo"
                           label={t['kymCoopUnionDirWardNo']}
                           placeholder={t['kymCoopUnionDirEnterWardNo']}
                           options={wardList.map((d) => ({
@@ -471,19 +477,24 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         <FormInput
                           type="text"
                           name={`permanentAddress.locality`}
+                          id="centralRepresentative.permanentAddress.locality"
                           label={t['kymCoopUnionDirLocality']}
                           placeholder={t['kymCoopUnionDirEnterLocality']}
                         />
                         <FormInput
                           type="text"
                           name="permanentAddress.houseNo"
+                          id="centralRepresentative.permanentAddress.houseNo"
                           label={t['kymIndHouseNo']}
                           placeholder={t['kymIndEnterHouseNo']}
                         />
                       </InputGroupContainer>
 
                       <Box>
-                        <FormMap name={`permanentAddress.coordinates`} />
+                        <FormMap
+                          name={`permanentAddress.coordinates`}
+                          id="centralRepresentative.permanentAddress.coordinates"
+                        />
                       </Box>
                       {/* </Box> */}
 
@@ -499,7 +510,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         </Text>
 
                         <FormSwitch
-                          id="isPermanentAndTemporaryAddressSame"
+                          id="centralRepresentative.isPermanentAndTemporaryAddressSame"
                           name="isPermanentAndTemporaryAddressSame"
                           label={t['kymCoopUnionDirTemporaryAddressPermanent']}
                         />
@@ -509,12 +520,14 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                             <InputGroupContainer>
                               <FormSelect
                                 name={`temporaryAddress.provinceId`}
+                                id="centralRepresentative.temporaryAddress.provinceId"
                                 label={t['kymCoopUnionDirState']}
                                 placeholder={t['kymCoopUnionDirSelectState']}
                                 options={province}
                               />
                               <FormSelect
                                 name={`temporaryAddress.districtId`}
+                                id="centralRepresentative.temporaryAddress.districtId"
                                 label={t['kymCoopUnionDirDistrict']}
                                 placeholder={t['kymCoopUnionDirSelectDistrict']}
                                 options={districtTempList.map((d) => ({
@@ -524,6 +537,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                               />
                               <FormSelect
                                 name={`temporaryAddress.localGovernmentId`}
+                                id="centralRepresentative.temporaryAddress.localGovernmentId"
                                 label={t['kymCoopUnionDirVDCMunicipality']}
                                 placeholder={
                                   t['kymCoopUnionDirSelectVDCMunicipality']
@@ -535,6 +549,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                               />
                               <FormSelect
                                 name={`temporaryAddress.wardNo`}
+                                id="centralRepresentative.temporaryAddress.wardNo"
                                 label={t['kymCoopUnionDirWardNo']}
                                 placeholder={t['kymCoopUnionDirEnterWardNo']}
                                 options={wardTempList.map((d) => ({
@@ -545,19 +560,24 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                               <FormInput
                                 type="text"
                                 name={`temporaryAddress.locality`}
+                                id="centralRepresentative.temporaryAddress.locality"
                                 label={t['kymCoopUnionDirLocality']}
                                 placeholder={t['kymCoopUnionDirEnterLocality']}
                               />
                               <FormInput
                                 type="text"
                                 name="temporaryAddress.houseNo"
+                                id="centralRepresentative.temporaryAddress.houseNo"
                                 label={t['kymIndHouseNo']}
                                 placeholder={t['kymIndEnterHouseNo']}
                               />
                             </InputGroupContainer>
 
                             <Box mt="-16px">
-                              <FormMap name={`temporaryAddress.coordinates`} />
+                              <FormMap
+                                name={`temporaryAddress.coordinates`}
+                                id="centralRepresentative.temporaryAddress.coordinates"
+                              />
                             </Box>
                           </>
                         )}
@@ -566,12 +586,14 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         <FormInput
                           type="date"
                           name={`dateOfMembership`}
+                          id="centralRepresentative.dateOfMembership"
                           label={t['kymCoopUnionDirDateofMembership']}
                           placeholder="DD-MM-YYYY"
                         />
                         <FormInput
                           type="text"
                           name={`highestQualification`}
+                          id="centralRepresentative.highestQualification"
                           label={t['kymCoopUnionDirHighestQualification']}
                           placeholder={
                             t['kymCoopUnionDirEnterHigestQualification']
@@ -580,18 +602,21 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         <FormInput
                           type="number"
                           name={`mobileNumber`}
+                          id="centralRepresentative.mobileNumber"
                           label={t['kymCoopUnionDirMobileNo']}
                           placeholder={t['kymCoopUnionDirEnterMobileNo']}
                         />
                         <FormInput
                           type="text"
                           name={`email`}
+                          id="centralRepresentative.email"
                           label={t['kymCoopUnionDirEmail']}
                           placeholder={t['kymCoopUnionDirEnterEmail']}
                         />
                         <FormInput
                           type="string"
                           name={`citizenshipNo`}
+                          id="centralRepresentative.citizenshipNo"
                           label={
                             t[
                               'kymCoopUnionDirCitizenshipPassportDrivingLicenseNo'
@@ -603,8 +628,9 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         <FormInput
                           type="string"
                           name={`panNo`}
-                          label={'PAN No'}
-                          placeholder={'Enter PAN No'}
+                          id="centralRepresentative.panNo"
+                          label={t['kymCoopUnionPANNo']}
+                          placeholder={t['kymCoopUnionPANNoPlaceholder']}
                         />
                       </InputGroupContainer>
                       {/* <Text fontSize="r1" fontWeight="SemiBold">

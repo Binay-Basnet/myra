@@ -1154,6 +1154,7 @@ export type CooperativeUnionMember = {
   centralRepresentativeDetails?: Maybe<CoopUnionPersonnelDetails>;
   declaration?: Maybe<CooperativeUnionDeclaration>;
   economicDetails?: Maybe<CooperativeUnionEconomicDetails>;
+  id?: Maybe<Scalars['ID']>;
   institutionInformation?: Maybe<CooperativeUnionInstitutionInformation>;
 };
 
@@ -4314,7 +4315,7 @@ export type KymCoopUnionMutationDeletePersonnelArgs = {
 };
 
 export type KymCoopUnionQuery = {
-  formState?: Maybe<KymCoopUnionFormStateQuery>;
+  formState?: Maybe<KymCoopUnionAddFormStatus>;
 };
 
 
@@ -7540,35 +7541,35 @@ export type GetCooperativeUnionKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetCooperativeUnionKymEditDataQuery = { members: { cooperativeUnion?: { formState?: { data?: { formData?: { institutionInformation?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null, institutionType?: string | null, natureOfBusinessEn?: string | null, natureOfBusinessNp?: string | null, regdDate?: string | null, vatOrPan?: string | null, noOfBranches?: number | null, regdNo?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, contactEmail?: string | null, website?: string | null, postBoxNo?: string | null, noOfEmployee?: number | null, lastAgmDate?: string | null, nameOfBank?: string | null, accountNumber?: string | null, accountName?: string | null, applicantName?: string | null, applicantNameNp?: string | null, applicantDesignationEn?: string | null, applicantDesignationNp?: string | null, applicantEmail?: string | null, applicantContactNo?: string | null, applicantPanNo?: string | null, applicantDateOfMembership?: string | null, applicantHighestQualification?: string | null, applicantIsPermanentAndTemporaryAddrSame?: boolean | null, noOfMaleMemberCurrent?: number | null, noOfMaleMemberTarget?: number | null, noOfFemaleMemberCurrent?: number | null, noOfFemaleMemberTarget?: number | null, noOfInstitutionalMemberCurrent?: number | null, noOfInstitutionalMemberTarget?: number | null, regdAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, applicantPermanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, applicantTemporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
+export type GetCooperativeUnionKymEditDataQuery = { members: { cooperativeUnion?: { formState?: { formData?: { institutionInformation?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null, institutionType?: string | null, natureOfBusinessEn?: string | null, natureOfBusinessNp?: string | null, regdDate?: string | null, vatOrPan?: string | null, noOfBranches?: number | null, regdNo?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, contactEmail?: string | null, website?: string | null, postBoxNo?: string | null, noOfEmployee?: number | null, lastAgmDate?: string | null, nameOfBank?: string | null, accountNumber?: string | null, accountName?: string | null, applicantName?: string | null, applicantNameNp?: string | null, applicantDesignationEn?: string | null, applicantDesignationNp?: string | null, applicantEmail?: string | null, applicantContactNo?: string | null, applicantPanNo?: string | null, applicantDateOfMembership?: string | null, applicantHighestQualification?: string | null, applicantIsPermanentAndTemporaryAddrSame?: boolean | null, noOfMaleMemberCurrent?: number | null, noOfMaleMemberTarget?: number | null, noOfFemaleMemberCurrent?: number | null, noOfFemaleMemberTarget?: number | null, noOfInstitutionalMemberCurrent?: number | null, noOfInstitutionalMemberTarget?: number | null, regdAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, applicantPermanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, applicantTemporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetEconimicDetailsEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetEconimicDetailsEditDataQuery = { members: { cooperativeUnion?: { formState?: { data?: { formData?: { economicDetails?: { cashAndCashEquivalentCurrent?: number | null, cashAndCashEquivalentTarget?: number | null, bankCurrent?: number | null, bankTarget?: number | null, investmentsCurrent?: number | null, investmentsTarget?: number | null, loanCurrent?: number | null, loanTarget?: number | null, nonCurrentAssetsCurrent?: number | null, nonCurrentAssetsTarget?: number | null, otherNonCurrentAssetsCurrent?: number | null, otherNonCurrentAssetsTarget?: number | null, shareCapitalCurrent?: number | null, shareCapitalTarget?: number | null, reserveAndSurplusCurrent?: number | null, reserveAndSurplusTarget?: number | null, savingDepositCurrent?: number | null, savingDepositTarget?: number | null, loanAccountCurrent?: number | null, loanAccountTarget?: number | null, capitalGrantCurrent?: number | null, capitalGrantTarget?: number | null, currentLiabilitiesCurrent?: number | null, currentLiabilitiesTarget?: number | null, nonCurrentLiabilitiesCurrent?: number | null, nonCurrentLiabilitiesTarget?: number | null, incomeFromFinancialInvestment?: number | null, incomeFromNonFinancialInvestment?: number | null, incomeFromInvestment?: number | null, incomeFromServiceOperation?: number | null, incomeFromSales?: number | null, otherIncome?: number | null, miscellaneousIncome?: number | null, purchase?: number | null, directExpense?: number | null, administrativeExpense?: number | null, financialCost?: number | null, riskManagementCost?: number | null, deferredTaxExpense?: number | null } | null } | null } | null } | null } | null } };
+export type GetEconimicDetailsEditDataQuery = { members: { cooperativeUnion?: { formState?: { formData?: { economicDetails?: { cashAndCashEquivalentCurrent?: number | null, cashAndCashEquivalentTarget?: number | null, bankCurrent?: number | null, bankTarget?: number | null, investmentsCurrent?: number | null, investmentsTarget?: number | null, loanCurrent?: number | null, loanTarget?: number | null, nonCurrentAssetsCurrent?: number | null, nonCurrentAssetsTarget?: number | null, otherNonCurrentAssetsCurrent?: number | null, otherNonCurrentAssetsTarget?: number | null, shareCapitalCurrent?: number | null, shareCapitalTarget?: number | null, reserveAndSurplusCurrent?: number | null, reserveAndSurplusTarget?: number | null, savingDepositCurrent?: number | null, savingDepositTarget?: number | null, loanAccountCurrent?: number | null, loanAccountTarget?: number | null, capitalGrantCurrent?: number | null, capitalGrantTarget?: number | null, currentLiabilitiesCurrent?: number | null, currentLiabilitiesTarget?: number | null, nonCurrentLiabilitiesCurrent?: number | null, nonCurrentLiabilitiesTarget?: number | null, incomeFromFinancialInvestment?: number | null, incomeFromNonFinancialInvestment?: number | null, incomeFromInvestment?: number | null, incomeFromServiceOperation?: number | null, incomeFromSales?: number | null, otherIncome?: number | null, miscellaneousIncome?: number | null, purchase?: number | null, directExpense?: number | null, administrativeExpense?: number | null, financialCost?: number | null, riskManagementCost?: number | null, deferredTaxExpense?: number | null } | null } | null } | null } | null } };
 
 export type GetBoardOfDirectorsDetailsListQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetBoardOfDirectorsDetailsListQuery = { members: { cooperativeUnion?: { formState?: { data?: { formData?: { boardOfDirectorsDetails?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null } | null } | null } | null } | null } };
+export type GetBoardOfDirectorsDetailsListQuery = { members: { cooperativeUnion?: { formState?: { formData?: { boardOfDirectorsDetails?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null } | null } | null } | null } };
 
 export type GetAccountOperatorDetailsListQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetAccountOperatorDetailsListQuery = { members: { cooperativeUnion?: { formState?: { data?: { formData?: { accountOperatorsDetails?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null } | null } | null } | null } | null } };
+export type GetAccountOperatorDetailsListQuery = { members: { cooperativeUnion?: { formState?: { formData?: { accountOperatorsDetails?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null } | null } | null } | null } };
 
 export type GetCentralRepresentativeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetCentralRepresentativeDetailsQuery = { members: { cooperativeUnion?: { formState?: { data?: { formData?: { centralRepresentativeDetails?: { id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, notAmongDirectors?: boolean | null, centralRepID?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null } | null } | null } | null } | null } };
+export type GetCentralRepresentativeDetailsQuery = { members: { cooperativeUnion?: { formState?: { formData?: { centralRepresentativeDetails?: { id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, notAmongDirectors?: boolean | null, centralRepID?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null } | null } | null } | null } };
 
 export type GetAccountListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9673,106 +9674,104 @@ export const GetCooperativeUnionKymEditDataDocument = `
   members {
     cooperativeUnion {
       formState(id: $id) {
-        data {
-          formData {
-            institutionInformation {
-              nameOfInstitutionEn
-              nameOfInstitutionNp
-              institutionType
-              natureOfBusinessEn
-              natureOfBusinessNp
-              regdDate
-              vatOrPan
-              noOfBranches
-              regdNo
-              issuingOffice
-              regdAddress {
-                provinceId
-                districtId
-                localGovernmentId
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
+        formData {
+          institutionInformation {
+            nameOfInstitutionEn
+            nameOfInstitutionNp
+            institutionType
+            natureOfBusinessEn
+            natureOfBusinessNp
+            regdDate
+            vatOrPan
+            noOfBranches
+            regdNo
+            issuingOffice
+            regdAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
               }
-              operatingOfficeAddress {
-                provinceId
-                districtId
-                localGovernmentId
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
-              }
-              branchOfficeAddress {
-                provinceId
-                districtId
-                localGovernmentId
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
-              }
-              phone
-              fax
-              contactEmail
-              website
-              postBoxNo
-              noOfEmployee
-              lastAgmDate
-              nameOfBank
-              accountNumber
-              accountName
-              applicantName
-              applicantNameNp
-              applicantDesignationEn
-              applicantDesignationNp
-              applicantEmail
-              applicantContactNo
-              applicantPanNo
-              applicantDateOfMembership
-              applicantHighestQualification
-              applicantPermanentAddress {
-                provinceId
-                districtId
-                localGovernmentId
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
-              }
-              applicantIsPermanentAndTemporaryAddrSame
-              applicantTemporaryAddress {
-                provinceId
-                districtId
-                localGovernmentId
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
-              }
-              noOfMaleMemberCurrent
-              noOfMaleMemberTarget
-              noOfFemaleMemberCurrent
-              noOfFemaleMemberTarget
-              noOfInstitutionalMemberCurrent
-              noOfInstitutionalMemberTarget
             }
+            operatingOfficeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            branchOfficeAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            phone
+            fax
+            contactEmail
+            website
+            postBoxNo
+            noOfEmployee
+            lastAgmDate
+            nameOfBank
+            accountNumber
+            accountName
+            applicantName
+            applicantNameNp
+            applicantDesignationEn
+            applicantDesignationNp
+            applicantEmail
+            applicantContactNo
+            applicantPanNo
+            applicantDateOfMembership
+            applicantHighestQualification
+            applicantPermanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            applicantIsPermanentAndTemporaryAddrSame
+            applicantTemporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            noOfMaleMemberCurrent
+            noOfMaleMemberTarget
+            noOfFemaleMemberCurrent
+            noOfFemaleMemberTarget
+            noOfInstitutionalMemberCurrent
+            noOfInstitutionalMemberTarget
           }
         }
       }
@@ -9797,49 +9796,47 @@ export const GetEconimicDetailsEditDataDocument = `
   members {
     cooperativeUnion {
       formState(id: $id) {
-        data {
-          formData {
-            economicDetails {
-              cashAndCashEquivalentCurrent
-              cashAndCashEquivalentTarget
-              bankCurrent
-              bankTarget
-              investmentsCurrent
-              investmentsTarget
-              loanCurrent
-              loanTarget
-              nonCurrentAssetsCurrent
-              nonCurrentAssetsTarget
-              otherNonCurrentAssetsCurrent
-              otherNonCurrentAssetsTarget
-              shareCapitalCurrent
-              shareCapitalTarget
-              reserveAndSurplusCurrent
-              reserveAndSurplusTarget
-              savingDepositCurrent
-              savingDepositTarget
-              loanAccountCurrent
-              loanAccountTarget
-              capitalGrantCurrent
-              capitalGrantTarget
-              currentLiabilitiesCurrent
-              currentLiabilitiesTarget
-              nonCurrentLiabilitiesCurrent
-              nonCurrentLiabilitiesTarget
-              incomeFromFinancialInvestment
-              incomeFromNonFinancialInvestment
-              incomeFromInvestment
-              incomeFromServiceOperation
-              incomeFromSales
-              otherIncome
-              miscellaneousIncome
-              purchase
-              directExpense
-              administrativeExpense
-              financialCost
-              riskManagementCost
-              deferredTaxExpense
-            }
+        formData {
+          economicDetails {
+            cashAndCashEquivalentCurrent
+            cashAndCashEquivalentTarget
+            bankCurrent
+            bankTarget
+            investmentsCurrent
+            investmentsTarget
+            loanCurrent
+            loanTarget
+            nonCurrentAssetsCurrent
+            nonCurrentAssetsTarget
+            otherNonCurrentAssetsCurrent
+            otherNonCurrentAssetsTarget
+            shareCapitalCurrent
+            shareCapitalTarget
+            reserveAndSurplusCurrent
+            reserveAndSurplusTarget
+            savingDepositCurrent
+            savingDepositTarget
+            loanAccountCurrent
+            loanAccountTarget
+            capitalGrantCurrent
+            capitalGrantTarget
+            currentLiabilitiesCurrent
+            currentLiabilitiesTarget
+            nonCurrentLiabilitiesCurrent
+            nonCurrentLiabilitiesTarget
+            incomeFromFinancialInvestment
+            incomeFromNonFinancialInvestment
+            incomeFromInvestment
+            incomeFromServiceOperation
+            incomeFromSales
+            otherIncome
+            miscellaneousIncome
+            purchase
+            directExpense
+            administrativeExpense
+            financialCost
+            riskManagementCost
+            deferredTaxExpense
           }
         }
       }
@@ -9864,153 +9861,9 @@ export const GetBoardOfDirectorsDetailsListDocument = `
   members {
     cooperativeUnion {
       formState(id: $id) {
-        data {
-          formData {
-            boardOfDirectorsDetails {
-              personnelDetails {
-                id
-                cooperativeUnionId
-                fullName
-                fullNameNp
-                designationEn
-                designationNp
-                permanentAddress {
-                  provinceId
-                  districtId
-                  localGovernmentId
-                  wardNo
-                  locality
-                  houseNo
-                  coordinates {
-                    longitude
-                    latitude
-                  }
-                }
-                isPermanentAndTemporaryAddressSame
-                temporaryAddress {
-                  provinceId
-                  districtId
-                  localGovernmentId
-                  wardNo
-                  locality
-                  houseNo
-                  coordinates {
-                    longitude
-                    latitude
-                  }
-                }
-                dateOfMembership
-                highestQualification
-                mobileNumber
-                email
-                citizenshipNo
-                trainingAttended {
-                  subjectOfTraining
-                  dateOfTraining
-                  trainingOrganization
-                }
-                panNo
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetBoardOfDirectorsDetailsListQuery = <
-      TData = GetBoardOfDirectorsDetailsListQuery,
-      TError = unknown
-    >(
-      variables: GetBoardOfDirectorsDetailsListQueryVariables,
-      options?: UseQueryOptions<GetBoardOfDirectorsDetailsListQuery, TError, TData>
-    ) =>
-    useQuery<GetBoardOfDirectorsDetailsListQuery, TError, TData>(
-      ['getBoardOfDirectorsDetailsList', variables],
-      useAxios<GetBoardOfDirectorsDetailsListQuery, GetBoardOfDirectorsDetailsListQueryVariables>(GetBoardOfDirectorsDetailsListDocument).bind(null, variables),
-      options
-    );
-export const GetAccountOperatorDetailsListDocument = `
-    query getAccountOperatorDetailsList($id: ID!) {
-  members {
-    cooperativeUnion {
-      formState(id: $id) {
-        data {
-          formData {
-            accountOperatorsDetails {
-              personnelDetails {
-                id
-                cooperativeUnionId
-                fullName
-                fullNameNp
-                designationEn
-                designationNp
-                permanentAddress {
-                  provinceId
-                  districtId
-                  localGovernmentId
-                  wardNo
-                  locality
-                  houseNo
-                  coordinates {
-                    longitude
-                    latitude
-                  }
-                }
-                isPermanentAndTemporaryAddressSame
-                temporaryAddress {
-                  provinceId
-                  districtId
-                  localGovernmentId
-                  wardNo
-                  locality
-                  houseNo
-                  coordinates {
-                    longitude
-                    latitude
-                  }
-                }
-                dateOfMembership
-                highestQualification
-                mobileNumber
-                email
-                citizenshipNo
-                trainingAttended {
-                  subjectOfTraining
-                  dateOfTraining
-                  trainingOrganization
-                }
-                panNo
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetAccountOperatorDetailsListQuery = <
-      TData = GetAccountOperatorDetailsListQuery,
-      TError = unknown
-    >(
-      variables: GetAccountOperatorDetailsListQueryVariables,
-      options?: UseQueryOptions<GetAccountOperatorDetailsListQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountOperatorDetailsListQuery, TError, TData>(
-      ['getAccountOperatorDetailsList', variables],
-      useAxios<GetAccountOperatorDetailsListQuery, GetAccountOperatorDetailsListQueryVariables>(GetAccountOperatorDetailsListDocument).bind(null, variables),
-      options
-    );
-export const GetCentralRepresentativeDetailsDocument = `
-    query getCentralRepresentativeDetails($id: ID!) {
-  members {
-    cooperativeUnion {
-      formState(id: $id) {
-        data {
-          formData {
-            centralRepresentativeDetails {
+        formData {
+          boardOfDirectorsDetails {
+            personnelDetails {
               id
               cooperativeUnionId
               fullName
@@ -10053,9 +9906,147 @@ export const GetCentralRepresentativeDetailsDocument = `
                 trainingOrganization
               }
               panNo
-              notAmongDirectors
-              centralRepID
             }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBoardOfDirectorsDetailsListQuery = <
+      TData = GetBoardOfDirectorsDetailsListQuery,
+      TError = unknown
+    >(
+      variables: GetBoardOfDirectorsDetailsListQueryVariables,
+      options?: UseQueryOptions<GetBoardOfDirectorsDetailsListQuery, TError, TData>
+    ) =>
+    useQuery<GetBoardOfDirectorsDetailsListQuery, TError, TData>(
+      ['getBoardOfDirectorsDetailsList', variables],
+      useAxios<GetBoardOfDirectorsDetailsListQuery, GetBoardOfDirectorsDetailsListQueryVariables>(GetBoardOfDirectorsDetailsListDocument).bind(null, variables),
+      options
+    );
+export const GetAccountOperatorDetailsListDocument = `
+    query getAccountOperatorDetailsList($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        formData {
+          accountOperatorsDetails {
+            personnelDetails {
+              id
+              cooperativeUnionId
+              fullName
+              fullNameNp
+              designationEn
+              designationNp
+              permanentAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              isPermanentAndTemporaryAddressSame
+              temporaryAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              dateOfMembership
+              highestQualification
+              mobileNumber
+              email
+              citizenshipNo
+              trainingAttended {
+                subjectOfTraining
+                dateOfTraining
+                trainingOrganization
+              }
+              panNo
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOperatorDetailsListQuery = <
+      TData = GetAccountOperatorDetailsListQuery,
+      TError = unknown
+    >(
+      variables: GetAccountOperatorDetailsListQueryVariables,
+      options?: UseQueryOptions<GetAccountOperatorDetailsListQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountOperatorDetailsListQuery, TError, TData>(
+      ['getAccountOperatorDetailsList', variables],
+      useAxios<GetAccountOperatorDetailsListQuery, GetAccountOperatorDetailsListQueryVariables>(GetAccountOperatorDetailsListDocument).bind(null, variables),
+      options
+    );
+export const GetCentralRepresentativeDetailsDocument = `
+    query getCentralRepresentativeDetails($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        formData {
+          centralRepresentativeDetails {
+            id
+            cooperativeUnionId
+            fullName
+            fullNameNp
+            designationEn
+            designationNp
+            permanentAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            isPermanentAndTemporaryAddressSame
+            temporaryAddress {
+              provinceId
+              districtId
+              localGovernmentId
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            dateOfMembership
+            highestQualification
+            mobileNumber
+            email
+            citizenshipNo
+            trainingAttended {
+              subjectOfTraining
+              dateOfTraining
+              trainingOrganization
+            }
+            panNo
+            notAmongDirectors
+            centralRepID
           }
         }
       }
