@@ -30,7 +30,7 @@ import {
 import { Box, Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
-import { useCooperative } from '../../hooks/customCooperative';
+import { useCooperative } from '../../hooks/useCooperative';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }

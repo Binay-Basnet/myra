@@ -13,7 +13,7 @@ import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
-import { useInstitution } from '../hooks/institutionHook';
+import { useInstitution } from '../hooks/useInstitution';
 
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
