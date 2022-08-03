@@ -1,15 +1,10 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import { GridItem } from '@chakra-ui/react';
-import { pickBy } from 'lodash';
-import debounce from 'lodash/debounce';
 
 import {
   KymCooperativeFormInput,
   useAllAdministrationQuery,
-  useGetCoOperativeKymEditDataQuery,
-  useSetCooperativeDataMutation,
 } from '@coop/cbs/data-access';
 import {
   GroupContainer,
@@ -26,6 +21,8 @@ import {
 import { Box, Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
+import { useCooperative } from '../../hooks/useCooperative';
+
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
@@ -35,67 +32,68 @@ export const KymCoopRepresentative = (props: IProps) => {
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
   });
-  const { control, handleSubmit, getValues, watch, setError, reset } = methods;
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const { watch } = methods;
+  useCooperative({ methods });
+  // const router = useRouter();
+  // const id = String(router?.query?.['id']);
 
-  const { mutate } = useSetCooperativeDataMutation();
-  const {
-    data: editValues,
-    isLoading: editLoading,
-    refetch,
-  } = useGetCoOperativeKymEditDataQuery(
-    {
-      id: id,
-    },
-    { enabled: id !== 'undefined' }
-  );
+  // const { mutate } = useSetCooperativeDataMutation();
+  // const {
+  //   data: editValues,
+  //   isLoading: editLoading,
+  //   refetch,
+  // } = useGetCoOperativeKymEditDataQuery(
+  //   {
+  //     id: id,
+  //   },
+  //   { enabled: id !== 'undefined' }
+  // );
 
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        if (editValues && data) {
-          mutate({ id: router.query['id'] as string, data });
-          refetch();
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady, editValues]);
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData =
-        editValues?.members?.cooperative?.formState?.data?.formData;
-
-      reset({
-        ...pickBy(
-          editValues?.members?.cooperative?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        ),
-        permanentRepresentativeAddress: {
-          ...editValueData?.permanentRepresentativeAddress,
-          locality:
-            editValueData?.permanentRepresentativeAddress?.locality?.local,
-        },
-        temporaryRepresentativeAddress: {
-          ...editValueData?.temporaryRepresentativeAddress,
-          locality:
-            editValueData?.temporaryRepresentativeAddress?.locality?.local,
-        },
-      });
-    }
-  }, [editLoading]);
   // useEffect(() => {
-  //   if (id) {
-  //     refetch();
-  //
+  //   const subscription = watch(
+  //     debounce((data) => {
+  //       if (editValues && data) {
+  //         mutate({ id: router.query['id'] as string, data });
+  //         refetch();
+  //       }
+  //     }, 800)
+  //   );
+
+  //   return () => subscription.unsubscribe();
+  // }, [watch, router.isReady, editValues]);
+
+  // useEffect(() => {
+  //   if (editValues) {
+  //     const editValueData =
+  //       editValues?.members?.cooperative?.formState?.data?.formData;
+
+  //     reset({
+  //       ...pickBy(
+  //         editValues?.members?.cooperative?.formState?.data?.formData ?? {},
+  //         (v) => v !== null
+  //       ),
+  //       permanentRepresentativeAddress: {
+  //         ...editValueData?.permanentRepresentativeAddress,
+  //         locality:
+  //           editValueData?.permanentRepresentativeAddress?.locality?.local,
+  //       },
+  //       temporaryRepresentativeAddress: {
+  //         ...editValueData?.temporaryRepresentativeAddress,
+  //         locality:
+  //           editValueData?.temporaryRepresentativeAddress?.locality?.local,
+  //       },
+  //     });
   //   }
-  // }, [id]);
-  const isPermanentAndTemporaryAddressSame = watch(
-    'isPermanentAndTemporaryAddressSame'
-  );
+  // }, [editLoading]);
+  // // useEffect(() => {
+  // //   if (id) {
+  // //     refetch();
+  // //
+  // //   }
+  // // }, [id]);
+  // const isPermanentAndTemporaryAddressSame = watch(
+  //   'isPermanentAndTemporaryAddressSame'
+  // );
   const { data } = useAllAdministrationQuery();
 
   const province = useMemo(() => {
@@ -161,7 +159,9 @@ export const KymCoopRepresentative = (props: IProps) => {
       localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
     [currentTempLocalityId]
   );
-
+  const isPermanentAndTemporaryAddressSame = watch(
+    'isPermanentAndTemporaryAddressSame'
+  );
   return (
     <FormProvider {...methods}>
       <form

@@ -17,6 +17,16 @@ const tabList = [
   //     title: 'settingsDepositIROSetup',
   //     to: '/settings/general/deposit/iro-setup',
   //   },
+  {
+    // title: 'TDS',
+    title: 'settingsInsuranceGeneral',
+    to: '/settings/general/loan/insurance',
+  },
+  {
+    // title: 'TDS',
+    title: 'settingsProductTypeGeneral',
+    to: '/settings/general/loan/product-type',
+  },
 ];
 
 interface ISettingsLoanLayout {
