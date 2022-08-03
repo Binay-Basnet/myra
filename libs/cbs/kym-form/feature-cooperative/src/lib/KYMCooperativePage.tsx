@@ -3,41 +3,36 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from '@coop/shared/utils';
 import {
-  KymCooperativeFormInput,
-} from '@coop/cbs/data-access';
-import { useForm } from 'react-hook-form';
-import {
   Box,
-  Container,
-  Text,
-  IconButton,
-  Checkbox,
-  TextFields,
   Button,
-  Icon,
+  Checkbox,
+  Container,
   FormFooter,
+  FormHeader,
+  Icon,
+  Text,
+  TextFields,
 } from '@coop/shared/ui';
-import { IoCloseOutline } from 'react-icons/io5';
 import {
-  KymCoopBasicInfo,
-  KymCoopRegdAddress,
-  KymCoopOpAddress,
-  KymCoopContactDetails,
-  KymCoopDate,
-  KymCoopCurrentMembers,
-  KymCoopRepresentative,
-  KymCoopAddCoopDetails,
-  KymCoopNoEmployee,
-  KymEquityLiabilities,
-  KymCoopAssets,
   KymAccountHolderDeclaration,
-  KymCoopDocumentDeclarationForm,
-  KymCoopBoardDirectorDetail,
   KymCoopAccountOperatorDetail,
+  KymCoopAddCoopDetails,
+  KymCoopAssets,
+  KymCoopBasicInfo,
+  KymCoopBoardDirectorDetail,
+  KymCoopContactDetails,
+  KymCoopCurrentMembers,
+  KymCoopDate,
+  KymCoopDocumentDeclarationForm,
+  KymCoopNoEmployee,
+  KymCoopOpAddress,
+  KymCoopRegdAddress,
+  KymCoopRepresentative,
+  KymEquityLiabilities,
 } from '../components/form';
 import {
-  SectionContainer,
   ContainerWithDivider,
+  SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccordionKymCoopForm } from '@coop/myra/components';
@@ -52,51 +47,18 @@ export function KYMCooperativePage() {
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  // const kymFormStatusQuery = useGetKymFormStatusQuery({ id });
-  // const kymFormStatus =
-  //   kymFormStatusQuery?.data?.members?.individual?.formState?.data
-  //     ?.sectionStatus;
-
-  const methods = useForm<KymCooperativeFormInput>({});
-
-  const { control, handleSubmit, getValues, watch, setError } = methods;
   return (
     <>
-      {/* // Top Bar */}
-      <Box position="relative" margin="0px auto">
-        <Box
-          position="fixed"
-          margin="0px auto"
-          bg="gray.100"
-          width="100%"
-          zIndex="10"
-        >
-          <Container minW="container.xl" height="fit-content">
-            <Box
-              height="60px"
-              display="flex"
-              justifyContent="space-between"
-              alignItems={'center'}
-              px="5"
-              background="white"
-              borderBottom="1px solid #E6E6E6"
-            >
-              <Text fontSize="r2" fontWeight="SemiBold">
-                {t['membersFormAddNewMembers']}
-              </Text>
-              <IconButton
-                variant={'ghost'}
-                aria-label="close"
-                icon={<Icon as={IoCloseOutline} size="md" />}
-                onClick={() => router.push('/members/list')}
-              />
-            </Box>
-          </Container>
-        </Box>
+      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Container minW="container.xl" height="fit-content">
+          <FormHeader
+            title={t['membersFormAddNewMembers']}
+            closeLink="/members/list"
+          />
+        </Container>
       </Box>
 
       <Container minW="container.xl" height="fit-content">
-        {/* main */}
         <Box pb="s40" display="flex" width="100%">
           <Box display="flex">
             <Box
@@ -110,14 +72,7 @@ export function KYMCooperativePage() {
               <AccordionKymCoopForm kymCurrentSection={kymCurrentSection} />
             </Box>
 
-            <Box
-              background="white"
-              ml={320}
-              px="s20"
-              mt="60px"
-              pt="s20"
-              pb="120px"
-            >
+            <Box background="white" ml={320} px="s20" pt="s20" pb="120px">
               <SectionContainer>
                 <SectionContainer>
                   <Text fontSize="r3" fontWeight="600">

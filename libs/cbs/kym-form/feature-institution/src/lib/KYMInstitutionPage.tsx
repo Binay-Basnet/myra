@@ -1,11 +1,8 @@
 import React from 'react';
 import { BiSave } from 'react-icons/bi';
-import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import {
-  useGetKymFormStatusInstitutionQuery,
-} from '@coop/cbs/data-access';
+import { useGetKymFormStatusInstitutionQuery } from '@coop/cbs/data-access';
 import {
   ContainerWithDivider,
   SectionContainer,
@@ -16,8 +13,8 @@ import {
   Button,
   Container,
   FormFooter,
+  FormHeader,
   Icon,
-  IconButton,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -38,10 +35,7 @@ import {
   TransactionProfileInstitution,
 } from '../components-form';
 
-/* eslint-disable-next-line */
-export interface KYMInstitutionPageProps {}
-
-export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
+export function KYMInstitutionPage() {
   const { t } = useTranslation();
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
@@ -56,53 +50,16 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
 
   return (
     <>
-      <Box position="relative" margin="0px auto">
-        <Box
-          position="fixed"
-          margin="0px auto"
-          bg="gray.100"
-          width="100%"
-          zIndex="10"
-        >
-          <Container minW="container.xl" height="fit-content">
-            <Box
-              height="60px"
-              display="flex"
-              justifyContent="space-between"
-              alignItems={'center'}
-              px="5"
-              background="white"
-              borderBottom="1px solid #E6E6E6"
-            >
-              <Text fontSize="r2" fontWeight="SemiBold">
-                {t['kymInsAddNewMember']}
-              </Text>
-              <IconButton
-                variant={'ghost'}
-                aria-label="close"
-                icon={<Icon as={IoCloseOutline} size="md" />}
-                onClick={() => router.push('/members/list')}
-              />
-            </Box>
-          </Container>
-        </Box>
+      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Container minW="container.xl" height="fit-content">
+          <FormHeader
+            title={t['membersFormAddNewMembers']}
+            closeLink="/members/list"
+          />
+        </Container>
       </Box>
+
       <Container minW="container.xl" height="fit-content">
-        {/* <FormProvider {...methods}>
-          <form
-            // onChange={debounce(() => {
-            //
-            //   mutate({ id, data: getValues() });
-            // }, 800)}
-            // onSubmit={handleSubmit((data) => {
-            //
-            // })}
-            onFocus={(e) => {
-              const kymSection = getKymSectionInstitution(e.target.id);
-              setKymCurrentSection(kymSection);
-            }}
-          > */}
-        {/* main */}
         <Box pb="s40" display="flex" width="100%">
           <Box display="flex">
             <Box
@@ -119,14 +76,7 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
               />
             </Box>
 
-            <Box
-              background="white"
-              ml={320}
-              px="s20"
-              mt="60px"
-              pt="s20"
-              pb="120px"
-            >
+            <Box background="white" ml={320} px="s20" pt="s20" pb="120px">
               <SectionContainer>
                 <SectionContainer>
                   <Text fontSize="r3" fontWeight="600">

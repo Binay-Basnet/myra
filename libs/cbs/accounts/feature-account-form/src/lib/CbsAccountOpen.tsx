@@ -1,7 +1,6 @@
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
-import router from 'next/router';
 import { Icon } from '@chakra-ui/react';
 
 import {
@@ -9,7 +8,7 @@ import {
   Button,
   Container,
   FormFooter,
-  IconButton,
+  FormHeader,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -26,10 +25,7 @@ import {
   Tenure,
 } from '../component/form';
 
-/* eslint-disable-next-line */
-export interface CbsAccountOpenFormProps {}
-
-export function CbsAccountOpen(props: CbsAccountOpenFormProps) {
+export function CbsAccountOpen() {
   const { t } = useTranslation();
   const methods = useForm();
   const { watch } = methods;
@@ -41,24 +37,13 @@ export function CbsAccountOpen(props: CbsAccountOpenFormProps) {
         <FormProvider {...methods}>
           <form>
             <Box
-              height="60px"
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              px="5"
-              background="neutralColorLight.Gray-0"
-              borderBottom="1px solid #E6E6E6"
-              borderTopRadius={5}
+              position="sticky"
+              top="110px"
+              bg="gray.100"
+              width="100%"
+              zIndex="10"
             >
-              <Text fontSize="r2" fontWeight="600">
-                {t['newAccountOpen']}
-              </Text>
-              <IconButton
-                variant={'ghost'}
-                aria-label="close"
-                icon={<GrClose />}
-                onClick={() => router.back()}
-              />
+              <FormHeader title={t['newAccountOpen']} />
             </Box>
 
             <Member />

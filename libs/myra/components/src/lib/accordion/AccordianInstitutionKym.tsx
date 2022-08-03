@@ -56,7 +56,7 @@ interface AccordianProps {
 
 export function AccorrdianAddInstitution(props: AccordianProps) {
   const { t } = useTranslation();
-  const { formStatus, kymCurrentSection } = props;
+  const { kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
   const [isOpenOrganizational, setIsOpenOrganizational] = React.useState(false);
   const [isOpenTransaction, setIsOpenTransaction] = React.useState(false);
@@ -76,7 +76,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
   }, [kymCurrentSection]);
 
   return (
-    <Box p={'1'} overflow="auto" h="700px" mt="60px">
+    <Box p={'1'} overflow="auto" h="700px">
       <Box
         display="flex"
         justifyContent="space-between"

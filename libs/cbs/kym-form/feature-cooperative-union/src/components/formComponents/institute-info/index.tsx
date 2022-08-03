@@ -1,14 +1,10 @@
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
 import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { Text } from '@coop/shared/ui';
-import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import { ApplicantDetails } from './ApplicantDetails';
@@ -27,25 +23,8 @@ interface interfaceInfoProps {
 export const InstituteInfo = (props: interfaceInfoProps) => {
   const { t } = useTranslation();
   const { setSection } = props;
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
 
   return (
-    // <FormProvider {...methods}>
-    //   <form
-    //     onChange={debounce(() => {
-    //
-    //       mutate({ id, data: getValues() });
-    //     }, 800)}
-    //     onSubmit={handleSubmit((data) => {
-    //
-    //     })}
-    //     onFocus={(e) => {
-    //       const kymSection = getKymSectionCoOperativeUnion(e.target.id);
-
-    //       setSection(kymSection);
-    //     }}
-    //   >
     <SectionContainer>
       <Text fontSize="r3" fontWeight="600">
         {t['kymCoopUnionInstitutionInformation']}

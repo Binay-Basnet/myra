@@ -1,12 +1,12 @@
 import React from 'react';
-import {FormProvider, SubmitHandler, UseFormReturn} from 'react-hook-form';
+import { FormProvider, SubmitHandler, UseFormReturn } from 'react-hook-form';
 
-import {FormGenerator} from './FormGenerator';
+import { FormGenerator } from './FormGenerator';
 
 interface IFormProps<T> {
   methods: UseFormReturn<T, unknown>; // ! TODO replace this unknown
   children: React.ReactNode;
-  onSubmit: SubmitHandler<T>;
+  onSubmit?: SubmitHandler<T>;
   onChange?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
@@ -16,12 +16,12 @@ interface IFormProps<T> {
 // 3. Implement Layout props
 
 export default function Form<T>(props: IFormProps<T>) {
-  const {methods, children, onSubmit, onChange} = props;
+  const { methods, children, onSubmit, onChange } = props;
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={onSubmit && methods.handleSubmit(onSubmit)}
         onChange={(e) => {
           onChange && onChange(e);
         }}
@@ -32,5 +32,5 @@ export default function Form<T>(props: IFormProps<T>) {
   );
 }
 
-export type {DataSchema, DefaultFieldTypes, Dependencies} from './types';
-export {Form, FormGenerator};
+export type { DataSchema, DefaultFieldTypes, Dependencies } from './types';
+export { Form, FormGenerator };

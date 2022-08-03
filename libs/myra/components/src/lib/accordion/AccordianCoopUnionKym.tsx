@@ -20,10 +20,10 @@ const AccountOperators = ['kymCoopUnionAccDetailsofAccountOperators'];
 const CentralRepresentative = [
   'kymCoopUnionAccDetailsofdirectorsaffiliatedwithotherFirms',
 ];
-const memberDetails = [
-  'kymCoopUnionAccCurrentMembers',
-  'kymCoopUnionAccTargetfornextfiscalyear',
-];
+// const memberDetails = [
+//   'kymCoopUnionAccCurrentMembers',
+//   'kymCoopUnionAccTargetfornextfiscalyear',
+// ];
 const EconomicDetails = [
   'kymCoopUnionAccAssets',
   'kymCoopUnionAccEquityandLiailibities',
@@ -45,11 +45,11 @@ interface AccordianProps {
 
 export function AccorrdianAddCOOPUnion(props: AccordianProps) {
   const { t } = useTranslation();
-  const { formStatus, kymCurrentSection } = props;
+  const { kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
   const [isOpenOrganizational, setIsOpenOrganizational] = React.useState(false);
   const [isopenDirector, setIsopenDirector] = React.useState(false);
-  const [isOpenmemberDetails, setIsOpenMemberDetails] = React.useState(false);
+  // const [isOpenmemberDetails, setIsOpenMemberDetails] = React.useState(false);
   const [isOpenEconmoicDetails, setIsOpenEconomicDetails] =
     React.useState(false);
   const [isopenAccountOperators, setIsopenAccountOperators] =
@@ -66,12 +66,12 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
     setIsopenAccountOperators(section === 'accountOperators');
     setIsOpenDeclaration(section === 'declaration');
     setIsopenCentralRepresentatives(section === 'centralRepresentatives');
-    setIsOpenMemberDetails(section === 'memberDetails');
+    // setIsOpenMemberDetails(section === 'memberDetails');
     setIsOpenEconomicDetails(section === 'economicDetails');
   }, [kymCurrentSection]);
 
   return (
-    <Box p={'1'} overflow="auto" h="700px" mt="60px">
+    <Box p={'1'} overflow="auto" h="700px">
       <Box
         display="flex"
         justifyContent="space-between"

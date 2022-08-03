@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -21,9 +20,8 @@ import {
   Box,
   Container,
   FormFooter,
+  FormHeader,
   GridItem,
-  Icon,
-  IconButton,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -46,10 +44,7 @@ import {
   TypesOfMember,
 } from '../components/form';
 
-/* eslint-disable-next-line */
-export interface loanProductsAdd {}
-
-export function SettingsLoanProductForm(props: loanProductsAdd) {
+export function SettingsLoanProductForm() {
   const router = useRouter();
   const { t } = useTranslation();
   const id = String(router?.query?.['id']);
@@ -84,6 +79,7 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
     natureOFBusinessCoop: SelectOption;
     natureOfBusinessInstitution: SelectOption;
     loanProvisiontable: LoanProvisionType;
+    productName: string;
   };
 
   const methods = useForm<LoanProductForm>({
@@ -266,13 +262,12 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
     };
 
     mutate(
-      { id, data: updatedData },
+      { id, data: updatedData as LoanProductInput },
       {
         onSuccess: () => router.push('/settings/general/loan-products'),
       }
     );
   };
-  console.log(editVals);
   useEffect(() => {
     if (editValues) {
       if (editVals) {
@@ -291,44 +286,25 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
 
   return (
     <>
-      <Container p="0" height="fit-content" minW="container.lg">
-        <Box position="relative" margin="0px auto">
-          <Box
-            position="fixed"
-            margin="0px auto"
-            bg="gray.100"
-            minW="container.lg"
-            zIndex="10"
-          >
-            <Box
-              height="50px"
-              display="flex"
-              justifyContent="space-between"
-              alignItems={'center'}
-              px="5"
-              background="white"
-              borderBottom="1px solid #E6E6E6"
-            >
-              <Text fontSize="r2" fontWeight="SemiBold">
-                {t['loanProductAddLoanProduct']}
-              </Text>
-              <IconButton
-                variant={'ghost'}
-                aria-label="close"
-                icon={<Icon as={IoCloseOutline} size="md" />}
-                onClick={() => router.back()}
-              />
-            </Box>
-          </Box>
-        </Box>
-      </Container>
-      <Container minW="container.lg" height="fit-content" bg="gray.0" pb="55px">
+      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Container minW="container.lg" height="fit-content" paddingInline="0">
+          <FormHeader title={t['loanProductAddLoanProduct']} />
+        </Container>
+      </Box>
+
+      <Container
+        minW="container.lg"
+        height="fit-content"
+        bg="gray.0"
+        pb="55px"
+        paddingInline="0"
+      >
         <FormProvider {...methods}>
           <form>
             {/* main */}
             <Box px="s20" py="s24">
               <ContainerWithDivider>
-                <Box background="white" mt="50px">
+                <Box background="white">
                   <Text
                     fontSize="r2"
                     fontWeight="SemiBold"

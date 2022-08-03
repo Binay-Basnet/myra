@@ -1,27 +1,24 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import { mapValues } from 'lodash';
 
-import {
-  ContainerWithDivider,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import {
   DepositProductInput,
   NatureOfDepositProduct,
   useGetDepositProductSettingsEditDataQuery,
   useSetDepositProductMutation,
 } from '@coop/cbs/data-access';
+import {
+  ContainerWithDivider,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
   Container,
   FormFooter,
+  FormHeader,
   GridItem,
-  Icon,
-  IconButton,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -71,9 +68,7 @@ type DepositForm = Omit<
   natureOfBusinessInstitution: SelectOption;
 };
 
-export function SettingsDepositProductsAdd(
-  props: SettingsDepositProductsAddProps
-) {
+export function SettingsDepositProductsAdd() {
   const router = useRouter();
   const { t } = useTranslation();
   const id = String(router?.query?.['id']);
@@ -204,44 +199,24 @@ export function SettingsDepositProductsAdd(
 
   return (
     <>
-      <Container height="fit-content" minW="container.lg" p="0">
-        <Box position="relative" margin="0px auto">
-          <Box
-            position="fixed"
-            margin="0px auto"
-            bg="gray.100"
-            minW="container.lg"
-            zIndex="10"
-          >
-            <Box
-              height="50px"
-              display="flex"
-              justifyContent="space-between"
-              alignItems={'center'}
-              px="5"
-              background="white"
-              borderBottom="1px solid #E6E6E6"
-            >
-              <Text fontSize="r2" fontWeight="SemiBold">
-                {t['depositProductAddDepositProducts']}
-              </Text>
-              <IconButton
-                variant={'ghost'}
-                aria-label="close"
-                icon={<Icon as={IoCloseOutline} size="md" />}
-                onClick={() => router.back()}
-              />
-            </Box>
-          </Box>
-        </Box>
-      </Container>
-      <Container bg="white" height="fit-content" minW="container.lg" pb="120px">
+      <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+        <Container minW="container.lg" height="fit-content" paddingInline="0">
+          <FormHeader title={t['depositProductAddDepositProducts']} />
+        </Container>
+      </Box>
+      <Container
+        bg="white"
+        height="fit-content"
+        minW="container.lg"
+        pb="120px"
+        paddingInline="0"
+      >
         <FormProvider {...methods}>
           <form>
             {/* main */}
             <Box px="s20" py="s24">
               <ContainerWithDivider>
-                <Box background="white" mt="50px">
+                <Box background="white">
                   <InputGroupContainer>
                     <GridItem colSpan={2}>
                       <FormInput
@@ -329,7 +304,6 @@ export function SettingsDepositProductsAdd(
           </form>
         </FormProvider>
       </Container>
-
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.lg" height="fit-content" p="0">

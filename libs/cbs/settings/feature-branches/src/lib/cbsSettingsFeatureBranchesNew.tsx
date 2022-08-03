@@ -1,6 +1,5 @@
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 import {
@@ -23,9 +22,8 @@ import {
   Box,
   Container,
   FormFooter,
+  FormHeader,
   GridItem,
-  Icon,
-  IconButton,
   Text,
   TextFields,
 } from '@coop/shared/ui';
@@ -34,9 +32,7 @@ import { useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface CbsSettingsFeatureBranchesNewProps {}
 
-export function CbsSettingsFeatureBranchesNew(
-  props: CbsSettingsFeatureBranchesNewProps
-) {
+export function CbsSettingsFeatureBranchesNew() {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -156,25 +152,7 @@ export function CbsSettingsFeatureBranchesNew(
           width="100%"
           zIndex="10"
         >
-          <Box
-            height="60px"
-            display="flex"
-            justifyContent="space-between"
-            alignItems={'center'}
-            px="5"
-            background="white"
-            borderBottom="1px solid #E6E6E6"
-          >
-            <Text fontSize="r2" fontWeight="SemiBold">
-              {t['settingsBranchAdd']}
-            </Text>
-            <IconButton
-              variant={'ghost'}
-              aria-label="close"
-              icon={<Icon as={IoCloseOutline} w="s20" h="s20" />}
-              onClick={() => router.back()}
-            />
-          </Box>
+          <FormHeader title={t['settingsBranchAdd']} />
         </Box>
 
         <Box bg="white" pb="100px">

@@ -2,13 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
-import { CloseIcon } from '@chakra-ui/icons';
 
-import {
-  Payment_Mode,
-  ShareReturnInput,
-  useAddShareReturnMutation,
-} from '@coop/cbs/data-access';
+import { Payment_Mode, ShareReturnInput } from '@coop/cbs/data-access';
 import { Form } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
@@ -23,6 +18,7 @@ import {
   Button,
   Container,
   FormFooter,
+  FormHeader,
   Grid,
   GridItem,
   Icon,
@@ -47,10 +43,10 @@ const Header = () => {
 const ShareReturn = () => {
   const router = useRouter();
   const { t } = useTranslation();
-  const { mutate } = useAddShareReturnMutation();
+  // const { mutate } = useAddShareReturnMutation();
   // TODO! CHANGE THIS ANY
   const methods = useForm();
-  const { getValues, watch } = methods;
+  const { watch } = methods;
 
   const accountList = [
     { label: t['sharePurchaseBankVoucher'], value: Payment_Mode.BankVoucher },
@@ -117,11 +113,7 @@ const ShareReturn = () => {
 
   return (
     <>
-      <Form<ShareReturnInput>
-        methods={methods}
-        onChange={() => {console.log("heloo")}}
-        onSubmit={(data) => {console.log(data)}}
-      >
+      <Form<ShareReturnInput> methods={methods}>
         <form>
           <Box
             position="fixed"
@@ -134,18 +126,13 @@ const ShareReturn = () => {
           </Box>
           <Container minW="container.lg" p="0">
             <Box
-              height="60px"
-              display="flex"
-              justifyContent="space-between"
-              alignItems={'center'}
-              px="5"
-              background="white"
-              borderBottom="1px solid #E6E6E6"
+              position="sticky"
+              top="110px"
+              bg="gray.100"
+              width="100%"
+              zIndex="10"
             >
-              <Text fontSize="r2" fontWeight="600">
-                {t['shareReturnNewShareReturn']}
-              </Text>
-              <CloseIcon cursor="pointer" onClick={() => router.back()} />
+              <FormHeader title={t['shareReturnNewShareReturn']} />
             </Box>
             <Box mb="50px" display="flex" width="100%">
               <Box w="100%" minHeight="100vh">
