@@ -38,18 +38,21 @@ const AddRelatedTraining = ({
         <FormInput
           type="text"
           name={`trainingAttended.${index}.subjectOfTraining`}
+          id="centralRepresentative.trainingAttended.subjectOfTraining"
           label={t['kymCoopUnionSubjectOfTraining']}
           placeholder={t['kymCoopUnionEnterSubjectOfTraining']}
         />
         <FormInput
           type="date"
           name={`trainingAttended.${index}.dateOfTraining`}
+          id="centralRepresentative.trainingAttended.dateOfTraining"
           label={t['kymCoopUnionDateOfTraining']}
           placeholder={t['kymCoopUnionEnterDateOfTraining']}
         />
         <FormInput
           type="text"
           name={`trainingAttended.${index}.trainingOrganization`}
+          id="centralRepresentative.trainingAttended.trainingOrganization"
           label={t['kymCoopUnionTrainingOrganization']}
           placeholder={t['kymCoopUnionEnterTrainingOrganization']}
         />
@@ -101,6 +104,7 @@ export const CentralRepresentativeTraining = () => {
             onClick={() => {
               relatedAppend({});
             }}
+            id="centralRepresentative.relatedTrainingButton"
           >
             {t['kymInsNewDetail']}
           </Button>

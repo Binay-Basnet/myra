@@ -105,7 +105,7 @@ export const CooperativeMemberInformation = ({
             fontWeight="semibold"
             color="neutralColorLight.Gray-80"
           >
-            {'Cooperative Member Information'}
+            {t['kymCoopUnionCooperativeMemberInformation']}
           </Text>
 
           <ContainerWithDivider gap="s8">
@@ -115,7 +115,7 @@ export const CooperativeMemberInformation = ({
                 fontWeight={600}
                 color="neutralColorLight.Gray-80"
               >
-                Member Details
+                {t['kymCoopUnionMemberDetails']}
               </Text>
 
               <Text
@@ -123,7 +123,7 @@ export const CooperativeMemberInformation = ({
                 fontWeight={600}
                 color="neutralColorLight.Gray-80"
               >
-                Current
+                {t['kymCoopUnionCurrent']}
               </Text>
 
               <Text
@@ -131,66 +131,66 @@ export const CooperativeMemberInformation = ({
                 fontWeight={600}
                 color="neutralColorLight.Gray-80"
               >
-                Target for next fiscal year
+                {t['kymCoopUnionTargetFiscalYear']}
               </Text>
             </InputGroupContainer>
             <InputGroupContainer>
               <TextFields variant="formHelper" margin="auto 0">
-                No. of Male Members
+                {t['kymCoopUnionNoMaleMembers']}
               </TextFields>
 
               <FormInput
                 type="number"
                 name="noOfMaleMemberCurrent"
-                placeholder={'Enter No. of Male Members'}
+                placeholder={t['kymCoopUnionEnterNoMaleMembers']}
               />
 
               <FormInput
                 type="number"
                 name="noOfMaleMemberTarget"
-                placeholder={'Enter No. of Male Members'}
+                placeholder={t['kymCoopUnionEnterNoMaleMembers']}
               />
             </InputGroupContainer>
 
             <InputGroupContainer>
               <TextFields variant="formHelper" margin="auto 0">
-                No. of Female Members
+                {t['kymCoopUnionNoFemaleMembers']}
               </TextFields>
 
               <FormInput
                 type="number"
                 name="noOfFemaleMemberCurrent"
-                placeholder={'Enter No. of Female Members'}
+                placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
               />
 
               <FormInput
                 type="number"
                 name="noOfFemaleMemberTarget"
-                placeholder={'Enter No. of Female Members'}
+                placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
               />
             </InputGroupContainer>
 
             <InputGroupContainer>
               <TextFields variant="formHelper" margin="auto 0">
-                No. of Institutional Members
+                {t['kymCoopUnionNoInstitutionalMembers']}
               </TextFields>
 
               <FormInput
                 type="number"
                 name="noOfInstitutionalMemberCurrent"
-                placeholder={'Enter No. of Institutional Members'}
+                placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
               />
 
               <FormInput
                 type="number"
                 name="noOfInstitutionalMemberTarget"
-                placeholder={'Enter No. of Institutional Members'}
+                placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
               />
             </InputGroupContainer>
 
             <InputGroupContainer>
               <TextFields variant="formLabel" margin="auto 0">
-                Total Current Members
+                {t['kymCoopUnionTotalCurrentMembers']}
               </TextFields>
 
               <Input

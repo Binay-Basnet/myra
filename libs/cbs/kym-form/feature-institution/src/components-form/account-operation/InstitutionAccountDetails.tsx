@@ -130,7 +130,7 @@ const AddAccountDetails = ({
   // FOR TEMPORARY ADDRESS
   const currentTempProvinceId = watch('temporaryAddress.provinceId');
   const currentTemptDistrictId = watch('temporaryAddress.districtId');
-  const currentTemptLocalityId = watch('temporaryAddress.localGovernmentId');
+  const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
 
   const districtTempList = useMemo(
     () =>
@@ -145,11 +145,10 @@ const AddAccountDetails = ({
         ?.municipalities ?? [],
     [currentTemptDistrictId]
   );
-  const wardTemptList = useMemo(
+  const wardTempList = useMemo(
     () =>
-      localityTempList.find((d) => d.id === currentTemptLocalityId)?.wards ??
-      [],
-    [currentLocalityId]
+      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+    [currentTempLocalityId]
   );
   const isPermanentAndTemporaryAddressSame = watch(
     'isTemporaryAndPermanentAddressSame'
@@ -262,9 +261,7 @@ const AddAccountDetails = ({
                     id="AccountOperatorInstitution"
                     name={'permanentAddress.provinceId'}
                     label={t['kymInsState']}
-                    placeholder={
-                      t['kymInsSelInstitutionAccountDetails.selectState']
-                    }
+                    placeholder={t['kymInsSelectState']}
                     options={province}
                   />
                   <FormSelect
@@ -370,7 +367,7 @@ const AddAccountDetails = ({
                           id="AccountOperatorInstitution"
                           name={'temporaryAddress.wardNo'}
                           label={t['kymInsWardNo']}
-                          options={wardTemptList?.map((d) => ({
+                          options={wardTempList?.map((d) => ({
                             label: d,
                             value: d,
                           }))}
@@ -401,7 +398,12 @@ const AddAccountDetails = ({
             </form>
           </FormProvider>
           <Box>
-            <InputGroupContainer>
+            <Box
+              display={'flex'}
+              flexDirection="row"
+              justifyContent={'flex-start'}
+              gap="s16"
+            >
               <FormProvider {...methods}>
                 <form
                   onFocus={(e) => {
@@ -409,56 +411,30 @@ const AddAccountDetails = ({
                     setKymCurrentSection(kymSection);
                   }}
                 >
-                  <FormSelect
-                    id="AccountOperatorInstitution"
-                    name={'permanentAddress.provinceId'}
-                    label={t['kymInsState']}
-                    placeholder={t['kymInsSelectState']}
-                    options={province}
-                  />
-                  <FormSelect
-                    id="AccountOperatorInstitution"
-                    name={'permanentAddress.districtId'}
-                    label={t['kymInsDistrict']}
-                    placeholder={t['kymInsSelectDistrict']}
-                    options={districtList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    id="AccountOperatorInstitution"
-                    name={'permanentAddress.localGovernmentId'}
-                    label={t['kymInsVDCMunicipality']}
-                    placeholder={t['kymInsSelectVDCMunicipality']}
-                    options={localityList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    id="AccountOperatorInstitution"
-                    name={'permanentAddress.wardNo'}
-                    label={t['kymInsWardNo']}
-                    placeholder={t['kymInsEnterWardNo']}
-                    options={wardList?.map((d) => ({
-                      label: d,
-                      value: d,
-                    }))}
-                  />
-                  <FormInput
-                    id="AccountOperatorInstitution"
-                    type="text"
-                    name={'permanentAddress.locality'}
-                    label={t['kymInsLocality']}
-                    placeholder={t['kymInsEnterLocality']}
-                  />
-                  <FormInput
-                    type="text"
-                    name={'permanentAddress.houseNo'}
-                    label={t['kymInsHouseNo']}
-                    placeholder={t['kymInsEnterHouseNo']}
-                  />
+                  <Box
+                    display={'flex'}
+                    flexDirection="row"
+                    justifyContent={'space-between'}
+                    gap="s16"
+                  >
+                    <FormSelect
+                      id="AccountOperatorInstitution"
+                      name={'designation'}
+                      label={t['kymInsDesignation']}
+                      placeholder={t['kymInsSelectposition']}
+                      options={[
+                        { value: 'precident', label: 'President' },
+                        { value: 'viceprecident', label: 'Vice-President' },
+                        { value: 'secretary', label: 'Secretary' },
+                        { value: 'treasurer', label: 'Treasurer' },
+                      ]}
+                    />
+                    <FormInput
+                      name="panNo"
+                      placeholder={t['kymInsPanNoPlaceholder']}
+                      label={t['kymInsPanNo']}
+                    />
+                  </Box>
                 </form>
               </FormProvider>
               {/* <Box display="flex" flexDirection={'column'} gap="s4">
@@ -469,13 +445,11 @@ const AddAccountDetails = ({
                   <FormFileInput name={"specimenSignature"} />
                 </Box>
               </Box> */}
-            </InputGroupContainer>
+              <BottomDocument setKymCurrentSection={setKymCurrentSection} />
+            </Box>
           </Box>
         </SectionContainer>
 
-        <SectionContainer>
-          <BottomDocument setKymCurrentSection={setKymCurrentSection} />
-        </SectionContainer>
         <Box
           display="flex"
           justifyContent="flex-end"

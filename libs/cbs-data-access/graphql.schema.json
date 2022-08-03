@@ -10671,6 +10671,18 @@
             "deprecationReason": null
           },
           {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "institutionInformation",
             "description": null,
             "args": [],
@@ -36391,7 +36403,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCoopUnionFormStateQuery",
+              "name": "KymCoopUnionAddFormStatus",
               "ofType": null
             },
             "isDeprecated": false,

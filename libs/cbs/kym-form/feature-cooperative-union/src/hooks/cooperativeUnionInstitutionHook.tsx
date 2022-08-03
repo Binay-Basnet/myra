@@ -50,7 +50,7 @@ export const useCooperativeUnionInstitution = ({
   useEffect(() => {
     if (editValues) {
       const editValueData =
-        editValues?.members?.cooperativeUnion?.formState?.data?.formData
+        editValues?.members?.cooperativeUnion?.formState?.formData
           ?.institutionInformation;
 
       const filteredData = {
