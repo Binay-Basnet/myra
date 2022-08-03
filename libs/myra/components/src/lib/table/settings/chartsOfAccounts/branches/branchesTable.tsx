@@ -60,7 +60,7 @@ export const SettingsBranchesTable = () => {
         accessorFn: (row) => row?.node?.address?.district?.local,
         cell: (props) => (
           <span>
-            {props?.row?.original?.node?.address?.district?.local} -
+            {props?.row?.original?.node?.address?.district?.local} - &nbsp;
             {props?.row?.original?.node?.address?.wardNo}
           </span>
         ),

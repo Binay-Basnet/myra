@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { BiBell } from 'react-icons/bi';
+import { BsArrowRight } from 'react-icons/bs';
 import { CgMenuGridO } from 'react-icons/cg';
+import { IoArrowForwardOutline } from 'react-icons/io5';
 import { RiHistoryFill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
@@ -25,6 +27,7 @@ import {
   Select,
   ShortcutTab,
   SwitchTabs,
+  TextFields,
 } from '@coop/shared/ui';
 import { logout, useTranslation } from '@coop/shared/utils';
 
@@ -404,7 +407,6 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
                           onClick={() => router.push('/loan')}
-                          // _hover={{ noOfLines: '{[1, 1]}' }}
                           onMouseOver={() => setNumLines([1, 3])}
                           onMouseLeave={() => setNumLines([1, 2])}
                         >
@@ -457,44 +459,52 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
                       </Box>
                       <Divider mt="s24" mb="s24" />
                       <Box>
-                        <Box
-                          display={'flex'}
-                          flexDirection="column"
-                          w="100px"
-                          gap="s8"
-                          px="s24"
-                          cursor="pointer"
-                          borderRadius="br2"
-                          _hover={{ bg: 'primary.0' }}
-                          onClick={() =>
-                            router.push('/settings/general/organization')
-                          }
-                        >
-                          <Image
-                            width={12}
-                            height={12}
-                            src="/settings.svg"
-                            alt="Settings"
-                          />
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Medium"
-                            color="neutralColorLight.Gray-60"
-                            lineHeight="125%"
+                        <Box display="grid" gridTemplateColumns="repeat(3,1fr)">
+                          <Box
+                            display={'flex'}
+                            flexDirection="column"
+                            textAlign="center"
+                            alignItems="center"
+                            gap="s8"
+                            p="s4"
+                            cursor="pointer"
+                            borderRadius="br2"
+                            _hover={{ bg: 'primary.0' }}
+                            onClick={() =>
+                              router.push('/settings/general/organization')
+                            }
                           >
-                            {t['settings']}
-                          </Text>
+                            <Image
+                              width={12}
+                              height={12}
+                              src="/settings.svg"
+                              alt="Settings"
+                            />
+                            <Text
+                              fontSize="s3"
+                              fontWeight="Medium"
+                              color="neutralColorLight.Gray-60"
+                              lineHeight="125%"
+                            >
+                              {t['settings']}
+                            </Text>
+                          </Box>
                         </Box>
 
-                        <Box textAlign="right" mt="s16">
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Medium"
+                        <Box
+                          display="flex"
+                          justifyContent="flex-end"
+                          gap="s4"
+                          mt="s16"
+                        >
+                          <TextFields variant="link">
+                            {t['exploreAllApplications']}
+                          </TextFields>
+                          <Icon
+                            size="sm"
+                            as={BsArrowRight}
                             color="primary.500"
-                            lineHeight="116%"
-                          >
-                            {t['exploreAllApplications']} --&gt;
-                          </Text>
+                          />
                         </Box>
                       </Box>
                     </PopoverBody>

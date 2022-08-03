@@ -26,7 +26,7 @@ const en: Record<string, string> = {
   enable: 'Enable',
   disable: 'Disable',
   new: 'New',
-  quatrerly: 'Quarterly',
+  quaterly: 'Quarterly',
   halfYearly: 'Half-Yearly',
   daily: 'Daily',
   weekly: 'Weekly',
@@ -594,6 +594,8 @@ const en: Record<string, string> = {
 
   // settings LOAN
   settingsLoanGeneral: 'General',
+  settingsInsuranceGeneral: 'Insurance',
+  settingsProductTypeGeneral: 'Product Type',
   settingsLoan: 'Loan Setting',
   settingsLoanInsuranceScheme: 'Insurance Scheme Setup',
   settingsLoanInsuranceSubtext: 'Setup insurance scheme setup',
@@ -3053,6 +3055,7 @@ const en: Record<string, string> = {
   loanProductPenaltyType: 'Penalty Type',
   loanProductDifferentLoanProvisionTreatment:
     ' Different Loan Provision Treatment',
+  loanProductInstallment: 'Installment',
 
   depositProductMinAge: 'Minimum Age',
   depositProductMaxAge: 'Maximum Age',

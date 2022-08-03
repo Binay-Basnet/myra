@@ -57,7 +57,7 @@ export function SettingsLoanProduct(props: SettingsLoanProductProps) {
     () => [
       {
         header: t['loanProductsProductCode'],
-        accessorFn: (row) => row?.node.productCode?.initialNo,
+        accessorFn: (row) => row?.node.productCodeString,
       },
 
       {

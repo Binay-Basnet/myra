@@ -96,6 +96,7 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
   const { data: editValues, refetch } = useGetLoanProductEditDataQuery({
     id,
   });
+  const editVals = editValues?.settings?.general?.loanProducts?.formState;
 
   const productType = [
     {
@@ -209,6 +210,7 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
       values?.loanProvisiontable?.filter(
         (item) => item?.loanProvision === 'good'
       );
+
     const doubtfulLoanProvision =
       values?.loanProvisiontable &&
       values?.loanProvisiontable?.filter(
@@ -226,7 +228,13 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
       );
 
     const updatedData = {
-      ...omit(values, ['loanProvisiontable']),
+      ...omit(values, [
+        'id',
+        'createdAt',
+        'modifiedAt',
+        'objState',
+        'loanProvisiontable',
+      ]),
       genderId: genderList,
       maritalStatusId: maritalStatusList,
       educationQualification: educationQualificationList,
@@ -238,22 +246,23 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
       minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
       maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
       installmentType: values?.installmentType ? values?.installmentType : null,
+      modeOfPayment: values?.modeOfPayment ? values?.modeOfPayment : null,
       penalty: {
         ...values?.penalty,
         rateType: values?.penalty?.rateType ? values?.penalty?.rateType : null,
       },
-      goodLoanProvision: goodLoanProvision[0].provision
+      goodLoanProvision: goodLoanProvision
         ? Number(goodLoanProvision[0].provision)
-        : null,
-      doubtfulLoanProvision: doubtfulLoanProvision[0].provision
+        : editVals?.goodLoanProvision,
+      doubtfulLoanProvision: doubtfulLoanProvision
         ? Number(doubtfulLoanProvision[0].provision)
-        : 0,
-      problematicLoanProvision: problematicLoanProvision[0].provision
+        : editVals?.doubtfulLoanProvision,
+      problematicLoanProvision: problematicLoanProvision
         ? Number(problematicLoanProvision[0].provision)
-        : 0,
-      badLoanProvision: badLoanProvision[0].provision
+        : editVals?.problematicLoanProvision,
+      badLoanProvision: badLoanProvision
         ? Number(badLoanProvision[0].provision)
-        : 0,
+        : editVals?.badLoanProvision,
     };
 
     mutate(
@@ -263,15 +272,12 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
       }
     );
   };
-
+  console.log(editVals);
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.settings?.general?.loanProducts?.formState;
-
-      if (editValueData) {
+      if (editVals) {
         reset({
-          ...(editValueData as unknown as LoanProductForm),
+          ...(editVals as unknown as LoanProductForm),
         });
       }
     }
@@ -395,10 +401,6 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
                   <Critera />
                   <GridItems />
                 </Box>
-
-                {/* {depositNature !== 'voluntary' && (
-                  <DepositFrequency  />
-                )} */}
                 <MinimunTenure />
                 <MaximumTenure />
                 <AmountLimit />
@@ -411,11 +413,8 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
                 <LoanLimit
                   data={editValues?.settings?.general?.loanProducts?.formState}
                 />
-                {/* {(depositNature === 'recurringSaving' ||
-                  depositNature === 'termSaving') && <DefaultAccountName />} */}
                 <Questions />
                 <RequiredDocumentSetup />
-                {/* {depositNature !== 'termSaving' && <PrematuredPenalty />} */}
               </ContainerWithDivider>
             </Box>
           </form>

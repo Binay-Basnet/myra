@@ -98,6 +98,8 @@ export const KYMDeclaration = ({
         ...editValueData?.declaration,
         beneficialFullName:
           editValueData?.declaration?.beneficialFullName?.local,
+        foreignResidentialPermitTypeId:
+          editValueData?.declaration?.foreignResidentialPermitTypeId ?? '',
       });
     }
   }, [editValues]);

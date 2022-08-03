@@ -12,8 +12,8 @@ type AccountServiceTable = {
 };
 
 const service_name = [
-  { label: 'Lenovo Laptop', value: 'mi001' },
-  { label: 'Alienware Laptop', value: 'mi002' },
+  { label: 'Form', value: 'form' },
+  { label: 'Charge', value: 'charge' },
 ];
 
 const ledger_name = [

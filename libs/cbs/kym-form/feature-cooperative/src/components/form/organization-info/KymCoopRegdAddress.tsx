@@ -1,14 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import { pickBy } from 'lodash';
-import debounce from 'lodash/debounce';
 
 import {
   KymCooperativeFormInput,
   useAllAdministrationQuery,
-  useGetCoOperativeKymEditDataQuery,
-  useSetCooperativeDataMutation,
 } from '@coop/cbs/data-access';
 import {
   GroupContainer,
@@ -29,62 +24,55 @@ export const KymCoopRegdAddress = (props: IProps) => {
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
   });
-  const { control, handleSubmit, getValues, watch, setError, reset } = methods;
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
-
-  const { mutate } = useSetCooperativeDataMutation();
+  const { watch } = methods;
   useCooperative({ methods });
-  const {
-    data: editValues,
-    isLoading: editLoading,
-    refetch,
-  } = useGetCoOperativeKymEditDataQuery(
-    {
-      id: id,
-    },
-    { enabled: id !== 'undefined' }
-  );
+  // const router = useRouter();
+  // const id = String(router?.query?.['id']);
 
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        console.log(editValues);
-        if (editValues && data) {
-          mutate({ id: router.query['id'] as string, data });
-          refetch();
-        }
-      }, 800)
-    );
+  // const { mutate } = useSetCooperativeDataMutation();
+  // useCooperative({ methods });
+  // const {
+  //   data: editValues,
+  //   isLoading: editLoading,
+  //   refetch,
+  // } = useGetCoOperativeKymEditDataQuery(
+  //   {
+  //     id: id,
+  //   },
+  //   { enabled: id !== 'undefined' }
+  // );
 
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady, editValues]);
+  // useEffect(() => {
+  //   const subscription = watch(
+  //     debounce((data) => {
+  //       if (editValues && data) {
+  //         mutate({ id: router.query['id'] as string, data });
+  //         refetch();
+  //       }
+  //     }, 800)
+  //   );
 
-  useEffect(() => {
-    if (editValues) {
-      console.log(
-        pickBy(
-          editValues?.members?.cooperative?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        )
-      );
-      console.log('pick', pickBy);
-      const editValueData =
-        editValues?.members?.cooperative?.formState?.data?.formData;
+  //   return () => subscription.unsubscribe();
+  // }, [watch, router.isReady, editValues]);
 
-      reset({
-        ...pickBy(
-          editValues?.members?.cooperative?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        ),
-      });
-    }
-  }, [editLoading]);
+  // useEffect(() => {
+  //   if (editValues) {
+  //     const editValueData =
+  //       editValues?.members?.cooperative?.formState?.data?.formData;
+
+  //     reset({
+  //       ...pickBy(
+  //         editValues?.members?.cooperative?.formState?.data?.formData ?? {},
+  //         (v) => v !== null
+  //       ),
+  //     });
+  //   }
+  // }, [editLoading]);
 
   // useEffect(() => {
   //   if (id) {
   //     refetch();
-  //     console.log({ id });
+  //
   //   }
   // }, [id]);
   const { data } = useAllAdministrationQuery();
@@ -124,10 +112,8 @@ export const KymCoopRegdAddress = (props: IProps) => {
     <FormProvider {...methods}>
       <form
         onFocus={(e) => {
-          console.log('hello');
           const kymSection = getKymCoopSection(e.target.id);
           setSection(kymSection);
-          console.log('new', kymSection);
         }}
       >
         <GroupContainer

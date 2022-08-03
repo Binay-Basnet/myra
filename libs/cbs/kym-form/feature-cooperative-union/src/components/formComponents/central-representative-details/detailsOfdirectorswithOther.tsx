@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 import pickBy from 'lodash/pickBy';
 
@@ -78,10 +79,10 @@ const CRDirectorsSelection = ({
   });
 
   useEffect(() => {
-    if (watch('notAmongDirectors')) {
+    if (watch('notAmongDirectors') && !crId) {
       newIdMutate({});
     }
-  }, [watch('notAmongDirectors')]);
+  }, [watch('notAmongDirectors'), crId]);
 
   useEffect(() => {
     if (crId) {
@@ -139,8 +140,10 @@ const CRDirectorsSelection = ({
   }, [crDetailsEditData]);
 
   useEffect(() => {
-    refetchCentralRepresentativeDetail();
-  }, []);
+    if (id) {
+      refetchCentralRepresentativeDetail();
+    }
+  }, [id]);
 
   const { mutate } = useSetPersonnelDetailsMutation({
     onSuccess: () => refetch(),
@@ -149,7 +152,17 @@ const CRDirectorsSelection = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        if (id && data && !isDeepEmpty(data)) {
+        const crDetail = {
+          ...omit(
+            pickBy(
+              crDetailsEditData?.members?.cooperativeUnion?.formState?.formData
+                ?.centralRepresentativeDetails,
+              (v) => v !== null
+            ),
+            ['id']
+          ),
+        };
+        if (id && data && !isDeepEmpty(data) && !isEqual(data, crDetail)) {
           if (!data?.notAmongDirectors) {
             mutate({
               id,

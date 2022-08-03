@@ -593,6 +593,8 @@ const ne: Record<string, string> = {
 
   // settings LOAN
   settingsLoanGeneral: 'General',
+  settingsInsuranceGeneral: 'Insurance',
+  settingsProductTypeGeneral: 'Product Type',
   settingsLoan: 'Loan Setting',
   settingsLoanInsuranceScheme: 'Insurance Scheme Setup',
   settingsLoanInsuranceSubtext: 'Setup insurance scheme setup',
@@ -3054,6 +3056,7 @@ const ne: Record<string, string> = {
   loanProductPenaltyType: 'Penalty Type',
   loanProductDifferentLoanProvisionTreatment:
     ' Different Loan Provision Treatment',
+  loanProductInstallment: 'Installment',
 
   depositProductMinAge: 'Minimum Age',
   depositProductMaxAge: 'Maximum Age',

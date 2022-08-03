@@ -1,26 +1,64 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { identity, pickBy } from 'lodash';
+import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 
 import {
+  GetCooperativeUnionKymEditDataQuery,
+  KymInsInput,
   useGetCooperativeUnionKymEditDataQuery,
   useSetCooperativeUnionInstitutionDataMutation,
 } from '@coop/cbs/data-access';
-import { KymInsInput } from '@coop/cbs/data-access';
 import { isDeepEmpty } from '@coop/shared/utils';
 
 interface ICooperativeUnionHookProps {
   methods: UseFormReturn<KymInsInput>;
 }
 
+const getInstiutionData = (
+  data: GetCooperativeUnionKymEditDataQuery | undefined
+) => {
+  if (!data) {
+    return {};
+  }
+
+  const editValueData =
+    data?.members?.cooperativeUnion?.formState?.formData
+      ?.institutionInformation;
+
+  return {
+    ...editValueData,
+    regdAddress: {
+      ...editValueData?.regdAddress,
+      locality: editValueData?.regdAddress?.locality?.local,
+    },
+    operatingOfficeAddress: {
+      ...editValueData?.operatingOfficeAddress,
+      locality: editValueData?.operatingOfficeAddress?.locality?.local,
+    },
+    branchOfficeAddress: {
+      ...editValueData?.branchOfficeAddress,
+      locality: editValueData?.branchOfficeAddress?.locality?.local,
+    },
+    applicantPermanentAddress: {
+      ...editValueData?.applicantPermanentAddress,
+      locality: editValueData?.applicantPermanentAddress?.locality?.local,
+    },
+    applicantTemporaryAddress: {
+      ...editValueData?.applicantTemporaryAddress,
+      locality: editValueData?.applicantTemporaryAddress?.locality?.local,
+    },
+  };
+};
+
 export const useCooperativeUnionInstitution = ({
   methods,
 }: ICooperativeUnionHookProps) => {
   const router = useRouter();
   const id = router?.query?.['id'];
-  const { setError, watch, reset } = methods;
+  const { watch, reset } = methods;
   const { mutate } = useSetCooperativeUnionInstitutionDataMutation();
 
   const {
@@ -35,9 +73,26 @@ export const useCooperativeUnionInstitution = ({
   );
 
   useEffect(() => {
+    if (editValues) {
+      const filteredData = getInstiutionData(editValues);
+
+      reset({
+        ...pickBy(filteredData ?? {}, (v) => v !== null),
+      });
+    }
+  }, [editLoading]);
+
+  useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        if (id && data && !isDeepEmpty(data)) {
+        const institutionData = getInstiutionData(editValues);
+
+        if (
+          id &&
+          data &&
+          !isDeepEmpty(data) &&
+          !isEqual(institutionData, data)
+        ) {
           mutate({ id: String(id), data });
           // refetch();
         }
@@ -46,42 +101,6 @@ export const useCooperativeUnionInstitution = ({
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData =
-        editValues?.members?.cooperativeUnion?.formState?.formData
-          ?.institutionInformation;
-
-      const filteredData = {
-        ...editValueData,
-        regdAddress: {
-          ...editValueData?.regdAddress,
-          locality: editValueData?.regdAddress?.locality?.local,
-        },
-        operatingOfficeAddress: {
-          ...editValueData?.operatingOfficeAddress,
-          locality: editValueData?.operatingOfficeAddress?.locality?.local,
-        },
-        branchOfficeAddress: {
-          ...editValueData?.branchOfficeAddress,
-          locality: editValueData?.branchOfficeAddress?.locality?.local,
-        },
-        applicantPermanentAddress: {
-          ...editValueData?.applicantPermanentAddress,
-          locality: editValueData?.applicantPermanentAddress?.locality?.local,
-        },
-        applicantTemporaryAddress: {
-          ...editValueData?.applicantTemporaryAddress,
-          locality: editValueData?.applicantTemporaryAddress?.locality?.local,
-        },
-      };
-
-      reset({
-        ...pickBy(filteredData ?? {}, (v) => v !== null),
-      });
-    }
-  }, [editLoading]);
 
   useEffect(() => {
     if (id) {
