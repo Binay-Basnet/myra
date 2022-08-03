@@ -9,7 +9,6 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-// import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

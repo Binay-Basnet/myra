@@ -1,18 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
+import { useAllAdministrationQuery } from '@coop/cbs/data-access';
 import {
   ContainerWithDivider,
-  GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  useAllAdministrationQuery,
-  useSetBranchDataMutation,
-} from '@coop/shared/data-access';
 import {
   FormEmailInput,
   FormFileInput,
@@ -20,7 +15,6 @@ import {
   FormMap,
   FormPhoneNumber,
   FormSelect,
-  FormSwitchTab,
 } from '@coop/shared/form';
 import {
   Box,
@@ -375,7 +369,6 @@ export function CbsSettingsFeatureValuatorAdd(
               }
               draftButton={null}
               mainButtonLabel={'Save'}
-              mainButtonHandler={() => console.log('save')}
             />
           </Container>
         </Box>

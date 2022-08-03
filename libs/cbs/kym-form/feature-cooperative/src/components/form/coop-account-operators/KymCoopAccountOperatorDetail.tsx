@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   KymCooperativeAccountOperatorDetailsInput,
-  KymCooperativeFormInput,
   useDeleteCoopAccOperatorDataMutation,
   useGetCoOperativeAccountOperatorEditDataQuery,
   useGetNewIdMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

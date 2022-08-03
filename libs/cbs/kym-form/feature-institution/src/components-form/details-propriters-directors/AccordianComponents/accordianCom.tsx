@@ -1,22 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   FormProvider,
-  useFieldArray,
   useForm,
-  useFormContext,
 } from 'react-hook-form';
-import { FaMap } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   useAllAdministrationQuery,
   useGetInsBoardDirectorEditListQuery,
   useSetAddDirectorInstitutionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IAddDirector {

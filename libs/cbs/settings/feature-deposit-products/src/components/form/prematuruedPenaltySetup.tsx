@@ -1,6 +1,6 @@
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { PrematurePenaltyDateType } from '@coop/shared/data-access';
+import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

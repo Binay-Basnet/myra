@@ -7,7 +7,7 @@ import {
   KymIndMemberInput,
   useGetKymDocumentsListQuery,
   useSetKymDocumentDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormFileInput } from '@coop/shared/form';
 import { Grid } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
@@ -66,13 +66,11 @@ const KYMDocumentDeclarationField = ({
     if (editValues) {
       const kymDocumentsList = editValues?.document?.listKYMDocuments?.data;
 
-      console.log({ kymDocumentsList });
-
       const documentData = kymDocumentsList?.find(
         (doc) => doc?.fieldId === name
       );
 
-      // console.log({ documentData });
+      //
 
       if (documentData) {
         reset({

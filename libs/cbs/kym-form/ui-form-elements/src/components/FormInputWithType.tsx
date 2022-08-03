@@ -1,7 +1,7 @@
 import React from 'react';
 import { Path } from 'react-hook-form';
 
-import { FormFieldType as FIELD_TYPE } from '@coop/shared/data-access';
+import { FormFieldType as FIELD_TYPE } from '@coop/cbs/data-access';
 import { FormEmailInput, FormInput } from '@coop/shared/form';
 import { InputProps } from '@coop/shared/ui';
 
@@ -27,17 +27,17 @@ export const FormInputWithType = <T,>(props: FormInputTypeProps<T>) => {
     case FIELD_TYPE?.PhoneNumber:
       return <FormInput type="number" {...rest} />;
 
-    //todo
+    // TODO! COMPLETE THIS!
     // case FIELD_TYPE?.Paragraph:
     //   return <FormTextArea {...rest} />;
-    case FIELD_TYPE?.Address:
-    case FIELD_TYPE?.Bank:
-    // case FIELD_TYPE?.Display:
-    case FIELD_TYPE?.Fax:
-    case FIELD_TYPE?.LocalLevel:
-    case FIELD_TYPE?.MultipleFile:
-    case FIELD_TYPE?.District:
-    case FIELD_TYPE?.Province:
+    // case FIELD_TYPE?.Address:
+    // case FIELD_TYPE?.Bank:
+    // // case FIELD_TYPE?.Display:
+    // case FIELD_TYPE?.Fax:
+    // case FIELD_TYPE?.LocalLevel:
+    // case FIELD_TYPE?.MultipleFile:
+    // case FIELD_TYPE?.District:
+    // case FIELD_TYPE?.Province:
     case FIELD_TYPE?.SingleFile:
       return <FormInput {...rest} />;
     default:

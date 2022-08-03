@@ -1,7 +1,8 @@
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
-import { theme } from '@coop/shared/utils';
 import { Meta, Story } from '@storybook/react';
+
+import { theme } from '@coop/shared/utils';
 
 import { Tags, TagsProps } from './Tags';
 
@@ -27,5 +28,7 @@ Tag.args = {
   label: 'Tag',
   isRemovable: true,
   isDisabled: false,
-  onClick: () => console.log('clicked'),
+  onClick: () => {
+    console.log('Hello');
+  },
 };

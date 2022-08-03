@@ -1,0 +1,11 @@
+query getHomeServiceList {
+  eBanking {
+    services {
+      id
+      name
+      service_id
+      icon
+      enabled
+    }
+  }
+}

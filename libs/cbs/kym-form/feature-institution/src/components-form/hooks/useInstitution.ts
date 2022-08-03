@@ -7,8 +7,8 @@ import debounce from 'lodash/debounce';
 import {
   useGetInstitutionKymEditDataQuery,
   useSetInstitutionDataMutation,
-} from '@coop/shared/data-access';
-import { KymInsInput } from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { KymInsInput } from '@coop/cbs/data-access';
 
 interface IInstitutionHookProps {
   methods: UseFormReturn<KymInsInput>;
@@ -45,12 +45,9 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
     { enabled: id !== 'undefined' }
   );
 
-  console.log('edit values', editValues);
-
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        console.log({ data, id });
         if (data && id !== 'undefined') {
           mutate({
             id: router.query['id'] as string,
@@ -108,7 +105,6 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
   useEffect(() => {
     if (id) {
       refetch();
-      console.log({ id });
     }
   }, [id]);
 };

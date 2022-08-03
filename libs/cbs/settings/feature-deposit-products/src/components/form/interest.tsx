@@ -2,7 +2,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { NatureOfDepositProduct } from '@coop/shared/data-access';
+import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 import { FormEditableTable, FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

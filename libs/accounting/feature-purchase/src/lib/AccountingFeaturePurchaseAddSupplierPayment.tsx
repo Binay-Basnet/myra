@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, ArrayPath } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
@@ -7,6 +7,7 @@ import {
   BoxContainer,
   DividerContainer,
   InputGroupContainer,
+  AccountsDetailPageLayout,
 } from '@coop/accounting/ui-components';
 import {
   FormInput,

@@ -7,8 +7,8 @@ import debounce from 'lodash/debounce';
 import {
   useGetCooperativeUnionKymEditDataQuery,
   useSetCooperativeUnionInstitutionDataMutation,
-} from '@coop/shared/data-access';
-import { KymInsInput } from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { KymInsInput } from '@coop/cbs/data-access';
 import { isDeepEmpty } from '@coop/shared/utils';
 
 interface ICooperativeUnionHookProps {

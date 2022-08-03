@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { CoopUnionInstitutionInformationInput } from '@coop/shared/data-access';
+import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormCheckbox } from '@coop/shared/form';
 import { Box, Grid, Text, TextFields } from '@coop/shared/ui';
 import {

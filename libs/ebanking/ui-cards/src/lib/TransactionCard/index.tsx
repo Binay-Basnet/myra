@@ -1,4 +1,4 @@
-import { Transactions } from '@coop/shared/data-access';
+import { Transactions } from '@coop/ebanking/data-access';
 import { Box, Icon, TextFields } from '@coop/shared/ui';
 
 interface ITransactionCardProps {

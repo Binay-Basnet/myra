@@ -2,7 +2,7 @@
 import { useTranslation } from '@coop/shared/utils';
 import React from 'react';
 import { useRouter } from 'next/router';
-import { useGetKymFormStatusQuery } from '@coop/shared/data-access';
+import { useGetKymFormStatusQuery } from '@coop/cbs/data-access';
 import {
   Box,
   Button,

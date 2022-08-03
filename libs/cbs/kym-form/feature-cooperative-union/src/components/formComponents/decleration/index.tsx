@@ -2,11 +2,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
+import { useSetDeclarationDataMutation } from '@coop/cbs/data-access';
 import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useSetDeclarationDataMutation } from '@coop/shared/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 import { useTranslation } from '@coop/shared/utils';
@@ -29,12 +29,8 @@ export const Declaration = (props: declarationProps) => {
     <FormProvider {...methods}>
       <form
         onChange={debounce(() => {
-          console.log('hello', getValues());
           mutate({ id, data: getValues() });
         }, 800)}
-        onSubmit={handleSubmit((data) => {
-          console.log('data', data);
-        })}
         onFocus={(e) => {
           const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 

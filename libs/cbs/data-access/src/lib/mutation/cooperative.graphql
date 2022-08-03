@@ -1,0 +1,65 @@
+mutation setCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
+  members {
+    cooperative(id: $id) {
+      add(data: $data) {
+        recordId
+      }
+    }
+  }
+}
+
+mutation setCOOPAccOperatorData(
+  $id: ID!
+  $accOperatorId: ID!
+  $data: KymCoopAccountOperatorDetailsFormInput!
+) {
+  members {
+    cooperative(id: $id) {
+      accountOperatorDetail {
+        Upsert(accOperatorId: $accOperatorId, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteCOOPAccOperatorData($id: ID!, $accOperatorId: ID!) {
+  members {
+    cooperative(id: $id) {
+      accountOperatorDetail {
+        Delete(accOperatorId: $accOperatorId) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setCOOPdirectorData(
+  $id: ID!
+  $dirId: ID!
+  $data: KymCoopDirectorDetailsFormInput!
+) {
+  members {
+    cooperative(id: $id) {
+      directorDetails {
+        Upsert(dirId: $dirId, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteCOOPdirectorData($id: ID!, $dirId: ID!) {
+  members {
+    cooperative(id: $id) {
+      directorDetails {
+        Delete(dirId: $dirId) {
+          recordId
+        }
+      }
+    }
+  }
+}

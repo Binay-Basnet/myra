@@ -4,14 +4,14 @@ import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
 import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   KymIndMemberInput,
   useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import {
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';

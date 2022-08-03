@@ -1,4 +1,4 @@
-import { FormFieldType as Field_Types } from '@coop/shared/data-access';
+import { FormFieldType as Field_Types } from '@coop/cbs/data-access';
 
 export const UPLOAD_FIELD_OPTIONS = [
   {

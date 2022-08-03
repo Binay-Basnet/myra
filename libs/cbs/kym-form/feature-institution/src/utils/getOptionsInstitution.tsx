@@ -1,4 +1,4 @@
-import { GetInstitutionKymOptionsQuery } from '@coop/shared/data-access';
+import { GetInstitutionKymOptionsQuery } from '@coop/cbs/data-access';
 
 export const getOption = (
   data?: GetInstitutionKymOptionsQuery,

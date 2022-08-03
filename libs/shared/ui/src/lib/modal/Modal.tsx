@@ -61,7 +61,7 @@ export function Modal(props: ModalProps) {
             icon={<Icon as={IoCloseOutline} size="lg" />}
           />
         </ModalCloseButton>
-        {/*<ModalCloseButton  _focus={{ bg: 'none' }} />*/}
+        {/* <ModalCloseButton  _focus={{ bg: 'none' }} />*/}
         <ModalBody>{children}</ModalBody>
         {/* <Divider /> */}
         {footerPrimary1Props ||

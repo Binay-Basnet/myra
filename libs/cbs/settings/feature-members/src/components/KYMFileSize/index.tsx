@@ -5,7 +5,7 @@ import {
   FormSection,
   FormSectionType,
   useAddFileSizeToSectionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { AccordionPanel, Box, Text, TextInput } from '@coop/shared/ui';
 
 interface FileSizeInputProps {

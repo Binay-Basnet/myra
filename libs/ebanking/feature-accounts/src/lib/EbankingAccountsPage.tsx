@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { Skeleton } from '@chakra-ui/react';
 
 import { AccountCard, AccountHeaderCard } from '@coop/ebanking/cards';
-import { useGetAccountListQuery } from '@coop/shared/data-access';
+import { useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { Box, Divider, Grid } from '@coop/shared/ui';
 
 export function EbankingAccountsPage() {

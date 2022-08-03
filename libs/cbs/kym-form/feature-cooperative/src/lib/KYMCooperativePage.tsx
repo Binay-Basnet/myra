@@ -1,12 +1,11 @@
 /* eslint-disable-next-line */
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useTranslation, getKymCoopSection } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 import {
-  useSetKymCooperativeDataMutation,
   KymCooperativeFormInput,
-} from '@coop/shared/data-access';
-import { useForm, FormProvider } from 'react-hook-form';
+} from '@coop/cbs/data-access';
+import { useForm } from 'react-hook-form';
 import {
   Box,
   Container,
@@ -19,7 +18,6 @@ import {
   FormFooter,
 } from '@coop/shared/ui';
 import { IoCloseOutline } from 'react-icons/io5';
-import debounce from 'lodash/debounce';
 import {
   KymCoopBasicInfo,
   KymCoopRegdAddress,

@@ -3,7 +3,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 
-import { Member } from '@coop/shared/data-access';
+import { Member } from '@coop/cbs/data-access';
 import {
   Box,
   Popover,

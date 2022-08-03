@@ -16,7 +16,7 @@ import {
 import axios from 'axios';
 import { isEmpty, isEqual, xorWith } from 'lodash';
 
-import { useGetPreSignedUrlMutation } from '@coop/shared/data-access';
+import { useGetPreSignedUrlMutation } from '@coop/cbs/data-access';
 
 import { dropdownStyles } from './FileInputStyles';
 import Box from '../box/Box';
@@ -70,9 +70,9 @@ export function FileInput({
     { url?: string; fileName: string }[] | null
   >(null);
 
-  // console.log(JSON.stringify(alreadyAddedFiles, null, 2), 'files-already');
-  // console.log(JSON.stringify(value, null, 2), 'files-value');
-  // console.log(fileNames, 'files-name');
+  //
+  //
+  //
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles((prev) => [...prev, ...acceptedFiles]);

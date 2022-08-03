@@ -7,11 +7,11 @@ import {
   FormField,
   FormOption,
   useUpsertNewOptionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormInput, FormSwitch } from '@coop/shared/form';
 import { Box, Icon, Text } from '@coop/shared/ui';
 
-/***************** KYM Settings Field Option Component Start *****************/
+/** *************** KYM Settings Field Option Component Start *****************/
 
 interface KYMSettingOptionProps {
   option: Partial<FormOption>;

@@ -4,15 +4,15 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 import {
-  ContainerWithDivider,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   BranchCategory,
   useAllAdministrationQuery,
   useGetBranchEditDataQuery,
   useSetBranchDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import {
+  ContainerWithDivider,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import {
   FormInput,
   FormMap,

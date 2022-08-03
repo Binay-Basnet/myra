@@ -3,8 +3,8 @@ import { BsThreeDots } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 
+import { useGetShareRegisterListQuery } from '@coop/cbs/data-access';
 import { InventoryPageHeader } from '@coop/myra/inventory/ui-layout';
-import { useGetShareRegisterListQuery } from '@coop/shared/data-access';
 import { Column } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -72,12 +72,12 @@ export const WarehouseTransferTable = () => {
         buttonHandler={() => router.push('/inventory/warehouse/transfer/add')}
       />
 
-      {/*<Table*/}
+      {/* <Table*/}
       {/*  data={rowItems}*/}
       {/*  isLoading={isFetching}*/}
       {/*  columns={columns}*/}
       {/*  sort={true}*/}
-      {/*/>*/}
+      {/* />*/}
     </>
   );
 };

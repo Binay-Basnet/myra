@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
-import { useGetShareBalanceListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

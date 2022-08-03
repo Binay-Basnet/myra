@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-import { FormCategory } from '@coop/shared/data-access';
+import { FormCategory } from '@coop/cbs/data-access';
 import { Box } from '@coop/shared/ui';
 
 import { KYMSettings } from '../components';

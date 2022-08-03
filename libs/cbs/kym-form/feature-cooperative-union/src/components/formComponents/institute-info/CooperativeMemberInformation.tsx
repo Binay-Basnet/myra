@@ -6,7 +6,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { ContainerWithDivider } from '@coop/cbs/kym-form/ui-containers';
-import { CoopUnionInstitutionInformationInput } from '@coop/shared/data-access';
+import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Input, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

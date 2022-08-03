@@ -6,15 +6,16 @@ const path = require('path');
  * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  output: 'standalone',
   experimental: {
-    outputStandalone: true,
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
-  nx: {
-    // Set this to true if you would like to to use SVGR
-    // See: https://github.com/gregberge/svgr
-    svgr: false,
-  },
+
+  // nx: {
+  //   // Set this to true if you would like to to use SVGR
+  //   // See: https://github.com/gregberge/svgr
+  //   svgr: false,
+  // },
   images: {
     domains: ['images.unsplash.com', 'cdn.raralabs.live'],
   },

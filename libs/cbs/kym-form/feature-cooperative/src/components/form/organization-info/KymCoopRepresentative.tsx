@@ -1,24 +1,20 @@
-import React from 'react';
-import { useMemo, useState } from 'react';
-import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { GridItem } from '@chakra-ui/react';
-import { identity, pickBy } from 'lodash';
+import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
+import {
+  KymCooperativeFormInput,
+  useAllAdministrationQuery,
+  useGetCoOperativeKymEditDataQuery,
+  useSetCooperativeDataMutation,
+} from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import {
-  useGetCoOperativeKymEditDataQuery,
-  useSetCooperativeDataMutation,
-} from '@coop/shared/data-access';
-import { KymCooperativeFormInput } from '@coop/shared/data-access';
 import {
   FormEmailInput,
   FormInput,
@@ -30,7 +26,6 @@ import {
 import { Box, Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
-import { useCooperative } from '../../hooks/useCooperative';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
@@ -59,7 +54,6 @@ export const KymCoopRepresentative = (props: IProps) => {
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        console.log(editValues);
         if (editValues && data) {
           mutate({ id: router.query['id'] as string, data });
           refetch();
@@ -72,13 +66,6 @@ export const KymCoopRepresentative = (props: IProps) => {
 
   useEffect(() => {
     if (editValues) {
-      console.log(
-        pickBy(
-          editValues?.members?.cooperative?.formState?.data?.formData ?? {},
-          (v) => v !== null
-        )
-      );
-      console.log('pick', pickBy);
       const editValueData =
         editValues?.members?.cooperative?.formState?.data?.formData;
 
@@ -103,7 +90,7 @@ export const KymCoopRepresentative = (props: IProps) => {
   // useEffect(() => {
   //   if (id) {
   //     refetch();
-  //     console.log({ id });
+  //
   //   }
   // }, [id]);
   const isPermanentAndTemporaryAddressSame = watch(

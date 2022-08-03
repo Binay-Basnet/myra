@@ -53,7 +53,6 @@ export function NewSalesForm(props: CbsAccountOpenFormProps) {
   const { t } = useTranslation();
   const methods = useForm();
   const { watch } = methods;
-  console.log('data', watch('data'));
 
   return (
     <>

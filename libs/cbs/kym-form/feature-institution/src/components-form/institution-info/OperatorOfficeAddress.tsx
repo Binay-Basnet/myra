@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { useAllAdministrationQuery } from '@coop/cbs/data-access';
+import { KymInsInput } from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { KymInsInput } from '@coop/shared/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
@@ -43,7 +43,6 @@ export const OperatorOfficeAddress = (props: IProps) => {
   const currentDistrictId = watch('operatingOfficeAddress.districtId');
   const currentLocalityId = watch('operatingOfficeAddress.localGovernmentId');
 
-  console.log({ currentProvinceId });
   const districtList = useMemo(
     () =>
       data?.administration.all.find((d) => d.id === currentProvinceId)

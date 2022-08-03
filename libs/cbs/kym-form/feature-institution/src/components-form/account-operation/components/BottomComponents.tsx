@@ -1,6 +1,5 @@
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { Box, Grid, Text } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 interface IProps {
   setKymCurrentSection: (section?: {

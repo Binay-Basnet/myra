@@ -1,5 +1,5 @@
 // import debounce from 'lodash/debounce';
-import { KymMemberTypesEnum } from '@coop/shared/data-access';
+import { KymMemberTypesEnum } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

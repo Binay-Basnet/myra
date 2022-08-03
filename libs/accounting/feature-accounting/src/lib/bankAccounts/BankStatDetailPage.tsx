@@ -3,7 +3,7 @@ import { FiCornerLeftDown } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 
 import { PopoverComponent } from '@coop/myra/components';
-import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
+import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

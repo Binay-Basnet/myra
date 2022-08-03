@@ -14,7 +14,7 @@ import {
   FormSection,
   useDeleteFieldMutation,
   useMoveFieldMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { AccordionPanel, Box, Button, Icon } from '@coop/shared/ui';
 
 import { KYMFileSize } from '../KYMFileSize';

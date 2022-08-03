@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { Member } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
-import { Member } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/table';
 import {
   Avatar,
@@ -41,10 +41,7 @@ export function MemberListPage() {
     }
   );
 
-  console.log('this is data', data);
-
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
-  console.log('hello', rowData);
 
   const popoverTitle = [
     {

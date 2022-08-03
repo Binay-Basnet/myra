@@ -35,6 +35,7 @@
       "@coop/cbs/accounts/account-form": [
         "libs/cbs/accounts/feature-account-form/src/index.ts"
       ],
+      "@coop/cbs/data-access": ["libs/cbs/data-access/src/index.ts"],
       "@coop/cbs/kym-form/cooperative": [
         "libs/cbs/kym-form/feature-cooperative/src/index.ts"
       ],
@@ -92,6 +93,7 @@
       ],
       "@coop/ebanking/cards": ["libs/ebanking/ui-cards/src/index.ts"],
       "@coop/ebanking/coop": ["libs/ebanking/feature-coop/src/index.ts"],
+      "@coop/ebanking/data-access": ["libs/ebanking/data-access/src/index.ts"],
       "@coop/ebanking/home": ["libs/ebanking/feature-home/src/index.ts"],
       "@coop/ebanking/ui-layout": ["libs/ebanking/ui-layout/src/index.ts"],
       "@coop/inventory/inventory": [
@@ -123,7 +125,6 @@
       ],
       "@coop/neosys-admin/users": ["libs/neosys/feature-users/src/index.ts"],
       "@coop/shared/components": ["libs/shared/components/src/index.ts"],
-      "@coop/shared/data-access": ["libs/shared/data-access/src/index.ts"],
       "@coop/shared/editable-table": [
         "libs/shared/editable-table/src/index.ts"
       ],

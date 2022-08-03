@@ -1,0 +1,142 @@
+query getBranchList($paginate: Pagination, $filter: BranchSearchFilter) {
+  settings {
+    general {
+      branch {
+        list(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              branchCode
+              name
+              category
+              estDate
+              manager {
+                code
+                type
+                name
+                address {
+                  state
+                  district
+                  localGovernment
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                contact
+                dateJoined
+                share {
+                  summary {
+                    id
+                    member {
+                      code
+                      type
+                      name
+                      address {
+                        state
+                        district
+                      }
+                      contact
+                      dateJoined
+                    }
+                    count
+                  }
+                  history {
+                    member {
+                      code
+                      type
+                      name
+                      address {
+                        state
+                        district
+                      }
+                      contact
+                      dateJoined
+                    }
+                    status
+                    transactionDate
+                    transactionDirection
+                    credit
+                  }
+                }
+                profile {
+                  __typename
+                }
+              }
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              location {
+                longitude
+                latitude
+              }
+              contactNumber
+              email
+              abbsTransaction {
+                abbsStatus
+                receivableAccountId
+                payableAccountId
+              }
+              plTransferId
+              tdsTransaferId
+              branchStatus
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getBranchEditData($id: ID!) {
+  settings {
+    general {
+      branch {
+        formState(id: $id) {
+          data {
+            branchCode
+            name
+            category
+            estDate
+            managerId
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            location {
+              longitude
+              latitude
+            }
+            phoneNumber
+            email
+            abbsStatus
+            receivableAccountId
+            payableAccountId
+            plTransferId
+            tdsTransaferId
+            branchStatus
+          }
+          error {
+            __typename
+          }
+        }
+      }
+    }
+  }
+}

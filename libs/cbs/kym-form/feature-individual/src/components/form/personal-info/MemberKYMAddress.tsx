@@ -5,15 +5,15 @@ import debounce from 'lodash/debounce';
 import pickBy from 'lodash/pickBy';
 
 import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   KymIndMemberInput,
   useAllAdministrationQuery,
   useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import {
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';

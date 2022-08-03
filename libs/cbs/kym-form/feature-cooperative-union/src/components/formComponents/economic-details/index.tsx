@@ -6,7 +6,7 @@ import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useSetEconomicDetailsDataMutation } from '@coop/shared/data-access';
+import { useSetEconomicDetailsDataMutation } from '@coop/cbs/data-access';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 import { useTranslation } from '@coop/shared/utils';

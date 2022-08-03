@@ -1,9 +1,10 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+
 import { ChakraProvider } from '@chakra-ui/react';
 
 import { theme } from '@coop/shared/utils';

@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
-import { AiOutlineSetting } from 'react-icons/ai';
 import { BiBell } from 'react-icons/bi';
 import { CgMenuGridO } from 'react-icons/cg';
 import { RiHistoryFill } from 'react-icons/ri';

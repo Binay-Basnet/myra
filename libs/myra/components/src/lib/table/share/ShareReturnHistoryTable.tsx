@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import format from 'date-fns/format';
 
-import { useGetShareHistoryQuery } from '@coop/shared/data-access';
+import { useGetShareHistoryQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

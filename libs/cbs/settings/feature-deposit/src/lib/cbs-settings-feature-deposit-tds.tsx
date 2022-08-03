@@ -6,7 +6,7 @@ import { debounce } from 'lodash';
 import {
   useGetDepositSettingsTdsQuery,
   useSetDepositTdsMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

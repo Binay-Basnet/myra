@@ -16,5 +16,7 @@ Primary.args = {
   status: <Text as="i">Form details saved to draft</Text>,
   draftButton: <Button>Save Draft</Button>,
   mainButtonLabel: 'Next',
-  mainButtonHandler: () => console.log('OK'),
+  mainButtonHandler: () => {
+    console.log('Hello');
+  },
 };

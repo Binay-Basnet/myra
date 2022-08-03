@@ -1,11 +1,11 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { KymCooperativeFormInput } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';

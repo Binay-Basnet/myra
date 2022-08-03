@@ -1,5 +1,5 @@
 // import debounce from 'lodash/debounce';
-import { LoanRequiredDocuments } from '@coop/shared/data-access';
+import { LoanRequiredDocuments } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { Box, Grid } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

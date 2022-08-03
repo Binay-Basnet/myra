@@ -1,0 +1,274 @@
+mutation upsertNewOption($fieldId: ID!, $data: FormOptionUpsertInput!) {
+  settings {
+    form {
+      option {
+        upsert(fieldId: $fieldId, data: $data) {
+          recordId
+          record {
+            id
+            name
+            enabled
+            order
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation deleteOption($optionId: ID!) {
+  settings {
+    form {
+      option {
+        delete(id: $optionId) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation moveOption($optionId: ID!, $to: Int!) {
+  settings {
+    form {
+      option {
+        move(id: $optionId, to: $to) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation toggleFieldOtherOption($fieldId: ID!, $hasOtherField: Boolean) {
+  settings {
+    form {
+      field {
+        update(id: $fieldId, data: { hasOtherField: $hasOtherField }) {
+          record {
+            name
+            hasOtherField
+          }
+        }
+      }
+    }
+  }
+}
+
+# SECTION
+
+mutation upsertSectionOption($sectionId: ID!, $data: FormFieldUpsertInput!) {
+  settings {
+    form {
+      field {
+        upsert(sectionId: $sectionId, data: $data) {
+          recordId
+          record {
+            id
+            name
+            enabled
+            fieldType
+            order
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation deleteField($fieldId: ID!) {
+  settings {
+    form {
+      field {
+        delete(id: $fieldId) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation moveField($fieldId: ID!, $to: Int!) {
+  settings {
+    form {
+      field {
+        move(id: $fieldId, to: $to) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation addConditionOption($fieldId: ID!, $dependsOn: [ID]!) {
+  settings {
+    form {
+      field {
+        condition(fieldId: $fieldId, dependsOn: $dependsOn) {
+          recordId
+          record {
+            id
+            dependsOn
+            name
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+#FILE
+
+mutation addFileSizeToSection($sectionId: ID!, $maxSize: Int!) {
+  settings {
+    form {
+      maxSize(id: $sectionId, maxSize: $maxSize) {
+        error {
+          ...MutationError
+        }
+        record {
+          ... on FormSection {
+            id
+            name
+            maxSize
+          }
+        }
+      }
+    }
+  }
+}
+
+#CUSTOM
+
+mutation upsertCustomSection($data: FormSectionUpsertInput!) {
+  settings {
+    form {
+      section {
+        upsert(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+          record {
+            id
+            name
+            isCustom
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation upsertCustomField($data: FormFieldUpsertInput!) {
+  settings {
+    form {
+      field {
+        upsert(data: $data) {
+          record {
+            id
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation deleteCustomSection($id: ID!) {
+  settings {
+    form {
+      section {
+        delete(id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation deleteCustomSectionField($id: ID!) {
+  settings {
+    form {
+      field {
+        delete(id: $id) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updateCustomSection($id: ID!, $data: FormSectionUpdateInput!) {
+  settings {
+    form {
+      section {
+        update(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+          record {
+            id
+            name
+            isCustom
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation updateCustomSectionField($id: ID!, $data: FormFieldUpdateInput!) {
+  settings {
+    form {
+      field {
+        update(id: $id, data: $data) {
+          record {
+            id
+          }
+        }
+      }
+    }
+  }
+}
+
+# Declaration
+
+mutation updateDeclaration($data: DeclarationInput!) {
+  settings {
+    declaration {
+      update(data: $data) {
+        record {
+          content
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
-import { CoopUnionEconomicDetailsInput } from '@coop/shared/data-access';
+import { CoopUnionEconomicDetailsInput } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import {
   getKymSectionCoOperativeUnion,

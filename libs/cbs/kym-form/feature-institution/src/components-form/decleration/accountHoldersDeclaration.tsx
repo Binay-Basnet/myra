@@ -1,24 +1,13 @@
 import { useMemo } from 'react';
-import { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import { pickBy } from 'lodash';
-import debounce from 'lodash/debounce';
 
+import { useAllAdministrationQuery } from '@coop/cbs/data-access';
+import { KymInsInput } from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import { KymInsInput } from '@coop/shared/data-access';
 import {
-  useGetInstitutionKymEditDataQuery,
-  useGetKymFormStatusInstitutionQuery,
-  useSetInstitutionDataMutation,
-} from '@coop/shared/data-access';
-import {
-  FormFileInput,
   FormInput,
   FormMap,
   FormSelect,

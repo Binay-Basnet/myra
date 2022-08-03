@@ -1,4 +1,4 @@
-import { useGetAccountListQuery } from '@coop/shared/data-access';
+import { useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { Accordion, AccordionItem, AccordionPanel } from '@coop/shared/ui';
 
 import { AnnouncementAccountCard } from '../AnnouncementAccountCard';

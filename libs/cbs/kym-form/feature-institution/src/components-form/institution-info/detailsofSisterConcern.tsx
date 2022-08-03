@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
 import {
-  DynamicBoxContainer,
-  DynamicBoxGroupContainer,
-  GroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   KymInsSisterConcernInput,
   useDeleteSisterConcernsMutation,
   useGetInstitutionSisterDetailsEditListQuery,
   useGetNewIdMutation,
   useSetSisterConcernsMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import {
+  DynamicBoxContainer,
+  DynamicBoxGroupContainer,
+  GroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-// import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
@@ -187,7 +186,6 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
   useEffect(() => {
     if (id) {
       refetch();
-      console.log({ id });
     }
   }, [id]);
 

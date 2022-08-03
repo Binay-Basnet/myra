@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { Textarea, TextareaProps, Flex } from '@chakra-ui/react';
+import { Flex,Textarea, TextareaProps } from '@chakra-ui/react';
 
 import { TextFields } from '../text-fields/TextFields';
 

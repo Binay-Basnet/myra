@@ -1,0 +1,120 @@
+mutation getNewId {
+  newId
+}
+
+mutation setMemberData($id: ID!, $data: KymIndMemberInput!) {
+  members {
+    individual(id: $id) {
+      add(data: $data) {
+        recordId
+        error {
+          ... on KymIndAddInvalidDataError {
+            error
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setMemberFamilyDetails($id: ID!, $data: KYMIndFamilyMemberInput!) {
+  members {
+    individual(id: $id) {
+      familyMember {
+        upsert(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteMemberFamilyDetails($memberId: ID!, $id: ID!) {
+  members {
+    individual(id: $memberId) {
+      familyMember {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setMemberOccupation(
+  $id: ID!
+  $isSpouse: Boolean!
+  $data: KYMIndOccupationInput!
+) {
+  members {
+    individual(id: $id) {
+      occupation {
+        upsert(isSpouse: $isSpouse, data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteMemberOccupation($memberId: ID!, $id: ID!) {
+  members {
+    individual(id: $memberId) {
+      occupation {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setMemberIncomeSource($id: ID!, $data: KYMIndIncomeSourceInput!) {
+  members {
+    individual(id: $id) {
+      incomeSource {
+        upsert(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deleteMemberIncomeSource($memberId: ID!, $id: ID!) {
+  members {
+    individual(id: $memberId) {
+      incomeSource {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setKymCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
+  members {
+    cooperative(id: $id) {
+      add(data: $data) {
+        recordId
+      }
+    }
+  }
+}
+
+mutation setKYMDocumentData(
+  $memberId: String!
+  $fieldId: String!
+  $identifiers: [String!]!
+) {
+  document {
+    KYMUpsert(
+      memberId: $memberId
+      fieldId: $fieldId
+      identifiers: $identifiers
+    ) {
+      recordId
+    }
+  }
+}

@@ -1,13 +1,13 @@
 import React, { useId } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react';
+import { FormControl, FormLabel } from '@chakra-ui/react';
 
 import { Input as ChakraInput } from '@coop/shared/ui';
 
 import type { IInputProps } from '../types';
 
 function useProps<TfieldTypes>(props: IInputProps<TfieldTypes>) {
-  //! TODO: Type this
+  // ! TODO: Type this
   const { control } = useFormContext();
 
   const { dependency, name } = props;
@@ -20,13 +20,13 @@ function useProps<TfieldTypes>(props: IInputProps<TfieldTypes>) {
     disabled: !dependency,
   });
 
-  //! TODO this is just shit typescript
+  // ! TODO this is just shit typescript
   const valuesObj = keys?.reduce(
     (obj, curr, index) => ({ [curr]: values[index] }),
     {} as Record<string, string>
   );
 
-  //! TODO this is just shit typescript
+  // ! TODO this is just shit typescript
   const newProps = dependency?.conditions(
     (valuesObj as Record<keyof TfieldTypes, string>) ?? null
   );
@@ -54,7 +54,6 @@ export function Input<TfieldTypes>(props: IInputProps<TfieldTypes>) {
 
   const error = errors[name];
 
-  console.log('error', error);
   if (!render) return null;
 
   return (

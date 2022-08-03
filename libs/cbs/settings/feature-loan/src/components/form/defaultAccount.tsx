@@ -3,7 +3,6 @@ import React from 'react';
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
 
 import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
 

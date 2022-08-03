@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import { useAllAdministrationQuery } from '@coop/cbs/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

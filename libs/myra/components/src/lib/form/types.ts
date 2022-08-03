@@ -2,7 +2,7 @@ import { RegisterOptions } from 'react-hook-form';
 import { InputProps, SelectProps } from '@chakra-ui/react';
 
 // type FormTypes = 'input' | 'select';
-//! TODO use a Generic for its name or ...
+// ! TODO use a Generic for its name or ...
 interface ICommonJsonProps<TfieldTypes> {
   name: keyof TfieldTypes;
   label: React.ReactNode;
@@ -37,9 +37,9 @@ export type DataSchema<
 // type DataSchemaWithoutType = Omit<DataSchema, 'type'>;
 
 export interface IConditionalProps<T, U = DefaultFieldTypes> {
-  keys: Array<keyof U>; //! TODO omit its own key
+  keys: Array<keyof U>; // ! TODO omit its own key
   conditions: (
-    watch: Record<keyof U, string> | null //! TODO Check if I can do something like Record<keys,string>
+    watch: Record<keyof U, string> | null // ! TODO Check if I can do something like Record<keys,string>
     // methods: Omit<UseFormReturn<FieldValues, unknown>, 'watch' & 'control'> //! TODO! what is this?
   ) => Partial<T> | null;
 }

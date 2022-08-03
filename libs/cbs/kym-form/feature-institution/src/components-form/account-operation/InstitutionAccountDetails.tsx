@@ -1,42 +1,26 @@
-import React, { useEffect, useMemo } from 'react';
-import { useState } from 'react';
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import React, { useEffect, useMemo, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
-import { FaMap } from 'react-icons/fa';
-import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
 import {
-  DynamicBoxGroupContainer,
-  GroupContainer,
-  InputGroupContainer,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   KymInsAccountOperatorInput,
-  KymInsInput,
   useAllAdministrationQuery,
   useDeleteAccountOperatorInstitutionMutation,
   useGetInsAccountOperatorEditListQuery,
   useGetNewIdMutation,
   useSetAddAccountOperatorInstitutionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import {
-  FormFileInput,
-  FormInput,
-  FormMap,
-  FormSelect,
-  FormSwitch,
-} from '@coop/shared/form';
-// import { KymIndMemberInput } from '@coop/shared/data-access';
+  DynamicBoxGroupContainer,
+  GroupContainer,
+  InputGroupContainer,
+  SectionContainer,
+} from '@coop/cbs/kym-form/ui-containers';
+import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Button, Collapse, Icon, IconButton, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 

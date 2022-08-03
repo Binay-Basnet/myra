@@ -21,7 +21,7 @@ import {
   useGetCoopComplaintServicesQuery,
   useGetCoopDownloadsQuery,
   useGetCoopLoanServicesQuery,
-} from '@coop/shared/data-access';
+} from '@coop/ebanking/data-access';
 import {
   Box,
   Button,

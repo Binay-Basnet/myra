@@ -1,7 +1,7 @@
 import { IoCheckmark, IoRepeat } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { useGetAccountListQuery } from '@coop/shared/data-access';
+import { useGetAccountListQuery } from '@coop/ebanking/data-access';
 import {
   Box,
   Button,

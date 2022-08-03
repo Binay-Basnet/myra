@@ -4,7 +4,7 @@ import {
   GetPreDefinedFieldsQuery,
   PredefinedElementFilter,
   useGetPreDefinedFieldsQuery,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 
 export const useGetPreDefinedFields = (
   filter: PredefinedElementFilter,

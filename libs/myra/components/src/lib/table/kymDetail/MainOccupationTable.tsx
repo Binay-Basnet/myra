@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import { Column, Table } from '@coop/shared/ui';
 
 export const MainOccupationTable = () => {

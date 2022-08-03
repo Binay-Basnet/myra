@@ -1,18 +1,10 @@
-import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
+import { KymInsInput, useGetBankListQuery } from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { KymInsInput, useGetBankListQuery } from '@coop/shared/data-access';
-import {
-  GetBankListQuery,
-  useGetKymFormStatusInstitutionQuery,
-  useSetInstitutionDataMutation,
-} from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
@@ -30,8 +22,6 @@ export const BankAccountDetailsInstitution = (props: IProps) => {
   const { setSection } = props;
 
   const { data: BankList } = useGetBankListQuery();
-
-  console.log({ BankList });
 
   type optionType = { label: string; value: string };
 

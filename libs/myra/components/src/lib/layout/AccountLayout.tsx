@@ -2,9 +2,11 @@ import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
+
 import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
-import { TabColumn } from '../tab/TabforMemberPage';
 import { useTranslation } from '@coop/shared/utils';
+
+import { TabColumn } from '../tab/TabforMemberPage';
 
 interface IAccountPageLayoutProps {
   children: React.ReactNode;

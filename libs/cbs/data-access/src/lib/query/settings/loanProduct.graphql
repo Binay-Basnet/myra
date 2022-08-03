@@ -1,0 +1,150 @@
+query getLoanProductList(
+  $paginate: Pagination
+  $filter: LoanProductSearchFilter
+) {
+  settings {
+    general {
+      loanProducts {
+        list(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              objState
+              createdAt
+              createdBy {
+                id
+                name
+                username
+                userType
+              }
+              modifiedAt
+              createdDate
+              modifiedBy {
+                id
+                name
+                username
+                userType
+              }
+              productName
+              productCode {
+                prefix
+                initialNo
+              }
+              productType
+              productSubType
+              interest {
+                minRate
+                maxRate
+                defaultRate
+                ceoAuthority
+                boardAuthority
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLoanProductEditData($id: ID!) {
+  settings {
+    general {
+      loanProducts {
+        formState(id: $id) {
+          id
+          objState
+          createdAt
+          modifiedAt
+          productName
+          productType
+          productSubType
+          productNature
+          productCode {
+            prefix
+            initialNo
+          }
+          productCodeString
+          typeOfMember
+          criteria
+          minAge
+          maxAge
+          genderId
+          maritalStatusId
+          educationQualification
+          ethnicity
+          occupation
+          foreignEmployment
+          natureOfBusinessInstitution
+          natureOFBusinessCoop
+          cooperativeType
+          minTenure
+          minTenureUnit
+          minTenureUnitNumber
+          maxTenure
+          maxTenureUnit
+          maxTenureUnitNumber
+          minimumLoanAmount
+          maxLoanAmount
+          repaymentScheme
+          modeOfPayment
+          installmentType
+          allowPartialInstallment
+          isMonthlyInstallmentCompulsory
+          isPenaltyApplicable
+          penalty {
+            dayAfterInstallmentDate
+            minimumAmount
+            rateType
+            flatRatePenalty
+            penaltyRate
+            penaltyAmount
+          }
+          isRebateApplicable
+          rebate {
+            daysBeforeInstallmentDate
+            noOfInstallment
+            rebateAmount
+            percentage
+          }
+          minGraceDurationUnit
+          minGraceDurationUnitNumber
+          maxGraceDurationUnit
+          maxGraceDurationUnitNumber
+          interest {
+            minRate
+            maxRate
+            defaultRate
+            ceoAuthority
+            boardAuthority
+          }
+          overrideInterest
+          serviceCharge {
+            serviceName
+            ledgerName
+            amount
+          }
+          goodLoanProvision
+          doubtfulLoanProvision
+          problematicLoanProvision
+          badLoanProvision
+          isInsuranceApplicable
+          isCollateralRequired
+          disburementOfFMV
+          disburementOfDMV
+          isStaffProduct
+          supportMultipleAccounts
+          loanScheduleChangeOverride
+          requiredDocuments
+        }
+      }
+    }
+  }
+}

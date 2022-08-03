@@ -4,13 +4,13 @@ import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
-import { Form } from '@coop/myra/components';
-import { FieldCardComponents } from '@coop/shared/components';
 import {
   Payment_Mode,
   ShareReturnInput,
   useAddShareReturnMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { Form } from '@coop/myra/components';
+import { FieldCardComponents } from '@coop/shared/components';
 import {
   FormCheckbox,
   FormInput,
@@ -103,7 +103,7 @@ const ShareReturn = () => {
   //     voucherNumber,
   //     accountId,
   //   };
-  //   console.log(formData);
+  //
   //   mutate({ id: '12', data: formData });
   // };
 
@@ -119,12 +119,8 @@ const ShareReturn = () => {
     <>
       <Form<ShareReturnInput>
         methods={methods}
-        onChange={() => {
-          console.log('getValues', getValues());
-        }}
-        onSubmit={(datasss) => {
-          console.log('datasss', datasss);
-        }}
+        onChange={() => {console.log("heloo")}}
+        onSubmit={(data) => {console.log(data)}}
       >
         <form>
           <Box

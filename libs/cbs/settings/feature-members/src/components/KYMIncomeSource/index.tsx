@@ -6,7 +6,7 @@ import {
   FormSearchTerm,
   FormSection,
   useAddConditionOptionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { AccordionPanel, Text } from '@coop/shared/ui';
 
@@ -19,7 +19,6 @@ export const IncomeSourceDetailsComponent = (props: {
   kymType: KYMCategory;
   section: FormSection;
 }) => {
-  console.log(props.section);
   const { data: field, isLoading } = useGetPreDefinedFields({
     searchTerm: FormSearchTerm.FamilyIncomeSource,
     category: props.kymType,

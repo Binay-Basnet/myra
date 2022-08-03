@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-  FormField,
-  FormSearchTerm,
-  FormSection,
-} from '@coop/shared/data-access';
+import { FormField, FormSearchTerm, FormSection } from '@coop/cbs/data-access';
 
 import { KYMLoadingState } from '../KYMLoadingState';
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';

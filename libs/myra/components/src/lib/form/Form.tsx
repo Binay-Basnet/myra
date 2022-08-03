@@ -4,7 +4,7 @@ import {FormProvider, SubmitHandler, UseFormReturn} from 'react-hook-form';
 import {FormGenerator} from './FormGenerator';
 
 interface IFormProps<T> {
-  methods: UseFormReturn<T, unknown>; //! TODO replace this unknown
+  methods: UseFormReturn<T, unknown>; // ! TODO replace this unknown
   children: React.ReactNode;
   onSubmit: SubmitHandler<T>;
   onChange?: (e: React.FormEvent<HTMLFormElement>) => void;

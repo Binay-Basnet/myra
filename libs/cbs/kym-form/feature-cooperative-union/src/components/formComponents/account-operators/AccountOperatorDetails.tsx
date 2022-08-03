@@ -1,20 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
-import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 
-import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import {
-  DynamicBoxGroupContainer,
-  GroupContainer,
-  InputGroupContainer,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import {
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelDetails,
@@ -24,7 +16,14 @@ import {
   useGetAccountOperatorDetailsListQuery,
   useGetNewIdMutation,
   useSetPersonnelDetailsMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
+import {
+  DynamicBoxGroupContainer,
+  GroupContainer,
+  InputGroupContainer,
+  SectionContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Box,
@@ -546,7 +545,7 @@ export const AccountOperatorInfo = ({
 
       setAccountOperatorIds(
         editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          (prevVal, curVal) => (curVal?.id ? [...prevVal, curVal.id] : prevVal),
           [] as string[]
         ) ?? []
       );

@@ -1,23 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FormProvider,
-  useFieldArray,
   useForm,
   useFormContext,
 } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
-import { FaMap } from 'react-icons/fa';
-import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
-import {
-  GroupContainer,
-  InputGroupContainer,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import {
   KymInsDirectorInput,
   useAllAdministrationQuery,
@@ -25,19 +17,15 @@ import {
   useGetInsBoardDirectorEditListQuery,
   useGetNewIdMutation,
   useSetAddDirectorInstitutionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import {
-  FormFileInput,
-  FormInput,
-  FormMap,
-  FormSelect,
-  FormSwitch,
-} from '@coop/shared/form';
+  GroupContainer,
+  SectionContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import {
   Box,
   Button,
   Collapse,
-  Grid,
   Icon,
   IconButton,
   Text,

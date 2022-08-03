@@ -2,7 +2,7 @@ import React from 'react';
 import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
-import { KymInsAddSectionStatus } from '@coop/shared/data-access';
+import { KymInsAddSectionStatus } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 const OrganizationInformation = [

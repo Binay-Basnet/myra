@@ -1,4 +1,5 @@
-import { Story, Meta } from '@storybook/react';
+import { Meta,Story } from '@storybook/react';
+
 import { TableSearch, TableSearchProps } from './TableSearch';
 
 export default {

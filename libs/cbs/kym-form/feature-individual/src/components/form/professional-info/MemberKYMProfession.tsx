@@ -4,14 +4,14 @@ import { useRouter } from 'next/router';
 import { Skeleton } from '@chakra-ui/react';
 import debounce from 'lodash/debounce';
 
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormFieldSearchTerm,
   KymIndMemberInput,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';

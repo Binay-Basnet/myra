@@ -1,28 +1,23 @@
 import React, { useEffect, useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { FaMap } from 'react-icons/fa';
-import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
 import {
-  AccordianContainer,
+  KymCoopAccountOperatorDetailsFormInput,
+  useAllAdministrationQuery,
+  useGetCoOperativeAccountOperatorEditDataQuery,
+  useSetCoopAccOperatorDataMutation,
+} from '@coop/cbs/data-access';
+import {
   DynamicBoxGroupContainer,
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  KymCoopAccountOperatorDetailsFormInput,
-  useAllAdministrationQuery,
-  useGetCoOperativeAccountOperatorEditDataQuery,
-  useSetCoopAccOperatorDataMutation,
-} from '@coop/shared/data-access';
-import {
-  FormFileInput,
   FormInput,
   FormMap,
   FormSelect,
@@ -32,7 +27,6 @@ import {
   Box,
   Button,
   Collapse,
-  Grid,
   Icon,
   IconButton,
   Text,

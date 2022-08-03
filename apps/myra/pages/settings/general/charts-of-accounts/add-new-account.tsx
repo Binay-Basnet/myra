@@ -4,12 +4,9 @@ import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
+import { AddCoaAccountInput, CoaTypesOfAccount } from '@coop/cbs/data-access';
 import { SettingsLayout } from '@coop/cbs/settings/ui-layout';
 import { Form } from '@coop/myra/components';
-import {
-  AddCoaAccountInput,
-  CoaTypesOfAccount,
-} from '@coop/shared/data-access';
 import {
   FormAccountInput,
   FormInput,
@@ -46,7 +43,7 @@ const AddNewAccount = () => {
 
   const methods = useForm<AddCoaAccountInput>();
 
-  const { watch, getValues } = methods;
+  const { watch } = methods;
 
   const accountType = watch('accountType');
 
@@ -55,10 +52,10 @@ const AddNewAccount = () => {
       <Form<AddCoaAccountInput>
         methods={methods}
         onChange={() => {
-          console.log('getValues', getValues());
+          console.log("Hello")
         }}
-        onSubmit={(datasss) => {
-          console.log('datasss', datasss);
+        onSubmit={(data) => {
+          console.log("Data")
         }}
       >
         <form>

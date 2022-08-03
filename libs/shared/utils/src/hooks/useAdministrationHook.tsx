@@ -1,4 +1,4 @@
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
+import { useAllAdministrationQuery } from '@coop/cbs/data-access';
 interface IOptions {
   label: string;
   value: string;

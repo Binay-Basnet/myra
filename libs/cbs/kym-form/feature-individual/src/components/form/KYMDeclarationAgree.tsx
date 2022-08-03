@@ -7,7 +7,7 @@ import {
   KymIndMemberInput,
   useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormCheckbox } from '@coop/shared/form';
 import { Box, TextFields } from '@coop/shared/ui';
 

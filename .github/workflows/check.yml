@@ -7,7 +7,6 @@ on:
     branches:
       - dev
 
-
 jobs:
   test:
     name: 🃏 Test

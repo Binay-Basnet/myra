@@ -8,6 +8,7 @@ import {
   InputLeftElement,
   Text,
 } from '@chakra-ui/react';
+
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

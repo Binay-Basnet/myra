@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import {
   useGetBranchListQuery,
   useGetNewIdMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
+import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

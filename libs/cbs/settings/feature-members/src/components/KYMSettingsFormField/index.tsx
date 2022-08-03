@@ -14,7 +14,7 @@ import {
   useDeleteOptionMutation,
   useMoveOptionMutation,
   useToggleFieldOtherOptionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import {
   AccordionPanel,
   Box,

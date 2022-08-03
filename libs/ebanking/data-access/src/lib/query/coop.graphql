@@ -1,0 +1,54 @@
+query getCoopChequeServices {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        options {
+          name
+          enabled
+        }
+      }
+    }
+  }
+}
+
+query getCoopLoanServices {
+  eBanking {
+    cooperativeServices {
+      loan {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+
+query getCoopComplaintServices {
+  eBanking {
+    cooperativeServices {
+      complaint {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}
+
+query getCoopDownloads {
+  eBanking {
+    cooperativeServices {
+      downloads {
+        options {
+          name
+          enabled
+          requestType
+        }
+      }
+    }
+  }
+}

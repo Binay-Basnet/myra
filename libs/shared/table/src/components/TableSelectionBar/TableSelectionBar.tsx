@@ -21,7 +21,6 @@ import {
   Maybe,
   Row,
   TableInstance,
-  TableProps,
 } from '../../types/Table';
 
 interface TableSelectionBarProps<T extends Maybe<Record<string, unknown>>> {

@@ -15,8 +15,6 @@ export const useSnap = () => {
   const toast = useChakraToast();
   const router = useRouter();
 
-  console.log(router);
-
   useEffect(() => {
     snap.init(async (data) => {
       const { image } = data;
@@ -48,7 +46,6 @@ export const useSnap = () => {
         method: 'post',
         data: formData,
       });
-      console.log('response', response);
 
       if (response && response?.status === 200) {
         toast({

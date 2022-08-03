@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
+import { CriteriaSection } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { CriteriaSection } from '@coop/shared/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 

@@ -1,9 +1,30 @@
 {
   "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx", "simple-import-sort", "unused-imports"],
-  "extends": ["eslint:recommended"],
+  "ignorePatterns": ["**/*", "**/graphql.ts"],
+  "plugins": [
+    "unused-imports",
+    "@nrwl/nx",
+    "@typescript-eslint",
+    "simple-import-sort"
+  ],
+  "extends": ["eslint:recommended", "google"],
   "rules": {
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off",
+    "camelcase": "off",
+    "no-console": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "unused-imports/no-unused-imports-ts": "warn",
+    "unused-imports/no-unused-imports": "warn",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "simple-import-sort/exports": "warn",
     "simple-import-sort/imports": [
       "warn",

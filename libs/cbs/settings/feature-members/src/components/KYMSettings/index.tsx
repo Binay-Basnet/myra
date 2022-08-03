@@ -23,7 +23,7 @@ import {
   useUpdateCustomSectionMutation,
   useUpsertCustomFieldMutation,
   useUpsertCustomSectionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Accordion,

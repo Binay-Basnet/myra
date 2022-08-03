@@ -9,7 +9,6 @@ import { Box, Collapse, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
 import { AccountCards } from '../components/AccountCards';
 import { DocumentCard } from '../components/DocumentCard';
 import { LoanCard } from '../components/LoanCard';
-// import { useGetMemberDataQuery } from '@coop/shared/data-access';
 
 const memberProfileColumns = [
   {
@@ -190,7 +189,7 @@ export const ProfileFeature = () => {
   //   id: '12',
   // });
   // const data = memberData?.members?.individual?.get?.data?.member;
-  // console.log(data);
+  //
   return (
     <Box margin="0px auto">
       <Box w="100%" height="fit-content" p="0">

@@ -10,7 +10,7 @@ import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
 import {
   KymIndAddSectionStatus,
   KymIndPersonalSection,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 const PersonalInformation = [

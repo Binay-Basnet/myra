@@ -9,7 +9,7 @@ import {
   InfoCard,
   TransactionCard,
 } from '@coop/ebanking/cards';
-import { useGetAccountDetailsQuery } from '@coop/shared/data-access';
+import { useGetAccountDetailsQuery } from '@coop/ebanking/data-access';
 import { Box, Button, Divider, Grid, Icon, PathBar } from '@coop/shared/ui';
 
 import { AccountDetail } from '../components/AccountDetail';

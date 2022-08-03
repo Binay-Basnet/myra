@@ -1,7 +1,8 @@
 // import { ThemeProvider as Emotion10ThemeProvider } from 'emotion-theming';
-import { ChakraProvider } from '@chakra-ui/react';
-import { theme } from '@coop/shared/utils';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
+import { ChakraProvider } from '@chakra-ui/react';
+
+import { theme } from '@coop/shared/utils';
 
 const withThemeProvider = (Story, context) => {
   return (

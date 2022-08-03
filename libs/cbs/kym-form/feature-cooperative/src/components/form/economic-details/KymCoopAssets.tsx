@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
-import { KymCooperativeFormInput } from '@coop/shared/data-access';
+import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 

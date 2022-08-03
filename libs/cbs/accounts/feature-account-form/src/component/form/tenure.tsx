@@ -39,8 +39,6 @@ export const Tenure = () => {
     setRightElementMax(tenureUnit);
   }, [tenureUnit]);
 
-  console.log(tenureUnit);
-
   return (
     <GroupContainer
       scrollMarginTop={'200px'}

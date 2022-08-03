@@ -8,11 +8,11 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 import { Grid } from '@chakra-ui/react';
 
-import { TabColumn } from '@coop/myra/components';
 import {
   useGetMemberTypesQuery,
   useGetNewIdMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { TabColumn } from '@coop/myra/components';
 import {
   Box,
   Button,

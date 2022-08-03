@@ -10,7 +10,7 @@ import {
   FormSection,
   FormSectionType,
   useUpsertSectionOptionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Icon, Text } from '@coop/shared/ui';
 

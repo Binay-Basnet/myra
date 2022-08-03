@@ -8,7 +8,7 @@ import {
 import {
   CoopUnionInstitutionInformationInput,
   useAllAdministrationQuery,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

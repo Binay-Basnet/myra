@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { FaMap } from 'react-icons/fa';
 import debounce from 'lodash/debounce';
 
+import { useSetOrganizationDataMutation } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
-import { useSetOrganizationDataMutation } from '@coop/shared/data-access';
 import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
 import { Box, Button, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -58,7 +57,6 @@ export function CbsSettingsFeatureOrganization(
 
         <FormProvider {...methods}>
           <form
-            onSubmit={handleSubmit((data) => console.log('data', data))}
             onChange={debounce(() => {
               mutate({
                 id: orgId,

@@ -5,12 +5,6 @@ import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
-import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
-import {
-  DynamicBoxGroupContainer,
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import {
   FormFieldSearchTerm,
   useDeleteMemberOccupationMutation,
@@ -19,7 +13,13 @@ import {
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
   useSetMemberOccupationMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
+import {
+  DynamicBoxGroupContainer,
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon, Text, TextFields } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
@@ -239,7 +239,7 @@ const HusbandWifeOccupation = ({
           </Box>
 
           <Box display="flex" gap="9px" alignItems="center">
-            {/*TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
+            {/* TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
             <FormCheckbox name={`isOwner`} id="spouseIsOwner" />
             <TextFields variant="formLabel">
               {t['kymIndAreyouowner']}

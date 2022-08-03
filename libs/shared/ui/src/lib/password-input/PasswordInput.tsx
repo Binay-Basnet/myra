@@ -1,16 +1,16 @@
+import { useState } from 'react';
+import { forwardRef } from 'react';
+import { IoEyeOffOutline,IoEyeOutline, IoLockClosed } from 'react-icons/io5';
 import {
+  Box,
   Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement,
-  Box,
-  Text,
   InputProps,
+  InputRightElement,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { IoLockClosed, IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
+
 import { TextFields } from '@coop/shared/ui';
-import { forwardRef } from 'react';
 
 /* eslint-disable-next-line */
 export interface PasswordInputProps extends InputProps {

@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
+import { CoopUnionEconomicDetailsInput } from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { CoopUnionEconomicDetailsInput } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import {
   getKymSectionCoOperativeUnion,
@@ -141,7 +141,6 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
     Number(currentLiabilitiesTarget) +
     Number(nonCurrentLiabilitiesTarget);
 
-  console.log('first', totalequityTarget);
   return (
     <FormProvider {...methods}>
       <form

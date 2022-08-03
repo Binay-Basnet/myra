@@ -5,18 +5,17 @@ import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
 import {
-  ContainerWithDivider,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   LoanProductInput,
   LoanProductSubType,
   LoanProductType,
   NatureOfLoanProduct,
-  useGetDepositProductSettingsEditDataQuery,
   useGetLoanProductEditDataQuery,
   useSetLoanProductMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import {
+  ContainerWithDivider,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
@@ -97,11 +96,6 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
   const { data: editValues, refetch } = useGetLoanProductEditDataQuery({
     id,
   });
-  console.log(
-    'data',
-    editValues,
-    editValues?.settings?.general?.loanProducts?.formState
-  );
 
   const productType = [
     {
@@ -186,8 +180,6 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
 
   const submitForm = () => {
     const values = getValues();
-
-    console.log(values);
 
     const genderList = values?.genderId?.map((data) => data?.value);
     const maritalStatusList = values?.maritalStatusId?.map(
@@ -276,7 +268,7 @@ export function SettingsLoanProductForm(props: loanProductsAdd) {
     if (editValues) {
       const editValueData =
         editValues?.settings?.general?.loanProducts?.formState;
-      console.log(editValueData);
+
       if (editValueData) {
         reset({
           ...(editValueData as unknown as LoanProductForm),

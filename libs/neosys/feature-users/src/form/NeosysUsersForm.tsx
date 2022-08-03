@@ -6,7 +6,7 @@ import {
   FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
-import { Box, Button, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, Button, Grid, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const roles = [

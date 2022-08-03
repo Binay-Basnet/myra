@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   KymCooperativeFormInput,
   useDeleteCooPdirectorDataMutation,
   useGetCoOperativeDirectorEditDataQuery,
   useGetNewIdMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
-import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { AddDirector } from '../../accordion-component/KymCoopDirectorAccordion';
-import { useCooperative } from '../../hooks/useCooperative';
 
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -56,7 +55,6 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
   useEffect(() => {
     if (id) {
       refetch();
-      console.log({ id });
     }
   }, [id]);
 

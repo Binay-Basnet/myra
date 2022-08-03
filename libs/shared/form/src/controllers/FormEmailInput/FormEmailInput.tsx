@@ -1,5 +1,5 @@
 import React from 'react';
-import { Control, Controller, Path, useFormContext } from 'react-hook-form';
+import { Controller, Path, useFormContext } from 'react-hook-form';
 import { MdEmail } from 'react-icons/md';
 
 import { Icon, Input, InputProps } from '@coop/shared/ui';

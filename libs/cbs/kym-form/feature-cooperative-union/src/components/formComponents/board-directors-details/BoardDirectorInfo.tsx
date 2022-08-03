@@ -1,13 +1,22 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
-import { GrRotateRight } from 'react-icons/gr';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 
+import {
+  CooperativeUnionPersonnelSection,
+  CoopUnionPersonnelDetails,
+  CoopUnionPersonnelInput,
+  useAllAdministrationQuery,
+  useDeletePersonnelDetailsMutation,
+  useGetBoardOfDirectorsDetailsListQuery,
+  useGetNewIdMutation,
+  useSetPersonnelDetailsMutation,
+} from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxGroupContainer,
@@ -16,19 +25,7 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  CooperativeUnionPersonnelSection,
-  CoopUnionPersonnelDetails,
-  CoopUnionPersonnelInput,
-  KymAddress,
-  useAllAdministrationQuery,
-  useDeletePersonnelDetailsMutation,
-  useGetBoardOfDirectorsDetailsListQuery,
-  useGetNewIdMutation,
-  useSetPersonnelDetailsMutation,
-} from '@coop/shared/data-access';
-import {
   FormEmailInput,
-  FormFileInput,
   FormInput,
   FormMap,
   FormSelect,
@@ -538,7 +535,7 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
 
       setDirectorIds(
         editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          (prevVal, curVal) => (curVal?.id ? [...prevVal, curVal.id] : prevVal),
           [] as string[]
         ) ?? []
       );

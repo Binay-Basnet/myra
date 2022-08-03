@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { useAllAdministrationQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/neosys-admin/layout';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
 import {
   FormEmailInput,
   FormFileInput,
@@ -32,8 +32,6 @@ export const NeosysClientForm = () => {
   const currentProvinceId = watch('provinceId');
   const currentDistrictId = watch('districtId');
   const currentLocalityId = watch('localityId');
-
-  console.log({ currentProvinceId });
 
   const districtList = useMemo(
     () =>

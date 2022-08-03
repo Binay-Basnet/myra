@@ -1,14 +1,11 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { KymInsInput, useAllAdministrationQuery } from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  KymInsInput,
-  useAllAdministrationQuery,
-} from '@coop/shared/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
@@ -63,11 +60,11 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
     <FormProvider {...methods}>
       <form
         // onChange={debounce(() => {
-        //   console.log('hello', getValues());
+        //
         //   mutate({ id, data: getValues() });
         // }, 800)}
         // onSubmit={handleSubmit((data) => {
-        //   console.log('data', data);
+        //
         // })}
         onFocus={(e) => {
           const kymSection = getKymSectionInstitution(e.target.id);

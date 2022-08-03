@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
 
-import { KymInsAddSectionStatus } from '@coop/shared/data-access';
+import { KymInsAddSectionStatus } from '@coop/cbs/data-access';
 import { Box, Collapse, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

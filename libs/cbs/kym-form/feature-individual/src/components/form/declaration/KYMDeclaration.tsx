@@ -4,17 +4,17 @@ import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
 import {
-  ContainerWithDivider,
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   FormFieldSearchTerm,
   KymIndMemberInput,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import {
+  ContainerWithDivider,
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import {
   FormInput,
   FormRadioGroup,

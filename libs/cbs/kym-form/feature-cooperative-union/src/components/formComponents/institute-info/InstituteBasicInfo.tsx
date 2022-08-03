@@ -4,7 +4,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { CoopUnionInstitutionInformationInput } from '@coop/shared/data-access';
+import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

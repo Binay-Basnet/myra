@@ -6,12 +6,6 @@ import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
 import {
-  DynamicBoxContainer,
-  DynamicBoxGroupContainer,
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   FormFieldSearchTerm,
   KymIndMemberInput,
   useDeleteMemberFamilyDetailsMutation,
@@ -21,7 +15,13 @@ import {
   useGetNewIdMutation,
   useSetMemberDataMutation,
   useSetMemberFamilyDetailsMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import {
+  DynamicBoxContainer,
+  DynamicBoxGroupContainer,
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';

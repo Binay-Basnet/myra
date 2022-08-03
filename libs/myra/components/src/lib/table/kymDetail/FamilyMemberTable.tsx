@@ -1,6 +1,5 @@
-import { useMemo } from 'react';
 
-import { Column, Table } from '@coop/shared/table';
+import { Table } from '@coop/shared/table';
 
 interface IData {
   [key: string]: string | number;

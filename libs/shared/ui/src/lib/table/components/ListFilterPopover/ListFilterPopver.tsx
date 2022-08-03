@@ -11,7 +11,7 @@ import { TableAmountFilterContent } from '../../../table-amount-filter/TableAmou
 import { TableListFilterContent } from '../../../table-list-filter/TableListFilter';
 
 interface IListFilterPopoverProps<T extends Record<string, unknown>> {
-  //TODO! HeaderGroup<T>
+  // TODO! HeaderGroup<T>
   column: any;
   uniqueOptions?: string[];
 }

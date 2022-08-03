@@ -3,12 +3,12 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   KymIndMemberInput,
   useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup, FormInput } from '@coop/shared/form';
 import { Box, Grid, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
@@ -57,7 +57,7 @@ export const MemberKYMIdentificationDetails = ({
 
   // const [currentShownDetails, setCurrentDetailsShown] = useState<string[]>([]);
 
-  // console.log({ currentShownDetails });
+  //
 
   // React.useEffect(() => {
   //   checkedIds.length !== 0 && setCurrentDetailsShown([...checkedIds]);

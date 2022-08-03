@@ -1,6 +1,6 @@
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 
-import { useGetAccountSummaryQuery } from '@coop/shared/data-access';
+import { useGetAccountSummaryQuery } from '@coop/ebanking/data-access';
 import { Box, Grid, Icon, TextFields } from '@coop/shared/ui';
 
 export const AccountHeaderCard = () => {

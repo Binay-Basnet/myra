@@ -1,9 +1,7 @@
-import { GrView } from 'react-icons/gr';
 import { EditIcon } from '@chakra-ui/icons';
-import { Image } from '@chakra-ui/react';
 
 import { NeosysDocumentCard } from '@coop/neosys-admin/ui-components';
-import { Box, Button, Grid, Text } from '@coop/shared/ui';
+import { Box, Button, Grid } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { ClientDetailHeader } from './components';

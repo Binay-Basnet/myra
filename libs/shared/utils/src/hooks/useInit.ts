@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 
-import { useGetMeQuery } from '@coop/shared/data-access';
+import {
+  authenticate,
+  logout,
+  useAppDispatch,
+  useGetMeQuery,
+  useRefreshToken,
+} from '@coop/cbs/data-access';
 
-import { useRefreshToken } from './useRefreshToken';
 import { useReplace } from './useReplace';
-import { authenticate, logout } from '../redux/authSlice';
-import { useAppDispatch } from '../redux/store';
 
 const url = process.env['NX_SCHEMA_PATH'] ?? '';
 

@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { identity, pickBy } from 'lodash';
+import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
 import {
   CoopUnionEconomicDetailsInput,
   useGetEconimicDetailsEditDataQuery,
   useSetEconomicDetailsDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { isDeepEmpty } from '@coop/shared/utils';
 
 interface ICooperativeUnionEconomicDetailsHookProps {
@@ -34,8 +34,6 @@ export const useCooperativeUnionEconomicDetails = ({
     { enabled: id !== 'undefined' }
   );
 
-  console.log('isDeepEmpty', isDeepEmpty({}));
-
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
@@ -57,10 +55,6 @@ export const useCooperativeUnionEconomicDetails = ({
       // const registeredAddressLocality =
       //   editValueData?.registeredAddress?.locality?.local;
       // console.log('edit value', editValueData);
-
-      console.log({
-        ...pickBy(editValueData ?? {}, (v) => v !== null),
-      });
 
       reset({
         ...pickBy(editValueData ?? {}, (v) => v !== null),

@@ -10,7 +10,7 @@ import {
   FormSection,
   useGetDeclarationQuery,
   useUpdateDeclarationMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormTextArea } from '@coop/shared/form';
 import { AccordionPanel, Box } from '@coop/shared/ui';
 

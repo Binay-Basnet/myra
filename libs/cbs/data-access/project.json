@@ -1,0 +1,23 @@
+{
+  "root": "libs/cbs/data-access",
+  "sourceRoot": "libs/cbs/data-access/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/cbs/data-access/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/data-access"],
+      "options": {
+        "jestConfig": "libs/cbs/data-access/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

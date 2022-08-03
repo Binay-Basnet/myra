@@ -1,25 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import { KymInsInput } from '@coop/shared/data-access';
-import {
-  useGetKymFormStatusInstitutionQuery,
-  useSetInstitutionDataMutation,
-} from '@coop/shared/data-access';
+import { KymInsInput } from '@coop/cbs/data-access';
 import {
   KymIndMemberInput,
   useGetKymDocumentsListQuery,
   useSetKymDocumentDataMutation,
-} from '@coop/shared/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
+} from '@coop/cbs/data-access';
+import {
+  GroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Grid, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -103,13 +97,11 @@ const KYMDocumentDeclarationField = ({
     if (editValues) {
       const kymDocumentsList = editValues?.document?.listKYMDocuments?.data;
 
-      console.log({ kymDocumentsList });
-
       const documentData = kymDocumentsList?.find(
         (doc) => doc?.fieldId === name
       );
 
-      // console.log({ documentData });
+      //
 
       if (documentData) {
         reset({

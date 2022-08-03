@@ -1,6 +1,5 @@
 import { BsFillCaretRightFill } from 'react-icons/bs';
 import { HStack, Icon, Text } from '@chakra-ui/react';
-import { Button } from '@coop/shared/ui';
 
 import { useAccordion } from './Accordion';
 

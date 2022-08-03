@@ -9,7 +9,7 @@ import {
 import {
   CoopUnionInstitutionInformationInput,
   useAllAdministrationQuery,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import {
   FormFileInput,
   FormInput,

@@ -23,7 +23,7 @@ export function FormGenerator<TfieldTypes extends DefaultFieldTypes>(
         if (data.variant === 'input') {
           const {name, validations, label, ...otherProps} = data;
 
-          //! TODO This is bad typescript
+          // ! TODO This is bad typescript
           const dependency = dependencies?.[name] as IConditionalProps<IInputProps,
             TfieldTypes>;
           return (

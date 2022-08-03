@@ -258,7 +258,7 @@ export function Table<T extends Record<string, unknown>>({
           </Thead>
 
           <Tbody {...getTableBodyProps()}>
-            {/*// TODO ( WILL CHANGE THIS ANY LATER )*/}
+            {/* // TODO ( WILL CHANGE THIS ANY LATER )*/}
             {rows.map((row) => {
               prepareRow(row);
               return (

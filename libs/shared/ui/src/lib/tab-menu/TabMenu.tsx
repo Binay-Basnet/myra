@@ -1,5 +1,4 @@
 import { IconType } from 'react-icons';
-import { AiOutlineAppstore } from 'react-icons/ai';
 import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
 import { ImStack } from 'react-icons/im';
 import { IoIosList } from 'react-icons/io';

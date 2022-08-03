@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Box, Text } from '@coop/shared/ui';
 
 type accountCardProps = {

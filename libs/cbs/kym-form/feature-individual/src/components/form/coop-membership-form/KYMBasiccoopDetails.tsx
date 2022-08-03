@@ -10,16 +10,16 @@ import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
 import {
-  ContainerWithDivider,
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   FormFieldSearchTerm,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import {
+  ContainerWithDivider,
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Avatar,

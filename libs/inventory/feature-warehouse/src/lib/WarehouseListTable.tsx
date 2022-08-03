@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
+import { useGetInventoryItemGroupQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { useGetInventoryItemGroupQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { useTranslation } from '@coop/shared/utils';
 

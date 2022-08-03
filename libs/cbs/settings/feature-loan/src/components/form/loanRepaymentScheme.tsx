@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
+import { LoanRepaymentScheme } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { LoanRepaymentScheme } from '@coop/shared/data-access';
 import { FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

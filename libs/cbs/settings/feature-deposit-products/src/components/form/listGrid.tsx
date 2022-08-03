@@ -1,12 +1,12 @@
 // import debounce from 'lodash/debounce';
 import { useFormContext } from 'react-hook-form';
-import { getOption } from 'libs/cbs/kym-form/feature-institution/src/utils/getOptionsInstitution';
+import { getOption } from '@coop/cbs/kym-form/institution';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormFieldSearchTerm,
   useGetInstitutionKymOptionsQuery,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import {
   FormCheckboxGroup,
   FormInput,

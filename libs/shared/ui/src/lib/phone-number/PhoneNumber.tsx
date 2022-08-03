@@ -1,5 +1,4 @@
 import { forwardRef } from 'react';
-import { BiLabel } from 'react-icons/bi';
 import { HiPhone } from 'react-icons/hi';
 import {
   Input,
@@ -7,6 +6,7 @@ import {
   InputLeftElement,
   InputProps,
 } from '@chakra-ui/react';
+
 import { TextFields } from '@coop/shared/ui';
 /* eslint-disable-next-line */
 export interface PhoneNumberProps extends InputProps {

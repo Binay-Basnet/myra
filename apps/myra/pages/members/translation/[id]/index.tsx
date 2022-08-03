@@ -1,8 +1,11 @@
 import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineEye } from 'react-icons/ai';
-import { IoCloseOutline } from 'react-icons/io5';
-import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import {
+  IoChevronDownOutline,
+  IoChevronUpOutline,
+  IoCloseOutline,
+} from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import {
   Accordion,
@@ -12,11 +15,11 @@ import {
   Flex,
 } from '@chakra-ui/react';
 
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   KymIndMemberInput,
   useGetMemberTranslationQuery,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormRadioGroup, FormSwitchTab } from '@coop/shared/form';
 import {
   Box,

@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { identity, pickBy } from 'lodash';
+import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
 import {
   useGetCoOperativeKymEditDataQuery,
   useSetCooperativeDataMutation,
-} from '@coop/shared/data-access';
-import { KymCooperativeFormInput } from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 
 interface IInstitutionHookProps {
   methods: UseFormReturn<KymCooperativeFormInput>;
@@ -33,7 +33,6 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        console.log(editValues);
         if (editValues && data) {
           mutate({
             id: router.query['id'] as string,
@@ -51,12 +50,11 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
 
   useEffect(() => {
     if (editLastValues) {
-      console.log('pick', pickBy);
       const editTruthyData = pickBy(
         editLastValues,
         (v) => v !== 0 && v !== '' && v !== null
       );
-      console.log('truthy', editTruthyData);
+
       reset({
         ...editTruthyData,
       });
@@ -66,7 +64,7 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
   // useEffect(() => {
   //   if (id) {
   //     refetch();
-  //     console.log({ id });
+  //
   //   }
   // }, [id]);
 };

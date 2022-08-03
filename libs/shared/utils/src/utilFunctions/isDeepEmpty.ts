@@ -1,6 +1,6 @@
 import isEmpty from 'lodash/isEmpty';
 
-export function isDeepEmpty(obj) {
+export function isDeepEmpty(obj: object) {
   if (isEmpty(obj)) {
     return true;
   }

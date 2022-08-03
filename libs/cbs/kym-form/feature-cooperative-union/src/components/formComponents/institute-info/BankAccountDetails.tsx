@@ -7,7 +7,7 @@ import {
 import {
   CoopUnionInstitutionInformationInput,
   useGetBankListQuery,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

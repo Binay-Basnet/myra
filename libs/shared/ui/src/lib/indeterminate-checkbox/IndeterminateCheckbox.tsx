@@ -34,10 +34,9 @@ export function IndeterminateCheckbox(props: IndeterminateCheckboxProps) {
   const defaultRef = useRef<HTMLInputElement>(null);
   const resolvedRef = ref || defaultRef;
 
-  console.log('isIndeterminate', resolvedRef, defaultRef, isIndeterminate);
   useEffect(() => {
     if (defaultRef?.current?.indeterminate) {
-      //! TODO Forbidden non-null assertion re.. fix this
+      // ! TODO Forbidden non-null assertion re.. fix this
       defaultRef.current.indeterminate! = isIndeterminate!;
     }
   }, [resolvedRef, isIndeterminate]);

@@ -3,7 +3,7 @@ import { FaUsers } from 'react-icons/fa';
 import { IoCashOutline } from 'react-icons/io5';
 import Image from 'next/image';
 
-import { useGetAccountSummaryQuery } from '@coop/shared/data-access';
+import { useGetAccountSummaryQuery } from '@coop/ebanking/data-access';
 import { Box, Grid, Icon, TextFields } from '@coop/shared/ui';
 
 export const COOPHeaderCard = () => {

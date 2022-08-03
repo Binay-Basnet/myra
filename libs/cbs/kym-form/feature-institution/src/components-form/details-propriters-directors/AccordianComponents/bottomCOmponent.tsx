@@ -1,46 +1,25 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   FormProvider,
-  useFieldArray,
   useForm,
-  useFormContext,
 } from 'react-hook-form';
-import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
-import { FaMap } from 'react-icons/fa';
-import { GrRotateRight } from 'react-icons/gr';
-import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
 import {
-  GroupContainer,
+  useGetInsBoardDirectorEditListQuery,
+  useSetAddDirectorInstitutionMutation,
+} from '@coop/cbs/data-access';
+import {
   InputGroupContainer,
-  SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
-  KymInsInput,
-  useAllAdministrationQuery,
-  useDeleteDirectorInstitutionMutation,
-  useGetInsBoardDirectorEditListQuery,
-  useGetNewIdMutation,
-  useSetAddDirectorInstitutionMutation,
-} from '@coop/shared/data-access';
-import {
-  FormFileInput,
   FormInput,
-  FormMap,
-  FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
 import {
   Box,
-  Button,
-  Collapse,
   Grid,
-  Icon,
-  IconButton,
-  Text,
 } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
@@ -100,7 +79,7 @@ export const DirectorsWithAffliation = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
   const isAffiliated = watch(`isAffiliatedWithOtherFirms`);
-  console.log({ isAffiliated });
+
   return (
     <FormProvider {...methods}>
       <form

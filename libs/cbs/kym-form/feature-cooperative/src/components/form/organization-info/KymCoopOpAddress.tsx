@@ -2,13 +2,13 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
+  KymCooperativeFormInput,
+  useAllAdministrationQuery,
+} from '@coop/cbs/data-access';
+import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  KymCooperativeFormInput,
-  useAllAdministrationQuery,
-} from '@coop/shared/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';

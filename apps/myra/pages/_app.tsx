@@ -1,5 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
-import React from 'react';
+import React, { ReactElement, ReactNode, useMemo} from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
@@ -7,13 +6,15 @@ import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
-import { Spinner } from '@chakra-ui/react';
 
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import { useAppSelector, useInit, useSnap } from '@coop/shared/utils';
-import { store, theme } from '@coop/shared/utils';
-
-import Login from './login';
+import {
+  store,
+  theme,
+  useAppSelector,
+  useInit,
+  useSnap,
+} from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 

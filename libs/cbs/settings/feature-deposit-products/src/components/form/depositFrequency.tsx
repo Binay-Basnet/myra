@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { Frequency, PenaltyRateType } from '@coop/shared/data-access';
+import { Frequency, PenaltyRateType } from '@coop/cbs/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

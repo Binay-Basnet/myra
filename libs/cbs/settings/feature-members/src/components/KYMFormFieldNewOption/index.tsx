@@ -6,7 +6,7 @@ import {
   FormField,
   FormOption,
   useUpsertNewOptionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Icon } from '@coop/shared/ui';
 
@@ -35,9 +35,6 @@ export const KYMFormFieldNewOption = ({
           id: 'loading-id',
         },
       ]);
-    },
-    onError: () => {
-      console.log('ERROR');
     },
     onSuccess: (response) => {
       setHasNewField(false);

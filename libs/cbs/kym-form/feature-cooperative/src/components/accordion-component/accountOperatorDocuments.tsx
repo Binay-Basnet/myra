@@ -1,6 +1,5 @@
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { Box, Grid, Text } from '@coop/shared/ui';
+import { Box, Grid } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 import { getKymSectionInstitution } from '@coop/shared/utils';
 

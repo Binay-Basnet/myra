@@ -36,12 +36,9 @@ describe('TableSearch', () => {
   it('should render successfully', () => {
     const { baseElement } = render(
       <RouterContext.Provider value={createMockRouter({ query: { id: '22' } })}>
-        <TableSearch
-          setSize={() => {
-            console.log('CHANGE');
-          }}
-          size="compact"
-        />
+        <TableSearch setSize={() => {
+          console.log("hello")
+        }} size="compact" />
       </RouterContext.Provider>
     );
     expect(baseElement).toBeTruthy();

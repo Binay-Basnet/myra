@@ -6,12 +6,6 @@ import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
 
-import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
-import {
-  DynamicBoxGroupContainer,
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import {
   FormFieldSearchTerm,
   FormOption,
@@ -24,7 +18,13 @@ import {
   useGetNewIdMutation,
   useSetMemberDataMutation,
   useSetMemberOccupationMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
+import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
+import {
+  DynamicBoxGroupContainer,
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import {
   FormCheckbox,
   FormInput,
@@ -286,7 +286,7 @@ const MainOccupation = ({
 
             <Box display="flex" gap="16px" flexDirection="column">
               <Box display="flex" gap="9px" alignItems="center">
-                {/*TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
+                {/* TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
                 <FormCheckbox name={`isOwner`} />
                 <TextFields variant="formLabel">
                   {t['kymIndAreyouowner']}

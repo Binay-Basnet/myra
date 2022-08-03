@@ -1,7 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { IoEyeOffOutline, IoEyeOutline, IoLockClosed } from 'react-icons/io5';
-import { useDispatch } from 'react-redux';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -12,7 +11,7 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 
-import { useLoginMutation } from '@coop/shared/data-access';
+import { useLoginMutation } from '@coop/cbs/data-access';
 import { Box, Button } from '@coop/shared/ui';
 import { login, useAppDispatch } from '@coop/shared/utils';
 

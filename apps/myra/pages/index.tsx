@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Flex, HStack, Img, Spacer } from '@chakra-ui/react';
 
+import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { HomePageLayout } from '@coop/myra/components';
-import { useGetNewIdMutation } from '@coop/shared/data-access';
 import { Avatar, Box, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

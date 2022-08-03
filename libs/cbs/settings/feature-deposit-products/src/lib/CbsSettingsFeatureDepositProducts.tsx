@@ -7,7 +7,7 @@ import {
   NatureOfDepositProduct,
   useGetDepositProductSettingsListQuery,
   useGetNewIdMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

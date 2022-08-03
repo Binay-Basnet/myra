@@ -5,7 +5,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { KymIndMemberInput } from '@coop/shared/data-access';
+import { KymIndMemberInput } from '@coop/cbs/data-access';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

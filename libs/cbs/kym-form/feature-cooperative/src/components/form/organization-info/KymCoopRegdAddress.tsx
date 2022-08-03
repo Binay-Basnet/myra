@@ -1,27 +1,25 @@
-import React, { useMemo } from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { UseFormReturn } from 'react-hook-form';
-import { FaMap } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import { identity, pickBy } from 'lodash';
+import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
+import {
+  KymCooperativeFormInput,
+  useAllAdministrationQuery,
+  useGetCoOperativeKymEditDataQuery,
+  useSetCooperativeDataMutation,
+} from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useAllAdministrationQuery } from '@coop/shared/data-access';
-import {
-  useGetCoOperativeKymEditDataQuery,
-  useSetCooperativeDataMutation,
-} from '@coop/shared/data-access';
-import { KymCooperativeFormInput } from '@coop/shared/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
+
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }

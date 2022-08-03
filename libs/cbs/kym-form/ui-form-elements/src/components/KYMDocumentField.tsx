@@ -7,7 +7,7 @@ import {
   KymIndMemberInput,
   useGetKymDocumentsListQuery,
   useSetKymDocumentDataMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormFileInput } from '@coop/shared/form';
 
 interface IKYMDocumentFieldProps {
@@ -51,13 +51,11 @@ export const KYMDocumentField = ({
     if (editValues) {
       const kymDocumentsList = editValues?.document?.listKYMDocuments?.data;
 
-      console.log({ kymDocumentsList });
-
       const documentData = kymDocumentsList?.find(
         (doc) => doc?.fieldId === name
       );
 
-      // console.log({ documentData });
+      //
 
       if (documentData) {
         reset({

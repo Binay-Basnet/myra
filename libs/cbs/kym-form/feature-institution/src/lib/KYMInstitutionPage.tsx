@@ -1,21 +1,16 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
+import {
+  useGetKymFormStatusInstitutionQuery,
+} from '@coop/cbs/data-access';
 import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { AccorrdianAddInstitution } from '@coop/myra/components';
-import {
-  useGetKymFormStatusInstitutionQuery,
-  useSetInstitutionDataMutation,
-} from '@coop/shared/data-access';
-import { KymInsInput } from '@coop/shared/data-access';
 import {
   Box,
   Button,
@@ -25,7 +20,7 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
-import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
   AccountHolderDeclarationInstitution,
@@ -37,7 +32,6 @@ import {
   ContactDetailsInstitution,
   DocumentDeclarationInstitution,
   InstitutionKYMAccountDetail,
-  InstitutionKYMDirectorWithAffiliation,
   InstitutionKYMSisterConcernDetails,
   OperatorOfficeAddress,
   RegisteredDetailsInstitution,
@@ -97,11 +91,11 @@ export function KYMInstitutionPage(props: KYMInstitutionPageProps) {
         {/* <FormProvider {...methods}>
           <form
             // onChange={debounce(() => {
-            //   console.log('hello', getValues());
+            //
             //   mutate({ id, data: getValues() });
             // }, 800)}
             // onSubmit={handleSubmit((data) => {
-            //   console.log('data', data);
+            //
             // })}
             onFocus={(e) => {
               const kymSection = getKymSectionInstitution(e.target.id);

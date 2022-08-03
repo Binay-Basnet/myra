@@ -1,4 +1,4 @@
-import { GetIndividualKymOptionsQuery } from '@coop/shared/data-access';
+import { GetIndividualKymOptionsQuery } from '@coop/cbs/data-access';
 
 export const getFieldOption = (
   data?: GetIndividualKymOptionsQuery,

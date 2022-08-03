@@ -1,8 +1,9 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Theme } from '@chakra-ui/react';
 import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
-import { theme } from '@coop/shared/utils';
 import { Meta, Story } from '@storybook/react';
+
+import { theme } from '@coop/shared/utils';
 
 import {
   IndeterminateCheckbox,

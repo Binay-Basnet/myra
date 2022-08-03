@@ -1,6 +1,6 @@
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 
-import { useGetChartOfAccountsQuery } from '@coop/shared/data-access';
+import { useGetChartOfAccountsQuery } from '@coop/cbs/data-access';
 import {
   Accordion,
   AccordionButton,

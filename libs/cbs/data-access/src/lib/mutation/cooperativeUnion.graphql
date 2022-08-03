@@ -1,0 +1,72 @@
+mutation setCooperativeUnionInstitutionData(
+  $id: ID!
+  $data: CoopUnionInstitutionInformationInput
+) {
+  members {
+    cooperativeUnion {
+      add(id: $id) {
+        institutionInformation(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setPersonnelDetails(
+  $id: ID!
+  $personnelId: String
+  $sectionType: CooperativeUnionPersonnelSection!
+  $data: CoopUnionPersonnelInput
+) {
+  members {
+    cooperativeUnion {
+      add(id: $id) {
+        personnelDetails(
+          recordId: $personnelId
+          sectionType: $sectionType
+          data: $data
+        ) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation deletePersonnelDetails($personnelId: ID!) {
+  members {
+    cooperativeUnion {
+      deletePersonnel(id: $personnelId) {
+        recordId
+      }
+    }
+  }
+}
+
+mutation setEconomicDetailsData(
+  $id: ID!
+  $data: CoopUnionEconomicDetailsInput
+) {
+  members {
+    cooperativeUnion {
+      add(id: $id) {
+        economicDetails(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+
+mutation setDeclarationData($id: ID!, $data: CoopUnionDeclarationInput) {
+  members {
+    cooperativeUnion {
+      add(id: $id) {
+        declaration(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}

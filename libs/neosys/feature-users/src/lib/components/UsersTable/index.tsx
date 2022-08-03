@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Avatar, Flex } from '@chakra-ui/react';
 
+import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import {
   Column,
   DEFAULT_PAGE_SIZE,

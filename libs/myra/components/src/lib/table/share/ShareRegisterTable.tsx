@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { Avatar, Flex } from '@chakra-ui/react';
 import format from 'date-fns/format';
 
+import { useGetShareRegisterListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
-import { useGetShareRegisterListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

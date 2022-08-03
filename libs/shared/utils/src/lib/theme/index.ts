@@ -6,7 +6,6 @@ import accordion from './foundations/accordion';
 import button from './foundations/button';
 import checkbox from './foundations/checkbox';
 import Input from './foundations/input';
-import Textarea from './foundations/textarea';
 import modal from './foundations/modal';
 import radio from './foundations/radio';
 import switches from './foundations/switches';

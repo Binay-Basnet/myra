@@ -1,0 +1,56 @@
+mutation setNewCOA($data: AddCOAAccountInput!) {
+  settings {
+    general {
+      chartsOfAccount {
+        account {
+          add(data: $data) {
+            record {
+              id
+              name
+              level
+              parent {
+                id
+                name
+                accountNumber
+                isDefault
+                amount
+                interestRate
+                accountType
+                interestBooked
+                interestEarned
+                subscribedDate
+                history {
+                  date
+                  balance
+                }
+                transactions {
+                  id
+                  name
+                  transactionType
+                  date
+                  transactionDirection
+                  amount
+                }
+              }
+              code
+              currency
+              classId
+              hasSubAccounts
+              active
+              accountType
+              openingBalance
+              isLedgerAccount
+              isBalanceSheetAccount
+              isSummationAccount
+              isIbtAccount
+              isInTransitAccount
+              isProfitAndLossAccount
+              allowFreeEntry
+              allowTransaction
+            }
+          }
+        }
+      }
+    }
+  }
+}

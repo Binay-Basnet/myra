@@ -1,4 +1,5 @@
-import { Story, Meta } from '@storybook/react';
+import { Meta,Story } from '@storybook/react';
+
 import { Collapse, CollapseProps } from './Collapse';
 
 export default {

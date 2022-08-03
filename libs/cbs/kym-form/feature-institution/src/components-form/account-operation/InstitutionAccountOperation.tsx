@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { KymInsInput } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { KymInsInput } from '@coop/shared/data-access';
 import { FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';

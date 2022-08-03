@@ -9,7 +9,7 @@ import {
   FormSection,
   FormSectionType,
   useUpsertSectionOptionMutation,
-} from '@coop/shared/data-access';
+} from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Icon } from '@coop/shared/ui';
 
@@ -47,9 +47,6 @@ export const KYMSectionNewOption = ({
           id: 'loading-id',
         },
       ]);
-    },
-    onError: () => {
-      console.log('ERROR');
     },
     onSuccess: (response) => {
       setHasNewField(false);

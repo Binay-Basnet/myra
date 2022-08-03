@@ -1,0 +1,29 @@
+mutation addShareReturn($id: ID!, $data: ShareReturnInput!) {
+  share {
+    return(id: $id, data: $data) {
+      recordId
+      record {
+        id
+        createdAt
+        modifiedAt
+        member {
+          id
+        }
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        balance
+        shareAmount
+        totalAmount
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
+      }
+    }
+  }
+}

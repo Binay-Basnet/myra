@@ -1,10 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { FormEditableTable } from '@coop/shared/form';
-import { Box, Text, TextFields } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
 
 type ShareChargeTable = {

@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import Geocoder from 'leaflet-control-geocoder';
 

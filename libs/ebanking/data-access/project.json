@@ -1,0 +1,23 @@
+{
+  "root": "libs/ebanking/data-access",
+  "sourceRoot": "libs/ebanking/data-access/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/ebanking/data-access/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ebanking/data-access"],
+      "options": {
+        "jestConfig": "libs/ebanking/data-access/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

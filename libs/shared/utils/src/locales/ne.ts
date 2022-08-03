@@ -219,7 +219,7 @@ const ne: Record<string, string> = {
   shareReturnCash: 'Cash',
   shareReturnAccount: 'Account',
 
-  //Account Page TODO ( Update Translations)
+  // Account Page TODO ( Update Translations)
 
   account: 'Account',
   accountNavActive: 'Active',
@@ -236,23 +236,23 @@ const ne: Record<string, string> = {
   inventoryUnitOfMeasure: 'Unit of Measurement List',
   inventoryVendor: 'Vendor',
 
-  //Accounts Page
+  // Accounts Page
   accounts: 'Accounts',
 
-  //Report Page
+  // Report Page
   reports: 'Reports',
 
-  //Utilities Page
+  // Utilities Page
   utilities: 'Utilities',
 
-  //member detail
+  // member detail
   memberOverview: 'Overview',
   memberAccount: 'Account',
   memberShare: 'Share',
   memberDeposit: 'Deposit',
   memberReports: 'Reports',
 
-  //LAYOUT PAGE
+  // LAYOUT PAGE
 
   // member layout
   memberLayout: 'Member',
@@ -305,7 +305,7 @@ const ne: Record<string, string> = {
   shareTableShareCount: 'Share Count',
   shareTableShareAmount: 'Share Amount',
 
-  //share register table
+  // share register table
   shareRegisterTable: 'Share Register',
   shareRegisterDate: 'Date',
   shareRegisterType: 'Type',
@@ -338,7 +338,7 @@ const ne: Record<string, string> = {
   settingsCoaTableAccountClass: 'Account Class',
   settingsCoaTableAccountParentGroup: 'Parent Group',
 
-  //settings branch table
+  // settings branch table
   settingsBranch: 'Branches',
   settingsBranchViewDetail: 'View Detail',
   settingsBranchViewBranchProfile: 'View Branch Profile',
@@ -547,7 +547,7 @@ const ne: Record<string, string> = {
   settingsKymCoopMembers: 'Members',
   settingsKymCoopUnionMembers: 'Members',
 
-  //settings general member sidebar
+  // settings general member sidebar
   settingsSideGeneral: 'General',
   settingsSideIndividual: 'KYM Form - Individual',
   settingsSideInstitutional: 'KYM Form - Institutional',
@@ -565,14 +565,14 @@ const ne: Record<string, string> = {
   settingsSideBarLoan: 'Loan',
   settingsSideBarLoanProducts: 'Loan Products',
 
-  //settings tab menu
+  // settings tab menu
   settingsTabMenu: 'Settings',
   settingsTabMenuGeneral: 'General',
   settingsTabMenuUsers: 'Users',
   settingsTabMenuImport: 'Import',
   settingsTabMenuSubscriptions: 'Subscriptions',
 
-  //settings deposit
+  // settings deposit
   settingsDeposit: 'Deposit Settings',
   settingsDepositTds: 'TDS',
   settingsDepositIROSetup: 'IRO Setup',
@@ -1513,7 +1513,7 @@ const ne: Record<string, string> = {
   shareAccountBonusShareDebited: 'Where is the bonus share debited',
   shareAccountName: 'Account Name',
 
-  //Setting Share Divident
+  // Setting Share Divident
   shareDividentDistributionCondition: 'Distribution Condition',
   shareAddDifferentShareDividentRate:
     'Add different share dividend rate for members based on their joined date',
@@ -1569,7 +1569,7 @@ const ne: Record<string, string> = {
 
   // account list
 
-  //account open
+  // account open
   newAccountOpen: 'New Account Open',
   accountOpenMemberId: 'Member ID',
   accProductName: 'Product Name',
@@ -1620,19 +1620,19 @@ const ne: Record<string, string> = {
 
   // NEOSYS-ADMIN
 
-  //header
+  // header
   neoClientDashboard: 'Dashboard',
   neoClientClients: 'Clients',
   neoClientUsers: 'Users',
   neoClientSettings: 'Settings',
 
-  //siderbar
+  // siderbar
   neoClientSiderbarClients: 'Clients',
   neoClientSiderbarClientsAdd: 'Add Client',
   neoClientSidebarClientList: 'Client List',
   neoClientSiderbarSettings: 'Client Settings',
 
-  //clients table
+  // clients table
   neoClientTableList: 'Client List',
   neoClientTableSearch: 'Search Clients',
   neoClientTableActive: 'Active',
@@ -1702,7 +1702,7 @@ const ne: Record<string, string> = {
   warehouse: 'Warehouse',
   suppliers: 'Suppliers',
 
-  //items form
+  // items form
   invItemAddNewItem: 'Add New Item',
   invItemName: 'Item Name',
   invItemSelectItem: 'Select Item',
@@ -1933,7 +1933,7 @@ const ne: Record<string, string> = {
   addVendorCreditLimit: 'Credit Limit',
   addVendorSaveVendor: 'Save Vendor',
 
-  //client details
+  // client details
   neoClientDetailsClients: 'Clients',
   neoClientDetailsOverview: 'Overview',
   neoClientDetailsBranches: 'Branches',
@@ -1943,7 +1943,7 @@ const ne: Record<string, string> = {
   neoClientDetailsCodes: 'Codes',
   neoClientDetailsActivity: 'Activity',
 
-  //client details overview
+  // client details overview
   neoClientDetailOverviewClientInformation: 'Client Information',
   neoClientDetailOverviewEdit: 'Edit',
   neoClientDetailOverviewType: 'Type',
@@ -1959,7 +1959,7 @@ const ne: Record<string, string> = {
   neoClientDetailOverviewAoa: 'AOA',
   neoClientDetailOverviewBODDecision: 'BOD Decision',
 
-  //client details documents
+  // client details documents
   neoClientDetailDocumentsDocuments: 'Documents',
   neoClientDetailDocumentsAddDocument: 'Add New Document',
   neoClientDetailDocumentsRegistrationDoc: 'Registration Doc',
@@ -1967,14 +1967,14 @@ const ne: Record<string, string> = {
   neoClientDetailDocumentsAoa: 'AOA',
   neoClientDetailDocumentsBODDecision: 'BOD Decision',
 
-  //users sidebar
+  // users sidebar
   neoClientUserSiderbarUsers: 'Users',
   neoClientUserSiderbarNewUser: 'New User',
   neoClientUserSiderbarUsersList: 'Users List',
   neoClientUserSiderbarUsersRole: 'Users Role',
   neoClientUserSiderbarNewUserRole: 'New User Role',
 
-  //settings sidebar
+  // settings sidebar
   neoSettingsSidebarSettings: 'Settings',
   neoSettingsSidebarGeneralSettings: 'General Settings',
   neoSettingsSidebarGlobalAppSettings: 'Global App Settings',
@@ -1982,7 +1982,7 @@ const ne: Record<string, string> = {
   neoSettingsSidebarDocumentMasterLists: 'Document Master Lists',
   neoSettingsSidebarUsers: 'Users',
 
-  //global app settings layout
+  // global app settings layout
   neoSettingsGlobalAppSettingsGlobal: 'Global App Settings',
   neoSettingsGlobalAppSettingsGeneral: 'General',
   neoSettingsGlobalAppSettingsInterestRate: 'Interest Rate',
@@ -1994,7 +1994,7 @@ const ne: Record<string, string> = {
     'Cheque & Certificate Setup',
   neoSettingsGlobalAppSettingsBulkMessaging: 'Bulk Messaging',
 
-  //shortcuts modal
+  // shortcuts modal
   shortcutsModalAll: 'All Keyboard Shorcut',
   shortcutsModalGeneral: 'General',
   shortcutsModalFocusOut: 'Focus Out',
@@ -2014,7 +2014,7 @@ const ne: Record<string, string> = {
   shortcutModalObjectMenu: 'Object Menu',
   shortcutModalSwitchTabs: 'Switch Tabs',
 
-  //neosys clients table
+  // neosys clients table
   neoClientTableViewClientProfile: 'View Client Profile',
   neoClientTableEditClient: 'Edit Client',
   neoClientTableMakeInactive: 'Make Inactive',
@@ -2051,8 +2051,8 @@ const ne: Record<string, string> = {
   kymCoopSelectLocalGov: 'Select Local Government',
   kymIndWriteStudentVISA: 'Write 0 if Student VISA',
 
-  //accounting
-  //purchase sidebar
+  // accounting
+  // purchase sidebar
   accountingPurchaseSidebarPurchase: 'Purchase',
   accountingPurchaseSidebarCreate: 'Create',
   accountingPurchaseSidebarPurchaseList: 'Purchase List',
@@ -2063,7 +2063,7 @@ const ne: Record<string, string> = {
 
   settingsMemberNominee: 'Nominee',
 
-  //accounting sidebar
+  // accounting sidebar
   accountingAccountingSidebarAccounting: 'Accounting',
   accountingAccountingSidebarCreate: 'Create',
   accountingAccountingSidebarJournalVouchers: 'Journal Vouchers',
@@ -2074,7 +2074,7 @@ const ne: Record<string, string> = {
   accountingAccountingSidebarChartsOfAccounts: 'Charts of Account',
   accountingAccountingSiderbarAccountingSettings: 'Accounting Settings',
 
-  //accounting sales sidebar
+  // accounting sales sidebar
   accountingsales: 'Sales',
   accountingSalesCreate: 'Create',
   accountingSalesSettings: 'Sales Settings',
@@ -2082,14 +2082,14 @@ const ne: Record<string, string> = {
   creditNote: 'Credit Note',
   customerPayment: 'Customer Payment',
 
-  //accounting tab menu
+  // accounting tab menu
   accountingAccountingTabMenuSales: 'Sales',
   accountingAccountingTabMenuPurchase: 'Purchase',
   accountingAccountingTabMenuAccounting: 'Accounting',
   accountingAccountingTabMenuLoan: 'Loan',
   accountingAccountingTabMenuInvestment: 'Investment',
 
-  //accounting purchase list
+  // accounting purchase list
   accountingPurchaseListBillNo: 'Bill No',
   accountingPurchaseListSupplierName: 'Supplier Name',
   accountingPurchaseListTotalAmount: 'Total Amount',
@@ -2097,7 +2097,7 @@ const ne: Record<string, string> = {
   accountingPurchaseListPurchase: 'Purchase',
   accountingPurchaseListPurchaseEntry: 'Purchase Entry',
 
-  //accounting purchase add
+  // accounting purchase add
   accountingPurchaseAddPurchaseNew: 'New Purchase Entry',
   accountingPurchaseAddSupplierName: 'Supplier Name',
   accountingPurchaseAddSupplierInvoiceReference: 'Supplier Invoice Reference',
@@ -2120,7 +2120,7 @@ const ne: Record<string, string> = {
   accountingPurchaseAddYes: 'Yes',
   accountingPurchaseAddNo: 'No',
 
-  //accounting expenses list
+  // accounting expenses list
   accountingExpensesListBillNo: 'Bill No',
   accountingExpensesListSupplierName: 'Supplier Name',
   accountingExpensesListTotalAmount: 'Total Amount',
@@ -2128,7 +2128,7 @@ const ne: Record<string, string> = {
   accountingExpensesListExpenses: 'Expenses',
   accountingExpensesListExpensesNew: 'New Expense',
 
-  //accounting expenses add
+  // accounting expenses add
   accountingExpensesAddNewExpense: 'New Expense',
   accountingExpensesAddSupplierName: 'Supplier Name',
   accountingExpensesAddDate: 'Date',
@@ -2148,7 +2148,7 @@ const ne: Record<string, string> = {
   accountingExpensesAddTDSYes: 'Yes',
   accountingExpensesAddTDSNo: 'No',
 
-  //accounting debit note list
+  // accounting debit note list
   accountingDebitNoteListBillNo: 'Bill No',
   accountingDebitNoteListSupplierName: 'Supplier Name',
   accountingDebitNoteListAmount: 'Amount',
@@ -2156,7 +2156,7 @@ const ne: Record<string, string> = {
   accountingDebitNoteListDebitNote: 'Debit Note',
   accountingDebitNoteListDebitNoteNew: 'New Debit Note',
 
-  //accounting debit note add
+  // accounting debit note add
   accountingDebitNoteAddNewDebitNote: 'New Debit Note',
   accountingDebitNoteAddSupplierName: 'Supplier Name',
   accountingDebitNoteAddBillReference: 'Bill Reference',
@@ -2169,7 +2169,7 @@ const ne: Record<string, string> = {
   accountingDebitNoteAddVAT: 'VAT',
   accountingDebitNoteAddGrandTotal: 'Grand Total',
 
-  //accounting supplier Payment list
+  // accounting supplier Payment list
   accountingSupplierPaymentListBillNo: 'Bill No',
   accountingSupplierPaymentListSupplierName: 'Supplier Name',
   accountingSupplierPaymentListAmount: 'Amount',
@@ -2177,7 +2177,7 @@ const ne: Record<string, string> = {
   accountingSupplierPaymentListSupplierPayment: 'Supplier Payment',
   accountingSupplierPaymentListSupplierPaymentNew: 'New Supplier Payment',
 
-  //accounting supplier payment add
+  // accounting supplier payment add
   accountingSupplierPaymentAddNewSupplierPayment: 'New Supplier Payment',
   accountingSupplierPaymentAddPaidTo: 'Paid To',
   accountingSupplierPaymentAddPaidFrom: 'Paid From',
@@ -2204,7 +2204,7 @@ const ne: Record<string, string> = {
   accountingSupplierPaymentAddTDSYes: 'Yes',
   accountingSupplierPaymentAddTDSNo: 'No',
 
-  //accounting journal vouchers list
+  // accounting journal vouchers list
   accountingJournalVouchersListJournalVouchers: 'Journal Vouchers',
   accountingJournalVouchersListNewJournalVoucher: 'New Journal Voucher',
   accountingJournalVouchersListItemId: 'Item Id',
@@ -2214,14 +2214,14 @@ const ne: Record<string, string> = {
   accountingJournalVouchersListTotalCost: 'Total Cost',
   accountingJournalVouchersListItemQuantity: 'Item Quantity',
 
-  //accounting journal voucher add
+  // accounting journal voucher add
   accountingJournalVoucherAddNewJournalVoucher: 'New Journal Voucher',
   accountingJournalVoucherAddDueDate: 'Due Date',
   accountingJournalVoucherAddReference: 'Reference',
   accountingJournalVoucherAddNotes: 'Notes',
   accountingJournalVoucherAddNote: 'Note',
 
-  //accounting cash transfer list
+  // accounting cash transfer list
   accountingCashTransferListCashTransfer: 'Cash Transfer',
   accountingCashTransferListNewJournalVoucher: 'New Cash Transfer',
   accountingCashTransferListItemId: 'Item Id',
@@ -2231,7 +2231,7 @@ const ne: Record<string, string> = {
   accountingCashTransferListTotalCost: 'Total Cost',
   accountingCashTransferListItemQuantity: 'Item Quantity',
 
-  //accounting cash transfer add
+  // accounting cash transfer add
   accountingCashTransferAddNewCashTransfer: 'New Cash Transfer',
   accountingCashTransferAddTransferredFromAccount: 'Transferred From Account',
   accountingCashTransferAddSelectAccount: 'Select Account',
@@ -2240,7 +2240,7 @@ const ne: Record<string, string> = {
   accountingCashTransferAddNotes: 'Notes',
   accountingCashTransferAddNote: 'Note',
 
-  //accounting quick payment list
+  // accounting quick payment list
   accountingQuickPaymentListQuickPayment: 'Quick Payment',
   accountingQuickPaymentListNewJournalVoucher: 'New Quick Payment',
   accountingQuickPaymentListItemId: 'Item Id',
@@ -2250,7 +2250,7 @@ const ne: Record<string, string> = {
   accountingQuickPaymentListTotalCost: 'Total Cost',
   accountingQuickPaymentListItemQuantity: 'Item Quantity',
 
-  //accounting cash transfer add
+  // accounting cash transfer add
   accountingQuickPaymentAddNewQuickPayment: 'New Quick Payment',
   accountingQuickPaymentAddPaidFrom: 'Paid From',
   accountingQuickPaymentAddSelectLedgerName: 'Select Ledger Name',
@@ -2260,7 +2260,7 @@ const ne: Record<string, string> = {
   accountingQuickPaymentAddNotes: 'Notes',
   accountingQuickPaymentAddNote: 'Note',
 
-  //accounting quick receipt list
+  // accounting quick receipt list
   accountingQuickReceiptListQuickReceipt: 'Quick Receipt',
   accountingQuickReceiptListNewQuickReceipt: 'New Quick Receipt',
   accountingQuickReceiptListItemId: 'Item Id',
@@ -2270,7 +2270,7 @@ const ne: Record<string, string> = {
   accountingQuickReceiptListTotalCost: 'Total Cost',
   accountingQuickReceiptListItemQuantity: 'Item Quantity',
 
-  //accounting cash transfer add
+  // accounting cash transfer add
   accountingQuickReceiptAddNewQuickReceipt: 'New Quick Receipt',
   accountingQuickReceiptAddDepositTo: 'Deposit To',
   accountingQuickReceiptAddSelectLedgerName: 'Select Ledger Name',
@@ -2280,7 +2280,7 @@ const ne: Record<string, string> = {
   accountingQuickReceiptAddNotes: 'Notes',
   accountingQuickReceiptAddNote: 'Note',
 
-  //accounting bank accounts list
+  // accounting bank accounts list
   accountingBankAccountsListBankAccounts: 'Bank Accounts',
   accountingBankAccountsListNewBankAccounts: 'New Bank Accounts',
   accountingBankAccountsListItemId: 'Item Id',
@@ -2290,7 +2290,7 @@ const ne: Record<string, string> = {
   accountingBankAccountsListTotalCost: 'Total Cost',
   accountingBankAccountsListItemQuantity: 'Item Quantity',
 
-  //accounting cash transfer add
+  // accounting cash transfer add
   accountingBankAccountAddNewBankAccount: 'New Bank Account',
   accountingBankAccountAddBank: 'Bank',
   accountingBankAccountAddSelectBank: 'Select Bank',
@@ -2306,7 +2306,7 @@ const ne: Record<string, string> = {
   accountingBankAccountAddOpeningBalance: 'Opening Balance',
   accountingBankAccountAddDesciption: 'Description',
 
-  //accounting sales list
+  // accounting sales list
   accountingSalesListSales: 'Sales',
   accountingSalesListSaleEntry: 'Sale Entry',
   accountingSalesListInvoiceNo: 'Invoice No',
@@ -2314,10 +2314,10 @@ const ne: Record<string, string> = {
   accountingSalesListTotalAmount: 'Total Amount',
   accountingSalesListInvoiceDate: 'Invoice Date',
 
-  //accounting sales form
+  // accounting sales form
   accountingSalesFormNewSalesEntry: 'New Sales Entry',
 
-  //accounting credit note list
+  // accounting credit note list
   accountingCreditNoteListCreditNote: 'Credit Note',
   accountingCreditNoteListNewCreditNote: 'New Credit Note',
   accountingCreditNoteListNoteNo: 'Note No',
@@ -2325,7 +2325,7 @@ const ne: Record<string, string> = {
   accountingCreditNoteListTotalAmount: 'Total Amount',
   accountingCreditNoteListInvoiceDate: 'Invoice Date',
 
-  //accounting credit note form
+  // accounting credit note form
   accountingCreditNoteAddNewCreditNote: 'New Credit Note',
   accountingCreditNoteAddCustomerName: 'Customer Name',
   accountingCreditNoteAddSelectCustomer: 'Select Customer',
@@ -2338,7 +2338,7 @@ const ne: Record<string, string> = {
   accountingCreditNoteAddVAT: 'VAT',
   accountingCreditNoteAddGrandTotal: 'Grand Total',
 
-  //accounting customer payment list
+  // accounting customer payment list
   accountingCustomerPaymentListCustomerPayment: 'Customer Payment',
   accountingCustomerPaymentListNewCustomerPayment: 'New Customer Payment',
   accountingCustomerPaymentListEntryNo: 'Entry No',
@@ -2348,7 +2348,7 @@ const ne: Record<string, string> = {
   accountingCustomerPaymentListDate: 'Date',
   accountingCustomerPaymentListPaymentMode: 'Payment Mode',
 
-  //accounting customer payment form
+  // accounting customer payment form
   accountingCustomerPaymentAddNewCustomerPayment: 'New Customer Payment',
   accountingCustomerPaymentAddReceivedFrom: 'Received From',
   accountingCustomerPaymentAddReceivedAccount: 'Received Account',
@@ -2384,7 +2384,7 @@ const ne: Record<string, string> = {
   invItemsOptions: 'Options',
   invItemsSml: 'S.M,L',
   invItemAddNewVariant: 'Add New Variant',
-  //accounting purchase table
+  // accounting purchase table
   accountingPurchaseTableProduct: 'Product',
   accountingPurchaseTableQuantity: 'Quantity',
   accountingPurchaseTableRate: 'Rate',
@@ -2394,12 +2394,12 @@ const ne: Record<string, string> = {
   accountingPurchaseTablePurchaseLedger: 'Purchase Ledger',
   accountingPurchaseTableWarehousePartition: 'Warehouse Partition',
 
-  //accounting expenses form table
+  // accounting expenses form table
   accountingExpensesFormTableTransferredTo: 'Transferred To (Select Ledger)',
   accountingExpensesFormTableTax: 'Tax',
   accountingExpensesFormTableAmount: 'Amount',
 
-  //accounting debit note form table
+  // accounting debit note form table
   accountingDebitNoteFormTableProduct: 'Product',
   accountingDebitNoteFormTableQuantity: 'Quantity',
   accountingDebitNoteFormTableRate: 'Rate',
@@ -2409,32 +2409,32 @@ const ne: Record<string, string> = {
   accountingDebitNoteFormTableWarehousePartition: 'Warehouse Partition',
   accountingDebitNoteFormTablePurchaseReturnLedger: 'Purchase Return Ledger',
 
-  //accounting supplier payment form table
+  // accounting supplier payment form table
   accountingSupplierPaymentFormTableType: 'Type',
   accountingSupplierPaymentFormTableDate: 'Date',
   accountingSupplierPaymentFormTableAmount: 'Amount',
   accountingSupplierPaymentFormTableLeftToAllocate: 'Left to Allocate',
   accountingSupplierPaymentFormTableThisAllocation: 'This Allocation',
 
-  //accounting journal vouchers form table
+  // accounting journal vouchers form table
   accountingJournalVouchersFormTableTransferredTo:
     'Transferred To (Select Ledger)',
   accountingJournalVouchersFormTableDRAmount: 'DR Amount',
   accountingJournalVouchersFormTableCRAmount: 'CR Amount',
 
-  //accounting cash transfer form table
+  // accounting cash transfer form table
   accountingCashTransferFormTableTransferredTo:
     'Transferred To (Select Ledger)',
   accountingCashTransferFormTableAmount: 'Amount',
 
-  //accounting quick payment form table
+  // accounting quick payment form table
   accountingQuickPaymentFormTableAccount: 'Account',
   accountingQuickPaymentFormTableAmount: 'Amount',
 
-  //accounting quick receipt form table
+  // accounting quick receipt form table
   accountingQuickReceiptFormTableAccount: 'Account',
   accountingQuickReceiptFormTableAmount: 'Amount',
-  //editabletableSales
+  // editabletableSales
   Salesproduct_id: 'Product',
   SalesQuantity: 'Quantity',
   SaleRate: 'Rate',
@@ -2444,7 +2444,7 @@ const ne: Record<string, string> = {
   SaleWarehousePartition: 'Warehouse Partition',
   SaleSelectWareLedger: 'Sales Ledger',
 
-  //editable sales CreditnOte table
+  // editable sales CreditnOte table
   CreditNoteProduct: 'Product',
   CreditNoteQuantity: 'Quantity',
   CreditNoteRate: 'Rate',
@@ -2453,7 +2453,7 @@ const ne: Record<string, string> = {
   CreditNoteProductDes: 'Product Description',
   CreditNoteWareHouse: 'Warehouse Partition',
   CreditNoteSalesReturn: 'Sales Return Ledger',
-  //editable sales customer payment
+  // editable sales customer payment
   CustomerPaymentAllocation: 'Payment Allocation',
   CustomerPaymentType: 'Type',
   CustomerPaymentDate: 'Date',
@@ -2491,10 +2491,10 @@ const ne: Record<string, string> = {
   accoutnOpenLadderRateInfo: 'Ladder Rate Info: ',
   accountOpenUnit: 'Unit',
   accountOpenTenure: 'Tenure',
-  //settings general sidebar
+  // settings general sidebar
   settingsSideBarValuator: 'Valuator',
 
-  //settings general valuator
+  // settings general valuator
   settingsGeneralValuatorValuator: 'Valuator',
   settingsGeneralValuatorNewValuator: 'New Valuator',
   settingsGeneralValuatorId: 'ID',
@@ -2503,7 +2503,7 @@ const ne: Record<string, string> = {
   settingsGeneralValuatorAddress: 'Address',
   settingsGeneralValuatorContractDate: 'Contract Date',
 
-  //settings general valuator form
+  // settings general valuator form
   settingsGeneralValuatorFormNewValuator: 'New Valuator',
   settingsGeneralValuatorFormValuatorSetup: 'Valuator Setup',
   settingsGeneralValuatorFormValuatorName: 'Valuator Name',

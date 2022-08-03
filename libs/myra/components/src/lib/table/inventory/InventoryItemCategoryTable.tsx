@@ -12,8 +12,8 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
+import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
 import { InventoryPageHeader } from '@coop/myra/inventory/ui-layout';
-import { useGetInventoryItemsQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, Column, Table, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

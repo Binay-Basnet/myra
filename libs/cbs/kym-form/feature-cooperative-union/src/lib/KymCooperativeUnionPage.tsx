@@ -4,24 +4,22 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import {
   Box,
-  Container,
-  Text,
-  IconButton,
   Button,
-  Icon,
+  Container,
   FormFooter,
+  Icon,
+  IconButton,
+  Text,
 } from '@coop/shared/ui';
 import { IoCloseOutline } from 'react-icons/io5';
-import { useFormContext } from 'react-hook-form';
 
 import {
-  InstituteInfo,
-  DirectorDetails,
   AccountOperatorDetails,
   CentralRepresentativeDetails,
-  MemberDetails,
-  EconomicDetails,
   Declaration,
+  DirectorDetails,
+  EconomicDetails,
+  InstituteInfo,
 } from '../components';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
@@ -174,7 +172,9 @@ export function KYMCooperativeUnionPage() {
                 </Button>
               }
               mainButtonLabel={t['next']}
-              mainButtonHandler={() => console.log('save')}
+              mainButtonHandler={() => {
+                console.log('TODO!');
+              }}
             />
           </Container>
         </Box>

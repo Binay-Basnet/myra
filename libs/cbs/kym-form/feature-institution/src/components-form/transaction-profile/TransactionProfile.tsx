@@ -1,25 +1,21 @@
-import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
+import {
+  FormFieldSearchTerm,
+  KymInsInput,
+  useGetInstitutionKymOptionsQuery,
+} from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { KymInsInput } from '@coop/shared/data-access';
-import {
-  FormFieldSearchTerm,
-  useGetInstitutionKymOptionsQuery,
-} from '@coop/shared/data-access';
-import { FormRadioGroup } from '@coop/shared/form';
-import { FormInput, FormSelect } from '@coop/shared/form';
-// import { InstitutionExpectedMonthlyTurnover } from '@coop/shared/data-access';
-import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { FormInput, FormRadioGroup } from '@coop/shared/form';
+import { Box, Grid } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
 import { getOption } from '../../utils/getOptionsInstitution';
+
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }

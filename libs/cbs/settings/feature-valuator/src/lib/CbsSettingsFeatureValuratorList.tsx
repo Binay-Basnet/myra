@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { PopoverComponent } from '@coop/myra/components';
-import { ObjState, useGetMemberListQuery } from '@coop/shared/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

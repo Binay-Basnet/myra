@@ -1,13 +1,10 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckbox, FormCheckboxGroup } from '@coop/shared/form';
+import { FormCheckboxGroup } from '@coop/shared/form';
 // import debounce from 'lodash/debounce';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { AccountServicesCharge } from '../components';
 
 /* eslint-disable-next-line */
 export interface CbsSettingsFeatureLoanProductsProps {}

@@ -1,11 +1,11 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormFieldSearchTerm, KymInsInput } from '@coop/cbs/data-access';
+import { useGetInstitutionKymOptionsQuery } from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormFieldSearchTerm, KymInsInput } from '@coop/shared/data-access';
-import { useGetInstitutionKymOptionsQuery } from '@coop/shared/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';

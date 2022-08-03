@@ -20,7 +20,7 @@ const search_options = [
 
 export const LoanLimit = ({ data }: any) => {
   const { t } = useTranslation();
-  console.log(data);
+
   return (
     <BoxContainer>
       <TextBoxContainer>

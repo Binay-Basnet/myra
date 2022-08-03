@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { IoClose } from 'react-icons/io5';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { useAddNewFieldMutation } from '@coop/shared/data-access';
+import { useAddNewFieldMutation } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { AccordionPanel, Box, Button, Icon } from '@coop/shared/ui';
 

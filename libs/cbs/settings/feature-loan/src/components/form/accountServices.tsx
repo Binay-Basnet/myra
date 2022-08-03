@@ -1,6 +1,5 @@
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormEditableTable } from '@coop/shared/form';
-// import { KymIndMemberInput } from '@coop/shared/data-access';
 import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

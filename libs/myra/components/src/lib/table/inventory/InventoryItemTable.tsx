@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
-import { useGetInventoryItemsQuery } from '@coop/shared/data-access';
+import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

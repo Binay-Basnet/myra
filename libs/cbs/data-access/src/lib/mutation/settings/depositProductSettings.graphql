@@ -1,0 +1,21 @@
+mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
+  settings {
+    general {
+      depositProduct {
+        add(id: $id, data: $data) {
+          recordId
+          record {
+            id
+            productCode
+            productName
+            createdDate
+            interest
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

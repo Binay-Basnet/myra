@@ -17,11 +17,11 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/inventory/suppliers': 3,
 };
 
-//inventory/register
-//inventory/adjustment
+// inventory/register
+// inventory/adjustment
 
-//inventory/items
-//inventory/items/category
+// inventory/items
+// inventory/items/category
 
 const demotabs: {
   title: string;

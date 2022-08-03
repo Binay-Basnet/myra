@@ -2,9 +2,9 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Grid, GridItem } from '@chakra-ui/react';
 
+import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { KymCooperativeFormInput } from '@coop/shared/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';

@@ -4,11 +4,8 @@ import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
+import { Payment_Mode } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
-import {
-  Payment_Mode,
-  useAddSharePurchaseMutation,
-} from '@coop/shared/data-access';
 import {
   FormInput,
   FormNumberInput,
