@@ -126,8 +126,10 @@ export const KymCoopRegdAddress = (props: IProps) => {
     <FormProvider {...methods}>
       <form
         onFocus={(e) => {
+          console.log('hello');
           const kymSection = getKymCoopSection(e.target.id);
           setSection(kymSection);
+          console.log('new', kymSection);
         }}
       >
         <GroupContainer

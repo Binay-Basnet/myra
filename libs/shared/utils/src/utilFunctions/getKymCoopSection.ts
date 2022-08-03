@@ -7,6 +7,7 @@ const basicInfo = [
 ];
 
 const registeredAddress = [
+  'registeredCoopAddress',
   'regdProvinceId',
   'regdDistrictId',
   'regdMunicipalityId',

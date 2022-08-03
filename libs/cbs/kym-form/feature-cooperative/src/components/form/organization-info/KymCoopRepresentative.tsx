@@ -123,7 +123,9 @@ export const KymCoopRepresentative = (props: IProps) => {
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('permanentRepresentativeAddress.provinceId');
   const currentDistrictId = watch('permanentRepresentativeAddress.districtId');
-
+  const currentLocalityId = watch(
+    'permanentRepresentativeAddress.localGovernmentId'
+  );
   const districtList = useMemo(
     () =>
       data?.administration.all.find((d) => d.id === currentProvinceId)
@@ -137,6 +139,10 @@ export const KymCoopRepresentative = (props: IProps) => {
       [],
     [currentDistrictId]
   );
+  const wardList = useMemo(
+    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
+  );
 
   // FOR TEMPORARY ADDRESS
   const currentTempProvinceId = watch(
@@ -144,6 +150,9 @@ export const KymCoopRepresentative = (props: IProps) => {
   );
   const currentTemptDistrictId = watch(
     'temporaryRepresentativeAddress.districtId'
+  );
+  const currentTempLocalityId = watch(
+    'temporaryRepresentativeAddress.localGovernmentId'
   );
 
   const districtTempList = useMemo(
@@ -158,6 +167,12 @@ export const KymCoopRepresentative = (props: IProps) => {
       districtList.find((d) => d.id === currentTemptDistrictId)
         ?.municipalities ?? [],
     [currentTemptDistrictId]
+  );
+
+  const wardTempList = useMemo(
+    () =>
+      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+    [currentTempLocalityId]
   );
 
   return (
@@ -251,11 +266,14 @@ export const KymCoopRepresentative = (props: IProps) => {
                     value: d.id,
                   }))}
                 />
-                <FormInput
-                  type="number"
+                <FormSelect
                   name="permanentRepresentativeAddress.wardNo"
                   label={t['kymCoopRepresentativeWardNo']}
                   placeholder={t['kymCoopRepresentativeEnterWardNo']}
+                  options={wardList?.map((d) => ({
+                    label: d,
+                    value: d,
+                  }))}
                 />
                 <FormInput
                   type="text"
@@ -321,11 +339,14 @@ export const KymCoopRepresentative = (props: IProps) => {
                       value: d.id,
                     }))}
                   />
-                  <FormInput
-                    type="number"
+                  <FormSelect
                     name="temporaryRepresentativeAddress.wardNo"
                     label={t['kymCoopRepresentativeWardNo']}
                     placeholder={t['kymCoopRepresentativeEnterWardNo']}
+                    options={wardTempList.map((d) => ({
+                      label: d,
+                      value: d,
+                    }))}
                   />
                   <FormInput
                     type="text"

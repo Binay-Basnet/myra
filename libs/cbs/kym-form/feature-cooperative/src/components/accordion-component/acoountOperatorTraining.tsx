@@ -48,7 +48,7 @@ const AddSister = ({ index, removeTraining, operatorIndex }: IAddTraining) => {
           placeholder={t['kymCoopEnterDateOfTraining']}
         />
         <FormInput
-          type="number"
+          type="text"
           name={`coopRelatedTraining.${index}.trainingOrganization}`}
           label={t['kymCoopTrainingOrganization']}
           placeholder={t['kymCoopEnterTrainingOrganization']}
