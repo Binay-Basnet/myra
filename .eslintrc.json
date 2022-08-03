@@ -10,7 +10,6 @@
   ],
   "extends": ["eslint:recommended", "google", "prettier"],
   "rules": {
-    "prettier/prettier": ["error"],
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
     "camelcase": "off",
