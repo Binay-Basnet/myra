@@ -17,7 +17,7 @@ interface IInstitutionHookProps {
 export const useCooperative = ({ methods }: IInstitutionHookProps) => {
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { setError, watch, reset } = methods;
+  const { watch, reset } = methods;
   const { mutate } = useSetCooperativeDataMutation();
   const {
     data: editValues,
@@ -54,9 +54,33 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
         editLastValues,
         (v) => v !== 0 && v !== '' && v !== null
       );
+      const registeredAddressLocality =
+        editLastValues?.registeredAddress?.locality?.local;
 
+      const operatingAddressLocality =
+        editLastValues?.operatingAddress?.locality?.local;
+      const permanentAdrressLocality =
+        editLastValues?.permanentRepresentativeAddress?.locality?.local;
+      const temporaryAddressLocality =
+        editLastValues?.temporaryRepresentativeAddress?.locality?.local;
       reset({
         ...editTruthyData,
+        registeredAddress: {
+          ...editLastValues?.registeredAddress,
+          locality: registeredAddressLocality,
+        },
+        operatingAddress: {
+          ...editLastValues?.operatingAddress,
+          locality: operatingAddressLocality,
+        },
+        permanentRepresentativeAddress: {
+          ...editLastValues?.permanentRepresentativeAddress,
+          locality: permanentAdrressLocality,
+        },
+        temporaryRepresentativeAddress: {
+          ...editLastValues?.temporaryRepresentativeAddress,
+          locality: temporaryAddressLocality,
+        },
       });
     }
   }, [editLoading]);
