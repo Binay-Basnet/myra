@@ -7798,14 +7798,14 @@ export type GetLoanProductListQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanProductListQuery = { settings: { general?: { loanProducts?: { list?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, createdDate: string, productName: string, productType: LoanProductType, productSubType: LoanProductSubType, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType }, productCode?: { prefix: string, initialNo: string } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null } }> } | null } | null } | null } };
+export type GetLoanProductListQuery = { settings: { general?: { loanProducts?: { list?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { id: string, objState: ObjState, createdDate: string, productName: string, productCodeString?: string | null, productType: LoanProductType, productSubType: LoanProductSubType, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType }, productCode?: { prefix: string, initialNo: string } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null } }> } | null } | null } | null } };
 
 export type GetLoanProductEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetLoanProductEditDataQuery = { settings: { general?: { loanProducts?: { formState?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: LoanProductType, productSubType: LoanProductSubType, productNature: NatureOfLoanProduct, productCodeString?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: Frequency | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, repaymentScheme: LoanRepaymentScheme, modeOfPayment?: LoanPaymentMode | null, installmentType?: LoanPaymentInstallmentType | null, allowPartialInstallment?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, isPenaltyApplicable?: boolean | null, isRebateApplicable?: boolean | null, minGraceDurationUnit?: Frequency | null, minGraceDurationUnitNumber?: number | null, maxGraceDurationUnit?: Frequency | null, maxGraceDurationUnitNumber?: number | null, overrideInterest?: boolean | null, goodLoanProvision?: number | null, doubtfulLoanProvision?: number | null, problematicLoanProvision?: number | null, badLoanProvision?: number | null, isInsuranceApplicable?: boolean | null, isCollateralRequired?: boolean | null, disburementOfFMV?: number | null, disburementOfDMV?: number | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, productCode?: { prefix: string, initialNo: string } | null, penalty?: { dayAfterInstallmentDate?: number | null, minimumAmount?: any | null, rateType?: PenaltyRateType | null, flatRatePenalty?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, rebate?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, percentage?: number | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null } | null } | null } | null } };
+export type GetLoanProductEditDataQuery = { settings: { general?: { loanProducts?: { formState?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: LoanProductType, productSubType: LoanProductSubType, productNature: NatureOfLoanProduct, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: Frequency | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, repaymentScheme: LoanRepaymentScheme, modeOfPayment?: LoanPaymentMode | null, installmentType?: LoanPaymentInstallmentType | null, allowPartialInstallment?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, isPenaltyApplicable?: boolean | null, isRebateApplicable?: boolean | null, minGraceDurationUnit?: Frequency | null, minGraceDurationUnitNumber?: number | null, maxGraceDurationUnit?: Frequency | null, maxGraceDurationUnitNumber?: number | null, overrideInterest?: boolean | null, goodLoanProvision?: number | null, doubtfulLoanProvision?: number | null, problematicLoanProvision?: number | null, badLoanProvision?: number | null, isInsuranceApplicable?: boolean | null, isCollateralRequired?: boolean | null, disburementOfFMV?: number | null, disburementOfDMV?: number | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, productCode?: { prefix: string, initialNo: string } | null, penalty?: { dayAfterInstallmentDate?: number | null, minimumAmount?: any | null, rateType?: PenaltyRateType | null, flatRatePenalty?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, rebate?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, percentage?: number | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null } | null } | null } | null } };
 
 export type GetPreDefinedFieldsQueryVariables = Exact<{
   filter: PredefinedElementFilter;
@@ -11569,14 +11569,12 @@ export const GetLoanProductListDocument = `
             node {
               id
               objState
-              createdAt
               createdBy {
                 id
                 name
                 username
                 userType
               }
-              modifiedAt
               createdDate
               modifiedBy {
                 id
@@ -11585,6 +11583,7 @@ export const GetLoanProductListDocument = `
                 userType
               }
               productName
+              productCodeString
               productCode {
                 prefix
                 initialNo
@@ -11636,7 +11635,6 @@ export const GetLoanProductEditDataDocument = `
             prefix
             initialNo
           }
-          productCodeString
           typeOfMember
           criteria
           minAge

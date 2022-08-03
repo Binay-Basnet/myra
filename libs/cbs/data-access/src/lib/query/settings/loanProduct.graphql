@@ -17,14 +17,12 @@ query getLoanProductList(
             node {
               id
               objState
-              createdAt
               createdBy {
                 id
                 name
                 username
                 userType
               }
-              modifiedAt
               createdDate
               modifiedBy {
                 id
@@ -33,6 +31,7 @@ query getLoanProductList(
                 userType
               }
               productName
+              productCodeString
               productCode {
                 prefix
                 initialNo
@@ -71,7 +70,6 @@ query getLoanProductEditData($id: ID!) {
             prefix
             initialNo
           }
-          productCodeString
           typeOfMember
           criteria
           minAge

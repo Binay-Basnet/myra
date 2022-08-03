@@ -27,17 +27,6 @@ export const LoanLimit = ({ data }: any) => {
         <TopText>{t['loanProductLoanProvisionTreatment']} </TopText>
         <SubText>{t['loanProductDifferentLoanProvisionTreatment']} </SubText>
       </TextBoxContainer>
-      {/* <InputGroupContainer>
-        <FormInput
-          name="scheduleChangeOverride"
-          type="number"
-          label={t['loanProductScheduleChangeOverride']}
-          // textAlign={'right'}
-          placeholder={t['loanProductScheduleChangeOverride']}
-          //   rightElement={'%'}
-        />
-      </InputGroupContainer> */}
-
       <FormEditableTable<AccountServiceTable>
         name="loanProvisiontable"
         canDeleteRow={false}

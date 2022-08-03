@@ -55,6 +55,8 @@ export const RequiredDocumentSetup = () => {
     },
   ];
 
+  console.log(typesOfMember);
+
   return (
     <BoxContainer>
       <TopText> {t['depositProductRequiredDocumentSetup']} </TopText>
@@ -70,20 +72,18 @@ export const RequiredDocumentSetup = () => {
           </Box>
         )}
 
-        {typesOfMember?.includes(
-          KymMemberTypesEnum.Institution ||
-            KymMemberTypesEnum.Cooperative ||
-            KymMemberTypesEnum.CooperativeUnion
-        ) && (
-          <Box display="flex" flexDirection="column" gap="s16">
-            <TopText>{t['depositProductInstitutional']} </TopText>
-            <FormCheckboxGroup
-              name="institutionDocuments"
-              list={instutionList}
-              orientation="column"
-            />
-          </Box>
-        )}
+        {typesOfMember?.includes(KymMemberTypesEnum.Institution) ||
+          typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
+          (typesOfMember?.includes(KymMemberTypesEnum.CooperativeUnion) && (
+            <Box display="flex" flexDirection="column" gap="s16">
+              <TopText>{t['depositProductInstitutional']} </TopText>
+              <FormCheckboxGroup
+                name="institutionDocuments"
+                list={instutionList}
+                orientation="column"
+              />
+            </Box>
+          ))}
       </Grid>
     </BoxContainer>
   );
