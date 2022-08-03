@@ -30,7 +30,7 @@ export function CbsSettingsFeatureLoanProducts(
       <FormProvider {...methods}>
         <form>
           <Box display="flex" flexDirection="column" rowGap="s32" padding="s12">
-            <Box display="flex" flexDirection={'column'} rowGap="s16">
+            {/* <Box display="flex" flexDirection={'column'} rowGap="s16">
               <Box display="flex" flexDirection={'column'} gap="s4">
                 <Text fontSize="r1" fontWeight="500">
                   {t['settingsLoanInsuranceScheme']}
@@ -41,8 +41,8 @@ export function CbsSettingsFeatureLoanProducts(
               </Box>
 
               <AccountServicesCharge />
-            </Box>
-            <Divider />
+            </Box> */}
+            {/* <Divider /> */}
             <Box display={'flex'} flexDirection="column" gap="s16">
               <Text fontSize="r1" fontWeight="500">
                 {t['settingsLoanRepaymentScheme']}{' '}

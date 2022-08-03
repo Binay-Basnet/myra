@@ -594,6 +594,8 @@ const en: Record<string, string> = {
 
   // settings LOAN
   settingsLoanGeneral: 'General',
+  settingsInsuranceGeneral: 'Insurance',
+  settingsProductTypeGeneral: 'Product Type',
   settingsLoan: 'Loan Setting',
   settingsLoanInsuranceScheme: 'Insurance Scheme Setup',
   settingsLoanInsuranceSubtext: 'Setup insurance scheme setup',
