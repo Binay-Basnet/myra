@@ -46,6 +46,7 @@
     "myra-ui-e2e": "apps/myra-ui-e2e",
     "neosys-admin": "apps/neosys-admin",
     "neosys-admin-e2e": "apps/neosys-admin-e2e",
+    "neosys-data-access": "libs/neosys/data-access",
     "neosys-feature-clients": "libs/neosys/feature-clients",
     "neosys-feature-settings": "libs/neosys/feature-settings",
     "neosys-feature-users": "libs/neosys/feature-users",

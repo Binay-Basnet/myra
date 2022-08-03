@@ -1,9 +1,9 @@
 overwrite: true
 schema: ${NX_SCHEMA_PATH}
-documents: 'libs/ebanking/data-access/src/lib/**/*.graphql'
+documents: 'libs/neosys/data-access/src/lib/**/*.graphql'
 watch: true
 generates:
-  libs/ebanking/data-access/src/generated/graphql.ts:
+  libs/neosys/data-access/src/generated/graphql.ts:
     plugins:
       - add:
           content:
@@ -27,6 +27,6 @@ generates:
       fetcher:
         func: './axiosHelper#useAxios'
         isReactHook: true
-  libs/ebanking/data-access/graphql.schema.json:
+  libs/neosys/data-access/graphql.schema.json:
     plugins:
       - 'introspection'

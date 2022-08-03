@@ -1,13 +1,18 @@
-import { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { Provider } from 'react-redux';
 import type { NextPage } from 'next';
-import { AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
-import { neosysTheme } from '@coop/shared/utils';
+import { Box, FloatingShortcutButton } from '@coop/shared/ui';
+import { store, theme, useInit, useSnap } from '@coop/shared/utils';
 
-import './styles.css';
+import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
+
+const { ToastContainer } = createStandaloneToast();
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -23,7 +28,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      refetchOnMount: false,
+      refetchOnMount: true,
       refetchOnReconnect: false,
       retry: false,
       keepPreviousData: true,
@@ -33,20 +38,45 @@ const queryClient = new QueryClient({
   },
 });
 
-function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
+function MainApp({ Component, pageProps }: AppPropsWithLayout) {
+  useInit();
+  useSnap();
+
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <ChakraProvider theme={neosysTheme}>
-          <Head>
-            <title>Welcome to neosys-admin!</title>
-          </Head>
-          <main className="app">{getLayout(<Component {...pageProps} />)}</main>
-        </ChakraProvider>
-      </QueryClientProvider>
+      <Head>
+        <title>Neosys</title>
+      </Head>
+      <ToastContainer />
+      <main className="app">{getLayout(<Component {...pageProps} />)}</main>
+      <Box
+        position="fixed"
+        bottom={'40px'}
+        right={'32px'}
+        display="flex"
+        flexDirection={'row-reverse'}
+        zIndex="99"
+      >
+        <FloatingShortcutButton />
+      </Box>
     </>
+  );
+}
+
+function CustomApp(props: AppPropsWithLayout) {
+  return (
+    <Provider store={store}>
+      {/* <AuthProvider> */}
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
+          <MainApp {...props} />
+        </ChakraProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+      {/* </AuthProvider> */}
+    </Provider>
   );
 }
 

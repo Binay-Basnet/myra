@@ -116,6 +116,9 @@
       "@coop/neosys-admin/clients": [
         "libs/neosys/feature-clients/src/index.ts"
       ],
+      "@coop/neosys-admin/data-access": [
+        "libs/neosys/data-access/src/index.ts"
+      ],
       "@coop/neosys-admin/layout": ["libs/neosys/ui-layout/src/index.ts"],
       "@coop/neosys-admin/settings": [
         "libs/neosys/feature-settings/src/index.ts"
