@@ -3054,6 +3054,7 @@ const ne: Record<string, string> = {
   loanProductPenaltyType: 'Penalty Type',
   loanProductDifferentLoanProvisionTreatment:
     ' Different Loan Provision Treatment',
+  loanProductInstallment: 'Installment',
 
   depositProductMinAge: 'Minimum Age',
   depositProductMaxAge: 'Maximum Age',

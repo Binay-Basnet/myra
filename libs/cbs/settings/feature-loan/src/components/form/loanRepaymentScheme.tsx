@@ -23,6 +23,17 @@ export const LoanRepaymentSchemes = () => {
     { label: t['no'], value: false },
   ];
 
+  const modeOfPaymentList = [
+    { label: t['loanProductInstallment'], value: 'installment' },
+    { label: 'N/A', value: 'n/a' },
+  ];
+
+  const installmentTypeList = [
+    { label: t['monthly'], value: 'monthly' },
+    { label: t['quaterly'], value: 'quarterly' },
+    { label: 'N/A', value: 'n/a' },
+  ];
+
   return (
     <BoxContainer>
       <Box
@@ -42,12 +53,13 @@ export const LoanRepaymentSchemes = () => {
               name="modeOfPayment"
               label={t['loanProductModePayment']}
               placeholder={t['loanProductSelectModePayment']}
-              // options={loanschemeOptions}
+              options={modeOfPaymentList}
             />
             <FormSelect
               name="installmentType"
               label={t['loanProductInstallmentType']}
               placeholder={t['loanProductSelectInstallmentType']}
+              options={installmentTypeList}
             />
           </InputGroupContainer>
         )}
