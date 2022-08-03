@@ -5,19 +5,21 @@
     "unused-imports",
     "@nrwl/nx",
     "@typescript-eslint",
-    "simple-import-sort"
+    "simple-import-sort",
+    "prettier"
   ],
-  "extends": ["eslint:recommended", "google"],
+  "extends": ["eslint:recommended", "google", "prettier"],
   "rules": {
+    "prettier/prettier": ["error"],
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
     "camelcase": "off",
-    "no-console": "warn",
-    "@typescript-eslint/no-unused-vars": "warn",
-    "unused-imports/no-unused-imports-ts": "warn",
-    "unused-imports/no-unused-imports": "warn",
+    "no-console": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "unused-imports/no-unused-imports-ts": "error",
+    "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
-      "warn",
+      "error",
       {
         "vars": "all",
         "varsIgnorePattern": "^_",
@@ -25,7 +27,7 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "simple-import-sort/exports": "warn",
+    "simple-import-sort/exports": "error",
     "simple-import-sort/imports": [
       "warn",
       {

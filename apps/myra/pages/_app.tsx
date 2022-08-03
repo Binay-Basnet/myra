@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useMemo} from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
@@ -8,13 +8,7 @@ import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import {
-  store,
-  theme,
-  useAppSelector,
-  useInit,
-  useSnap,
-} from '@coop/shared/utils';
+import { store, theme, useInit, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
@@ -40,41 +34,16 @@ const queryClient = new QueryClient({
       keepPreviousData: true,
       cacheTime: fiveMinutesInMs,
       staleTime: fiveMinutesInMs,
-
-      // onError: (error) => {
-      //   toast({
-      //     title: '500 Server Error',
-      //     description: 'Check Console for More Info',
-      //     status: 'error',
-      //     variant: 'left-accent',
-      //     position: 'bottom-right',
-      //     isClosable: true,
-      //     size: 'lg',
-      //   });
-      // },
     },
   },
 });
 
-function MainApp({ Component, pageProps }: any) {
-  const getLayout = Component.getLayout || ((page) => page);
-  const auth = useAppSelector((state) => state?.auth);
-
+function MainApp({ Component, pageProps }: AppPropsWithLayout) {
   useInit();
-
   useSnap();
 
-  // if (auth.isLogged === null) {
-  //   return (
-  //     <Box h="100vh" display="flex" alignItems="center" justifyContent="center">
-  //       <Spinner />
-  //     </Box>
-  //   );
-  // }
+  const getLayout = Component.getLayout || ((page) => page);
 
-  // if (!auth.isLogged) {
-  //   return <Login />;
-  // }
   return (
     <>
       <Head>
@@ -96,13 +65,13 @@ function MainApp({ Component, pageProps }: any) {
   );
 }
 
-function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
+function CustomApp(props: AppPropsWithLayout) {
   return (
     <Provider store={store}>
       {/* <AuthProvider> */}
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
-          <MainApp Component={Component} pageProps={pageProps} />
+          <MainApp {...props} />
         </ChakraProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>
