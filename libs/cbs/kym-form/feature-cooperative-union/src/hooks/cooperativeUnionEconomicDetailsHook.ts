@@ -3,6 +3,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 
 import {
   CoopUnionEconomicDetailsInput,
@@ -37,9 +38,21 @@ export const useCooperativeUnionEconomicDetails = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        if (id && data && !isDeepEmpty(data)) {
+        const economicDetail = {
+          ...pickBy(
+            editValues?.members?.cooperativeUnion?.formState?.formData
+              ?.economicDetails ?? {},
+            (v) => v !== null
+          ),
+        };
+
+        if (
+          id &&
+          data &&
+          !isDeepEmpty(data) &&
+          !isEqual(economicDetail, data)
+        ) {
           mutate({ id, data });
-          // refetch();
         }
       }, 800)
     );
@@ -52,9 +65,6 @@ export const useCooperativeUnionEconomicDetails = ({
       const editValueData =
         editValues?.members?.cooperativeUnion?.formState?.formData
           ?.economicDetails;
-      // const registeredAddressLocality =
-      //   editValueData?.registeredAddress?.locality?.local;
-      // console.log('edit value', editValueData);
 
       reset({
         ...pickBy(editValueData ?? {}, (v) => v !== null),

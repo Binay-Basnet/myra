@@ -5,6 +5,7 @@ import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 
 import {
@@ -106,7 +107,19 @@ const AddDirector = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        if (id && data && !isDeepEmpty(data)) {
+        const operatorData = {
+          ...omit(accountOperatorDetail, ['id', 'cooperativeUnionId']),
+          permanentAddress: {
+            ...accountOperatorDetail?.permanentAddress,
+            locality: accountOperatorDetail?.permanentAddress?.locality?.local,
+          },
+          temporaryAddress: {
+            ...accountOperatorDetail?.temporaryAddress,
+            locality: accountOperatorDetail?.temporaryAddress?.locality?.local,
+          },
+        };
+
+        if (id && data && !isDeepEmpty(data) && !isEqual(operatorData, data)) {
           mutate({
             id,
             personnelId: accountOperatorId,
