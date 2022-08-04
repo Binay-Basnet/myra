@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
-import { CloseIcon } from '@chakra-ui/icons';
 
 import { Payment_Mode } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
@@ -17,6 +16,7 @@ import {
   Button,
   Container,
   FormFooter,
+  FormHeader,
   Grid,
   GridItem,
   Icon,
@@ -107,21 +107,16 @@ const SharePurchase = () => {
           </Box>
           <Container minW="container.lg" p="0">
             <Box
-              height="60px"
-              display="flex"
-              justifyContent="space-between"
-              alignItems={'center'}
-              px="5"
-              background="white"
-              borderBottom="1px solid #E6E6E6"
+              position="sticky"
+              top="110px"
+              bg="gray.100"
+              width="100%"
+              zIndex="10"
             >
-              <Text fontSize="r2" fontWeight="600">
-                {t['sharePurchaseNewSharePurchase']}
-              </Text>
-              <CloseIcon cursor="pointer" onClick={() => router.back()} />
+              <FormHeader title={t['sharePurchaseNewSharePurchase']} />
             </Box>
             <Box mb="50px" display="flex" width="100%">
-              <Box w="100%" minHeight="100vh">
+              <Box w="100%">
                 <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
                   <Box w="50%">
                     <FormSelect

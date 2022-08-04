@@ -1,7 +1,5 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IoCloseOutline } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 
 import { useAllAdministrationQuery } from '@coop/cbs/data-access';
 import {
@@ -20,23 +18,15 @@ import {
   Box,
   Container,
   FormFooter,
+  FormHeader,
   Grid,
   GridItem,
-  Icon,
-  IconButton,
   Text,
   TextFields,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-/* eslint-disable-next-line */
-export interface CbsSettingsFeatureValuatorAddProps {}
-
-export function CbsSettingsFeatureValuatorAdd(
-  props: CbsSettingsFeatureValuatorAddProps
-) {
-  const router = useRouter();
-
+export function CbsSettingsFeatureValuatorAdd() {
   const { t } = useTranslation();
 
   const methods = useForm({});
@@ -72,20 +62,20 @@ export function CbsSettingsFeatureValuatorAdd(
     () =>
       data?.administration.all.find((d) => d.id === currentProvinceId)
         ?.districts ?? [],
-    [currentProvinceId]
+    [currentProvinceId, data]
   );
 
   const localityList = useMemo(
     () =>
       districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
       [],
-    [currentDistrictId]
+    [currentDistrictId, districtList]
   );
 
   const wardList = useMemo(
     () =>
       localityList.find((d) => d.id === currentLocalGovernmentId)?.wards ?? [],
-    [currentLocalGovernmentId]
+    [currentLocalGovernmentId, localityList]
   );
 
   return (
@@ -97,23 +87,8 @@ export function CbsSettingsFeatureValuatorAdd(
           bg="gray.100"
           width="100%"
           zIndex="10"
-          height="50px"
-          display="flex"
-          justifyContent="space-between"
-          alignItems={'center'}
-          px="5"
-          background="white"
-          borderBottom="1px solid #E6E6E6"
         >
-          <Text fontSize="r2" fontWeight="SemiBold">
-            {t['settingsGeneralValuatorFormNewValuator']}
-          </Text>
-          <IconButton
-            variant={'ghost'}
-            aria-label="close"
-            icon={<Icon as={IoCloseOutline} size="md" />}
-            onClick={() => router.back()}
-          />
+          <FormHeader title={t['settingsGeneralValuatorFormNewValuator']} />
         </Box>
 
         <Box bg="white" pb="100px">

@@ -16,6 +16,7 @@ export function FormHeader({ title, closeLink }: FormHeaderProps) {
 
   return (
     <Box
+      w="100%"
       h="50px"
       display="flex"
       alignItems="center"

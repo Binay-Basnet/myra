@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { Snipping } from '@raralabs/web-feedback';
 import axios from 'axios';
+
+import { useAppSelector } from '@coop/cbs/data-access';
 
 import { useChakraToast } from './useChakraToast';
 
@@ -13,16 +14,16 @@ const snap = new Snipping({
 });
 export const useSnap = () => {
   const toast = useChakraToast();
-  const router = useRouter();
+  const username = useAppSelector((state) => state?.auth?.user?.username);
 
   useEffect(() => {
     snap.init(async (data) => {
       const { image } = data;
       const formData = new FormData();
 
-      if (!router.isReady) return;
+      if (!username) return;
 
-      const query = `mutation ($file: Upload!) {createPublicFeedback(input: {appSlug: "MYRA", userEmail: "${router.query['td_user_email']}"}, imageInput: $file) {success data {userEmail description appSlugID { name }} errors {__typename ... on ValidationError { message field } ... on BadRequestError {  message } ... on NotFoundError { message } ... on InternalServerError { message } } } }`;
+      const query = `mutation ($file: Upload!) {createPublicFeedback(input: {appSlug: "MYRA", userEmail: "${username}"}, imageInput: $file) {success data {userEmail description appSlugID { name }} errors {__typename ... on ValidationError { message field } ... on BadRequestError {  message } ... on NotFoundError { message } ... on InternalServerError { message } } } }`;
 
       formData.append(
         'operations',
@@ -67,6 +68,6 @@ export const useSnap = () => {
         });
       }
     });
-  }, [router]);
+  }, [username]);
   return;
 };

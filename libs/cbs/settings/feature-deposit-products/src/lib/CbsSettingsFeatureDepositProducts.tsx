@@ -2,20 +2,17 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { ActionPopoverComponent } from '@coop/myra/components';
 import {
   NatureOfDepositProduct,
   useGetDepositProductSettingsListQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
+import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-/* eslint-disable-next-line */
-export interface SettingsDepositProductsProps {}
-
-export function SettingsDepositProducts(props: SettingsDepositProductsProps) {
+export function SettingsDepositProducts() {
   const router = useRouter();
 
   const { t } = useTranslation();

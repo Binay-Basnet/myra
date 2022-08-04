@@ -17,20 +17,8 @@ import {
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormInput,
-  FormMap,
-  FormSelect,
-  FormSwitch,
-} from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Collapse,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { Box, Button, Collapse, Icon, IconButton, Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { BottomOperatorCoop } from './accountOperatorDocuments';
@@ -42,14 +30,12 @@ interface IAddDirector {
     subSection: string;
   }) => void;
   accountId: string;
-  index: number;
 }
 
 export const AddOperator = ({
   removeDirector,
   setKymCurrentSection,
   accountId,
-  index,
 }: IAddDirector) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
@@ -91,8 +77,8 @@ export const AddOperator = ({
           highestQualification: familyMemberDetail?.highestQualification,
           contactNumber: familyMemberDetail?.contactNumber,
           email: familyMemberDetail?.email,
-          citizenshipNo: familyMemberDetail?.citizenshipOrPassportOrLisenceNo,
-          // panNo: familyMemberDetails?.panNo
+          citizenshipNo: familyMemberDetail?.citizenshipNo,
+          panNo: familyMemberDetail?.panNo,
         });
       }
     }
@@ -359,7 +345,7 @@ export const AddOperator = ({
                           />
                           <FormSelect
                             id="accountOperatorCoop"
-                            name={`temporaryAddress.wardId`}
+                            name={`temporaryAddress.wardNo`}
                             label={t['kymCoopWardNo']}
                             placeholder={t['kymCoopEnterWardNo']}
                             options={wardTempList.map((d) => ({
@@ -436,7 +422,7 @@ export const AddOperator = ({
                       placeholder={t['kymCoopEnterPanOrVat']}
                     />
                   </InputGroupContainer>
-                  <DynamicAddtraining operatorIndex={index} />
+                  <DynamicAddtraining />
                 </Box>
               </form>
             </FormProvider>
