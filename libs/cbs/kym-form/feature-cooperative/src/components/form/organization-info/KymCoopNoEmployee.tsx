@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
@@ -18,19 +18,19 @@ interface IProps {
 
 export const KymCoopNoEmployee = (props: IProps) => {
   const { t } = useTranslation();
-  const [maleNum, setMaleNum] = useState(0);
-  const [femaleNum, setFemaleNum] = useState(0);
 
-  const totalEmployee = useMemo(
-    () => Number(maleNum) + Number(femaleNum),
-    [maleNum, femaleNum]
-  );
   const { setSection } = props;
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
   });
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+
+  const { watch } = methods;
+
   useCooperative({ methods });
+
+  const totalEmployee =
+    (Number(watch('noOfMaleEmployee')) ?? 0) +
+    Number(watch('noOfFemaleEmployee') ?? 0);
 
   return (
     <FormProvider {...methods}>
@@ -56,22 +56,22 @@ export const KymCoopNoEmployee = (props: IProps) => {
             <FormInput
               type="number"
               textAlign={'right'}
-              name="noOfMaleMembers"
+              name="noOfMaleEmployee"
               label={t['kymCoopMale']}
               placeholder="0"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setMaleNum(Number(e.target.value))
-              }
+              // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              //   setMaleNum(Number(e.target.value))
+              // }
             />
             <FormInput
               type="number"
               textAlign={'right'}
-              name="noOfFemaleMembers"
+              name="noOfFemaleEmployee"
               label={t['kymCoopFemale']}
               placeholder="0"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFemaleNum(Number(e.target.value))
-              }
+              // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              //   setFemaleNum(Number(e.target.value))
+              // }
             />
 
             <FormInput
@@ -81,7 +81,7 @@ export const KymCoopNoEmployee = (props: IProps) => {
               isDisabled={true}
               type="number"
               textAlign={'right'}
-              name="noOfOtherMembers"
+              name="totalEmployee"
               label={t['kymCoopTotal']}
               placeholder="0"
               value={totalEmployee}

@@ -100,7 +100,8 @@ export const KymEquityLiabilities = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="shareCapital"
                 placeholder="0.00"
               />
@@ -126,7 +127,8 @@ export const KymEquityLiabilities = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="reserveAndSurplus"
                 placeholder="0.00"
               />
@@ -152,7 +154,8 @@ export const KymEquityLiabilities = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="savingDeposit"
                 placeholder="0.00"
               />
@@ -178,7 +181,8 @@ export const KymEquityLiabilities = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="loanAccount"
                 placeholder="0.00"
               />
@@ -204,7 +208,8 @@ export const KymEquityLiabilities = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="capitalGrant"
                 placeholder="0.00"
               />
@@ -230,7 +235,8 @@ export const KymEquityLiabilities = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="currentLiabilities"
                 placeholder="0.00"
               />
@@ -256,7 +262,8 @@ export const KymEquityLiabilities = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="nonCurrentLiabilities"
                 placeholder="0.00"
               />

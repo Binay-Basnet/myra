@@ -15,11 +15,10 @@ import { useTranslation } from '@coop/shared/utils';
 
 interface IAddTraining {
   index: number;
-  operatorIndex: number;
   removeTraining: () => void;
 }
 
-const AddSister = ({ index, removeTraining, operatorIndex }: IAddTraining) => {
+const AddSister = ({ index, removeTraining }: IAddTraining) => {
   const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
@@ -48,7 +47,7 @@ const AddSister = ({ index, removeTraining, operatorIndex }: IAddTraining) => {
         />
         <FormInput
           type="text"
-          name={`coopRelatedTraining.${index}.trainingOrganization}`}
+          name={`coopRelatedTraining.${index}.trainingOrganization`}
           label={t['kymCoopTrainingOrganization']}
           placeholder={t['kymCoopEnterTrainingOrganization']}
         />
@@ -57,10 +56,7 @@ const AddSister = ({ index, removeTraining, operatorIndex }: IAddTraining) => {
   );
 };
 
-interface IProps {
-  operatorIndex: number;
-}
-export const DynamicAddtraining = ({ operatorIndex }: IProps) => {
+export const DynamicAddtraining = () => {
   const { t } = useTranslation();
   const {
     fields: trainingFields,
@@ -86,7 +82,6 @@ export const DynamicAddtraining = ({ operatorIndex }: IProps) => {
                 <AddSister
                   index={index}
                   removeTraining={() => trainingRemove(index)}
-                  operatorIndex={operatorIndex}
                 />
               </Box>
             );

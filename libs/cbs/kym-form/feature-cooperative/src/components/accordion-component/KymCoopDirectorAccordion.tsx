@@ -18,20 +18,8 @@ import {
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormInput,
-  FormMap,
-  FormSelect,
-  FormSwitch,
-} from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Collapse,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { Box, Button, Collapse, Icon, IconButton, Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { Bottomdirectorcoop } from './boardDirectorDocuments';
@@ -50,7 +38,7 @@ export const AddDirector = ({
   const { t } = useTranslation();
   const methods = useForm<KymCoopDirectorDetailsFormInput>();
 
-  const { control, handleSubmit, getValues, watch, setError, reset } = methods;
+  const { watch, reset } = methods;
 
   const router = useRouter();
 
@@ -90,8 +78,8 @@ export const AddDirector = ({
           highestQualification: directorDetails?.highestQualification,
           contactNumber: directorDetails?.contactNumber,
           email: directorDetails?.email,
-          citizenshipNo: directorDetails?.citizenshipOrPassportOrLisenceNo,
-          // panNo: directorDetails?.panNO,
+          citizenshipNo: directorDetails?.citizenshipNo,
+          panNo: directorDetails?.panNo,
         });
       }
     }
@@ -163,7 +151,7 @@ export const AddDirector = ({
 
   const localityTempList = useMemo(
     () =>
-      districtList.find((d) => d.id === currentTemptDistrictId)
+      districtTempList.find((d) => d.id === currentTemptDistrictId)
         ?.municipalities ?? [],
     [currentTemptDistrictId]
   );

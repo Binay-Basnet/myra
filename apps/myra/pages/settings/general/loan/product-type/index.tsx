@@ -1,10 +1,12 @@
+import { CbsSettingsFeatureProductType } from '@coop/cbs/settings/loan-products';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
   SettingsLoanLayout,
 } from '@coop/cbs/settings/ui-layout';
+
 const LoanProductType = () => {
-  return <div> product-type</div>;
+  return <CbsSettingsFeatureProductType />;
 };
 
 export default LoanProductType;
