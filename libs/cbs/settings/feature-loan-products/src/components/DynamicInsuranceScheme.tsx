@@ -59,10 +59,19 @@ const AddServiceCharge = ({
           label={t['settingsLoanPaymentFreq']}
           placeholder={t['settingsLoanPaymentFreq']}
         />
-        <FormSwitchTab
-          name={`accountServiceCharge.${index}.choose`}
-          options={amountOpt}
-        />
+        <Box display="flex" flexDirection="column" gap="s8">
+          <Text
+            fontWeight="Medium"
+            color="neutralColorLight.Gray-70"
+            fontSize="s3"
+          >
+            {t['loanPaymentType']}
+          </Text>
+          <FormSwitchTab
+            name={`accountServiceCharge.${index}.choose`}
+            options={amountOpt}
+          />
+        </Box>
       </InputGroupContainer>
       <Box pt="s16">
         {AmountPer && AmountPer === 'amount' && (

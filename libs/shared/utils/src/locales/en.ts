@@ -34,6 +34,7 @@ const en: Record<string, string> = {
   yearly: 'Yearly',
   settings: 'Settings',
   edit: 'Edit',
+  saveChanges: 'Save Changes',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',
@@ -3078,6 +3079,12 @@ const en: Record<string, string> = {
   kymCoopUnionNoInstitutionalMembers: 'No. of Institutional Members',
   kymCoopUnionEnterNoInstitutionalMembers: 'Enter No. of Institutional Members',
   kymCoopUnionTotalCurrentMembers: 'Total Current Members',
+
+  loanPaymentType: 'Payment Type',
+  loanProductTypeProductType: 'Product Type',
+  loanProductTypeProductSubtype: 'Product Subtype',
+  loanProductTypeNatureofProduct: 'Nature of Product',
+  loanProductTypeDescription: 'Description',
 };
 
 export default en;

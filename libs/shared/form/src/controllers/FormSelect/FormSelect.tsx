@@ -15,7 +15,6 @@ interface Option {
 }
 
 export const FormSelect = <T,>({
-  control,
   name,
   options,
   ...rest
@@ -24,7 +23,6 @@ export const FormSelect = <T,>({
   const {
     formState: { errors },
     control: formControl,
-    watch,
   } = methods;
 
   return (

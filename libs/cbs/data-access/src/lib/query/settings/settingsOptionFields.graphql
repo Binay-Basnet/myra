@@ -1,0 +1,15 @@
+query getSettingsOptionsFields(
+  $searchTerm: FormFieldSearchTerm!
+  $category: FormCategory!
+) {
+  form {
+    options {
+      predefined(filter: { searchTerm: $searchTerm, category: $category }) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}

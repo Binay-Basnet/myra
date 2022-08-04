@@ -55,8 +55,6 @@ export const RequiredDocumentSetup = () => {
     },
   ];
 
-  console.log(typesOfMember);
-
   return (
     <BoxContainer>
       <TopText> {t['depositProductRequiredDocumentSetup']} </TopText>

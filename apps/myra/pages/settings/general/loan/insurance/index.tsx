@@ -1,16 +1,16 @@
-import { LoanProductsInsurance as LoanProductsInsuranceForm } from '@coop/cbs/settings/loan-products';
+import { LoanProductsInsurance } from '@coop/cbs/settings/loan-products';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
   SettingsLoanLayout,
 } from '@coop/cbs/settings/ui-layout';
-const LoanProductsInsurance = () => {
-  return <LoanProductsInsuranceForm />;
+const LoanProductsInsurancePage = () => {
+  return <LoanProductsInsurance />;
 };
 
-export default LoanProductsInsurance;
+export default LoanProductsInsurancePage;
 
-LoanProductsInsurance.getLayout = function getLayout(page) {
+LoanProductsInsurancePage.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
       <SettingsGeneralLayout>

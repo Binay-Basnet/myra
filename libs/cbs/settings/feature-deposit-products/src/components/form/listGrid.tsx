@@ -1,12 +1,11 @@
-// import debounce from 'lodash/debounce';
 import { useFormContext } from 'react-hook-form';
-import { getOption } from '@coop/cbs/kym-form/institution';
 
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
+  FormCategory,
   FormFieldSearchTerm,
-  useGetInstitutionKymOptionsQuery,
+  useGetSettingsOptionsFieldsQuery,
 } from '@coop/cbs/data-access';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormCheckboxGroup,
   FormInput,
@@ -18,90 +17,9 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer } from '../formui';
 
-const GenderOptions = [
-  {
-    label: 'Male',
-    value: 'Male',
-  },
-  {
-    label: 'Female',
-    value: 'Female',
-  },
-  {
-    label: 'Other',
-    value: 'other',
-  },
-];
-const MartialOptions = [
-  { label: 'Married', value: 'married' },
-  { label: 'Unmarried', value: 'unmarried' },
-  { label: 'Single', value: 'single' },
-];
-const EducationalOptions = [
-  { label: '+2', value: '+2' },
-  { label: 'Bachelors', value: 'bachelors' },
-  { label: 'Masters', value: 'masters' },
-];
-const EthnicityOptions = [
-  { label: 'Brahmin', value: 'brahmin' },
-  { label: 'Chettri', value: 'chettri' },
-  { label: 'Newar', value: 'newar' },
-];
-
-const OccupationalOptions = [
-  { label: 'Farmer', value: 'farmer' },
-  { label: 'Engineer', value: 'engineer' },
-  { label: 'Doctor', value: 'doctor' },
-];
-
 const CheckboxYesNo = [
   { label: 'Yes', value: true },
   { label: 'No', value: false },
-];
-const CoOperativeType = [
-  {
-    label: 'Saving & Loan',
-    value: 'savaingLoan',
-  },
-  {
-    label: 'Agricultural',
-    value: 'agricultural',
-  },
-  {
-    label: 'Industrial',
-    value: 'industrial',
-  },
-  {
-    label: 'Business',
-    value: 'business',
-  },
-  {
-    label: 'Multi Purpose',
-    value: 'multiPropose',
-  },
-  {
-    label: 'Dairy',
-    value: 'dairy',
-  },
-  {
-    label: 'Others',
-    value: 'others',
-  },
-];
-
-const coopUnion = [
-  {
-    label: 'Saccos',
-    value: 'saccos',
-  },
-  {
-    label: 'District union',
-    value: 'districtUnion',
-  },
-  {
-    label: 'Coop',
-    value: 'coop',
-  },
 ];
 
 export const GridItems = () => {
@@ -120,10 +38,111 @@ export const GridItems = () => {
 
   const { t } = useTranslation();
 
-  const { data: organizationFields, isLoading: OrganizationLoading } =
-    useGetInstitutionKymOptionsQuery({
+  const { data: genderFields } = useGetSettingsOptionsFieldsQuery({
+    searchTerm: FormFieldSearchTerm.Gender,
+    category: FormCategory.KymIndividual,
+  });
+
+  const { data: maritialFields } = useGetSettingsOptionsFieldsQuery({
+    searchTerm: FormFieldSearchTerm.MaritalStatus,
+    category: FormCategory.KymIndividual,
+  });
+
+  const { data: educationFields } = useGetSettingsOptionsFieldsQuery({
+    searchTerm: FormFieldSearchTerm.EducationQualification,
+    category: FormCategory.KymIndividual,
+  });
+
+  const { data: ethnicityFields } = useGetSettingsOptionsFieldsQuery({
+    searchTerm: FormFieldSearchTerm.Ethnicity,
+    category: FormCategory.KymIndividual,
+  });
+
+  const { data: occupationFields } = useGetSettingsOptionsFieldsQuery({
+    searchTerm: FormFieldSearchTerm.Occupation,
+    category: FormCategory.KymIndividual,
+  });
+
+  const { data: institutionFields, isLoading: OrganizationLoading } =
+    useGetSettingsOptionsFieldsQuery({
       searchTerm: FormFieldSearchTerm.OrganizationType,
+      category: FormCategory.KymInstitution,
     });
+
+  const { data: coopTypeFields } = useGetSettingsOptionsFieldsQuery({
+    searchTerm: FormFieldSearchTerm.CooperativeType,
+    category: FormCategory.KymCoop,
+  });
+
+  const { data: coopUnionOrgFields } = useGetSettingsOptionsFieldsQuery({
+    searchTerm: FormFieldSearchTerm.OrganizationType,
+    category: FormCategory.KymCoopUnion,
+  });
+
+  const genderOptions = genderFields?.form?.options?.predefined?.data;
+  const maritialOptions = maritialFields?.form?.options?.predefined?.data;
+  const educationOptions = educationFields?.form?.options?.predefined?.data;
+  const ethnicityOptions = ethnicityFields?.form?.options?.predefined?.data;
+  const occupationalOptions = occupationFields?.form?.options?.predefined?.data;
+  const institutionOptions = institutionFields?.form?.options?.predefined?.data;
+  const coopTypeOptions = coopTypeFields?.form?.options?.predefined?.data;
+  const coopUnionOptions = coopUnionOrgFields?.form?.options?.predefined?.data;
+
+  const GenderList = genderOptions?.map((item) => {
+    return {
+      label: item?.name?.local,
+      value: item?.id,
+    };
+  });
+
+  const MartialOptions = maritialOptions?.map((item) => {
+    return {
+      label: item?.name.local,
+      value: item?.id,
+    };
+  });
+
+  const EducationalOptions = educationOptions?.map((item) => {
+    return {
+      label: item?.name.local,
+      value: item?.id,
+    };
+  });
+
+  const InstituitionList = institutionOptions?.map((item) => {
+    return {
+      label: item?.name.local,
+      value: item?.id,
+    };
+  });
+
+  const CoopTypeList = coopTypeOptions?.map((item) => {
+    return {
+      label: item?.name.local,
+      value: item?.id,
+    };
+  });
+
+  const CoopUnionList = coopUnionOptions?.map((item) => {
+    return {
+      label: item?.name.local,
+      value: item?.id,
+    };
+  });
+
+  const EthnicityList = ethnicityOptions?.map((item) => {
+    return {
+      label: item?.name.local,
+      value: item?.id,
+    };
+  });
+
+  const OccupationOptions = occupationalOptions?.map((item) => {
+    return {
+      label: item?.name.local,
+      value: item?.id,
+    };
+  });
 
   if (
     ageCheck ||
@@ -171,7 +190,7 @@ export const GridItems = () => {
             genderCheck.indexOf('GENDER') !== -1 && (
               <FormSelect
                 name="genderId"
-                options={GenderOptions}
+                options={GenderList}
                 label={t['depositProductGender']}
                 placeholder={t['depositProductSelectGender']}
                 isMulti
@@ -207,7 +226,7 @@ export const GridItems = () => {
             ethnicityCheck.indexOf('ETHNICITY') !== -1 && (
               <FormSelect
                 name="ethnicity"
-                options={EthnicityOptions}
+                options={EthnicityList}
                 label={t['depositProductEthinicity']}
                 placeholder={t['depositProductSelectEthinicity']}
                 isMulti
@@ -219,7 +238,7 @@ export const GridItems = () => {
             occupationCheck.indexOf('OCCUPATION_DETAILS') !== -1 && (
               <FormSelect
                 name="occupation"
-                options={OccupationalOptions}
+                options={OccupationOptions}
                 label={t['depositProductOccupationDetails']}
                 placeholder={t['depositProductSelectOccupationDetails']}
                 isMulti
@@ -248,7 +267,7 @@ export const GridItems = () => {
                 name="natureOfBusinessInstitution"
                 label={t['depositProductNatureofBusinessIns']}
                 placeholder={t['depositProductSelectNatureofBusiness']}
-                options={getOption(organizationFields)}
+                options={InstituitionList}
                 isLoading={OrganizationLoading}
                 isMulti
               />
@@ -260,7 +279,7 @@ export const GridItems = () => {
               -1 && (
               <FormSelect
                 name="natureOFBusinessCoop"
-                options={coopUnion}
+                options={CoopUnionList}
                 label={t['depositProductNatureofBusinessCoopUnion']}
                 placeholder={t['depositProductSelectNatureofBusiness']}
                 isMulti
@@ -277,7 +296,7 @@ export const GridItems = () => {
                 <FormCheckboxGroup
                   name="cooperativeType"
                   label={t['depositProductCoorperativeType']}
-                  list={CoOperativeType}
+                  list={CoopTypeList}
                   orientation="column"
                 />
               </BoxContainer>
