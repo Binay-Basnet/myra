@@ -63,6 +63,7 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
         editLastValues?.permanentRepresentativeAddress?.locality?.local;
       const temporaryAddressLocality =
         editLastValues?.temporaryRepresentativeAddress?.locality?.local;
+
       reset({
         ...editTruthyData,
         registeredAddress: {
@@ -85,10 +86,9 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
     }
   }, [editLoading]);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     refetch();
-  //
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [id]);
 };

@@ -903,7 +903,7 @@ export enum CoopUnionSection {
 }
 
 export type CooperativeAccountOperatorDetails = {
-  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['String']>;
+  citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   dateofTrainig?: Maybe<Scalars['Date']>;
@@ -934,7 +934,7 @@ export type CooperativeAddLastUpdated = {
 };
 
 export type CooperativeBodDetails = {
-  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['String']>;
+  citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   designation?: Maybe<Scalars['String']>;
@@ -1584,6 +1584,11 @@ export type DepositProductInput = {
   withdrawRestricted?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type DepositProductList = {
+  data?: Maybe<Array<Maybe<DepositProduct>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type DepositProductResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<DepositProductSettingsQuery>;
@@ -1609,6 +1614,7 @@ export type DepositProductSettingsMutationAddArgs = {
 export type DepositProductSettingsQuery = {
   formState?: Maybe<DepositProductFormStateResult>;
   get?: Maybe<DepositProduct>;
+  getProductList?: Maybe<DepositProductList>;
   list?: Maybe<DepositProductConnection>;
 };
 
@@ -1620,6 +1626,12 @@ export type DepositProductSettingsQueryFormStateArgs = {
 
 export type DepositProductSettingsQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+
+export type DepositProductSettingsQueryGetProductListArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -4354,8 +4366,9 @@ export type KymCoopUnionSectionMutationPersonnelDetailsArgs = {
 };
 
 export type KymCooperativeAccountOperatorDetailsFormState = {
-  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['String']>;
+  citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
+  coopRelatedTraining?: Maybe<Array<Maybe<CoopRelatedTrainingType>>>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -4363,13 +4376,13 @@ export type KymCooperativeAccountOperatorDetailsFormState = {
   highestQualification?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
+  panNo?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
   temporaryAddress?: Maybe<KymAddress>;
-  trainings?: Maybe<Array<Maybe<CoopRelatedTrainingType>>>;
 };
 
 export type KymCooperativeAccountOperatorDetailsInput = {
-  citizenshipOrPassportOrLisenceNo?: InputMaybe<Scalars['Int']>;
+  citizenshipNo?: InputMaybe<Scalars['Int']>;
   contactNumber?: InputMaybe<Scalars['String']>;
   dateOfMembership?: InputMaybe<Scalars['Date']>;
   dateofTrainig?: InputMaybe<Scalars['Date']>;
@@ -4436,7 +4449,7 @@ export type KymCooperativeAddSectionStatus = {
 };
 
 export type KymCooperativeBodDetailsFormState = {
-  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['String']>;
+  citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   designation?: Maybe<Scalars['String']>;
@@ -4445,12 +4458,13 @@ export type KymCooperativeBodDetailsFormState = {
   highestQualification?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
+  panNo?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
   temporaryAddress?: Maybe<KymAddress>;
 };
 
 export type KymCooperativeBodDetailsInput = {
-  citizenshipOrPassportOrLisenceNo?: InputMaybe<Scalars['Int']>;
+  citizenshipNo?: InputMaybe<Scalars['Int']>;
   contactNumber?: InputMaybe<Scalars['String']>;
   dateOfMembership?: InputMaybe<Scalars['Date']>;
   designation?: InputMaybe<Scalars['String']>;
@@ -4548,7 +4562,7 @@ export type KymCooperativeFormData = {
   loanAccount?: Maybe<Scalars['Float']>;
   mainServiceProduct?: Maybe<Scalars['String']>;
   nameOfOrganization?: Maybe<Scalars['String']>;
-  noOfFemaleEmloyee?: Maybe<Scalars['Int']>;
+  noOfFemaleEmployee?: Maybe<Scalars['Int']>;
   noOfFemaleMembers?: Maybe<Scalars['Int']>;
   noOfMaleEmployee?: Maybe<Scalars['Int']>;
   noOfMaleMembers?: Maybe<Scalars['Int']>;
@@ -7522,21 +7536,21 @@ export type GetCoOperativeKymEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetCoOperativeKymEditDataQuery = { members: { cooperative?: { formState?: { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null, email?: string | null, website?: string | null, contactNumber?: string | null, noOfMaleMembers?: number | null, noOfFemaleMembers?: number | null, noOfOtherMembers?: number | null, lastAuditDate?: string | null, lastAgmDate?: string | null, representativeFullName?: string | null, representativeDesignatiton?: string | null, representativeEmail?: string | null, representativeContactNumber?: string | null, representativePanNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, cooperativeTypeId?: string | null, mainServiceProduct?: string | null, noOfMaleEmployee?: number | null, totalEmployee?: number | null, shareCapital?: number | null, reserveAndSurplus?: number | null, savingDeposit?: number | null, loanAccount?: number | null, capitalGrant?: number | null, currentLiabilities?: number | null, nonCurrentLiabilities?: number | null, cashAndCashEquivalent?: number | null, bank?: number | null, investments?: number | null, loan?: number | null, nonCurrentAssets?: number | null, otherNonCurrentAssets?: number | null, totalAssets?: number | null, hasTCAccepted?: boolean | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, permanentRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
+export type GetCoOperativeKymEditDataQuery = { members: { cooperative?: { formState?: { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null, regdOffice?: string | null, email?: string | null, website?: string | null, contactNumber?: string | null, noOfMaleMembers?: number | null, noOfFemaleMembers?: number | null, noOfOtherMembers?: number | null, lastAuditDate?: string | null, lastAgmDate?: string | null, representativeFullName?: string | null, representativeDesignatiton?: string | null, representativeEmail?: string | null, representativeContactNumber?: string | null, representativePanNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, cooperativeTypeId?: string | null, mainServiceProduct?: string | null, noOfMaleEmployee?: number | null, noOfFemaleEmployee?: number | null, totalEmployee?: number | null, shareCapital?: number | null, reserveAndSurplus?: number | null, savingDeposit?: number | null, loanAccount?: number | null, capitalGrant?: number | null, currentLiabilities?: number | null, nonCurrentLiabilities?: number | null, cashAndCashEquivalent?: number | null, bank?: number | null, investments?: number | null, loan?: number | null, nonCurrentAssets?: number | null, otherNonCurrentAssets?: number | null, totalAssets?: number | null, accountHoldersName?: string | null, hasTCAccepted?: boolean | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, permanentRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetCoOperativeDirectorEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetCoOperativeDirectorEditDataQuery = { members: { cooperative?: { listDirectors?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipOrPassportOrLisenceNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null> | null } | null } | null } };
+export type GetCoOperativeDirectorEditDataQuery = { members: { cooperative?: { listDirectors?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null> | null } | null } | null } };
 
 export type GetCoOperativeAccountOperatorEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetCoOperativeAccountOperatorEditDataQuery = { members: { cooperative?: { listAccountOperators?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipOrPassportOrLisenceNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainings?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null } | null } };
+export type GetCoOperativeAccountOperatorEditDataQuery = { members: { cooperative?: { listAccountOperators?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, coopRelatedTraining?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null } | null } };
 
 export type GetCooperativeUnionKymEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -9452,6 +9466,7 @@ export const GetCoOperativeKymEditDataDocument = `
             nameOfOrganization
             regdNumber
             regdDate
+            regdOffice
             registeredAddress {
               provinceId
               districtId
@@ -9517,6 +9532,7 @@ export const GetCoOperativeKymEditDataDocument = `
             cooperativeTypeId
             mainServiceProduct
             noOfMaleEmployee
+            noOfFemaleEmployee
             totalEmployee
             shareCapital
             reserveAndSurplus
@@ -9532,6 +9548,7 @@ export const GetCoOperativeKymEditDataDocument = `
             nonCurrentAssets
             otherNonCurrentAssets
             totalAssets
+            accountHoldersName
             hasTCAccepted
           }
         }
@@ -9590,7 +9607,8 @@ export const GetCoOperativeDirectorEditDataDocument = `
           highestQualification
           contactNumber
           email
-          citizenshipOrPassportOrLisenceNo
+          citizenshipNo
+          panNo
         }
       }
     }
@@ -9647,8 +9665,9 @@ export const GetCoOperativeAccountOperatorEditDataDocument = `
           highestQualification
           contactNumber
           email
-          citizenshipOrPassportOrLisenceNo
-          trainings {
+          citizenshipNo
+          panNo
+          coopRelatedTraining {
             subjectOfTraining
             dateOfTraining
             trainingOrganization

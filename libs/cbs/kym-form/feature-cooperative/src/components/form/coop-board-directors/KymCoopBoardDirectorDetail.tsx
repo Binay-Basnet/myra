@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 import {
-  KymCooperativeFormInput,
   useDeleteCooPdirectorDataMutation,
   useGetCoOperativeDirectorEditDataQuery,
   useGetNewIdMutation,
@@ -22,14 +20,10 @@ interface IProps {
 export const KymCoopBoardDirectorDetail = (props: IProps) => {
   const { t } = useTranslation();
   const { setSection } = props;
-  const methods = useForm<KymCooperativeFormInput>({
-    defaultValues: {},
-  });
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  const { control, handleSubmit, getValues, watch, setError } = methods;
   const [coopDirectorIds, setCoopDirectorIds] = useState<string[]>([]);
 
   const { data: editValues, refetch } = useGetCoOperativeDirectorEditDataQuery(
@@ -92,7 +86,7 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymCoopBoardofdirectordetails']}
       </Text>
-      {coopDirectorIds.map((id, index) => {
+      {coopDirectorIds.map((id) => {
         return (
           <Box key={id} display="flex" flexDirection={'column'}>
             <AddDirector
