@@ -202,23 +202,23 @@ export function SettingsLoanProductForm() {
     });
 
     const goodLoanProvision =
-      values?.loanProvisiontable &&
+      values?.loanProvisiontable.length > 0 &&
       values?.loanProvisiontable?.filter(
         (item) => item?.loanProvision === 'good'
       );
 
     const doubtfulLoanProvision =
-      values?.loanProvisiontable &&
+      values?.loanProvisiontable.length > 0 &&
       values?.loanProvisiontable?.filter(
         (item) => item?.loanProvision === 'doubtful'
       );
     const problematicLoanProvision =
-      values?.loanProvisiontable &&
+      values?.loanProvisiontable.length > 0 &&
       values?.loanProvisiontable?.filter(
         (item) => item?.loanProvision === 'problematic'
       );
     const badLoanProvision =
-      values?.loanProvisiontable &&
+      values?.loanProvisiontable.length > 0 &&
       values?.loanProvisiontable?.filter(
         (item) => item?.loanProvision === 'bad'
       );
@@ -270,20 +270,18 @@ export function SettingsLoanProductForm() {
   };
 
   useEffect(() => {
-    if (editValues) {
-      if (editVals) {
-        reset({
-          ...(editVals as unknown as LoanProductForm),
-        });
-      }
+    if (editVals) {
+      reset({
+        ...(editVals as unknown as LoanProductForm),
+      });
     }
-  }, [editValues, id]);
+  }, [editVals, reset]);
 
   useEffect(() => {
     if (id) {
       refetch();
     }
-  }, [refetch]);
+  }, [id, refetch]);
 
   return (
     <>

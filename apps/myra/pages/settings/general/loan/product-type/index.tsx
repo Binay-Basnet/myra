@@ -1,4 +1,3 @@
-import { CbsSettingsFeatureLoanProducts } from '@coop/cbs/settings/loan-products';
 import {
   SettingsGeneralLayout,
   SettingsLayout,

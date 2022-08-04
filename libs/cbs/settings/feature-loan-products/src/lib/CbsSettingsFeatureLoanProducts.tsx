@@ -1,23 +1,14 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 
 import { FormCheckboxGroup } from '@coop/shared/form';
-// import debounce from 'lodash/debounce';
 import { Box, Divider, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { AcceptedCollateral, AccountServicesCharge } from '../components';
+import { AcceptedCollateral } from '../components';
 
-/* eslint-disable-next-line */
-export interface CbsSettingsFeatureLoanProductsProps {}
-
-export function CbsSettingsFeatureLoanProducts(
-  props: CbsSettingsFeatureLoanProductsProps
-) {
-  const router = useRouter();
+export function CbsSettingsFeatureLoanProducts() {
   const { t } = useTranslation();
   const methods = useForm();
-  const { control, handleSubmit, getValues, watch, setError } = methods;
 
   const CheckboxList = [
     { label: t['settingsLoanInsuranceEmi'], value: 'emi' },
@@ -30,19 +21,6 @@ export function CbsSettingsFeatureLoanProducts(
       <FormProvider {...methods}>
         <form>
           <Box display="flex" flexDirection="column" rowGap="s32" padding="s12">
-            {/* <Box display="flex" flexDirection={'column'} rowGap="s16">
-              <Box display="flex" flexDirection={'column'} gap="s4">
-                <Text fontSize="r1" fontWeight="500">
-                  {t['settingsLoanInsuranceScheme']}
-                </Text>
-                <Text fontSize="s2" fontWeight="400">
-                  {t['settingsLoanInsuranceScheme']}{' '}
-                </Text>
-              </Box>
-
-              <AccountServicesCharge />
-            </Box> */}
-            {/* <Divider /> */}
             <Box display={'flex'} flexDirection="column" gap="s16">
               <Text fontSize="r1" fontWeight="500">
                 {t['settingsLoanRepaymentScheme']}{' '}

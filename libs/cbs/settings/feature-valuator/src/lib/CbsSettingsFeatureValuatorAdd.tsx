@@ -26,9 +26,6 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-/* eslint-disable-next-line */
-export interface CbsSettingsFeatureValuatorAddProps {}
-
 export function CbsSettingsFeatureValuatorAdd() {
   const { t } = useTranslation();
 
@@ -65,20 +62,20 @@ export function CbsSettingsFeatureValuatorAdd() {
     () =>
       data?.administration.all.find((d) => d.id === currentProvinceId)
         ?.districts ?? [],
-    [currentProvinceId]
+    [currentProvinceId, data]
   );
 
   const localityList = useMemo(
     () =>
       districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
       [],
-    [currentDistrictId]
+    [currentDistrictId, districtList]
   );
 
   const wardList = useMemo(
     () =>
       localityList.find((d) => d.id === currentLocalGovernmentId)?.wards ?? [],
-    [currentLocalGovernmentId]
+    [currentLocalGovernmentId, localityList]
   );
 
   return (

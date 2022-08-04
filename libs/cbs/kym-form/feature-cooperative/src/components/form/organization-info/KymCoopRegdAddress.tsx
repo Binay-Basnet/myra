@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
@@ -95,18 +95,18 @@ export const KymCoopRegdAddress = (props: IProps) => {
     () =>
       data?.administration.all.find((d) => d.id === currentProvinceId)
         ?.districts ?? [],
-    [currentProvinceId]
+    [currentProvinceId, data]
   );
 
   const muncipalityList = useMemo(
     () =>
       districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
       [],
-    [currentDistrictId]
+    [currentDistrictId, districtList]
   );
   const wardList = useMemo(
     () => muncipalityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
-    [currentLocalityId]
+    [currentLocalityId, muncipalityList]
   );
   return (
     <FormProvider {...methods}>

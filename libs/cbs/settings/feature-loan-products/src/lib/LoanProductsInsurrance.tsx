@@ -1,8 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 
-import { FormCheckboxGroup } from '@coop/shared/form';
-// import debounce from 'lodash/debounce';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -11,8 +8,6 @@ import { AccountServicesCharge } from '../components';
 export const LoanProductsInsurance = () => {
   const methods = useForm();
   const { t } = useTranslation();
-
-  const { control, handleSubmit, getValues, watch, setError } = methods;
 
   return (
     <Box

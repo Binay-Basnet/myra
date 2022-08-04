@@ -11,10 +11,7 @@ import { Column, Table } from '@coop/shared/table';
 import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-/* eslint-disable-next-line */
-export interface SettingsLoanProductProps {}
-
-export function SettingsLoanProduct(props: SettingsLoanProductProps) {
+export function SettingsLoanProduct() {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -91,15 +88,7 @@ export function SettingsLoanProduct(props: SettingsLoanProductProps) {
       {
         header: t['loanProductsProductType'],
         accessorFn: (row) => row?.node.productType,
-        meta: {
-          width: '20%',
-        },
-
-        cell: (row) => {
-          return <span>Nature</span>;
-        },
       },
-
       {
         header: t['loanProductsProductSubType'],
         accessorFn: (row) => row?.node.productSubType,
@@ -131,7 +120,7 @@ export function SettingsLoanProduct(props: SettingsLoanProductProps) {
         },
       },
     ],
-    [t]
+    [t, router, popoverTitle]
   );
 
   return (
