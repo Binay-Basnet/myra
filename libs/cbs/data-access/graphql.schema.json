@@ -7957,7 +7957,7 @@
         "description": null,
         "fields": [
           {
-            "name": "citizenshipOrPassportOrLisenceNo",
+            "name": "citizenshipNo",
             "description": null,
             "args": [],
             "type": {
@@ -8283,7 +8283,7 @@
         "description": null,
         "fields": [
           {
-            "name": "citizenshipOrPassportOrLisenceNo",
+            "name": "citizenshipNo",
             "description": null,
             "args": [],
             "type": {
@@ -34046,7 +34046,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "CitizenshipOrPassportOrLisenceNo",
+            "name": "citizenshipNo",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -34353,7 +34353,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "CitizenshipOrPassportOrLisenceNo",
+            "name": "citizenshipNo",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -36636,7 +36636,7 @@
         "description": null,
         "fields": [
           {
-            "name": "citizenshipOrPassportOrLisenceNo",
+            "name": "citizenshipNo",
             "description": null,
             "args": [],
             "type": {
@@ -36655,6 +36655,22 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "coopRelatedTraining",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CoopRelatedTrainingType",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -36744,6 +36760,18 @@
             "deprecationReason": null
           },
           {
+            "name": "panNo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "permanentAddress",
             "description": null,
             "args": [],
@@ -36766,22 +36794,6 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
-          },
-          {
-            "name": "trainings",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "CoopRelatedTrainingType",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -36796,7 +36808,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "citizenshipOrPassportOrLisenceNo",
+            "name": "citizenshipNo",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -37450,7 +37462,7 @@
         "description": null,
         "fields": [
           {
-            "name": "citizenshipOrPassportOrLisenceNo",
+            "name": "citizenshipNo",
             "description": null,
             "args": [],
             "type": {
@@ -37606,7 +37618,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "citizenshipOrPassportOrLisenceNo",
+            "name": "citizenshipNo",
             "description": null,
             "type": {
               "kind": "SCALAR",

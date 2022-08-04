@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 import {
-  KymCooperativeAccountOperatorDetailsInput,
   useDeleteCoopAccOperatorDataMutation,
   useGetCoOperativeAccountOperatorEditDataQuery,
   useGetNewIdMutation,
@@ -22,22 +20,19 @@ interface IProps {
 export const KymCoopAccountOperatorDetail = (props: IProps) => {
   const { t } = useTranslation();
   const { setSection } = props;
-  const methods = useForm<KymCooperativeAccountOperatorDetailsInput>({
-    defaultValues: {},
-  });
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  const { control, handleSubmit, getValues, watch, setError, reset } = methods;
   const [accOperatorIds, setAccOperatorIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetCoOperativeAccountOperatorEditDataQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
+  const { data: editValues, refetch } =
+    useGetCoOperativeAccountOperatorEditDataQuery(
+      {
+        id: String(id),
+      },
+      { enabled: !!id }
+    );
 
   useEffect(() => {
     if (editValues) {
@@ -81,6 +76,12 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
     deleteMutate({ accOperatorId: accOperatorId, id: id });
   };
 
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [id]);
+
   return (
     <GroupContainer
       id="kymCoopAccAccountOperatorDetail"
@@ -89,14 +90,13 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymCoopDetailsofAccountOperators']}
       </Text>
-      {accOperatorIds.map((id, index) => {
+      {accOperatorIds.map((id) => {
         return (
           <Box key={id} display="flex" flexDirection={'column'}>
             <AddOperator
               setKymCurrentSection={setSection}
               removeDirector={removeAccountOperator}
               accountId={id}
-              index={index}
             />
           </Box>
         );

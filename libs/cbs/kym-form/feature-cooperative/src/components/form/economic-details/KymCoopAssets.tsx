@@ -94,6 +94,7 @@ export const KymCoopAssets = (props: IProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="cashAndCashEquivalent"
                 placeholder="0.00"
               />
@@ -119,7 +120,8 @@ export const KymCoopAssets = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="bank"
                 placeholder="0.00"
               />
@@ -147,6 +149,7 @@ export const KymCoopAssets = (props: IProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="investments"
                 placeholder="0.00"
               />
@@ -172,7 +175,8 @@ export const KymCoopAssets = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="loan"
                 placeholder="0.00"
               />
@@ -199,7 +203,8 @@ export const KymCoopAssets = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="nonCurrentAssets"
                 placeholder="0.00"
               />
@@ -225,7 +230,8 @@ export const KymCoopAssets = (props: IProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="otherNonCurrentAssets"
                 placeholder="0.00"
               />
