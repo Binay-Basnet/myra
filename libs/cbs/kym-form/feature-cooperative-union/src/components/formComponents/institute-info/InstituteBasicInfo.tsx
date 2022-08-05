@@ -1,16 +1,21 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
+  CoopUnionInstitutionInformationInput,
+  FormFieldSearchTerm,
+  useGetCoopUnionKymOptionsQuery,
+} from '@coop/cbs/data-access';
+import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
 import { useCooperativeUnionInstitution } from '../../../hooks';
+import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IInstituteBasicInfoProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -22,6 +27,10 @@ export const InstituteBasicInfo = ({
   const { t } = useTranslation();
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
+
+  const { data: organizationTypeFields } = useGetCoopUnionKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.OrganizationType,
+  });
 
   useCooperativeUnionInstitution({ methods });
 
@@ -59,11 +68,7 @@ export const InstituteBasicInfo = ({
               name="institutionType"
               label={t['kymCoopUnionInstitutionType']}
               placeholder={t['kymCoopUnionSelectInstitutionType']}
-              options={[
-                { label: 'Banking', value: 'Male' },
-                { label: 'NGO', value: 'Female' },
-                { label: 'Other', value: 'Other' },
-              ]}
+              options={getFieldOption(organizationTypeFields)}
             />
             <FormInput
               type="text"
