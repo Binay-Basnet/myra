@@ -4210,10 +4210,10 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.5.tgz"
   integrity sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==
 
-"@raralabs/web-feedback@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@raralabs/web-feedback/-/web-feedback-2.0.3.tgz#261b4e4313ab99838fc73293b2f2ef75d881a396"
-  integrity sha512-A0plByJ++0jUM4aKGb1T5hmh9gEulNEr2AUgPf7vfM8GlsB/L+hBqVtjeluu9WX3OF4V0DOj78n9yG/OD5HRTQ==
+"@raralabs/web-feedback@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@raralabs/web-feedback/-/web-feedback-2.0.4.tgz#543b0c7253003e94231f379016eeeb67c5b752cd"
+  integrity sha512-gBSzeTm1q/ahMf3HzMUkyiktatwh4O1/jk/vGLoxaYAqmhFNka3n39GqUD9KPsEKEZa3OPUIMkP0QsKa704fTg==
   dependencies:
     html-to-image "^1.9.0"
 
