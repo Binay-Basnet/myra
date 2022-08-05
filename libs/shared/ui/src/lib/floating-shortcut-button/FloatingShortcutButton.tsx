@@ -42,6 +42,44 @@ interface WhatsNewModalProps {
   handleWhatsNewModalClose: () => void;
 }
 
+const whatsNewData = {
+  features: {
+    title: 'New Features',
+    data: [
+      'All 4 type of members can be added and seen in member list.',
+      'Deposit product can be created and seen in deposit list.',
+      'Deposit Settings (TDS/IRO Setup) can be done.',
+      'Loan product can be created and seen in deposit list.',
+      'New branch can be added and seen in branch list',
+      'User Authentication is done',
+      'All 4 Kym settings can be mended which reflects in actual Kym form.',
+    ],
+  },
+  bugsSquashed: {
+    title: 'Bug Squashed',
+    data: [
+      'UI fixes',
+      'Active state bugs on navigation tabs',
+      'Frequency input field right item alignment',
+      'File document upload',
+    ],
+  },
+  knownBugs: {
+    title: 'Known Bugs',
+    data: [
+      'Drop down list might not be relevant.',
+      'Validation not applicable at any where.',
+      'Multiple upload on edit not applicable.',
+      'Map ui issue',
+      'All kym form fields cannot be updated in kym setting however new can be added and reflected.',
+      'Some input contains zero value as default.',
+      'Find members in kym form individuals is not working.',
+      'All fields in deposit/loan product must be filled for the product to be created',
+      'Remaining 2 kym form coop and coop union might contain bugs.',
+    ],
+  },
+};
+
 const WhatsNewModal = (props: WhatsNewModalProps) => {
   const { whatsNewModalOpen, handleWhatsNewModalClose } = props;
   return (
@@ -86,49 +124,27 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
           <Box display="flex" alignItems="center" gap={2}>
             <AiOutlineStar size={18} />
             <Text fontSize="r2" fontWeight="medium">
-              New Features
+              {whatsNewData.features.title}
             </Text>
           </Box>
           <UnorderedList>
-            <ListItem fontSize="s3">
-              All 4 type of members can be added and seen in member list.
-            </ListItem>
-            <ListItem fontSize="s3">
-              Deposit product can be created and seen in deposit list.
-            </ListItem>
-            <ListItem fontSize="s3">
-              Deposit Settings (TDS/IRO Setup) can be done.
-            </ListItem>
-            <ListItem fontSize="s3">
-              Loan product can be created and seen in deposit list.
-            </ListItem>
-            <ListItem fontSize="s3">
-              New branch can be added and seen in branch list
-            </ListItem>
-            <ListItem fontSize="s3">User Authentication is done.</ListItem>
-            <ListItem fontSize="s3">
-              All 4 Kym settings can be mended which reflects in actual Kym
-              form.
-            </ListItem>
+            {whatsNewData.features.data.map((item) => (
+              <ListItem fontSize="s3">{item}</ListItem>
+            ))}
           </UnorderedList>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
             <AiOutlineBug size={18} />
             <Text fontSize="r2" fontWeight="medium">
-              Bug Squashed
+              {whatsNewData?.bugsSquashed?.title}
             </Text>
           </Box>
 
           <UnorderedList>
-            <ListItem fontSize="s3">UI fixes</ListItem>
-            <ListItem fontSize="s3">
-              Active state bugs on navigation tabs
-            </ListItem>
-            <ListItem fontSize="s3">
-              Frequency input field right item alignment
-            </ListItem>
-            <ListItem fontSize="s3">File document upload</ListItem>
+            {whatsNewData.bugsSquashed.data.map((item) => (
+              <ListItem fontSize="s3">{item}</ListItem>
+            ))}
           </UnorderedList>
         </Box>
         <Box>
@@ -139,33 +155,9 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             </Text>
           </Box>
           <UnorderedList>
-            <ListItem fontSize="s3">
-              Drop down list might not be relevant.
-            </ListItem>
-            <ListItem fontSize="s3">
-              Validation not applicable at any where.
-            </ListItem>
-            <ListItem fontSize="s3">
-              Multiple upload on edit not applicable.
-            </ListItem>
-            <ListItem fontSize="s3">Map ui issue.</ListItem>
-            <ListItem fontSize="s3">
-              All kym form fields cannot be updated in kym setting however new
-              can be added and reflected.
-            </ListItem>
-            <ListItem fontSize="s3">
-              Some input contains zero value as default.
-            </ListItem>
-            <ListItem fontSize="s3">
-              Find members in kym form individuals is not working.
-            </ListItem>
-            <ListItem fontSize="s3">
-              All fields in deposit/loan product must be filled for the product
-              to be created
-            </ListItem>
-            <ListItem fontSize="s3">
-              Remaining 2 kym form coop and coop union might contain bugs.
-            </ListItem>
+            {whatsNewData?.knownBugs?.data.map((item) => (
+              <ListItem fontSize="s3">{item}</ListItem>
+            ))}
           </UnorderedList>
         </Box>
       </Box>
@@ -174,7 +166,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
   );
 };
 
-export function FloatingShortcutButton(props: FloatingShortcutButtonProps) {
+export function FloatingShortcutButton() {
   const { t } = useTranslation();
   const helpOptions = [
     {

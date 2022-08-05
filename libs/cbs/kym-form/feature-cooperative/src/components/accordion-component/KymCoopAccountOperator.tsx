@@ -445,7 +445,10 @@ export const AddOperator = ({
                 />
               </Box>
             </Grid> */}
-            <BottomOperatorCoop setKymCurrentSection={setKymCurrentSection} />
+            <BottomOperatorCoop
+              accountId={accountId}
+              setKymCurrentSection={setKymCurrentSection}
+            />
           </SectionContainer>
         </DynamicBoxGroupContainer>
         <Box

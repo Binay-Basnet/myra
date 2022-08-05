@@ -67,7 +67,7 @@ const AddDirector = ({
 
   const methods = useForm<CoopUnionPersonnelInput>();
 
-  const { getValues, reset, watch } = methods;
+  const { reset, watch } = methods;
 
   const [isOpen, setIsOpen] = React.useState(true);
 
@@ -245,7 +245,6 @@ const AddDirector = ({
             <FormProvider {...methods}>
               <form
                 onFocus={(e) => {
-                  console.log();
                   const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
                   setSection(kymSection);
@@ -391,7 +390,7 @@ const AddDirector = ({
                             id="accountOperator.temporaryAddress.wardNo"
                             label={t['kymCoopUnionOpWardNo']}
                             placeholder={t['kymCoopUnionOpEnterWardNo']}
-                            options={wardList.map((d) => ({
+                            options={wardTempList.map((d) => ({
                               label: d,
                               value: d,
                             }))}
@@ -499,12 +498,14 @@ const AddDirector = ({
 
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
               <KYMDocumentField
+                mutationId={accountOperatorId}
                 label={t['kymCoopUnionOpPhotograph']}
                 name={`photograph`}
                 setKymCurrentSection={setSection}
                 getKymSection={getKymSectionCoOperativeUnion}
               />
               <KYMDocumentField
+                mutationId={accountOperatorId}
                 label={t['kymCoopUnionOpPhotographOfIdentityProofDocument']}
                 name={`identityDocumentPhoto`}
                 setKymCurrentSection={setSection}
@@ -514,6 +515,7 @@ const AddDirector = ({
             <InputGroupContainer>
               <Box w="124px">
                 <KYMDocumentField
+                  mutationId={accountOperatorId}
                   name={`signature`}
                   label={t['kymCoopUnionOpSpecimenSignature']}
                   setKymCurrentSection={setSection}

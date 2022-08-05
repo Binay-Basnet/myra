@@ -13,7 +13,6 @@ import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 import { Icon } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-
 const demoTabs: { title: string; icon: IconType; link: string }[] = [
   {
     title: 'settingsTabMenuGeneral',

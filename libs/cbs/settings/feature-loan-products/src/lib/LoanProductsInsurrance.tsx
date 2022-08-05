@@ -36,3 +36,5 @@ export const LoanProductsInsurance = () => {
     </Box>
   );
 };
+
+export default LoanProductsInsurance;

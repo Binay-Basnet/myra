@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
@@ -138,6 +137,7 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="purchase"
                 placeholder="0.00"
               />
@@ -191,6 +191,7 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="administrativeExpense"
                 placeholder="0.00"
               />
@@ -216,7 +217,8 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="financialCost"
                 placeholder="0.00"
               />
@@ -243,7 +245,8 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="riskManagementCost"
                 placeholder="0.00"
               />
@@ -269,7 +272,8 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="deferredTaxExpense"
                 placeholder="0.00"
               />

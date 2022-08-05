@@ -24,7 +24,8 @@ export const Declaration = (props: declarationProps) => {
   const id = String(router?.query?.['id']);
   const { mutate } = useSetDeclarationDataMutation({});
   const methods = useForm({});
-  const { handleSubmit, getValues } = methods;
+  const { getValues } = methods;
+
   return (
     <FormProvider {...methods}>
       <form

@@ -8,22 +8,14 @@ import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMe
 
 const tabList = [
   {
-    // title: 'TDS',
     title: 'settingsLoanGeneral',
     to: '/settings/general/loan/general',
   },
-  //   {
-  //     // title: 'IRO Setup',
-  //     title: 'settingsDepositIROSetup',
-  //     to: '/settings/general/deposit/iro-setup',
-  //   },
   {
-    // title: 'TDS',
     title: 'settingsInsuranceGeneral',
     to: '/settings/general/loan/insurance',
   },
   {
-    // title: 'TDS',
     title: 'settingsProductTypeGeneral',
     to: '/settings/general/loan/product-type',
   },
@@ -38,7 +30,11 @@ export const SettingsLoanLayout = ({ children }: ISettingsLoanLayout) => {
 
   return (
     <>
-      <SettingsPageHeader heading={t['settingsLoan']} />
+      <SettingsPageHeader
+        buttonLabel={t['saveChanges']}
+        buttonHandler={() => alert('test')}
+        heading={t['settingsLoan']}
+      />
       <Box
         w="300px"
         px="s8"

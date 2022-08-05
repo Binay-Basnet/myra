@@ -421,7 +421,10 @@ export const AddDirector = ({
               </form>
             </FormProvider>
 
-            <Bottomdirectorcoop setKymCurrentSection={setSection} />
+            <Bottomdirectorcoop
+              directorId={directorId}
+              setKymCurrentSection={setSection}
+            />
 
             {/* <Grid
                   templateColumns="repeat(2, 1fr)"

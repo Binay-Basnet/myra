@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { ContainerWithDivider } from '@coop/cbs/kym-form/ui-containers';
-import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, Input, Text, TextFields } from '@coop/shared/ui';
+import { Input, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
@@ -141,12 +140,14 @@ export const CooperativeMemberInformation = ({
 
               <FormInput
                 type="number"
+                min={0}
                 name="noOfMaleMemberCurrent"
                 placeholder={t['kymCoopUnionEnterNoMaleMembers']}
               />
 
               <FormInput
                 type="number"
+                min={0}
                 name="noOfMaleMemberTarget"
                 placeholder={t['kymCoopUnionEnterNoMaleMembers']}
               />
@@ -159,12 +160,14 @@ export const CooperativeMemberInformation = ({
 
               <FormInput
                 type="number"
+                min={0}
                 name="noOfFemaleMemberCurrent"
                 placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
               />
 
               <FormInput
                 type="number"
+                min={0}
                 name="noOfFemaleMemberTarget"
                 placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
               />
@@ -177,12 +180,14 @@ export const CooperativeMemberInformation = ({
 
               <FormInput
                 type="number"
+                min={0}
                 name="noOfInstitutionalMemberCurrent"
                 placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
               />
 
               <FormInput
                 type="number"
+                min={0}
                 name="noOfInstitutionalMemberTarget"
                 placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
               />

@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { LoanRepaymentScheme } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { Box, Divider, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -11,11 +12,11 @@ export function CbsSettingsFeatureLoanProducts() {
   const methods = useForm();
 
   const CheckboxList = [
-    { label: t['settingsLoanInsuranceEmi'], value: 'emi' },
-    { label: t['settingsLoanInsuranceEpi'], value: 'epi' },
-
-    { label: t['settingsLoanInsuranceFlat'], value: 'flat' },
+    { label: t['settingsLoanInsuranceEmi'], value: LoanRepaymentScheme.Emi },
+    { label: t['settingsLoanInsuranceEpi'], value: LoanRepaymentScheme.Epi },
+    { label: t['settingsLoanInsuranceFlat'], value: LoanRepaymentScheme.Flat },
   ];
+
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
       <FormProvider {...methods}>

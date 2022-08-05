@@ -15,6 +15,7 @@ interface IKYMDocumentFieldProps {
     section: string;
     subSection: string;
   }) => void;
+  mutationId: string;
   name: string;
   label?: string;
   size?: 'sm' | 'md' | 'lg';
@@ -28,23 +29,27 @@ interface IKYMDocumentFieldProps {
 
 export const KYMDocumentField = ({
   setKymCurrentSection,
+  mutationId,
   name,
   label,
   size,
   getKymSection,
 }: IKYMDocumentFieldProps) => {
   const router = useRouter();
-  const id = router?.query?.['id'];
 
   const methods = useForm<KymIndMemberInput>();
 
   const { watch, reset } = methods;
 
-  const { data: editValues, isFetching } = useGetKymDocumentsListQuery(
+  const {
+    data: editValues,
+    isFetching,
+    refetch,
+  } = useGetKymDocumentsListQuery(
     {
-      memberId: String(id),
+      memberId: mutationId,
     },
-    { enabled: !!id }
+    { enabled: !!mutationId }
   );
 
   useEffect(() => {
@@ -74,9 +79,9 @@ export const KYMDocumentField = ({
     const subscription = watch(
       debounce((data) => {
         if (!data[name]?.[0]?.url) {
-          if (id) {
+          if (mutationId) {
             mutate({
-              memberId: id as string,
+              memberId: mutationId,
               fieldId: name,
               identifiers: data[name],
             });
@@ -87,6 +92,12 @@ export const KYMDocumentField = ({
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
+
+  useEffect(() => {
+    if (mutationId && mutationId !== 'undefined') {
+      refetch();
+    }
+  }, [mutationId]);
 
   return (
     <FormProvider {...methods}>
