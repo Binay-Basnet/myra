@@ -7,7 +7,6 @@ import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
 import {
-  KymInsAccountOperatorInput,
   useAllAdministrationQuery,
   useDeleteAccountOperatorInstitutionMutation,
   useGetInsAccountOperatorEditListQuery,
@@ -445,7 +444,10 @@ const AddAccountDetails = ({
                   <FormFileInput name={"specimenSignature"} />
                 </Box>
               </Box> */}
-              <BottomDocument setKymCurrentSection={setKymCurrentSection} />
+              <BottomDocument
+                accountId={accountId}
+                setKymCurrentSection={setKymCurrentSection}
+              />
             </Box>
           </Box>
         </SectionContainer>
@@ -481,15 +483,11 @@ interface IProps {
 }
 export const InstitutionKYMAccountDetail = (props: IProps) => {
   const { t } = useTranslation();
-  const methods = useForm<KymInsAccountOperatorInput>({
-    defaultValues: {},
-  });
+
   const { setSection } = props;
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
-
-  const { control, handleSubmit, getValues, watch, setError } = methods;
   const [accOperatorIds, setAccOperatorIds] = useState<string[]>([]);
 
   const { data: editValues } = useGetInsAccountOperatorEditListQuery(

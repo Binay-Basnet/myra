@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
@@ -147,6 +146,7 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="incomeFromFinancialInvestment"
                 placeholder="0.00"
               />
@@ -172,7 +172,8 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="incomeFromNonFinancialInvestment"
                 placeholder="0.00"
               />
@@ -200,6 +201,7 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="incomeFromInvestment"
                 placeholder="0.00"
               />
@@ -225,7 +227,8 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="incomeFromServiceOperation"
                 placeholder="0.00"
               />
@@ -252,7 +255,8 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="incomeFromSales"
                 placeholder="0.00"
               />
@@ -278,7 +282,8 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="otherIncome"
                 placeholder="0.00"
               />
@@ -305,7 +310,8 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
             <GridItem>
               <FormInput
                 textAlign="right"
-                type="text"
+                type="number"
+                min={0}
                 name="miscellaneousIncome"
                 placeholder="0.00"
               />

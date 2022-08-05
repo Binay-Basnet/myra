@@ -1,12 +1,7 @@
-import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Box, Divider, Grid, GridItem, Text } from '@chakra-ui/react';
 
 import { CoopUnionEconomicDetailsInput } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import {
   getKymSectionCoOperativeUnion,
@@ -218,6 +213,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="shareCapitalCurrent"
                 placeholder="0.00"
               />
@@ -226,6 +222,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="shareCapitalTarget"
                 placeholder="0.00"
               />
@@ -252,6 +249,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="reserveAndSurplusCurrent"
                 placeholder="0.00"
               />
@@ -260,6 +258,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="reserveAndSurplusTarget"
                 placeholder="0.00"
               />
@@ -286,6 +285,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="savingDepositCurrent"
                 placeholder="0.00"
               />
@@ -294,6 +294,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="savingDepositTarget"
                 placeholder="0.00"
               />
@@ -320,6 +321,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="loanAccountCurrent"
                 placeholder="0.00"
               />
@@ -328,6 +330,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="loanAccountTarget"
                 placeholder="0.00"
               />
@@ -354,6 +357,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="capitalGrantCurrent"
                 placeholder="0.00"
               />
@@ -362,6 +366,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="capitalGrantTarget"
                 placeholder="0.00"
               />
@@ -388,6 +393,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="currentLiabilitiesCurrent"
                 placeholder="0.00"
               />
@@ -396,6 +402,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="currentLiabilitiesTarget"
                 placeholder="0.00"
               />
@@ -422,6 +429,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="nonCurrentLiabilitiesCurrent"
                 placeholder="0.00"
               />
@@ -430,6 +438,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
               <FormInput
                 textAlign="right"
                 type="number"
+                min={0}
                 name="nonCurrentLiabilitiesTarget"
                 placeholder="0.00"
               />

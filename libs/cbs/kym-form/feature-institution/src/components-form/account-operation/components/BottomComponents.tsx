@@ -6,8 +6,9 @@ interface IProps {
     section: string;
     subSection: string;
   }) => void;
+  accountId: string;
 }
-export const BottomDocument = ({ setKymCurrentSection }: IProps) => {
+export const BottomDocument = ({ setKymCurrentSection, accountId }: IProps) => {
   const { t } = useTranslation();
   return (
     <Box display="flex" flexDirection={'column'} gap="s4">
@@ -16,6 +17,7 @@ export const BottomDocument = ({ setKymCurrentSection }: IProps) => {
       </Text>
       <Box w="124px" display="flex" flexDirection={'column'} gap="s4">
         <KYMDocumentField
+          mutationId={accountId}
           label="Fingerprint Photo"
           name="specimenSignature"
           setKymCurrentSection={setKymCurrentSection}

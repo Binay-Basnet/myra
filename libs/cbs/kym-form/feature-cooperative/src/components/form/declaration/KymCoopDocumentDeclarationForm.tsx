@@ -1,4 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
@@ -13,6 +14,11 @@ interface IProps {
 }
 export const KymCoopDocumentDeclarationForm = (props: IProps) => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
+  const id = String(router?.query?.['id']);
+
   const { setSection } = props;
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
@@ -32,54 +38,62 @@ export const KymCoopDocumentDeclarationForm = (props: IProps) => {
           </Text>
           <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
             <KYMDocumentField
+              mutationId={id}
               label={t['kymCoopAGMDecisionDocument']}
-              name="passportSizePhoto"
+              name="agmBodDecisionDocument"
               setKymCurrentSection={setSection}
               getKymSection={getKymCoopSection}
             />
             <KYMDocumentField
+              mutationId={id}
               label={t['kymCoopRegisteredCertificate']}
-              name="signaturePhoto"
+              name="registeredCertificate"
               setKymCurrentSection={setSection}
               getKymSection={getKymCoopSection}
             />
             <KYMDocumentField
+              mutationId={id}
               label="MOA/AOA"
-              name="citizenshipPhoto"
+              name="moaAoa"
               setKymCurrentSection={setSection}
               getKymSection={getKymCoopSection}
             />
             <KYMDocumentField
+              mutationId={id}
               label={t['kymCoopPANCertificate']}
-              name="fingerprintPhoto"
+              name="panCertificate"
               setKymCurrentSection={setSection}
               getKymSection={getKymCoopSection}
             />
 
             <KYMDocumentField
+              mutationId={id}
               label={t['kymCoopTaxClearance']}
-              name="citizenshipPhoto"
+              name="taxClearance"
               setKymCurrentSection={setSection}
               getKymSection={getKymCoopSection}
             />
 
             <KYMDocumentField
+              mutationId={id}
               label={t['kymCoopLatestAuditReport']}
-              name="citizenshipPhoto"
+              name="latestAuditReport"
               setKymCurrentSection={setSection}
               getKymSection={getKymCoopSection}
             />
 
             <KYMDocumentField
+              mutationId={id}
               label={t['kymCoopLogo']}
-              name="citizenshipPhoto"
+              name="logo"
               setKymCurrentSection={setSection}
               getKymSection={getKymCoopSection}
             />
 
             <KYMDocumentField
+              mutationId={id}
               label={t['kymCoopMinuteofCentralRep']}
-              name="citizenshipPhoto"
+              name="minuteOfCentralRep"
               setKymCurrentSection={setSection}
               getKymSection={getKymCoopSection}
             />

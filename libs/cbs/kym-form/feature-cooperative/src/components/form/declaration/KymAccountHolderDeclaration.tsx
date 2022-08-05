@@ -1,5 +1,5 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import { Grid, GridItem } from '@chakra-ui/react';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
@@ -64,11 +64,17 @@ interface IDocProps {
 
 const Documents = ({ setSection }: IDocProps) => {
   const { t } = useTranslation();
+
+  const router = useRouter();
+
+  const id = String(router?.query?.['id']);
+
   return (
     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
       <GridItem>
         <Box w="124px">
           <KYMDocumentField
+            mutationId={id}
             size="md"
             label={t['kymCoopSignature']}
             name="accountHolderSignature"
@@ -80,6 +86,7 @@ const Documents = ({ setSection }: IDocProps) => {
       <GridItem>
         <Box w="124px">
           <KYMDocumentField
+            mutationId={id}
             size="md"
             label={t['kymCoopStamp']}
             name="accountHolderStamp"

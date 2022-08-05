@@ -1,22 +1,17 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
+import {
+  CoopUnionInstitutionInformationInput,
+  useAllAdministrationQuery,
+} from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  CoopUnionInstitutionInformationInput,
-  useAllAdministrationQuery,
-} from '@coop/cbs/data-access';
-import {
-  FormFileInput,
-  FormInput,
-  FormMap,
-  FormSelect,
-  FormSwitch,
-} from '@coop/shared/form';
+import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
@@ -28,6 +23,10 @@ interface IApplicantDetailsProps {
 }
 
 export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
+  const router = useRouter();
+
+  const id = String(router?.query?.['id']);
+
   const { t } = useTranslation();
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
@@ -305,6 +304,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
 
       <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
         <KYMDocumentField
+          mutationId={id}
           size="md"
           label={t['kymCoopUnionSignature']}
           name="applicantSign"
@@ -312,6 +312,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
           getKymSection={getKymSectionCoOperativeUnion}
         />
         <KYMDocumentField
+          mutationId={id}
           size="md"
           label={t['kymCoopUnionStamp']}
           name="applicantStamp"

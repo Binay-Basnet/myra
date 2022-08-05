@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
-import { Member } from '@coop/cbs/data-access';
+import { Address } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import {
@@ -15,6 +15,32 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
+
+const formatAddress = (address: Address | undefined | null) => {
+  if (
+    !address?.locality?.local &&
+    !address?.district?.local &&
+    !address?.state?.local
+  ) {
+    return '-';
+  }
+
+  const addressArr = [];
+
+  if (address?.locality?.local) {
+    addressArr.push(address?.locality?.local);
+  }
+
+  if (address?.district?.local) {
+    addressArr.push(address?.district?.local);
+  }
+
+  if (address?.state?.local) {
+    addressArr.push(address?.state?.local);
+  }
+
+  return addressArr.join(', ');
+};
 
 export function MemberListPage() {
   const { t } = useTranslation();
@@ -42,22 +68,6 @@ export function MemberListPage() {
   );
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
-
-  const popoverTitle = [
-    {
-      title: 'memberListTableViewMemberProfile',
-    },
-    {
-      title: 'memberListTableEditMember',
-      onClick: (member?: Member | null) =>
-        router.push(
-          `/members/${member?.type.toLowerCase()}/edit/${member?.id}`
-        ),
-    },
-    {
-      title: 'memberListTableMakeInactive',
-    },
-  ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -94,10 +104,7 @@ export function MemberListPage() {
       },
       {
         header: t['memberListTableAddress'],
-        accessorFn: (row) =>
-          `${row?.node?.address?.locality?.local ?? '--'}, ${
-            row?.node?.address?.district?.local ?? '--'
-          }, ${row?.node?.address?.state?.local ?? '--'}`,
+        accessorFn: (row) => formatAddress(row?.node?.address),
       },
       {
         header: t['memberListTablePhoneNo'],

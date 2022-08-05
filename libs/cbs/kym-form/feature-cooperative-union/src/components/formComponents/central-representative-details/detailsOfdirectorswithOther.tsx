@@ -6,13 +6,6 @@ import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 import pickBy from 'lodash/pickBy';
 
-import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import {
-  DynamicBoxGroupContainer,
-  GroupContainer,
-  InputGroupContainer,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import {
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelInput,
@@ -22,23 +15,21 @@ import {
   useGetNewIdMutation,
   useSetPersonnelDetailsMutation,
 } from '@coop/cbs/data-access';
+import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import {
-  FormFileInput,
+  DynamicBoxGroupContainer,
+  GroupContainer,
+  InputGroupContainer,
+  SectionContainer,
+} from '@coop/cbs/kym-form/ui-containers';
+import {
   FormInput,
   FormMap,
   FormRadioGroup,
   FormSelect,
   FormSwitch,
-  FormSwitchTab,
 } from '@coop/shared/form';
-import {
-  Box,
-  Grid,
-  RadioGroup,
-  Switch,
-  Text,
-  TextFields,
-} from '@coop/shared/ui';
+import { Box, Grid, Text } from '@coop/shared/ui';
 import {
   getKymSectionCoOperativeUnion,
   isDeepEmpty,
@@ -49,9 +40,9 @@ import { CentralRepresentativeTraining } from './centralRepresentativeTraining';
 
 interface ICRDirectorsSelectionProps {
   setSection: (section?: { section: string; subSection: string }) => void;
-  refetch: any;
+  refetch: () => void;
   crId: string;
-  setCRId: any;
+  setCRId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const CRDirectorsSelection = ({
@@ -70,7 +61,7 @@ const CRDirectorsSelection = ({
 
   const methods = useForm<CoopUnionPersonnelInput>();
 
-  const { getValues, reset, watch, control } = methods;
+  const { getValues, reset, watch } = methods;
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
@@ -243,13 +234,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
 
   const methods = useForm<CoopUnionPersonnelInput>();
 
-  const { getValues, reset, watch, control } = methods;
-
-  const { mutate: newIdMutate } = useGetNewIdMutation({
-    onSuccess: (res) => {
-      setCRId(res.newId);
-    },
-  });
+  const { reset, watch } = methods;
 
   // useEffect(() => {
   //   if (!crId) {
@@ -681,6 +666,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                 >
                   <Box w="124px">
                     <KYMDocumentField
+                      mutationId={crId}
                       // size="md"
                       label={t['kymCoopUnionDirPhotograph']}
                       // control={control}
@@ -695,6 +681,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                     </Text>
                     <Box w="124px">
                       <KYMDocumentField
+                        mutationId={crId}
                         // size="md"
                         // control={control}
                         name={`identityDocumentPhoto`}
@@ -710,6 +697,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                     </Text>
                     <Box w="124px">
                       <KYMDocumentField
+                        mutationId={crId}
                         // size="md"
                         // control={control}
                         name={`signature`}
@@ -725,6 +713,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                     </Text>
                     <Box w="124px">
                       <KYMDocumentField
+                        mutationId={crId}
                         // size="md"
                         // control={control}
                         name={`crDecisionDocument`}

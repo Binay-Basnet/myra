@@ -76,7 +76,7 @@ const AddDirector = ({
 
   const methods = useForm<CoopUnionPersonnelInput>();
 
-  const { getValues, reset, watch, control } = methods;
+  const { reset, watch, control } = methods;
 
   const { mutate } = useSetPersonnelDetailsMutation({
     onSuccess: () => refetch(),
@@ -195,16 +195,6 @@ const AddDirector = ({
     [currentTempLocalGovernmentId]
   );
 
-  const resetDirectorForm = () => {
-    const values = getValues();
-
-    // values['boardOfDirectorsDetails'][index] = {};
-
-    // reset({
-    //   boardOfDirectorsDetails: values['boardOfDirectorsDetails'],
-    // });
-  };
-
   return (
     <>
       <Box display="flex" alignItems="center">
@@ -262,7 +252,6 @@ const AddDirector = ({
             <FormProvider {...methods}>
               <form
                 onFocus={(e) => {
-                  console.log({ id: e.target.id });
                   const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
                   setSection(kymSection);
@@ -491,15 +480,15 @@ const AddDirector = ({
 
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
               <KYMDocumentField
+                mutationId={directorId}
                 label={t['kymCoopUnionPhotograph']}
-                // control={control}
                 name={`photograph`}
                 setKymCurrentSection={setSection}
                 getKymSection={getKymSectionCoOperativeUnion}
               />
               <KYMDocumentField
+                mutationId={directorId}
                 label={t['kymCoopUnionPhotographOfIdentityProofDocument']}
-                // control={control}
                 name={`identityDocumentPhoto`}
                 setKymCurrentSection={setSection}
                 getKymSection={getKymSectionCoOperativeUnion}

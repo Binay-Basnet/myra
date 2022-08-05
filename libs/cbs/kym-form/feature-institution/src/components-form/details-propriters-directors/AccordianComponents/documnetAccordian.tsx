@@ -1,118 +1,31 @@
-import { useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
-
-import {
-  KymIndMemberInput,
-  useGetKymDocumentsListQuery,
-  useSetKymDocumentDataMutation,
-} from '@coop/cbs/data-access';
-import { FormFileInput } from '@coop/shared/form';
+import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { Grid } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
+  directorId: string;
 }
 
-export const DocumentComponent = ({ setSection }: IProps) => {
+export const DocumentComponent = ({ setSection, directorId }: IProps) => {
   const { t } = useTranslation();
 
   return (
     <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
-      <KYMDocumentDeclarationField
-        setSection={setSection}
+      <KYMDocumentField
+        mutationId={directorId}
+        setKymCurrentSection={setSection}
+        getKymSection={getKymSectionInstitution}
         label={t['kymInsPhotograph']}
-        // control={control}
         name={`photograph`}
       />
-      <KYMDocumentDeclarationField
-        setSection={setSection}
+      <KYMDocumentField
+        mutationId={directorId}
+        setKymCurrentSection={setSection}
+        getKymSection={getKymSectionInstitution}
         label={t['kymInsPhotographOfIdentityProofDocument']}
-        // control={control}
         name={`documentPhotograph`}
       />
     </Grid>
-  );
-};
-
-interface IKYMDocumentDeclarationFieldProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
-  name: string;
-  label: string;
-}
-
-const KYMDocumentDeclarationField = ({
-  setSection,
-  name,
-  label,
-}: IKYMDocumentDeclarationFieldProps) => {
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
-
-  const methods = useForm<KymIndMemberInput>();
-
-  const { watch, reset } = methods;
-
-  const { data: editValues, isFetching } = useGetKymDocumentsListQuery(
-    {
-      memberId: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (editValues) {
-      const kymDocumentsList = editValues?.document?.listKYMDocuments?.data;
-
-      const documentData = kymDocumentsList?.find(
-        (doc) => doc?.fieldId === name
-      );
-
-      //
-
-      if (documentData) {
-        reset({
-          [name]: documentData.docData.map((file) => ({
-            url: file?.url,
-            fileName: file?.identifier,
-          })),
-        });
-      }
-    }
-  }, [isFetching]);
-
-  const { mutate } = useSetKymDocumentDataMutation();
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        if (!data[name]?.[0]?.url) {
-          if (id) {
-            mutate({
-              memberId: id as string,
-              fieldId: name,
-              identifiers: data[name],
-            });
-          }
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-
-  return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSectionInstitution(e.target.id);
-          setSection(kymSection);
-        }}
-      >
-        <FormFileInput size="lg" label={label} name={name} />
-      </form>
-    </FormProvider>
   );
 };

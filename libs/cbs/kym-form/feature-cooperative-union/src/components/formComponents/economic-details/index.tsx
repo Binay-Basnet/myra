@@ -1,14 +1,8 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
-
 import {
   ContainerWithDivider,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { useSetEconomicDetailsDataMutation } from '@coop/cbs/data-access';
 import { Text } from '@coop/shared/ui';
-import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 import { useTranslation } from '@coop/shared/utils';
 
 import { KymAssestsAndtarget } from './assets';
@@ -23,11 +17,6 @@ interface economicDetailsProps {
 export const EconomicDetails = (props: economicDetailsProps) => {
   const { t } = useTranslation();
   const { setSection } = props;
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
-  const { mutate } = useSetEconomicDetailsDataMutation({});
-  const methods = useForm({});
-  const { handleSubmit, getValues, watch } = methods;
 
   return (
     <SectionContainer>

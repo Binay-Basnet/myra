@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  FormProvider,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
@@ -12,7 +8,6 @@ import debounce from 'lodash/debounce';
 
 import {
   KymInsDirectorInput,
-  useAllAdministrationQuery,
   useDeleteDirectorInstitutionMutation,
   useGetInsBoardDirectorEditListQuery,
   useGetNewIdMutation,
@@ -22,14 +17,7 @@ import {
   GroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  Box,
-  Button,
-  Collapse,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Collapse, Icon, IconButton, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import {
@@ -73,10 +61,6 @@ const AddDirector = ({
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
-
-  const { data } = useAllAdministrationQuery();
-
-  const { getValues, reset } = useFormContext();
 
   const [isOpen, setIsOpen] = React.useState(true);
 
@@ -150,7 +134,10 @@ const AddDirector = ({
               directorId={directorId}
               setKymCurrentSection={setKymCurrentSection}
             />
-            <DocumentComponent setSection={setKymCurrentSection} />
+            <DocumentComponent
+              directorId={directorId}
+              setSection={setKymCurrentSection}
+            />
             <DirectorsWithAffliation
               directorId={directorId}
               removeDirector={removeDirector}
@@ -207,8 +194,6 @@ export const BoardDirectorInfo = (props: IProps) => {
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
-
-  const { control, handleSubmit, getValues, watch, setError } = methods;
 
   const [directorIds, setDirectorIds] = useState<string[]>([]);
 
