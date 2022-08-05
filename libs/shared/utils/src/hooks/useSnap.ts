@@ -17,11 +17,11 @@ export const useSnap = () => {
   const username = useAppSelector((state) => state?.auth?.user?.username);
 
   useEffect(() => {
+    if (!username) return;
+
     snap.init(async (data) => {
       const { image } = data;
       const formData = new FormData();
-
-      if (!username) return;
 
       const query = `mutation ($file: Upload!) {createPublicFeedback(input: {appSlug: "MYRA", userEmail: "${username}"}, imageInput: $file) {success data {userEmail description appSlugID { name }} errors {__typename ... on ValidationError { message field } ... on BadRequestError {  message } ... on NotFoundError { message } ... on InternalServerError { message } } } }`;
 
@@ -68,6 +68,6 @@ export const useSnap = () => {
         });
       }
     });
-  }, [username]);
+  }, [toast, username]);
   return;
 };
