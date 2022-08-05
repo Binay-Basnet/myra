@@ -27,11 +27,7 @@ export const ShareSettingsTransfer = () => {
         subtitle={t['shareToAccountSubtitle']}
       >
         <Box width="33%">
-          <Select
-            size="sm"
-            options={[]}
-            placeholder={t['shareFundAccountName']}
-          />
+          <Select options={[]} placeholder={t['shareFundAccountName']} />
         </Box>
       </ShareSettingsCard>
 
@@ -40,11 +36,7 @@ export const ShareSettingsTransfer = () => {
         subtitle={t['shareToFundLedgerMappingSubtitle']}
       >
         <Box width="33%">
-          <Select
-            size="sm"
-            options={[]}
-            placeholder={t['shareTransferLedgerName']}
-          />
+          <Select options={[]} placeholder={t['shareTransferLedgerName']} />
         </Box>
       </ShareSettingsCard>
     </>

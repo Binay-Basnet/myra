@@ -146,7 +146,6 @@ export const ShareSettingsDividendPage = () => {
               </Text>
               <Select
                 menuPlacement="top"
-                size="sm"
                 options={[]}
                 placeholder={t['shareSelectAccount']}
               />
@@ -161,7 +160,6 @@ export const ShareSettingsDividendPage = () => {
           <Box width="33%">
             <Select
               menuPlacement="top"
-              size="sm"
               options={[]}
               placeholder={t['shareSelectAccount']}
             />
@@ -175,7 +173,6 @@ export const ShareSettingsDividendPage = () => {
           <Box width="33%">
             <Select
               menuPlacement="top"
-              size="sm"
               options={[]}
               placeholder={t['shareNameOfTheFund']}
             />
