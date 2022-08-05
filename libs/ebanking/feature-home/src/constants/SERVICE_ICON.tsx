@@ -24,6 +24,15 @@ export const SERVICE_ICON_DICT: Record<string, IconType> = {
   CARDLESS_WITHDRAW: MdOutlineContactless,
 };
 
+export const SERVICE_LINK_DICT: Record<string, string> = {
+  ACC_TRANSFER: '/home/account-transfer',
+  SEND_MONEY: '/home/send-money',
+  BANK_TRANSFER: '/home/bank-transfer',
+  REMITTANCE: '/home/remittance',
+  LOAD_WALLET: '/home/load_wallet',
+  CARDLESS_WITHDRAW: '/home/cardless_withdraw',
+};
+
 export const UTILITY_ICON_DICT: Record<string, IconType> = {
   TOPUP: AiOutlineMobile,
   NEA_PAYMENT: MdLightbulbOutline,

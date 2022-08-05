@@ -903,7 +903,7 @@ export enum CoopUnionSection {
 }
 
 export type CooperativeAccountOperatorDetails = {
-  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['String']>;
+  citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   dateofTrainig?: Maybe<Scalars['Date']>;
@@ -934,7 +934,7 @@ export type CooperativeAddLastUpdated = {
 };
 
 export type CooperativeBodDetails = {
-  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['String']>;
+  citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   designation?: Maybe<Scalars['String']>;
@@ -1584,6 +1584,11 @@ export type DepositProductInput = {
   withdrawRestricted?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type DepositProductList = {
+  data?: Maybe<Array<Maybe<DepositProduct>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type DepositProductResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<DepositProductSettingsQuery>;
@@ -1609,6 +1614,7 @@ export type DepositProductSettingsMutationAddArgs = {
 export type DepositProductSettingsQuery = {
   formState?: Maybe<DepositProductFormStateResult>;
   get?: Maybe<DepositProduct>;
+  getProductList?: Maybe<DepositProductList>;
   list?: Maybe<DepositProductConnection>;
 };
 
@@ -1620,6 +1626,12 @@ export type DepositProductSettingsQueryFormStateArgs = {
 
 export type DepositProductSettingsQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+
+export type DepositProductSettingsQueryGetProductListArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -4354,8 +4366,9 @@ export type KymCoopUnionSectionMutationPersonnelDetailsArgs = {
 };
 
 export type KymCooperativeAccountOperatorDetailsFormState = {
-  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['String']>;
+  citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
+  coopRelatedTraining?: Maybe<Array<Maybe<CoopRelatedTrainingType>>>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   designation?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -4363,13 +4376,13 @@ export type KymCooperativeAccountOperatorDetailsFormState = {
   highestQualification?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
+  panNo?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
   temporaryAddress?: Maybe<KymAddress>;
-  trainings?: Maybe<Array<Maybe<CoopRelatedTrainingType>>>;
 };
 
 export type KymCooperativeAccountOperatorDetailsInput = {
-  citizenshipOrPassportOrLisenceNo?: InputMaybe<Scalars['Int']>;
+  citizenshipNo?: InputMaybe<Scalars['Int']>;
   contactNumber?: InputMaybe<Scalars['String']>;
   dateOfMembership?: InputMaybe<Scalars['Date']>;
   dateofTrainig?: InputMaybe<Scalars['Date']>;
@@ -4436,7 +4449,7 @@ export type KymCooperativeAddSectionStatus = {
 };
 
 export type KymCooperativeBodDetailsFormState = {
-  citizenshipOrPassportOrLisenceNo?: Maybe<Scalars['String']>;
+  citizenshipNo?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['Date']>;
   designation?: Maybe<Scalars['String']>;
@@ -4445,12 +4458,13 @@ export type KymCooperativeBodDetailsFormState = {
   highestQualification?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   isPermanentAndTemporaryAddressSame?: Maybe<Scalars['Boolean']>;
+  panNo?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
   temporaryAddress?: Maybe<KymAddress>;
 };
 
 export type KymCooperativeBodDetailsInput = {
-  citizenshipOrPassportOrLisenceNo?: InputMaybe<Scalars['Int']>;
+  citizenshipNo?: InputMaybe<Scalars['Int']>;
   contactNumber?: InputMaybe<Scalars['String']>;
   dateOfMembership?: InputMaybe<Scalars['Date']>;
   designation?: InputMaybe<Scalars['String']>;
@@ -4548,7 +4562,7 @@ export type KymCooperativeFormData = {
   loanAccount?: Maybe<Scalars['Float']>;
   mainServiceProduct?: Maybe<Scalars['String']>;
   nameOfOrganization?: Maybe<Scalars['String']>;
-  noOfFemaleEmloyee?: Maybe<Scalars['Int']>;
+  noOfFemaleEmployee?: Maybe<Scalars['Int']>;
   noOfFemaleMembers?: Maybe<Scalars['Int']>;
   noOfMaleEmployee?: Maybe<Scalars['Int']>;
   noOfMaleMembers?: Maybe<Scalars['Int']>;
