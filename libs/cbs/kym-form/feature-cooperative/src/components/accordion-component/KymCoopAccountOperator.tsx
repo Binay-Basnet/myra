@@ -79,6 +79,7 @@ export const AddOperator = ({
           email: familyMemberDetail?.email,
           citizenshipNo: familyMemberDetail?.citizenshipNo,
           panNo: familyMemberDetail?.panNo,
+          coopRelatedTraining: familyMemberDetail?.coopRelatedTraining,
         });
       }
     }

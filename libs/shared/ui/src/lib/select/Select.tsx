@@ -25,7 +25,6 @@ export interface SelectProps
 }
 
 export function Select({
-  size,
   errorText,
   helperText,
   isMulti,

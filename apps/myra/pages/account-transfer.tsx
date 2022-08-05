@@ -3,8 +3,6 @@ import React from 'react';
 import { AccountTransferForm } from '@coop/ebanking/accounts';
 import { Box, PathBar } from '@coop/shared/ui';
 
-type PaymentStatus = 'form' | 'review' | 'success' | 'failure';
-
 const AccountTransfer = () => {
   return (
     <Box display="flex" flexDir="column" gap="s16">

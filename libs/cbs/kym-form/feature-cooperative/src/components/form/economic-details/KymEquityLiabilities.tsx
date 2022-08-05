@@ -62,7 +62,7 @@ export const KymEquityLiabilities = (props: IProps) => {
                 fontSize="s3"
                 fontWeight="SemiBold"
               >
-                Equity and Liabilities
+                {t['kymCoopEquityandLiabilities']}
               </Text>
             </GridItem>
 
@@ -93,7 +93,7 @@ export const KymEquityLiabilities = (props: IProps) => {
                 fontSize="s3"
                 fontWeight="Regular"
               >
-                Share Capital
+                {t['kymCoopShareCapital']}
               </Text>
             </GridItem>
 
@@ -120,7 +120,7 @@ export const KymEquityLiabilities = (props: IProps) => {
                 fontSize="s3"
                 fontWeight="Regular"
               >
-                Reserve and surplus
+                {t['kymCoopReserveandsurplus']}
               </Text>
             </GridItem>
 
@@ -147,7 +147,7 @@ export const KymEquityLiabilities = (props: IProps) => {
                 fontSize="s3"
                 fontWeight="Regular"
               >
-                Saving/Deposit
+                {t['kymCoopSavingDeposit']}
               </Text>
             </GridItem>
 
@@ -174,7 +174,7 @@ export const KymEquityLiabilities = (props: IProps) => {
                 fontSize="s3"
                 fontWeight="Regular"
               >
-                Loan Account (External Loan)
+                {t['kymCoopLoanAccount']}
               </Text>
             </GridItem>
 
@@ -201,7 +201,7 @@ export const KymEquityLiabilities = (props: IProps) => {
                 fontSize="s3"
                 fontWeight="Regular"
               >
-                Capital Grant
+                {t['kymCoopCapitalGrant']}
               </Text>
             </GridItem>
 
@@ -228,7 +228,7 @@ export const KymEquityLiabilities = (props: IProps) => {
                 fontSize="s3"
                 fontWeight="Regular"
               >
-                Current Liabilities and payable
+                {t['kymCoopCurrentLiabilitiesandpayable']}
               </Text>
             </GridItem>
 
@@ -255,7 +255,7 @@ export const KymEquityLiabilities = (props: IProps) => {
                 fontSize="s3"
                 fontWeight="Regular"
               >
-                Non-current liabilities
+                {t['kymCoopNoncurrentliabilities']}
               </Text>
             </GridItem>
 

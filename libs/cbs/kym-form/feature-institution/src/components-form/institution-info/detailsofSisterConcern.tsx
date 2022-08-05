@@ -64,7 +64,7 @@ const AddSister = ({
           name: familyMemberDetail?.name,
           natureOfBusiness: familyMemberDetail?.natureOfBusiness,
           address: familyMemberDetail?.address,
-          phoneNo: familyMemberDetail?.phoneNo,
+          phone: familyMemberDetail?.phoneNo,
         });
       }
     }
@@ -156,8 +156,6 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
-
-  const { control, handleSubmit, getValues, watch, setError } = methods;
 
   const [sisterIds, setSisterIds] = useState<string[]>([]);
 

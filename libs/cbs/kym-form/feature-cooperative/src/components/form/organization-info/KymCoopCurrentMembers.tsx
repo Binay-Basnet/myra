@@ -20,7 +20,6 @@ export const KymCoopCurrentMembers = (props: IProps) => {
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
   });
-  const { control, handleSubmit, getValues, watch, setError } = methods;
   useCooperative({ methods });
 
   return (
@@ -41,13 +40,15 @@ export const KymCoopCurrentMembers = (props: IProps) => {
           </Text>
           <InputGroupContainer>
             <FormInput
-              type="text"
+              type="number"
+              min={0}
               name="noOfMaleMembers"
               label={t['kymCoopNoofMalemembers']}
               placeholder={t['kymCoopEnternumberofMaleMembers']}
             />
             <FormInput
-              type="text"
+              type="number"
+              min={0}
               name="noOfFemaleMembers"
               label={t['kymCoopNoofFemalemembers']}
               placeholder={t['kymCoopEnternumberofFemaleMembers']}

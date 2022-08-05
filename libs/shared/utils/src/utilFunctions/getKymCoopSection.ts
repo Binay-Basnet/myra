@@ -35,31 +35,28 @@ const representative = [
   'representativeFullName',
   'representativeDesignatiton',
   'representativeEmail',
-  'representativeContact',
-  'representativePanOrVatNo',
-  'representativePermanentStateID',
-  'representativePermanentDistrictId',
-  'representativePermanentLocalityId',
-  'representativePermanentWardId',
-  'representativePermanentTole',
-  'representativePermanentHouseNo',
-  'isPermanentAndTemporaryAddressRepresentativeSame',
-  'representativeTemporaryStateId',
-  'representativeTemporaryDistrictId',
-  'representativeTemporaryStateId',
-  'representativeTemporaryDistrictId',
-  'representativeTemporaryLocalityId',
-  'representativeTemporaryWardId',
-  'representativeTemporaryTole',
-  'representativeTemporaryHouseNo',
-  'representativeTemporaryAddressLocation',
-  'representativePermanentAddressLocation',
-  'representativeTemporaryAddressLocation',
+  'representativeContactNumber',
+  'representativePanNo',
+  'permanentRepresentativeAddress.provinceId',
+  'permanentRepresentativeAddress.districtId',
+  'permanentRepresentativeAddress.localGovernmentId',
+  'permanentRepresentativeAddress.wardNo',
+  'permanentRepresentativeAddress.locality',
+  'permanentRepresentativeAddress.houseNo',
+  'permanentRepresentativeAddress.coordinates',
+  'isPermanentAndTemporaryAddressSame',
+  'temporaryRepresentativeAddress.provinceId',
+  'temporaryRepresentativeAddress.districtId',
+  'temporaryRepresentativeAddress.localGovernmentId',
+  'temporaryRepresentativeAddress.wardNo',
+  'temporaryRepresentativeAddress.locality',
+  'temporaryRepresentativeAddress.houseNo',
+  'temporaryRepresentativeAddress.coordinates',
 ];
-const coopAddressDetails = ['economicDetailType', 'mainServiceProduct'];
+const coopAddressDetails = ['cooperativeTypeId', 'mainServiceProduct'];
 const numOfEmployee = [
   'noOfMaleEmployee',
-  'noOfFemaleEmloyee',
+  'noOfFemaleEmployee',
   'totalEmployee',
 ];
 const cooperativeDate = ['lastAuditDate', 'lastAgmDate'];
@@ -83,6 +80,7 @@ const assets = [
   'loan',
   'currentAssets',
   'nonCurrentAssets',
+  'otherNonCurrentAssets',
   'totalAssets',
 ];
 
@@ -105,17 +103,20 @@ const accountOperatorDetail = [
   'accountOperatorCoop',
 ];
 
-const accountHolderDeclaration = [
-  'passportSizePhoto',
-  'signaturePhoto',
-  'citizenshipPhoto',
-  'fingerprintPhoto',
-  'citizenshipPhoto',
+const documentDeclaration = [
+  'agmBodDecisionDocument',
+  'registeredCertificate',
+  'moaAoa',
+  'panCertificate',
+  'taxClearance',
+  'latestAuditReport',
+  'logo',
+  'minuteOfCentralRep',
 ];
 
-const documentDeclaration = [
+const accountHolderDeclaration = [
   'accountHoldersName',
-  'Signature',
+  'accountHolderSignature',
   'accountHolderStamp',
 ];
 
