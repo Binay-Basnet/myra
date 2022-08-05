@@ -28,6 +28,7 @@ import {
 
 import {
   SERVICE_ICON_DICT,
+  SERVICE_LINK_DICT,
   UTILITY_ICON_DICT,
 } from '../constants/SERVICE_ICON';
 
@@ -36,8 +37,7 @@ export function EbankingHomePage() {
   const { isOpen, onToggle } = useDisclosure();
 
   const { data: servicesList, isLoading } = useGetHomeServiceListQuery();
-  const { data: utilityList, isLoading: utilityLoading } =
-    useGetUtilityListQuery();
+  const { data: utilityList } = useGetUtilityListQuery();
   const { data: accountList, isLoading: accountsLoading } =
     useGetAccountListQuery();
   const { data: transactionList } = useGetRecentTransactionsQuery();
@@ -77,6 +77,10 @@ export function EbankingHomePage() {
               cursor="pointer"
               tabIndex={0}
               key={service?.id}
+              onClick={() => {
+                service?.service_id &&
+                  router.push(SERVICE_LINK_DICT[service?.service_id]);
+              }}
             >
               <Icon
                 as={
@@ -107,7 +111,7 @@ export function EbankingHomePage() {
             rowGap="s16"
             columnGap="s16"
           >
-            {utilityPayments.slice(0, 10).map((utilityPayment, index) => {
+            {utilityPayments.slice(0, 10).map((utilityPayment) => {
               return (
                 <UtilityHomeCard
                   icon={
@@ -129,7 +133,7 @@ export function EbankingHomePage() {
             >
               {utilityPayments
                 .slice(10, utilityPayments.length)
-                .map((utilityPayment, index) => {
+                .map((utilityPayment) => {
                   return (
                     <UtilityHomeCard
                       icon={

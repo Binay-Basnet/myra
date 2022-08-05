@@ -25,7 +25,6 @@ export interface SelectProps
 }
 
 export function Select({
-  size,
   errorText,
   helperText,
   isMulti,
@@ -50,6 +49,11 @@ export function Select({
         </TextFields>
       )}
       <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
+        key={
+          !isMulti
+            ? `my_unique_select_key__${JSON.stringify(value)}`
+            : 'isMulti'
+        }
         onMenuClose={() => {
           if (isMulti) {
             setSortedOptions((prev) =>

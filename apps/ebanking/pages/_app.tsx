@@ -44,7 +44,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
       </Head>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
-          {getLayout(<Component {...pageProps} />)}
+          <main>{getLayout(<Component {...pageProps} />)}</main>
         </ChakraProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>

@@ -9,6 +9,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { Grid } from '@chakra-ui/react';
 
 import {
+  Id_Type,
   useGetMemberTypesQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
@@ -116,6 +117,7 @@ const memberTypesArray = {
 export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
   const router = useRouter();
   const newId = useGetNewIdMutation();
+
   const memberTypesQuery = useGetMemberTypesQuery();
 
   const { t } = useTranslation();
@@ -181,7 +183,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                       onClick={() => {
                         item === 'INDIVIDUAL' &&
                           newId
-                            .mutateAsync({})
+                            .mutateAsync({ idType: Id_Type.Kymindividual })
                             .then((res) =>
                               router.push(
                                 `/members/individual/add/${res?.newId}`
@@ -190,7 +192,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
 
                         item === 'INSTITUTION' &&
                           newId
-                            .mutateAsync({})
+                            .mutateAsync({ idType: Id_Type.Kyminstitutions })
                             .then((res) =>
                               router.push(
                                 `/members/institution/add/${res?.newId}`
@@ -199,13 +201,15 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
 
                         item === 'COOPERATIVE' &&
                           newId
-                            .mutateAsync({})
+                            .mutateAsync({ idType: Id_Type.Kymcooperative })
                             .then((res) =>
                               router.push(`/members/coop/add/${res?.newId}`)
                             );
                         item === 'COOPERATIVE_UNION' &&
                           newId
-                            .mutateAsync({})
+                            .mutateAsync({
+                              idType: Id_Type.Kymcooperativeunion,
+                            })
                             .then((res) =>
                               router.push(
                                 `/members/coop_union/add/${res?.newId}`

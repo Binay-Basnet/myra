@@ -7233,7 +7233,9 @@ export type SetDeclarationDataMutation = {
   };
 };
 
-export type GetNewIdMutationVariables = Exact<{ [key: string]: never }>;
+export type GetNewIdMutationVariables = Exact<{
+  idType?: InputMaybe<Id_Type>;
+}>;
 
 export type GetNewIdMutation = { newId: string };
 
@@ -9322,6 +9324,23 @@ export type GetCooperativeKymOptionsQuery = {
   };
 };
 
+export type GetCoopUnionKymOptionsQueryVariables = Exact<{
+  searchTerm: FormFieldSearchTerm;
+}>;
+
+export type GetCoopUnionKymOptionsQuery = {
+  form: {
+    options: {
+      predefined?: {
+        data?: Array<{
+          id: string;
+          name: Record<'local' | 'en' | 'np', string>;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
@@ -11013,8 +11032,8 @@ export const useSetDeclarationDataMutation = <
     options
   );
 export const GetNewIdDocument = `
-    mutation getNewId {
-  newId
+    mutation getNewId($idType: ID_TYPE) {
+  newId(idType: $idType)
 }
     `;
 export const useGetNewIdMutation = <TError = unknown, TContext = unknown>(
@@ -14345,6 +14364,34 @@ export const useGetCooperativeKymOptionsQuery = <
       GetCooperativeKymOptionsQuery,
       GetCooperativeKymOptionsQueryVariables
     >(GetCooperativeKymOptionsDocument).bind(null, variables),
+    options
+  );
+export const GetCoopUnionKymOptionsDocument = `
+    query getCoopUnionKYMOptions($searchTerm: FormFieldSearchTerm!) {
+  form {
+    options {
+      predefined(filter: {searchTerm: $searchTerm, category: KYM_COOP_UNION}) {
+        data {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopUnionKymOptionsQuery = <
+  TData = GetCoopUnionKymOptionsQuery,
+  TError = unknown
+>(
+  variables: GetCoopUnionKymOptionsQueryVariables,
+  options?: UseQueryOptions<GetCoopUnionKymOptionsQuery, TError, TData>
+) =>
+  useQuery<GetCoopUnionKymOptionsQuery, TError, TData>(
+    ['getCoopUnionKYMOptions', variables],
+    useAxios<GetCoopUnionKymOptionsQuery, GetCoopUnionKymOptionsQueryVariables>(
+      GetCoopUnionKymOptionsDocument
+    ).bind(null, variables),
     options
   );
 export const GetMemberListDocument = `

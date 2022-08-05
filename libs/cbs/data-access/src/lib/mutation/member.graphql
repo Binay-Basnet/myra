@@ -1,5 +1,5 @@
-mutation getNewId {
-  newId
+mutation getNewId($idType: ID_TYPE) {
+  newId(idType: $idType)
 }
 
 mutation setMemberData($id: ID!, $data: KymIndMemberInput!) {

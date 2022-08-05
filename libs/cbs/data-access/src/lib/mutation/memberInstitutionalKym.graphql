@@ -1,7 +1,3 @@
-mutation getNewId {
-  newId
-}
-
 mutation setInstitutionData($id: ID!, $data: KymInsInput!) {
   members {
     institution(id: $id) {
