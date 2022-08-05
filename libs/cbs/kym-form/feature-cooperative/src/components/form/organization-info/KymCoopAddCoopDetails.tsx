@@ -1,7 +1,11 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { KymCooperativeFormInput } from '@coop/cbs/data-access';
+import {
+  FormFieldSearchTerm,
+  KymCooperativeFormInput,
+  useGetCooperativeKymOptionsQuery,
+} from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
@@ -11,6 +15,7 @@ import { Text } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
+import { getFieldOption } from '../../../utils/getFieldOption';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
@@ -20,7 +25,11 @@ export const KymCoopAddCoopDetails = (props: IProps) => {
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
   });
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+
+  const { data: cooperativeTypeFields } = useGetCooperativeKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.CooperativeType,
+  });
+
   useCooperative({ methods });
 
   return (
@@ -47,10 +56,7 @@ export const KymCoopAddCoopDetails = (props: IProps) => {
               name="cooperativeTypeId"
               label={t['kymCoopType']}
               placeholder={t['kymCoopSelectType']}
-              options={[
-                { label: 'Economy', value: 'economy' },
-                { label: 'Maths', value: 'maths' },
-              ]}
+              options={getFieldOption(cooperativeTypeFields)}
             />
             <FormInput
               type="text"
