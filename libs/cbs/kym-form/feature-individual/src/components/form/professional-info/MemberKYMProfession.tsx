@@ -43,7 +43,9 @@ export const MemberKYMProfession = ({
       searchTerm: FormFieldSearchTerm.Occupation,
     });
 
-  const { mutate } = useSetMemberDataMutation({ onSuccess: () => refetch() });
+  const { mutateAsync } = useSetMemberDataMutation({
+    onSuccess: () => refetch(),
+  });
 
   const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
     {
@@ -67,7 +69,7 @@ export const MemberKYMProfession = ({
     const subscription = watch(
       debounce((data) => {
         if (id) {
-          mutate({ id: String(id), data });
+          mutateAsync({ id: String(id), data }).then(() => refetch());
         }
       }, 800)
     );

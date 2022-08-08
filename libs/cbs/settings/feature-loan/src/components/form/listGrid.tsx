@@ -107,6 +107,20 @@ export const GridItems = () => {
     };
   });
 
+  const EthnicityList = ethnicityOptions?.map((item) => {
+    return {
+      label: item?.name.local,
+      value: item?.id,
+    };
+  });
+
+  const OccupationOptions = occupationalOptions?.map((item) => {
+    return {
+      label: item?.name.local,
+      value: item?.id,
+    };
+  });
+
   const InstituitionList = institutionOptions?.map((item) => {
     return {
       label: item?.name.local,
@@ -122,20 +136,6 @@ export const GridItems = () => {
   });
 
   const CoopUnionList = coopUnionOptions?.map((item) => {
-    return {
-      label: item?.name.local,
-      value: item?.id,
-    };
-  });
-
-  const EthnicityList = ethnicityOptions?.map((item) => {
-    return {
-      label: item?.name.local,
-      value: item?.id,
-    };
-  });
-
-  const OccupationOptions = occupationalOptions?.map((item) => {
     return {
       label: item?.name.local,
       value: item?.id,

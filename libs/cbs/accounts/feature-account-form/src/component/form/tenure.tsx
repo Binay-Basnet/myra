@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { FrequencyTenure } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText } from '@coop/shared/components';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
@@ -10,19 +11,19 @@ import { useTranslation } from '@coop/shared/utils';
 const unitOptions = [
   {
     label: 'Day',
-    value: 'Day',
+    value: FrequencyTenure.Day,
   },
   {
     label: 'Week',
-    value: 'Week',
+    value: FrequencyTenure.Week,
   },
   {
     label: 'Month',
-    value: 'Month',
+    value: FrequencyTenure.Month,
   },
   {
     label: 'Year',
-    value: 'Year',
+    value: FrequencyTenure.Year,
   },
 ];
 
@@ -32,7 +33,7 @@ export const Tenure = () => {
 
   const { resetField, watch } = useFormContext();
 
-  const tenureUnit = watch('tenureUnit');
+  const tenureUnit = watch('tenure');
 
   useEffect(() => {
     resetField('tenureUnitFrequency');
@@ -71,11 +72,12 @@ export const Tenure = () => {
           >
             <Box display={'flex'} flexDirection="column" gap="s4">
               <SubHeadingText>{t['accountOpenUnit']} </SubHeadingText>
-              <FormSwitchTab name={'tenureUnit'} options={unitOptions} />
+              <FormSwitchTab name={'tenure'} options={unitOptions} />
             </Box>
             <Box w="290px">
               <FormInput
-                name="tenureUnitFrequency"
+                type="number"
+                name="tenureNumber"
                 textAlign={'right'}
                 label={t['accountOpenNumber']}
                 placeholder="0"

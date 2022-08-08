@@ -3,7 +3,6 @@ import { GlobalHotKeys } from 'react-hotkeys';
 import { BiBell } from 'react-icons/bi';
 import { BsArrowRight } from 'react-icons/bs';
 import { CgMenuGridO } from 'react-icons/cg';
-import { IoArrowForwardOutline } from 'react-icons/io5';
 import { RiHistoryFill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
@@ -75,10 +74,9 @@ const closingDate = format(new Date(), 'yyyy-MM-dd');
 //     );
 //   }
 // );
-export function TopLevelHeader(props: TopLevelHeaderProps) {
+export function TopLevelHeader() {
   const { t } = useTranslation();
   const router = useRouter();
-  const [isClose, setIsClose] = useState(true);
   const [numLines, setNumLines] = useState([1, 2]);
   const dispatch = useDispatch();
 
@@ -120,9 +118,9 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
+  // const handleModalOpen = () => {
+  //   setIsModalOpen(true);
+  // };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -304,7 +302,7 @@ export function TopLevelHeader(props: TopLevelHeaderProps) {
             />
 
             <Popover placement="bottom-end" gutter={3}>
-              {({ isOpen }) => (
+              {() => (
                 <>
                   <PopoverTrigger>
                     <IconButton

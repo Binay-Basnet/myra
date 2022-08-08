@@ -1,11 +1,20 @@
-import { Control, Controller, Path, useFormContext } from 'react-hook-form';
-import { UseControllerProps } from 'react-hook-form/dist/types/controller';
+import { useEffect } from 'react';
+import {
+  Control,
+  Controller,
+  FieldValues,
+  useFormContext,
+} from 'react-hook-form';
+import {
+  ControllerRenderProps,
+  UseControllerProps,
+} from 'react-hook-form/dist/types/controller';
 
 import { Select, SelectProps } from '@coop/shared/ui';
 
 interface IFormSelectProps<T> extends SelectProps {
   control?: Control<T>;
-  name: Path<T>;
+  name: string;
   rules?: UseControllerProps['rules'];
 }
 
@@ -14,11 +23,9 @@ interface Option {
   value: string;
 }
 
-export const FormSelect = <T,>({
-  name,
-  options,
-  ...rest
-}: IFormSelectProps<T>) => {
+export const FormSelect = <T,>(props: IFormSelectProps<T>) => {
+  const { name, ...rest } = props;
+
   const methods = useFormContext();
   const {
     formState: { errors },
@@ -30,25 +37,55 @@ export const FormSelect = <T,>({
       control={formControl}
       rules={rest.rules}
       name={name}
-      render={({ field: { onChange, value } }) => {
-        const foundValue = options?.find((option) => option.value === value);
-        return (
-          <Select
-            errorText={errors[name]?.message}
-            options={options}
-            value={rest.isMulti ? value : foundValue}
-            inputId={name}
-            {...rest}
-            onChange={(newValue: Option | Option[]) => {
-              if (Array.isArray(newValue)) {
-                onChange(newValue);
-              } else {
-                const { value } = newValue as Option;
-                onChange(value);
-              }
-            }}
-          />
-        );
+      render={({ field }) => {
+        return <FormControl field={field} errors={errors} {...props} />;
+      }}
+    />
+  );
+};
+
+interface FormControlProps<T> extends IFormSelectProps<T> {
+  errors: any;
+  field: ControllerRenderProps<FieldValues, string>;
+}
+
+const FormControl = <T,>({
+  name,
+  options,
+  errors,
+  field: { onChange, value },
+  ...rest
+}: FormControlProps<T>) => {
+  const foundValue = options?.find((option) => option.value === value);
+
+  const filteredValue = rest.isMulti
+    ? options?.filter(
+        (option) =>
+          value?.some((v: Option) => v?.value === option.value) ||
+          value?.includes(option?.value)
+      )
+    : [];
+
+  useEffect(() => {
+    if (rest.isMulti) {
+      onChange(filteredValue);
+    }
+  }, []);
+
+  return (
+    <Select
+      errorText={errors[name]?.message}
+      options={options}
+      value={rest.isMulti ? filteredValue : foundValue}
+      inputId={name}
+      {...rest}
+      onChange={(newValue: Option | Option[]) => {
+        if (Array.isArray(newValue)) {
+          onChange(newValue);
+        } else {
+          const { value } = newValue as Option;
+          onChange(value);
+        }
       }}
     />
   );

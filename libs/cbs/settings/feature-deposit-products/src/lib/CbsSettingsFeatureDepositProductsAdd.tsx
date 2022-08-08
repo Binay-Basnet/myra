@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import {
   DepositProductInput,
   NatureOfDepositProduct,
+  PrematurePenaltyDateType,
   useGetDepositProductSettingsEditDataQuery,
   useSetDepositProductMutation,
 } from '@coop/cbs/data-access';
@@ -40,9 +41,6 @@ import {
   RequiredDocumentSetup,
   TypesOfMember,
 } from '../components/form';
-
-/* eslint-disable-next-line */
-export interface SettingsDepositProductsAddProps {}
 
 type SelectOption = {
   label: string;
@@ -99,6 +97,9 @@ export function SettingsDepositProductsAdd() {
       nature: NatureOfDepositProduct.RecurringSaving,
       minTenureUnitNumber: 0,
       maxTenureUnitNumber: 0,
+      prematurePenalty: {
+        penaltyDateType: PrematurePenaltyDateType.EffectiveDaysFromStart,
+      },
     },
   });
 
@@ -107,6 +108,7 @@ export function SettingsDepositProductsAdd() {
 
   const submitForm = () => {
     const values = getValues();
+
     const genderList = values?.genderId?.map((data) => data?.value);
     const maritalStatusList = values?.maritalStatusId?.map(
       (data) => data?.value
@@ -183,6 +185,7 @@ export function SettingsDepositProductsAdd() {
     if (editValues) {
       const editValueData =
         editValues?.settings?.general?.depositProduct?.formState?.data;
+
       if (editValueData) {
         reset({
           ...(editValueData as unknown as DepositForm),
