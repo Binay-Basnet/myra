@@ -3,9 +3,8 @@ import { useRouter } from 'next/router';
 import format from 'date-fns/format';
 
 import { useGetShareHistoryQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
-// import { amountConverter } from '../../../../../util/src/utilFunctions/amountFunc';
+import { Column, Table } from '@coop/shared/table';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type shareHistoryProps = {
   id: string;
@@ -23,30 +22,33 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: t['sn'],
-        accessor: 'node.id',
-        width: '2',
-        Cell: ({ row }) => {
-          return <span>{Number(row?.id) + 1}</span>;
+        header: t['sn'],
+        accessorFn: (row) => row?.node?.id,
+      },
+
+      {
+        header: t['sharePurchaseTableDate'],
+        accessorFn: (row) => row?.node?.transactionDate,
+        cell: (props) => {
+          return (
+            <span>{format(new Date(props.getValue()), 'yyyy-mm-dd')}</span>
+          );
         },
       },
 
       {
-        Header: t['sharePurchaseTableDate'],
-        accessor: 'node.transactionDate',
-        Cell: ({ value }) => {
-          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
-        },
+        header: t['sharePurchaseNoOfShares'],
+        accessorFn: (row) => row?.node?.endNumber,
       },
 
       {
-        Header: t['sharePurchaseTableShareNumber'],
-        accessor: 'node.startNumber',
+        header: t['sharePurchaseTableShareNumber'],
+        accessorFn: (row) => row?.node?.startNumber,
 
-        Cell: ({ value, row }) => {
+        cell: (props) => {
           return (
             <span>
-              {value} to {row?.original?.node?.endNumber}
+              {props.getValue()} to {props?.row?.original?.node?.endNumber}
             </span>
           );
         },
@@ -54,50 +56,55 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
 
       {
         id: 'share-dr',
-        Header: t['sharePurchaseTableShareDr'],
-        accessor: 'node.debit',
+        header: t['sharePurchaseTableShareDr'],
+        accessorFn: (row) => row?.node?.debit,
         isNumeric: true,
 
-        Cell: ({ value, row }) => {
+        cell: (props) => {
           return (
-            <span> {value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
+            <span>
+              {props.getValue() ? `${amountConverter(props.getValue())}` : '-'}
+            </span>
           );
         },
       },
       {
         id: 'share-cr',
-        Header: t['sharePurchaseTableShareCr'],
+        header: t['sharePurchaseTableShareCr'],
         isNumeric: true,
-        accessor: 'node.credit',
-        Cell: ({ value, row }) => {
+        accessorFn: (row) => row?.node?.credit,
+        cell: (props) => {
           return (
-            <span> {value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
+            <span>
+              {' '}
+              {props.getValue() ? `${amountConverter(props.getValue())}` : '-'}
+            </span>
           );
         },
       },
       {
-        Header: t['sharePurchaseTableBalance'],
-        accessor: 'node.balance',
+        header: t['sharePurchaseTableBalance'],
+        accessorFn: (row) => row?.node?.balance,
         isNumeric: true,
-        Cell: ({ value }) => {
-          return <span>{value.toLocaleString('en-IN')}</span>;
+        cell: (props) => {
+          return <span>{amountConverter(props.getValue())}</span>;
         },
-        Footer: (props) => {
-          return (
-            <div>
-              Rs.{' '}
-              {props.rows
-                .reduce(
-                  (sum, row) => Number(row.original.node.balance) + sum,
-                  0
-                )
-                .toLocaleString('en-IN')}
-            </div>
-          );
-        },
+        // Footer: (props) => {
+        //   return (
+        //     <div>
+        //       Rs.{' '}
+        //       {props.rows
+        //         .reduce(
+        //           (sum, row) => Number(row.original.node.balance) + sum,
+        //           0
+        //         )
+        //         .toLocaleString('en-IN')}
+        //     </div>
+        //   );
+        // },
       },
     ],
-    [router.locale]
+    [router, t]
   );
 
   return (
@@ -107,7 +114,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       isLoading={isFetching}
       data={rowData ?? []}
       columns={columns}
-      showFooters={true}
+      // showFooters={true}
     />
   );
 };

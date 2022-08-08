@@ -88,6 +88,12 @@
       "@coop/cbs/settings/valuator": [
         "libs/cbs/settings/feature-valuator/src/index.ts"
       ],
+      "@coop/cbs/share": [
+        "libs/cbs/share/features-share-purchase/src/index.ts"
+      ],
+      "@coop/cbs/share-return": [
+        "libs/cbs/share/features-share-return/src/index.ts"
+      ],
       "@coop/ebanking/accounts": [
         "libs/ebanking/feature-accounts/src/index.ts"
       ],

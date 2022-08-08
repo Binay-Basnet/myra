@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/share/features-share-purchase",
+  "sourceRoot": "libs/cbs/share/features-share-purchase/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/share/features-share-purchase/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/share/features-share-purchase"],
+      "options": {
+        "jestConfig": "libs/cbs/share/features-share-purchase/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
