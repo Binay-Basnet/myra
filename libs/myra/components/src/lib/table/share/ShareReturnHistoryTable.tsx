@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import format from 'date-fns/format';
 
 import { useGetShareHistoryQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Column, Table } from '@coop/shared/table';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type memberIdProp = {
   id: string;
@@ -19,30 +19,33 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: t['sn'],
-        accessor: 'node.id',
-        width: '2',
-        Cell: ({ row }) => {
-          return <span>{Number(row?.id) + 1}</span>;
+        header: t['sn'],
+        accessorFn: (row) => row?.node?.id,
+      },
+
+      {
+        header: t['shareReturnTableDate'],
+        accessorFn: (row) => row?.node?.transactionDate,
+        cell: (props) => {
+          return (
+            <span>{format(new Date(props.getValue()), 'yyyy-mm-dd')}</span>
+          );
         },
       },
 
       {
-        Header: t['shareReturnTableDate'],
-        accessor: 'node.transactionDate',
-        Cell: ({ value }) => {
-          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
-        },
+        header: t['shareReturnNoOfShares'],
+        accessorFn: (row) => row?.node?.endNumber,
       },
 
       {
-        Header: t['shareReturnTableShareNumber'],
-        accessor: 'node.startNumber',
+        header: t['shareReturnTableShareNumber'],
+        accessorFn: (row) => row?.node?.startNumber,
 
-        Cell: ({ value, row }) => {
+        cell: (props) => {
           return (
             <span>
-              {value} to {row?.original?.node?.endNumber}
+              {props.getValue()} to {props?.row?.original?.node?.endNumber}
             </span>
           );
         },
@@ -50,50 +53,55 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
 
       {
         id: 'share-dr',
-        Header: t['shareReturnTableShareDr'],
-        accessor: 'node.debit',
+        header: t['shareReturnTableShareDr'],
+        accessorFn: (row) => row?.node?.debit,
         isNumeric: true,
 
-        Cell: ({ value, row }) => {
+        cell: (props) => {
           return (
-            <span>{value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
+            <span>
+              {props.getValue() ? `${amountConverter(props.getValue())}` : '-'}
+            </span>
           );
         },
       },
       {
         id: 'share-cr',
-        Header: t['shareReturnTableShareCr'],
+        header: t['shareReturnTableShareCr'],
         isNumeric: true,
-        accessor: 'node.credit',
-        Cell: ({ value, row }) => {
+        accessorFn: (row) => row?.node?.credit,
+        cell: (props) => {
           return (
-            <span> {value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
+            <span>
+              {' '}
+              {props.getValue() ? `${amountConverter(props.getValue())}` : '-'}
+            </span>
           );
         },
       },
       {
-        Header: t['shareReturnTableBalance'],
-        accessor: 'node.balance',
+        header: t['shareReturnTableBalance'],
+        accessorFn: (row) => row?.node?.balance,
         isNumeric: true,
-        Cell: ({ value }) => {
-          return <span>{value.toLocaleString('en-IN')}</span>;
+        cell: (props) => {
+          return <span>{amountConverter(props.getValue())}</span>;
         },
-        Footer: (props) => {
-          return (
-            <div>
-              Rs.{' '}
-              {props.rows
-                .reduce(
-                  (sum, row) => Number(row.original.node.balance) + sum,
-                  0
-                )
-                .toLocaleString('en-IN')}
-            </div>
-          );
-        },
+        // Footer: (props) => {
+        //   return (
+        //     <div>
+        //       Rs.{' '}
+        //       {props.rows
+        //         .reduce(
+        //           (sum, row) => Number(row.original.node.balance) + sum,
+        //           0
+        //         )
+        //         .toLocaleString('en-IN')}
+        //     </div>
+        //   );
+        // },
       },
     ],
-    [router.locale]
+    [router, t]
   );
 
   return (
@@ -102,7 +110,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
       isLoading={isFetching}
       data={rowData ?? []}
       columns={columns}
-      showFooters={true}
+      // showFooters={true}
     />
   );
 };

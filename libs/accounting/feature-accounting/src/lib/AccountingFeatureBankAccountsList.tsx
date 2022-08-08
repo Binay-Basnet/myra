@@ -2,18 +2,13 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { PopoverComponent } from '@coop/myra/components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-/* eslint-disable-next-line */
-export interface AccountingFeatureBankAccountsListProps {}
-
-export function AccountingFeatureBankAccountsList(
-  props: AccountingFeatureBankAccountsListProps
-) {
+export function AccountingFeatureBankAccountsList() {
   const { t } = useTranslation();
 
   const router = useRouter();

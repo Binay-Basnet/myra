@@ -1,6 +1,13 @@
-query getMemberList($objState: ObjState, $pagination: Pagination) {
+query getMemberList(
+  $objState: ObjState
+  $pagination: Pagination
+  $query: String
+) {
   members {
-    list(pagination: $pagination, filter: { objState: $objState }) {
+    list(
+      pagination: $pagination
+      filter: { objState: $objState, query: $query }
+    ) {
       totalCount
       edges {
         node {

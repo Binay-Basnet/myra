@@ -41,9 +41,6 @@ import {
   TypesOfMember,
 } from '../components/form';
 
-/* eslint-disable-next-line */
-export interface SettingsDepositProductsAddProps {}
-
 type SelectOption = {
   label: string;
   value: string;

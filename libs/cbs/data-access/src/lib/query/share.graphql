@@ -3,7 +3,6 @@ query getShareBalanceList {
     balance {
       edges {
         node {
-          id
           balance
           count
           member {
@@ -26,7 +25,6 @@ query getShareRegisterList {
         node {
           transactionDate
           transactionDirection
-          id
           member {
             name
           }
@@ -50,11 +48,9 @@ query getShareHistory($memberId: String!) {
     ) {
       edges {
         node {
-          id
           member {
             id
           }
-
           transactionDate
           transactionDirection
           startNumber

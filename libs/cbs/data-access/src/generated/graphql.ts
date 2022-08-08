@@ -652,6 +652,16 @@ export type CitizenshipInNepali = {
   issuePlace?: Maybe<Scalars['String']>;
 };
 
+export type CollateralListData = {
+  enabled?: Maybe<Scalars['Boolean']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type CollateralListInputData = {
+  enabled?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export enum ComparatorType {
   EqualTo = 'EqualTo',
   GreaterThan = 'GreaterThan',
@@ -3082,6 +3092,7 @@ export type GeneralSettingsMutation = {
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
   deposit?: Maybe<DepositSettingsMutation>;
   depositProduct?: Maybe<DepositProductSettingsMutation>;
+  loan?: Maybe<LoanSettingsMutation>;
   loanProducts?: Maybe<LoanProductsMutation>;
   organization?: Maybe<OrganizationSettingsMutation>;
   valuator?: Maybe<ValuatorSettingsMutation>;
@@ -3093,6 +3104,7 @@ export type GeneralSettingsQuery = {
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
   deposit?: Maybe<DepositSettingsQuery>;
   depositProduct?: Maybe<DepositProductSettingsQuery>;
+  loan?: Maybe<LoanSettingsQuery>;
   loanProducts?: Maybe<LoanProductsQuery>;
   organization?: Maybe<OrganizationSettingsQuery>;
   valuator?: Maybe<ValuatorSettingsQuery>;
@@ -5464,6 +5476,61 @@ export type Level2HelloArgs = {
   data: ExampleInput;
 };
 
+export type LoanGeneralSettings = {
+  /** accepted collateral list */
+  collateralList?: Maybe<Array<Maybe<CollateralListData>>>;
+  /**  loan repayment  */
+  emi?: Maybe<Scalars['Boolean']>;
+  epi?: Maybe<Scalars['Boolean']>;
+  flat?: Maybe<Scalars['Boolean']>;
+};
+
+export type LoanGeneralSettingsInput = {
+  /** accepted collateral list */
+  collateralList?: InputMaybe<Array<InputMaybe<CollateralListInputData>>>;
+  /**  loan repayment  */
+  emi?: InputMaybe<Scalars['Boolean']>;
+  epi?: InputMaybe<Scalars['Boolean']>;
+  flat?: InputMaybe<Scalars['Boolean']>;
+};
+
+export enum LoanInsurancePaymentType {
+  Amount = 'AMOUNT',
+  Percentage = 'PERCENTAGE',
+}
+
+export type LoanInsuranceScheme = {
+  id: Scalars['ID'];
+  insuranceCompany?: Maybe<Scalars['String']>;
+  insurancePremiumPercent?: Maybe<Scalars['Float']>;
+  maxAmount?: Maybe<Scalars['String']>;
+  maxPercent?: Maybe<Scalars['Float']>;
+  minAmount?: Maybe<Scalars['String']>;
+  minPercent?: Maybe<Scalars['Float']>;
+  paymentFrequency?: Maybe<Frequency>;
+  paymentType?: Maybe<LoanInsurancePaymentType>;
+  schemeName?: Maybe<Scalars['String']>;
+};
+
+export type LoanInsuranceSchemeInput = {
+  id?: InputMaybe<Scalars['String']>;
+  insuranceCompany?: InputMaybe<Scalars['String']>;
+  insurancePremiumPercent?: InputMaybe<Scalars['Float']>;
+  maxAmount?: InputMaybe<Scalars['String']>;
+  maxPercent?: InputMaybe<Scalars['Float']>;
+  minAmount?: InputMaybe<Scalars['String']>;
+  minPercent?: InputMaybe<Scalars['Float']>;
+  paymentFrequency?: InputMaybe<Frequency>;
+  paymentType?: InputMaybe<LoanInsurancePaymentType>;
+  schemeName?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanNatureOfProductInput = {
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  natureOfProduct?: InputMaybe<Scalars['String']>;
+};
+
 export enum LoanPaymentInstallmentType {
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
@@ -5662,6 +5729,12 @@ export enum LoanProductSubType {
   YouthSelfEmployment = 'YOUTH_SELF__EMPLOYMENT',
 }
 
+export type LoanProductSubTypeInput = {
+  id?: InputMaybe<Scalars['ID']>;
+  productSubType?: InputMaybe<Scalars['String']>;
+  productTypeID?: InputMaybe<Scalars['ID']>;
+};
+
 export enum LoanProductType {
   Agriculture = 'AGRICULTURE',
   AlternativeEnergy = 'ALTERNATIVE_ENERGY',
@@ -5676,6 +5749,12 @@ export enum LoanProductType {
   SocialSector = 'SOCIAL_SECTOR',
   Staff = 'STAFF',
 }
+
+export type LoanProductTypeInput = {
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  productType?: InputMaybe<Scalars['String']>;
+};
 
 export type LoanProductsMutation = {
   upsert?: Maybe<LoanProductsResult>;
@@ -5719,6 +5798,71 @@ export enum LoanRequiredDocuments {
   LoanChangeDocument = 'LOAN_CHANGE_DOCUMENT',
   PolicyDocument = 'POLICY_DOCUMENT',
 }
+
+export type LoanSettingsMutation = {
+  general?: Maybe<LoanSettingsResult>;
+  insuranceScheme?: Maybe<LoanSettingsResult>;
+  productType?: Maybe<LoanSettingsResult>;
+};
+
+export type LoanSettingsMutationGeneralArgs = {
+  data?: InputMaybe<LoanGeneralSettingsInput>;
+};
+
+export type LoanSettingsMutationInsuranceSchemeArgs = {
+  data?: InputMaybe<Array<InputMaybe<LoanInsuranceSchemeInput>>>;
+};
+
+export type LoanSettingsMutationProductTypeArgs = {
+  data?: InputMaybe<LoanSettingsProductTypeInput>;
+};
+
+export type LoanSettingsNatureOfProductData = {
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  natureOfProduct?: Maybe<Scalars['String']>;
+};
+
+export type LoanSettingsProductSubTypeData = {
+  id?: Maybe<Scalars['ID']>;
+  productSubType?: Maybe<Scalars['String']>;
+  productTypeID?: Maybe<Scalars['ID']>;
+};
+
+export type LoanSettingsProductType = {
+  natureOfProduct?: Maybe<Array<Maybe<LoanSettingsNatureOfProductData>>>;
+  productSubTypes?: Maybe<Array<Maybe<LoanSettingsProductSubTypeData>>>;
+  productTypes?: Maybe<Array<Maybe<LoanSettingsProductTypeData>>>;
+};
+
+export type LoanSettingsProductTypeProductSubTypesArgs = {
+  productTypeID?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanSettingsProductTypeData = {
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  productType?: Maybe<Scalars['String']>;
+};
+
+export type LoanSettingsProductTypeInput = {
+  natureOfProduct?: InputMaybe<Array<InputMaybe<LoanNatureOfProductInput>>>;
+  productSubTypes?: InputMaybe<Array<InputMaybe<LoanProductSubTypeInput>>>;
+  productTypes?: InputMaybe<Array<InputMaybe<LoanProductTypeInput>>>;
+};
+
+export type LoanSettingsQuery = {
+  general?: Maybe<LoanGeneralSettings>;
+  insuranceSchemes?: Maybe<Array<Maybe<LoanInsuranceScheme>>>;
+  productType?: Maybe<LoanSettingsProductType>;
+};
+
+export type LoanSettingsResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<LoanSettingsQuery>;
+  record?: Maybe<LoanSettingsQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
 
 export type LocalizationExample = {
   name?: Maybe<Scalars['Localized']>;
@@ -6518,10 +6662,10 @@ export type SharePurchaseInput = {
   accountId?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['String']>;
   extraFee?: InputMaybe<Array<InputMaybe<ShareExtraChargesInput>>>;
-  memberId?: InputMaybe<Scalars['String']>;
+  memberId: Scalars['String'];
   paymentMode?: InputMaybe<Payment_Mode>;
   shareAmount?: InputMaybe<Scalars['Float']>;
-  shareCount?: InputMaybe<Scalars['Int']>;
+  shareCount: Scalars['Int'];
   totalAmount?: InputMaybe<Scalars['Float']>;
   voucherNumber?: InputMaybe<Scalars['String']>;
 };
@@ -6548,27 +6692,21 @@ export type ShareQueryRegisterArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
-export type ShareRegister = Base & {
+export type ShareRegister = {
   accountId?: Maybe<Scalars['String']>;
-  balance: Scalars['Int'];
+  balance?: Maybe<Scalars['Int']>;
   bankId?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Time'];
-  createdBy: Identity;
   credit?: Maybe<Scalars['Int']>;
   debit?: Maybe<Scalars['Int']>;
   endNumber: Scalars['Int'];
   extraFee?: Maybe<Array<Maybe<ShareExtraCharges>>>;
-  id: Scalars['ID'];
-  member: Member;
-  modifiedAt: Scalars['Time'];
-  modifiedBy: Identity;
-  objState: ObjState;
-  paymentMode: Payment_Mode;
+  member?: Maybe<Member>;
+  paymentMode?: Maybe<Payment_Mode>;
   shareAmount?: Maybe<Scalars['Float']>;
   startNumber: Scalars['Int'];
-  status: Share_Status;
+  status?: Maybe<Share_Status>;
   totalAmount?: Maybe<Scalars['Float']>;
-  transactionDate: Scalars['Date'];
+  transactionDate?: Maybe<Scalars['Date']>;
   transactionDirection: Share_Transaction_Direction;
   voucherNumber?: Maybe<Scalars['String']>;
 };
@@ -8010,32 +8148,7 @@ export type AddSharePurchaseMutationVariables = Exact<{
 }>;
 
 export type AddSharePurchaseMutation = {
-  share: {
-    purchase: {
-      recordId: string;
-      record?: {
-        id: string;
-        createdAt: string;
-        modifiedAt: string;
-        status: Share_Status;
-        transactionDate: string;
-        transactionDirection: Share_Transaction_Direction;
-        credit?: number | null;
-        debit?: number | null;
-        startNumber: number;
-        endNumber: number;
-        balance: number;
-        shareAmount?: number | null;
-        totalAmount?: number | null;
-        paymentMode: Payment_Mode;
-        bankId?: string | null;
-        voucherNumber?: string | null;
-        accountId?: string | null;
-        member: { id: string };
-        extraFee?: Array<{ name: string; value: number } | null> | null;
-      } | null;
-    };
-  };
+  share: { purchase: { recordId: string } };
 };
 
 export type AddShareReturnMutationVariables = Exact<{
@@ -8044,31 +8157,7 @@ export type AddShareReturnMutationVariables = Exact<{
 }>;
 
 export type AddShareReturnMutation = {
-  share: {
-    return: {
-      recordId: string;
-      record?: {
-        id: string;
-        createdAt: string;
-        modifiedAt: string;
-        status: Share_Status;
-        transactionDate: string;
-        transactionDirection: Share_Transaction_Direction;
-        credit?: number | null;
-        debit?: number | null;
-        startNumber: number;
-        endNumber: number;
-        balance: number;
-        shareAmount?: number | null;
-        totalAmount?: number | null;
-        paymentMode: Payment_Mode;
-        bankId?: string | null;
-        voucherNumber?: string | null;
-        accountId?: string | null;
-        member: { id: string };
-      } | null;
-    };
-  };
+  share: { return: { recordId: string } };
 };
 
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
@@ -9344,6 +9433,7 @@ export type GetCoopUnionKymOptionsQuery = {
 export type GetMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
+  query?: InputMaybe<Scalars['String']>;
 }>;
 
 export type GetMemberListQuery = {
@@ -9792,11 +9882,11 @@ export type GetBranchListQuery = {
                     };
                   } | null;
                   history?: Array<{
-                    status: Share_Status;
-                    transactionDate: string;
+                    status?: Share_Status | null;
+                    transactionDate?: string | null;
                     transactionDirection: Share_Transaction_Direction;
                     credit?: number | null;
-                    member: {
+                    member?: {
                       code: string;
                       type: KymMemberTypesEnum;
                       name?: Record<'local' | 'en' | 'np', string> | null;
@@ -9806,7 +9896,7 @@ export type GetBranchListQuery = {
                         state?: Record<'local' | 'en' | 'np', string> | null;
                         district?: Record<'local' | 'en' | 'np', string> | null;
                       } | null;
-                    };
+                    } | null;
                   } | null> | null;
                 } | null;
                 profile?:
@@ -10436,7 +10526,6 @@ export type GetShareBalanceListQuery = {
     balance?: {
       edges: Array<{
         node: {
-          id: string;
           balance: number;
           count: number;
           member: { name?: Record<'local' | 'en' | 'np', string> | null };
@@ -10456,16 +10545,17 @@ export type GetShareRegisterListQuery = {
     register?: {
       edges: Array<{
         node: {
-          transactionDate: string;
+          transactionDate?: string | null;
           transactionDirection: Share_Transaction_Direction;
-          id: string;
-          balance: number;
+          balance?: number | null;
           startNumber: number;
           shareAmount?: number | null;
           endNumber: number;
           credit?: number | null;
           debit?: number | null;
-          member: { name?: Record<'local' | 'en' | 'np', string> | null };
+          member?: {
+            name?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
         };
       }>;
     } | null;
@@ -10481,15 +10571,14 @@ export type GetShareHistoryQuery = {
     register?: {
       edges: Array<{
         node: {
-          id: string;
-          transactionDate: string;
+          transactionDate?: string | null;
           transactionDirection: Share_Transaction_Direction;
           startNumber: number;
           endNumber: number;
           credit?: number | null;
           debit?: number | null;
-          balance: number;
-          member: { id: string };
+          balance?: number | null;
+          member?: { id: string } | null;
         };
       }>;
     } | null;
@@ -12563,32 +12652,6 @@ export const AddSharePurchaseDocument = `
   share {
     purchase(id: $id, data: $data) {
       recordId
-      record {
-        id
-        createdAt
-        modifiedAt
-        member {
-          id
-        }
-        status
-        transactionDate
-        transactionDirection
-        credit
-        debit
-        startNumber
-        endNumber
-        balance
-        shareAmount
-        totalAmount
-        extraFee {
-          name
-          value
-        }
-        paymentMode
-        bankId
-        voucherNumber
-        accountId
-      }
     }
   }
 }
@@ -12621,28 +12684,6 @@ export const AddShareReturnDocument = `
   share {
     return(id: $id, data: $data) {
       recordId
-      record {
-        id
-        createdAt
-        modifiedAt
-        member {
-          id
-        }
-        status
-        transactionDate
-        transactionDirection
-        credit
-        debit
-        startNumber
-        endNumber
-        balance
-        shareAmount
-        totalAmount
-        paymentMode
-        bankId
-        voucherNumber
-        accountId
-      }
     }
   }
 }
@@ -14395,9 +14436,9 @@ export const useGetCoopUnionKymOptionsQuery = <
     options
   );
 export const GetMemberListDocument = `
-    query getMemberList($objState: ObjState, $pagination: Pagination) {
+    query getMemberList($objState: ObjState, $pagination: Pagination, $query: String) {
   members {
-    list(pagination: $pagination, filter: {objState: $objState}) {
+    list(pagination: $pagination, filter: {objState: $objState, query: $query}) {
       totalCount
       edges {
         node {
@@ -15794,7 +15835,6 @@ export const GetShareBalanceListDocument = `
     balance {
       edges {
         node {
-          id
           balance
           count
           member {
@@ -15834,7 +15874,6 @@ export const GetShareRegisterListDocument = `
         node {
           transactionDate
           transactionDirection
-          id
           member {
             name
           }
@@ -15875,7 +15914,6 @@ export const GetShareHistoryDocument = `
     ) {
       edges {
         node {
-          id
           member {
             id
           }
