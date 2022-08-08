@@ -1,11 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import {
+  Arrange,
   BranchCategory,
   useAllAdministrationQuery,
   useGetBranchEditDataQuery,
+  useGetMemberListQuery,
   useSetBranchDataMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -21,6 +23,7 @@ import {
 import {
   Box,
   Container,
+  DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
   GridItem,
@@ -28,9 +31,6 @@ import {
   TextFields,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-/* eslint-disable-next-line */
-export interface CbsSettingsFeatureBranchesNewProps {}
 
 export function CbsSettingsFeatureBranchesNew() {
   const router = useRouter();
@@ -49,6 +49,35 @@ export function CbsSettingsFeatureBranchesNew() {
 
   const { mutate } = useSetBranchDataMutation();
 
+  const { data: memberListData } = useGetMemberListQuery(
+    router.query['before']
+      ? {
+          pagination: {
+            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+            before: router.query['before'] as string,
+            order: {
+              column: 'ID',
+              arrange: Arrange.Desc,
+            },
+          },
+        }
+      : {
+          pagination: {
+            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+            after: (router.query['after'] ?? '') as string,
+            order: {
+              column: 'ID',
+              arrange: Arrange.Desc,
+            },
+          },
+        },
+    {
+      staleTime: 0,
+    }
+  );
+
+  const memberList = memberListData?.members?.list?.edges;
+
   const province = useMemo(() => {
     return (
       data?.administration?.all?.map((d) => ({
@@ -61,6 +90,7 @@ export function CbsSettingsFeatureBranchesNew() {
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('provinceId');
   const currentDistrictId = watch('districtId');
+  const currentLocalityId = watch('localGovernmentId');
 
   const districtList = useMemo(
     () =>
@@ -74,6 +104,11 @@ export function CbsSettingsFeatureBranchesNew() {
       districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
       [],
     [currentDistrictId]
+  );
+
+  const wardList = useMemo(
+    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
   );
 
   const booleanList = [
@@ -109,7 +144,6 @@ export function CbsSettingsFeatureBranchesNew() {
 
     const updatedValues = {
       ...values,
-      managerId: '123456789',
     };
     mutate(
       {
@@ -178,10 +212,14 @@ export function CbsSettingsFeatureBranchesNew() {
                       </InputGroupContainer>
 
                       <InputGroupContainer mt="s16">
-                        <FormInput
+                        <FormSelect
+                          name="managerId"
                           label={t['settingsBranchManagerName']}
                           placeholder={t['settingsBranchManagerName']}
-                          name="managerId"
+                          options={memberList?.map((d) => ({
+                            label: d?.node?.name?.local,
+                            value: d?.node?.id,
+                          }))}
                         />
                         <FormSelect
                           label={t['settingsBranchCategory']}
@@ -232,11 +270,14 @@ export function CbsSettingsFeatureBranchesNew() {
                               value: d.id,
                             }))}
                           />
-                          <FormInput
-                            type="number"
+                          <FormSelect
                             name="wardNo"
                             label={t['kymIndWardNo']}
                             placeholder={t['kymIndEnterWardNo']}
+                            options={wardList.map((d) => ({
+                              label: d,
+                              value: d,
+                            }))}
                           />
                           <FormInput
                             type="text"

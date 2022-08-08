@@ -1,4 +1,4 @@
-query getMemberList($objState: ObjState, $pagination: Pagination) {
+query getAccountMemberList($objState: ObjState, $pagination: Pagination) {
   members {
     list(pagination: $pagination, filter: { objState: $objState }) {
       totalCount
