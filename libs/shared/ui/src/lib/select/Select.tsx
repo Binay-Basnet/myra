@@ -20,11 +20,12 @@ export interface SelectProps
   helperText?: string;
   errorText?: string;
   label?: string;
-  size?: 'sm' | 'default';
+  // size?: 'sm' | 'default';
   onChange?: ((newValue: SelectOption) => void) | any;
 }
 
 export function Select({
+  // size,
   errorText,
   helperText,
   isMulti,

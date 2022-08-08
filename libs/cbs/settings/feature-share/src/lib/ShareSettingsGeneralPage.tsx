@@ -109,7 +109,6 @@ export const ShareSettingsGeneralPage = () => {
             </Text>
             <Box width="190px">
               <Select
-                size="sm"
                 options={[
                   {
                     label: t['shareTransactable'],
