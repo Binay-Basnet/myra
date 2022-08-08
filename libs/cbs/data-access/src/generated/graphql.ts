@@ -1312,6 +1312,13 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
+export type DepositAccount = {
+  createdAt: Scalars['Time'];
+  id: Scalars['ID'];
+  member: Member;
+  product: DepositProduct;
+};
+
 export type DepositIro = {
   id: Scalars['ID'];
   iroAddress?: Maybe<Scalars['String']>;
@@ -1377,7 +1384,7 @@ export type DepositLoanAccountConnection = {
 
 export type DepositLoanAccountEdge = {
   cursor: Scalars['Cursor'];
-  node: DepositLoanAccount;
+  node?: Maybe<DepositAccount>;
 };
 
 export type DepositLoanAccountFormStateResult = {
@@ -7144,6 +7151,15 @@ export type KymIndFormStateQuery = {
   error?: Maybe<QueryError>;
 };
 
+export type SetAccountOpenDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: DepositLoanAccountInput;
+}>;
+
+export type SetAccountOpenDataMutation = {
+  account: { add?: { recordId: string } | null };
+};
+
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
 }>;
@@ -8158,6 +8174,167 @@ export type AddShareReturnMutationVariables = Exact<{
 
 export type AddShareReturnMutation = {
   share: { return: { recordId: string } };
+};
+
+export type GetAccountMemberListQueryVariables = Exact<{
+  objState?: InputMaybe<ObjState>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetAccountMemberListQuery = {
+  members: {
+    list: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+          type: KymMemberTypesEnum;
+          contact?: string | null;
+          createdAt: string;
+          dateJoined?: string | null;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
+
+export type GetProductListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetProductListQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getProductList?: {
+          data?: Array<{ id: string; productName: string } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAccountOpenProductDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAccountOpenProductDetailsQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        formState?: {
+          data?: {
+            productName?: string | null;
+            nature?: NatureOfDepositProduct | null;
+            typeOfMember?: Array<KymMemberTypesEnum | null> | null;
+            criteria?: Array<CriteriaSection | null> | null;
+            minAge?: number | null;
+            maxAge?: number | null;
+            genderId?: Array<string | null> | null;
+            maritalStatusId?: Array<string | null> | null;
+            educationQualification?: Array<string | null> | null;
+            ethnicity?: Array<string | null> | null;
+            occupation?: Array<string | null> | null;
+            foreignEmployment?: boolean | null;
+            natureOfBusinessInstitution?: Array<string | null> | null;
+            natureOFBusinessCoop?: Array<string | null> | null;
+            cooperativeType?: Array<string | null> | null;
+            depositFrequency?: Frequency | null;
+            penalty?: boolean | null;
+            rebate?: boolean | null;
+            minTenure?: boolean | null;
+            minTenureUnit?: Frequency | null;
+            minTenureUnitNumber?: number | null;
+            maxTenure?: boolean | null;
+            maxTenureUnit?: Frequency | null;
+            maxTenureUnitNumber?: number | null;
+            ladderRate?: boolean | null;
+            postingFrequency?: Frequency | null;
+            maxPostingFreqDifference?: number | null;
+            accountType?: string | null;
+            autoOpen?: boolean | null;
+            allowLoan?: boolean | null;
+            percentageOfDeposit?: number | null;
+            alternativeChannels?: boolean | null;
+            atmFacility?: boolean | null;
+            chequeIssue?: boolean | null;
+            supportMultiple?: boolean | null;
+            staffProduct?: boolean | null;
+            withdrawRestricted?: boolean | null;
+            specifyWithdrawRestriction?: string | null;
+            wealthBuildingProduct?: boolean | null;
+            individualDocuments?: Array<IndividualRequiredDocument | null> | null;
+            institutionDocuments?: Array<InstitutionRequiredDocument | null> | null;
+            productCode: { prefix: string; initialNo: string };
+            depositAmount?: {
+              minAmount?: any | null;
+              maxAmount?: any | null;
+            } | null;
+            penaltyData?: {
+              dayAfterInstallmentDate?: number | null;
+              minimumAmount?: string | null;
+              rateType?: PenaltyRateType | null;
+              flatRatePenalty?: number | null;
+              penaltyRate?: number | null;
+              penaltyAmount?: any | null;
+            } | null;
+            rebateData?: {
+              daysBeforeInstallmentDate?: number | null;
+              noOfInstallment?: number | null;
+              rebateAmount?: any | null;
+              percentage?: number | null;
+            } | null;
+            balanceLimit?: {
+              minAmount?: any | null;
+              maxAmount?: any | null;
+              avgAmount?: any | null;
+            } | null;
+            interest?: {
+              minRate?: number | null;
+              maxRate?: number | null;
+              defaultRate?: number | null;
+              ceoAuthority?: number | null;
+              boardAuthority?: number | null;
+              additionalRate?: number | null;
+            } | null;
+            ladderRateData?: Array<{
+              type?: string | null;
+              amount?: any | null;
+              rate?: number | null;
+            } | null> | null;
+            serviceCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            dormantSetup?: Array<{
+              duration?: string | null;
+              condition?: string | null;
+            } | null> | null;
+            prematurePenalty?: {
+              penaltyDateType?: PrematurePenaltyDateType | null;
+              noOfDays?: number | null;
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
 };
 
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
@@ -9431,9 +9608,11 @@ export type GetCoopUnionKymOptionsQuery = {
 };
 
 export type GetMemberListQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['Cursor']>;
+  first?: InputMaybe<Scalars['Int']>;
+  column: Scalars['String'];
+  arrange: Arrange;
   objState?: InputMaybe<ObjState>;
-  pagination?: InputMaybe<Pagination>;
-  query?: InputMaybe<Scalars['String']>;
 }>;
 
 export type GetMemberListQuery = {
@@ -10623,6 +10802,38 @@ export const KymFieldDataFragmentDoc = `
   }
 }
     `;
+export const SetAccountOpenDataDocument = `
+    mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
+  account {
+    add(id: $id, data: $data) {
+      recordId
+    }
+  }
+}
+    `;
+export const useSetAccountOpenDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetAccountOpenDataMutation,
+    TError,
+    SetAccountOpenDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAccountOpenDataMutation,
+    TError,
+    SetAccountOpenDataMutationVariables,
+    TContext
+  >(
+    ['setAccountOpenData'],
+    useAxios<SetAccountOpenDataMutation, SetAccountOpenDataMutationVariables>(
+      SetAccountOpenDataDocument
+    ),
+    options
+  );
 export const LoginDocument = `
     mutation login($data: LoginInput!) {
   auth {
@@ -12708,6 +12919,212 @@ export const useAddShareReturnMutation = <TError = unknown, TContext = unknown>(
     ),
     options
   );
+export const GetAccountMemberListDocument = `
+    query getAccountMemberList($objState: ObjState, $pagination: Pagination) {
+  members {
+    list(pagination: $pagination, filter: {objState: $objState}) {
+      totalCount
+      edges {
+        node {
+          id
+          name
+          code
+          type
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+          }
+          contact
+          createdAt
+          dateJoined
+        }
+        cursor
+      }
+      pageInfo {
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountMemberListQuery = <
+  TData = GetAccountMemberListQuery,
+  TError = unknown
+>(
+  variables?: GetAccountMemberListQueryVariables,
+  options?: UseQueryOptions<GetAccountMemberListQuery, TError, TData>
+) =>
+  useQuery<GetAccountMemberListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountMemberList']
+      : ['getAccountMemberList', variables],
+    useAxios<GetAccountMemberListQuery, GetAccountMemberListQueryVariables>(
+      GetAccountMemberListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetProductListDocument = `
+    query getProductList {
+  settings {
+    general {
+      depositProduct {
+        getProductList {
+          data {
+            id
+            productName
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetProductListQuery = <
+  TData = GetProductListQuery,
+  TError = unknown
+>(
+  variables?: GetProductListQueryVariables,
+  options?: UseQueryOptions<GetProductListQuery, TError, TData>
+) =>
+  useQuery<GetProductListQuery, TError, TData>(
+    variables === undefined
+      ? ['getProductList']
+      : ['getProductList', variables],
+    useAxios<GetProductListQuery, GetProductListQueryVariables>(
+      GetProductListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountOpenProductDetailsDocument = `
+    query getAccountOpenProductDetails($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        formState(id: $id) {
+          data {
+            productName
+            nature
+            productCode {
+              prefix
+              initialNo
+            }
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            depositAmount {
+              minAmount
+              maxAmount
+            }
+            depositFrequency
+            penalty
+            penaltyData {
+              dayAfterInstallmentDate
+              minimumAmount
+              rateType
+              flatRatePenalty
+              penaltyRate
+              penaltyAmount
+            }
+            rebate
+            rebateData {
+              daysBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              percentage
+            }
+            minTenure
+            minTenureUnit
+            minTenureUnitNumber
+            maxTenure
+            maxTenureUnit
+            maxTenureUnitNumber
+            balanceLimit {
+              minAmount
+              maxAmount
+              avgAmount
+            }
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthority
+              additionalRate
+            }
+            ladderRate
+            ladderRateData {
+              type
+              amount
+              rate
+            }
+            postingFrequency
+            maxPostingFreqDifference
+            accountType
+            serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            dormantSetup {
+              duration
+              condition
+            }
+            autoOpen
+            allowLoan
+            percentageOfDeposit
+            alternativeChannels
+            atmFacility
+            chequeIssue
+            supportMultiple
+            staffProduct
+            withdrawRestricted
+            specifyWithdrawRestriction
+            wealthBuildingProduct
+            individualDocuments
+            institutionDocuments
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpenProductDetailsQuery = <
+  TData = GetAccountOpenProductDetailsQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenProductDetailsQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenProductDetailsQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenProductDetailsQuery, TError, TData>(
+    ['getAccountOpenProductDetails', variables],
+    useAxios<
+      GetAccountOpenProductDetailsQuery,
+      GetAccountOpenProductDetailsQueryVariables
+    >(GetAccountOpenProductDetailsDocument).bind(null, variables),
+    options
+  );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -14436,9 +14853,12 @@ export const useGetCoopUnionKymOptionsQuery = <
     options
   );
 export const GetMemberListDocument = `
-    query getMemberList($objState: ObjState, $pagination: Pagination, $query: String) {
+    query getMemberList($after: Cursor, $first: Int, $column: String!, $arrange: Arrange!, $objState: ObjState) {
   members {
-    list(pagination: $pagination, filter: {objState: $objState, query: $query}) {
+    list(
+      pagination: {after: $after, first: $first, order: {column: $column, arrange: $arrange}}
+      filter: {objState: $objState}
+    ) {
       totalCount
       edges {
         node {
@@ -14471,11 +14891,11 @@ export const useGetMemberListQuery = <
   TData = GetMemberListQuery,
   TError = unknown
 >(
-  variables?: GetMemberListQueryVariables,
+  variables: GetMemberListQueryVariables,
   options?: UseQueryOptions<GetMemberListQuery, TError, TData>
 ) =>
   useQuery<GetMemberListQuery, TError, TData>(
-    variables === undefined ? ['getMemberList'] : ['getMemberList', variables],
+    ['getMemberList', variables],
     useAxios<GetMemberListQuery, GetMemberListQueryVariables>(
       GetMemberListDocument
     ).bind(null, variables),
