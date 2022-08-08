@@ -1,7 +1,11 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import {
+  Arrange,
+  ObjState,
+  useGetMemberListQuery,
+} from '@coop/cbs/data-access';
 import { Address } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
@@ -53,6 +57,10 @@ export function MemberListPage() {
           pagination: {
             last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
             before: router.query['before'] as string,
+            order: {
+              column: 'ID',
+              arrange: Arrange.Desc,
+            },
           },
         }
       : {
@@ -60,6 +68,10 @@ export function MemberListPage() {
           pagination: {
             first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
             after: (router.query['after'] ?? '') as string,
+            order: {
+              column: 'ID',
+              arrange: Arrange.Desc,
+            },
           },
         },
     {
@@ -68,6 +80,22 @@ export function MemberListPage() {
   );
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+
+  // const popoverTitle = [
+  //   {
+  //     title: 'memberListTableViewMemberProfile',
+  //   },
+  //   {
+  //     title: 'memberListTableEditMember',
+  //     onClick: (member?: Member | null) =>
+  //       router.push(
+  //         `/members/${member?.type.toLowerCase()}/edit/${member?.id}`
+  //       ),
+  //   },
+  //   {
+  //     title: 'memberListTableMakeInactive',
+  //   },
+  // ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [

@@ -57,10 +57,10 @@ export const SettingsBranchesTable = () => {
       },
       {
         header: t['settingsBranchAddress'],
-        accessorFn: (row) => row?.node?.address?.district?.local,
+        accessorFn: (row) => row?.node?.address?.locality?.local,
         cell: (props) => (
           <span>
-            {props?.row?.original?.node?.address?.district?.local} - &nbsp;
+            {props?.row?.original?.node?.address?.locality?.local} - &nbsp;
             {props?.row?.original?.node?.address?.wardNo}
           </span>
         ),
@@ -75,14 +75,7 @@ export const SettingsBranchesTable = () => {
       },
       {
         header: t['settingsBranchManager'],
-        accessorFn: (row) => row?.node?.manager,
-        cell: (props) => (
-          <>
-            {props?.row?.original?.node?.manager?.name
-              ? props?.row?.original?.node?.manager?.name
-              : '-'}
-          </>
-        ),
+        accessorFn: (row) => row?.node?.manager?.name?.local,
         meta: {
           width: '30%',
         },

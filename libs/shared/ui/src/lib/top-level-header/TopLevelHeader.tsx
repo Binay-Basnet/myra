@@ -302,7 +302,7 @@ export function TopLevelHeader() {
             />
 
             <Popover placement="bottom-end" gutter={3}>
-              {({ isOpen }) => (
+              {() => (
                 <>
                   <PopoverTrigger>
                     <IconButton
