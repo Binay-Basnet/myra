@@ -5,8 +5,8 @@ import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const YesNoOptions = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
+  { label: 'Yes', value: true },
+  { label: 'No', value: false },
 ];
 
 export const Atm = () => {
@@ -39,7 +39,7 @@ export const Atm = () => {
           pt="s16"
         >
           <SubHeadingText>{t['accountOpenChequeIssue']}</SubHeadingText>
-          <FormSwitchTab name="cChequeIssue" options={YesNoOptions} />
+          <FormSwitchTab name="atmFacility" options={YesNoOptions} />
         </Box>
       </Box>
     </GroupContainer>

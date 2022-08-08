@@ -32,7 +32,7 @@ export const Agent = () => {
           <SubHeadingText>Agent</SubHeadingText>
           <Box w="300px">
             <FormSelect
-              name="agent"
+              name="agentId"
               placeholder={t['accountOpenSelectAgent']}
               options={agentList}
             />

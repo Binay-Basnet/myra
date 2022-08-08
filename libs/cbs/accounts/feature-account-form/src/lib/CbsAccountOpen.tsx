@@ -25,6 +25,9 @@ import {
   Tenure,
 } from '../component/form';
 
+/* eslint-disable-next-line */
+export interface CbsAccountOpenFormProps {}
+
 export function CbsAccountOpen() {
   const { t } = useTranslation();
   const methods = useForm();
@@ -56,13 +59,12 @@ export function CbsAccountOpen() {
 
             {products !== 'voluntary' && <DepositFrequency />}
 
-            <RequiredDocuments />
-
             {products === 'voluntary' && <Atm />}
 
             <FeesAndCharge />
 
             <Agent />
+            <RequiredDocuments />
           </form>
         </FormProvider>
       </Container>

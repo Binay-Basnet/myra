@@ -1,0 +1,156 @@
+query getMemberList($objState: ObjState, $pagination: Pagination) {
+  members {
+    list(pagination: $pagination, filter: { objState: $objState }) {
+      totalCount
+      edges {
+        node {
+          id
+          name
+          code
+          type
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+          }
+          contact
+          createdAt
+          dateJoined
+        }
+        cursor
+      }
+      pageInfo {
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+
+query getProductList {
+  settings {
+    general {
+      depositProduct {
+        getProductList {
+          data {
+            id
+            productName
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAccountOpenProductDetails($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        formState(id: $id) {
+          data {
+            productName
+            nature
+            productCode {
+              prefix
+              initialNo
+            }
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            depositAmount {
+              minAmount
+              maxAmount
+            }
+            depositFrequency
+            penalty
+            penaltyData {
+              dayAfterInstallmentDate
+              minimumAmount
+              rateType
+              flatRatePenalty
+              penaltyRate
+
+              penaltyAmount
+            }
+            rebate
+            rebateData {
+              daysBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              percentage
+            }
+            minTenure
+            minTenureUnit
+            minTenureUnitNumber
+            maxTenure
+            maxTenureUnit
+            maxTenureUnitNumber
+            balanceLimit {
+              minAmount
+              maxAmount
+              avgAmount
+            }
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthority
+              additionalRate
+            }
+            ladderRate
+            ladderRateData {
+              type
+              amount
+              rate
+            }
+            postingFrequency
+            maxPostingFreqDifference
+            accountType
+            serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            dormantSetup {
+              duration
+              condition
+            }
+            autoOpen
+            allowLoan
+            percentageOfDeposit
+            alternativeChannels
+            atmFacility
+            chequeIssue
+            supportMultiple
+            staffProduct
+            withdrawRestricted
+            specifyWithdrawRestriction
+            wealthBuildingProduct
+            individualDocuments
+            institutionDocuments
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+          }
+        }
+      }
+    }
+  }
+}

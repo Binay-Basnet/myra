@@ -1,0 +1,7 @@
+mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
+  account {
+    add(id: $id, data: $data) {
+      recordId
+    }
+  }
+}
