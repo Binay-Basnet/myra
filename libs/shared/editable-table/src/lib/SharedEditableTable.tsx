@@ -466,6 +466,17 @@ const EditableTableRow = <
           .map((column, index) => {
             const accessorFnValue = column?.accessorFn?.(data);
 
+            if (accessorFnValue) {
+              dispatch({
+                type: EditableTableActionKind.EDIT,
+                payload: {
+                  data: data,
+                  newValue: accessorFnValue as string,
+                  column: column,
+                },
+              });
+            }
+
             return (
               <Fragment key={index}>
                 <Editable
