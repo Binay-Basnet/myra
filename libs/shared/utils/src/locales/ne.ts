@@ -3082,6 +3082,7 @@ const ne: Record<string, string> = {
 
   loanPaymentType: 'Payment Type',
 
+  depositProductMinimumRate: 'Minimum Rate',
   // Report page
   reportsHeading: 'Reports',
   reportsCbsReports: 'CBS reports',

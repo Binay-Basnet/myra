@@ -90,6 +90,16 @@ export const Interest = () => {
           name="interestMethod"
           label={t['loanProductInterestMethod']}
           placeholder={t['loanProductSelectInterestMethod']}
+          options={[
+            {
+              label: 'Stated Rate Method',
+              value: 'statedRateMethod',
+            },
+            {
+              label: 'Bank Method',
+              value: 'bankMethod',
+            },
+          ]}
         />
       </InputGroupContainer>
       <Box

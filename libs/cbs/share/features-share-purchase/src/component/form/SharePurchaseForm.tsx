@@ -69,7 +69,9 @@ const SharePurchaseForm = () => {
 
   const [totalAmount, setTotalAmount] = useState(0);
 
-  const { data } = useGetMemberIndividualDataQuery({ id: memberId });
+  const { data } = useGetMemberIndividualDataQuery({
+    id: memberId,
+  });
 
   const memberData = data?.members?.details?.data;
 
@@ -186,14 +188,12 @@ const SharePurchaseForm = () => {
                       flexDirection="column"
                       gap="s16"
                     >
-                      <Box p={2} bg="background.500">
+                      <Box bg="background.500">
                         <Grid
                           templateRows="repeat(1,1fr)"
                           templateColumns="repeat(5,1fr)"
                           gap={2}
-                          mt="s20"
-                          mb="s20"
-                          ml="s16"
+                          p="s16"
                         >
                           <GridItem
                             display="flex"
@@ -294,8 +294,8 @@ const SharePurchaseForm = () => {
                                 fontWeight="Regular"
                               >
                                 {memberData?.address?.district?.local},
-                                {memberData?.address?.locality?.local} -
-                                {memberData?.address?.wardNo}
+                                {/* {memberData?.address?.locality?.local} -
+                                {memberData?.address?.wardNo} */}
                               </TextFields>
                             </Box>
                           </GridItem>
@@ -400,22 +400,19 @@ const SharePurchaseForm = () => {
                             {t['sharePurchaseAdministrationFees']}
                           </Text>
                           <Box width="300px">
-                            {/* <FormInput
+                            <FormInput
                               name="adminFee"
-                              id="administrationFees"
-                              label=""
-                              placeholder="34000.00"
-                              bg="gray.0"
-                              textAlign="right"
-                            /> */}
-
-                            <FormNumberInput
-                              name="adminFee"
-                              id="administrationFees"
-                              label=""
-                              placeholder="34000.00"
-                              bg="gray.0"
+                              type="number"
+                              textAlign={'right'}
+                              placeholder="0.00"
                             />
+
+                            {/* <FormNumberInput
+                              name="adminFee"
+                              id="administrationFees"
+                              placeholder="34000.00"
+                              bg="gray.0"
+                            /> */}
                           </Box>
                         </GridItem>
 
@@ -432,22 +429,20 @@ const SharePurchaseForm = () => {
                             {t['sharePurchasePrintingFees']}
                           </Text>
                           <Box width="300px">
-                            {/* <FormInput
+                            <FormInput
                               name="printingFee"
-                              id="printingFees"
-                              label=""
-                              placeholder="54.00"
-                              bg="gray.0"
-                              textAlign="right"
-                            /> */}
-
-                            <FormNumberInput
-                              name="printingFee"
-                              id="printingFees"
-                              label=""
-                              placeholder="54.00"
-                              bg="gray.0"
+                              type="number"
+                              textAlign={'right'}
+                              placeholder="0.00"
                             />
+
+                            {/* <FormNumberInput
+                              name="printingFee"
+                              id="printingFees"
+                              label=""
+                              placeholder="54.00"
+                              bg="gray.0"
+                            /> */}
                           </Box>
                         </GridItem>
 
@@ -558,16 +553,16 @@ const SharePurchaseForm = () => {
                         placeholder={t['sharePurchaseSelectBank']}
                         options={[
                           {
-                            label: 'Option 1',
-                            value: 'option-1',
+                            label: 'Jyoti Bikash Bank Ltd',
+                            value: 'jbbl',
                           },
                           {
-                            label: 'Option 2',
-                            value: 'option-2',
+                            label: 'Nabil Bank',
+                            value: 'nabilBank',
                           },
                           {
-                            label: 'Option 3',
-                            value: 'option-3',
+                            label: 'NIC Bank',
+                            value: 'nic',
                           },
                         ]}
                       />

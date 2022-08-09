@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import {
   DepositProductInput,
+  KymMemberTypesEnum,
   NatureOfDepositProduct,
   PrematurePenaltyDateType,
   useGetDepositProductSettingsEditDataQuery,
@@ -105,6 +106,7 @@ export function SettingsDepositProductsAdd() {
 
   const { getValues, watch, reset } = methods;
   const depositNature = watch('nature');
+  const typesOfMember = watch('typeOfMember');
 
   const submitForm = () => {
     const values = getValues();
@@ -153,6 +155,12 @@ export function SettingsDepositProductsAdd() {
       serviceCharge: serviceChargeList,
       minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
       maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
+      maxTenureUnitNumber: values?.maxTenureUnitNumber
+        ? values?.maxTenureUnitNumber
+        : null,
+      minTenureUnitNumber: values?.minTenureUnitNumber
+        ? values?.minTenureUnitNumber
+        : null,
       depositFrequency: values?.depositFrequency
         ? values?.depositFrequency
         : null,
@@ -297,7 +305,13 @@ export function SettingsDepositProductsAdd() {
                 {depositNature === NatureOfDepositProduct.Mandatory && (
                   <DormantSetup />
                 )}
-                <RequiredDocumentSetup />
+                {(typesOfMember?.includes(KymMemberTypesEnum.Individual) ||
+                  typesOfMember?.includes(KymMemberTypesEnum.Institution) ||
+                  typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
+                  typesOfMember?.includes(
+                    KymMemberTypesEnum.CooperativeUnion
+                  )) && <RequiredDocumentSetup />}
+
                 {depositNature !==
                   NatureOfDepositProduct.VoluntaryOrOptional && (
                   <PrematuredPenalty />

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import {
+  Id_Type,
   useGetBranchListQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
@@ -109,7 +110,7 @@ export const SettingsBranchesTable = () => {
         buttonLabel={t['settingsBranchNew']}
         buttonHandler={() =>
           newId
-            .mutateAsync({})
+            .mutateAsync({ idType: Id_Type.Branch })
             .then((res) =>
               router.push(`/settings/general/branches/add/${res?.newId}`)
             )
