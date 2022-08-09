@@ -54,7 +54,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'reports',
     icon: BsFileText,
-    link: '/reports',
+    link: '/reports/cbs',
   },
   {
     title: 'utilities',

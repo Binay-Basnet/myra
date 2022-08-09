@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
 import {
-  ObjState,
+  Arrange,
   Payment_Mode,
   useAddSharePurchaseMutation,
   useGetMemberIndividualDataQuery,
@@ -80,12 +80,12 @@ const SharePurchaseForm = () => {
 
   const { data: memberList } = useGetMemberListQuery(
     {
-      objState: ObjState.Draft,
       pagination: {
         first: Number(DEFAULT_PAGE_SIZE),
-        // first: 5,
         after: '',
       },
+      column: 'ID',
+      arrange: Arrange.Desc,
     },
     {
       staleTime: 0,

@@ -1,24 +1,50 @@
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IoInformationCircleOutline } from 'react-icons/io5';
 
 import {
+  NatureOfDepositProduct,
+  useGetAccountOpenProductDetailsQuery,
+} from '@coop/cbs/data-access';
+import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckboxGroup, FormInput } from '@coop/shared/form';
+import { FormCheckbox, FormInput } from '@coop/shared/form';
 import { Box, Icon, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Interest = () => {
   const { t } = useTranslation();
+  const [triggerQuery, setTriggerQuery] = useState(false);
   const { watch } = useFormContext();
   const products = watch('productId');
 
-  const interestList = [
-    { label: t['accountOpenCEOAuthority'], value: 'ceoAuthority' },
-    { label: t['accountOpenBoardAuthority'], value: 'boardAuthority' },
-  ];
+  const poductDetails = useGetAccountOpenProductDetailsQuery(
+    { id: products },
+    {
+      enabled: triggerQuery,
+    }
+  );
 
+  const ProductData =
+    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+
+  const ProductType = ProductData?.nature;
+
+  useEffect(() => {
+    if (products) {
+      setTriggerQuery(true);
+    }
+  }, [products]);
+
+  const ceoInterest = watch('ceoAuthority');
+  const BoardInterest = watch('boardAuthority');
+
+  const valueInput =
+    Number(ProductData?.interest?.defaultRate) +
+    (ceoInterest && Number(ProductData?.interest?.ceoAuthority)) +
+    (BoardInterest && Number(ProductData?.interest?.boardAuthority));
   return (
     <GroupContainer
       scrollMarginTop={'200px'}
@@ -48,14 +74,15 @@ export const Interest = () => {
               type="number"
               label={t['accountOpenInterestRate']}
               textAlign={'right'}
-              placeholder="0.00"
+              isDisabled={true}
+              value={valueInput}
               rightElement={
                 <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                   %
                 </Text>
               }
             />
-            {products !== 'recurringSaving' && (
+            {ProductType !== NatureOfDepositProduct.RecurringSaving && (
               <>
                 <FormInput
                   name="sanctionedId"
@@ -73,12 +100,23 @@ export const Interest = () => {
               </>
             )}
           </InputGroupContainer>
-          <FormCheckboxGroup
-            name="individualRequiredDocuments"
-            list={interestList}
-            orientation="row"
-          />
-          {products === 'recurringSaving' && (
+          <InputGroupContainer>
+            <Box
+              display={'flex'}
+              flexDirection="row"
+              justifyContent={'flex-start'}
+            >
+              <FormCheckbox
+                name="ceoAuthority"
+                label={t['accountOpenCEOAuthority']}
+              />
+              <FormCheckbox
+                name="boardAuthority"
+                label={t['accountOpenBoardAuthority']}
+              />
+            </Box>
+          </InputGroupContainer>
+          {ProductType === NatureOfDepositProduct.RecurringSaving && (
             <Box
               display="flex"
               gap="s12"
@@ -106,46 +144,45 @@ export const Interest = () => {
                       fontWeight="Regular"
                       color="neutralColorLight.Gray-80"
                     >
-                      Minimum Interest Rate: <b>7%</b>
+                      Minimum Interest Rate:{' '}
+                      <b>{ProductData?.interest?.minRate}</b>
                       <TextFields
                         fontSize="s3"
                         fontWeight="Regular"
                         color="neutralColorLight.Gray-80"
                         mb="s16"
                       >
-                        Interest Rate: <b> 12%</b>
+                        Maximum Interest Rate:{' '}
+                        <b>{ProductData?.interest?.maxRate}</b>
                       </TextFields>
                     </TextFields>
                   </Box>
                 </Box>
-
-                <Box display="flex" flexDirection="column" gap="s8">
-                  <TextFields
-                    fontSize="s3"
-                    fontWeight="SemiBold"
-                    color="neutralColorLight.Gray-80"
-                  >
-                    {t['accoutnOpenLadderRateInfo']}
-                  </TextFields>
-                  <Box display="flex" flexDirection="column">
+                {ProductData?.ladderRate && (
+                  <Box display="flex" flexDirection="column" gap="s8">
                     <TextFields
                       fontSize="s3"
-                      fontWeight="Regular"
+                      fontWeight="SemiBold"
                       color="neutralColorLight.Gray-80"
                     >
-                      For More than <b>45,000.00</b> Ladder Rate is <b> 15%</b>.
-                      <TextFields
-                        fontSize="s3"
-                        fontWeight="Regular"
-                        color="neutralColorLight.Gray-80"
-                        mb="s16"
-                      >
-                        For More than <b>10,000.00</b> Ladder Rate is
-                        <b> 10%</b>.
-                      </TextFields>
+                      {t['accoutnOpenLadderRateInfo']}
                     </TextFields>
+
+                    <Box display="flex" flexDirection="column">
+                      {ProductData?.ladderRateData?.map((data) => (
+                        <TextFields
+                          fontSize="s3"
+                          fontWeight="Regular"
+                          color="neutralColorLight.Gray-80"
+                          key={data?.type}
+                        >
+                          For More than <b>{data?.amount}</b> Ladder Rate is
+                          {data?.rate}
+                        </TextFields>
+                      ))}
+                    </Box>
                   </Box>
-                </Box>
+                )}
               </Box>
             </Box>
           )}

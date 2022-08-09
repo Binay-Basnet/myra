@@ -218,6 +218,11 @@ const colors = {
   //   Gray-80: '#85d044',
   //   Gray-90: '#44b556',
   // },
+
+  warning: {
+    0: '#FFF5EA',
+    900: '#D1912E',
+  },
 };
 
 export default colors;

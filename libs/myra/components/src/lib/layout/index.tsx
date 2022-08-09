@@ -6,4 +6,5 @@ export * from './inventoryLayout/ItemsLayout';
 export * from './inventoryLayout/SuppliersLayout';
 export * from './inventoryLayout/UnitsLayout';
 export * from './inventoryLayout/WarehouseLayout';
+export * from './ReportLayout';
 export * from './ShareLayout';

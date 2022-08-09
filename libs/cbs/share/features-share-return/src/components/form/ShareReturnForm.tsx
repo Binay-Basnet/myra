@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
 import {
+  Arrange,
   Payment_Mode,
   ShareReturnInput,
   useAddShareReturnMutation,
@@ -114,7 +115,8 @@ const ShareReturnForm = () => {
         first: Number(DEFAULT_PAGE_SIZE),
         after: '',
       },
-      //   query: memberID.toString(),
+      column: 'ID',
+      arrange: Arrange.Desc,
     },
     {
       staleTime: 0,

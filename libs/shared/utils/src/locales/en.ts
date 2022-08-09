@@ -3084,6 +3084,11 @@ const en: Record<string, string> = {
   loanProductTypeDescription: 'Description',
 
   depositProductMinimumRate: 'Minimum Rate',
+  // Report page
+  reportsHeading: 'Reports',
+  reportsCbsReports: 'CBS reports',
+  reportsSavedReports: 'Saved reports',
+  reportsSettings: 'Report Settings',
 };
 
 export default en;

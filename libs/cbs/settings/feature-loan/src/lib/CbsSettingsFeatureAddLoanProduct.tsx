@@ -202,23 +202,23 @@ export function SettingsLoanProductForm() {
     });
 
     const goodLoanProvision =
-      values?.loanProvisiontable.length > 0 &&
+      values?.loanProvisiontable !== undefined &&
       values?.loanProvisiontable?.filter(
         (item) => item?.loanProvision === 'good'
       );
 
     const doubtfulLoanProvision =
-      values?.loanProvisiontable.length > 0 &&
+      values?.loanProvisiontable !== undefined &&
       values?.loanProvisiontable?.filter(
         (item) => item?.loanProvision === 'doubtful'
       );
     const problematicLoanProvision =
-      values?.loanProvisiontable.length > 0 &&
+      values?.loanProvisiontable !== undefined &&
       values?.loanProvisiontable?.filter(
         (item) => item?.loanProvision === 'problematic'
       );
     const badLoanProvision =
-      values?.loanProvisiontable.length > 0 &&
+      values?.loanProvisiontable !== undefined &&
       values?.loanProvisiontable?.filter(
         (item) => item?.loanProvision === 'bad'
       );
@@ -249,22 +249,32 @@ export function SettingsLoanProductForm() {
         : null,
       installmentType: values?.installmentType ? values?.installmentType : null,
       modeOfPayment: values?.modeOfPayment ? values?.modeOfPayment : null,
+      minGraceDurationUnit: values?.minGraceDurationUnit
+        ? values?.minGraceDurationUnit
+        : null,
+      maxGraceDurationUnit: values?.maxGraceDurationUnit
+        ? values?.maxGraceDurationUnit
+        : null,
       penalty: {
         ...values?.penalty,
         rateType: values?.penalty?.rateType ? values?.penalty?.rateType : null,
       },
-      goodLoanProvision: goodLoanProvision
-        ? Number(goodLoanProvision[0].provision)
-        : editVals?.goodLoanProvision,
-      doubtfulLoanProvision: doubtfulLoanProvision
-        ? Number(doubtfulLoanProvision[0].provision)
-        : editVals?.doubtfulLoanProvision,
-      problematicLoanProvision: problematicLoanProvision
-        ? Number(problematicLoanProvision[0].provision)
-        : editVals?.problematicLoanProvision,
-      badLoanProvision: badLoanProvision
-        ? Number(badLoanProvision[0].provision)
-        : editVals?.badLoanProvision,
+      goodLoanProvision:
+        goodLoanProvision?.length > 0
+          ? Number(goodLoanProvision[0].provision)
+          : editVals?.goodLoanProvision,
+      doubtfulLoanProvision:
+        doubtfulLoanProvision?.length > 0
+          ? Number(doubtfulLoanProvision[0].provision)
+          : editVals?.doubtfulLoanProvision,
+      problematicLoanProvision:
+        problematicLoanProvision?.length > 0
+          ? Number(problematicLoanProvision[0].provision)
+          : editVals?.problematicLoanProvision,
+      badLoanProvision:
+        badLoanProvision?.length > 0
+          ? Number(badLoanProvision[0].provision)
+          : editVals?.badLoanProvision,
     };
 
     mutate(

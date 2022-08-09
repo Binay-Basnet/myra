@@ -1,5 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
+import { Months, Week, WeeklyFrequency } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
@@ -8,21 +9,36 @@ import { useTranslation } from '@coop/shared/utils';
 export const DepositFrequency = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext();
-  const monthly = watch('monthly');
+  const monthly = watch('depositFrequencyMonthly');
 
   const daysList = [
-    { label: t['accSunday'], value: 'sunday' },
-    { label: t['accMonday'], value: 'monday' },
-    { label: t['accTuesday'], value: 'tuesday' },
-    { label: t['accWednesday'], value: 'wednesday' },
-    { label: t['accThursday'], value: 'thursday' },
-    { label: t['accFriday'], value: 'friday' },
-    { label: t['accSaturday'], value: 'saturday' },
+    { label: t['accSunday'], value: Week.Sunday },
+    { label: t['accMonday'], value: Week.Monday },
+    { label: t['accTuesday'], value: Week.Tuesday },
+    { label: t['accWednesday'], value: Week.Wednesday },
+    { label: t['accThursday'], value: Week.Thursaday },
+    { label: t['accFriday'], value: Week.Friday },
+    { label: t['accSaturday'], value: Week.Saturday },
   ];
 
   const monthlyList = [
-    { label: t['accDay'], value: 'day' },
-    { label: t['accDayOfWeek'], value: 'dayOfWeek' },
+    { label: t['accDay'], value: WeeklyFrequency.Day },
+    { label: t['accDayOfWeek'], value: WeeklyFrequency.DayOfTheWeek },
+  ];
+
+  const monthsList = [
+    { label: 'January', value: Months.January },
+    { label: 'Febuary', value: Months.February },
+    { label: 'March', value: Months.March },
+    { label: 'April', value: Months.April },
+    { label: 'May', value: Months.May },
+    { label: 'June', value: Months.June },
+    { label: 'July', value: Months.July },
+    { label: 'August', value: Months.August },
+    { label: 'September', value: Months.September },
+    { label: 'October', value: Months.October },
+    { label: 'November', value: Months.November },
+    { label: 'December', value: Months.December },
   ];
 
   return (
@@ -73,7 +89,7 @@ export const DepositFrequency = () => {
               {t['accDayoftheWeek']}
             </Text>
             <FormSwitchTab
-              name="dayOfWeek"
+              name="depositFrequencyWeekly"
               options={daysList.map((value) => ({
                 label: value.label,
                 value: value.value,
@@ -110,13 +126,13 @@ export const DepositFrequency = () => {
             </Text>
           </Box>
           <FormSwitchTab
-            name="monthly"
+            name="depositFrequencyMonthly"
             options={monthlyList.map((value) => ({
               label: value.label,
               value: value.value,
             }))}
           />
-          {monthly === 'day' && (
+          {monthly === WeeklyFrequency.Day && (
             <Box
               display="grid"
               mt="s16"
@@ -125,58 +141,31 @@ export const DepositFrequency = () => {
             >
               <FormInput
                 type="text"
-                name="noOfReturnedShares"
+                name="depositFrequencyDay"
                 label={t['accDay']}
                 placeholder={t['accEnterDay']}
               />
             </Box>
           )}
 
-          {monthly === 'dayOfWeek' && (
+          {monthly === WeeklyFrequency.DayOfTheWeek && (
             <Box
               display="grid"
               mt="s16"
               gridTemplateColumns="repeat(3, 1fr)"
               gap="s16"
             >
-              <FormSelect
-                name="memberId"
+              <FormInput
+                name="depositFrequencyFrequencyDay"
                 label={t['accFrequencyDay']}
                 placeholder={t['accFrequencyDay']}
-                options={[
-                  {
-                    label: '1',
-                    value: '1',
-                  },
-                  {
-                    label: '2',
-                    value: '2',
-                  },
-                  {
-                    label: '3',
-                    value: '3',
-                  },
-                ]}
               />
 
               <FormSelect
-                name="memberId"
+                name="depositFrequencyDayOfWeek"
                 label={t['accDayOfWeek']}
                 placeholder={t['accDayOfWeek']}
-                options={[
-                  {
-                    label: 'Sunday',
-                    value: 'sunday',
-                  },
-                  {
-                    label: 'Monday',
-                    value: 'monday',
-                  },
-                  {
-                    label: 'Tuesday',
-                    value: 'tuesday',
-                  },
-                ]}
+                options={daysList}
               />
             </Box>
           )}
@@ -209,43 +198,17 @@ export const DepositFrequency = () => {
             gap={6}
           >
             <FormSelect
-              name="memberId"
+              name="depositFrequencyYearlyMonth"
               label={t['accSelectMonth']}
               placeholder={t['accSelectMonth']}
-              options={[
-                {
-                  label: 'January',
-                  value: 'anuary',
-                },
-                {
-                  label: 'February',
-                  value: 'february',
-                },
-                {
-                  label: 'March',
-                  value: 'march',
-                },
-              ]}
+              options={monthsList}
             />
 
             <FormSelect
-              name="memberId"
+              name="depositFrequencyYearlyDay"
               label={t['accSelectDay']}
               placeholder={t['accSelectDay']}
-              options={[
-                {
-                  label: 'Sunday',
-                  value: 'sunday',
-                },
-                {
-                  label: 'Monday',
-                  value: 'monday',
-                },
-                {
-                  label: 'Tuesday',
-                  value: 'tuesday',
-                },
-              ]}
+              options={daysList}
             />
           </Box>
         </Box>
