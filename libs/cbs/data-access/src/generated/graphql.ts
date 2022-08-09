@@ -1600,8 +1600,9 @@ export type DepositProductInput = {
 };
 
 export type DepositProductList = {
-  data?: Maybe<Array<Maybe<DepositProduct>>>;
+  allowed?: Maybe<Array<Maybe<DepositProduct>>>;
   error?: Maybe<QueryError>;
+  notAllowed?: Maybe<Array<Maybe<DepositProduct>>>;
 };
 
 export type DepositProductResult = {
@@ -1641,8 +1642,7 @@ export type DepositProductSettingsQueryGetArgs = {
 };
 
 export type DepositProductSettingsQueryGetProductListArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-  name?: InputMaybe<Scalars['String']>;
+  memberId: Scalars['ID'];
 };
 
 export type DepositProductSettingsQueryListArgs = {
@@ -8216,14 +8216,17 @@ export type GetAccountMemberListQuery = {
   };
 };
 
-export type GetProductListQueryVariables = Exact<{ [key: string]: never }>;
+export type GetProductListQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
 
 export type GetProductListQuery = {
   settings: {
     general?: {
       depositProduct?: {
         getProductList?: {
-          data?: Array<{ id: string; productName: string } | null> | null;
+          allowed?: Array<{ id: string; productName: string } | null> | null;
+          notAllowed?: Array<{ id: string; productName: string } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -13050,12 +13053,16 @@ export const useGetAccountMemberListQuery = <
     options
   );
 export const GetProductListDocument = `
-    query getProductList {
+    query getProductList($memberId: ID!) {
   settings {
     general {
       depositProduct {
-        getProductList {
-          data {
+        getProductList(memberId: $memberId) {
+          allowed {
+            id
+            productName
+          }
+          notAllowed {
             id
             productName
           }
@@ -13069,13 +13076,11 @@ export const useGetProductListQuery = <
   TData = GetProductListQuery,
   TError = unknown
 >(
-  variables?: GetProductListQueryVariables,
+  variables: GetProductListQueryVariables,
   options?: UseQueryOptions<GetProductListQuery, TError, TData>
 ) =>
   useQuery<GetProductListQuery, TError, TData>(
-    variables === undefined
-      ? ['getProductList']
-      : ['getProductList', variables],
+    ['getProductList', variables],
     useAxios<GetProductListQuery, GetProductListQueryVariables>(
       GetProductListDocument
     ).bind(null, variables),
