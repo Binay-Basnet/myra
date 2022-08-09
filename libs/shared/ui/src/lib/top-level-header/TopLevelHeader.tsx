@@ -153,18 +153,21 @@ export function TopLevelHeader() {
         display={'flex'}
         alignItems={'asdcenter'}
         justifyContent={'flex-start'}
-        px={'s16'}
       >
-        <Box
-          h="100%"
-          w="300px"
-          display={'flex'}
-          justifyContent={'flex-start'}
-          alignItems={'center'}
-          flexDirection={'row'}
-        >
-          <Image boxSize={'32px'} src={'/logo.svg'} alt="logo" />
-          <Link href="/">
+        <Link href="/">
+          <Box
+            px={'s16'}
+            h="100%"
+            w="300px"
+            display={'flex'}
+            justifyContent={'flex-start'}
+            alignItems={'center'}
+            flexDirection={'row'}
+            cursor={'pointer'}
+            _hover={{ backgroundColor: 'secondary.900' }}
+          >
+            <Image boxSize={'32px'} src={'/neosystest.png'} alt="logo" />
+
             <Box
               maxH="100%"
               pl="s8"
@@ -172,23 +175,29 @@ export function TopLevelHeader() {
               flexDirection={'column'}
               justifyContent={'center'}
               alignItems={'flex-start'}
-              cursor={'pointer'}
+              gap="s4"
             >
-              <Text fontSize="r1" fontWeight="bold" color={'white'}>
-                नमुना बचत तथ ऋण सहकारी{' '}
+              <Text
+                fontSize="s3"
+                fontWeight="bold"
+                color={'white'}
+                noOfLines={1}
+                p={0}
+                lineHeight="100%"
+              >
+                {t['sahakariName']}
               </Text>
-              <Text fontSize="r1" color={'white'}>
-                ललितपुर
+              <Text fontSize="s3" color={'white'} p={0} lineHeight="100%">
+                {t['sahakariLocation']}
               </Text>
             </Box>
-          </Link>
-        </Box>
+          </Box>
+        </Link>
 
         <Box
           h="100%"
           flex={1}
-          pl="r1"
-          pr="r1"
+          px="s16"
           display={'flex'}
           justifyContent={'space-between'}
           alignItems="center"
