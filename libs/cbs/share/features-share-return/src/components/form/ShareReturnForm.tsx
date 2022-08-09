@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
@@ -27,7 +26,6 @@ import {
 import {
   Avatar,
   Box,
-  Button,
   Container,
   DEFAULT_PAGE_SIZE,
   FormFooter,
@@ -653,27 +651,15 @@ const ShareReturnForm = () => {
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
+                  <Text
+                    color="neutralColorLight.Gray-60"
+                    fontWeight="Regular"
+                    as="i"
+                    fontSize="r1"
+                  >
+                    Press Done to save form
                   </Text>
                 </Box>
-              }
-              draftButton={
-                <Button type="submit" variant="ghost">
-                  <Icon as={BiSave} color="primary.500" />
-                  <Text
-                    alignSelf="center"
-                    color="primary.500"
-                    fontWeight="Medium"
-                    fontSize="s2"
-                    ml="5px"
-                  >
-                    {t['saveDraft']}
-                  </Text>
-                </Button>
               }
               mainButtonLabel={t['done']}
               mainButtonHandler={onSubmit}

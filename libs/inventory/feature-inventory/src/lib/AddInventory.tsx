@@ -1,10 +1,8 @@
-import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 import {
   Box,
-  Button,
   Container,
   FormFooter,
   Icon,
@@ -15,10 +13,7 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { AddInventoryForm } from '../component/form/AddInventoryForm';
 
-/* eslint-disable-next-line */
-export interface AddInventoryProps {}
-
-export function AddInventory(props: AddInventoryProps) {
+export function AddInventory() {
   const { t } = useTranslation();
   const router = useRouter();
   return (
@@ -61,27 +56,15 @@ export function AddInventory(props: AddInventoryProps) {
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
+                  <Text
+                    color="neutralColorLight.Gray-60"
+                    fontWeight="Regular"
+                    as="i"
+                    fontSize="r1"
+                  >
+                    Press Save to save form
                   </Text>
                 </Box>
-              }
-              draftButton={
-                <Button type="submit" variant="ghost">
-                  <Icon as={BiSave} color="primary.500" />
-                  <Text
-                    alignSelf="center"
-                    color="primary.500"
-                    fontWeight="Medium"
-                    fontSize="s2"
-                    ml="5px"
-                  >
-                    {t['saveDraft']}
-                  </Text>
-                </Button>
               }
               mainButtonLabel={t['save']}
               mainButtonHandler={() => router.push(`/members/translation}`)}

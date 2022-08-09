@@ -1,9 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
-import { Icon } from '@chakra-ui/react';
 
 import {
   DepositLoanAccountInput,
@@ -14,14 +12,7 @@ import {
   useGetAccountOpenEditDataQuery,
   useGetAccountOpenProductDetailsQuery,
 } from '@coop/cbs/data-access';
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Container, FormFooter, FormHeader, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -171,31 +162,9 @@ export function CbsAccountOpen() {
                   as="i"
                   fontSize="r1"
                 >
-                  {t['formDetails']}
-                </Text>
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontWeight="Regular"
-                  as="i"
-                  fontSize="r1"
-                >
-                  09:41 AM
+                  Press Submit to save form
                 </Text>
               </Box>
-            }
-            draftButton={
-              <Button type="submit" variant="ghost">
-                <Icon as={BiSave} color="primary.500" />
-                <Text
-                  alignSelf="center"
-                  color="primary.500"
-                  fontWeight="Medium"
-                  fontSize="s2"
-                  ml="5px"
-                >
-                  {t['saveDraft']}
-                </Text>
-              </Button>
             }
             mainButtonLabel={t['submit']}
             mainButtonHandler={() => submitForm()}

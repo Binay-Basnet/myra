@@ -38,7 +38,7 @@ export const ShareRegisterTable = () => {
       },
       {
         Header: t['shareRegisterTableMemberID'],
-        accessor: 'node.member.name.local',
+        accessor: 'node.member.id',
         maxWidth: 4,
         Cell: ({ value }) => {
           return <span>{value.slice(0, 5).toUpperCase()}</span>;
