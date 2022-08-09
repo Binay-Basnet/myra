@@ -142,6 +142,26 @@ export const Interest = () => {
                 amount: 0,
                 rate: 0,
               },
+              {
+                type: 'More Than',
+                amount: 0,
+                rate: 0,
+              },
+              {
+                type: 'More Than',
+                amount: 0,
+                rate: 0,
+              },
+              {
+                type: 'More Than',
+                amount: 0,
+                rate: 0,
+              },
+              {
+                type: 'More Than',
+                amount: 0,
+                rate: 0,
+              },
             ]}
             columns={[
               {
