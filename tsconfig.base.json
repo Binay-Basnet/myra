@@ -94,6 +94,33 @@
       "@coop/cbs/share-return": [
         "libs/cbs/share/features-share-return/src/index.ts"
       ],
+      "@coop/cbs/transactions/account-transfer": [
+        "libs/cbs/transactions/feature-account-transfer/src/index.ts"
+      ],
+      "@coop/cbs/transactions/agent": [
+        "libs/cbs/transactions/feature-agent/src/index.ts"
+      ],
+      "@coop/cbs/transactions/agent-transaction": [
+        "libs/cbs/transactions/feature-agent-transaction/src/index.ts"
+      ],
+      "@coop/cbs/transactions/deposit": [
+        "libs/cbs/transactions/feature-deposit/src/index.ts"
+      ],
+      "@coop/cbs/transactions/loan-payment": [
+        "libs/cbs/transactions/feature-loan-payment/src/index.ts"
+      ],
+      "@coop/cbs/transactions/ui-components": [
+        "libs/cbs/transactions/ui-components/src/index.ts"
+      ],
+      "@coop/cbs/transactions/ui-containers": [
+        "libs/cbs/transactions/ui-containers/src/index.ts"
+      ],
+      "@coop/cbs/transactions/ui-layouts": [
+        "libs/cbs/transactions/ui-layouts/src/index.ts"
+      ],
+      "@coop/cbs/transactions/withdraw": [
+        "libs/cbs/transactions/feature-withdraw/src/index.ts"
+      ],
       "@coop/ebanking/accounts": [
         "libs/ebanking/feature-accounts/src/index.ts"
       ],

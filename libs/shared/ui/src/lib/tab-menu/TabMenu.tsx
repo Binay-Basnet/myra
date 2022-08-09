@@ -44,7 +44,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'transactions',
     icon: IoIosList,
-    link: '/transactions',
+    link: '/transactions/deposit/list',
   },
   {
     title: 'loan',

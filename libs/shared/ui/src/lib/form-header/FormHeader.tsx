@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import { Box, IconButton } from '@chakra-ui/react';
+import { Box, Button, IconButton } from '@chakra-ui/react';
 
 import Icon from '../icon/Icon';
 import TextFields from '../text-fields/TextFields';
@@ -9,9 +9,16 @@ import TextFields from '../text-fields/TextFields';
 export interface FormHeaderProps {
   title: string;
   closeLink?: string;
+  buttonLabel?: string;
+  buttonHandler?: () => void;
 }
 
-export function FormHeader({ title, closeLink }: FormHeaderProps) {
+export function FormHeader({
+  title,
+  closeLink,
+  buttonLabel,
+  buttonHandler,
+}: FormHeaderProps) {
   const router = useRouter();
 
   return (
@@ -29,19 +36,28 @@ export function FormHeader({ title, closeLink }: FormHeaderProps) {
       <TextFields variant="pageHeader" color="gray.800">
         {title}
       </TextFields>
-      <IconButton
-        variant={'ghost'}
-        aria-label="close"
-        color="gray.500"
-        icon={<Icon as={IoClose} size="lg" />}
-        onClick={() => {
-          if (closeLink) {
-            router.push(closeLink);
-          } else {
-            router.back();
-          }
-        }}
-      />
+
+      <Box display="flex" gap="s24">
+        {buttonLabel && buttonHandler && (
+          <Button variant="ghost" onClick={buttonHandler}>
+            {buttonLabel}
+          </Button>
+        )}
+
+        <IconButton
+          variant={'ghost'}
+          aria-label="close"
+          color="gray.500"
+          icon={<Icon as={IoClose} size="lg" />}
+          onClick={() => {
+            if (closeLink) {
+              router.push(closeLink);
+            } else {
+              router.back();
+            }
+          }}
+        />
+      </Box>
     </Box>
   );
 }

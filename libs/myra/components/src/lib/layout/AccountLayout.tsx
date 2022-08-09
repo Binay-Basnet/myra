@@ -17,6 +17,7 @@ const accountColumns = [
   {
     title: 'accountList',
     link: '/accounts/list',
+    addLink: '/accounts/account-open',
   },
   {
     title: 'accountClose',

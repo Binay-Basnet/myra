@@ -73,6 +73,8 @@ const ne: Record<string, string> = {
   complainceManagement: 'Complaince Management',
   businessProcessManagement: 'Business Process Management',
   exploreAllApplications: 'Explore All Applications',
+  sahakariName: 'नियोसिस बचत तथ ऋण सहकारी',
+  sahakariLocation: ' ललितपुर',
 
   // main dashboard
   quickLinks: 'QUICK LINKS',
@@ -3082,6 +3084,17 @@ const ne: Record<string, string> = {
   kymCoopUnionTotalCurrentMembers: 'Total Current Members',
 
   loanPaymentType: 'Payment Type',
+  loanProductTypeProductType: 'Product Type',
+  loanProductTypeProductSubtype: 'Product Subtype',
+  loanProductTypeNatureofProduct: 'Nature of Product',
+  loanProductTypeDescription: 'Description',
+
+  transactionsSidebarDeposit: 'Deposit',
+  transactionsSidebarWithdraw: 'Withdraw',
+  transactionsSidebarAccountTransfer: 'Account Transfer',
+  transactionsSidebarLoanPayment: 'Loan Payment',
+  transactionsSidebarAgentList: 'Agent List',
+  transactionsSidebarAgentTransaction: 'Agent Transaction',
 
   depositProductMinimumRate: 'Minimum Rate',
   // Report page

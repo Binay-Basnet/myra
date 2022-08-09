@@ -73,10 +73,12 @@ const en: Record<string, string> = {
   complainceManagement: 'Complaince Management',
   businessProcessManagement: 'Business Process Management',
   exploreAllApplications: 'Explore All Applications',
+  sahakariName: 'Neosys Saving and Credit Cooperative',
+  sahakariLocation: 'Lalitpur',
 
   // main dashboard
   quickLinks: 'QUICK LINKS',
-  editLinks: 'EDIT LINKS',
+  editLinks: 'Edit Links',
   addNewMember: 'Add New Member',
   transactionHistory: 'Transaction History',
   transactionHistoryReport: 'Report',
@@ -3082,6 +3084,12 @@ const en: Record<string, string> = {
   loanProductTypeNatureofProduct: 'Nature of Product',
   loanProductTypeDescription: 'Description',
 
+  transactionsSidebarDeposit: 'Deposit',
+  transactionsSidebarWithdraw: 'Withdraw',
+  transactionsSidebarAccountTransfer: 'Account Transfer',
+  transactionsSidebarLoanPayment: 'Loan Payment',
+  transactionsSidebarAgentList: 'Agent List',
+  transactionsSidebarAgentTransaction: 'Agent Transaction',
   depositProductMinimumRate: 'Minimum Rate',
   // Report page
   reportsHeading: 'Reports',

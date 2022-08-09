@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/transactions/feature-withdraw",
+  "sourceRoot": "libs/cbs/transactions/feature-withdraw/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/transactions/feature-withdraw/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/transactions/feature-withdraw"],
+      "options": {
+        "jestConfig": "libs/cbs/transactions/feature-withdraw/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

@@ -1,7 +1,10 @@
+import { IoAdd } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { chakra, Tab, Tabs, Text } from '@chakra-ui/react';
+import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
+import { useGetNewIdMutation } from '@coop/cbs/data-access';
+import { Icon, IconButton } from '@coop/shared/ui';
 import { en, useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
@@ -29,6 +32,7 @@ interface ITabColumnProps {
     title: string;
     link: string;
     name?: string | undefined;
+    addLink?: string;
   }[];
 }
 
@@ -36,6 +40,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
   const { t } = useTranslation();
 
   const router = useRouter();
+  const newId = useGetNewIdMutation();
 
   // const currentIndex = useMemo(
   //   () => list.findIndex((link) => router.pathname.includes(link?.name ?? '')),
@@ -48,17 +53,41 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
     >
       {list.map((item, index) => {
         return (
-          <Link href={item.link} key={`${item}${index}`}>
-            <TabCol>
-              <Text
-                noOfLines={1}
-                align="left"
-                title={t[item.title as keyof typeof en]}
-              >
-                {t[item.title as keyof typeof en]}
-              </Text>
-            </TabCol>
-          </Link>
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            key={`${item}${index}`}
+          >
+            <Link href={item.link}>
+              <TabCol>
+                <Text
+                  noOfLines={1}
+                  align="left"
+                  title={t[item.title as keyof typeof en]}
+                >
+                  {t[item.title as keyof typeof en]}
+                </Text>
+              </TabCol>
+            </Link>
+            {item.addLink && (
+              // <Link href={item.addLink}>
+              <IconButton
+                aria-label="add-Button"
+                size="lg"
+                variant={'ghost'}
+                icon={<Icon as={IoAdd} />}
+                onClick={() =>
+                  newId
+                    .mutateAsync({})
+                    .then((res) =>
+                      router.push(`${item.addLink}/add/${res?.newId}`)
+                    )
+                }
+              />
+              // </Link>
+            )}
+          </Box>
         );
       })}
     </Tabs>

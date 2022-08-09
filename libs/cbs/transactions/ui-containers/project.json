@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/transactions/ui-containers",
+  "sourceRoot": "libs/cbs/transactions/ui-containers/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/transactions/ui-containers/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/transactions/ui-containers"],
+      "options": {
+        "jestConfig": "libs/cbs/transactions/ui-containers/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

@@ -144,7 +144,7 @@ const Details = () => {
             justifyContent="space-between"
           >
             <Box display="flex" alignItems="center">
-              <Image src={logo} alt="logo" />
+              <Image src={logo} alt="logo" layout="fill" />
               <Box ml={5}>
                 <Text color="primary.500" fontSize="r2" fontWeight="medium">
                   Namuna Savings and Credit Co-operative Ltd.

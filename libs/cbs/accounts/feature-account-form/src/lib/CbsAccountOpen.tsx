@@ -73,9 +73,27 @@ export function CbsAccountOpen() {
 
   const submitForm = () => {
     const values = getValues();
-
+    const updatedData = {
+      ...values,
+      tenure: values?.tenure ? values?.tenure : null,
+      depositFrequencyMonthly: values?.depositFrequencyMonthly
+        ? values?.depositFrequencyMonthly
+        : null,
+      depositFrequencyDayOfWeek: values?.depositFrequencyDayOfWeek
+        ? values?.depositFrequencyDayOfWeek
+        : null,
+      depositFrequencyYearlyMonth: values?.depositFrequencyYearlyMonth
+        ? values?.depositFrequencyYearlyMonth
+        : null,
+      depositFrequencyYearlyDay: values?.depositFrequencyYearlyDay
+        ? values?.depositFrequencyYearlyDay
+        : null,
+      depositFrequencyWeekly: values?.depositFrequencyWeekly
+        ? values?.depositFrequencyWeekly
+        : null,
+    };
     mutate(
-      { id, data: values },
+      { id, data: updatedData },
       {
         onSuccess: () => router.push('/accounts/list'),
       }
