@@ -41,7 +41,7 @@ export const Member = () => {
             options={[
               {
                 label: '1',
-                value: '1',
+                value: '01G9YETPZE0N67YVCF941Bindi',
               },
               {
                 label: '2',

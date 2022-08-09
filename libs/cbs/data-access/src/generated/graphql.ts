@@ -8341,6 +8341,82 @@ export type GetAccountOpenProductDetailsQuery = {
   };
 };
 
+export type GetAccountOpenEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAccountOpenEditDataQuery = {
+  account: {
+    formState?: {
+      data?: {
+        memberId: string;
+        productId: string;
+        tenure?: FrequencyTenure | null;
+        tenureNumber?: number | null;
+        interestRate?: number | null;
+        ceoAuthority?: boolean | null;
+        boardAuthority?: boolean | null;
+        depositFrequencyWeekly?: Week | null;
+        depositFrequencyMonthly?: WeeklyFrequency | null;
+        depositFrequencyDay?: number | null;
+        depositFrequencyFrequencyDay?: string | null;
+        depositFrequencyDayOfWeek?: Week | null;
+        depositFrequencyYearlyMonth?: Months | null;
+        depositFrequencyYearlyDay?: Week | null;
+        atmFacility?: boolean | null;
+        chequeIssue?: boolean | null;
+        agentId?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAccountTableListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<DepositLoanAccountSearchFilter>;
+}>;
+
+export type GetAccountTableListQuery = {
+  account: {
+    list?: {
+      totalCount: number;
+      pageInfo: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      };
+      edges: Array<{
+        node?: {
+          id: string;
+          objState: ObjState;
+          createdAt: string;
+          modifiedAt: string;
+          member: {
+            id: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            contact?: string | null;
+            dateJoined?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: {
+                longitude?: number | null;
+                latitude?: number | null;
+              } | null;
+            } | null;
+          };
+          product: { id: string; productCode: string; productName: string };
+        } | null;
+      }>;
+    } | null;
+  };
+};
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AllAdministrationQuery = {
@@ -13129,6 +13205,109 @@ export const useGetAccountOpenProductDetailsQuery = <
       GetAccountOpenProductDetailsQuery,
       GetAccountOpenProductDetailsQueryVariables
     >(GetAccountOpenProductDetailsDocument).bind(null, variables),
+    options
+  );
+export const GetAccountOpenEditDataDocument = `
+    query getAccountOpenEditData($id: ID!) {
+  account {
+    formState(id: $id) {
+      data {
+        memberId
+        productId
+        tenure
+        tenureNumber
+        interestRate
+        ceoAuthority
+        boardAuthority
+        depositFrequencyWeekly
+        depositFrequencyMonthly
+        depositFrequencyDay
+        depositFrequencyFrequencyDay
+        depositFrequencyDayOfWeek
+        depositFrequencyYearlyMonth
+        depositFrequencyYearlyDay
+        atmFacility
+        chequeIssue
+        agentId
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpenEditDataQuery = <
+  TData = GetAccountOpenEditDataQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenEditDataQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenEditDataQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenEditDataQuery, TError, TData>(
+    ['getAccountOpenEditData', variables],
+    useAxios<GetAccountOpenEditDataQuery, GetAccountOpenEditDataQueryVariables>(
+      GetAccountOpenEditDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountTableListDocument = `
+    query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
+  account {
+    list(paginate: $paginate, filter: $filter) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          objState
+          createdAt
+          modifiedAt
+          member {
+            id
+            name
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            contact
+            dateJoined
+          }
+          product {
+            id
+            productCode
+            productName
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountTableListQuery = <
+  TData = GetAccountTableListQuery,
+  TError = unknown
+>(
+  variables?: GetAccountTableListQueryVariables,
+  options?: UseQueryOptions<GetAccountTableListQuery, TError, TData>
+) =>
+  useQuery<GetAccountTableListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountTableList']
+      : ['getAccountTableList', variables],
+    useAxios<GetAccountTableListQuery, GetAccountTableListQueryVariables>(
+      GetAccountTableListDocument
+    ).bind(null, variables),
     options
   );
 export const AllAdministrationDocument = `

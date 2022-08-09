@@ -43,8 +43,8 @@ export const Interest = () => {
 
   const valueInput =
     Number(ProductData?.interest?.defaultRate) +
-    (ceoInterest && Number(ProductData?.interest?.ceoAuthority)) +
-    (BoardInterest && Number(ProductData?.interest?.boardAuthority));
+    (ceoInterest ? Number(ProductData?.interest?.ceoAuthority) : 0) +
+    (BoardInterest ? Number(ProductData?.interest?.boardAuthority) : 0);
   return (
     <GroupContainer
       scrollMarginTop={'200px'}
@@ -82,29 +82,12 @@ export const Interest = () => {
                 </Text>
               }
             />
-            {ProductType !== NatureOfDepositProduct.RecurringSaving && (
-              <>
-                <FormInput
-                  name="sanctionedId"
-                  type="number"
-                  label={t['accountOpenInterestSanctionedByID']}
-                  textAlign={'right'}
-                  placeholder="0.00"
-                />
-                <FormInput
-                  name="sanctionedName"
-                  type="text"
-                  label={t['accountOpenInterestSanctionedbyName']}
-                  placeholder={t['accountOpenInterestSanctionedbyName']}
-                />
-              </>
-            )}
           </InputGroupContainer>
           <InputGroupContainer>
             <Box
               display={'flex'}
               flexDirection="row"
-              justifyContent={'flex-start'}
+              justifyContent={'space-between'}
             >
               <FormCheckbox
                 name="ceoAuthority"

@@ -3,6 +3,7 @@ import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
+import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -30,6 +31,7 @@ const accountColumns = [
 export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
   const { t } = useTranslation();
   const router = useRouter();
+  const newId = useGetNewIdMutation();
 
   return (
     <Box display="flex">
@@ -43,9 +45,13 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
           size="lg"
           justifyContent="start"
           leftIcon={<AddIcon h="11px" />}
-          onClick={() => {
-            router.push('/accounts/account-open');
-          }}
+          onClick={() =>
+            newId
+              .mutateAsync({})
+              .then((res) =>
+                router.push(`/accounts/account-open/add/${res?.newId}`)
+              )
+          }
         >
           {t['accountLayoutNewAccount']}
         </Button>
