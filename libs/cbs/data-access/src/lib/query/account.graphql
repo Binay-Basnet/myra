@@ -29,12 +29,16 @@ query getAccountMemberList($objState: ObjState, $pagination: Pagination) {
   }
 }
 
-query getProductList {
+query getProductList($memberId: ID!) {
   settings {
     general {
       depositProduct {
-        getProductList {
-          data {
+        getProductList(memberId: $memberId) {
+          allowed {
+            id
+            productName
+          }
+          notAllowed {
             id
             productName
           }
