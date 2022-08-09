@@ -2589,9 +2589,7 @@ const en: Record<string, string> = {
   depositProductDairy: 'Dairy',
   depositProductOthers: 'Others',
   depositProductDepositAmountLimit: 'Deposit Amount Limit',
-  depositProductMinimumAmount: 'Minimum Amount',
   depositProductEnterMinimumAmount: 'Enter Minimum Amount',
-  depositProductMaximumAmount: 'Maximum Amount',
   depositProductEnterMaximumAmount: 'Enter Maximum Amount',
   depositProductDepositFrequency: 'Deposit Frequency',
   depositProductSelectdepositfrequency:
@@ -3084,6 +3082,8 @@ const en: Record<string, string> = {
   loanProductTypeProductSubtype: 'Product Subtype',
   loanProductTypeNatureofProduct: 'Nature of Product',
   loanProductTypeDescription: 'Description',
+
+  depositProductMinimumRate: 'Minimum Rate',
 };
 
 export default en;

@@ -1,6 +1,6 @@
 // import debounce from 'lodash/debounce';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -42,6 +42,20 @@ export const PrematuredPenalty = () => {
           name="prematurePenalty.penaltyLedgerMapping"
           label={t['depositProductPenaltyLedgerMapping']}
           placeholder={t['depositProductPenaltyLedgerMapping']}
+          options={[
+            {
+              label: 'Option 1',
+              value: 'option1',
+            },
+            {
+              label: 'Option 2',
+              value: 'option2',
+            },
+            {
+              label: 'Option 3',
+              value: 'option3',
+            },
+          ]}
         />
         <FormInput
           name="prematurePenalty.penaltyAmount"

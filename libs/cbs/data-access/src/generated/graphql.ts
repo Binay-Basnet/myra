@@ -1312,6 +1312,17 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
+export type DepositAccount = Base & {
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  id: Scalars['ID'];
+  member: Member;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
+  product: DepositProduct;
+};
+
 export type DepositIro = {
   id: Scalars['ID'];
   iroAddress?: Maybe<Scalars['String']>;
@@ -1377,7 +1388,7 @@ export type DepositLoanAccountConnection = {
 
 export type DepositLoanAccountEdge = {
   cursor: Scalars['Cursor'];
-  node: DepositLoanAccount;
+  node?: Maybe<DepositAccount>;
 };
 
 export type DepositLoanAccountFormStateResult = {

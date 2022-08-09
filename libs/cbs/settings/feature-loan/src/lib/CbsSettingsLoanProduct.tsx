@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
 import {
+  Id_Type,
   useGetLoanProductListQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
@@ -139,7 +140,7 @@ export function SettingsLoanProduct() {
             leftIcon={<AddIcon h="11px" />}
             onClick={() =>
               newId
-                .mutateAsync({})
+                .mutateAsync({ idType: Id_Type.Loanproduct })
                 .then((res) =>
                   router.push(
                     `/settings/general/loan-products/add/${res?.newId}`

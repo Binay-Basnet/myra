@@ -1,11 +1,6 @@
 import { SettingsBranchesTable } from '@coop/myra/components';
 
-/* eslint-disable-next-line */
-export interface CbsSettingsFeatureBranchesProps {}
-
-export function CbsSettingsFeatureBranches(
-  props: CbsSettingsFeatureBranchesProps
-) {
+export function CbsSettingsFeatureBranches() {
   return <SettingsBranchesTable />;
 }
 

@@ -3081,6 +3081,8 @@ const ne: Record<string, string> = {
   kymCoopUnionTotalCurrentMembers: 'Total Current Members',
 
   loanPaymentType: 'Payment Type',
+
+  depositProductMinimumRate: 'Minimum Rate',
 };
 
 export default ne;
