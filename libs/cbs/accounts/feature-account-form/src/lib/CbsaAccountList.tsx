@@ -1,26 +1,18 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { AddIcon } from '@chakra-ui/icons';
 
-import {
-  Id_Type,
-  NatureOfDepositProduct,
-  useGetDepositProductSettingsListQuery,
-  useGetNewIdMutation,
-} from '@coop/cbs/data-access';
+import { useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
+import { Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export function SettingsDepositProducts() {
+export function CBSAccountList() {
   const router = useRouter();
 
   const { t } = useTranslation();
 
-  const newId = useGetNewIdMutation();
-
-  const { data, isLoading } = useGetDepositProductSettingsListQuery(
+  const { data, isLoading } = useGetAccountTableListQuery(
     router.query['before']
       ? {
           paginate: {
@@ -38,37 +30,34 @@ export function SettingsDepositProducts() {
       staleTime: 0,
     }
   );
-  const rowData = useMemo(
-    () => data?.settings?.general?.depositProduct?.list?.edges ?? [],
-    [data]
-  );
+
+  const rowData = useMemo(() => data?.account?.list?.edges ?? [], [data]);
 
   const popoverTitle = [
     {
       title: 'depositProductEdit',
-      onClick: (id: string) =>
-        router.push(`/settings/general/deposit-products/edit/${id}`),
+      onClick: (id: string) => router.push(`/accounts/account-open/edit/${id}`),
     },
   ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['depositProductCode'],
-        accessorFn: (row) => row?.node?.productCode,
+        header: 'Member Id',
+        accessorFn: (row) => row?.node?.id,
       },
 
       {
         header: t['depositProductName'],
-        accessorFn: (row) => row?.node?.productName,
+        accessorFn: (row) => row?.node?.member?.name?.local,
       },
       {
         header: t['depositNature'],
-        accessorFn: (row) => row?.node?.nature,
-        cell: (props) => {
+        accessorFn: (row) => row?.node?.product?.productName,
+        cell: () => {
           return (
             <span>
-              {props?.row?.original?.node?.nature ===
+              {/* {props?.row?.original?.node?.nature ===
               NatureOfDepositProduct.Mandatory
                 ? t['depositProductMandatory']
                 : props?.row?.original?.node?.nature ===
@@ -80,21 +69,23 @@ export function SettingsDepositProducts() {
                 : props?.row?.original?.node?.nature ===
                   NatureOfDepositProduct.VoluntaryOrOptional
                 ? t['depositProductVoluntaryOptional']
-                : ' '}
+                : ' '} */}
             </span>
           );
         },
       },
       {
         header: t['depositInterest'],
-        accessorFn: (row) => row?.node?.interest,
-        cell: (props) => {
-          return <span>{props?.row?.original?.node?.interest} %</span>;
-        },
+        accessorFn: (row) => row?.node?.product?.productCode,
+        // cell: (props) => {
+        //   return (
+        //     <span>{props?.row?.original?.node?.depositFrequencyMonthly} %</span>
+        //   );
+        // },
       },
       {
         header: t['depositCreatedDate'],
-        accessorFn: (row) => row?.node?.createdDate,
+        accessorFn: (row) => row?.node?.createdAt,
       },
       {
         id: '_actions',
@@ -125,20 +116,6 @@ export function SettingsDepositProducts() {
           <Text fontSize="r2" fontWeight="600" color="gray.800">
             {t['settingsDepositProducts']}
           </Text>
-          <Button
-            leftIcon={<AddIcon h="11px" />}
-            onClick={() =>
-              newId
-                .mutateAsync({ idType: Id_Type.Depositproduct })
-                .then((res) =>
-                  router.push(
-                    `/settings/general/deposit-products/add/${res?.newId}`
-                  )
-                )
-            }
-          >
-            {t['settingsDepositProductNew']}
-          </Button>
         </Box>
       </Box>
 
@@ -147,17 +124,13 @@ export function SettingsDepositProducts() {
         data={rowData}
         columns={columns}
         pagination={{
-          total: 1200,
-          endCursor:
-            data?.settings?.general?.depositProduct?.list?.pageInfo
-              ?.startCursor ?? '',
-          startCursor:
-            data?.settings?.general?.depositProduct?.list?.pageInfo
-              ?.endCursor ?? '',
+          total: data?.account?.list?.totalCount ?? 'Many',
+          endCursor: data?.account?.list?.pageInfo?.startCursor ?? '',
+          startCursor: data?.account?.list?.pageInfo?.endCursor ?? '',
         }}
       />
     </>
   );
 }
 
-export default SettingsDepositProducts;
+export default CBSAccountList;

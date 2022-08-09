@@ -1,8 +1,19 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 import { Icon } from '@chakra-ui/react';
 
+import {
+  DepositLoanAccountInput,
+  useSetAccountOpenDataMutation,
+} from '@coop/cbs/data-access';
+import {
+  NatureOfDepositProduct,
+  useGetAccountOpenEditDataQuery,
+  useGetAccountOpenProductDetailsQuery,
+} from '@coop/cbs/data-access';
 import {
   Box,
   Button,
@@ -21,18 +32,75 @@ import {
   Interest,
   Member,
   Product,
-  RequiredDocuments,
   Tenure,
 } from '../component/form';
+/* eslint-disable-next-line */
+export interface CbsAccountOpenFormProps {}
 
 /* eslint-disable-next-line */
 export interface CbsAccountOpenFormProps {}
 
 export function CbsAccountOpen() {
   const { t } = useTranslation();
-  const methods = useForm();
-  const { watch } = methods;
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
+  const methods = useForm<DepositLoanAccountInput>();
+
+  const { mutate } = useSetAccountOpenDataMutation();
+  const { getValues, watch, reset } = methods;
+
+  const [triggerQuery, setTriggerQuery] = useState(false);
+
   const products = watch('productId');
+
+  const poductDetails = useGetAccountOpenProductDetailsQuery(
+    { id: products },
+    {
+      enabled: triggerQuery,
+    }
+  );
+
+  const ProductData =
+    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+
+  const ProductType = ProductData?.nature;
+  useEffect(() => {
+    if (products) {
+      setTriggerQuery(true);
+    }
+  }, [products]);
+
+  const submitForm = () => {
+    const values = getValues();
+
+    mutate(
+      { id, data: values },
+      {
+        onSuccess: () => router.push('/accounts/list'),
+      }
+    );
+  };
+
+  const { data: editValues, refetch } = useGetAccountOpenEditDataQuery({
+    id,
+  });
+  useEffect(() => {
+    if (editValues) {
+      const editValueData = editValues?.account?.formState?.data;
+      if (editValueData) {
+        reset({
+          ...editValueData,
+        });
+      }
+    }
+  }, [editValues, id]);
+
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [refetch]);
 
   return (
     <>
@@ -53,18 +121,24 @@ export function CbsAccountOpen() {
 
             <Product />
 
-            {products !== 'voluntary' && <Tenure />}
+            {ProductType !== NatureOfDepositProduct?.VoluntaryOrOptional && (
+              <Tenure />
+            )}
 
             <Interest />
 
-            {products !== 'voluntary' && <DepositFrequency />}
+            {ProductType !== NatureOfDepositProduct?.VoluntaryOrOptional && (
+              <DepositFrequency />
+            )}
 
-            {products === 'voluntary' && <Atm />}
+            {ProductType === NatureOfDepositProduct?.VoluntaryOrOptional && (
+              <Atm />
+            )}
 
             <FeesAndCharge />
 
             <Agent />
-            <RequiredDocuments />
+            {/* <RequiredDocuments /> */}
           </form>
         </FormProvider>
       </Container>
@@ -106,7 +180,7 @@ export function CbsAccountOpen() {
               </Button>
             }
             mainButtonLabel={t['submit']}
-            mainButtonHandler={() => alert('Submitted')}
+            mainButtonHandler={() => submitForm()}
           />
         </Container>
       </Box>
