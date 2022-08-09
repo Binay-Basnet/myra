@@ -84,9 +84,8 @@ const ShareReturnForm = () => {
 
   const onSubmit = () => {
     const values = getValues();
-
     const updatedValues = {
-      ...omit(values, ['printingFee', 'adminFee']),
+      ...omit(values, ['printingFee', 'adminFee', 'selectAllShares']),
       extraFee: [
         {
           name: 'adminFee',
@@ -97,14 +96,13 @@ const ShareReturnForm = () => {
           value: printingFees,
         },
       ],
-      totalAmount: totalAmount,
-      remainingShare: 20,
-      remainingShareValue: 3000,
-      withdrawAmount: noOfShares * 100,
+      totalAmount: totalAmount.toString(),
+      noOfReturnedShares: Number(values['noOfReturnedShares']),
+      memberId: '123456789',
     };
 
     mutate(
-      { id: '123', data: updatedValues },
+      { data: updatedValues },
       {
         onSuccess: () => router.push(`/share/balance`),
       }

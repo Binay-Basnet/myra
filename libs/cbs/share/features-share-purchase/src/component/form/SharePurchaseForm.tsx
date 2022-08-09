@@ -117,7 +117,6 @@ const SharePurchaseForm = () => {
 
     const updatedValues = {
       ...omit(values, ['printingFee', 'adminFee']),
-      shareAmount: noOfShares * 100,
       extraFee: [
         {
           name: 'adminFee',
@@ -128,13 +127,13 @@ const SharePurchaseForm = () => {
           value: printingFee,
         },
       ],
-      totalAmount: totalAmount,
+      totalAmount: totalAmount.toString(),
       shareCount: Number(values['shareCount']),
-      memberId,
+      memberId: '123456789',
     };
 
     mutate(
-      { id: '123', data: updatedValues },
+      { data: updatedValues },
       {
         onSuccess: () => router.push(`/share/balance`),
       }
