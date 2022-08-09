@@ -4,9 +4,16 @@ import { useRouter } from 'next/router';
 import { useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
+import {
+  Avatar,
+  Box,
+  DEFAULT_PAGE_SIZE,
+  PageHeader,
+  Text,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { MEMBER_TAB_ITEMS } from '../component/form/utils/memberTabItems';
 export function CBSAccountList() {
   const router = useRouter();
 
@@ -48,44 +55,41 @@ export function CBSAccountList() {
       },
 
       {
-        header: t['depositProductName'],
+        header: 'Member Name',
         accessorFn: (row) => row?.node?.member?.name?.local,
-      },
-      {
-        header: t['depositNature'],
-        accessorFn: (row) => row?.node?.product?.productName,
-        cell: () => {
+        cell: (props) => {
           return (
-            <span>
-              {/* {props?.row?.original?.node?.nature ===
-              NatureOfDepositProduct.Mandatory
-                ? t['depositProductMandatory']
-                : props?.row?.original?.node?.nature ===
-                  NatureOfDepositProduct.RecurringSaving
-                ? t['depositProductRecurringSaving']
-                : props?.row?.original?.node?.nature ===
-                  NatureOfDepositProduct.TermSavingOrFd
-                ? t['depositProductTermSaving']
-                : props?.row?.original?.node?.nature ===
-                  NatureOfDepositProduct.VoluntaryOrOptional
-                ? t['depositProductVoluntaryOptional']
-                : ' '} */}
-            </span>
+            <Box
+              display="flex"
+              flexDirection="row"
+              gap="s8"
+              justifyContent="flex-start"
+              alignItems={'center'}
+            >
+              <Avatar
+                name={props.row?.original?.node?.member?.name?.local}
+                size="sm"
+              />
+              <Text fontWeight="400" fontSize="r1">
+                {props.row?.original?.node?.member?.name?.local}
+              </Text>
+            </Box>
           );
         },
       },
+
       {
-        header: t['depositInterest'],
-        accessorFn: (row) => row?.node?.product?.productCode,
-        // cell: (props) => {
-        //   return (
-        //     <span>{props?.row?.original?.node?.depositFrequencyMonthly} %</span>
-        //   );
-        // },
+        header: 'Account Name',
+        accessorFn: (row) => row?.node?.product?.productName,
       },
       {
-        header: t['depositCreatedDate'],
+        header: 'Account Open Date',
         accessorFn: (row) => row?.node?.createdAt,
+        cell: (props) => {
+          return (
+            <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>
+          );
+        },
       },
       {
         id: '_actions',
@@ -106,7 +110,7 @@ export function CBSAccountList() {
 
   return (
     <>
-      <Box borderBottom="1px solid #E6E6E6" p="8px 16px">
+      {/* <Box borderBottom="1px solid #E6E6E6" p="8px 16px">
         <Box
           display="flex"
           justifyContent="space-between"
@@ -114,10 +118,12 @@ export function CBSAccountList() {
           h="100%"
         >
           <Text fontSize="r2" fontWeight="600" color="gray.800">
-            {t['settingsDepositProducts']}
+            "Account List"
           </Text>
         </Box>
-      </Box>
+      </Box> */}
+
+      <PageHeader heading="Account List" tabItems={MEMBER_TAB_ITEMS} />
 
       <Table
         isLoading={isLoading}
