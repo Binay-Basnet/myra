@@ -173,6 +173,14 @@ export function SettingsDepositProductsAdd() {
         rateType: values?.penaltyData?.rateType
           ? values?.penaltyData?.rateType
           : null,
+        prematurePenalty: {
+          noOfDays: values?.prematurePenalty?.noOfDays,
+          penaltyAmount: values?.prematurePenalty?.penaltyAmount,
+          penaltyDateType: values?.prematurePenalty?.penaltyDateType,
+          penaltyRate: values?.prematurePenalty?.penaltyRate,
+          penaltyLedgerMapping:
+            values?.prematurePenalty?.penaltyLedgerMapping ?? null,
+        },
       },
     };
 

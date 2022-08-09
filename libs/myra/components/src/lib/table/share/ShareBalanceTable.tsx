@@ -19,7 +19,7 @@ export const ShareBalanceTable = () => {
     () => [
       {
         Header: t['shareTableMemberId'],
-        accessor: 'node.member.name.local',
+        accessor: 'node.id',
         maxWidth: 4,
       },
 

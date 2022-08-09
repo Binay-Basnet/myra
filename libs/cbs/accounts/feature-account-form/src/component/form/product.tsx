@@ -19,7 +19,9 @@ export const Product = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const products = watch('productId');
-  const { data, isFetching } = useGetProductListQuery();
+  const { data, isFetching } = useGetProductListQuery({
+    memberId: '123456789',
+  });
 
   type optionType = { label: string; value: string };
 

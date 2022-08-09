@@ -6,11 +6,10 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { omit } from 'lodash';
+import { debounce, omit } from 'lodash';
 
 import {
   Arrange,
-  ObjState,
   Payment_Mode,
   ShareReturnInput,
   useAddShareReturnMutation,
@@ -76,6 +75,8 @@ const ShareReturnForm = () => {
   const adminFees = watch('adminFee');
   const paymentModes = watch('paymentMode');
   const [totalAmount, setTotalAmount] = useState(0);
+  const [IDMember, setIDMember] = useState('');
+  const [trigger, setTrigger] = useState(false);
 
   const { data } = useGetMemberIndividualDataQuery({ id: memberId });
 
@@ -83,9 +84,8 @@ const ShareReturnForm = () => {
 
   const onSubmit = () => {
     const values = getValues();
-
     const updatedValues = {
-      ...omit(values, ['printingFee', 'adminFee']),
+      ...omit(values, ['printingFee', 'adminFee', 'selectAllShares']),
       extraFee: [
         {
           name: 'adminFee',
@@ -96,14 +96,13 @@ const ShareReturnForm = () => {
           value: printingFees,
         },
       ],
-      totalAmount: totalAmount,
-      remainingShare: 20,
-      remainingShareValue: 3000,
-      withdrawAmount: noOfShares * 100,
+      totalAmount: totalAmount.toString(),
+      noOfReturnedShares: Number(values['noOfReturnedShares']),
+      memberId: '123456789',
     };
 
     mutate(
-      { id: '123', data: updatedValues },
+      { data: updatedValues },
       {
         onSuccess: () => router.push(`/share/balance`),
       }
@@ -111,23 +110,16 @@ const ShareReturnForm = () => {
   };
 
   const { data: memberList } = useGetMemberListQuery(
-    router.query['before']
-      ? {
-          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-          after: router.query['before'] as string,
-          column: 'ID',
-          arrange: Arrange.Desc,
-        }
-      : {
-          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-          after: (router.query['after'] ?? '') as string,
-          column: 'ID',
-          arrange: Arrange.Desc,
-        },
+    {
+      first: DEFAULT_PAGE_SIZE,
+      after: '',
+      column: 'ID',
+      arrange: Arrange.Desc,
+      query: IDMember,
+    },
     {
       staleTime: 0,
+      enabled: trigger,
     }
   );
 
@@ -179,6 +171,10 @@ const ShareReturnForm = () => {
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
                       placeholder={t['sharePurchaseEnterMemberID']}
+                      onInputChange={debounce((id) => {
+                        setIDMember(id);
+                        setTrigger(true);
+                      }, 800)}
                       options={memberOptions}
                     />
                   </Box>

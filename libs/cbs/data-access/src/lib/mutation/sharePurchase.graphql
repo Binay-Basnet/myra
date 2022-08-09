@@ -1,6 +1,6 @@
-mutation addSharePurchase($id: ID!, $data: SharePurchaseInput!) {
+mutation addSharePurchase($data: SharePurchaseInput!) {
   share {
-    purchase(id: $id, data: $data) {
+    purchase(data: $data) {
       recordId
     }
   }
