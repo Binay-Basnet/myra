@@ -3089,6 +3089,9 @@ const en: Record<string, string> = {
   reportsCbsReports: 'CBS reports',
   reportsSavedReports: 'Saved reports',
   reportsSettings: 'Report Settings',
+
+  depositProductMinimumAmount: 'Minimum Amount',
+  depositProductMaximumAmount: 'Maximum Amount',
 };
 
 export default en;
