@@ -27,7 +27,7 @@ export const ShareRegisterTable = () => {
         maxWidth: 40,
         accessor: 'node.transactionDate',
         disableFilters: false,
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
         },
       },
@@ -38,7 +38,7 @@ export const ShareRegisterTable = () => {
       },
       {
         Header: t['shareRegisterTableMemberID'],
-        accessor: 'node.id',
+        accessor: 'node.member.name.local',
         maxWidth: 4,
         Cell: ({ value }) => {
           return <span>{value.slice(0, 5).toUpperCase()}</span>;
@@ -52,7 +52,7 @@ export const ShareRegisterTable = () => {
 
         disableFilters: false,
 
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return (
             <Flex alignItems="center" gap="2">
               <Avatar
@@ -91,7 +91,7 @@ export const ShareRegisterTable = () => {
         filter: 'numberAll',
         filterType: 'amount',
 
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return (
             <span>{value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
           );
@@ -107,7 +107,7 @@ export const ShareRegisterTable = () => {
         filter: 'numberAll',
         filterType: 'amount',
 
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return (
             <span>{value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
           );
@@ -118,7 +118,7 @@ export const ShareRegisterTable = () => {
         accessor: 'node.balance',
         disableSortBy: true,
         isNumeric: true,
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return <span>{Number(value).toLocaleString('en-IN')}</span>;
         },
       },

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import {
   Arrange,
   BranchCategory,
+  ObjState,
   useAllAdministrationQuery,
   useGetBranchEditDataQuery,
   useGetMemberListQuery,
@@ -52,24 +53,18 @@ export function CbsSettingsFeatureBranchesNew() {
   const { data: memberListData } = useGetMemberListQuery(
     router.query['before']
       ? {
-          pagination: {
-            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            before: router.query['before'] as string,
-            order: {
-              column: 'ID',
-              arrange: Arrange.Desc,
-            },
-          },
+          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          after: router.query['before'] as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
         }
       : {
-          pagination: {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
-            order: {
-              column: 'ID',
-              arrange: Arrange.Desc,
-            },
-          },
+          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+          after: (router.query['after'] ?? '') as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
         },
     {
       staleTime: 0,

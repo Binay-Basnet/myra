@@ -3,7 +3,11 @@ import { useRouter } from 'next/router';
 import { Avatar, Flex } from '@chakra-ui/react';
 import format from 'date-fns/format';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import {
+  Arrange,
+  ObjState,
+  useGetMemberListQuery,
+} from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { NeosysTableListPageHeader } from '@coop/neosys-admin/ui-components';
 import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/shared/ui';
@@ -16,17 +20,17 @@ export const ClientsTable = () => {
     router.query['before']
       ? {
           objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          pagination: {
-            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            before: router.query['before'] as string,
-          },
+          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          after: router.query['before'] as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
         }
       : {
           objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          pagination: {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
-          },
+          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+          after: (router.query['after'] ?? '') as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
         },
     {
       staleTime: 0,
@@ -46,7 +50,7 @@ export const ClientsTable = () => {
         disableSortBy: false,
         disableFilters: false,
 
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return (
             <Flex alignItems="center" gap="2">
               <Avatar

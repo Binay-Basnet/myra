@@ -1,7 +1,11 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import {
+  Arrange,
+  ObjState,
+  useGetMemberListQuery,
+} from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
@@ -11,9 +15,7 @@ import { useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface CbsSettingsFeatureValuatorListProps {}
 
-export const CbsSettingsFeatureValuatorList = (
-  props: CbsSettingsFeatureValuatorListProps
-) => {
+export const CbsSettingsFeatureValuatorList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -21,17 +23,17 @@ export const CbsSettingsFeatureValuatorList = (
     router.query['before']
       ? {
           objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          pagination: {
-            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            before: router.query['before'] as string,
-          },
+          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          after: router.query['before'] as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
         }
       : {
           objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          pagination: {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
-          },
+          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+          after: (router.query['after'] ?? '') as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
         },
     {
       staleTime: 0,

@@ -9,11 +9,9 @@ import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
 import {
-  ObjState,
   Payment_Mode,
   useAddSharePurchaseMutation,
   useGetMemberIndividualDataQuery,
-  useGetMemberListQuery,
 } from '@coop/cbs/data-access';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
@@ -28,7 +26,6 @@ import {
   Box,
   Button,
   Container,
-  DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
   Grid,
@@ -76,29 +73,37 @@ const SharePurchaseForm = () => {
 
   const memberData = data?.members?.details?.data;
 
-  const { data: memberList } = useGetMemberListQuery(
-    {
-      objState: ObjState.Draft,
-      pagination: {
-        first: Number(DEFAULT_PAGE_SIZE),
-        after: '',
-      },
-    },
-    {
-      staleTime: 0,
-    }
-  );
+  // const { data: memberList, isFetching } = useGetMemberListQuery(
+  //   router.query['before']
+  //     ? {
+  //         objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+  //         first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+  //         after: router.query['before'] as string,
+  //         column: 'ID',
+  //         arrange: Arrange.Desc,
+  //       }
+  //     : {
+  //         objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+  //         first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+  //         after: (router.query['after'] ?? '') as string,
+  //         column: 'ID',
+  //         arrange: Arrange.Desc,
+  //       },
+  //   {
+  //     staleTime: 0,
+  //   }
+  // );
 
-  const memberListData = memberList?.members?.list?.edges;
+  // const memberListData = memberList?.members?.list?.edges;
 
-  const memberOptions =
-    memberListData &&
-    memberListData.map((member) => {
-      return {
-        label: member?.node?.name?.local,
-        value: member?.node?.id,
-      };
-    });
+  // const memberOptions =
+  //   memberListData &&
+  //   memberListData.map((member) => {
+  //     return {
+  //       label: member?.node?.name?.local,
+  //       value: member?.node?.id,
+  //     };
+  //   });
 
   useEffect(() => {
     setTotalAmount(
@@ -123,6 +128,8 @@ const SharePurchaseForm = () => {
         },
       ],
       totalAmount: totalAmount,
+      shareCount: Number(values['shareCount']),
+      memberId,
     };
 
     mutate(
@@ -164,7 +171,7 @@ const SharePurchaseForm = () => {
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
                       placeholder={t['sharePurchaseEnterMemberID']}
-                      options={memberOptions}
+                      options={[{ label: 'John doe', value: '123456789' }]}
                     />
                   </Box>
 

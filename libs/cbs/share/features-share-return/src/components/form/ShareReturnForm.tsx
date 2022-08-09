@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
 import {
+  Arrange,
   ObjState,
   Payment_Mode,
   ShareReturnInput,
@@ -138,16 +139,21 @@ const ShareReturnForm = () => {
   //    );
 
   const { data: memberList } = useGetMemberListQuery(
-    {
-      objState: ObjState.Draft,
-      pagination: {
-        first: Number(DEFAULT_PAGE_SIZE),
-        after: '',
-      },
-      //   filter: {
-      //     query: memberId,
-      //   },
-    },
+    router.query['before']
+      ? {
+          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          after: router.query['before'] as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
+        }
+      : {
+          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+          after: (router.query['after'] ?? '') as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
+        },
     {
       staleTime: 0,
     }

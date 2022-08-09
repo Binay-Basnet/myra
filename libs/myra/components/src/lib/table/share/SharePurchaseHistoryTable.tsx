@@ -23,7 +23,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
     () => [
       {
         header: t['sn'],
-        accessorFn: (row) => row?.node?.id,
+        accessorFn: (row) => row?.node?.member?.id,
       },
 
       {
