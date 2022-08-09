@@ -32,7 +32,6 @@ const en: Record<string, string> = {
   weekly: 'Weekly',
   monthly: 'Monthly',
   yearly: 'Yearly',
-  settings: 'Settings',
   edit: 'Edit',
   saveChanges: 'Save Changes',
 
@@ -2732,7 +2731,7 @@ const en: Record<string, string> = {
   loanProductUnit: 'Unit',
   loanProductNumber: 'Number',
   loanProductEnterNumber: 'Enter Number',
-  loanProductMaxinumTenure: 'Maxinum Tenure',
+  loanProductMaxinumTenure: 'Maximum Tenure',
   loanProductLoanAmountLimit: 'Loan Amount Limit',
   loanProductMinimumAmount: 'Minimum Amount',
   loanProductMaximumAmount: 'Maximum Amount',

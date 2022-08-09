@@ -32,6 +32,7 @@ const ne: Record<string, string> = {
   weekly: 'Weekly',
   monthly: 'Monthly',
   yearly: 'Yearly',
+  quaterly: 'Quaterly',
   edit: 'Edit',
 
   // navbar
