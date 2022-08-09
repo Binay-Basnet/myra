@@ -5,7 +5,7 @@ import { Flex, HStack, Img, Spacer } from '@chakra-ui/react';
 
 import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { HomePageLayout } from '@coop/myra/components';
-import { Avatar, Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Avatar, Box, Button, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const data = [
@@ -67,30 +67,25 @@ const Dashboard = () => {
   const router = useRouter();
 
   return (
-    <Box height="fit-content" mt="70px" p="0" pb="55px">
+    <Box height="fit-content" p="0" pb="55px">
       <Box display="flex" flexDir="column" gap="s16">
         <Box>
           <Flex>
             <Box>
               <Text
-                fontSize="12px"
-                fontFamily="Inter"
-                fontWeight="600"
-                color="#636972"
+                fontSize={'s3'}
+                color="gray.600"
+                fontWeight={'600'}
+                textTransform={'uppercase'}
               >
                 {t.quickLinks}
               </Text>
             </Box>
             <Spacer />
             <Box>
-              <Text
-                fontSize="14px"
-                fontFamily="Inter"
-                fontWeight="500"
-                color="#636972"
-              >
+              <Button variant="link" shade="neutral">
                 {t.editLinks}
-              </Text>
+              </Button>
             </Box>
           </Flex>
         </Box>
@@ -118,7 +113,7 @@ const Dashboard = () => {
                       onClick={() =>
                         newId
                           .mutateAsync({})
-                          .then((res) => router.push(`members/list`))
+                          .then(() => router.push(`members/list`))
                       }
                     >
                       {t.addNewMember}
@@ -249,7 +244,12 @@ const Dashboard = () => {
         <Box>
           <Flex>
             <Box>
-              <Text fontSize="13px" fontWeight="600" color="#636972">
+              <Text
+                fontSize={'s3'}
+                color="gray.600"
+                fontWeight={'600'}
+                textTransform={'uppercase'}
+              >
                 {t.today}
               </Text>
             </Box>

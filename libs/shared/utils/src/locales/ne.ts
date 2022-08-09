@@ -72,6 +72,8 @@ const ne: Record<string, string> = {
   complainceManagement: 'Complaince Management',
   businessProcessManagement: 'Business Process Management',
   exploreAllApplications: 'Explore All Applications',
+  sahakariName: 'नियोसिस बचत तथ ऋण सहकारी',
+  sahakariLocation: ' ललितपुर',
 
   // main dashboard
   quickLinks: 'QUICK LINKS',
