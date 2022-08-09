@@ -1312,10 +1312,14 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
-export type DepositAccount = {
+export type DepositAccount = Base & {
   createdAt: Scalars['Time'];
+  createdBy: Identity;
   id: Scalars['ID'];
   member: Member;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
   product: DepositProduct;
 };
 
@@ -9610,6 +9614,8 @@ export type GetCoopUnionKymOptionsQuery = {
 export type GetMemberListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['Cursor']>;
   first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  last?: InputMaybe<Scalars['Int']>;
   column: Scalars['String'];
   arrange: Arrange;
   objState?: InputMaybe<ObjState>;
@@ -14853,10 +14859,10 @@ export const useGetCoopUnionKymOptionsQuery = <
     options
   );
 export const GetMemberListDocument = `
-    query getMemberList($after: Cursor, $first: Int, $column: String!, $arrange: Arrange!, $objState: ObjState) {
+    query getMemberList($after: Cursor, $first: Int, $before: Cursor, $last: Int, $column: String!, $arrange: Arrange!, $objState: ObjState) {
   members {
     list(
-      pagination: {after: $after, first: $first, order: {column: $column, arrange: $arrange}}
+      pagination: {after: $after, first: $first, before: $before, last: $last, order: {column: $column, arrange: $arrange}}
       filter: {objState: $objState}
     ) {
       totalCount

@@ -3084,6 +3084,12 @@ const en: Record<string, string> = {
   loanProductTypeProductSubtype: 'Product Subtype',
   loanProductTypeNatureofProduct: 'Nature of Product',
   loanProductTypeDescription: 'Description',
+
+  // Report page
+  reportsHeading: 'Reports',
+  reportsCbsReports: 'CBS reports',
+  reportsSavedReports: 'Saved reports',
+  reportsSettings: 'Report Settings',
 };
 
 export default en;

@@ -1,6 +1,8 @@
 query getMemberList(
   $after: Cursor
   $first: Int
+  $before: Cursor
+  $last: Int
   $column: String!
   $arrange: Arrange!
   $objState: ObjState
@@ -10,6 +12,8 @@ query getMemberList(
       pagination: {
         after: $after
         first: $first
+        before: $before
+        last: $last
         order: { column: $column, arrange: $arrange }
       }
       filter: { objState: $objState }

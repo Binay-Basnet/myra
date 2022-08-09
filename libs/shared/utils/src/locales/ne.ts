@@ -3081,6 +3081,12 @@ const ne: Record<string, string> = {
   kymCoopUnionTotalCurrentMembers: 'Total Current Members',
 
   loanPaymentType: 'Payment Type',
+
+  // Report page
+  reportsHeading: 'Reports',
+  reportsCbsReports: 'CBS reports',
+  reportsSavedReports: 'Saved reports',
+  reportsSettings: 'Report Settings',
 };
 
 export default ne;
