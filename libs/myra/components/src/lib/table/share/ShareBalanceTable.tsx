@@ -19,7 +19,7 @@ export const ShareBalanceTable = () => {
     () => [
       {
         Header: t['shareTableMemberId'],
-        accessor: 'node.id',
+        accessor: 'node.member.id',
         maxWidth: 4,
       },
 
@@ -36,7 +36,7 @@ export const ShareBalanceTable = () => {
       },
       {
         Header: t['shareTableShareAmount'],
-        accessor: 'node.balance',
+        accessor: 'node.amount',
         Cell: ({ value }) => {
           return <span>{Number(value).toLocaleString('en-IN')}</span>;
         },

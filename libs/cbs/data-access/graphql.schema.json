@@ -12349,6 +12349,41 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "DepositFrequency",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "HALF_YEARLY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MONTHLY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "QUARTERLY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "YEARLY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "DepositIro",
         "description": null,
@@ -14386,7 +14421,7 @@
             "args": [],
             "type": {
               "kind": "ENUM",
-              "name": "Frequency",
+              "name": "DepositFrequency",
               "ofType": null
             },
             "isDeprecated": false,
@@ -15116,7 +15151,7 @@
             "description": null,
             "type": {
               "kind": "ENUM",
-              "name": "Frequency",
+              "name": "DepositFrequency",
               "ofType": null
             },
             "defaultValue": null,
@@ -28566,6 +28601,18 @@
             "deprecationReason": null
           },
           {
+            "name": "interestMethod",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "InterestMethod",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maxRate",
             "description": null,
             "args": [],
@@ -28593,6 +28640,29 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "InterestMethod",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "DIMINISHING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FLAT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -28648,6 +28718,18 @@
                 "name": "Float",
                 "ofType": null
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "interestMethod",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "InterestMethod",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -28735,6 +28817,18 @@
                 "name": "Float",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "interestMethod",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "InterestMethod",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null

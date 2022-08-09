@@ -3083,6 +3083,17 @@ const ne: Record<string, string> = {
   kymCoopUnionTotalCurrentMembers: 'Total Current Members',
 
   loanPaymentType: 'Payment Type',
+  loanProductTypeProductType: 'Product Type',
+  loanProductTypeProductSubtype: 'Product Subtype',
+  loanProductTypeNatureofProduct: 'Nature of Product',
+  loanProductTypeDescription: 'Description',
+
+  transactionsSidebarDeposit: 'Deposit',
+  transactionsSidebarWithdraw: 'Withdraw',
+  transactionsSidebarAccountTransfer: 'Account Transfer',
+  transactionsSidebarLoanPayment: 'Loan Payment',
+  transactionsSidebarAgentList: 'Agent List',
+  transactionsSidebarAgentTransaction: 'Agent Transaction',
 
   depositProductMinimumRate: 'Minimum Rate',
   // Report page
@@ -3090,9 +3101,6 @@ const ne: Record<string, string> = {
   reportsCbsReports: 'CBS reports',
   reportsSavedReports: 'Saved reports',
   reportsSettings: 'Report Settings',
-
-  depositProductMinimumAmount: 'Minimum Amount',
-  depositProductMaximumAmount: 'Maximum Amount',
 };
 
 export default ne;

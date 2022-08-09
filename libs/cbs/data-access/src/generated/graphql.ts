@@ -1353,6 +1353,13 @@ export type DepositAccount = Base & {
   product: DepositProduct;
 };
 
+export enum DepositFrequency {
+  HalfYearly = 'HALF_YEARLY',
+  Monthly = 'MONTHLY',
+  Quarterly = 'QUARTERLY',
+  Yearly = 'YEARLY',
+}
+
 export type DepositIro = {
   id: Scalars['ID'];
   iroAddress?: Maybe<Scalars['String']>;
@@ -1551,7 +1558,7 @@ export type DepositProductFormStateData = {
   penalty?: Maybe<Scalars['Boolean']>;
   penaltyData?: Maybe<PenaltyFormState>;
   percentageOfDeposit?: Maybe<Scalars['Float']>;
-  postingFrequency?: Maybe<Frequency>;
+  postingFrequency?: Maybe<DepositFrequency>;
   prematurePenalty?: Maybe<PrematurePenaltyFormState>;
   productCode: ProductCodeFormState;
   productName?: Maybe<Scalars['String']>;
@@ -1614,7 +1621,7 @@ export type DepositProductInput = {
   penalty?: InputMaybe<Scalars['Boolean']>;
   penaltyData?: InputMaybe<PenaltyInput>;
   percentageOfDeposit?: InputMaybe<Scalars['Float']>;
-  postingFrequency?: InputMaybe<Frequency>;
+  postingFrequency?: InputMaybe<DepositFrequency>;
   prematurePenalty?: InputMaybe<PrematurePenalty>;
   productCode: ProductCode;
   productName: Scalars['String'];
@@ -3303,15 +3310,22 @@ export type InterestFormState = {
   boardAuthority?: Maybe<Scalars['Float']>;
   ceoAuthority?: Maybe<Scalars['Float']>;
   defaultRate?: Maybe<Scalars['Float']>;
+  interestMethod?: Maybe<InterestMethod>;
   maxRate?: Maybe<Scalars['Float']>;
   minRate?: Maybe<Scalars['Float']>;
 };
+
+export enum InterestMethod {
+  Diminishing = 'DIMINISHING',
+  Flat = 'FLAT',
+}
 
 export type InterestRate = {
   additionalRate?: InputMaybe<Scalars['Float']>;
   boardAuthority?: InputMaybe<Scalars['Float']>;
   ceoAuthority?: InputMaybe<Scalars['Float']>;
   defaultRate: Scalars['Float'];
+  interestMethod?: InputMaybe<InterestMethod>;
   maxRate?: InputMaybe<Scalars['Float']>;
   minRate?: InputMaybe<Scalars['Float']>;
 };
@@ -3321,6 +3335,7 @@ export type InterestRateType = {
   boardAuthority?: Maybe<Scalars['Float']>;
   ceoAuthority?: Maybe<Scalars['Float']>;
   defaultRate: Scalars['Float'];
+  interestMethod?: Maybe<InterestMethod>;
   maxRate?: Maybe<Scalars['Float']>;
   minRate?: Maybe<Scalars['Float']>;
   postingFrequency?: Maybe<Frequency>;
@@ -8235,7 +8250,7 @@ export type GetAccountOpenProductDetailsQuery = {
             maxTenureUnit?: Frequency | null;
             maxTenureUnitNumber?: number | null;
             ladderRate?: boolean | null;
-            postingFrequency?: Frequency | null;
+            postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
             accountType?: string | null;
             autoOpen?: boolean | null;
@@ -10616,7 +10631,7 @@ export type GetDepositProductSettingsEditDataQuery = {
             maxTenureUnit?: Frequency | null;
             maxTenureUnitNumber?: number | null;
             ladderRate?: boolean | null;
-            postingFrequency?: Frequency | null;
+            postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
             accountType?: string | null;
             autoOpen?: boolean | null;

@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/transactions/feature-agent-transaction",
+  "sourceRoot": "libs/cbs/transactions/feature-agent-transaction/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/transactions/feature-agent-transaction/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/transactions/feature-agent-transaction"],
+      "options": {
+        "jestConfig": "libs/cbs/transactions/feature-agent-transaction/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

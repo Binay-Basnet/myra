@@ -16,19 +16,19 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
   const { data: shareHistoryTableData, isFetching } = useGetShareHistoryQuery({
     memberId: id,
   });
-  const data = shareHistoryTableData?.share?.register?.edges;
+  const data = shareHistoryTableData?.share?.history?.history;
   const rowData = useMemo(() => data ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: t['sn'],
-        accessorFn: (row) => row?.node?.member?.id,
+        accessorFn: (row) => row?.id,
       },
 
       {
         header: t['sharePurchaseTableDate'],
-        accessorFn: (row) => row?.node?.transactionDate,
+        accessorFn: (row) => row?.transactionDate,
         cell: (props) => {
           return (
             <span>{format(new Date(props.getValue()), 'yyyy-mm-dd')}</span>
@@ -38,17 +38,17 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
 
       {
         header: t['sharePurchaseNoOfShares'],
-        accessorFn: (row) => row?.node?.endNumber,
+        accessorFn: (row) => row?.endNumber,
       },
 
       {
         header: t['sharePurchaseTableShareNumber'],
-        accessorFn: (row) => row?.node?.startNumber,
+        accessorFn: (row) => row?.startNumber,
 
         cell: (props) => {
           return (
             <span>
-              {props.getValue()} to {props?.row?.original?.node?.endNumber}
+              {props.getValue()} to {props?.row?.original?.endNumber}
             </span>
           );
         },
@@ -57,7 +57,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       {
         id: 'share-dr',
         header: t['sharePurchaseTableShareDr'],
-        accessorFn: (row) => row?.node?.debit,
+        accessorFn: (row) => row?.debit,
         isNumeric: true,
 
         cell: (props) => {
@@ -72,7 +72,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         id: 'share-cr',
         header: t['sharePurchaseTableShareCr'],
         isNumeric: true,
-        accessorFn: (row) => row?.node?.credit,
+        accessorFn: (row) => row?.credit,
         cell: (props) => {
           return (
             <span>
@@ -84,7 +84,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       },
       {
         header: t['sharePurchaseTableBalance'],
-        accessorFn: (row) => row?.node?.balance,
+        accessorFn: (row) => row?.balance,
         isNumeric: true,
         cell: (props) => {
           return <span>{amountConverter(props.getValue())}</span>;

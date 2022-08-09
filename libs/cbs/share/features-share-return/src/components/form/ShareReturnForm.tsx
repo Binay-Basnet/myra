@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { GrMail } from 'react-icons/gr';
@@ -11,12 +11,11 @@ import { debounce, omit } from 'lodash';
 import {
   Arrange,
   Payment_Mode,
-  ShareReturnInput,
   useAddShareReturnMutation,
   useGetMemberIndividualDataQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
-import { Form, ShareReturnHistoryTable } from '@coop/myra/components';
+import { ShareReturnHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
   FormCheckbox,
@@ -142,7 +141,7 @@ const ShareReturnForm = () => {
 
   return (
     <>
-      <Form<ShareReturnInput> methods={methods}>
+      <FormProvider {...methods}>
         <form>
           <Box
             position="fixed"
@@ -647,7 +646,7 @@ const ShareReturnForm = () => {
             </Box>
           </Container>
         </form>
-      </Form>
+      </FormProvider>
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.lg" height="fit-content" p="0">

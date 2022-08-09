@@ -26,7 +26,7 @@ export const Product = () => {
   type optionType = { label: string; value: string };
 
   const OptionProductType =
-    data?.settings?.general?.depositProduct?.getProductList?.data?.reduce(
+    data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
       (prevVal, curVal) => {
         return [...prevVal, { label: curVal?.productName, value: curVal?.id }];
       },

@@ -3085,15 +3085,18 @@ const en: Record<string, string> = {
   loanProductTypeNatureofProduct: 'Nature of Product',
   loanProductTypeDescription: 'Description',
 
+  transactionsSidebarDeposit: 'Deposit',
+  transactionsSidebarWithdraw: 'Withdraw',
+  transactionsSidebarAccountTransfer: 'Account Transfer',
+  transactionsSidebarLoanPayment: 'Loan Payment',
+  transactionsSidebarAgentList: 'Agent List',
+  transactionsSidebarAgentTransaction: 'Agent Transaction',
   depositProductMinimumRate: 'Minimum Rate',
   // Report page
   reportsHeading: 'Reports',
   reportsCbsReports: 'CBS reports',
   reportsSavedReports: 'Saved reports',
   reportsSettings: 'Report Settings',
-
-  depositProductMinimumAmount: 'Minimum Amount',
-  depositProductMaximumAmount: 'Maximum Amount',
 };
 
 export default en;

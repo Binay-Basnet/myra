@@ -21,7 +21,7 @@ import { Button } from '../button/Button';
 
 /* eslint-disable-next-line */
 export interface MemberCardProps {
-  isInline: boolean;
+  isInline?: boolean;
   memberDetails: {
     name: string;
     avatar: string;
@@ -36,8 +36,8 @@ export interface MemberCardProps {
     address?: string;
   };
   notice?: string;
-  signaturePath: string;
-  citizenshipPath: string;
+  signaturePath?: string;
+  citizenshipPath?: string;
   accountInfo?: {
     name: string;
     type: string;
@@ -85,7 +85,7 @@ export function MemberCard({
 
   return (
     <>
-      <Box bg="white" w={isInline ? '960px' : '320px'} boxShadow="E2">
+      <Box bg="white" w={isInline ? '960px' : '320px'}>
         {!isInline && (
           <Box px="s16" py="s8">
             <Text
