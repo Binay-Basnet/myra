@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
 import {
-  ObjState,
+  Arrange,
   Payment_Mode,
   ShareReturnInput,
   useAddShareReturnMutation,
@@ -109,44 +109,14 @@ const ShareReturnForm = () => {
     );
   };
 
-  // useEffect(() => {
-  //   const subscription = watch(
-  //     debounce(() => {
-  //       if (memberId) {
-
-  //       }
-  //     }, 800)
-  //   );
-
-  //   return () => subscription.unsubscribe();
-  // }, [watch, router.isReady]);
-
-  //    const { data: memberList } = useGetMemberListQuery(
-  //      {
-  //        objState: ObjState.Draft,
-  //        pagination: {
-  //          first: Number(DEFAULT_PAGE_SIZE),
-  //          after: '',
-  //        },
-  //        filter: {
-  //          query: memberId,
-  //        },
-  //      },
-  //      {
-  //        staleTime: 0,
-  //      }
-  //    );
-
   const { data: memberList } = useGetMemberListQuery(
     {
-      objState: ObjState.Draft,
       pagination: {
         first: Number(DEFAULT_PAGE_SIZE),
         after: '',
       },
-      //   filter: {
-      //     query: memberId,
-      //   },
+      column: 'ID',
+      arrange: Arrange.Desc,
     },
     {
       staleTime: 0,
@@ -216,14 +186,12 @@ const ShareReturnForm = () => {
                       flexDirection="column"
                       gap="s16"
                     >
-                      <Box p={2} bg="background.500">
+                      <Box bg="background.500">
                         <Grid
                           templateRows="repeat(1,1fr)"
                           templateColumns="repeat(5,1fr)"
                           gap={2}
-                          mt="s20"
-                          mb="s20"
-                          ml="s16"
+                          p="s16"
                         >
                           <GridItem
                             display="flex"
@@ -324,8 +292,8 @@ const ShareReturnForm = () => {
                                 fontWeight="Regular"
                               >
                                 {memberData?.address?.district?.local},
-                                {memberData?.address?.locality?.local} -
-                                {memberData?.address?.wardNo}
+                                {/* {memberData?.address?.locality?.local} -
+                                {memberData?.address?.wardNo} */}
                               </TextFields>
                             </Box>
                           </GridItem>
@@ -478,12 +446,18 @@ const ShareReturnForm = () => {
                             {t['shareReturnAdministrationFees']}
                           </Text>
                           <Box width="300px">
-                            <FormNumberInput
+                            <FormInput
+                              name="adminFee"
+                              type="number"
+                              textAlign={'right'}
+                              placeholder="0.00"
+                            />
+                            {/* <FormNumberInput
                               name="adminFee"
                               label=""
                               textAlign="right"
                               bg="gray.0"
-                            />
+                            /> */}
                           </Box>
                         </GridItem>
 
@@ -501,11 +475,18 @@ const ShareReturnForm = () => {
                             {t['shareReturnPrintingFees']}
                           </Text>
                           <Box width="300px">
-                            <FormNumberInput
+                            {/* <FormNumberInput
                               name="printingFee"
                               label=""
                               bg="gray.0"
                               textAlign="right"
+                            /> */}
+
+                            <FormInput
+                              name="printingFee"
+                              type="number"
+                              textAlign={'right'}
+                              placeholder="0.00"
                             />
                           </Box>
                         </GridItem>

@@ -241,6 +241,12 @@ export function SettingsLoanProductForm() {
       serviceCharge: serviceChargeList,
       minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
       maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
+      maxTenureUnitNumber: values?.maxTenureUnitNumber
+        ? values?.maxTenureUnitNumber
+        : null,
+      minTenureUnitNumber: values?.minTenureUnitNumber
+        ? values?.minTenureUnitNumber
+        : null,
       installmentType: values?.installmentType ? values?.installmentType : null,
       modeOfPayment: values?.modeOfPayment ? values?.modeOfPayment : null,
       minGraceDurationUnit: values?.minGraceDurationUnit
