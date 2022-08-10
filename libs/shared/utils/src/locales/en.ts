@@ -3096,6 +3096,9 @@ const en: Record<string, string> = {
   reportsCbsReports: 'CBS reports',
   reportsSavedReports: 'Saved reports',
   reportsSettings: 'Report Settings',
+  reportsTableView: 'Table View',
+  reportsListView: 'List View',
+  reportsCoreBankingSystemReports: 'Core Banking System Reports',
 };
 
 export default en;

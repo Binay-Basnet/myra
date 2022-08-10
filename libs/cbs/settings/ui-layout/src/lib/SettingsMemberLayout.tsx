@@ -29,11 +29,13 @@ const tabList = [
   },
 ];
 
-interface SettingsMemberLayout {
+interface SettingsMemberLayoutProps {
   children: React.ReactNode;
 }
 
-export const SettingsMemberLayout = ({ children }: SettingsMemberLayout) => {
+export const SettingsMemberLayout = ({
+  children,
+}: SettingsMemberLayoutProps) => {
   const { t } = useTranslation();
 
   return (

@@ -23,6 +23,8 @@
     "cbs-kym-form-ui-form-elements": "libs/cbs/kym-form/ui-form-elements",
     "cbs-members-feature-list": "libs/cbs/members/feature-list",
     "cbs-members-feature-profile": "libs/cbs/members/feature-profile",
+    "cbs-reports-feature-lists": "libs/cbs/reports/feature-lists",
+    "cbs-reports-ui-layouts": "libs/cbs/reports/ui-layouts",
     "cbs-settings--feature-loan": "libs/cbs/settings/feature-loan",
     "cbs-settings-feature-branches": "libs/cbs/settings/feature-branches",
     "cbs-settings-feature-deposit": "libs/cbs/settings/feature-deposit",

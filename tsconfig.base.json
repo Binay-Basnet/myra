@@ -58,6 +58,8 @@
       "@coop/cbs/members/profile": [
         "libs/cbs/members/feature-profile/src/index.ts"
       ],
+      "@coop/cbs/reports/layout": ["libs/cbs/reports/ui-layouts/src/index.ts"],
+      "@coop/cbs/reports/list": ["libs/cbs/reports/feature-lists/src/index.ts"],
       "@coop/cbs/settings//feature-loan": [
         "libs/cbs/settings/feature-loan/src/index.ts"
       ],

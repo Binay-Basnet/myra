@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { ReportLayout } from '@coop/myra/components';
+import { ReportMainLayout } from '@coop/cbs/reports/layout';
 import { MainLayout } from '@coop/shared/ui';
 
 const ReportsSaved = () => {
@@ -10,7 +10,7 @@ const ReportsSaved = () => {
 ReportsSaved.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
-      <ReportLayout>{page}</ReportLayout>
+      <ReportMainLayout>{page}</ReportMainLayout>
     </MainLayout>
   );
 };
