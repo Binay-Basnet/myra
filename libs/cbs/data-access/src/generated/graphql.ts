@@ -74,6 +74,26 @@ export type Account = {
   transactions?: Maybe<Array<Transactions>>;
 };
 
+export type AccountActivityEntry = {
+  ID: Scalars['ID'];
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<Scalars['String']>;
+  processedBy?: Maybe<Scalars['String']>;
+};
+
+export type AccountActivityListConnection = {
+  edges?: Maybe<Array<Maybe<AccountActivityListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AccountActivityListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AccountActivityEntry>;
+};
+
 export type AccountConnection = {
   edges: Array<AccountEdge>;
   pageInfo: PageInfo;
@@ -588,6 +608,18 @@ export type CoaView = {
   openingBalance: Scalars['Float'];
   under?: Maybe<Scalars['ID']>;
 };
+
+export enum CashValue {
+  Cash_1 = 'CASH_1',
+  Cash_2 = 'CASH_2',
+  Cash_5 = 'CASH_5',
+  Cash_10 = 'CASH_10',
+  Cash_20 = 'CASH_20',
+  Cash_50 = 'CASH_50',
+  Cash_100 = 'CASH_100',
+  Cash_500 = 'CASH_500',
+  Cash_1000 = 'CASH_1000',
+}
 
 export type ChartsOfAccount = Base & {
   accountClass: Scalars['String'];
@@ -1342,6 +1374,11 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
+export type Denomination = {
+  quantity: Scalars['Int'];
+  value: CashValue;
+};
+
 export type DepositAccount = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -1353,12 +1390,59 @@ export type DepositAccount = Base & {
   product: DepositProduct;
 };
 
+export type DepositBankVoucher = {
+  amount: Scalars['String'];
+  bankId: Scalars['String'];
+  depositedAt: Scalars['String'];
+  depositedBy: Scalars['String'];
+  voucherId: Scalars['String'];
+};
+
+export type DepositCash = {
+  cashPaid: Scalars['String'];
+  denominations?: InputMaybe<Array<Denomination>>;
+  returned_amount: Scalars['String'];
+  setDenomination: Scalars['Boolean'];
+  total: Scalars['String'];
+};
+
+export type DepositCheque = {
+  amount: Scalars['String'];
+  bankId: Scalars['String'];
+  chequeNo: Scalars['String'];
+  depositedAt: Scalars['String'];
+  depositedBy: Scalars['String'];
+};
+
+export type DepositDataFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
 export enum DepositFrequency {
   HalfYearly = 'HALF_YEARLY',
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
   Yearly = 'YEARLY',
 }
+
+export type DepositInput = {
+  accountId: Scalars['String'];
+  agentId?: InputMaybe<Scalars['String']>;
+  amount: Scalars['String'];
+  bankVoucher?: InputMaybe<DepositBankVoucher>;
+  cash?: InputMaybe<DepositCash>;
+  cheque?: InputMaybe<DepositCheque>;
+  depositedBy: DepositedBy;
+  fine: Scalars['String'];
+  memberId: Scalars['String'];
+  noOfInstallments?: InputMaybe<Scalars['Int']>;
+  notes?: InputMaybe<Scalars['String']>;
+  payment_type: DepositPaymentType;
+  rebate: Scalars['String'];
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+  voucherId: Scalars['String'];
+};
 
 export type DepositIro = {
   id: Scalars['ID'];
@@ -1490,8 +1574,15 @@ export type DepositLoanAccountResult = {
 
 export type DepositLoanAccountSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
+  memberId?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
 };
+
+export enum DepositPaymentType {
+  BankVoucher = 'BANK_VOUCHER',
+  Cash = 'CASH',
+  Cheque = 'CHEQUE',
+}
 
 export type DepositProduct = Base & {
   createdAt: Scalars['Time'];
@@ -1687,6 +1778,12 @@ export type DepositProductSettingsQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export type DepositResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type DepositSettingsMutation = {
   iroSetup?: Maybe<DepositIroResult>;
   tdsSetup?: Maybe<DepositTdsResult>;
@@ -1738,6 +1835,12 @@ export type DepositTdsResult = {
   record?: Maybe<DepositTds>;
   recordId: Scalars['ID'];
 };
+
+export enum DepositedBy {
+  Agent = 'AGENT',
+  Other = 'OTHER',
+  Self = 'SELF',
+}
 
 export type DirectorAffiliatedFirms = {
   addressOfInstitution?: Maybe<Scalars['String']>;
@@ -6117,6 +6220,7 @@ export type Mutation = {
   seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
+  transaction: TransactionMutation;
   user: UserMutation;
 };
 
@@ -6535,6 +6639,7 @@ export type Query = {
   routesAndCodes: RoutesAndCodesQuery;
   settings: SettingsQuery;
   share: ShareQuery;
+  transaction: TransactionQuery;
   user: UserQuery;
 };
 
@@ -6897,6 +7002,34 @@ export type TransactionFilter = {
   type?: InputMaybe<TranslateInput>;
 };
 
+export type TransactionMutation = {
+  deposit: DepositResult;
+  withdraw: WithdrawResult;
+};
+
+export type TransactionMutationDepositArgs = {
+  data: DepositInput;
+};
+
+export type TransactionMutationWithdrawArgs = {
+  data: WithdrawInput;
+};
+
+export type TransactionQuery = {
+  listDeposit: AccountActivityListConnection;
+  listWithdraw: AccountActivityListConnection;
+};
+
+export type TransactionQueryListDepositArgs = {
+  filter?: InputMaybe<DepositDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListWithdrawArgs = {
+  filter?: InputMaybe<WithdrawDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
 export type Transactions = {
   amount: Scalars['Float'];
   date: Scalars['Date'];
@@ -7191,6 +7324,43 @@ export enum WeeklyFrequency {
   Day = 'DAY',
   DayOfTheWeek = 'DAY_OF_THE_WEEK',
 }
+
+export enum WithdrawBy {
+  Agent = 'AGENT',
+  Self = 'SELF',
+}
+
+export type WithdrawDataFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type WithdrawInput = {
+  accountId: Scalars['String'];
+  agentId?: InputMaybe<Scalars['String']>;
+  amount: Scalars['String'];
+  bankCheque?: InputMaybe<DepositCheque>;
+  cash?: InputMaybe<DepositCash>;
+  chequeNo?: InputMaybe<Scalars['String']>;
+  fine: Scalars['String'];
+  memberId: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  payment_type: WithdrawPaymentType;
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+  withdrawnBy: WithdrawBy;
+};
+
+export enum WithdrawPaymentType {
+  BankCheque = 'BANK_CHEQUE',
+  Cash = 'CASH',
+  WithdrawSlip = 'WITHDRAW_SLIP',
+}
+
+export type WithdrawResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
 
 export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;
