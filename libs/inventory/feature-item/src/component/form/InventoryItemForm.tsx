@@ -38,11 +38,6 @@ interface IVariantProduct {
   removeVariantProduct: () => void;
 }
 
-type variantProps = {
-  variantName: string;
-  options: string;
-};
-
 const VariantProduct = ({ index, removeVariantProduct }: IVariantProduct) => {
   const { t } = useTranslation();
   return (
@@ -126,6 +121,7 @@ export const InventoryItemForm = () => {
       display="flex"
       flexDirection="column"
       gap="s32"
+      minH="calc(100vh - 220px)"
     >
       <Grid templateColumns="repeat(3,1fr)" gap="s20">
         <GridItem colSpan={2}>

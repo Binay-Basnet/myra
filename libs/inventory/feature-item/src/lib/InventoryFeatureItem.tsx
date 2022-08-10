@@ -19,14 +19,14 @@ import { InventoryItemForm } from '../component/form/InventoryItemForm';
 /* eslint-disable-next-line */
 export interface InventoryFeatureItemProps {}
 
-export function InventoryFeatureItem(props: InventoryFeatureItemProps) {
+export function InventoryFeatureItem() {
   const { t } = useTranslation();
   const router = useRouter();
   const methods = useForm({});
   return (
     <>
-      <Container minW="container.lg" height="fit-content" pb="55px">
-        <Box margin="0px auto" bg="gray.0" width="100%" zIndex="10">
+      <Container minW="container.lg" height="fit-content" pb="55px" bg="gray.0">
+        <Box margin="0px auto" width="100%" zIndex="10">
           <Box
             height="60px"
             display="flex"
@@ -64,16 +64,6 @@ export function InventoryFeatureItem(props: InventoryFeatureItemProps) {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100">
           <Container minW="container.lg" height="fit-content">
             <FormFooter
-              status={
-                <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
-                  </Text>
-                </Box>
-              }
               draftButton={
                 <Button type="submit" variant="ghost">
                   <Icon as={BiSave} color="primary.500" />
@@ -89,7 +79,6 @@ export function InventoryFeatureItem(props: InventoryFeatureItemProps) {
                 </Button>
               }
               mainButtonLabel={t['next']}
-              mainButtonHandler={() => router.push(`/members/translation}`)}
             />
           </Container>
         </Box>

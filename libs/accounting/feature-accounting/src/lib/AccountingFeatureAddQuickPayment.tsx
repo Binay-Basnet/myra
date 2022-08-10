@@ -25,9 +25,7 @@ import { QuickPaymentTable } from '../components';
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddQuickPaymentProps {}
 
-export function AccountingFeatureAddQuickPayment(
-  props: AccountingFeatureAddQuickPaymentProps
-) {
+export function AccountingFeatureAddQuickPayment() {
   const { t } = useTranslation();
   const methods = useForm({
     defaultValues: { data: [{ account: 'Saving Account', amount: 45 }] },
@@ -111,32 +109,11 @@ export function AccountingFeatureAddQuickPayment(
       <Box bottom="0" position="fixed" width="100%" bg="gray.100">
         <Container minW="container.lg" height="fit-content">
           <FormFooter
-            status={
-              <Box display="flex" gap="s8">
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontWeight="Regular"
-                  as="i"
-                  fontSize="r1"
-                >
-                  {t['formDetails']}
-                </Text>
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontWeight="Regular"
-                  as="i"
-                  fontSize="r1"
-                >
-                  09:41 AM
-                </Text>
-              </Box>
-            }
             draftButton={
-              <Button type="submit" variant="ghost">
-                <Icon as={BiSave} color="primary.500" />
+              <Button type="submit" variant="ghost" shade="neutral">
+                <Icon as={BiSave} />
                 <Text
                   alignSelf="center"
-                  color="primary.500"
                   fontWeight="Medium"
                   fontSize="s2"
                   ml="5px"

@@ -1,9 +1,7 @@
 /* eslint-disable-next-line */
 export interface AccountingFeatureChartsOfAccountListProps {}
 
-export function AccountingFeatureChartsOfAccountList(
-  props: AccountingFeatureChartsOfAccountListProps
-) {
+export function AccountingFeatureChartsOfAccountList() {
   return (
     <div>
       <h1>Welcome to AccountingFeatureChartsOfAccountList!</h1>

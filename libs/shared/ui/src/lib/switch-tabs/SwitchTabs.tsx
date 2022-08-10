@@ -67,6 +67,7 @@ export interface SwitchTabsProps {
   value?: string;
   name?: string;
   onChange?: (nextValue: string) => void;
+  defaultValue?: string;
 }
 
 export function SwitchTabs({
@@ -78,6 +79,7 @@ export function SwitchTabs({
   id,
   errorText,
   helperText,
+  defaultValue,
 }: SwitchTabsProps) {
   const { getRootProps, getRadioProps, setValue } = useRadioGroup({
     name: name,
@@ -90,6 +92,8 @@ export function SwitchTabs({
   useEffect(() => {
     if (value !== undefined) {
       setValue(value?.toString());
+    } else {
+      defaultValue && setValue(defaultValue);
     }
   }, [value]);
 

@@ -156,7 +156,12 @@ const SharePurchaseForm = () => {
           >
             <Header />
           </Box>
-          <Container minW="container.lg" p="0">
+          <Container
+            minW="container.lg"
+            p="0"
+            minH="calc(100vh - 170px)"
+            bg="white"
+          >
             <Box
               position="sticky"
               top="110px"
@@ -166,7 +171,7 @@ const SharePurchaseForm = () => {
             >
               <FormHeader title={t['sharePurchaseNewSharePurchase']} />
             </Box>
-            <Box mb="50px" display="flex" width="100%">
+            <Box display="flex" width="100%">
               <Box w="100%">
                 <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
                   <Box w="50%">

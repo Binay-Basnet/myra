@@ -13,13 +13,22 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { AddInventoryForm } from '../component/form/AddInventoryForm';
 
+/* eslint-disable-next-line */
+export interface AddInventoryProps {}
+
 export function AddInventory() {
   const { t } = useTranslation();
   const router = useRouter();
   return (
     <>
-      <Container minW="container.lg" height="fit-content" pb="55px">
-        <Box margin="0px auto" bg="gray.0" width="100%" zIndex="10">
+      <Container
+        minW="container.lg"
+        height="fit-content"
+        pb="55px"
+        bg="gray.0"
+        minH="calc(100vh - 170px)"
+      >
+        <Box margin="0px auto" width="100%" zIndex="10">
           <Box
             height="60px"
             display="flex"
@@ -52,7 +61,7 @@ export function AddInventory() {
 
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100">
-          <Container minW="container.lg" height="fit-content">
+          <Container minW="container.lg" height="fit-content" p={0}>
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
@@ -67,7 +76,6 @@ export function AddInventory() {
                 </Box>
               }
               mainButtonLabel={t['save']}
-              mainButtonHandler={() => router.push(`/members/translation}`)}
             />
           </Container>
         </Box>

@@ -77,7 +77,6 @@ const closingDate = format(new Date(), 'yyyy-MM-dd');
 export function TopLevelHeader() {
   const { t } = useTranslation();
   const router = useRouter();
-  const [numLines, setNumLines] = useState([1, 2]);
   const dispatch = useAppDispatch();
 
   const helpOptions = [
@@ -341,7 +340,7 @@ export function TopLevelHeader() {
                     color="white"
                     zIndex="10"
                   >
-                    <PopoverBody>
+                    <PopoverBody p={0}>
                       <Box
                         display="grid"
                         gridTemplateColumns="repeat(3,1fr)"
@@ -353,7 +352,7 @@ export function TopLevelHeader() {
                           textAlign="center"
                           alignItems="center"
                           gap="s8"
-                          p="s4"
+                          p="s8"
                           cursor="pointer"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
@@ -382,7 +381,7 @@ export function TopLevelHeader() {
                           alignItems="center"
                           gap="s8"
                           cursor="pointer"
-                          p="s4"
+                          p="s8"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
                           onClick={() => router.push('/inventory/register')}
@@ -409,13 +408,11 @@ export function TopLevelHeader() {
                           textAlign="center"
                           alignItems="center"
                           gap="s8"
-                          p="s4"
+                          p="s8"
                           cursor="pointer"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
                           onClick={() => router.push('/loan')}
-                          onMouseOver={() => setNumLines([1, 3])}
-                          onMouseLeave={() => setNumLines([1, 2])}
                         >
                           <Image
                             w={12}
@@ -430,9 +427,8 @@ export function TopLevelHeader() {
                             lineHeight="125%"
                             overflow="hidden"
                             textOverflow="ellipsis"
-                            noOfLines={numLines}
                           >
-                            {t['fixedAssetManagement']}
+                            {t['memberAndShareManagement']}
                           </Text>
                         </Box>
 
@@ -442,7 +438,7 @@ export function TopLevelHeader() {
                           textAlign="center"
                           alignItems="center"
                           gap="s8"
-                          p="s4"
+                          p="s8"
                           cursor="pointer"
                           borderRadius="br2"
                           _hover={{ bg: 'primary.0' }}
@@ -473,7 +469,7 @@ export function TopLevelHeader() {
                             textAlign="center"
                             alignItems="center"
                             gap="s8"
-                            p="s4"
+                            p="s8"
                             cursor="pointer"
                             borderRadius="br2"
                             _hover={{ bg: 'primary.0' }}

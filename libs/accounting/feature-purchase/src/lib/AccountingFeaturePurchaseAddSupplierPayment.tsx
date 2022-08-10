@@ -1,4 +1,4 @@
-import { FormProvider, useForm, ArrayPath } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
@@ -7,7 +7,6 @@ import {
   BoxContainer,
   DividerContainer,
   InputGroupContainer,
-  AccountsDetailPageLayout,
 } from '@coop/accounting/ui-components';
 import {
   FormInput,
@@ -31,9 +30,7 @@ import { SupplierPaymentTable } from '../components';
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseAddSupplierPaymentProps {}
 
-export function AccountingFeaturePurchaseAddSupplierPayment(
-  props: AccountingFeaturePurchaseAddSupplierPaymentProps
-) {
+export function AccountingFeaturePurchaseAddSupplierPayment() {
   const { t } = useTranslation();
 
   const methods = useForm({
@@ -231,32 +228,11 @@ export function AccountingFeaturePurchaseAddSupplierPayment(
       <Box bottom="0" position="fixed" width="100%" bg="gray.100">
         <Container minW="container.lg" height="fit-content">
           <FormFooter
-            status={
-              <Box display="flex" gap="s8">
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontWeight="Regular"
-                  as="i"
-                  fontSize="r1"
-                >
-                  {t['formDetails']}
-                </Text>
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontWeight="Regular"
-                  as="i"
-                  fontSize="r1"
-                >
-                  09:41 AM
-                </Text>
-              </Box>
-            }
             draftButton={
-              <Button type="submit" variant="ghost">
-                <Icon as={BiSave} color="primary.500" />
+              <Button type="submit" variant="ghost" shade="neutral">
+                <Icon as={BiSave} />
                 <Text
                   alignSelf="center"
-                  color="primary.500"
                   fontWeight="Medium"
                   fontSize="s2"
                   ml="5px"
