@@ -11,6 +11,7 @@ import {
   NatureOfDepositProduct,
   useGetAccountOpenEditDataQuery,
   useGetAccountOpenProductDetailsQuery,
+  useSetAccountDocumentDataMutation,
 } from '@coop/cbs/data-access';
 import { Box, Container, FormFooter, FormHeader, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -23,15 +24,26 @@ import {
   Interest,
   Member,
   Product,
+  RequiredDocuments,
   Tenure,
 } from '../component/form';
-/* eslint-disable-next-line */
-export interface CbsAccountOpenFormProps {}
 
-/* eslint-disable-next-line */
-export interface CbsAccountOpenFormProps {}
+type FileList = 'signature' | 'nominee' | 'photo' | 'fingerPrintPhoto';
+
+export type FileListType = {
+  signature: string[];
+  nominee: string[];
+  photo: string[];
+  fingerPrintPhoto: string[];
+};
 
 export function CbsAccountOpen() {
+  const [fileList, setFileList] = useState<FileListType>({
+    signature: [],
+    fingerPrintPhoto: [],
+    photo: [],
+    nominee: [],
+  });
   const { t } = useTranslation();
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -39,6 +51,8 @@ export function CbsAccountOpen() {
   const methods = useForm<DepositLoanAccountInput>();
 
   const { mutate } = useSetAccountOpenDataMutation();
+  const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();
+
   const { getValues, watch, reset } = methods;
 
   const [triggerQuery, setTriggerQuery] = useState(false);
@@ -89,8 +103,17 @@ export function CbsAccountOpen() {
         onSuccess: () => router.push('/accounts/list'),
       }
     );
-  };
 
+    Object.keys(fileList).map((fieldName) => {
+      if (fileList[fieldName as FileList]) {
+        mutateDocs({
+          subscriptionId: id,
+          fieldId: fieldName,
+          identifiers: fileList[fieldName as FileList],
+        });
+      }
+    });
+  };
   const { data: editValues, refetch } = useGetAccountOpenEditDataQuery({
     id,
   });
@@ -147,9 +170,9 @@ export function CbsAccountOpen() {
             <FeesAndCharge />
 
             <Agent />
-            {/* <RequiredDocuments /> */}
           </form>
         </FormProvider>
+        <RequiredDocuments setFileList={setFileList} id={id} />
       </Container>
       <Box bottom="0" position="fixed" width="100%" bg="gray.100">
         <Container minW="container.xl" height="fit-content">

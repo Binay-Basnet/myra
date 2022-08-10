@@ -244,3 +244,17 @@ query getAccountTableList(
     }
   }
 }
+
+query getAccountDocumentsList($subscriptionId: String!) {
+  document {
+    listSubscriptionDocuments(subscriptionId: $subscriptionId) {
+      data {
+        fieldId
+        docData {
+          identifier
+          url
+        }
+      }
+    }
+  }
+}

@@ -7377,6 +7377,16 @@ export type SetAccountOpenDataMutation = {
   account: { add?: { recordId: string } | null };
 };
 
+export type SetAccountDocumentDataMutationVariables = Exact<{
+  subscriptionId: Scalars['String'];
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+export type SetAccountDocumentDataMutation = {
+  document: { Subscription: { Upsert: { recordId?: string | null } } };
+};
+
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
 }>;
@@ -8599,6 +8609,21 @@ export type GetAccountTableListQuery = {
         } | null;
       }>;
     } | null;
+  };
+};
+
+export type GetAccountDocumentsListQueryVariables = Exact<{
+  subscriptionId: Scalars['String'];
+}>;
+
+export type GetAccountDocumentsListQuery = {
+  document: {
+    listSubscriptionDocuments: {
+      data?: Array<{
+        fieldId?: string | null;
+        docData: Array<{ identifier: string; url: string } | null>;
+      } | null> | null;
+    };
   };
 };
 
@@ -11132,6 +11157,41 @@ export const useSetAccountOpenDataMutation = <
     ),
     options
   );
+export const SetAccountDocumentDataDocument = `
+    mutation setAccountDocumentData($subscriptionId: String!, $fieldId: String!, $identifiers: [String!]!) {
+  document {
+    Subscription(subscriptionId: $subscriptionId) {
+      Upsert(fieldId: $fieldId, identifiers: $identifiers) {
+        recordId
+      }
+    }
+  }
+}
+    `;
+export const useSetAccountDocumentDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetAccountDocumentDataMutation,
+    TError,
+    SetAccountDocumentDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAccountDocumentDataMutation,
+    TError,
+    SetAccountDocumentDataMutationVariables,
+    TContext
+  >(
+    ['setAccountDocumentData'],
+    useAxios<
+      SetAccountDocumentDataMutation,
+      SetAccountDocumentDataMutationVariables
+    >(SetAccountDocumentDataDocument),
+    options
+  );
 export const LoginDocument = `
     mutation login($data: LoginInput!) {
   auth {
@@ -13497,6 +13557,36 @@ export const useGetAccountTableListQuery = <
     useAxios<GetAccountTableListQuery, GetAccountTableListQueryVariables>(
       GetAccountTableListDocument
     ).bind(null, variables),
+    options
+  );
+export const GetAccountDocumentsListDocument = `
+    query getAccountDocumentsList($subscriptionId: String!) {
+  document {
+    listSubscriptionDocuments(subscriptionId: $subscriptionId) {
+      data {
+        fieldId
+        docData {
+          identifier
+          url
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountDocumentsListQuery = <
+  TData = GetAccountDocumentsListQuery,
+  TError = unknown
+>(
+  variables: GetAccountDocumentsListQueryVariables,
+  options?: UseQueryOptions<GetAccountDocumentsListQuery, TError, TData>
+) =>
+  useQuery<GetAccountDocumentsListQuery, TError, TData>(
+    ['getAccountDocumentsList', variables],
+    useAxios<
+      GetAccountDocumentsListQuery,
+      GetAccountDocumentsListQueryVariables
+    >(GetAccountDocumentsListDocument).bind(null, variables),
     options
   );
 export const AllAdministrationDocument = `
