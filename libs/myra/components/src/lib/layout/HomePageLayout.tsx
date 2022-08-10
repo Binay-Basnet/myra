@@ -24,7 +24,7 @@ const myraAppn = [
   {
     title: 'memberAndShareManagement',
     img: '/theta.svg',
-    link: '/loan',
+    link: '/share/balance',
   },
   {
     title: 'accountingSystem',

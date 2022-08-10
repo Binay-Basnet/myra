@@ -615,6 +615,7 @@ export enum CashValue {
   Cash_5 = 'CASH_5',
   Cash_10 = 'CASH_10',
   Cash_20 = 'CASH_20',
+  Cash_25 = 'CASH_25',
   Cash_50 = 'CASH_50',
   Cash_100 = 'CASH_100',
   Cash_500 = 'CASH_500',
@@ -1434,12 +1435,12 @@ export type DepositInput = {
   cash?: InputMaybe<DepositCash>;
   cheque?: InputMaybe<DepositCheque>;
   depositedBy: DepositedBy;
-  fine: Scalars['String'];
+  fine?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
   noOfInstallments?: InputMaybe<Scalars['Int']>;
   notes?: InputMaybe<Scalars['String']>;
   payment_type: DepositPaymentType;
-  rebate: Scalars['String'];
+  rebate?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
   voucherId: Scalars['String'];
 };
@@ -7342,7 +7343,7 @@ export type WithdrawInput = {
   bankCheque?: InputMaybe<DepositCheque>;
   cash?: InputMaybe<DepositCash>;
   chequeNo?: InputMaybe<Scalars['String']>;
-  fine: Scalars['String'];
+  fine?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
   payment_type: WithdrawPaymentType;
