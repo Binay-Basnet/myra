@@ -14,41 +14,9 @@ import { FormSelect } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+type OptionType = { label: string; value: string };
+
 export const Product = () => {
-  const [triggerQuery, setTriggerQuery] = useState(false);
-  const { t } = useTranslation();
-  const { watch } = useFormContext();
-  const products = watch('productId');
-  const { data, isFetching } = useGetProductListQuery({
-    memberId: '123456789',
-  });
-
-  type optionType = { label: string; value: string };
-
-  const OptionProductType =
-    data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
-      (prevVal, curVal) => {
-        return [...prevVal, { label: curVal?.productName, value: curVal?.id }];
-      },
-      [] as optionType[]
-    );
-
-  const productId = watch('productId');
-  const poductDetails = useGetAccountOpenProductDetailsQuery(
-    { id: productId },
-    {
-      enabled: triggerQuery,
-    }
-  );
-  const ProductData =
-    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
-
-  useEffect(() => {
-    if (products) {
-      setTriggerQuery(true);
-    }
-  }, [products]);
-
   const { data: genderFields } = useGetSettingsOptionsFieldsQuery({
     searchTerm: FormFieldSearchTerm.Gender,
     category: FormCategory.KymIndividual,
@@ -83,6 +51,29 @@ export const Product = () => {
     category: FormCategory.KymIndividual,
   });
 
+  const [triggerQuery, setTriggerQuery] = useState(false);
+  const [triggerProductQuery, setTriggerProductQuery] = useState(false);
+  const { t } = useTranslation();
+  const { watch } = useFormContext();
+  const memberId = watch('memberId');
+  const products = watch('productId');
+  const { data, isFetching } = useGetProductListQuery(
+    {
+      memberId,
+    },
+    { enabled: triggerProductQuery }
+  );
+
+  const productId = watch('productId');
+  const poductDetails = useGetAccountOpenProductDetailsQuery(
+    { id: productId },
+    {
+      enabled: triggerQuery,
+    }
+  );
+  const productData =
+    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+
   const genderOptions = genderFields?.form?.options?.predefined?.data;
   const institutionOptions = institutionFields?.form?.options?.predefined?.data;
   const maritialOptions = maritialFields?.form?.options?.predefined?.data;
@@ -93,39 +84,82 @@ export const Product = () => {
   const ethnicityOptions = ethnicityFields?.form?.options?.predefined?.data;
 
   const tempGender = genderOptions?.map(
-    (item) => ProductData?.genderId?.includes(item?.id) && item?.name?.local
+    (item) =>
+      productData?.genderId?.includes(String(item?.id)) && item?.name?.local
   );
 
   const tempIns = institutionOptions?.map(
     (item) =>
-      ProductData?.natureOfBusinessInstitution?.includes(item?.id) &&
+      productData?.natureOfBusinessInstitution?.includes(String(item?.id)) &&
       item?.name?.local
   );
   const tempMarriage = maritialOptions?.map(
     (item) =>
-      ProductData?.maritalStatusId?.includes(item?.id) && item?.name?.local
+      productData?.maritalStatusId?.includes(String(item?.id)) &&
+      item?.name?.local
   );
   const tempOccupationOptions = occupationalOptions?.map(
-    (item) => ProductData?.occupation?.includes(item?.id) && item?.name?.local
+    (item) =>
+      productData?.occupation?.includes(String(item?.id)) && item?.name?.local
   );
   const tempCoopUnionOptions = coopUnionOptions?.map(
     (item) =>
-      ProductData?.natureOFBusinessCoop?.includes(item?.id) && item?.name?.local
+      productData?.natureOFBusinessCoop?.includes(String(item?.id)) &&
+      item?.name?.local
   );
   const tempCoopOptions = coopTypeOptions?.map(
     (item) =>
-      ProductData?.cooperativeType?.includes(item?.id) && item?.name?.local
+      productData?.cooperativeType?.includes(String(item?.id)) &&
+      item?.name?.local
   );
   const tempEducationOptions = educationOptions?.map(
     (item) =>
-      ProductData?.educationQualification?.includes(item?.id) &&
+      productData?.educationQualification?.includes(String(item?.id)) &&
       item?.name?.local
   );
   const tempEthnicityOptions = ethnicityOptions?.map(
     (item) =>
-      ProductData?.educationQualification?.includes(item?.id) &&
+      productData?.educationQualification?.includes(String(item?.id)) &&
       item?.name?.local
   );
+
+  useEffect(() => {
+    if (products) {
+      setTriggerQuery(true);
+    }
+  }, [products]);
+
+  useEffect(() => {
+    if (memberId) {
+      setTriggerProductQuery(true);
+    }
+  }, [memberId]);
+
+  const productOptions = [
+    ...(data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
+      (prevVal, curVal) => {
+        return [
+          ...prevVal,
+          { label: curVal?.productName as string, value: curVal?.id as string },
+        ];
+      },
+      [] as OptionType[]
+    ) ?? []),
+    ...(data?.settings?.general?.depositProduct?.getProductList?.notAllowed?.reduce(
+      (prevVal, curVal) => {
+        return [
+          ...prevVal,
+          {
+            label: curVal?.productName as string,
+            value: curVal?.id as string,
+            disabled: true,
+          },
+        ];
+      },
+      [] as OptionType[]
+    ) ?? []),
+  ];
+
   return (
     <GroupContainer
       scrollMarginTop={'200px'}
@@ -146,7 +180,7 @@ export const Product = () => {
             label={t['accProductName']}
             placeholder={t['accSelectProduct']}
             isLoading={isFetching}
-            options={OptionProductType}
+            options={productOptions}
           />
         </Box>
         {products && (
@@ -181,7 +215,7 @@ export const Product = () => {
                   }
                 </Text>
                 <Text fontWeight="Medium" color="primary.500" fontSize="r2">
-                  {ProductData?.productName}
+                  {productData?.productName}
                 </Text>
               </Box>
 
@@ -190,13 +224,13 @@ export const Product = () => {
                   Interest Rate
                 </Text>
                 <Text fontWeight="Medium" color="primary.500" fontSize="r2">
-                  {ProductData?.interest?.defaultRate}%
+                  {productData?.interest?.defaultRate}%
                 </Text>
               </Box>
             </Box>
 
             <Grid templateColumns="repeat(3,1fr)" gap="s32">
-              {ProductData?.nature !==
+              {productData?.nature !==
                 NatureOfDepositProduct?.VoluntaryOrOptional && (
                 <GridItem display="flex" flexDirection="column">
                   <Box display="flex" flexDirection="column" gap="s4">
@@ -208,24 +242,24 @@ export const Product = () => {
                       {/* {t['accInterestRate']} */}
                       Tenure 25
                     </TextFields>
-                    {ProductData?.minTenure && (
+                    {productData?.minTenure && (
                       <TextFields
                         color="neutralColorLight.Gray-70"
                         fontSize="s2"
                         fontWeight="Regular"
                       >
-                        Minimum: {ProductData?.minTenureUnitNumber}{' '}
-                        {ProductData?.minTenureUnit}
+                        Minimum: {productData?.minTenureUnitNumber}{' '}
+                        {productData?.minTenureUnit}
                       </TextFields>
                     )}
-                    {ProductData?.maxTenure && (
+                    {productData?.maxTenure && (
                       <TextFields
                         color="neutralColorLight.Gray-70"
                         fontSize="s2"
                         fontWeight="Regular"
                       >
-                        Maximum: : {ProductData?.maxTenureUnitNumber}{' '}
-                        {ProductData?.maxTenureUnit}
+                        Maximum: : {productData?.maxTenureUnitNumber}{' '}
+                        {productData?.maxTenureUnit}
                       </TextFields>
                     )}
                   </Box>
@@ -250,7 +284,7 @@ export const Product = () => {
                           fontSize="s2"
                           fontWeight="Regular"
                         >
-                          Minimum: {ProductData?.depositAmount?.minAmount}
+                          Minimum: {productData?.depositAmount?.minAmount}
                         </TextFields>
                       </li>
 
@@ -260,7 +294,7 @@ export const Product = () => {
                           fontSize="s2"
                           fontWeight="Regular"
                         >
-                          Maximum: {ProductData?.depositAmount?.maxAmount}
+                          Maximum: {productData?.depositAmount?.maxAmount}
                         </TextFields>
                       </li>
                     </ul>
@@ -278,35 +312,12 @@ export const Product = () => {
                     {/* {t['accInterestRate']} */}
                     Transaction Limit
                   </TextFields>
-                  {/* <Box pl="s24">
-                  <ul>
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Criteria: 1
-                      </TextFields>
-                    </li>
-
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Criteria: 2
-                      </TextFields>
-                    </li>
-                  </ul>
-                </Box> */}
                 </Box>
               </GridItem>
 
-              {(ProductData?.nature ===
+              {(productData?.nature ===
                 NatureOfDepositProduct?.RecurringSaving ||
-                ProductData?.nature ===
+                productData?.nature ===
                   NatureOfDepositProduct?.TermSavingOrFd) && (
                 <>
                   <GridItem display="flex" flexDirection="column">
@@ -335,8 +346,8 @@ export const Product = () => {
                               Age:{' '}
                               <b>
                                 {' '}
-                                Mininum: {ProductData?.minAge} : Maximum{' '}
-                                {ProductData?.maxAge}
+                                Mininum: {productData?.minAge} : Maximum{' '}
+                                {productData?.maxAge}
                               </b>
                             </TextFields>
                           </li>
@@ -378,7 +389,7 @@ export const Product = () => {
                             >
                               Foreign Employment:{' '}
                               <b>
-                                {ProductData?.foreignEmployment
+                                {productData?.foreignEmployment
                                   ? 'true'
                                   : 'false'}
                               </b>
@@ -617,7 +628,7 @@ export const Product = () => {
                 </Box>
               </GridItem>
 
-              {ProductData?.nature !==
+              {productData?.nature !==
                 NatureOfDepositProduct?.VoluntaryOrOptional && (
                 <>
                   {' '}
@@ -637,7 +648,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Penalty {ProductData?.penaltyData?.penaltyRate} %
+                            Penalty {productData?.penaltyData?.penaltyRate} %
                           </TextFields>
                         </li>
                         {/* 
@@ -679,7 +690,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Rebate {ProductData?.rebateData?.percentage} %
+                            Rebate {productData?.rebateData?.percentage} %
                           </TextFields>
                         </li>
                         {/* 

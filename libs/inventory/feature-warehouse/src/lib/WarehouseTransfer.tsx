@@ -18,12 +18,18 @@ import { WarehouseTransferForm } from '../component/WarehouseTransferForm';
 /* eslint-disable-next-line */
 export interface WarehouseTransferProps {}
 
-export function WarehouseTransfer(props: WarehouseTransferProps) {
+export function WarehouseTransfer() {
   const { t } = useTranslation();
   const router = useRouter();
   return (
     <>
-      <Container minW="container.lg" height="fit-content" pb="55px">
+      <Container
+        minW="container.lg"
+        height="fit-content"
+        pb="55px"
+        bg="gray.0"
+        minH="calc(100vh - 170px)"
+      >
         <Box margin="0px auto" bg="gray.0" width="100%" zIndex="10">
           <Box
             height="60px"
@@ -57,24 +63,13 @@ export function WarehouseTransfer(props: WarehouseTransferProps) {
 
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100">
-          <Container minW="container.lg" height="fit-content">
+          <Container minW="container.lg" height="fit-content" p={0}>
             <FormFooter
-              status={
-                <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
-                  </Text>
-                </Box>
-              }
               draftButton={
-                <Button type="submit" variant="ghost">
-                  <Icon as={BiSave} color="primary.500" />
+                <Button type="submit" variant="ghost" shade="neutral">
+                  <Icon as={BiSave} />
                   <Text
                     alignSelf="center"
-                    color="primary.500"
                     fontWeight="Medium"
                     fontSize="s2"
                     ml="5px"
@@ -84,7 +79,6 @@ export function WarehouseTransfer(props: WarehouseTransferProps) {
                 </Button>
               }
               mainButtonLabel={t['applyChanges']}
-              mainButtonHandler={() => router.push(`/members/translation}`)}
             />
           </Container>
         </Box>

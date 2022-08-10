@@ -94,6 +94,7 @@ export const DepositFrequency = () => {
         <SubText>{t['depositProductSelectdepositfrequency']}</SubText>
       </TextBoxContainer>
       <FormSwitchTab
+        defaultValue={Frequency.Daily}
         name={'depositFrequency'}
         options={DepositFrequencyOptions}
       />
@@ -102,7 +103,11 @@ export const DepositFrequency = () => {
           <SubHeadingText>{t['depositProductpenalty']} </SubHeadingText>
           <SubText>{t['depositProductEnterPenaltydetails']} </SubText>
         </TextBoxContainer>
-        <FormSwitchTab name="penalty" options={enableSwitch} />
+        <FormSwitchTab
+          name="penalty"
+          defaultValue={'false'}
+          options={enableSwitch}
+        />
       </Box>
       {penalty && (
         <BoxContainer
@@ -174,7 +179,11 @@ export const DepositFrequency = () => {
           <SubHeadingText>{t['depositProductRebate']} </SubHeadingText>
           <SubText>{t['depositProductEnterRebatedetails']} </SubText>
         </TextBoxContainer>
-        <FormSwitchTab name={'rebate'} options={enableSwitch} />
+        <FormSwitchTab
+          name={'rebate'}
+          options={enableSwitch}
+          defaultValue={'false'}
+        />
       </Box>
       {rebate && (
         <BoxContainer
