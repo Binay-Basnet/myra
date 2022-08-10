@@ -1,4 +1,5 @@
 // import debounce from 'lodash/debounce';
+import { InterestMethod } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
@@ -17,6 +18,17 @@ export const Interest = () => {
   const yesNo = [
     { label: t['yes'], value: true },
     { label: t['no'], value: false },
+  ];
+
+  const interestMethodList = [
+    {
+      label: t['depositProductFlat'],
+      value: InterestMethod.Flat,
+    },
+    {
+      label: t['depositProductDiminishing'],
+      value: InterestMethod.Diminishing,
+    },
   ];
 
   return (
@@ -87,19 +99,10 @@ export const Interest = () => {
         />
 
         <FormSelect
-          name="interestMethod"
+          name="interest.interestMethod"
           label={t['loanProductInterestMethod']}
           placeholder={t['loanProductSelectInterestMethod']}
-          options={[
-            {
-              label: 'Stated Rate Method',
-              value: 'statedRateMethod',
-            },
-            {
-              label: 'Bank Method',
-              value: 'bankMethod',
-            },
-          ]}
+          options={interestMethodList}
         />
       </InputGroupContainer>
       <Box

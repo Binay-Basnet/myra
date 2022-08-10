@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Frequency } from '@coop/cbs/data-access';
+import { DepositFrequency } from '@coop/cbs/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -24,19 +24,19 @@ export const PostingFrequency = () => {
   const postingFrequency = [
     {
       label: t['monthly'],
-      value: Frequency.Monthly,
+      value: DepositFrequency.Monthly,
     },
     {
       label: t['quaterly'],
-      value: Frequency.Monthly,
+      value: DepositFrequency.Quarterly,
     },
     {
       label: t['halfYearly'],
-      value: Frequency.Monthly,
+      value: DepositFrequency.HalfYearly,
     },
     {
       label: t['yearly'],
-      value: Frequency.Yearly,
+      value: DepositFrequency.Yearly,
     },
   ];
 

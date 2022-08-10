@@ -1,6 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Frequency, PenaltyRateType } from '@coop/cbs/data-access';
+import {
+  Frequency,
+  NatureOfDepositProduct,
+  PenaltyRateType,
+} from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
@@ -15,11 +19,12 @@ import {
 } from '../formui';
 
 export const DepositFrequency = () => {
+  const { t } = useTranslation();
   const { watch } = useFormContext();
   const penalty = watch('penalty');
   const rebate = watch('rebate');
   const penaltyType = watch('penaltyData.rateType');
-  const { t } = useTranslation();
+  const depositNature = watch('nature');
 
   const DepositFrequencyOptions = [
     {
@@ -64,21 +69,25 @@ export const DepositFrequency = () => {
 
   return (
     <BoxContainer>
-      <TextBoxContainer>
-        <TopText>{t['depositProductDepositAmountLimit']} </TopText>
-      </TextBoxContainer>
-      <InputGroupContainer>
-        <FormInput
-          name="depositAmount.minAmount"
-          label={t['depositProductMinimumAmount']}
-          placeholder={t['depositProductEnterMinimumAmount']}
-        />
-        <FormInput
-          name="depositAmount.maxAmount"
-          label={t['depositProductMaximumAmount']}
-          placeholder={t['depositProductEnterMaximumAmount']}
-        />
-      </InputGroupContainer>
+      {depositNature === NatureOfDepositProduct.RecurringSaving && (
+        <>
+          <TextBoxContainer>
+            <TopText>{t['depositProductDepositAmountLimit']} </TopText>
+          </TextBoxContainer>
+          <InputGroupContainer>
+            <FormInput
+              name="depositAmount.minAmount"
+              label={t['depositProductMinimumAmount']}
+              placeholder={t['depositProductEnterMinimumAmount']}
+            />
+            <FormInput
+              name="depositAmount.maxAmount"
+              label={t['depositProductMaximumAmount']}
+              placeholder={t['depositProductEnterMaximumAmount']}
+            />
+          </InputGroupContainer>
+        </>
+      )}
 
       <TextBoxContainer>
         <TopText> {t['depositProductDepositFrequency']} </TopText>

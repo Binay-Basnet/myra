@@ -27,7 +27,6 @@ import {
   Avatar,
   Box,
   Container,
-  DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
   Grid,
@@ -73,18 +72,24 @@ const SharePurchaseForm = () => {
   const [IDMember, setIDMember] = useState('');
   const [trigger, setTrigger] = useState(false);
 
-  const { data } = useGetMemberIndividualDataQuery({
-    id: memberId,
-  });
+  const { data } = useGetMemberIndividualDataQuery(
+    {
+      id: memberId,
+    },
+    {
+      staleTime: 0,
+      enabled: trigger,
+    }
+  );
 
   const memberData = data?.members?.details?.data;
 
   const { data: memberList } = useGetMemberListQuery(
     {
-      first: DEFAULT_PAGE_SIZE,
+      first: 10,
       after: '',
       column: 'ID',
-      arrange: Arrange.Desc,
+      arrange: Arrange.Asc,
       query: IDMember,
     },
     {
@@ -127,7 +132,7 @@ const SharePurchaseForm = () => {
       ],
       totalAmount: totalAmount.toString(),
       shareCount: Number(values['shareCount']),
-      memberId: '123456789',
+      memberId,
     };
 
     mutate(
@@ -173,7 +178,7 @@ const SharePurchaseForm = () => {
                         setIDMember(id);
                         setTrigger(true);
                       }, 800)}
-                      options={memberOptions}
+                      options={memberOptions ?? []}
                     />
                   </Box>
 

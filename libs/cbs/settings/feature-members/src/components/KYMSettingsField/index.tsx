@@ -21,7 +21,7 @@ export const KYMSettingsField = ({
   kymType,
   isExpanded,
 }: KYMSettingsFieldProps) => {
-  const { data, isLoading } = useGetPreDefinedFields(
+  const { data } = useGetPreDefinedFields(
     {
       searchTerm:
         fields.type !== 'group' ? fields.search_term : FormSearchTerm.Gender,

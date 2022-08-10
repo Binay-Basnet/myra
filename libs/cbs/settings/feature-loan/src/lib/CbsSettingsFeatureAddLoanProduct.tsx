@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
@@ -82,13 +82,9 @@ export function SettingsLoanProductForm() {
     productName: string;
   };
 
-  const methods = useForm<LoanProductForm>({
-    defaultValues: {
-      productType: LoanProductType.Agriculture,
-    },
-  });
+  const methods = useForm<LoanProductForm>({});
 
-  const { getValues, reset } = methods;
+  const { getValues, reset, watch } = methods;
   const { data: editValues, refetch } = useGetLoanProductEditDataQuery({
     id,
   });
@@ -255,9 +251,11 @@ export function SettingsLoanProductForm() {
       maxGraceDurationUnit: values?.maxGraceDurationUnit
         ? values?.maxGraceDurationUnit
         : null,
-      penalty: {
-        ...values?.penalty,
-        rateType: values?.penalty?.rateType ? values?.penalty?.rateType : null,
+      interest: {
+        ...values?.interest,
+        interestMethod: values?.interest?.interestMethod
+          ? values?.interest?.interestMethod
+          : null,
       },
       goodLoanProvision:
         goodLoanProvision?.length > 0
@@ -275,6 +273,18 @@ export function SettingsLoanProductForm() {
         badLoanProvision?.length > 0
           ? Number(badLoanProvision[0].provision)
           : editVals?.badLoanProvision,
+      maxLoanAmount: values?.maxLoanAmount ?? null,
+      minimumLoanAmount: values?.minimumLoanAmount ?? null,
+      rebate: {
+        ...values?.rebate,
+        rebateAmount: values?.rebate?.rebateAmount ?? null,
+      },
+      penalty: {
+        ...values?.penalty,
+        minimumAmount: values?.penalty?.minimumAmount ?? null,
+        penaltyAmount: values?.penalty?.penaltyAmount ?? null,
+        rateType: values?.penalty?.rateType ? values?.penalty?.rateType : null,
+      },
     };
 
     mutate(
@@ -298,6 +308,8 @@ export function SettingsLoanProductForm() {
       refetch();
     }
   }, [id, refetch]);
+
+  const memberType = watch('typeOfMember');
 
   return (
     <>
@@ -388,10 +400,13 @@ export function SettingsLoanProductForm() {
                 </Box>
                 <TypesOfMember />
 
-                <Box display="flex" flexDirection={'column'} gap="s16">
-                  <Critera />
-                  <GridItems />
-                </Box>
+                {memberType && (
+                  <>
+                    <Critera />
+
+                    <GridItems />
+                  </>
+                )}
                 <MinimunTenure />
                 <MaximumTenure />
                 <AmountLimit />

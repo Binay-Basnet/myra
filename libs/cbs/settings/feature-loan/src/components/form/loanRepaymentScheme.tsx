@@ -1,6 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 
-import { LoanRepaymentScheme } from '@coop/cbs/data-access';
+import {
+  LoanPaymentInstallmentType,
+  LoanPaymentMode,
+  LoanRepaymentScheme,
+} from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
@@ -24,14 +28,12 @@ export const LoanRepaymentSchemes = () => {
   ];
 
   const modeOfPaymentList = [
-    { label: t['loanProductInstallment'], value: 'installment' },
-    { label: 'N/A', value: 'n/a' },
+    { label: t['loanProductInstallment'], value: LoanPaymentMode.Installment },
   ];
 
   const installmentTypeList = [
-    { label: t['monthly'], value: 'monthly' },
-    { label: t['quaterly'], value: 'quarterly' },
-    { label: 'N/A', value: 'n/a' },
+    { label: t['monthly'], value: LoanPaymentInstallmentType.Monthly },
+    { label: t['quaterly'], value: LoanPaymentInstallmentType.Quarterly },
   ];
 
   return (

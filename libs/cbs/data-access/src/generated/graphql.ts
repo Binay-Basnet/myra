@@ -10296,6 +10296,7 @@ export type GetLoanProductListQuery = {
                 defaultRate: number;
                 ceoAuthority?: number | null;
                 boardAuthority?: number | null;
+                interestMethod?: InterestMethod | null;
               } | null;
             };
           }>;
@@ -10809,18 +10810,15 @@ export type GetShareBalanceListQuery = {
           };
         };
       }>;
-      pageInfo: {
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-        startCursor?: string | null;
-        endCursor?: string | null;
-      };
     } | null;
   };
 };
 
 export type GetShareRegisterListQueryVariables = Exact<{
-  [key: string]: never;
+  after?: InputMaybe<Scalars['Cursor']>;
+  first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  last?: InputMaybe<Scalars['Int']>;
 }>;
 
 export type GetShareRegisterListQuery = {
@@ -10842,6 +10840,12 @@ export type GetShareRegisterListQuery = {
           } | null;
         };
       }>;
+      pageInfo: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      };
     } | null;
   };
 };
@@ -15780,6 +15784,7 @@ export const GetLoanProductListDocument = `
                 defaultRate
                 ceoAuthority
                 boardAuthority
+                interestMethod
               }
             }
           }
@@ -16461,12 +16466,6 @@ export const GetShareBalanceListDocument = `
           amount
         }
       }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
     }
   }
 }
@@ -16488,9 +16487,11 @@ export const useGetShareBalanceListQuery = <
     options
   );
 export const GetShareRegisterListDocument = `
-    query getShareRegisterList {
+    query getShareRegisterList($after: Cursor, $first: Int, $before: Cursor, $last: Int) {
   share {
-    register {
+    register(
+      pagination: {after: $after, first: $first, before: $before, last: $last}
+    ) {
       edges {
         node {
           transactionDate
@@ -16506,6 +16507,12 @@ export const GetShareRegisterListDocument = `
           credit
           debit
         }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }

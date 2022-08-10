@@ -1,17 +1,33 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { Avatar, Flex } from '@chakra-ui/react';
-import format from 'date-fns/format';
 
-import { useGetShareRegisterListQuery } from '@coop/cbs/data-access';
+import {
+  Share_Transaction_Direction,
+  useGetShareRegisterListQuery,
+} from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
-import { Column, Table } from '@coop/shared/ui';
+import { Column, Table } from '@coop/shared/table';
+import { Avatar, Box, DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const ShareRegisterTable = () => {
-  const { data, isFetching } = useGetShareRegisterListQuery();
   const { t } = useTranslation();
   const router = useRouter();
+
+  const { data, isFetching } = useGetShareRegisterListQuery(
+    router.query['before']
+      ? {
+          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          after: router.query['before'] as string,
+        }
+      : {
+          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+          after: (router.query['after'] ?? '') as string,
+        },
+    {
+      staleTime: 0,
+    }
+  );
 
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
 
@@ -23,59 +39,55 @@ export const ShareRegisterTable = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: t['shareRegisterDate'],
-        maxWidth: 40,
-        accessor: 'node.transactionDate',
-        disableFilters: false,
-        Cell: ({ value }) => {
-          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
-        },
+        header: t['shareRegisterDate'],
+        accessorFn: (row) => row?.node.transactionDate,
       },
 
       {
-        Header: t['shareRegisterType'],
-        accessor: 'node.transactionDirection',
-      },
-      {
-        Header: t['shareRegisterTableMemberID'],
-        accessor: 'node.member.id',
-        maxWidth: 4,
-        Cell: ({ value }) => {
-          return <span>{value.slice(0, 5).toUpperCase()}</span>;
-        },
-      },
-
-      {
-        Header: t['shareRegisterTableName'],
-        accessor: 'node.member.name.local',
-        width: '80%',
-
-        disableFilters: false,
-
-        Cell: ({ value }) => {
+        header: t['shareRegisterType'],
+        accessorFn: (row) => row?.node.transactionDirection,
+        cell: (props) => {
           return (
-            <Flex alignItems="center" gap="2">
+            <span>
+              {(props.getValue() === Share_Transaction_Direction.Purchase &&
+                'Purchase') ||
+                (props.getValue() === Share_Transaction_Direction.Return &&
+                  'Return')}
+            </span>
+          );
+        },
+      },
+      {
+        header: t['shareRegisterTableMemberID'],
+        accessorFn: (row) => row?.node.member?.id,
+      },
+
+      {
+        header: t['shareRegisterTableName'],
+        accessorFn: (row) => row?.node?.member?.name?.local,
+
+        cell: (props) => {
+          return (
+            <Box display="flex" alignItems="center" gap="2">
               <Avatar
-                name="Dan Abrahmov"
+                name={props.getValue()}
                 size="sm"
                 src="https://bit.ly/dan-abramov"
               />
-              <span>{value}</span>
-            </Flex>
+              <span>{props.getValue()}</span>
+            </Box>
           );
         },
       },
 
       {
-        Header: t['shareRegisterTableNameToFrom'],
-        accessor: 'node.startNumber',
-        width: '20%',
-        disableSortBy: true,
+        header: t['shareRegisterTableNameToFrom'],
+        accessorFn: (row) => row?.node.startNumber,
 
-        Cell: ({ value, row }) => {
+        cell: (props) => {
           return (
             <span>
-              {value} - {row?.original?.node?.endNumber}
+              {props.getValue()} - {props?.row?.original?.node?.endNumber}
             </span>
           );
         },
@@ -83,48 +95,47 @@ export const ShareRegisterTable = () => {
 
       {
         id: 'share-dr',
-        Header: t['shareRegisterTableNameShareDr'],
-        accessor: 'node.debit',
-        isNumeric: true,
+        header: t['shareRegisterTableNameShareDr'],
+        accessorFn: (row) => row?.node.debit,
 
-        disableFilters: false,
-        filter: 'numberAll',
-        filterType: 'amount',
-
-        Cell: ({ value }) => {
+        cell: (props) => {
           return (
-            <span>{value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
+            <span>
+              {props.getValue()
+                ? `${Number(props?.getValue())?.toLocaleString('en-IN')}`
+                : '-'}
+            </span>
           );
         },
       },
       {
         id: 'share-cr',
-        Header: t['shareRegisterTableNameShareCr'],
-        isNumeric: true,
-        accessor: 'node.credit',
+        header: t['shareRegisterTableNameShareCr'],
+        accessorFn: (row) => row?.node.credit,
 
-        disableFilters: false,
-        filter: 'numberAll',
-        filterType: 'amount',
-
-        Cell: ({ value }) => {
+        cell: (props) => {
           return (
-            <span>{value ? `${value.toLocaleString('en-IN')}` : '-'}</span>
+            <span>
+              {props.getValue()
+                ? `${Number(props.getValue()).toLocaleString('en-IN')}`
+                : '-'}
+            </span>
           );
         },
       },
       {
-        Header: t['shareRegisterTableNameBalance'],
-        accessor: 'node.balance',
-        disableSortBy: true,
-        isNumeric: true,
-        Cell: ({ value }) => {
-          return <span>{Number(value).toLocaleString('en-IN')}</span>;
+        header: t['shareRegisterTableNameBalance'],
+        accessorFn: (row) => row?.node.balance,
+        cell: (props) => {
+          return (
+            <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>
+          );
         },
       },
       {
-        accessor: 'actions',
-        Cell: () => <PopoverComponent title={popoverTitle} />,
+        id: '_actions',
+        header: '',
+        cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
     [router.locale]
@@ -155,14 +166,7 @@ export const ShareRegisterTable = () => {
         tabItems={shareRows}
       />
 
-      <Table
-        isLoading={isFetching}
-        data={rowData ?? []}
-        columns={columns}
-        sort={true}
-        filter={true}
-        disableFilterAll={true}
-      />
+      <Table isLoading={isFetching} data={rowData ?? []} columns={columns} />
     </>
   );
 };

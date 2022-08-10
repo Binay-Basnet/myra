@@ -13,8 +13,9 @@ import {
   useAddShareReturnMutation,
   useGetMemberIndividualDataQuery,
   useGetMemberListQuery,
+  useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
-import { ShareReturnHistoryTable } from '@coop/myra/components';
+import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
   FormCheckbox,
@@ -95,7 +96,7 @@ const ShareReturnForm = () => {
       ],
       totalAmount: totalAmount.toString(),
       noOfReturnedShares: Number(values['noOfReturnedShares']),
-      memberId: '123456789',
+      memberId,
     };
 
     mutate(
@@ -136,6 +137,12 @@ const ShareReturnForm = () => {
       noOfShares * 1000 + Number(adminFees ?? 0) + Number(printingFees ?? 0)
     );
   }, [noOfShares, adminFees, printingFees]);
+
+  const { data: shareHistoryTableData } = useGetShareHistoryQuery({
+    memberId,
+  });
+
+  const balanceData = shareHistoryTableData?.share?.history?.balance;
 
   return (
     <>
@@ -329,7 +336,7 @@ const ShareReturnForm = () => {
                         >
                           {t['shareReturnShareHistory']}
                         </Text>
-                        <ShareReturnHistoryTable id={memberId} />
+                        <SharePurchaseHistoryTable id={memberId} />
                       </Box>
                     </Box>
                   )}
@@ -389,7 +396,10 @@ const ShareReturnForm = () => {
                                   {t['shareReturnRemainingShare']}
                                 </Text>
                                 <Text fontWeight="600" fontSize="r1">
-                                  {allShares ? 0 : 20}
+                                  {allShares
+                                    ? Number(balanceData?.count) -
+                                      Number(noOfShares)
+                                    : balanceData?.count}
                                 </Text>
                               </Box>
 
@@ -399,7 +409,11 @@ const ShareReturnForm = () => {
                                 </Text>
                                 <Text fontWeight="600" fontSize="r1">
                                   {' '}
-                                  {allShares ? 0 : 2000}
+                                  {allShares
+                                    ? (Number(balanceData?.count) -
+                                        Number(noOfShares)) *
+                                      100
+                                    : balanceData?.amount}
                                 </Text>
                               </Box>
                             </Box>
