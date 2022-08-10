@@ -1,4 +1,3 @@
-import React from 'react';
 import { Control, Controller, useFormContext } from 'react-hook-form';
 
 import { Box, TextAreaInput, TextAreaInputProps } from '@coop/shared/ui';
@@ -9,13 +8,7 @@ interface IFormInputProps extends TextAreaInputProps {
   rows?: number;
 }
 
-export const FormTextArea = ({
-  control,
-  name,
-  id,
-  rows,
-  ...rest
-}: IFormInputProps) => {
+export const FormTextArea = ({ name, rows, ...rest }: IFormInputProps) => {
   const methods = useFormContext();
 
   const {

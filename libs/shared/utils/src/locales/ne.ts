@@ -34,6 +34,11 @@ const ne: Record<string, string> = {
   yearly: 'Yearly',
   quaterly: 'Quaterly',
   edit: 'Edit',
+  settings: 'Settings',
+  days: 'days',
+  weeks: 'weeks',
+  months: 'months',
+  years: 'years',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',

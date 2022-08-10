@@ -9,17 +9,6 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 
-const ladderSwitch = [
-  {
-    label: 'Yes',
-    value: true,
-  },
-  {
-    label: 'No',
-    value: false,
-  },
-];
-
 type SalesTable = {
   type: string;
   amount: number;
@@ -30,8 +19,18 @@ export const Interest = () => {
   const { watch } = useFormContext();
   const { t } = useTranslation();
   const depositNature = watch('nature');
-
   const ladderRate = watch('ladderRate');
+
+  const ladderSwitch = [
+    {
+      label: t['yes'],
+      value: true,
+    },
+    {
+      label: t['no'],
+      value: false,
+    },
+  ];
 
   return (
     <>
@@ -137,18 +136,6 @@ export const Interest = () => {
             <FormEditableTable<SalesTable>
               name="ladderRateData"
               debug={false}
-              defaultData={[
-                {
-                  type: 'More Than',
-                  amount: 0,
-                  rate: 0,
-                },
-                {
-                  type: 'More Than',
-                  amount: 0,
-                  rate: 0,
-                },
-              ]}
               columns={[
                 {
                   accessor: 'type',

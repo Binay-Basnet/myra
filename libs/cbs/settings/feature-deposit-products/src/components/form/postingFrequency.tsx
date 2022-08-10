@@ -1,6 +1,4 @@
 // import debounce from 'lodash/debounce';
-import { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
 
 import { DepositFrequency } from '@coop/cbs/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
@@ -11,15 +9,6 @@ import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 
 export const PostingFrequency = () => {
   const { t } = useTranslation();
-  const { watch, resetField } = useFormContext();
-  const [rightElementMin, setRightElementMin] = useState('days');
-
-  const postingFrequencyUnit = watch('postingFrequency');
-
-  useEffect(() => {
-    resetField('maxFreqDifference');
-    setRightElementMin(postingFrequencyUnit);
-  }, [postingFrequencyUnit]);
 
   const postingFrequency = [
     {
@@ -52,7 +41,7 @@ export const PostingFrequency = () => {
           textAlign={'right'}
           label={t['depositProductMaximumPostingFrequencyDifference']}
           placeholder="0"
-          rightAddonText={rightElementMin && rightElementMin.toLowerCase()}
+          rightAddonText={'days'}
         />
       </Box>
     </BoxContainer>

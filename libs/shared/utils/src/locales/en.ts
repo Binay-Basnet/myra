@@ -34,6 +34,11 @@ const en: Record<string, string> = {
   yearly: 'Yearly',
   edit: 'Edit',
   saveChanges: 'Save Changes',
+  settings: 'Settings',
+  days: 'days',
+  weeks: 'weeks',
+  months: 'months',
+  years: 'years',
 
   // navbar
   searchMembersNameReportsEtc: 'Search Members Name, Reports, etc',

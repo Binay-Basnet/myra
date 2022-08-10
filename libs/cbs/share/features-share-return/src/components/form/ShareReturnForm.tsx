@@ -102,7 +102,7 @@ const ShareReturnForm = () => {
     mutate(
       { data: updatedValues },
       {
-        onSuccess: () => router.push(`/share/balance`),
+        onSuccess: () => router.push(`/share/register`),
       }
     );
   };
@@ -127,14 +127,14 @@ const ShareReturnForm = () => {
     memberListData &&
     memberListData.map((member) => {
       return {
-        label: `${member?.node?.id}-${member?.node?.name?.local}`,
+        label: `${member?.node?.name?.local} - ID: ${member?.node?.id}`,
         value: member?.node?.id,
       };
     });
 
   useEffect(() => {
     setTotalAmount(
-      noOfShares * 1000 + Number(adminFees ?? 0) + Number(printingFees ?? 0)
+      noOfShares * 100 + Number(adminFees ?? 0) + Number(printingFees ?? 0)
     );
   }, [noOfShares, adminFees, printingFees]);
 
@@ -157,7 +157,7 @@ const ShareReturnForm = () => {
           >
             <Header />
           </Box>
-          <Container minW="container.lg" p="0">
+          <Container minW="container.lg" p="0" mb="60px">
             <Box
               position="sticky"
               top="110px"
@@ -316,15 +316,11 @@ const ShareReturnForm = () => {
                             justifyContent="flex-end"
                             mr="s32"
                           >
-                            <Text
-                              fontWeight="Medium"
-                              color="primary.500"
-                              fontSize="s2"
-                              mr="5px"
-                            >
-                              {t['sharePurchaseViewProfile']}
-                            </Text>
+                            <TextFields mr="5px" variant="link">
+                              {t['sharePurchaseViewProfile']}{' '}
+                            </TextFields>
                             <Icon
+                              ml="5px"
                               size="sm"
                               as={RiShareBoxFill}
                               color="primary.500"
@@ -334,14 +330,15 @@ const ShareReturnForm = () => {
                       </Box>
 
                       <Box p="2px">
-                        <Text
-                          color="neutralColorLight.Gray-80"
-                          fontWeight="SemiBold"
-                          fontSize="r1"
-                          ml="s24"
-                        >
-                          {t['shareReturnShareHistory']}
-                        </Text>
+                        <Box p="s16">
+                          <Text
+                            color="neutralColorLight.Gray-80"
+                            fontWeight="SemiBold"
+                            fontSize="r1"
+                          >
+                            {t['shareReturnShareHistory']}
+                          </Text>
+                        </Box>
                         <SharePurchaseHistoryTable id={memberId} />
                       </Box>
                     </Box>
@@ -540,7 +537,7 @@ const ShareReturnForm = () => {
                   </Grid>
                 </Box>
 
-                <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
+                <Box background="white" p={5}>
                   <Text
                     color="neutralColorLight.Gray-60"
                     fontSize="r2"

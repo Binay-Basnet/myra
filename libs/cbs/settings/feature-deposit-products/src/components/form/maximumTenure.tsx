@@ -88,7 +88,17 @@ export const MaximumTenure = () => {
               textAlign={'right'}
               label={t['depositProductNumber']}
               placeholder="0"
-              rightAddonText={rightElement && rightElement.toLowerCase()}
+              rightAddonText={
+                rightElement && rightElement === Frequency.Daily
+                  ? t['days']
+                  : rightElement === Frequency.Weekly
+                  ? t['weeks']
+                  : rightElement === Frequency.Monthly
+                  ? t['months']
+                  : rightElement === Frequency.Yearly
+                  ? t['years']
+                  : ''
+              }
             />
           </Box>
         </BoxContainer>
