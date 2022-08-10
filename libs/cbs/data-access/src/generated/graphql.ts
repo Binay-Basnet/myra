@@ -7775,6 +7775,35 @@ export type SetLoanProductMutation = {
   };
 };
 
+export type SetLoanGeneralSettingsMutationVariables = Exact<{
+  emi?: InputMaybe<Scalars['Boolean']>;
+  epi?: InputMaybe<Scalars['Boolean']>;
+  flat?: InputMaybe<Scalars['Boolean']>;
+  collateralList?: InputMaybe<
+    | Array<InputMaybe<CollateralListInputData>>
+    | InputMaybe<CollateralListInputData>
+  >;
+}>;
+
+export type SetLoanGeneralSettingsMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        general?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertNewOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   data: FormOptionUpsertInput;
@@ -12243,6 +12272,48 @@ export const useSetLoanProductMutation = <TError = unknown, TContext = unknown>(
     useAxios<SetLoanProductMutation, SetLoanProductMutationVariables>(
       SetLoanProductDocument
     ),
+    options
+  );
+export const SetLoanGeneralSettingsDocument = `
+    mutation setLoanGeneralSettings($emi: Boolean, $epi: Boolean, $flat: Boolean, $collateralList: [CollateralListInputData]) {
+  settings {
+    general {
+      loan {
+        general(
+          data: {emi: $emi, epi: $epi, flat: $flat, collateralList: $collateralList}
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanGeneralSettingsMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetLoanGeneralSettingsMutation,
+    TError,
+    SetLoanGeneralSettingsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetLoanGeneralSettingsMutation,
+    TError,
+    SetLoanGeneralSettingsMutationVariables,
+    TContext
+  >(
+    ['setLoanGeneralSettings'],
+    useAxios<
+      SetLoanGeneralSettingsMutation,
+      SetLoanGeneralSettingsMutationVariables
+    >(SetLoanGeneralSettingsDocument),
     options
   );
 export const UpsertNewOptionDocument = `

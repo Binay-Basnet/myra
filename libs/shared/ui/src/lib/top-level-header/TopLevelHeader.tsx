@@ -4,12 +4,12 @@ import { BiBell } from 'react-icons/bi';
 import { BsArrowRight } from 'react-icons/bs';
 import { CgMenuGridO } from 'react-icons/cg';
 import { RiHistoryFill } from 'react-icons/ri';
-import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Image, Text } from '@chakra-ui/react';
 import { format } from 'date-fns';
 
+import { useAppDispatch } from '@coop/cbs/data-access';
 import {
   Avatar,
   Box,
@@ -78,7 +78,7 @@ export function TopLevelHeader() {
   const { t } = useTranslation();
   const router = useRouter();
   const [numLines, setNumLines] = useState([1, 2]);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const helpOptions = [
     {
