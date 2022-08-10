@@ -11,8 +11,8 @@ type AccountServiceTable = {
 };
 
 const service_name = [
-  { label: 'Form', value: 'form' },
-  { label: 'Charge', value: 'charge' },
+  { label: 'Cheque Book Issue', value: 'chequeBookIssue' },
+  { label: 'Atm issue', value: 'atmIssue' },
 ];
 
 const ledger_name = [

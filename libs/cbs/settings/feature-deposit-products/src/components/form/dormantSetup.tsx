@@ -1,74 +1,27 @@
-import { useFieldArray } from 'react-hook-form';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { CloseIcon } from '@chakra-ui/icons';
-
-import {
-  DynamicBoxContainer,
-  DynamicBoxGroupContainer,
-  GroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import { FormSelect } from '@coop/shared/form';
-import { Box, Button, Grid, GridItem, Icon } from '@coop/shared/ui';
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TextBoxContainer, TopText } from '../formui';
 
-const options = [
-  { label: 'option 1', value: 'option1' },
-  { label: 'option 2', value: 'option2' },
-];
-interface IAddAccountServices {
-  index: number;
-  removeAccountServices: () => void;
-}
-
-const AddServiceCharge = ({
-  index,
-  removeAccountServices,
-}: IAddAccountServices) => {
-  const { t } = useTranslation();
-
-  return (
-    <DynamicBoxContainer>
-      <CloseIcon
-        cursor="pointer"
-        onClick={removeAccountServices}
-        color="gray.500"
-        _hover={{
-          color: 'gray.900',
-        }}
-        aria-label="close"
-        alignSelf="flex-end"
-      />
-      <Grid templateColumns="repeat(2,1fr)" gap="s20">
-        <GridItem>
-          <FormSelect
-            name={`dormantSetup.${index}.duration`}
-            label={t['depositProductDuration']}
-            placeholder={t['depositProductSelectDuration']}
-            options={options}
-          />
-        </GridItem>
-        <GridItem>
-          <FormSelect
-            name={`dormantSetup.${index}.condition`}
-            label={t['depositProductCondition']}
-            placeholder={t['depositProductSelectCondition']}
-            options={options}
-          />
-        </GridItem>
-      </Grid>
-    </DynamicBoxContainer>
-  );
+type DormantSetupTable = {
+  duration: string;
+  condition: string;
 };
+
+const durationList = [
+  { label: '3 months', value: '3Months' },
+  { label: '6 months', value: '6Months' },
+  { label: 'A year', value: 'year' },
+];
+
+const conditionList = [
+  { label: 'Withdraw', value: 'Withdraw' },
+  { label: 'Deposit', value: 'deposit' },
+];
 
 export const DormantSetup = () => {
   const { t } = useTranslation();
-  const {
-    fields: accountServicesFields,
-    append: accountServicesAppend,
-    remove: accountServicesRemove,
-  } = useFieldArray({ name: 'dormantSetup' });
 
   return (
     <GroupContainer
@@ -80,31 +33,26 @@ export const DormantSetup = () => {
       <TextBoxContainer>
         <TopText>{t['depositProductDormantSetup']} </TopText>
       </TextBoxContainer>
-      <div>
-        <DynamicBoxGroupContainer>
-          {accountServicesFields.map((item, index) => {
-            return (
-              <Box key={item.id}>
-                <AddServiceCharge
-                  index={index}
-                  removeAccountServices={() => accountServicesRemove(index)}
-                />
-              </Box>
-            );
-          })}
-          <Button
-            id="sisterConcernButton"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              accountServicesAppend({});
-            }}
-          >
-            {t['new']}
-          </Button>
-        </DynamicBoxGroupContainer>
-      </div>
+      <FormEditableTable<DormantSetupTable>
+        name="dormantSetup"
+        debug={false}
+        columns={[
+          {
+            accessor: 'duration',
+            header: t['depositProductDuration'],
+            fieldType: 'select',
+            cellWidth: 'auto',
+            selectOptions: durationList,
+          },
+          {
+            accessor: 'condition',
+            header: t['depositProductCondition'],
+            fieldType: 'select',
+            cellWidth: 'auto',
+            selectOptions: conditionList,
+          },
+        ]}
+      />
     </GroupContainer>
   );
 };

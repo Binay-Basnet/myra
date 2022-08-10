@@ -440,7 +440,7 @@ export const KYMCustomFieldAdd = ({ kymType }: { kymType: KYMCategory }) => {
           alignItems="center"
           gap="s8"
           type="button"
-          onClick={(e) => {
+          onClick={() => {
             setHasNewField((prev) => !prev);
           }}
         >

@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
@@ -8,16 +5,6 @@ import { useTranslation } from '@coop/shared/utils';
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 
 export const BalanceLimit = () => {
-  const [rightElement, setRightElement] = useState('days');
-  const { resetField, watch } = useFormContext();
-
-  const frequencyUnit = watch('frequencyUnit');
-
-  useEffect(() => {
-    resetField('unitDays');
-    setRightElement(frequencyUnit);
-  }, [frequencyUnit]);
-
   const { t } = useTranslation();
 
   return (
@@ -37,9 +24,11 @@ export const BalanceLimit = () => {
           placeholder={t['depositProductEnterMaximumAmount']}
         />
         <FormInput
+          type="number"
+          textAlign="right"
           name="balanceLimit.avgAmount"
           label={t['depositProductAverage']}
-          placeholder={t['depositProductAverage']}
+          placeholder="0.00"
         />
       </InputGroupContainer>
     </BoxContainer>

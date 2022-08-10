@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 
 import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
-import { Column, Table } from '@coop/shared/ui';
+import { Column, Table } from '@coop/shared/table';
+import { Avatar, Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
@@ -18,34 +19,50 @@ export const ShareBalanceTable = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: t['shareTableMemberId'],
-        accessor: 'node.member.id',
-        maxWidth: 4,
+        header: t['shareTableMemberId'],
+        accessorFn: (row) => row?.node?.member?.id,
       },
 
       {
-        Header: t['shareTableName'],
-        accessor: 'node.member.name.local',
-        width: '60%',
+        header: t['shareTableName'],
+        accessorFn: (row) => row?.node.member.name?.local,
+        cell: (props) => {
+          return (
+            <Box display="flex" alignItems="center" gap="2">
+              <Avatar
+                name={props.getValue()}
+                size="sm"
+                src="https://bit.ly/dan-abramov"
+              />
+              <span>{props.getValue()}</span>
+            </Box>
+          );
+        },
+        meta: {
+          width: '50%',
+        },
       },
 
       {
-        Header: t['shareTableShareCount'],
-        accessor: 'node.count',
+        header: t['shareTableShareCount'],
+        accessorFn: (row) => row?.node.count,
         isNumeric: true,
       },
       {
-        Header: t['shareTableShareAmount'],
-        accessor: 'node.amount',
-        Cell: ({ value }) => {
-          return <span>{Number(value).toLocaleString('en-IN')}</span>;
+        header: t['shareTableShareAmount'],
+        accessorFn: (row) => row?.node.amount,
+        cell: (props) => {
+          return (
+            <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>
+          );
         },
         isNumeric: true,
       },
 
       {
-        accessor: 'actions',
-        Cell: () => <PopoverComponent title={popoverTitle} />,
+        id: '_actions',
+        header: '',
+        cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
     [router.locale]
@@ -55,12 +72,7 @@ export const ShareBalanceTable = () => {
     <>
       <TableListPageHeader heading={'shareBalanceTable'} />
 
-      <Table
-        isLoading={isFetching}
-        data={rowData ?? []}
-        columns={columns}
-        sort={true}
-      />
+      <Table isLoading={isFetching} data={rowData ?? []} columns={columns} />
     </>
   );
 };

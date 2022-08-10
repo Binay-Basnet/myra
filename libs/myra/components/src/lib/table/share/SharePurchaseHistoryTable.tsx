@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import format from 'date-fns/format';
 
 import { useGetShareHistoryQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
@@ -24,21 +23,19 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       {
         header: t['sn'],
         accessorFn: (row) => row?.id,
+        cell: (props) => {
+          return <span>{props.row.index + 1}</span>;
+        },
       },
 
       {
         header: t['sharePurchaseTableDate'],
         accessorFn: (row) => row?.transactionDate,
-        cell: (props) => {
-          return (
-            <span>{format(new Date(props.getValue()), 'yyyy-mm-dd')}</span>
-          );
-        },
       },
 
       {
         header: t['sharePurchaseNoOfShares'],
-        accessorFn: (row) => row?.endNumber,
+        accessorFn: (row) => row?.shareAmount,
       },
 
       {
@@ -76,7 +73,6 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         cell: (props) => {
           return (
             <span>
-              {' '}
               {props.getValue() ? `${amountConverter(props.getValue())}` : '-'}
             </span>
           );

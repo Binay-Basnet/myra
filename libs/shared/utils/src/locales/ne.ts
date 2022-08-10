@@ -306,7 +306,6 @@ const ne: Record<string, string> = {
   shareTableMemberId: 'Member ID',
   shareTableName: 'Name',
   shareTableShareCount: 'Share Count',
-  shareTableShareAmount: 'Share Amount',
 
   // share register table
   shareRegisterTable: 'Share Register',
@@ -2612,7 +2611,7 @@ const ne: Record<string, string> = {
   depositProductEnterNumberInstallments: 'Enter Number of Installments',
   depositProductMinimumTenure: 'Minimum Tenure',
   depositProductNoteWeek:
-    ' Note: Week is equal to 7 days, Month is equal to 30 days & year is equal to 365days.',
+    ' Note: Week is equal to 7 days, Month is equal to 30 days & year is equal to 365 days.',
   depositProductApplicable: 'Applicable',
   depositProductNotApplicable: 'Not Applicable',
   depositProductUnit: 'Unit',
@@ -2732,7 +2731,7 @@ const ne: Record<string, string> = {
   loanProductOthers: 'Others',
   loanProductMinimumTenure: 'Minimum Tenure',
   loanProductNoteWeek:
-    'Note: Week is equal to 7 days, Month is equal to 30 days & year is equal to 365days.',
+    'Note: Week is equal to 7 days, Month is equal to 30 days & year is equal to 365 days.',
   loanProductApplicable: 'Applicable',
   loanProductNotApplicable: 'Not Applicable',
   loanProductUnit: 'Unit',
@@ -3102,6 +3101,11 @@ const ne: Record<string, string> = {
   reportsCbsReports: 'CBS reports',
   reportsSavedReports: 'Saved reports',
   reportsSettings: 'Report Settings',
+
+  shareTableShareAmount: 'Share Balance',
+
+  depositProductFlat: 'Flat',
+  depositProductDiminishing: 'Diminishing',
   reportsTableView: 'Table View',
   reportsListView: 'List View',
   reportsCoreBankingSystemReports: 'Core Banking System Reports',
