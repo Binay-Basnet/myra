@@ -89,6 +89,7 @@ export function Select({
         controlShouldRenderValue={!isMulti}
         closeMenuOnSelect={!isMulti}
         isMulti={isMulti}
+        menuIsOpen={true}
         hideSelectedOptions={false}
         isClearable={false}
         chakraStyles={
