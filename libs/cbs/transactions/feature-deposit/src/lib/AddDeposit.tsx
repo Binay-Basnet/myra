@@ -1,15 +1,5 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiRightArrowAlt } from 'react-icons/bi';
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react';
 
 import {
   Arrange,
@@ -17,8 +7,7 @@ import {
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
 import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
-import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -28,12 +17,11 @@ import {
   FormFooter,
   FormHeader,
   Grid,
-  GridItem,
-  Icon,
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { InstallmentModel, Payment } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddDepositProps {}
@@ -74,44 +62,8 @@ const memberAccountsList = [
   },
 ];
 
-const installmentsList = [
-  {
-    from: '01-05-2079',
-    to: '01-06-2079',
-    status: 'Done',
-    title: 'Bhadra',
-  },
-  {
-    from: '01-06-2079',
-    to: '01-07-2079',
-    status: 'Forgive',
-    title: 'Asoj',
-  },
-  {
-    from: '01-07-2079',
-    to: '01-08-2079',
-    status: 'Forgive',
-    title: 'Kartik',
-  },
-];
-
-const paymentModes = [
-  {
-    label: 'Cash',
-    value: 'cash',
-  },
-  {
-    label: 'Cheque',
-    value: 'cheque',
-  },
-  {
-    label: 'Bank Voucher',
-    value: 'bankVoucher',
-  },
-];
-
 export function AddDeposit() {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const methods = useForm();
 
@@ -174,8 +126,6 @@ export function AddDeposit() {
     setIsModalOpen(false);
   };
 
-  const selectedPaymentMode = watch('paymentMode');
-
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -188,7 +138,7 @@ export function AddDeposit() {
         >
           <FormHeader
             title={'New Deposit'}
-            closeLink="/transactions/add"
+            closeLink="/transactions/deposit/list"
             buttonLabel="Add Bulk Deposit"
             buttonHandler={() => null}
           />
@@ -469,41 +419,7 @@ export function AddDeposit() {
                 )}
               </Box>
 
-              <Box
-                display={mode === 1 ? 'flex' : 'none'}
-                p="s16"
-                width="100%"
-                flexDirection="column"
-                gap="s24"
-                borderRight="1px"
-                borderColor="border.layout"
-              >
-                <FormSwitchTab
-                  label={'Payment Mode'}
-                  options={paymentModes}
-                  name="paymentMode"
-                />
-
-                {selectedPaymentMode === 'bankVoucher' && (
-                  <InputGroupContainer>
-                    <GridItem colSpan={2}>
-                      <FormInput
-                        name="bankName"
-                        label="Bank Name"
-                        placeholder="Bank Name"
-                      />
-                    </GridItem>
-
-                    <GridItem>
-                      <FormInput
-                        name="bankVoucherID"
-                        label="Voucher ID"
-                        placeholder="Voucher ID"
-                      />
-                    </GridItem>
-                  </InputGroupContainer>
-                )}
-              </Box>
+              <Payment mode={mode} />
             </form>
           </FormProvider>
         </Box>
@@ -514,22 +430,28 @@ export function AddDeposit() {
           <Container minW="container.xl" height="fit-content">
             <FormFooter
               status={
-                <Box display="flex" gap="s32">
-                  <Text
-                    fontSize="r1"
-                    fontWeight={600}
-                    color="neutralColorLight.Gray-50"
-                  >
-                    {t['formDetails']}
-                  </Text>
-                  <Text
-                    fontSize="r1"
-                    fontWeight={600}
-                    color="neutralColorLight.Gray-70"
-                  >
-                    {'---'}
-                  </Text>
-                </Box>
+                mode === 0 ? (
+                  <Box display="flex" gap="s32">
+                    <Text
+                      fontSize="r1"
+                      fontWeight={600}
+                      color="neutralColorLight.Gray-50"
+                    >
+                      {'Total Deposit Amount'}
+                    </Text>
+                    <Text
+                      fontSize="r1"
+                      fontWeight={600}
+                      color="neutralColorLight.Gray-70"
+                    >
+                      {'---'}
+                    </Text>
+                  </Box>
+                ) : (
+                  <Button variant="solid" onClick={() => setMode(0)}>
+                    Previous
+                  </Button>
+                )
               }
               mainButtonLabel={mode === 0 ? 'Proceed to Payment' : 'Submit'}
               mainButtonHandler={mode === 0 ? () => setMode(1) : () => null}
@@ -538,102 +460,7 @@ export function AddDeposit() {
         </Box>
       </Box>
 
-      <Modal isOpen={isModalOpen} onClose={handleModalClose} isCentered={true}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Text
-              fontSize="r2"
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-            >
-              Installments
-            </Text>
-          </ModalHeader>
-          <Divider />
-
-          <ModalCloseButton />
-          <ModalBody
-            // display="flex"
-            // justifyContent="center"
-            // alignItems="center"
-            p="s16"
-          >
-            <Box
-              border="1px"
-              borderColor="border.layout"
-              borderRadius="br2"
-              px="s12"
-              py="s8"
-              display="flex"
-              flexDirection="column"
-              gap="s16"
-            >
-              {installmentsList.map((installment) => (
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Box display="flex" flexDirection="column">
-                    <Text
-                      fontSize="r1"
-                      fontWeight={500}
-                      color="neutralColorLight.Gray-80"
-                    >
-                      {installment.title}
-                    </Text>
-                    <Box display="flex" alignItems="center">
-                      <Text
-                        fontSize="s3"
-                        fontWeight={400}
-                        color="neutralColorLight.Gray-60"
-                      >
-                        {installment.from}
-                      </Text>
-                      <Icon
-                        as={BiRightArrowAlt}
-                        w="s16"
-                        cursor="pointer"
-                        color="neutralColorLight.Gray-60"
-                        h="s16"
-                      />
-                      <Text
-                        fontSize="s3"
-                        fontWeight={400}
-                        color="neutralColorLight.Gray-60"
-                      >
-                        {installment.to}
-                      </Text>
-                    </Box>
-                  </Box>
-
-                  <Box>
-                    <Text
-                      fontSize="r1"
-                      fontWeight={500}
-                      color={
-                        installment.status === 'Done'
-                          ? 'neutralColorLight.Gray-60'
-                          : 'primary.500'
-                      }
-                    >
-                      {installment.status}
-                    </Text>
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-          </ModalBody>
-
-          <Divider />
-          <ModalFooter>
-            <Button variant="solid" onClick={handleModalClose}>
-              Save
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <InstallmentModel isOpen={isModalOpen} onClose={handleModalClose} />
     </>
   );
 }

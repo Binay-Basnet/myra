@@ -56,6 +56,9 @@ export type Column<T extends RecordWithId & Record<string, string | number>> = {
   searchOptions?: { label: string; value: string }[];
   isNumeric?: boolean;
 
+  // // TODO! Create a cell component
+  // cell?: (row: T) => React.ReactNode;
+
   cellWidth?: 'auto' | 'lg' | 'md' | 'sm';
   colSpan?: number;
 };

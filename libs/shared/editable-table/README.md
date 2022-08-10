@@ -4,7 +4,7 @@ This library was generated with [Nx](https://nx.dev).
 
 ### Simple Usage
 
-```jsx
+```tsx
 
 // USAGE FOR EDITABLE TABLE, WILL MOVE THIS LATER
 import { Box } from '@chakra-ui/react';
@@ -145,4 +145,5 @@ export default EDITABLE;
 
 - [ ] focus element up and down using arrow keys
 - [ ] validations
+- [ ] custom cell renderer
 
