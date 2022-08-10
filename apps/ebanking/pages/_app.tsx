@@ -44,7 +44,9 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
       </Head>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
-          <main>{getLayout(<Component {...pageProps} />)}</main>
+          <main suppressHydrationWarning>
+            {getLayout(<Component {...pageProps} />)}
+          </main>
         </ChakraProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>

@@ -138,7 +138,7 @@ export type AddCoaAccountInput = {
   allowFreeEntry: Scalars['Boolean'];
   allowTransaction: Scalars['Boolean'];
   balanceSheetAccount: Scalars['Boolean'];
-  bankAccountNumber?: InputMaybe<Scalars['Int']>;
+  bankAccountNumber?: InputMaybe<Scalars['String']>;
   bankGLCode?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['ID']>;
   classId: Scalars['ID'];
@@ -150,9 +150,9 @@ export type AddCoaAccountInput = {
   ledgerAccount: Scalars['Boolean'];
   name: Scalars['String'];
   openingBalance: Scalars['Float'];
-  parentId: Scalars['ID'];
   profitAndLossAccount: Scalars['Boolean'];
   summationAccount: Scalars['Boolean'];
+  under?: InputMaybe<Scalars['ID']>;
 };
 
 export type AddChartsOfAccountResult = {
@@ -377,7 +377,7 @@ export type BankBranchSearchFilter = {
 };
 
 export type BankChartsOfAccount = {
-  bankAccountNumber: Scalars['Int'];
+  bankAccountNumber: Scalars['String'];
   bankGLCode: Scalars['String'];
   bankId: Scalars['ID'];
 };
@@ -552,25 +552,55 @@ export type BranchSearchFilter = {
   query?: InputMaybe<Scalars['String']>;
 };
 
+export type CoaFullView = {
+  data?: Maybe<Array<Maybe<CoaView>>>;
+  error?: Maybe<QueryError>;
+};
+
 export enum CoaTypesOfAccount {
   Bank = 'BANK',
   Cash = 'CASH',
   Journal = 'JOURNAL',
 }
 
-export type ChartsOfAccount = Base & {
+export type CoaView = {
+  accountClass: Scalars['String'];
+  accountCode: Scalars['String'];
   accountType: CoaTypesOfAccount;
   accountTypeDetails?: Maybe<AccountTypeDetailsUnion>;
-  active: Scalars['Boolean'];
   allowFreeEntry: Scalars['Boolean'];
   allowTransaction: Scalars['Boolean'];
-  classId: Scalars['ID'];
-  code: Scalars['String'];
+  createdAt: Scalars['Time'];
+  creatorId: Scalars['ID'];
+  currency: Scalars['String'];
+  id: Scalars['ID'];
+  isApplicableToAllBranches: Scalars['Boolean'];
+  isBalanceSheetAccount: Scalars['Boolean'];
+  isIbtAccount: Scalars['Boolean'];
+  isInTransitAccount: Scalars['Boolean'];
+  isLedgerAccount: Scalars['Boolean'];
+  isProfitAndLossAccount: Scalars['Boolean'];
+  isSummationAccount: Scalars['Boolean'];
+  modifiedAt: Scalars['Time'];
+  modifierId: Scalars['ID'];
+  name: Scalars['Localized'];
+  objState: ObjState;
+  openingBalance: Scalars['Float'];
+  under?: Maybe<Scalars['ID']>;
+};
+
+export type ChartsOfAccount = Base & {
+  accountClass: Scalars['String'];
+  accountCode: Scalars['String'];
+  accountType: CoaTypesOfAccount;
+  accountTypeDetails?: Maybe<AccountTypeDetailsUnion>;
+  allowFreeEntry: Scalars['Boolean'];
+  allowTransaction: Scalars['Boolean'];
   createdAt: Scalars['Time'];
   createdBy: Identity;
   currency: Scalars['String'];
-  hasSubAccounts: Scalars['Boolean'];
   id: Scalars['ID'];
+  isApplicableToAllBranches: Scalars['Boolean'];
   isBalanceSheetAccount: Scalars['Boolean'];
   isIbtAccount: Scalars['Boolean'];
   isInTransitAccount: Scalars['Boolean'];
@@ -578,13 +608,12 @@ export type ChartsOfAccount = Base & {
   isLedgerAccount: Scalars['Boolean'];
   isProfitAndLossAccount: Scalars['Boolean'];
   isSummationAccount: Scalars['Boolean'];
-  level: Scalars['Int'];
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
-  name: Scalars['String'];
+  name: Scalars['Localized'];
   objState: ObjState;
   openingBalance: Scalars['Float'];
-  parent?: Maybe<Account>;
+  under?: Maybe<Scalars['ID']>;
 };
 
 export type ChartsOfAccountClass = {
@@ -626,6 +655,7 @@ export type ChartsOfAccountSettingsMutation = {
 export type ChartsOfAccountSettingsQuery = {
   accounts: ChartsOfAccountResult;
   class?: Maybe<ChartsOfAccountClassResult>;
+  fullView: CoaFullView;
 };
 
 export type ChartsOfAccountSettingsQueryAccountsArgs = {
@@ -1312,12 +1342,23 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
-export type DepositAccount = {
+export type DepositAccount = Base & {
   createdAt: Scalars['Time'];
+  createdBy: Identity;
   id: Scalars['ID'];
   member: Member;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
   product: DepositProduct;
 };
+
+export enum DepositFrequency {
+  HalfYearly = 'HALF_YEARLY',
+  Monthly = 'MONTHLY',
+  Quarterly = 'QUARTERLY',
+  Yearly = 'YEARLY',
+}
 
 export type DepositIro = {
   id: Scalars['ID'];
@@ -1517,7 +1558,7 @@ export type DepositProductFormStateData = {
   penalty?: Maybe<Scalars['Boolean']>;
   penaltyData?: Maybe<PenaltyFormState>;
   percentageOfDeposit?: Maybe<Scalars['Float']>;
-  postingFrequency?: Maybe<Frequency>;
+  postingFrequency?: Maybe<DepositFrequency>;
   prematurePenalty?: Maybe<PrematurePenaltyFormState>;
   productCode: ProductCodeFormState;
   productName?: Maybe<Scalars['String']>;
@@ -1580,7 +1621,7 @@ export type DepositProductInput = {
   penalty?: InputMaybe<Scalars['Boolean']>;
   penaltyData?: InputMaybe<PenaltyInput>;
   percentageOfDeposit?: InputMaybe<Scalars['Float']>;
-  postingFrequency?: InputMaybe<Frequency>;
+  postingFrequency?: InputMaybe<DepositFrequency>;
   prematurePenalty?: InputMaybe<PrematurePenalty>;
   productCode: ProductCode;
   productName: Scalars['String'];
@@ -1596,8 +1637,9 @@ export type DepositProductInput = {
 };
 
 export type DepositProductList = {
-  data?: Maybe<Array<Maybe<DepositProduct>>>;
+  allowed?: Maybe<Array<Maybe<DepositProduct>>>;
   error?: Maybe<QueryError>;
+  notAllowed?: Maybe<Array<Maybe<DepositProduct>>>;
 };
 
 export type DepositProductResult = {
@@ -1637,8 +1679,7 @@ export type DepositProductSettingsQueryGetArgs = {
 };
 
 export type DepositProductSettingsQueryGetProductListArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-  name?: InputMaybe<Scalars['String']>;
+  memberId: Scalars['ID'];
 };
 
 export type DepositProductSettingsQueryListArgs = {
@@ -3269,15 +3310,22 @@ export type InterestFormState = {
   boardAuthority?: Maybe<Scalars['Float']>;
   ceoAuthority?: Maybe<Scalars['Float']>;
   defaultRate?: Maybe<Scalars['Float']>;
+  interestMethod?: Maybe<InterestMethod>;
   maxRate?: Maybe<Scalars['Float']>;
   minRate?: Maybe<Scalars['Float']>;
 };
+
+export enum InterestMethod {
+  Diminishing = 'DIMINISHING',
+  Flat = 'FLAT',
+}
 
 export type InterestRate = {
   additionalRate?: InputMaybe<Scalars['Float']>;
   boardAuthority?: InputMaybe<Scalars['Float']>;
   ceoAuthority?: InputMaybe<Scalars['Float']>;
   defaultRate: Scalars['Float'];
+  interestMethod?: InputMaybe<InterestMethod>;
   maxRate?: InputMaybe<Scalars['Float']>;
   minRate?: InputMaybe<Scalars['Float']>;
 };
@@ -3287,6 +3335,7 @@ export type InterestRateType = {
   boardAuthority?: Maybe<Scalars['Float']>;
   ceoAuthority?: Maybe<Scalars['Float']>;
   defaultRate: Scalars['Float'];
+  interestMethod?: Maybe<InterestMethod>;
   maxRate?: Maybe<Scalars['Float']>;
   minRate?: Maybe<Scalars['Float']>;
   postingFrequency?: Maybe<Frequency>;
@@ -6603,17 +6652,10 @@ export type SettingsQuery = {
   general?: Maybe<GeneralSettingsQuery>;
 };
 
-export type ShareBalance = Base & {
-  balance: Scalars['Int'];
+export type ShareBalance = {
+  amount: Scalars['Int'];
   count: Scalars['Int'];
-  createdAt: Scalars['Time'];
-  createdBy: Identity;
-  id: Scalars['ID'];
   member: Member;
-  modifiedAt: Scalars['Time'];
-  modifiedBy: Identity;
-  objState: ObjState;
-  shareNumbers?: Maybe<Array<Maybe<ShareNumber>>>;
 };
 
 export type ShareBalanceConnection = {
@@ -6640,7 +6682,12 @@ export type ShareExtraCharges = {
 
 export type ShareExtraChargesInput = {
   name: Scalars['String'];
-  value: Scalars['Float'];
+  value: Scalars['String'];
+};
+
+export type ShareHistory = {
+  balance?: Maybe<ShareBalance>;
+  history?: Maybe<Array<Maybe<ShareRegister>>>;
 };
 
 export type ShareMutation = {
@@ -6650,12 +6697,10 @@ export type ShareMutation = {
 
 export type ShareMutationPurchaseArgs = {
   data: SharePurchaseInput;
-  id: Scalars['ID'];
 };
 
 export type ShareMutationReturnArgs = {
   data: ShareReturnInput;
-  id: Scalars['ID'];
 };
 
 export type ShareNumber = {
@@ -6671,9 +6716,8 @@ export type SharePurchaseInput = {
   extraFee?: InputMaybe<Array<InputMaybe<ShareExtraChargesInput>>>;
   memberId: Scalars['String'];
   paymentMode?: InputMaybe<Payment_Mode>;
-  shareAmount?: InputMaybe<Scalars['Float']>;
   shareCount: Scalars['Int'];
-  totalAmount?: InputMaybe<Scalars['Float']>;
+  totalAmount?: InputMaybe<Scalars['String']>;
   voucherNumber?: InputMaybe<Scalars['String']>;
 };
 
@@ -6686,17 +6730,22 @@ export type SharePurchaseResult = {
 
 export type ShareQuery = {
   balance?: Maybe<ShareBalanceConnection>;
+  history?: Maybe<ShareHistory>;
   register?: Maybe<ShareRegisterConnection>;
 };
 
 export type ShareQueryBalanceArgs = {
   filter?: InputMaybe<ShareBalanceFilter>;
-  paginate?: InputMaybe<Pagination>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type ShareQueryHistoryArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type ShareQueryRegisterArgs = {
   filter?: InputMaybe<ShareRegisterFilter>;
-  paginate?: InputMaybe<Pagination>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type ShareRegister = {
@@ -6707,6 +6756,7 @@ export type ShareRegister = {
   debit?: Maybe<Scalars['Int']>;
   endNumber: Scalars['Int'];
   extraFee?: Maybe<Array<Maybe<ShareExtraCharges>>>;
+  id?: Maybe<Scalars['ID']>;
   member?: Maybe<Member>;
   paymentMode?: Maybe<Payment_Mode>;
   shareAmount?: Maybe<Scalars['Float']>;
@@ -6745,15 +6795,11 @@ export type ShareReturnInput = {
   accountId?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['String']>;
   extraFee?: InputMaybe<Array<InputMaybe<ShareExtraChargesInput>>>;
-  memberId?: InputMaybe<Scalars['String']>;
-  noOfReturnedShares?: InputMaybe<Scalars['Int']>;
+  memberId: Scalars['String'];
+  noOfReturnedShares: Scalars['Int'];
   paymentMode?: InputMaybe<Payment_Mode>;
-  remainingShare?: InputMaybe<Scalars['Int']>;
-  remainingShareValue?: InputMaybe<Scalars['Float']>;
-  selectAllShares?: InputMaybe<Scalars['Boolean']>;
-  totalAmount?: InputMaybe<Scalars['Float']>;
+  totalAmount?: InputMaybe<Scalars['String']>;
   voucherNumber?: InputMaybe<Scalars['String']>;
-  withdrawAmount?: InputMaybe<Scalars['Float']>;
 };
 
 export type ShareReturnResult = {
@@ -7198,64 +7244,6 @@ export type RefreshMutation = {
         | MutationError_ServerError_Fragment
         | MutationError_ValidationError_Fragment
         | null;
-    } | null;
-  };
-};
-
-export type SetNewCoaMutationVariables = Exact<{
-  data: AddCoaAccountInput;
-}>;
-
-export type SetNewCoaMutation = {
-  settings: {
-    general?: {
-      chartsOfAccount?: {
-        account?: {
-          add: {
-            record?: {
-              id: string;
-              name: string;
-              level: number;
-              code: string;
-              currency: string;
-              classId: string;
-              hasSubAccounts: boolean;
-              active: boolean;
-              accountType: CoaTypesOfAccount;
-              openingBalance: number;
-              isLedgerAccount: boolean;
-              isBalanceSheetAccount: boolean;
-              isSummationAccount: boolean;
-              isIbtAccount: boolean;
-              isInTransitAccount: boolean;
-              isProfitAndLossAccount: boolean;
-              allowFreeEntry: boolean;
-              allowTransaction: boolean;
-              parent?: {
-                id: string;
-                name: string;
-                accountNumber: string;
-                isDefault: boolean;
-                amount: number;
-                interestRate: number;
-                accountType: Account_Type;
-                interestBooked: number;
-                interestEarned: number;
-                subscribedDate: string;
-                history?: Array<{ date: string; balance: number }> | null;
-                transactions?: Array<{
-                  id: string;
-                  name: string;
-                  transactionType: Transaction_Type;
-                  date: string;
-                  transactionDirection: Transaction_Direction;
-                  amount: number;
-                }> | null;
-              } | null;
-            } | null;
-          };
-        } | null;
-      } | null;
     } | null;
   };
 };
@@ -7787,6 +7775,35 @@ export type SetLoanProductMutation = {
   };
 };
 
+export type SetLoanGeneralSettingsMutationVariables = Exact<{
+  emi?: InputMaybe<Scalars['Boolean']>;
+  epi?: InputMaybe<Scalars['Boolean']>;
+  flat?: InputMaybe<Scalars['Boolean']>;
+  collateralList?: InputMaybe<
+    | Array<InputMaybe<CollateralListInputData>>
+    | InputMaybe<CollateralListInputData>
+  >;
+}>;
+
+export type SetLoanGeneralSettingsMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        general?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertNewOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   data: FormOptionUpsertInput;
@@ -8159,7 +8176,6 @@ export type UpdateDeclarationMutation = {
 };
 
 export type AddSharePurchaseMutationVariables = Exact<{
-  id: Scalars['ID'];
   data: SharePurchaseInput;
 }>;
 
@@ -8168,7 +8184,6 @@ export type AddSharePurchaseMutation = {
 };
 
 export type AddShareReturnMutationVariables = Exact<{
-  id: Scalars['ID'];
   data: ShareReturnInput;
 }>;
 
@@ -8212,14 +8227,17 @@ export type GetAccountMemberListQuery = {
   };
 };
 
-export type GetProductListQueryVariables = Exact<{ [key: string]: never }>;
+export type GetProductListQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
 
 export type GetProductListQuery = {
   settings: {
     general?: {
       depositProduct?: {
         getProductList?: {
-          data?: Array<{ id: string; productName: string } | null> | null;
+          allowed?: Array<{ id: string; productName: string } | null> | null;
+          notAllowed?: Array<{ id: string; productName: string } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -8261,7 +8279,7 @@ export type GetAccountOpenProductDetailsQuery = {
             maxTenureUnit?: Frequency | null;
             maxTenureUnitNumber?: number | null;
             ladderRate?: boolean | null;
-            postingFrequency?: Frequency | null;
+            postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
             accountType?: string | null;
             autoOpen?: boolean | null;
@@ -8333,6 +8351,82 @@ export type GetAccountOpenProductDetailsQuery = {
           } | null;
         } | null;
       } | null;
+    } | null;
+  };
+};
+
+export type GetAccountOpenEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAccountOpenEditDataQuery = {
+  account: {
+    formState?: {
+      data?: {
+        memberId: string;
+        productId: string;
+        tenure?: FrequencyTenure | null;
+        tenureNumber?: number | null;
+        interestRate?: number | null;
+        ceoAuthority?: boolean | null;
+        boardAuthority?: boolean | null;
+        depositFrequencyWeekly?: Week | null;
+        depositFrequencyMonthly?: WeeklyFrequency | null;
+        depositFrequencyDay?: number | null;
+        depositFrequencyFrequencyDay?: string | null;
+        depositFrequencyDayOfWeek?: Week | null;
+        depositFrequencyYearlyMonth?: Months | null;
+        depositFrequencyYearlyDay?: Week | null;
+        atmFacility?: boolean | null;
+        chequeIssue?: boolean | null;
+        agentId?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAccountTableListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<DepositLoanAccountSearchFilter>;
+}>;
+
+export type GetAccountTableListQuery = {
+  account: {
+    list?: {
+      totalCount: number;
+      pageInfo: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      };
+      edges: Array<{
+        node?: {
+          id: string;
+          objState: ObjState;
+          createdAt: string;
+          modifiedAt: string;
+          member: {
+            id: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            contact?: string | null;
+            dateJoined?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: {
+                longitude?: number | null;
+                latitude?: number | null;
+              } | null;
+            } | null;
+          };
+          product: { id: string; productCode: string; productName: string };
+        } | null;
+      }>;
     } | null;
   };
 };
@@ -9610,9 +9704,12 @@ export type GetCoopUnionKymOptionsQuery = {
 export type GetMemberListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['Cursor']>;
   first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  last?: InputMaybe<Scalars['Int']>;
   column: Scalars['String'];
   arrange: Arrange;
   objState?: InputMaybe<ObjState>;
+  query?: InputMaybe<Scalars['String']>;
 }>;
 
 export type GetMemberListQuery = {
@@ -10046,7 +10143,6 @@ export type GetBranchListQuery = {
                 } | null;
                 share?: {
                   summary?: {
-                    id: string;
                     count: number;
                     member: {
                       code: string;
@@ -10564,7 +10660,7 @@ export type GetDepositProductSettingsEditDataQuery = {
             maxTenureUnit?: Frequency | null;
             maxTenureUnitNumber?: number | null;
             ladderRate?: boolean | null;
-            postingFrequency?: Frequency | null;
+            postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
             accountType?: string | null;
             autoOpen?: boolean | null;
@@ -10705,12 +10801,20 @@ export type GetShareBalanceListQuery = {
     balance?: {
       edges: Array<{
         node: {
-          balance: number;
           count: number;
-          member: { name?: Record<'local' | 'en' | 'np', string> | null };
+          amount: number;
+          member: {
+            id: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+          };
         };
       }>;
-      pageInfo: { endCursor?: string | null; startCursor?: string | null };
+      pageInfo: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      };
     } | null;
   };
 };
@@ -10733,6 +10837,7 @@ export type GetShareRegisterListQuery = {
           credit?: number | null;
           debit?: number | null;
           member?: {
+            id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
           } | null;
         };
@@ -10742,24 +10847,42 @@ export type GetShareRegisterListQuery = {
 };
 
 export type GetShareHistoryQueryVariables = Exact<{
-  memberId: Scalars['String'];
+  memberId: Scalars['ID'];
 }>;
 
 export type GetShareHistoryQuery = {
   share: {
-    register?: {
-      edges: Array<{
-        node: {
-          transactionDate?: string | null;
-          transactionDirection: Share_Transaction_Direction;
-          startNumber: number;
-          endNumber: number;
-          credit?: number | null;
-          debit?: number | null;
-          balance?: number | null;
-          member?: { id: string } | null;
+    history?: {
+      history?: Array<{
+        id?: string | null;
+        status?: Share_Status | null;
+        transactionDate?: string | null;
+        transactionDirection: Share_Transaction_Direction;
+        credit?: number | null;
+        debit?: number | null;
+        startNumber: number;
+        endNumber: number;
+        balance?: number | null;
+        shareAmount?: number | null;
+        totalAmount?: number | null;
+        paymentMode?: Payment_Mode | null;
+        bankId?: string | null;
+        voucherNumber?: string | null;
+        accountId?: string | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        extraFee?: Array<{ name: string; value: number } | null> | null;
+      } | null> | null;
+      balance?: {
+        count: number;
+        amount: number;
+        member: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
         };
-      }>;
+      } | null;
     } | null;
   };
 };
@@ -10896,77 +11019,6 @@ export const useRefreshMutation = <TError = unknown, TContext = unknown>(
   useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
     ['refresh'],
     useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
-    options
-  );
-export const SetNewCoaDocument = `
-    mutation setNewCOA($data: AddCOAAccountInput!) {
-  settings {
-    general {
-      chartsOfAccount {
-        account {
-          add(data: $data) {
-            record {
-              id
-              name
-              level
-              parent {
-                id
-                name
-                accountNumber
-                isDefault
-                amount
-                interestRate
-                accountType
-                interestBooked
-                interestEarned
-                subscribedDate
-                history {
-                  date
-                  balance
-                }
-                transactions {
-                  id
-                  name
-                  transactionType
-                  date
-                  transactionDirection
-                  amount
-                }
-              }
-              code
-              currency
-              classId
-              hasSubAccounts
-              active
-              accountType
-              openingBalance
-              isLedgerAccount
-              isBalanceSheetAccount
-              isSummationAccount
-              isIbtAccount
-              isInTransitAccount
-              isProfitAndLossAccount
-              allowFreeEntry
-              allowTransaction
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useSetNewCoaMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    SetNewCoaMutation,
-    TError,
-    SetNewCoaMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<SetNewCoaMutation, TError, SetNewCoaMutationVariables, TContext>(
-    ['setNewCOA'],
-    useAxios<SetNewCoaMutation, SetNewCoaMutationVariables>(SetNewCoaDocument),
     options
   );
 export const SetCooperativeDataDocument = `
@@ -12222,6 +12274,48 @@ export const useSetLoanProductMutation = <TError = unknown, TContext = unknown>(
     ),
     options
   );
+export const SetLoanGeneralSettingsDocument = `
+    mutation setLoanGeneralSettings($emi: Boolean, $epi: Boolean, $flat: Boolean, $collateralList: [CollateralListInputData]) {
+  settings {
+    general {
+      loan {
+        general(
+          data: {emi: $emi, epi: $epi, flat: $flat, collateralList: $collateralList}
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanGeneralSettingsMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetLoanGeneralSettingsMutation,
+    TError,
+    SetLoanGeneralSettingsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetLoanGeneralSettingsMutation,
+    TError,
+    SetLoanGeneralSettingsMutationVariables,
+    TContext
+  >(
+    ['setLoanGeneralSettings'],
+    useAxios<
+      SetLoanGeneralSettingsMutation,
+      SetLoanGeneralSettingsMutationVariables
+    >(SetLoanGeneralSettingsDocument),
+    options
+  );
 export const UpsertNewOptionDocument = `
     mutation upsertNewOption($fieldId: ID!, $data: FormOptionUpsertInput!) {
   settings {
@@ -12859,9 +12953,9 @@ export const useUpdateDeclarationMutation = <
     options
   );
 export const AddSharePurchaseDocument = `
-    mutation addSharePurchase($id: ID!, $data: SharePurchaseInput!) {
+    mutation addSharePurchase($data: SharePurchaseInput!) {
   share {
-    purchase(id: $id, data: $data) {
+    purchase(data: $data) {
       recordId
     }
   }
@@ -12891,9 +12985,9 @@ export const useAddSharePurchaseMutation = <
     options
   );
 export const AddShareReturnDocument = `
-    mutation addShareReturn($id: ID!, $data: ShareReturnInput!) {
+    mutation addShareReturn($data: ShareReturnInput!) {
   share {
-    return(id: $id, data: $data) {
+    return(data: $data) {
       recordId
     }
   }
@@ -12968,12 +13062,16 @@ export const useGetAccountMemberListQuery = <
     options
   );
 export const GetProductListDocument = `
-    query getProductList {
+    query getProductList($memberId: ID!) {
   settings {
     general {
       depositProduct {
-        getProductList {
-          data {
+        getProductList(memberId: $memberId) {
+          allowed {
+            id
+            productName
+          }
+          notAllowed {
             id
             productName
           }
@@ -12987,13 +13085,11 @@ export const useGetProductListQuery = <
   TData = GetProductListQuery,
   TError = unknown
 >(
-  variables?: GetProductListQueryVariables,
+  variables: GetProductListQueryVariables,
   options?: UseQueryOptions<GetProductListQuery, TError, TData>
 ) =>
   useQuery<GetProductListQuery, TError, TData>(
-    variables === undefined
-      ? ['getProductList']
-      : ['getProductList', variables],
+    ['getProductList', variables],
     useAxios<GetProductListQuery, GetProductListQueryVariables>(
       GetProductListDocument
     ).bind(null, variables),
@@ -13123,6 +13219,109 @@ export const useGetAccountOpenProductDetailsQuery = <
       GetAccountOpenProductDetailsQuery,
       GetAccountOpenProductDetailsQueryVariables
     >(GetAccountOpenProductDetailsDocument).bind(null, variables),
+    options
+  );
+export const GetAccountOpenEditDataDocument = `
+    query getAccountOpenEditData($id: ID!) {
+  account {
+    formState(id: $id) {
+      data {
+        memberId
+        productId
+        tenure
+        tenureNumber
+        interestRate
+        ceoAuthority
+        boardAuthority
+        depositFrequencyWeekly
+        depositFrequencyMonthly
+        depositFrequencyDay
+        depositFrequencyFrequencyDay
+        depositFrequencyDayOfWeek
+        depositFrequencyYearlyMonth
+        depositFrequencyYearlyDay
+        atmFacility
+        chequeIssue
+        agentId
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpenEditDataQuery = <
+  TData = GetAccountOpenEditDataQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenEditDataQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenEditDataQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenEditDataQuery, TError, TData>(
+    ['getAccountOpenEditData', variables],
+    useAxios<GetAccountOpenEditDataQuery, GetAccountOpenEditDataQueryVariables>(
+      GetAccountOpenEditDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountTableListDocument = `
+    query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
+  account {
+    list(paginate: $paginate, filter: $filter) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          objState
+          createdAt
+          modifiedAt
+          member {
+            id
+            name
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            contact
+            dateJoined
+          }
+          product {
+            id
+            productCode
+            productName
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountTableListQuery = <
+  TData = GetAccountTableListQuery,
+  TError = unknown
+>(
+  variables?: GetAccountTableListQueryVariables,
+  options?: UseQueryOptions<GetAccountTableListQuery, TError, TData>
+) =>
+  useQuery<GetAccountTableListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountTableList']
+      : ['getAccountTableList', variables],
+    useAxios<GetAccountTableListQuery, GetAccountTableListQueryVariables>(
+      GetAccountTableListDocument
+    ).bind(null, variables),
     options
   );
 export const AllAdministrationDocument = `
@@ -14853,11 +15052,11 @@ export const useGetCoopUnionKymOptionsQuery = <
     options
   );
 export const GetMemberListDocument = `
-    query getMemberList($after: Cursor, $first: Int, $column: String!, $arrange: Arrange!, $objState: ObjState) {
+    query getMemberList($after: Cursor, $first: Int, $before: Cursor, $last: Int, $column: String!, $arrange: Arrange!, $objState: ObjState, $query: String) {
   members {
     list(
-      pagination: {after: $after, first: $first, order: {column: $column, arrange: $arrange}}
-      filter: {objState: $objState}
+      pagination: {after: $after, first: $first, before: $before, last: $last, order: {column: $column, arrange: $arrange}}
+      filter: {objState: $objState, query: $query}
     ) {
       totalCount
       edges {
@@ -15405,7 +15604,6 @@ export const GetBranchListDocument = `
                 dateJoined
                 share {
                   summary {
-                    id
                     member {
                       code
                       type
@@ -16255,16 +16453,19 @@ export const GetShareBalanceListDocument = `
     balance {
       edges {
         node {
-          balance
-          count
           member {
+            id
             name
           }
+          count
+          amount
         }
       }
       pageInfo {
-        endCursor
+        hasNextPage
+        hasPreviousPage
         startCursor
+        endCursor
       }
     }
   }
@@ -16295,6 +16496,7 @@ export const GetShareRegisterListDocument = `
           transactionDate
           transactionDirection
           member {
+            id
             name
           }
           balance
@@ -16326,25 +16528,41 @@ export const useGetShareRegisterListQuery = <
     options
   );
 export const GetShareHistoryDocument = `
-    query getShareHistory($memberId: String!) {
+    query getShareHistory($memberId: ID!) {
   share {
-    register(
-      paginate: {first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA"}
-      filter: {memberId: $memberId}
-    ) {
-      edges {
-        node {
-          member {
-            id
-          }
-          transactionDate
-          transactionDirection
-          startNumber
-          endNumber
-          credit
-          debit
-          balance
+    history(memberId: $memberId) {
+      history {
+        id
+        member {
+          id
+          name
         }
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        balance
+        shareAmount
+        extraFee {
+          name
+          value
+        }
+        totalAmount
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
+      }
+      balance {
+        member {
+          id
+          name
+        }
+        count
+        amount
       }
     }
   }

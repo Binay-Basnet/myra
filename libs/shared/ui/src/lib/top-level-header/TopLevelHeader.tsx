@@ -4,12 +4,12 @@ import { BiBell } from 'react-icons/bi';
 import { BsArrowRight } from 'react-icons/bs';
 import { CgMenuGridO } from 'react-icons/cg';
 import { RiHistoryFill } from 'react-icons/ri';
-import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Image, Text } from '@chakra-ui/react';
 import { format } from 'date-fns';
 
+import { useAppDispatch } from '@coop/cbs/data-access';
 import {
   Avatar,
   Box,
@@ -78,7 +78,7 @@ export function TopLevelHeader() {
   const { t } = useTranslation();
   const router = useRouter();
   const [numLines, setNumLines] = useState([1, 2]);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const helpOptions = [
     {
@@ -153,18 +153,21 @@ export function TopLevelHeader() {
         display={'flex'}
         alignItems={'asdcenter'}
         justifyContent={'flex-start'}
-        px={'s16'}
       >
-        <Box
-          h="100%"
-          w="300px"
-          display={'flex'}
-          justifyContent={'flex-start'}
-          alignItems={'center'}
-          flexDirection={'row'}
-        >
-          <Image boxSize={'32px'} src={'/logo.svg'} alt="logo" />
-          <Link href="/">
+        <Link href="/">
+          <Box
+            px={'s16'}
+            h="100%"
+            w="300px"
+            display={'flex'}
+            justifyContent={'flex-start'}
+            alignItems={'center'}
+            flexDirection={'row'}
+            cursor={'pointer'}
+            _hover={{ backgroundColor: 'secondary.900' }}
+          >
+            <Image boxSize={'32px'} src={'/neosystest.png'} alt="logo" />
+
             <Box
               maxH="100%"
               pl="s8"
@@ -172,23 +175,29 @@ export function TopLevelHeader() {
               flexDirection={'column'}
               justifyContent={'center'}
               alignItems={'flex-start'}
-              cursor={'pointer'}
+              gap="s4"
             >
-              <Text fontSize="r1" fontWeight="bold" color={'white'}>
-                नमुना बचत तथ ऋण सहकारी{' '}
+              <Text
+                fontSize="s3"
+                fontWeight="bold"
+                color={'white'}
+                noOfLines={1}
+                p={0}
+                lineHeight="100%"
+              >
+                {t['sahakariName']}
               </Text>
-              <Text fontSize="r1" color={'white'}>
-                ललितपुर
+              <Text fontSize="s3" color={'white'} p={0} lineHeight="100%">
+                {t['sahakariLocation']}
               </Text>
             </Box>
-          </Link>
-        </Box>
+          </Box>
+        </Link>
 
         <Box
           h="100%"
           flex={1}
-          pl="r1"
-          pr="r1"
+          px="s16"
           display={'flex'}
           justifyContent={'space-between'}
           alignItems="center"

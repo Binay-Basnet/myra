@@ -15,13 +15,13 @@ import { en, useTranslation } from '@coop/shared/utils';
 export interface TabMenuProps {}
 
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
-  '/members': 0,
-  '/share': 1,
-  '/accounts': 2,
-  '/transactions': 3,
-  '/loan': 4,
-  '/reports': 5,
-  '/utilities': 6,
+  members: 0,
+  share: 1,
+  accounts: 2,
+  transactions: 3,
+  loan: 4,
+  reports: 5,
+  utilities: 6,
 };
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
@@ -44,7 +44,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'transactions',
     icon: IoIosList,
-    link: '/transactions',
+    link: '/transactions/deposit/list',
   },
   {
     title: 'loan',
@@ -54,7 +54,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'reports',
     icon: BsFileText,
-    link: '/reports',
+    link: '/reports/cbs/share-report',
   },
   {
     title: 'utilities',
@@ -70,8 +70,8 @@ export function TabMenu() {
 
   const currentIndex =
     NAVBAR_TAB_OBJECT[
-      Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
-        router?.pathname.includes(string)
+      Object.keys(NAVBAR_TAB_OBJECT).find(
+        (string) => router.asPath.split('/')[1] === string
       ) ?? '/dashboard'
     ];
 
@@ -88,7 +88,9 @@ export function TabMenu() {
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
         <TabList border="none" height="100%" display="flex" gap="s8">
           {demotabs.map(({ title, icon, link }, index) => {
-            const isActive = router?.asPath.includes(title.toLowerCase());
+            const isActive = router.asPath
+              .split('/')[1]
+              .includes(title.toLowerCase());
 
             return (
               <Link href={link} key={index}>

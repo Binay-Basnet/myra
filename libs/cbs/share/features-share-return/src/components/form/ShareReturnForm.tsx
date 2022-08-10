@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
+import { FormProvider, useForm } from 'react-hook-form';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { omit } from 'lodash';
+import { debounce, omit } from 'lodash';
 
 import {
-  ObjState,
+  Arrange,
   Payment_Mode,
-  ShareReturnInput,
   useAddShareReturnMutation,
   useGetMemberIndividualDataQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
-import { Form, ShareReturnHistoryTable } from '@coop/myra/components';
+import { ShareReturnHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
   FormCheckbox,
@@ -28,7 +26,6 @@ import {
 import {
   Avatar,
   Box,
-  Button,
   Container,
   DEFAULT_PAGE_SIZE,
   FormFooter,
@@ -75,6 +72,8 @@ const ShareReturnForm = () => {
   const adminFees = watch('adminFee');
   const paymentModes = watch('paymentMode');
   const [totalAmount, setTotalAmount] = useState(0);
+  const [IDMember, setIDMember] = useState('');
+  const [trigger, setTrigger] = useState(false);
 
   const { data } = useGetMemberIndividualDataQuery({ id: memberId });
 
@@ -82,9 +81,8 @@ const ShareReturnForm = () => {
 
   const onSubmit = () => {
     const values = getValues();
-
     const updatedValues = {
-      ...omit(values, ['printingFee', 'adminFee']),
+      ...omit(values, ['printingFee', 'adminFee', 'selectAllShares']),
       extraFee: [
         {
           name: 'adminFee',
@@ -95,61 +93,30 @@ const ShareReturnForm = () => {
           value: printingFees,
         },
       ],
-      totalAmount: totalAmount,
-      remainingShare: 20,
-      remainingShareValue: 3000,
-      withdrawAmount: noOfShares * 100,
+      totalAmount: totalAmount.toString(),
+      noOfReturnedShares: Number(values['noOfReturnedShares']),
+      memberId: '123456789',
     };
 
     mutate(
-      { id: '123', data: updatedValues },
+      { data: updatedValues },
       {
         onSuccess: () => router.push(`/share/balance`),
       }
     );
   };
 
-  // useEffect(() => {
-  //   const subscription = watch(
-  //     debounce(() => {
-  //       if (memberId) {
-
-  //       }
-  //     }, 800)
-  //   );
-
-  //   return () => subscription.unsubscribe();
-  // }, [watch, router.isReady]);
-
-  //    const { data: memberList } = useGetMemberListQuery(
-  //      {
-  //        objState: ObjState.Draft,
-  //        pagination: {
-  //          first: Number(DEFAULT_PAGE_SIZE),
-  //          after: '',
-  //        },
-  //        filter: {
-  //          query: memberId,
-  //        },
-  //      },
-  //      {
-  //        staleTime: 0,
-  //      }
-  //    );
-
   const { data: memberList } = useGetMemberListQuery(
     {
-      objState: ObjState.Draft,
-      pagination: {
-        first: Number(DEFAULT_PAGE_SIZE),
-        after: '',
-      },
-      //   filter: {
-      //     query: memberId,
-      //   },
+      first: DEFAULT_PAGE_SIZE,
+      after: '',
+      column: 'ID',
+      arrange: Arrange.Desc,
+      query: IDMember,
     },
     {
       staleTime: 0,
+      enabled: trigger,
     }
   );
 
@@ -172,7 +139,7 @@ const ShareReturnForm = () => {
 
   return (
     <>
-      <Form<ShareReturnInput> methods={methods}>
+      <FormProvider {...methods}>
         <form>
           <Box
             position="fixed"
@@ -201,6 +168,10 @@ const ShareReturnForm = () => {
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
                       placeholder={t['sharePurchaseEnterMemberID']}
+                      onInputChange={debounce((id) => {
+                        setIDMember(id);
+                        setTrigger(true);
+                      }, 800)}
                       options={memberOptions}
                     />
                   </Box>
@@ -216,14 +187,12 @@ const ShareReturnForm = () => {
                       flexDirection="column"
                       gap="s16"
                     >
-                      <Box p={2} bg="background.500">
+                      <Box bg="background.500">
                         <Grid
                           templateRows="repeat(1,1fr)"
                           templateColumns="repeat(5,1fr)"
                           gap={2}
-                          mt="s20"
-                          mb="s20"
-                          ml="s16"
+                          p="s16"
                         >
                           <GridItem
                             display="flex"
@@ -324,8 +293,8 @@ const ShareReturnForm = () => {
                                 fontWeight="Regular"
                               >
                                 {memberData?.address?.district?.local},
-                                {memberData?.address?.locality?.local} -
-                                {memberData?.address?.wardNo}
+                                {/* {memberData?.address?.locality?.local} -
+                                {memberData?.address?.wardNo} */}
                               </TextFields>
                             </Box>
                           </GridItem>
@@ -478,12 +447,18 @@ const ShareReturnForm = () => {
                             {t['shareReturnAdministrationFees']}
                           </Text>
                           <Box width="300px">
-                            <FormNumberInput
+                            <FormInput
+                              name="adminFee"
+                              type="number"
+                              textAlign={'right'}
+                              placeholder="0.00"
+                            />
+                            {/* <FormNumberInput
                               name="adminFee"
                               label=""
                               textAlign="right"
                               bg="gray.0"
-                            />
+                            /> */}
                           </Box>
                         </GridItem>
 
@@ -501,11 +476,18 @@ const ShareReturnForm = () => {
                             {t['shareReturnPrintingFees']}
                           </Text>
                           <Box width="300px">
-                            <FormNumberInput
+                            {/* <FormNumberInput
                               name="printingFee"
                               label=""
                               bg="gray.0"
                               textAlign="right"
+                            /> */}
+
+                            <FormInput
+                              name="printingFee"
+                              type="number"
+                              textAlign={'right'}
+                              placeholder="0.00"
                             />
                           </Box>
                         </GridItem>
@@ -662,34 +644,22 @@ const ShareReturnForm = () => {
             </Box>
           </Container>
         </form>
-      </Form>
+      </FormProvider>
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.lg" height="fit-content" p="0">
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
+                  <Text
+                    color="neutralColorLight.Gray-60"
+                    fontWeight="Regular"
+                    as="i"
+                    fontSize="r1"
+                  >
+                    Press Done to save form
                   </Text>
                 </Box>
-              }
-              draftButton={
-                <Button type="submit" variant="ghost">
-                  <Icon as={BiSave} color="primary.500" />
-                  <Text
-                    alignSelf="center"
-                    color="primary.500"
-                    fontWeight="Medium"
-                    fontSize="s2"
-                    ml="5px"
-                  >
-                    {t['saveDraft']}
-                  </Text>
-                </Button>
               }
               mainButtonLabel={t['done']}
               mainButtonHandler={onSubmit}

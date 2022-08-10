@@ -19,12 +19,14 @@ export const Product = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const products = watch('productId');
-  const { data, isFetching } = useGetProductListQuery();
+  const { data, isFetching } = useGetProductListQuery({
+    memberId: '123456789',
+  });
 
   type optionType = { label: string; value: string };
 
   const OptionProductType =
-    data?.settings?.general?.depositProduct?.getProductList?.data?.reduce(
+    data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
       (prevVal, curVal) => {
         return [...prevVal, { label: curVal?.productName, value: curVal?.id }];
       },

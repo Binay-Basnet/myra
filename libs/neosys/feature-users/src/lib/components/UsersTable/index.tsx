@@ -2,7 +2,11 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Avatar, Flex } from '@chakra-ui/react';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import {
+  Arrange,
+  ObjState,
+  useGetMemberListQuery,
+} from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import {
   Column,
@@ -10,26 +14,24 @@ import {
   Table,
   TableListPageHeader,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
 
 export const UsersTable = () => {
-  const { t } = useTranslation();
   const router = useRouter();
   const { data, isFetching } = useGetMemberListQuery(
     router.query['before']
       ? {
           objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          pagination: {
-            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            before: router.query['before'] as string,
-          },
+          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          after: router.query['before'] as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
         }
       : {
           objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          pagination: {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
-          },
+          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+          after: (router.query['after'] ?? '') as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
         },
     {
       staleTime: 0,
@@ -55,7 +57,7 @@ export const UsersTable = () => {
         disableSortBy: false,
         disableFilters: false,
 
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return (
             <Flex alignItems="center" gap="2">
               <Avatar

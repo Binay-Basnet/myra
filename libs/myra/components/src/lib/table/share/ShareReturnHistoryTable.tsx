@@ -14,18 +14,18 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
   const router = useRouter();
   const { t } = useTranslation();
   const { data, isFetching } = useGetShareHistoryQuery({ memberId: id });
-  const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.share?.history?.history ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: t['sn'],
-        accessorFn: (row) => row?.node?.id,
+        accessorFn: (row) => row?.member?.id,
       },
 
       {
         header: t['shareReturnTableDate'],
-        accessorFn: (row) => row?.node?.transactionDate,
+        accessorFn: (row) => row?.transactionDate,
         cell: (props) => {
           return (
             <span>{format(new Date(props.getValue()), 'yyyy-mm-dd')}</span>
@@ -35,17 +35,17 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
 
       {
         header: t['shareReturnNoOfShares'],
-        accessorFn: (row) => row?.node?.endNumber,
+        accessorFn: (row) => row?.endNumber,
       },
 
       {
         header: t['shareReturnTableShareNumber'],
-        accessorFn: (row) => row?.node?.startNumber,
+        accessorFn: (row) => row?.startNumber,
 
         cell: (props) => {
           return (
             <span>
-              {props.getValue()} to {props?.row?.original?.node?.endNumber}
+              {props.getValue()} to {props?.row?.original?.endNumber}
             </span>
           );
         },
@@ -54,7 +54,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
       {
         id: 'share-dr',
         header: t['shareReturnTableShareDr'],
-        accessorFn: (row) => row?.node?.debit,
+        accessorFn: (row) => row?.debit,
         isNumeric: true,
 
         cell: (props) => {
@@ -69,7 +69,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
         id: 'share-cr',
         header: t['shareReturnTableShareCr'],
         isNumeric: true,
-        accessorFn: (row) => row?.node?.credit,
+        accessorFn: (row) => row?.credit,
         cell: (props) => {
           return (
             <span>
@@ -81,7 +81,7 @@ export const ShareReturnHistoryTable = ({ id }: memberIdProp) => {
       },
       {
         header: t['shareReturnTableBalance'],
-        accessorFn: (row) => row?.node?.balance,
+        accessorFn: (row) => row?.balance,
         isNumeric: true,
         cell: (props) => {
           return <span>{amountConverter(props.getValue())}</span>;

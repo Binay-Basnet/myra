@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Frequency } from '@coop/cbs/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
@@ -23,15 +23,15 @@ export const PostingFrequency = () => {
 
   const postingFrequency = [
     {
-      label: t['daily'],
-      value: Frequency.Daily,
-    },
-    {
-      label: t['weekly'],
-      value: Frequency.Weekly,
-    },
-    {
       label: t['monthly'],
+      value: Frequency.Monthly,
+    },
+    {
+      label: t['quaterly'],
+      value: Frequency.Monthly,
+    },
+    {
+      label: t['halfYearly'],
       value: Frequency.Monthly,
     },
     {

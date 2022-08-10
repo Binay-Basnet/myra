@@ -185,7 +185,7 @@ export function TableSearch({
         {/* TODO (REPLACE THIS IF) */}
         <SmallPagination
           limit={pageSize}
-          total={pagination?.total ?? 1000}
+          total={pagination?.total ?? 'Many'}
           startCursor={pagination?.startCursor ?? '1310910'}
           endCursor={pagination?.endCursor ?? '139199103'}
         />

@@ -1,0 +1,26 @@
+mutation setLoanGeneralSettings(
+  $emi: Boolean
+  $epi: Boolean
+  $flat: Boolean
+  $collateralList: [CollateralListInputData]
+) {
+  settings {
+    general {
+      loan {
+        general(
+          data: {
+            emi: $emi
+            epi: $epi
+            flat: $flat
+            collateralList: $collateralList
+          }
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

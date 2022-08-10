@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/transactions/feature-loan-payment",
+  "sourceRoot": "libs/cbs/transactions/feature-loan-payment/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/transactions/feature-loan-payment/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/transactions/feature-loan-payment"],
+      "options": {
+        "jestConfig": "libs/cbs/transactions/feature-loan-payment/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

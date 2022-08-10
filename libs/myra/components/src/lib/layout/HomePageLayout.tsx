@@ -96,15 +96,16 @@ export function HomePageLayout(props: HomePageLayoutProps) {
           height="calc(100% - 60px)"
           p="s16"
           gap="s32"
-          mt="80px"
+          pt="90px"
           overflowY="auto"
         >
           <Box display="flex" flexDir="column" gap="s16">
             <TextFields
               px="s16"
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-              fontSize="r2"
+              fontSize={'s3'}
+              color="gray.600"
+              fontWeight={'600'}
+              textTransform={'uppercase'}
             >
               {t['yourMyraApplication']}
             </TextFields>
@@ -153,9 +154,10 @@ export function HomePageLayout(props: HomePageLayoutProps) {
           <Box display="flex" flexDir="column" gap="s16">
             <TextFields
               px="s16"
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-              fontSize="r2"
+              fontSize={'s3'}
+              color="gray.600"
+              fontWeight={'600'}
+              textTransform={'uppercase'}
             >
               {t['moreFromMyra']}
             </TextFields>
@@ -172,8 +174,9 @@ export function HomePageLayout(props: HomePageLayoutProps) {
                   gap="s16"
                   alignItems="center"
                   cursor="pointer"
-                  _hover={{ bg: 'neutralColorLight.Gray-0' }}
+                  _hover={{ bg: 'neutralColorLight.Gray-0', filter: 'none' }}
                   onClick={() => router.push(item.link)}
+                  filter="grayscale(80%)"
                 >
                   <Box
                     display="flex"
@@ -208,6 +211,7 @@ export function HomePageLayout(props: HomePageLayoutProps) {
             p="s32"
             overflowX="hidden"
             position="relative"
+            pt="90px"
             left="300px"
           >
             <Box minHeight="100vh">{children}</Box>

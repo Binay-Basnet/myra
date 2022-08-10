@@ -1,18 +1,23 @@
 query getMemberList(
   $after: Cursor
   $first: Int
+  $before: Cursor
+  $last: Int
   $column: String!
   $arrange: Arrange!
   $objState: ObjState
+  $query: String
 ) {
   members {
     list(
       pagination: {
         after: $after
         first: $first
+        before: $before
+        last: $last
         order: { column: $column, arrange: $arrange }
       }
-      filter: { objState: $objState }
+      filter: { objState: $objState, query: $query }
     ) {
       totalCount
       edges {

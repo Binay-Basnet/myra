@@ -56,6 +56,9 @@ export type Column<T extends RecordWithId & Record<string, string | number>> = {
   searchOptions?: { label: string; value: string }[];
   isNumeric?: boolean;
 
+  // // TODO! Create a cell component
+  // cell?: (row: T) => React.ReactNode;
+
   cellWidth?: 'auto' | 'lg' | 'md' | 'sm';
   colSpan?: number;
 };
@@ -465,6 +468,17 @@ const EditableTableRow = <
           .filter((column) => !column.hidden)
           .map((column, index) => {
             const accessorFnValue = column?.accessorFn?.(data);
+
+            if (accessorFnValue) {
+              dispatch({
+                type: EditableTableActionKind.EDIT,
+                payload: {
+                  data: data,
+                  newValue: accessorFnValue as string,
+                  column: column,
+                },
+              });
+            }
 
             return (
               <Fragment key={index}>

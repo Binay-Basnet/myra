@@ -54,25 +54,17 @@ export function MemberListPage() {
     router.query['before']
       ? {
           objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          pagination: {
-            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            before: router.query['before'] as string,
-            order: {
-              column: 'ID',
-              arrange: Arrange.Desc,
-            },
-          },
+          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          after: router.query['before'] as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
         }
       : {
           objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          pagination: {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
-            order: {
-              column: 'ID',
-              arrange: Arrange.Desc,
-            },
-          },
+          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
+          after: (router.query['after'] ?? '') as string,
+          column: 'ID',
+          arrange: Arrange.Desc,
         },
     {
       staleTime: 0,

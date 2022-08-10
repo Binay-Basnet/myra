@@ -241,6 +241,12 @@ export function SettingsLoanProductForm() {
       serviceCharge: serviceChargeList,
       minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
       maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
+      maxTenureUnitNumber: values?.maxTenureUnitNumber
+        ? values?.maxTenureUnitNumber
+        : null,
+      minTenureUnitNumber: values?.minTenureUnitNumber
+        ? values?.minTenureUnitNumber
+        : null,
       installmentType: values?.installmentType ? values?.installmentType : null,
       modeOfPayment: values?.modeOfPayment ? values?.modeOfPayment : null,
       minGraceDurationUnit: values?.minGraceDurationUnit
@@ -412,11 +418,13 @@ export function SettingsLoanProductForm() {
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
+                  <Text
+                    color="neutralColorLight.Gray-60"
+                    fontWeight="Regular"
+                    as="i"
+                    fontSize="r1"
+                  >
+                    Press Complete to save form
                   </Text>
                 </Box>
               }

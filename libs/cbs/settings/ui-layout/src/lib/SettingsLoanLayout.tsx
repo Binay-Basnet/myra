@@ -1,7 +1,8 @@
 import React from 'react';
 
+import { useSetLoanGeneralSettingsMutation } from '@coop/cbs/data-access';
 import { Box } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { useAppSelector, useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
@@ -27,12 +28,18 @@ interface ISettingsLoanLayout {
 
 export const SettingsLoanLayout = ({ children }: ISettingsLoanLayout) => {
   const { t } = useTranslation();
+  const loanSettings = useAppSelector((state) => state.loanSettings);
+  const { mutateAsync } = useSetLoanGeneralSettingsMutation();
+
+  const saveButtonHandler = () => {
+    mutateAsync({ emi: loanSettings?.general?.emi });
+  };
 
   return (
     <>
       <SettingsPageHeader
         buttonLabel={t['saveChanges']}
-        buttonHandler={() => alert('test')}
+        buttonHandler={saveButtonHandler}
         heading={t['settingsLoan']}
       />
       <Box

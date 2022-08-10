@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
+import { debounce } from 'lodash';
 import omit from 'lodash/omit';
 
 import {
-  ObjState,
+  Arrange,
   Payment_Mode,
   useAddSharePurchaseMutation,
   useGetMemberIndividualDataQuery,
@@ -26,7 +26,6 @@ import {
 import {
   Avatar,
   Box,
-  Button,
   Container,
   DEFAULT_PAGE_SIZE,
   FormFooter,
@@ -71,21 +70,26 @@ const SharePurchaseForm = () => {
   const paymentModes = watch('paymentMode');
 
   const [totalAmount, setTotalAmount] = useState(0);
+  const [IDMember, setIDMember] = useState('');
+  const [trigger, setTrigger] = useState(false);
 
-  const { data } = useGetMemberIndividualDataQuery({ id: memberId });
+  const { data } = useGetMemberIndividualDataQuery({
+    id: memberId,
+  });
 
   const memberData = data?.members?.details?.data;
 
   const { data: memberList } = useGetMemberListQuery(
     {
-      objState: ObjState.Draft,
-      pagination: {
-        first: Number(DEFAULT_PAGE_SIZE),
-        after: '',
-      },
+      first: DEFAULT_PAGE_SIZE,
+      after: '',
+      column: 'ID',
+      arrange: Arrange.Desc,
+      query: IDMember,
     },
     {
       staleTime: 0,
+      enabled: trigger,
     }
   );
 
@@ -95,7 +99,7 @@ const SharePurchaseForm = () => {
     memberListData &&
     memberListData.map((member) => {
       return {
-        label: member?.node?.name?.local,
+        label: `${member?.node?.id}-${member?.node?.name?.local}`,
         value: member?.node?.id,
       };
     });
@@ -111,7 +115,6 @@ const SharePurchaseForm = () => {
 
     const updatedValues = {
       ...omit(values, ['printingFee', 'adminFee']),
-      shareAmount: noOfShares * 100,
       extraFee: [
         {
           name: 'adminFee',
@@ -122,11 +125,13 @@ const SharePurchaseForm = () => {
           value: printingFee,
         },
       ],
-      totalAmount: totalAmount,
+      totalAmount: totalAmount.toString(),
+      shareCount: Number(values['shareCount']),
+      memberId: '123456789',
     };
 
     mutate(
-      { id: '123', data: updatedValues },
+      { data: updatedValues },
       {
         onSuccess: () => router.push(`/share/balance`),
       }
@@ -164,6 +169,10 @@ const SharePurchaseForm = () => {
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
                       placeholder={t['sharePurchaseEnterMemberID']}
+                      onInputChange={debounce((id) => {
+                        setIDMember(id);
+                        setTrigger(true);
+                      }, 800)}
                       options={memberOptions}
                     />
                   </Box>
@@ -179,14 +188,12 @@ const SharePurchaseForm = () => {
                       flexDirection="column"
                       gap="s16"
                     >
-                      <Box p={2} bg="background.500">
+                      <Box bg="background.500">
                         <Grid
                           templateRows="repeat(1,1fr)"
                           templateColumns="repeat(5,1fr)"
                           gap={2}
-                          mt="s20"
-                          mb="s20"
-                          ml="s16"
+                          p="s16"
                         >
                           <GridItem
                             display="flex"
@@ -287,8 +294,8 @@ const SharePurchaseForm = () => {
                                 fontWeight="Regular"
                               >
                                 {memberData?.address?.district?.local},
-                                {memberData?.address?.locality?.local} -
-                                {memberData?.address?.wardNo}
+                                {/* {memberData?.address?.locality?.local} -
+                                {memberData?.address?.wardNo} */}
                               </TextFields>
                             </Box>
                           </GridItem>
@@ -393,22 +400,19 @@ const SharePurchaseForm = () => {
                             {t['sharePurchaseAdministrationFees']}
                           </Text>
                           <Box width="300px">
-                            {/* <FormInput
+                            <FormInput
                               name="adminFee"
-                              id="administrationFees"
-                              label=""
-                              placeholder="34000.00"
-                              bg="gray.0"
-                              textAlign="right"
-                            /> */}
-
-                            <FormNumberInput
-                              name="adminFee"
-                              id="administrationFees"
-                              label=""
-                              placeholder="34000.00"
-                              bg="gray.0"
+                              type="number"
+                              textAlign={'right'}
+                              placeholder="0.00"
                             />
+
+                            {/* <FormNumberInput
+                              name="adminFee"
+                              id="administrationFees"
+                              placeholder="34000.00"
+                              bg="gray.0"
+                            /> */}
                           </Box>
                         </GridItem>
 
@@ -425,22 +429,20 @@ const SharePurchaseForm = () => {
                             {t['sharePurchasePrintingFees']}
                           </Text>
                           <Box width="300px">
-                            {/* <FormInput
+                            <FormInput
                               name="printingFee"
-                              id="printingFees"
-                              label=""
-                              placeholder="54.00"
-                              bg="gray.0"
-                              textAlign="right"
-                            /> */}
-
-                            <FormNumberInput
-                              name="printingFee"
-                              id="printingFees"
-                              label=""
-                              placeholder="54.00"
-                              bg="gray.0"
+                              type="number"
+                              textAlign={'right'}
+                              placeholder="0.00"
                             />
+
+                            {/* <FormNumberInput
+                              name="printingFee"
+                              id="printingFees"
+                              label=""
+                              placeholder="54.00"
+                              bg="gray.0"
+                            /> */}
                           </Box>
                         </GridItem>
 
@@ -551,16 +553,16 @@ const SharePurchaseForm = () => {
                         placeholder={t['sharePurchaseSelectBank']}
                         options={[
                           {
-                            label: 'Option 1',
-                            value: 'option-1',
+                            label: 'Jyoti Bikash Bank Ltd',
+                            value: 'jbbl',
                           },
                           {
-                            label: 'Option 2',
-                            value: 'option-2',
+                            label: 'Nabil Bank',
+                            value: 'nabilBank',
                           },
                           {
-                            label: 'Option 3',
-                            value: 'option-3',
+                            label: 'NIC Bank',
+                            value: 'nic',
                           },
                         ]}
                       />
@@ -599,27 +601,15 @@ const SharePurchaseForm = () => {
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
+                  <Text
+                    color="neutralColorLight.Gray-60"
+                    fontWeight="Regular"
+                    as="i"
+                    fontSize="r1"
+                  >
+                    Press Done to save form
                   </Text>
                 </Box>
-              }
-              draftButton={
-                <Button type="submit" variant="ghost">
-                  <Icon as={BiSave} color="primary.500" />
-                  <Text
-                    alignSelf="center"
-                    color="primary.500"
-                    fontWeight="Medium"
-                    fontSize="s2"
-                    ml="5px"
-                  >
-                    {t['saveDraft']}
-                  </Text>
-                </Button>
               }
               mainButtonLabel={t['done']}
               mainButtonHandler={onSubmit}

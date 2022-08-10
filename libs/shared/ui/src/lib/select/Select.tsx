@@ -44,11 +44,9 @@ export function Select({
 
   return (
     <Flex direction="column" gap="s4">
-      {label && (
-        <TextFields variant="formLabel" color="gray.700">
-          {label}
-        </TextFields>
-      )}
+      <TextFields variant="formLabel" color="gray.700">
+        {label}
+      </TextFields>
       <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
         key={
           !isMulti

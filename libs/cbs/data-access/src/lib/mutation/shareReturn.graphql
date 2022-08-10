@@ -1,6 +1,6 @@
-mutation addShareReturn($id: ID!, $data: ShareReturnInput!) {
+mutation addShareReturn($data: ShareReturnInput!) {
   share {
-    return(id: $id, data: $data) {
+    return(data: $data) {
       recordId
     }
   }

@@ -13,4 +13,6 @@ const Template: Story<FormHeaderProps> = (args) => <FormHeader {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
   title: 'Hello World',
+  buttonLabel: 'Add Product',
+  buttonHandler: () => null,
 };

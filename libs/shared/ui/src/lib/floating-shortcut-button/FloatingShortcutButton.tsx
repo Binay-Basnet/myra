@@ -128,8 +128,10 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             </Text>
           </Box>
           <UnorderedList>
-            {whatsNewData.features.data.map((item) => (
-              <ListItem fontSize="s3">{item}</ListItem>
+            {whatsNewData.features.data.map((item, index) => (
+              <ListItem key={index} fontSize="s3">
+                {item}
+              </ListItem>
             ))}
           </UnorderedList>
         </Box>
@@ -142,8 +144,10 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
           </Box>
 
           <UnorderedList>
-            {whatsNewData.bugsSquashed.data.map((item) => (
-              <ListItem fontSize="s3">{item}</ListItem>
+            {whatsNewData.bugsSquashed.data.map((item, index) => (
+              <ListItem key={index} fontSize="s3">
+                {item}
+              </ListItem>
             ))}
           </UnorderedList>
         </Box>
@@ -155,8 +159,10 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             </Text>
           </Box>
           <UnorderedList>
-            {whatsNewData?.knownBugs?.data.map((item) => (
-              <ListItem fontSize="s3">{item}</ListItem>
+            {whatsNewData?.knownBugs?.data.map((item, index) => (
+              <ListItem key={index} fontSize="s3">
+                {item}
+              </ListItem>
             ))}
           </UnorderedList>
         </Box>

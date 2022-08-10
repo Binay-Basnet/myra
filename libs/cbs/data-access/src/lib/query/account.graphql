@@ -29,12 +29,16 @@ query getAccountMemberList($objState: ObjState, $pagination: Pagination) {
   }
 }
 
-query getProductList {
+query getProductList($memberId: ID!) {
   settings {
     general {
       depositProduct {
-        getProductList {
-          data {
+        getProductList(memberId: $memberId) {
+          allowed {
+            id
+            productName
+          }
+          notAllowed {
             id
             productName
           }
@@ -148,6 +152,92 @@ query getAccountOpenProductDetails($id: ID!) {
               penaltyAmount
               penaltyRate
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAccountOpenEditData($id: ID!) {
+  account {
+    formState(id: $id) {
+      data {
+        memberId
+        productId
+        tenure
+        tenureNumber
+        interestRate
+        ceoAuthority
+        boardAuthority
+        depositFrequencyWeekly
+        depositFrequencyMonthly
+        depositFrequencyDay
+        depositFrequencyFrequencyDay
+        depositFrequencyDayOfWeek
+        depositFrequencyYearlyMonth
+        depositFrequencyYearlyDay
+        atmFacility
+        chequeIssue
+        agentId
+      }
+    }
+  }
+}
+
+query getAccountTableList(
+  $paginate: Pagination
+  $filter: DepositLoanAccountSearchFilter
+) {
+  account {
+    list(paginate: $paginate, filter: $filter) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          objState
+          createdAt
+          # createdBy {
+          #   id
+          #   name
+          #   username
+          #   userType
+          # }
+          modifiedAt
+          # modifiedBy {
+          #   id
+          #   name
+          #   username
+          #   userType
+          # }
+          member {
+            id
+            name
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
+            contact
+            dateJoined
+          }
+          product {
+            id
+            productCode
+            productName
           }
         }
       }

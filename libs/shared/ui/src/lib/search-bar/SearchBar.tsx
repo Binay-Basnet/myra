@@ -12,7 +12,7 @@ import {
 /* eslint-disable-next-line */
 export interface SearchBarProps extends InputProps {}
 
-export function SearchBar(props: SearchBarProps) {
+export function SearchBar() {
   return (
     <InputGroup
       borderRadius={'6px'}
@@ -21,11 +21,13 @@ export function SearchBar(props: SearchBarProps) {
       borderColor="secondary.700"
       color="white"
       _hover={{ color: 'gray.700' }}
+      _active={{ backgroundColor: 'gray.0' }}
     >
       <InputLeftElement
         pointerEvents="none"
         children={<Icon as={IoSearch} fontSize="lg" />}
         _hover={{ color: 'gray.800' }}
+        _active={{ backgrundColor: 'gray.0' }}
       />
       <Input
         type="text"
@@ -34,6 +36,7 @@ export function SearchBar(props: SearchBarProps) {
         color={'white'}
         fontSize="r1"
         border="none"
+        _active={{ color: 'gray.800', backgroundColor: 'gray.0' }}
         bg={'secondary.900'}
         _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
       />

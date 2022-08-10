@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
 import {
+  Id_Type,
   NatureOfDepositProduct,
   useGetDepositProductSettingsListQuery,
   useGetNewIdMutation,
@@ -37,7 +38,6 @@ export function SettingsDepositProducts() {
       staleTime: 0,
     }
   );
-
   const rowData = useMemo(
     () => data?.settings?.general?.depositProduct?.list?.edges ?? [],
     [data]
@@ -129,7 +129,7 @@ export function SettingsDepositProducts() {
             leftIcon={<AddIcon h="11px" />}
             onClick={() =>
               newId
-                .mutateAsync({})
+                .mutateAsync({ idType: Id_Type.Depositproduct })
                 .then((res) =>
                   router.push(
                     `/settings/general/deposit-products/add/${res?.newId}`

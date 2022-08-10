@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/transactions/ui-layouts",
+  "sourceRoot": "libs/cbs/transactions/ui-layouts/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/transactions/ui-layouts/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/transactions/ui-layouts"],
+      "options": {
+        "jestConfig": "libs/cbs/transactions/ui-layouts/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

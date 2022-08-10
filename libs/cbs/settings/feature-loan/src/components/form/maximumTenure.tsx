@@ -23,19 +23,19 @@ export const MaximumTenure = () => {
 
   const unitOptions = [
     {
-      label: t['daily'],
+      label: t['day'],
       value: Frequency.Daily,
     },
     {
-      label: t['weekly'],
+      label: t['week'],
       value: Frequency.Weekly,
     },
     {
-      label: t['monthly'],
+      label: t['month'],
       value: Frequency.Monthly,
     },
     {
-      label: t['yearly'],
+      label: t['year'],
       value: Frequency.Yearly,
     },
   ];

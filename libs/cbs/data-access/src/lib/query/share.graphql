@@ -3,16 +3,19 @@ query getShareBalanceList {
     balance {
       edges {
         node {
-          balance
-          count
           member {
+            id
             name
           }
+          count
+          amount
         }
       }
       pageInfo {
-        endCursor
+        hasNextPage
+        hasPreviousPage
         startCursor
+        endCursor
       }
     }
   }
@@ -26,6 +29,7 @@ query getShareRegisterList {
           transactionDate
           transactionDirection
           member {
+            id
             name
           }
           balance
@@ -40,25 +44,41 @@ query getShareRegisterList {
   }
 }
 
-query getShareHistory($memberId: String!) {
+query getShareHistory($memberId: ID!) {
   share {
-    register(
-      paginate: { first: 10, after: "dWduT1hYQWN2VVBHcGtmQ2RVd29JcktnZA" }
-      filter: { memberId: $memberId }
-    ) {
-      edges {
-        node {
-          member {
-            id
-          }
-          transactionDate
-          transactionDirection
-          startNumber
-          endNumber
-          credit
-          debit
-          balance
+    history(memberId: $memberId) {
+      history {
+        id
+        member {
+          id
+          name
         }
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        balance
+        shareAmount
+        extraFee {
+          name
+          value
+        }
+        totalAmount
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
+      }
+      balance {
+        member {
+          id
+          name
+        }
+        count
+        amount
       }
     }
   }

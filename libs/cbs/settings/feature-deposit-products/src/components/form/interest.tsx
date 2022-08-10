@@ -1,8 +1,8 @@
 // import debounce from 'lodash/debounce';
 import { useFormContext } from 'react-hook-form';
 
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormEditableTable, FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -26,11 +26,6 @@ type SalesTable = {
   rate: number;
 };
 
-const type = [
-  { label: 'Lenovo Laptop', value: 'mi001' },
-  { label: 'Alienware Laptop', value: 'mi002' },
-];
-
 export const Interest = () => {
   const { watch } = useFormContext();
   const { t } = useTranslation();
@@ -48,7 +43,7 @@ export const Interest = () => {
           <FormInput
             name="interest.minRate"
             type="number"
-            label={t['depositProductMinimumAmount']}
+            label={t['depositProductMinimumRate']}
             textAlign={'right'}
             placeholder="0.00"
             rightElement={
@@ -60,7 +55,7 @@ export const Interest = () => {
           <FormInput
             name="interest.maxRate"
             type="number"
-            label={t['depositProductMaximumAmount']}
+            label={t['depositProductMaximumRate']}
             textAlign={'right'}
             placeholder="0.00"
             rightElement={
@@ -141,12 +136,37 @@ export const Interest = () => {
           <FormEditableTable<SalesTable>
             name="ladderRateData"
             debug={false}
+            defaultData={[
+              {
+                type: 'More Than',
+                amount: 0,
+                rate: 0,
+              },
+              {
+                type: 'More Than',
+                amount: 0,
+                rate: 0,
+              },
+              {
+                type: 'More Than',
+                amount: 0,
+                rate: 0,
+              },
+              {
+                type: 'More Than',
+                amount: 0,
+                rate: 0,
+              },
+              {
+                type: 'More Than',
+                amount: 0,
+                rate: 0,
+              },
+            ]}
             columns={[
               {
                 accessor: 'type',
                 header: t['depositProductInterestType'],
-                fieldType: 'select',
-                selectOptions: type,
               },
               {
                 accessor: 'amount',

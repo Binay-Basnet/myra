@@ -32,6 +32,7 @@ const ne: Record<string, string> = {
   weekly: 'Weekly',
   monthly: 'Monthly',
   yearly: 'Yearly',
+  quaterly: 'Quaterly',
   edit: 'Edit',
 
   // navbar
@@ -72,6 +73,8 @@ const ne: Record<string, string> = {
   complainceManagement: 'Complaince Management',
   businessProcessManagement: 'Business Process Management',
   exploreAllApplications: 'Explore All Applications',
+  sahakariName: 'नियोसिस बचत तथ ऋण सहकारी',
+  sahakariLocation: ' ललितपुर',
 
   // main dashboard
   quickLinks: 'QUICK LINKS',
@@ -3081,6 +3084,27 @@ const ne: Record<string, string> = {
   kymCoopUnionTotalCurrentMembers: 'Total Current Members',
 
   loanPaymentType: 'Payment Type',
+  loanProductTypeProductType: 'Product Type',
+  loanProductTypeProductSubtype: 'Product Subtype',
+  loanProductTypeNatureofProduct: 'Nature of Product',
+  loanProductTypeDescription: 'Description',
+
+  transactionsSidebarDeposit: 'Deposit',
+  transactionsSidebarWithdraw: 'Withdraw',
+  transactionsSidebarAccountTransfer: 'Account Transfer',
+  transactionsSidebarLoanPayment: 'Loan Payment',
+  transactionsSidebarAgentList: 'Agent List',
+  transactionsSidebarAgentTransaction: 'Agent Transaction',
+
+  depositProductMinimumRate: 'Minimum Rate',
+  // Report page
+  reportsHeading: 'Reports',
+  reportsCbsReports: 'CBS reports',
+  reportsSavedReports: 'Saved reports',
+  reportsSettings: 'Report Settings',
+  reportsTableView: 'Table View',
+  reportsListView: 'List View',
+  reportsCoreBankingSystemReports: 'Core Banking System Reports',
 };
 
 export default ne;

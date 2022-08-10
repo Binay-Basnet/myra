@@ -1,0 +1,23 @@
+{
+  "root": "libs/cbs/reports/ui-layouts",
+  "sourceRoot": "libs/cbs/reports/ui-layouts/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/cbs/reports/ui-layouts/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/reports/ui-layouts"],
+      "options": {
+        "jestConfig": "libs/cbs/reports/ui-layouts/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

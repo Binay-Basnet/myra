@@ -32,7 +32,6 @@ const en: Record<string, string> = {
   weekly: 'Weekly',
   monthly: 'Monthly',
   yearly: 'Yearly',
-  settings: 'Settings',
   edit: 'Edit',
   saveChanges: 'Save Changes',
 
@@ -74,10 +73,12 @@ const en: Record<string, string> = {
   complainceManagement: 'Complaince Management',
   businessProcessManagement: 'Business Process Management',
   exploreAllApplications: 'Explore All Applications',
+  sahakariName: 'Neosys Saving and Credit Cooperative',
+  sahakariLocation: 'Lalitpur',
 
   // main dashboard
   quickLinks: 'QUICK LINKS',
-  editLinks: 'EDIT LINKS',
+  editLinks: 'Edit Links',
   addNewMember: 'Add New Member',
   transactionHistory: 'Transaction History',
   transactionHistoryReport: 'Report',
@@ -2589,9 +2590,7 @@ const en: Record<string, string> = {
   depositProductDairy: 'Dairy',
   depositProductOthers: 'Others',
   depositProductDepositAmountLimit: 'Deposit Amount Limit',
-  depositProductMinimumAmount: 'Minimum Amount',
   depositProductEnterMinimumAmount: 'Enter Minimum Amount',
-  depositProductMaximumAmount: 'Maximum Amount',
   depositProductEnterMaximumAmount: 'Enter Maximum Amount',
   depositProductDepositFrequency: 'Deposit Frequency',
   depositProductSelectdepositfrequency:
@@ -2734,7 +2733,7 @@ const en: Record<string, string> = {
   loanProductUnit: 'Unit',
   loanProductNumber: 'Number',
   loanProductEnterNumber: 'Enter Number',
-  loanProductMaxinumTenure: 'Maxinum Tenure',
+  loanProductMaxinumTenure: 'Maximum Tenure',
   loanProductLoanAmountLimit: 'Loan Amount Limit',
   loanProductMinimumAmount: 'Minimum Amount',
   loanProductMaximumAmount: 'Maximum Amount',
@@ -3084,6 +3083,22 @@ const en: Record<string, string> = {
   loanProductTypeProductSubtype: 'Product Subtype',
   loanProductTypeNatureofProduct: 'Nature of Product',
   loanProductTypeDescription: 'Description',
+
+  transactionsSidebarDeposit: 'Deposit',
+  transactionsSidebarWithdraw: 'Withdraw',
+  transactionsSidebarAccountTransfer: 'Account Transfer',
+  transactionsSidebarLoanPayment: 'Loan Payment',
+  transactionsSidebarAgentList: 'Agent List',
+  transactionsSidebarAgentTransaction: 'Agent Transaction',
+  depositProductMinimumRate: 'Minimum Rate',
+  // Report page
+  reportsHeading: 'Reports',
+  reportsCbsReports: 'CBS reports',
+  reportsSavedReports: 'Saved reports',
+  reportsSettings: 'Report Settings',
+  reportsTableView: 'Table View',
+  reportsListView: 'List View',
+  reportsCoreBankingSystemReports: 'Core Banking System Reports',
 };
 
 export default en;
