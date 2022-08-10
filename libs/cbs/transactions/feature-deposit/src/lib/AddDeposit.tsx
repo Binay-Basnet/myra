@@ -1,18 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 import {
-  Arrange,
-  NatureOfDepositProduct,
-  useGetMemberListQuery,
-} from '@coop/cbs/data-access';
-import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
-import { FormInput, FormSelect } from '@coop/shared/form';
+  FormCustomSelect,
+  MemberSelect,
+} from '@coop/cbs/transactions/ui-components';
+import { FormInput } from '@coop/shared/form';
 import {
   Box,
   Button,
   Container,
-  DEFAULT_PAGE_SIZE,
   Divider,
   FormFooter,
   FormHeader,
@@ -67,9 +65,7 @@ export function AddDeposit() {
 
   const methods = useForm();
 
-  const { watch } = methods;
-
-  const memberId = watch('memberId');
+  const { watch, reset } = methods;
 
   // const { data } = useGetMemberIndividualDataQuery(
   //   {
@@ -82,35 +78,16 @@ export function AddDeposit() {
 
   // const memberData = data?.members?.details?.data;
 
-  const { data: memberList } = useGetMemberListQuery(
-    {
-      first: Number(DEFAULT_PAGE_SIZE),
-      after: '',
-      column: 'ID',
-      arrange: Arrange.Desc,
-    },
-    {
-      staleTime: 0,
-    }
-  );
+  const memberId = watch('memberId');
 
-  const memberListData = memberList?.members?.list?.edges;
-
-  const memberOptions =
-    memberListData &&
-    memberListData.map((member) => {
-      return {
-        label: `${member?.node?.id}-${member?.node?.name?.local}`,
-        value: member?.node?.id,
-      };
-    });
+  useEffect(() => {
+    reset({ memberId, accountId: '', voucherId: '', amount: '' });
+  }, [memberId]);
 
   const accountId = watch('accountId');
 
-  const selectedAccountType = useMemo(
-    () =>
-      memberAccountsList.find((account) => account.accountId === accountId)
-        ?.accountType,
+  const selectedAccount = useMemo(
+    () => memberAccountsList.find((account) => account.accountId === accountId),
     [accountId]
   );
 
@@ -124,6 +101,23 @@ export function AddDeposit() {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+  };
+
+  const amountToBeDeposited = watch('amount') ?? 0;
+
+  const totalDeposit = useMemo(
+    () => (amountToBeDeposited ? Number(amountToBeDeposited) + 5000 - 1000 : 0),
+    [amountToBeDeposited]
+  );
+
+  const handleSubmit = () => {
+    // const values = getValues();
+    // console.log({
+    //   values,
+    //   denominations: values?.['denomination']?.map(
+    //     ({ amount, ...denomination }) => denomination
+    //   ),
+    // });
   };
 
   return (
@@ -157,11 +151,10 @@ export function AddDeposit() {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <FormSelect
+                  <MemberSelect
                     name="memberId"
                     label="Member"
                     placeholder="Select Member"
-                    options={memberOptions}
                   />
 
                   {memberId && (
@@ -183,9 +176,9 @@ export function AddDeposit() {
                   )}
 
                   {accountId &&
-                    (selectedAccountType ===
+                    (selectedAccount?.accountType ===
                       accountTypes[NatureOfDepositProduct.RecurringSaving] ||
-                      selectedAccountType ===
+                      selectedAccount?.accountType ===
                         accountTypes[NatureOfDepositProduct.Mandatory]) && (
                       <>
                         <Grid
@@ -193,7 +186,7 @@ export function AddDeposit() {
                           gap="s24"
                           alignItems="flex-end"
                         >
-                          <FormInput name="voucherID" label="Voucher ID" />
+                          <FormInput name="voucherId" label="Voucher ID" />
 
                           <Box></Box>
 
@@ -229,7 +222,7 @@ export function AddDeposit() {
                     )}
 
                   {accountId &&
-                    selectedAccountType ===
+                    selectedAccount?.accountType ===
                       accountTypes[NatureOfDepositProduct.TermSavingOrFd] && (
                       <>
                         <Grid
@@ -237,10 +230,10 @@ export function AddDeposit() {
                           gap="s24"
                           alignItems="flex-end"
                         >
-                          <FormInput name="voucherID" label="Voucher ID" />
+                          <FormInput name="voucherId" label="Voucher ID" />
 
                           <FormInput
-                            name="amountToBeDeposited"
+                            name="amount"
                             label="Amount to be Deposited"
                           />
                         </Grid>
@@ -265,7 +258,7 @@ export function AddDeposit() {
                     )}
 
                   {accountId &&
-                    selectedAccountType ===
+                    selectedAccount?.accountType ===
                       accountTypes[
                         NatureOfDepositProduct.VoluntaryOrOptional
                       ] && (
@@ -275,10 +268,10 @@ export function AddDeposit() {
                           gap="s24"
                           alignItems="flex-end"
                         >
-                          <FormInput name="voucherID" label="Voucher ID" />
+                          <FormInput name="voucherId" label="Voucher ID" />
 
                           <FormInput
-                            name="amountToBeDeposited"
+                            name="amount"
                             label="Amount to be Deposited"
                           />
                         </Grid>
@@ -329,7 +322,7 @@ export function AddDeposit() {
                             fontWeight={500}
                             color="neutralColorLight.Gray-80"
                           >
-                            20,000
+                            {amountToBeDeposited}
                           </Text>
                         </Box>
 
@@ -371,7 +364,7 @@ export function AddDeposit() {
                             fontWeight={500}
                             color="neutralColorLight.Gray-80"
                           >
-                            24,000
+                            {totalDeposit}
                           </Text>
                         </Box>
                       </Box>
@@ -398,20 +391,24 @@ export function AddDeposit() {
                       notice="KYM needs to be updated"
                       // signaturePath="/signature.jpg"
                       citizenshipPath="/citizenship.jpeg"
-                      accountInfo={{
-                        name: 'Kopila Karnadhar Saving',
-                        type: 'Mandatory Saving',
-                        ID: '100300010001324',
-                        currentBalance: '1,04,000.45',
-                        minimumBalance: '1000',
-                        guaranteeBalance: '1000',
-                        overdrawnBalance: '0',
-                        fine: '500',
-                        branch: 'Kumaripati',
-                        openDate: '2022-04-03',
-                        expiryDate: '2022-04-03',
-                        lastTransactionDate: '2022-04-03',
-                      }}
+                      accountInfo={
+                        selectedAccount
+                          ? {
+                              name: selectedAccount.accountName,
+                              type: selectedAccount.accountType,
+                              ID: selectedAccount.accountId,
+                              currentBalance: '1,04,000.45',
+                              minimumBalance: '1000',
+                              guaranteeBalance: '1000',
+                              overdrawnBalance: '0',
+                              fine: '500',
+                              branch: 'Kumaripati',
+                              openDate: '2022-04-03',
+                              expiryDate: '2022-04-03',
+                              lastTransactionDate: '2022-04-03',
+                            }
+                          : null
+                      }
                       viewProfileHandler={() => null}
                       viewAccountTransactionsHandler={() => null}
                     />
@@ -419,7 +416,7 @@ export function AddDeposit() {
                 )}
               </Box>
 
-              <Payment mode={mode} />
+              <Payment mode={mode} totalDeposit={Number(totalDeposit)} />
             </form>
           </FormProvider>
         </Box>
@@ -454,7 +451,7 @@ export function AddDeposit() {
                 )
               }
               mainButtonLabel={mode === 0 ? 'Proceed to Payment' : 'Submit'}
-              mainButtonHandler={mode === 0 ? () => setMode(1) : () => null}
+              mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>
         </Box>

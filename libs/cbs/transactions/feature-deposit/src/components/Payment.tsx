@@ -10,6 +10,7 @@ import {
   FormFileInput,
   FormInput,
   FormSelect,
+  FormSwitch,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
@@ -61,6 +62,7 @@ const denominationsOptions = [
 /* eslint-disable-next-line */
 export interface PaymentProps {
   mode: number;
+  totalDeposit: number;
 }
 
 type PaymentTableType = {
@@ -69,7 +71,7 @@ type PaymentTableType = {
   amount: number;
 };
 
-export function Payment({ mode }: PaymentProps) {
+export function Payment({ mode, totalDeposit }: PaymentProps) {
   const { watch } = useFormContext();
 
   const selectedPaymentMode = watch('paymentMode');
@@ -78,12 +80,20 @@ export function Payment({ mode }: PaymentProps) {
 
   const denomination = watch('denomination');
 
-  const total =
+  const denominationTotal =
     denomination?.reduce(
       (accumulator: number, curr: PaymentTableType) =>
         accumulator + Number(curr.amount),
       0 as number
     ) ?? 0;
+
+  const disableDenomination = watch('disableDenomination');
+
+  const cashPaid = watch('cashPaid');
+
+  const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
+
+  const returnAmount = totalCashPaid - totalDeposit;
 
   return (
     <ContainerWithDivider
@@ -179,44 +189,51 @@ export function Payment({ mode }: PaymentProps) {
               />
             </InputGroupContainer>
 
-            <FormEditableTable<PaymentTableType>
-              name="denomination"
-              columns={[
-                {
-                  accessor: 'denomination',
-                  header: 'Denomination',
-                  cellWidth: 'auto',
-                  fieldType: 'search',
-                  searchOptions: denominationsOptions,
-                },
-                {
-                  accessor: 'quantity',
-                  header: 'Quantity',
-                  isNumeric: true,
-                },
-                {
-                  accessor: 'amount',
-                  header: 'Amount',
-                  isNumeric: true,
-                  accessorFn: (row) =>
-                    Number(row.denomination) * Number(row.quantity),
-                },
-              ]}
-              defaultData={[
-                { denomination: '1000', quantity: 0, amount: 0 },
-                { denomination: '500', quantity: 0, amount: 0 },
-                { denomination: '100', quantity: 0, amount: 0 },
-                { denomination: '50', quantity: 0, amount: 0 },
-                { denomination: '25', quantity: 0, amount: 0 },
-                { denomination: '20', quantity: 0, amount: 0 },
-                { denomination: '10', quantity: 0, amount: 0 },
-                { denomination: '5', quantity: 0, amount: 0 },
-                { denomination: '2', quantity: 0, amount: 0 },
-                { denomination: '1', quantity: 0, amount: 0 },
-              ]}
-              canDeleteRow={false}
-              canAddRow={false}
+            <FormSwitch
+              name="disableDenomination"
+              label={'Disable Denomination'}
             />
+
+            {!disableDenomination && (
+              <FormEditableTable<PaymentTableType>
+                name="denomination"
+                columns={[
+                  {
+                    accessor: 'denomination',
+                    header: 'Denomination',
+                    cellWidth: 'auto',
+                    fieldType: 'search',
+                    searchOptions: denominationsOptions,
+                  },
+                  {
+                    accessor: 'quantity',
+                    header: 'Quantity',
+                    isNumeric: true,
+                  },
+                  {
+                    accessor: 'amount',
+                    header: 'Amount',
+                    isNumeric: true,
+                    accessorFn: (row) =>
+                      Number(row.denomination) * Number(row.quantity),
+                  },
+                ]}
+                defaultData={[
+                  { denomination: '1000', quantity: 0, amount: 0 },
+                  { denomination: '500', quantity: 0, amount: 0 },
+                  { denomination: '100', quantity: 0, amount: 0 },
+                  { denomination: '50', quantity: 0, amount: 0 },
+                  { denomination: '25', quantity: 0, amount: 0 },
+                  { denomination: '20', quantity: 0, amount: 0 },
+                  { denomination: '10', quantity: 0, amount: 0 },
+                  { denomination: '5', quantity: 0, amount: 0 },
+                  { denomination: '2', quantity: 0, amount: 0 },
+                  { denomination: '1', quantity: 0, amount: 0 },
+                ]}
+                canDeleteRow={false}
+                canAddRow={false}
+              />
+            )}
 
             <Box
               display="flex"
@@ -241,7 +258,7 @@ export function Payment({ mode }: PaymentProps) {
                   fontWeight={400}
                   color="neutralColorLight.Gray-60"
                 >
-                  {total}
+                  {totalCashPaid}
                 </Text>
               </Box>
 
@@ -258,7 +275,7 @@ export function Payment({ mode }: PaymentProps) {
                   fontWeight={400}
                   color="neutralColorLight.Gray-60"
                 >
-                  0
+                  {returnAmount}
                 </Text>
               </Box>
 
@@ -275,7 +292,7 @@ export function Payment({ mode }: PaymentProps) {
                   fontWeight={400}
                   color="neutralColorLight.Gray-60"
                 >
-                  0
+                  {totalCashPaid - returnAmount}
                 </Text>
               </Box>
             </Box>

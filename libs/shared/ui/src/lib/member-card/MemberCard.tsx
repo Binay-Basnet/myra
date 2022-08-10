@@ -38,20 +38,23 @@ export interface MemberCardProps {
   notice?: string;
   signaturePath?: string;
   citizenshipPath?: string;
-  accountInfo?: {
-    name: string;
-    type: string;
-    ID: string;
-    currentBalance?: string | number;
-    minimumBalance?: string | number;
-    guaranteeBalance?: string | number;
-    overdrawnBalance?: string | number;
-    fine?: string | number;
-    branch?: string;
-    openDate?: string;
-    expiryDate?: string;
-    lastTransactionDate?: string;
-  };
+  accountInfo?:
+    | {
+        name: string;
+        type: string;
+        ID: string;
+        currentBalance?: string | number;
+        minimumBalance?: string | number;
+        guaranteeBalance?: string | number;
+        overdrawnBalance?: string | number;
+        fine?: string | number;
+        branch?: string;
+        openDate?: string;
+        expiryDate?: string;
+        lastTransactionDate?: string;
+      }
+    | undefined
+    | null;
   viewProfileHandler: () => void;
   viewAccountTransactionsHandler: () => void;
 }

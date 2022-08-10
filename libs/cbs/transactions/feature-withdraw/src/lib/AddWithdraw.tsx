@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
@@ -71,9 +71,7 @@ export function AddWithdraw() {
 
   const methods = useForm();
 
-  const { watch } = methods;
-
-  const memberId = watch('memberId');
+  const { watch, resetField } = methods;
 
   // const { data } = useGetMemberIndividualDataQuery(
   //   {
@@ -109,11 +107,29 @@ export function AddWithdraw() {
       };
     });
 
+  const memberId = watch('memberId');
+
+  useEffect(() => {
+    resetField('accountId');
+  }, [memberId]);
+
   const accountId = watch('accountId');
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
 
   const withdrawBy = watch('withdrawBy');
+
+  const selectedAccount = useMemo(
+    () => memberAccountsList.find((account) => account.accountId === accountId),
+    [accountId]
+  );
+
+  const amountToBeWithdrawn = watch('amount') ?? 0;
+
+  const totalWithdraw = useMemo(
+    () => (amountToBeWithdrawn ? Number(amountToBeWithdrawn) + 5000 - 1000 : 0),
+    [amountToBeWithdrawn]
+  );
 
   return (
     <>
@@ -190,7 +206,7 @@ export function AddWithdraw() {
                       <FormInput
                         type="number"
                         min={0}
-                        name="withdrawAmount"
+                        name="amount"
                         label="Withdraw Amount"
                         textAlign="right"
                         placeholder="0.0"
@@ -268,20 +284,22 @@ export function AddWithdraw() {
                       notice="KYM needs to be updated"
                       signaturePath="/signature.jpg"
                       citizenshipPath="/citizenship.jpeg"
-                      accountInfo={{
-                        name: 'Kopila Karnadhar Saving',
-                        type: 'Mandatory Saving',
-                        ID: '100300010001324',
-                        currentBalance: '1,04,000.45',
-                        minimumBalance: '1000',
-                        guaranteeBalance: '1000',
-                        overdrawnBalance: '0',
-                        fine: '500',
-                        branch: 'Kumaripati',
-                        openDate: '2022-04-03',
-                        expiryDate: '2022-04-03',
-                        lastTransactionDate: '2022-04-03',
-                      }}
+                      accountInfo={
+                        selectedAccount && {
+                          name: selectedAccount.accountName,
+                          type: selectedAccount.accountType,
+                          ID: selectedAccount.accountId,
+                          currentBalance: '1,04,000.45',
+                          minimumBalance: '1000',
+                          guaranteeBalance: '1000',
+                          overdrawnBalance: '0',
+                          fine: '500',
+                          branch: 'Kumaripati',
+                          openDate: '2022-04-03',
+                          expiryDate: '2022-04-03',
+                          lastTransactionDate: '2022-04-03',
+                        }
+                      }
                       viewProfileHandler={() => null}
                       viewAccountTransactionsHandler={() => null}
                     />
@@ -289,7 +307,7 @@ export function AddWithdraw() {
                 )}
               </Box>
 
-              <Payment mode={mode} />
+              <Payment mode={mode} totalWithdraw={totalWithdraw} />
             </form>
           </FormProvider>
         </Box>
