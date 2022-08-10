@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { Flex,Textarea, TextareaProps } from '@chakra-ui/react';
+import { Flex, Textarea, TextareaProps } from '@chakra-ui/react';
 
 import { TextFields } from '../text-fields/TextFields';
 
@@ -12,7 +12,7 @@ export interface TextAreaInputProps extends TextareaProps {
 }
 
 export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>(
-  (props, ref) => {
+  (props) => {
     const { labelColor, label, placeholder, id, ...rest } = props;
     return (
       <Flex flexDir="column" gap="s4">

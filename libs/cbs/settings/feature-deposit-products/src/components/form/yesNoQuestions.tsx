@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -128,11 +128,11 @@ export const Questions = () => {
               minH="156px"
             >
               <Box>
-                <FormInput
-                  type="text"
+                <FormTextArea
                   name="specifyWithdrawRestriction"
                   label={t['depositProductSpecify']}
-                  minH={'100px'}
+                  placeholder={t['depositProductNote']}
+                  rows={3}
                 />
               </Box>
             </Box>

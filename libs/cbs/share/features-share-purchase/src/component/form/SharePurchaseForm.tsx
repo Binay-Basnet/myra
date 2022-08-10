@@ -104,14 +104,14 @@ const SharePurchaseForm = () => {
     memberListData &&
     memberListData.map((member) => {
       return {
-        label: `${member?.node?.id}-${member?.node?.name?.local}`,
+        label: `${member?.node?.name?.local} - ID: ${member?.node?.id}`,
         value: member?.node?.id,
       };
     });
 
   useEffect(() => {
     setTotalAmount(
-      noOfShares * 1000 + Number(adminFee ?? 0) + Number(printingFee ?? 0)
+      noOfShares * 100 + Number(adminFee ?? 0) + Number(printingFee ?? 0)
     );
   }, [noOfShares, adminFee, printingFee]);
 
@@ -138,7 +138,7 @@ const SharePurchaseForm = () => {
     mutate(
       { data: updatedValues },
       {
-        onSuccess: () => router.push(`/share/balance`),
+        onSuccess: () => router.push(`/share/register`),
       }
     );
   };
@@ -156,12 +156,7 @@ const SharePurchaseForm = () => {
           >
             <Header />
           </Box>
-          <Container
-            minW="container.lg"
-            p="0"
-            minH="calc(100vh - 170px)"
-            bg="white"
-          >
+          <Container minW="container.lg" p="0" mb="60px">
             <Box
               position="sticky"
               top="110px"
@@ -171,7 +166,13 @@ const SharePurchaseForm = () => {
             >
               <FormHeader title={t['sharePurchaseNewSharePurchase']} />
             </Box>
-            <Box display="flex" width="100%">
+            <Box
+              mb="50px"
+              display="flex"
+              width="100%"
+              background="white"
+              minH="calc(100vh - 170px)"
+            >
               <Box w="100%">
                 <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
                   <Box w="50%">
@@ -314,15 +315,11 @@ const SharePurchaseForm = () => {
                             justifyContent="flex-end"
                             mr="s32"
                           >
-                            <Text
-                              fontWeight="Medium"
-                              color="primary.500"
-                              fontSize="s2"
-                              mr="5px"
-                            >
-                              {t['sharePurchaseViewProfile']}
-                            </Text>
+                            <TextFields variant="link">
+                              {t['sharePurchaseViewProfile']}{' '}
+                            </TextFields>
                             <Icon
+                              ml="5px"
                               size="sm"
                               as={RiShareBoxFill}
                               color="primary.500"
@@ -331,7 +328,7 @@ const SharePurchaseForm = () => {
                         </Grid>
                       </Box>
 
-                      <Box>
+                      <Box p="2px">
                         <Box p="s16">
                           <Text
                             color="neutralColorLight.Gray-80"
