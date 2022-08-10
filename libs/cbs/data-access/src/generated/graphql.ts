@@ -81,6 +81,7 @@ export type AccountActivityEntry = {
   name?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<Scalars['String']>;
   processedBy?: Maybe<Scalars['String']>;
+  state: TransactionState;
 };
 
 export type AccountActivityListConnection = {
@@ -1402,8 +1403,8 @@ export type DepositBankVoucher = {
 export type DepositCash = {
   cashPaid: Scalars['String'];
   denominations?: InputMaybe<Array<Denomination>>;
+  disableDenomination: Scalars['Boolean'];
   returned_amount: Scalars['String'];
-  setDenomination: Scalars['Boolean'];
   total: Scalars['String'];
 };
 
@@ -6218,6 +6219,7 @@ export type Mutation = {
   members: MemberMutation;
   newId: Scalars['String'];
   presignedUrl: PresignedUrlMutation;
+  report: ReportMutation;
   seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
@@ -6637,6 +6639,7 @@ export type Query = {
   form: FormQuery;
   inventory: InventoryQuery;
   members: MemberQuery;
+  report: ReportQuery;
   routesAndCodes: RoutesAndCodesQuery;
   settings: SettingsQuery;
   share: ShareQuery;
@@ -6673,6 +6676,32 @@ export type RebateInput = {
 
 export type RecentTransactionFilter = {
   limit: Scalars['Int'];
+};
+
+export type ReportMutation = {
+  statementReport?: Maybe<ReportResult>;
+};
+
+export type ReportMutationStatementReportArgs = {
+  data: StatementReportInput;
+};
+
+export type ReportPeriod = {
+  from: Scalars['String'];
+  to?: InputMaybe<Scalars['String']>;
+};
+
+export type ReportQuery = {
+  shareStatementReport?: Maybe<ReportResult>;
+};
+
+export type ReportQueryShareStatementReportArgs = {
+  data: ShareStatementReportData;
+};
+
+export type ReportResult = {
+  member?: Maybe<Member>;
+  statement?: Maybe<StatementReport>;
 };
 
 export type Result = {
@@ -6915,6 +6944,37 @@ export type ShareReturnResult = {
   recordId: Scalars['ID'];
 };
 
+export type ShareStatement = {
+  balanceSheet: Scalars['Int'];
+  date: Scalars['String'];
+  noOfShares: Scalars['Int'];
+  particular: Scalars['String'];
+  purchaseAmountCr: Scalars['Int'];
+  returnAmountDr: Scalars['Int'];
+};
+
+export type ShareStatementReport = {
+  shareStatement?: Maybe<Array<Maybe<ShareStatement>>>;
+};
+
+export type ShareStatementReportData = {
+  filter: ShareTransactionType;
+  memberId: Scalars['ID'];
+  period: ReportPeriod;
+};
+
+export type ShareStatementReportSettings = {
+  filter?: InputMaybe<ShareTransactionType>;
+  membeId: Scalars['ID'];
+  period: ReportPeriod;
+};
+
+export enum ShareTransactionType {
+  All = 'ALL',
+  Issue = 'ISSUE',
+  Return = 'RETURN',
+}
+
 export type SisterConcernDetails = {
   address?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -6935,6 +6995,14 @@ export type SisterConcernDetailsType = {
   name?: Maybe<Scalars['String']>;
   natureOfBusiness?: Maybe<Scalars['String']>;
   phoneNo?: Maybe<Scalars['String']>;
+};
+
+export type StatementReport = ShareStatementReport;
+
+export type StatementReportInput = {
+  data?: InputMaybe<ShareStatementReportSettings>;
+  name?: InputMaybe<Scalars['String']>;
+  reportType?: InputMaybe<Scalars['String']>;
 };
 
 export type SubscriptionMutation = {
@@ -7030,6 +7098,11 @@ export type TransactionQueryListWithdrawArgs = {
   filter?: InputMaybe<WithdrawDataFilter>;
   pagination?: InputMaybe<Pagination>;
 };
+
+export enum TransactionState {
+  Active = 'ACTIVE',
+  Submitted = 'SUBMITTED',
+}
 
 export type Transactions = {
   amount: Scalars['Float'];

@@ -78,8 +78,6 @@ const ShareReturnForm = () => {
 
   const { data } = useGetMemberIndividualDataQuery({ id: memberId });
 
-  const memberData = data?.members?.details?.data;
-
   const onSubmit = () => {
     const values = getValues();
     const updatedValues = {
@@ -123,14 +121,21 @@ const ShareReturnForm = () => {
 
   const memberListData = memberList?.members?.list?.edges;
 
-  const memberOptions =
+  type optionType = { label: string; value: string };
+
+  const memberDetail =
     memberListData &&
-    memberListData.map((member) => {
-      return {
-        label: `${member?.node?.name?.local} - ID: ${member?.node?.id}`,
-        value: member?.node?.id,
-      };
-    });
+    memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
+
+  const memberOptions = memberListData?.reduce((prevVal, curVal) => {
+    return [
+      ...prevVal,
+      {
+        label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
+        value: curVal?.node?.id as string,
+      },
+    ];
+  }, [] as optionType[]);
 
   useEffect(() => {
     setTotalAmount(
@@ -185,7 +190,7 @@ const ShareReturnForm = () => {
                         setIDMember(id);
                         setTrigger(true);
                       }, 800)}
-                      options={memberOptions}
+                      options={memberOptions ?? []}
                     />
                   </Box>
 
@@ -216,7 +221,7 @@ const ShareReturnForm = () => {
                               <Avatar
                                 src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
                                 size="lg"
-                                name={memberData?.name?.local}
+                                name={memberDetail?.name?.local}
                               />
                             </Box>
                             <Box>
@@ -225,16 +230,14 @@ const ShareReturnForm = () => {
                                 fontWeight="Medium"
                                 fontSize="s3"
                               >
-                                {memberData?.name?.local}
+                                {memberDetail?.name?.local}
                               </TextFields>
                               <Text
                                 color="neutralColorLight.Gray-80"
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {t['sharePurchaseID']}:
-                                {/* {memberData?.personalInformation?.panNumber} */}
-                                1233223
+                                {t['sharePurchaseID']}:{memberDetail?.id}
                               </Text>
 
                               <Text
@@ -243,7 +246,7 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                               >
                                 {t['sharePurchaseMemberSince']}:
-                                {/* {memberData?.personalInformation?.dateOfBirth} */}
+                                {/* {memberDetail?.personalInformation?.dateOfBirth} */}
                                 2054/10/12
                               </Text>
 
@@ -253,7 +256,7 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                               >
                                 {t['sharePurchaseBranch']}:
-                                {memberData?.address?.district?.local}
+                                {memberDetail?.address?.district?.local}
                               </Text>
                             </Box>
                           </GridItem>
@@ -277,7 +280,7 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberData?.contact}
+                                {memberDetail?.contact}
                               </TextFields>
                             </Box>
 
@@ -305,9 +308,9 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberData?.address?.district?.local},
-                                {/* {memberData?.address?.locality?.local} -
-                                {memberData?.address?.wardNo} */}
+                                {memberDetail?.address?.district?.local},
+                                {/* {memberDetail?.address?.locality?.local} -
+                                {memberDetail?.address?.wardNo} */}
                               </TextFields>
                             </Box>
                           </GridItem>
