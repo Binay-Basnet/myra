@@ -52,13 +52,7 @@ export const components: SelectComponentsConfig<
   Option: (props) => {
     return (
       <chakraComponents.Option {...props}>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          p="s12"
-          width="100%"
-          height="80px"
-        >
+        <Box display="flex" justifyContent="space-between" p="s12" width="100%">
           <Box display="flex" flexDirection="column" gap="s4">
             <Text
               fontSize="r1"

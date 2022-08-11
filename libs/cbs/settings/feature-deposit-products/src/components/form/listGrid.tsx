@@ -17,11 +17,6 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer } from '../formui';
 
-const CheckboxYesNo = [
-  { label: 'Yes', value: true },
-  { label: 'No', value: false },
-];
-
 export const GridItems = () => {
   const { watch } = useFormContext();
   const ageCheck = watch('criteria');
@@ -37,6 +32,17 @@ export const GridItems = () => {
   const memberType = watch('typeOfMember');
 
   const { t } = useTranslation();
+
+  const CheckboxYesNo = [
+    {
+      label: t['yes'],
+      value: true,
+    },
+    {
+      label: t['no'],
+      value: false,
+    },
+  ];
 
   const { data: genderFields } = useGetSettingsOptionsFieldsQuery({
     searchTerm: FormFieldSearchTerm.Gender,

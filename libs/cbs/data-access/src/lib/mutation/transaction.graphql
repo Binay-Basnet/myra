@@ -1,0 +1,15 @@
+mutation setDepositData($data: DepositInput!) {
+  transaction {
+    deposit(data: $data) {
+      recordId
+    }
+  }
+}
+
+mutation setWithdrawData($data: WithdrawInput!) {
+  transaction {
+    withdraw(data: $data) {
+      recordId
+    }
+  }
+}

@@ -29,19 +29,19 @@ export const MaximumTenure = () => {
 
   const unitOptions = [
     {
-      label: t['daily'],
+      label: t['day'],
       value: Frequency.Daily,
     },
     {
-      label: t['weekly'],
+      label: t['week'],
       value: Frequency.Weekly,
     },
     {
-      label: t['monthly'],
+      label: t['month'],
       value: Frequency.Monthly,
     },
     {
-      label: t['yearly'],
+      label: t['year'],
       value: Frequency.Yearly,
     },
   ];
@@ -88,7 +88,17 @@ export const MaximumTenure = () => {
               textAlign={'right'}
               label={t['depositProductNumber']}
               placeholder="0"
-              rightAddonText={rightElement && rightElement.toLowerCase()}
+              rightAddonText={
+                rightElement && rightElement === Frequency.Daily
+                  ? t['days']
+                  : rightElement === Frequency.Weekly
+                  ? t['weeks']
+                  : rightElement === Frequency.Monthly
+                  ? t['months']
+                  : rightElement === Frequency.Yearly
+                  ? t['years']
+                  : ''
+              }
             />
           </Box>
         </BoxContainer>

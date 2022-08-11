@@ -13,8 +13,9 @@ import {
   useAddShareReturnMutation,
   useGetMemberIndividualDataQuery,
   useGetMemberListQuery,
+  useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
-import { ShareReturnHistoryTable } from '@coop/myra/components';
+import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
   FormCheckbox,
@@ -77,8 +78,6 @@ const ShareReturnForm = () => {
 
   const { data } = useGetMemberIndividualDataQuery({ id: memberId });
 
-  const memberData = data?.members?.details?.data;
-
   const onSubmit = () => {
     const values = getValues();
     const updatedValues = {
@@ -95,13 +94,13 @@ const ShareReturnForm = () => {
       ],
       totalAmount: totalAmount.toString(),
       noOfReturnedShares: Number(values['noOfReturnedShares']),
-      memberId: '123456789',
+      memberId,
     };
 
     mutate(
       { data: updatedValues },
       {
-        onSuccess: () => router.push(`/share/balance`),
+        onSuccess: () => router.push(`/share/register`),
       }
     );
   };
@@ -122,20 +121,33 @@ const ShareReturnForm = () => {
 
   const memberListData = memberList?.members?.list?.edges;
 
-  const memberOptions =
+  type optionType = { label: string; value: string };
+
+  const memberDetail =
     memberListData &&
-    memberListData.map((member) => {
-      return {
-        label: `${member?.node?.id}-${member?.node?.name?.local}`,
-        value: member?.node?.id,
-      };
-    });
+    memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
+
+  const memberOptions = memberListData?.reduce((prevVal, curVal) => {
+    return [
+      ...prevVal,
+      {
+        label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
+        value: curVal?.node?.id as string,
+      },
+    ];
+  }, [] as optionType[]);
 
   useEffect(() => {
     setTotalAmount(
-      noOfShares * 1000 + Number(adminFees ?? 0) + Number(printingFees ?? 0)
+      noOfShares * 100 + Number(adminFees ?? 0) + Number(printingFees ?? 0)
     );
   }, [noOfShares, adminFees, printingFees]);
+
+  const { data: shareHistoryTableData } = useGetShareHistoryQuery({
+    memberId,
+  });
+
+  const balanceData = shareHistoryTableData?.share?.history?.balance;
 
   return (
     <>
@@ -150,7 +162,7 @@ const ShareReturnForm = () => {
           >
             <Header />
           </Box>
-          <Container minW="container.lg" p="0">
+          <Container minW="container.lg" p="0" mb="60px">
             <Box
               position="sticky"
               top="110px"
@@ -160,9 +172,15 @@ const ShareReturnForm = () => {
             >
               <FormHeader title={t['shareReturnNewShareReturn']} />
             </Box>
-            <Box mb="50px" display="flex" width="100%">
+            <Box
+              mb="50px"
+              display="flex"
+              width="100%"
+              background="white"
+              minH="calc(100vh - 170px)"
+            >
               <Box w="100%" minHeight="100vh">
-                <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
+                <Box borderBottom="1px solid #E6E6E6" p={5}>
                   <Box w="50%">
                     <FormSelect
                       name="memberId"
@@ -172,7 +190,7 @@ const ShareReturnForm = () => {
                         setIDMember(id);
                         setTrigger(true);
                       }, 800)}
-                      options={memberOptions}
+                      options={memberOptions ?? []}
                     />
                   </Box>
 
@@ -203,7 +221,7 @@ const ShareReturnForm = () => {
                               <Avatar
                                 src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
                                 size="lg"
-                                name={memberData?.name?.local}
+                                name={memberDetail?.name?.local}
                               />
                             </Box>
                             <Box>
@@ -212,16 +230,14 @@ const ShareReturnForm = () => {
                                 fontWeight="Medium"
                                 fontSize="s3"
                               >
-                                {memberData?.name?.local}
+                                {memberDetail?.name?.local}
                               </TextFields>
                               <Text
                                 color="neutralColorLight.Gray-80"
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {t['sharePurchaseID']}:
-                                {/* {memberData?.personalInformation?.panNumber} */}
-                                1233223
+                                {t['sharePurchaseID']}:{memberDetail?.id}
                               </Text>
 
                               <Text
@@ -230,7 +246,7 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                               >
                                 {t['sharePurchaseMemberSince']}:
-                                {/* {memberData?.personalInformation?.dateOfBirth} */}
+                                {/* {memberDetail?.personalInformation?.dateOfBirth} */}
                                 2054/10/12
                               </Text>
 
@@ -240,7 +256,7 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                               >
                                 {t['sharePurchaseBranch']}:
-                                {memberData?.address?.district?.local}
+                                {memberDetail?.address?.district?.local}
                               </Text>
                             </Box>
                           </GridItem>
@@ -264,7 +280,7 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberData?.contact}
+                                {memberDetail?.contact}
                               </TextFields>
                             </Box>
 
@@ -292,9 +308,9 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberData?.address?.district?.local},
-                                {/* {memberData?.address?.locality?.local} -
-                                {memberData?.address?.wardNo} */}
+                                {memberDetail?.address?.district?.local},
+                                {/* {memberDetail?.address?.locality?.local} -
+                                {memberDetail?.address?.wardNo} */}
                               </TextFields>
                             </Box>
                           </GridItem>
@@ -303,15 +319,11 @@ const ShareReturnForm = () => {
                             justifyContent="flex-end"
                             mr="s32"
                           >
-                            <Text
-                              fontWeight="Medium"
-                              color="primary.500"
-                              fontSize="s2"
-                              mr="5px"
-                            >
-                              {t['sharePurchaseViewProfile']}
-                            </Text>
+                            <TextFields mr="5px" variant="link">
+                              {t['sharePurchaseViewProfile']}{' '}
+                            </TextFields>
                             <Icon
+                              ml="5px"
                               size="sm"
                               as={RiShareBoxFill}
                               color="primary.500"
@@ -321,15 +333,16 @@ const ShareReturnForm = () => {
                       </Box>
 
                       <Box p="2px">
-                        <Text
-                          color="neutralColorLight.Gray-80"
-                          fontWeight="SemiBold"
-                          fontSize="r1"
-                          ml="s24"
-                        >
-                          {t['shareReturnShareHistory']}
-                        </Text>
-                        <ShareReturnHistoryTable id={memberId} />
+                        <Box p="s16">
+                          <Text
+                            color="neutralColorLight.Gray-80"
+                            fontWeight="SemiBold"
+                            fontSize="r1"
+                          >
+                            {t['shareReturnShareHistory']}
+                          </Text>
+                        </Box>
+                        <SharePurchaseHistoryTable id={memberId} />
                       </Box>
                     </Box>
                   )}
@@ -389,7 +402,10 @@ const ShareReturnForm = () => {
                                   {t['shareReturnRemainingShare']}
                                 </Text>
                                 <Text fontWeight="600" fontSize="r1">
-                                  {allShares ? 0 : 20}
+                                  {allShares
+                                    ? Number(balanceData?.count) -
+                                      Number(noOfShares)
+                                    : balanceData?.count}
                                 </Text>
                               </Box>
 
@@ -399,7 +415,11 @@ const ShareReturnForm = () => {
                                 </Text>
                                 <Text fontWeight="600" fontSize="r1">
                                   {' '}
-                                  {allShares ? 0 : 2000}
+                                  {allShares
+                                    ? (Number(balanceData?.count) -
+                                        Number(noOfShares)) *
+                                      100
+                                    : balanceData?.amount}
                                 </Text>
                               </Box>
                             </Box>
@@ -520,7 +540,7 @@ const ShareReturnForm = () => {
                   </Grid>
                 </Box>
 
-                <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
+                <Box background="white" p={5}>
                   <Text
                     color="neutralColorLight.Gray-60"
                     fontSize="r2"

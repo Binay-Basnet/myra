@@ -11,19 +11,20 @@ query getShareBalanceList {
           amount
         }
       }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
     }
   }
 }
 
-query getShareRegisterList {
+query getShareRegisterList(
+  $after: Cursor
+  $first: Int
+  $before: Cursor
+  $last: Int
+) {
   share {
-    register {
+    register(
+      pagination: { after: $after, first: $first, before: $before, last: $last }
+    ) {
       edges {
         node {
           transactionDate
@@ -39,6 +40,12 @@ query getShareRegisterList {
           credit
           debit
         }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }

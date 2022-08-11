@@ -5,3 +5,17 @@ mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
     }
   }
 }
+
+mutation setAccountDocumentData(
+  $subscriptionId: String!
+  $fieldId: String!
+  $identifiers: [String!]!
+) {
+  document {
+    Subscription(subscriptionId: $subscriptionId) {
+      Upsert(fieldId: $fieldId, identifiers: $identifiers) {
+        recordId
+      }
+    }
+  }
+}

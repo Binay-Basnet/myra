@@ -1,6 +1,11 @@
 import { useFormContext } from 'react-hook-form';
 
 import {
+  useGetBankListQuery,
+  WithdrawBy,
+  WithdrawPaymentType,
+} from '@coop/cbs/data-access';
+import {
   BoxContainer,
   ContainerWithDivider,
   InputGroupContainer,
@@ -10,6 +15,7 @@ import {
   FormFileInput,
   FormInput,
   FormSelect,
+  FormSwitch,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
@@ -18,30 +24,22 @@ import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 const paymentModes = [
   {
     label: 'Cash',
-    value: 'cash',
+    value: WithdrawPaymentType.Cash,
   },
   {
-    label: 'Cheque',
-    value: 'cheque',
-  },
-  {
-    label: 'Bank Voucher',
-    value: 'bankVoucher',
+    label: 'Bank Cheque',
+    value: WithdrawPaymentType.BankCheque,
   },
 ];
 
-const depositors = [
+const withdrawnByOptions = [
   {
     label: 'Self',
-    value: 'self',
+    value: WithdrawBy.Self,
   },
   {
     label: 'Agent',
-    value: 'agent',
-  },
-  {
-    label: 'Other',
-    value: 'other',
+    value: WithdrawBy.Agent,
   },
 ];
 
@@ -61,95 +59,80 @@ const denominationsOptions = [
 /* eslint-disable-next-line */
 export interface PaymentProps {
   mode: number;
+  totalWithdraw: number;
 }
 
 type PaymentTableType = {
-  denominations: string;
+  value: string;
   quantity: number;
   amount: number;
 };
 
-export function Payment({ mode }: PaymentProps) {
+export function Payment({ mode, totalWithdraw }: PaymentProps) {
   const { watch } = useFormContext();
 
-  const selectedPaymentMode = watch('paymentMode');
+  const { data: bankList } = useGetBankListQuery();
 
-  const depositedBy = watch('depositedBy');
+  const selectedPaymentMode = watch('payment_type');
 
-  const denomination = watch('denomination');
+  const withdrawnBy = watch('withdrawnBy');
 
-  const total = denomination.reduce(
-    (accumulator: number, curr: PaymentTableType) =>
-      accumulator + Number(curr.amount),
-    0 as number
-  );
+  const denominations = watch('cash.denominations');
+
+  const denominationTotal =
+    denominations?.reduce(
+      (accumulator: number, curr: PaymentTableType) =>
+        accumulator + Number(curr.amount),
+      0 as number
+    ) ?? 0;
+
+  const disableDenomination = watch('cash.disableDenomination');
+
+  const cashPaid = watch('cash.cashPaid');
+
+  const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
+
+  const returnAmount = Number(totalCashPaid) - Number(totalWithdraw);
 
   return (
     <ContainerWithDivider
       borderRight="1px"
       borderColor="border.layout"
       p="s16"
+      pb="100px"
       display={mode === 1 ? 'flex' : 'none'}
     >
       <BoxContainer>
         <FormSwitchTab
           label={'Payment Mode'}
           options={paymentModes}
-          name="paymentMode"
+          name="payment_type"
         />
 
-        {selectedPaymentMode === 'bankVoucher' && (
+        {selectedPaymentMode === WithdrawPaymentType.BankCheque && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
-              <FormInput
-                name="bankName"
-                label="Bank Name"
-                placeholder="Bank Name"
+              <FormSelect
+                name="bankCheque.bankId"
+                label={'Bank Name'}
+                placeholder={'Bank Name'}
+                options={
+                  bankList?.bank?.bank?.list?.map((bank) => ({
+                    label: bank?.name as string,
+                    value: bank?.id as string,
+                  })) ?? []
+                }
               />
             </GridItem>
 
             <FormInput
-              name="bankVoucherID"
-              label="Voucher ID"
-              placeholder="Voucher ID"
-            />
-
-            <FormInput
-              name="amount"
-              type="number"
-              label={'Amount'}
-              textAlign={'right'}
-              placeholder="0.00"
-            />
-
-            <FormInput
-              type="date"
-              name="depositedDate"
-              label="Deposited Date"
-            />
-
-            <FormInput type="date" name="depositedBy" label="Deposited By" />
-          </InputGroupContainer>
-        )}
-
-        {selectedPaymentMode === 'cheque' && (
-          <InputGroupContainer>
-            <GridItem colSpan={2}>
-              <FormInput
-                name="bankName"
-                label="Bank Name"
-                placeholder="Bank Name"
-              />
-            </GridItem>
-
-            <FormInput
-              name="chequeNo"
+              name="bankCheque.chequeNo"
               label="Cheque No"
               placeholder="Cheque No"
             />
 
             <FormInput
-              name="amount"
+              name="bankCheque.amount"
               type="number"
               label={'Amount'}
               textAlign={'right'}
@@ -158,19 +141,24 @@ export function Payment({ mode }: PaymentProps) {
 
             <FormInput
               type="date"
-              name="depositedDate"
+              name="bankCheque.depositedAt"
               label="Deposited Date"
             />
 
-            <FormInput type="date" name="depositedBy" label="Deposited By" />
+            <FormInput
+              type="text"
+              name="bankCheque.depositedBy"
+              label="Deposited By"
+              placeholder="Deposited By"
+            />
           </InputGroupContainer>
         )}
 
-        {selectedPaymentMode === 'cash' && (
+        {selectedPaymentMode === WithdrawPaymentType.Cash && (
           <>
             <InputGroupContainer>
               <FormInput
-                name="cashPaid"
+                name="cash.cashPaid"
                 type="number"
                 label={'Cash Paid'}
                 textAlign={'right'}
@@ -178,45 +166,51 @@ export function Payment({ mode }: PaymentProps) {
               />
             </InputGroupContainer>
 
-            <FormEditableTable<PaymentTableType>
-              name="denomination"
-              columns={[
-                {
-                  accessor: 'denominations',
-                  header: 'Denomination',
-                  cellWidth: 'auto',
-                  fieldType: 'search',
-                  searchOptions: denominationsOptions,
-                },
-                {
-                  accessor: 'quantity',
-                  header: 'Quantity',
-                  isNumeric: true,
-                },
-                {
-                  accessor: 'amount',
-                  header: 'Amount',
-                  isNumeric: true,
-                  accessorFn: (row) =>
-                    Number(row.denominations.slice(0, -1)) *
-                    Number(row.quantity),
-                },
-              ]}
-              defaultData={[
-                { denominations: '1000x', quantity: 0, amount: 0 },
-                { denominations: '500x', quantity: 0, amount: 0 },
-                { denominations: '100x', quantity: 0, amount: 0 },
-                { denominations: '50x', quantity: 0, amount: 0 },
-                { denominations: '25x', quantity: 0, amount: 0 },
-                { denominations: '20x', quantity: 0, amount: 0 },
-                { denominations: '10x', quantity: 0, amount: 0 },
-                { denominations: '5x', quantity: 0, amount: 0 },
-                { denominations: '2x', quantity: 0, amount: 0 },
-                { denominations: '1x', quantity: 0, amount: 0 },
-              ]}
-              canDeleteRow={false}
-              canAddRow={false}
+            <FormSwitch
+              name="cash.disableDenomination"
+              label={'Disable Denomination'}
             />
+
+            {!disableDenomination && (
+              <FormEditableTable<PaymentTableType>
+                name="cash.denominations"
+                columns={[
+                  {
+                    accessor: 'value',
+                    header: 'Denomination',
+                    cellWidth: 'auto',
+                    fieldType: 'search',
+                    searchOptions: denominationsOptions,
+                  },
+                  {
+                    accessor: 'quantity',
+                    header: 'Quantity',
+                    isNumeric: true,
+                  },
+                  {
+                    accessor: 'amount',
+                    header: 'Amount',
+                    isNumeric: true,
+                    accessorFn: (row) =>
+                      Number(row.value) * Number(row.quantity),
+                  },
+                ]}
+                defaultData={[
+                  { value: '1000', quantity: 0, amount: 0 },
+                  { value: '500', quantity: 0, amount: 0 },
+                  { value: '100', quantity: 0, amount: 0 },
+                  { value: '50', quantity: 0, amount: 0 },
+                  { value: '25', quantity: 0, amount: 0 },
+                  { value: '20', quantity: 0, amount: 0 },
+                  { value: '10', quantity: 0, amount: 0 },
+                  { value: '5', quantity: 0, amount: 0 },
+                  { value: '2', quantity: 0, amount: 0 },
+                  { value: '1', quantity: 0, amount: 0 },
+                ]}
+                canDeleteRow={false}
+                canAddRow={false}
+              />
+            )}
 
             <Box
               display="flex"
@@ -241,7 +235,7 @@ export function Payment({ mode }: PaymentProps) {
                   fontWeight={400}
                   color="neutralColorLight.Gray-60"
                 >
-                  {total}
+                  {totalCashPaid}
                 </Text>
               </Box>
 
@@ -258,7 +252,7 @@ export function Payment({ mode }: PaymentProps) {
                   fontWeight={400}
                   color="neutralColorLight.Gray-60"
                 >
-                  0
+                  {returnAmount}
                 </Text>
               </Box>
 
@@ -275,7 +269,7 @@ export function Payment({ mode }: PaymentProps) {
                   fontWeight={400}
                   color="neutralColorLight.Gray-60"
                 >
-                  0
+                  {totalCashPaid - returnAmount}
                 </Text>
               </Box>
             </Box>
@@ -301,12 +295,12 @@ export function Payment({ mode }: PaymentProps) {
 
       <BoxContainer>
         <FormSwitchTab
-          label={'Deposited By'}
-          options={depositors}
-          name="depositedBy"
+          label={'Withdrawn By'}
+          options={withdrawnByOptions}
+          name="withdrawnBy"
         />
 
-        {depositedBy === 'agent' && (
+        {withdrawnBy === WithdrawBy.Agent && (
           <InputGroupContainer>
             <FormSelect name="agent" label="Agent" placeholder="Select Agent" />
           </InputGroupContainer>
@@ -314,7 +308,7 @@ export function Payment({ mode }: PaymentProps) {
       </BoxContainer>
 
       <BoxContainer>
-        <FormTextArea name="note" label="Note" placeholder="Note" rows={5} />
+        <FormTextArea name="notes" label="Note" placeholder="Note" rows={5} />
       </BoxContainer>
     </ContainerWithDivider>
   );

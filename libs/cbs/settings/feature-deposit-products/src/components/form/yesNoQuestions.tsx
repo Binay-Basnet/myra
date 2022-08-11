@@ -1,9 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 
+import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 // import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { NatureOfDepositProduct } from '@coop/cbs/data-access';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -65,34 +65,31 @@ export const Questions = () => {
           <FormSwitchTab name={'allowLoan'} options={yesNo} />
         </Box>
 
-        {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-          depositNature === NatureOfDepositProduct.TermSavingOrFd) &&
-          allowLoan &&
-          allowLoan === 'yes' && (
-            <Box
-              display={'flex'}
-              justifyContent="space-between"
-              p="s16"
-              border="1px solid"
-              borderColor={'border.layout'}
-              borderRadius="6px"
-            >
-              <InputGroupContainer>
-                <FormInput
-                  type="number"
-                  textAlign="right"
-                  name="percentageOfDeposit"
-                  label={t['depositProductPercentageDeposit']}
-                  placeholder="0.00"
-                  rightElement={
-                    <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                      %
-                    </Text>
-                  }
-                />
-              </InputGroupContainer>
-            </Box>
-          )}
+        {allowLoan && (
+          <Box
+            display={'flex'}
+            justifyContent="space-between"
+            p="s16"
+            border="1px solid"
+            borderColor={'border.layout'}
+            borderRadius="6px"
+          >
+            <InputGroupContainer>
+              <FormInput
+                type="number"
+                textAlign="right"
+                name="percentageOfDeposit"
+                label={t['depositProductPercentageDeposit']}
+                placeholder="0.00"
+                rightElement={
+                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                    %
+                  </Text>
+                }
+              />
+            </InputGroupContainer>
+          </Box>
+        )}
       </Box>
       {depositNature !== NatureOfDepositProduct.Mandatory && (
         <Box
@@ -131,11 +128,11 @@ export const Questions = () => {
               minH="156px"
             >
               <Box>
-                <FormInput
-                  type="text"
+                <FormTextArea
                   name="specifyWithdrawRestriction"
                   label={t['depositProductSpecify']}
-                  minH={'100px'}
+                  placeholder={t['depositProductNote']}
+                  rows={3}
                 />
               </Box>
             </Box>

@@ -1,0 +1,54 @@
+query getDepositListData($filter: DepositDataFilter, $pagination: Pagination) {
+  transaction {
+    listDeposit(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          ID
+          name
+          amount
+          state
+          paymentMode
+          processedBy
+          date
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+
+query getWithdrawListData(
+  $filter: WithdrawDataFilter
+  $pagination: Pagination
+) {
+  transaction {
+    listWithdraw(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          ID
+          name
+          amount
+          state
+          paymentMode
+          processedBy
+          date
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}

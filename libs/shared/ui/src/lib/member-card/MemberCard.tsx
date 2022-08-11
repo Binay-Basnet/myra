@@ -23,35 +23,38 @@ import { Button } from '../button/Button';
 export interface MemberCardProps {
   isInline?: boolean;
   memberDetails: {
-    name: string;
+    name?: string | undefined | null;
     avatar: string;
-    memberID: string;
-    gender: string;
-    age: string | number;
-    maritalStatus: string;
-    dateJoined?: string;
+    memberID?: string | undefined | null;
+    gender?: string;
+    age?: string | number;
+    maritalStatus?: string;
+    dateJoined?: string | undefined | null;
     branch?: string;
-    phoneNo?: string;
+    phoneNo?: string | undefined | null;
     email?: string;
     address?: string;
   };
   notice?: string;
   signaturePath?: string;
   citizenshipPath?: string;
-  accountInfo?: {
-    name: string;
-    type: string;
-    ID: string;
-    currentBalance?: string | number;
-    minimumBalance?: string | number;
-    guaranteeBalance?: string | number;
-    overdrawnBalance?: string | number;
-    fine?: string | number;
-    branch?: string;
-    openDate?: string;
-    expiryDate?: string;
-    lastTransactionDate?: string;
-  };
+  accountInfo?:
+    | {
+        name: string | undefined;
+        type: string | undefined;
+        ID: string | undefined;
+        currentBalance?: string | number;
+        minimumBalance?: string | number;
+        guaranteeBalance?: string | number;
+        overdrawnBalance?: string | number;
+        fine?: string | number;
+        branch?: string;
+        openDate?: string;
+        expiryDate?: string;
+        lastTransactionDate?: string;
+      }
+    | undefined
+    | null;
   viewProfileHandler: () => void;
   viewAccountTransactionsHandler: () => void;
 }
@@ -83,6 +86,18 @@ export function MemberCard({
     setModalImage('');
   };
 
+  const memberMeta = [];
+
+  if (memberDetails.gender) {
+    memberMeta.push(memberDetails.gender);
+  }
+  if (memberDetails.age) {
+    memberMeta.push(memberDetails.age);
+  }
+  if (memberDetails.maritalStatus) {
+    memberMeta.push(memberDetails.maritalStatus);
+  }
+
   return (
     <>
       <Box bg="white" w={isInline ? '960px' : '320px'}>
@@ -106,16 +121,18 @@ export function MemberCard({
           alignItems={isInline ? 'flex-start' : 'normal'}
           gap="s8"
           borderTop="1px"
-          borderBottom="1px"
           borderColor="border.layout"
         >
           <Box display="flex" gap="s8">
             <Avatar
-              name={memberDetails.name}
+              name={memberDetails.name ?? 'Member'}
               size="lg"
               src={memberDetails.avatar}
               onClick={() =>
-                handleModalOpen(memberDetails.avatar, memberDetails.name)
+                handleModalOpen(
+                  memberDetails.avatar,
+                  memberDetails.name ?? 'Member'
+                )
               }
               cursor="pointer"
             />
@@ -136,13 +153,13 @@ export function MemberCard({
                     <Box p="s16" display="flex" flexDirection="column" gap="s8">
                       <Box display="flex" gap="s8">
                         <Avatar
-                          name={memberDetails.name}
+                          name={memberDetails.name ?? 'Member'}
                           size="lg"
                           src={memberDetails.avatar}
                           onClick={() =>
                             handleModalOpen(
                               memberDetails.avatar,
-                              memberDetails.name
+                              memberDetails.name ?? 'Member'
                             )
                           }
                           cursor="pointer"
@@ -154,13 +171,13 @@ export function MemberCard({
                             fontWeight="500"
                             color="primary.500"
                           >
-                            {memberDetails.name}
+                            {memberDetails.name ?? '-'}
                           </Text>
                           <Text fontSize="s3" fontWeight="400" color="gray.800">
-                            {memberDetails.memberID}
+                            {memberDetails.memberID ?? '-'}
                           </Text>
                           <Text fontSize="s3" fontWeight="400" color="gray.800">
-                            {`${memberDetails.gender} | ${memberDetails.age} | ${memberDetails.maritalStatus}`}
+                            {memberMeta.join(' | ')}
                           </Text>
                         </Box>
                       </Box>
@@ -335,7 +352,7 @@ export function MemberCard({
                 {memberDetails.memberID}
               </Text>
               <Text fontSize="s3" fontWeight="400" color="gray.800">
-                {`${memberDetails.gender} | ${memberDetails.age}`}
+                {memberMeta.join(' | ')}
               </Text>
             </Box>
           </Box>

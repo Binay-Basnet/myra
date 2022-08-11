@@ -22,9 +22,9 @@ const myraAppn = [
     link: '/inventory/register',
   },
   {
-    title: 'fixedAssetManagement',
+    title: 'memberAndShareManagement',
     img: '/theta.svg',
-    link: '/loan',
+    link: '/share/balance',
   },
   {
     title: 'accountingSystem',
@@ -40,7 +40,7 @@ const moreFromMyra = [
     link: '/members/list',
   },
   {
-    title: 'memberAndShareManagement',
+    title: 'fixedAssetManagement',
     img: '/zcl.svg',
     link: '/members/list',
   },
@@ -176,7 +176,7 @@ export function HomePageLayout(props: HomePageLayoutProps) {
                   cursor="pointer"
                   _hover={{ bg: 'neutralColorLight.Gray-0', filter: 'none' }}
                   onClick={() => router.push(item.link)}
-                  filter="grayscale(80%)"
+                  filter="grayscale(100%)"
                 >
                   <Box
                     display="flex"

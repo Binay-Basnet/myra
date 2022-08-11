@@ -11,7 +11,7 @@ import { DividerContainer, SubHeadingText } from '../formui';
 export const Questions = () => {
   const { watch } = useFormContext();
   const { t } = useTranslation();
-  const collateral = watch('collateral');
+  const collateral = watch('isCollateralRequired');
 
   const yesNo = [
     { label: t['yes'], value: true },

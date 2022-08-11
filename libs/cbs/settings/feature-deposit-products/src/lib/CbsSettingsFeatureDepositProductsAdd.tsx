@@ -169,18 +169,35 @@ export function SettingsDepositProductsAdd() {
         : null,
       accountType: values?.accountType ? values?.accountType : null,
       penaltyData: {
-        ...values?.penaltyData,
+        dayAfterInstallmentDate:
+          values?.penaltyData?.dayAfterInstallmentDate ?? null,
+        flatRatePenalty: values?.penaltyData?.flatRatePenalty ?? null,
+        minimumAmount: values?.penaltyData?.minimumAmount ?? null,
+        penaltyAmount: values?.penaltyData?.penaltyAmount ?? null,
+        penaltyRate: values?.penaltyData?.penaltyRate ?? null,
         rateType: values?.penaltyData?.rateType
           ? values?.penaltyData?.rateType
           : null,
-        prematurePenalty: {
-          noOfDays: values?.prematurePenalty?.noOfDays,
-          penaltyAmount: values?.prematurePenalty?.penaltyAmount,
-          penaltyDateType: values?.prematurePenalty?.penaltyDateType,
-          penaltyRate: values?.prematurePenalty?.penaltyRate,
-          penaltyLedgerMapping:
-            values?.prematurePenalty?.penaltyLedgerMapping ?? null,
-        },
+      },
+      rebateData: {
+        daysBeforeInstallmentDate:
+          values?.rebateData?.daysBeforeInstallmentDate ?? null,
+        noOfInstallment: values?.rebateData?.noOfInstallment ?? null,
+        percentage: values?.rebateData?.percentage ?? null,
+        rebateAmount: values?.rebateData?.rebateAmount ?? null,
+      },
+      maxAge: values?.maxAge ?? null,
+      minAge: values?.minAge ?? null,
+      maxPostingFreqDifference: values?.maxPostingFreqDifference ?? null,
+      percentageOfDeposit: values?.percentageOfDeposit ?? null,
+      depositAmount: {
+        maxAmount: values?.depositAmount?.maxAmount ?? null,
+        minAmount: values?.depositAmount?.minAmount ?? null,
+      },
+      balanceLimit: {
+        avgAmount: values?.balanceLimit?.avgAmount ?? null,
+        maxAmount: values?.balanceLimit?.maxAmount ?? null,
+        minAmount: values?.balanceLimit?.minAmount ?? null,
       },
     };
 
@@ -280,10 +297,11 @@ export function SettingsDepositProductsAdd() {
 
                 {depositNature !== NatureOfDepositProduct.Mandatory && (
                   <Box display="flex" flexDirection={'column'} gap="s16">
-                    <Critera />
+                    {typesOfMember && <Critera />}
                     <GridItems />
                   </Box>
                 )}
+
                 {depositNature !==
                   NatureOfDepositProduct.VoluntaryOrOptional && (
                   <DepositFrequency />

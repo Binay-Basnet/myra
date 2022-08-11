@@ -21,13 +21,19 @@ export const components: SelectComponentsConfig<
   GroupBase<Option>
 > = {
   Placeholder: ({ children, ...props }) => {
+    const value = props.selectProps.value;
+
     return (
       <chakraComponents.Placeholder {...props}>
         {props.isMulti ? (
-          Array.isArray(props.selectProps?.value) ? (
-            <Text color="gray.900">
-              {`${(props.selectProps.value as Option[]).length} items selected`}
-            </Text>
+          Array.isArray(value) ? (
+            (value as Option[]).length === 0 || !value ? (
+              props.selectProps.placeholder
+            ) : (
+              <Text color="gray.900">
+                {`${(value as Option[]).length} items selected`}
+              </Text>
+            )
           ) : (
             children
           )

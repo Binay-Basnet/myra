@@ -383,7 +383,6 @@ export const FileUrlPreview = ({
 
       const response = await fetch(fileUrl);
 
-      const contentType = response.headers.get('content-type');
       const blob = await response.blob();
       const file = new File([blob], fileName, {
         // Todo use switch case for this type using extension of filename

@@ -74,6 +74,27 @@ export type Account = {
   transactions?: Maybe<Array<Transactions>>;
 };
 
+export type AccountActivityEntry = {
+  ID: Scalars['ID'];
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['Localized']>;
+  paymentMode?: Maybe<Scalars['String']>;
+  processedBy?: Maybe<Scalars['String']>;
+  state: TransactionState;
+};
+
+export type AccountActivityListConnection = {
+  edges?: Maybe<Array<Maybe<AccountActivityListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AccountActivityListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AccountActivityEntry>;
+};
+
 export type AccountConnection = {
   edges: Array<AccountEdge>;
   pageInfo: PageInfo;
@@ -588,6 +609,19 @@ export type CoaView = {
   openingBalance: Scalars['Float'];
   under?: Maybe<Scalars['ID']>;
 };
+
+export enum CashValue {
+  Cash_1 = 'CASH_1',
+  Cash_2 = 'CASH_2',
+  Cash_5 = 'CASH_5',
+  Cash_10 = 'CASH_10',
+  Cash_20 = 'CASH_20',
+  Cash_25 = 'CASH_25',
+  Cash_50 = 'CASH_50',
+  Cash_100 = 'CASH_100',
+  Cash_500 = 'CASH_500',
+  Cash_1000 = 'CASH_1000',
+}
 
 export type ChartsOfAccount = Base & {
   accountClass: Scalars['String'];
@@ -1342,15 +1376,49 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
+export type Denomination = {
+  quantity: Scalars['Int'];
+  value: CashValue;
+};
+
 export type DepositAccount = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
   id: Scalars['ID'];
-  member: Member;
+  member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
   product: DepositProduct;
+};
+
+export type DepositBankVoucher = {
+  amount: Scalars['String'];
+  bankId: Scalars['String'];
+  depositedAt: Scalars['String'];
+  depositedBy: Scalars['String'];
+  voucherId: Scalars['String'];
+};
+
+export type DepositCash = {
+  cashPaid: Scalars['String'];
+  denominations?: InputMaybe<Array<Denomination>>;
+  disableDenomination: Scalars['Boolean'];
+  returned_amount: Scalars['String'];
+  total: Scalars['String'];
+};
+
+export type DepositCheque = {
+  amount: Scalars['String'];
+  bankId: Scalars['String'];
+  chequeNo: Scalars['String'];
+  depositedAt: Scalars['String'];
+  depositedBy: Scalars['String'];
+};
+
+export type DepositDataFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
 };
 
 export enum DepositFrequency {
@@ -1359,6 +1427,25 @@ export enum DepositFrequency {
   Quarterly = 'QUARTERLY',
   Yearly = 'YEARLY',
 }
+
+export type DepositInput = {
+  accountId: Scalars['String'];
+  agentId?: InputMaybe<Scalars['String']>;
+  amount: Scalars['String'];
+  bankVoucher?: InputMaybe<DepositBankVoucher>;
+  cash?: InputMaybe<DepositCash>;
+  cheque?: InputMaybe<DepositCheque>;
+  depositedBy: DepositedBy;
+  doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  fine?: InputMaybe<Scalars['String']>;
+  memberId: Scalars['String'];
+  noOfInstallments?: InputMaybe<Scalars['Int']>;
+  notes?: InputMaybe<Scalars['String']>;
+  payment_type: DepositPaymentType;
+  rebate?: InputMaybe<Scalars['String']>;
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+  voucherId: Scalars['String'];
+};
 
 export type DepositIro = {
   id: Scalars['ID'];
@@ -1418,8 +1505,8 @@ export type DepositLoanAccount = Base & {
 };
 
 export type DepositLoanAccountConnection = {
-  edges: Array<DepositLoanAccountEdge>;
-  pageInfo: PageInfo;
+  edges?: Maybe<Array<DepositLoanAccountEdge>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -1490,15 +1577,22 @@ export type DepositLoanAccountResult = {
 
 export type DepositLoanAccountSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
+  memberId?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
 };
+
+export enum DepositPaymentType {
+  BankVoucher = 'BANK_VOUCHER',
+  Cash = 'CASH',
+  Cheque = 'CHEQUE',
+}
 
 export type DepositProduct = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
-  createdDate: Scalars['String'];
+  createdDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  interest: Scalars['Float'];
+  interest?: Maybe<Scalars['Float']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   nature: NatureOfDepositProduct;
@@ -1687,6 +1781,12 @@ export type DepositProductSettingsQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export type DepositResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type DepositSettingsMutation = {
   iroSetup?: Maybe<DepositIroResult>;
   tdsSetup?: Maybe<DepositTdsResult>;
@@ -1738,6 +1838,12 @@ export type DepositTdsResult = {
   record?: Maybe<DepositTds>;
   recordId: Scalars['ID'];
 };
+
+export enum DepositedBy {
+  Agent = 'AGENT',
+  Other = 'OTHER',
+  Self = 'SELF',
+}
 
 export type DirectorAffiliatedFirms = {
   addressOfInstitution?: Maybe<Scalars['String']>;
@@ -6114,9 +6220,11 @@ export type Mutation = {
   members: MemberMutation;
   newId: Scalars['String'];
   presignedUrl: PresignedUrlMutation;
+  report: ReportMutation;
   seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
+  transaction: TransactionMutation;
   user: UserMutation;
 };
 
@@ -6532,9 +6640,11 @@ export type Query = {
   form: FormQuery;
   inventory: InventoryQuery;
   members: MemberQuery;
+  report: ReportQuery;
   routesAndCodes: RoutesAndCodesQuery;
   settings: SettingsQuery;
   share: ShareQuery;
+  transaction: TransactionQuery;
   user: UserQuery;
 };
 
@@ -6567,6 +6677,32 @@ export type RebateInput = {
 
 export type RecentTransactionFilter = {
   limit: Scalars['Int'];
+};
+
+export type ReportMutation = {
+  statementReport?: Maybe<ReportResult>;
+};
+
+export type ReportMutationStatementReportArgs = {
+  data: StatementReportInput;
+};
+
+export type ReportPeriod = {
+  from: Scalars['String'];
+  to?: InputMaybe<Scalars['String']>;
+};
+
+export type ReportQuery = {
+  shareStatementReport?: Maybe<ReportResult>;
+};
+
+export type ReportQueryShareStatementReportArgs = {
+  data: ShareStatementReportData;
+};
+
+export type ReportResult = {
+  member?: Maybe<Member>;
+  statement?: Maybe<StatementReport>;
 };
 
 export type Result = {
@@ -6809,6 +6945,37 @@ export type ShareReturnResult = {
   recordId: Scalars['ID'];
 };
 
+export type ShareStatement = {
+  balanceSheet: Scalars['Int'];
+  date: Scalars['String'];
+  noOfShares: Scalars['Int'];
+  particular: Scalars['String'];
+  purchaseAmountCr: Scalars['Int'];
+  returnAmountDr: Scalars['Int'];
+};
+
+export type ShareStatementReport = {
+  shareStatement?: Maybe<Array<Maybe<ShareStatement>>>;
+};
+
+export type ShareStatementReportData = {
+  filter: ShareTransactionType;
+  memberId: Scalars['ID'];
+  period: ReportPeriod;
+};
+
+export type ShareStatementReportSettings = {
+  filter?: InputMaybe<ShareTransactionType>;
+  membeId: Scalars['ID'];
+  period: ReportPeriod;
+};
+
+export enum ShareTransactionType {
+  All = 'ALL',
+  Issue = 'ISSUE',
+  Return = 'RETURN',
+}
+
 export type SisterConcernDetails = {
   address?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -6829,6 +6996,14 @@ export type SisterConcernDetailsType = {
   name?: Maybe<Scalars['String']>;
   natureOfBusiness?: Maybe<Scalars['String']>;
   phoneNo?: Maybe<Scalars['String']>;
+};
+
+export type StatementReport = ShareStatementReport;
+
+export type StatementReportInput = {
+  data?: InputMaybe<ShareStatementReportSettings>;
+  name?: InputMaybe<Scalars['String']>;
+  reportType?: InputMaybe<Scalars['String']>;
 };
 
 export type SubscriptionMutation = {
@@ -6896,6 +7071,39 @@ export type TransactionFilter = {
   toDate?: InputMaybe<Scalars['Date']>;
   type?: InputMaybe<TranslateInput>;
 };
+
+export type TransactionMutation = {
+  deposit: DepositResult;
+  withdraw: WithdrawResult;
+};
+
+export type TransactionMutationDepositArgs = {
+  data: DepositInput;
+};
+
+export type TransactionMutationWithdrawArgs = {
+  data: WithdrawInput;
+};
+
+export type TransactionQuery = {
+  listDeposit: AccountActivityListConnection;
+  listWithdraw: AccountActivityListConnection;
+};
+
+export type TransactionQueryListDepositArgs = {
+  filter?: InputMaybe<DepositDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListWithdrawArgs = {
+  filter?: InputMaybe<WithdrawDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export enum TransactionState {
+  Active = 'ACTIVE',
+  Submitted = 'SUBMITTED',
+}
 
 export type Transactions = {
   amount: Scalars['Float'];
@@ -7192,6 +7400,44 @@ export enum WeeklyFrequency {
   DayOfTheWeek = 'DAY_OF_THE_WEEK',
 }
 
+export enum WithdrawBy {
+  Agent = 'AGENT',
+  Self = 'SELF',
+}
+
+export type WithdrawDataFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type WithdrawInput = {
+  accountId: Scalars['String'];
+  agentId?: InputMaybe<Scalars['String']>;
+  amount: Scalars['String'];
+  bankCheque?: InputMaybe<DepositCheque>;
+  cash?: InputMaybe<DepositCash>;
+  chequeNo?: InputMaybe<Scalars['String']>;
+  doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  fine?: InputMaybe<Scalars['String']>;
+  memberId: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  payment_type: WithdrawPaymentType;
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+  withdrawnBy: WithdrawBy;
+};
+
+export enum WithdrawPaymentType {
+  BankCheque = 'BANK_CHEQUE',
+  Cash = 'CASH',
+  WithdrawSlip = 'WITHDRAW_SLIP',
+}
+
+export type WithdrawResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;
   error?: Maybe<QueryError>;
@@ -7204,6 +7450,16 @@ export type SetAccountOpenDataMutationVariables = Exact<{
 
 export type SetAccountOpenDataMutation = {
   account: { add?: { recordId: string } | null };
+};
+
+export type SetAccountDocumentDataMutationVariables = Exact<{
+  subscriptionId: Scalars['String'];
+  fieldId: Scalars['String'];
+  identifiers: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+export type SetAccountDocumentDataMutation = {
+  document: { Subscription: { Upsert: { recordId?: string | null } } };
 };
 
 export type LoginMutationVariables = Exact<{
@@ -7669,8 +7925,8 @@ export type SetDepositProductMutation = {
             id: string;
             productCode: string;
             productName: string;
-            createdDate: string;
-            interest: number;
+            createdDate?: string | null;
+            interest?: number | null;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -8191,6 +8447,22 @@ export type AddShareReturnMutation = {
   share: { return: { recordId: string } };
 };
 
+export type SetDepositDataMutationVariables = Exact<{
+  data: DepositInput;
+}>;
+
+export type SetDepositDataMutation = {
+  transaction: { deposit: { recordId?: string | null } };
+};
+
+export type SetWithdrawDataMutationVariables = Exact<{
+  data: WithdrawInput;
+}>;
+
+export type SetWithdrawDataMutation = {
+  transaction: { withdraw: { recordId?: string | null } };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
@@ -8394,19 +8666,21 @@ export type GetAccountTableListQuery = {
   account: {
     list?: {
       totalCount: number;
-      pageInfo: {
+      pageInfo?: {
         hasNextPage: boolean;
         hasPreviousPage: boolean;
         startCursor?: string | null;
         endCursor?: string | null;
-      };
-      edges: Array<{
+      } | null;
+      edges?: Array<{
         node?: {
           id: string;
           objState: ObjState;
           createdAt: string;
           modifiedAt: string;
-          member: {
+          createdBy: { id: string };
+          modifiedBy: { id: string };
+          member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
             contact?: string | null;
@@ -8423,11 +8697,31 @@ export type GetAccountTableListQuery = {
                 latitude?: number | null;
               } | null;
             } | null;
+          } | null;
+          product: {
+            id: string;
+            productCode: string;
+            productName: string;
+            nature: NatureOfDepositProduct;
           };
-          product: { id: string; productCode: string; productName: string };
         } | null;
-      }>;
+      }> | null;
     } | null;
+  };
+};
+
+export type GetAccountDocumentsListQueryVariables = Exact<{
+  subscriptionId: Scalars['String'];
+}>;
+
+export type GetAccountDocumentsListQuery = {
+  document: {
+    listSubscriptionDocuments: {
+      data?: Array<{
+        fieldId?: string | null;
+        docData: Array<{ identifier: string; url: string } | null>;
+      } | null> | null;
+    };
   };
 };
 
@@ -9710,6 +10004,7 @@ export type GetMemberListQueryVariables = Exact<{
   arrange: Arrange;
   objState?: InputMaybe<ObjState>;
   query?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
 }>;
 
 export type GetMemberListQuery = {
@@ -10296,6 +10591,7 @@ export type GetLoanProductListQuery = {
                 defaultRate: number;
                 ceoAuthority?: number | null;
                 boardAuthority?: number | null;
+                interestMethod?: InterestMethod | null;
               } | null;
             };
           }>;
@@ -10393,6 +10689,28 @@ export type GetLoanProductEditDataQuery = {
             serviceName?: string | null;
             ledgerName?: string | null;
             amount?: any | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanGeneralSettingsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetLoanGeneralSettingsQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        general?: {
+          emi?: boolean | null;
+          epi?: boolean | null;
+          flat?: boolean | null;
+          collateralList?: Array<{
+            name?: string | null;
+            enabled?: boolean | null;
           } | null> | null;
         } | null;
       } | null;
@@ -10600,8 +10918,8 @@ export type GetDepositProductSettingsListQuery = {
               productCode: string;
               productName: string;
               nature: NatureOfDepositProduct;
-              interest: number;
-              createdDate: string;
+              interest?: number | null;
+              createdDate?: string | null;
               typeOfMember?: Array<KymMemberTypesEnum | null> | null;
               createdAt: string;
               modifiedAt: string;
@@ -10809,18 +11127,15 @@ export type GetShareBalanceListQuery = {
           };
         };
       }>;
-      pageInfo: {
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-        startCursor?: string | null;
-        endCursor?: string | null;
-      };
     } | null;
   };
 };
 
 export type GetShareRegisterListQueryVariables = Exact<{
-  [key: string]: never;
+  after?: InputMaybe<Scalars['Cursor']>;
+  first?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  last?: InputMaybe<Scalars['Int']>;
 }>;
 
 export type GetShareRegisterListQuery = {
@@ -10842,6 +11157,12 @@ export type GetShareRegisterListQuery = {
           } | null;
         };
       }>;
+      pageInfo: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      };
     } | null;
   };
 };
@@ -10884,6 +11205,68 @@ export type GetShareHistoryQuery = {
         };
       } | null;
     } | null;
+  };
+};
+
+export type GetDepositListDataQueryVariables = Exact<{
+  filter?: InputMaybe<DepositDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDepositListDataQuery = {
+  transaction: {
+    listDeposit: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          ID: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          state: TransactionState;
+          paymentMode?: string | null;
+          processedBy?: string | null;
+          date?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
+
+export type GetWithdrawListDataQueryVariables = Exact<{
+  filter?: InputMaybe<WithdrawDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetWithdrawListDataQuery = {
+  transaction: {
+    listWithdraw: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          ID: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          state: TransactionState;
+          paymentMode?: string | null;
+          processedBy?: string | null;
+          date?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
   };
 };
 
@@ -10955,6 +11338,41 @@ export const useSetAccountOpenDataMutation = <
     useAxios<SetAccountOpenDataMutation, SetAccountOpenDataMutationVariables>(
       SetAccountOpenDataDocument
     ),
+    options
+  );
+export const SetAccountDocumentDataDocument = `
+    mutation setAccountDocumentData($subscriptionId: String!, $fieldId: String!, $identifiers: [String!]!) {
+  document {
+    Subscription(subscriptionId: $subscriptionId) {
+      Upsert(fieldId: $fieldId, identifiers: $identifiers) {
+        recordId
+      }
+    }
+  }
+}
+    `;
+export const useSetAccountDocumentDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetAccountDocumentDataMutation,
+    TError,
+    SetAccountDocumentDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAccountDocumentDataMutation,
+    TError,
+    SetAccountDocumentDataMutationVariables,
+    TContext
+  >(
+    ['setAccountDocumentData'],
+    useAxios<
+      SetAccountDocumentDataMutation,
+      SetAccountDocumentDataMutationVariables
+    >(SetAccountDocumentDataDocument),
     options
   );
 export const LoginDocument = `
@@ -13013,6 +13431,67 @@ export const useAddShareReturnMutation = <TError = unknown, TContext = unknown>(
     ),
     options
   );
+export const SetDepositDataDocument = `
+    mutation setDepositData($data: DepositInput!) {
+  transaction {
+    deposit(data: $data) {
+      recordId
+    }
+  }
+}
+    `;
+export const useSetDepositDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepositDataMutation,
+    TError,
+    SetDepositDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetDepositDataMutation,
+    TError,
+    SetDepositDataMutationVariables,
+    TContext
+  >(
+    ['setDepositData'],
+    useAxios<SetDepositDataMutation, SetDepositDataMutationVariables>(
+      SetDepositDataDocument
+    ),
+    options
+  );
+export const SetWithdrawDataDocument = `
+    mutation setWithdrawData($data: WithdrawInput!) {
+  transaction {
+    withdraw(data: $data) {
+      recordId
+    }
+  }
+}
+    `;
+export const useSetWithdrawDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetWithdrawDataMutation,
+    TError,
+    SetWithdrawDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetWithdrawDataMutation,
+    TError,
+    SetWithdrawDataMutationVariables,
+    TContext
+  >(
+    ['setWithdrawData'],
+    useAxios<SetWithdrawDataMutation, SetWithdrawDataMutationVariables>(
+      SetWithdrawDataDocument
+    ),
+    options
+  );
 export const GetAccountMemberListDocument = `
     query getAccountMemberList($objState: ObjState, $pagination: Pagination) {
   members {
@@ -13278,7 +13757,13 @@ export const GetAccountTableListDocument = `
           id
           objState
           createdAt
+          createdBy {
+            id
+          }
           modifiedAt
+          modifiedBy {
+            id
+          }
           member {
             id
             name
@@ -13301,6 +13786,7 @@ export const GetAccountTableListDocument = `
             id
             productCode
             productName
+            nature
           }
         }
       }
@@ -13322,6 +13808,36 @@ export const useGetAccountTableListQuery = <
     useAxios<GetAccountTableListQuery, GetAccountTableListQueryVariables>(
       GetAccountTableListDocument
     ).bind(null, variables),
+    options
+  );
+export const GetAccountDocumentsListDocument = `
+    query getAccountDocumentsList($subscriptionId: String!) {
+  document {
+    listSubscriptionDocuments(subscriptionId: $subscriptionId) {
+      data {
+        fieldId
+        docData {
+          identifier
+          url
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountDocumentsListQuery = <
+  TData = GetAccountDocumentsListQuery,
+  TError = unknown
+>(
+  variables: GetAccountDocumentsListQueryVariables,
+  options?: UseQueryOptions<GetAccountDocumentsListQuery, TError, TData>
+) =>
+  useQuery<GetAccountDocumentsListQuery, TError, TData>(
+    ['getAccountDocumentsList', variables],
+    useAxios<
+      GetAccountDocumentsListQuery,
+      GetAccountDocumentsListQueryVariables
+    >(GetAccountDocumentsListDocument).bind(null, variables),
     options
   );
 export const AllAdministrationDocument = `
@@ -15052,11 +15568,11 @@ export const useGetCoopUnionKymOptionsQuery = <
     options
   );
 export const GetMemberListDocument = `
-    query getMemberList($after: Cursor, $first: Int, $before: Cursor, $last: Int, $column: String!, $arrange: Arrange!, $objState: ObjState, $query: String) {
+    query getMemberList($after: Cursor, $first: Int, $before: Cursor, $last: Int, $column: String!, $arrange: Arrange!, $objState: ObjState, $query: String, $id: ID) {
   members {
     list(
       pagination: {after: $after, first: $first, before: $before, last: $last, order: {column: $column, arrange: $arrange}}
-      filter: {objState: $objState, query: $query}
+      filter: {objState: $objState, query: $query, id: $id}
     ) {
       totalCount
       edges {
@@ -15780,6 +16296,7 @@ export const GetLoanProductListDocument = `
                 defaultRate
                 ceoAuthority
                 boardAuthority
+                interestMethod
               }
             }
           }
@@ -15911,6 +16428,41 @@ export const useGetLoanProductEditDataQuery = <
     ['getLoanProductEditData', variables],
     useAxios<GetLoanProductEditDataQuery, GetLoanProductEditDataQueryVariables>(
       GetLoanProductEditDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanGeneralSettingsDocument = `
+    query getLoanGeneralSettings {
+  settings {
+    general {
+      loan {
+        general {
+          emi
+          epi
+          flat
+          collateralList {
+            name
+            enabled
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanGeneralSettingsQuery = <
+  TData = GetLoanGeneralSettingsQuery,
+  TError = unknown
+>(
+  variables?: GetLoanGeneralSettingsQueryVariables,
+  options?: UseQueryOptions<GetLoanGeneralSettingsQuery, TError, TData>
+) =>
+  useQuery<GetLoanGeneralSettingsQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanGeneralSettings']
+      : ['getLoanGeneralSettings', variables],
+    useAxios<GetLoanGeneralSettingsQuery, GetLoanGeneralSettingsQueryVariables>(
+      GetLoanGeneralSettingsDocument
     ).bind(null, variables),
     options
   );
@@ -16461,12 +17013,6 @@ export const GetShareBalanceListDocument = `
           amount
         }
       }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
     }
   }
 }
@@ -16488,9 +17034,11 @@ export const useGetShareBalanceListQuery = <
     options
   );
 export const GetShareRegisterListDocument = `
-    query getShareRegisterList {
+    query getShareRegisterList($after: Cursor, $first: Int, $before: Cursor, $last: Int) {
   share {
-    register {
+    register(
+      pagination: {after: $after, first: $first, before: $before, last: $last}
+    ) {
       edges {
         node {
           transactionDate
@@ -16506,6 +17054,12 @@ export const GetShareRegisterListDocument = `
           credit
           debit
         }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }
@@ -16579,6 +17133,92 @@ export const useGetShareHistoryQuery = <
     ['getShareHistory', variables],
     useAxios<GetShareHistoryQuery, GetShareHistoryQueryVariables>(
       GetShareHistoryDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDepositListDataDocument = `
+    query getDepositListData($filter: DepositDataFilter, $pagination: Pagination) {
+  transaction {
+    listDeposit(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          ID
+          name
+          amount
+          state
+          paymentMode
+          processedBy
+          date
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositListDataQuery = <
+  TData = GetDepositListDataQuery,
+  TError = unknown
+>(
+  variables?: GetDepositListDataQueryVariables,
+  options?: UseQueryOptions<GetDepositListDataQuery, TError, TData>
+) =>
+  useQuery<GetDepositListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getDepositListData']
+      : ['getDepositListData', variables],
+    useAxios<GetDepositListDataQuery, GetDepositListDataQueryVariables>(
+      GetDepositListDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetWithdrawListDataDocument = `
+    query getWithdrawListData($filter: WithdrawDataFilter, $pagination: Pagination) {
+  transaction {
+    listWithdraw(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          ID
+          name
+          amount
+          state
+          paymentMode
+          processedBy
+          date
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetWithdrawListDataQuery = <
+  TData = GetWithdrawListDataQuery,
+  TError = unknown
+>(
+  variables?: GetWithdrawListDataQueryVariables,
+  options?: UseQueryOptions<GetWithdrawListDataQuery, TError, TData>
+) =>
+  useQuery<GetWithdrawListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getWithdrawListData']
+      : ['getWithdrawListData', variables],
+    useAxios<GetWithdrawListDataQuery, GetWithdrawListDataQueryVariables>(
+      GetWithdrawListDataDocument
     ).bind(null, variables),
     options
   );

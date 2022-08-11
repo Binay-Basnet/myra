@@ -30,9 +30,7 @@ export const PageHeaderWithTabs = ({
       alignItems="center"
       px="s16"
       py="s8"
-      // height="60px"
-      height="60px"
-      // gap="s48"
+      height="50px"
     >
       <Text fontSize="r2" fontWeight="600" color="gray.800" w="300px">
         {heading}

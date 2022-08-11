@@ -9,17 +9,6 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 
-const ladderSwitch = [
-  {
-    label: 'Yes',
-    value: true,
-  },
-  {
-    label: 'No',
-    value: false,
-  },
-];
-
 type SalesTable = {
   type: string;
   amount: number;
@@ -30,8 +19,18 @@ export const Interest = () => {
   const { watch } = useFormContext();
   const { t } = useTranslation();
   const depositNature = watch('nature');
-
   const ladderRate = watch('ladderRate');
+
+  const ladderSwitch = [
+    {
+      label: t['yes'],
+      value: true,
+    },
+    {
+      label: t['no'],
+      value: false,
+    },
+  ];
 
   return (
     <>
@@ -117,72 +116,48 @@ export const Interest = () => {
         </InputGroupContainer>
       </BoxContainer>
 
-      <Box display={'flex'} flexDirection="column" gap="s20">
-        <Box
-          alignItems="center"
-          display={'flex'}
-          justifyContent="space-between"
-        >
-          <Text
-            color="neutralColorLight.Gray-70"
-            fontSize={'s3'}
-            fontWeight="Medium"
+      {depositNature === NatureOfDepositProduct.RecurringSaving && (
+        <Box display={'flex'} flexDirection="column" gap="s20">
+          <Box
+            alignItems="center"
+            display={'flex'}
+            justifyContent="space-between"
           >
-            {t['depositProductLadderRate']}
-          </Text>
-          <FormSwitchTab name="ladderRate" options={ladderSwitch} />
+            <Text
+              color="neutralColorLight.Gray-70"
+              fontSize={'s3'}
+              fontWeight="Medium"
+            >
+              {t['depositProductLadderRate']}
+            </Text>
+            <FormSwitchTab name="ladderRate" options={ladderSwitch} />
+          </Box>
+          {ladderRate && (
+            <FormEditableTable<SalesTable>
+              name="ladderRateData"
+              debug={false}
+              columns={[
+                {
+                  accessor: 'type',
+                  accessorFn: () => 'More than',
+                  header: t['depositProductInterestType'],
+                },
+                {
+                  accessor: 'amount',
+                  header: t['depositProductInterestLadderAmount'],
+                  isNumeric: true,
+                },
+                {
+                  accessor: 'rate',
+                  header: t['depositProductInterestLadderRate'],
+                  fieldType: 'percentage',
+                  isNumeric: true,
+                },
+              ]}
+            />
+          )}
         </Box>
-        {ladderRate && (
-          <FormEditableTable<SalesTable>
-            name="ladderRateData"
-            debug={false}
-            defaultData={[
-              {
-                type: 'More Than',
-                amount: 0,
-                rate: 0,
-              },
-              {
-                type: 'More Than',
-                amount: 0,
-                rate: 0,
-              },
-              {
-                type: 'More Than',
-                amount: 0,
-                rate: 0,
-              },
-              {
-                type: 'More Than',
-                amount: 0,
-                rate: 0,
-              },
-              {
-                type: 'More Than',
-                amount: 0,
-                rate: 0,
-              },
-            ]}
-            columns={[
-              {
-                accessor: 'type',
-                header: t['depositProductInterestType'],
-              },
-              {
-                accessor: 'amount',
-                header: t['depositProductInterestLadderAmount'],
-                isNumeric: true,
-              },
-              {
-                accessor: 'rate',
-                header: t['depositProductInterestLadderRate'],
-                fieldType: 'percentage',
-                isNumeric: true,
-              },
-            ]}
-          />
-        )}
-      </Box>
+      )}
     </>
   );
 };

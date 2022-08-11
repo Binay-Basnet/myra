@@ -27,7 +27,6 @@ import {
   Avatar,
   Box,
   Container,
-  DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
   Grid,
@@ -73,18 +72,22 @@ const SharePurchaseForm = () => {
   const [IDMember, setIDMember] = useState('');
   const [trigger, setTrigger] = useState(false);
 
-  const { data } = useGetMemberIndividualDataQuery({
-    id: memberId,
-  });
-
-  const memberData = data?.members?.details?.data;
+  const { data } = useGetMemberIndividualDataQuery(
+    {
+      id: memberId,
+    },
+    {
+      staleTime: 0,
+      enabled: trigger,
+    }
+  );
 
   const { data: memberList } = useGetMemberListQuery(
     {
-      first: DEFAULT_PAGE_SIZE,
+      first: 10,
       after: '',
       column: 'ID',
-      arrange: Arrange.Desc,
+      arrange: Arrange.Asc,
       query: IDMember,
     },
     {
@@ -95,18 +98,25 @@ const SharePurchaseForm = () => {
 
   const memberListData = memberList?.members?.list?.edges;
 
-  const memberOptions =
+  type optionType = { label: string; value: string };
+
+  const memberDetail =
     memberListData &&
-    memberListData.map((member) => {
-      return {
-        label: `${member?.node?.id}-${member?.node?.name?.local}`,
-        value: member?.node?.id,
-      };
-    });
+    memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
+
+  const memberOptions = memberListData?.reduce((prevVal, curVal) => {
+    return [
+      ...prevVal,
+      {
+        label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
+        value: curVal?.node?.id as string,
+      },
+    ];
+  }, [] as optionType[]);
 
   useEffect(() => {
     setTotalAmount(
-      noOfShares * 1000 + Number(adminFee ?? 0) + Number(printingFee ?? 0)
+      noOfShares * 100 + Number(adminFee ?? 0) + Number(printingFee ?? 0)
     );
   }, [noOfShares, adminFee, printingFee]);
 
@@ -127,13 +137,13 @@ const SharePurchaseForm = () => {
       ],
       totalAmount: totalAmount.toString(),
       shareCount: Number(values['shareCount']),
-      memberId: '123456789',
+      memberId,
     };
 
     mutate(
       { data: updatedValues },
       {
-        onSuccess: () => router.push(`/share/balance`),
+        onSuccess: () => router.push(`/share/register`),
       }
     );
   };
@@ -151,7 +161,7 @@ const SharePurchaseForm = () => {
           >
             <Header />
           </Box>
-          <Container minW="container.lg" p="0">
+          <Container minW="container.lg" p="0" mb="60px">
             <Box
               position="sticky"
               top="110px"
@@ -161,7 +171,13 @@ const SharePurchaseForm = () => {
             >
               <FormHeader title={t['sharePurchaseNewSharePurchase']} />
             </Box>
-            <Box mb="50px" display="flex" width="100%">
+            <Box
+              mb="50px"
+              display="flex"
+              width="100%"
+              background="white"
+              minH="calc(100vh - 170px)"
+            >
               <Box w="100%">
                 <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
                   <Box w="50%">
@@ -173,7 +189,7 @@ const SharePurchaseForm = () => {
                         setIDMember(id);
                         setTrigger(true);
                       }, 800)}
-                      options={memberOptions}
+                      options={memberOptions ?? []}
                     />
                   </Box>
 
@@ -204,7 +220,7 @@ const SharePurchaseForm = () => {
                               <Avatar
                                 src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
                                 size="lg"
-                                name={memberData?.name?.local}
+                                name={memberDetail?.name?.local}
                               />
                             </Box>
                             <Box>
@@ -213,16 +229,14 @@ const SharePurchaseForm = () => {
                                 fontWeight="Medium"
                                 fontSize="s3"
                               >
-                                {memberData?.name?.local}
+                                {memberDetail?.name?.local}
                               </TextFields>
                               <Text
                                 color="neutralColorLight.Gray-80"
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {t['sharePurchaseID']}:
-                                {/* {memberData?.personalInformation?.panNumber} */}
-                                1233223
+                                {t['sharePurchaseID']}:{memberDetail?.id}
                               </Text>
 
                               <Text
@@ -231,7 +245,7 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                               >
                                 {t['sharePurchaseMemberSince']}:
-                                {/* {memberData?.personalInformation?.dateOfBirth} */}
+                                {/* {memberDetail?.personalInformation?.dateOfBirth} */}
                                 2054/10/12
                               </Text>
 
@@ -241,7 +255,7 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                               >
                                 {t['sharePurchaseBranch']}:
-                                {memberData?.address?.district?.local}
+                                {memberDetail?.address?.district?.local}
                               </Text>
                             </Box>
                           </GridItem>
@@ -265,7 +279,7 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberData?.contact}
+                                {memberDetail?.contact}
                               </TextFields>
                             </Box>
 
@@ -293,9 +307,9 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberData?.address?.district?.local},
-                                {/* {memberData?.address?.locality?.local} -
-                                {memberData?.address?.wardNo} */}
+                                {memberDetail?.address?.district?.local},
+                                {/* {memberDetail?.address?.locality?.local} -
+                                {memberDetail?.address?.wardNo} */}
                               </TextFields>
                             </Box>
                           </GridItem>
@@ -304,15 +318,11 @@ const SharePurchaseForm = () => {
                             justifyContent="flex-end"
                             mr="s32"
                           >
-                            <Text
-                              fontWeight="Medium"
-                              color="primary.500"
-                              fontSize="s2"
-                              mr="5px"
-                            >
-                              {t['sharePurchaseViewProfile']}
-                            </Text>
+                            <TextFields variant="link">
+                              {t['sharePurchaseViewProfile']}{' '}
+                            </TextFields>
                             <Icon
+                              ml="5px"
                               size="sm"
                               as={RiShareBoxFill}
                               color="primary.500"
@@ -321,7 +331,7 @@ const SharePurchaseForm = () => {
                         </Grid>
                       </Box>
 
-                      <Box>
+                      <Box p="2px">
                         <Box p="s16">
                           <Text
                             color="neutralColorLight.Gray-80"

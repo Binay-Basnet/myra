@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { BsFillTelephoneFill } from 'react-icons/bs';
@@ -57,6 +57,7 @@ interface IKYMBasiccoopDetailsFamilyMemberProps {
 const KYMBasiccoopDetailsFamilyMember = ({
   setKymCurrentSection,
 }: IKYMBasiccoopDetailsFamilyMemberProps) => {
+  const [showFamilyDetailCard, setShowFamilyDetailCard] = useState(false);
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -127,188 +128,204 @@ const KYMBasiccoopDetailsFamilyMember = ({
               id="familyMemberInThisInstitution"
             />
           </Box>
+          {showFamilyDetailCard && (
+            <Box display="flex" flexDirection="column" gap="s4">
+              <Text fontSize="s3">
+                {t['kynIndFamilyMemberinthisinstitution']}
+              </Text>
 
-          <Box display="flex" flexDirection="column" gap="s4">
-            <Text fontSize="s3">
-              {t['kynIndFamilyMemberinthisinstitution']}
-            </Text>
-
-            <Box
-              mt="s16"
-              borderRadius="br2"
-              border="1px solid"
-              borderColor="border.layout"
-              display="flex"
-              flexDirection="column"
-            >
-              <Box bg="background.500" borderBottom="1px solid #E6E6E6">
-                <Grid
-                  templateRows="repeat(1,1fr)"
-                  templateColumns="repeat(5,1fr)"
-                  gap={2}
-                  mt="s20"
-                  mb="s20"
-                  ml="s16"
-                >
-                  <GridItem display="flex" alignSelf="center" colSpan={2}>
-                    <Box m="10px">
-                      <Avatar
-                        src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
-                        size="lg"
-                        // name={data?.personalInformation?.name?.firstName}
-                        name="Ajit Nepal"
-                      />
-                    </Box>
-                    <Box>
-                      <TextFields
-                        color="neutralColorLight.Gray-80"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
-                        Ajit Nepal
-                        {/* {data?.personalInformation?.name?.firstName}{' '}
+              <Box
+                mt="s16"
+                borderRadius="br2"
+                border="1px solid"
+                borderColor="border.layout"
+                display="flex"
+                flexDirection="column"
+              >
+                <Box bg="background.500" borderBottom="1px solid #E6E6E6">
+                  <Grid
+                    templateRows="repeat(1,1fr)"
+                    templateColumns="repeat(5,1fr)"
+                    gap={2}
+                    mt="s20"
+                    mb="s20"
+                    ml="s16"
+                  >
+                    <GridItem display="flex" alignSelf="center" colSpan={2}>
+                      <Box m="10px">
+                        <Avatar
+                          src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
+                          size="lg"
+                          // name={data?.personalInformation?.name?.firstName}
+                          name="Ajit Nepal"
+                        />
+                      </Box>
+                      <Box>
+                        <TextFields
+                          color="neutralColorLight.Gray-80"
+                          fontWeight="Medium"
+                          fontSize="s3"
+                        >
+                          Ajit Nepal
+                          {/* {data?.personalInformation?.name?.firstName}{' '}
                     {data?.personalInformation?.name?.middleName}{' '}
                     {data?.personalInformation?.name?.lastName} */}
-                      </TextFields>
-                      <Text
-                        color="neutralColorLight.Gray-80"
-                        fontSize="s3"
-                        fontWeight="Regular"
-                      >
-                        {/* ID: {data?.personalInformation?.panNumber} */}
-                        {t['id']} : 23524364456
-                      </Text>
+                        </TextFields>
+                        <Text
+                          color="neutralColorLight.Gray-80"
+                          fontSize="s3"
+                          fontWeight="Regular"
+                        >
+                          {/* ID: {data?.personalInformation?.panNumber} */}
+                          {t['id']} : 23524364456
+                        </Text>
 
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Regular"
-                        fontSize="s3"
-                      >
-                        {/* Member Since: {data?.personalInformation?.dateOfBirth} */}
-                        {t['memberSince']} : 2077/03/45
-                      </Text>
+                        <Text
+                          color="neutralColorLight.Gray-60"
+                          fontWeight="Regular"
+                          fontSize="s3"
+                        >
+                          {/* Member Since: {data?.personalInformation?.dateOfBirth} */}
+                          {t['memberSince']} : 2077/03/45
+                        </Text>
 
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Regular"
-                        fontSize="s3"
-                      >
-                        {/* Branch: {data?.address?.temporary?.state} */}
-                        ABC SACCOS
-                      </Text>
-                    </Box>
+                        <Text
+                          color="neutralColorLight.Gray-60"
+                          fontWeight="Regular"
+                          fontSize="s3"
+                        >
+                          {/* Branch: {data?.address?.temporary?.state} */}
+                          ABC SACCOS
+                        </Text>
+                      </Box>
+                    </GridItem>
+
+                    <GridItem
+                      display="flex"
+                      flexDirection="column"
+                      alignSelf="center"
+                      colSpan={2}
+                      gap={3}
+                    >
+                      <Box display="flex">
+                        <Icon
+                          size="sm"
+                          as={BsFillTelephoneFill}
+                          color="primary.500"
+                        />
+                        <TextFields
+                          ml="10px"
+                          color="neutralColorLight.Gray-80"
+                          fontSize="s3"
+                          fontWeight="Regular"
+                        >
+                          {/* {data?.contact?.mobile} */}
+                          9865000000
+                        </TextFields>
+                      </Box>
+
+                      <Box display="flex">
+                        <Icon size="sm" as={GrMail} color="primary.500" />
+                        <TextFields
+                          ml="10px"
+                          color="neutralColorLight.Gray-80"
+                          fontSize="s3"
+                          fontWeight="Regular"
+                        >
+                          ajitnepal65@gmail.com
+                        </TextFields>
+                      </Box>
+
+                      <Box display="flex">
+                        <Icon
+                          size="sm"
+                          as={IoLocationSharp}
+                          color="primary.500"
+                        />
+                        <TextFields
+                          ml="10px"
+                          color="neutralColorLight.Gray-80"
+                          fontSize="s3"
+                          fontWeight="Regular"
+                        >
+                          Kathmandu, Tokha Municipality-10
+                        </TextFields>
+                      </Box>
+                    </GridItem>
+
+                    <GridItem
+                      mr="s16"
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent="space-between"
+                    >
+                      <Box alignSelf="flex-end">
+                        <Icon
+                          h="14px"
+                          w="14px"
+                          as={CloseIcon}
+                          color="gray.500"
+                          cursor="pointer"
+                          onClick={() => setShowFamilyDetailCard(false)}
+                        />
+                      </Box>
+                      <Box display="flex" alignSelf="flex-end">
+                        <Text
+                          fontWeight="Medium"
+                          color="primary.500"
+                          fontSize="s2"
+                          mr="5px"
+                        >
+                          {t['kynIndViewProfile']}
+                        </Text>
+                        <Icon
+                          size="sm"
+                          as={RiShareBoxFill}
+                          color="primary.500"
+                        />
+                      </Box>
+                    </GridItem>
+                  </Grid>
+                </Box>
+
+                <Grid
+                  p="s16"
+                  bg="background.500"
+                  templateColumns="repeat(2,1fr)"
+                >
+                  <GridItem>
+                    <Text
+                      fontWeight="Regular"
+                      fontSize="s3"
+                      color="neutralColorLight.gray-80"
+                    >
+                      {t['kynIndCitizenshipNo']} : 23456873445wds23424
+                    </Text>
                   </GridItem>
-
-                  <GridItem
-                    display="flex"
-                    flexDirection="column"
-                    alignSelf="center"
-                    colSpan={2}
-                    gap={3}
-                  >
-                    <Box display="flex">
-                      <Icon
-                        size="sm"
-                        as={BsFillTelephoneFill}
-                        color="primary.500"
-                      />
-                      <TextFields
-                        ml="10px"
-                        color="neutralColorLight.Gray-80"
-                        fontSize="s3"
-                        fontWeight="Regular"
-                      >
-                        {/* {data?.contact?.mobile} */}
-                        9865000000
-                      </TextFields>
-                    </Box>
-
-                    <Box display="flex">
-                      <Icon size="sm" as={GrMail} color="primary.500" />
-                      <TextFields
-                        ml="10px"
-                        color="neutralColorLight.Gray-80"
-                        fontSize="s3"
-                        fontWeight="Regular"
-                      >
-                        ajitnepal65@gmail.com
-                      </TextFields>
-                    </Box>
-
-                    <Box display="flex">
-                      <Icon
-                        size="sm"
-                        as={IoLocationSharp}
-                        color="primary.500"
-                      />
-                      <TextFields
-                        ml="10px"
-                        color="neutralColorLight.Gray-80"
-                        fontSize="s3"
-                        fontWeight="Regular"
-                      >
-                        Kathmandu, Tokha Municipality-10
-                      </TextFields>
-                    </Box>
-                  </GridItem>
-
-                  <GridItem
-                    mr="s16"
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="space-between"
-                  >
-                    <Box alignSelf="flex-end">
-                      <Icon h="14px" w="14px" as={CloseIcon} color="gray.500" />
-                    </Box>
-                    <Box display="flex" alignSelf="flex-end">
-                      <Text
-                        fontWeight="Medium"
-                        color="primary.500"
-                        fontSize="s2"
-                        mr="5px"
-                      >
-                        {t['kynIndViewProfile']}
-                      </Text>
-                      <Icon size="sm" as={RiShareBoxFill} color="primary.500" />
-                    </Box>
+                  <GridItem>
+                    <Text
+                      fontWeight="Regular"
+                      fontSize="s3"
+                      color="neutralColorLight.gray-80"
+                    >
+                      {t['kynIndPresentAddress']} : Lalitpur, Lalitpur
+                      Municipality -11
+                    </Text>
                   </GridItem>
                 </Grid>
-              </Box>
-
-              <Grid p="s16" bg="background.500" templateColumns="repeat(2,1fr)">
-                <GridItem>
-                  <Text
-                    fontWeight="Regular"
-                    fontSize="s3"
-                    color="neutralColorLight.gray-80"
-                  >
-                    {t['kynIndCitizenshipNo']} : 23456873445wds23424
-                  </Text>
-                </GridItem>
-                <GridItem>
-                  <Text
-                    fontWeight="Regular"
-                    fontSize="s3"
-                    color="neutralColorLight.gray-80"
-                  >
-                    {t['kynIndPresentAddress']} : Lalitpur, Lalitpur
-                    Municipality -11
-                  </Text>
-                </GridItem>
-              </Grid>
-              <Box px="s16" py="s32" w="40%">
-                <FormSelect
-                  name={`familyRelationship`}
-                  id="familyMemberInThisCooperative"
-                  label={t['kymIndRelationship']}
-                  placeholder={t['kymIndSelectRelationship']}
-                  isLoading={familyRelationshipLoading}
-                  options={getFieldOption(familyRelationShipData)}
-                />
+                <Box px="s16" py="s32" w="40%">
+                  <FormSelect
+                    name={`familyRelationship`}
+                    id="familyMemberInThisCooperative"
+                    label={t['kymIndRelationship']}
+                    placeholder={t['kymIndSelectRelationship']}
+                    isLoading={familyRelationshipLoading}
+                    options={getFieldOption(familyRelationShipData)}
+                  />
+                </Box>
               </Box>
             </Box>
-          </Box>
+          )}
 
           <Box display="flex" gap="s20" alignItems="center">
             <Input
@@ -331,6 +348,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
               h="44px"
               variant="outline"
               leftIcon={<Icon size="md" as={AiOutlineSearch} />}
+              onClick={() => setShowFamilyDetailCard(true)}
             >
               {t['kynIndFindMember']}
             </Button>

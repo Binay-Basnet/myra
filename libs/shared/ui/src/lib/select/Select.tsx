@@ -9,6 +9,7 @@ import TextFields from '../text-fields/TextFields';
 interface SelectOption {
   label: string | number;
   value: string | number;
+  disabled?: boolean;
 }
 
 export interface SelectProps
@@ -76,6 +77,7 @@ export function Select({
         closeMenuOnSelect={!isMulti}
         isMulti={isMulti}
         hideSelectedOptions={false}
+        isOptionDisabled={(option) => !!option.disabled}
         isClearable={false}
         chakraStyles={chakraDefaultStyles}
         components={customComponents}

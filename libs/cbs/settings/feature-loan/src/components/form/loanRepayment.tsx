@@ -79,7 +79,17 @@ export const LoanRepayment = () => {
               textAlign={'right'}
               label={t['loanProductNumber']}
               placeholder="0"
-              rightAddonText={rightElementMin && rightElementMin.toLowerCase()}
+              rightAddonText={
+                rightElementMin && rightElementMin === Frequency.Daily
+                  ? t['days']
+                  : rightElementMin === Frequency.Weekly
+                  ? t['weeks']
+                  : rightElementMin === Frequency.Monthly
+                  ? t['months']
+                  : rightElementMin === Frequency.Yearly
+                  ? t['years']
+                  : ''
+              }
             />
           </Box>
         </Box>
@@ -111,7 +121,17 @@ export const LoanRepayment = () => {
               textAlign={'right'}
               label={t['loanProductNumber']}
               placeholder="0"
-              rightAddonText={rightElementMax && rightElementMax.toLowerCase()}
+              rightAddonText={
+                rightElementMax && rightElementMax === Frequency.Daily
+                  ? t['days']
+                  : rightElementMax === Frequency.Weekly
+                  ? t['weeks']
+                  : rightElementMax === Frequency.Monthly
+                  ? t['months']
+                  : rightElementMax === Frequency.Yearly
+                  ? t['years']
+                  : ''
+              }
             />
           </Box>
         </BoxContainer>

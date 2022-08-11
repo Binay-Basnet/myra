@@ -49,15 +49,7 @@ const AddNewAccount = () => {
 
   return (
     <>
-      <Form<AddCoaAccountInput>
-        methods={methods}
-        onChange={() => {
-          console.log("Hello")
-        }}
-        onSubmit={(data) => {
-          console.log("Data")
-        }}
-      >
+      <Form<AddCoaAccountInput> methods={methods}>
         <form>
           <Container
             minW="container.lg"
@@ -466,22 +458,11 @@ const AddNewAccount = () => {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.lg" height="fit-content" p="0">
             <FormFooter
-              status={
-                <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
-                  </Text>
-                </Box>
-              }
               draftButton={
-                <Button type="submit" variant="ghost">
-                  <Icon as={BiSave} color="primary.500" />
+                <Button type="submit" variant="ghost" shade="neutral">
+                  <Icon as={BiSave} />
                   <Text
                     alignSelf="center"
-                    color="primary.500"
                     fontWeight="Medium"
                     fontSize="s2"
                     ml="5px"
@@ -491,7 +472,7 @@ const AddNewAccount = () => {
                 </Button>
               }
               mainButtonLabel={t['next']}
-              mainButtonHandler={() => router.push(`/members/translation`)}
+              mainButtonHandler={null}
             />
           </Container>
         </Box>
