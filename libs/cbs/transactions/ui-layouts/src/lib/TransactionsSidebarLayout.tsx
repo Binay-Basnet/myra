@@ -125,6 +125,7 @@ export const TransactionsSidebarLayout = ({
                     _hover={{ bg: 'gray.100' }}
                     cursor="pointer"
                     onClick={() => router.push(addButton.link)}
+                    key={addButton.link}
                   >
                     <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                     <Text

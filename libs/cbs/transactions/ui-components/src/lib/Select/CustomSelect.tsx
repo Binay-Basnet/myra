@@ -13,13 +13,13 @@ import { components as customComponents } from './SelectComponents';
 import { chakraDefaultStyles } from './SelectStyles';
 
 interface SelectOption {
-  label?: string | number;
-  value: string | number;
-  accountInfo: {
-    accountName: string;
-    accountId: string;
-    accountType: string;
-    balance: string;
+  label?: string;
+  value: string;
+  accountInfo?: {
+    accountName?: string;
+    accountId?: string;
+    accountType?: string;
+    balance?: string;
     fine?: string;
   };
 }

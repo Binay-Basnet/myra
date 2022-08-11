@@ -5,7 +5,7 @@ import { FrequencyTenure } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText } from '@coop/shared/components';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const unitOptions = [
@@ -29,7 +29,7 @@ const unitOptions = [
 
 export const Tenure = () => {
   const { t } = useTranslation();
-  const [rightElementMax, setRightElementMax] = useState('day');
+  const [rightElement, setRightElement] = useState('day');
 
   const { resetField, watch } = useFormContext();
 
@@ -37,7 +37,7 @@ export const Tenure = () => {
 
   useEffect(() => {
     resetField('tenureUnitFrequency');
-    setRightElementMax(tenureUnit);
+    setRightElement(tenureUnit);
   }, [tenureUnit]);
 
   return (
@@ -81,16 +81,16 @@ export const Tenure = () => {
                 textAlign={'right'}
                 label={t['accountOpenNumber']}
                 placeholder="0"
-                rightElement={
-                  <Box mr="s24">
-                    <Text
-                      fontWeight="Medium"
-                      fontSize="r1"
-                      color="accent.debit"
-                    >
-                      {rightElementMax}
-                    </Text>
-                  </Box>
+                rightAddonText={
+                  rightElement && rightElement === FrequencyTenure.Day
+                    ? t['days']
+                    : rightElement === FrequencyTenure.Week
+                    ? t['weeks']
+                    : rightElement === FrequencyTenure.Month
+                    ? t['months']
+                    : rightElement === FrequencyTenure.Year
+                    ? t['years']
+                    : ''
                 }
               />
             </Box>

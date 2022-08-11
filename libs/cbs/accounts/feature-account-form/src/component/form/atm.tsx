@@ -39,7 +39,7 @@ export const Atm = () => {
           pt="s16"
         >
           <SubHeadingText>{t['accountOpenChequeIssue']}</SubHeadingText>
-          <FormSwitchTab name="atmFacility" options={YesNoOptions} />
+          <FormSwitchTab name="chequeIssue" options={YesNoOptions} />
         </Box>
       </Box>
     </GroupContainer>

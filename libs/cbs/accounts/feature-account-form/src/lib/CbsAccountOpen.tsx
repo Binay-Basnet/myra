@@ -35,6 +35,10 @@ export type FileListType = {
   nominee: string[];
   photo: string[];
   fingerPrintPhoto: string[];
+  decisionDocuments: string[];
+  registeredPhotos: string[];
+  InsSignature: string[];
+  taxClearance: string[];
 };
 
 export function CbsAccountOpen() {
@@ -43,6 +47,10 @@ export function CbsAccountOpen() {
     fingerPrintPhoto: [],
     photo: [],
     nominee: [],
+    decisionDocuments: [],
+    registeredPhotos: [],
+    InsSignature: [],
+    taxClearance: [],
   });
   const { t } = useTranslation();
   const router = useRouter();
@@ -58,6 +66,7 @@ export function CbsAccountOpen() {
   const [triggerQuery, setTriggerQuery] = useState(false);
 
   const products = watch('productId');
+  const member = watch('memberId');
 
   const poductDetails = useGetAccountOpenProductDetailsQuery(
     { id: products },
@@ -133,6 +142,7 @@ export function CbsAccountOpen() {
       refetch();
     }
   }, [refetch]);
+  const productid = watch('productId');
 
   return (
     <>
@@ -172,7 +182,12 @@ export function CbsAccountOpen() {
             <Agent />
           </form>
         </FormProvider>
-        <RequiredDocuments setFileList={setFileList} id={id} />
+        <RequiredDocuments
+          setFileList={setFileList}
+          id={id}
+          productId={productid}
+          memberId={member}
+        />
       </Container>
       <Box bottom="0" position="fixed" width="100%" bg="gray.100">
         <Container minW="container.xl" height="fit-content">

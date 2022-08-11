@@ -203,19 +203,19 @@ query getAccountTableList(
           id
           objState
           createdAt
-          # createdBy {
-          #   id
-          #   name
-          #   username
-          #   userType
-          # }
+          createdBy {
+            id
+            # name
+            # username
+            # userType
+          }
           modifiedAt
-          # modifiedBy {
-          #   id
-          #   name
-          #   username
-          #   userType
-          # }
+          modifiedBy {
+            id
+            # name
+            # username
+            # userType
+          }
           member {
             id
             name
@@ -238,6 +238,7 @@ query getAccountTableList(
             id
             productCode
             productName
+            nature
           }
         }
       }

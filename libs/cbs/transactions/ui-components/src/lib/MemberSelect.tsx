@@ -17,7 +17,7 @@ export const MemberSelect = ({
   placeholder,
 }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
-  const [trigger, setTrigger] = useState(false);
+  // const [trigger, setTrigger] = useState(false);
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
@@ -25,11 +25,11 @@ export const MemberSelect = ({
       after: '',
       column: 'ID',
       arrange: Arrange.Desc,
-      query: IDMember,
+      query: IDMember ?? '',
     },
     {
       staleTime: 0,
-      enabled: trigger,
+      // enabled: trigger,
     }
   );
 
@@ -55,7 +55,7 @@ export const MemberSelect = ({
       placeholder={placeholder}
       onInputChange={debounce((id) => {
         setIDMember(id);
-        setTrigger(true);
+        // setTrigger(true);
       }, 800)}
       options={memberOptions}
     />

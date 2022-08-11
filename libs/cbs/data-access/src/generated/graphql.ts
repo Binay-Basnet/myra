@@ -8447,6 +8447,22 @@ export type AddShareReturnMutation = {
   share: { return: { recordId: string } };
 };
 
+export type SetDepositDataMutationVariables = Exact<{
+  data: DepositInput;
+}>;
+
+export type SetDepositDataMutation = {
+  transaction: { deposit: { recordId?: string | null } };
+};
+
+export type SetWithdrawDataMutationVariables = Exact<{
+  data: WithdrawInput;
+}>;
+
+export type SetWithdrawDataMutation = {
+  transaction: { withdraw: { recordId?: string | null } };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
@@ -8662,6 +8678,8 @@ export type GetAccountTableListQuery = {
           objState: ObjState;
           createdAt: string;
           modifiedAt: string;
+          createdBy: { id: string };
+          modifiedBy: { id: string };
           member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
@@ -8680,7 +8698,12 @@ export type GetAccountTableListQuery = {
               } | null;
             } | null;
           } | null;
-          product: { id: string; productCode: string; productName: string };
+          product: {
+            id: string;
+            productCode: string;
+            productName: string;
+            nature: NatureOfDepositProduct;
+          };
         } | null;
       }> | null;
     } | null;
@@ -9981,6 +10004,7 @@ export type GetMemberListQueryVariables = Exact<{
   arrange: Arrange;
   objState?: InputMaybe<ObjState>;
   query?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
 }>;
 
 export type GetMemberListQuery = {
@@ -11181,6 +11205,68 @@ export type GetShareHistoryQuery = {
         };
       } | null;
     } | null;
+  };
+};
+
+export type GetDepositListDataQueryVariables = Exact<{
+  filter?: InputMaybe<DepositDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetDepositListDataQuery = {
+  transaction: {
+    listDeposit: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          ID: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          state: TransactionState;
+          paymentMode?: string | null;
+          processedBy?: string | null;
+          date?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
+
+export type GetWithdrawListDataQueryVariables = Exact<{
+  filter?: InputMaybe<WithdrawDataFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetWithdrawListDataQuery = {
+  transaction: {
+    listWithdraw: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          ID: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          state: TransactionState;
+          paymentMode?: string | null;
+          processedBy?: string | null;
+          date?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
   };
 };
 
@@ -13345,6 +13431,67 @@ export const useAddShareReturnMutation = <TError = unknown, TContext = unknown>(
     ),
     options
   );
+export const SetDepositDataDocument = `
+    mutation setDepositData($data: DepositInput!) {
+  transaction {
+    deposit(data: $data) {
+      recordId
+    }
+  }
+}
+    `;
+export const useSetDepositDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepositDataMutation,
+    TError,
+    SetDepositDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetDepositDataMutation,
+    TError,
+    SetDepositDataMutationVariables,
+    TContext
+  >(
+    ['setDepositData'],
+    useAxios<SetDepositDataMutation, SetDepositDataMutationVariables>(
+      SetDepositDataDocument
+    ),
+    options
+  );
+export const SetWithdrawDataDocument = `
+    mutation setWithdrawData($data: WithdrawInput!) {
+  transaction {
+    withdraw(data: $data) {
+      recordId
+    }
+  }
+}
+    `;
+export const useSetWithdrawDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetWithdrawDataMutation,
+    TError,
+    SetWithdrawDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetWithdrawDataMutation,
+    TError,
+    SetWithdrawDataMutationVariables,
+    TContext
+  >(
+    ['setWithdrawData'],
+    useAxios<SetWithdrawDataMutation, SetWithdrawDataMutationVariables>(
+      SetWithdrawDataDocument
+    ),
+    options
+  );
 export const GetAccountMemberListDocument = `
     query getAccountMemberList($objState: ObjState, $pagination: Pagination) {
   members {
@@ -13610,7 +13757,13 @@ export const GetAccountTableListDocument = `
           id
           objState
           createdAt
+          createdBy {
+            id
+          }
           modifiedAt
+          modifiedBy {
+            id
+          }
           member {
             id
             name
@@ -13633,6 +13786,7 @@ export const GetAccountTableListDocument = `
             id
             productCode
             productName
+            nature
           }
         }
       }
@@ -15414,11 +15568,11 @@ export const useGetCoopUnionKymOptionsQuery = <
     options
   );
 export const GetMemberListDocument = `
-    query getMemberList($after: Cursor, $first: Int, $before: Cursor, $last: Int, $column: String!, $arrange: Arrange!, $objState: ObjState, $query: String) {
+    query getMemberList($after: Cursor, $first: Int, $before: Cursor, $last: Int, $column: String!, $arrange: Arrange!, $objState: ObjState, $query: String, $id: ID) {
   members {
     list(
       pagination: {after: $after, first: $first, before: $before, last: $last, order: {column: $column, arrange: $arrange}}
-      filter: {objState: $objState, query: $query}
+      filter: {objState: $objState, query: $query, id: $id}
     ) {
       totalCount
       edges {
@@ -16979,6 +17133,92 @@ export const useGetShareHistoryQuery = <
     ['getShareHistory', variables],
     useAxios<GetShareHistoryQuery, GetShareHistoryQueryVariables>(
       GetShareHistoryDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDepositListDataDocument = `
+    query getDepositListData($filter: DepositDataFilter, $pagination: Pagination) {
+  transaction {
+    listDeposit(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          ID
+          name
+          amount
+          state
+          paymentMode
+          processedBy
+          date
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositListDataQuery = <
+  TData = GetDepositListDataQuery,
+  TError = unknown
+>(
+  variables?: GetDepositListDataQueryVariables,
+  options?: UseQueryOptions<GetDepositListDataQuery, TError, TData>
+) =>
+  useQuery<GetDepositListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getDepositListData']
+      : ['getDepositListData', variables],
+    useAxios<GetDepositListDataQuery, GetDepositListDataQueryVariables>(
+      GetDepositListDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetWithdrawListDataDocument = `
+    query getWithdrawListData($filter: WithdrawDataFilter, $pagination: Pagination) {
+  transaction {
+    listWithdraw(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          ID
+          name
+          amount
+          state
+          paymentMode
+          processedBy
+          date
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetWithdrawListDataQuery = <
+  TData = GetWithdrawListDataQuery,
+  TError = unknown
+>(
+  variables?: GetWithdrawListDataQueryVariables,
+  options?: UseQueryOptions<GetWithdrawListDataQuery, TError, TData>
+) =>
+  useQuery<GetWithdrawListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getWithdrawListData']
+      : ['getWithdrawListData', variables],
+    useAxios<GetWithdrawListDataQuery, GetWithdrawListDataQueryVariables>(
+      GetWithdrawListDataDocument
     ).bind(null, variables),
     options
   );

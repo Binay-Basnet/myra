@@ -4,6 +4,8 @@ import { useFormContext } from 'react-hook-form';
 import {
   FormCategory,
   FormFieldSearchTerm,
+  IndividualRequiredDocument,
+  KymMemberTypesEnum,
   NatureOfDepositProduct,
   useGetAccountOpenProductDetailsQuery,
   useGetProductListQuery,
@@ -63,7 +65,11 @@ export const Product = () => {
     },
     { enabled: triggerProductQuery }
   );
-
+  useEffect(() => {
+    if (products) {
+      setTriggerQuery(true);
+    }
+  }, [products]);
   const productId = watch('productId');
   const poductDetails = useGetAccountOpenProductDetailsQuery(
     { id: productId },
@@ -71,6 +77,12 @@ export const Product = () => {
       enabled: triggerQuery,
     }
   );
+  useEffect(() => {
+    if (memberId) {
+      setTriggerProductQuery(true);
+    }
+  }, [memberId]);
+
   const productData =
     poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
 
@@ -122,18 +134,6 @@ export const Product = () => {
       productData?.educationQualification?.includes(String(item?.id)) &&
       item?.name?.local
   );
-
-  useEffect(() => {
-    if (products) {
-      setTriggerQuery(true);
-    }
-  }, [products]);
-
-  useEffect(() => {
-    if (memberId) {
-      setTriggerProductQuery(true);
-    }
-  }, [memberId]);
 
   const productOptions = [
     ...(data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
@@ -240,28 +240,32 @@ export const Product = () => {
                       fontWeight="Medium"
                     >
                       {/* {t['accInterestRate']} */}
-                      Tenure 25
+                      Tenure
                     </TextFields>
-                    {productData?.minTenure && (
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Minimum: {productData?.minTenureUnitNumber}{' '}
-                        {productData?.minTenureUnit}
-                      </TextFields>
-                    )}
-                    {productData?.maxTenure && (
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Maximum: : {productData?.maxTenureUnitNumber}{' '}
-                        {productData?.maxTenureUnit}
-                      </TextFields>
-                    )}
+                    <Box pl="s24">
+                      <ul>
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Minimum: {productData?.minTenureUnitNumber}{' '}
+                            {productData?.minTenureUnit}
+                          </TextFields>
+                        </li>
+                        <li>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            Maximum: : {productData?.maxTenureUnitNumber}{' '}
+                            {productData?.maxTenureUnit}
+                          </TextFields>
+                        </li>
+                      </ul>
+                    </Box>
                   </Box>
                 </GridItem>
               )}
@@ -312,6 +316,29 @@ export const Product = () => {
                     {/* {t['accInterestRate']} */}
                     Transaction Limit
                   </TextFields>
+                  <Box pl="s24">
+                    <ul>
+                      <li>
+                        <TextFields
+                          color="neutralColorLight.Gray-70"
+                          fontSize="s2"
+                          fontWeight="Regular"
+                        >
+                          Minimum: {productData?.depositAmount?.minAmount}
+                        </TextFields>
+                      </li>
+
+                      <li>
+                        <TextFields
+                          color="neutralColorLight.Gray-70"
+                          fontSize="s2"
+                          fontWeight="Regular"
+                        >
+                          Maximum: {productData?.depositAmount?.maxAmount}
+                        </TextFields>
+                      </li>
+                    </ul>
+                  </Box>
                 </Box>
               </GridItem>
 
@@ -396,26 +423,30 @@ export const Product = () => {
                             </TextFields>
                           </li>
 
-                          <li>
-                            <TextFields
-                              color="neutralColorLight.Gray-70"
-                              fontSize="s2"
-                              fontWeight="Regular"
-                            >
-                              Business (Institutions):{' '}
-                              {tempIns?.map((item) => {
-                                return (
-                                  <Text
-                                    fontSize={'s2'}
-                                    fontWeight="bold"
-                                    p="s4"
-                                  >
-                                    {item}
-                                  </Text>
-                                );
-                              })}
-                            </TextFields>
-                          </li>
+                          {productData?.typeOfMember?.includes(
+                            KymMemberTypesEnum.Institution
+                          ) && (
+                            <li>
+                              <TextFields
+                                color="neutralColorLight.Gray-70"
+                                fontSize="s2"
+                                fontWeight="Regular"
+                              >
+                                Business (Institutions):{' '}
+                                {tempIns?.map((item) => {
+                                  return (
+                                    <Text
+                                      fontSize={'s2'}
+                                      fontWeight="bold"
+                                      p="s4"
+                                    >
+                                      {item}
+                                    </Text>
+                                  );
+                                })}
+                              </TextFields>
+                            </li>
+                          )}
                         </ul>
                       </Box>
                     </Box>
@@ -480,50 +511,57 @@ export const Product = () => {
                         </ul>
 
                         <ul>
-                          <li>
-                            <TextFields
-                              color="neutralColorLight.Gray-70"
-                              fontSize="s2"
-                              fontWeight="Regular"
-                            >
-                              Nature of Business ( COOP Union):
-                              {tempCoopUnionOptions?.map((item) => {
-                                return (
-                                  <Text
-                                    fontSize={'s2'}
-                                    fontWeight="bold"
-                                    p="s4"
-                                  >
-                                    {item}
-                                  </Text>
-                                );
-                              })}
-                            </TextFields>
-                          </li>
-
-                          <li>
-                            <TextFields
-                              color="neutralColorLight.Gray-70"
-                              fontSize="s2"
-                              fontWeight="Regular"
-                              display={'flex'}
-                              flexDirection="row"
-                              gap="s4"
-                            >
-                              Cooperative Type:{' '}
-                              {tempCoopOptions?.map((item) => {
-                                return (
-                                  <Text
-                                    fontSize={'s2'}
-                                    fontWeight="bold"
-                                    p="s4"
-                                  >
-                                    {item}
-                                  </Text>
-                                );
-                              })}
-                            </TextFields>
-                          </li>
+                          {productData?.typeOfMember?.includes(
+                            KymMemberTypesEnum?.CooperativeUnion
+                          ) && (
+                            <li>
+                              <TextFields
+                                color="neutralColorLight.Gray-70"
+                                fontSize="s2"
+                                fontWeight="Regular"
+                              >
+                                Nature of Business ( COOP Union):
+                                {tempCoopUnionOptions?.map((item) => {
+                                  return (
+                                    <Text
+                                      fontSize={'s2'}
+                                      fontWeight="bold"
+                                      p="s4"
+                                    >
+                                      {item}
+                                    </Text>
+                                  );
+                                })}
+                              </TextFields>
+                            </li>
+                          )}
+                          {productData?.typeOfMember?.includes(
+                            KymMemberTypesEnum?.Cooperative
+                          ) && (
+                            <li>
+                              <TextFields
+                                color="neutralColorLight.Gray-70"
+                                fontSize="s2"
+                                fontWeight="Regular"
+                                display={'flex'}
+                                flexDirection="row"
+                                gap="s4"
+                              >
+                                Cooperative Type:{' '}
+                                {tempCoopOptions?.map((item) => {
+                                  return (
+                                    <Text
+                                      fontSize={'s2'}
+                                      fontWeight="bold"
+                                      p="s4"
+                                    >
+                                      {item}
+                                    </Text>
+                                  );
+                                })}
+                              </TextFields>
+                            </li>
+                          )}
                         </ul>
                       </Box>
                     </Box>
@@ -595,35 +633,28 @@ export const Product = () => {
                 </TextFields>
                 <Box pl="s24" display="grid">
                   <ul>
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Photo
-                      </TextFields>
-                    </li>
-
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Signature
-                      </TextFields>
-                    </li>
-
-                    <li>
-                      <TextFields
-                        color="neutralColorLight.Gray-70"
-                        fontSize="s2"
-                        fontWeight="Regular"
-                      >
-                        Nominee Document
-                      </TextFields>
-                    </li>
+                    {productData?.individualDocuments?.map((item, index) => {
+                      return (
+                        <li key={`${item}${index}`}>
+                          <TextFields
+                            color="neutralColorLight.Gray-70"
+                            fontSize="s2"
+                            fontWeight="Regular"
+                          >
+                            {item === IndividualRequiredDocument?.Fingerprint
+                              ? 'FingerPrint'
+                              : item === IndividualRequiredDocument?.Form
+                              ? 'Form'
+                              : item ===
+                                IndividualRequiredDocument?.NomineeDocument
+                              ? 'Nominee Document'
+                              : item === IndividualRequiredDocument?.Photo
+                              ? 'Photo'
+                              : 'Signature'}
+                          </TextFields>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </Box>
               </GridItem>
