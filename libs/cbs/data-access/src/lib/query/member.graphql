@@ -7,6 +7,7 @@ query getMemberList(
   $arrange: Arrange!
   $objState: ObjState
   $query: String
+  $id: ID
 ) {
   members {
     list(
@@ -17,7 +18,7 @@ query getMemberList(
         last: $last
         order: { column: $column, arrange: $arrange }
       }
-      filter: { objState: $objState, query: $query }
+      filter: { objState: $objState, query: $query, id: $id }
     ) {
       totalCount
       edges {

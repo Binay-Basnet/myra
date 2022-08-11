@@ -9981,6 +9981,7 @@ export type GetMemberListQueryVariables = Exact<{
   arrange: Arrange;
   objState?: InputMaybe<ObjState>;
   query?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
 }>;
 
 export type GetMemberListQuery = {
@@ -15414,11 +15415,11 @@ export const useGetCoopUnionKymOptionsQuery = <
     options
   );
 export const GetMemberListDocument = `
-    query getMemberList($after: Cursor, $first: Int, $before: Cursor, $last: Int, $column: String!, $arrange: Arrange!, $objState: ObjState, $query: String) {
+    query getMemberList($after: Cursor, $first: Int, $before: Cursor, $last: Int, $column: String!, $arrange: Arrange!, $objState: ObjState, $query: String, $id: ID) {
   members {
     list(
       pagination: {after: $after, first: $first, before: $before, last: $last, order: {column: $column, arrange: $arrange}}
-      filter: {objState: $objState, query: $query}
+      filter: {objState: $objState, query: $query, id: $id}
     ) {
       totalCount
       edges {

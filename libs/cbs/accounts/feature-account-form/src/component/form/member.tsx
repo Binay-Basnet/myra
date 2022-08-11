@@ -47,6 +47,9 @@ export const Member = () => {
   );
 
   const memberListData = memberList?.members?.list?.edges;
+  const memberData =
+    memberListData &&
+    memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
 
   // const memberOptions =
   //   memberListData &&
@@ -71,7 +74,6 @@ export const Member = () => {
       },
     ];
   }, [] as optionType[]);
-  const memberData = data?.members?.details?.data;
   return (
     <GroupContainer
       scrollMarginTop={'200px'}
@@ -146,7 +148,8 @@ export const Member = () => {
                     fontWeight="Regular"
                     fontSize="s3"
                   >
-                    {t['shareReturnMemberSince']}: {memberData?.dateJoined}
+                    {t['shareReturnMemberSince']}:{' '}
+                    {memberData?.dateJoined?.split(' ')[0]}
                     {/* {data?.personalInformation?.dateOfBirth} */}
                   </Text>
 
@@ -194,7 +197,7 @@ export const Member = () => {
                     fontSize="s3"
                     fontWeight="Regular"
                   >
-                    ajitnepal65@gmail.com
+                    nepalemail@gmail.com{' '}
                   </TextFields>
                 </Box>
 
@@ -209,7 +212,8 @@ export const Member = () => {
                     {/* {data?.address?.permanent?.district}
                         {','}
                         {data?.address?.permanent?.state} */}
-                    Kathmandu, Tokha Municipality-10
+                    {memberData?.address?.locality?.local} ,{' '}
+                    {memberData?.address?.district?.local},
                   </TextFields>
                 </Box>
               </GridItem>
