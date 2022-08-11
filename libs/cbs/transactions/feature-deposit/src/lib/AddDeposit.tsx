@@ -102,7 +102,7 @@ const cashOptions: Record<string, string> = {
 const FINE = '0';
 const REBATE = '0';
 
-const CURRENT_BALANCE = '125000';
+const CURRENT_BALANCE = '0';
 
 export function AddDeposit() {
   // const { t } = useTranslation();
