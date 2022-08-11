@@ -318,7 +318,7 @@ export function AddDeposit() {
                             // balance: account.balance,
                             // fine: FINE,
                           },
-                          value: account.node?.product.id as string,
+                          value: account.node?.id as string,
                         })
                       )}
                     />
