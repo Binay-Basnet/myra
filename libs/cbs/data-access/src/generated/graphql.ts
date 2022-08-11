@@ -6979,6 +6979,7 @@ export type ShareStatement = {
 
 export type ShareStatementReport = {
   shareStatement?: Maybe<Array<Maybe<ShareStatement>>>;
+  totals?: Maybe<TotalReport>;
 };
 
 export type ShareStatementReportSettings = {
@@ -7084,6 +7085,13 @@ export type TodayTrend = {
 
 export type TodayTrendTrendDataArgs = {
   filter: TrendDataFilter;
+};
+
+export type TotalReport = {
+  totalBalanceSheet?: Maybe<Scalars['Int']>;
+  totalCr?: Maybe<Scalars['Int']>;
+  totalDr?: Maybe<Scalars['Int']>;
+  totalShares?: Maybe<Scalars['Int']>;
 };
 
 export type TransactionFilter = {
@@ -10426,6 +10434,12 @@ export type GetShareStatementQuery = {
           purchaseAmountCr: number;
           balanceSheet: number;
         } | null> | null;
+        totals?: {
+          totalShares?: number | null;
+          totalDr?: number | null;
+          totalCr?: number | null;
+          totalBalanceSheet?: number | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -16141,6 +16155,12 @@ export const GetShareStatementDocument = `
             returnAmountDr
             purchaseAmountCr
             balanceSheet
+          }
+          totals {
+            totalShares
+            totalDr
+            totalCr
+            totalBalanceSheet
           }
         }
       }

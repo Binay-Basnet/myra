@@ -1,5 +1,3 @@
-import { map, sum } from 'lodash';
-
 import { Table } from '@coop/shared/table';
 import { Box } from '@coop/shared/ui';
 
@@ -13,11 +11,22 @@ type ShareReport = {
   balanceSheet: number;
 };
 
+type ShareReportTotal = {
+  totalShares?: number;
+  totalDr?: number;
+  totalCr?: number;
+  totalBalanceSheet?: number;
+};
+
 interface ShareReportTableProps {
   shareReport: ShareReport[];
+  shareTotal: ShareReportTotal;
 }
 
-export const ShareReportTable = ({ shareReport }: ShareReportTableProps) => {
+export const ShareReportTable = ({
+  shareReport,
+  shareTotal,
+}: ShareReportTableProps) => {
   return (
     <Box p="s32">
       <Table<ShareReport>
@@ -30,6 +39,7 @@ export const ShareReportTable = ({ shareReport }: ShareReportTableProps) => {
             's.no.': index + 1,
           })) ?? []
         }
+        showFooter
         columns={[
           {
             header: 'S.No.',
@@ -65,9 +75,7 @@ export const ShareReportTable = ({ shareReport }: ShareReportTableProps) => {
           },
           {
             header: 'No of Share',
-            footer: ({ table }) => {
-              return sum(map(table.options.data.map((d) => d.noOfShares)));
-            },
+            footer: () => shareTotal.totalShares,
             accessorKey: 'noOfShares',
             meta: {
               isNumeric: true,
@@ -76,9 +84,7 @@ export const ShareReportTable = ({ shareReport }: ShareReportTableProps) => {
           {
             header: 'Return Amount (Dr.)',
             accessorKey: 'returnAmountDr',
-            footer: ({ table }) => {
-              return sum(map(table.options.data.map((d) => d.returnAmountDr)));
-            },
+            footer: () => shareTotal.totalDr,
             meta: {
               isNumeric: true,
             },
@@ -86,11 +92,8 @@ export const ShareReportTable = ({ shareReport }: ShareReportTableProps) => {
           {
             header: 'Purchase Amount (Cr.)',
             accessorKey: 'purchaseAmountCr',
-            footer: ({ table }) => {
-              return sum(
-                map(table.options?.data.map((d) => d.purchaseAmountCr))
-              );
-            },
+            footer: () => shareTotal.totalCr,
+
             meta: {
               isNumeric: true,
             },
@@ -98,9 +101,8 @@ export const ShareReportTable = ({ shareReport }: ShareReportTableProps) => {
           {
             header: 'Balance Sheet',
             accessorKey: 'balanceSheet',
-            footer: ({ table }) => {
-              return sum(map(table.options?.data.map((d) => d.balanceSheet)));
-            },
+            footer: () => shareTotal.totalBalanceSheet,
+
             meta: {
               isNumeric: true,
             },

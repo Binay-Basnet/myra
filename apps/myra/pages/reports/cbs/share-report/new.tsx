@@ -117,6 +117,9 @@ const NewShareStatementReport = () => {
                 <ReportMember />
 
                 <ShareReportTable
+                  shareTotal={
+                    shareStatement.report.shareStatementReport.statement.totals
+                  }
                   shareReport={
                     shareStatement.report.shareStatementReport.statement
                       .shareStatement

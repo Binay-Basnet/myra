@@ -14,6 +14,12 @@ query getShareStatement($data: ShareStatementReportSettings!) {
             purchaseAmountCr
             balanceSheet
           }
+          totals {
+            totalShares
+            totalDr
+            totalCr
+            totalBalanceSheet
+          }
         }
       }
     }
