@@ -75,7 +75,8 @@ export const ReportsInnerSidebar = () => {
               Favorite Reports
             </Box>
           }
-          to={'/reports/cbs/favorites'}
+          // to={'/reports/cbs/favorites'}
+          to={'/reports/cbs/share-report'}
         />
       </Tabs>
       <Divider my="s4" />

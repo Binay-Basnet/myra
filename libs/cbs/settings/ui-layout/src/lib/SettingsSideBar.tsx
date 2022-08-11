@@ -38,7 +38,7 @@ const tabList: TabList[] = [
   },
   {
     title: 'settingsSideBarLoan',
-    to: '/settings/general/loan/general',
+    to: '/settings/general/loan/loan-general',
   },
   {
     title: 'settingsSideBarLoanProducts',

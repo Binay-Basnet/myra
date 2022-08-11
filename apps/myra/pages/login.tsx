@@ -14,7 +14,7 @@ export default function Login() {
   const { mutateAsync, isLoading } = useLoginMutation();
   const dispatch = useAppDispatch();
 
-  const router = useRouter();
+  const { locale, push, asPath, replace } = useRouter();
 
   const { register, handleSubmit } = useForm();
   const [show, setShow] = React.useState(false);
@@ -29,7 +29,7 @@ export default function Login() {
       const user = res?.auth?.login?.record?.user;
       dispatch(login({ user: user, token: accessToken }));
       localStorage.setItem('refreshToken', refreshToken);
-      router.replace('/');
+      replace('/');
     });
   };
 
@@ -81,13 +81,13 @@ export default function Login() {
 
             <Button
               variant="outline"
-              // onClick={() =>
-              //   router.push(`/${router.asPath}`, ucolorndefined, {
-              //     locale: value,
-              //   })
-              // }
+              onClick={() =>
+                push(`/${asPath}`, undefined, {
+                  locale: locale === 'ne' ? 'en' : 'ne',
+                })
+              }
             >
-              नेपाली
+              {locale === 'en' ? 'नेपाली' : 'English'}
             </Button>
           </Box>
           <Text fontSize="l1" color="gray.700">
