@@ -19,7 +19,7 @@ import {
   MemberSelect,
 } from '@coop/cbs/transactions/ui-components';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -75,6 +75,8 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
+const FINE = '0';
+
 export function AddWithdraw() {
   // const { t } = useTranslation();
 
@@ -112,7 +114,7 @@ export function AddWithdraw() {
 
   const { data: memberListData } = useGetMemberListQuery(
     {
-      first: DEFAULT_PAGE_SIZE,
+      first: 100,
       after: '',
       column: 'ID',
       arrange: Arrange.Desc,
@@ -162,7 +164,8 @@ export function AddWithdraw() {
   const amountToBeWithdrawn = watch('amount') ?? 0;
 
   const totalWithdraw = useMemo(
-    () => (amountToBeWithdrawn ? Number(amountToBeWithdrawn) + 5000 - 1000 : 0),
+    () =>
+      amountToBeWithdrawn ? Number(amountToBeWithdrawn) - Number(FINE) : 0,
     [amountToBeWithdrawn]
   );
 
@@ -307,7 +310,7 @@ export function AddWithdraw() {
                   {memberId && accountId && withdrawn === 'cheque' && (
                     <>
                       <InputGroupContainer>
-                        <FormSelect
+                        <FormInput
                           name="chequeNo"
                           label="Cheque No"
                           placeholder="Select Cheque"
@@ -324,6 +327,27 @@ export function AddWithdraw() {
                       />
                     </>
                   )}
+
+                  {/* {memberId && accountId && withdrawn === 'cheque' && (
+                    <>
+                      <InputGroupContainer>
+                        <FormInput
+                          name="chequeNo"
+                          label="Cheque No"
+                          placeholder="Cheque Cheque"
+                        />
+                      </InputGroupContainer>
+
+                      <FormInput
+                        type="number"
+                        min={0}
+                        name="amount"
+                        label="Withdraw Amount"
+                        textAlign="right"
+                        placeholder="0.0"
+                      />
+                    </>
+                  )} */}
 
                   {memberId && accountId && (
                     <Box
@@ -345,12 +369,11 @@ export function AddWithdraw() {
                           fontWeight={500}
                           color="neutralColorLight.Gray-80"
                         >
-                          20,000
+                          {amountToBeWithdrawn}
                         </Text>
                       </Box>
 
-                      {selectedAccount?.node?.product?.nature !==
-                        NatureOfDepositProduct.VoluntaryOrOptional && (
+                      {
                         <Box display="flex" justifyContent="space-between">
                           <Text fontSize="s3" fontWeight={500} color="gray.600">
                             Fine
@@ -361,10 +384,10 @@ export function AddWithdraw() {
                             fontWeight={500}
                             color="danger.500"
                           >
-                            - 5000
+                            {`- ${FINE}`}
                           </Text>
                         </Box>
-                      )}
+                      }
 
                       <Box display="flex" justifyContent="space-between">
                         <Text fontSize="s3" fontWeight={500} color="gray.600">
@@ -376,7 +399,7 @@ export function AddWithdraw() {
                           fontWeight={500}
                           color="neutralColorLight.Gray-80"
                         >
-                          15,000
+                          {totalWithdraw}
                         </Text>
                       </Box>
                     </Box>

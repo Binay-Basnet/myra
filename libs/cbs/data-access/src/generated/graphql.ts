@@ -6679,6 +6679,14 @@ export type RecentTransactionFilter = {
   limit: Scalars['Int'];
 };
 
+export type ReportList = {
+  id: Scalars['ID'];
+  lastModifiedDate: Scalars['Date'];
+  name: Scalars['String'];
+  reportType: Scalars['String'];
+  savedBy: Scalars['String'];
+};
+
 export type ReportMutation = {
   statementReport?: Maybe<ReportResult>;
 };
@@ -6692,12 +6700,27 @@ export type ReportPeriod = {
   to?: InputMaybe<Scalars['String']>;
 };
 
+export type ReportPeriodType = {
+  from: Scalars['String'];
+  to?: Maybe<Scalars['String']>;
+};
+
 export type ReportQuery = {
+  getReport?: Maybe<ShareStatementReportSettingsType>;
+  listReports?: Maybe<Array<Maybe<ReportList>>>;
   shareStatementReport?: Maybe<ReportResult>;
 };
 
+export type ReportQueryGetReportArgs = {
+  reportId: Scalars['ID'];
+};
+
+export type ReportQueryListReportsArgs = {
+  organizationId?: InputMaybe<Scalars['ID']>;
+};
+
 export type ReportQueryShareStatementReportArgs = {
-  data: ShareStatementReportData;
+  data: ShareStatementReportSettings;
 };
 
 export type ReportResult = {
@@ -6958,16 +6981,16 @@ export type ShareStatementReport = {
   shareStatement?: Maybe<Array<Maybe<ShareStatement>>>;
 };
 
-export type ShareStatementReportData = {
-  filter: ShareTransactionType;
+export type ShareStatementReportSettings = {
+  filter?: InputMaybe<ShareTransactionType>;
   memberId: Scalars['ID'];
   period: ReportPeriod;
 };
 
-export type ShareStatementReportSettings = {
-  filter?: InputMaybe<ShareTransactionType>;
-  membeId: Scalars['ID'];
-  period: ReportPeriod;
+export type ShareStatementReportSettingsType = {
+  filter?: Maybe<ShareTransactionType>;
+  memberId: Scalars['ID'];
+  period: ReportPeriodType;
 };
 
 export enum ShareTransactionType {

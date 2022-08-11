@@ -3,8 +3,6 @@ import { debounce } from 'lodash';
 
 import { Arrange, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
-
 interface IMemberSelectProps {
   name: string;
   label: string;
@@ -21,7 +19,7 @@ export const MemberSelect = ({
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
-      first: DEFAULT_PAGE_SIZE,
+      first: 100,
       after: '',
       column: 'ID',
       arrange: Arrange.Desc,
@@ -32,6 +30,10 @@ export const MemberSelect = ({
       // enabled: trigger,
     }
   );
+
+  // useEffect(() => {
+  //   setIDMember(watch(name));
+  // }, [watch(name)]);
 
   const memberListData = memberList?.members?.list?.edges;
 
