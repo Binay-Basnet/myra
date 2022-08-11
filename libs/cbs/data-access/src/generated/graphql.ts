@@ -10409,6 +10409,28 @@ export type GetKymDocumentsListQuery = {
   };
 };
 
+export type GetShareStatementQueryVariables = Exact<{
+  data: ShareStatementReportSettings;
+}>;
+
+export type GetShareStatementQuery = {
+  report: {
+    shareStatementReport?: {
+      member?: { id: string } | null;
+      statement?: {
+        shareStatement?: Array<{
+          date: string;
+          particular: string;
+          noOfShares: number;
+          returnAmountDr: number;
+          purchaseAmountCr: number;
+          balanceSheet: number;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetBranchListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<BranchSearchFilter>;
@@ -16100,6 +16122,43 @@ export const useGetKymDocumentsListQuery = <
     ['getKYMDocumentsList', variables],
     useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(
       GetKymDocumentsListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetShareStatementDocument = `
+    query getShareStatement($data: ShareStatementReportSettings!) {
+  report {
+    shareStatementReport(data: $data) {
+      member {
+        id
+      }
+      statement {
+        ... on ShareStatementReport {
+          shareStatement {
+            date
+            particular
+            noOfShares
+            returnAmountDr
+            purchaseAmountCr
+            balanceSheet
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetShareStatementQuery = <
+  TData = GetShareStatementQuery,
+  TError = unknown
+>(
+  variables: GetShareStatementQueryVariables,
+  options?: UseQueryOptions<GetShareStatementQuery, TError, TData>
+) =>
+  useQuery<GetShareStatementQuery, TError, TData>(
+    ['getShareStatement', variables],
+    useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
+      GetShareStatementDocument
     ).bind(null, variables),
     options
   );

@@ -3106,14 +3106,14 @@ const ne: Record<string, string> = {
   reportsCbsReports: 'CBS reports',
   reportsSavedReports: 'Saved reports',
   reportsSettings: 'Report Settings',
+  reportsTableView: 'Table View',
+  reportsListView: 'List View',
+  reportsCoreBankingSystemReports: 'Core Banking System Reports',
 
   shareTableShareAmount: 'Share Balance',
 
   depositProductFlat: 'Flat',
   depositProductDiminishing: 'Diminishing',
-  reportsTableView: 'Table View',
-  reportsListView: 'List View',
-  reportsCoreBankingSystemReports: 'Core Banking System Reports',
 };
 
 export default ne;

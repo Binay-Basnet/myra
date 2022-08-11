@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 import { GroupBase, Props, Select as ChakraSelect } from 'chakra-react-select';
 
-import { components as customComponents, Option } from './SelectComponents';
+import { getComponents, Option } from './SelectComponents';
 import { chakraDefaultStyles } from './SelectStyles';
 import TextFields from '../text-fields/TextFields';
 
@@ -23,6 +23,7 @@ export interface SelectProps
   label?: string;
   // size?: 'sm' | 'default';
   onChange?: ((newValue: SelectOption) => void) | any;
+  hasRadioOption?: boolean;
 }
 
 export function Select({
@@ -33,6 +34,7 @@ export function Select({
   label,
   options,
   value,
+  hasRadioOption,
   ...rest
 }: SelectProps) {
   const [sortedOptions, setSortedOptions] = useState(options ?? []);
@@ -80,7 +82,7 @@ export function Select({
         isOptionDisabled={(option) => !!option.disabled}
         isClearable={false}
         chakraStyles={chakraDefaultStyles}
-        components={customComponents}
+        components={getComponents(hasRadioOption)}
         {...rest}
       />
       {errorText ? (

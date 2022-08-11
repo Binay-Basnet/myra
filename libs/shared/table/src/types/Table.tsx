@@ -4,6 +4,10 @@ declare module '@tanstack/table-core' {
   interface ColumnMeta {
     isNumeric?: boolean;
     width?: number | string;
+    Footer?: {
+      colspan?: number;
+      display?: 'none';
+    };
   }
 }
 
@@ -22,13 +26,15 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
     endCursor: string;
   };
 
-  size?: 'default' | 'compact';
+  size?: 'default' | 'compact' | 'report';
   isLoading?: boolean;
   isStatic?: boolean;
 
   searchPlaceholder?: string;
 
   getRowId?: (originalRow: TData) => string;
+
+  variant?: 'simple' | 'report';
 }
 
 export type TableInstance<T> = Table<T>;

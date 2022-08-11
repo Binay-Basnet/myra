@@ -23,12 +23,12 @@ export interface TextFieldsProps extends TextProps {
 }
 
 export function TextFields(props: TextFieldsProps) {
-  const { children, variant, onClick, ...rest } = props;
+  const { children, variant, ...rest } = props;
 
   switch (variant) {
     case 'bodyLarge':
       return (
-        <Text fontSize="r3" fontWeight="400" {...rest} lineHeight="1.5">
+        <Text fontSize="r2" fontWeight="400" {...rest} lineHeight="1.5">
           {children}
         </Text>
       );
@@ -95,13 +95,13 @@ export function TextFields(props: TextFieldsProps) {
 
     case 'stickyCardHeader':
       return (
-        <Text fontSize="r3" fontWeight="500" lineHeight="1.3">
+        <Text fontSize="r3" fontWeight="500" lineHeight="1.3" {...rest}>
           {children}
         </Text>
       );
     case 'navItems':
       return (
-        <Text fontSize="r1" fontWeight="500" lineHeight="1.3">
+        <Text fontSize="r1" fontWeight="500" lineHeight="1.3" {...rest}>
           {children}
         </Text>
       );
@@ -115,7 +115,7 @@ export function TextFields(props: TextFieldsProps) {
           lineHeight="17px"
           cursor="pointer"
           _hover={{ textDecoration: 'underline' }}
-          onClick={onClick}
+          {...rest}
         >
           {children}
         </Text>
