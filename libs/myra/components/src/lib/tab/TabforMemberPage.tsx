@@ -32,6 +32,7 @@ interface ITabColumnProps {
     title: string;
     link: string;
     name?: string | undefined;
+    addLinkId?: string;
     addLink?: string;
   }[];
 }
@@ -70,7 +71,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
                 </Text>
               </TabCol>
             </Link>
-            {item.addLink && (
+            {item.addLinkId && (
               // <Link href={item.addLink}>
               <IconButton
                 aria-label="add-Button"
@@ -81,11 +82,21 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
                   newId
                     .mutateAsync({})
                     .then((res) =>
-                      router.push(`${item.addLink}/add/${res?.newId}`)
+                      router.push(`${item.addLinkId}/add/${res?.newId}`)
                     )
                 }
               />
               // </Link>
+            )}
+            {item.addLink && (
+              // <Link href={item.addLink}>
+              <IconButton
+                aria-label="add-Button"
+                size="lg"
+                variant={'ghost'}
+                icon={<Icon as={IoAdd} />}
+                onClick={() => router.push(`${item.addLink}`)}
+              />
             )}
           </Box>
         );
