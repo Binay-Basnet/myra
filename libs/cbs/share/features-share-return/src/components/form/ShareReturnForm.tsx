@@ -149,6 +149,19 @@ const ShareReturnForm = () => {
 
   const balanceData = shareHistoryTableData?.share?.history?.balance;
 
+  // useEffect(() => {
+  //   if (balanceData) {
+  //     reset({
+  //       ...getValues(),
+  //       ...memberListData,
+  //       ...balanceData,
+  //       noOfShares: balanceData?.count ?? 0,
+  //     });
+  //   }
+  // }, [allShares]);
+
+  // console.log(noOfShares, balanceData?.count);
+
   return (
     <>
       <FormProvider {...methods}>
@@ -237,7 +250,7 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {t['sharePurchaseID']}:{memberDetail?.id}
+                                {t['sharePurchaseID']}:&nbsp;{memberDetail?.id}
                               </Text>
 
                               <Text
@@ -245,9 +258,7 @@ const ShareReturnForm = () => {
                                 fontWeight="Regular"
                                 fontSize="s3"
                               >
-                                {t['sharePurchaseMemberSince']}:
-                                {/* {memberDetail?.personalInformation?.dateOfBirth} */}
-                                2054/10/12
+                                {t['sharePurchaseMemberSince']}: 2054/10/12
                               </Text>
 
                               <Text
@@ -255,7 +266,7 @@ const ShareReturnForm = () => {
                                 fontWeight="Regular"
                                 fontSize="s3"
                               >
-                                {t['sharePurchaseBranch']}:
+                                {t['sharePurchaseBranch']}:&nbsp;
                                 {memberDetail?.address?.district?.local}
                               </Text>
                             </Box>
@@ -309,8 +320,8 @@ const ShareReturnForm = () => {
                                 fontWeight="Regular"
                               >
                                 {memberDetail?.address?.district?.local},
-                                {/* {memberDetail?.address?.locality?.local} -
-                                {memberDetail?.address?.wardNo} */}
+                                {memberDetail?.address?.locality?.local} -
+                                {memberDetail?.address?.wardNo}
                               </TextFields>
                             </Box>
                           </GridItem>
@@ -378,6 +389,7 @@ const ShareReturnForm = () => {
                             id="noOfShares"
                             name="noOfReturnedShares"
                             label={t['shareReturnNoOfShares']}
+                            isDisabled={allShares}
                           />
                         </GridItem>
 
@@ -403,9 +415,9 @@ const ShareReturnForm = () => {
                                 </Text>
                                 <Text fontWeight="600" fontSize="r1">
                                   {allShares
-                                    ? Number(balanceData?.count) -
-                                      Number(noOfShares)
-                                    : balanceData?.count}
+                                    ? 0
+                                    : Number(balanceData?.count) -
+                                      Number(noOfShares)}
                                 </Text>
                               </Box>
 
@@ -414,12 +426,11 @@ const ShareReturnForm = () => {
                                   {t['shareReturnRemainingShareValue']}
                                 </Text>
                                 <Text fontWeight="600" fontSize="r1">
-                                  {' '}
                                   {allShares
-                                    ? (Number(balanceData?.count) -
+                                    ? 0
+                                    : (Number(balanceData?.count) -
                                         Number(noOfShares)) *
-                                      100
-                                    : balanceData?.amount}
+                                      100}
                                 </Text>
                               </Box>
                             </Box>
@@ -560,10 +571,7 @@ const ShareReturnForm = () => {
                   <FormSwitchTab
                     // TODO ( USE FORM SWITCH TAB)
                     name="paymentMode"
-                    options={accountList.map((value) => ({
-                      label: value.label,
-                      value: value.value,
-                    }))}
+                    options={accountList}
                   />
 
                   {paymentModes === Payment_Mode.Account && (

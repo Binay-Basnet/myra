@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import {
@@ -14,11 +14,11 @@ export const ShareRegisterTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const { data, isFetching } = useGetShareRegisterListQuery(
+  const { data, isFetching, refetch } = useGetShareRegisterListQuery(
     router.query['before']
       ? {
-          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-          after: router.query['before'] as string,
+          last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
+          before: router.query['before'] as string,
         }
       : {
           first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
@@ -28,6 +28,10 @@ export const ShareRegisterTable = () => {
       staleTime: 0,
     }
   );
+
+  useEffect(() => {
+    refetch();
+  }, [router]);
 
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
 
@@ -166,7 +170,16 @@ export const ShareRegisterTable = () => {
         tabItems={shareRows}
       />
 
-      <Table isLoading={isFetching} data={rowData ?? []} columns={columns} />
+      <Table
+        isLoading={isFetching}
+        data={rowData ?? []}
+        columns={columns}
+        pagination={{
+          total: data?.share?.register?.totalCount ?? 'Many',
+          endCursor: data?.share?.register?.pageInfo?.startCursor ?? '',
+          startCursor: data?.share?.register?.pageInfo?.endCursor ?? '',
+        }}
+      />
     </>
   );
 };

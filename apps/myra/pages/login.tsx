@@ -41,7 +41,7 @@ export default function Login() {
       alignItems="center"
       justifyContent="center"
       p={170}
-      bg="#E5E5E5"
+      bg="primary.0"
     >
       <Box display="flex" width="100%" justifyContent="space-between">
         <Box
@@ -49,12 +49,19 @@ export default function Login() {
           flexDirection="column"
           width={500}
           justifyContent="center"
-          gap={2}
+          gap="s16"
         >
-          <Text fontSize="m2" fontWeight="semibold" lineHeight="shorter">
+          <Text
+            fontSize="m2"
+            fontWeight="semibold"
+            lineHeight="shorter"
+            color="gray.700"
+          >
             {t['loginTitle']}
           </Text>
-          <Text fontSize="r3">{t['loginSubTitle']}</Text>
+          <Text fontSize="r3" color="gray.700">
+            {t['loginSubTitle']}
+          </Text>
         </Box>
         <Box
           display="flex"
@@ -69,13 +76,13 @@ export default function Login() {
         >
           <Box display="flex" justifyContent="space-between">
             <Box position="relative" w="120px" h="62px">
-              <Image src="/loginLogo.svg" layout="fill" alt="logo" />
+              <Image src="/loginLogo.png" layout="fill" alt="logo" />
             </Box>
 
             <Button
               variant="outline"
               // onClick={() =>
-              //   router.push(`/${router.asPath}`, undefined, {
+              //   router.push(`/${router.asPath}`, ucolorndefined, {
               //     locale: value,
               //   })
               // }
@@ -83,7 +90,9 @@ export default function Login() {
               नेपाली
             </Button>
           </Box>
-          <Text fontSize="l1">{t['loginHeader']}</Text>
+          <Text fontSize="l1" color="gray.700">
+            {t['loginHeader']}
+          </Text>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box display="flex" flexDir="column" gap={5}>
               <Box>

@@ -40,7 +40,9 @@ query getShareRegisterList(
           credit
           debit
         }
+        cursor
       }
+      totalCount
       pageInfo {
         hasNextPage
         hasPreviousPage

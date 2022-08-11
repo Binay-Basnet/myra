@@ -43,11 +43,7 @@ export const RequiredDocuments = ({
   const registeredwatch = watch('registeredPhotoIns');
   const signatureInsWatch = watch('signatureIns');
   const taxClearwatch = watch('taxClearance');
-  const {
-    data,
-    isLoading,
-    refetch: refetchDocumentList,
-  } = useGetAccountDocumentsListQuery({
+  const { data, isLoading } = useGetAccountDocumentsListQuery({
     subscriptionId: id,
   });
 
@@ -123,9 +119,9 @@ export const RequiredDocuments = ({
       setTriggerQuery(true);
     }
   }, [productId]);
-  useEffect(() => {
-    refetchDocumentList();
-  }, [id]);
+  // useEffect(() => {
+  //   refetchDocumentList();
+  // }, [id]);
 
   const { data: memberList } = useGetMemberListQuery(
     {

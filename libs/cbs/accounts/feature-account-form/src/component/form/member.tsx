@@ -185,7 +185,7 @@ export const Member = () => {
                     fontWeight="Regular"
                   >
                     {/* {data?.contact?.mobile} */}
-                    {memberData?.contact}
+                    {memberData?.contact ?? '98555445454'}
                   </TextFields>
                 </Box>
 

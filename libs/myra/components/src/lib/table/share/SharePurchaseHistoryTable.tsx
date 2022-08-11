@@ -26,16 +26,13 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         cell: (props) => {
           return <span>{props.row.index + 1}</span>;
         },
+        // footer: () => '',
       },
 
       {
         header: t['sharePurchaseTableDate'],
         accessorFn: (row) => row?.transactionDate,
-      },
-
-      {
-        header: t['sharePurchaseNoOfShares'],
-        accessorFn: (row) => row?.shareAmount,
+        // footer: () => '',
       },
 
       {
@@ -49,13 +46,13 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
             </span>
           );
         },
+        // footer: () => '',
       },
 
       {
         id: 'share-dr',
         header: t['sharePurchaseTableShareDr'],
         accessorFn: (row) => row?.debit,
-        isNumeric: true,
 
         cell: (props) => {
           return (
@@ -64,11 +61,15 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
             </span>
           );
         },
+        // footer: () => '',
       },
       {
         id: 'share-cr',
         header: t['sharePurchaseTableShareCr'],
-        isNumeric: true,
+        meta: {
+          isNumeric: true,
+        },
+        // footer: () => '',
         accessorFn: (row) => row?.credit,
         cell: (props) => {
           return (
@@ -81,23 +82,14 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       {
         header: t['sharePurchaseTableBalance'],
         accessorFn: (row) => row?.balance,
-        isNumeric: true,
+        meta: {
+          isNumeric: true,
+        },
+
+        // footer: (col) => console.log(col),
         cell: (props) => {
           return <span>{amountConverter(props.getValue())}</span>;
         },
-        // Footer: (props) => {
-        //   return (
-        //     <div>
-        //       Rs.{' '}
-        //       {props.rows
-        //         .reduce(
-        //           (sum, row) => Number(row.original.node.balance) + sum,
-        //           0
-        //         )
-        //         .toLocaleString('en-IN')}
-        //     </div>
-        //   );
-        // },
       },
     ],
     [router, t]
@@ -110,7 +102,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       isLoading={isFetching}
       data={rowData ?? []}
       columns={columns}
-      // showFooters={true}
+      // showFooter
     />
   );
 };

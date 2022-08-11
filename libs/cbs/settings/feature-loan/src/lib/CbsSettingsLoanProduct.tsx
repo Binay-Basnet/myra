@@ -158,7 +158,8 @@ export function SettingsLoanProduct() {
         data={rowData}
         columns={columns}
         pagination={{
-          total: 1200,
+          total:
+            data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
           endCursor:
             data?.settings?.general?.loanProducts?.list?.pageInfo
               ?.startCursor ?? '',
