@@ -28,7 +28,7 @@ export const ReportOrganization = ({ filter }: ReportOrganizationProps) => {
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" alignItems="center" gap="s16">
           <Box position="relative" w="s60" h="s60">
-            <Image src={'/reportLogo.svg'} alt="report-page" layout="fill" />
+            <Image src={'/neosystest.png'} alt="report-page" layout="fill" />
           </Box>
 
           <Box display="flex" flexDir="column" gap="s4">

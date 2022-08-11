@@ -1382,9 +1382,13 @@ export type Denomination = {
 };
 
 export type DepositAccount = Base & {
+  accountExpiryDate?: Maybe<Scalars['String']>;
+  accountOpenedDate?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
   id: Scalars['ID'];
+  lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -1441,6 +1445,8 @@ export type DepositInput = {
   memberId: Scalars['String'];
   noOfInstallments?: InputMaybe<Scalars['Int']>;
   notes?: InputMaybe<Scalars['String']>;
+  other_doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  other_name?: InputMaybe<Scalars['String']>;
   payment_type: DepositPaymentType;
   rebate?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
@@ -2649,6 +2655,11 @@ export enum File_Variant {
   Other = 'OTHER',
   Pdf = 'PDF',
   Png = 'PNG',
+}
+
+export enum Filter_Mode {
+  And = 'AND',
+  Or = 'OR',
 }
 
 export type FamilyDetails = {
@@ -5545,6 +5556,7 @@ export type KymInstitutionDocumentsType = {
 };
 
 export type KymMemberDataFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
   memberType?: InputMaybe<KymMemberTypesEnum>;
   objState?: InputMaybe<ObjState>;
@@ -7454,6 +7466,8 @@ export type WithdrawInput = {
   notes?: InputMaybe<Scalars['String']>;
   payment_type: WithdrawPaymentType;
   sourceOfFund?: InputMaybe<Scalars['String']>;
+  withdrawSlipNo?: InputMaybe<Scalars['String']>;
+  withdrawWith: WithdrawWith;
   withdrawnBy: WithdrawBy;
 };
 
@@ -7468,6 +7482,11 @@ export type WithdrawResult = {
   query?: Maybe<TransactionQuery>;
   recordId?: Maybe<Scalars['ID']>;
 };
+
+export enum WithdrawWith {
+  Cheque = 'CHEQUE',
+  WithdrawSlip = 'WITHDRAW_SLIP',
+}
 
 export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;
