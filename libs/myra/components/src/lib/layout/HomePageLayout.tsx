@@ -13,22 +13,22 @@ export interface HomePageLayoutProps {
 const myraAppn = [
   {
     title: 'corebankingSystems',
-    img: '/ppc.svg',
+    img: '/cbs.svg',
     link: '/members/list',
   },
   {
     title: 'inventoryManagement',
-    img: '/exp.svg',
+    img: '/inventory.svg',
     link: '/inventory/register',
   },
   {
     title: 'memberAndShareManagement',
-    img: '/theta.svg',
-    link: '/share/balance',
+    img: '/memberandshare.svg',
+    link: '/members/list',
   },
   {
     title: 'accountingSystem',
-    img: '/hpb.svg',
+    img: '/accounting.svg',
     link: '/accounting/sales/list',
   },
 ];
