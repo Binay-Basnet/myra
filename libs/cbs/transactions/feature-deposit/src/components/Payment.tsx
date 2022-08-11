@@ -94,7 +94,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
 
   const selectedPaymentMode = watch('payment_type');
 
-  const depositedBy = watch('depositedBy');
+  // const depositedBy = watch('depositedBy');
 
   const denominations = watch('cash.denominations');
 
@@ -234,6 +234,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
             <FormSwitch
               name="cash.disableDenomination"
               label={'Disable Denomination'}
+              defaultChecked={false}
             />
 
             {!disableDenomination && (
@@ -344,11 +345,11 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
 
       <BoxContainer>
         <Grid templateColumns="repeat(2, 1fr)" columnGap="s20">
-          <FormSelect
+          {/* <FormSelect
             name="sourceOfFund"
             label="Source of Fund"
             placeholder="Select Source of Fund"
-          />
+          /> */}
 
           <FormFileInput
             size={'md'}
@@ -365,11 +366,11 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
           name="depositedBy"
         />
 
-        {depositedBy === DepositedBy.Agent && (
+        {/* {depositedBy === DepositedBy.Agent && (
           <InputGroupContainer>
             <FormSelect name="agent" label="Agent" placeholder="Select Agent" />
           </InputGroupContainer>
-        )}
+        )} */}
       </BoxContainer>
 
       <BoxContainer>
