@@ -191,7 +191,7 @@ export const RequiredDocuments = ({
                   name="fingerprintPhoto"
                 />
               )}
-            {memberData?.type === KymMemberTypesEnum?.Institution &&
+            {memberData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(decIns) && (
                 <FormFileInput
                   size="lg"
@@ -199,7 +199,7 @@ export const RequiredDocuments = ({
                   name="decisionDocumentIns"
                 />
               )}
-            {memberData?.type === KymMemberTypesEnum?.Institution &&
+            {memberData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(
                 InstitutionRequiredDocument?.Registered
               ) && (
@@ -209,7 +209,7 @@ export const RequiredDocuments = ({
                   name="registeredPhotoIns"
                 />
               )}
-            {memberData?.type === KymMemberTypesEnum?.Institution &&
+            {memberData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(
                 InstitutionRequiredDocument?.Signature
               ) && (
@@ -219,7 +219,7 @@ export const RequiredDocuments = ({
                   name="signatureIns"
                 />
               )}
-            {memberData?.type === KymMemberTypesEnum?.Institution &&
+            {memberData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(
                 InstitutionRequiredDocument?.TaxClearance
               ) && (
