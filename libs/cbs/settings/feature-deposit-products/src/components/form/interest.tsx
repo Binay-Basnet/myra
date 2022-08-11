@@ -136,10 +136,21 @@ export const Interest = () => {
             <FormEditableTable<SalesTable>
               name="ladderRateData"
               debug={false}
+              defaultData={[
+                {
+                  type: 'More Than',
+                  amount: 0,
+                  rate: 0,
+                },
+                {
+                  type: 'More Than',
+                  amount: 0,
+                  rate: 0,
+                },
+              ]}
               columns={[
                 {
                   accessor: 'type',
-                  accessorFn: () => 'More than',
                   header: t['depositProductInterestType'],
                 },
                 {

@@ -186,8 +186,8 @@ export function SettingsDepositProductsAdd() {
         percentage: values?.rebateData?.percentage ?? null,
         rebateAmount: values?.rebateData?.rebateAmount ?? null,
       },
-      maxAge: values?.maxAge ?? null,
-      minAge: values?.minAge ?? null,
+      maxAge: Number(values?.maxAge) ?? null,
+      minAge: Number(values?.minAge) ?? null,
       maxPostingFreqDifference: values?.maxPostingFreqDifference ?? null,
       percentageOfDeposit: values?.percentageOfDeposit ?? null,
       depositAmount: {

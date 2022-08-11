@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
@@ -8,9 +8,13 @@ import { Avatar, Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
-  const { data, isFetching } = useGetShareBalanceListQuery();
+  const { data, isFetching, refetch } = useGetShareBalanceListQuery();
   const { t } = useTranslation();
   const router = useRouter();
+
+  useEffect(() => {
+    refetch();
+  }, [router]);
 
   const rowData = useMemo(() => data?.share.balance?.edges ?? [], [data]);
 

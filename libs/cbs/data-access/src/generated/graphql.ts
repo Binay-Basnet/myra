@@ -11223,7 +11223,9 @@ export type GetShareRegisterListQueryVariables = Exact<{
 export type GetShareRegisterListQuery = {
   share: {
     register?: {
+      totalCount: number;
       edges: Array<{
+        cursor: string;
         node: {
           transactionDate?: string | null;
           transactionDirection: Share_Transaction_Direction;
@@ -16429,6 +16431,7 @@ export const GetLoanProductListDocument = `
               }
             }
           }
+          totalCount
         }
       }
     }
@@ -16869,6 +16872,7 @@ export const GetDepositProductSettingsListDocument = `
               }
             }
           }
+          totalCount
         }
       }
     }
@@ -17183,7 +17187,9 @@ export const GetShareRegisterListDocument = `
           credit
           debit
         }
+        cursor
       }
+      totalCount
       pageInfo {
         hasNextPage
         hasPreviousPage

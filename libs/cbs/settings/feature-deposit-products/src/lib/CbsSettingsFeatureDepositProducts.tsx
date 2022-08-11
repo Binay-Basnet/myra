@@ -147,7 +147,8 @@ export function SettingsDepositProducts() {
         data={rowData}
         columns={columns}
         pagination={{
-          total: 1200,
+          total:
+            data?.settings?.general?.depositProduct?.list?.totalCount ?? 'Many',
           endCursor:
             data?.settings?.general?.depositProduct?.list?.pageInfo
               ?.startCursor ?? '',
