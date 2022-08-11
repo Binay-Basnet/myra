@@ -176,8 +176,8 @@ export const ShareRegisterTable = () => {
         columns={columns}
         pagination={{
           total: data?.share?.register?.totalCount ?? 'Many',
-          endCursor: data?.share?.register?.pageInfo?.startCursor ?? '',
-          startCursor: data?.share?.register?.pageInfo?.endCursor ?? '',
+          endCursor: data?.share?.register?.pageInfo?.endCursor ?? '',
+          startCursor: data?.share?.register?.pageInfo?.startCursor ?? '',
         }}
       />
     </>

@@ -296,7 +296,7 @@ export function AddWithdraw() {
                             // balance: account.balance,
                             // fine: account.fine,
                           },
-                          value: account.node?.product.id as string,
+                          value: account.node?.id as string,
                         })
                       )}
                     />

@@ -151,10 +151,10 @@ export function SettingsDepositProducts() {
             data?.settings?.general?.depositProduct?.list?.totalCount ?? 'Many',
           endCursor:
             data?.settings?.general?.depositProduct?.list?.pageInfo
-              ?.startCursor ?? '',
+              ?.endCursor ?? '',
           startCursor:
             data?.settings?.general?.depositProduct?.list?.pageInfo
-              ?.endCursor ?? '',
+              ?.startCursor ?? '',
         }}
       />
     </>
