@@ -3114,6 +3114,17 @@ const ne: Record<string, string> = {
   reportsTableView: 'Table View',
   reportsListView: 'List View',
   reportsCoreBankingSystemReports: 'Core Banking System Reports',
+
+  // login
+  loginTitle: 'SACCOS लाई डिजिटाइज गरेर जोड्दै ।',
+  loginSubTitle:
+    'सहकारीलाई सुविधासँग जोड्ने एक सरल, सुरक्षित र साझा डिजिटल प्ल्याट्फर्म ।',
+  loginHeader: 'मीरामा स्वागत छ।',
+  loginEmail: 'इमेल',
+  loginPassword: 'पासवर्ड',
+  loginKeepSignedIn: 'मेरो अकाउन्ट खुल्लै राख्नुहोस्।',
+  loginForgotPassword: 'पासवर्ड विर्सनुभयो?',
+  loginText: 'लग इन',
 };
 
 export default ne;
