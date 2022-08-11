@@ -1,0 +1,17 @@
+query getLoanGeneralSettings {
+  settings {
+    general {
+      loan {
+        general {
+          emi
+          epi
+          flat
+          collateralList {
+            name
+            enabled
+          }
+        }
+      }
+    }
+  }
+}

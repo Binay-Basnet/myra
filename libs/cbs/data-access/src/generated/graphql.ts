@@ -1385,7 +1385,7 @@ export type DepositAccount = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
   id: Scalars['ID'];
-  member: Member;
+  member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
@@ -1436,6 +1436,7 @@ export type DepositInput = {
   cash?: InputMaybe<DepositCash>;
   cheque?: InputMaybe<DepositCheque>;
   depositedBy: DepositedBy;
+  doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
   noOfInstallments?: InputMaybe<Scalars['Int']>;
@@ -1504,8 +1505,8 @@ export type DepositLoanAccount = Base & {
 };
 
 export type DepositLoanAccountConnection = {
-  edges: Array<DepositLoanAccountEdge>;
-  pageInfo: PageInfo;
+  edges?: Maybe<Array<DepositLoanAccountEdge>>;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -1589,9 +1590,9 @@ export enum DepositPaymentType {
 export type DepositProduct = Base & {
   createdAt: Scalars['Time'];
   createdBy: Identity;
-  createdDate: Scalars['String'];
+  createdDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  interest: Scalars['Float'];
+  interest?: Maybe<Scalars['Float']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   nature: NatureOfDepositProduct;
@@ -7416,6 +7417,7 @@ export type WithdrawInput = {
   bankCheque?: InputMaybe<DepositCheque>;
   cash?: InputMaybe<DepositCash>;
   chequeNo?: InputMaybe<Scalars['String']>;
+  doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
@@ -7923,8 +7925,8 @@ export type SetDepositProductMutation = {
             id: string;
             productCode: string;
             productName: string;
-            createdDate: string;
-            interest: number;
+            createdDate?: string | null;
+            interest?: number | null;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -8648,19 +8650,19 @@ export type GetAccountTableListQuery = {
   account: {
     list?: {
       totalCount: number;
-      pageInfo: {
+      pageInfo?: {
         hasNextPage: boolean;
         hasPreviousPage: boolean;
         startCursor?: string | null;
         endCursor?: string | null;
-      };
-      edges: Array<{
+      } | null;
+      edges?: Array<{
         node?: {
           id: string;
           objState: ObjState;
           createdAt: string;
           modifiedAt: string;
-          member: {
+          member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
             contact?: string | null;
@@ -8677,10 +8679,10 @@ export type GetAccountTableListQuery = {
                 latitude?: number | null;
               } | null;
             } | null;
-          };
+          } | null;
           product: { id: string; productCode: string; productName: string };
         } | null;
-      }>;
+      }> | null;
     } | null;
   };
 };
@@ -10670,6 +10672,28 @@ export type GetLoanProductEditDataQuery = {
   };
 };
 
+export type GetLoanGeneralSettingsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetLoanGeneralSettingsQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        general?: {
+          emi?: boolean | null;
+          epi?: boolean | null;
+          flat?: boolean | null;
+          collateralList?: Array<{
+            name?: string | null;
+            enabled?: boolean | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetPreDefinedFieldsQueryVariables = Exact<{
   filter: PredefinedElementFilter;
 }>;
@@ -10870,8 +10894,8 @@ export type GetDepositProductSettingsListQuery = {
               productCode: string;
               productName: string;
               nature: NatureOfDepositProduct;
-              interest: number;
-              createdDate: string;
+              interest?: number | null;
+              createdDate?: string | null;
               typeOfMember?: Array<KymMemberTypesEnum | null> | null;
               createdAt: string;
               modifiedAt: string;
@@ -16250,6 +16274,41 @@ export const useGetLoanProductEditDataQuery = <
     ['getLoanProductEditData', variables],
     useAxios<GetLoanProductEditDataQuery, GetLoanProductEditDataQueryVariables>(
       GetLoanProductEditDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanGeneralSettingsDocument = `
+    query getLoanGeneralSettings {
+  settings {
+    general {
+      loan {
+        general {
+          emi
+          epi
+          flat
+          collateralList {
+            name
+            enabled
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanGeneralSettingsQuery = <
+  TData = GetLoanGeneralSettingsQuery,
+  TError = unknown
+>(
+  variables?: GetLoanGeneralSettingsQueryVariables,
+  options?: UseQueryOptions<GetLoanGeneralSettingsQuery, TError, TData>
+) =>
+  useQuery<GetLoanGeneralSettingsQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanGeneralSettings']
+      : ['getLoanGeneralSettings', variables],
+    useAxios<GetLoanGeneralSettingsQuery, GetLoanGeneralSettingsQueryVariables>(
+      GetLoanGeneralSettingsDocument
     ).bind(null, variables),
     options
   );

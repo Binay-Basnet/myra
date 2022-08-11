@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
 import { useSetLoanGeneralSettingsMutation } from '@coop/cbs/data-access';
 import { Box } from '@coop/shared/ui';
@@ -10,7 +11,7 @@ import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMe
 const tabList = [
   {
     title: 'settingsLoanGeneral',
-    to: '/settings/general/loan/general',
+    to: '/settings/general/loan/loan-general',
   },
   {
     title: 'settingsInsuranceGeneral',
@@ -27,12 +28,18 @@ interface ISettingsLoanLayout {
 }
 
 export const SettingsLoanLayout = ({ children }: ISettingsLoanLayout) => {
+  const route = useRouter();
   const { t } = useTranslation();
   const loanSettings = useAppSelector((state) => state.loanSettings);
   const { mutateAsync } = useSetLoanGeneralSettingsMutation();
-
   const saveButtonHandler = () => {
-    mutateAsync({ emi: loanSettings?.general?.emi });
+    if (route.pathname.includes('loan-general')) {
+      mutateAsync({
+        emi: loanSettings?.general?.emi,
+        epi: loanSettings?.general?.epi,
+        flat: loanSettings?.general?.flat,
+      });
+    }
   };
 
   return (
