@@ -154,7 +154,7 @@ export const TransactionsSidebarLayout = ({
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          Deposit Settings
+          Transaction Settings
         </Button>
       </Box>
       <Box

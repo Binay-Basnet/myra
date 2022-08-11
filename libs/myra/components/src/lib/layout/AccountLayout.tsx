@@ -21,12 +21,12 @@ const accountColumns = [
   },
   {
     title: 'accountClose',
-    link: '/accounts/close',
+    link: '/accounts/list',
     addLinkId: '/accounts/account-open',
   },
   {
     title: 'accountReport',
-    link: '/accounts/report',
+    link: '/accounts/list',
   },
 ];
 
