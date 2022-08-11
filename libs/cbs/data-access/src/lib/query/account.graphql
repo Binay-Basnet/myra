@@ -216,6 +216,10 @@ query getAccountTableList(
             # username
             # userType
           }
+          balance
+          accountOpenedDate
+          lastTransactionDate
+          accountExpiryDate
           member {
             id
             name

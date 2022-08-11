@@ -8728,6 +8728,10 @@ export type GetAccountTableListQuery = {
           objState: ObjState;
           createdAt: string;
           modifiedAt: string;
+          balance?: string | null;
+          accountOpenedDate?: string | null;
+          lastTransactionDate?: string | null;
+          accountExpiryDate?: string | null;
           createdBy: { id: string };
           modifiedBy: { id: string };
           member?: {
@@ -13842,6 +13846,10 @@ export const GetAccountTableListDocument = `
           modifiedBy {
             id
           }
+          balance
+          accountOpenedDate
+          lastTransactionDate
+          accountExpiryDate
           member {
             id
             name

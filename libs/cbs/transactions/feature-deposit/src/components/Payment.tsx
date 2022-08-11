@@ -36,6 +36,15 @@ const paymentModes = [
   },
 ];
 
+const sourceOfFundsList = [
+  'Personal Savings',
+  'Share Sales',
+  'Dividends',
+  'Property Sales',
+  'Inheritances',
+  'Compensation',
+];
+
 const depositors = [
   {
     label: 'Self',
@@ -94,7 +103,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
 
   const selectedPaymentMode = watch('payment_type');
 
-  // const depositedBy = watch('depositedBy');
+  const depositedBy = watch('depositedBy');
 
   const denominations = watch('cash.denominations');
 
@@ -225,7 +234,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
               <FormInput
                 name="cash.cashPaid"
                 type="number"
-                label={'Cash Paid'}
+                label={'Cash'}
                 textAlign={'right'}
                 placeholder="0.00"
               />
@@ -345,16 +354,20 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
 
       <BoxContainer>
         <Grid templateColumns="repeat(2, 1fr)" columnGap="s20">
-          {/* <FormSelect
+          <FormSelect
             name="sourceOfFund"
             label="Source of Fund"
             placeholder="Select Source of Fund"
-          /> */}
+            options={sourceOfFundsList.map((source) => ({
+              label: source,
+              value: source,
+            }))}
+          />
 
           <FormFileInput
             size={'md'}
             label={'File Upload (Optional)'}
-            name={'file'}
+            name={'doc_identifiers'}
           />
         </Grid>
       </BoxContainer>
@@ -371,6 +384,26 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
             <FormSelect name="agent" label="Agent" placeholder="Select Agent" />
           </InputGroupContainer>
         )} */}
+
+        {depositedBy === DepositedBy.Other && (
+          <>
+            <InputGroupContainer>
+              <FormInput
+                name="other_name"
+                label="Name"
+                placeholder="Enter Name"
+              />
+            </InputGroupContainer>
+
+            <Box width="50%">
+              <FormFileInput
+                name="other_doc_identifiers"
+                label="Citizenship Document"
+                size="md"
+              />
+            </Box>
+          </>
+        )}
       </BoxContainer>
 
       <BoxContainer>

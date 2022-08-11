@@ -56,6 +56,15 @@ const denominationsOptions = [
   { label: '1x', value: '1' },
 ];
 
+const sourceOfFundsList = [
+  'Personal Savings',
+  'Share Sales',
+  'Dividends',
+  'Property Sales',
+  'Inheritances',
+  'Compensation',
+];
+
 /* eslint-disable-next-line */
 export interface PaymentProps {
   mode: number;
@@ -160,7 +169,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
               <FormInput
                 name="cash.cashPaid"
                 type="number"
-                label={'Cash Paid'}
+                label={'Cash'}
                 textAlign={'right'}
                 placeholder="0.00"
               />
@@ -279,16 +288,20 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
 
       <BoxContainer>
         <Grid templateColumns="repeat(2, 1fr)" columnGap="s20">
-          {/* <FormSelect
+          <FormSelect
             name="sourceOfFund"
             label="Source of Fund"
             placeholder="Select Source of Fund"
-          /> */}
+            options={sourceOfFundsList.map((source) => ({
+              label: source,
+              value: source,
+            }))}
+          />
 
           <FormFileInput
             size={'md'}
             label={'File Upload (Optional)'}
-            name={'file'}
+            name={'doc_identifiers'}
           />
         </Grid>
       </BoxContainer>

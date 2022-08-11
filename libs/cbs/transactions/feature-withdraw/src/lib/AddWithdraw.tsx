@@ -422,7 +422,7 @@ export function AddWithdraw() {
                         // email: 'ajitkumar.345@gmail.com',
                         // address: 'Basantapur',
                       }}
-                      notice="KYM needs to be updated"
+                      // notice="KYM needs to be updated"
                       // signaturePath="/signature.jpg"
                       citizenshipPath="/citizenship.jpeg"
                       accountInfo={
