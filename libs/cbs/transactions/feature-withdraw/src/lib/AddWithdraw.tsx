@@ -78,6 +78,8 @@ const cashOptions: Record<string, string> = {
 
 const FINE = '0';
 
+const CURRENT_BALANCE = '2000';
+
 export function AddWithdraw() {
   // const { t } = useTranslation();
 
@@ -309,46 +311,35 @@ export function AddWithdraw() {
                   )}
 
                   {memberId && accountId && withdrawn === WithdrawWith.Cheque && (
-                    <>
-                      <InputGroupContainer>
-                        <FormInput
-                          name="chequeNo"
-                          label="Cheque No"
-                          placeholder="Select Cheque"
-                        />
-                      </InputGroupContainer>
-
+                    <InputGroupContainer>
                       <FormInput
-                        type="number"
-                        min={0}
-                        name="amount"
-                        label="Withdraw Amount"
-                        textAlign="right"
-                        placeholder="0.0"
+                        name="chequeNo"
+                        label="Cheque No"
+                        placeholder="Cheque No"
                       />
-                    </>
+                    </InputGroupContainer>
                   )}
 
-                  {/* {memberId && accountId && withdrawn === 'cheque' && (
-                    <>
+                  {memberId &&
+                    accountId &&
+                    withdrawn === WithdrawWith.WithdrawSlip && (
                       <InputGroupContainer>
                         <FormInput
-                          name="chequeNo"
-                          label="Cheque No"
-                          placeholder="Cheque Cheque"
+                          name="withdrawSlipNo"
+                          label="Withdraw Slip No"
+                          placeholder="Withdraw Slip No"
                         />
                       </InputGroupContainer>
+                    )}
 
-                      <FormInput
-                        type="number"
-                        min={0}
-                        name="amount"
-                        label="Withdraw Amount"
-                        textAlign="right"
-                        placeholder="0.0"
-                      />
-                    </>
-                  )} */}
+                  <FormInput
+                    type="number"
+                    min={0}
+                    name="amount"
+                    label="Withdraw Amount"
+                    textAlign="right"
+                    placeholder="0.0"
+                  />
 
                   {memberId && accountId && (
                     <Box
@@ -436,7 +427,7 @@ export function AddWithdraw() {
                                   ]
                                 : '',
                               ID: selectedAccount?.node?.product?.id,
-                              currentBalance: '1,04,000.45',
+                              currentBalance: CURRENT_BALANCE,
                               minimumBalance: '1000',
                               guaranteeBalance: '1000',
                               overdrawnBalance: '0',
