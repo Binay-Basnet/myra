@@ -13,6 +13,7 @@ import {
   WithdrawBy,
   WithdrawInput,
   WithdrawPaymentType,
+  WithdrawWith,
 } from '@coop/cbs/data-access';
 import {
   FormCustomSelect,
@@ -58,8 +59,8 @@ const accountTypes = {
 };
 
 const withdrawTypes = [
-  { label: 'Cheque', value: 'cheque' },
-  { label: 'Withdraw Slip', value: 'withdrawSlip' },
+  { label: 'Cheque', value: WithdrawWith.Cheque },
+  { label: 'Withdraw Slip', value: WithdrawWith.WithdrawSlip },
 ];
 
 const cashOptions: Record<string, string> = {
@@ -159,7 +160,7 @@ export function AddWithdraw() {
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
 
-  const withdrawn = watch('withdrawBy');
+  const withdrawn = watch('withdrawWith');
 
   const amountToBeWithdrawn = watch('amount') ?? 0;
 
@@ -301,13 +302,13 @@ export function AddWithdraw() {
 
                   {memberId && accountId && (
                     <FormSwitchTab
-                      name="withdrawBy"
+                      name="withdrawWith"
                       label="Withdraw By"
                       options={withdrawTypes}
                     />
                   )}
 
-                  {memberId && accountId && withdrawn === 'cheque' && (
+                  {memberId && accountId && withdrawn === WithdrawWith.Cheque && (
                     <>
                       <InputGroupContainer>
                         <FormInput
