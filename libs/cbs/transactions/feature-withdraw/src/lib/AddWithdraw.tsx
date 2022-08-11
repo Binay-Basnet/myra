@@ -88,7 +88,7 @@ export function AddWithdraw() {
       payment_type: WithdrawPaymentType.Cash,
       cash: { disableDenomination: false },
       withdrawnBy: WithdrawBy.Self,
-      withdrawBy: 'cheque',
+      withdrawWith: WithdrawWith.Cheque,
     },
   });
 

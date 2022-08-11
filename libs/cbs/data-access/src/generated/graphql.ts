@@ -6852,8 +6852,8 @@ export type ShareExtraCharges = {
 };
 
 export type ShareExtraChargesInput = {
-  name: Scalars['String'];
-  value: Scalars['String'];
+  name?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
 };
 
 export type ShareHistory = {

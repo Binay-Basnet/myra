@@ -56,14 +56,14 @@ const denominationsOptions = [
   { label: '1x', value: '1' },
 ];
 
-const sourceOfFundsList = [
-  'Personal Savings',
-  'Share Sales',
-  'Dividends',
-  'Property Sales',
-  'Inheritances',
-  'Compensation',
-];
+// const sourceOfFundsList = [
+//   'Personal Savings',
+//   'Share Sales',
+//   'Dividends',
+//   'Property Sales',
+//   'Inheritances',
+//   'Compensation',
+// ];
 
 /* eslint-disable-next-line */
 export interface PaymentProps {
@@ -288,7 +288,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
 
       <BoxContainer>
         <Grid templateColumns="repeat(2, 1fr)" columnGap="s20">
-          <FormSelect
+          {/* <FormSelect
             name="sourceOfFund"
             label="Source of Fund"
             placeholder="Select Source of Fund"
@@ -296,7 +296,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
               label: source,
               value: source,
             }))}
-          />
+          /> */}
 
           <FormFileInput
             size={'md'}
