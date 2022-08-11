@@ -23,7 +23,7 @@ import {
   FeesAndCharge,
   Interest,
   Member,
-  Product,
+  ProductTest,
   RequiredDocuments,
   Tenure,
 } from '../component/form';
@@ -161,7 +161,8 @@ export function CbsAccountOpen() {
 
             <Member />
 
-            <Product />
+            {/* <Product /> */}
+            <ProductTest />
 
             {ProductType !== NatureOfDepositProduct?.VoluntaryOrOptional && (
               <Tenure />
