@@ -1,12 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import omit from 'lodash/omit';
 
 import {
   Arrange,
+  CashValue,
   NatureOfDepositProduct,
+  useGetAccountTableListQuery,
   useGetMemberListQuery,
+  useSetWithdrawDataMutation,
+  WithdrawBy,
+  WithdrawInput,
+  WithdrawPaymentType,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
+import {
+  FormCustomSelect,
+  MemberSelect,
+} from '@coop/cbs/transactions/ui-components';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
@@ -22,6 +33,20 @@ import {
 
 import { Payment } from '../components';
 
+type WithdrawFormInput = Omit<WithdrawInput, 'cash'> & {
+  cash?:
+    | {
+        cashPaid: string;
+        disableDenomination: boolean;
+        total: string;
+        returned_amount: string;
+        denominations: { value?: string; quantity?: number; amount?: string }[];
+      }
+    | undefined
+    | null;
+  withdrawBy?: string;
+};
+
 /* eslint-disable-next-line */
 export interface AddWithdrawProps {}
 
@@ -32,46 +57,39 @@ const accountTypes = {
   [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
 };
 
-const withdrawByTypes = [
+const withdrawTypes = [
   { label: 'Cheque', value: 'cheque' },
   { label: 'Withdraw Slip', value: 'withdrawSlip' },
 ];
 
-const memberAccountsList = [
-  {
-    accountName: 'Kopila Karnadhar Saving',
-    accountId: '100300010001324',
-    accountType: accountTypes[NatureOfDepositProduct.Mandatory],
-    balance: '1,30,000.43',
-    fine: '40,000.32',
-  },
-  {
-    accountName: 'Youth Saving',
-    accountId: '100300010001325',
-    accountType: accountTypes[NatureOfDepositProduct.VoluntaryOrOptional],
-    balance: '1,30,000.43',
-    fine: '40,000.32',
-  },
-  {
-    accountName: 'Term Saving (Fixed Saving)',
-    accountId: '100300010001326',
-    accountType: accountTypes[NatureOfDepositProduct.TermSavingOrFd],
-    balance: '1,30,000.43',
-  },
-  {
-    accountName: 'Double Payment Saving Scheme',
-    accountId: '100300010001327',
-    accountType: accountTypes[NatureOfDepositProduct.RecurringSaving],
-    balance: '1,30,000.43',
-  },
-];
+const cashOptions: Record<string, string> = {
+  '1000': CashValue.Cash_1000,
+  '500': CashValue.Cash_500,
+  '100': CashValue.Cash_100,
+  '50': CashValue.Cash_50,
+  '25': CashValue.Cash_25,
+  '20': CashValue.Cash_20,
+  '10': CashValue.Cash_10,
+  '5': CashValue.Cash_5,
+  '2': CashValue.Cash_2,
+  '1': CashValue.Cash_1,
+};
 
 export function AddWithdraw() {
   // const { t } = useTranslation();
 
-  const methods = useForm();
+  const router = useRouter();
 
-  const { watch, resetField } = methods;
+  const methods = useForm<WithdrawFormInput>({
+    defaultValues: {
+      payment_type: WithdrawPaymentType.Cash,
+      cash: { disableDenomination: false },
+      withdrawnBy: WithdrawBy.Self,
+      withdrawBy: 'cheque',
+    },
+  });
+
+  const { watch, resetField, getValues } = methods;
 
   // const { data } = useGetMemberIndividualDataQuery(
   //   {
@@ -84,28 +102,7 @@ export function AddWithdraw() {
 
   // const memberData = data?.members?.details?.data;
 
-  const { data: memberList } = useGetMemberListQuery(
-    {
-      first: Number(DEFAULT_PAGE_SIZE),
-      after: '',
-      column: 'ID',
-      arrange: Arrange.Desc,
-    },
-    {
-      staleTime: 0,
-    }
-  );
-
-  const memberListData = memberList?.members?.list?.edges;
-
-  const memberOptions =
-    memberListData &&
-    memberListData.map((member) => {
-      return {
-        label: `${member?.node?.id}-${member?.node?.name?.local}`,
-        value: member?.node?.id,
-      };
-    });
+  const { mutateAsync } = useSetWithdrawDataMutation();
 
   const memberId = watch('memberId');
 
@@ -113,16 +110,54 @@ export function AddWithdraw() {
     resetField('accountId');
   }, [memberId]);
 
+  const { data: memberListData } = useGetMemberListQuery(
+    {
+      first: DEFAULT_PAGE_SIZE,
+      after: '',
+      column: 'ID',
+      arrange: Arrange.Desc,
+    },
+    {
+      staleTime: 0,
+      enabled: !!memberId,
+    }
+  );
+
+  const memberDetail = useMemo(
+    () =>
+      memberListData?.members?.list?.edges?.find(
+        (member) => member?.node?.id === memberId
+      ),
+    [memberId]
+  );
+
+  const { data: accountListData } = useGetAccountTableListQuery(
+    {
+      paginate: {
+        first: DEFAULT_PAGE_SIZE,
+        after: '',
+      },
+      filter: { memberId },
+    },
+    {
+      staleTime: 0,
+      enabled: !!memberId,
+    }
+  );
+
   const accountId = watch('accountId');
+
+  const selectedAccount = useMemo(
+    () =>
+      accountListData?.account?.list?.edges?.find(
+        (account) => account.node?.product?.id === accountId
+      ),
+    [accountId]
+  );
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
 
-  const withdrawBy = watch('withdrawBy');
-
-  const selectedAccount = useMemo(
-    () => memberAccountsList.find((account) => account.accountId === accountId),
-    [accountId]
-  );
+  const withdrawn = watch('withdrawBy');
 
   const amountToBeWithdrawn = watch('amount') ?? 0;
 
@@ -130,6 +165,75 @@ export function AddWithdraw() {
     () => (amountToBeWithdrawn ? Number(amountToBeWithdrawn) + 5000 - 1000 : 0),
     [amountToBeWithdrawn]
   );
+
+  const denominations = watch('cash.denominations');
+
+  const denominationTotal =
+    denominations?.reduce(
+      (accumulator, curr) => accumulator + Number(curr.amount),
+      0 as number
+    ) ?? 0;
+
+  const disableDenomination = watch('cash.disableDenomination');
+
+  const cashPaid = watch('cash.cashPaid');
+
+  const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
+
+  const returnAmount = Number(totalCashPaid) - Number(totalWithdraw);
+
+  const handleSubmit = () => {
+    const values = getValues();
+
+    let filteredValues;
+
+    if (values.payment_type === WithdrawPaymentType.Cash) {
+      filteredValues = omit({ ...values }, [
+        'bankCheque',
+        'file',
+        'withdrawBy',
+      ]);
+
+      filteredValues['cash'] = {
+        ...values['cash'],
+        cashPaid: values.cash?.cashPaid as string,
+        disableDenomination: Boolean(values.cash?.disableDenomination),
+        total: String(totalCashPaid),
+        returned_amount: String(returnAmount),
+        denominations:
+          filteredValues['cash']?.['denominations']?.map(
+            ({ value, quantity }) => ({
+              value: cashOptions[value as string],
+              quantity,
+            })
+          ) ?? [],
+      };
+
+      mutateAsync({ data: filteredValues as WithdrawInput }).then((res) => {
+        if (res?.transaction?.withdraw?.recordId) {
+          router.push('/transactions/withdraw/list');
+        }
+      });
+    }
+
+    if (values.payment_type === WithdrawPaymentType.BankCheque) {
+      filteredValues = omit({ ...filteredValues }, [
+        'cash',
+        'file',
+        'withdrawBy',
+      ]);
+
+      mutateAsync({ data: filteredValues as WithdrawInput }).then((res) => {
+        if (res?.transaction?.withdraw?.recordId) {
+          router.push('/transactions/withdraw/list');
+        }
+      });
+    }
+
+    // mutate({ data: filteredValues });
+
+    // const proccessedValues = {...values, cash:{...values.cash,denominations:}
+  };
 
   return (
     <>
@@ -147,12 +251,16 @@ export function AddWithdraw() {
           />
         </Box>
 
-        <Box bg="white" pb="100px">
+        <Box bg="white">
           <FormProvider {...methods}>
             <form>
-              <Box display={mode === 0 ? 'flex' : 'none'}>
+              <Box
+                minH="calc(100vh - 170px)"
+                display={mode === 0 ? 'flex' : 'none'}
+              >
                 <Box
                   p="s16"
+                  pb="100px"
                   width="100%"
                   display="flex"
                   flexDirection="column"
@@ -160,11 +268,10 @@ export function AddWithdraw() {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <FormSelect
+                  <MemberSelect
                     name="memberId"
                     label="Member"
                     placeholder="Select Member"
-                    options={memberOptions}
                   />
 
                   {memberId && (
@@ -172,16 +279,20 @@ export function AddWithdraw() {
                       name="accountId"
                       label="Select Withdraw Account"
                       placeholder="Select Account"
-                      options={memberAccountsList.map((account) => ({
-                        accountInfo: {
-                          accountName: account.accountName,
-                          accountId: account.accountId,
-                          accountType: account.accountType,
-                          balance: account.balance,
-                          fine: account.fine,
-                        },
-                        value: account.accountId,
-                      }))}
+                      options={accountListData?.account?.list?.edges?.map(
+                        (account) => ({
+                          accountInfo: {
+                            accountName: account.node?.product.productName,
+                            accountId: account.node?.product?.id,
+                            accountType: account?.node?.product?.nature
+                              ? accountTypes[account?.node?.product?.nature]
+                              : '',
+                            // balance: account.balance,
+                            // fine: account.fine,
+                          },
+                          value: account.node?.product.id as string,
+                        })
+                      )}
                     />
                   )}
 
@@ -189,11 +300,11 @@ export function AddWithdraw() {
                     <FormSwitchTab
                       name="withdrawBy"
                       label="Withdraw By"
-                      options={withdrawByTypes}
+                      options={withdrawTypes}
                     />
                   )}
 
-                  {memberId && accountId && withdrawBy === 'cheque' && (
+                  {memberId && accountId && withdrawn === 'cheque' && (
                     <>
                       <InputGroupContainer>
                         <FormSelect
@@ -238,15 +349,22 @@ export function AddWithdraw() {
                         </Text>
                       </Box>
 
-                      <Box display="flex" justifyContent="space-between">
-                        <Text fontSize="s3" fontWeight={500} color="gray.600">
-                          Fine
-                        </Text>
+                      {selectedAccount?.node?.product?.nature !==
+                        NatureOfDepositProduct.VoluntaryOrOptional && (
+                        <Box display="flex" justifyContent="space-between">
+                          <Text fontSize="s3" fontWeight={500} color="gray.600">
+                            Fine
+                          </Text>
 
-                        <Text fontSize="s3" fontWeight={500} color="danger.500">
-                          - 5000
-                        </Text>
-                      </Box>
+                          <Text
+                            fontSize="s3"
+                            fontWeight={500}
+                            color="danger.500"
+                          >
+                            - 5000
+                          </Text>
+                        </Box>
+                      )}
 
                       <Box display="flex" justifyContent="space-between">
                         <Text fontSize="s3" fontWeight={500} color="gray.600">
@@ -269,36 +387,42 @@ export function AddWithdraw() {
                   <Box>
                     <MemberCard
                       memberDetails={{
-                        name: 'Ram Kumar Pandey',
+                        name: memberDetail?.node?.name?.local,
                         avatar: 'https://bit.ly/dan-abramov',
-                        memberID: '23524364456',
-                        gender: 'Male',
-                        age: '43',
-                        maritalStatus: 'Unmarried',
-                        dateJoined: '2077/04/03',
-                        branch: 'Basantapur',
-                        phoneNo: '9841045567',
-                        email: 'ajitkumar.345@gmail.com',
-                        address: 'Basantapur',
+                        memberID: memberDetail?.node?.id,
+                        // gender: 'Male',
+                        // age: '43',
+                        // maritalStatus: 'Unmarried',
+                        dateJoined: memberDetail?.node?.dateJoined,
+                        // branch: 'Basantapur',
+                        phoneNo: memberDetail?.node?.contact,
+                        // email: 'ajitkumar.345@gmail.com',
+                        // address: 'Basantapur',
                       }}
                       notice="KYM needs to be updated"
-                      signaturePath="/signature.jpg"
+                      // signaturePath="/signature.jpg"
                       citizenshipPath="/citizenship.jpeg"
                       accountInfo={
-                        selectedAccount && {
-                          name: selectedAccount.accountName,
-                          type: selectedAccount.accountType,
-                          ID: selectedAccount.accountId,
-                          currentBalance: '1,04,000.45',
-                          minimumBalance: '1000',
-                          guaranteeBalance: '1000',
-                          overdrawnBalance: '0',
-                          fine: '500',
-                          branch: 'Kumaripati',
-                          openDate: '2022-04-03',
-                          expiryDate: '2022-04-03',
-                          lastTransactionDate: '2022-04-03',
-                        }
+                        selectedAccount
+                          ? {
+                              name: selectedAccount?.node?.product?.productName,
+                              type: selectedAccount?.node?.product?.nature
+                                ? accountTypes[
+                                    selectedAccount?.node?.product?.nature
+                                  ]
+                                : '',
+                              ID: selectedAccount?.node?.product?.id,
+                              currentBalance: '1,04,000.45',
+                              minimumBalance: '1000',
+                              guaranteeBalance: '1000',
+                              overdrawnBalance: '0',
+                              fine: '500',
+                              branch: 'Kumaripati',
+                              openDate: '2022-04-03',
+                              expiryDate: '2022-04-03',
+                              lastTransactionDate: '2022-04-03',
+                            }
+                          : null
                       }
                       viewProfileHandler={() => null}
                       viewAccountTransactionsHandler={() => null}
@@ -332,7 +456,7 @@ export function AddWithdraw() {
                       fontWeight={600}
                       color="neutralColorLight.Gray-70"
                     >
-                      {'---'}
+                      {totalWithdraw ?? '---'}
                     </Text>
                   </Box>
                 ) : (
@@ -342,7 +466,7 @@ export function AddWithdraw() {
                 )
               }
               mainButtonLabel={mode === 0 ? 'Proceed to Payment' : 'Submit'}
-              mainButtonHandler={mode === 0 ? () => setMode(1) : () => null}
+              mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>
         </Box>

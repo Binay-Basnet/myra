@@ -22,11 +22,11 @@ interface IFormCustomSelectProps<T> extends SelectProps {
 interface Option {
   label?: string;
   value: string;
-  accountInfo: {
-    accountName: string;
-    accountId: string;
-    accountType: string;
-    balance: string;
+  accountInfo?: {
+    accountName?: string;
+    accountId?: string;
+    accountType?: string;
+    balance?: string;
     fine?: string;
   };
 }
