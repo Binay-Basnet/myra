@@ -47,11 +47,5 @@ jobs:
             echo "Successfully updated repo to the latest version"
             docker-compose -f docker-compose.myra.yml up --build --force-recreate -d
             echo "Myra app deployed successfully"
-            docker-compose -f docker-compose.neosys.yml up --build --force-recreate -d
-            echo "Neosys admin app deployed successfully"
-            docker-compose -f docker-compose.ebanking.yml up --build --force-recreate -d
-            echo "Ebanking app deployed successfully"
-            docker-compose -f docker-compose.storybook.yml up --build --force-recreate -d
-            echo "Storybook deployed successfully"
             docker image prune -f || true
             docker container prune -f || true

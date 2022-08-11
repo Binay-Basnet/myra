@@ -3100,6 +3100,9 @@ const en: Record<string, string> = {
   reportsCbsReports: 'CBS reports',
   reportsSavedReports: 'Saved reports',
   reportsSettings: 'Report Settings',
+  reportsTableView: 'Table View',
+  reportsListView: 'List View',
+  reportsCoreBankingSystemReports: 'Core Banking System Reports',
 
   depositProductMinimumAmount: 'Minimum Amount',
   depositProductMaximumAmount: 'Maximum Amount',
@@ -3107,9 +3110,6 @@ const en: Record<string, string> = {
   depositProductDiminishing: 'Diminishing',
 
   shareTableShareAmount: 'Share Balance',
-  reportsTableView: 'Table View',
-  reportsListView: 'List View',
-  reportsCoreBankingSystemReports: 'Core Banking System Reports',
 
   // login
   loginTitle: 'Digitizing and Connecting SACCOS',

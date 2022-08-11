@@ -69,8 +69,32 @@ const variantSimple: PartsStyleFunction<typeof parts> = (props) => {
   };
 };
 
+const variantReport: PartsStyleFunction<typeof parts> = (props) => {
+  const { colorScheme: c } = props;
+
+  return {
+    th: {
+      bg: 'gray.100',
+      color: mode('gray.800', 'gray.400')(props),
+      border: '1px',
+      borderColor: mode(`border.element`, `${c}.700`)(props),
+      ...numericStyles,
+    },
+    td: {
+      color: mode('gray.800', 'gray.400')(props),
+      border: '1px',
+      borderColor: mode(`border.element`, `${c}.700`)(props),
+      ...numericStyles,
+    },
+    caption: {
+      color: mode('gray.600', 'gray.100')(props),
+    },
+  };
+};
+
 const variants = {
   simple: variantSimple,
+  report: variantReport,
   unstyled: {},
 };
 
@@ -115,6 +139,27 @@ const sizes: Record<string, PartsStyleObject<typeof parts>> = {
       px: '6',
       py: '2',
       fontSize: 'sm',
+    },
+  },
+  report: {
+    th: {
+      px: 's12',
+      lineHeight: '4',
+      fontSize: 'r1',
+      color: 'gray.800',
+      fontWeight: '600',
+      height: '44px',
+    },
+    td: {
+      px: 's12',
+      lineHeight: '5',
+      fontSize: 'r1',
+      height: '40px',
+    },
+    caption: {
+      px: '4',
+      py: '2',
+      fontSize: 'xs',
     },
   },
 };

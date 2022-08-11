@@ -75,7 +75,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
 
   const selectedPaymentMode = watch('payment_type');
 
-  const withdrawnBy = watch('withdrawnBy');
+  // const withdrawnBy = watch('withdrawnBy');
 
   const denominations = watch('cash.denominations');
 
@@ -279,11 +279,11 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
 
       <BoxContainer>
         <Grid templateColumns="repeat(2, 1fr)" columnGap="s20">
-          <FormSelect
+          {/* <FormSelect
             name="sourceOfFund"
             label="Source of Fund"
             placeholder="Select Source of Fund"
-          />
+          /> */}
 
           <FormFileInput
             size={'md'}
@@ -300,11 +300,11 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
           name="withdrawnBy"
         />
 
-        {withdrawnBy === WithdrawBy.Agent && (
+        {/* {withdrawnBy === WithdrawBy.Agent && (
           <InputGroupContainer>
             <FormSelect name="agent" label="Agent" placeholder="Select Agent" />
           </InputGroupContainer>
-        )}
+        )} */}
       </BoxContainer>
 
       <BoxContainer>

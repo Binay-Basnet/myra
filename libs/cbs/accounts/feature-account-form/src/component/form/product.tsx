@@ -288,7 +288,11 @@ export const Product = () => {
                           fontSize="s2"
                           fontWeight="Regular"
                         >
-                          Minimum: {productData?.depositAmount?.minAmount}
+                          Minimum:
+                          {productData?.nature !==
+                          NatureOfDepositProduct?.VoluntaryOrOptional
+                            ? productData?.depositAmount?.minAmount
+                            : productData?.balanceLimit?.minAmount}
                         </TextFields>
                       </li>
 
@@ -298,7 +302,11 @@ export const Product = () => {
                           fontSize="s2"
                           fontWeight="Regular"
                         >
-                          Maximum: {productData?.depositAmount?.maxAmount}
+                          Maximum:{' '}
+                          {productData?.nature !==
+                          NatureOfDepositProduct?.VoluntaryOrOptional
+                            ? productData?.depositAmount?.minAmount
+                            : productData?.balanceLimit?.maxAmount}
                         </TextFields>
                       </li>
                     </ul>
@@ -345,95 +353,261 @@ export const Product = () => {
               {(productData?.nature ===
                 NatureOfDepositProduct?.RecurringSaving ||
                 productData?.nature ===
-                  NatureOfDepositProduct?.TermSavingOrFd) && (
-                <>
-                  <GridItem display="flex" flexDirection="column">
-                    <TextFields
-                      color="primary.800"
-                      fontSize="s3"
-                      fontWeight="Medium"
-                    >
-                      {/* {t['accInterestRate']} */}
-                      Criteria
-                    </TextFields>
-                    <Box display="flex" flexDirection="column" gap="s4">
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        gap="s16"
-                        pl="s24"
+                  NatureOfDepositProduct?.TermSavingOrFd ||
+                productData?.nature ===
+                  NatureOfDepositProduct?.VoluntaryOrOptional) &&
+                productData?.criteria && (
+                  <>
+                    <GridItem display="flex" flexDirection="column">
+                      <TextFields
+                        color="primary.800"
+                        fontSize="s3"
+                        fontWeight="Medium"
                       >
-                        <ul>
-                          <li>
-                            <TextFields
-                              color="neutralColorLight.Gray-70"
-                              fontSize="s2"
-                              fontWeight="Regular"
-                            >
-                              Age:{' '}
-                              <b>
-                                {' '}
-                                Mininum: {productData?.minAge} : Maximum{' '}
-                                {productData?.maxAge}
-                              </b>
-                            </TextFields>
-                          </li>
-
-                          <li>
-                            <TextFields
-                              color="neutralColorLight.Gray-70"
-                              fontSize="s2"
-                              display={'flex'}
-                              flexDirection="row"
-                              gap="s4"
-                              fontWeight="Regular"
-                            >
-                              Gender:{' '}
-                              {tempGender?.map((item) => {
-                                return (
-                                  <Text
-                                    fontSize={'s2'}
-                                    fontWeight="bold"
-                                    pl="s4"
-                                  >
-                                    {item}
-                                  </Text>
-                                );
-                              })}
-                            </TextFields>
-                          </li>
-                        </ul>
-
-                        <ul>
-                          <li>
-                            <TextFields
-                              color="neutralColorLight.Gray-70"
-                              fontSize="s2"
-                              fontWeight="Regular"
-                              display={'flex'}
-                              flexDirection="row"
-                              gap="s4"
-                            >
-                              Foreign Employment:{' '}
-                              <b>
-                                {productData?.foreignEmployment
-                                  ? 'true'
-                                  : 'false'}
-                              </b>
-                            </TextFields>
-                          </li>
-
-                          {productData?.typeOfMember?.includes(
-                            KymMemberTypesEnum.Institution
-                          ) && (
+                        {/* {t['accInterestRate']} */}
+                        Criteria
+                      </TextFields>
+                      <Box display="flex" flexDirection="column" gap="s4">
+                        <Box
+                          display="flex"
+                          flexDirection="column"
+                          gap="s16"
+                          pl="s24"
+                        >
+                          <ul>
                             <li>
                               <TextFields
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 fontWeight="Regular"
                               >
-                                Business (Institutions):{' '}
-                                {tempIns?.map((item) => {
+                                Age:{' '}
+                                <b>
+                                  {' '}
+                                  Mininum: {productData?.minAge} : Maximum{' '}
+                                  {productData?.maxAge}
+                                </b>
+                              </TextFields>
+                            </li>
+                            {productData?.genderId && (
+                              <li>
+                                <TextFields
+                                  color="neutralColorLight.Gray-70"
+                                  fontSize="s2"
+                                  display={'flex'}
+                                  flexDirection="row"
+                                  gap="s4"
+                                  fontWeight="Regular"
+                                >
+                                  Gender:{' '}
+                                  {tempGender?.map((item) => {
+                                    return (
+                                      <Text
+                                        fontSize={'s2'}
+                                        fontWeight="bold"
+                                        pl="s4"
+                                      >
+                                        {item}
+                                      </Text>
+                                    );
+                                  })}
+                                </TextFields>
+                              </li>
+                            )}
+                          </ul>
+
+                          <ul>
+                            {productData?.foreignEmployment && (
+                              <li>
+                                <TextFields
+                                  color="neutralColorLight.Gray-70"
+                                  fontSize="s2"
+                                  fontWeight="Regular"
+                                  display={'flex'}
+                                  flexDirection="row"
+                                  gap="s4"
+                                >
+                                  Foreign Employment:{' '}
+                                  <b>
+                                    {productData?.foreignEmployment
+                                      ? 'true'
+                                      : 'false'}
+                                  </b>
+                                </TextFields>
+                              </li>
+                            )}
+
+                            {productData?.typeOfMember?.includes(
+                              KymMemberTypesEnum.Institution
+                            ) && (
+                              <li>
+                                <TextFields
+                                  color="neutralColorLight.Gray-70"
+                                  fontSize="s2"
+                                  fontWeight="Regular"
+                                >
+                                  Business (Institutions):{' '}
+                                  {tempIns?.map((item) => {
+                                    return (
+                                      <Text
+                                        fontSize={'s2'}
+                                        fontWeight="bold"
+                                        p="s4"
+                                      >
+                                        {item}
+                                      </Text>
+                                    );
+                                  })}
+                                </TextFields>
+                              </li>
+                            )}
+                          </ul>
+                        </Box>
+                      </Box>
+                    </GridItem>
+                    {productData?.maritalStatusId ||
+                      productData?.occupation ||
+                      productData?.typeOfMember?.includes(
+                        KymMemberTypesEnum?.CooperativeUnion
+                      ) ||
+                      productData?.typeOfMember?.includes(
+                        KymMemberTypesEnum?.Cooperative
+                      )}
+                    <GridItem display="flex" flexDirection="column">
+                      <Box display="flex" flexDirection="column" gap="s4">
+                        <Box
+                          display="flex"
+                          flexDirection="column"
+                          gap="s16"
+                          pl="s24"
+                        >
+                          <ul>
+                            {productData?.maritalStatusId && (
+                              <li>
+                                <TextFields
+                                  color="neutralColorLight.Gray-70"
+                                  fontSize="s2"
+                                  fontWeight="Regular"
+                                  display={'flex'}
+                                  flexDirection="row"
+                                  gap="s4"
+                                >
+                                  {' '}
+                                  Marital Status:
+                                  {tempMarriage?.map((item) => {
+                                    return (
+                                      <Text
+                                        fontSize={'s2'}
+                                        fontWeight="bold"
+                                        pl="s4"
+                                      >
+                                        {item}
+                                      </Text>
+                                    );
+                                  })}
+                                </TextFields>
+                              </li>
+                            )}
+                            {productData?.occupation && (
+                              <li>
+                                <TextFields
+                                  color="neutralColorLight.Gray-70"
+                                  fontSize="s2"
+                                  fontWeight="Regular"
+                                  display={'flex'}
+                                  flexDirection="row"
+                                  gap="s4"
+                                >
+                                  Occupation Detail
+                                  {tempOccupationOptions?.map((item) => {
+                                    return (
+                                      <Text
+                                        fontSize={'s2'}
+                                        fontWeight="bold"
+                                        p="s4"
+                                      >
+                                        {item}
+                                      </Text>
+                                    );
+                                  })}
+                                </TextFields>
+                              </li>
+                            )}
+                          </ul>
+
+                          <ul>
+                            {productData?.typeOfMember?.includes(
+                              KymMemberTypesEnum?.CooperativeUnion
+                            ) && (
+                              <li>
+                                <TextFields
+                                  color="neutralColorLight.Gray-70"
+                                  fontSize="s2"
+                                  fontWeight="Regular"
+                                >
+                                  Nature of Business ( COOP Union):
+                                  {tempCoopUnionOptions?.map((item) => {
+                                    return (
+                                      <Text
+                                        fontSize={'s2'}
+                                        fontWeight="bold"
+                                        p="s4"
+                                      >
+                                        {item}
+                                      </Text>
+                                    );
+                                  })}
+                                </TextFields>
+                              </li>
+                            )}
+                            {productData?.typeOfMember?.includes(
+                              KymMemberTypesEnum?.Cooperative
+                            ) && (
+                              <li>
+                                <TextFields
+                                  color="neutralColorLight.Gray-70"
+                                  fontSize="s2"
+                                  fontWeight="Regular"
+                                  display={'flex'}
+                                  flexDirection="row"
+                                  gap="s4"
+                                >
+                                  Cooperative Type:{' '}
+                                  {tempCoopOptions?.map((item) => {
+                                    return (
+                                      <Text
+                                        fontSize={'s2'}
+                                        fontWeight="bold"
+                                        p="s4"
+                                      >
+                                        {item}
+                                      </Text>
+                                    );
+                                  })}
+                                </TextFields>
+                              </li>
+                            )}
+                          </ul>
+                        </Box>
+                      </Box>
+                    </GridItem>
+                    <GridItem display="flex" flexDirection="column">
+                      <Box display="flex" flexDirection="column" gap="s4">
+                        <Box
+                          display="flex"
+                          flexDirection="column"
+                          gap="s16"
+                          pl="s24"
+                        >
+                          <ul>
+                            <li>
+                              <TextFields
+                                color="neutralColorLight.Gray-70"
+                                fontSize="s2"
+                                fontWeight="Regular"
+                              >
+                                Education Qualification:{' '}
+                                {tempEducationOptions?.map((item) => {
                                   return (
                                     <Text
                                       fontSize={'s2'}
@@ -446,82 +620,15 @@ export const Product = () => {
                                 })}
                               </TextFields>
                             </li>
-                          )}
-                        </ul>
-                      </Box>
-                    </Box>
-                  </GridItem>
-                  <GridItem display="flex" flexDirection="column">
-                    <Box display="flex" flexDirection="column" gap="s4">
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        gap="s16"
-                        pl="s24"
-                      >
-                        <ul>
-                          <li>
-                            <TextFields
-                              color="neutralColorLight.Gray-70"
-                              fontSize="s2"
-                              fontWeight="Regular"
-                              display={'flex'}
-                              flexDirection="row"
-                              gap="s4"
-                            >
-                              {' '}
-                              Marital Status:
-                              {tempMarriage?.map((item) => {
-                                return (
-                                  <Text
-                                    fontSize={'s2'}
-                                    fontWeight="bold"
-                                    pl="s4"
-                                  >
-                                    {item}
-                                  </Text>
-                                );
-                              })}
-                            </TextFields>
-                          </li>
 
-                          <li>
-                            <TextFields
-                              color="neutralColorLight.Gray-70"
-                              fontSize="s2"
-                              fontWeight="Regular"
-                              display={'flex'}
-                              flexDirection="row"
-                              gap="s4"
-                            >
-                              Occupation Detail
-                              {tempOccupationOptions?.map((item) => {
-                                return (
-                                  <Text
-                                    fontSize={'s2'}
-                                    fontWeight="bold"
-                                    p="s4"
-                                  >
-                                    {item}
-                                  </Text>
-                                );
-                              })}
-                            </TextFields>
-                          </li>
-                        </ul>
-
-                        <ul>
-                          {productData?.typeOfMember?.includes(
-                            KymMemberTypesEnum?.CooperativeUnion
-                          ) && (
                             <li>
                               <TextFields
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 fontWeight="Regular"
                               >
-                                Nature of Business ( COOP Union):
-                                {tempCoopUnionOptions?.map((item) => {
+                                Ethinicity:{' '}
+                                {tempEthnicityOptions?.map((item) => {
                                   return (
                                     <Text
                                       fontSize={'s2'}
@@ -534,94 +641,12 @@ export const Product = () => {
                                 })}
                               </TextFields>
                             </li>
-                          )}
-                          {productData?.typeOfMember?.includes(
-                            KymMemberTypesEnum?.Cooperative
-                          ) && (
-                            <li>
-                              <TextFields
-                                color="neutralColorLight.Gray-70"
-                                fontSize="s2"
-                                fontWeight="Regular"
-                                display={'flex'}
-                                flexDirection="row"
-                                gap="s4"
-                              >
-                                Cooperative Type:{' '}
-                                {tempCoopOptions?.map((item) => {
-                                  return (
-                                    <Text
-                                      fontSize={'s2'}
-                                      fontWeight="bold"
-                                      p="s4"
-                                    >
-                                      {item}
-                                    </Text>
-                                  );
-                                })}
-                              </TextFields>
-                            </li>
-                          )}
-                        </ul>
+                          </ul>
+                        </Box>
                       </Box>
-                    </Box>
-                  </GridItem>
-                  <GridItem display="flex" flexDirection="column">
-                    <Box display="flex" flexDirection="column" gap="s4">
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        gap="s16"
-                        pl="s24"
-                      >
-                        <ul>
-                          <li>
-                            <TextFields
-                              color="neutralColorLight.Gray-70"
-                              fontSize="s2"
-                              fontWeight="Regular"
-                            >
-                              Education Qualification:{' '}
-                              {tempEducationOptions?.map((item) => {
-                                return (
-                                  <Text
-                                    fontSize={'s2'}
-                                    fontWeight="bold"
-                                    p="s4"
-                                  >
-                                    {item}
-                                  </Text>
-                                );
-                              })}
-                            </TextFields>
-                          </li>
-
-                          <li>
-                            <TextFields
-                              color="neutralColorLight.Gray-70"
-                              fontSize="s2"
-                              fontWeight="Regular"
-                            >
-                              Ethinicity:{' '}
-                              {tempEthnicityOptions?.map((item) => {
-                                return (
-                                  <Text
-                                    fontSize={'s2'}
-                                    fontWeight="bold"
-                                    p="s4"
-                                  >
-                                    {item}
-                                  </Text>
-                                );
-                              })}
-                            </TextFields>
-                          </li>
-                        </ul>
-                      </Box>
-                    </Box>
-                  </GridItem>
-                </>
-              )}
+                    </GridItem>
+                  </>
+                )}
 
               <GridItem display="flex" flexDirection="column">
                 <TextFields

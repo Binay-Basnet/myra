@@ -99,6 +99,9 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
+const FINE = '0';
+const REBATE = '0';
+
 export function AddDeposit() {
   // const { t } = useTranslation();
 
@@ -147,7 +150,7 @@ export function AddDeposit() {
 
   const { data: memberListData } = useGetMemberListQuery(
     {
-      first: DEFAULT_PAGE_SIZE,
+      first: 100,
       after: '',
       column: 'ID',
       arrange: Arrange.Desc,
@@ -189,7 +192,10 @@ export function AddDeposit() {
   const amountToBeDeposited = watch('amount') ?? 0;
 
   const totalDeposit = useMemo(
-    () => (amountToBeDeposited ? Number(amountToBeDeposited) + 5000 - 1000 : 0),
+    () =>
+      amountToBeDeposited
+        ? Number(amountToBeDeposited) + Number(FINE) - Number(REBATE)
+        : 0,
     [amountToBeDeposited]
   );
 
@@ -218,8 +224,8 @@ export function AddDeposit() {
     const values = getValues();
     let filteredValues = {
       ...values,
-      fine: '0',
-      rebate: '0',
+      fine: FINE,
+      rebate: REBATE,
     };
 
     if (values['payment_type'] === DepositPaymentType.Cash) {
@@ -308,7 +314,7 @@ export function AddDeposit() {
                               ? accountTypes[account?.node?.product?.nature]
                               : '',
                             // balance: account.balance,
-                            // fine: account.fine,
+                            // fine: FINE,
                           },
                           value: account.node?.product.id as string,
                         })
@@ -484,7 +490,7 @@ export function AddDeposit() {
                               fontWeight={500}
                               color="danger.500"
                             >
-                              + 5000
+                              {`+ ${FINE}`}
                             </Text>
                           </Box>
                         )}
@@ -499,7 +505,7 @@ export function AddDeposit() {
                             fontWeight={500}
                             color="success.500"
                           >
-                            - 1000
+                            {`- ${REBATE}`}
                           </Text>
                         </Box>
 
@@ -554,10 +560,10 @@ export function AddDeposit() {
                               minimumBalance: '1000',
                               guaranteeBalance: '1000',
                               overdrawnBalance: '0',
-                              fine: '500',
+                              fine: FINE,
                               branch: 'Kumaripati',
                               openDate: '2022-04-03',
-                              expiryDate: '2022-04-03',
+                              expiryDate: '2022-12-03',
                               lastTransactionDate: '2022-04-03',
                             }
                           : null
