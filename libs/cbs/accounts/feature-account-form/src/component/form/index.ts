@@ -5,5 +5,6 @@ export * from './feesAndCharge';
 export * from './interest';
 export * from './member';
 export * from './product';
+export * from './producttest';
 export * from './requiredDoc';
 export * from './tenure';

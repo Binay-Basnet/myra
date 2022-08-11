@@ -102,6 +102,8 @@ const cashOptions: Record<string, string> = {
 const FINE = '0';
 const REBATE = '0';
 
+const CURRENT_BALANCE = '125000';
+
 export function AddDeposit() {
   // const { t } = useTranslation();
 
@@ -381,9 +383,9 @@ export function AddDeposit() {
 
                           <FormInput
                             name="amount"
+                            textAlign="right"
                             type="number"
                             min={0}
-                            textAlign="right"
                             label="Amount to be Deposited"
                           />
                         </Grid>
@@ -437,7 +439,9 @@ export function AddDeposit() {
                             fontWeight={400}
                             color="neutralColorLight.Gray-70"
                           >
-                            Rs. 1,20,000.00
+                            {`Rs. ${
+                              Number(CURRENT_BALANCE) + Number(totalDeposit)
+                            }`}
                           </Text>
                         </Box>
                       </>
@@ -543,7 +547,7 @@ export function AddDeposit() {
                         // email: 'ajitkumar.345@gmail.com',
                         // address: 'Basantapur',
                       }}
-                      notice="KYM needs to be updated"
+                      // notice="KYM needs to be updated"
                       // signaturePath="/signature.jpg"
                       citizenshipPath="/citizenship.jpeg"
                       accountInfo={
@@ -556,7 +560,7 @@ export function AddDeposit() {
                                   ]
                                 : '',
                               ID: selectedAccount?.node?.product?.id,
-                              currentBalance: '1,04,000.45',
+                              currentBalance: CURRENT_BALANCE,
                               minimumBalance: '1000',
                               guaranteeBalance: '1000',
                               overdrawnBalance: '0',

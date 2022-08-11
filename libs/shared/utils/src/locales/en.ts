@@ -3100,6 +3100,9 @@ const en: Record<string, string> = {
   reportsCbsReports: 'CBS reports',
   reportsSavedReports: 'Saved reports',
   reportsSettings: 'Report Settings',
+  reportsTableView: 'Table View',
+  reportsListView: 'List View',
+  reportsCoreBankingSystemReports: 'Core Banking System Reports',
 
   depositProductMinimumAmount: 'Minimum Amount',
   depositProductMaximumAmount: 'Maximum Amount',
@@ -3107,9 +3110,17 @@ const en: Record<string, string> = {
   depositProductDiminishing: 'Diminishing',
 
   shareTableShareAmount: 'Share Balance',
-  reportsTableView: 'Table View',
-  reportsListView: 'List View',
-  reportsCoreBankingSystemReports: 'Core Banking System Reports',
+
+  // login
+  loginTitle: 'Digitizing and Connecting SACCOS',
+  loginSubTitle:
+    'A simple, secure and shared digital platform that connects SACCOS to technology.',
+  loginHeader: 'Welcome to Myra!',
+  loginEmail: 'Email',
+  loginPassword: 'Password',
+  loginKeepSignedIn: 'Keep me signed in',
+  loginForgotPassword: 'Forgot Password',
+  loginText: 'Log in',
 };
 
 export default en;

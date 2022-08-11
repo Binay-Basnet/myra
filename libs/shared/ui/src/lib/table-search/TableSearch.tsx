@@ -98,7 +98,7 @@ export type TableSearchProps = {
     endCursor: string;
     total: number | string;
   };
-  size: 'default' | 'compact';
+  size: 'default' | 'compact' | 'report';
   setSize: (size: 'default' | 'compact') => void;
 };
 

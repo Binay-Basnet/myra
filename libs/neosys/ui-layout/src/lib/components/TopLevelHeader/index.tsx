@@ -30,7 +30,7 @@ const calendarList = [
   { label: 'BS', value: 'BS' },
 ];
 
-export function TopLevelHeader(props: TopLevelHeaderProps) {
+export function TopLevelHeader() {
   const router = useRouter();
 
   return (

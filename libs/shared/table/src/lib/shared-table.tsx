@@ -8,6 +8,7 @@ import {
   TableContainer,
   Tbody,
   Td,
+  Tfoot,
   Th,
   Thead,
   Tr,
@@ -29,6 +30,8 @@ export const Table = <T extends Record<string, unknown>>({
   size = 'default',
   isLoading,
   getRowId,
+  variant = 'simple',
+  showFooter,
 }: TableProps<T>) => {
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
@@ -64,11 +67,11 @@ export const Table = <T extends Record<string, unknown>>({
 
       <TableContainer
         overflowX="auto"
-        overflowY="hidden"
+        overflowY="visible"
         minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
         position="relative"
       >
-        <ChakraTable size={tableSize}>
+        <ChakraTable size={tableSize} variant={variant}>
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
@@ -138,7 +141,7 @@ export const Table = <T extends Record<string, unknown>>({
               return (
                 <Tr
                   key={row.id}
-                  _hover={{ bg: 'background.500' }}
+                  _hover={isStatic ? {} : { bg: 'background.500' }}
                   bg={row.getIsSelected() ? 'primary.0' : 'white'}
                 >
                   {row.getVisibleCells().map((cell) => {
@@ -169,6 +172,33 @@ export const Table = <T extends Record<string, unknown>>({
               );
             })}
           </Tbody>
+
+          {showFooter && (
+            <Tfoot>
+              {table.getFooterGroups().map((footerGroup) => (
+                <Tr key={footerGroup.id}>
+                  {footerGroup.headers.map((footer) =>
+                    footer.column.columnDef.meta?.Footer?.display ===
+                    'none' ? null : (
+                      <Th
+                        key={footer.id}
+                        isNumeric={footer.column.columnDef.meta?.isNumeric}
+                        width={footer.column.columnDef.meta?.width}
+                        colSpan={footer.column.columnDef.meta?.Footer?.colspan}
+                      >
+                        {footer.isPlaceholder
+                          ? null
+                          : flexRender(
+                              footer.column.columnDef.footer,
+                              footer.getContext()
+                            )}
+                      </Th>
+                    )
+                  )}
+                </Tr>
+              ))}
+            </Tfoot>
+          )}
         </ChakraTable>
       </TableContainer>
       {pagination && data && data?.length !== 0 && (

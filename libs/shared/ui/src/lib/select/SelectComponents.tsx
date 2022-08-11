@@ -3,7 +3,7 @@ import {
   IoChevronDownSharp,
   IoSearch,
 } from 'react-icons/io5';
-import { Box, Checkbox, Icon, Text } from '@chakra-ui/react';
+import { Box, Checkbox, Icon, Radio, Text } from '@chakra-ui/react';
 import {
   chakraComponents,
   GroupBase,
@@ -15,11 +15,11 @@ export interface Option {
   value: string | number;
 }
 
-export const components: SelectComponentsConfig<
-  Option,
-  boolean,
-  GroupBase<Option>
-> = {
+export const getComponents: (
+  hasRadio?: boolean
+) => SelectComponentsConfig<Option, boolean, GroupBase<Option>> = (
+  hasRadio
+) => ({
   Placeholder: ({ children, ...props }) => {
     const value = props.selectProps.value;
 
@@ -53,7 +53,28 @@ export const components: SelectComponentsConfig<
     </chakraComponents.DropdownIndicator>
   ),
   Option: ({ children, ...props }) => {
-    return (
+    return hasRadio ? (
+      <chakraComponents.Option {...props}>
+        <Box display="flex" alignItems="center" gap="s8">
+          <Box
+            display="flex"
+            onClick={(e) => {
+              props.selectOption({ ...props.data });
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          >
+            <Radio
+              ref={props.innerRef}
+              isDisabled={props.isDisabled}
+              isChecked={props.isSelected}
+            />
+          </Box>
+
+          {children}
+        </Box>
+      </chakraComponents.Option>
+    ) : (
       <chakraComponents.Option {...props}>
         {children}
         {props.isMulti ? (
@@ -84,4 +105,4 @@ export const components: SelectComponentsConfig<
       </chakraComponents.Option>
     );
   },
-};
+});

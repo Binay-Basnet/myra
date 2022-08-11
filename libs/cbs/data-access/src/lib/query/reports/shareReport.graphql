@@ -1,0 +1,27 @@
+query getShareStatement($data: ShareStatementReportSettings!) {
+  report {
+    shareStatementReport(data: $data) {
+      member {
+        id
+      }
+      statement {
+        ... on ShareStatementReport {
+          shareStatement {
+            date
+            particular
+            noOfShares
+            returnAmountDr
+            purchaseAmountCr
+            balanceSheet
+          }
+          totals {
+            totalShares
+            totalDr
+            totalCr
+            totalBalanceSheet
+          }
+        }
+      }
+    }
+  }
+}

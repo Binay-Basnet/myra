@@ -1382,9 +1382,13 @@ export type Denomination = {
 };
 
 export type DepositAccount = Base & {
+  accountExpiryDate?: Maybe<Scalars['String']>;
+  accountOpenedDate?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
   id: Scalars['ID'];
+  lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -1441,6 +1445,8 @@ export type DepositInput = {
   memberId: Scalars['String'];
   noOfInstallments?: InputMaybe<Scalars['Int']>;
   notes?: InputMaybe<Scalars['String']>;
+  other_doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  other_name?: InputMaybe<Scalars['String']>;
   payment_type: DepositPaymentType;
   rebate?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
@@ -2649,6 +2655,11 @@ export enum File_Variant {
   Other = 'OTHER',
   Pdf = 'PDF',
   Png = 'PNG',
+}
+
+export enum Filter_Mode {
+  And = 'AND',
+  Or = 'OR',
 }
 
 export type FamilyDetails = {
@@ -5545,6 +5556,7 @@ export type KymInstitutionDocumentsType = {
 };
 
 export type KymMemberDataFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
   memberType?: InputMaybe<KymMemberTypesEnum>;
   objState?: InputMaybe<ObjState>;
@@ -6979,6 +6991,7 @@ export type ShareStatement = {
 
 export type ShareStatementReport = {
   shareStatement?: Maybe<Array<Maybe<ShareStatement>>>;
+  totals?: Maybe<TotalReport>;
 };
 
 export type ShareStatementReportSettings = {
@@ -7084,6 +7097,13 @@ export type TodayTrend = {
 
 export type TodayTrendTrendDataArgs = {
   filter: TrendDataFilter;
+};
+
+export type TotalReport = {
+  totalBalanceSheet?: Maybe<Scalars['Int']>;
+  totalCr?: Maybe<Scalars['Int']>;
+  totalDr?: Maybe<Scalars['Int']>;
+  totalShares?: Maybe<Scalars['Int']>;
 };
 
 export type TransactionFilter = {
@@ -7446,6 +7466,8 @@ export type WithdrawInput = {
   notes?: InputMaybe<Scalars['String']>;
   payment_type: WithdrawPaymentType;
   sourceOfFund?: InputMaybe<Scalars['String']>;
+  withdrawSlipNo?: InputMaybe<Scalars['String']>;
+  withdrawWith: WithdrawWith;
   withdrawnBy: WithdrawBy;
 };
 
@@ -7460,6 +7482,11 @@ export type WithdrawResult = {
   query?: Maybe<TransactionQuery>;
   recordId?: Maybe<Scalars['ID']>;
 };
+
+export enum WithdrawWith {
+  Cheque = 'CHEQUE',
+  WithdrawSlip = 'WITHDRAW_SLIP',
+}
 
 export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;
@@ -8701,6 +8728,10 @@ export type GetAccountTableListQuery = {
           objState: ObjState;
           createdAt: string;
           modifiedAt: string;
+          balance?: string | null;
+          accountOpenedDate?: string | null;
+          lastTransactionDate?: string | null;
+          accountExpiryDate?: string | null;
           createdBy: { id: string };
           modifiedBy: { id: string };
           member?: {
@@ -10406,6 +10437,34 @@ export type GetKymDocumentsListQuery = {
         docData: Array<{ identifier: string; url: string } | null>;
       } | null> | null;
     };
+  };
+};
+
+export type GetShareStatementQueryVariables = Exact<{
+  data: ShareStatementReportSettings;
+}>;
+
+export type GetShareStatementQuery = {
+  report: {
+    shareStatementReport?: {
+      member?: { id: string } | null;
+      statement?: {
+        shareStatement?: Array<{
+          date: string;
+          particular: string;
+          noOfShares: number;
+          returnAmountDr: number;
+          purchaseAmountCr: number;
+          balanceSheet: number;
+        } | null> | null;
+        totals?: {
+          totalShares?: number | null;
+          totalDr?: number | null;
+          totalCr?: number | null;
+          totalBalanceSheet?: number | null;
+        } | null;
+      } | null;
+    } | null;
   };
 };
 
@@ -13787,6 +13846,10 @@ export const GetAccountTableListDocument = `
           modifiedBy {
             id
           }
+          balance
+          accountOpenedDate
+          lastTransactionDate
+          accountExpiryDate
           member {
             id
             name
@@ -16100,6 +16163,49 @@ export const useGetKymDocumentsListQuery = <
     ['getKYMDocumentsList', variables],
     useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(
       GetKymDocumentsListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetShareStatementDocument = `
+    query getShareStatement($data: ShareStatementReportSettings!) {
+  report {
+    shareStatementReport(data: $data) {
+      member {
+        id
+      }
+      statement {
+        ... on ShareStatementReport {
+          shareStatement {
+            date
+            particular
+            noOfShares
+            returnAmountDr
+            purchaseAmountCr
+            balanceSheet
+          }
+          totals {
+            totalShares
+            totalDr
+            totalCr
+            totalBalanceSheet
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetShareStatementQuery = <
+  TData = GetShareStatementQuery,
+  TError = unknown
+>(
+  variables: GetShareStatementQueryVariables,
+  options?: UseQueryOptions<GetShareStatementQuery, TError, TData>
+) =>
+  useQuery<GetShareStatementQuery, TError, TData>(
+    ['getShareStatement', variables],
+    useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
+      GetShareStatementDocument
     ).bind(null, variables),
     options
   );

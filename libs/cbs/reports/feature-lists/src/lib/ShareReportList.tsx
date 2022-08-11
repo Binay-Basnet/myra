@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 import { PopoverComponent } from '@coop/myra/components';
 import { Table } from '@coop/shared/table';
@@ -11,11 +12,21 @@ export const ShareReportList = () => {
         Share Report
       </Text>
       <Box display="flex" flexDir="column" gap="s16">
-        <ReportLinkText>102 - Share Register</ReportLinkText>
-        <ReportLinkText>302 - Share Transaction Report</ReportLinkText>
-        <ReportLinkText>120 - Share Consolidated Report</ReportLinkText>
-        <ReportLinkText>300 - Share Bonus Distribution Report</ReportLinkText>
-        <ReportLinkText>145 - Share Certificate Print</ReportLinkText>
+        <ReportLinkText link="/reports/cbs/share-report/new">
+          102 - Share Register
+        </ReportLinkText>
+        <ReportLinkText link="/reports/cbs/share-report/new">
+          302 - Share Transaction Report
+        </ReportLinkText>
+        <ReportLinkText link="/reports/cbs/share-report/new">
+          120 - Share Consolidated Report
+        </ReportLinkText>
+        <ReportLinkText link="/reports/cbs/share-report/new">
+          300 - Share Bonus Distribution Report
+        </ReportLinkText>
+        <ReportLinkText link="/reports/cbs/share-report/new">
+          145 - Share Certificate Print
+        </ReportLinkText>
       </Box>
     </Box>
   );
@@ -102,21 +113,24 @@ export const ShareReportTable = () => {
 
 interface ReportLinkTextProps {
   children: React.ReactNode;
+  link: string;
 }
 
-export const ReportLinkText = ({ children }: ReportLinkTextProps) => {
+export const ReportLinkText = ({ children, link }: ReportLinkTextProps) => {
   return (
-    <Text
-      fontSize="r1"
-      cursor="pointer"
-      color="gray.600"
-      fontWeight="500"
-      _hover={{
-        textDecoration: 'underline',
-        color: 'primary.500',
-      }}
-    >
-      {children}
-    </Text>
+    <Link href={link} passHref>
+      <Text
+        fontSize="r1"
+        cursor="pointer"
+        color="gray.600"
+        fontWeight="500"
+        _hover={{
+          textDecoration: 'underline',
+          color: 'primary.500',
+        }}
+      >
+        {children}
+      </Text>
+    </Link>
   );
 };

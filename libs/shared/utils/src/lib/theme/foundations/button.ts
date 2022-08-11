@@ -2,7 +2,7 @@ import type {
   SystemStyleFunction,
   SystemStyleObject,
 } from '@chakra-ui/theme-tools';
-import { mode, transparentize } from '@chakra-ui/theme-tools';
+import { mode } from '@chakra-ui/theme-tools';
 
 const baseStyle: SystemStyleObject = {
   textTransform: 'initial',
@@ -30,7 +30,7 @@ const baseStyle: SystemStyleObject = {
 };
 
 const variantGhost: SystemStyleFunction = (props) => {
-  const { colorScheme: c, theme } = props;
+  const { colorScheme: c } = props;
 
   if (c === 'gray') {
     return {
@@ -42,8 +42,8 @@ const variantGhost: SystemStyleFunction = (props) => {
     };
   }
 
-  const darkHoverBg = transparentize(`${c}.200`, 0.12)(theme);
-  const darkActiveBg = transparentize(`${c}.200`, 0.24)(theme);
+  // const darkHoverBg = transparentize(`${c}.200`, 0.12)(theme);
+  // const darkActiveBg = transparentize(`${c}.200`, 0.24)(theme);
 
   return {
     color: mode(`${c}.600`, `${c}.200`)(props),
@@ -190,7 +190,7 @@ const sizes: Record<string, SystemStyleObject> = {
     py: 3,
   },
   md: {
-    h: 10,
+    h: '44px',
     minW: 10,
     fontSize: 'sm',
     px: 3,
