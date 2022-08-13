@@ -59,6 +59,18 @@ Runs the storybook for myra ui component
 yarn storybook:myra-ui
 ```
 
+Runs the neosys admin app
+
+```
+yarn start:neosys-admin
+```
+
+Runs the myra ebanking app
+
+```
+yarn start:ebanking
+```
+
 ## Existing problem:
 
 From package.json file I've removed emotion dependency.
@@ -84,25 +96,11 @@ and remove from `package.json` again.
 
 I know its weird. But I didn't find any other way. will be looking into solutions though. Any help will be appreciated!!
 
-TODO:
-
-[x] react query // all
-[] redux-toolkit (June) // Sameer
-[x] i18n // all
-[] theming // Santosh
-[] authorization and authentication (June) // Suyash
-
-[] hotkeys // Santosh
-
-[] table // Aakash // priorty1
-[] Docker and deployment // Aakash // priority 3
-
-[] json form generator // Suyash // priority 2
-[] Nx expertise // Sameer & Suyash
-
 // Rules:
 
 1. Export everything ( chakra -related) from libs/myra
 2. Rule of 3 if used for more than 2 then create a lib else create it where it is used
-3. Don't use "any"
-4.
+3. Try not to use "any" as a type.
+4. Keep components shared by all apps in shared library.
+5. keep graphql and api related stuff in data-access librrary.
+
