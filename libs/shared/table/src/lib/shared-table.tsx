@@ -49,7 +49,11 @@ export const Table = <T extends Record<string, unknown>>({
   });
 
   return (
-    <>
+    <TableContainer
+      overflowX="auto"
+      minH={isLoading || !data || data.length === 0 ? '400px' : '400px'}
+      position="relative"
+    >
       <Collapse in={Object.keys(rowSelection).length !== 0} animateOpacity>
         <TableSelectionBar
           tableInstance={table}
@@ -65,142 +69,136 @@ export const Table = <T extends Record<string, unknown>>({
         />
       )}
 
-      <TableContainer
-        overflowX="auto"
-        overflowY="visible"
-        minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
-        position="relative"
-      >
-        <ChakraTable size={tableSize} variant={variant}>
-          <Thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <Tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <Th
-                    key={header.id}
-                    colSpan={header.colSpan}
-                    isNumeric={header.column.columnDef.meta?.isNumeric}
-                    width={header.column.columnDef.meta?.width}
-                    px="s12"
-                    py="0"
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </Th>
-                ))}
-              </Tr>
-            ))}
-          </Thead>
-          <Tbody position="relative">
-            {isLoading ? (
+      <ChakraTable size={tableSize} variant={variant}>
+        <Thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <Tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <Th
+                  key={header.id}
+                  colSpan={header.colSpan}
+                  isNumeric={header.column.columnDef.meta?.isNumeric}
+                  width={header.column.columnDef.meta?.width}
+                  px="s12"
+                  py="0"
+                >
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </Th>
+              ))}
+            </Tr>
+          ))}
+        </Thead>
+        <Tbody position="relative">
+          {isLoading ? (
+            <Box
+              position="absolute"
+              width="100%"
+              height="100%"
+              zIndex={10}
+              bg="#ffffff99"
+              display="flex"
+              justifyContent="center"
+              pt="100px"
+            >
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="primary.500"
+                size="xl"
+              />
+            </Box>
+          ) : (
+            !data ||
+            (data?.length === 0 && (
               <Box
                 position="absolute"
                 width="100%"
                 height="100%"
-                zIndex={10}
-                bg="#ffffff99"
                 display="flex"
                 justifyContent="center"
-                pt="100px"
               >
-                <Spinner
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  color="primary.500"
-                  size="xl"
-                />
-              </Box>
-            ) : (
-              !data ||
-              (data?.length === 0 && (
-                <Box
-                  position="absolute"
-                  width="100%"
-                  height="100%"
-                  display="flex"
+                <Flex
                   justifyContent="center"
+                  height="250px"
+                  alignItems="center"
                 >
-                  <Flex
-                    justifyContent="center"
-                    height="250px"
-                    alignItems="center"
-                  >
-                    <Text fontSize="r3" color="gray.500">
-                      No Data Found
-                    </Text>
-                  </Flex>
-                </Box>
-              ))
-            )}
-            {table.getRowModel().rows.map((row) => {
-              return (
-                <Tr
-                  key={row.id}
-                  _hover={isStatic ? {} : { bg: 'background.500' }}
-                  bg={row.getIsSelected() ? 'primary.0' : 'white'}
-                >
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <Td
-                        key={cell.id}
-                        isNumeric={cell.column.columnDef.meta?.isNumeric}
-                        width={cell.column.columnDef.meta?.width}
-                        px="s12"
-                        py="0"
-                      >
-                        <Text
-                          as="div"
-                          textOverflow="ellipsis"
-                          overflow="hidden"
-                          width={cell.column.columnDef.meta?.width}
-                          whiteSpace="nowrap"
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </Text>
-                      </Td>
-                    );
-                  })}
-                </Tr>
-              );
-            })}
-          </Tbody>
-
-          {showFooter && (
-            <Tfoot>
-              {table.getFooterGroups().map((footerGroup) => (
-                <Tr key={footerGroup.id}>
-                  {footerGroup.headers.map((footer) =>
-                    footer.column.columnDef.meta?.Footer?.display ===
-                    'none' ? null : (
-                      <Th
-                        key={footer.id}
-                        isNumeric={footer.column.columnDef.meta?.isNumeric}
-                        width={footer.column.columnDef.meta?.width}
-                        colSpan={footer.column.columnDef.meta?.Footer?.colspan}
-                      >
-                        {footer.isPlaceholder
-                          ? null
-                          : flexRender(
-                              footer.column.columnDef.footer,
-                              footer.getContext()
-                            )}
-                      </Th>
-                    )
-                  )}
-                </Tr>
-              ))}
-            </Tfoot>
+                  <Text fontSize="r3" color="gray.500">
+                    No Data Found
+                  </Text>
+                </Flex>
+              </Box>
+            ))
           )}
-        </ChakraTable>
-      </TableContainer>
+          {table.getRowModel().rows.map((row) => {
+            return (
+              <Tr
+                key={row.id}
+                _hover={isStatic ? {} : { bg: 'background.500' }}
+                bg={row.getIsSelected() ? 'primary.0' : 'white'}
+              >
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <Td
+                      key={cell.id}
+                      isNumeric={cell.column.columnDef.meta?.isNumeric}
+                      width={cell.column.columnDef.meta?.width}
+                      px="s12"
+                      py="0"
+                    >
+                      <Text
+                        as="div"
+                        textOverflow="ellipsis"
+                        overflow="hidden"
+                        width={cell.column.columnDef.meta?.width}
+                        whiteSpace="nowrap"
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </Text>
+                    </Td>
+                  );
+                })}
+              </Tr>
+            );
+          })}
+        </Tbody>
+
+        {showFooter && (
+          <Tfoot>
+            {table.getFooterGroups().map((footerGroup) => (
+              <Tr key={footerGroup.id}>
+                {footerGroup.headers.map((footer) =>
+                  footer.column.columnDef.meta?.Footer?.display ===
+                  'none' ? null : (
+                    <Th
+                      key={footer.id}
+                      isNumeric={footer.column.columnDef.meta?.isNumeric}
+                      width={footer.column.columnDef.meta?.width}
+                      colSpan={footer.column.columnDef.meta?.Footer?.colspan}
+                    >
+                      {footer.isPlaceholder
+                        ? null
+                        : flexRender(
+                            footer.column.columnDef.footer,
+                            footer.getContext()
+                          )}
+                    </Th>
+                  )
+                )}
+              </Tr>
+            ))}
+          </Tfoot>
+        )}
+      </ChakraTable>
+
       {pagination && data && data?.length !== 0 && (
         <Pagination
           total={pagination.total}
@@ -209,7 +207,7 @@ export const Table = <T extends Record<string, unknown>>({
           pageSizeOptions={[10, 50, 100]}
         />
       )}
-    </>
+    </TableContainer>
   );
 };
 
