@@ -14,7 +14,7 @@ import { Select, SelectProps } from '@coop/shared/ui';
 
 interface IFormSelectProps<T> extends SelectProps {
   control?: Control<T>;
-  name: string;
+  name?: string;
   rules?: UseControllerProps['rules'];
 }
 

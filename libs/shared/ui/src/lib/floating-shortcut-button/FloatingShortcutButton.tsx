@@ -53,6 +53,10 @@ const whatsNewData = {
       'New branch can be added and seen in branch list',
       'User Authentication is done',
       'All 4 Kym settings can be mended which reflects in actual Kym form.',
+      'Share can be purchased and returned which is reflected in Share balance, share register',
+      'As per the deposit product created new account can be opened for individual members and is reflected in account list',
+      'On the opened account transactions like withdraw and deposit can be carried out ( Most efficient with Voluntary/Optional Product)',
+      'Report list can be seen and share statement report can be viewed',
     ],
   },
   bugsSquashed: {
@@ -118,7 +122,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
           <Text fontSize="r2">Version 1.0.0</Text>
-          <Text fontSize="s3">July 28, 2022</Text>
+          <Text fontSize="s3">Aug 15, 2022</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
