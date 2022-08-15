@@ -21,8 +21,6 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-import logo from '../../../../assets/svgs/namunaLogo.svg';
-
 const TextComponent = ({ label, value }) => {
   return (
     <>
@@ -144,13 +142,20 @@ const Details = () => {
             justifyContent="space-between"
           >
             <Box display="flex" alignItems="center">
-              <Image src={logo} alt="logo" layout="fill" />
-              <Box ml={5}>
+              <Box position="relative" w="s60" h="s60">
+                <Image
+                  src={'/neosystest.png'}
+                  alt="report-page"
+                  layout="fill"
+                />
+              </Box>
+
+              <Box ml={2}>
                 <Text color="primary.500" fontSize="r2" fontWeight="medium">
-                  Namuna Savings and Credit Co-operative Ltd.
+                  Neosys Saving and Credit Cooperative Society Ltd.
                 </Text>
                 <Text color="primary.500" fontSize="r1" fontWeight="medium">
-                  नमुना सहकारी तथा बित्तिय संस्था
+                  नियोसिस बचत तथ ऋण सहकारी{' '}
                 </Text>
               </Box>
             </Box>

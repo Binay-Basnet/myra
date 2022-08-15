@@ -174,15 +174,14 @@ export function TopLevelHeader() {
               flexDirection={'column'}
               justifyContent={'center'}
               alignItems={'flex-start'}
-              gap="s4"
+              gap="s2"
             >
               <Text
                 fontSize="s3"
                 fontWeight="bold"
                 color={'white'}
                 noOfLines={1}
-                p={0}
-                lineHeight="100%"
+                lineHeight="130%"
               >
                 {t['sahakariName']}
               </Text>
