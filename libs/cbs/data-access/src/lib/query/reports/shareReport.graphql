@@ -3,6 +3,15 @@ query getShareStatement($data: ShareStatementReportSettings!) {
     shareStatementReport(data: $data) {
       member {
         id
+        name
+        address {
+          wardNo
+          state
+          district
+          houseNo
+          localGovernment
+        }
+        dateJoined
       }
       statement {
         ... on ShareStatementReport {

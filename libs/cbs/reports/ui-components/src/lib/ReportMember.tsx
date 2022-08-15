@@ -1,6 +1,12 @@
+import { Member } from '@coop/cbs/data-access';
+import { formatAddress } from '@coop/cbs/utils';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 
-export const ReportMember = () => {
+interface ReportMemberProps {
+  member: Partial<Member>;
+}
+
+export const ReportMember = ({ member }: ReportMemberProps) => {
   return (
     <Box p="s32" display="flex" justifyContent="space-between">
       <Box w="50%">
@@ -23,10 +29,10 @@ export const ReportMember = () => {
             <GridItem>
               <Box display="flex" flexDir="column">
                 <Text fontSize="r1" color="gray.700" fontWeight="500">
-                  Binita Acharya
+                  {member?.name?.local ?? '-'}
                 </Text>
                 <Text fontSize="r1" color="gray.700" fontWeight="500">
-                  Koteshwor, Kathmandu, Nepal
+                  {formatAddress(member?.address)}
                 </Text>
                 <Text fontSize="r1" color="gray.700" fontWeight="500">
                   Koteshwor Branch, Kathmandu
@@ -57,7 +63,7 @@ export const ReportMember = () => {
                   2727
                 </Text>
                 <Text fontSize="r1" color="gray.700" fontWeight="500">
-                  2079/04/01
+                  {member?.dateJoined}
                 </Text>
               </Box>
             </GridItem>

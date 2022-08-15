@@ -10447,7 +10447,18 @@ export type GetShareStatementQueryVariables = Exact<{
 export type GetShareStatementQuery = {
   report: {
     shareStatementReport?: {
-      member?: { id: string } | null;
+      member?: {
+        id: string;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        dateJoined?: string | null;
+        address?: {
+          wardNo?: string | null;
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+      } | null;
       statement?: {
         shareStatement?: Array<{
           date: string;
@@ -16174,6 +16185,15 @@ export const GetShareStatementDocument = `
     shareStatementReport(data: $data) {
       member {
         id
+        name
+        address {
+          wardNo
+          state
+          district
+          houseNo
+          localGovernment
+        }
+        dateJoined
       }
       statement {
         ... on ShareStatementReport {
