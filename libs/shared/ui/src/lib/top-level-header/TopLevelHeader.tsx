@@ -361,7 +361,7 @@ export function TopLevelHeader() {
                           <Image
                             width={12}
                             height={12}
-                            src="/ppc.svg"
+                            src="/cbs.svg"
                             alt="Core Banking System"
                           />
                           <Text
@@ -389,7 +389,7 @@ export function TopLevelHeader() {
                           <Image
                             width={12}
                             height={12}
-                            src="/exp.svg"
+                            src="/inventory.svg"
                             alt="Inventory System"
                           />
                           <Text
@@ -417,7 +417,7 @@ export function TopLevelHeader() {
                           <Image
                             w={12}
                             h={12}
-                            src="/theta.svg"
+                            src="/memberandshare.svg"
                             alt="Fixed Asset Management"
                           />
                           <Text
@@ -447,7 +447,7 @@ export function TopLevelHeader() {
                           <Image
                             width={12}
                             height={12}
-                            src="/hpb.svg"
+                            src="/accounting.svg"
                             alt="Accounting System"
                           />
                           <Text
