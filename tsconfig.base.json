@@ -126,6 +126,7 @@
       "@coop/cbs/transactions/withdraw": [
         "libs/cbs/transactions/feature-withdraw/src/index.ts"
       ],
+      "@coop/cbs/utils": ["libs/cbs/utils/src/index.ts"],
       "@coop/ebanking/accounts": [
         "libs/ebanking/feature-accounts/src/index.ts"
       ],

@@ -114,7 +114,9 @@ const NewShareStatementReport = () => {
                   <Divider />
                 </Box>
 
-                <ReportMember />
+                <ReportMember
+                  member={shareStatement.report.shareStatementReport.member}
+                />
 
                 <ShareReportTable
                   shareTotal={
