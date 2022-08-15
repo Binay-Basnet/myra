@@ -29,7 +29,7 @@ export const ReportMember = ({ member }: ReportMemberProps) => {
             <GridItem>
               <Box display="flex" flexDir="column">
                 <Text fontSize="r1" color="gray.700" fontWeight="500">
-                  {member?.name?.local ?? '-'}
+                  {member?.name?.local === '' ? '-' : member?.name?.local}
                 </Text>
                 <Text fontSize="r1" color="gray.700" fontWeight="500">
                   {formatAddress(member?.address)}
