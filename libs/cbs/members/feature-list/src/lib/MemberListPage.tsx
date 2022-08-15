@@ -6,7 +6,7 @@ import {
   ObjState,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
-import { Address } from '@coop/cbs/data-access';
+import { formatAddress } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import {
@@ -19,32 +19,6 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
-
-const formatAddress = (address: Address | undefined | null) => {
-  if (
-    !address?.locality?.local &&
-    !address?.district?.local &&
-    !address?.state?.local
-  ) {
-    return '-';
-  }
-
-  const addressArr = [];
-
-  if (address?.locality?.local) {
-    addressArr.push(address?.locality?.local);
-  }
-
-  if (address?.district?.local) {
-    addressArr.push(address?.district?.local);
-  }
-
-  if (address?.state?.local) {
-    addressArr.push(address?.state?.local);
-  }
-
-  return addressArr.join(', ');
-};
 
 export function MemberListPage() {
   const { t } = useTranslation();

@@ -1,0 +1,23 @@
+{
+  "root": "libs/cbs/utils",
+  "sourceRoot": "libs/cbs/utils/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/cbs/utils/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/utils"],
+      "options": {
+        "jestConfig": "libs/cbs/utils/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
