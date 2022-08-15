@@ -78,8 +78,6 @@ const cashOptions: Record<string, string> = {
 
 const FINE = '0';
 
-const CURRENT_BALANCE = '2000';
-
 export function AddWithdraw() {
   // const { t } = useTranslation();
 
@@ -132,7 +130,7 @@ export function AddWithdraw() {
     () =>
       memberListData?.members?.list?.edges?.find(
         (member) => member?.node?.id === memberId
-      ),
+      )?.node,
     [memberId]
   );
 
@@ -156,7 +154,7 @@ export function AddWithdraw() {
     () =>
       accountListData?.account?.list?.edges?.find(
         (account) => account.node?.id === accountId
-      ),
+      )?.node,
     [accountId]
   );
 
@@ -404,15 +402,15 @@ export function AddWithdraw() {
                   <Box>
                     <MemberCard
                       memberDetails={{
-                        name: memberDetail?.node?.name?.local,
+                        name: memberDetail?.name?.local,
                         avatar: 'https://bit.ly/dan-abramov',
-                        memberID: memberDetail?.node?.id,
+                        memberID: memberDetail?.id,
                         // gender: 'Male',
                         // age: '43',
                         // maritalStatus: 'Unmarried',
-                        dateJoined: memberDetail?.node?.dateJoined,
+                        dateJoined: memberDetail?.dateJoined,
                         // branch: 'Basantapur',
-                        phoneNo: memberDetail?.node?.contact,
+                        phoneNo: memberDetail?.contact,
                         // email: 'ajitkumar.345@gmail.com',
                         // address: 'Basantapur',
                       }}
@@ -422,22 +420,23 @@ export function AddWithdraw() {
                       accountInfo={
                         selectedAccount
                           ? {
-                              name: selectedAccount?.node?.product?.productName,
-                              type: selectedAccount?.node?.product?.nature
-                                ? accountTypes[
-                                    selectedAccount?.node?.product?.nature
-                                  ]
+                              name: selectedAccount?.product?.productName,
+                              type: selectedAccount?.product?.nature
+                                ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
-                              ID: selectedAccount?.node?.product?.id,
-                              currentBalance: CURRENT_BALANCE,
+                              ID: selectedAccount?.product?.id,
+                              currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: '1000',
                               guaranteeBalance: '1000',
                               overdrawnBalance: '0',
-                              fine: '500',
+                              fine: '0',
                               branch: 'Kumaripati',
-                              openDate: '2022-04-03',
-                              expiryDate: '2022-04-03',
-                              lastTransactionDate: '2022-04-03',
+                              openDate:
+                                selectedAccount?.accountOpenedDate ?? 'N/A',
+                              expiryDate:
+                                selectedAccount?.accountExpiryDate ?? 'N/A',
+                              lastTransactionDate:
+                                selectedAccount?.lastTransactionDate ?? 'N/A',
                             }
                           : null
                       }

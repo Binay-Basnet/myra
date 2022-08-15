@@ -94,8 +94,8 @@ export interface PaymentProps {
 
 type PaymentTableType = {
   value: string;
-  quantity: number;
-  amount: number;
+  quantity: string;
+  amount: string;
 };
 
 export function Payment({ mode, totalDeposit }: PaymentProps) {
@@ -267,20 +267,22 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
                     header: 'Amount',
                     isNumeric: true,
                     accessorFn: (row) =>
-                      Number(row.value) * Number(row.quantity),
+                      row.quantity
+                        ? Number(row.value) * Number(row.quantity)
+                        : '0',
                   },
                 ]}
                 defaultData={[
-                  { value: '1000', quantity: 0, amount: 0 },
-                  { value: '500', quantity: 0, amount: 0 },
-                  { value: '100', quantity: 0, amount: 0 },
-                  { value: '50', quantity: 0, amount: 0 },
-                  { value: '25', quantity: 0, amount: 0 },
-                  { value: '20', quantity: 0, amount: 0 },
-                  { value: '10', quantity: 0, amount: 0 },
-                  { value: '5', quantity: 0, amount: 0 },
-                  { value: '2', quantity: 0, amount: 0 },
-                  { value: '1', quantity: 0, amount: 0 },
+                  { value: '1000', quantity: '0', amount: '0' },
+                  { value: '500', quantity: '0', amount: '0' },
+                  { value: '100', quantity: '0', amount: '0' },
+                  { value: '50', quantity: '0', amount: '0' },
+                  { value: '25', quantity: '0', amount: '0' },
+                  { value: '20', quantity: '0', amount: '0' },
+                  { value: '10', quantity: '0', amount: '0' },
+                  { value: '5', quantity: '0', amount: '0' },
+                  { value: '2', quantity: '0', amount: '0' },
+                  { value: '1', quantity: '0', amount: '0' },
                 ]}
                 canDeleteRow={false}
                 canAddRow={false}

@@ -102,8 +102,6 @@ const cashOptions: Record<string, string> = {
 const FINE = '0';
 const REBATE = '0';
 
-const CURRENT_BALANCE = '0';
-
 export function AddDeposit() {
   // const { t } = useTranslation();
 
@@ -166,7 +164,7 @@ export function AddDeposit() {
   const memberDetail = useMemo(() => {
     return memberListData?.members?.list?.edges?.find(
       (member) => member?.node?.id === memberId
-    );
+    )?.node;
   }, [memberId, memberListData]);
 
   const accountId = watch('accountId');
@@ -175,7 +173,7 @@ export function AddDeposit() {
     () =>
       accountListData?.account?.list?.edges?.find(
         (account) => account.node?.id === accountId
-      ),
+      )?.node,
     [accountId]
   );
 
@@ -325,9 +323,9 @@ export function AddDeposit() {
                   )}
 
                   {accountId &&
-                    (selectedAccount?.node?.product?.nature ===
+                    (selectedAccount?.product?.nature ===
                       accountTypes[NatureOfDepositProduct.RecurringSaving] ||
-                      selectedAccount?.node?.product?.nature ===
+                      selectedAccount?.product?.nature ===
                         NatureOfDepositProduct.Mandatory) && (
                       <>
                         <Grid
@@ -371,7 +369,7 @@ export function AddDeposit() {
                     )}
 
                   {accountId &&
-                    selectedAccount?.node?.product?.nature ===
+                    selectedAccount?.product?.nature ===
                       NatureOfDepositProduct.TermSavingOrFd && (
                       <>
                         <Grid
@@ -410,7 +408,7 @@ export function AddDeposit() {
                     )}
 
                   {accountId &&
-                    selectedAccount?.node?.product?.nature ===
+                    selectedAccount?.product?.nature ===
                       NatureOfDepositProduct.VoluntaryOrOptional && (
                       <>
                         <Grid
@@ -440,7 +438,8 @@ export function AddDeposit() {
                             color="neutralColorLight.Gray-70"
                           >
                             {`Rs. ${
-                              Number(CURRENT_BALANCE) + Number(totalDeposit)
+                              Number(selectedAccount?.balance ?? 0) +
+                              Number(totalDeposit)
                             }`}
                           </Text>
                         </Box>
@@ -478,7 +477,7 @@ export function AddDeposit() {
                           </Text>
                         </Box>
 
-                        {selectedAccount?.node?.product?.nature !==
+                        {selectedAccount?.product?.nature !==
                           NatureOfDepositProduct.VoluntaryOrOptional && (
                           <Box display="flex" justifyContent="space-between">
                             <Text
@@ -535,15 +534,15 @@ export function AddDeposit() {
                   <Box>
                     <MemberCard
                       memberDetails={{
-                        name: memberDetail?.node?.name?.local,
+                        name: memberDetail?.name?.local,
                         avatar: 'https://bit.ly/dan-abramov',
-                        memberID: memberDetail?.node?.id,
+                        memberID: memberDetail?.id,
                         // gender: 'Male',
                         // age: '43',
                         // maritalStatus: 'Unmarried',
-                        dateJoined: memberDetail?.node?.dateJoined,
+                        dateJoined: memberDetail?.dateJoined,
                         // branch: 'Basantapur',
-                        phoneNo: memberDetail?.node?.contact,
+                        phoneNo: memberDetail?.contact,
                         // email: 'ajitkumar.345@gmail.com',
                         // address: 'Basantapur',
                       }}
@@ -553,22 +552,23 @@ export function AddDeposit() {
                       accountInfo={
                         selectedAccount
                           ? {
-                              name: selectedAccount?.node?.product?.productName,
-                              type: selectedAccount?.node?.product?.nature
-                                ? accountTypes[
-                                    selectedAccount?.node?.product?.nature
-                                  ]
+                              name: selectedAccount?.product?.productName,
+                              type: selectedAccount?.product?.nature
+                                ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
-                              ID: selectedAccount?.node?.product?.id,
-                              currentBalance: CURRENT_BALANCE,
+                              ID: selectedAccount?.product?.id,
+                              currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: '1000',
                               guaranteeBalance: '1000',
                               overdrawnBalance: '0',
                               fine: FINE,
                               branch: 'Kumaripati',
-                              openDate: '2022-04-03',
-                              expiryDate: '2022-12-03',
-                              lastTransactionDate: '2022-04-03',
+                              openDate:
+                                selectedAccount?.accountOpenedDate ?? 'N/A',
+                              expiryDate:
+                                selectedAccount?.accountExpiryDate ?? 'N/A',
+                              lastTransactionDate:
+                                selectedAccount?.lastTransactionDate ?? 'N/A',
                             }
                           : null
                       }
