@@ -206,7 +206,7 @@ export const ProductTest = () => {
               p="s16"
             >
               <Box display="flex" flexDirection="column" gap="s4">
-                <Text fontWeight="Medium" color="primary.400" fontSize="s3">
+                <Text fontWeight="Medium" fontSize="s3">
                   {
                     poductDetails?.data?.settings?.general?.depositProduct
                       ?.formState?.data?.productCode?.prefix
@@ -217,16 +217,16 @@ export const ProductTest = () => {
                       ?.formState?.data?.productCode?.initialNo
                   }
                 </Text>
-                <Text fontWeight="Medium" color="primary.500" fontSize="r2">
+                <Text fontWeight="Medium" fontSize="r2">
                   {productData?.productName}
                 </Text>
               </Box>
 
               <Box display="flex" flexDirection="column" gap="s4">
-                <Text fontWeight="Medium" color="primary.400" fontSize="s3">
+                <Text fontWeight="Medium" fontSize="s3">
                   Interest Rate
                 </Text>
-                <Text fontWeight="Medium" color="primary.500" fontSize="r2">
+                <Text fontWeight="Medium" fontSize="r2">
                   {productData?.interest?.defaultRate}%
                 </Text>
               </Box>
@@ -370,13 +370,15 @@ export const ProductTest = () => {
                     <Text fontSize={'s3'} fontWeight="400">
                       Ethnicity
                     </Text>
-                    {tempEthnicityOptions?.map((item) => {
-                      return (
-                        <Text fontSize={'s3'} fontWeight="bold" p="s4">
-                          {item}
-                        </Text>
-                      );
-                    })}
+                    <Box>
+                      {tempEthnicityOptions?.map((item) => {
+                        return (
+                          <Text fontSize={'s3'} fontWeight="bold" p="s4">
+                            {item}
+                          </Text>
+                        );
+                      })}
+                    </Box>
                   </Box>
                 )}
 
