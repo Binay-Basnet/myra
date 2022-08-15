@@ -3,16 +3,18 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { GrMail } from 'react-icons/gr';
-import { IoLocationSharp, IoSearchSharp } from 'react-icons/io5';
+import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
 import {
+  Arrange,
   FormFieldSearchTerm,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
+  useGetMemberListQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -556,6 +558,20 @@ const KYMBasiccoopDetailsIntroducer = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
+  const { data: memberListData } = useGetMemberListQuery({
+    first: 100,
+    after: '',
+    column: 'ID',
+    arrange: Arrange.Desc,
+  });
+
+  const memberSelectOption = memberListData?.members?.list?.edges?.map(
+    (item) => ({
+      value: item?.node?.id ?? '',
+      label: `${item?.node?.id ?? ''}-${item?.node?.name?.local ?? ''}`,
+    })
+  );
+
   return (
     <FormProvider {...methods}>
       <form
@@ -569,17 +585,17 @@ const KYMBasiccoopDetailsIntroducer = ({
             {t['kymIndIntroducers']}
           </Text>
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
-            <FormInput
+            <FormSelect
               name="firstIntroducerId"
               label={t['kymIndFirstIntroducer']}
               placeholder={t['kynmIndFirstIntroducerDetail']}
-              rightElement={<Icon as={IoSearchSharp} color="gray.500" />}
+              options={memberSelectOption}
             />
-            <FormInput
+            <FormSelect
               name="secondIntroducerId"
               label={t['kymIndSecondIntroducer']}
               placeholder={t['kymIndSecondIntroducerDetails']}
-              rightElement={<Icon as={IoSearchSharp} color="gray.500" />}
+              options={memberSelectOption}
             />
           </Grid>
         </GroupContainer>
