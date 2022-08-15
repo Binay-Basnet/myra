@@ -3,6 +3,7 @@ import { debounce } from 'lodash';
 
 import { Arrange, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
+import { DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
 interface IMemberSelectProps {
   name: string;
   label: string;
@@ -15,11 +16,11 @@ export const MemberSelect = ({
   placeholder,
 }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
-  // const [trigger, setTrigger] = useState(false);
+  const [trigger, setTrigger] = useState(false);
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
-      first: 100,
+      first: DEFAULT_PAGE_SIZE,
       after: '',
       column: 'ID',
       arrange: Arrange.Desc,
@@ -27,7 +28,7 @@ export const MemberSelect = ({
     },
     {
       staleTime: 0,
-      // enabled: trigger,
+      enabled: trigger,
     }
   );
 
@@ -57,7 +58,7 @@ export const MemberSelect = ({
       placeholder={placeholder}
       onInputChange={debounce((id) => {
         setIDMember(id);
-        // setTrigger(true);
+        setTrigger(true);
       }, 800)}
       options={memberOptions}
     />

@@ -291,8 +291,14 @@ export function AddWithdraw() {
                             accountType: account?.node?.product?.nature
                               ? accountTypes[account?.node?.product?.nature]
                               : '',
-                            // balance: account.balance,
-                            // fine: account.fine,
+                            balance: account?.node?.balance ?? '0',
+                            fine:
+                              account?.node?.product?.nature ===
+                                NatureOfDepositProduct.RecurringSaving ||
+                              account?.node?.product?.nature ===
+                                NatureOfDepositProduct.Mandatory
+                                ? FINE
+                                : '',
                           },
                           value: account.node?.id as string,
                         })

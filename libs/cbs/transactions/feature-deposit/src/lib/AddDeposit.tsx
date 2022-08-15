@@ -313,8 +313,14 @@ export function AddDeposit() {
                             accountType: account?.node?.product?.nature
                               ? accountTypes[account?.node?.product?.nature]
                               : '',
-                            // balance: account.balance,
-                            // fine: FINE,
+                            balance: account?.node?.balance ?? '0',
+                            fine:
+                              account?.node?.product?.nature ===
+                                NatureOfDepositProduct.RecurringSaving ||
+                              account?.node?.product?.nature ===
+                                NatureOfDepositProduct.Mandatory
+                                ? FINE
+                                : '',
                           },
                           value: account.node?.id as string,
                         })
@@ -401,7 +407,10 @@ export function AddDeposit() {
                             fontWeight={400}
                             color="neutralColorLight.Gray-70"
                           >
-                            Rs. 1,20,000.00
+                            {`Rs. ${
+                              Number(selectedAccount?.balance ?? 0) +
+                              Number(totalDeposit)
+                            }`}
                           </Text>
                         </Box>
                       </>
@@ -477,8 +486,10 @@ export function AddDeposit() {
                           </Text>
                         </Box>
 
-                        {selectedAccount?.product?.nature !==
-                          NatureOfDepositProduct.VoluntaryOrOptional && (
+                        {(selectedAccount?.product?.nature ===
+                          NatureOfDepositProduct.RecurringSaving ||
+                          selectedAccount?.product?.nature ===
+                            NatureOfDepositProduct.Mandatory) && (
                           <Box display="flex" justifyContent="space-between">
                             <Text
                               fontSize="s3"

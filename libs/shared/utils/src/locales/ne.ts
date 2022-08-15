@@ -3119,7 +3119,7 @@ const ne: Record<string, string> = {
   loginTitle: 'SACCOS लाई डिजिटाइज गरेर जोड्दै ।',
   loginSubTitle:
     'सहकारीलाई सुविधासँग जोड्ने एक सरल, सुरक्षित र साझा डिजिटल प्ल्याट्फर्म ।',
-  loginHeader: 'मीरामा स्वागत छ।',
+  loginHeader: 'मिरामा स्वागत छ।',
   loginEmail: 'इमेल',
   loginPassword: 'पासवर्ड',
   loginKeepSignedIn: 'मेरो अकाउन्ट खुल्लै राख्नुहोस्।',
