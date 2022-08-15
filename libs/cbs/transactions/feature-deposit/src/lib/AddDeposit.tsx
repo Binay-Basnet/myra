@@ -174,7 +174,7 @@ export function AddDeposit() {
   const selectedAccount = useMemo(
     () =>
       accountListData?.account?.list?.edges?.find(
-        (account) => account.node?.product?.id === accountId
+        (account) => account.node?.id === accountId
       ),
     [accountId]
   );

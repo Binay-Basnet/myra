@@ -155,7 +155,7 @@ export function AddWithdraw() {
   const selectedAccount = useMemo(
     () =>
       accountListData?.account?.list?.edges?.find(
-        (account) => account.node?.product?.id === accountId
+        (account) => account.node?.id === accountId
       ),
     [accountId]
   );
@@ -332,14 +332,16 @@ export function AddWithdraw() {
                       </InputGroupContainer>
                     )}
 
-                  <FormInput
-                    type="number"
-                    min={0}
-                    name="amount"
-                    label="Withdraw Amount"
-                    textAlign="right"
-                    placeholder="0.0"
-                  />
+                  {memberId && accountId && (
+                    <FormInput
+                      type="number"
+                      min={0}
+                      name="amount"
+                      label="Withdraw Amount"
+                      textAlign="right"
+                      placeholder="0.0"
+                    />
+                  )}
 
                   {memberId && accountId && (
                     <Box
