@@ -1,65 +1,14 @@
 import { ReactElement } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Flex, HStack, Img, Spacer } from '@chakra-ui/react';
 
 import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { HomePageLayout } from '@coop/myra/components';
-import { Avatar, Box, Button, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, Button, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-const data = [
-  {
-    avatar: '/dashboardmain/avatar.png',
-    text: 'Fill Out KYC for NIC Asia Bank',
-    subtext: 'I’ve attached an image for the task. Please go through it.',
-    status: 'Due Today',
-    importance: '/dashboardmain/importance.png',
-    icon: '/dashboardmain/redellipse.png',
-  },
-  {
-    avatar: '/dashboardmain/avatar2.png',
-    text: 'Invoice Correction',
-    subtext: 'Check the attachments to fix the errors',
-    status: 'Due in 2 days',
-    importance: '/dashboardmain/importance.png',
-    icon: '/dashboardmain/greyellipse.svg',
-  },
-  {
-    avatar: '/dashboardmain/avatar3.png',
-    text: 'Process all approvals today',
-    subtext: 'All the files must be approved today',
-    status: 'Done',
-    importance: '/dashboardmain/importance.png',
-    icon: '/dashboardmain/check.png',
-  },
-  {
-    avatar: '/dashboardmain/avatar.png',
-    text: 'Fill Out KYC for NIC Asia Bank',
-    subtext: 'I’ve attached an image for the task. Please go through it.',
-    status: 'Due Today',
-    importance: '/dashboardmain/importance.png',
-    icon: '/dashboardmain/check.png',
-  },
-  {
-    avatar: '/dashboardmain/avatar2.png',
-    text: 'Invoice Correction',
-    subtext: 'Check the attachments to fix the errors',
-    status: 'Due in 2 days',
-    importance: '/dashboardmain/importance.png',
-    icon: '/dashboardmain/greyellipse.svg',
-  },
-  {
-    avatar: '/dashboardmain/avatar3.png',
-    text: 'Process all approvals today',
-    subtext: 'All the files must be approved today',
-    status: 'Done',
-    importance: '/dashboardmain/importance.png',
-    icon: '/dashboardmain/check.png',
-  },
-];
-
-const dataKeys = Object.keys(data);
+const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -495,67 +444,140 @@ const Dashboard = () => {
         </Box>
       </Box>
 
-      <Box mt="32px" bg="#FFFFFF" p="16px" pt="24px">
-        <Text fontSize="14px" fontWeight="500" color="#343C46">
-          {t.tasks}
+      <Box display="flex" flexDirection={'column'} gap="s16" pt="s32">
+        <Text fontSize={'r2'} fontWeight="600">
+          {' '}
+          Member Insights
         </Text>
-      </Box>
-      <Box mt="1px" bg="#FFFFFF">
-        {dataKeys.map((keys) => {
-          return (
-            <Box
-              key={keys}
-              borderBottom="1px solid #CBD0D6"
-              pl="45px"
-              pr="20px"
-              h="79px"
-              display={'flex'}
-              alignItems="center"
-              justifyContent="flex-start"
-            >
-              <Box w="470px" display={'flex'} flexDirection="row">
-                <Avatar src={data[keys].avatar} />
-                <Box
-                  display={'flex'}
-                  flexDirection="column"
-                  alignItems={'flex-start'}
-                  px="16px"
-                >
-                  <Text fontSize="13px" fontWeight="600" color="#37474F">
-                    {data[keys].text}
-                  </Text>
-                  <Text fontSize="13px" fontWeight="400" color="#607D8B">
-                    {data[keys].subtext}
-                  </Text>
-                </Box>
-              </Box>
+        <Grid templateColumns={'repeat(2,1fr)'} gap="s16">
+          <Box
+            bg="white"
+            p="s16"
+            display={'flex'}
+            flexDirection="column"
+            gap="s16"
+            borderRadius={'6px'}
+          >
+            <Text fontSize={'r1'} fontWeight="500">
+              Age
+            </Text>
+            <Charts
+              series={[
+                {
+                  name: 'Age',
+                  data: [
+                    {
+                      x: '1-10',
+                      y: 10,
+                    },
+                    {
+                      x: '11-16',
+                      y: 30,
+                    },
+                    {
+                      x: '16-25',
+                      y: 300,
+                    },
+                    {
+                      x: '26-45',
+                      y: 700,
+                    },
+                    {
+                      x: '46-60',
+                      y: 300,
+                    },
+                    {
+                      x: 'Above 60',
+                      y: 175,
+                    },
+                  ],
+                },
+              ]}
+              type="bar"
+              height={'400px'}
+              w="100%"
+              options={{
+                chart: {
+                  toolbar: {
+                    show: false,
+                  },
+                  type: 'bar',
+                },
+                colors: ['#82CA9D'],
+                legend: {
+                  show: true,
+                  horizontalAlign: 'right',
+                  position: 'bottom',
 
-              <Box>
-                <Flex>
-                  <Box w="24px" h="24px">
-                    <Img src={data[keys].importance} alt="importance" />
-                  </Box>
-                  <Box minW="10px" minH="10px" ml="19px" mt="6px">
-                    <Img src={data[keys].icon} alt="check" />
-                  </Box>
-                  <Box mt="2px" ml="8px">
-                    <Text fontSize="13px" fontWeight="400" color="#343C46">
-                      {data[keys].status}
-                    </Text>
-                  </Box>
-                </Flex>
-              </Box>
-              <Spacer />
-              <Box display={'flex'} justifyContent="flex-end">
-                <Avatar src={data[keys].avatar} mr="45px" />
+                  showForSingleSeries: true,
+                },
+                // fill: {
+                //   colors: ['#82CA9D'],
+                // },
+                dataLabels: {
+                  enabled: false,
+                },
+                grid: {
+                  borderColor: '#cccccc',
+                  strokeDashArray: 2,
+                  yaxis: {
+                    lines: {
+                      show: true,
+                    },
+                  },
+                  xaxis: {
+                    lines: {
+                      show: true,
+                    },
+                  },
+                },
+              }}
+            />
+          </Box>
+          <Box
+            bg="white"
+            p="s16"
+            display={'flex'}
+            flexDirection="column"
+            gap="s16"
+            borderRadius={'6px'}
+          >
+            <Text fontSize={'r1'} fontWeight="500">
+              Type
+            </Text>
+            <Charts
+              series={[750, 630, 250, 33]}
+              type="donut"
+              height={'400px'}
+              w="100%"
+              options={{
+                labels: ['Male', 'Female', 'Institutions', 'Other'],
+                colors: ['#8CC63F', '#FC814A', '#143E9F', '#474F5C'],
+                chart: {
+                  type: 'donut',
+                  toolbar: {
+                    show: false,
+                  },
+                },
 
-                <Box pt="15px">
-                  <Img src="/dashboardmain/options.svg" alt="more options" />
-                </Box>
-              </Box>
-            </Box>
-          );
-        })}
+                legend: {
+                  show: true,
+                  horizontalAlign: 'right',
+                  position: 'bottom',
+                },
+                // fill: {
+                //   colors: ['#8CC63F', '#FF8596', '#143E9F', '#474F5C'],
+                // },
+                dataLabels: {
+                  // style: {
+                  //   colors: ['#8CC63F', '#FF8596', '#143E9F', '#474F5C'],
+                  // },
+                  enabled: true,
+                },
+              }}
+            />
+          </Box>
+        </Grid>
       </Box>
     </Box>
   );
