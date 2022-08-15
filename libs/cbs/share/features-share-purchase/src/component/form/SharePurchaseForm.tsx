@@ -10,11 +10,15 @@ import omit from 'lodash/omit';
 
 import {
   Arrange,
+  NatureOfDepositProduct,
   Payment_Mode,
   useAddSharePurchaseMutation,
+  useGetAccountTableListQuery,
+  useGetBankListQuery,
   useGetMemberIndividualDataQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
+import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
@@ -27,6 +31,7 @@ import {
   Avatar,
   Box,
   Container,
+  DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
   Grid,
@@ -67,10 +72,22 @@ const SharePurchaseForm = () => {
   const printingFee = watch('printingFee');
   const adminFee = watch('adminFee');
   const paymentModes = watch('paymentMode');
+  const accountId = watch('accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [IDMember, setIDMember] = useState('');
   const [trigger, setTrigger] = useState(false);
+
+  const { data: bankData } = useGetBankListQuery();
+
+  const bankListArr = bankData?.bank?.bank?.list;
+
+  const bankList = bankListArr?.map((item) => {
+    return {
+      label: item?.name,
+      value: item?.id,
+    };
+  });
 
   const { data } = useGetMemberIndividualDataQuery(
     {
@@ -95,6 +112,31 @@ const SharePurchaseForm = () => {
       enabled: trigger,
     }
   );
+
+  const { data: accountListData } = useGetAccountTableListQuery(
+    {
+      paginate: {
+        first: DEFAULT_PAGE_SIZE,
+        after: '',
+      },
+      filter: { memberId },
+    },
+    {
+      staleTime: 0,
+      enabled: !!memberId,
+    }
+  );
+
+  const availableBalance = accountListData?.account?.list?.edges?.filter(
+    (item) => item?.node?.id === accountId
+  );
+
+  const accountTypes = {
+    [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
+    [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+    [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+    [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
+  };
 
   const memberListData = memberList?.members?.list?.edges;
 
@@ -511,25 +553,23 @@ const SharePurchaseForm = () => {
                   />
 
                   {paymentModes === Payment_Mode.Account && (
-                    <Box mt="s16" mb="s16" w="25%">
-                      <FormSelect
+                    <Box mt="s16" mb="220px" w="40%">
+                      <FormCustomSelect
                         name="accountId"
                         label={t['sharePurchaseSelectAccount']}
                         placeholder={t['sharePurchaseSelectAccount']}
-                        options={[
-                          {
-                            label: 'Option 1',
-                            value: 'option-1',
-                          },
-                          {
-                            label: 'Option 2',
-                            value: 'option-2',
-                          },
-                          {
-                            label: 'Option 3',
-                            value: 'option-3',
-                          },
-                        ]}
+                        options={accountListData?.account?.list?.edges?.map(
+                          (account) => ({
+                            accountInfo: {
+                              accountName: account.node?.product.productName,
+                              accountId: account.node?.product?.id,
+                              accountType: account?.node?.product?.nature
+                                ? accountTypes[account?.node?.product?.nature]
+                                : '',
+                            },
+                            value: account.node?.id as string,
+                          })
+                        )}
                       />
 
                       <Box
@@ -543,7 +583,10 @@ const SharePurchaseForm = () => {
                           {t['sharePurchaseAvailableBalance']}
                         </Text>
                         <Text fontWeight="600" fontSize="r1">
-                          Rs. 12,342
+                          Rs.
+                          {(availableBalance &&
+                            availableBalance[0]?.node?.balance) ??
+                            0}
                         </Text>
                       </Box>
                     </Box>
@@ -561,20 +604,7 @@ const SharePurchaseForm = () => {
                         name="bankId"
                         label={t['sharePurchaseSelectBank']}
                         placeholder={t['sharePurchaseSelectBank']}
-                        options={[
-                          {
-                            label: 'Jyoti Bikash Bank Ltd',
-                            value: 'jbbl',
-                          },
-                          {
-                            label: 'Nabil Bank',
-                            value: 'nabilBank',
-                          },
-                          {
-                            label: 'NIC Bank',
-                            value: 'nic',
-                          },
-                        ]}
+                        options={bankList}
                       />
 
                       <Box>

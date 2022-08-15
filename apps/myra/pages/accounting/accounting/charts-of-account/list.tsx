@@ -1,14 +1,22 @@
 import { ReactElement } from 'react';
 
-import { AccountingFeatureChartsOfAccountList } from '@coop/accounting/accounting';
+// import { AccountingFeatureChartsOfAccountList } from '@coop/accounting/accounting';
 import {
   AccountingLayout,
   AccountingSidebarLayout,
 } from '@coop/accounting/ui-layouts';
+import { WorkInProgress } from '@coop/shared/components';
+import { Box } from '@coop/shared/ui';
 
 // TODO ( Update this page when design arrives )
 const AccountingChartsOfAccountList = () => {
-  return <AccountingFeatureChartsOfAccountList />;
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <WorkInProgress />
+    </Box>
+  );
+
+  // <AccountingFeatureChartsOfAccountList />;
 };
 
 AccountingChartsOfAccountList.getLayout = function getLayout(

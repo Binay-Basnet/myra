@@ -155,6 +155,7 @@ export function MemberListPage() {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
+        noDataTitle={t['member']}
         pagination={{
           total: data?.members?.list?.totalCount ?? 'Many',
           endCursor: data?.members?.list.pageInfo?.endCursor ?? '',

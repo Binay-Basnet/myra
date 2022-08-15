@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -18,7 +19,7 @@ import { useTranslation } from '@coop/shared/utils';
 import { BoxContainer } from '../formui';
 
 export const GridItems = () => {
-  const { watch } = useFormContext();
+  const { watch, reset, getValues } = useFormContext();
   const ageCheck = watch('criteria');
   const genderCheck = watch('criteria');
   const marriageCheck = watch('criteria');
@@ -30,6 +31,16 @@ export const GridItems = () => {
   const cooperativeUnionstatus = watch('criteria');
   const coperativeStatus = watch('criteria');
   const memberType = watch('typeOfMember');
+
+  useEffect(() => {
+    if (ageCheck === undefined || ageCheck?.length === 0) {
+      reset({
+        ...getValues(),
+        minAge: null,
+        maxAge: null,
+      });
+    }
+  }, [ageCheck]);
 
   const { t } = useTranslation();
 

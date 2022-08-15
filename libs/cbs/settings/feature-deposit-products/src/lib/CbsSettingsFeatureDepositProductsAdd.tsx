@@ -14,6 +14,7 @@ import {
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import { NoData, WorkInProgress } from '@coop/shared/components';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
@@ -294,6 +295,8 @@ export function SettingsDepositProductsAdd() {
                 {depositNature !== NatureOfDepositProduct.Mandatory && (
                   <TypesOfMember />
                 )}
+                <NoData title="Member" />
+                <WorkInProgress />
 
                 {depositNature !== NatureOfDepositProduct.Mandatory && (
                   <Box display="flex" flexDirection={'column'} gap="s16">

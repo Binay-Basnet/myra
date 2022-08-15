@@ -1,11 +1,18 @@
 import React, { ReactElement } from 'react';
 
-import { AgentList } from '@coop/cbs/transactions/agent';
+// import { AgentList } from '@coop/cbs/transactions/agent';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { MainLayout } from '@coop/shared/ui';
+import { WorkInProgress } from '@coop/shared/components';
+import { Box, MainLayout } from '@coop/shared/ui';
 
 const TransactionsAgentList = () => {
-  return <AgentList />;
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <WorkInProgress />
+    </Box>
+  );
+
+  // <AgentList />;
 };
 
 TransactionsAgentList.getLayout = function getLayout(page: ReactElement) {

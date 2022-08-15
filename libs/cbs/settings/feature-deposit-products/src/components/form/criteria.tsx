@@ -1,9 +1,7 @@
-import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-// import debounce from 'lodash/debounce';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { CriteriaSection } from '@coop/cbs/data-access';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 

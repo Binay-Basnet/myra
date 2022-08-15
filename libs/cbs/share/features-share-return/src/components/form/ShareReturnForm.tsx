@@ -9,18 +9,21 @@ import { debounce, omit } from 'lodash';
 
 import {
   Arrange,
+  NatureOfDepositProduct,
   Payment_Mode,
   useAddShareReturnMutation,
+  useGetAccountTableListQuery,
+  useGetBankListQuery,
   useGetMemberIndividualDataQuery,
   useGetMemberListQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
+import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
   FormCheckbox,
   FormInput,
-  FormNumberInput,
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
@@ -34,6 +37,7 @@ import {
   Grid,
   GridItem,
   Icon,
+  Input,
   Navbar,
   TabMenu,
   Text,
@@ -56,7 +60,7 @@ const ShareReturnForm = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const methods = useForm();
-  const { watch, getValues } = methods;
+  const { watch, getValues, reset } = methods;
 
   const { mutate } = useAddShareReturnMutation();
 
@@ -72,11 +76,24 @@ const ShareReturnForm = () => {
   const printingFees = watch('printingFee');
   const adminFees = watch('adminFee');
   const paymentModes = watch('paymentMode');
+  const accountId = watch('accountId');
+
   const [totalAmount, setTotalAmount] = useState(0);
   const [IDMember, setIDMember] = useState('');
   const [trigger, setTrigger] = useState(false);
 
   const { data } = useGetMemberIndividualDataQuery({ id: memberId });
+
+  const { data: bankData } = useGetBankListQuery();
+
+  const bankListArr = bankData?.bank?.bank?.list;
+
+  const bankList = bankListArr?.map((item) => {
+    return {
+      label: item?.name as string,
+      value: item?.id as string,
+    };
+  });
 
   const onSubmit = () => {
     const values = getValues();
@@ -103,6 +120,31 @@ const ShareReturnForm = () => {
         onSuccess: () => router.push(`/share/register`),
       }
     );
+  };
+
+  const { data: accountListData } = useGetAccountTableListQuery(
+    {
+      paginate: {
+        first: DEFAULT_PAGE_SIZE,
+        after: '',
+      },
+      filter: { memberId },
+    },
+    {
+      staleTime: 0,
+      enabled: !!memberId,
+    }
+  );
+
+  const availableBalance = accountListData?.account?.list?.edges?.filter(
+    (item) => item?.node?.id === accountId
+  );
+
+  const accountTypes = {
+    [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
+    [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+    [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+    [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
   };
 
   const { data: memberList } = useGetMemberListQuery(
@@ -153,12 +195,28 @@ const ShareReturnForm = () => {
   //   if (balanceData) {
   //     reset({
   //       ...getValues(),
-  //       ...memberListData,
-  //       ...balanceData,
-  //       noOfShares: balanceData?.count ?? 0,
+  //       // ...memberListData,
+  //       // ...balanceData,
+  //       noOfReturnedShares: balanceData?.count ?? 0,
   //     });
   //   }
   // }, [allShares]);
+
+  useEffect(() => {
+    if (balanceData) {
+      if (allShares) {
+        reset({
+          ...getValues(),
+          noOfReturnedShares: balanceData?.count ?? 0,
+        });
+      } else {
+        methods.reset({
+          ...getValues(),
+          noOfReturnedShares: 0,
+        });
+      }
+    }
+  }, [allShares, balanceData, getValues, memberListData, methods, reset]);
 
   // console.log(noOfShares, balanceData?.count);
 
@@ -385,11 +443,19 @@ const ShareReturnForm = () => {
                         gap={3}
                       >
                         <GridItem>
-                          <FormNumberInput
+                          {/* <FormNumberInput
                             id="noOfShares"
                             name="noOfReturnedShares"
                             label={t['shareReturnNoOfShares']}
                             isDisabled={allShares}
+                          /> */}
+                          <Input
+                            textAlign="right"
+                            id="noOfShares"
+                            label={t['shareReturnNoOfShares']}
+                            isDisabled={allShares}
+                            type="number"
+                            {...methods.register('noOfReturnedShares')}
                           />
                         </GridItem>
 
@@ -484,12 +550,6 @@ const ShareReturnForm = () => {
                               textAlign={'right'}
                               placeholder="0.00"
                             />
-                            {/* <FormNumberInput
-                              name="adminFee"
-                              label=""
-                              textAlign="right"
-                              bg="gray.0"
-                            /> */}
                           </Box>
                         </GridItem>
 
@@ -507,13 +567,6 @@ const ShareReturnForm = () => {
                             {t['shareReturnPrintingFees']}
                           </Text>
                           <Box width="300px">
-                            {/* <FormNumberInput
-                              name="printingFee"
-                              label=""
-                              bg="gray.0"
-                              textAlign="right"
-                            /> */}
-
                             <FormInput
                               name="printingFee"
                               type="number"
@@ -577,31 +630,30 @@ const ShareReturnForm = () => {
                   {paymentModes === Payment_Mode.Account && (
                     <Box
                       mt="s16"
-                      mb="s16"
-                      w="25%"
+                      mb="200px"
+                      w="40%"
                       display="flex"
                       flexDirection="column"
                       gap="s16"
                     >
-                      <FormSelect
+                      <FormCustomSelect
                         name="accountId"
                         label={t['shareReturnSelectAccount']}
                         placeholder={t['shareReturnSavingAccount']}
-                        options={[
-                          {
-                            label: 'Nabil Bank',
-                            value: 'option-1',
-                          },
-                          {
-                            label: 'Civil Bank',
-                            value: 'option-2',
-                          },
-                          {
-                            label: 'Sky Bank',
-                            value: 'option-3',
-                          },
-                        ]}
+                        options={accountListData?.account?.list?.edges?.map(
+                          (account) => ({
+                            accountInfo: {
+                              accountName: account.node?.product.productName,
+                              accountId: account.node?.product?.id,
+                              accountType: account?.node?.product?.nature
+                                ? accountTypes[account?.node?.product?.nature]
+                                : '',
+                            },
+                            value: account.node?.id as string,
+                          })
+                        )}
                       />
+
                       <Box
                         px="s16"
                         py="s8"
@@ -613,7 +665,10 @@ const ShareReturnForm = () => {
                           {t['shareReturnAvailableBalance']}
                         </Text>
                         <Text fontWeight="600" fontSize="r1">
-                          {t['rs']} 12,342
+                          Rs.
+                          {(availableBalance &&
+                            availableBalance[0]?.node?.balance) ??
+                            0}
                         </Text>
                       </Box>
                     </Box>
@@ -631,20 +686,7 @@ const ShareReturnForm = () => {
                         name="bankId"
                         label={t['shareReturnSelectBank']}
                         placeholder={t['shareReturnSelectBank']}
-                        options={[
-                          {
-                            label: 'Option 1',
-                            value: 'option-1',
-                          },
-                          {
-                            label: 'Option 2',
-                            value: 'option-2',
-                          },
-                          {
-                            label: 'Option 3',
-                            value: 'option-3',
-                          },
-                        ]}
+                        options={bankList}
                       />
                       <Box>
                         <FormInput

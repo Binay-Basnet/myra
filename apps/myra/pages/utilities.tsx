@@ -1,9 +1,14 @@
 import React, { ReactElement } from 'react';
 
-import { MainLayout } from '@coop/shared/ui';
+import { WorkInProgress } from '@coop/shared/components';
+import { Box, MainLayout } from '@coop/shared/ui';
 
 const Utilities = () => {
-  return <div style={{ marginTop: '150px' }}>Utilities share share</div>;
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <WorkInProgress />
+    </Box>
+  );
 };
 
 Utilities.getLayout = function getLayout(page: ReactElement) {

@@ -3125,6 +3125,17 @@ const ne: Record<string, string> = {
   loginKeepSignedIn: 'मेरो अकाउन्ट खुल्लै राख्नुहोस्।',
   loginForgotPassword: 'पासवर्ड विर्सनुभयो?',
   loginText: 'लग इन',
+
+  tryCreatinganew: 'Try creating a new',
+  orReloadthepage: 'or Reload the page',
+  here: 'here',
+  workinProgress: 'Work in progress',
+  ThisPageIsUnderConstruction:
+    'This page is currently under construction. Come back later or',
+  follow: 'Follow',
+  usForUpdates: 'us for updates',
+  member: 'Member',
+  data: 'data',
 };
 
 export default ne;
