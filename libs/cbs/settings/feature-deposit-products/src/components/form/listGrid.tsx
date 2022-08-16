@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -19,7 +18,7 @@ import { useTranslation } from '@coop/shared/utils';
 import { BoxContainer } from '../formui';
 
 export const GridItems = () => {
-  const { watch, reset, getValues } = useFormContext();
+  const { watch } = useFormContext();
   const ageCheck = watch('criteria');
   const genderCheck = watch('criteria');
   const marriageCheck = watch('criteria');
@@ -32,15 +31,15 @@ export const GridItems = () => {
   const coperativeStatus = watch('criteria');
   const memberType = watch('typeOfMember');
 
-  useEffect(() => {
-    if (ageCheck === undefined || ageCheck?.length === 0) {
-      reset({
-        ...getValues(),
-        minAge: null,
-        maxAge: null,
-      });
-    }
-  }, [ageCheck]);
+  // useEffect(() => {
+  //   if (ageCheck === undefined || ageCheck?.length === 0) {
+  //     reset({
+  //       ...getValues(),
+  //       minAge: null,
+  //       maxAge: null,
+  //     });
+  //   }
+  // }, [ageCheck]);
 
   const { t } = useTranslation();
 
@@ -107,57 +106,57 @@ export const GridItems = () => {
 
   const GenderList = genderOptions?.map((item) => {
     return {
-      label: item?.name?.local,
-      value: item?.id,
+      label: item?.name?.local as string,
+      value: item?.id as string,
     };
   });
 
   const MartialOptions = maritialOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const EducationalOptions = educationOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const InstituitionList = institutionOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const CoopTypeList = coopTypeOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const CoopUnionList = coopUnionOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const EthnicityList = ethnicityOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const OccupationOptions = occupationalOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
