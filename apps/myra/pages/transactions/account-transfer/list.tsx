@@ -2,13 +2,12 @@ import React, { ReactElement } from 'react';
 
 // import { AccountTransferList } from '@coop/cbs/transactions/account-transfer';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { WorkInProgress } from '@coop/shared/components';
-import { Box, MainLayout } from '@coop/shared/ui';
+import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
 const TransactionsAccountTransferList = () => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <WorkInProgress />
+      <WIPState />
     </Box>
   );
   // <AccountTransferList />;

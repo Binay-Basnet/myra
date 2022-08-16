@@ -2,13 +2,12 @@ import React, { ReactElement } from 'react';
 
 // import { AgentList } from '@coop/cbs/transactions/agent';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { WorkInProgress } from '@coop/shared/components';
-import { Box, MainLayout } from '@coop/shared/ui';
+import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
 const TransactionsAgentList = () => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <WorkInProgress />
+      <WIPState />
     </Box>
   );
 

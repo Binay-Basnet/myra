@@ -1,12 +1,14 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
-import { Box, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export const WorkInProgress = () => {
+import Box from '../box/Box';
+import Text from '../text/Text';
+import TextFields from '../text-fields/TextFields';
+
+export function WIPState() {
   const { t } = useTranslation();
-  const router = useRouter();
+
   return (
     <Box
       display="flex"
@@ -22,7 +24,7 @@ export const WorkInProgress = () => {
         src="/workInProgress.svg"
         alt="cetral chakra"
       />
-      <Text color="neutralColorLight.Gray-70" fontWeight="Medium" fontSize="m1">
+      <Text color="neutralColorLight.Gray-70" fontWeight="500" fontSize="m1">
         {t['workinProgress']}
       </Text>
       <Text
@@ -31,7 +33,11 @@ export const WorkInProgress = () => {
         fontSize="r1"
       >
         {t['ThisPageIsUnderConstruction']} &nbsp;
-        <TextFields onClick={() => router.reload()} as="span" variant="link">
+        <TextFields
+          onClick={() => window.location.reload()}
+          as="span"
+          variant="link"
+        >
           {t['follow']}
         </TextFields>
         <Text
@@ -45,4 +51,6 @@ export const WorkInProgress = () => {
       </Text>
     </Box>
   );
-};
+}
+
+export default WIPState;

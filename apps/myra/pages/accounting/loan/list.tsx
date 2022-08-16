@@ -1,13 +1,12 @@
 import { ReactElement } from 'react';
 
 import { AccountingLayout } from '@coop/accounting/ui-layouts';
-import { WorkInProgress } from '@coop/shared/components';
-import { Box } from '@coop/shared/ui';
+import { Box, WIPState } from '@coop/shared/ui';
 
 const LoanList = () => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <WorkInProgress />
+      <WIPState />
     </Box>
   );
 };

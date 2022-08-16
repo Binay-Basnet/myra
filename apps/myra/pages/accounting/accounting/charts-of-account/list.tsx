@@ -5,14 +5,13 @@ import {
   AccountingLayout,
   AccountingSidebarLayout,
 } from '@coop/accounting/ui-layouts';
-import { WorkInProgress } from '@coop/shared/components';
-import { Box } from '@coop/shared/ui';
+import { Box, WIPState } from '@coop/shared/ui';
 
 // TODO ( Update this page when design arrives )
 const AccountingChartsOfAccountList = () => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <WorkInProgress />
+      <WIPState />
     </Box>
   );
 
