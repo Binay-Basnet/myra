@@ -1387,12 +1387,14 @@ export type DepositAccount = Base & {
   balance?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
+  fine?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
+  overDrawnBalance?: Maybe<Scalars['String']>;
   product: DepositProduct;
 };
 
@@ -1599,6 +1601,7 @@ export type DepositProduct = Base & {
   createdDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   interest?: Maybe<Scalars['Float']>;
+  minimumBalance?: Maybe<Scalars['String']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   nature: NatureOfDepositProduct;
