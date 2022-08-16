@@ -186,8 +186,8 @@ export function SettingsDepositProductsAdd() {
         percentage: values?.rebateData?.percentage ?? null,
         rebateAmount: values?.rebateData?.rebateAmount ?? null,
       },
-      maxAge: Number(values?.maxAge) ?? null,
-      minAge: Number(values?.minAge) ?? null,
+      maxAge: values?.maxAge ? Number(values?.maxAge) : null,
+      minAge: values?.minAge ? Number(values?.minAge) : null,
       maxPostingFreqDifference: values?.maxPostingFreqDifference ?? null,
       percentageOfDeposit: values?.percentageOfDeposit ?? null,
       depositAmount: {
@@ -302,8 +302,8 @@ export function SettingsDepositProductsAdd() {
                   </Box>
                 )}
 
-                {depositNature !==
-                  NatureOfDepositProduct.VoluntaryOrOptional && (
+                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  depositNature === NatureOfDepositProduct.Mandatory) && (
                   <DepositFrequency />
                 )}
                 {depositNature !==

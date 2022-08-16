@@ -140,7 +140,7 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
         <TabColumn list={inventoryColumns} />
         <Divider my="s16" />
         <Button
-          onClick={() => router.push('/sales/list')}
+          onClick={() => router.push('/accounting/sales/settings')}
           variant="ghost"
           color="#37474F"
           height="s48"

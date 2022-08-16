@@ -3,12 +3,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import {
-  Arrange,
   BranchCategory,
-  ObjState,
   useAllAdministrationQuery,
   useGetBranchEditDataQuery,
-  useGetMemberListQuery,
+  useGetCoaListQuery,
   useSetBranchDataMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -24,7 +22,6 @@ import {
 import {
   Box,
   Container,
-  DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
   GridItem,
@@ -49,29 +46,6 @@ export function CbsSettingsFeatureBranchesNew() {
   const { data } = useAllAdministrationQuery();
 
   const { mutate } = useSetBranchDataMutation();
-
-  const { data: memberListData } = useGetMemberListQuery(
-    router.query['before']
-      ? {
-          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-          after: router.query['before'] as string,
-          column: 'ID',
-          arrange: Arrange.Desc,
-        }
-      : {
-          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-          after: (router.query['after'] ?? '') as string,
-          column: 'ID',
-          arrange: Arrange.Desc,
-        },
-    {
-      staleTime: 0,
-    }
-  );
-
-  const memberList = memberListData?.members?.list?.edges;
 
   const province = useMemo(() => {
     return (
@@ -110,6 +84,21 @@ export function CbsSettingsFeatureBranchesNew() {
     { label: t['settingsBranchStatusActive'], value: true },
     { label: t['settingsBranchStatusInactive'], value: false },
   ];
+
+  const { data: coa } = useGetCoaListQuery({
+    filter: {
+      active: true,
+    },
+  });
+
+  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+
+  const coaList = coaData?.map((item) => {
+    return {
+      label: item?.name?.en as string,
+      value: item?.id as string,
+    };
+  });
 
   const branchCategories = [
     {
@@ -207,14 +196,11 @@ export function CbsSettingsFeatureBranchesNew() {
                       </InputGroupContainer>
 
                       <InputGroupContainer mt="s16">
-                        <FormSelect
-                          name="managerId"
+                        <FormInput
+                          type="text"
+                          name="managerName"
                           label={t['settingsBranchManagerName']}
-                          placeholder={t['settingsBranchManagerName']}
-                          options={memberList?.map((d) => ({
-                            label: d?.node?.name?.local,
-                            value: d?.node?.id,
-                          }))}
+                          placeholder={t['branchEnterManagerName']}
                         />
                         <FormSelect
                           label={t['settingsBranchCategory']}
@@ -225,7 +211,7 @@ export function CbsSettingsFeatureBranchesNew() {
                         <FormInput
                           type="date"
                           label={t['settingsBranchEstablishedDate']}
-                          placeholder="Enter Established Date"
+                          placeholder={t['branchEnterEstablishedDate']}
                           name="estDate"
                         />
                       </InputGroupContainer>
@@ -329,7 +315,7 @@ export function CbsSettingsFeatureBranchesNew() {
                                 t['settingsBranchRecievableAccountPlaceholder']
                               }
                               name="receivableAccountId"
-                              options={[]}
+                              options={coaList}
                             />
                             <FormSelect
                               label={t['settingsBranchPayableAccount']}
@@ -337,7 +323,7 @@ export function CbsSettingsFeatureBranchesNew() {
                                 t['settingsBranchPayableAccountPlaceholder']
                               }
                               name="payableAccountId"
-                              options={[]}
+                              options={coaList}
                             />
                           </InputGroupContainer>
                         </Box>
@@ -350,13 +336,13 @@ export function CbsSettingsFeatureBranchesNew() {
                           label={t['settinsBranchPLTransfer']}
                           placeholder={t['settingsBranchPLTransderLabel']}
                           name="plTransferId"
-                          options={[]}
+                          options={coaList}
                         />
                         <FormSelect
                           label={t['settinsBranchTDSTransfer']}
                           placeholder={t['settingsBranchTDSTransderLabel']}
                           name="tdsTransaferId"
-                          options={[]}
+                          options={coaList}
                         />
                       </InputGroupContainer>
                     </Box>

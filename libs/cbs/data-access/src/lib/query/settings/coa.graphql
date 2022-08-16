@@ -1,0 +1,20 @@
+query getCOAList($filter: ChartsOfAccountFilter!) {
+  settings {
+    general {
+      chartsOfAccount {
+        accounts(filter: $filter) {
+          data {
+            id
+            name
+            under
+            accountClass
+            accountCode
+            currency
+            accountType
+            openingBalance
+          }
+        }
+      }
+    }
+  }
+}

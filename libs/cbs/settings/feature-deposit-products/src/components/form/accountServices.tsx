@@ -1,3 +1,4 @@
+import { useGetCoaListQuery } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
@@ -15,19 +16,23 @@ const service_name = [
   { label: 'Atm issue', value: 'atmIssue' },
 ];
 
-const ledger_name = [
-  {
-    label: 'Purchase Ledger',
-    value: 'purchaseLedger',
-  },
-  {
-    label: 'Sales Ledger',
-    value: 'salesLedger',
-  },
-];
-
 export const AccountServicesCharge = () => {
   const { t } = useTranslation();
+
+  const { data: coa } = useGetCoaListQuery({
+    filter: {
+      active: true,
+    },
+  });
+
+  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+
+  const coaList = coaData?.map((item) => {
+    return {
+      label: item?.name?.en as string,
+      value: item?.id as string,
+    };
+  });
 
   return (
     <GroupContainer
@@ -56,7 +61,7 @@ export const AccountServicesCharge = () => {
             header: t['depositProductAccServiceTableLedgerName'],
             fieldType: 'select',
             cellWidth: 'auto',
-            selectOptions: ledger_name,
+            selectOptions: coaList,
           },
           {
             accessor: 'amount',
