@@ -6,4 +6,3 @@ export * from './SectionSubHeading';
 export * from './SectionSubText';
 export * from './SectionText';
 export * from './TextBox';
-export * from './WorkInProgress';

@@ -49,8 +49,7 @@ export function NoDataState({ title, custom }: NoDataStateProps) {
         </Text>
       ) : (
         <Text color="neutralColorLight.Gray-50" fontSize="r2">
-          {t['tryCreatinganew']} data
-          {t['orReloadthepage']}{' '}
+          {t['tryCreatinganew']} data {t['orReloadthepage']}{' '}
           <TextFields
             onClick={() => window.location.reload()}
             as="span"
