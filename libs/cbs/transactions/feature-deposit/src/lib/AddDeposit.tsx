@@ -273,7 +273,9 @@ export function AddDeposit() {
             title={'New Deposit'}
             closeLink="/transactions/deposit/list"
             buttonLabel="Add Bulk Deposit"
-            buttonHandler={() => null}
+            buttonHandler={() =>
+              router.push('/transactions/deposit/add-bulk-deposit')
+            }
           />
         </Box>
 
@@ -569,11 +571,13 @@ export function AddDeposit() {
                                 : '',
                               ID: selectedAccount?.product?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
-                              minimumBalance: '1000',
+                              minimumBalance:
+                                selectedAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: '1000',
-                              overdrawnBalance: '0',
+                              overdrawnBalance:
+                                selectedAccount?.overDrawnBalance ?? '0',
                               fine: FINE,
-                              branch: 'Kumaripati',
+                              // branch: 'Kumaripati',
                               openDate:
                                 selectedAccount?.accountOpenedDate ?? 'N/A',
                               expiryDate:

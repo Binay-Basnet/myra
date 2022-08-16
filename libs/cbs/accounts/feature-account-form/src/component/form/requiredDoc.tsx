@@ -117,12 +117,14 @@ export const RequiredDocuments = ({
         ?.find((doc) => doc?.fieldId === 'taxClearance')
         ?.docData?.map((doc) => ({ fileName: doc?.identifier, url: doc?.url })),
     });
-  }, [isLoading]);
+  }, [isLoading, docData]);
+
   useEffect(() => {
     if (productId) {
       setTriggerQuery(true);
     }
   }, [productId]);
+
   useEffect(() => {
     if (id) {
       refetchDocumentList();

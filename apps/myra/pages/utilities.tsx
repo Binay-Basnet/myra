@@ -1,9 +1,13 @@
 import React, { ReactElement } from 'react';
 
-import { MainLayout } from '@coop/shared/ui';
+import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
 const Utilities = () => {
-  return <div style={{ marginTop: '150px' }}>Utilities share share</div>;
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <WIPState />
+    </Box>
+  );
 };
 
 Utilities.getLayout = function getLayout(page: ReactElement) {

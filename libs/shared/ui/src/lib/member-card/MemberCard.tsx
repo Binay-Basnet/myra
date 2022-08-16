@@ -57,6 +57,7 @@ export interface MemberCardProps {
     | null;
   viewProfileHandler: () => void;
   viewAccountTransactionsHandler: () => void;
+  cardBg?: string;
 }
 
 export function MemberCard({
@@ -68,6 +69,7 @@ export function MemberCard({
   accountInfo,
   viewProfileHandler,
   viewAccountTransactionsHandler,
+  cardBg = 'white',
 }: MemberCardProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -100,7 +102,7 @@ export function MemberCard({
 
   return (
     <>
-      <Box bg="white" w={isInline ? '960px' : '320px'}>
+      <Box bg={cardBg} w={isInline ? '100%' : '320px'}>
         {!isInline && (
           <Box px="s16" py="s8">
             <Text
@@ -120,7 +122,7 @@ export function MemberCard({
           justifyContent={isInline ? 'space-between' : 'center'}
           alignItems={isInline ? 'flex-start' : 'normal'}
           gap="s8"
-          borderTop="1px"
+          borderTop={isInline ? 0 : '1px'}
           borderColor="border.layout"
         >
           <Box display="flex" gap="s8">

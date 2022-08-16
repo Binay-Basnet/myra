@@ -3121,6 +3121,17 @@ const en: Record<string, string> = {
   loginKeepSignedIn: 'Keep me signed in',
   loginForgotPassword: 'Forgot Password',
   loginText: 'Log in',
+
+  tryCreatinganew: 'Try creating a new',
+  orReloadthepage: 'or Reload the page',
+  here: 'here',
+  workinProgress: 'Work in progress',
+  ThisPageIsUnderConstruction:
+    'This page is currently under construction. Come back later or',
+  follow: 'Follow',
+  usForUpdates: 'us for updates',
+  member: 'Member',
+  data: 'data',
 };
 
 export default en;

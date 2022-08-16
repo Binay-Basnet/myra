@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { flexRender } from '@tanstack/react-table';
 
-import { Pagination, TableSearch, Text } from '@coop/shared/ui';
+import { NoDataState, Pagination, TableSearch, Text } from '@coop/shared/ui';
 
 import { TableSelectionBar } from '../components';
 import { useTable } from '../hooks/useTable';
@@ -29,6 +29,7 @@ export const Table = <T extends Record<string, unknown>>({
   searchPlaceholder,
   size = 'default',
   isLoading,
+  noDataTitle,
   getRowId,
   variant = 'simple',
   showFooter,
@@ -125,12 +126,10 @@ export const Table = <T extends Record<string, unknown>>({
               >
                 <Flex
                   justifyContent="center"
-                  height="250px"
+                  height="300px"
                   alignItems="center"
                 >
-                  <Text fontSize="r3" color="gray.500">
-                    No Data Found
-                  </Text>
+                  <NoDataState title={noDataTitle} />
                 </Flex>
               </Box>
             ))

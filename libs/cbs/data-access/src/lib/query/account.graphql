@@ -238,12 +238,15 @@ query getAccountTableList(
             contact
             dateJoined
           }
+          overDrawnBalance
           product {
             id
             productCode
             productName
             nature
+            minimumBalance
           }
+          fine
         }
       }
     }

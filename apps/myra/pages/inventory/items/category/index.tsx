@@ -1,13 +1,15 @@
 import { ReactElement } from 'react';
 
-import {
-  InventoryItemCategoryTable,
-  InventoryItemsLayout,
-} from '@coop/myra/components';
-import { MainLayoutInventory } from '@coop/shared/ui';
+import { InventoryItemsLayout } from '@coop/myra/components';
+import { Box, MainLayoutInventory, WIPState } from '@coop/shared/ui';
 
 const InventoryCategory = () => {
-  return <InventoryItemCategoryTable />;
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <WIPState />
+    </Box>
+  );
+  // <InventoryItemCategoryTable />;
 };
 
 InventoryCategory.getLayout = function getLayout(page: ReactElement) {

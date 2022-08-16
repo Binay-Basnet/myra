@@ -21,8 +21,8 @@ const accountColumns = [
   },
   {
     title: 'accountClose',
-    link: '/accounts/list',
-    addLinkId: '/accounts/account-open',
+    link: '/accounts/account-close',
+    addLinkId: '/accounts/account-close',
   },
   {
     title: 'accountReport',

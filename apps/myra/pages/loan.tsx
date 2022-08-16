@@ -1,9 +1,13 @@
 import React, { ReactElement } from 'react';
 
-import { MainLayout } from '@coop/shared/ui';
+import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
 const Loan = () => {
-  return <div style={{ marginTop: '150px' }}>Loan share share</div>;
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <WIPState />
+    </Box>
+  );
 };
 
 Loan.getLayout = function getLayout(page: ReactElement) {
