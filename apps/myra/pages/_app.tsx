@@ -11,6 +11,7 @@ import { Box, FloatingShortcutButton } from '@coop/shared/ui';
 import { store, theme, useInit } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
+import '../styles/globals.css';
 
 const { ToastContainer } = createStandaloneToast();
 
