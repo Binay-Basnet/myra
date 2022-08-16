@@ -75,6 +75,7 @@ export interface EditableTableProps<
 
   debug?: boolean;
   canAddRow?: boolean;
+  searchPlaceholder?: string;
 }
 
 const cellWidthObj = {
@@ -187,6 +188,7 @@ export function EditableTable<
   onChange,
   debug = false,
   canAddRow = true,
+  searchPlaceholder,
 }: EditableTableProps<T>) {
   const [state, dispatch] = useReducer<
     Reducer<EditableState<T>, EditableTableAction<T>>
@@ -301,7 +303,7 @@ export function EditableTable<
           >
             <Select
               components={components}
-              placeholder="Search for items"
+              placeholder={searchPlaceholder ?? 'Search for items'}
               options={
                 columns.find((column) => column.searchOptions)?.searchOptions
               }

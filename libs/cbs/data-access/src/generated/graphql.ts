@@ -6157,6 +6157,7 @@ export type MemberQuery = {
   cooperativeUnion?: Maybe<KymCoopUnionQuery>;
   details: MemberDetailsResult;
   entry?: Maybe<KymEntryQuery>;
+  get?: Maybe<Member>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
@@ -6170,6 +6171,10 @@ export type MemberQueryDetailsArgs = {
 
 export type MemberQueryEntryArgs = {
   membeId: Scalars['String'];
+};
+
+export type MemberQueryGetArgs = {
+  memberId: Scalars['String'];
 };
 
 export type MemberQueryIndividualArgs = {
@@ -6830,6 +6835,7 @@ export type ShareBalance = {
   amount: Scalars['Int'];
   count: Scalars['Int'];
   member: Member;
+  memberId?: Maybe<Scalars['ID']>;
 };
 
 export type ShareBalanceConnection = {
@@ -6932,6 +6938,7 @@ export type ShareRegister = {
   extraFee?: Maybe<Array<Maybe<ShareExtraCharges>>>;
   id?: Maybe<Scalars['ID']>;
   member?: Maybe<Member>;
+  memberId?: Maybe<Scalars['String']>;
   paymentMode?: Maybe<Payment_Mode>;
   shareAmount?: Maybe<Scalars['Float']>;
   startNumber: Scalars['Int'];
@@ -8735,6 +8742,8 @@ export type GetAccountTableListQuery = {
           accountOpenedDate?: string | null;
           lastTransactionDate?: string | null;
           accountExpiryDate?: string | null;
+          overDrawnBalance?: string | null;
+          fine?: string | null;
           createdBy: { id: string };
           modifiedBy: { id: string };
           member?: {
@@ -8760,6 +8769,7 @@ export type GetAccountTableListQuery = {
             productCode: string;
             productName: string;
             nature: NatureOfDepositProduct;
+            minimumBalance?: string | null;
           };
         } | null;
       }> | null;
@@ -13884,12 +13894,15 @@ export const GetAccountTableListDocument = `
             contact
             dateJoined
           }
+          overDrawnBalance
           product {
             id
             productCode
             productName
             nature
+            minimumBalance
           }
+          fine
         }
       }
     }

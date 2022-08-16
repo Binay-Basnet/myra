@@ -432,11 +432,13 @@ export function AddWithdraw() {
                                 : '',
                               ID: selectedAccount?.product?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
-                              minimumBalance: '1000',
+                              minimumBalance:
+                                selectedAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: '1000',
-                              overdrawnBalance: '0',
+                              overdrawnBalance:
+                                selectedAccount?.overDrawnBalance ?? '0',
                               fine: '0',
-                              branch: 'Kumaripati',
+                              // branch: 'Kumaripati',
                               openDate:
                                 selectedAccount?.accountOpenedDate ?? 'N/A',
                               expiryDate:
