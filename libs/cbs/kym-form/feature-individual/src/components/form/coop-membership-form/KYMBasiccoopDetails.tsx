@@ -31,6 +31,7 @@ import {
   GridItem,
   Icon,
   Input,
+  Select,
   Text,
   TextFields,
 } from '@coop/shared/ui';
@@ -60,6 +61,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
   setKymCurrentSection,
 }: IKYMBasiccoopDetailsFamilyMemberProps) => {
   const [showFamilyDetailCard, setShowFamilyDetailCard] = useState(false);
+  const [selectedFamilyMember, setSelectedFamilyMember] = useState('');
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -106,6 +108,24 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
+
+  const { data: memberListData } = useGetMemberListQuery({
+    first: 100,
+    after: '',
+    column: 'ID',
+    arrange: Arrange.Desc,
+  });
+
+  const memberSelectOption = memberListData?.members?.list?.edges?.map(
+    (item) => ({
+      value: item?.node?.id ?? '',
+      label: `${item?.node?.id ?? ''}-${item?.node?.name?.local ?? ''}`,
+    })
+  );
+
+  const selectedMemberDetails = memberListData?.members?.list?.edges?.filter(
+    (item) => item?.node?.id === selectedFamilyMember
+  );
 
   return (
     <FormProvider {...methods}>
@@ -168,10 +188,9 @@ const KYMBasiccoopDetailsFamilyMember = ({
                           fontWeight="Medium"
                           fontSize="s3"
                         >
-                          Ajit Nepal
-                          {/* {data?.personalInformation?.name?.firstName}{' '}
-                    {data?.personalInformation?.name?.middleName}{' '}
-                    {data?.personalInformation?.name?.lastName} */}
+                          {selectedMemberDetails
+                            ? selectedMemberDetails[0]?.node?.name?.local
+                            : 'Ajit Nepal'}
                         </TextFields>
                         <Text
                           color="neutralColorLight.Gray-80"
@@ -179,7 +198,10 @@ const KYMBasiccoopDetailsFamilyMember = ({
                           fontWeight="Regular"
                         >
                           {/* ID: {data?.personalInformation?.panNumber} */}
-                          {t['id']} : 23524364456
+                          {t['id']} :{' '}
+                          {selectedMemberDetails
+                            ? selectedMemberDetails[0]?.node?.id
+                            : '123456789'}
                         </Text>
 
                         <Text
@@ -188,7 +210,15 @@ const KYMBasiccoopDetailsFamilyMember = ({
                           fontSize="s3"
                         >
                           {/* Member Since: {data?.personalInformation?.dateOfBirth} */}
-                          {t['memberSince']} : 2077/03/45
+                          {t['memberSince']} :{' '}
+                          {selectedMemberDetails
+                            ? selectedMemberDetails[0]?.node?.dateJoined?.substring(
+                                0,
+                                selectedMemberDetails[0]?.node?.dateJoined.indexOf(
+                                  ' '
+                                )
+                              )
+                            : 'Ajit Nepal'}
                         </Text>
 
                         <Text
@@ -222,7 +252,9 @@ const KYMBasiccoopDetailsFamilyMember = ({
                           fontWeight="Regular"
                         >
                           {/* {data?.contact?.mobile} */}
-                          9865000000
+                          {selectedMemberDetails
+                            ? selectedMemberDetails[0]?.node?.contact
+                            : '9865000000'}
                         </TextFields>
                       </Box>
 
@@ -250,7 +282,9 @@ const KYMBasiccoopDetailsFamilyMember = ({
                           fontSize="s3"
                           fontWeight="Regular"
                         >
-                          Kathmandu, Tokha Municipality-10
+                          {selectedMemberDetails
+                            ? `${selectedMemberDetails[0]?.node?.address?.district?.local}`
+                            : 'Kathmandu, Tokha Municipality-10'}
                         </TextFields>
                       </Box>
                     </GridItem>
@@ -310,8 +344,10 @@ const KYMBasiccoopDetailsFamilyMember = ({
                       fontSize="s3"
                       color="neutralColorLight.gray-80"
                     >
-                      {t['kynIndPresentAddress']} : Lalitpur, Lalitpur
-                      Municipality -11
+                      {t['kynIndPresentAddress']} :{' '}
+                      {selectedMemberDetails
+                        ? `${selectedMemberDetails[0]?.node?.address?.district}`
+                        : ' Lalitpur, Lalitpur Municipality -11'}
                     </Text>
                   </GridItem>
                 </Grid>
@@ -331,6 +367,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
           <Box display="flex" gap="s20" alignItems="center">
             <Input
+              mt={1}
               type="text"
               flexGrow="1"
               id={`familyMemberInThisCooperative.0.memberId`}
@@ -338,12 +375,20 @@ const KYMBasiccoopDetailsFamilyMember = ({
               bg="white"
             />
 
-            <Input
+            {/* <Input
               type="text"
               flexGrow="1"
               id={`familyMemberInThisCooperative.0.memberId`}
               placeholder={t['kynIndEnterMemberID']}
               bg="white"
+            /> */}
+            <Select
+              name="otherCoopBranchId"
+              placeholder={t['kynIndEnterMemberID']}
+              options={memberSelectOption}
+              onChange={(e: { label: string; value: string }) =>
+                setSelectedFamilyMember(e.value)
+              }
             />
             <Button
               id="findmemberButton"
