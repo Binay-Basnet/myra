@@ -282,7 +282,9 @@ export function SettingsLoanProductForm() {
       penalty: {
         ...values?.penalty,
         minimumAmount: values?.penalty?.minimumAmount ?? null,
-        penaltyAmount: values?.penalty?.penaltyAmount ?? null,
+        penaltyAmount: values?.penalty?.penaltyAmount
+          ? values?.penalty?.penaltyAmount
+          : null,
         rateType: values?.penalty?.rateType ? values?.penalty?.rateType : null,
       },
     };

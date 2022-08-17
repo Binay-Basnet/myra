@@ -31,12 +31,13 @@ export const TypesOfMember = () => {
       <Text fontWeight="500" fontSize={'s3'} color="gray.700">
         {t['depositProductTypeofmember']}
       </Text>
-
-      <FormCheckboxGroup
-        name="typeOfMember"
-        list={typesOfMember}
-        orientation="column"
-      />
+      <Box w="16%">
+        <FormCheckboxGroup
+          name="typeOfMember"
+          list={typesOfMember}
+          orientation="column"
+        />
+      </Box>
     </Box>
   );
 };

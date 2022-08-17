@@ -28,7 +28,7 @@ export const RequiredDocumentSetup = () => {
     <BoxContainer>
       <TopText> {t['loanProductRequiredDocumentSetup']} </TopText>
       <Grid templateColumns={'repeat(2,1fr)'}>
-        <Box display="flex" flexDirection="column" gap="s16">
+        <Box display="flex" flexDirection="column" gap="s16" w="40%">
           <FormCheckboxGroup
             name="requiredDocuments"
             list={individualList}

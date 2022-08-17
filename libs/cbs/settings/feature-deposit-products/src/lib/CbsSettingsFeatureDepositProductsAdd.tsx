@@ -96,8 +96,6 @@ export function SettingsDepositProductsAdd() {
   const methods = useForm<DepositForm>({
     defaultValues: {
       nature: NatureOfDepositProduct.RecurringSaving,
-      minTenureUnitNumber: 0,
-      maxTenureUnitNumber: 0,
       prematurePenalty: {
         penaltyDateType: PrematurePenaltyDateType.EffectiveDaysFromStart,
       },

@@ -27,11 +27,13 @@ export const TypesOfMember = () => {
         {t['loanProductMemberCategory']}
       </Text>
 
-      <FormCheckboxGroup
-        name="typeOfMember"
-        list={typesOfMember}
-        orientation="column"
-      />
+      <Box w="16%">
+        <FormCheckboxGroup
+          name="typeOfMember"
+          list={typesOfMember}
+          orientation="column"
+        />
+      </Box>
     </Box>
   );
 };
