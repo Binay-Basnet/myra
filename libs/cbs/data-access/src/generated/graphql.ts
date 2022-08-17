@@ -150,6 +150,32 @@ export type AccountSummary = {
   totalSaving: Scalars['Float'];
 };
 
+export type AccountTransactionFilter = {
+  from?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+  to?: InputMaybe<Scalars['String']>;
+};
+
+export type AccountTransferEntry = {
+  ID: Scalars['ID'];
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  state: TransactionState;
+  transferType: TransferType;
+};
+
+export type AccountTransferListConnection = {
+  edges?: Maybe<Array<Maybe<AccountTransferListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AccountTransferListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AccountTransferEntry>;
+};
+
 export type AccountTypeDetailsUnion =
   | BankChartsOfAccount
   | JournalChartsOfAccount;
@@ -1424,11 +1450,6 @@ export type DepositCheque = {
   chequeNo: Scalars['String'];
   depositedAt: Scalars['String'];
   depositedBy: Scalars['String'];
-};
-
-export type DepositDataFilter = {
-  id?: InputMaybe<Scalars['ID']>;
-  query?: InputMaybe<Scalars['String']>;
 };
 
 export enum DepositFrequency {
@@ -3318,6 +3339,7 @@ export enum Id_Type {
   Kymdocument = 'KYMDOCUMENT',
   Kymfield = 'KYMFIELD',
   Kymfieldoption = 'KYMFIELDOPTION',
+  Kymidentification = 'KYMIDENTIFICATION',
   Kymindividual = 'KYMINDIVIDUAL',
   Kymindividualfamilymembers = 'KYMINDIVIDUALFAMILYMEMBERS',
   Kymindividualincomesource = 'KYMINDIVIDUALINCOMESOURCE',
@@ -7327,11 +7349,16 @@ export type TransactionFilter = {
 
 export type TransactionMutation = {
   deposit: DepositResult;
+  transfer: TransferResult;
   withdraw: WithdrawResult;
 };
 
 export type TransactionMutationDepositArgs = {
   data: DepositInput;
+};
+
+export type TransactionMutationTransferArgs = {
+  data: TransferInput;
 };
 
 export type TransactionMutationWithdrawArgs = {
@@ -7340,16 +7367,22 @@ export type TransactionMutationWithdrawArgs = {
 
 export type TransactionQuery = {
   listDeposit: AccountActivityListConnection;
+  listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
 };
 
 export type TransactionQueryListDepositArgs = {
-  filter?: InputMaybe<DepositDataFilter>;
+  filter?: InputMaybe<AccountTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListTransferArgs = {
+  filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
 export type TransactionQueryListWithdrawArgs = {
-  filter?: InputMaybe<WithdrawDataFilter>;
+  filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -7366,6 +7399,29 @@ export type Transactions = {
   transactionDirection: Transaction_Direction;
   transactionType: Transaction_Type;
 };
+
+export type TransferInput = {
+  amount: Scalars['String'];
+  chequeNo?: InputMaybe<Scalars['String']>;
+  destAccountId: Scalars['String'];
+  memberId: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  srcAccountId: Scalars['String'];
+  transferType: TransferType;
+  withdrawSlipNo?: InputMaybe<Scalars['String']>;
+  withdrawWith: WithdrawWith;
+};
+
+export type TransferResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export enum TransferType {
+  Member = 'MEMBER',
+  Self = 'SELF',
+}
 
 export type TranslateData = {
   data?: Maybe<Scalars['String']>;
@@ -7661,11 +7717,6 @@ export enum WithdrawBy {
   Agent = 'AGENT',
   Self = 'SELF',
 }
-
-export type WithdrawDataFilter = {
-  id?: InputMaybe<Scalars['ID']>;
-  query?: InputMaybe<Scalars['String']>;
-};
 
 export type WithdrawInput = {
   accountId: Scalars['String'];
@@ -11442,7 +11493,7 @@ export type GetShareHistoryQuery = {
 };
 
 export type GetDepositListDataQueryVariables = Exact<{
-  filter?: InputMaybe<DepositDataFilter>;
+  filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -11473,7 +11524,7 @@ export type GetDepositListDataQuery = {
 };
 
 export type GetWithdrawListDataQueryVariables = Exact<{
-  filter?: InputMaybe<WithdrawDataFilter>;
+  filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
@@ -17352,7 +17403,7 @@ export const useGetShareHistoryQuery = <
     options
   );
 export const GetDepositListDataDocument = `
-    query getDepositListData($filter: DepositDataFilter, $pagination: Pagination) {
+    query getDepositListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
     listDeposit(filter: $filter, pagination: $pagination) {
       totalCount
@@ -17395,7 +17446,7 @@ export const useGetDepositListDataQuery = <
     options
   );
 export const GetWithdrawListDataDocument = `
-    query getWithdrawListData($filter: WithdrawDataFilter, $pagination: Pagination) {
+    query getWithdrawListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
     listWithdraw(filter: $filter, pagination: $pagination) {
       totalCount
