@@ -8066,6 +8066,19 @@ export type SetKymDocumentDataMutation = {
   document: { KYMUpsert: { recordId?: string | null } };
 };
 
+export type SetKymIndividualIdentificationDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: KymIndIdentificationInput;
+}>;
+
+export type SetKymIndividualIdentificationDataMutation = {
+  members: {
+    individual?: {
+      identification: { upsert: { recordId?: string | null } };
+    } | null;
+  };
+};
+
 export type SetInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymInsInput;
@@ -10513,6 +10526,7 @@ export type GetIndividualKymEditDataQuery = {
             maritalStatusId?: string | null;
             annualIncomeSourceId?: string | null;
             isFamilyAMember?: boolean | null;
+            identificationSelection?: Array<string | null> | null;
             basicInformation?: {
               firstName?: Record<'local' | 'en' | 'np', string> | null;
               middleName?: Record<'local' | 'en' | 'np', string> | null;
@@ -10689,6 +10703,26 @@ export type GetKymDocumentsListQuery = {
         docData: Array<{ identifier: string; url: string } | null>;
       } | null> | null;
     };
+  };
+};
+
+export type GetIndividualKymIdentificationListQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetIndividualKymIdentificationListQuery = {
+  members: {
+    individual?: {
+      listIdentification?: {
+        data?: Array<{
+          id: string;
+          idNo?: string | null;
+          idType: string;
+          place?: Record<'local' | 'en' | 'np', string> | null;
+          date?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
   };
 };
 
@@ -12425,6 +12459,43 @@ export const useSetKymDocumentDataMutation = <
     useAxios<SetKymDocumentDataMutation, SetKymDocumentDataMutationVariables>(
       SetKymDocumentDataDocument
     ),
+    options
+  );
+export const SetKymIndividualIdentificationDataDocument = `
+    mutation setKymIndividualIdentificationData($id: ID!, $data: KYMIndIdentificationInput!) {
+  members {
+    individual(id: $id) {
+      identification {
+        upsert(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetKymIndividualIdentificationDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetKymIndividualIdentificationDataMutation,
+    TError,
+    SetKymIndividualIdentificationDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetKymIndividualIdentificationDataMutation,
+    TError,
+    SetKymIndividualIdentificationDataMutationVariables,
+    TContext
+  >(
+    ['setKymIndividualIdentificationData'],
+    useAxios<
+      SetKymIndividualIdentificationDataMutation,
+      SetKymIndividualIdentificationDataMutationVariables
+    >(SetKymIndividualIdentificationDataDocument),
     options
   );
 export const SetInstitutionDataDocument = `
@@ -16194,6 +16265,7 @@ export const GetIndividualKymEditDataDocument = `
               }
               sameTempAsPermanentAddress
             }
+            identificationSelection
           }
         }
       }
@@ -16354,6 +16426,42 @@ export const useGetKymDocumentsListQuery = <
     useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(
       GetKymDocumentsListDocument
     ).bind(null, variables),
+    options
+  );
+export const GetIndividualKymIdentificationListDocument = `
+    query getIndividualKymIdentificationList($id: String!) {
+  members {
+    individual(id: $id) {
+      listIdentification {
+        data {
+          id
+          idNo
+          idType
+          place
+          date
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetIndividualKymIdentificationListQuery = <
+  TData = GetIndividualKymIdentificationListQuery,
+  TError = unknown
+>(
+  variables: GetIndividualKymIdentificationListQueryVariables,
+  options?: UseQueryOptions<
+    GetIndividualKymIdentificationListQuery,
+    TError,
+    TData
+  >
+) =>
+  useQuery<GetIndividualKymIdentificationListQuery, TError, TData>(
+    ['getIndividualKymIdentificationList', variables],
+    useAxios<
+      GetIndividualKymIdentificationListQuery,
+      GetIndividualKymIdentificationListQueryVariables
+    >(GetIndividualKymIdentificationListDocument).bind(null, variables),
     options
   );
 export const GetShareStatementDocument = `

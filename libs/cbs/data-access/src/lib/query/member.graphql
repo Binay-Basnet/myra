@@ -271,6 +271,7 @@ query getIndividualKymEditData($id: String!) {
               }
               sameTempAsPermanentAddress
             }
+            identificationSelection
           }
         }
       }
@@ -337,6 +338,22 @@ query getKYMDocumentsList($memberId: String!) {
         docData {
           identifier
           url
+        }
+      }
+    }
+  }
+}
+
+query getIndividualKymIdentificationList($id: String!) {
+  members {
+    individual(id: $id) {
+      listIdentification {
+        data {
+          id
+          idNo
+          idType
+          place
+          date
         }
       }
     }
