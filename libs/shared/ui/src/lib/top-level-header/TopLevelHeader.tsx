@@ -650,10 +650,12 @@ export function TopLevelHeader() {
                           flexDirection="column"
                           justifyContent="space-between"
                           py="s8"
+                          px="s8"
                         >
                           <Box
                             _hover={{
                               bg: 'background.500',
+                              borderRadius: 'br2',
                             }}
                             h="40px"
                             px="s16"

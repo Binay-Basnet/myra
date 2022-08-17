@@ -25,31 +25,37 @@ const transactionSidebarColumns = [
     title: 'transactionsSidebarDeposit',
     link: '/transactions/deposit/list',
     name: 'deposit',
+    addLink: '/transactions/deposit/add',
   },
   {
     title: 'transactionsSidebarWithdraw',
     link: '/transactions/withdraw/list',
     name: 'withdraw',
+    addLink: '/transactions/withdraw/add',
   },
   {
     title: 'transactionsSidebarAccountTransfer',
     link: '/transactions/account-transfer/list',
     name: 'account-transfer',
+    addLink: '/transactions/account-transfer/add',
   },
   {
     title: 'transactionsSidebarLoanPayment',
     link: '/transactions/loan-payment/list',
     name: 'loan-payment',
+    addLink: '/transactions/loan-payment/add',
   },
   {
     title: 'transactionsSidebarAgentList',
     link: '/transactions/agent/list',
     name: 'agent-list',
+    addLink: '/transactions/agent/add',
   },
   {
     title: 'transactionsSidebarAgentTransaction',
     link: '/transactions/agent-transaction/list',
     name: 'agent-transaction',
+    addLink: '/transactions/agent-transaction/add',
   },
 ];
 

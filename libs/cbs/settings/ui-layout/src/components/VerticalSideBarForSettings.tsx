@@ -18,7 +18,7 @@ const TabCol = chakra(Tab, {
     _focus: {
       boxShadow: 'none',
     },
-    _selected: { color: '#37474F', bg: 'gray.200' },
+    _selected: { color: '#37474F', bg: 'gray.200', borderRadius: 'br2' },
   },
 });
 

@@ -27,10 +27,6 @@ export const InventoryItemCategoryTable = () => {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const onOpenModal = () => {
-    setOpenModal(true);
-  };
-
   const onCloseModal = () => {
     setOpenModal(false);
   };
@@ -136,11 +132,7 @@ export const InventoryItemCategoryTable = () => {
 
   return (
     <>
-      <InventoryPageHeader
-        heading="catgItemsCategory"
-        buttonLabel="catgNewItemCategory"
-        buttonHandler={() => onOpenModal()}
-      />
+      <InventoryPageHeader heading="catgItemsCategory" />
       <NewItemCategoryModal />
       <Table
         isLoading={isFetching}

@@ -40,7 +40,7 @@ export function CbsSettingsFeatureOrganization() {
           borderRightColor="border.layout"
           minHeight="100vh"
         >
-          <Box bg="#EEF2F7" p="s16">
+          <Box bg="#EEF2F7" p="s16" borderRadius={'br2'}>
             <Text fontSize={'r1'} fontWeight="600">
               {t['settingsOrganization']}
             </Text>

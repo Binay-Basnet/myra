@@ -1,10 +1,15 @@
 import React, { ReactElement } from 'react';
 
-import { AgentList } from '@coop/cbs/transactions/agent';
-import { MainLayout } from '@coop/shared/ui';
+// import { AgentList } from '@coop/cbs/transactions/agent';
+import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
 const TransactionsAddAgent = () => {
-  return <AgentList />;
+  return (
+    // <AgentList />
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <WIPState />
+    </Box>
+  );
 };
 
 TransactionsAddAgent.getLayout = function getLayout(page: ReactElement) {

@@ -27,10 +27,6 @@ export const InventoryItemUnitsTable = () => {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const onOpenModal = () => {
-    setOpenModal(true);
-  };
-
   const onCloseModal = () => {
     setOpenModal(false);
   };
@@ -127,11 +123,7 @@ export const InventoryItemUnitsTable = () => {
 
   return (
     <>
-      <InventoryPageHeader
-        heading="itemUnitUnits"
-        buttonLabel="itemUnitNewUnit"
-        buttonHandler={() => onOpenModal()}
-      />
+      <InventoryPageHeader heading="itemUnitUnits" />
       <NewItemUnitModal />
       <Table
         isLoading={isFetching}
