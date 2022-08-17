@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
-import {
-  BsFillArrowDownCircleFill,
-  BsFillArrowUpCircleFill,
-} from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { Box, Button, Divider, Icon, Modal, Text } from '@coop/shared/ui';
+import {
+  AddButtonList,
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../tab/TabforMemberPage';
@@ -31,18 +38,20 @@ const shareColumns = [
   },
 ];
 
+const addButtoncolumns = [
+  {
+    title: 'shareLayoutSharePurchase',
+    link: '/share/share-purchase',
+  },
+  {
+    title: 'shareLayoutShareReturn',
+    link: '/share/share-return',
+  },
+];
+
 export const SharePageLayout = ({ children }: IMemberPageLayout) => {
   const router = useRouter();
   const { t } = useTranslation();
-  const [openModal, setOpenModal] = useState(false);
-
-  const onOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  const onCloseModal = () => {
-    setOpenModal(false);
-  };
 
   return (
     <Box display="flex">
@@ -51,135 +60,40 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
           {t['shareLayout']}
         </Text>
         <Divider my="s16" />
-
-        <Button
-          width="full"
-          size="lg"
-          justifyContent="start"
-          leftIcon={<AddIcon h="11px" />}
-          onClick={() => {
-            onOpenModal();
-          }}
-        >
-          {t['shareLayoutNewShare']}
-        </Button>
-
-        <Modal
-          open={openModal}
-          onClose={onCloseModal}
-          isCentered={true}
-          title={
-            <Text
-              fontSize="r2"
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
+        <Popover placement="bottom-start" gutter={3}>
+          <PopoverTrigger>
+            <Button
+              width="full"
+              size="lg"
+              justifyContent="start"
+              leftIcon={<AddIcon h="11px" />}
             >
-              {t['shareLayoutSelectShareType']}
-            </Text>
-          }
-        >
-          <Box
-            display="flex"
-            justifyContent="space-around"
-            alignItems={'center'}
-            px="s24"
-            py="s16"
-            gap="s16"
+              {t['shareLayoutNewShare']}
+            </Button>
+          </PopoverTrigger>
+
+          <PopoverContent
+            // bg="gray.0"
+            p={0}
+            w="225px"
+            _focus={{ boxShadow: 'none' }}
           >
-            <Box
-              p="s24"
-              w="300px"
-              h="150px"
-              border="1px solid"
-              borderColor="border.element"
-              borderRadius="br3"
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              cursor="pointer"
-              onClick={() => router.push('/share/share-purchase')}
-              as="button"
-              lineHeight="1.2"
-              minWidth={300}
-              px="8px"
-              boxShadow={'none'}
-              color="#4b4f56"
-              _hover={{
-                color: 'primary.500',
-                borderColor: 'primary.500',
-              }}
-              _active={{
-                transform: 'scale(0.98)',
-                borderColor: 'primary.500',
-              }}
-            >
-              <Icon
-                mb="10px"
-                alignSelf="center"
-                w="30px"
-                h="30px"
-                as={BsFillArrowDownCircleFill}
-              />
-              <Text
-                alignSelf="center"
-                fontSize="r2"
-                color="neutralColorLight.Gray-80"
-                fontWeight="Medium"
-              >
-                {t['shareLayoutSharePurchase']}
-              </Text>
-              <Text mt="10px" fontSize="s2" alignSelf="center">
-                Lorem Ipsum
-              </Text>
-            </Box>
-            <Box
-              p="s24"
-              w="300px"
-              h="150px"
-              border="1px solid"
-              borderColor="border.element"
-              borderRadius="br3"
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              cursor="pointer"
-              onClick={() => router.push('/share/share-return')}
-              as="button"
-              lineHeight="1.2"
-              minWidth={300}
-              px="8px"
-              boxShadow={'none'}
-              color="#4b4f56"
-              _hover={{
-                borderColor: 'primary.500',
-                color: 'primary.500',
-              }}
-              _active={{
-                transform: 'scale(0.98)',
-                borderColor: 'primary.500',
-              }}
-            >
-              <Icon
-                mb="10px"
-                alignSelf="center"
-                w="30px"
-                h="30px"
-                as={BsFillArrowUpCircleFill}
-              />
-              <Text
-                alignSelf="center"
-                fontSize="r2"
-                color="neutralColorLight.Gray-80"
-                fontWeight="Medium"
-              >
-                {t['shareLayoutShareReturn']}
-              </Text>
-              <Text mt="10px" fontSize="s2" alignSelf="center">
-                Lorem Ipsum
-              </Text>
-            </Box>
-          </Box>
-        </Modal>
+            <PopoverBody p={0}>
+              <Box display={'flex'} flexDirection={'column'} gap="s4">
+                {addButtoncolumns.map((item, index) => {
+                  return (
+                    <Box key={`${item}${index}`}>
+                      <AddButtonList
+                        label={t[item.title]}
+                        onClick={() => router.push(`${item.link}`)}
+                      />
+                    </Box>
+                  );
+                })}
+              </Box>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
 
         <Divider my="s16" />
         <TabColumn list={shareColumns} />

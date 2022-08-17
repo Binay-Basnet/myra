@@ -6388,9 +6388,9 @@ export type OrganizationAddResult = {
 };
 
 export type OrganizationBasicDetails = {
-  TypeOfOrganization?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   logo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  typeOfOrganization?: Maybe<TypeOfOrganization>;
 };
 
 export type OrganizationContactDetails = {
@@ -6434,7 +6434,7 @@ export type OrganizationFormData = {
   title?: Maybe<Scalars['String']>;
   totalCapital?: Maybe<Scalars['Float']>;
   totalMembers?: Maybe<Scalars['Int']>;
-  typeOfOrganization?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
+  typeOfOrganization?: Maybe<TypeOfOrganization>;
   wardNo?: Maybe<Scalars['Int']>;
   website?: Maybe<Scalars['String']>;
 };
@@ -6469,7 +6469,7 @@ export type OrganizationInput = {
   title?: InputMaybe<Scalars['String']>;
   totalCapital?: InputMaybe<Scalars['Float']>;
   totalMembers?: InputMaybe<Scalars['Int']>;
-  typeOfOrganization?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
+  typeOfOrganization?: InputMaybe<TypeOfOrganization>;
   wardNo?: InputMaybe<Scalars['Int']>;
   website?: InputMaybe<Scalars['String']>;
 };
@@ -6498,22 +6498,12 @@ export type OrganizationSettingsMutation = {
 
 export type OrganizationSettingsMutationInitialSetupArgs = {
   data: OrganizationInput;
-  id: Scalars['ID'];
 };
 
 export type OrganizationSettingsQuery = {
   formState?: Maybe<OrganizationFormStateResult>;
-  list?: Maybe<OrganizationListResult>;
   /** This is to get organization details of a logged in employee. id of that email will be extracted from the employee who sends the request */
   mine?: Maybe<OrganizationGetResult>;
-};
-
-export type OrganizationSettingsQueryFormStateArgs = {
-  id: Scalars['ID'];
-};
-
-export type OrganizationSettingsQueryListArgs = {
-  filter?: InputMaybe<OrganizationFilter>;
 };
 
 export type OrganizationStatistics = {
@@ -8123,7 +8113,6 @@ export type DeleteAccountOperatorInstitutionMutation = {
 };
 
 export type SetOrganizationDataMutationVariables = Exact<{
-  id: Scalars['ID'];
   data: OrganizationInput;
 }>;
 
@@ -12648,11 +12637,11 @@ export const useDeleteAccountOperatorInstitutionMutation = <
     options
   );
 export const SetOrganizationDataDocument = `
-    mutation setOrganizationData($id: ID!, $data: OrganizationInput!) {
+    mutation setOrganizationData($data: OrganizationInput!) {
   settings {
     general {
       organization {
-        initialSetup(id: $id, data: $data) {
+        initialSetup(data: $data) {
           recordId
           error {
             ...MutationError
