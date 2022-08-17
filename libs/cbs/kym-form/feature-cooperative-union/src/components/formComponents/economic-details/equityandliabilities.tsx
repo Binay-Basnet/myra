@@ -152,7 +152,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
           scrollMarginTop={'200px'}
         >
           <Grid
-            columnGap={40}
+            columnGap={10}
             alignItems="center"
             px="s14"
             templateColumns="repeat(3,1fr)"
