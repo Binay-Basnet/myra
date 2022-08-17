@@ -40,7 +40,7 @@ export function CbsSettingsFeatureOrganization() {
           borderRightColor="border.layout"
           minHeight="100vh"
         >
-          <Box bg="#EEF2F7" p="s16">
+          <Box bg="#EEF2F7" p="s16" borderRadius={'br2'}>
             <Text fontSize={'r1'} fontWeight="600">
               {t['settingsOrganization']}
             </Text>
@@ -83,13 +83,6 @@ export function CbsSettingsFeatureOrganization() {
                   <FormFileInput name="logo" size="md" />
                 </Box>
                 <Box mt={'s16'}>
-                  {/* <Text color={'gray.700'} fontSize="s3" fontWeight={'500'}>
-                    {t['settingsOrganizationTypeOfOrganization']}
-                  </Text>
-                  <Box mt="s16"> */}
-                  {/* <RadioGroup radioList={radiolist}> </RadioGroup> */}
-                  {/* <RadioOrganization />
-                  </Box> */}
                   <FormRadioGroup
                     label={t['settingsOrganizationTypeOfOrganization']}
                     name="typeOfOrganization"

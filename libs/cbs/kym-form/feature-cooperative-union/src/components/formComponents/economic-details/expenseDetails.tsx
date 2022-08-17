@@ -284,7 +284,7 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
 
           <Grid
             alignItems="center"
-            px="14px"
+            px="s8"
             py="s16"
             templateColumns="repeat(2,1fr)"
             columnGap={40}

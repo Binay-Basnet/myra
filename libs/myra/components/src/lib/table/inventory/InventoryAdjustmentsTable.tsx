@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
-import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 
 import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
@@ -9,7 +8,6 @@ import { Column, Table } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const InventoryAdjustmentsTable = () => {
-  const router = useRouter();
   const { t } = useTranslation();
   const { data, isFetching } = useGetInventoryItemsQuery();
 
@@ -47,11 +45,7 @@ export const InventoryAdjustmentsTable = () => {
 
   return (
     <>
-      <InventoryPageHeader
-        heading="itemUnitInventoryAdjustment"
-        buttonLabel="itemUnitsNewInventoryAdjustment"
-        buttonHandler={() => router.push('/inventory/adjustments/add')}
-      />
+      <InventoryPageHeader heading="itemUnitInventoryAdjustment" />
 
       <Table
         isLoading={isFetching}

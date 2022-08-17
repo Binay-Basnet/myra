@@ -1,12 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 
-import { useSetKymIndividualIdentificationDataMutation } from '@coop/cbs/data-access';
+import {
+  Id_Type,
+  KymIndIdentification,
+  useGetIndividualKymIdentificationListQuery,
+  useGetNewIdMutation,
+  useSetKymIndividualIdentificationDataMutation,
+} from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Grid, Text } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface IDrivingLicenseProps {
   setKymCurrentSection: (section?: {
@@ -15,9 +22,38 @@ interface IDrivingLicenseProps {
   }) => void;
 }
 
+type drivingLicenseData =
+  | {
+      id: string;
+      idNo: string;
+      idType: string;
+      place: Record<'en' | 'local' | 'np', string>;
+      date: string;
+    }[]
+  | null
+  | undefined;
+
+const getDrivingLicenseData = (
+  identificationListData: KymIndIdentification[] | null | undefined
+) => {
+  const drivingLicenseData = identificationListData?.find(
+    (identification: KymIndIdentification | null) =>
+      identification?.idType === 'drivingLicense'
+  );
+
+  return {
+    idNo: drivingLicenseData?.idNo,
+    place: drivingLicenseData?.place?.local,
+    date: drivingLicenseData?.date,
+    id: drivingLicenseData?.id,
+  };
+};
+
 export const DrivingLicense = ({
   setKymCurrentSection,
 }: IDrivingLicenseProps) => {
+  const [mutationId, setMutationId] = useState('');
+
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -26,21 +62,76 @@ export const DrivingLicense = ({
 
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
-  const { mutate } = useSetKymIndividualIdentificationDataMutation();
+  const { mutateAsync: newIDMutate } = useGetNewIdMutation();
+
+  const { mutate } = useSetKymIndividualIdentificationDataMutation({
+    onSuccess: () => refetch(),
+  });
+
+  const { data: identificationListData, refetch } =
+    useGetIndividualKymIdentificationListQuery(
+      {
+        id: String(id),
+      },
+      { enabled: !!id }
+    );
+
+  useEffect(() => {
+    if (identificationListData?.members?.individual?.listIdentification?.data) {
+      const drivingLicenseData = getDrivingLicenseData(
+        identificationListData?.members?.individual?.listIdentification
+          ?.data as drivingLicenseData
+      );
+
+      if (drivingLicenseData?.id) {
+        setMutationId(drivingLicenseData.id);
+
+        reset({
+          idNo: drivingLicenseData?.idNo,
+          place: drivingLicenseData?.place,
+          date: drivingLicenseData?.date,
+        });
+      }
+    }
+  }, [identificationListData]);
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        if (id) {
-          mutate({ id: String(id), data: { ...data, idType: 'citizenship' } });
+        const drivingLicenseData = getDrivingLicenseData(
+          identificationListData?.members?.individual?.listIdentification
+            ?.data as drivingLicenseData
+        );
+
+        if (
+          id &&
+          !isDeepEmpty(data) &&
+          !isEqual({ ...data, id: mutationId }, drivingLicenseData)
+        ) {
+          if (!mutationId) {
+            newIDMutate({ idType: Id_Type.Kymidentification }).then((res) => {
+              setMutationId(res.newId);
+              mutate({
+                id: String(id),
+                data: { ...data, id: res.newId, idType: 'drivingLicense' },
+              });
+            });
+          }
+
+          if (mutationId) {
+            mutate({
+              id: String(id),
+              data: { ...data, id: mutationId, idType: 'drivingLicense' },
+            });
+          }
         }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  }, [watch, mutationId, identificationListData]);
 
   return (
     <FormProvider {...methods}>

@@ -19,11 +19,12 @@ const TabCol = chakra(Tab, {
     alignItems: 'center',
     _hover: {
       bg: 'highlight.500',
+      borderRadius: 'br2',
     },
     _focus: {
       boxShadow: 'none',
     },
-    _selected: { color: '#37474F', bg: 'gray.200' },
+    _selected: { color: '#37474F', bg: 'gray.200', borderRadius: 'br2' },
   },
 });
 
@@ -34,6 +35,7 @@ interface ITabColumnProps {
     name?: string | undefined;
     addLinkId?: string;
     addLink?: string;
+    modalOpen?: () => void;
   }[];
 }
 
@@ -50,7 +52,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
   return (
     <Tabs
       variant="unstyled"
-      index={list.findIndex((value) => router.asPath.includes(value.link)) ?? 0}
+      index={list.findIndex((value) => router.asPath === value.link) ?? 0}
     >
       {list.map((item, index) => {
         return (
@@ -96,6 +98,16 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
                 variant={'ghost'}
                 icon={<Icon as={IoAdd} />}
                 onClick={() => router.push(`${item.addLink}`)}
+              />
+            )}
+            {item.modalOpen && (
+              // <Link href={item.addLink}>
+              <IconButton
+                aria-label="add-Button"
+                size="lg"
+                variant={'ghost'}
+                icon={<Icon as={IoAdd} />}
+                onClick={item.modalOpen}
               />
             )}
           </Box>

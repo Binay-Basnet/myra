@@ -127,12 +127,7 @@ export function WithdrawList() {
 
   return (
     <>
-      <TransactionPageHeader
-        heading={'Withdraw'}
-        tabItems={tabList}
-        buttonLabel={'New Withdraw'}
-        buttonHandler={() => router.push('/transactions/withdraw/add')}
-      />
+      <TransactionPageHeader heading={'Withdraw'} tabItems={tabList} />
 
       <Table
         data={rowData}
