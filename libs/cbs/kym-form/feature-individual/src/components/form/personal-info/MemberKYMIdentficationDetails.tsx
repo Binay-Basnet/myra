@@ -9,9 +9,17 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckboxGroup, FormInput } from '@coop/shared/form';
-import { Box, Grid, Text } from '@coop/shared/ui';
+import { FormCheckboxGroup } from '@coop/shared/form';
+import { Box, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
+
+import {
+  Citizenship,
+  DrivingLicense,
+  NationalID,
+  Passport,
+  VoterCard,
+} from '../identifications';
 
 interface IMemberKYMIdentificationDetailsProps {
   setKymCurrentSection: (section?: {
@@ -34,7 +42,7 @@ export const MemberKYMIdentificationDetails = ({
   const { t } = useTranslation();
   const methods = useForm<KymIndMemberInput>();
 
-  const { reset, getValues, watch } = methods;
+  const { reset, watch } = methods;
 
   const router = useRouter();
   const id = router?.query?.['id'];
@@ -48,7 +56,7 @@ export const MemberKYMIdentificationDetails = ({
   //   [identificationDocsData]
   // );
 
-  const identificationValues = getValues()?.identificationSelection;
+  const identificationValues = watch('identificationSelection');
 
   // const checkedIds =
   //   identificationValues?.map((item) =>
@@ -76,7 +84,7 @@ export const MemberKYMIdentificationDetails = ({
         editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
-        ...editValueData?.identification,
+        identificationSelection: editValueData?.identificationSelection,
       });
     }
   }, [editValues]);
@@ -96,30 +104,32 @@ export const MemberKYMIdentificationDetails = ({
   }, [watch, router.isReady]);
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSection(e.target.id);
-          setKymCurrentSection(kymSection);
-        }}
-      >
-        <GroupContainer
-          id="kymAccIndIdentificationDetails"
-          scrollMarginTop={'200px'}
-        >
-          <Text fontSize="r1" fontWeight="semibold">
-            {t['kymIndIDENTIFICATIONDETAILS']}
-          </Text>
-          <Text fontSize="r1" fontWeight="medium">
-            {t['kymIndChooseidentificationdetails']}
-          </Text>
-          <Box display="flex">
+    <GroupContainer
+      id="kymAccIndIdentificationDetails"
+      scrollMarginTop={'200px'}
+    >
+      <Text fontSize="r1" fontWeight="semibold">
+        {t['kymIndIDENTIFICATIONDETAILS']}
+      </Text>
+      <Text fontSize="r1" fontWeight="medium">
+        {t['kymIndChooseidentificationdetails']}
+      </Text>
+      <Box display="flex">
+        <FormProvider {...methods}>
+          <form
+            onFocus={(e) => {
+              const kymSection = getKymSection(e.target.id);
+              setKymCurrentSection(kymSection);
+            }}
+          >
             <FormCheckboxGroup
               name={'identificationSelection'}
               showOther={false}
               list={identificationOptions}
             />
-            {/* {identificationOptions.map(
+          </form>
+        </FormProvider>
+        {/* {identificationOptions.map(
               (item, index) => {
                 // const isChecked = checkedIds?.includes(item.name);
                 return (
@@ -146,7 +156,7 @@ export const MemberKYMIdentificationDetails = ({
               // ))
             )} */}
 
-            {/* {identificationDocs.map(
+        {/* {identificationDocs.map(
               (item, index) => {
                 const isChecked = checkedIds?.includes(item?.id);
                 return (
@@ -174,160 +184,31 @@ export const MemberKYMIdentificationDetails = ({
               }
               // ))
             )} */}
-          </Box>
+      </Box>
 
-          <GroupContainer>
-            {identificationValues?.includes('citizenship') && (
-              <Box display="flex" flexDirection="column" gap="s16">
-                <Text
-                  fontSize="r1"
-                  fontWeight="medium"
-                  color="neutralColorLight.Gray-70"
-                >
-                  {t['kynIndCitizenship']}
-                </Text>
-                <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-                  <FormInput
-                    type="text"
-                    name="citizenshipNo"
-                    label={t['kynIndCitizenshipNo']}
-                    placeholder={t['kynIndCitizenshipNo']}
-                  />
+      <GroupContainer>
+        {identificationValues?.includes('citizenship') && (
+          <Citizenship setKymCurrentSection={setKymCurrentSection} />
+        )}
 
-                  <FormInput
-                    type="text"
-                    name="citizenshipIssuePlace"
-                    label={t['kynIndCitizenshipIssuePlace']}
-                    placeholder={t['kynIndCitizenshipIssuePlace']}
-                  />
+        {identificationValues?.includes('drivingLicense') && (
+          <DrivingLicense setKymCurrentSection={setKymCurrentSection} />
+        )}
 
-                  <FormInput
-                    type="date"
-                    name="citizenshipIssueDate"
-                    label={t['kynIndCitizenshipIssueDate']}
-                    placeholder={t['kynIndCitizenshipIssueDate']}
-                  />
-                </Grid>
-              </Box>
-            )}
+        {identificationValues?.includes('passport') && (
+          <Passport setKymCurrentSection={setKymCurrentSection} />
+        )}
 
-            {identificationValues?.includes('drivingLicense') && (
-              <Box display="flex" flexDirection="column" gap="s16">
-                <Text
-                  fontSize="r1"
-                  fontWeight="medium"
-                  color="neutralColorLight.Gray-70"
-                >
-                  {t['kymIndDrivingLicense']}
-                </Text>
-                <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-                  <FormInput
-                    type="text"
-                    name="drivingLicenseNo"
-                    label={t['kymIndDrivingLicenseNo']}
-                    placeholder={t['kymIndDrivingLicenseNo']}
-                  />
+        {identificationValues?.includes('voterCard') && (
+          <VoterCard setKymCurrentSection={setKymCurrentSection} />
+        )}
 
-                  <FormInput
-                    type="text"
-                    name="drivingLicenseIssuePlace"
-                    label={t['kymIndDrivingLicenseIssuePlace']}
-                    placeholder={t['kymIndDrivingLicenseIssuePlace']}
-                  />
+        {identificationValues?.includes('nationalId') && (
+          <NationalID setKymCurrentSection={setKymCurrentSection} />
+        )}
+      </GroupContainer>
 
-                  <FormInput
-                    type="date"
-                    name="drivingLicenseIssueDate"
-                    label={t['kymIndDrivingLicenseIssueDate']}
-                    placeholder={t['kymIndDrivingLicenseIssueDate']}
-                  />
-                </Grid>
-              </Box>
-            )}
-
-            {identificationValues?.includes('passport') && (
-              <Box display="flex" flexDirection="column" gap="s16">
-                <Text
-                  fontSize="r1"
-                  fontWeight="medium"
-                  color="neutralColorLight.Gray-70"
-                >
-                  {t['kymIndPassport']}
-                </Text>
-                <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-                  <FormInput
-                    type="text"
-                    name="passportNo"
-                    label={t['kymIndPassportNo']}
-                    placeholder={t['kymIndPassportNo']}
-                  />
-
-                  <FormInput
-                    type="text"
-                    name="passportIssuePlace"
-                    label={t['kymIndPassportIssuePlace']}
-                    placeholder={t['kymIndPassportIssuePlace']}
-                  />
-
-                  <FormInput
-                    type="date"
-                    name="passportIssueDate"
-                    label={t['kymIndPassportIssueDate']}
-                    placeholder={t['kymIndPassportIssueDate']}
-                  />
-                </Grid>
-              </Box>
-            )}
-
-            {identificationValues?.includes('voterCard') && (
-              <Box display="flex" flexDirection="column" gap="s16">
-                <Text
-                  fontSize="r1"
-                  fontWeight="medium"
-                  color="neutralColorLight.Gray-70"
-                >
-                  {t['kymIndVoterCard']}
-                </Text>
-                <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-                  <FormInput
-                    type="text"
-                    name="voterCardNo"
-                    label={t['kymIndVoterCardNo']}
-                    placeholder={t['kymIndVoterCardNo']}
-                  />
-
-                  <FormInput
-                    type="text"
-                    name="voterPollingStation"
-                    label={t['kymIndVoterCardPollingStation']}
-                    placeholder={t['kymIndVoterCardPollingStation']}
-                  />
-                </Grid>
-              </Box>
-            )}
-
-            {identificationValues?.includes('nationalId') && (
-              <Box display="flex" flexDirection="column" gap="s16">
-                <Text
-                  fontSize="r1"
-                  fontWeight="medium"
-                  color="neutralColorLight.Gray-70"
-                >
-                  {t['kymIndNationalID']}
-                </Text>
-                <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-                  <FormInput
-                    type="text"
-                    name="nationalIDNo"
-                    label={t['kymIndNationalIDNo']}
-                    placeholder={t['kymIndNationalIDNo']}
-                  />
-                </Grid>
-              </Box>
-            )}
-          </GroupContainer>
-
-          {/* {currentShownDetails?.length !== 0 ? (
+      {/* {currentShownDetails?.length !== 0 ? (
             <GroupContainer>
               {identificationDocs
                 .filter(
@@ -376,8 +257,6 @@ export const MemberKYMIdentificationDetails = ({
                 })}
             </GroupContainer>
           ) : null} */}
-        </GroupContainer>
-      </form>
-    </FormProvider>
+    </GroupContainer>
   );
 };
