@@ -25,16 +25,7 @@ const CheckboxYesNo = [
 export const GridItems = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext();
-  const ageCheck = watch('criteria');
-  const genderCheck = watch('criteria');
-  const marriageCheck = watch('criteria');
-  const occupationCheck = watch('criteria');
-  const educationCheck = watch('criteria');
-  const ethnicityCheck = watch('criteria');
-  const foreignCheck = watch('criteria');
-  const nobusInstitution = watch('criteria');
-  const cooperativeUnionstatus = watch('criteria');
-  const coperativeStatus = watch('criteria');
+  const criteria = watch('criteria');
   const memberType = watch('typeOfMember');
 
   const { data: genderFields } = useGetSettingsOptionsFieldsQuery({
@@ -88,72 +79,61 @@ export const GridItems = () => {
 
   const GenderList = genderOptions?.map((item) => {
     return {
-      label: item?.name?.local,
-      value: item?.id,
+      label: item?.name?.local as string,
+      value: item?.id as string,
     };
   });
 
   const MartialOptions = maritialOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const EducationalOptions = educationOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const EthnicityList = ethnicityOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const OccupationOptions = occupationalOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const InstituitionList = institutionOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const CoopTypeList = coopTypeOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
   const CoopUnionList = coopUnionOptions?.map((item) => {
     return {
-      label: item?.name.local,
-      value: item?.id,
+      label: item?.name.local as string,
+      value: item?.id as string,
     };
   });
 
-  if (
-    ageCheck ||
-    genderCheck ||
-    marriageCheck ||
-    occupationCheck ||
-    educationCheck ||
-    ethnicityCheck ||
-    foreignCheck ||
-    nobusInstitution ||
-    cooperativeUnionstatus ||
-    coperativeStatus
-  ) {
+  if (criteria) {
     return (
       <BoxContainer
         p="s16"
@@ -164,8 +144,8 @@ export const GridItems = () => {
         <InputGroupContainer rowGap={'s32'}>
           {memberType &&
             memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            ageCheck &&
-            ageCheck.indexOf('AGE') !== -1 && (
+            criteria &&
+            criteria.indexOf('AGE') !== -1 && (
               <FormInput
                 name="maxAge"
                 placeholder={t['loanProductMinAgeEnter']}
@@ -174,8 +154,8 @@ export const GridItems = () => {
             )}
           {memberType &&
             memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            ageCheck &&
-            ageCheck.indexOf('AGE') !== -1 && (
+            criteria &&
+            criteria.indexOf('AGE') !== -1 && (
               <FormInput
                 name="minAge"
                 placeholder={t['loanProductMaxAgeEnter']}
@@ -184,8 +164,8 @@ export const GridItems = () => {
             )}
           {memberType &&
             memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            genderCheck &&
-            genderCheck.indexOf('GENDER') !== -1 && (
+            criteria &&
+            criteria.indexOf('GENDER') !== -1 && (
               <FormSelect
                 name="genderId"
                 options={GenderList}
@@ -196,8 +176,8 @@ export const GridItems = () => {
             )}
           {memberType &&
             memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            marriageCheck &&
-            marriageCheck.indexOf('MARITAL_STATUS') !== -1 && (
+            criteria &&
+            criteria.indexOf('MARITAL_STATUS') !== -1 && (
               <FormSelect
                 name="maritalStatusId"
                 options={MartialOptions}
@@ -208,8 +188,8 @@ export const GridItems = () => {
             )}
           {memberType &&
             memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            educationCheck &&
-            educationCheck.indexOf('EDUCATION_QUALIFICATION') !== -1 && (
+            criteria &&
+            criteria.indexOf('EDUCATION_QUALIFICATION') !== -1 && (
               <FormSelect
                 name="educationQualification"
                 options={EducationalOptions}
@@ -220,8 +200,8 @@ export const GridItems = () => {
             )}
           {memberType &&
             memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            ethnicityCheck &&
-            ethnicityCheck.indexOf('ETHNICITY') !== -1 && (
+            criteria &&
+            criteria.indexOf('ETHNICITY') !== -1 && (
               <FormSelect
                 name="ethnicity"
                 options={EthnicityList}
@@ -232,8 +212,8 @@ export const GridItems = () => {
             )}
           {memberType &&
             memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            occupationCheck &&
-            occupationCheck.indexOf('OCCUPATION_DETAILS') !== -1 && (
+            criteria &&
+            criteria.indexOf('OCCUPATION_DETAILS') !== -1 && (
               <FormSelect
                 name="occupation"
                 options={OccupationOptions}
@@ -245,9 +225,8 @@ export const GridItems = () => {
 
           {memberType &&
             memberType?.indexOf('INSTITUTION') !== -1 &&
-            nobusInstitution &&
-            nobusInstitution.indexOf('NATURE_OF_BUSINESS_INSTITUTIONS') !==
-              -1 && (
+            criteria &&
+            criteria.indexOf('NATURE_OF_BUSINESS_INSTITUTIONS') !== -1 && (
               <FormSelect
                 name="natureOfBusinessInstitution"
                 options={InstituitionList}
@@ -259,8 +238,8 @@ export const GridItems = () => {
 
           {memberType &&
             memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            foreignCheck &&
-            foreignCheck.indexOf('FOREIGN_EMPLOYMENT') !== -1 && (
+            criteria &&
+            criteria.indexOf('FOREIGN_EMPLOYMENT') !== -1 && (
               <Box display="flex" flexDirection="column" gap="s4">
                 <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                   {t['loanProductForeignEmployment']}
@@ -274,8 +253,8 @@ export const GridItems = () => {
 
           {memberType &&
             memberType?.indexOf('COOPERATIVE') !== -1 &&
-            coperativeStatus &&
-            coperativeStatus.indexOf('COOPERATIVE_TYPE') !== -1 && (
+            criteria &&
+            criteria.indexOf('COOPERATIVE_TYPE') !== -1 && (
               <BoxContainer>
                 <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                   {t['loanProductCoorperativeType']}
@@ -290,9 +269,8 @@ export const GridItems = () => {
             )}
           {memberType &&
             memberType?.indexOf('COOPERATIVE_UNION') !== -1 &&
-            cooperativeUnionstatus &&
-            cooperativeUnionstatus.indexOf('NATURE_OF_BUSINESS_COOPUNION') !==
-              -1 && (
+            criteria &&
+            criteria.indexOf('NATURE_OF_BUSINESS_COOPUNION') !== -1 && (
               <FormSelect
                 name="natureOFBusinessCoop"
                 options={CoopUnionList}

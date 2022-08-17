@@ -191,17 +191,6 @@ const ShareReturnForm = () => {
 
   const balanceData = shareHistoryTableData?.share?.history?.balance;
 
-  // useEffect(() => {
-  //   if (balanceData) {
-  //     reset({
-  //       ...getValues(),
-  //       // ...memberListData,
-  //       // ...balanceData,
-  //       noOfReturnedShares: balanceData?.count ?? 0,
-  //     });
-  //   }
-  // }, [allShares]);
-
   useEffect(() => {
     if (balanceData) {
       if (allShares) {
@@ -210,7 +199,7 @@ const ShareReturnForm = () => {
           noOfReturnedShares: balanceData?.count ?? 0,
         });
       } else {
-        methods.reset({
+        reset({
           ...getValues(),
           noOfReturnedShares: 0,
         });
