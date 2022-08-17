@@ -104,7 +104,7 @@ export function SettingsDepositProductsAdd() {
     },
   });
 
-  const { getValues, watch, reset } = methods;
+  const { getValues, watch, reset, resetField } = methods;
   const depositNature = watch('nature');
   const typesOfMember = watch('typeOfMember');
 
@@ -232,6 +232,24 @@ export function SettingsDepositProductsAdd() {
       refetch();
     }
   }, [refetch]);
+
+  useEffect(() => {
+    if (depositNature === NatureOfDepositProduct.Mandatory) {
+      resetField('minAge');
+      resetField('maxAge');
+      resetField('genderId');
+      resetField('maritalStatusId');
+      resetField('educationQualification');
+      resetField('ethnicity');
+      resetField('occupation');
+      resetField('natureOfBusinessInstitution');
+      resetField('foreignEmployment');
+      resetField('cooperativeType');
+      resetField('natureOFBusinessCoop');
+      resetField('typeOfMember');
+      resetField('criteria');
+    }
+  }, [JSON.stringify(depositNature)]);
 
   return (
     <>

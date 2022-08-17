@@ -53,6 +53,9 @@ export const GridItems = () => {
     if (!criteria?.includes('COOPERATIVE_TYPE')) {
       resetField('cooperativeType');
     }
+    if (!criteria?.includes('NATURE_OF_BUSINESS_COOPUNION')) {
+      resetField('natureOFBusinessCoop');
+    }
   }, [JSON.stringify(criteria)]);
 
   const { t } = useTranslation();
@@ -93,11 +96,10 @@ export const GridItems = () => {
     category: FormCategory.KymIndividual,
   });
 
-  const { data: institutionFields, isLoading: OrganizationLoading } =
-    useGetSettingsOptionsFieldsQuery({
-      searchTerm: FormFieldSearchTerm.OrganizationType,
-      category: FormCategory.KymInstitution,
-    });
+  const { data: institutionFields } = useGetSettingsOptionsFieldsQuery({
+    searchTerm: FormFieldSearchTerm.OrganizationType,
+    category: FormCategory.KymInstitution,
+  });
 
   const { data: coopTypeFields } = useGetSettingsOptionsFieldsQuery({
     searchTerm: FormFieldSearchTerm.CooperativeType,
@@ -174,7 +176,7 @@ export const GridItems = () => {
     };
   });
   if (isEmpty(criteria)) {
-    return;
+    return null;
   }
   return (
     <BoxContainer
@@ -275,7 +277,6 @@ export const GridItems = () => {
               label={t['depositProductNatureofBusinessIns']}
               placeholder={t['depositProductSelectNatureofBusiness']}
               options={InstituitionList}
-              isLoading={OrganizationLoading}
               isMulti
             />
           )}
