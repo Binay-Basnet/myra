@@ -85,9 +85,14 @@ export function SettingsLoanProductForm() {
   const methods = useForm<LoanProductForm>({});
 
   const { getValues, reset, watch } = methods;
-  const { data: editValues, refetch } = useGetLoanProductEditDataQuery({
-    id,
-  });
+  const { data: editValues, refetch } = useGetLoanProductEditDataQuery(
+    {
+      id,
+    },
+    {
+      staleTime: 0,
+    }
+  );
   const editVals = editValues?.settings?.general?.loanProducts?.formState;
 
   const productType = [
@@ -237,6 +242,8 @@ export function SettingsLoanProductForm() {
       serviceCharge: serviceChargeList,
       minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
       maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
+      minAge: values?.minAge ? values?.minAge : null,
+      maxAge: values?.maxAge ? values?.maxAge : null,
       maxTenureUnitNumber: values?.maxTenureUnitNumber
         ? values?.maxTenureUnitNumber
         : null,

@@ -208,9 +208,14 @@ export function SettingsDepositProductsAdd() {
   };
 
   const { data: editValues, refetch } =
-    useGetDepositProductSettingsEditDataQuery({
-      id,
-    });
+    useGetDepositProductSettingsEditDataQuery(
+      {
+        id,
+      },
+      {
+        staleTime: 0,
+      }
+    );
 
   useEffect(() => {
     if (editValues) {

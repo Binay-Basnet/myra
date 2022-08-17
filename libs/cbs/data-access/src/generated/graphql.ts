@@ -3934,10 +3934,12 @@ export type KymGeneralSettingsQuery = {
 };
 
 export type KymIndBasicInformation = {
+  age?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['String']>;
   educationQualificationId?: Maybe<Scalars['String']>;
   ethnicityId?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['Localized']>;
+  gender?: Maybe<Scalars['Localized']>;
   genderId?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['Localized']>;
   middleName?: Maybe<Scalars['Localized']>;
@@ -5095,6 +5097,7 @@ export type KymIndFormData = {
   initialTransactionDetails?: Maybe<KymIndInitialTransactionDetails>;
   introducers?: Maybe<KymIndIntroducers>;
   isFamilyAMember?: Maybe<Scalars['Boolean']>;
+  maritalStatus?: Maybe<Scalars['Localized']>;
   maritalStatusId?: Maybe<Scalars['String']>;
   membershipDetails?: Maybe<KymIndMembershipDetails>;
   permanentAddress?: Maybe<KymAddress>;
@@ -6159,7 +6162,6 @@ export type Member = Base & {
 
 export type MemberDetailsResult = {
   data?: Maybe<Member>;
-  error?: Maybe<QueryError>;
 };
 
 export enum MemberIdentityLevel {
@@ -6211,17 +6213,16 @@ export type MemberMutationTranslateArgs = {
 };
 
 export type MemberProfile =
-  | CooperativeMember
   | CooperativeUnionMember
-  | IndividualMember
-  | InstitutionMember;
+  | KymCooperativeFormStateQuery
+  | KymInsFormStateQuery
+  | KymIndFormStateQuery;
 
 export type MemberQuery = {
   cooperative?: Maybe<KymCooperativeQuery>;
   cooperativeUnion?: Maybe<KymCoopUnionQuery>;
   details: MemberDetailsResult;
   entry?: Maybe<KymEntryQuery>;
-  get?: Maybe<Member>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
@@ -6235,10 +6236,6 @@ export type MemberQueryDetailsArgs = {
 
 export type MemberQueryEntryArgs = {
   membeId: Scalars['String'];
-};
-
-export type MemberQueryGetArgs = {
-  memberId: Scalars['String'];
 };
 
 export type MemberQueryIndividualArgs = {
@@ -10453,61 +10450,6 @@ export type GetMemberIndividualDataQuery = {
           wardNo?: string | null;
           locality?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
-        profile?:
-          | {
-              personalInformation?: {
-                firstName: string;
-                middleName?: string | null;
-                lastName?: string | null;
-                genderId?: string | null;
-                dateOfBirth?: string | null;
-                ethnicityId?: string | null;
-                nationalityId?: string | null;
-                educationQualificationId?: string | null;
-                religionId?: string | null;
-                landlordName?: string | null;
-                landlordContact?: string | null;
-                maritalStatusId?: string | null;
-                contact?: {
-                  mobile?: string | null;
-                  residence?: string | null;
-                  office?: string | null;
-                } | null;
-                identification?: Array<{
-                  id?: string | null;
-                  fields?: Array<{
-                    name?: string | null;
-                    value?: string | null;
-                  } | null> | null;
-                } | null> | null;
-                permanentAddress?: {
-                  state?: Record<'local' | 'en' | 'np', string> | null;
-                  district?: Record<'local' | 'en' | 'np', string> | null;
-                  localGovernment?: Record<
-                    'local' | 'en' | 'np',
-                    string
-                  > | null;
-                  wardNo?: string | null;
-                  locality?: Record<'local' | 'en' | 'np', string> | null;
-                } | null;
-                temporaryAddress?: {
-                  state?: Record<'local' | 'en' | 'np', string> | null;
-                  district?: Record<'local' | 'en' | 'np', string> | null;
-                  localGovernment?: Record<
-                    'local' | 'en' | 'np',
-                    string
-                  > | null;
-                  wardNo?: string | null;
-                  locality?: Record<'local' | 'en' | 'np', string> | null;
-                } | null;
-                familyDetails?: Array<{
-                  relationshipId: string;
-                  fullName?: string | null;
-                } | null> | null;
-              } | null;
-            }
-          | {}
-          | null;
       } | null;
     };
   };
@@ -11028,6 +10970,7 @@ export type GetLoanProductEditDataQuery = {
             defaultRate: number;
             ceoAuthority?: number | null;
             boardAuthority?: number | null;
+            interestMethod?: InterestMethod | null;
           } | null;
           serviceCharge?: Array<{
             serviceName?: string | null;
@@ -11360,7 +11303,6 @@ export type GetDepositProductSettingsEditDataQuery = {
             balanceLimit?: {
               minAmount?: any | null;
               maxAmount?: any | null;
-              avgAmount?: any | null;
             } | null;
             interest?: {
               minRate?: number | null;
@@ -16093,54 +16035,6 @@ export const GetMemberIndividualDataDocument = `
         }
         contact
         dateJoined
-        profile {
-          ... on IndividualMember {
-            personalInformation {
-              firstName
-              middleName
-              lastName
-              genderId
-              dateOfBirth
-              ethnicityId
-              nationalityId
-              educationQualificationId
-              religionId
-              contact {
-                mobile
-                residence
-                office
-              }
-              identification {
-                id
-                fields {
-                  name
-                  value
-                }
-              }
-              permanentAddress {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
-              }
-              temporaryAddress {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
-              }
-              landlordName
-              landlordContact
-              maritalStatusId
-              familyDetails {
-                relationshipId
-                fullName
-              }
-            }
-          }
-        }
       }
     }
   }
@@ -16808,6 +16702,7 @@ export const GetLoanProductEditDataDocument = `
             defaultRate
             ceoAuthority
             boardAuthority
+            interestMethod
           }
           overrideInterest
           serviceCharge {
@@ -17236,7 +17131,6 @@ export const GetDepositProductSettingsEditDataDocument = `
             balanceLimit {
               minAmount
               maxAmount
-              avgAmount
             }
             interest {
               minRate
