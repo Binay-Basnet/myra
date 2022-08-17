@@ -448,7 +448,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
           {/* .................................last part ............................... */}
           <Grid
             alignItems="center"
-            px="14px"
+            px="s8"
             py="s16"
             templateColumns="repeat(3,1fr)"
             gap="s40"
