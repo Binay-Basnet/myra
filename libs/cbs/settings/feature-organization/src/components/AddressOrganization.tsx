@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { useAllAdministrationQuery } from '@coop/cbs/data-access';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -25,6 +25,7 @@ export const AddressOrganization = () => {
 
   const currentProvinceId = watch('provinceId');
   const currentDistrictId = watch('districtId');
+  const currentLocalityId = watch('localGovernmentId');
 
   const districtList = useMemo(
     () =>
@@ -38,6 +39,11 @@ export const AddressOrganization = () => {
       districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
       [],
     [currentDistrictId]
+  );
+
+  const wardList = useMemo(
+    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+    [currentLocalityId]
   );
 
   return (
@@ -72,11 +78,14 @@ export const AddressOrganization = () => {
             value: d.id,
           }))}
         />
-        <FormInput
-          type="number"
+        <FormSelect
           name="wardNo"
           label={t['kymIndWardNo']}
           placeholder={t['kymIndEnterWardNo']}
+          options={wardList.map((d) => ({
+            label: d,
+            value: d,
+          }))}
         />
         <FormInput
           type="text"

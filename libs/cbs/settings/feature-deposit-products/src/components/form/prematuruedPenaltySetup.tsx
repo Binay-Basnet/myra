@@ -1,5 +1,8 @@
 // import debounce from 'lodash/debounce';
-import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
+import {
+  PrematurePenaltyDateType,
+  useGetCoaListQuery,
+} from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
@@ -20,6 +23,21 @@ export const PrematuredPenalty = () => {
       value: PrematurePenaltyDateType.RemainingDaysToGetMatured,
     },
   ];
+
+  const { data: coa } = useGetCoaListQuery({
+    filter: {
+      active: true,
+    },
+  });
+
+  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+
+  const coaList = coaData?.map((item) => {
+    return {
+      label: item?.name?.en as string,
+      value: item?.id as string,
+    };
+  });
 
   return (
     <BoxContainer>
@@ -42,20 +60,7 @@ export const PrematuredPenalty = () => {
           name="prematurePenalty.penaltyLedgerMapping"
           label={t['depositProductPenaltyLedgerMapping']}
           placeholder={t['depositProductPenaltyLedgerMapping']}
-          options={[
-            {
-              label: 'Option 1',
-              value: 'option1',
-            },
-            {
-              label: 'Option 2',
-              value: 'option2',
-            },
-            {
-              label: 'Option 3',
-              value: 'option3',
-            },
-          ]}
+          options={coaList}
         />
         <FormInput
           name="prematurePenalty.penaltyAmount"

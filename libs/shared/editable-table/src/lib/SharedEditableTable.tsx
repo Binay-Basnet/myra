@@ -185,7 +185,7 @@ export function EditableTable<
   defaultData,
   canDeleteRow = true,
   onChange,
-  debug = true,
+  debug = false,
   canAddRow = true,
   searchPlaceholder,
 }: EditableTableProps<T>) {

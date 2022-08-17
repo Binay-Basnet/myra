@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -24,9 +25,43 @@ const CheckboxYesNo = [
 
 export const GridItems = () => {
   const { t } = useTranslation();
-  const { watch } = useFormContext();
+  const { watch, resetField } = useFormContext();
   const criteria = watch('criteria');
   const memberType = watch('typeOfMember');
+
+  useEffect(() => {
+    if (!criteria?.includes('AGE')) {
+      resetField('minAge');
+      resetField('maxAge');
+    }
+    if (!criteria?.includes('GENDER')) {
+      resetField('genderId');
+    }
+    if (!criteria?.includes('MARITAL_STATUS')) {
+      resetField('maritalStatusId');
+    }
+    if (!criteria?.includes('EDUCATION_QUALIFICATION')) {
+      resetField('educationQualification');
+    }
+    if (!criteria?.includes('ETHNICITY')) {
+      resetField('ethnicity');
+    }
+    if (!criteria?.includes('OCCUPATION_DETAILS')) {
+      resetField('occupation');
+    }
+    if (!criteria?.includes('FOREIGN_EMPLOYMENT')) {
+      resetField('foreignEmployment');
+    }
+    if (!criteria?.includes('NATURE_OF_BUSINESS_INSTITUTIONS')) {
+      resetField('natureOfBusinessInstitution');
+    }
+    if (!criteria?.includes('COOPERATIVE_TYPE')) {
+      resetField('cooperativeType');
+    }
+    if (!criteria?.includes('NATURE_OF_BUSINESS_COOPUNION')) {
+      resetField('natureOFBusinessCoop');
+    }
+  }, [JSON.stringify(criteria)]);
 
   const { data: genderFields } = useGetSettingsOptionsFieldsQuery({
     searchTerm: FormFieldSearchTerm.Gender,
