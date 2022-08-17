@@ -1,31 +1,3 @@
-query getBranchesList {
-  settings {
-    general {
-      branch {
-        list {
-          edges {
-            node {
-              id
-              branchCode
-              address {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
-              }
-              manager {
-                id
-              }
-              contactNumber
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 query getChartOfAccounts {
   settings {
     general {
