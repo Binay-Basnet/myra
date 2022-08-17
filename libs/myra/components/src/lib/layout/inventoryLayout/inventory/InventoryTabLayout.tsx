@@ -53,7 +53,7 @@ export const InventoryTabLayout = ({ children }: IInventoryPageLayoutProps) => {
         <TabColumn list={inventoryColumns} />
         <Divider my="s16" />
         <Button
-          onClick={() => router.push('/inventory/register')}
+          onClick={() => router.push('/inventory/inventory/settings')}
           variant="ghost"
           color="#37474F"
           height="s48"

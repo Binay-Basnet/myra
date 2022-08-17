@@ -45,7 +45,7 @@ export const SuppliersLayout = ({ children }: IInventoryPageLayoutProps) => {
         <TabColumn list={inventoryColumns} />
         <Divider my="s16" />
         <Button
-          onClick={() => router.push('/members/settings')}
+          onClick={() => router.push('/inventory/suppliers/settings')}
           variant="ghost"
           color="#37474F"
           height="s48"
@@ -55,7 +55,7 @@ export const SuppliersLayout = ({ children }: IInventoryPageLayoutProps) => {
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          {t['inventorySettings']}
+          {t['suppiersSettings']}
         </Button>
       </Box>
       <Box

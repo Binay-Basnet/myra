@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 
-import { WarehouseLayout } from '@coop/myra/components';
+import { SalesLayout } from '@coop/accounting/ui-layouts';
 import { Box, MainLayoutInventory, WIPState } from '@coop/shared/ui';
 
-const InventoryWarehousePage = () => {
+const SalesSettings = () => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WIPState />
@@ -11,11 +11,11 @@ const InventoryWarehousePage = () => {
   );
 };
 
-InventoryWarehousePage.getLayout = function getLayout(page: ReactElement) {
+SalesSettings.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayoutInventory>
-      <WarehouseLayout>{page}</WarehouseLayout>
+      <SalesLayout>{page}</SalesLayout>
     </MainLayoutInventory>
   );
 };
-export default InventoryWarehousePage;
+export default SalesSettings;

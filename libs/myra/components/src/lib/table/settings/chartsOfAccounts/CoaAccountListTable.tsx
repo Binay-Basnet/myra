@@ -1,72 +1,71 @@
 import { useMemo } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { IconButton } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
-import { Column, Table } from '@coop/shared/ui';
+import { useGetCoaListQuery } from '@coop/cbs/data-access';
+import { Column, Table } from '@coop/shared/table';
 import { useTranslation } from '@coop/shared/utils';
 
-type MemberData = {
-  id: string;
-  firstName: string;
-  middleName?: string | null;
-  lastName?: string;
-  gender: string;
-  title?: string | null;
-  dateOfBirth?: string | null;
-};
+import { ActionPopoverComponent } from '../../../actionPopover/ActionPopover';
 
 export const CoaAccountListTable = () => {
   const { t } = useTranslation();
-  const columns: Column<MemberData>[] = useMemo(
+  const router = useRouter();
+
+  const { data, isFetching } = useGetCoaListQuery({
+    filter: {
+      active: true,
+    },
+  });
+
+  const rowData = useMemo(
+    () => data?.settings?.general?.chartsOfAccount?.accounts?.data ?? [],
+    [data]
+  );
+
+  const popoverTitle = [
+    {
+      title: 'depositProductEdit',
+      onClick: (id: string) => router.push(`/settings/general/test/edit/${id}`),
+    },
+  ];
+
+  const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: t['settingsCoaTableAccountCode'],
-        accessor: 'id',
-        maxWidth: 4,
+        header: t['settingsCoaTableAccountCode'],
+        accessorFn: (row) => row?.accountCode,
       },
       {
-        Header: t['settingsCoaTableAccountName'],
-        accessor: 'firstName',
-        width: '80%',
+        header: t['settingsCoaTableAccountName'],
+        accessorFn: (row) => row?.name?.en,
+        meta: {
+          width: '50%',
+        },
       },
       {
-        Header: t['settingsCoaTableAccountClass'],
-        accessor: 'title',
-        width: '40%',
-      },
-
-      {
-        Header: t['settingsCoaTableAccountParentGroup'],
-        accessor: 'gender',
-        width: '40%',
+        header: t['settingsCoaTableAccountClass'],
+        accessorFn: (row) => row?.accountClass,
+        cell: (props) => {
+          return <span>{props.getValue() ? `${props.getValue()}` : '-'}</span>;
+        },
       },
 
       {
-        accessor: 'actions',
-        Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
+        header: t['settingsCoaTableAccountParentGroup'],
+        accessorFn: (row) => row?.id,
+      },
+
+      {
+        id: '_actions',
+        header: '',
+        accessorKey: 'actions',
+        cell: (props) => (
+          <ActionPopoverComponent items={popoverTitle} id={props?.row?.id} />
         ),
       },
     ],
     [t]
   );
 
-  return (
-    <Table
-      data={[
-        {
-          id: '0012',
-          firstName: '123',
-          title: 'Account Test',
-          gender: 'Account Group',
-        },
-      ]}
-      columns={columns}
-      sort={true}
-    />
-  );
+  return <Table data={rowData} columns={columns} isLoading={isFetching} />;
 };

@@ -56,8 +56,7 @@ export type Column<T extends RecordWithId & Record<string, string | number>> = {
   searchOptions?: { label: string; value: string }[];
   isNumeric?: boolean;
 
-  // // TODO! Create a cell component
-  // cell?: (row: T) => React.ReactNode;
+  cell?: (row: T) => React.ReactNode;
 
   cellWidth?: 'auto' | 'lg' | 'md' | 'sm';
   colSpan?: number;
@@ -186,7 +185,7 @@ export function EditableTable<
   defaultData,
   canDeleteRow = true,
   onChange,
-  debug = false,
+  debug = true,
   canAddRow = true,
   searchPlaceholder,
 }: EditableTableProps<T>) {
@@ -531,7 +530,11 @@ const EditableTableRow = <
                         )
                   }
                 >
-                  {column.fieldType === 'select' ? null : (
+                  {column.cell ? (
+                    <Box px="s8" width="100%" cursor="not-allowed">
+                      {column.cell(data)}
+                    </Box>
+                  ) : column.fieldType === 'select' ? null : (
                     <EditablePreview
                       width="100%"
                       mr={column.fieldType === 'percentage' ? 's24' : '0'}

@@ -152,6 +152,7 @@ export const Interest = () => {
                 {
                   accessor: 'type',
                   header: t['depositProductInterestType'],
+                  accessorFn: () => 'More Than',
                 },
                 {
                   accessor: 'amount',

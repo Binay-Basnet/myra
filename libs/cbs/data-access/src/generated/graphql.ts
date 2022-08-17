@@ -10652,6 +10652,31 @@ export type GetBranchEditDataQuery = {
   };
 };
 
+export type GetCoaListQueryVariables = Exact<{
+  filter: ChartsOfAccountFilter;
+}>;
+
+export type GetCoaListQuery = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        accounts: {
+          data?: Array<{
+            id: string;
+            name: Record<'local' | 'en' | 'np', string>;
+            under?: string | null;
+            accountClass: string;
+            accountCode: string;
+            currency: string;
+            accountType: CoaTypesOfAccount;
+            openingBalance: number;
+          }> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLoanProductListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<LoanProductSearchFilter>;
@@ -16416,6 +16441,39 @@ export const useGetBranchEditDataQuery = <
     ['getBranchEditData', variables],
     useAxios<GetBranchEditDataQuery, GetBranchEditDataQueryVariables>(
       GetBranchEditDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCoaListDocument = `
+    query getCOAList($filter: ChartsOfAccountFilter!) {
+  settings {
+    general {
+      chartsOfAccount {
+        accounts(filter: $filter) {
+          data {
+            id
+            name
+            under
+            accountClass
+            accountCode
+            currency
+            accountType
+            openingBalance
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoaListQuery = <TData = GetCoaListQuery, TError = unknown>(
+  variables: GetCoaListQueryVariables,
+  options?: UseQueryOptions<GetCoaListQuery, TError, TData>
+) =>
+  useQuery<GetCoaListQuery, TError, TData>(
+    ['getCOAList', variables],
+    useAxios<GetCoaListQuery, GetCoaListQueryVariables>(
+      GetCoaListDocument
     ).bind(null, variables),
     options
   );
