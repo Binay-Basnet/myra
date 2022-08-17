@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Spinner } from '@chakra-ui/react';
 
 import {
+  ReportPeriodType,
   ShareTransactionType,
   useGetShareStatementQuery,
 } from '@coop/cbs/data-access';
@@ -35,7 +36,7 @@ const NewShareStatementReport = () => {
       {
         data: {
           memberId: filter?.memberId,
-          period: filter?.period,
+          periodType: ReportPeriodType?.Today,
           filter: filter?.type,
         },
       },

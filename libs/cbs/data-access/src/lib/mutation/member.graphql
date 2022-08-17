@@ -118,3 +118,18 @@ mutation setKYMDocumentData(
     }
   }
 }
+
+mutation setKymIndividualIdentificationData(
+  $id: ID!
+  $data: KYMIndIdentificationInput!
+) {
+  members {
+    individual(id: $id) {
+      identification {
+        upsert(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}

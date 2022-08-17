@@ -8,11 +8,7 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 import { Grid } from '@chakra-ui/react';
 
-import {
-  Id_Type,
-  useGetMemberTypesQuery,
-  useGetNewIdMutation,
-} from '@coop/cbs/data-access';
+import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { TabColumn } from '@coop/myra/components';
 import {
   Box,
@@ -118,11 +114,19 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
   const router = useRouter();
   const newId = useGetNewIdMutation();
 
-  const memberTypesQuery = useGetMemberTypesQuery();
+  // const memberTypesQuery = useGetMemberTypesQuery();
 
   const { t } = useTranslation();
 
-  const memberTypes = memberTypesQuery?.data?.members?.memberTypes?.data;
+  // const memberTypes =i memberTypesQuery?.data?.members?.memberTypes?.data;
+  // memberTypes?.[0]?.type?
+  const memberTypes = [
+    'INDIVIDUAL',
+    'INSTITUTION',
+    'COOPERATIVE',
+    'COOPERATIVE_UNION',
+  ];
+
   const [openModal, setOpenModal] = useState(false);
 
   const onOpenModal = () => {
@@ -169,7 +173,8 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
         >
           <Box py="s16">
             <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-              {memberTypes?.[0]?.type?.map((item, index) => {
+              {/* {memberTypes?.[0]?.type?.map((item, index) => { */}
+              {memberTypes?.map((item, index) => {
                 if (!item) {
                   return null;
                 }
