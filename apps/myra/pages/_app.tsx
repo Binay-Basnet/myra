@@ -55,7 +55,7 @@ function MainApp({ Component, pageProps }: AppPropsWithLayout) {
       <Box
         position="fixed"
         bottom={'40px'}
-        right={'32px'}
+        left={'32px'}
         display="flex"
         flexDirection={'row-reverse'}
         zIndex="99"

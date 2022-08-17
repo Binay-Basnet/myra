@@ -205,6 +205,7 @@ export function TopLevelHeader() {
             display={'flex'}
             justifyContent={'flex-start'}
             alignItems={'center'}
+            gap="s16"
           >
             <IconButton
               h="40px"

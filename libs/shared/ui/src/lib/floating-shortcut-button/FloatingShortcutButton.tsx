@@ -13,6 +13,7 @@ import {
   BsTwitter,
 } from 'react-icons/bs';
 import { TbMessageDots } from 'react-icons/tb';
+
 import {
   Box,
   Divider,
@@ -23,8 +24,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
-} from '@chakra-ui/react';
-
+} from '@coop/shared/ui';
 import {
   Grid,
   ListItem,
@@ -243,10 +243,13 @@ export function FloatingShortcutButton() {
         <PopoverTrigger>
           <IconButton
             aria-label="button"
+            width={'40px'}
+            height={'40px'}
             boxShadow={' 0px 4px 10px rgba(52, 60, 70, 0.1)'}
-            icon={<BsQuestionLg color="black" />}
+            // boxShadow={' 0px  10px rgba(52, 60, 70, 0.1)'}
+            icon={<BsQuestionLg color="white" />}
             borderRadius="50%"
-            colorScheme={'whiteAlpha'}
+            colorScheme={'gray'}
           />
         </PopoverTrigger>
 
