@@ -22,8 +22,19 @@ interface ICitizenshipProps {
   }) => void;
 }
 
+type citizenshipData =
+  | {
+      id: string;
+      idNo: string;
+      idType: string;
+      place: Record<'en' | 'local' | 'np', string>;
+      date: string;
+    }[]
+  | null
+  | undefined;
+
 const getCitizenshipData = (
-  identificationListData: any[] | null | undefined
+  identificationListData: KymIndIdentification[] | null | undefined
 ) => {
   const citizenshipData = identificationListData?.find(
     (identification: KymIndIdentification | null) =>
@@ -65,12 +76,11 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
       { enabled: !!id }
     );
 
-  // console.log({ identificationListData });
-
   useEffect(() => {
     if (identificationListData?.members?.individual?.listIdentification?.data) {
       const citizenshipData = getCitizenshipData(
-        identificationListData?.members?.individual?.listIdentification?.data
+        identificationListData?.members?.individual?.listIdentification
+          ?.data as citizenshipData
       );
 
       if (citizenshipData?.id) {
@@ -89,7 +99,8 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
     const subscription = watch(
       debounce((data) => {
         const citizenshipData = getCitizenshipData(
-          identificationListData?.members?.individual?.listIdentification?.data
+          identificationListData?.members?.individual?.listIdentification
+            ?.data as citizenshipData
         );
 
         if (

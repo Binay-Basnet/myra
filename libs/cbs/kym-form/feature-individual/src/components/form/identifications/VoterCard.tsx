@@ -1,12 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 
-import { useSetKymIndividualIdentificationDataMutation } from '@coop/cbs/data-access';
+import {
+  Id_Type,
+  KymIndIdentification,
+  useGetIndividualKymIdentificationListQuery,
+  useGetNewIdMutation,
+  useSetKymIndividualIdentificationDataMutation,
+} from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Grid, Text } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface IVoterCardProps {
   setKymCurrentSection: (section?: {
@@ -15,7 +22,35 @@ interface IVoterCardProps {
   }) => void;
 }
 
+type voterCardData =
+  | {
+      id: string;
+      idNo: string;
+      idType: string;
+      place: Record<'en' | 'local' | 'np', string>;
+      date: string;
+    }[]
+  | null
+  | undefined;
+
+const getVoterCardData = (
+  identificationListData: KymIndIdentification[] | null | undefined
+) => {
+  const voterCardData = identificationListData?.find(
+    (identification: KymIndIdentification | null) =>
+      identification?.idType === 'voterCard'
+  );
+
+  return {
+    idNo: voterCardData?.idNo,
+    place: voterCardData?.place?.local,
+    id: voterCardData?.id,
+  };
+};
+
 export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
+  const [mutationId, setMutationId] = useState('');
+
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -24,21 +59,75 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
 
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
-  const { mutate } = useSetKymIndividualIdentificationDataMutation();
+  const { mutateAsync: newIDMutate } = useGetNewIdMutation();
+
+  const { mutate } = useSetKymIndividualIdentificationDataMutation({
+    onSuccess: () => refetch(),
+  });
+
+  const { data: identificationListData, refetch } =
+    useGetIndividualKymIdentificationListQuery(
+      {
+        id: String(id),
+      },
+      { enabled: !!id }
+    );
+
+  useEffect(() => {
+    if (identificationListData?.members?.individual?.listIdentification?.data) {
+      const voterCardData = getVoterCardData(
+        identificationListData?.members?.individual?.listIdentification
+          ?.data as voterCardData
+      );
+
+      if (voterCardData?.id) {
+        setMutationId(voterCardData.id);
+
+        reset({
+          idNo: voterCardData?.idNo,
+          place: voterCardData?.place,
+        });
+      }
+    }
+  }, [identificationListData]);
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        if (id) {
-          mutate({ id: String(id), data: { ...data, idType: 'citizenship' } });
+        const voterCardData = getVoterCardData(
+          identificationListData?.members?.individual?.listIdentification
+            ?.data as voterCardData
+        );
+
+        if (
+          id &&
+          !isDeepEmpty(data) &&
+          !isEqual({ ...data, id: mutationId }, voterCardData)
+        ) {
+          if (!mutationId) {
+            newIDMutate({ idType: Id_Type.Kymidentification }).then((res) => {
+              setMutationId(res.newId);
+              mutate({
+                id: String(id),
+                data: { ...data, id: res.newId, idType: 'voterCard' },
+              });
+            });
+          }
+
+          if (mutationId) {
+            mutate({
+              id: String(id),
+              data: { ...data, id: mutationId, idType: 'voterCard' },
+            });
+          }
         }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  }, [watch, mutationId, identificationListData]);
 
   return (
     <FormProvider {...methods}>

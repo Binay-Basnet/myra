@@ -1,12 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 
-import { useSetKymIndividualIdentificationDataMutation } from '@coop/cbs/data-access';
+import {
+  Id_Type,
+  KymIndIdentification,
+  useGetIndividualKymIdentificationListQuery,
+  useGetNewIdMutation,
+  useSetKymIndividualIdentificationDataMutation,
+} from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Grid, Text } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface INationalIDProps {
   setKymCurrentSection: (section?: {
@@ -15,7 +22,34 @@ interface INationalIDProps {
   }) => void;
 }
 
+type nationalIdData =
+  | {
+      id: string;
+      idNo: string;
+      idType: string;
+      place: Record<'en' | 'local' | 'np', string>;
+      date: string;
+    }[]
+  | null
+  | undefined;
+
+const getNationalIDData = (
+  identificationListData: KymIndIdentification[] | null | undefined
+) => {
+  const nationalIdData = identificationListData?.find(
+    (identification: KymIndIdentification | null) =>
+      identification?.idType === 'nationalId'
+  );
+
+  return {
+    idNo: nationalIdData?.idNo,
+    id: nationalIdData?.id,
+  };
+};
+
 export const NationalID = ({ setKymCurrentSection }: INationalIDProps) => {
+  const [mutationId, setMutationId] = useState('');
+
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -24,21 +58,74 @@ export const NationalID = ({ setKymCurrentSection }: INationalIDProps) => {
 
   const methods = useForm();
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
-  const { mutate } = useSetKymIndividualIdentificationDataMutation();
+  const { mutateAsync: newIDMutate } = useGetNewIdMutation();
+
+  const { mutate } = useSetKymIndividualIdentificationDataMutation({
+    onSuccess: () => refetch(),
+  });
+
+  const { data: identificationListData, refetch } =
+    useGetIndividualKymIdentificationListQuery(
+      {
+        id: String(id),
+      },
+      { enabled: !!id }
+    );
+
+  useEffect(() => {
+    if (identificationListData?.members?.individual?.listIdentification?.data) {
+      const nationalIdData = getNationalIDData(
+        identificationListData?.members?.individual?.listIdentification
+          ?.data as nationalIdData
+      );
+
+      if (nationalIdData?.id) {
+        setMutationId(nationalIdData.id);
+
+        reset({
+          idNo: nationalIdData?.idNo,
+        });
+      }
+    }
+  }, [identificationListData]);
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        if (id) {
-          mutate({ id: String(id), data: { ...data, idType: 'citizenship' } });
+        const nationalIdData = getNationalIDData(
+          identificationListData?.members?.individual?.listIdentification
+            ?.data as nationalIdData
+        );
+
+        if (
+          id &&
+          !isDeepEmpty(data) &&
+          !isEqual({ ...data, id: mutationId }, nationalIdData)
+        ) {
+          if (!mutationId) {
+            newIDMutate({ idType: Id_Type.Kymidentification }).then((res) => {
+              setMutationId(res.newId);
+              mutate({
+                id: String(id),
+                data: { ...data, id: res.newId, idType: 'nationalId' },
+              });
+            });
+          }
+
+          if (mutationId) {
+            mutate({
+              id: String(id),
+              data: { ...data, id: mutationId, idType: 'nationalId' },
+            });
+          }
         }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  }, [watch, mutationId, identificationListData]);
 
   return (
     <FormProvider {...methods}>
