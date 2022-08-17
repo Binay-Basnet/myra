@@ -65,7 +65,7 @@ export const InventoryItemsLayout = ({
             <Icon as={AiOutlineSetting} size="md" color="primary.500" />
           }
         >
-          {t['itemInventorySettings']}
+          {t['itemSettings']}
         </Button>
       </Box>
       <Box

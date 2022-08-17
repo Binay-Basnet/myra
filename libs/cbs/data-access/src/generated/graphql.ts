@@ -481,7 +481,7 @@ export type Branch = {
   estDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   location?: Maybe<LocationCoordinate>;
-  manager?: Maybe<Member>;
+  managerName?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   plTransferId?: Maybe<Scalars['String']>;
   tdsTransaferId?: Maybe<Scalars['String']>;
@@ -508,12 +508,6 @@ export type BranchConnection = {
   totalCount: Scalars['Int'];
 };
 
-export type BranchDeleteResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<GeneralBranchSettingsQuery>;
-  recordId: Scalars['ID'];
-};
-
 export type BranchEdge = {
   cursor: Scalars['Cursor'];
   node?: Maybe<Branch>;
@@ -530,7 +524,7 @@ export type BranchFormData = {
   localGovernmentId?: Maybe<Scalars['Int']>;
   locality?: Maybe<Scalars['String']>;
   location?: Maybe<LocationCoordinate>;
-  managerId?: Maybe<Scalars['String']>;
+  managerName?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   payableAccountId?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
@@ -557,7 +551,7 @@ export type BranchInput = {
   localGovernmentId?: InputMaybe<Scalars['Int']>;
   locality?: InputMaybe<Scalars['String']>;
   location?: InputMaybe<LocationCoordinateInput>;
-  managerId?: InputMaybe<Scalars['String']>;
+  managerName?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   payableAccountId?: InputMaybe<Scalars['String']>;
   phoneNumber?: InputMaybe<Scalars['String']>;
@@ -1281,6 +1275,16 @@ export type CustomListFilter = {
   category: FormCategory;
 };
 
+export type CustomPeriodInput = {
+  from: Scalars['String'];
+  to: Scalars['String'];
+};
+
+export type CustomPeriodType = {
+  from: Scalars['String'];
+  to: Scalars['String'];
+};
+
 export type DashboardData = {
   listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
   listTodayTrend?: Maybe<Array<Maybe<TodayTrend>>>;
@@ -1905,6 +1909,18 @@ export type District = {
   name: Scalars['String'];
   nameNp: Scalars['String'];
 };
+
+export enum DividendDistributionCondition {
+  Daily = 'DAILY',
+  Monthly = 'MONTHLY',
+  Quarterly = 'QUARTERLY',
+}
+
+export enum DividendTransferTreatment {
+  AccountTransfer = 'ACCOUNT_TRANSFER',
+  BookPayable = 'BOOK_PAYABLE',
+  ShareAndAccount = 'SHARE_AND_ACCOUNT',
+}
 
 export type Document = {
   photo?: Maybe<Scalars['String']>;
@@ -3227,15 +3243,10 @@ export enum FrequencyTenure {
 
 export type GeneralBranchSettingsMutation = {
   add: BranchAddResult;
-  delete?: Maybe<BranchDeleteResult>;
 };
 
 export type GeneralBranchSettingsMutationAddArgs = {
   data?: InputMaybe<BranchInput>;
-  id: Scalars['ID'];
-};
-
-export type GeneralBranchSettingsMutationDeleteArgs = {
   id: Scalars['ID'];
 };
 
@@ -3263,6 +3274,7 @@ export type GeneralSettingsMutation = {
   loan?: Maybe<LoanSettingsMutation>;
   loanProducts?: Maybe<LoanProductsMutation>;
   organization?: Maybe<OrganizationSettingsMutation>;
+  share?: Maybe<ShareSettingsMutation>;
   valuator?: Maybe<ValuatorSettingsMutation>;
 };
 
@@ -3275,6 +3287,7 @@ export type GeneralSettingsQuery = {
   loan?: Maybe<LoanSettingsQuery>;
   loanProducts?: Maybe<LoanProductsQuery>;
   organization?: Maybe<OrganizationSettingsQuery>;
+  share?: Maybe<ShareSettingsQuery>;
   valuator?: Maybe<ValuatorSettingsQuery>;
 };
 
@@ -3987,19 +4000,46 @@ export type KymIndForeignEmployment = {
 };
 
 export type KymIndIdentification = {
-  citizenshipIssueDate?: Maybe<Scalars['String']>;
-  citizenshipIssuePlace?: Maybe<Scalars['String']>;
-  citizenshipNo?: Maybe<Scalars['String']>;
-  drivingLicenseIssueDate?: Maybe<Scalars['String']>;
-  drivingLicenseIssuePlace?: Maybe<Scalars['String']>;
-  drivingLicenseNo?: Maybe<Scalars['String']>;
-  identificationSelection?: Maybe<Array<Maybe<Scalars['String']>>>;
-  nationalIDNo?: Maybe<Scalars['String']>;
-  passportIssueDate?: Maybe<Scalars['String']>;
-  passportIssuePlace?: Maybe<Scalars['String']>;
-  passportNo?: Maybe<Scalars['String']>;
-  voterCardNo?: Maybe<Scalars['String']>;
-  voterPollingStation?: Maybe<Scalars['String']>;
+  additionalFields?: Maybe<Array<Maybe<KymAdditionalFieldsFormState>>>;
+  date?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  idNo?: Maybe<Scalars['String']>;
+  idType: Scalars['String'];
+  place?: Maybe<Scalars['Localized']>;
+};
+
+export type KymIndIdentificationInput = {
+  additionalFields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
+  date?: InputMaybe<Scalars['String']>;
+  id: Scalars['String'];
+  idNo?: InputMaybe<Scalars['String']>;
+  idType: Scalars['String'];
+  place?: InputMaybe<Scalars['String']>;
+};
+
+export type KymIndIdentificationMutation = {
+  delete: KymIndIdentificationResult;
+  upsert: KymIndIdentificationResult;
+};
+
+export type KymIndIdentificationMutationDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+export type KymIndIdentificationMutationUpsertArgs = {
+  data: KymIndIdentificationInput;
+};
+
+export type KymIndIdentificationQueryResult = {
+  data?: Maybe<Array<Maybe<KymIndIdentification>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type KymIndIdentificationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<KymIndQuery>;
+  record?: Maybe<KymIndIdentification>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type KymIndIncomeSource = {
@@ -5029,7 +5069,7 @@ export type KymIndFormData = {
   declaration?: Maybe<KymIndDeclaration>;
   estimatedTransactions?: Maybe<KymIndEstimatedTransactions>;
   foreignEmployment?: Maybe<KymIndForeignEmployment>;
-  identification?: Maybe<KymIndIdentification>;
+  identificationSelection?: Maybe<Array<Maybe<Scalars['String']>>>;
   initialTransactionDetails?: Maybe<KymIndInitialTransactionDetails>;
   introducers?: Maybe<KymIndIntroducers>;
   isFamilyAMember?: Maybe<Scalars['Boolean']>;
@@ -5122,6 +5162,7 @@ export type KymIndMemberInput = {
 export type KymIndMutation = {
   add?: Maybe<KymIndAddResult>;
   familyMember: KymIndFamilyMemberMutation;
+  identification: KymIndIdentificationMutation;
   incomeSource: KymIndIncomeSourceMutation;
   occupation: KymIndOccupationMutation;
 };
@@ -5196,6 +5237,7 @@ export type KymIndProfessionalStatus = {
 export type KymIndQuery = {
   formState?: Maybe<KymIndFormStateQuery>;
   listFamilyMember?: Maybe<KymIndFamilyMemberQueryResult>;
+  listIdentification?: Maybe<KymIndIdentificationQueryResult>;
   listIncomeSource?: Maybe<KymIndIncomeSourceQueryResult>;
   listOccupation?: Maybe<KymIndOccupationQueryResult>;
 };
@@ -6346,9 +6388,9 @@ export type OrganizationAddResult = {
 };
 
 export type OrganizationBasicDetails = {
-  TypeOfOrganization?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   logo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  typeOfOrganization?: Maybe<TypeOfOrganization>;
 };
 
 export type OrganizationContactDetails = {
@@ -6392,17 +6434,13 @@ export type OrganizationFormData = {
   title?: Maybe<Scalars['String']>;
   totalCapital?: Maybe<Scalars['Float']>;
   totalMembers?: Maybe<Scalars['Int']>;
-  typeOfOrganization?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
+  typeOfOrganization?: Maybe<TypeOfOrganization>;
   wardNo?: Maybe<Scalars['Int']>;
   website?: Maybe<Scalars['String']>;
 };
 
-export type OrganizationFormState = {
-  formData?: Maybe<OrganizationFormData>;
-};
-
 export type OrganizationFormStateResult = {
-  data?: Maybe<OrganizationFormState>;
+  data?: Maybe<OrganizationFormData>;
   error?: Maybe<QueryError>;
 };
 
@@ -6431,7 +6469,7 @@ export type OrganizationInput = {
   title?: InputMaybe<Scalars['String']>;
   totalCapital?: InputMaybe<Scalars['Float']>;
   totalMembers?: InputMaybe<Scalars['Int']>;
-  typeOfOrganization?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
+  typeOfOrganization?: InputMaybe<TypeOfOrganization>;
   wardNo?: InputMaybe<Scalars['Int']>;
   website?: InputMaybe<Scalars['String']>;
 };
@@ -6455,32 +6493,17 @@ export type OrganizationRegistrationDetails = {
 };
 
 export type OrganizationSettingsMutation = {
-  delete?: Maybe<OrganizationDeleteResult>;
   initialSetup?: Maybe<OrganizationAddResult>;
-};
-
-export type OrganizationSettingsMutationDeleteArgs = {
-  id: Scalars['ID'];
 };
 
 export type OrganizationSettingsMutationInitialSetupArgs = {
   data: OrganizationInput;
-  id: Scalars['ID'];
 };
 
 export type OrganizationSettingsQuery = {
   formState?: Maybe<OrganizationFormStateResult>;
-  list?: Maybe<OrganizationListResult>;
   /** This is to get organization details of a logged in employee. id of that email will be extracted from the employee who sends the request */
   mine?: Maybe<OrganizationGetResult>;
-};
-
-export type OrganizationSettingsQueryFormStateArgs = {
-  id: Scalars['ID'];
-};
-
-export type OrganizationSettingsQueryListArgs = {
-  filter?: InputMaybe<OrganizationFilter>;
 };
 
 export type OrganizationStatistics = {
@@ -6699,12 +6722,29 @@ export type RecentTransactionFilter = {
   limit: Scalars['Int'];
 };
 
-export type ReportList = {
+export type ReportDetail = {
   id: Scalars['ID'];
   lastModifiedDate: Scalars['Date'];
   name: Scalars['String'];
   reportType: Scalars['String'];
   savedBy: Scalars['String'];
+};
+
+export type ReportListConnection = {
+  edges?: Maybe<Array<Maybe<ReportListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type ReportListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<ReportDetail>;
+};
+
+export type ReportListFilter = {
+  name?: InputMaybe<Scalars['String']>;
+  reportType?: InputMaybe<Scalars['String']>;
+  savedBy?: InputMaybe<Scalars['String']>;
 };
 
 export type ReportMutation = {
@@ -6715,19 +6755,20 @@ export type ReportMutationStatementReportArgs = {
   data: StatementReportInput;
 };
 
-export type ReportPeriod = {
-  from: Scalars['String'];
-  to?: InputMaybe<Scalars['String']>;
-};
-
-export type ReportPeriodType = {
-  from: Scalars['String'];
-  to?: Maybe<Scalars['String']>;
-};
+export enum ReportPeriodType {
+  CustomPeriod = 'CUSTOM_PERIOD',
+  Last_7Days = 'LAST_7_DAYS',
+  Last_14Days = 'LAST_14_DAYS',
+  Last_30Days = 'LAST_30_DAYS',
+  Lifetime = 'LIFETIME',
+  ThisFiscalYearToDate = 'THIS_FISCAL_YEAR_TO_DATE',
+  Today = 'TODAY',
+  Yesterday = 'YESTERDAY',
+}
 
 export type ReportQuery = {
   getReport?: Maybe<ShareStatementReportSettingsType>;
-  listReports?: Maybe<Array<Maybe<ReportList>>>;
+  listReports: ReportListConnection;
   shareStatementReport?: Maybe<ReportResult>;
 };
 
@@ -6736,7 +6777,9 @@ export type ReportQueryGetReportArgs = {
 };
 
 export type ReportQueryListReportsArgs = {
+  filter?: InputMaybe<ReportListFilter>;
   organizationId?: InputMaybe<Scalars['ID']>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type ReportQueryShareStatementReportArgs = {
@@ -6855,6 +6898,53 @@ export type ShareBalanceFilter = {
   memberSearchText?: InputMaybe<Scalars['String']>;
 };
 
+export type ShareBonusSettingsBonusResult = {
+  accountMapping?: Maybe<Scalars['ID']>;
+  taxPayer?: Maybe<TaxPayerOptions>;
+  taxRate?: Maybe<Scalars['Float']>;
+};
+
+export type ShareBonusSettingsInput = {
+  accountMapping?: InputMaybe<Scalars['ID']>;
+  taxPayer?: InputMaybe<TaxPayerOptions>;
+  taxRate?: InputMaybe<Scalars['Float']>;
+};
+
+export type ShareCharge = {
+  charge?: Maybe<Scalars['Float']>;
+  maxShare?: Maybe<Scalars['Int']>;
+  minShare?: Maybe<Scalars['Int']>;
+  type?: Maybe<ShareChargeType>;
+};
+
+export type ShareChargeInput = {
+  charge?: InputMaybe<Scalars['Float']>;
+  maxShare?: InputMaybe<Scalars['Int']>;
+  minShare?: InputMaybe<Scalars['Int']>;
+  type?: InputMaybe<ShareChargeType>;
+};
+
+export enum ShareChargeType {
+  FixedAmount = 'FIXED_AMOUNT',
+  Percentage = 'PERCENTAGE',
+}
+
+export type ShareDividendSettingsInput = {
+  accountForFractionalDividends?: InputMaybe<Scalars['ID']>;
+  accountForShareDividends?: InputMaybe<Scalars['ID']>;
+  distributionCondition?: InputMaybe<DividendDistributionCondition>;
+  dividendTransferTreatment?: InputMaybe<DividendTransferTreatment>;
+  organizationFundForDividends?: InputMaybe<Scalars['ID']>;
+};
+
+export type ShareDividendSettingsResult = {
+  accountForFractionalDividends?: Maybe<Scalars['ID']>;
+  accountForShareDividends?: Maybe<Scalars['ID']>;
+  distributionCondition?: Maybe<DividendDistributionCondition>;
+  dividendTransferTreatment?: Maybe<DividendTransferTreatment>;
+  organizationFundForDividends?: Maybe<Scalars['ID']>;
+};
+
 export type ShareExtraCharges = {
   name: Scalars['String'];
   value: Scalars['Float'];
@@ -6863,6 +6953,16 @@ export type ShareExtraCharges = {
 export type ShareExtraChargesInput = {
   name?: InputMaybe<Scalars['String']>;
   value?: InputMaybe<Scalars['String']>;
+};
+
+export type ShareFeeAndChargesInput = {
+  other?: InputMaybe<Array<InputMaybe<ShareChargeInput>>>;
+  shareCertificate?: InputMaybe<Array<InputMaybe<ShareChargeInput>>>;
+};
+
+export type ShareFeeAndChargesResult = {
+  other?: Maybe<Array<Maybe<ShareCharge>>>;
+  shareCertificate?: Maybe<Array<Maybe<ShareCharge>>>;
 };
 
 export type ShareHistory = {
@@ -6990,6 +7090,82 @@ export type ShareReturnResult = {
   recordId: Scalars['ID'];
 };
 
+export type ShareSettingsAddMutation = {
+  bonus?: Maybe<ShareSettingsQuery>;
+  dividend?: Maybe<ShareSettingsQuery>;
+  feeAndCharges?: Maybe<ShareSettingsQuery>;
+  general?: Maybe<ShareSettingsQuery>;
+  transfer?: Maybe<ShareSettingsQuery>;
+};
+
+export type ShareSettingsAddMutationBonusArgs = {
+  data?: InputMaybe<ShareBonusSettingsInput>;
+};
+
+export type ShareSettingsAddMutationDividendArgs = {
+  data?: InputMaybe<ShareDividendSettingsInput>;
+};
+
+export type ShareSettingsAddMutationFeeAndChargesArgs = {
+  data?: InputMaybe<ShareFeeAndChargesInput>;
+};
+
+export type ShareSettingsAddMutationGeneralArgs = {
+  data?: InputMaybe<ShareSettingsGeneralInput>;
+};
+
+export type ShareSettingsAddMutationTransferArgs = {
+  data?: InputMaybe<ShareTransferSettingsInput>;
+};
+
+export type ShareSettingsGeneralInput = {
+  endNumber?: InputMaybe<Scalars['Int']>;
+  incrementor?: InputMaybe<Scalars['Int']>;
+  maximumQuantityOfShare?: InputMaybe<Scalars['Int']>;
+  minimumQuantityOfShare?: InputMaybe<Scalars['Int']>;
+  multiplicityFactor?: InputMaybe<Scalars['Int']>;
+  noOfAuthorisedPaidUpShare?: InputMaybe<Scalars['Int']>;
+  noOfDigits?: InputMaybe<Scalars['Int']>;
+  noOfIssuedShare?: InputMaybe<Scalars['Int']>;
+  paidUpShareRate?: InputMaybe<Scalars['Int']>;
+  shareIssueAuthority?: InputMaybe<Array<InputMaybe<BranchCategory>>>;
+  startNumber?: InputMaybe<Scalars['Int']>;
+  typeOfShare?: InputMaybe<TypeOfShare>;
+  typeOfShareKitta?: InputMaybe<TypeOfShare>;
+};
+
+export type ShareSettingsGeneralResult = {
+  endNumber?: Maybe<Scalars['Int']>;
+  incrementor?: Maybe<Scalars['Int']>;
+  maximumQuantityOfShare?: Maybe<Scalars['Int']>;
+  minimumQuantityOfShare?: Maybe<Scalars['Int']>;
+  multiplicityFactor?: Maybe<Scalars['Int']>;
+  noOfAuthorisedPaidUpShare?: Maybe<Scalars['Int']>;
+  noOfDigits?: Maybe<Scalars['Int']>;
+  noOfIssuedShare?: Maybe<Scalars['Int']>;
+  paidUpShareRate?: Maybe<Scalars['Int']>;
+  shareIssueAuthority?: Maybe<Array<Maybe<BranchCategory>>>;
+  startNumber?: Maybe<Scalars['Int']>;
+  typeOfShare?: Maybe<TypeOfShare>;
+  typeOfShareKitta?: Maybe<TypeOfShare>;
+};
+
+export type ShareSettingsMutation = {
+  add?: Maybe<ShareSettingsAddMutation>;
+};
+
+export type ShareSettingsMutationAddArgs = {
+  id: Scalars['ID'];
+};
+
+export type ShareSettingsQuery = {
+  bonus?: Maybe<ShareBonusSettingsBonusResult>;
+  dividend?: Maybe<ShareDividendSettingsResult>;
+  feeAndCharges?: Maybe<ShareFeeAndChargesResult>;
+  general?: Maybe<ShareSettingsGeneralResult>;
+  transfer?: Maybe<ShareTransferSettingsResult>;
+};
+
 export type ShareStatement = {
   balanceSheet: Scalars['Int'];
   date: Scalars['String'];
@@ -7005,21 +7181,40 @@ export type ShareStatementReport = {
 };
 
 export type ShareStatementReportSettings = {
+  customPeriod?: InputMaybe<CustomPeriodInput>;
   filter?: InputMaybe<ShareTransactionType>;
   memberId: Scalars['ID'];
-  period: ReportPeriod;
+  periodType: ReportPeriodType;
 };
 
 export type ShareStatementReportSettingsType = {
+  customPeriod?: Maybe<CustomPeriodType>;
   filter?: Maybe<ShareTransactionType>;
   memberId: Scalars['ID'];
-  period: ReportPeriodType;
+  periodType: ReportPeriodType;
 };
 
 export enum ShareTransactionType {
   All = 'ALL',
   Issue = 'ISSUE',
   Return = 'RETURN',
+}
+
+export type ShareTransferSettingsInput = {
+  accountForShareFund?: InputMaybe<Scalars['ID']>;
+  mappedShareLedger?: InputMaybe<Scalars['ID']>;
+  type?: InputMaybe<ShareTransferType>;
+};
+
+export type ShareTransferSettingsResult = {
+  accountForShareFund?: Maybe<Scalars['ID']>;
+  mappedShareLedger?: Maybe<Scalars['ID']>;
+  type?: Maybe<ShareTransferType>;
+};
+
+export enum ShareTransferType {
+  MemberToMember = 'MEMBER_TO_MEMBER',
+  ShareRefund = 'SHARE_REFUND',
 }
 
 export type SisterConcernDetails = {
@@ -7078,6 +7273,11 @@ export enum Transaction_Type {
   SharePurchase = 'SHARE_PURCHASE',
   Transfer = 'TRANSFER',
   Withdraw = 'WITHDRAW',
+}
+
+export enum TaxPayerOptions {
+  Cooperative = 'COOPERATIVE',
+  Member = 'MEMBER',
 }
 
 export type TestDbResult = {
@@ -7193,6 +7393,10 @@ export type TrendDataFilter = {
 export enum TypeOfOrganization {
   Cooperative = 'COOPERATIVE',
   CooperativeUnion = 'COOPERATIVE_UNION',
+}
+
+export enum TypeOfShare {
+  PaidUp = 'PAID_UP',
 }
 
 export type UploadedDocument = {
@@ -7909,7 +8113,6 @@ export type DeleteAccountOperatorInstitutionMutation = {
 };
 
 export type SetOrganizationDataMutationVariables = Exact<{
-  id: Scalars['ID'];
   data: OrganizationInput;
 }>;
 
@@ -10275,21 +10478,6 @@ export type GetIndividualKymEditDataQuery = {
               phoneNumber?: string | null;
               email?: string | null;
             } | null;
-            identification?: {
-              identificationSelection?: Array<string | null> | null;
-              citizenshipNo?: string | null;
-              citizenshipIssueDate?: string | null;
-              citizenshipIssuePlace?: string | null;
-              passportNo?: string | null;
-              passportIssueDate?: string | null;
-              passportIssuePlace?: string | null;
-              nationalIDNo?: string | null;
-              drivingLicenseNo?: string | null;
-              drivingLicenseIssueDate?: string | null;
-              drivingLicenseIssuePlace?: string | null;
-              voterCardNo?: string | null;
-              voterPollingStation?: string | null;
-            } | null;
             rentedHouse?: {
               landlordName?: Record<'local' | 'en' | 'np', string> | null;
               landlordContact?: string | null;
@@ -10516,72 +10704,12 @@ export type GetBranchListQuery = {
               name?: string | null;
               category?: BranchCategory | null;
               estDate?: string | null;
+              managerName?: string | null;
               contactNumber?: string | null;
               email?: string | null;
               plTransferId?: string | null;
               tdsTransaferId?: string | null;
               branchStatus?: boolean | null;
-              manager?: {
-                code: string;
-                type: KymMemberTypesEnum;
-                name?: Record<'local' | 'en' | 'np', string> | null;
-                contact?: string | null;
-                dateJoined?: string | null;
-                address?: {
-                  state?: Record<'local' | 'en' | 'np', string> | null;
-                  district?: Record<'local' | 'en' | 'np', string> | null;
-                  localGovernment?: Record<
-                    'local' | 'en' | 'np',
-                    string
-                  > | null;
-                  wardNo?: string | null;
-                  locality?: Record<'local' | 'en' | 'np', string> | null;
-                  houseNo?: string | null;
-                  coordinates?: {
-                    longitude?: number | null;
-                    latitude?: number | null;
-                  } | null;
-                } | null;
-                share?: {
-                  summary?: {
-                    count: number;
-                    member: {
-                      code: string;
-                      type: KymMemberTypesEnum;
-                      name?: Record<'local' | 'en' | 'np', string> | null;
-                      contact?: string | null;
-                      dateJoined?: string | null;
-                      address?: {
-                        state?: Record<'local' | 'en' | 'np', string> | null;
-                        district?: Record<'local' | 'en' | 'np', string> | null;
-                      } | null;
-                    };
-                  } | null;
-                  history?: Array<{
-                    status?: Share_Status | null;
-                    transactionDate?: string | null;
-                    transactionDirection: Share_Transaction_Direction;
-                    credit?: number | null;
-                    member?: {
-                      code: string;
-                      type: KymMemberTypesEnum;
-                      name?: Record<'local' | 'en' | 'np', string> | null;
-                      contact?: string | null;
-                      dateJoined?: string | null;
-                      address?: {
-                        state?: Record<'local' | 'en' | 'np', string> | null;
-                        district?: Record<'local' | 'en' | 'np', string> | null;
-                      } | null;
-                    } | null;
-                  } | null> | null;
-                } | null;
-                profile?:
-                  | { __typename: 'CooperativeMember' }
-                  | { __typename: 'CooperativeUnionMember' }
-                  | { __typename: 'IndividualMember' }
-                  | { __typename: 'InstitutionMember' }
-                  | null;
-              } | null;
               address?: {
                 state?: Record<'local' | 'en' | 'np', string> | null;
                 district?: Record<'local' | 'en' | 'np', string> | null;
@@ -10621,7 +10749,7 @@ export type GetBranchEditDataQuery = {
             name?: string | null;
             category?: BranchCategory | null;
             estDate?: string | null;
-            managerId?: string | null;
+            managerName?: string | null;
             provinceId?: number | null;
             districtId?: number | null;
             localGovernmentId?: number | null;
@@ -10647,6 +10775,31 @@ export type GetBranchEditDataQuery = {
             | { __typename: 'ServerError' }
             | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetCoaListQueryVariables = Exact<{
+  filter: ChartsOfAccountFilter;
+}>;
+
+export type GetCoaListQuery = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        accounts: {
+          data?: Array<{
+            id: string;
+            name: Record<'local' | 'en' | 'np', string>;
+            under?: string | null;
+            accountClass: string;
+            accountCode: string;
+            currency: string;
+            accountType: CoaTypesOfAccount;
+            openingBalance: number;
+          }> | null;
+        };
       } | null;
     } | null;
   };
@@ -11175,34 +11328,6 @@ export type GetSettingsOptionsFieldsQuery = {
         } | null> | null;
       } | null;
     };
-  };
-};
-
-export type GetBranchesListQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetBranchesListQuery = {
-  settings: {
-    general?: {
-      branch?: {
-        list?: {
-          edges?: Array<{
-            node?: {
-              id: string;
-              branchCode?: string | null;
-              contactNumber?: string | null;
-              address?: {
-                state?: Record<'local' | 'en' | 'np', string> | null;
-                district?: Record<'local' | 'en' | 'np', string> | null;
-                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
-                wardNo?: string | null;
-                locality?: Record<'local' | 'en' | 'np', string> | null;
-              } | null;
-              manager?: { id: string } | null;
-            } | null;
-          }> | null;
-        } | null;
-      } | null;
-    } | null;
   };
 };
 
@@ -12512,11 +12637,11 @@ export const useDeleteAccountOperatorInstitutionMutation = <
     options
   );
 export const SetOrganizationDataDocument = `
-    mutation setOrganizationData($id: ID!, $data: OrganizationInput!) {
+    mutation setOrganizationData($data: OrganizationInput!) {
   settings {
     general {
       organization {
-        initialSetup(id: $id, data: $data) {
+        initialSetup(data: $data) {
           recordId
           error {
             ...MutationError
@@ -15939,21 +16064,6 @@ export const GetIndividualKymEditDataDocument = `
               phoneNumber
               email
             }
-            identification {
-              identificationSelection
-              citizenshipNo
-              citizenshipIssueDate
-              citizenshipIssuePlace
-              passportNo
-              passportIssueDate
-              passportIssuePlace
-              nationalIDNo
-              drivingLicenseNo
-              drivingLicenseIssueDate
-              drivingLicenseIssuePlace
-              voterCardNo
-              voterPollingStation
-            }
             rentedHouse {
               landlordName
               landlordContact
@@ -16267,61 +16377,7 @@ export const GetBranchListDocument = `
               name
               category
               estDate
-              manager {
-                code
-                type
-                name
-                address {
-                  state
-                  district
-                  localGovernment
-                  wardNo
-                  locality
-                  houseNo
-                  coordinates {
-                    longitude
-                    latitude
-                  }
-                }
-                contact
-                dateJoined
-                share {
-                  summary {
-                    member {
-                      code
-                      type
-                      name
-                      address {
-                        state
-                        district
-                      }
-                      contact
-                      dateJoined
-                    }
-                    count
-                  }
-                  history {
-                    member {
-                      code
-                      type
-                      name
-                      address {
-                        state
-                        district
-                      }
-                      contact
-                      dateJoined
-                    }
-                    status
-                    transactionDate
-                    transactionDirection
-                    credit
-                  }
-                }
-                profile {
-                  __typename
-                }
-              }
+              managerName
               address {
                 state
                 district
@@ -16377,7 +16433,7 @@ export const GetBranchEditDataDocument = `
             name
             category
             estDate
-            managerId
+            managerName
             provinceId
             districtId
             localGovernmentId
@@ -16416,6 +16472,39 @@ export const useGetBranchEditDataQuery = <
     ['getBranchEditData', variables],
     useAxios<GetBranchEditDataQuery, GetBranchEditDataQueryVariables>(
       GetBranchEditDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCoaListDocument = `
+    query getCOAList($filter: ChartsOfAccountFilter!) {
+  settings {
+    general {
+      chartsOfAccount {
+        accounts(filter: $filter) {
+          data {
+            id
+            name
+            under
+            accountClass
+            accountCode
+            currency
+            accountType
+            openingBalance
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoaListQuery = <TData = GetCoaListQuery, TError = unknown>(
+  variables: GetCoaListQueryVariables,
+  options?: UseQueryOptions<GetCoaListQuery, TError, TData>
+) =>
+  useQuery<GetCoaListQuery, TError, TData>(
+    ['getCOAList', variables],
+    useAxios<GetCoaListQuery, GetCoaListQueryVariables>(
+      GetCoaListDocument
     ).bind(null, variables),
     options
   );
@@ -17089,51 +17178,6 @@ export const useGetSettingsOptionsFieldsQuery = <
       GetSettingsOptionsFieldsQuery,
       GetSettingsOptionsFieldsQueryVariables
     >(GetSettingsOptionsFieldsDocument).bind(null, variables),
-    options
-  );
-export const GetBranchesListDocument = `
-    query getBranchesList {
-  settings {
-    general {
-      branch {
-        list {
-          edges {
-            node {
-              id
-              branchCode
-              address {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
-              }
-              manager {
-                id
-              }
-              contactNumber
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetBranchesListQuery = <
-  TData = GetBranchesListQuery,
-  TError = unknown
->(
-  variables?: GetBranchesListQueryVariables,
-  options?: UseQueryOptions<GetBranchesListQuery, TError, TData>
-) =>
-  useQuery<GetBranchesListQuery, TError, TData>(
-    variables === undefined
-      ? ['getBranchesList']
-      : ['getBranchesList', variables],
-    useAxios<GetBranchesListQuery, GetBranchesListQueryVariables>(
-      GetBranchesListDocument
-    ).bind(null, variables),
     options
   );
 export const GetChartOfAccountsDocument = `

@@ -104,7 +104,7 @@ export function SettingsDepositProductsAdd() {
     },
   });
 
-  const { getValues, watch, reset } = methods;
+  const { getValues, watch, reset, resetField } = methods;
   const depositNature = watch('nature');
   const typesOfMember = watch('typeOfMember');
 
@@ -186,8 +186,8 @@ export function SettingsDepositProductsAdd() {
         percentage: values?.rebateData?.percentage ?? null,
         rebateAmount: values?.rebateData?.rebateAmount ?? null,
       },
-      maxAge: Number(values?.maxAge) ?? null,
-      minAge: Number(values?.minAge) ?? null,
+      maxAge: values?.maxAge ? Number(values?.maxAge) : null,
+      minAge: values?.minAge ? Number(values?.minAge) : null,
       maxPostingFreqDifference: values?.maxPostingFreqDifference ?? null,
       percentageOfDeposit: values?.percentageOfDeposit ?? null,
       depositAmount: {
@@ -232,6 +232,24 @@ export function SettingsDepositProductsAdd() {
       refetch();
     }
   }, [refetch]);
+
+  useEffect(() => {
+    if (depositNature === NatureOfDepositProduct.Mandatory) {
+      resetField('minAge');
+      resetField('maxAge');
+      resetField('genderId');
+      resetField('maritalStatusId');
+      resetField('educationQualification');
+      resetField('ethnicity');
+      resetField('occupation');
+      resetField('natureOfBusinessInstitution');
+      resetField('foreignEmployment');
+      resetField('cooperativeType');
+      resetField('natureOFBusinessCoop');
+      resetField('typeOfMember');
+      resetField('criteria');
+    }
+  }, [JSON.stringify(depositNature)]);
 
   return (
     <>
@@ -302,8 +320,8 @@ export function SettingsDepositProductsAdd() {
                   </Box>
                 )}
 
-                {depositNature !==
-                  NatureOfDepositProduct.VoluntaryOrOptional && (
+                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  depositNature === NatureOfDepositProduct.Mandatory) && (
                   <DepositFrequency />
                 )}
                 {depositNature !==

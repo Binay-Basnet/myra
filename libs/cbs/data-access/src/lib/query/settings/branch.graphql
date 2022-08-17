@@ -17,61 +17,7 @@ query getBranchList($paginate: Pagination, $filter: BranchSearchFilter) {
               name
               category
               estDate
-              manager {
-                code
-                type
-                name
-                address {
-                  state
-                  district
-                  localGovernment
-                  wardNo
-                  locality
-                  houseNo
-                  coordinates {
-                    longitude
-                    latitude
-                  }
-                }
-                contact
-                dateJoined
-                share {
-                  summary {
-                    member {
-                      code
-                      type
-                      name
-                      address {
-                        state
-                        district
-                      }
-                      contact
-                      dateJoined
-                    }
-                    count
-                  }
-                  history {
-                    member {
-                      code
-                      type
-                      name
-                      address {
-                        state
-                        district
-                      }
-                      contact
-                      dateJoined
-                    }
-                    status
-                    transactionDate
-                    transactionDirection
-                    credit
-                  }
-                }
-                profile {
-                  __typename
-                }
-              }
+              managerName
               address {
                 state
                 district
@@ -112,7 +58,7 @@ query getBranchEditData($id: ID!) {
             name
             category
             estDate
-            managerId
+            managerName
             provinceId
             districtId
             localGovernmentId

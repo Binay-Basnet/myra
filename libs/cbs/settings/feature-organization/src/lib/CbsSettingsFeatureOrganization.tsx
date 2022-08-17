@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import debounce from 'lodash/debounce';
 
-import { useSetOrganizationDataMutation } from '@coop/cbs/data-access';
+import {
+  KymMemberTypesEnum,
+  useSetOrganizationDataMutation,
+} from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
 import { Box, Button, Text } from '@coop/shared/ui';
@@ -18,23 +21,12 @@ import {
 /* eslint-disable-next-line */
 export interface CbsSettingsFeatureOrganizationProps {}
 
-export function CbsSettingsFeatureOrganization(
-  props: CbsSettingsFeatureOrganizationProps
-) {
+export function CbsSettingsFeatureOrganization() {
   const { t } = useTranslation();
   const methods = useForm({});
-  const { handleSubmit, getValues } = methods;
+  const { getValues } = methods;
 
-  const [orgId, setOrgId] = useState<string>('');
-
-  const { mutate } = useSetOrganizationDataMutation({
-    onSuccess: (res) => {
-      if (res?.settings?.general?.organization?.initialSetup?.recordId) {
-        setOrgId(res?.settings?.general?.organization?.initialSetup?.recordId);
-      }
-    },
-    // onError: () => {},
-  });
+  const { mutate } = useSetOrganizationDataMutation();
   return (
     <Box width="100%" display={'flex'} flexDirection={'column'}>
       <SettingsPageHeader heading="Organizations" />
@@ -59,7 +51,6 @@ export function CbsSettingsFeatureOrganization(
           <form
             onChange={debounce(() => {
               mutate({
-                id: orgId,
                 data: getValues(),
               });
             }, 500)}
@@ -104,20 +95,12 @@ export function CbsSettingsFeatureOrganization(
                     name="typeOfOrganization"
                     options={[
                       {
-                        label: 'Individual',
-                        value: 'INDIVIDUAL',
+                        label: t['settingsIndividual'],
+                        value: KymMemberTypesEnum.Cooperative,
                       },
                       {
-                        label: 'Institutional',
-                        value: 'INSTITUTIONAL',
-                      },
-                      {
-                        label: 'Cooperative',
-                        value: 'COOPERATIVE',
-                      },
-                      {
-                        label: 'Cooperative Union',
-                        value: 'COOPERATIVE_UNION',
+                        label: t['settingsInstitutional'],
+                        value: KymMemberTypesEnum.CooperativeUnion,
                       },
                     ]}
                     labelFontSize="s3"

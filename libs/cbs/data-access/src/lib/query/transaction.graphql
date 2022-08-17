@@ -1,4 +1,7 @@
-query getDepositListData($filter: DepositDataFilter, $pagination: Pagination) {
+query getDepositListData(
+  $filter: AccountTransactionFilter
+  $pagination: Pagination
+) {
   transaction {
     listDeposit(filter: $filter, pagination: $pagination) {
       totalCount
@@ -25,7 +28,7 @@ query getDepositListData($filter: DepositDataFilter, $pagination: Pagination) {
 }
 
 query getWithdrawListData(
-  $filter: WithdrawDataFilter
+  $filter: AccountTransactionFilter
   $pagination: Pagination
 ) {
   transaction {

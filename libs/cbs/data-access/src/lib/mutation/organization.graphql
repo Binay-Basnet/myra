@@ -1,8 +1,8 @@
-mutation setOrganizationData($id: ID!, $data: OrganizationInput!) {
+mutation setOrganizationData($data: OrganizationInput!) {
   settings {
     general {
       organization {
-        initialSetup(id: $id, data: $data) {
+        initialSetup(data: $data) {
           recordId
           error {
             ...MutationError
