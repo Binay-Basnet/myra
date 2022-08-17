@@ -192,21 +192,6 @@ query getIndividualKymEditData($id: String!) {
               phoneNumber
               email
             }
-            identification {
-              identificationSelection
-              citizenshipNo
-              citizenshipIssueDate
-              citizenshipIssuePlace
-              passportNo
-              passportIssueDate
-              passportIssuePlace
-              nationalIDNo
-              drivingLicenseNo
-              drivingLicenseIssueDate
-              drivingLicenseIssuePlace
-              voterCardNo
-              voterPollingStation
-            }
             rentedHouse {
               landlordName
               landlordContact
