@@ -76,7 +76,7 @@ export const SettingsBranchesTable = () => {
       },
       {
         header: t['settingsBranchManager'],
-        accessorFn: (row) => row?.node?.manager?.name?.local,
+        accessorFn: (row) => row?.node?.managerName,
         meta: {
           width: '30%',
         },
