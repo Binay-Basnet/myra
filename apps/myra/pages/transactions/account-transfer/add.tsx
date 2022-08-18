@@ -1,14 +1,14 @@
 import React, { ReactElement } from 'react';
 
-// import { NewAccountTransfer } from '@coop/cbs/transactions/account-transfer';
-import { Box, MainLayout, WIPState } from '@coop/shared/ui';
+import { NewAccountTransfer } from '@coop/cbs/transactions/account-transfer';
+import { MainLayout } from '@coop/shared/ui';
 
 const TransactionsAddAccountTransfer = () => {
   return (
-    // <NewAccountTransfer />
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <WIPState />
-    </Box>
+    <NewAccountTransfer />
+    // <Box display="flex" justifyContent="center" alignItems="center">
+    //   <WIPState />
+    // </Box>
   );
 };
 

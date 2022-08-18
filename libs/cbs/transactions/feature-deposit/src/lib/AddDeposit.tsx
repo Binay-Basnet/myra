@@ -4,14 +4,12 @@ import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
 import {
-  Arrange,
   CashValue,
   DepositedBy,
   DepositInput,
   DepositPaymentType,
   NatureOfDepositProduct,
   useGetAccountTableListQuery,
-  useGetMemberListQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -31,6 +29,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
+import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
 
@@ -117,18 +116,10 @@ export function AddDeposit() {
 
   const { watch, reset, getValues } = methods;
 
-  // const { data } = useGetMemberIndividualDataQuery(
-  //   {
-  //     id: memberId,
-  //   },
-  //   {
-  //     enabled: !!memberId,
-  //   }
-  // );
-
-  // const memberData = data?.members?.details?.data;
-
   const memberId = watch('memberId');
+
+  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
+    useGetIndividualMemberDetails({ memberId });
 
   const { data: accountListData } = useGetAccountTableListQuery(
     {
@@ -147,25 +138,6 @@ export function AddDeposit() {
   useEffect(() => {
     reset({ memberId, accountId: '', voucherId: '', amount: '' });
   }, [memberId]);
-
-  const { data: memberListData } = useGetMemberListQuery(
-    {
-      first: 100,
-      after: '',
-      column: 'ID',
-      arrange: Arrange.Desc,
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
-
-  const memberDetail = useMemo(() => {
-    return memberListData?.members?.list?.edges?.find(
-      (member) => member?.node?.id === memberId
-    )?.node;
-  }, [memberId, memberListData]);
 
   const accountId = watch('accountId');
 
@@ -547,21 +519,22 @@ export function AddDeposit() {
                   <Box>
                     <MemberCard
                       memberDetails={{
-                        name: memberDetail?.name?.local,
+                        name: memberDetailData?.name,
                         avatar: 'https://bit.ly/dan-abramov',
-                        memberID: memberDetail?.id,
-                        // gender: 'Male',
-                        // age: '43',
-                        // maritalStatus: 'Unmarried',
-                        dateJoined: memberDetail?.dateJoined,
+                        memberID: memberDetailData?.id,
+                        gender: memberDetailData?.gender,
+                        age: memberDetailData?.age,
+                        maritalStatus: memberDetailData?.maritalStatus,
+                        dateJoined: memberDetailData?.dateJoined,
                         // branch: 'Basantapur',
-                        phoneNo: memberDetail?.contact,
-                        // email: 'ajitkumar.345@gmail.com',
-                        // address: 'Basantapur',
+                        phoneNo: memberDetailData?.contact,
+                        email: memberDetailData?.email,
+                        address: memberDetailData?.address,
                       }}
                       // notice="KYM needs to be updated"
-                      // signaturePath="/signature.jpg"
-                      citizenshipPath="/citizenship.jpeg"
+                      signaturePath={memberSignatureUrl}
+                      showSignaturePreview={false}
+                      citizenshipPath={memberCitizenshipUrl}
                       accountInfo={
                         selectedAccount
                           ? {
