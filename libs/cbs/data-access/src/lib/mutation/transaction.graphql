@@ -13,3 +13,11 @@ mutation setWithdrawData($data: WithdrawInput!) {
     }
   }
 }
+
+mutation setAccountTransferData($data: TransferInput!) {
+  transaction {
+    transfer(data: $data) {
+      recordId
+    }
+  }
+}

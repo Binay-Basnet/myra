@@ -275,7 +275,7 @@ export function FloatingShortcutButton() {
                 alignItems={'center'}
               >
                 <Icon as={BsBook} />
-                <Text fontSize="s3" fontWeight="500">
+                <Text fontSize="s3" fontWeight="500" color="gray.600">
                   {' '}
                   Help & support guide
                 </Text>
@@ -288,7 +288,7 @@ export function FloatingShortcutButton() {
                 alignItems={'center'}
               >
                 <Icon as={TbMessageDots} />
-                <Text fontSize="s3" fontWeight="500">
+                <Text fontSize="s3" fontWeight="500" color="gray.600">
                   {' '}
                   Send us a message
                 </Text>
@@ -301,7 +301,7 @@ export function FloatingShortcutButton() {
                 alignItems={'center'}
               >
                 <Icon as={BsHeart} />
-                <Text fontSize="s3" fontWeight="500">
+                <Text fontSize="s3" fontWeight="500" color="gray.600">
                   {' '}
                   Give Feedback
                 </Text>
@@ -314,11 +314,11 @@ export function FloatingShortcutButton() {
                 onClick={handleModalOpen}
                 alignItems={'center'}
               >
-                <Text fontSize="s3" fontWeight="700">
+                <Text fontSize="s3" fontWeight="700" color="gray.600">
                   {' '}
                   Keyboard shortcuts
                 </Text>
-                <Text fontSize="s3" fontWeight="500">
+                <Text fontSize="s3" fontWeight="500" color="gray.600">
                   {' '}
                   Alt + l
                 </Text>
@@ -331,13 +331,23 @@ export function FloatingShortcutButton() {
                 onClick={handleWhatsNewModalOpen}
                 alignItems={'center'}
               >
-                <Text fontSize="s3" fontWeight="500" cursor="pointer">
+                <Text
+                  fontSize="s3"
+                  fontWeight="500"
+                  cursor="pointer"
+                  color="gray.600"
+                >
                   {' '}
                   What's New?
                 </Text>
               </Box>
 
-              <Text fontSize="s3" fontWeight="500" cursor="pointer">
+              <Text
+                fontSize="s3"
+                fontWeight="500"
+                cursor="pointer"
+                color="gray.600"
+              >
                 {' '}
                 Terms & Privacy
               </Text>

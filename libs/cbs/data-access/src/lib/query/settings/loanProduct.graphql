@@ -124,6 +124,7 @@ query getLoanProductEditData($id: ID!) {
             defaultRate
             ceoAuthority
             boardAuthority
+            interestMethod
           }
           overrideInterest
           serviceCharge {

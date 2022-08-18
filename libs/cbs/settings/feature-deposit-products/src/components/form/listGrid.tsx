@@ -14,7 +14,7 @@ import {
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer } from '../formui';
@@ -298,12 +298,14 @@ export const GridItems = () => {
               <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                 {t['depositProductCoorperativeType']}
               </Text>
-              <FormCheckboxGroup
-                name="cooperativeType"
-                label={t['depositProductCoorperativeType']}
-                list={CoopTypeList}
-                orientation="column"
-              />
+              <Box w="40%">
+                <FormCheckboxGroup
+                  name="cooperativeType"
+                  label={t['depositProductCoorperativeType']}
+                  list={CoopTypeList}
+                  orientation="column"
+                />
+              </Box>
             </BoxContainer>
           )}
       </InputGroupContainer>

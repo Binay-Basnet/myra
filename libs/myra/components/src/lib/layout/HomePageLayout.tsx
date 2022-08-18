@@ -120,6 +120,7 @@ export function HomePageLayout(props: HomePageLayoutProps) {
                   display="flex"
                   borderRadius="br2"
                   gap="s16"
+                  minH={'48px'}
                   alignItems="center"
                   cursor="pointer"
                   _hover={{ bg: 'neutralColorLight.Gray-0' }}
@@ -131,13 +132,12 @@ export function HomePageLayout(props: HomePageLayoutProps) {
                     alignItems="center"
                     w="s32"
                     h="s32"
-                    borderRadius="50%"
                   >
                     <Image
-                      width={32}
-                      height={32}
+                      width={'32px'}
+                      height={'32px'}
                       src={item.img}
-                      alt="corebanking"
+                      alt={t[item.title]}
                     />
                   </Box>
                   <TextFields

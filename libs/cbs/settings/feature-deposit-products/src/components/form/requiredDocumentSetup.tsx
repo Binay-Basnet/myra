@@ -60,7 +60,7 @@ export const RequiredDocumentSetup = () => {
       <TopText> {t['depositProductRequiredDocumentSetup']} </TopText>
       <Grid templateColumns={'repeat(2,1fr)'}>
         {typesOfMember?.includes(KymMemberTypesEnum.Individual) && (
-          <Box display="flex" flexDirection="column" gap="s16">
+          <Box display="flex" flexDirection="column" gap="s16" w="40%">
             <TopText>{t['depositProductIndividual']} </TopText>
             <FormCheckboxGroup
               name="individualDocuments"
@@ -73,7 +73,7 @@ export const RequiredDocumentSetup = () => {
         {(typesOfMember?.includes(KymMemberTypesEnum.Institution) ||
           typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
           typesOfMember?.includes(KymMemberTypesEnum.CooperativeUnion)) && (
-          <Box display="flex" flexDirection="column" gap="s16">
+          <Box display="flex" flexDirection="column" gap="s16" w="25%">
             <TopText>{t['depositProductInstitutional']} </TopText>
             <FormCheckboxGroup
               name="institutionDocuments"

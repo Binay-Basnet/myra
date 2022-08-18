@@ -4,7 +4,12 @@ import { NewAccountTransfer } from '@coop/cbs/transactions/account-transfer';
 import { MainLayout } from '@coop/shared/ui';
 
 const TransactionsAddAccountTransfer = () => {
-  return <NewAccountTransfer />;
+  return (
+    <NewAccountTransfer />
+    // <Box display="flex" justifyContent="center" alignItems="center">
+    //   <WIPState />
+    // </Box>
+  );
 };
 
 TransactionsAddAccountTransfer.getLayout = function getLayout(

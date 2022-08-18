@@ -55,3 +55,30 @@ query getWithdrawListData(
     }
   }
 }
+
+query getAccountTransferListData(
+  $filter: AccountTransactionFilter
+  $pagination: Pagination
+) {
+  transaction {
+    listTransfer(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          ID
+          amount
+          state
+          transferType
+          date
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}

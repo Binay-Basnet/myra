@@ -294,12 +294,14 @@ export const GridItems = () => {
                 <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                   {t['loanProductCoorperativeType']}
                 </Text>
-                <FormCheckboxGroup
-                  name="cooperativeType"
-                  label={t['loanProductCoorperativeType']}
-                  list={CoopTypeList}
-                  orientation="column"
-                />
+                <Box w="40%">
+                  <FormCheckboxGroup
+                    name="cooperativeType"
+                    label={t['loanProductCoorperativeType']}
+                    list={CoopTypeList}
+                    orientation="column"
+                  />
+                </Box>
               </BoxContainer>
             )}
           {memberType &&

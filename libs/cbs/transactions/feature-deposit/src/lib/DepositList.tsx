@@ -123,12 +123,7 @@ export function DepositList() {
 
   return (
     <>
-      <TransactionPageHeader
-        heading={'Deposit'}
-        tabItems={tabList}
-        buttonLabel={'New Deposit'}
-        buttonHandler={() => router.push('/transactions/deposit/add')}
-      />
+      <TransactionPageHeader heading={'Deposit'} tabItems={tabList} />
 
       <Table
         data={rowData}

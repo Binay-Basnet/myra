@@ -20,6 +20,7 @@ const inventoryColumns = [
   {
     title: 'invInventoryAdjustment',
     link: '/inventory/adjustments',
+    addLink: '/inventory/adjustments/add',
   },
   {
     title: 'invInventoryReports',

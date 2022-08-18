@@ -20,7 +20,7 @@ export const theme = extendTheme({
     global: () => ({
       'html, body': {
         fontSize: 'md',
-        background: '#EEF2F7',
+        background: 'background.500',
         lineHeight: 'tall',
         scrollBehavior: 'smooth',
       },

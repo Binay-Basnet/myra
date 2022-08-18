@@ -103,7 +103,6 @@ query getDepositProductSettingsEditData($id: ID!) {
             balanceLimit {
               minAmount
               maxAmount
-              avgAmount
             }
             interest {
               minRate

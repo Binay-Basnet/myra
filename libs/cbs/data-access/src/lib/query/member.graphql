@@ -116,50 +116,45 @@ query getMemberIndividualData($id: ID!) {
         contact
         dateJoined
         profile {
-          ... on IndividualMember {
-            personalInformation {
-              firstName
-              middleName
-              lastName
-              genderId
-              dateOfBirth
-              ethnicityId
-              nationalityId
-              educationQualificationId
-              religionId
-              contact {
-                mobile
-                residence
-                office
-              }
-              identification {
-                id
-                fields {
-                  name
-                  value
+          ... on kymIndFormStateQuery {
+            data {
+              formData {
+                basicInformation {
+                  dateOfBirth
+                  age
+                  gender
                 }
+                contactDetails {
+                  email
+                }
+                maritalStatus
+                maritalStatusId
               }
-              permanentAddress {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
+            }
+          }
+          ... on KymInsFormStateQuery {
+            data {
+              formData {
+                institutionName
+                institutionTypeId
+                natureOfBusiness
               }
-              temporaryAddress {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
+            }
+          }
+          ... on KymCooperativeFormStateQuery {
+            data {
+              formData {
+                nameOfOrganization
+                regdNumber
+                regdDate
               }
-              landlordName
-              landlordContact
-              maritalStatusId
-              familyDetails {
-                relationshipId
-                fullName
-              }
+            }
+          }
+          ... on CooperativeUnionMember {
+            id
+            institutionInformation {
+              nameOfInstitutionEn
+              nameOfInstitutionNp
             }
           }
         }

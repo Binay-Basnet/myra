@@ -84,8 +84,8 @@ const SharePurchaseForm = () => {
 
   const bankList = bankListArr?.map((item) => {
     return {
-      label: item?.name,
-      value: item?.id,
+      label: item?.name as string,
+      value: item?.id as string,
     };
   });
 
@@ -411,6 +411,7 @@ const SharePurchaseForm = () => {
                       <FormNumberInput
                         id="noOfShares"
                         name="shareCount"
+                        max={10}
                         label={t['sharePurchaseNoOfShares']}
                       />
                     </GridItem>

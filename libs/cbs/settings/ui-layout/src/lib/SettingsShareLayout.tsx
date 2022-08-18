@@ -55,7 +55,7 @@ export const SettingsShareLayout = ({ children }: SettingsShareLayoutProps) => {
         <SettingsInnerVerticalMenu tablinks={tabList} />
       </Box>
       <Box ml="300px">
-        <Box p="s16" display="flex" flexDir="column" gap="s16">
+        <Box p="s16" pb="80px" display="flex" flexDir="column" gap="s16">
           {children}
         </Box>
       </Box>
