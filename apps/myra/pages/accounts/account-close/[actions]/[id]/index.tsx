@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { AccountPagesLayout } from '@coop/myra/components';
 import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
-const AccountClose = () => {
+const AccountCloseAdd = () => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WIPState />
@@ -11,11 +11,11 @@ const AccountClose = () => {
   );
 };
 
-AccountClose.getLayout = function getLayout(page: ReactElement) {
+AccountCloseAdd.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <AccountPagesLayout>{page}</AccountPagesLayout>
     </MainLayout>
   );
 };
-export default AccountClose;
+export default AccountCloseAdd;

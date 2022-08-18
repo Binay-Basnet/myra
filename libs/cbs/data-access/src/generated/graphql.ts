@@ -6788,6 +6788,7 @@ export enum ReportPeriodType {
 export type ReportQuery = {
   getReport?: Maybe<ShareStatementReportSettingsType>;
   listReports: ReportListConnection;
+  savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
 };
 
@@ -6801,12 +6802,17 @@ export type ReportQueryListReportsArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type ReportQuerySavingStatementReportArgs = {
+  data: SavingStatementReportSettings;
+};
+
 export type ReportQueryShareStatementReportArgs = {
   data: ShareStatementReportSettings;
 };
 
 export type ReportResult = {
   member?: Maybe<Member>;
+  memberId?: Maybe<Scalars['ID']>;
   statement?: Maybe<StatementReport>;
 };
 
@@ -6843,6 +6849,57 @@ export enum Share_Status {
 export enum Share_Transaction_Direction {
   Purchase = 'PURCHASE',
   Return = 'RETURN',
+}
+
+export type SavingAmountRange = {
+  max?: InputMaybe<Scalars['Int']>;
+  min?: InputMaybe<Scalars['Int']>;
+};
+
+export type SavingFilters = {
+  amountRange?: InputMaybe<SavingAmountRange>;
+  service?: InputMaybe<SavingServiceType>;
+  transactionType?: InputMaybe<SavingTransactionType>;
+};
+
+export enum SavingServiceType {
+  Charges = 'CHARGES',
+  CustomerInitiated = 'CUSTOMER_INITIATED',
+  Interest = 'INTEREST',
+}
+
+export type SavingStatement = {
+  balanceAmount: Scalars['Float'];
+  chequeOrVoucherNo: Scalars['String'];
+  date: Scalars['String'];
+  depositCr: Scalars['Float'];
+  particular: Scalars['String'];
+  withdrawDr: Scalars['Float'];
+};
+
+export type SavingStatementReport = {
+  savingStatement?: Maybe<Array<Maybe<SavingStatement>>>;
+  totals?: Maybe<SavingTotalReport>;
+};
+
+export type SavingStatementReportSettings = {
+  accountId: Scalars['ID'];
+  customPeriod?: InputMaybe<CustomPeriodInput>;
+  filter?: InputMaybe<SavingFilters>;
+  memberId: Scalars['ID'];
+  periodType: ReportPeriodType;
+};
+
+export type SavingTotalReport = {
+  totalBalance: Scalars['Float'];
+  totalDeposit: Scalars['Float'];
+  totalWithdraw: Scalars['Float'];
+};
+
+export enum SavingTransactionType {
+  All = 'ALL',
+  Deposit = 'DEPOSIT',
+  Withdraw = 'WITHDRAW',
 }
 
 export type SectionDetailsFilter = {
@@ -7258,7 +7315,7 @@ export type SisterConcernDetailsType = {
   phoneNo?: Maybe<Scalars['String']>;
 };
 
-export type StatementReport = ShareStatementReport;
+export type StatementReport = SavingStatementReport | ShareStatementReport;
 
 export type StatementReportInput = {
   data?: InputMaybe<ShareStatementReportSettings>;
@@ -10450,6 +10507,47 @@ export type GetMemberIndividualDataQuery = {
           wardNo?: string | null;
           locality?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
+        profile?:
+          | {
+              id?: string | null;
+              institutionInformation?: {
+                nameOfInstitutionEn?: string | null;
+                nameOfInstitutionNp?: string | null;
+              } | null;
+            }
+          | {
+              data?: {
+                formData?: {
+                  nameOfOrganization?: string | null;
+                  regdNumber?: number | null;
+                  regdDate?: string | null;
+                } | null;
+              } | null;
+            }
+          | {
+              data?: {
+                formData?: {
+                  institutionName?: string | null;
+                  institutionTypeId?: string | null;
+                  natureOfBusiness?: string | null;
+                } | null;
+              } | null;
+            }
+          | {
+              data?: {
+                formData?: {
+                  maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+                  maritalStatusId?: string | null;
+                  basicInformation?: {
+                    dateOfBirth?: string | null;
+                    age?: number | null;
+                    gender?: Record<'local' | 'en' | 'np', string> | null;
+                  } | null;
+                  contactDetails?: { email?: string | null } | null;
+                } | null;
+              } | null;
+            }
+          | null;
       } | null;
     };
   };
@@ -10687,22 +10785,25 @@ export type GetShareStatementQuery = {
           localGovernment?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
       } | null;
-      statement?: {
-        shareStatement?: Array<{
-          date: string;
-          particular: string;
-          noOfShares: number;
-          returnAmountDr: number;
-          purchaseAmountCr: number;
-          balanceSheet: number;
-        } | null> | null;
-        totals?: {
-          totalShares?: number | null;
-          totalDr?: number | null;
-          totalCr?: number | null;
-          totalBalanceSheet?: number | null;
-        } | null;
-      } | null;
+      statement?:
+        | {
+            shareStatement?: Array<{
+              date: string;
+              particular: string;
+              noOfShares: number;
+              returnAmountDr: number;
+              purchaseAmountCr: number;
+              balanceSheet: number;
+            } | null> | null;
+            totals?: {
+              totalShares?: number | null;
+              totalDr?: number | null;
+              totalCr?: number | null;
+              totalBalanceSheet?: number | null;
+            } | null;
+          }
+        | {}
+        | null;
     } | null;
   };
 };
@@ -16035,6 +16136,49 @@ export const GetMemberIndividualDataDocument = `
         }
         contact
         dateJoined
+        profile {
+          ... on kymIndFormStateQuery {
+            data {
+              formData {
+                basicInformation {
+                  dateOfBirth
+                  age
+                  gender
+                }
+                contactDetails {
+                  email
+                }
+                maritalStatus
+                maritalStatusId
+              }
+            }
+          }
+          ... on KymInsFormStateQuery {
+            data {
+              formData {
+                institutionName
+                institutionTypeId
+                natureOfBusiness
+              }
+            }
+          }
+          ... on KymCooperativeFormStateQuery {
+            data {
+              formData {
+                nameOfOrganization
+                regdNumber
+                regdDate
+              }
+            }
+          }
+          ... on CooperativeUnionMember {
+            id
+            institutionInformation {
+              nameOfInstitutionEn
+              nameOfInstitutionNp
+            }
+          }
+        }
       }
     }
   }
