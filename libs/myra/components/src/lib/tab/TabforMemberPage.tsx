@@ -52,7 +52,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
   return (
     <Tabs
       variant="unstyled"
-      index={list.findIndex((value) => router.asPath === value.link) ?? 0}
+      index={list.findIndex((value) => router.asPath.includes(value.link)) ?? 0}
     >
       {list.map((item, index) => {
         return (

@@ -34,6 +34,7 @@ export * from './lib/main-layout/MainLayout';
 export * from './lib/main-layout-inventory/MainLayoutInventory';
 export * from './lib/member-card/MemberCard';
 export * from './lib/modal/Modal';
+export * from './lib/modal-header/ModalHeader';
 export * from './lib/myra-ui';
 export * from './lib/navbar/Navbar';
 export * from './lib/navbarfordaashboard/Navbarfordaashboard';

@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
-import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 
 import { Member } from '@coop/cbs/data-access';
@@ -28,7 +27,6 @@ type popoverType = {
 export const PopoverComponent = ({ title, items, member }: popoverType) => {
   const initialFocusRef = useRef<HTMLButtonElement | null>(null);
   const { t } = useTranslation();
-  const router = useRouter();
   return (
     <Popover placement="bottom-start" initialFocusRef={initialFocusRef}>
       <PopoverTrigger>
@@ -61,7 +59,7 @@ export const PopoverComponent = ({ title, items, member }: popoverType) => {
                       variant="bodyRegular"
                       color="neutralColorLight.Gray-80"
                     >
-                      {t[item.title]}
+                      {t[item.title] ?? item.title}
                     </Text>
                   </Box>
                 ))

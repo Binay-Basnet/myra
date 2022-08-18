@@ -58,7 +58,7 @@ const baseStyleCloseButton: SystemStyleObject = {
 const baseStyleBody: SystemStyleFunction = (props) => {
   const { scrollBehavior } = props;
   return {
-    px: 6,
+    px: 's16',
     py: 2,
     flex: 1,
     overflow: scrollBehavior === 'inside' ? 'auto' : undefined,
