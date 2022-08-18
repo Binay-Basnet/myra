@@ -1,4 +1,4 @@
-query getAllSavedReports($pagination: Pagination){
+query getAllSavedReports($pagination: Pagination) {
   report {
     listReports(pagination: $pagination) {
       totalCount
@@ -24,13 +24,18 @@ query getAllSavedReports($pagination: Pagination){
 
 query getSavedReport($reportId: ID!) {
   report {
-    getReport(reportId: $reportId){
-      filter
-      memberId
-      periodType
-      customPeriod {
-        from
-        to
+    getReport(reportId: $reportId) {
+      name
+      settings {
+        ... on ShareStatementReportSettingsType {
+          filter
+          memberId
+          periodType
+          customPeriod {
+            from
+            to
+          }
+        }
       }
     }
   }

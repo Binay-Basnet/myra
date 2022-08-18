@@ -1,6 +1,6 @@
 mutation saveNewReport($data: StatementReportInput!) {
   report {
-    statementReport(data: $data,) {
+    statementReport(data: $data) {
       member {
         id
         name

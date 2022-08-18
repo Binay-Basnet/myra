@@ -6786,7 +6786,7 @@ export enum ReportPeriodType {
 }
 
 export type ReportQuery = {
-  getReport?: Maybe<ShareStatementReportSettingsType>;
+  getReport?: Maybe<SavedReportResponse>;
   listReports: ReportListConnection;
   savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
@@ -6850,6 +6850,13 @@ export enum Share_Transaction_Direction {
   Purchase = 'PURCHASE',
   Return = 'RETURN',
 }
+
+export type SavedReportResponse = {
+  name?: Maybe<Scalars['String']>;
+  settings?: Maybe<SavedReportSettings>;
+};
+
+export type SavedReportSettings = ShareStatementReportSettingsType;
 
 export type SavingAmountRange = {
   max?: InputMaybe<Scalars['Int']>;
@@ -7319,6 +7326,7 @@ export type StatementReport = SavingStatementReport | ShareStatementReport;
 
 export type StatementReportInput = {
   data?: InputMaybe<ShareStatementReportSettings>;
+  id: Scalars['ID'];
   name?: InputMaybe<Scalars['String']>;
   reportType?: InputMaybe<Scalars['String']>;
 };
@@ -10105,7 +10113,6 @@ export type GetInstitutionKymEditDataQuery = {
             accountType?: AccountOperationType | null;
             isCompanyStampCompulsory?: boolean | null;
             specialInstruction?: string | null;
-            companyStamp?: string | null;
             accountHolderName?: string | null;
             accountHolderPhone?: string | null;
             accountHolderEmail?: string | null;
@@ -10850,10 +10857,13 @@ export type GetSavedReportQueryVariables = Exact<{
 export type GetSavedReportQuery = {
   report: {
     getReport?: {
-      filter?: ShareTransactionType | null;
-      memberId: string;
-      periodType: ReportPeriodType;
-      customPeriod?: { from: string; to: string } | null;
+      name?: string | null;
+      settings?: {
+        filter?: ShareTransactionType | null;
+        memberId: string;
+        periodType: ReportPeriodType;
+        customPeriod?: { from: string; to: string } | null;
+      } | null;
     } | null;
   };
 };
@@ -15729,7 +15739,6 @@ export const GetInstitutionKymEditDataDocument = `
             accountType
             isCompanyStampCompulsory
             specialInstruction
-            companyStamp
             accountHolderName
             accountHolderPhone
             accountHolderEmail
@@ -16758,12 +16767,17 @@ export const GetSavedReportDocument = `
     query getSavedReport($reportId: ID!) {
   report {
     getReport(reportId: $reportId) {
-      filter
-      memberId
-      periodType
-      customPeriod {
-        from
-        to
+      name
+      settings {
+        ... on ShareStatementReportSettingsType {
+          filter
+          memberId
+          periodType
+          customPeriod {
+            from
+            to
+          }
+        }
       }
     }
   }

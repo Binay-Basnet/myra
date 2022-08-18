@@ -10,6 +10,7 @@ import { Popover } from '@chakra-ui/react';
 import {
   ReportPeriodType,
   ShareTransactionType,
+  useGetNewIdMutation,
   useSaveNewReportMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -51,6 +52,7 @@ export const ReportHeader = ({ paths, filters }: PathBarProps) => {
   const router = useRouter();
   const { register, getValues } = useForm();
   const { mutateAsync: saveReport } = useSaveNewReportMutation();
+  const { mutateAsync: getNewId } = useGetNewIdMutation();
   const queryClient = useQueryClient();
 
   const [openModal, setOpenModal] = useState(false);
@@ -145,8 +147,11 @@ export const ReportHeader = ({ paths, filters }: PathBarProps) => {
         <Box pt="s12" pb="s8">
           <Button
             onClick={async () => {
+              const idResponse = await getNewId({});
+
               const response = await saveReport({
                 data: {
+                  id: idResponse.newId,
                   data: {
                     memberId: filters.memberId,
                     periodType: filters.predefinedPeriod,

@@ -67,17 +67,17 @@ const NewShareStatementReport = () => {
   useEffect(() => {
     if (savedData) {
       methods.reset({
-        memberId: savedData.report.getReport.memberId,
-        transaction_type: savedData.report.getReport.filter,
-        period: savedData.report.getReport.periodType,
+        memberId: savedData.report.getReport.settings.memberId,
+        transaction_type: savedData.report.getReport.settings.filter,
+        period: savedData.report.getReport.settings.periodType,
       });
       setFilter({
-        type: savedData.report.getReport.filter,
-        memberId: savedData.report.getReport.memberId,
-        predefinedPeriod: savedData.report.getReport.periodType,
+        type: savedData.report.getReport.settings.filter,
+        memberId: savedData.report.getReport.settings.memberId,
+        predefinedPeriod: savedData.report.getReport.settings.periodType,
         period: {
-          from: savedData.report.getReport.customPeriod.from,
-          to: savedData.report.getReport.customPeriod.to,
+          from: savedData.report.getReport.settings.customPeriod.from,
+          to: savedData.report.getReport.settings.customPeriod.to,
         },
       });
     }
@@ -101,7 +101,10 @@ const NewShareStatementReport = () => {
             { label: 'All Reports', link: '/reports/cbs/share-report' },
             { label: 'Share Statement', link: '/reports/cbs/share-report' },
             {
-              label: router.query['action'] ? 'Saved Report' : 'New Report',
+              label:
+                router.query['action'] !== 'new'
+                  ? savedData?.report.getReport?.name
+                  : 'New Report',
               link: '/reports/cbs/share-report/new',
             },
           ]}
