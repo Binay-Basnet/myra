@@ -1,4 +1,5 @@
 export * from './hooks/useChakraToast';
+export * from './hooks/useGetIndividualMemberDetails';
 export * from './hooks/useInit';
 export * from './hooks/useRefreshToken';
 export * from './hooks/useReplace';

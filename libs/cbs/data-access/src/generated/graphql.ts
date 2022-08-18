@@ -8844,6 +8844,14 @@ export type SetWithdrawDataMutation = {
   transaction: { withdraw: { recordId?: string | null } };
 };
 
+export type SetAccountTransferDataMutationVariables = Exact<{
+  data: TransferInput;
+}>;
+
+export type SetAccountTransferDataMutation = {
+  transaction: { transfer: { recordId?: string | null } };
+};
+
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
@@ -11632,6 +11640,35 @@ export type GetWithdrawListDataQuery = {
   };
 };
 
+export type GetAccountTransferListDataQueryVariables = Exact<{
+  filter?: InputMaybe<AccountTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetAccountTransferListDataQuery = {
+  transaction: {
+    listTransfer: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          ID: string;
+          amount?: string | null;
+          state: TransactionState;
+          transferType: TransferType;
+          date?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
+
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
   ... on BadRequestError {
@@ -13889,6 +13926,39 @@ export const useSetWithdrawDataMutation = <
     useAxios<SetWithdrawDataMutation, SetWithdrawDataMutationVariables>(
       SetWithdrawDataDocument
     ),
+    options
+  );
+export const SetAccountTransferDataDocument = `
+    mutation setAccountTransferData($data: TransferInput!) {
+  transaction {
+    transfer(data: $data) {
+      recordId
+    }
+  }
+}
+    `;
+export const useSetAccountTransferDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetAccountTransferDataMutation,
+    TError,
+    SetAccountTransferDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAccountTransferDataMutation,
+    TError,
+    SetAccountTransferDataMutationVariables,
+    TContext
+  >(
+    ['setAccountTransferData'],
+    useAxios<
+      SetAccountTransferDataMutation,
+      SetAccountTransferDataMutationVariables
+    >(SetAccountTransferDataDocument),
     options
   );
 export const GetAccountMemberListDocument = `
@@ -17634,5 +17704,47 @@ export const useGetWithdrawListDataQuery = <
     useAxios<GetWithdrawListDataQuery, GetWithdrawListDataQueryVariables>(
       GetWithdrawListDataDocument
     ).bind(null, variables),
+    options
+  );
+export const GetAccountTransferListDataDocument = `
+    query getAccountTransferListData($filter: AccountTransactionFilter, $pagination: Pagination) {
+  transaction {
+    listTransfer(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          ID
+          amount
+          state
+          transferType
+          date
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountTransferListDataQuery = <
+  TData = GetAccountTransferListDataQuery,
+  TError = unknown
+>(
+  variables?: GetAccountTransferListDataQueryVariables,
+  options?: UseQueryOptions<GetAccountTransferListDataQuery, TError, TData>
+) =>
+  useQuery<GetAccountTransferListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountTransferListData']
+      : ['getAccountTransferListData', variables],
+    useAxios<
+      GetAccountTransferListDataQuery,
+      GetAccountTransferListDataQueryVariables
+    >(GetAccountTransferListDataDocument).bind(null, variables),
     options
   );

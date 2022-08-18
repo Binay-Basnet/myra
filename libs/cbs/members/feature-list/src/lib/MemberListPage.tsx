@@ -63,6 +63,13 @@ export function MemberListPage() {
   //   },
   // ];
 
+  const memberTypeSlug = {
+    INDIVIDUAL: 'individual',
+    INSTITUTION: 'institution',
+    COOPERATIVE: 'coop',
+    COOPERATIVE_UNION: 'coop_union',
+  };
+
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -123,10 +130,13 @@ export function MemberListPage() {
               },
               {
                 title: 'memberListTableEditMember',
-                onClick: (member) =>
+                onClick: (member) => {
                   router.push(
-                    `/members/${member?.type?.toLowerCase()}/edit/${member?.id}`
-                  ),
+                    `/members/${
+                      memberTypeSlug[member?.type || 'INDIVIDUAL']
+                    }/edit/${member?.id}`
+                  );
+                },
               },
               {
                 title: 'memberListTableMakeInactive',

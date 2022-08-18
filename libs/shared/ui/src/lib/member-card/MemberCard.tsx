@@ -21,22 +21,24 @@ import { Button } from '../button/Button';
 
 /* eslint-disable-next-line */
 export interface MemberCardProps {
+  cardTitle?: string;
   isInline?: boolean;
   memberDetails: {
     name?: string | undefined | null;
     avatar: string;
     memberID?: string | undefined | null;
-    gender?: string;
-    age?: string | number;
+    gender?: string | undefined | null;
+    age?: string | number | undefined | null;
     maritalStatus?: string;
     dateJoined?: string | undefined | null;
     branch?: string;
     phoneNo?: string | undefined | null;
-    email?: string;
+    email?: string | undefined | null;
     address?: string;
   };
   notice?: string;
   signaturePath?: string;
+  showSignaturePreview?: boolean;
   citizenshipPath?: string;
   accountInfo?:
     | {
@@ -62,9 +64,11 @@ export interface MemberCardProps {
 
 export function MemberCard({
   isInline = false,
+  cardTitle,
   memberDetails,
   notice,
   signaturePath,
+  showSignaturePreview = true,
   citizenshipPath,
   accountInfo,
   viewProfileHandler,
@@ -110,7 +114,7 @@ export function MemberCard({
               fontWeight="500"
               color="neutralColorLight.Gray-60"
             >
-              Member Info
+              {cardTitle ?? 'Member Info'}
             </Text>
           </Box>
         )}
@@ -377,12 +381,14 @@ export function MemberCard({
             </Box>
           )}
 
-          {!isInline && signaturePath && (
+          {!isInline && signaturePath && showSignaturePreview && (
             <Box
               p="s10"
               border="1px"
               borderColor="border.layout"
               borderRadius="br2"
+              display="flex"
+              justifyContent="center"
             >
               <Image
                 width="auto"
@@ -560,7 +566,7 @@ export function MemberCard({
         </Box>
       </Box>
 
-      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>

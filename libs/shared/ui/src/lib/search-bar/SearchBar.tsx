@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { IoSearch } from 'react-icons/io5';
 import {
@@ -25,6 +26,7 @@ const keyMap = {
 export interface SearchBarProps extends InputProps {}
 
 export function SearchBar() {
+  const [isFocused, setIsFocused] = useState(false);
   const searchBarRef = useRef<HTMLInputElement>(null);
   const handlers = {
     inputFocus() {
@@ -45,7 +47,7 @@ export function SearchBar() {
         <InputLeftElement
           pointerEvents="none"
           children={<Icon as={IoSearch} fontSize="lg" />}
-          color={'currentcolor'}
+          color={isFocused ? 'gray.800' : 'currentcolor'}
         />
         <Input
           type="text"
@@ -56,13 +58,15 @@ export function SearchBar() {
           ref={searchBarRef}
           border="none"
           bg={'secondary.900'}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
           _focus={{ color: 'gray.800', backgroundColor: 'gray.0' }}
         />
 
         <InputRightElement
           pointerEvents="none"
-          color={'currentcolor'}
+          color={isFocused ? 'gray.800' : 'currentcolor'}
           children={
             <Text fontSize={'r1'} alignItems="center" pr="s12">
               Ctrl+/
