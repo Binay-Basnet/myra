@@ -27,13 +27,13 @@ export interface MemberCardProps {
     name?: string | undefined | null;
     avatar: string;
     memberID?: string | undefined | null;
-    gender?: string;
-    age?: string | number;
+    gender?: string | undefined | null;
+    age?: string | number | undefined | null;
     maritalStatus?: string;
     dateJoined?: string | undefined | null;
     branch?: string;
     phoneNo?: string | undefined | null;
-    email?: string;
+    email?: string | undefined | null;
     address?: string;
   };
   notice?: string;
