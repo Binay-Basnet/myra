@@ -10065,6 +10065,7 @@ export type GetInstitutionKymEditDataQuery = {
             accountType?: AccountOperationType | null;
             isCompanyStampCompulsory?: boolean | null;
             specialInstruction?: string | null;
+            companyStamp?: string | null;
             accountHolderName?: string | null;
             accountHolderPhone?: string | null;
             accountHolderEmail?: string | null;
@@ -15589,6 +15590,7 @@ export const GetInstitutionKymEditDataDocument = `
             accountType
             isCompanyStampCompulsory
             specialInstruction
+            companyStamp
             accountHolderName
             accountHolderPhone
             accountHolderEmail

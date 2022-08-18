@@ -87,7 +87,7 @@ export const MinimunTenure = () => {
               name="minTenureUnitNumber"
               textAlign={'right'}
               label={t['loanProductNumber']}
-              placeholder={t['loanProductEnterNumber']}
+              placeholder="0"
               rightAddonText={
                 rightElement && rightElement === Frequency.Daily
                   ? t['days']

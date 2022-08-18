@@ -190,25 +190,27 @@ export function CbsAccountOpen() {
           memberId={member}
         />
       </Container>
-      <Box bottom="0" position="fixed" width="100%" bg="gray.100">
-        <Container minW="container.xl" height="fit-content">
-          <FormFooter
-            status={
-              <Box display="flex" gap="s8">
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontWeight="Regular"
-                  as="i"
-                  fontSize="r1"
-                >
-                  Press Submit to save form
-                </Text>
-              </Box>
-            }
-            mainButtonLabel={t['submit']}
-            mainButtonHandler={() => submitForm()}
-          />
-        </Container>
+      <Box position="relative" margin="0px auto">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container minW="container.xl" height="fit-content">
+            <FormFooter
+              status={
+                <Box display="flex" gap="s8">
+                  <Text
+                    color="neutralColorLight.Gray-60"
+                    fontWeight="Regular"
+                    as="i"
+                    fontSize="r1"
+                  >
+                    Press Submit to save form
+                  </Text>
+                </Box>
+              }
+              mainButtonLabel={t['submit']}
+              mainButtonHandler={() => submitForm()}
+            />
+          </Container>
+        </Box>
       </Box>
     </>
   );
