@@ -31,7 +31,7 @@ const NewShareStatementReport = () => {
   const [filter, setFilter] = useState<ReportFilterType | null>(null);
   const [hasShownFilter, setHasShownFilter] = useState(false);
 
-  const { data: shareStatement, isFetching: reportLoading } =
+  const { data: shareStatementData, isFetching: reportLoading } =
     useGetShareStatementQuery(
       {
         data: {
@@ -42,6 +42,9 @@ const NewShareStatementReport = () => {
       },
       { enabled: !!filter }
     );
+
+  const shareStatement =
+    shareStatementData?.report?.shareStatementReport?.statement;
 
   return (
     <FormProvider {...methods}>
@@ -86,8 +89,8 @@ const NewShareStatementReport = () => {
                 <Spinner />{' '}
               </Box>
             ) : !shareStatement ||
-              !shareStatement?.report?.shareStatementReport?.statement
-                ?.shareStatement ? (
+              !shareStatementData ||
+              !('totals' in shareStatement) ? (
               filter ? (
                 <Box
                   h="200px"
@@ -116,17 +119,12 @@ const NewShareStatementReport = () => {
                 </Box>
 
                 <ReportMember
-                  member={shareStatement.report.shareStatementReport.member}
+                  member={shareStatementData.report.shareStatementReport.member}
                 />
 
                 <ShareReportTable
-                  shareTotal={
-                    shareStatement.report.shareStatementReport.statement.totals
-                  }
-                  shareReport={
-                    shareStatement.report.shareStatementReport.statement
-                      .shareStatement
-                  }
+                  shareTotal={shareStatement.totals}
+                  shareReport={shareStatement.shareStatement}
                 />
               </Box>
             )}
