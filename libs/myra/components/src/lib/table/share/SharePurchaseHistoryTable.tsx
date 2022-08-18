@@ -12,9 +12,16 @@ type shareHistoryProps = {
 export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
   const router = useRouter();
   const { t } = useTranslation();
-  const { data: shareHistoryTableData, isFetching } = useGetShareHistoryQuery({
-    memberId: id,
-  });
+
+  const { data: shareHistoryTableData, isFetching } = useGetShareHistoryQuery(
+    {
+      memberId: id,
+    },
+    {
+      staleTime: 0,
+    }
+  );
+
   const data = shareHistoryTableData?.share?.history?.history;
   const rowData = useMemo(() => data ?? [], [data]);
 

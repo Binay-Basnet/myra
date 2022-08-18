@@ -3934,10 +3934,12 @@ export type KymGeneralSettingsQuery = {
 };
 
 export type KymIndBasicInformation = {
+  age?: Maybe<Scalars['Int']>;
   dateOfBirth?: Maybe<Scalars['String']>;
   educationQualificationId?: Maybe<Scalars['String']>;
   ethnicityId?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['Localized']>;
+  gender?: Maybe<Scalars['Localized']>;
   genderId?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['Localized']>;
   middleName?: Maybe<Scalars['Localized']>;
@@ -5095,6 +5097,7 @@ export type KymIndFormData = {
   initialTransactionDetails?: Maybe<KymIndInitialTransactionDetails>;
   introducers?: Maybe<KymIndIntroducers>;
   isFamilyAMember?: Maybe<Scalars['Boolean']>;
+  maritalStatus?: Maybe<Scalars['Localized']>;
   maritalStatusId?: Maybe<Scalars['String']>;
   membershipDetails?: Maybe<KymIndMembershipDetails>;
   permanentAddress?: Maybe<KymAddress>;
@@ -6159,7 +6162,6 @@ export type Member = Base & {
 
 export type MemberDetailsResult = {
   data?: Maybe<Member>;
-  error?: Maybe<QueryError>;
 };
 
 export enum MemberIdentityLevel {
@@ -6211,17 +6213,16 @@ export type MemberMutationTranslateArgs = {
 };
 
 export type MemberProfile =
-  | CooperativeMember
   | CooperativeUnionMember
-  | IndividualMember
-  | InstitutionMember;
+  | KymCooperativeFormStateQuery
+  | KymInsFormStateQuery
+  | KymIndFormStateQuery;
 
 export type MemberQuery = {
   cooperative?: Maybe<KymCooperativeQuery>;
   cooperativeUnion?: Maybe<KymCoopUnionQuery>;
   details: MemberDetailsResult;
   entry?: Maybe<KymEntryQuery>;
-  get?: Maybe<Member>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
@@ -6235,10 +6236,6 @@ export type MemberQueryDetailsArgs = {
 
 export type MemberQueryEntryArgs = {
   membeId: Scalars['String'];
-};
-
-export type MemberQueryGetArgs = {
-  memberId: Scalars['String'];
 };
 
 export type MemberQueryIndividualArgs = {
@@ -6791,6 +6788,7 @@ export enum ReportPeriodType {
 export type ReportQuery = {
   getReport?: Maybe<ShareStatementReportSettingsType>;
   listReports: ReportListConnection;
+  savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
 };
 
@@ -6804,12 +6802,17 @@ export type ReportQueryListReportsArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type ReportQuerySavingStatementReportArgs = {
+  data: SavingStatementReportSettings;
+};
+
 export type ReportQueryShareStatementReportArgs = {
   data: ShareStatementReportSettings;
 };
 
 export type ReportResult = {
   member?: Maybe<Member>;
+  memberId?: Maybe<Scalars['ID']>;
   statement?: Maybe<StatementReport>;
 };
 
@@ -6846,6 +6849,57 @@ export enum Share_Status {
 export enum Share_Transaction_Direction {
   Purchase = 'PURCHASE',
   Return = 'RETURN',
+}
+
+export type SavingAmountRange = {
+  max?: InputMaybe<Scalars['Int']>;
+  min?: InputMaybe<Scalars['Int']>;
+};
+
+export type SavingFilters = {
+  amountRange?: InputMaybe<SavingAmountRange>;
+  service?: InputMaybe<SavingServiceType>;
+  transactionType?: InputMaybe<SavingTransactionType>;
+};
+
+export enum SavingServiceType {
+  Charges = 'CHARGES',
+  CustomerInitiated = 'CUSTOMER_INITIATED',
+  Interest = 'INTEREST',
+}
+
+export type SavingStatement = {
+  balanceAmount: Scalars['Float'];
+  chequeOrVoucherNo: Scalars['String'];
+  date: Scalars['String'];
+  depositCr: Scalars['Float'];
+  particular: Scalars['String'];
+  withdrawDr: Scalars['Float'];
+};
+
+export type SavingStatementReport = {
+  savingStatement?: Maybe<Array<Maybe<SavingStatement>>>;
+  totals?: Maybe<SavingTotalReport>;
+};
+
+export type SavingStatementReportSettings = {
+  accountId: Scalars['ID'];
+  customPeriod?: InputMaybe<CustomPeriodInput>;
+  filter?: InputMaybe<SavingFilters>;
+  memberId: Scalars['ID'];
+  periodType: ReportPeriodType;
+};
+
+export type SavingTotalReport = {
+  totalBalance: Scalars['Float'];
+  totalDeposit: Scalars['Float'];
+  totalWithdraw: Scalars['Float'];
+};
+
+export enum SavingTransactionType {
+  All = 'ALL',
+  Deposit = 'DEPOSIT',
+  Withdraw = 'WITHDRAW',
 }
 
 export type SectionDetailsFilter = {
@@ -7261,7 +7315,7 @@ export type SisterConcernDetailsType = {
   phoneNo?: Maybe<Scalars['String']>;
 };
 
-export type StatementReport = ShareStatementReport;
+export type StatementReport = SavingStatementReport | ShareStatementReport;
 
 export type StatementReportInput = {
   data?: InputMaybe<ShareStatementReportSettings>;
@@ -10455,58 +10509,44 @@ export type GetMemberIndividualDataQuery = {
         } | null;
         profile?:
           | {
-              personalInformation?: {
-                firstName: string;
-                middleName?: string | null;
-                lastName?: string | null;
-                genderId?: string | null;
-                dateOfBirth?: string | null;
-                ethnicityId?: string | null;
-                nationalityId?: string | null;
-                educationQualificationId?: string | null;
-                religionId?: string | null;
-                landlordName?: string | null;
-                landlordContact?: string | null;
-                maritalStatusId?: string | null;
-                contact?: {
-                  mobile?: string | null;
-                  residence?: string | null;
-                  office?: string | null;
-                } | null;
-                identification?: Array<{
-                  id?: string | null;
-                  fields?: Array<{
-                    name?: string | null;
-                    value?: string | null;
-                  } | null> | null;
-                } | null> | null;
-                permanentAddress?: {
-                  state?: Record<'local' | 'en' | 'np', string> | null;
-                  district?: Record<'local' | 'en' | 'np', string> | null;
-                  localGovernment?: Record<
-                    'local' | 'en' | 'np',
-                    string
-                  > | null;
-                  wardNo?: string | null;
-                  locality?: Record<'local' | 'en' | 'np', string> | null;
-                } | null;
-                temporaryAddress?: {
-                  state?: Record<'local' | 'en' | 'np', string> | null;
-                  district?: Record<'local' | 'en' | 'np', string> | null;
-                  localGovernment?: Record<
-                    'local' | 'en' | 'np',
-                    string
-                  > | null;
-                  wardNo?: string | null;
-                  locality?: Record<'local' | 'en' | 'np', string> | null;
-                } | null;
-                familyDetails?: Array<{
-                  relationshipId: string;
-                  fullName?: string | null;
-                } | null> | null;
+              id?: string | null;
+              institutionInformation?: {
+                nameOfInstitutionEn?: string | null;
+                nameOfInstitutionNp?: string | null;
               } | null;
             }
-          | {}
+          | {
+              data?: {
+                formData?: {
+                  nameOfOrganization?: string | null;
+                  regdNumber?: number | null;
+                  regdDate?: string | null;
+                } | null;
+              } | null;
+            }
+          | {
+              data?: {
+                formData?: {
+                  institutionName?: string | null;
+                  institutionTypeId?: string | null;
+                  natureOfBusiness?: string | null;
+                } | null;
+              } | null;
+            }
+          | {
+              data?: {
+                formData?: {
+                  maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+                  maritalStatusId?: string | null;
+                  basicInformation?: {
+                    dateOfBirth?: string | null;
+                    age?: number | null;
+                    gender?: Record<'local' | 'en' | 'np', string> | null;
+                  } | null;
+                  contactDetails?: { email?: string | null } | null;
+                } | null;
+              } | null;
+            }
           | null;
       } | null;
     };
@@ -10745,22 +10785,25 @@ export type GetShareStatementQuery = {
           localGovernment?: Record<'local' | 'en' | 'np', string> | null;
         } | null;
       } | null;
-      statement?: {
-        shareStatement?: Array<{
-          date: string;
-          particular: string;
-          noOfShares: number;
-          returnAmountDr: number;
-          purchaseAmountCr: number;
-          balanceSheet: number;
-        } | null> | null;
-        totals?: {
-          totalShares?: number | null;
-          totalDr?: number | null;
-          totalCr?: number | null;
-          totalBalanceSheet?: number | null;
-        } | null;
-      } | null;
+      statement?:
+        | {
+            shareStatement?: Array<{
+              date: string;
+              particular: string;
+              noOfShares: number;
+              returnAmountDr: number;
+              purchaseAmountCr: number;
+              balanceSheet: number;
+            } | null> | null;
+            totals?: {
+              totalShares?: number | null;
+              totalDr?: number | null;
+              totalCr?: number | null;
+              totalBalanceSheet?: number | null;
+            } | null;
+          }
+        | {}
+        | null;
     } | null;
   };
 };
@@ -11028,6 +11071,7 @@ export type GetLoanProductEditDataQuery = {
             defaultRate: number;
             ceoAuthority?: number | null;
             boardAuthority?: number | null;
+            interestMethod?: InterestMethod | null;
           } | null;
           serviceCharge?: Array<{
             serviceName?: string | null;
@@ -11360,7 +11404,6 @@ export type GetDepositProductSettingsEditDataQuery = {
             balanceLimit?: {
               minAmount?: any | null;
               maxAmount?: any | null;
-              avgAmount?: any | null;
             } | null;
             interest?: {
               minRate?: number | null;
@@ -16094,50 +16137,45 @@ export const GetMemberIndividualDataDocument = `
         contact
         dateJoined
         profile {
-          ... on IndividualMember {
-            personalInformation {
-              firstName
-              middleName
-              lastName
-              genderId
-              dateOfBirth
-              ethnicityId
-              nationalityId
-              educationQualificationId
-              religionId
-              contact {
-                mobile
-                residence
-                office
-              }
-              identification {
-                id
-                fields {
-                  name
-                  value
+          ... on kymIndFormStateQuery {
+            data {
+              formData {
+                basicInformation {
+                  dateOfBirth
+                  age
+                  gender
                 }
+                contactDetails {
+                  email
+                }
+                maritalStatus
+                maritalStatusId
               }
-              permanentAddress {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
+            }
+          }
+          ... on KymInsFormStateQuery {
+            data {
+              formData {
+                institutionName
+                institutionTypeId
+                natureOfBusiness
               }
-              temporaryAddress {
-                state
-                district
-                localGovernment
-                wardNo
-                locality
+            }
+          }
+          ... on KymCooperativeFormStateQuery {
+            data {
+              formData {
+                nameOfOrganization
+                regdNumber
+                regdDate
               }
-              landlordName
-              landlordContact
-              maritalStatusId
-              familyDetails {
-                relationshipId
-                fullName
-              }
+            }
+          }
+          ... on CooperativeUnionMember {
+            id
+            institutionInformation {
+              nameOfInstitutionEn
+              nameOfInstitutionNp
             }
           }
         }
@@ -16808,6 +16846,7 @@ export const GetLoanProductEditDataDocument = `
             defaultRate
             ceoAuthority
             boardAuthority
+            interestMethod
           }
           overrideInterest
           serviceCharge {
@@ -17236,7 +17275,6 @@ export const GetDepositProductSettingsEditDataDocument = `
             balanceLimit {
               minAmount
               maxAmount
-              avgAmount
             }
             interest {
               minRate

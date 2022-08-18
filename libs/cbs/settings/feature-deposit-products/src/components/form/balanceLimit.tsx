@@ -23,13 +23,6 @@ export const BalanceLimit = () => {
           label={t['depositProductMaximumAmount']}
           placeholder={t['depositProductEnterMaximumAmount']}
         />
-        <FormInput
-          type="number"
-          textAlign="right"
-          name="balanceLimit.avgAmount"
-          label={t['depositProductAverage']}
-          placeholder="0.00"
-        />
       </InputGroupContainer>
     </BoxContainer>
   );
