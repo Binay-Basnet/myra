@@ -149,7 +149,7 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
             />
           </InputGroupContainer>
 
-          <Box mt="-16px">
+          <Box>
             <FormMap
               id="registeredDetailsInstitution"
               name="registeredAddress.coordinates"

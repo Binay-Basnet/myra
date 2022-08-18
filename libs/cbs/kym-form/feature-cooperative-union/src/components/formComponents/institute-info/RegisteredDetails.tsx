@@ -2,13 +2,13 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   CoopUnionInstitutionInformationInput,
   useAllAdministrationQuery,
 } from '@coop/cbs/data-access';
+import {
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -140,7 +140,7 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
               placeholder={t['kymIndEnterLocality']}
             />
           </InputGroupContainer>
-          <Box mt="-16px">
+          <Box>
             <FormMap name={`regdAddress.coordinates`} />
           </Box>
         </GroupContainer>

@@ -22,9 +22,13 @@ import {
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccorrdianAddCOOPUnion } from '@coop/myra/components';
+import { useRouter } from 'next/router';
 
 export function KYMCooperativeUnionPage() {
   const { t } = useTranslation();
+  const router = useRouter();
+
+  const id = String(router?.query?.['id']);
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
     subSection: string;
@@ -108,6 +112,9 @@ export function KYMCooperativeUnionPage() {
                 </Button>
               }
               mainButtonLabel={t['next']}
+              mainButtonHandler={() =>
+                router.push(`/members/translation/${id}`)
+              }
             />
           </Container>
         </Box>

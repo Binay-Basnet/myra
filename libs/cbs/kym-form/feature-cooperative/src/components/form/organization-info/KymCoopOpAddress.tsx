@@ -24,7 +24,7 @@ export const KymCoopOpAddress = (props: IProps) => {
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
   });
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+  const { watch } = methods;
   useCooperative({ methods });
   const { data } = useAllAdministrationQuery();
 
@@ -133,7 +133,7 @@ export const KymCoopOpAddress = (props: IProps) => {
             />
           </InputGroupContainer>
 
-          <Box mt="-16px">
+          <Box>
             <FormMap
               name="operatingAddress.coordinates"
               id="operatingAddressCOOP"

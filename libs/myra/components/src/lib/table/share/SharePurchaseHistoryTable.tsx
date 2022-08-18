@@ -33,13 +33,14 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         cell: (props) => {
           return <span>{props.row.index + 1}</span>;
         },
-        // footer: () => '',
+        meta: {
+          width: '10%',
+        },
       },
 
       {
         header: t['sharePurchaseTableDate'],
         accessorFn: (row) => row?.transactionDate,
-        // footer: () => '',
       },
 
       {
@@ -53,7 +54,6 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
             </span>
           );
         },
-        // footer: () => '',
       },
 
       {
@@ -68,15 +68,13 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
             </span>
           );
         },
-        // footer: () => '',
       },
       {
         id: 'share-cr',
         header: t['sharePurchaseTableShareCr'],
         meta: {
-          isNumeric: true,
+          width: '20%',
         },
-        // footer: () => '',
         accessorFn: (row) => row?.credit,
         cell: (props) => {
           return (
@@ -89,11 +87,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       {
         header: t['sharePurchaseTableBalance'],
         accessorFn: (row) => row?.balance,
-        meta: {
-          isNumeric: true,
-        },
 
-        // footer: (col) => console.log(col),
         cell: (props) => {
           return <span>{amountConverter(props.getValue())}</span>;
         },
@@ -109,7 +103,6 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       isLoading={isFetching}
       data={rowData ?? []}
       columns={columns}
-      // showFooter
     />
   );
 };

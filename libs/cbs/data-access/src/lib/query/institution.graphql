@@ -130,7 +130,7 @@ query getInstitutionKymEditData($id: ID!) {
             accountType
             isCompanyStampCompulsory
             specialInstruction
-            # companyStamp
+            companyStamp
             accountHolderName
             accountHolderPhone
             accountHolderEmail

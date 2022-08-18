@@ -182,7 +182,7 @@ export const KymCoopRegdAddress = (props: IProps) => {
             />
           </InputGroupContainer>
 
-          <Box mt="-16px">
+          <Box>
             <FormMap name="registeredAddress.coordinates" />
           </Box>
         </GroupContainer>
