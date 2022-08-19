@@ -52,7 +52,7 @@ export const Table = <T extends Record<string, unknown>>({
   return (
     <TableContainer
       overflowX="auto"
-      minH={isLoading || !data || data.length === 0 ? '400px' : '400px'}
+      minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
       position="relative"
     >
       <Collapse in={Object.keys(rowSelection).length !== 0} animateOpacity>

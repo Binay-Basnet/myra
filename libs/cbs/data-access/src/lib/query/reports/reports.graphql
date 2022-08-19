@@ -1,0 +1,42 @@
+query getAllSavedReports($pagination: Pagination) {
+  report {
+    listReports(pagination: $pagination) {
+      totalCount
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
+      }
+      edges {
+        cursor
+        node {
+          id
+          lastModifiedDate
+          name
+          reportType
+          savedBy
+        }
+      }
+    }
+  }
+}
+
+query getSavedReport($reportId: ID!) {
+  report {
+    getReport(reportId: $reportId) {
+      name
+      settings {
+        ... on ShareStatementReportSettingsType {
+          filter
+          memberId
+          periodType
+          customPeriod {
+            from
+            to
+          }
+        }
+      }
+    }
+  }
+}

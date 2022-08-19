@@ -1,0 +1,34 @@
+mutation saveNewReport($data: StatementReportInput!) {
+  report {
+    statementReport(data: $data) {
+      member {
+        id
+        name
+        address {
+          state
+          district
+          locality
+          localGovernment
+        }
+      }
+      statement {
+        ... on ShareStatementReport {
+          shareStatement {
+            date
+            particular
+            noOfShares
+            returnAmountDr
+            purchaseAmountCr
+            balanceSheet
+          }
+          totals {
+            totalShares
+            totalDr
+            totalCr
+            totalBalanceSheet
+          }
+        }
+      }
+    }
+  }
+}

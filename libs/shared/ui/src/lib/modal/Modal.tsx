@@ -11,7 +11,7 @@ import {
   ModalProps as ChakraModalProps,
 } from '@chakra-ui/react';
 
-import { Button, Divider, Icon, IconButton } from '@coop/shared/ui';
+import { Button, Divider, Icon, IconButton, TextFields } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
 export interface ModalProps
@@ -32,7 +32,6 @@ export function Modal(props: ModalProps) {
   const {
     open,
     onClose,
-    leftIcon,
     children,
     title,
     footerPrimary1Props,
@@ -49,7 +48,9 @@ export function Modal(props: ModalProps) {
       <ModalContent {...modalContentProps}>
         {title && (
           <>
-            <ModalHeader>{title}</ModalHeader>
+            <ModalHeader>
+              <TextFields variant="pageHeader">{title}</TextFields>
+            </ModalHeader>
             <Divider />
           </>
         )}

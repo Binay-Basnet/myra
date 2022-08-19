@@ -6786,7 +6786,7 @@ export enum ReportPeriodType {
 }
 
 export type ReportQuery = {
-  getReport?: Maybe<ShareStatementReportSettingsType>;
+  getReport?: Maybe<SavedReportResponse>;
   listReports: ReportListConnection;
   savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
@@ -6850,6 +6850,13 @@ export enum Share_Transaction_Direction {
   Purchase = 'PURCHASE',
   Return = 'RETURN',
 }
+
+export type SavedReportResponse = {
+  name?: Maybe<Scalars['String']>;
+  settings?: Maybe<SavedReportSettings>;
+};
+
+export type SavedReportSettings = ShareStatementReportSettingsType;
 
 export type SavingAmountRange = {
   max?: InputMaybe<Scalars['Int']>;
@@ -7319,6 +7326,7 @@ export type StatementReport = SavingStatementReport | ShareStatementReport;
 
 export type StatementReportInput = {
   data?: InputMaybe<ShareStatementReportSettings>;
+  id: Scalars['ID'];
   name?: InputMaybe<Scalars['String']>;
   reportType?: InputMaybe<Scalars['String']>;
 };
@@ -8264,6 +8272,46 @@ export type GetPreSignedUrlMutation = {
       getUrl?: string | null;
       putUrl?: string | null;
     };
+  };
+};
+
+export type SaveNewReportMutationVariables = Exact<{
+  data: StatementReportInput;
+}>;
+
+export type SaveNewReportMutation = {
+  report: {
+    statementReport?: {
+      member?: {
+        id: string;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        address?: {
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+      } | null;
+      statement?:
+        | {
+            shareStatement?: Array<{
+              date: string;
+              particular: string;
+              noOfShares: number;
+              returnAmountDr: number;
+              purchaseAmountCr: number;
+              balanceSheet: number;
+            } | null> | null;
+            totals?: {
+              totalShares?: number | null;
+              totalDr?: number | null;
+              totalCr?: number | null;
+              totalBalanceSheet?: number | null;
+            } | null;
+          }
+        | {}
+        | null;
+    } | null;
   };
 };
 
@@ -10775,6 +10823,52 @@ export type GetIndividualKymIdentificationListQuery = {
   };
 };
 
+export type GetAllSavedReportsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetAllSavedReportsQuery = {
+  report: {
+    listReports: {
+      totalCount: number;
+      pageInfo?: {
+        startCursor?: string | null;
+        endCursor?: string | null;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+      } | null;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          lastModifiedDate: string;
+          name: string;
+          reportType: string;
+          savedBy: string;
+        } | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type GetSavedReportQueryVariables = Exact<{
+  reportId: Scalars['ID'];
+}>;
+
+export type GetSavedReportQuery = {
+  report: {
+    getReport?: {
+      name?: string | null;
+      settings?: {
+        filter?: ShareTransactionType | null;
+        memberId: string;
+        periodType: ReportPeriodType;
+        customPeriod?: { from: string; to: string } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
@@ -12909,6 +13003,62 @@ export const useGetPreSignedUrlMutation = <
     ['getPreSignedUrl'],
     useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(
       GetPreSignedUrlDocument
+    ),
+    options
+  );
+export const SaveNewReportDocument = `
+    mutation saveNewReport($data: StatementReportInput!) {
+  report {
+    statementReport(data: $data) {
+      member {
+        id
+        name
+        address {
+          state
+          district
+          locality
+          localGovernment
+        }
+      }
+      statement {
+        ... on ShareStatementReport {
+          shareStatement {
+            date
+            particular
+            noOfShares
+            returnAmountDr
+            purchaseAmountCr
+            balanceSheet
+          }
+          totals {
+            totalShares
+            totalDr
+            totalCr
+            totalBalanceSheet
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSaveNewReportMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SaveNewReportMutation,
+    TError,
+    SaveNewReportMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SaveNewReportMutation,
+    TError,
+    SaveNewReportMutationVariables,
+    TContext
+  >(
+    ['saveNewReport'],
+    useAxios<SaveNewReportMutation, SaveNewReportMutationVariables>(
+      SaveNewReportDocument
     ),
     options
   );
@@ -16572,6 +16722,81 @@ export const useGetIndividualKymIdentificationListQuery = <
       GetIndividualKymIdentificationListQuery,
       GetIndividualKymIdentificationListQueryVariables
     >(GetIndividualKymIdentificationListDocument).bind(null, variables),
+    options
+  );
+export const GetAllSavedReportsDocument = `
+    query getAllSavedReports($pagination: Pagination) {
+  report {
+    listReports(pagination: $pagination) {
+      totalCount
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
+      }
+      edges {
+        cursor
+        node {
+          id
+          lastModifiedDate
+          name
+          reportType
+          savedBy
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAllSavedReportsQuery = <
+  TData = GetAllSavedReportsQuery,
+  TError = unknown
+>(
+  variables?: GetAllSavedReportsQueryVariables,
+  options?: UseQueryOptions<GetAllSavedReportsQuery, TError, TData>
+) =>
+  useQuery<GetAllSavedReportsQuery, TError, TData>(
+    variables === undefined
+      ? ['getAllSavedReports']
+      : ['getAllSavedReports', variables],
+    useAxios<GetAllSavedReportsQuery, GetAllSavedReportsQueryVariables>(
+      GetAllSavedReportsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavedReportDocument = `
+    query getSavedReport($reportId: ID!) {
+  report {
+    getReport(reportId: $reportId) {
+      name
+      settings {
+        ... on ShareStatementReportSettingsType {
+          filter
+          memberId
+          periodType
+          customPeriod {
+            from
+            to
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavedReportQuery = <
+  TData = GetSavedReportQuery,
+  TError = unknown
+>(
+  variables: GetSavedReportQueryVariables,
+  options?: UseQueryOptions<GetSavedReportQuery, TError, TData>
+) =>
+  useQuery<GetSavedReportQuery, TError, TData>(
+    ['getSavedReport', variables],
+    useAxios<GetSavedReportQuery, GetSavedReportQueryVariables>(
+      GetSavedReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetShareStatementDocument = `

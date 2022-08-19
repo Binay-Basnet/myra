@@ -4,17 +4,18 @@ import { IoFilterOutline } from 'react-icons/io5';
 
 import {
   Arrange,
+  ReportPeriodType,
   ShareTransactionType,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon } from '@coop/shared/ui';
 
-import { getPeriodDate } from '../utils/getPeriodDate';
-
 type ReportFilter = {
   memberId: string;
-  period: {
+  predefinedPeriod: ReportPeriodType;
+
+  period?: {
     from: string;
     to: string;
   };
@@ -89,38 +90,34 @@ export const ReportInputs = ({
             name={'period'}
             hasRadioOption
             options={[
-              { label: 'Today', value: 'today' },
+              { label: 'Today', value: ReportPeriodType.Today },
               {
                 label: 'Yesterday',
-                value: 'yesterday',
-              },
-              {
-                label: 'This Week',
-                value: 'week',
+                value: ReportPeriodType.Yesterday,
               },
               {
                 label: 'Last 7 Days',
-                value: 'last-7',
+                value: ReportPeriodType.Last_7Days,
               },
               {
                 label: 'Last 14 Days',
-                value: 'last-14',
+                value: ReportPeriodType.Last_14Days,
               },
               {
                 label: 'Last 30 Days',
-                value: 'last-30',
+                value: ReportPeriodType.Last_30Days,
               },
               {
                 label: 'This Fiscal Year To Date',
-                value: 'last-year',
+                value: ReportPeriodType.ThisFiscalYearToDate,
               },
               {
                 label: 'Custom Period',
-                value: 'custom-period',
+                value: ReportPeriodType.CustomPeriod,
               },
               {
-                label: 'Everything',
-                value: 'everything',
+                label: 'Lifetime',
+                value: ReportPeriodType.Lifetime,
               },
             ]}
             label="Select Period"
@@ -136,12 +133,22 @@ export const ReportInputs = ({
           onClick={methods.handleSubmit((data) => {
             if (!data['memberId'] || !data['period']) return;
 
+            if (data['period'] === ReportPeriodType.CustomPeriod) {
+              setFilter({
+                memberId: data['memberId'],
+                predefinedPeriod: data['period'],
+                // TODO CHANGE THIS LATER
+                period: {
+                  from: '2002-01-20',
+                  to: '2080-01-10',
+                },
+                type: data['transaction_type'] ?? ShareTransactionType.All,
+              });
+            }
+
             setFilter({
               memberId: data['memberId'],
-              period: {
-                from: getPeriodDate({ period: data['period'] }).from,
-                to: getPeriodDate({ period: data['period'] }).to,
-              },
+              predefinedPeriod: data['period'],
               type: data['transaction_type'] ?? ShareTransactionType.All,
             });
           })}

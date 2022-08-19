@@ -1,15 +1,8 @@
 import date from 'dayjs';
 
-type Period =
-  | 'today'
-  | 'yesterday'
-  | 'week'
-  | 'last-7'
-  | 'last-14'
-  | 'last-30'
-  | 'last-year'
-  | 'custom-period'
-  | 'everything';
+import { ReportPeriodType } from '@coop/cbs/data-access';
+
+type Period = ReportPeriodType;
 
 interface GetPeriodDateProps {
   period: Period;
@@ -17,49 +10,43 @@ interface GetPeriodDateProps {
 
 export const getPeriodDate = ({ period }: GetPeriodDateProps) => {
   switch (period) {
-    case 'today':
+    case ReportPeriodType.Today:
       return {
         from: date().format('YYYY-MM-DD'),
         to: date().format('YYYY-MM-DD'),
       };
 
-    case 'yesterday':
+    case ReportPeriodType.Yesterday:
       return {
         from: date().subtract(1, 'day').format('YYYY-MM-DD'),
         to: date().subtract(1, 'day').format('YYYY-MM-DD'),
       };
 
-    case 'week':
-      return {
-        from: date().subtract(date().get('day'), 'day').format('YYYY-MM-DD'),
-        to: date().format('YYYY-MM-DD'),
-      };
-
-    case 'last-7':
+    case ReportPeriodType.Last_7Days:
       return {
         from: date().subtract(7, 'day').format('YYYY-MM-DD'),
         to: date().format('YYYY-MM-DD'),
       };
 
-    case 'last-14':
+    case ReportPeriodType.Last_14Days:
       return {
         from: date().subtract(14, 'day').format('YYYY-MM-DD'),
         to: date().format('YYYY-MM-DD'),
       };
 
-    case 'last-30':
+    case ReportPeriodType.Last_30Days:
       return {
         from: date().subtract(30, 'day').format('YYYY-MM-DD'),
         to: date().format('YYYY-MM-DD'),
       };
 
-    case 'last-year':
+    case ReportPeriodType.ThisFiscalYearToDate:
       return {
         from: date().subtract(12, 'month').format('YYYY-MM-DD'),
         to: date().format('YYYY-MM-DD'),
       };
 
-    case 'everything':
+    case ReportPeriodType.CustomPeriod:
       return {
         from: date().subtract(1000, 'year').format('YYYY-MM-DD'),
         to: date().format('YYYY-MM-DD'),
