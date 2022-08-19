@@ -71,10 +71,7 @@ export function DepositList() {
           width: '60%',
         },
       },
-      {
-        header: 'Amount',
-        accessorFn: (row) => row?.node?.amount,
-      },
+
       {
         header: 'Payment Mode',
         accessorFn: (row) => row?.node?.paymentMode,
@@ -87,6 +84,14 @@ export function DepositList() {
       {
         header: 'Deposit Date',
         accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+      },
+      {
+        header: 'Amount',
+
+        accessorFn: (row) => row?.node?.amount,
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         id: '_actions',

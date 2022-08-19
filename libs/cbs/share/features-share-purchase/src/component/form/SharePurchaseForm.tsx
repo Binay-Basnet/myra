@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { debounce } from 'lodash';
 import omit from 'lodash/omit';
 
+import { InputGroupContainer } from '@coop/accounting/ui-components';
 import {
   NatureOfDepositProduct,
   Payment_Mode,
@@ -20,12 +21,7 @@ import {
 import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
-import {
-  FormInput,
-  FormNumberInput,
-  FormSelect,
-  FormSwitchTab,
-} from '@coop/shared/form';
+import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Avatar,
   Box,
@@ -223,7 +219,12 @@ const SharePurchaseForm = () => {
               minH="calc(100vh - 170px)"
             >
               <Box w="100%">
-                <Box background="white" borderBottom="1px solid #E6E6E6" p={5}>
+                <Box
+                  background="white"
+                  p={5}
+                  borderBottom="1px solid"
+                  borderBottomColor={'border.layout'}
+                >
                   <Box w="50%">
                     <FormSelect
                       name="memberId"
@@ -410,11 +411,14 @@ const SharePurchaseForm = () => {
 
                   <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
                     <GridItem>
-                      <FormNumberInput
+                      <FormInput
+                        type={'number'}
+                        textAlign="right"
                         id="noOfShares"
                         name="shareCount"
                         max={10}
                         label={t['sharePurchaseNoOfShares']}
+                        placeholder="0"
                       />
                     </GridItem>
 
@@ -529,7 +533,7 @@ const SharePurchaseForm = () => {
                   </Grid>
                 </Box>
 
-                <Box background="white" p={5} borderBottom="1px solid #E6E6E6">
+                <Box background="white" p={5}>
                   <Text
                     color="neutralColorLight.Gray-60"
                     fontSize="r2"
@@ -596,28 +600,28 @@ const SharePurchaseForm = () => {
                   )}
                   {paymentModes === Payment_Mode.BankVoucher && (
                     <Box
-                      w="25%"
                       mt="s16"
                       mb="s16"
                       display="flex"
                       flexDirection="column"
                       gap="s16"
                     >
-                      <FormSelect
-                        name="bankId"
-                        label={t['sharePurchaseSelectBank']}
-                        placeholder={t['sharePurchaseSelectBank']}
-                        options={bankList}
-                      />
-
-                      <Box>
+                      <InputGroupContainer>
+                        <FormSelect
+                          name="bankId"
+                          label={t['sharePurchaseSelectBank']}
+                          placeholder={t['sharePurchaseSelectBank']}
+                          options={bankList}
+                        />
+                      </InputGroupContainer>
+                      <InputGroupContainer>
                         <FormInput
                           type="text"
                           name="voucherNumber"
                           placeholder={t['sharePurchaseEnterVoucherNumber']}
                           label={t['sharePurchaseEnterVoucherNumber']}
                         />
-                      </Box>
+                      </InputGroupContainer>
                     </Box>
                   )}
 

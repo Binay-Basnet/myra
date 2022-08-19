@@ -40,7 +40,7 @@ export const Member = () => {
     },
     {
       staleTime: 0,
-      enabled: trigger,
+      enabled: trigger && !!IDMember,
     }
   );
 

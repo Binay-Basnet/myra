@@ -1,7 +1,6 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { AddIcon } from '@chakra-ui/icons';
 
 import {
   AddButtonList,
@@ -9,10 +8,7 @@ import {
   Button,
   Divider,
   Icon,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
+  PopOverComponentForButtonList,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -31,10 +27,6 @@ const shareColumns = [
   {
     title: 'shareRegister',
     link: '/share/register',
-  },
-  {
-    title: 'shareReport',
-    link: '/share/report',
   },
 ];
 
@@ -60,40 +52,19 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
           {t['shareLayout']}
         </Text>
         <Divider my="s16" />
-        <Popover placement="bottom-start" gutter={3}>
-          <PopoverTrigger>
-            <Button
-              width="full"
-              size="lg"
-              justifyContent="start"
-              leftIcon={<AddIcon h="11px" />}
-            >
-              {t['shareLayoutNewShare']}
-            </Button>
-          </PopoverTrigger>
 
-          <PopoverContent
-            // bg="gray.0"
-            p={0}
-            w="225px"
-            _focus={{ boxShadow: 'none' }}
-          >
-            <PopoverBody p={0}>
-              <Box display={'flex'} flexDirection={'column'} gap="s4">
-                {addButtoncolumns.map((item, index) => {
-                  return (
-                    <Box key={`${item}${index}`}>
-                      <AddButtonList
-                        label={t[item.title]}
-                        onClick={() => router.push(`${item.link}`)}
-                      />
-                    </Box>
-                  );
-                })}
+        <PopOverComponentForButtonList buttonLabel="shareLayoutNewShare">
+          {addButtoncolumns.map((item, index) => {
+            return (
+              <Box key={`${item}${index}`}>
+                <AddButtonList
+                  label={t[item.title]}
+                  onClick={() => router.push(`${item.link}`)}
+                />
               </Box>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+            );
+          })}
+        </PopOverComponentForButtonList>
 
         <Divider my="s16" />
         <TabColumn list={shareColumns} />

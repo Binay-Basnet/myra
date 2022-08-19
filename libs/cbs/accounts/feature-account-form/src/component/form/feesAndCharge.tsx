@@ -59,7 +59,8 @@ export const FeesAndCharge = () => {
         <Box
           display="flex"
           flexDirection={'column'}
-          background="border.layout"
+          background="background.500"
+          borderRadius={'br2'}
           p="s16"
         >
           {ProductDatalist?.map((data) => {
