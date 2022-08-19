@@ -81,7 +81,7 @@ export const BranchOfficeAddress = ({
             fontWeight="semibold"
             color="neutralColorLight.Gray-80"
           >
-            {t['kymCoopUnionOperatorBranchAddress']}
+            {t['serviceCenterOfficeAddress']}
           </Text>
           <Box
             id="Branch Office Address"

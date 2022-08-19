@@ -11,7 +11,7 @@ import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-export const SettingsBranchesTable = () => {
+export const SettingsServiceCenterTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const newId = useGetNewIdMutation();
@@ -45,7 +45,7 @@ export const SettingsBranchesTable = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['settingsBranchBranchCode'],
+        header: t['serviceCenterCode'],
         accessorFn: (row) => row?.node?.branchCode,
       },
       {
@@ -98,13 +98,13 @@ export const SettingsBranchesTable = () => {
   return (
     <>
       <SettingsPageHeader
-        heading={t['settingsBranch']}
-        buttonLabel={t['settingsBranchNew']}
+        heading={t['serviceCenterSettings']}
+        buttonLabel={t['serviceCenterNew']}
         buttonHandler={() =>
           newId
             .mutateAsync({ idType: Id_Type.Branch })
             .then((res) =>
-              router.push(`/settings/general/branches/add/${res?.newId}`)
+              router.push(`/settings/general/service-center/add/${res?.newId}`)
             )
         }
       />

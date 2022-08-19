@@ -246,7 +246,7 @@ export function MemberCard({
                               fontWeight={400}
                               color="neutralColorLight.Gray-70"
                             >
-                              Branch
+                              Service Center
                             </Text>
                             <Text
                               fontSize="r1"
@@ -513,7 +513,7 @@ export function MemberCard({
                   {accountInfo.branch && (
                     <Box display="flex" justifyContent="space-between">
                       <Text fontSize="s3" fontWeight={400} color="gray.500">
-                        Account Branch
+                        Account Service Center
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="gray.800">
                         {accountInfo.branch}

@@ -78,7 +78,7 @@ export const BranchOfficeAddress = (props: IProps) => {
             fontWeight="semibold"
             color="neutralColorLight.Gray-80"
           >
-            {t['kymInsbranchOfficeAddress']}
+            {t['serviceCenterOfficeAddress']}
           </Text>
           <Box
             id="branch Office Address"

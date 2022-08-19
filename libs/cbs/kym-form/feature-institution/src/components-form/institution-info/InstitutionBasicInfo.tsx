@@ -84,8 +84,8 @@ export const BasicDetailsInstitution = (props: IProps) => {
             <FormInput
               type="text"
               name="noOfBranches"
-              label={t['kymInsNoofBranches']}
-              placeholder={t['kymInsEnterNoofBranches']}
+              label={t['serviceCenterNoOfServiceCenter']}
+              placeholder={t['serviceCenterEnterNoOfServiceCenter']}
             />
           </InputGroupContainer>
         </GroupContainer>

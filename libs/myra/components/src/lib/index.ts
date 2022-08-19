@@ -22,7 +22,7 @@ export * from './table/inventory/InventoryItemUnitsTable';
 export * from './table/inventory/inventoryTab/InventoryRegisterTable';
 export * from './table/inventory/InventoryUseOfMeasureTable';
 export * from './table/kymDetail/index';
-export * from './table/settings/chartsOfAccounts/branches/branchesTable';
 export * from './table/settings/chartsOfAccounts/CoaAccountListTable';
+export * from './table/settings/chartsOfAccounts/serviceCenter/serviceCenterTable';
 export * from './table/share';
 export * from './TableListPageHeader';

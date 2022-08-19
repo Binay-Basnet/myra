@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Box,
   Checkbox as ChakraCheckbox,
   CheckboxProps as ChakraCheckboxProps,
 } from '@chakra-ui/react';
@@ -16,9 +17,10 @@ export function Checkbox(props: CheckboxProps) {
   const { children, label, ...rest } = props;
 
   return (
-    <ChakraCheckbox {...rest}>
+    <Box display="flex" gap="s8">
+      <ChakraCheckbox {...rest} />
       {label ? <TextFields variant="formInput">{label}</TextFields> : children}
-    </ChakraCheckbox>
+    </Box>
   );
 }
 

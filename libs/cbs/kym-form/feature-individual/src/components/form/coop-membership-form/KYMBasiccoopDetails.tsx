@@ -397,10 +397,10 @@ const KYMBasiccoopDetailsBasic = ({
                     placeholder={t['kymIndCooperativeName']}
                   />
 
-                  <FormSelect
+                  <FormInput
                     name="otherCoopBranchId"
-                    label={t['kymIndCooperativeBranch']}
-                    placeholder={t['kymIndCooperativeSelectBranch']}
+                    label={t['kymIndCooperativeServiceCenter']}
+                    placeholder={t['kymIndCooperativeEnterServiceCenter']}
                   />
 
                   <FormInput
