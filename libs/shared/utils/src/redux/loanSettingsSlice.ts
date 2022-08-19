@@ -1,10 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Frequency, LoanInsurancePaymentType } from '@coop/cbs/data-access';
-
 import type { RootState } from './store';
 
 // Define a type for the slice state
+
+interface insuranceSchemeProps {
+  id?: string | null;
+  schemeName?: string | null;
+  insuranceCompany?: string | null;
+  // paymentFrequency?: Frequency | null;
+  // paymentType?: LoanInsurancePaymentType | null;
+  paymentFrequency?: string | null;
+  paymentType?: string | null;
+  minAmount?: string | null;
+  maxAmount?: string | null;
+  minPercent?: number | null;
+  maxPercent?: number | null;
+  insurancePremiumPercent?: number | null;
+}
 interface LoanSettingsState {
   general?: {
     emi?: boolean | null;
@@ -12,20 +25,7 @@ interface LoanSettingsState {
     flat?: boolean | null;
     collateralList?: { name?: string | null; enabled?: string | null }[] | null;
   } | null;
-  insuranceScheme?:
-    | {
-        id?: string | null;
-        schemeName?: string | null;
-        insuranceCompany?: string | null;
-        paymentFrequency?: Frequency | null;
-        paymentType?: LoanInsurancePaymentType | null;
-        minAmount?: string | null;
-        maxAmount?: string | null;
-        minPercent?: number | null;
-        maxPercent?: number | null;
-        insurancePremiumPercent?: number | null;
-      }[]
-    | null;
+  insuranceScheme?: insuranceSchemeProps[] | null;
   productType?: {
     productTypes: {
       id?: string | null;
@@ -50,6 +50,7 @@ interface LoanSettingsState {
 // Define the initial state using that type
 const initialState: LoanSettingsState = {
   general: null,
+  insuranceScheme: null,
 };
 
 export const loanSettingSlice = createSlice({
@@ -75,10 +76,17 @@ export const loanSettingSlice = createSlice({
         collateralList: action.payload,
       };
     },
+    setInsuranceScheme: (
+      state,
+      action: PayloadAction<insuranceSchemeProps[] | null>
+    ) => {
+      state.insuranceScheme = [...action.payload];
+    },
   },
 });
 
-export const { setEmi, setEpi, setFlat } = loanSettingSlice.actions;
+export const { setEmi, setEpi, setFlat, setInsuranceScheme } =
+  loanSettingSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectLoanSetting = (state: RootState) => state;
