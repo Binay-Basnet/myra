@@ -34,37 +34,38 @@ const defaultOrder = {
 };
 
 export const getRouterQuery = ({ type, query }: GetRouterQuery): Pagination => {
-  const router = Router;
+  try {
+    const router = Router;
 
-  if (!router || !(typeof window == undefined))
+    const paginationParams = query
+      ? omit(qs.parse(query['paginate'] as string), 'page')
+      : omit(qs.parse(router?.query['paginate'] as string), 'page');
+
+    if (type.includes('PAGINATION')) {
+      if (isEmpty(paginationParams)) {
+        return {
+          after: '',
+          first: DEFAULT_PAGE_SIZE,
+          order: defaultOrder,
+        };
+      } else {
+        return {
+          ...paginationParams,
+          order: defaultOrder,
+        };
+      }
+    }
+
     return {
       after: '',
       first: DEFAULT_PAGE_SIZE,
       order: defaultOrder,
     };
-
-  const paginationParams = query
-    ? omit(qs.parse(query['paginate'] as string), 'page')
-    : omit(qs.parse(router.query['paginate'] as string), 'page');
-
-  if (type.includes('PAGINATION')) {
-    if (isEmpty(paginationParams)) {
-      return {
-        after: '',
-        first: DEFAULT_PAGE_SIZE,
-        order: defaultOrder,
-      };
-    } else {
-      return {
-        ...paginationParams,
-        order: defaultOrder,
-      };
-    }
+  } catch (e) {
+    return {
+      after: '',
+      first: DEFAULT_PAGE_SIZE,
+      order: defaultOrder,
+    };
   }
-
-  return {
-    after: '',
-    first: DEFAULT_PAGE_SIZE,
-    order: defaultOrder,
-  };
 };
