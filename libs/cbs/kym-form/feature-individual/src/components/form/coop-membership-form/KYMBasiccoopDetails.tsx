@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { GrMail } from 'react-icons/gr';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { CloseIcon } from '@chakra-ui/icons';
+import { isEqual } from 'lodash';
 import debounce from 'lodash/debounce';
 
 import {
   FormFieldSearchTerm,
+  Id_Type,
+  useDeleteMemberFamilyDetailsMutation,
   useGetIndividualKymEditDataQuery,
+  useGetIndividualKymFamilyMembersListQuery,
   useGetIndividualKymOptionsQuery,
   useGetMemberListQuery,
+  useGetNewIdMutation,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -22,24 +22,15 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import {
-  Avatar,
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  Icon,
-  Input,
-  Select,
-  Text,
-  TextFields,
-} from '@coop/shared/ui';
+import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
 import {
   getKymSection,
   getRouterQuery,
+  isDeepEmpty,
   useTranslation,
 } from '@coop/shared/utils';
 
+import { FamilyMember } from './FamilyMember';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 const booleanList = [
@@ -63,8 +54,9 @@ interface IKYMBasiccoopDetailsFamilyMemberProps {
 const KYMBasiccoopDetailsFamilyMember = ({
   setKymCurrentSection,
 }: IKYMBasiccoopDetailsFamilyMemberProps) => {
-  const [showFamilyDetailCard, setShowFamilyDetailCard] = useState(false);
+  // const [showFamilyDetailCard, setShowFamilyDetailCard] = useState(false);
   const [selectedFamilyMember, setSelectedFamilyMember] = useState('');
+
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -75,10 +67,16 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
   const { watch, reset } = methods;
 
-  const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
-    useGetIndividualKymOptionsQuery({
-      searchTerm: FormFieldSearchTerm.Relationship,
-    });
+  const formMethods = useForm();
+
+  const { reset: formReset } = formMethods;
+
+  // const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
+  //   useGetIndividualKymOptionsQuery({
+  //     searchTerm: FormFieldSearchTerm.Relationship,
+  //   });
+
+  const isFamilyAMember = watch('isFamilyAMember');
 
   const { data: editValues } = useGetIndividualKymEditDataQuery(
     {
@@ -103,7 +101,9 @@ const KYMBasiccoopDetailsFamilyMember = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        if (id) {
+        const editValueData =
+          editValues?.members?.individual?.formState?.data?.formData;
+        if (id && !isDeepEmpty(data) && !isEqual(data, editValueData)) {
           mutate({ id: String(id), data });
         }
       }, 800)
@@ -123,19 +123,103 @@ const KYMBasiccoopDetailsFamilyMember = ({
     })
   );
 
-  const selectedMemberDetails = memberListData?.members?.list?.edges?.filter(
-    (item) => item?.node?.id === selectedFamilyMember
-  );
+  // const selectedMemberDetails = memberListData?.members?.list?.edges?.filter(
+  //   (item) => item?.node?.id === selectedFamilyMember
+  // );
+
+  const [familyMemberMutationIds, setFamilyMemberMutationIds] = useState<
+    string[]
+  >([]);
+
+  const [familyMemberIds, setFamilyMemberIds] = useState<string[]>([]);
+
+  const { data: familyMemberListQueryData, refetch } =
+    useGetIndividualKymFamilyMembersListQuery(
+      {
+        id: String(id),
+      },
+      { enabled: !!id }
+    );
+
+  useEffect(() => {
+    if (familyMemberListQueryData) {
+      const editValueData =
+        familyMemberListQueryData?.members?.individual?.listFamilyMember?.data?.filter(
+          (familyMember) => !!familyMember?.familyMemberId
+        );
+
+      setFamilyMemberMutationIds(
+        editValueData?.reduce(
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          [] as string[]
+        ) ?? []
+      );
+
+      setFamilyMemberIds(
+        editValueData?.reduce(
+          (prevVal, curVal) =>
+            curVal ? [...prevVal, curVal.familyMemberId as string] : prevVal,
+          [] as string[]
+        ) ?? []
+      );
+    }
+  }, [familyMemberListQueryData]);
+
+  const { mutate: newIDMutate } = useGetNewIdMutation({
+    onSuccess: (res) => {
+      setFamilyMemberMutationIds([...familyMemberMutationIds, res.newId]);
+      formReset({ memberName: '', memberId: '' });
+    },
+  });
+
+  const { mutate: deleteMutate } = useDeleteMemberFamilyDetailsMutation({
+    onSuccess: (res) => {
+      // refetch();
+      const deletedId = String(
+        res?.members?.individual?.familyMember?.delete?.recordId
+      );
+
+      const tempFamilyMemberMutationIds = [...familyMemberMutationIds];
+
+      tempFamilyMemberMutationIds.splice(
+        tempFamilyMemberMutationIds.indexOf(deletedId),
+        1
+      );
+
+      setFamilyMemberMutationIds([...tempFamilyMemberMutationIds]);
+
+      const tempFamilyMemberIds = [...familyMemberIds];
+
+      setFamilyMemberIds([
+        ...familyMemberIds.splice(tempFamilyMemberIds.indexOf(deletedId), 1),
+      ]);
+    },
+  });
+
+  const appendFamilyMember = () => {
+    setFamilyMemberIds([...familyMemberIds, selectedFamilyMember]);
+    newIDMutate({ idType: Id_Type.Kymindividualfamilymembers });
+  };
+
+  const removeFamilyMember = (mutationId: string) => {
+    deleteMutate({ memberId: String(id), id: mutationId });
+  };
+
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, [id]);
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSection(e.target.id);
-          setKymCurrentSection(kymSection);
-        }}
-      >
-        <GroupContainer>
+    <GroupContainer>
+      <FormProvider {...methods}>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSection(e.target.id);
+            setKymCurrentSection(kymSection);
+          }}
+        >
           <Box
             display="flex"
             flexDirection="column"
@@ -150,259 +234,63 @@ const KYMBasiccoopDetailsFamilyMember = ({
               id="familyMemberInThisInstitution"
             />
           </Box>
-          {showFamilyDetailCard && (
-            <Box display="flex" flexDirection="column" gap="s4">
-              <Text fontSize="s3">
-                {t['kynIndFamilyMemberinthisinstitution']}
-              </Text>
+        </form>
+      </FormProvider>
 
-              <Box
-                mt="s16"
-                borderRadius="br2"
-                border="1px solid"
-                borderColor="border.layout"
-                display="flex"
-                flexDirection="column"
-              >
-                <Box bg="background.500" borderBottom="1px solid #E6E6E6">
-                  <Grid
-                    templateRows="repeat(1,1fr)"
-                    templateColumns="repeat(5,1fr)"
-                    gap={2}
-                    mt="s20"
-                    mb="s20"
-                    ml="s16"
-                  >
-                    <GridItem display="flex" alignSelf="center" colSpan={2}>
-                      <Box m="10px">
-                        <Avatar
-                          src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
-                          size="lg"
-                          // name={data?.personalInformation?.name?.firstName}
-                          name="Ajit Nepal"
-                        />
-                      </Box>
-                      <Box>
-                        <TextFields
-                          color="neutralColorLight.Gray-80"
-                          fontWeight="Medium"
-                          fontSize="s3"
-                        >
-                          {selectedMemberDetails
-                            ? selectedMemberDetails[0]?.node?.name?.local
-                            : 'Ajit Nepal'}
-                        </TextFields>
-                        <Text
-                          color="neutralColorLight.Gray-80"
-                          fontSize="s3"
-                          fontWeight="Regular"
-                        >
-                          {/* ID: {data?.personalInformation?.panNumber} */}
-                          {t['id']} :{' '}
-                          {selectedMemberDetails
-                            ? selectedMemberDetails[0]?.node?.id
-                            : '123456789'}
-                        </Text>
-
-                        <Text
-                          color="neutralColorLight.Gray-60"
-                          fontWeight="Regular"
-                          fontSize="s3"
-                        >
-                          {/* Member Since: {data?.personalInformation?.dateOfBirth} */}
-                          {t['memberSince']} :{' '}
-                          {selectedMemberDetails
-                            ? selectedMemberDetails[0]?.node?.dateJoined?.substring(
-                                0,
-                                selectedMemberDetails[0]?.node?.dateJoined.indexOf(
-                                  ' '
-                                )
-                              )
-                            : 'Ajit Nepal'}
-                        </Text>
-
-                        <Text
-                          color="neutralColorLight.Gray-60"
-                          fontWeight="Regular"
-                          fontSize="s3"
-                        >
-                          {/* Branch: {data?.address?.temporary?.state} */}
-                          ABC SACCOS
-                        </Text>
-                      </Box>
-                    </GridItem>
-
-                    <GridItem
-                      display="flex"
-                      flexDirection="column"
-                      alignSelf="center"
-                      colSpan={2}
-                      gap={3}
-                    >
-                      <Box display="flex">
-                        <Icon
-                          size="sm"
-                          as={BsFillTelephoneFill}
-                          color="primary.500"
-                        />
-                        <TextFields
-                          ml="10px"
-                          color="neutralColorLight.Gray-80"
-                          fontSize="s3"
-                          fontWeight="Regular"
-                        >
-                          {/* {data?.contact?.mobile} */}
-                          {selectedMemberDetails
-                            ? selectedMemberDetails[0]?.node?.contact
-                            : '9865000000'}
-                        </TextFields>
-                      </Box>
-
-                      <Box display="flex">
-                        <Icon size="sm" as={GrMail} color="primary.500" />
-                        <TextFields
-                          ml="10px"
-                          color="neutralColorLight.Gray-80"
-                          fontSize="s3"
-                          fontWeight="Regular"
-                        >
-                          ajitnepal65@gmail.com
-                        </TextFields>
-                      </Box>
-
-                      <Box display="flex">
-                        <Icon
-                          size="sm"
-                          as={IoLocationSharp}
-                          color="primary.500"
-                        />
-                        <TextFields
-                          ml="10px"
-                          color="neutralColorLight.Gray-80"
-                          fontSize="s3"
-                          fontWeight="Regular"
-                        >
-                          {selectedMemberDetails
-                            ? `${selectedMemberDetails[0]?.node?.address?.district?.local}`
-                            : 'Kathmandu, Tokha Municipality-10'}
-                        </TextFields>
-                      </Box>
-                    </GridItem>
-
-                    <GridItem
-                      mr="s16"
-                      display="flex"
-                      flexDirection="column"
-                      justifyContent="space-between"
-                    >
-                      <Box alignSelf="flex-end">
-                        <Icon
-                          h="14px"
-                          w="14px"
-                          as={CloseIcon}
-                          color="gray.500"
-                          cursor="pointer"
-                          onClick={() => setShowFamilyDetailCard(false)}
-                        />
-                      </Box>
-                      <Box display="flex" alignSelf="flex-end">
-                        <Text
-                          fontWeight="Medium"
-                          color="primary.500"
-                          fontSize="s2"
-                          mr="5px"
-                        >
-                          {t['kynIndViewProfile']}
-                        </Text>
-                        <Icon
-                          size="sm"
-                          as={RiShareBoxFill}
-                          color="primary.500"
-                        />
-                      </Box>
-                    </GridItem>
-                  </Grid>
-                </Box>
-
-                <Grid
-                  p="s16"
-                  bg="background.500"
-                  templateColumns="repeat(2,1fr)"
-                >
-                  <GridItem>
-                    <Text
-                      fontWeight="Regular"
-                      fontSize="s3"
-                      color="neutralColorLight.gray-80"
-                    >
-                      {t['kynIndCitizenshipNo']} : 23456873445wds23424
-                    </Text>
-                  </GridItem>
-                  <GridItem>
-                    <Text
-                      fontWeight="Regular"
-                      fontSize="s3"
-                      color="neutralColorLight.gray-80"
-                    >
-                      {t['kynIndPresentAddress']} :{' '}
-                      {selectedMemberDetails
-                        ? `${selectedMemberDetails[0]?.node?.address?.district}`
-                        : ' Lalitpur, Lalitpur Municipality -11'}
-                    </Text>
-                  </GridItem>
-                </Grid>
-                <Box px="s16" py="s32" w="40%">
-                  <FormSelect
-                    name={`familyRelationship`}
-                    id="familyMemberInThisCooperative"
-                    label={t['kymIndRelationship']}
-                    placeholder={t['kymIndSelectRelationship']}
-                    isLoading={familyRelationshipLoading}
-                    options={getFieldOption(familyRelationShipData)}
-                  />
-                </Box>
-              </Box>
-            </Box>
-          )}
-
-          <Box display="flex" gap="s20" alignItems="center">
-            <Input
-              mt={1}
-              type="text"
-              flexGrow="1"
-              id={`familyMemberInThisCooperative.0.memberId`}
-              placeholder={t['kynIndFirstName']}
-              bg="white"
+      {isFamilyAMember && (
+        <>
+          {familyMemberMutationIds.map((mutationId, index) => (
+            <FamilyMember
+              mutationId={mutationId}
+              familyMemberId={familyMemberIds[index]}
+              memberId={id as string}
+              removeFamilyMember={removeFamilyMember}
             />
+          ))}
 
-            {/* <Input
+          <FormProvider {...formMethods}>
+            <form>
+              <Box display="flex" gap="s20" alignItems="center">
+                <FormInput
+                  name="memberName"
+                  mt={1}
+                  type="text"
+                  flexGrow="1"
+                  id={`familyMemberInThisCooperative.0.memberId`}
+                  placeholder={t['kynIndFirstName']}
+                  bg="white"
+                />
+
+                {/* <Input
               type="text"
               flexGrow="1"
               id={`familyMemberInThisCooperative.0.memberId`}
               placeholder={t['kynIndEnterMemberID']}
               bg="white"
             /> */}
-            <Select
-              name="otherCoopBranchId"
-              placeholder={t['kynIndEnterMemberID']}
-              options={memberSelectOption}
-              onChange={(e: { label: string; value: string }) =>
-                setSelectedFamilyMember(e.value)
-              }
-            />
-            <Button
-              id="findmemberButton"
-              h="44px"
-              variant="outline"
-              leftIcon={<Icon size="md" as={AiOutlineSearch} />}
-              onClick={() => setShowFamilyDetailCard(true)}
-            >
-              {t['kynIndFindMember']}
-            </Button>
-          </Box>
-        </GroupContainer>
-      </form>
-    </FormProvider>
+                <FormSelect
+                  name="memberId"
+                  placeholder={t['kynIndEnterMemberID']}
+                  options={memberSelectOption}
+                  onChange={(e: { label: string; value: string }) =>
+                    setSelectedFamilyMember(e.value)
+                  }
+                />
+                <Button
+                  id="findmemberButton"
+                  h="44px"
+                  variant="outline"
+                  leftIcon={<Icon size="md" as={AiOutlineSearch} />}
+                  onClick={() => appendFamilyMember()}
+                >
+                  {t['kynIndFindMember']}
+                </Button>
+              </Box>
+            </form>
+          </FormProvider>
+        </>
+      )}
+    </GroupContainer>
   );
 };
 
