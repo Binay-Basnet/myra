@@ -6,7 +6,7 @@ import {
 } from '@coop/accounting/ui-components';
 // import debounce from 'lodash/debounce';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CreditNoteDetails = () => {

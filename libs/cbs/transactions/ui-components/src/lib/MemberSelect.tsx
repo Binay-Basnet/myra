@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { debounce } from 'lodash';
 
-import { Arrange, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useGetMemberListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
+import { getRouterQuery } from '@coop/shared/utils';
+
 interface IMemberSelectProps {
   name: string;
   label: string;
@@ -20,11 +21,10 @@ export const MemberSelect = ({
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
-      first: DEFAULT_PAGE_SIZE,
-      after: '',
-      column: 'ID',
-      arrange: Arrange.Desc,
-      query: IDMember ?? '',
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        query: IDMember,
+      },
     },
     {
       staleTime: 0,

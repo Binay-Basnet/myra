@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
-  Arrange,
   IndividualRequiredDocument,
   InstitutionRequiredDocument,
   KymMemberTypesEnum,
@@ -13,7 +12,7 @@ import {
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput } from '@coop/shared/form';
 import { Grid } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { FileListType } from '../../lib/CbsAccountOpen';
 
@@ -23,6 +22,7 @@ interface Iprops {
   productId: string;
   memberId: string;
 }
+
 export const RequiredDocuments = ({
   setFileList,
   id,
@@ -133,10 +133,7 @@ export const RequiredDocuments = ({
 
   const { data: memberList } = useGetMemberListQuery(
     {
-      first: 10000,
-      after: '',
-      column: 'ID',
-      arrange: Arrange.Desc,
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
     },
     {
       staleTime: 0,

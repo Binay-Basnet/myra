@@ -12,17 +12,13 @@ import {
 } from '@chakra-ui/react';
 
 import { DetailPageTopCard } from '@coop/accounting/ui-components';
-import {
-  Arrange,
-  ObjState,
-  useGetMemberListQuery,
-} from '@coop/cbs/data-access';
+import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { AlertContainer } from '@coop/shared/components';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Column, Table } from '@coop/shared/table';
-import { Box, Button, DEFAULT_PAGE_SIZE, Divider, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Box, Button, Divider, Text } from '@coop/shared/ui';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export function ChequeDetailPage() {
   const { t } = useTranslation();
@@ -40,26 +36,12 @@ export function ChequeDetailPage() {
     setOpenModal(false);
   };
 
-  const { data, isFetching } = useGetMemberListQuery(
-    router.query['before']
-      ? {
-          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-          after: router.query['before'] as string,
-          column: 'ID',
-          arrange: Arrange.Desc,
-        }
-      : {
-          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-          after: (router.query['after'] ?? '') as string,
-          column: 'ID',
-          arrange: Arrange.Desc,
-        },
-    {
-      staleTime: 0,
-    }
-  );
+  const { data, isFetching } = useGetMemberListQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    filter: {
+      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+    },
+  });
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 

@@ -10,8 +10,8 @@ import {
 } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Box, Button, Text } from '@coop/shared/ui';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export function SettingsDepositProducts() {
   const router = useRouter();
@@ -21,19 +21,12 @@ export function SettingsDepositProducts() {
   const newId = useGetNewIdMutation();
 
   const { data, isLoading } = useGetDepositProductSettingsListQuery(
-    router.query['before']
-      ? {
-          paginate: {
-            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            before: router.query['before'] as string,
-          },
-        }
-      : {
-          paginate: {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
-          },
-        },
+    {
+      paginate: {
+        ...getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+        order: null,
+      },
+    },
     {
       staleTime: 0,
     }
@@ -149,12 +142,7 @@ export function SettingsDepositProducts() {
         pagination={{
           total:
             data?.settings?.general?.depositProduct?.list?.totalCount ?? 'Many',
-          endCursor:
-            data?.settings?.general?.depositProduct?.list?.pageInfo
-              ?.endCursor ?? '',
-          startCursor:
-            data?.settings?.general?.depositProduct?.list?.pageInfo
-              ?.startCursor ?? '',
+          pageInfo: data?.settings?.general?.depositProduct?.list?.pageInfo,
         }}
       />
     </>

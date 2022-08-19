@@ -9,8 +9,7 @@ import {
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const SettingsBranchesTable = () => {
   const { t } = useTranslation();
@@ -18,19 +17,12 @@ export const SettingsBranchesTable = () => {
   const newId = useGetNewIdMutation();
 
   const { data, isFetching } = useGetBranchListQuery(
-    router.query['before']
-      ? {
-          paginate: {
-            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            before: router.query['before'] as string,
-          },
-        }
-      : {
-          paginate: {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
-          },
-        },
+    {
+      paginate: {
+        ...getRouterQuery({ type: ['PAGINATION'] }),
+        order: null,
+      },
+    },
     {
       staleTime: 0,
     }
@@ -92,7 +84,7 @@ export const SettingsBranchesTable = () => {
         cell: (props) => (
           <ActionPopoverComponent
             items={popoverTitle}
-            id={props?.row?.original?.node?.id}
+            id={props?.row?.original?.node?.id as string}
           />
         ),
         meta: {
@@ -122,11 +114,8 @@ export const SettingsBranchesTable = () => {
         data={rowData ?? []}
         columns={columns}
         pagination={{
-          total: 1200,
-          endCursor:
-            data?.settings?.general?.branch?.list?.pageInfo?.startCursor ?? '',
-          startCursor:
-            data?.settings?.general?.branch?.list?.pageInfo?.endCursor ?? '',
+          total: data?.settings.general?.branch?.list?.totalCount ?? 'Many',
+          pageInfo: data?.settings.general?.branch?.list?.pageInfo,
         }}
       />
     </>

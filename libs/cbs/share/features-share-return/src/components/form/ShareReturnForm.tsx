@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import { debounce, omit } from 'lodash';
 
 import {
-  Arrange,
   NatureOfDepositProduct,
   Payment_Mode,
   useAddShareReturnMutation,
@@ -44,7 +43,11 @@ import {
   TextFields,
   TextInput,
 } from '@coop/shared/ui';
-import { amountConverter, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  getRouterQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 // TODO! use Layout
 const Header = () => {
@@ -149,18 +152,16 @@ const ShareReturnForm = () => {
 
   const { data: memberList } = useGetMemberListQuery(
     {
-      first: DEFAULT_PAGE_SIZE,
-      after: '',
-      column: 'ID',
-      arrange: Arrange.Desc,
-      query: IDMember,
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        query: IDMember,
+      },
     },
     {
       staleTime: 0,
       enabled: trigger,
     }
   );
-
   const memberListData = memberList?.members?.list?.edges;
 
   type optionType = { label: string; value: string };

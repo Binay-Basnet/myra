@@ -9,7 +9,6 @@ import { debounce } from 'lodash';
 import omit from 'lodash/omit';
 
 import {
-  Arrange,
   NatureOfDepositProduct,
   Payment_Mode,
   useAddSharePurchaseMutation,
@@ -42,7 +41,11 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
-import { amountConverter, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  getRouterQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 const Header = () => {
   return (
@@ -101,11 +104,10 @@ const SharePurchaseForm = () => {
 
   const { data: memberList } = useGetMemberListQuery(
     {
-      first: 10,
-      after: '',
-      column: 'ID',
-      arrange: Arrange.Asc,
-      query: IDMember,
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        query: IDMember,
+      },
     },
     {
       staleTime: 0,

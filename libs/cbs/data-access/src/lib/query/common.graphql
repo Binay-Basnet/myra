@@ -33,3 +33,10 @@ fragment KYMFieldData on KYMFieldData {
     value
   }
 }
+
+fragment Pagination on PageInfo {
+  startCursor
+  endCursor
+  hasNextPage
+  hasPreviousPage
+}

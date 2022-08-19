@@ -67,5 +67,9 @@ export const CoaAccountListTable = () => {
     [t]
   );
 
-  return <Table data={rowData} columns={columns} isLoading={isFetching} />;
+  return (
+    <>
+      <Table data={rowData} columns={columns} isLoading={isFetching} />{' '}
+    </>
+  );
 };

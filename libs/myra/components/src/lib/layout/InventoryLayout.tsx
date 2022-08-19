@@ -4,7 +4,7 @@
 // import { AddIcon } from '@chakra-ui/icons';
 
 // import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
-// import { useTranslation } from '@coop/shared/utils';
+// import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // import { TabColumn } from '../tab/TabforMemberPage';
 

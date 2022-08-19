@@ -22,8 +22,12 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
 
   pagination?: {
     total: number | string;
-    startCursor: string;
-    endCursor: string;
+    pageInfo?: {
+      startCursor?: string | null;
+      endCursor?: string | null;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+    } | null;
   };
 
   size?: 'default' | 'compact' | 'report';

@@ -1,5 +1,8 @@
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
+import qs from 'qs';
+
+import { DEFAULT_PAGE_SIZE as UTIL_PAGE_SIZE } from '@coop/shared/utils';
 
 import Select from '../select/Select';
 import SmallPagination from '../small-pagination/SmallPagination';
@@ -8,23 +11,27 @@ import TextFields from '../text-fields/TextFields';
 /* eslint-disable-next-line */
 export interface PaginationProps {
   total: number | string;
-  startCursor: string;
-  endCursor: string;
+  pageInfo?: {
+    startCursor?: string | null;
+    endCursor?: string | null;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  } | null;
   pageSizeOptions: number[];
 }
 
-export const DEFAULT_PAGE_SIZE = 50;
+export const DEFAULT_PAGE_SIZE = UTIL_PAGE_SIZE;
 
 export function Pagination({
-  endCursor,
-  startCursor,
+  pageInfo,
   total,
   pageSizeOptions,
 }: PaginationProps) {
   const router = useRouter();
+  const paginationParams = qs.parse(router.query['paginate'] as string);
 
   const pageSize = Number(
-    router?.query['first'] ?? router?.query['last'] ?? DEFAULT_PAGE_SIZE
+    paginationParams['first'] ?? paginationParams['last'] ?? DEFAULT_PAGE_SIZE
   );
 
   return (
@@ -47,30 +54,42 @@ export function Pagination({
               isSearchable={false}
               value={{ label: pageSize, value: pageSize }}
               onChange={(newValue: { value?: string | number }) => {
-                if (router.query['after']) {
-                  router.push({
-                    query: {
-                      ...router.query,
+                router.push({
+                  query: {
+                    ...router.query,
+                    paginate: qs.stringify({
+                      page: 1,
+                      after: '',
                       first: newValue?.value,
-                    },
-                  });
-                } else if (router.query['before']) {
-                  router.push({
-                    query: {
-                      ...router.query,
-                      last: newValue?.value,
-                    },
-                  });
-                } else {
-                  router.push({
-                    query: {
-                      ...router.query,
-                      first: newValue?.value,
-                      after: startCursor,
-                    },
-                  });
-                }
+                    }),
+                  },
+                });
               }}
+              // onChange={(newValue: { value?: string | number }) => {
+              //   // if (router.query['after']) {
+              //   //   router.push({
+              //   //     query: {
+              //   //       ...router.query,
+              //   //       first: newValue?.value,
+              //   //     },
+              //   //   });
+              //   // } else if (router.query['before']) {
+              //   //   router.push({
+              //   //     query: {
+              //   //       ...router.query,
+              //   //       last: newValue?.value,
+              //   //     },
+              //   //   });
+              //   // } else {
+              //   //   router.push({
+              //   //     query: {
+              //   //       ...router.query,
+              //   //       first: newValue?.value,
+              //   //       after: startCursor,
+              //   //     },
+              //   //   });
+              //   }
+              // }}
               options={pageSizeOptions?.map((size) => ({
                 label: String(size),
                 value: size,
@@ -81,12 +100,9 @@ export function Pagination({
           <span>items per page</span>
         </Box>
 
-        <SmallPagination
-          limit={pageSize}
-          total={total}
-          startCursor={startCursor}
-          endCursor={endCursor}
-        />
+        {pageInfo && (
+          <SmallPagination limit={pageSize} total={total} pageInfo={pageInfo} />
+        )}
       </Box>
     </TextFields>
   );

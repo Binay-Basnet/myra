@@ -5,8 +5,8 @@ import {
   InputGroupContainer,
 } from '@coop/accounting/ui-components';
 // import debounce from 'lodash/debounce';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PaymentMode = () => {

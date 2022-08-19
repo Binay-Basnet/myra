@@ -1,5 +1,5 @@
 /* eslint-disable-next-line */
-import { useTranslation } from '@coop/shared/utils';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 import React from 'react';
 import {
   Box,

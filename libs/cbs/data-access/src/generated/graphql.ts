@@ -9260,6 +9260,13 @@ export type KymFieldDataFragment = {
   } | null> | null;
 };
 
+export type PaginationFragment = {
+  startCursor?: string | null;
+  endCursor?: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+};
+
 export type GetConfigQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetConfigQuery = {
@@ -10441,15 +10448,8 @@ export type GetCoopUnionKymOptionsQuery = {
 };
 
 export type GetMemberListQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['Cursor']>;
-  first?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  last?: InputMaybe<Scalars['Int']>;
-  column: Scalars['String'];
-  arrange: Arrange;
-  objState?: InputMaybe<ObjState>;
-  query?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['ID']>;
+  pagination: Pagination;
+  filter?: InputMaybe<KymMemberDataFilter>;
 }>;
 
 export type GetMemberListQuery = {
@@ -10475,10 +10475,7 @@ export type GetMemberListQuery = {
           } | null;
         } | null;
       } | null> | null;
-      pageInfo?: {
-        startCursor?: string | null;
-        endCursor?: string | null;
-      } | null;
+      pageInfo?: PaginationFragment | null;
     };
   };
 };
@@ -10831,12 +10828,7 @@ export type GetAllSavedReportsQuery = {
   report: {
     listReports: {
       totalCount: number;
-      pageInfo?: {
-        startCursor?: string | null;
-        endCursor?: string | null;
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-      } | null;
+      pageInfo?: PaginationFragment | null;
       edges?: Array<{
         cursor: string;
         node?: {
@@ -11594,10 +11586,8 @@ export type GetShareBalanceListQuery = {
 };
 
 export type GetShareRegisterListQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['Cursor']>;
-  first?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  last?: InputMaybe<Scalars['Int']>;
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<ShareRegisterFilter>;
 }>;
 
 export type GetShareRegisterListQuery = {
@@ -11799,6 +11789,14 @@ export const KymFieldDataFragmentDoc = `
     id
     value
   }
+}
+    `;
+export const PaginationFragmentDoc = `
+    fragment Pagination on PageInfo {
+  startCursor
+  endCursor
+  hasNextPage
+  hasPreviousPage
 }
     `;
 export const SetAccountOpenDataDocument = `
@@ -16195,12 +16193,9 @@ export const useGetCoopUnionKymOptionsQuery = <
     options
   );
 export const GetMemberListDocument = `
-    query getMemberList($after: Cursor, $first: Int, $before: Cursor, $last: Int, $column: String!, $arrange: Arrange!, $objState: ObjState, $query: String, $id: ID) {
+    query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
   members {
-    list(
-      pagination: {after: $after, first: $first, before: $before, last: $last, order: {column: $column, arrange: $arrange}}
-      filter: {objState: $objState, query: $query, id: $id}
-    ) {
+    list(pagination: $pagination, filter: $filter) {
       totalCount
       edges {
         node {
@@ -16222,13 +16217,12 @@ export const GetMemberListDocument = `
         cursor
       }
       pageInfo {
-        startCursor
-        endCursor
+        ...Pagination
       }
     }
   }
 }
-    `;
+    ${PaginationFragmentDoc}`;
 export const useGetMemberListQuery = <
   TData = GetMemberListQuery,
   TError = unknown
@@ -16730,10 +16724,7 @@ export const GetAllSavedReportsDocument = `
     listReports(pagination: $pagination) {
       totalCount
       pageInfo {
-        startCursor
-        endCursor
-        hasNextPage
-        hasPreviousPage
+        ...Pagination
       }
       edges {
         cursor
@@ -16748,7 +16739,7 @@ export const GetAllSavedReportsDocument = `
     }
   }
 }
-    `;
+    ${PaginationFragmentDoc}`;
 export const useGetAllSavedReportsQuery = <
   TData = GetAllSavedReportsQuery,
   TError = unknown
@@ -17741,11 +17732,9 @@ export const useGetShareBalanceListQuery = <
     options
   );
 export const GetShareRegisterListDocument = `
-    query getShareRegisterList($after: Cursor, $first: Int, $before: Cursor, $last: Int) {
+    query getShareRegisterList($pagination: Pagination, $filter: ShareRegisterFilter) {
   share {
-    register(
-      pagination: {after: $after, first: $first, before: $before, last: $last}
-    ) {
+    register(pagination: $pagination, filter: $filter) {
       edges {
         node {
           transactionDate

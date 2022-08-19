@@ -7,23 +7,17 @@ import {
 } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Avatar, Box } from '@coop/shared/ui';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareRegisterTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
   const { data, isFetching, refetch } = useGetShareRegisterListQuery(
-    router.query['before']
-      ? {
-          last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-          before: router.query['before'] as string,
-        }
-      : {
-          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-          after: (router.query['after'] ?? '') as string,
-        },
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    },
     {
       staleTime: 0,
     }
@@ -176,8 +170,7 @@ export const ShareRegisterTable = () => {
         columns={columns}
         pagination={{
           total: data?.share?.register?.totalCount ?? 'Many',
-          endCursor: data?.share?.register?.pageInfo?.endCursor ?? '',
-          startCursor: data?.share?.register?.pageInfo?.startCursor ?? '',
+          pageInfo: data?.share?.register?.pageInfo,
         }}
       />
     </>

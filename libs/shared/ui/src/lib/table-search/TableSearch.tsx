@@ -9,6 +9,7 @@ import {
   Popover,
   Text,
 } from '@chakra-ui/react';
+import qs from 'qs';
 
 import {
   DEFAULT_PAGE_SIZE,
@@ -94,8 +95,12 @@ export const OptionsIcon = () => {
 export type TableSearchProps = {
   placeholder?: string;
   pagination?: {
-    startCursor: string;
-    endCursor: string;
+    pageInfo?: {
+      startCursor?: string | null;
+      endCursor?: string | null;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+    } | null;
     total: number | string;
   };
   size: 'default' | 'compact' | 'report';
@@ -110,8 +115,10 @@ export function TableSearch({
 }: TableSearchProps) {
   const router = useRouter();
 
+  const paginationParams = qs.parse(router.query['paginate'] as string);
+
   const pageSize = Number(
-    router?.query['first'] ?? router?.query['last'] ?? DEFAULT_PAGE_SIZE
+    paginationParams['first'] ?? paginationParams['last'] ?? DEFAULT_PAGE_SIZE
   );
 
   return (
@@ -173,23 +180,23 @@ export function TableSearch({
         </Button>
       </Box>
 
-      <Box
-        px="s16"
-        borderRight="1px"
-        borderColor="border.layout"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        flexShrink={0}
-      >
-        {/* TODO (REPLACE THIS IF) */}
-        <SmallPagination
-          limit={pageSize}
-          total={pagination?.total ?? 'Many'}
-          startCursor={pagination?.startCursor ?? '1310910'}
-          endCursor={pagination?.endCursor ?? '139199103'}
-        />
-      </Box>
+      {pagination?.pageInfo && (
+        <Box
+          px="s16"
+          borderRight="1px"
+          borderColor="border.layout"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          flexShrink={0}
+        >
+          <SmallPagination
+            limit={pageSize}
+            total={pagination?.total ?? 'Many'}
+            pageInfo={pagination.pageInfo}
+          />
+        </Box>
+      )}
 
       <Box
         px="s16"

@@ -10,7 +10,6 @@ import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
 
 import {
-  Arrange,
   FormFieldSearchTerm,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
@@ -35,7 +34,11 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import {
+  getKymSection,
+  getRouterQuery,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -110,10 +113,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
   }, [watch, router.isReady]);
 
   const { data: memberListData } = useGetMemberListQuery({
-    first: 100,
-    after: '',
-    column: 'ID',
-    arrange: Arrange.Desc,
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
   const memberSelectOption = memberListData?.members?.list?.edges?.map(
@@ -604,10 +604,7 @@ const KYMBasiccoopDetailsIntroducer = ({
   }, [watch, router.isReady]);
 
   const { data: memberListData } = useGetMemberListQuery({
-    first: 100,
-    after: '',
-    column: 'ID',
-    arrange: Arrange.Desc,
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
   const memberSelectOption = memberListData?.members?.list?.edges?.map(

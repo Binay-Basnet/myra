@@ -3,13 +3,13 @@ import { useFormContext } from 'react-hook-form';
 import { IoFilterOutline } from 'react-icons/io5';
 
 import {
-  Arrange,
   ReportPeriodType,
   ShareTransactionType,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon } from '@coop/shared/ui';
+import { getRouterQuery } from '@coop/shared/utils';
 
 type ReportFilter = {
   memberId: string;
@@ -38,10 +38,7 @@ export const ReportInputs = ({
 
   const { data: memberList, isLoading } = useGetMemberListQuery(
     {
-      first: Number(50),
-      after: '',
-      column: 'ID',
-      arrange: Arrange.Desc,
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
     },
     {
       staleTime: 0,
