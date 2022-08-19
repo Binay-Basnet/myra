@@ -9,7 +9,7 @@ const OrganizationInformation = [
   'kymCoopUnionAccBasicInformation',
   'kymCoopUnionAccRegisteredDetails',
   'kymCoopUnionAccOperatingOfficeAddress',
-  'kymCoopUnionAccBranchOfficeAddress',
+  'serviceCenterOfficeAddress',
   'kymCoopUnionAccContactDetails',
   'kymCoopUnionAccBankAccountDetails',
   'kymCoopUnionAccApplicant',

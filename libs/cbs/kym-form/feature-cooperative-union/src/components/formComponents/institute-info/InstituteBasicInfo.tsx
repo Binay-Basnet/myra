@@ -99,8 +99,8 @@ export const InstituteBasicInfo = ({
             <FormInput
               type="text"
               name="noOfBranches"
-              label={t['kymCoopUnionNoOfBranches']}
-              placeholder={t['kymCoopUnionEnterNoOfBranches']}
+              label={t['serviceCenterNoOfServiceCenter']}
+              placeholder={t['serviceCenterEnterNoOfServiceCenter']}
             />
 
             {/* <FormInput

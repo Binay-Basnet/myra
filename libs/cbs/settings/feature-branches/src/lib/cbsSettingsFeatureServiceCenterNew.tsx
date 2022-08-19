@@ -30,7 +30,7 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export function CbsSettingsFeatureBranchesNew() {
+export function CbsSettingsFeatureServiceCenterNew() {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -170,7 +170,7 @@ export function CbsSettingsFeatureBranchesNew() {
           width="100%"
           zIndex="10"
         >
-          <FormHeader title={t['settingsBranchAdd']} />
+          <FormHeader title={t['serviceCenterAdd']} />
         </Box>
 
         <Box bg="white" pb="100px">
@@ -184,14 +184,14 @@ export function CbsSettingsFeatureBranchesNew() {
                         <GridItem colSpan={2}>
                           <FormInput
                             name="name"
-                            label={t['settingsBranchName']}
-                            placeholder={t['settingsBranchNameLabel']}
+                            label={t['serviceCenterFormName']}
+                            placeholder={t['serviceCenterEnterName']}
                           />
                         </GridItem>
                         <FormInput
                           name={'branchCode'}
-                          label={t['settingsBranchBranchCode']}
-                          placeholder={t['settingsBranchBranchCodePlaceholder']}
+                          label={t['serviceCenterCode']}
+                          placeholder={t['serviceCenterCodeEnter']}
                         />
                       </InputGroupContainer>
 
@@ -199,12 +199,12 @@ export function CbsSettingsFeatureBranchesNew() {
                         <FormInput
                           type="text"
                           name="managerName"
-                          label={t['settingsBranchManagerName']}
-                          placeholder={t['branchEnterManagerName']}
+                          label={t['serviceCenterManager']}
+                          placeholder={t['serviceCenterEnterManager']}
                         />
                         <FormSelect
-                          label={t['settingsBranchCategory']}
-                          placeholder={t['settingsBranchCategory']}
+                          label={t['serviceCenterCategory']}
+                          placeholder={t['serviceCenterCategoryEnter']}
                           name="category"
                           options={branchCategories}
                         />
@@ -223,7 +223,7 @@ export function CbsSettingsFeatureBranchesNew() {
                         color="gray.700"
                         mb="s16"
                       >
-                        {t['settingsBranchAddressLabel']}
+                        {t['serviceCenterAddress']}
                       </TextFields>
                       <Box gap="s16" display={'flex'} flexDirection="column">
                         <InputGroupContainer>
@@ -350,7 +350,7 @@ export function CbsSettingsFeatureBranchesNew() {
                     <Box display="flex" justifyContent="space-between">
                       <Box display="flex" flexDirection="column">
                         <Text fontSize="s3" fontWeight="500" color="gray.700">
-                          {t['settingsBranchStatusLabel']}
+                          {t['serviceCenterStatus']}
                         </Text>
                         <Text fontSize="s3" fontWeight="400" color="gray.700">
                           {t['settingsBranchStatusReversible']}
@@ -397,4 +397,4 @@ export function CbsSettingsFeatureBranchesNew() {
   );
 }
 
-export default CbsSettingsFeatureBranchesNew;
+export default CbsSettingsFeatureServiceCenterNew;

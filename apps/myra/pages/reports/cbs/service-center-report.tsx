@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
 import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
-const InventoryReport = () => {
+const ServiceCenterReports = () => {
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WIPState />
@@ -11,7 +11,7 @@ const InventoryReport = () => {
   );
 };
 
-InventoryReport.getLayout = function getLayout(page: ReactElement) {
+ServiceCenterReports.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <ReportMainLayout>
@@ -20,4 +20,4 @@ InventoryReport.getLayout = function getLayout(page: ReactElement) {
     </MainLayout>
   );
 };
-export default InventoryReport;
+export default ServiceCenterReports;

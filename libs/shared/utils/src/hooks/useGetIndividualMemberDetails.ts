@@ -2,7 +2,9 @@ import { useMemo } from 'react';
 
 import {
   KymIndFormState,
+  KymIndIdentification,
   Member,
+  useGetIndividualKymIdentificationListQuery,
   useGetKymDocumentsListQuery,
   useGetMemberIndividualDataQuery,
 } from '@coop/cbs/data-access';
@@ -24,6 +26,14 @@ export const useGetIndividualMemberDetails = ({
     { enabled: !!memberId }
   );
 
+  const { data: identificationListData } =
+    useGetIndividualKymIdentificationListQuery(
+      {
+        id: String(memberId),
+      },
+      { enabled: !!memberId }
+    );
+
   const memberDetailData = useMemo(() => {
     if (!memberDetailQueryData?.members?.details?.data) {
       return;
@@ -31,6 +41,13 @@ export const useGetIndividualMemberDetails = ({
 
     const memberData = memberDetailQueryData?.members?.details
       ?.data as MemberDetailData;
+
+    const citizenshipData = identificationListData
+      ? identificationListData?.members?.individual?.listIdentification?.data?.find(
+          (identification: KymIndIdentification | null) =>
+            identification?.idType === 'citizenship'
+        )
+      : null;
 
     return {
       id: memberData.id,
@@ -43,8 +60,9 @@ export const useGetIndividualMemberDetails = ({
       age: memberData.profile?.data?.formData?.basicInformation?.age,
       maritalStatus: memberData.profile?.data?.formData?.maritalStatus?.local,
       dateJoined: memberData.dateJoined,
+      citizenship: citizenshipData,
     };
-  }, [memberDetailQueryData]);
+  }, [memberDetailQueryData, identificationListData]);
 
   const { data: documentListQueryData } = useGetKymDocumentsListQuery(
     {

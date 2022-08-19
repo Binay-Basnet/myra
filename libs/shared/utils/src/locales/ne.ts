@@ -1158,8 +1158,6 @@ const ne: Record<string, string> = {
 
   kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION:
     'ESTIMATED WITHDRAW / DEPOSIT AMOUNT IN THE INSTITUTION',
-  kynIndEstimatedannualaccounttransaction:
-    'Estimated annual account transaction (Debit/Credit)',
   kynIndEstimatednoofAnnualTransaction: 'Estimated no. of Annual Transaction',
   kynIndEstimatedAnnualDeposit: 'Estimated Annual Deposit',
   kynIndEstimatedAnnualLoan: 'Estimated Annual Loan',
@@ -2903,8 +2901,6 @@ const ne: Record<string, string> = {
   kymIndNationalID: 'National ID',
   kymIndNationalIDNo: 'National ID No',
   kymIndCooperativeName: 'Cooperative Name',
-  kymIndCooperativeBranch: 'Branch',
-  kymIndCooperativeSelectBranch: 'Select Branch',
   kymIndCooperativeMemberID: 'Member ID',
   kymIndIntroducers: 'Introducers',
   kymIndFinancialShare: 'Share',
@@ -3193,6 +3189,26 @@ const ne: Record<string, string> = {
   cooperativePromotion: 'Cooperative Promotion',
   microEnterprisePromotion: 'Micro Enterprise Promotion',
   lineOfCredit: 'LineOfCredit',
+
+  serviceCenterSettings: 'Service Center',
+  serviceCenterCode: 'Service Center Code',
+  serviceCenterCodeEnter: 'Enter Service Center Code',
+  serviceCenterNew: 'New Service Center',
+  serviceCenterFormName: 'Service Center Name',
+  serviceCenterEnterName: 'Enter Service Center Name',
+  serviceCenterManager: 'Service Center Manager',
+  serviceCenterEnterManager: 'Enter Service Center Manager',
+  serviceCenterCategory: 'Service Center Category',
+  serviceCenterCategoryEnter: 'Enter Service Center Category',
+  serviceCenterAdd: 'Add Service Center',
+  serviceCenterAddress: 'Service Center Address',
+  serviceCenterStatus: 'Service Center Status',
+  serviceCenterOfficeAddress: 'Service Center Office Address',
+  serviceCenterNoOfServiceCenter: 'No of Service Center',
+  serviceCenterEnterNoOfServiceCenter: 'Enter No of Service Center',
+
+  kynIndEstimatedannualaccounttransaction:
+    'Estimated annual account transaction',
 };
 
 export default ne;

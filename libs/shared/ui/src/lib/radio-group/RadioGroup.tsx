@@ -4,6 +4,7 @@ import {
   Radio,
   RadioProps as ChakraRadioProps,
   Stack,
+  Box,
   Text,
 } from '@chakra-ui/react';
 import TextFields from '../text-fields/TextFields';
@@ -23,15 +24,8 @@ export interface RadioGroupProps extends ChakraRadioProps {
 }
 
 export function RadioGroup(props: RadioGroupProps) {
-  const {
-    radioList,
-    spacing,
-    direction,
-    labelFontSize,
-    options,
-    name,
-    ...rest
-  } = props;
+  const { radioList, spacing, direction, labelFontSize, options, ...rest } =
+    props;
 
   return (
     <ChakraRadioGroup value={props.value}>
@@ -40,29 +34,31 @@ export function RadioGroup(props: RadioGroupProps) {
           ? radioList?.map((item, index) => {
               return (
                 // TODO string index
-                <Radio
-                  {...rest}
-                  key={index}
-                  id={`${item}${index}`}
-                  value={item}
-                  spacing="s8"
-                >
+                <Box>
+                  <Radio
+                    {...rest}
+                    key={index}
+                    id={`${item}${index}`}
+                    value={item}
+                    spacing="s8"
+                  />
                   <Text fontSize={labelFontSize}>{item}</Text>
-                </Radio>
+                </Box>
               );
             })
-          : options?.map((option, index) => (
-              <Radio
-                {...rest}
-                isChecked={true}
-                key={option.value}
-                value={option.value}
-                spacing="s8"
-              >
+          : options?.map((option) => (
+              <Box display="flex" gap="s8">
+                <Radio
+                  {...rest}
+                  isChecked={true}
+                  key={option.value}
+                  value={option.value}
+                  spacing="s8"
+                />
                 <TextFields variant="formInput" fontSize="s3" color="gray.800">
                   {option.label}
                 </TextFields>
-              </Radio>
+              </Box>
             ))}
       </Stack>
     </ChakraRadioGroup>

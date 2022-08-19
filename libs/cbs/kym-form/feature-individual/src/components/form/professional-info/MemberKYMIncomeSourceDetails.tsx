@@ -80,10 +80,9 @@ const IncomeSource = ({
   //     filter: { customId: KYMOptionEnum.IncomeSourceDetails },
   //   });
 
-  const { data: editValues, refetch } =
-    useGetIndividualKymIncomeSourceListQuery({
-      id: id,
-    });
+  const { data: editValues } = useGetIndividualKymIncomeSourceListQuery({
+    id: id,
+  });
 
   useEffect(() => {
     if (editValues) {
@@ -209,10 +208,9 @@ export const MemberKYMIncomeSourceDetails = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
-  const { data: familyIncomeData, isLoading: familyIncomeLoading } =
-    useGetIndividualKymOptionsQuery({
-      searchTerm: FormFieldSearchTerm.FamilyIncomeSource,
-    });
+  const { data: familyIncomeData } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.FamilyIncomeSource,
+  });
 
   const [incomeSourceIds, setIncomeSourceIds] = useState<string[]>([]);
 
