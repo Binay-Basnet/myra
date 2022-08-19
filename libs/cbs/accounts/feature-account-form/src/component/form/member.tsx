@@ -7,7 +7,6 @@ import { RiShareBoxFill } from 'react-icons/ri';
 import { debounce } from 'lodash';
 
 import {
-  Arrange,
   useGetMemberIndividualDataQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
@@ -16,14 +15,14 @@ import { FormSelect } from '@coop/shared/form';
 import {
   Avatar,
   Box,
-  DEFAULT_PAGE_SIZE,
   Grid,
   GridItem,
   Icon,
   Text,
   TextFields,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+
 export const Member = () => {
   const { t } = useTranslation();
   const [IDMember, setIDMember] = useState('');
@@ -34,15 +33,14 @@ export const Member = () => {
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
-      first: DEFAULT_PAGE_SIZE,
-      after: '',
-      column: 'ID',
-      arrange: Arrange.Desc,
-      query: IDMember,
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        query: IDMember,
+      },
     },
     {
       staleTime: 0,
-      enabled: trigger,
+      enabled: trigger && !!IDMember,
     }
   );
 
@@ -51,14 +49,6 @@ export const Member = () => {
     memberListData &&
     memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
 
-  // const memberOptions =
-  //   memberListData &&
-  //   memberListData.map((member) => {
-  //     return {
-  //       label: `${member?.node?.id}-${member?.node?.name?.local}`,
-  //       value: member?.node?.id,
-  //     };
-  //   });
   const { data } = useGetMemberIndividualDataQuery({
     id: memberId,
   });

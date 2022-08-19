@@ -2,8 +2,8 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormEmailInput, FormInput, FormPhoneNumber } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormInput } from '@coop/shared/form';
+import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CurrentMemberDetails = () => {

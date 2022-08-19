@@ -1,24 +1,10 @@
 query getMemberList(
-  $after: Cursor
-  $first: Int
-  $before: Cursor
-  $last: Int
-  $column: String!
-  $arrange: Arrange!
-  $objState: ObjState
-  $query: String
-  $id: ID
+  $pagination: Pagination!, $filter: KymMemberDataFilter
 ) {
   members {
     list(
-      pagination: {
-        after: $after
-        first: $first
-        before: $before
-        last: $last
-        order: { column: $column, arrange: $arrange }
-      }
-      filter: { objState: $objState, query: $query, id: $id }
+      pagination: $pagination
+      filter: $filter
     ) {
       totalCount
       edges {
@@ -41,8 +27,7 @@ query getMemberList(
         cursor
       }
       pageInfo {
-        startCursor
-        endCursor
+        ...Pagination
       }
     }
   }

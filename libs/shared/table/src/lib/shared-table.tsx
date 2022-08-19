@@ -201,8 +201,7 @@ export const Table = <T extends Record<string, unknown>>({
       {pagination && data && data?.length !== 0 && (
         <Pagination
           total={pagination.total}
-          startCursor={pagination.startCursor}
-          endCursor={pagination.endCursor}
+          pageInfo={pagination.pageInfo}
           pageSizeOptions={[10, 50, 100]}
         />
       )}

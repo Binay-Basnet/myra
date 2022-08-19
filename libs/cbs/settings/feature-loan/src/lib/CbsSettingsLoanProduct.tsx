@@ -305,12 +305,7 @@ export function SettingsLoanProduct() {
         pagination={{
           total:
             data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
-          endCursor:
-            data?.settings?.general?.loanProducts?.list?.pageInfo?.endCursor ??
-            '',
-          startCursor:
-            data?.settings?.general?.loanProducts?.list?.pageInfo
-              ?.startCursor ?? '',
+          pageInfo: data?.settings.general?.loanProducts?.list?.pageInfo,
         }}
       />
     </>

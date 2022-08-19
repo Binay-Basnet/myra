@@ -13,8 +13,8 @@ const tabList: TabList[] = [
     to: '/settings/general/organization',
   },
   {
-    title: 'settingsSideBarBranches',
-    to: '/settings/general/branches',
+    title: 'serviceCenterSettings',
+    to: '/settings/general/service-center',
   },
   {
     title: 'settingsSideBarChartsOfAccounts',

@@ -285,7 +285,9 @@ const MemberFamilyDetails = ({
   useEffect(() => {
     if (editValues) {
       const editValueData =
-        editValues?.members?.individual?.listFamilyMember?.data;
+        editValues?.members?.individual?.listFamilyMember?.data?.filter(
+          (familyMember) => !familyMember?.familyMemberId
+        );
 
       setFamilyMemberIds(
         editValueData?.reduce(

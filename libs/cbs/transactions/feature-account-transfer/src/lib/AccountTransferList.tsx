@@ -1,15 +1,11 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import {
-  Arrange,
-  useGetAccountTransferListDataQuery,
-} from '@coop/cbs/data-access';
+import { useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { DEFAULT_PAGE_SIZE } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
 //   {
@@ -31,23 +27,7 @@ export function AccountTransferList() {
   const router = useRouter();
   const { data, isFetching } = useGetAccountTransferListDataQuery(
     {
-      pagination: router.query['before']
-        ? {
-            first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            after: router.query['before'] as string,
-            order: {
-              column: 'ID',
-              arrange: Arrange.Desc,
-            },
-          }
-        : {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
-            order: {
-              column: 'ID',
-              arrange: Arrange.Desc,
-            },
-          },
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
     },
     {
       staleTime: 0,
@@ -149,9 +129,7 @@ export function AccountTransferList() {
         columns={columns}
         pagination={{
           total: data?.transaction?.listTransfer?.totalCount ?? 'Many',
-          endCursor: data?.transaction?.listTransfer.pageInfo?.endCursor ?? '',
-          startCursor:
-            data?.transaction?.listTransfer.pageInfo?.startCursor ?? '',
+          pageInfo: data?.transaction?.listTransfer?.pageInfo,
         }}
         searchPlaceholder="Search"
       />

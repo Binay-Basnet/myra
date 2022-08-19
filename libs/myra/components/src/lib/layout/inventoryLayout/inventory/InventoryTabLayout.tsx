@@ -22,10 +22,6 @@ const inventoryColumns = [
     link: '/inventory/adjustments',
     addLink: '/inventory/adjustments/add',
   },
-  {
-    title: 'invInventoryReports',
-    link: '/inventory/reports',
-  },
 ];
 
 export const InventoryTabLayout = ({ children }: IInventoryPageLayoutProps) => {

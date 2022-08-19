@@ -1,2 +1,2 @@
-export * from './lib/cbs-settings-feature-branches';
-export * from './lib/cbsSettingsFeatureBranchesNew';
+export * from './lib/cbsSettingsFeatureServiceCenterNew';
+export * from './lib/CbsSettingsServiceCenter';

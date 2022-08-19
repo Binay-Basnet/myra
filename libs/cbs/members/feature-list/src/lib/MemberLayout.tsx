@@ -30,10 +30,6 @@ const memberColumns = [
     title: 'memberList',
     link: '/members/list',
   },
-  {
-    title: 'balanceReport',
-    link: '/members/report',
-  },
 ];
 
 interface memberTypeButtonProps {

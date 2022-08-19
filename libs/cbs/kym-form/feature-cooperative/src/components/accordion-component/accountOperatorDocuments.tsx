@@ -10,6 +10,7 @@ interface IKYMDocumentDeclarationProps {
   }) => void;
   accountId: string;
 }
+
 export const BottomOperatorCoop = ({
   setKymCurrentSection,
   accountId,

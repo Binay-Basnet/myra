@@ -1,10 +1,10 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormEmailInput, FormInput, FormPhoneNumber } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

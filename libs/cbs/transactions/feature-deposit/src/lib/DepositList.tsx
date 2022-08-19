@@ -1,12 +1,11 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
-import { Arrange, useGetDepositListDataQuery } from '@coop/cbs/data-access';
+import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Avatar, Box, Text } from '@coop/shared/ui';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const tabList = [
   {
@@ -25,26 +24,9 @@ export interface DepositListProps {}
 export function DepositList() {
   const { t } = useTranslation();
 
-  const router = useRouter();
   const { data, isFetching } = useGetDepositListDataQuery(
     {
-      pagination: router.query['before']
-        ? {
-            first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            after: router.query['before'] as string,
-            order: {
-              column: 'ID',
-              arrange: Arrange.Desc,
-            },
-          }
-        : {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
-            order: {
-              column: 'ID',
-              arrange: Arrange.Desc,
-            },
-          },
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
     },
     {
       staleTime: 0,
@@ -89,10 +71,7 @@ export function DepositList() {
           width: '60%',
         },
       },
-      {
-        header: 'Amount',
-        accessorFn: (row) => row?.node?.amount,
-      },
+
       {
         header: 'Payment Mode',
         accessorFn: (row) => row?.node?.paymentMode,
@@ -105,6 +84,14 @@ export function DepositList() {
       {
         header: 'Deposit Date',
         accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
+      },
+      {
+        header: 'Amount',
+
+        accessorFn: (row) => row?.node?.amount,
+        meta: {
+          isNumeric: true,
+        },
       },
       {
         id: '_actions',
@@ -132,9 +119,7 @@ export function DepositList() {
         columns={columns}
         pagination={{
           total: data?.transaction?.listDeposit?.totalCount ?? 'Many',
-          endCursor: data?.transaction?.listDeposit.pageInfo?.endCursor ?? '',
-          startCursor:
-            data?.transaction?.listDeposit.pageInfo?.startCursor ?? '',
+          pageInfo: data?.transaction?.listDeposit?.pageInfo,
         }}
         searchPlaceholder="Search Deposit"
       />

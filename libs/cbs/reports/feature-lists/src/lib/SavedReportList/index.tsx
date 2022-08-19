@@ -1,19 +1,17 @@
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Arrange, useGetAllSavedReportsQuery } from '@coop/cbs/data-access';
+import { useGetAllSavedReportsQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Box, PageHeader } from '@coop/shared/ui';
+import { getRouterQuery } from '@coop/shared/utils';
 
 export const SavedReportList = () => {
   const router = useRouter();
+
   const { data: reportListData, isFetching } = useGetAllSavedReportsQuery({
-    pagination: {
-      after: '',
-      first: 1000,
-      order: { arrange: Arrange.Desc, column: 'ID' },
-    },
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
   const reportList = useMemo(
@@ -89,10 +87,7 @@ export const SavedReportList = () => {
         columns={columns}
         pagination={{
           total: reportListData?.report.listReports.totalCount ?? 'Many',
-          endCursor: reportListData?.report.listReports.pageInfo
-            ?.endCursor as string,
-          startCursor: reportListData?.report.listReports.pageInfo
-            ?.startCursor as string,
+          pageInfo: reportListData?.report.listReports.pageInfo,
         }}
       />
     </>

@@ -1,10 +1,8 @@
-
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup } from '@coop/shared/form';
 // import debounce from 'lodash/debounce';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
 
 /* eslint-disable-next-line */
 export interface CbsSettingsFeatureLoanProductsProps {}

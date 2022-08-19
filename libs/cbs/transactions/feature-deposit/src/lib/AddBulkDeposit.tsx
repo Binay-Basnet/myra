@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
 import {
-  Arrange,
   CashValue,
   DepositedBy,
   DepositInput,
@@ -26,6 +25,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
+import { getRouterQuery } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
 
@@ -149,10 +149,7 @@ export function AddBulkDeposit() {
 
   const { data: memberListData } = useGetMemberListQuery(
     {
-      first: 100,
-      after: '',
-      column: 'ID',
-      arrange: Arrange.Desc,
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
     },
     {
       staleTime: 0,

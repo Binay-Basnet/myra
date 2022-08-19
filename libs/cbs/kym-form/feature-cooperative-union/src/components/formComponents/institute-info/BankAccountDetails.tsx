@@ -1,13 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   CoopUnionInstitutionInformationInput,
   useGetBankListQuery,
 } from '@coop/cbs/data-access';
+import {
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

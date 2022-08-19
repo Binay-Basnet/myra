@@ -25,6 +25,7 @@ import {
 
 /* eslint-disable-next-line */
 interface CbsAccountOpenFormProps {}
+
 type CustomerPaymentTable = {
   payment_type: string;
   date: string;

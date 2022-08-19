@@ -707,7 +707,7 @@ export const Product = () => {
                             Penalty {productData?.penaltyData?.penaltyRate} %
                           </TextFields>
                         </li>
-                        {/* 
+                        {/*
                       <li>
                         <TextFields
                           color="neutralColorLight.Gray-70"
@@ -749,7 +749,7 @@ export const Product = () => {
                             Rebate {productData?.rebateData?.percentage} %
                           </TextFields>
                         </li>
-                        {/* 
+                        {/*
                       <li>
                         <TextFields
                           color="neutralColorLight.Gray-70"

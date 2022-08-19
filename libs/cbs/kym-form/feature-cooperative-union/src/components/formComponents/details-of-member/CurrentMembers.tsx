@@ -1,11 +1,10 @@
 import React from 'react';
-import { Control } from 'react-hook-form';
+
 import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/shared/form';
-import { KymIndMemberInput } from '@coop/cbs/data-access';
+import { FormInput } from '@coop/shared/form';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

@@ -1,10 +1,14 @@
 import React, { ReactElement } from 'react';
 
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
-import { MainLayout } from '@coop/shared/ui';
+import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
 const InventoryReport = () => {
-  return <>Branch Reports</>;
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <WIPState />
+    </Box>
+  );
 };
 
 InventoryReport.getLayout = function getLayout(page: ReactElement) {

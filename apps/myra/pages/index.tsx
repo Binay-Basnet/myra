@@ -8,6 +8,7 @@ import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { HomePageLayout } from '@coop/myra/components';
 import { Box, Button, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const Dashboard = () => {

@@ -16,14 +16,12 @@ query getShareBalanceList {
 }
 
 query getShareRegisterList(
-  $after: Cursor
-  $first: Int
-  $before: Cursor
-  $last: Int
+  $pagination: Pagination,
+  $filter: ShareRegisterFilter,
 ) {
   share {
     register(
-      pagination: { after: $after, first: $first, before: $before, last: $last }
+      pagination: $pagination, filter: $filter
     ) {
       edges {
         node {

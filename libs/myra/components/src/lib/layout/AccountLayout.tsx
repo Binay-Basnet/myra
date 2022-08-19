@@ -24,10 +24,6 @@ const accountColumns = [
     link: '/accounts/account-close',
     addLinkId: '/accounts/account-close',
   },
-  {
-    title: 'accountReport',
-    link: '/accounts/list',
-  },
 ];
 
 export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {

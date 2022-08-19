@@ -10,6 +10,7 @@ interface IKYMDocumentDeclarationProps {
   }) => void;
   directorId: string;
 }
+
 export const Bottomdirectorcoop = ({
   setKymCurrentSection,
   directorId,

@@ -1,4 +1,5 @@
 // import debounce from 'lodash/debounce';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
@@ -16,7 +17,11 @@ type SalesTable = {
 };
 
 export const Interest = () => {
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext<{
+    ladderRateData: SalesTable[];
+    nature: NatureOfDepositProduct;
+    ladderRate: boolean;
+  }>();
   const { t } = useTranslation();
   const depositNature = watch('nature');
   const ladderRate = watch('ladderRate');
@@ -31,6 +36,15 @@ export const Interest = () => {
       value: false,
     },
   ];
+
+  const ladderRateEditData = watch('ladderRateData');
+
+  useEffect(() => {
+    setValue(
+      'ladderRateData',
+      ladderRateEditData?.map((data) => ({ ...data, type: 'More Than' }))
+    );
+  }, [ladderRateEditData?.length]);
 
   return (
     <>
@@ -135,24 +149,11 @@ export const Interest = () => {
           {ladderRate && (
             <FormEditableTable<SalesTable>
               name="ladderRateData"
-              debug={false}
-              // defaultData={[
-              //   {
-              //     type: 'More Than',
-              //     amount: 0,
-              //     rate: 0,
-              //   },
-              //   {
-              //     type: 'More Than',
-              //     amount: 0,
-              //     rate: 0,
-              //   },
-              // ]}
               columns={[
                 {
                   accessor: 'type',
                   header: t['depositProductInterestType'],
-                  // accessorFn: () => 'More Than',
+                  cell: () => 'More Than',
                 },
                 {
                   accessor: 'amount',

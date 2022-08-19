@@ -3,10 +3,7 @@ query getAllSavedReports($pagination: Pagination) {
     listReports(pagination: $pagination) {
       totalCount
       pageInfo {
-        startCursor
-        endCursor
-        hasNextPage
-        hasPreviousPage
+        ...Pagination
       }
       edges {
         cursor

@@ -1,12 +1,11 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
-import { Arrange, useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
+import { useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Avatar, Box, Text } from '@coop/shared/ui';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const tabList = [
   {
@@ -29,26 +28,9 @@ export interface WithdrawListProps {}
 export function WithdrawList() {
   const { t } = useTranslation();
 
-  const router = useRouter();
   const { data, isFetching } = useGetWithdrawListDataQuery(
     {
-      pagination: router.query['before']
-        ? {
-            first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            after: router.query['before'] as string,
-            order: {
-              column: 'ID',
-              arrange: Arrange.Desc,
-            },
-          }
-        : {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
-            order: {
-              column: 'ID',
-              arrange: Arrange.Desc,
-            },
-          },
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
     },
     {
       staleTime: 0,
@@ -136,9 +118,7 @@ export function WithdrawList() {
         columns={columns}
         pagination={{
           total: data?.transaction?.listWithdraw?.totalCount ?? 'Many',
-          endCursor: data?.transaction?.listWithdraw.pageInfo?.endCursor ?? '',
-          startCursor:
-            data?.transaction?.listWithdraw.pageInfo?.startCursor ?? '',
+          pageInfo: data?.transaction?.listWithdraw?.pageInfo,
         }}
         searchPlaceholder="Search Withdraw"
       />

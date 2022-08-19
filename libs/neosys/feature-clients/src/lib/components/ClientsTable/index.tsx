@@ -3,39 +3,21 @@ import { useRouter } from 'next/router';
 import { Avatar, Flex } from '@chakra-ui/react';
 import format from 'date-fns/format';
 
-import {
-  Arrange,
-  ObjState,
-  useGetMemberListQuery,
-} from '@coop/cbs/data-access';
+import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { NeosysTableListPageHeader } from '@coop/neosys-admin/ui-components';
-import { Column, DEFAULT_PAGE_SIZE, Table } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Column, Table } from '@coop/shared/ui';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ClientsTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { data, isFetching } = useGetMemberListQuery(
-    router.query['before']
-      ? {
-          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          first: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-          after: router.query['before'] as string,
-          column: 'ID',
-          arrange: Arrange.Desc,
-        }
-      : {
-          objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-          first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-          after: (router.query['after'] ?? '') as string,
-          column: 'ID',
-          arrange: Arrange.Desc,
-        },
-    {
-      staleTime: 0,
-    }
-  );
+  const { data, isFetching } = useGetMemberListQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    filter: {
+      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+    },
+  });
 
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 

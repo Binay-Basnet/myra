@@ -106,8 +106,12 @@ export interface BaseTableProps<T extends Record<string, unknown>> {
 
   pagination?: {
     total: number | string;
-    startCursor: string;
-    endCursor: string;
+    pageInfo: {
+      startCursor: string;
+      endCursor: string;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+    };
   };
 
   searchPlaceholder?: string;

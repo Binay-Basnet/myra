@@ -1,8 +1,8 @@
-import { CbsSettingsFeatureBranchesNew } from '@coop/cbs/settings/branches';
+import { CbsSettingsFeatureServiceCenterNew } from '@coop/cbs/settings/branches';
 import { SettingsLayout } from '@coop/cbs/settings/ui-layout';
 
 const Branches = () => {
-  return <CbsSettingsFeatureBranchesNew />;
+  return <CbsSettingsFeatureServiceCenterNew />;
 };
 
 export default Branches;

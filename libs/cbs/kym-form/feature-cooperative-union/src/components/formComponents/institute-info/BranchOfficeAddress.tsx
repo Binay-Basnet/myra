@@ -2,13 +2,13 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   CoopUnionInstitutionInformationInput,
   useAllAdministrationQuery,
 } from '@coop/cbs/data-access';
+import {
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -81,7 +81,7 @@ export const BranchOfficeAddress = ({
             fontWeight="semibold"
             color="neutralColorLight.Gray-80"
           >
-            {t['kymCoopUnionOperatorBranchAddress']}
+            {t['serviceCenterOfficeAddress']}
           </Text>
           <Box
             id="Branch Office Address"

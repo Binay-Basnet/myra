@@ -23,6 +23,7 @@ export const theme = extendTheme({
         background: 'background.500',
         lineHeight: 'tall',
         scrollBehavior: 'smooth',
+        fontFamily: 'Inter',
       },
       ':not(.chakra-dont-set-collapse) > .chakra-collapse': {
         overflow: 'initial !important',
@@ -31,6 +32,10 @@ export const theme = extendTheme({
   },
   ...foundations,
 
+  fonts: {
+    heading: 'monospace',
+    body: 'monospace',
+  },
   semanticTokens: {
     colors: {
       primary: {

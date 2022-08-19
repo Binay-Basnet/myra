@@ -110,13 +110,6 @@ export const KYMFinancialTransactionDetails = ({
               />
               <FormInput
                 type="number"
-                name="initialLoan"
-                label={t['kymIndFinancialLoan']}
-                textAlign="right"
-                placeholder="0.00"
-              />
-              <FormInput
-                type="number"
                 name="otherFinancialAmount"
                 label={t['kymIndFinancialOther']}
                 textAlign="right"
