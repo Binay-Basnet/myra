@@ -14,7 +14,7 @@ const baseStyle: PartsStyleObject<typeof parts> = {
   },
 
   th: {
-    fontFamily: 'heading',
+    fontFamily: 'inherit',
     fontWeight: 'semibold',
     textTransform: 'capitalize',
     letterSpacing: 'normal',
