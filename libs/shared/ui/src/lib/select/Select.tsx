@@ -56,6 +56,8 @@ export function Select({
             ? `my_unique_select_key__${JSON.stringify(value)}`
             : 'isMulti'
         }
+        id="select"
+        instanceId="select"
         onMenuClose={() => {
           if (isMulti) {
             setSortedOptions((prev) =>
