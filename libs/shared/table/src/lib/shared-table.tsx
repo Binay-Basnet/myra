@@ -96,23 +96,26 @@ export const Table = <T extends Record<string, unknown>>({
         </Thead>
         <Tbody position="relative">
           {isLoading ? (
-            <Box
-              position="absolute"
-              width="100%"
-              height="100%"
-              zIndex={10}
-              bg="#ffffff99"
-              display="flex"
-              justifyContent="center"
-              pt="100px"
-            >
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="primary.500"
-                size="xl"
-              />
+            <Box as="tr">
+              <Box
+                position="absolute"
+                width="100%"
+                height="100%"
+                as="td"
+                zIndex={10}
+                bg="#ffffff99"
+                display="flex"
+                justifyContent="center"
+                pt="100px"
+              >
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="primary.500"
+                  size="xl"
+                />
+              </Box>
             </Box>
           ) : (
             !data ||
@@ -120,11 +123,13 @@ export const Table = <T extends Record<string, unknown>>({
               <Box
                 position="absolute"
                 width="100%"
+                as="tr"
                 height="100%"
                 display="flex"
                 justifyContent="center"
               >
                 <Flex
+                  as="td"
                   justifyContent="center"
                   height="300px"
                   alignItems="center"

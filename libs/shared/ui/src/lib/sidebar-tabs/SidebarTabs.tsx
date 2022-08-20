@@ -33,7 +33,7 @@ export function SidebarTabs({ title, to }: SidebarTabsProps) {
   return (
     <Link href={to}>
       <TabCol>
-        <Text>{title}</Text>
+        <Text as="div">{title}</Text>
       </TabCol>
     </Link>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { PopoverComponent } from '@coop/myra/components';
 import { Table } from '@coop/shared/table';
@@ -117,20 +117,21 @@ interface ReportLinkTextProps {
 }
 
 export const ReportLinkText = ({ children, link }: ReportLinkTextProps) => {
+  const router = useRouter();
+
   return (
-    <Link href={link} passHref>
-      <Text
-        fontSize="r1"
-        cursor="pointer"
-        color="gray.600"
-        fontWeight="500"
-        _hover={{
-          textDecoration: 'underline',
-          color: 'primary.500',
-        }}
-      >
-        {children}
-      </Text>
-    </Link>
+    <Text
+      fontSize="r1"
+      cursor="pointer"
+      color="gray.600"
+      fontWeight="500"
+      onClick={() => link && router.push(link)}
+      _hover={{
+        textDecoration: 'underline',
+        color: 'primary.500',
+      }}
+    >
+      {children}
+    </Text>
   );
 };
