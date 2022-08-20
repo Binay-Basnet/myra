@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   FormProvider,
   useFieldArray,
@@ -13,7 +14,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/shared/form';
+import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import {
   setInsuranceScheme,
@@ -32,10 +33,10 @@ const AddServiceCharge = ({
 }: IAddAccountServices) => {
   const { t } = useTranslation();
 
-  // const amountOpt = [
-  //   { label: t['settingsLoanAmount'], value: 'amount' },
-  //   { label: t['settingsLoanPercentage'], value: 'percentage' },
-  // ];
+  const amountOpt = [
+    { label: t['settingsLoanAmount'], value: 'amount' },
+    { label: t['settingsLoanPercentage'], value: 'percentage' },
+  ];
   const { watch } = useFormContext();
   const AmountPer = watch(`insuranceScheme.${index}.paymentType`);
   return (
@@ -73,7 +74,7 @@ const AddServiceCharge = ({
           label={t['settingsLoanPaymentFreq']}
           placeholder={t['settingsLoanPaymentFreq']}
         />
-        {/* <Box display="flex" flexDirection="column" gap="s8">
+        <Box display="flex" flexDirection="column" gap="s8">
           <Text
             fontWeight="Medium"
             color="neutralColorLight.Gray-70"
@@ -85,49 +86,49 @@ const AddServiceCharge = ({
             name={`insuranceScheme.${index}.paymentType`}
             options={amountOpt}
           />
-        </Box> */}
+        </Box>
       </InputGroupContainer>
       <Box pt="s16">
-        {/* {AmountPer && AmountPer === 'amount' && ( */}
-        <Box
-          border="1px solid"
-          borderColor={'border.layout'}
-          p="s16"
-          borderRadius={'4px'}
-        >
-          <InputGroupContainer>
-            <FormInput
-              type="number"
-              textAlign={'right'}
-              bg="white"
-              name={`insuranceScheme.${index}.minAmount`}
-              label={t['settingsLoanMinimumAmount']}
-              placeholder={t['settingsLoanPlceholderNumber']}
-            />
-            <FormInput
-              type="number"
-              textAlign={'right'}
-              bg="white"
-              name={`insuranceScheme.${index}.maxAmount`}
-              label={t['settingsLoanMaximumAmount']}
-              placeholder={t['settingsLoanPlceholderNumber']}
-            />
-            <FormInput
-              type="number"
-              textAlign={'right'}
-              bg="white"
-              name={`insuranceScheme.${index}.insurancePremiumPercent`}
-              label={t['settingsLoanInsurancePremium']}
-              placeholder={t['settingsLoanPlceholderNumber']}
-              rightElement={
-                <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                  %
-                </Text>
-              }
-            />
-          </InputGroupContainer>
-        </Box>
-        {/* )} */}
+        {AmountPer && AmountPer === 'amount' && (
+          <Box
+            border="1px solid"
+            borderColor={'border.layout'}
+            p="s16"
+            borderRadius={'4px'}
+          >
+            <InputGroupContainer>
+              <FormInput
+                type="number"
+                textAlign={'right'}
+                bg="white"
+                name={`insuranceScheme.${index}.minAmount`}
+                label={t['settingsLoanMinimumAmount']}
+                placeholder={t['settingsLoanPlceholderNumber']}
+              />
+              <FormInput
+                type="number"
+                textAlign={'right'}
+                bg="white"
+                name={`insuranceScheme.${index}.maxAmount`}
+                label={t['settingsLoanMaximumAmount']}
+                placeholder={t['settingsLoanPlceholderNumber']}
+              />
+              <FormInput
+                type="number"
+                textAlign={'right'}
+                bg="white"
+                name={`insuranceScheme.${index}.insurancePremiumPercent`}
+                label={t['settingsLoanInsurancePremium']}
+                placeholder={t['settingsLoanPlceholderNumber']}
+                rightElement={
+                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                    %
+                  </Text>
+                }
+              />
+            </InputGroupContainer>
+          </Box>
+        )}
         {AmountPer && AmountPer === 'percentage' && (
           <Box
             border="1px solid"
@@ -174,9 +175,15 @@ const AddServiceCharge = ({
 };
 export const AccountServicesCharge = () => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const methods = useForm();
-  const { getValues } = methods;
+  const { watch } = methods;
+  const insuranceScheme = watch('insuranceScheme');
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setInsuranceScheme(insuranceScheme));
+  }, [JSON.stringify(insuranceScheme)]);
+
   const {
     fields: insuranceSchemeFields,
     append: insuranceSchemeAppend,
@@ -191,11 +198,7 @@ export const AccountServicesCharge = () => {
       gap="s16"
     >
       <FormProvider {...methods}>
-        <form
-          onChange={() => {
-            dispatch(setInsuranceScheme(getValues()['insuranceScheme']));
-          }}
-        >
+        <form>
           <DynamicBoxGroupContainer>
             {insuranceSchemeFields.map((item, index) => {
               return (

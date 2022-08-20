@@ -80,7 +80,14 @@ export const loanSettingSlice = createSlice({
       state,
       action: PayloadAction<insuranceSchemeProps[] | null>
     ) => {
-      state.insuranceScheme = [...action.payload];
+      if (action.payload) {
+        const newArray: insuranceSchemeProps[] = [];
+        action.payload.forEach((item, index) => {
+          newArray[index] = { ...item };
+        });
+
+        state.insuranceScheme = [...newArray];
+      }
     },
   },
 });
