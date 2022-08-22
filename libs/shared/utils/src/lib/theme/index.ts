@@ -3,6 +3,7 @@ import { extendTheme } from '@chakra-ui/react';
 
 import foundations from './foundations';
 import accordion from './foundations/accordion';
+import Alert from './foundations/alert';
 import button from './foundations/button';
 import checkbox from './foundations/checkbox';
 import Input from './foundations/input';
@@ -71,6 +72,7 @@ export const theme = extendTheme({
       baseStyle: button.baseStyle,
       defaultProps: button.defaultProps,
     },
+    Alert,
     Checkbox: {
       parts: checkbox.parts,
       sizes: checkbox.sizes,

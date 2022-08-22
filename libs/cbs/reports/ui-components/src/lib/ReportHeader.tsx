@@ -14,6 +14,7 @@ import {
   useSaveNewReportMutation,
 } from '@coop/cbs/data-access';
 import {
+  asyncToast,
   Box,
   Button,
   Grid,
@@ -147,24 +148,35 @@ export const ReportHeader = ({ paths, filters }: PathBarProps) => {
         <Box pt="s12" pb="s8">
           <Button
             onClick={async () => {
-              const idResponse = await getNewId({});
-
-              const response = await saveReport({
-                data: {
-                  id: idResponse.newId,
+              const callApi = async () => {
+                const idResponse = await getNewId({});
+                return await saveReport({
                   data: {
-                    memberId: filters.memberId,
-                    periodType: filters.predefinedPeriod,
-                    filter: filters.type,
+                    id: idResponse.newId,
+                    data: {
+                      memberId: filters.memberId,
+                      periodType: filters.predefinedPeriod,
+                      filter: filters.type,
+                    },
+                    name: getValues()['name'],
+                    reportType: 'Share Report',
                   },
-                  name: getValues()['name'],
-                  reportType: 'Share Report',
+                });
+              };
+
+              await asyncToast({
+                id: 'save-report-toast',
+                onSuccess: () => {
+                  queryClient.invalidateQueries('getAllSavedReports');
+                  router.push('/reports/saved');
                 },
+                msgs: {
+                  loading: 'Saving New Report',
+                  success: 'Saved Report',
+                  error: 'Error while saving',
+                },
+                promise: callApi(),
               });
-              if (response) {
-                queryClient.invalidateQueries('getAllSavedReports');
-                router.push('/reports/saved');
-              }
             }}
           >
             Save Report{' '}

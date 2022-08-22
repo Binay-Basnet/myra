@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
+// import '../styles/globals.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
@@ -7,11 +8,10 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
-import { Box, FloatingShortcutButton } from '@coop/shared/ui';
+import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
 import { store, theme, useInit } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
-// import '../styles/globals.css';
 
 const { ToastContainer } = createStandaloneToast();
 
@@ -51,6 +51,7 @@ function MainApp({ Component, pageProps }: AppPropsWithLayout) {
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
       <ToastContainer />
+      <Toaster />
       <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       <Box
         position="fixed"
