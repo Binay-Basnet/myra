@@ -10,7 +10,6 @@ import {
   DepositPaymentType,
   NatureOfDepositProduct,
   useGetAccountTableListQuery,
-  useGetMemberListQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
 import { MemberSelect } from '@coop/cbs/transactions/ui-components';
@@ -25,9 +24,9 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { getRouterQuery } from '@coop/shared/utils';
+import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
-import { InstallmentModel, Payment } from '../components';
+import { Payment } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddBulkDepositProps {}
@@ -56,6 +55,10 @@ type DepositAccountTable = {
   noOfInstallments: string;
   amount: string;
   rebate: string;
+  accountName: string;
+  accountType: string;
+  accountBalance: string;
+  accountFine: string;
 };
 
 const accountTypes = {
@@ -109,6 +112,9 @@ export function AddBulkDeposit() {
 
   const memberId = watch('memberId');
 
+  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
+    useGetIndividualMemberDetails({ memberId });
+
   const { data: accountListData } = useGetAccountTableListQuery(
     {
       paginate: {
@@ -130,6 +136,12 @@ export function AddBulkDeposit() {
         noOfInstallments: '1',
         amount: '',
         rebate: '',
+        accountName: account?.node?.product?.productName ?? '',
+        accountType: account?.node?.product?.nature
+          ? accountTypes[account?.node?.product?.nature]
+          : '',
+        accountBalance: account?.node?.balance ?? '',
+        accountFine: account?.node?.fine ?? '',
       })) ?? [],
     [accountListData]
   );
@@ -147,22 +159,6 @@ export function AddBulkDeposit() {
     reset({ memberId, accountId: '', voucherId: '', amount: '' });
   }, [memberId]);
 
-  const { data: memberListData } = useGetMemberListQuery(
-    {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
-
-  const memberDetail = useMemo(() => {
-    return memberListData?.members?.list?.edges?.find(
-      (member) => member?.node?.id === memberId
-    )?.node;
-  }, [memberId, memberListData]);
-
   const accountId = watch('accountId');
 
   const selectedAccount = useMemo(
@@ -173,7 +169,7 @@ export function AddBulkDeposit() {
     [accountId]
   );
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
 
@@ -181,9 +177,9 @@ export function AddBulkDeposit() {
   //   setIsModalOpen(true);
   // };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
+  // const handleModalClose = () => {
+  //   setIsModalOpen(false);
+  // };
 
   const amountToBeDeposited = watch('amount') ?? 0;
 
@@ -330,21 +326,22 @@ export function AddBulkDeposit() {
                     <MemberCard
                       isInline={true}
                       memberDetails={{
-                        name: memberDetail?.name?.local,
+                        name: memberDetailData?.name,
                         avatar: 'https://bit.ly/dan-abramov',
-                        memberID: memberDetail?.id,
-                        // gender: 'Male',
-                        // age: '43',
-                        // maritalStatus: 'Unmarried',
-                        dateJoined: memberDetail?.dateJoined,
+                        memberID: memberDetailData?.id,
+                        gender: memberDetailData?.gender,
+                        age: memberDetailData?.age,
+                        maritalStatus: memberDetailData?.maritalStatus,
+                        dateJoined: memberDetailData?.dateJoined,
                         // branch: 'Basantapur',
-                        phoneNo: memberDetail?.contact,
-                        // email: 'ajitkumar.345@gmail.com',
-                        // address: 'Basantapur',
+                        phoneNo: memberDetailData?.contact,
+                        email: memberDetailData?.email,
+                        address: memberDetailData?.address,
                       }}
-                      notice="KYM needs to be updated"
-                      // signaturePath="/signature.jpg"
-                      citizenshipPath="/citizenship.jpeg"
+                      // notice="KYM needs to be updated"
+                      signaturePath={memberSignatureUrl}
+                      showSignaturePreview={false}
+                      citizenshipPath={memberCitizenshipUrl}
                       accountInfo={
                         selectedAccount
                           ? {
@@ -386,6 +383,67 @@ export function AddBulkDeposit() {
                           cellWidth: 'auto',
                           fieldType: 'search',
                           searchOptions: accountListSearchOptions,
+                          cell: (row) => (
+                            <Box
+                              display="flex"
+                              justifyContent="space-between"
+                              p="s12"
+                              width="100%"
+                            >
+                              <Box
+                                display="flex"
+                                flexDirection="column"
+                                gap="s4"
+                              >
+                                <Text
+                                  fontSize="r1"
+                                  fontWeight={500}
+                                  color="neutralColorLight.Gray-80"
+                                >
+                                  {row?.accountName}
+                                </Text>
+                                <Text
+                                  fontSize="s3"
+                                  fontWeight={500}
+                                  color="neutralColorLight.Gray-60"
+                                >
+                                  {row?.accountId}
+                                </Text>
+                                <Text
+                                  fontSize="s3"
+                                  fontWeight={400}
+                                  color="neutralColorLight.Gray-60"
+                                >
+                                  {row?.accountType}
+                                </Text>
+                              </Box>
+
+                              <Box
+                                display="flex"
+                                flexDirection="column"
+                                gap="s4"
+                                alignItems="flex-end"
+                              >
+                                <Text
+                                  fontSize="s3"
+                                  fontWeight={500}
+                                  color="neutralColorLight.Gray-80"
+                                >
+                                  {row?.accountBalance}
+                                </Text>
+
+                                {row?.accountFine && (
+                                  <Text
+                                    fontSize="s3"
+                                    fontWeight={500}
+                                    color="danger.500"
+                                  >
+                                    Fine: {row?.accountFine}
+                                  </Text>
+                                )}
+                              </Box>
+                            </Box>
+                          ),
                         },
                         {
                           accessor: 'noOfInstallments',
@@ -536,7 +594,7 @@ export function AddBulkDeposit() {
         </Box>
       </Box>
 
-      <InstallmentModel isOpen={isModalOpen} onClose={handleModalClose} />
+      {/* <InstallmentModel isOpen={isModalOpen} onClose={handleModalClose} /> */}
     </>
   );
 }

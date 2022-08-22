@@ -16,13 +16,11 @@ query getShareBalanceList {
 }
 
 query getShareRegisterList(
-  $pagination: Pagination,
-  $filter: ShareRegisterFilter,
+  $pagination: Pagination
+  $filter: ShareRegisterFilter
 ) {
   share {
-    register(
-      pagination: $pagination, filter: $filter
-    ) {
+    register(pagination: $pagination, filter: $filter) {
       edges {
         node {
           transactionDate

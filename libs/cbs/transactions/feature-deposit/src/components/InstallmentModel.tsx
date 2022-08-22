@@ -1,4 +1,4 @@
-import { BiRightArrowAlt } from 'react-icons/bi';
+import { useEffect } from 'react';
 import {
   Modal,
   ModalBody,
@@ -9,38 +9,53 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
-import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
-
-const installmentsList = [
-  {
-    from: '01-05-2079',
-    to: '01-06-2079',
-    status: 'Done',
-    title: 'Bhadra',
-  },
-  {
-    from: '01-06-2079',
-    to: '01-07-2079',
-    status: 'Forgive',
-    title: 'Asoj',
-  },
-  {
-    from: '01-07-2079',
-    to: '01-08-2079',
-    status: 'Forgive',
-    title: 'Kartik',
-  },
-];
+import {
+  InstallmentState,
+  NatureOfDepositProduct,
+  useGetInstallmentsListDataQuery,
+  useSetAccountForgiveInstallmentDataMutation,
+} from '@coop/cbs/data-access';
+import { Box, Button, Divider, Text } from '@coop/shared/ui';
 
 interface IInstallmentModelProps {
   isOpen: boolean;
   onClose: () => void;
+  accountId: string | undefined;
+  productType: NatureOfDepositProduct | undefined;
 }
 
 export const InstallmentModel = ({
   isOpen,
   onClose,
+  accountId,
+  productType,
 }: IInstallmentModelProps) => {
+  const { data: installmentsListQueryData, refetch } =
+    useGetInstallmentsListDataQuery(
+      { id: accountId as string },
+      {
+        enabled:
+          (!!accountId &&
+            productType === NatureOfDepositProduct.RecurringSaving) ||
+          productType === NatureOfDepositProduct.Mandatory,
+      }
+    );
+
+  const { mutate } = useSetAccountForgiveInstallmentDataMutation();
+
+  useEffect(() => {
+    if (accountId) {
+      refetch();
+    }
+  }, [accountId]);
+
+  const handleForgiveInstallment = (installmentDate: string) => {
+    mutate(
+      { id: accountId as string, installmentDate },
+      { onSuccess: () => refetch() }
+    );
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
       <ModalOverlay />
@@ -68,22 +83,23 @@ export const InstallmentModel = ({
             flexDirection="column"
             gap="s16"
           >
-            {installmentsList.map((installment) => (
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Box display="flex" flexDirection="column">
-                  <Text
-                    fontSize="r1"
-                    fontWeight={500}
-                    color="neutralColorLight.Gray-80"
-                  >
-                    {installment.title}
-                  </Text>
-                  <Box display="flex" alignItems="center">
+            {installmentsListQueryData?.account?.getInstallments?.data?.map(
+              (installment) => (
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Box display="flex" flexDirection="column">
                     <Text
+                      fontSize="r1"
+                      fontWeight={500}
+                      color="neutralColorLight.Gray-80"
+                    >
+                      {installment?.monthName}
+                    </Text>
+                    <Box display="flex" alignItems="center">
+                      {/* <Text
                       fontSize="s3"
                       fontWeight={400}
                       color="neutralColorLight.Gray-60"
@@ -96,32 +112,43 @@ export const InstallmentModel = ({
                       cursor="pointer"
                       color="neutralColorLight.Gray-60"
                       h="s16"
-                    />
-                    <Text
-                      fontSize="s3"
-                      fontWeight={400}
-                      color="neutralColorLight.Gray-60"
-                    >
-                      {installment.to}
-                    </Text>
+                    /> */}
+                      <Text
+                        fontSize="s3"
+                        fontWeight={400}
+                        color="neutralColorLight.Gray-60"
+                      >
+                        {installment?.dueDate}
+                      </Text>
+                    </Box>
+                  </Box>
+
+                  <Box>
+                    {installment?.status === InstallmentState.Paid ||
+                    installment?.status === InstallmentState.Cancelled ? (
+                      <Text
+                        fontSize="r1"
+                        fontWeight={500}
+                        color={'neutralColorLight.Gray-60'}
+                      >
+                        Done
+                      </Text>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        onClick={() =>
+                          handleForgiveInstallment(
+                            installment?.dueDate as string
+                          )
+                        }
+                      >
+                        Forgive
+                      </Button>
+                    )}
                   </Box>
                 </Box>
-
-                <Box>
-                  <Text
-                    fontSize="r1"
-                    fontWeight={500}
-                    color={
-                      installment.status === 'Done'
-                        ? 'neutralColorLight.Gray-60'
-                        : 'primary.500'
-                    }
-                  >
-                    {installment.status}
-                  </Text>
-                </Box>
-              </Box>
-            ))}
+              )
+            )}
           </Box>
         </ModalBody>
 
