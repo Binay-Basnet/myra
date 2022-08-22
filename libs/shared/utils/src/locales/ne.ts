@@ -3209,6 +3209,7 @@ const ne: Record<string, string> = {
 
   kynIndEstimatedannualaccounttransaction:
     'Estimated annual account transaction',
+  moreThan: 'More Than',
 };
 
 export default ne;

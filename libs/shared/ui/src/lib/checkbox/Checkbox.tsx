@@ -17,7 +17,7 @@ export function Checkbox(props: CheckboxProps) {
   const { children, label, ...rest } = props;
 
   return (
-    <Box display="flex" gap="s8">
+    <Box display="flex" alignItems="center" gap="s8">
       <ChakraCheckbox {...rest} />
       {label ? <TextFields variant="formInput">{label}</TextFields> : children}
     </Box>

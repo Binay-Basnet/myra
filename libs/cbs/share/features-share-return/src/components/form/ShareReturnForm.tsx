@@ -315,7 +315,7 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                               >
                                 {t['sharePurchaseBranch']}:&nbsp;
-                                {memberDetail?.address?.district?.local}
+                                {memberDetail?.address?.district?.local ?? '-'}
                               </Text>
                             </Box>
                           </GridItem>
@@ -339,7 +339,7 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberDetail?.contact}
+                                {memberDetail?.contact ?? '-'}
                               </TextFields>
                             </Box>
 
@@ -367,8 +367,8 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberDetail?.address?.district?.local},
-                                {memberDetail?.address?.locality?.local} -
+                                {memberDetail?.address?.district?.local ?? '-'}{' '}
+                                ,{memberDetail?.address?.locality?.local} -
                                 {memberDetail?.address?.wardNo}
                               </TextFields>
                             </Box>

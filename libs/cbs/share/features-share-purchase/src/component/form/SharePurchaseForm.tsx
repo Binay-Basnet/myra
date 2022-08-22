@@ -281,7 +281,7 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {t['sharePurchaseID']}:{memberDetail?.id}
+                                {t['sharePurchaseID']}:&nbsp;{memberDetail?.id}
                               </Text>
 
                               <Text
@@ -289,7 +289,7 @@ const SharePurchaseForm = () => {
                                 fontWeight="Regular"
                                 fontSize="s3"
                               >
-                                {t['sharePurchaseMemberSince']}:
+                                {t['sharePurchaseMemberSince']}:&nbsp;
                                 {/* {memberDetail?.personalInformation?.dateOfBirth} */}
                                 2054/10/12
                               </Text>
@@ -299,8 +299,8 @@ const SharePurchaseForm = () => {
                                 fontWeight="Regular"
                                 fontSize="s3"
                               >
-                                {t['sharePurchaseBranch']}:
-                                {memberDetail?.address?.district?.local}
+                                {t['sharePurchaseBranch']}:&nbsp;
+                                {memberDetail?.address?.district?.local ?? '-'}
                               </Text>
                             </Box>
                           </GridItem>
@@ -324,7 +324,7 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberDetail?.contact}
+                                {memberDetail?.contact ?? '-'}
                               </TextFields>
                             </Box>
 
@@ -352,9 +352,9 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberDetail?.address?.district?.local},
-                                {/* {memberDetail?.address?.locality?.local} -
-                                {memberDetail?.address?.wardNo} */}
+                                {memberDetail?.address?.district?.local ?? '-'}{' '}
+                                ,{memberDetail?.address?.locality?.local} -
+                                {memberDetail?.address?.wardNo}
                               </TextFields>
                             </Box>
                           </GridItem>

@@ -112,7 +112,7 @@ export const KYMEstimatedAmount = ({
               name="estimatedAnnualTransactionFrequencyId"
               options={getFieldOption(
                 estimatedAnnualTransactionData,
-                (label) => `${t['upto']} ${label}`
+                (label) => label
               )}
               labelFontSize="s3"
             />

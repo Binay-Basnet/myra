@@ -3204,6 +3204,7 @@ const en: Record<string, string> = {
     'Estimated annual account transaction',
   kymIndCooperativeServiceCenter: 'Service Center',
   kymIndCooperativeEnterServiceCenter: 'Enter Service Center',
+  moreThan: 'More Than',
 };
 
 export default en;

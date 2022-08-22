@@ -108,7 +108,7 @@ const MainOccupation = ({
 
   const id = router?.query?.['id'];
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
     {
       id: String(id),
     },
@@ -169,17 +169,19 @@ const MainOccupation = ({
     }
   }, [familyOccupationListData]);
 
-  const { mutate } = useSetMemberOccupationMutation();
+  const { mutateAsync } = useSetMemberOccupationMutation({
+    onSuccess: () => refetch(),
+  });
 
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
         if (id) {
-          mutate({
+          mutateAsync({
             id: String(id),
             isSpouse: false,
             data: { id: occupationId, ...data },
-          });
+          }).then(() => refetch());
         }
       }, 800)
     );

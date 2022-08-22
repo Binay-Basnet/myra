@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Control, FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
@@ -27,11 +27,10 @@ import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
-interface IKYMDeclaration {
-  control: Control<any>;
-}
+// interface IKYMDeclaration {
+//   control: Control<any>;
+// }
 
-const details = ['Citizen', 'Permanent Resident', 'Resident'];
 const booleanList = [
   {
     label: 'Yes',
@@ -68,7 +67,7 @@ export const KYMDeclaration = ({
     });
   const {
     data: foreignEmploymentOptions,
-    isLoading: foreignEmploymentOptionsLoading,
+    // isLoading: foreignEmploymentOptionsLoading,
   } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm?.ForeignEmploymentOptions,
     // filter: { se: Kym_Field_Custom_Id.ForeignEmploymentOptions },
@@ -77,10 +76,9 @@ export const KYMDeclaration = ({
   const hasBeneficialOwner = watch('hasBeneficialOwner');
 
   const isPoliticallyExposed = watch('isPoliticallyExposed');
+  const hasForeignResidentialPermit = watch('hasForeignResidentialPermit');
 
   const isConvicted = watch('isConvicted');
-
-  const hasForeignResidentialPermit = watch('hasForeignResidentialPermit');
 
   const { data: editValues } = useGetIndividualKymEditDataQuery(
     {
@@ -93,6 +91,20 @@ export const KYMDeclaration = ({
     if (editValues) {
       const editValueData =
         editValues?.members?.individual?.formState?.data?.formData;
+
+      // if (editValueData?.foreignEmployment) {
+      //   reset({
+      //     // ...editValueData?.declaration,
+      //     convictedDetails: 'true',
+      //     hasForeignResidentialPermit: true,
+      //   });
+      // } else {
+      //   reset({
+      //     // ...editValueData?.declaration,
+      //     convictedDetails: 'false',
+      //     hasForeignResidentialPermit: false,
+      //   });
+      // }
 
       reset({
         ...editValueData?.declaration,
