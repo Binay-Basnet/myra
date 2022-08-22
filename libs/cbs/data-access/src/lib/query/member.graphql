@@ -1,11 +1,6 @@
-query getMemberList(
-  $pagination: Pagination!, $filter: KymMemberDataFilter
-) {
+query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
   members {
-    list(
-      pagination: $pagination
-      filter: $filter
-    ) {
+    list(pagination: $pagination, filter: $filter) {
       totalCount
       edges {
         node {
@@ -23,6 +18,26 @@ query getMemberList(
           contact
           createdAt
           dateJoined
+          profile {
+            ... on kymIndFormStateQuery {
+              data {
+                formData {
+                  basicInformation {
+                    genderId
+                    gender
+                    age
+                  }
+                  contactDetails {
+                    mobileNumber
+                    phoneNumber
+                    email
+                  }
+                  maritalStatusId
+                  maritalStatus
+                }
+              }
+            }
+          }
         }
         cursor
       }

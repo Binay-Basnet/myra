@@ -18,7 +18,10 @@ import {
   useGetMemberIndividualDataQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
+import {
+  FormCustomSelect,
+  FormMemberSelect,
+} from '@coop/cbs/transactions/ui-components';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
@@ -138,21 +141,21 @@ const SharePurchaseForm = () => {
 
   const memberListData = memberList?.members?.list?.edges;
 
-  type optionType = { label: string; value: string };
+  // type optionType = { label: string; value: string };
 
   const memberDetail =
     memberListData &&
     memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
 
-  const memberOptions = memberListData?.reduce((prevVal, curVal) => {
-    return [
-      ...prevVal,
-      {
-        label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
-        value: curVal?.node?.id as string,
-      },
-    ];
-  }, [] as optionType[]);
+  // const memberOptions = memberListData?.reduce((prevVal, curVal) => {
+  //   return [
+  //     ...prevVal,
+  //     {
+  //       label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
+  //       value: curVal?.node?.id as string,
+  //     },
+  //   ];
+  // }, [] as optionType[]);
 
   useEffect(() => {
     setTotalAmount(
@@ -226,7 +229,7 @@ const SharePurchaseForm = () => {
                   borderBottomColor={'border.layout'}
                 >
                   <Box w="50%">
-                    <FormSelect
+                    <FormMemberSelect
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
                       placeholder={t['sharePurchaseEnterMemberID']}
@@ -234,7 +237,25 @@ const SharePurchaseForm = () => {
                         setIDMember(id);
                         setTrigger(true);
                       }, 800)}
-                      options={memberOptions ?? []}
+                      options={
+                        memberListData?.map((member) => ({
+                          memberInfo: {
+                            // image:member?.node?.code,
+                            memberName: member?.node?.name?.local,
+                            memberId: member?.node?.id,
+                            gender:
+                              member?.node?.profile?.data?.formData
+                                ?.basicInformation?.gender?.local,
+                            age: member?.node?.profile?.data?.formData
+                              ?.basicInformation?.age,
+                            maritialStatus:
+                              member?.node?.profile?.data?.formData
+                                ?.maritalStatus?.local,
+                            address: member?.node?.address,
+                          },
+                          value: member?.node?.id as string,
+                        })) ?? []
+                      }
                     />
                   </Box>
 
@@ -263,7 +284,7 @@ const SharePurchaseForm = () => {
                           >
                             <Box m="10px">
                               <Avatar
-                                src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
+                                src="/passport.jpg"
                                 size="lg"
                                 name={memberDetail?.name?.local}
                               />
@@ -336,7 +357,8 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                ajitnepal65@gmail.com
+                                {memberDetail?.profile?.data?.formData
+                                  ?.contactDetails?.email ?? '-'}
                               </TextFields>
                             </Box>
 
