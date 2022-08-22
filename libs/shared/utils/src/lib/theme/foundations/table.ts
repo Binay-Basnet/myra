@@ -59,6 +59,9 @@ const variantSimple: PartsStyleFunction<typeof parts> = (props) => {
       color: mode('gray.600', 'gray.100')(props),
     },
     tfoot: {
+      th: {
+        px: 's12',
+      },
       tr: {
         '&:last-of-type': {
           th: { borderBottomWidth: 0 },

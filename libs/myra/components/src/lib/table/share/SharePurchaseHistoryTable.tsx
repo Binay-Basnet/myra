@@ -29,10 +29,12 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
     () => [
       {
         header: t['sn'],
+        footer: () => '',
         accessorFn: (row) => row?.id,
         cell: (props) => {
           return <span>{props.row.index + 1}</span>;
         },
+
         meta: {
           width: '10%',
         },
@@ -40,13 +42,14 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
 
       {
         header: t['sharePurchaseTableDate'],
+        footer: () => '',
         accessorFn: (row) => row?.transactionDate,
       },
 
       {
         header: t['sharePurchaseTableShareNumber'],
         accessorFn: (row) => row?.startNumber,
-
+        footer: () => '',
         cell: (props) => {
           return (
             <span>
@@ -60,6 +63,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         id: 'share-dr',
         header: t['sharePurchaseTableShareDr'],
         accessorFn: (row) => row?.debit,
+        footer: () => '',
 
         cell: (props) => {
           return (
@@ -72,6 +76,8 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       {
         id: 'share-cr',
         header: t['sharePurchaseTableShareCr'],
+        footer: () => '',
+
         meta: {
           width: '20%',
         },
@@ -86,18 +92,23 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
       },
       {
         header: t['sharePurchaseTableBalance'],
-        accessorFn: (row) => row?.balance,
 
+        accessorFn: (row) => row?.balance,
+        footer: () => shareHistoryTableData?.share.history?.balance?.amount,
         cell: (props) => {
           return <span>{amountConverter(props.getValue())}</span>;
         },
+        meta: {
+          isNumeric: true,
+        },
       },
     ],
-    [router, t]
+    [router, t, isFetching]
   );
 
   return (
     <Table
+      showFooter={true}
       isStatic={true}
       size="compact"
       isLoading={isFetching}
