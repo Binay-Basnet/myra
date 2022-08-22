@@ -8524,6 +8524,65 @@ export type SetLoanGeneralSettingsMutation = {
   };
 };
 
+export type SetLoanInsuranceSchemeMutationVariables = Exact<{
+  data?: InputMaybe<
+    | Array<InputMaybe<LoanInsuranceSchemeInput>>
+    | InputMaybe<LoanInsuranceSchemeInput>
+  >;
+}>;
+
+export type SetLoanInsuranceSchemeMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        insuranceScheme?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetProductTypeMutationVariables = Exact<{
+  productTypes?: InputMaybe<
+    Array<InputMaybe<LoanProductTypeInput>> | InputMaybe<LoanProductTypeInput>
+  >;
+  productSubTypes?: InputMaybe<
+    | Array<InputMaybe<LoanProductSubTypeInput>>
+    | InputMaybe<LoanProductSubTypeInput>
+  >;
+  natureOfProduct?: InputMaybe<
+    | Array<InputMaybe<LoanNatureOfProductInput>>
+    | InputMaybe<LoanNatureOfProductInput>
+  >;
+}>;
+
+export type SetProductTypeMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertNewOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   data: FormOptionUpsertInput;
@@ -13378,6 +13437,84 @@ export const useSetLoanGeneralSettingsMutation = <
       SetLoanGeneralSettingsMutation,
       SetLoanGeneralSettingsMutationVariables
     >(SetLoanGeneralSettingsDocument),
+    options
+  );
+export const SetLoanInsuranceSchemeDocument = `
+    mutation setLoanInsuranceScheme($data: [LoanInsuranceSchemeInput]) {
+  settings {
+    general {
+      loan {
+        insuranceScheme(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanInsuranceSchemeMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetLoanInsuranceSchemeMutation,
+    TError,
+    SetLoanInsuranceSchemeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetLoanInsuranceSchemeMutation,
+    TError,
+    SetLoanInsuranceSchemeMutationVariables,
+    TContext
+  >(
+    ['setLoanInsuranceScheme'],
+    useAxios<
+      SetLoanInsuranceSchemeMutation,
+      SetLoanInsuranceSchemeMutationVariables
+    >(SetLoanInsuranceSchemeDocument),
+    options
+  );
+export const SetProductTypeDocument = `
+    mutation setProductType($productTypes: [LoanProductTypeInput], $productSubTypes: [LoanProductSubTypeInput], $natureOfProduct: [LoanNatureOfProductInput]) {
+  settings {
+    general {
+      loan {
+        productType(
+          data: {productTypes: $productTypes, productSubTypes: $productSubTypes, natureOfProduct: $natureOfProduct}
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetProductTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetProductTypeMutation,
+    TError,
+    SetProductTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetProductTypeMutation,
+    TError,
+    SetProductTypeMutationVariables,
+    TContext
+  >(
+    ['setProductType'],
+    useAxios<SetProductTypeMutation, SetProductTypeMutationVariables>(
+      SetProductTypeDocument
+    ),
     options
   );
 export const UpsertNewOptionDocument = `

@@ -10,17 +10,11 @@ export const LoanProductsInsurance = () => {
   const { t } = useTranslation();
 
   return (
-    <Box
-      pb="s20"
-      width="full"
-      display={'flex'}
-      flexDirection={'column'}
-      p="s12"
-    >
+    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
       <FormProvider {...methods}>
         <form>
           <Box display="flex" flexDirection={'column'} rowGap="s16">
-            <Box display="flex" flexDirection={'column'} gap="s4">
+            <Box display="flex" flexDirection={'column'} gap="s4" p="s12">
               <Text fontSize="r1" fontWeight="500">
                 {t['settingsLoanInsuranceScheme']}
               </Text>

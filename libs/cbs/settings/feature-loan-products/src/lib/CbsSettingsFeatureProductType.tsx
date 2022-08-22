@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { SettingsPageFooter } from '@coop/cbs/settings/ui-layout';
 import { Box, Divider } from '@coop/shared/ui';
 
 // import { getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -24,6 +25,7 @@ export function CbsSettingsFeatureProductType() {
             <Divider />
             <NatureOfProductTable />
           </Box>
+          <SettingsPageFooter />
         </form>
       </FormProvider>
     </Box>

@@ -27,9 +27,9 @@ export function ChequeDetailPage() {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const onOpenModal = () => {
-    setOpenModal(true);
-  };
+  // const onOpenModal = () => {
+  //   setOpenModal(true);
+  // };
 
   const onCloseModal = () => {
     setOpenModal(false);

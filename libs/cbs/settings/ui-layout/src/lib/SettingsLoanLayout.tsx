@@ -1,9 +1,7 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 
-import { useSetLoanGeneralSettingsMutation } from '@coop/cbs/data-access';
 import { Box } from '@coop/shared/ui';
-import { useAppSelector, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
@@ -28,25 +26,28 @@ interface ISettingsLoanLayout {
 }
 
 export const SettingsLoanLayout = ({ children }: ISettingsLoanLayout) => {
-  const route = useRouter();
+  // const route = useRouter();
   const { t } = useTranslation();
-  const loanSettings = useAppSelector((state) => state.loanSettings);
-  const { mutateAsync } = useSetLoanGeneralSettingsMutation();
-  const saveButtonHandler = () => {
-    if (route.pathname.includes('loan-general')) {
-      mutateAsync({
-        emi: loanSettings?.general?.emi,
-        epi: loanSettings?.general?.epi,
-        flat: loanSettings?.general?.flat,
-      });
-    }
-  };
+  // const loanSettings = useAppSelector((state) => state.loanSettings);
+  // const { mutateAsync } = useSetLoanGeneralSettingsMutation();
+  // const saveButtonHandler = () => {
+  //   if (route.pathname.includes('loan-general')) {
+  //     mutateAsync({
+  //       emi: loanSettings?.general?.emi,
+  //       epi: loanSettings?.general?.epi,
+  //       flat: loanSettings?.general?.flat,
+  //     });
+  //   }
+  //   if (route.pathname.includes('insurance')) {
+  //     console.log('hello');
+  //   }
+  // };
 
   return (
     <>
       <SettingsPageHeader
-        buttonLabel={t['saveChanges']}
-        buttonHandler={saveButtonHandler}
+        // buttonLabel={t['saveChanges']}
+        // buttonHandler={saveButtonHandler}
         heading={t['settingsLoan']}
       />
       <Box
