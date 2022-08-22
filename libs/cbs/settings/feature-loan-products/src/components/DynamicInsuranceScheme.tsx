@@ -14,6 +14,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
+import { SettingsPageFooter } from '@coop/cbs/settings/ui-layout';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, Button, Icon, Text } from '@coop/shared/ui';
 import {
@@ -221,6 +222,7 @@ export const AccountServicesCharge = () => {
               {t['settingsLoanNewScheme']}{' '}
             </Button>
           </DynamicBoxGroupContainer>
+          <SettingsPageFooter />
         </form>
       </FormProvider>
     </GroupContainer>

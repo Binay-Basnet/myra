@@ -206,6 +206,13 @@ const colors = {
     'Gray-80': '#343C46',
     'Gray-90': '#1D2530',
   },
+
+  info: {
+    0: '#EEF4FF',
+    500: '#4685F9',
+    900: '#1466FE',
+  },
+
   // accent: {
   //   Gray-0: '#f9ca24',
   //   Gray-10: '#f0932b',
@@ -221,6 +228,7 @@ const colors = {
 
   warning: {
     0: '#FFF5EA',
+    500: '#FBC02D',
     900: '#D1912E',
   },
 };

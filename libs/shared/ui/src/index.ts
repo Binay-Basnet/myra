@@ -1,6 +1,6 @@
 export * from './lib/accordion/Accordion';
 export * from './lib/add-button-list/AddButtonList';
-export * from './lib/alert-container/AlertContainer';
+export * from './lib/alert/Alert';
 export * from './lib/amount-input/AmountInput';
 export * from './lib/amount-input/AmountInput';
 export * from './lib/amount-input-normal/AmountInputNormal';
@@ -81,6 +81,7 @@ export * from './lib/text-area-input/TextAreaInput';
 export * from './lib/text-fields/TextFields';
 export * from './lib/text-input/TextInput';
 export * from './lib/text-input/TextInput';
+export * from './lib/toast';
 export * from './lib/top-level-header/TopLevelHeader';
 export * from './lib/vstack/VStack';
 export * from './lib/wipstate/WIPState';

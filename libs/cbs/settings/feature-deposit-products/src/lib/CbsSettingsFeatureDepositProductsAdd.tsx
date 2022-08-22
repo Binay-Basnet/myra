@@ -16,6 +16,7 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Container,
   FormFooter,
@@ -72,7 +73,7 @@ export function SettingsDepositProductsAdd() {
   const { t } = useTranslation();
   const id = String(router?.query?.['id']);
 
-  const { mutate } = useSetDepositProductMutation();
+  const { mutateAsync } = useSetDepositProductMutation();
 
   const optionsSaving = [
     {
@@ -199,12 +200,15 @@ export function SettingsDepositProductsAdd() {
       },
     };
 
-    mutate(
-      { id, data: updatedData },
-      {
-        onSuccess: () => router.push('/settings/general/deposit-products'),
-      }
-    );
+    asyncToast({
+      id: 'deposit-id',
+      msgs: {
+        success: 'New Product Added',
+        loading: 'Adding New Deposit',
+      },
+      onSuccess: () => router.push('/settings/general/deposit-products'),
+      promise: mutateAsync({ id, data: updatedData }),
+    });
   };
 
   const { data: editValues, refetch } =

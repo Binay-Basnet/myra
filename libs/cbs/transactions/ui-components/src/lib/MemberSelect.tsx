@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { debounce } from 'lodash';
 
-import { useGetMemberListQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
@@ -24,6 +24,8 @@ export const MemberSelect = ({
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {
         query: IDMember,
+        id: IDMember,
+        filterMode: Filter_Mode.Or,
       },
     },
     {
@@ -57,8 +59,10 @@ export const MemberSelect = ({
       isLoading={isFetching}
       placeholder={placeholder}
       onInputChange={debounce((id) => {
-        setIDMember(id);
-        setTrigger(true);
+        if (id) {
+          setIDMember(id);
+          setTrigger(true);
+        }
       }, 800)}
       options={memberOptions}
     />

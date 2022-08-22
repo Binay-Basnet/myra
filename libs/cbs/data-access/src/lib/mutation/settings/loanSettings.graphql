@@ -24,3 +24,43 @@ mutation setLoanGeneralSettings(
     }
   }
 }
+
+mutation setLoanInsuranceScheme($data: [LoanInsuranceSchemeInput]) {
+  settings {
+    general {
+      loan {
+        insuranceScheme(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setProductType(
+  $productTypes: [LoanProductTypeInput]
+  $productSubTypes: [LoanProductSubTypeInput]
+  $natureOfProduct: [LoanNatureOfProductInput]
+) {
+  settings {
+    general {
+      loan {
+        productType(
+          data: {
+            productTypes: $productTypes
+            productSubTypes: $productSubTypes
+            natureOfProduct: $natureOfProduct
+          }
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

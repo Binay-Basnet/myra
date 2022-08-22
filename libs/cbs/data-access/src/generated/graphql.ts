@@ -8524,6 +8524,65 @@ export type SetLoanGeneralSettingsMutation = {
   };
 };
 
+export type SetLoanInsuranceSchemeMutationVariables = Exact<{
+  data?: InputMaybe<
+    | Array<InputMaybe<LoanInsuranceSchemeInput>>
+    | InputMaybe<LoanInsuranceSchemeInput>
+  >;
+}>;
+
+export type SetLoanInsuranceSchemeMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        insuranceScheme?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetProductTypeMutationVariables = Exact<{
+  productTypes?: InputMaybe<
+    Array<InputMaybe<LoanProductTypeInput>> | InputMaybe<LoanProductTypeInput>
+  >;
+  productSubTypes?: InputMaybe<
+    | Array<InputMaybe<LoanProductSubTypeInput>>
+    | InputMaybe<LoanProductSubTypeInput>
+  >;
+  natureOfProduct?: InputMaybe<
+    | Array<InputMaybe<LoanNatureOfProductInput>>
+    | InputMaybe<LoanNatureOfProductInput>
+  >;
+}>;
+
+export type SetProductTypeMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertNewOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   data: FormOptionUpsertInput;
@@ -8933,6 +8992,15 @@ export type SetAccountTransferDataMutationVariables = Exact<{
 
 export type SetAccountTransferDataMutation = {
   transaction: { transfer: { recordId?: string | null } };
+};
+
+export type SetAccountForgiveInstallmentDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  installmentDate: Scalars['String'];
+}>;
+
+export type SetAccountForgiveInstallmentDataMutation = {
+  account: { forgiveInstallment?: { recordId: string } | null };
 };
 
 export type GetAccountMemberListQueryVariables = Exact<{
@@ -11812,6 +11880,24 @@ export type GetAccountTransferListDataQuery = {
   };
 };
 
+export type GetInstallmentsListDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetInstallmentsListDataQuery = {
+  account: {
+    getInstallments?: {
+      data?: Array<{
+        dueDate: string;
+        status: InstallmentState;
+        monthName?: string | null;
+        fine?: string | null;
+        rebate?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
   ... on BadRequestError {
@@ -13377,6 +13463,84 @@ export const useSetLoanGeneralSettingsMutation = <
     >(SetLoanGeneralSettingsDocument),
     options
   );
+export const SetLoanInsuranceSchemeDocument = `
+    mutation setLoanInsuranceScheme($data: [LoanInsuranceSchemeInput]) {
+  settings {
+    general {
+      loan {
+        insuranceScheme(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanInsuranceSchemeMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetLoanInsuranceSchemeMutation,
+    TError,
+    SetLoanInsuranceSchemeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetLoanInsuranceSchemeMutation,
+    TError,
+    SetLoanInsuranceSchemeMutationVariables,
+    TContext
+  >(
+    ['setLoanInsuranceScheme'],
+    useAxios<
+      SetLoanInsuranceSchemeMutation,
+      SetLoanInsuranceSchemeMutationVariables
+    >(SetLoanInsuranceSchemeDocument),
+    options
+  );
+export const SetProductTypeDocument = `
+    mutation setProductType($productTypes: [LoanProductTypeInput], $productSubTypes: [LoanProductSubTypeInput], $natureOfProduct: [LoanNatureOfProductInput]) {
+  settings {
+    general {
+      loan {
+        productType(
+          data: {productTypes: $productTypes, productSubTypes: $productSubTypes, natureOfProduct: $natureOfProduct}
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetProductTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetProductTypeMutation,
+    TError,
+    SetProductTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetProductTypeMutation,
+    TError,
+    SetProductTypeMutationVariables,
+    TContext
+  >(
+    ['setProductType'],
+    useAxios<SetProductTypeMutation, SetProductTypeMutationVariables>(
+      SetProductTypeDocument
+    ),
+    options
+  );
 export const UpsertNewOptionDocument = `
     mutation upsertNewOption($fieldId: ID!, $data: FormOptionUpsertInput!) {
   settings {
@@ -14166,6 +14330,39 @@ export const useSetAccountTransferDataMutation = <
       SetAccountTransferDataMutation,
       SetAccountTransferDataMutationVariables
     >(SetAccountTransferDataDocument),
+    options
+  );
+export const SetAccountForgiveInstallmentDataDocument = `
+    mutation setAccountForgiveInstallmentData($id: ID!, $installmentDate: String!) {
+  account {
+    forgiveInstallment(id: $id, installmentDate: $installmentDate) {
+      recordId
+    }
+  }
+}
+    `;
+export const useSetAccountForgiveInstallmentDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetAccountForgiveInstallmentDataMutation,
+    TError,
+    SetAccountForgiveInstallmentDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAccountForgiveInstallmentDataMutation,
+    TError,
+    SetAccountForgiveInstallmentDataMutationVariables,
+    TContext
+  >(
+    ['setAccountForgiveInstallmentData'],
+    useAxios<
+      SetAccountForgiveInstallmentDataMutation,
+      SetAccountForgiveInstallmentDataMutationVariables
+    >(SetAccountForgiveInstallmentDataDocument),
     options
   );
 export const GetAccountMemberListDocument = `
@@ -18039,5 +18236,35 @@ export const useGetAccountTransferListDataQuery = <
       GetAccountTransferListDataQuery,
       GetAccountTransferListDataQueryVariables
     >(GetAccountTransferListDataDocument).bind(null, variables),
+    options
+  );
+export const GetInstallmentsListDataDocument = `
+    query getInstallmentsListData($id: ID!) {
+  account {
+    getInstallments(id: $id) {
+      data {
+        dueDate
+        status
+        monthName
+        fine
+        rebate
+      }
+    }
+  }
+}
+    `;
+export const useGetInstallmentsListDataQuery = <
+  TData = GetInstallmentsListDataQuery,
+  TError = unknown
+>(
+  variables: GetInstallmentsListDataQueryVariables,
+  options?: UseQueryOptions<GetInstallmentsListDataQuery, TError, TData>
+) =>
+  useQuery<GetInstallmentsListDataQuery, TError, TData>(
+    ['getInstallmentsListData', variables],
+    useAxios<
+      GetInstallmentsListDataQuery,
+      GetInstallmentsListDataQueryVariables
+    >(GetInstallmentsListDataDocument).bind(null, variables),
     options
   );

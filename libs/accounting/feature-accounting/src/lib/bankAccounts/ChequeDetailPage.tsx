@@ -14,10 +14,9 @@ import {
 import { DetailPageTopCard } from '@coop/accounting/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { AlertContainer } from '@coop/shared/components';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Column, Table } from '@coop/shared/table';
-import { Box, Button, Divider, Text } from '@coop/shared/ui';
+import { Alert, Box, Button, Divider, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export function ChequeDetailPage() {
@@ -28,9 +27,9 @@ export function ChequeDetailPage() {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const onOpenModal = () => {
-    setOpenModal(true);
-  };
+  // const onOpenModal = () => {
+  //   setOpenModal(true);
+  // };
 
   const onCloseModal = () => {
     setOpenModal(false);
@@ -203,11 +202,10 @@ export function ChequeDetailPage() {
 
   return (
     <Box display="flex" flexDirection="column" p="s16" gap="s16">
-      <AlertContainer
+      <Alert
+        status="success"
         title="bankAccountNewChequeBook"
-        description="It looks like you are run out of cheque leafs. Consider Creating new cheque book"
-        buttonLabel="bankAccountNewChequeBook"
-        onClick={onOpenModal}
+        subtitle="It looks like you are run out of cheque leafs. Consider Creating new cheque book"
       />
 
       <DetailPageTopCard>

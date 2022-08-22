@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import AlertContainer from './AlertContainer';
+import Alert from './Alert';
 
-describe('AlertContainer', () => {
+describe('Alert', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<AlertContainer />);
+    const { baseElement } = render(<Alert />);
     expect(baseElement).toBeTruthy();
   });
 });

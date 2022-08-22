@@ -8,8 +8,10 @@ import {
   DepositedBy,
   DepositInput,
   DepositPaymentType,
+  InstallmentState,
   NatureOfDepositProduct,
   useGetAccountTableListQuery,
+  useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -56,35 +58,6 @@ const accountTypes = {
   [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
 };
 
-// const memberAccountsList = [
-//   {
-//     accountName: 'Kopila Karnadhar Saving',
-//     accountId: '100300010001324',
-//     accountType: accountTypes[NatureOfDepositProduct.Mandatory],
-//     balance: '1,30,000.43',
-//     fine: '40,000.32',
-//   },
-//   {
-//     accountName: 'Youth Saving',
-//     accountId: '100300010001325',
-//     accountType: accountTypes[NatureOfDepositProduct.VoluntaryOrOptional],
-//     balance: '1,30,000.43',
-//     fine: '40,000.32',
-//   },
-//   {
-//     accountName: 'Term Saving (Fixed Saving)',
-//     accountId: '100300010001326',
-//     accountType: accountTypes[NatureOfDepositProduct.TermSavingOrFd],
-//     balance: '1,30,000.43',
-//   },
-//   {
-//     accountName: 'Double Payment Saving Scheme',
-//     accountId: '100300010001327',
-//     accountType: accountTypes[NatureOfDepositProduct.RecurringSaving],
-//     balance: '1,30,000.43',
-//   },
-// ];
-
 const cashOptions: Record<string, string> = {
   '1000': CashValue.Cash_1000,
   '500': CashValue.Cash_500,
@@ -102,8 +75,6 @@ const FINE = '0';
 const REBATE = '0';
 
 export function AddDeposit() {
-  // const { t } = useTranslation();
-
   const router = useRouter();
 
   const methods = useForm<DepositFormInput>({
@@ -135,11 +106,17 @@ export function AddDeposit() {
     }
   );
 
+  const noOfInstallments = watch('noOfInstallments');
+
   useEffect(() => {
-    reset({ memberId, accountId: '', voucherId: '', amount: '' });
+    reset({ memberId, accountId: '', voucherId: '', noOfInstallments: null });
   }, [memberId]);
 
   const accountId = watch('accountId');
+
+  useEffect(() => {
+    reset({ memberId, accountId, voucherId: '', noOfInstallments: null });
+  }, [accountId]);
 
   const selectedAccount = useMemo(
     () =>
@@ -231,6 +208,60 @@ export function AddDeposit() {
     });
   };
 
+  const { data: installmentsListQueryData, refetch } =
+    useGetInstallmentsListDataQuery(
+      { id: accountId as string },
+      {
+        enabled:
+          (!!accountId &&
+            selectedAccount?.product?.nature ===
+              NatureOfDepositProduct.RecurringSaving) ||
+          selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory,
+      }
+    );
+
+  useEffect(() => {
+    if (accountId) {
+      refetch();
+    }
+  }, [accountId]);
+
+  const { firstMonth, lastMonth, fine, rebate } = useMemo(() => {
+    const installmentData =
+      installmentsListQueryData?.account?.getInstallments?.data;
+
+    if (!installmentData?.length || !noOfInstallments) {
+      return { firstMonth: '', lastMonth: '' };
+    }
+
+    const filteredInstallments = installmentData?.filter(
+      (installment) =>
+        installment?.status === InstallmentState.Cancelled ||
+        installment?.status === InstallmentState.Paid
+    );
+
+    const pendingInstallments = installmentData.slice(
+      filteredInstallments.length,
+      filteredInstallments.length + Number(noOfInstallments)
+    );
+
+    const fine = pendingInstallments.reduce(
+      (accumulator, curr) => accumulator + Number(curr?.fine),
+      0
+    );
+    const rebate = pendingInstallments.reduce(
+      (accumulator, curr) => accumulator + Number(curr?.rebate),
+      0
+    );
+
+    return {
+      firstMonth: pendingInstallments[0]?.monthName,
+      lastMonth: pendingInstallments[pendingInstallments.length - 1]?.monthName,
+      fine,
+      rebate,
+    };
+  }, [noOfInstallments, installmentsListQueryData]);
+
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -283,7 +314,7 @@ export function AddDeposit() {
                         (account) => ({
                           accountInfo: {
                             accountName: account.node?.product.productName,
-                            accountId: account.node?.product?.id,
+                            accountId: account.node?.id,
                             accountType: account?.node?.product?.nature
                               ? accountTypes[account?.node?.product?.nature]
                               : '',
@@ -304,7 +335,7 @@ export function AddDeposit() {
 
                   {accountId &&
                     (selectedAccount?.product?.nature ===
-                      accountTypes[NatureOfDepositProduct.RecurringSaving] ||
+                      NatureOfDepositProduct.RecurringSaving ||
                       selectedAccount?.product?.nature ===
                         NatureOfDepositProduct.Mandatory) && (
                       <>
@@ -342,7 +373,7 @@ export function AddDeposit() {
                             fontWeight={400}
                             color="neutralColorLight.Gray-70"
                           >
-                            Payment made from Bhadra to Asoj
+                            {`Payment made from ${firstMonth} to ${lastMonth}`}
                           </Text>
                         </Box>
                       </>
@@ -478,7 +509,7 @@ export function AddDeposit() {
                               fontWeight={500}
                               color="danger.500"
                             >
-                              {`+ ${FINE}`}
+                              {`+ ${fine ?? FINE}`}
                             </Text>
                           </Box>
                         )}
@@ -493,7 +524,7 @@ export function AddDeposit() {
                             fontWeight={500}
                             color="success.500"
                           >
-                            {`- ${REBATE}`}
+                            {`- ${rebate ?? REBATE}`}
                           </Text>
                         </Box>
 
@@ -608,7 +639,12 @@ export function AddDeposit() {
         </Box>
       </Box>
 
-      <InstallmentModel isOpen={isModalOpen} onClose={handleModalClose} />
+      <InstallmentModel
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        accountId={selectedAccount?.id}
+        productType={selectedAccount?.product?.nature}
+      />
     </>
   );
 }

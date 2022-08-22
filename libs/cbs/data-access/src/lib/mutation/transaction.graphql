@@ -21,3 +21,11 @@ mutation setAccountTransferData($data: TransferInput!) {
     }
   }
 }
+
+mutation setAccountForgiveInstallmentData($id: ID!, $installmentDate: String!) {
+  account {
+    forgiveInstallment(id: $id, installmentDate: $installmentDate) {
+      recordId
+    }
+  }
+}
