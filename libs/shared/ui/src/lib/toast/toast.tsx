@@ -18,6 +18,7 @@ interface ToastProps {
 export function toast({ options, id, ...props }: ToastProps) {
   return rhToast.custom(<Toast {...props} />, {
     id,
+    duration: 6000,
     ...options,
   });
 }

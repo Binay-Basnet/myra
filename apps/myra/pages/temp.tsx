@@ -71,7 +71,6 @@ const Temp = () => {
 
               options: {
                 id: '1234',
-                duration: Infinity,
               },
               type: 'info',
             });
