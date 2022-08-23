@@ -17,6 +17,7 @@ import {
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Container,
   FormFooter,
@@ -48,7 +49,7 @@ export function SettingsLoanProductForm() {
   const router = useRouter();
   const { t } = useTranslation();
   const id = String(router?.query?.['id']);
-  const { mutate } = useSetLoanProductMutation();
+  const { mutateAsync } = useSetLoanProductMutation();
 
   type SelectOption = {
     label: string;
@@ -478,13 +479,15 @@ export function SettingsLoanProductForm() {
         rateType: values?.penalty?.rateType ? values?.penalty?.rateType : null,
       },
     };
-
-    mutate(
-      { id, data: updatedData as LoanProductInput },
-      {
-        onSuccess: () => router.push('/settings/general/loan-products'),
-      }
-    );
+    asyncToast({
+      id: 'loan-id',
+      msgs: {
+        success: 'New Product Added',
+        loading: 'Adding New Loan Product',
+      },
+      onSuccess: () => router.push('/settings/general/loan-products'),
+      promise: mutateAsync({ id, data: updatedData as LoanProductInput }),
+    });
   };
 
   useEffect(() => {

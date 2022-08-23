@@ -30,6 +30,7 @@ import {
   FormSwitchTab,
 } from '@coop/shared/form';
 import {
+  asyncToast,
   Avatar,
   Box,
   Container,
@@ -68,7 +69,7 @@ const ShareReturnForm = () => {
   const methods = useForm();
   const { watch, getValues, reset } = methods;
 
-  const { mutate } = useAddShareReturnMutation();
+  const { mutateAsync } = useAddShareReturnMutation();
 
   const accountList = [
     { label: t['shareReturnBankVoucher'], value: Payment_Mode.BankVoucher },
@@ -120,12 +121,15 @@ const ShareReturnForm = () => {
       memberId,
     };
 
-    mutate(
-      { data: updatedValues },
-      {
-        onSuccess: () => router.push(`/share/register`),
-      }
-    );
+    asyncToast({
+      id: 'share-return-id',
+      msgs: {
+        success: 'Share Returned',
+        loading: 'Returning Share',
+      },
+      onSuccess: () => router.push('/share/register'),
+      promise: mutateAsync({ data: updatedValues }),
+    });
   };
 
   const { data: accountListData } = useGetAccountTableListQuery(

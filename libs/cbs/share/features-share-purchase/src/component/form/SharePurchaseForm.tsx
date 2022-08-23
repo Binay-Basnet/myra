@@ -26,6 +26,7 @@ import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
+  asyncToast,
   Avatar,
   Box,
   Container,
@@ -61,7 +62,7 @@ const SharePurchaseForm = () => {
   const methods = useForm();
   const { watch, getValues } = methods;
 
-  const { mutate } = useAddSharePurchaseMutation();
+  const { mutateAsync } = useAddSharePurchaseMutation();
 
   const accountList = [
     { label: t['sharePurchaseBankVoucher'], value: Payment_Mode.BankVoucher },
@@ -183,12 +184,15 @@ const SharePurchaseForm = () => {
       memberId,
     };
 
-    mutate(
-      { data: updatedValues },
-      {
-        onSuccess: () => router.push(`/share/register`),
-      }
-    );
+    asyncToast({
+      id: 'share-purchase-id',
+      msgs: {
+        success: 'Share Purchased',
+        loading: 'Purchasing Share',
+      },
+      onSuccess: () => router.push('/share/register'),
+      promise: mutateAsync({ data: updatedValues }),
+    });
   };
 
   return (
