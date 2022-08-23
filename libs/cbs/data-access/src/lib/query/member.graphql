@@ -18,6 +18,26 @@ query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
           contact
           createdAt
           dateJoined
+          profile {
+            ... on kymIndFormStateQuery {
+              data {
+                formData {
+                  basicInformation {
+                    genderId
+                    gender
+                    age
+                  }
+                  contactDetails {
+                    mobileNumber
+                    phoneNumber
+                    email
+                  }
+                  maritalStatusId
+                  maritalStatus
+                }
+              }
+            }
+          }
         }
         cursor
       }

@@ -17,7 +17,10 @@ import {
   useGetMemberListQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
+import {
+  FormCustomSelect,
+  FormMemberSelect,
+} from '@coop/cbs/transactions/ui-components';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
@@ -162,23 +165,12 @@ const ShareReturnForm = () => {
       enabled: trigger,
     }
   );
-  const memberListData = memberList?.members?.list?.edges;
 
-  type optionType = { label: string; value: string };
+  const memberListData = memberList?.members?.list?.edges;
 
   const memberDetail =
     memberListData &&
     memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
-
-  const memberOptions = memberListData?.reduce((prevVal, curVal) => {
-    return [
-      ...prevVal,
-      {
-        label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
-        value: curVal?.node?.id as string,
-      },
-    ];
-  }, [] as optionType[]);
 
   useEffect(() => {
     setTotalAmount(
@@ -207,8 +199,6 @@ const ShareReturnForm = () => {
       }
     }
   }, [allShares, balanceData, getValues, memberListData, methods, reset]);
-
-  // console.log(noOfShares, balanceData?.count);
 
   return (
     <>
@@ -243,7 +233,34 @@ const ShareReturnForm = () => {
               <Box w="100%" minHeight="100vh">
                 <Box borderBottom="1px solid #E6E6E6" p={5}>
                   <Box w="50%">
-                    <FormSelect
+                    <FormMemberSelect
+                      name="memberId"
+                      label={t['sharePurchaseSelectMember']}
+                      placeholder={t['sharePurchaseEnterMemberID']}
+                      onInputChange={debounce((id) => {
+                        setIDMember(id);
+                        setTrigger(true);
+                      }, 800)}
+                      options={
+                        memberListData?.map((member) => ({
+                          memberInfo: {
+                            memberName: member?.node?.name?.local,
+                            memberId: member?.node?.id,
+                            gender:
+                              member?.node?.profile?.data?.formData
+                                ?.basicInformation?.gender?.local,
+                            age: member?.node?.profile?.data?.formData
+                              ?.basicInformation?.age,
+                            maritialStatus:
+                              member?.node?.profile?.data?.formData
+                                ?.maritalStatus?.local,
+                            address: member?.node?.address,
+                          },
+                          value: member?.node?.id as string,
+                        })) ?? []
+                      }
+                    />
+                    {/* <FormSelect
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
                       placeholder={t['sharePurchaseEnterMemberID']}
@@ -252,7 +269,7 @@ const ShareReturnForm = () => {
                         setTrigger(true);
                       }, 800)}
                       options={memberOptions ?? []}
-                    />
+                    /> */}
                   </Box>
 
                   {data && (
@@ -280,7 +297,7 @@ const ShareReturnForm = () => {
                           >
                             <Box m="10px">
                               <Avatar
-                                src="https://www.kindpng.com/picc/m/483-4834603_daniel-hudson-passport-size-photo-bangladesh-hd-png.png"
+                                src="/passport.jpg"
                                 size="lg"
                                 name={memberDetail?.name?.local}
                               />
@@ -351,7 +368,8 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                ajitnepal65@gmail.com
+                                {memberDetail?.profile?.data?.formData
+                                  ?.contactDetails?.email ?? '-'}
                               </TextFields>
                             </Box>
 
@@ -430,7 +448,7 @@ const ShareReturnForm = () => {
                         templateRows={
                           noOfShares ? 'repeat(3,1fr)' : 'repeat(2,0fr)'
                         }
-                        gap={3}
+                        gap="s16"
                       >
                         <GridItem>
                           {/* <FormNumberInput
@@ -453,7 +471,6 @@ const ShareReturnForm = () => {
                           <FormCheckbox
                             name="selectAllShares"
                             label={t['shareReturnSelectAllShares']}
-                            mt="20px"
                           />
                         </GridItem>
                         {noOfShares ? (
@@ -470,10 +487,12 @@ const ShareReturnForm = () => {
                                   {t['shareReturnRemainingShare']}
                                 </Text>
                                 <Text fontWeight="600" fontSize="r1">
-                                  {allShares
-                                    ? 0
-                                    : Number(balanceData?.count) -
-                                      Number(noOfShares)}
+                                  {balanceData
+                                    ? allShares
+                                      ? 0
+                                      : Number(balanceData?.count) -
+                                        Number(noOfShares)
+                                    : 0}
                                 </Text>
                               </Box>
 
@@ -482,11 +501,13 @@ const ShareReturnForm = () => {
                                   {t['shareReturnRemainingShareValue']}
                                 </Text>
                                 <Text fontWeight="600" fontSize="r1">
-                                  {allShares
-                                    ? 0
-                                    : (Number(balanceData?.count) -
-                                        Number(noOfShares)) *
-                                      100}
+                                  {balanceData
+                                    ? allShares
+                                      ? 0
+                                      : (Number(balanceData?.count) -
+                                          Number(noOfShares)) *
+                                        100
+                                    : 0}
                                 </Text>
                               </Box>
                             </Box>
