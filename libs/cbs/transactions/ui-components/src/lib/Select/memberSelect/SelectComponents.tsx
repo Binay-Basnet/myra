@@ -68,7 +68,7 @@ export const components: SelectComponentsConfig<
   Option: (props) => {
     return (
       <chakraComponents.Option {...props}>
-        <Box display="flex" p="s16" gap="s16">
+        <Box display="flex" p="s8" gap="s16">
           <Box borderRadius="50%">
             <Avatar
               src="/passport.jpg"
@@ -76,7 +76,7 @@ export const components: SelectComponentsConfig<
               name={props.data.memberInfo?.memberName}
             />
           </Box>
-          <Box display="flex" flexDirection="column" gap="s4">
+          <Box display="flex" flexDirection="column">
             <Text
               fontWeight="Medium"
               fontSize="r1"
@@ -97,7 +97,7 @@ export const components: SelectComponentsConfig<
               color="neutralColorLight.Gray-80"
             >
               {props.data.memberInfo?.gender ?? '-'} |{' '}
-              {props.data.memberInfo?.age ?? '-'} |
+              {props.data.memberInfo?.age ?? '-'} |{' '}
               {props.data.memberInfo?.maritialStatus ?? '-'}
             </Text>
             <Text

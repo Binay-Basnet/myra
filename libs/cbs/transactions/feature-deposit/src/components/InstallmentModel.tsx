@@ -72,10 +72,8 @@ export const InstallmentModel = ({
         <Divider />
 
         <ModalCloseButton />
-        <ModalBody p="s16">
+        <ModalBody p="s16" height="60vh" overflowY="scroll">
           <Box
-            border="1px"
-            borderColor="border.layout"
             borderRadius="br2"
             px="s12"
             py="s8"
