@@ -13,7 +13,14 @@ import {
   useGetAccountOpenProductDetailsQuery,
   useSetAccountDocumentDataMutation,
 } from '@coop/cbs/data-access';
-import { Box, Container, FormFooter, FormHeader, Text } from '@coop/shared/ui';
+import {
+  asyncToast,
+  Box,
+  Container,
+  FormFooter,
+  FormHeader,
+  Text,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -58,7 +65,7 @@ export function CbsAccountOpen() {
 
   const methods = useForm<DepositLoanAccountInput>();
 
-  const { mutate } = useSetAccountOpenDataMutation();
+  const { mutateAsync } = useSetAccountOpenDataMutation();
   const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();
 
   const { getValues, watch, reset } = methods;
@@ -106,14 +113,18 @@ export function CbsAccountOpen() {
         ? values?.depositFrequencyWeekly
         : null,
     };
-    mutate(
-      { id, data: updatedData },
-      {
-        onSuccess: () => router.push('/accounts/list'),
-      }
-    );
 
-    Object.keys(fileList).map((fieldName) => {
+    asyncToast({
+      id: 'account-open-id',
+      msgs: {
+        success: 'New Account Opened',
+        loading: 'Opening new Account',
+      },
+      onSuccess: () => router.push('/accounts/list'),
+      promise: mutateAsync({ id, data: updatedData }),
+    });
+
+    Object.keys(fileList).forEach((fieldName) => {
       if (fileList[fieldName as FileList]) {
         mutateDocs({
           subscriptionId: id,
