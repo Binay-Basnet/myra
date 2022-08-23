@@ -1,0 +1,22 @@
+query getSettingsShareFeesAndChargesData {
+  settings {
+    general {
+      share {
+        feeAndCharges {
+          shareCertificate {
+            minShare
+            maxShare
+            type
+            charge
+          }
+          other {
+            minShare
+            maxShare
+            type
+            charge
+          }
+        }
+      }
+    }
+  }
+}

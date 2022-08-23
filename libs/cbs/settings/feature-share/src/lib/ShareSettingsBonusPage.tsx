@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
-import { Box, Checkbox, Input } from '@coop/shared/ui';
+import {
+  TaxPayerOptions,
+  useGetSettingsShareBonusDataQuery,
+  useSetSettingsShareBonusMutation,
+} from '@coop/cbs/data-access';
+import { FormInput, FormRadioGroup } from '@coop/shared/form';
+import { asyncToast, Box, SettingsFooter } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -8,41 +16,107 @@ import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettings
 
 export const ShareSettingsBonusPage = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+  const id = 'abcdef';
+  const taxpayerOpt = [
+    {
+      label: t['shareBonusCooperative'],
+      value: TaxPayerOptions?.Cooperative,
+    },
+    {
+      label: t['shareBonusMember'],
+      value: TaxPayerOptions?.Member,
+    },
+  ];
+
+  const methods = useForm();
+  const { getValues, reset } = methods;
+  const { mutateAsync } = useSetSettingsShareBonusMutation();
+
+  const { data, refetch } = useGetSettingsShareBonusDataQuery();
+  const settingsBonusData = data?.settings?.general?.share?.bonus;
+  useEffect(() => {
+    if (settingsBonusData) {
+      reset(settingsBonusData);
+    }
+  }, [settingsBonusData]);
+  // const taxPayer = watch('taxPayer');
+  // const taxRate = watch('taxRate');
+  // const accountMapping = watch('accountMapping');
+  const handleSubmit = () => {
+    const values = getValues();
+    asyncToast({
+      id: 'share-settings-bonus-id',
+      msgs: {
+        success: 'Saved',
+        loading: 'Saving Changes ',
+      },
+      onSuccess: () => router.push('/share/register'),
+      promise: mutateAsync(
+        {
+          id: id,
+          data: {
+            ...values,
+            // taxPayer: taxPayer ?? settingsBonusData?.taxPayer,
+            // taxRate: taxRate ?? settingsBonusData?.taxPayer,
+            // accountMapping: accountMapping ?? settingsBonusData?.accountMapping,
+          },
+        },
+        { onSuccess: () => refetch() }
+      ),
+    });
+  };
 
   return (
     <>
-      <ShareSettingsHeader title={t['settingsShareBonus']} />
+      {' '}
+      <FormProvider {...methods}>
+        <form>
+          <Box p="s16" pb="80px" display="flex" flexDir="column" gap="s16">
+            <ShareSettingsHeader title={t['settingsShareBonus']} />
 
-      <ShareSettingsCard
-        title={t['shareBonusWhoPaysTheTax']}
-        subtitle={t['shareBonusChooseWhoPaysTheTax']}
-      >
-        <Box display="flex" flexDir="column" gap="s16">
-          <Checkbox label={t['shareBonusCooperative']} isChecked />
-          <Checkbox label={t['shareBonusMember']} />
-        </Box>
-      </ShareSettingsCard>
+            <ShareSettingsCard
+              title={t['shareBonusWhoPaysTheTax']}
+              subtitle={t['shareBonusChooseWhoPaysTheTax']}
+            >
+              <Box display="flex" flexDir="column" gap="s16">
+                <FormRadioGroup
+                  options={taxpayerOpt}
+                  name="taxPayer"
+                  orientation="vertical"
+                />
+              </Box>
+            </ShareSettingsCard>
 
-      <ShareSettingsCard
-        title={t['shareBonusTaxRate']}
-        subtitle={t['shareBonusAddRateOfTax']}
-      >
-        <Box w="33%">
-          <Input
-            size="sm"
-            placeholder={t['shareBonusRateTaxRatePlaceholder']}
-          />
-        </Box>
-      </ShareSettingsCard>
+            <ShareSettingsCard
+              title={t['shareBonusTaxRate']}
+              subtitle={t['shareBonusAddRateOfTax']}
+            >
+              <Box w="33%">
+                <FormInput
+                  name="taxRate"
+                  size="sm"
+                  placeholder={t['shareBonusRateTaxRatePlaceholder']}
+                />
+              </Box>
+            </ShareSettingsCard>
 
-      <ShareSettingsCard
-        title={t['shareAccountMapping']}
-        subtitle={t['shareAccountBonusShareDebited']}
-      >
-        <Box w="33%">
-          <Input size="sm" placeholder={t['shareAccountName']} />
-        </Box>
-      </ShareSettingsCard>
+            <ShareSettingsCard
+              title={t['shareAccountMapping']}
+              subtitle={t['shareAccountBonusShareDebited']}
+            >
+              <Box w="33%">
+                <FormInput
+                  name="accountMapping"
+                  size="sm"
+                  placeholder={t['shareAccountName']}
+                />
+              </Box>
+            </ShareSettingsCard>
+          </Box>
+          <SettingsFooter handleSave={handleSubmit} />
+        </form>
+      </FormProvider>
     </>
   );
 };

@@ -1,0 +1,19 @@
+mutation setSettingsShareDividend($id: ID!, $data: ShareDividendSettingsInput) {
+  settings {
+    general {
+      share {
+        add(id: $id) {
+          dividend(data: $data) {
+            dividend {
+              distributionCondition
+              dividendTransferTreatment
+              accountForFractionalDividends
+              accountForShareDividends
+              organizationFundForDividends
+            }
+          }
+        }
+      }
+    }
+  }
+}

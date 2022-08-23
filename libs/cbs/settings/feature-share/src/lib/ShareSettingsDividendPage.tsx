@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Box } from '@chakra-ui/react';
 
 import { FormRadioGroup, FormSwitchTab } from '@coop/shared/form';
-import { Input, Select, Text } from '@coop/shared/ui';
+import { Input, Select, SettingsFooter, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -25,160 +25,163 @@ export const ShareSettingsDividendPage = () => {
 
   return (
     <FormProvider {...methods}>
-      <ShareSettingsHeader title={t['settingsShareDivident']} />
-      <ShareSettingsCard
-        title={t['shareDividentDistributionCondition']}
-        subtitle={t['shareAddDifferentShareDividentRate']}
-      >
-        <Box display="flex" flexDir="column" gap={'s16'}>
-          <FormSwitchTab
-            name={'distributionCondition'}
-            options={[
-              { label: t['shareDividentDaily'], value: 'daily' },
-              { label: t['shareDividentMonthly'], value: 'monthly' },
-              {
-                label: t['shareDividentQuarterly'],
-                value: 'quarterly',
-              },
-            ]}
-          />
-          <Box
-            width="100%"
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Text fontSize="r1" color="gray.800">
-              {t['share1stQuarter']}
-            </Text>
-            <Box w="33%">
-              <Input size="sm" placeholder="100%" />
-            </Box>
-          </Box>
-          <Box
-            width="100%"
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Text fontSize="r1" color="gray.800">
-              {t['share2ndQuarter']}
-            </Text>
-            <Box w="33%">
-              <Input size="sm" placeholder="100%" />
-            </Box>
-          </Box>
-          <Box
-            width="100%"
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Text fontSize="r1" color="gray.800">
-              {t['share3rdQuarter']}
-            </Text>
-            <Box w="33%">
-              <Input size="sm" placeholder="100%" />
-            </Box>
-          </Box>
-          <Box
-            width="100%"
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Text fontSize="r1" color="gray.800">
-              {t['share4thQuarter']}
-            </Text>
-            <Box w="33%">
-              <Input size="sm" placeholder="100%" />
-            </Box>
-          </Box>
-        </Box>
-      </ShareSettingsCard>
-      <ShareSettingsCard
-        title={t['shareDividentTransferTreatment']}
-        subtitle={t['shareDividentTransferTreatmentSubtitle']}
-      >
-        <FormRadioGroup
-          options={[
-            {
-              label: t['shareDividentTransferTreatmentShareAndAccount'],
-              value: 'shareAndAccount',
-            },
-            {
-              label: t['shareDividentTransferTreatmentAccountTransfer'],
-              value: 'accountTransfer',
-            },
-            {
-              label: t['shareDividentTransferTreatmentBookPayable'],
-              value: 'bookPayable',
-            },
-          ]}
-          name="dividentTransferTreatment"
-        />
-      </ShareSettingsCard>
-
-      {dividentTransferTreatment === 'shareAndAccount' ? (
+      <Box p="s16" pb="80px" display="flex" flexDir="column" gap="s16">
+        <ShareSettingsHeader title={t['settingsShareDivident']} />
         <ShareSettingsCard
-          title={t['shareAndAccount']}
-          subtitle={t['shareAndAccountSubtitle']}
+          title={t['shareDividentDistributionCondition']}
+          subtitle={t['shareAddDifferentShareDividentRate']}
         >
           <Box display="flex" flexDir="column" gap={'s16'}>
-            <Box>
-              <Text
-                fontWeight="Regular"
-                color="neutralColorLight.Gray-80"
-                fontSize="r1"
-              >
-                {t['shareAndAccountNote']}
+            <FormSwitchTab
+              name={'distributionCondition'}
+              options={[
+                { label: t['shareDividentDaily'], value: 'daily' },
+                { label: t['shareDividentMonthly'], value: 'monthly' },
+                {
+                  label: t['shareDividentQuarterly'],
+                  value: 'quarterly',
+                },
+              ]}
+            />
+            <Box
+              width="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Text fontSize="r1" color="gray.800">
+                {t['share1stQuarter']}
               </Text>
+              <Box w="33%">
+                <Input size="sm" placeholder="100%" />
+              </Box>
             </Box>
             <Box
               width="100%"
               display="flex"
               alignItems="center"
               justifyContent="space-between"
-              h="36px"
             >
-              <Text fontSize="r1" fontWeight="400" color="gray.800">
-                {t['shareChooseAccount']}
+              <Text fontSize="r1" color="gray.800">
+                {t['share2ndQuarter']}
               </Text>
+              <Box w="33%">
+                <Input size="sm" placeholder="100%" />
+              </Box>
+            </Box>
+            <Box
+              width="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Text fontSize="r1" color="gray.800">
+                {t['share3rdQuarter']}
+              </Text>
+              <Box w="33%">
+                <Input size="sm" placeholder="100%" />
+              </Box>
+            </Box>
+            <Box
+              width="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Text fontSize="r1" color="gray.800">
+                {t['share4thQuarter']}
+              </Text>
+              <Box w="33%">
+                <Input size="sm" placeholder="100%" />
+              </Box>
+            </Box>
+          </Box>
+        </ShareSettingsCard>
+        <ShareSettingsCard
+          title={t['shareDividentTransferTreatment']}
+          subtitle={t['shareDividentTransferTreatmentSubtitle']}
+        >
+          <FormRadioGroup
+            options={[
+              {
+                label: t['shareDividentTransferTreatmentShareAndAccount'],
+                value: 'shareAndAccount',
+              },
+              {
+                label: t['shareDividentTransferTreatmentAccountTransfer'],
+                value: 'accountTransfer',
+              },
+              {
+                label: t['shareDividentTransferTreatmentBookPayable'],
+                value: 'bookPayable',
+              },
+            ]}
+            name="dividentTransferTreatment"
+          />
+        </ShareSettingsCard>
+
+        {dividentTransferTreatment === 'shareAndAccount' ? (
+          <ShareSettingsCard
+            title={t['shareAndAccount']}
+            subtitle={t['shareAndAccountSubtitle']}
+          >
+            <Box display="flex" flexDir="column" gap={'s16'}>
+              <Box>
+                <Text
+                  fontWeight="Regular"
+                  color="neutralColorLight.Gray-80"
+                  fontSize="r1"
+                >
+                  {t['shareAndAccountNote']}
+                </Text>
+              </Box>
+              <Box
+                width="100%"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                h="36px"
+              >
+                <Text fontSize="r1" fontWeight="400" color="gray.800">
+                  {t['shareChooseAccount']}
+                </Text>
+                <Select
+                  menuPlacement="top"
+                  options={[]}
+                  placeholder={t['shareSelectAccount']}
+                />
+              </Box>
+            </Box>
+          </ShareSettingsCard>
+        ) : dividentTransferTreatment === 'accountTransfer' ? (
+          <ShareSettingsCard
+            title={t['shareAccountTransfer']}
+            subtitle={t['shareAccountTransferSubtitle']}
+          >
+            <Box width="33%">
               <Select
                 menuPlacement="top"
                 options={[]}
                 placeholder={t['shareSelectAccount']}
               />
             </Box>
-          </Box>
-        </ShareSettingsCard>
-      ) : dividentTransferTreatment === 'accountTransfer' ? (
-        <ShareSettingsCard
-          title={t['shareAccountTransfer']}
-          subtitle={t['shareAccountTransferSubtitle']}
-        >
-          <Box width="33%">
-            <Select
-              menuPlacement="top"
-              options={[]}
-              placeholder={t['shareSelectAccount']}
-            />
-          </Box>
-        </ShareSettingsCard>
-      ) : dividentTransferTreatment === 'bookPayable' ? (
-        <ShareSettingsCard
-          title={t['shareBookPayables']}
-          subtitle={t['shareBookPayablesSubtitle']}
-        >
-          <Box width="33%">
-            <Select
-              menuPlacement="top"
-              options={[]}
-              placeholder={t['shareNameOfTheFund']}
-            />
-          </Box>
-        </ShareSettingsCard>
-      ) : null}
+          </ShareSettingsCard>
+        ) : dividentTransferTreatment === 'bookPayable' ? (
+          <ShareSettingsCard
+            title={t['shareBookPayables']}
+            subtitle={t['shareBookPayablesSubtitle']}
+          >
+            <Box width="33%">
+              <Select
+                menuPlacement="top"
+                options={[]}
+                placeholder={t['shareNameOfTheFund']}
+              />
+            </Box>
+          </ShareSettingsCard>
+        ) : null}
+      </Box>
+      <SettingsFooter />
     </FormProvider>
   );
 };
