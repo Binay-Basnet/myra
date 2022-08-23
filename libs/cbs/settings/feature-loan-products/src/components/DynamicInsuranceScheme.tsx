@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import {
   FormProvider,
   useFieldArray,
@@ -9,19 +8,19 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
 import {
+  Frequency,
+  LoanInsurancePaymentType,
+  useSetLoanInsuranceSchemeMutation,
+} from '@coop/cbs/data-access';
+import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { SettingsPageFooter } from '@coop/cbs/settings/ui-layout';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
-import {
-  setInsuranceScheme,
-  useAppDispatch,
-  useTranslation,
-} from '@coop/shared/utils';
+import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { Box, Button, Icon, SettingsFooter, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IAddAccountServices {
   index: number;
@@ -35,8 +34,11 @@ const AddServiceCharge = ({
   const { t } = useTranslation();
 
   const amountOpt = [
-    { label: t['settingsLoanAmount'], value: 'amount' },
-    { label: t['settingsLoanPercentage'], value: 'percentage' },
+    { label: t['settingsLoanAmount'], value: LoanInsurancePaymentType?.Amount },
+    {
+      label: t['settingsLoanPercentage'],
+      value: LoanInsurancePaymentType?.Percentage,
+    },
   ];
   const { watch } = useFormContext();
   const AmountPer = watch(`insuranceScheme.${index}.paymentType`);
@@ -68,12 +70,28 @@ const AddServiceCharge = ({
           placeholder={t['settingsLoanInsuranceCompany']}
         />
 
-        <FormInput
-          type="number"
-          bg="white"
+        <FormSelect
           name={`insuranceScheme.${index}.paymentFrequency`}
           label={t['settingsLoanPaymentFreq']}
           placeholder={t['settingsLoanPaymentFreq']}
+          options={[
+            {
+              label: 'daily',
+              value: Frequency.Daily,
+            },
+            {
+              label: 'weekly',
+              value: Frequency.Weekly,
+            },
+            {
+              label: 'monthly',
+              value: Frequency.Monthly,
+            },
+            {
+              label: 'yearly',
+              value: Frequency.Yearly,
+            },
+          ]}
         />
         <Box display="flex" flexDirection="column" gap="s8">
           <Text
@@ -90,7 +108,7 @@ const AddServiceCharge = ({
         </Box>
       </InputGroupContainer>
       <Box pt="s16">
-        {AmountPer && AmountPer === 'amount' && (
+        {AmountPer && AmountPer === LoanInsurancePaymentType?.Amount && (
           <Box
             border="1px solid"
             borderColor={'border.layout'}
@@ -130,7 +148,7 @@ const AddServiceCharge = ({
             </InputGroupContainer>
           </Box>
         )}
-        {AmountPer && AmountPer === 'percentage' && (
+        {AmountPer && AmountPer === LoanInsurancePaymentType?.Percentage && (
           <Box
             border="1px solid"
             borderColor={'border.layout'}
@@ -179,17 +197,17 @@ export const AccountServicesCharge = () => {
   const methods = useForm();
   const { watch } = methods;
   const insuranceScheme = watch('insuranceScheme');
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setInsuranceScheme(insuranceScheme));
-  }, [JSON.stringify(insuranceScheme)]);
+  const { mutate } = useSetLoanInsuranceSchemeMutation();
 
   const {
     fields: insuranceSchemeFields,
     append: insuranceSchemeAppend,
     remove: insuranceSchemeRemove,
   } = useFieldArray({ name: 'insuranceScheme' });
+
+  const handleSave = () => {
+    mutate({ data: insuranceScheme });
+  };
 
   return (
     <GroupContainer
@@ -222,7 +240,7 @@ export const AccountServicesCharge = () => {
               {t['settingsLoanNewScheme']}{' '}
             </Button>
           </DynamicBoxGroupContainer>
-          <SettingsPageFooter />
+          <SettingsFooter handleSave={handleSave} />
         </form>
       </FormProvider>
     </GroupContainer>

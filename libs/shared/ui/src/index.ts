@@ -58,6 +58,7 @@ export * from './lib/search-bar/SearchBar';
 export * from './lib/search-bar/SearchBar';
 export * from './lib/select/Select';
 export * from './lib/select/Select';
+export * from './lib/settings-footer/SettingsFooter';
 export * from './lib/shortcut-tab/ShortcutTab';
 export * from './lib/sidebar-tabs/SidebarTabs';
 export * from './lib/slug-input/SlugInput';
