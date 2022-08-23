@@ -10576,6 +10576,30 @@ export type GetMemberListQuery = {
             wardNo?: string | null;
             locality?: Record<'local' | 'en' | 'np', string> | null;
           } | null;
+          profile?:
+            | {
+                data?: {
+                  formData?: {
+                    maritalStatusId?: string | null;
+                    maritalStatus?: Record<
+                      'local' | 'en' | 'np',
+                      string
+                    > | null;
+                    basicInformation?: {
+                      genderId?: string | null;
+                      gender?: Record<'local' | 'en' | 'np', string> | null;
+                      age?: number | null;
+                    } | null;
+                    contactDetails?: {
+                      mobileNumber?: string | null;
+                      phoneNumber?: string | null;
+                      email?: string | null;
+                    } | null;
+                  } | null;
+                } | null;
+              }
+            | {}
+            | null;
         } | null;
       } | null> | null;
       pageInfo?: PaginationFragment | null;
@@ -16445,6 +16469,26 @@ export const GetMemberListDocument = `
           contact
           createdAt
           dateJoined
+          profile {
+            ... on kymIndFormStateQuery {
+              data {
+                formData {
+                  basicInformation {
+                    genderId
+                    gender
+                    age
+                  }
+                  contactDetails {
+                    mobileNumber
+                    phoneNumber
+                    email
+                  }
+                  maritalStatusId
+                  maritalStatus
+                }
+              }
+            }
+          }
         }
         cursor
       }

@@ -22,7 +22,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, Grid, GridItem, TextFields } from '@coop/shared/ui';
+import { Box, Grid, GridItem, Input, TextFields } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -91,28 +91,37 @@ export const KYMDeclaration = ({
     if (editValues) {
       const editValueData =
         editValues?.members?.individual?.formState?.data?.formData;
-
-      // if (editValueData?.foreignEmployment) {
-      //   reset({
-      //     // ...editValueData?.declaration,
-      //     convictedDetails: 'true',
-      //     hasForeignResidentialPermit: true,
-      //   });
-      // } else {
-      //   reset({
-      //     // ...editValueData?.declaration,
-      //     convictedDetails: 'false',
-      //     hasForeignResidentialPermit: false,
-      //   });
-      // }
-
       reset({
+        // ...editValueData?.declaration,
         ...editValueData?.declaration,
         beneficialFullName:
           editValueData?.declaration?.beneficialFullName?.local,
         foreignResidentialPermitTypeId:
           editValueData?.declaration?.foreignResidentialPermitTypeId ?? '',
       });
+      // if (editValueData?.foreignEmployment) {
+      //   reset({
+      //     // ...editValueData?.declaration,
+      //     ...editValueData?.declaration,
+      //     beneficialFullName:
+      //       editValueData?.declaration?.beneficialFullName?.local,
+      //     foreignResidentialPermitTypeId:
+      //       editValueData?.declaration?.foreignResidentialPermitTypeId ?? '',
+      //     hasForeignResidentialPermit: true,
+      //   });
+      // }
+      //  else {
+      //   console.log('false');
+      //   reset({
+      //     // ...editValueData?.declaration,
+      //     ...editValueData?.declaration,
+      //     beneficialFullName:
+      //       editValueData?.declaration?.beneficialFullName?.local,
+      //     foreignResidentialPermitTypeId:
+      //       editValueData?.declaration?.foreignResidentialPermitTypeId ?? '',
+      //     hasForeignResidentialPermit: false,
+      //   });
+      // }
     }
   }, [editValues]);
 
@@ -234,11 +243,17 @@ export const KYMDeclaration = ({
                 {isConvicted && (
                   <InputGroupContainer>
                     <Box display="flex" flexDirection="column">
-                      <FormTextArea
+                      {/* <FormTextArea
                         name="convictedDetails"
                         id="convictedDetails"
                         label={t['kynIndPleasespecify']}
                         placeholder={t['kynIndEnterDetails']}
+                      /> */}
+                      <Input
+                        id="convictedDetails"
+                        label={t['kynIndPleasespecify']}
+                        placeholder={t['kynIndEnterDetails']}
+                        {...methods.register('convictedDetails')}
                       />
                     </Box>
                   </InputGroupContainer>

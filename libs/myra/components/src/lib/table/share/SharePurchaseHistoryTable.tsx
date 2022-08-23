@@ -78,9 +78,9 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         header: t['sharePurchaseTableShareCr'],
         footer: () => '',
 
-        meta: {
-          width: '20%',
-        },
+        // meta: {
+        //   width: '20%',
+        // },
         accessorFn: (row) => row?.credit,
         cell: (props) => {
           return (
