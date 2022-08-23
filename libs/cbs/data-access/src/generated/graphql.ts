@@ -793,7 +793,7 @@ export type CoopRelatedTrainingType = {
 
 export type CoopUnionAccountOperatorDetailsResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<KymCoopUnionAccountOperatorDetails>;
   recordId: Scalars['ID'];
 };
@@ -809,14 +809,14 @@ export type CoopUnionAddLastUpdated = {
 
 export type CoopUnionBodDetailsResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<KymCoopUnionBodDetails>;
   recordId: Scalars['ID'];
 };
 
 export type CoopUnionCentralRepresentativeDetailsResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<CooperativeUnionCentralRepresentativeDetails>;
   recordId: Scalars['ID'];
 };
@@ -876,7 +876,7 @@ export type CoopUnionEconomicDetailsInput = {
 
 export type CoopUnionEconomicDetailsResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<CooperativeUnionEconomicDetails>;
   recordId: Scalars['ID'];
 };
@@ -928,7 +928,7 @@ export type CoopUnionInstitutionInformationInput = {
 
 export type CoopUnionInstitutionInformationResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<CooperativeUnionInstitutionInformation>;
   recordId: Scalars['ID'];
 };
@@ -956,9 +956,15 @@ export type CoopUnionPersonnelDetails = {
 
 export type CoopUnionPersonnelDetailsResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<CoopUnionPersonnelDetails>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type CoopUnionPersonnelDetailsResultType = {
+  data?: Maybe<CoopUnionPersonnelDetails>;
+  id?: Maybe<Scalars['ID']>;
+  sectionStatus?: Maybe<KymIndAddSectionStatus>;
 };
 
 export type CoopUnionPersonnelInput = {
@@ -1195,6 +1201,12 @@ export type CooperativeUnionEconomicDetails = {
   shareCapitalTarget?: Maybe<Scalars['Float']>;
 };
 
+export type CooperativeUnionEconomicDetailsResult = {
+  data?: Maybe<CooperativeUnionEconomicDetails>;
+  id?: Maybe<Scalars['ID']>;
+  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+};
+
 export type CooperativeUnionInstitutionInformation = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
@@ -1240,14 +1252,20 @@ export type CooperativeUnionInstitutionInformation = {
   website?: Maybe<Scalars['String']>;
 };
 
-export type CooperativeUnionMember = {
-  accountOperatorsDetails?: Maybe<KymCooperativeUnionPersonnelDetails>;
-  boardOfDirectorsDetails?: Maybe<KymCooperativeUnionPersonnelDetails>;
-  centralRepresentativeDetails?: Maybe<CoopUnionPersonnelDetails>;
-  declaration?: Maybe<CooperativeUnionDeclaration>;
-  economicDetails?: Maybe<CooperativeUnionEconomicDetails>;
+export type CooperativeUnionInstitutionInformationResult = {
+  data?: Maybe<CooperativeUnionInstitutionInformation>;
   id?: Maybe<Scalars['ID']>;
-  institutionInformation?: Maybe<CooperativeUnionInstitutionInformation>;
+  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+};
+
+export type CooperativeUnionMember = {
+  accountOperatorsDetails?: Maybe<KymCooperativeUnionPersonnelDetailsResult>;
+  boardOfDirectorsDetails?: Maybe<KymCooperativeUnionPersonnelDetailsResult>;
+  centralRepresentativeDetails?: Maybe<CoopUnionPersonnelDetailsResultType>;
+  declaration?: Maybe<CooperativeUnionDeclaration>;
+  economicDetails?: Maybe<CooperativeUnionEconomicDetailsResult>;
+  id?: Maybe<Scalars['ID']>;
+  institutionInformation?: Maybe<CooperativeUnionInstitutionInformationResult>;
 };
 
 export enum CooperativeUnionPersonnelSection {
@@ -3393,6 +3411,11 @@ export type Identity = {
   username: Scalars['String'];
 };
 
+export type IncompleteSection = {
+  incomplete?: Maybe<Array<Maybe<Scalars['String']>>>;
+  sectionName?: Maybe<Scalars['String']>;
+};
+
 export type IndividualMember = {
   cooperativeMembership?: Maybe<KymCoopMembershipDetails>;
   declaration?: Maybe<KymIndDeclarations>;
@@ -4968,6 +4991,12 @@ export type KymCooperativeUnionPersonnelDetails = {
   personnelDetails?: Maybe<Array<Maybe<CoopUnionPersonnelDetails>>>;
 };
 
+export type KymCooperativeUnionPersonnelDetailsResult = {
+  data?: Maybe<KymCooperativeUnionPersonnelDetails>;
+  id?: Maybe<Scalars['ID']>;
+  sectionStatus?: Maybe<Array<Maybe<KymIndAddSectionStatus>>>;
+};
+
 export type KymDocuments = {
   documentUrl?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   id: Scalars['ID'];
@@ -5054,7 +5083,7 @@ export type KymIndAddFormStatus = {
 };
 
 export type KymIndAddInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
+  error?: Maybe<Array<Maybe<SectionWiseError>>>;
 };
 
 export type KymIndAddLus =
@@ -5078,10 +5107,9 @@ export type KymIndAddResult = {
 };
 
 export type KymIndAddSectionStatus = {
-  cooperativeMembership?: Maybe<KymIndCooperativeMemberStatus>;
-  declaration?: Maybe<KymIndDeclarationStatus>;
-  personal?: Maybe<KymIndPersonalStatus>;
-  professional?: Maybe<KymIndProfessionalStatus>;
+  errors?: Maybe<Array<Maybe<SectionWiseError>>>;
+  id?: Maybe<Scalars['ID']>;
+  incomplete?: Maybe<Array<Maybe<IncompleteSection>>>;
 };
 
 export type KymIndCooperativeLus = {
@@ -5157,6 +5185,11 @@ export type KymIndFormState = {
   formData?: Maybe<KymIndFormData>;
   lastUpdated: KymIndAddLus;
   sectionStatus?: Maybe<KymIndAddSectionStatus>;
+};
+
+export type KymIndFormStateQuery = {
+  data?: Maybe<KymIndFormState>;
+  error?: Maybe<QueryError>;
 };
 
 export type KymIndGetResult = {
@@ -6250,8 +6283,8 @@ export type MemberMutationTranslateArgs = {
 export type MemberProfile =
   | CooperativeUnionMember
   | KymCooperativeFormStateQuery
-  | KymInsFormStateQuery
-  | KymIndFormStateQuery;
+  | KymIndFormStateQuery
+  | KymInsFormStateQuery;
 
 export type MemberQuery = {
   cooperative?: Maybe<KymCooperativeQuery>;
@@ -6951,6 +6984,11 @@ export type SectionDetailsFilter = {
 export type SectionDetailsQueryResult = {
   data?: Maybe<FormSection>;
   error?: Maybe<QueryError>;
+};
+
+export type SectionWiseError = {
+  errors?: Maybe<Scalars['InvalidData']>;
+  sectionName?: Maybe<Scalars['String']>;
 };
 
 export type ServerError = {
@@ -7850,11 +7888,6 @@ export enum WithdrawWith {
   WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
-export type KymIndFormStateQuery = {
-  data?: Maybe<KymIndFormState>;
-  error?: Maybe<QueryError>;
-};
-
 export type SetAccountOpenDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: DepositLoanAccountInput;
@@ -8059,7 +8092,12 @@ export type SetMemberDataMutation = {
     individual?: {
       add?: {
         recordId: string;
-        error?: { error?: Record<string, Array<string>> | null } | null;
+        error?: {
+          error?: Array<{
+            sectionName?: string | null;
+            errors?: Record<string, Array<string>> | null;
+          } | null> | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -8186,7 +8224,12 @@ export type SetInstitutionDataMutation = {
     institution?: {
       add?: {
         recordId: string;
-        error?: { error?: Record<string, Array<string>> | null } | null;
+        error?: {
+          error?: Array<{
+            sectionName?: string | null;
+            errors?: Record<string, Array<string>> | null;
+          } | null> | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -9598,100 +9641,102 @@ export type GetCooperativeUnionKymEditDataQuery = {
       formState?: {
         formData?: {
           institutionInformation?: {
-            nameOfInstitutionEn?: string | null;
-            nameOfInstitutionNp?: string | null;
-            institutionType?: string | null;
-            natureOfBusinessEn?: string | null;
-            natureOfBusinessNp?: string | null;
-            regdDate?: string | null;
-            vatOrPan?: string | null;
-            noOfBranches?: number | null;
-            regdNo?: string | null;
-            issuingOffice?: string | null;
-            phone?: string | null;
-            fax?: string | null;
-            contactEmail?: string | null;
-            website?: string | null;
-            postBoxNo?: string | null;
-            noOfEmployee?: number | null;
-            lastAgmDate?: string | null;
-            nameOfBank?: string | null;
-            accountNumber?: string | null;
-            accountName?: string | null;
-            applicantName?: string | null;
-            applicantNameNp?: string | null;
-            applicantDesignationEn?: string | null;
-            applicantDesignationNp?: string | null;
-            applicantEmail?: string | null;
-            applicantContactNo?: string | null;
-            applicantPanNo?: string | null;
-            applicantDateOfMembership?: string | null;
-            applicantHighestQualification?: string | null;
-            applicantIsPermanentAndTemporaryAddrSame?: boolean | null;
-            noOfMaleMemberCurrent?: number | null;
-            noOfMaleMemberTarget?: number | null;
-            noOfFemaleMemberCurrent?: number | null;
-            noOfFemaleMemberTarget?: number | null;
-            noOfInstitutionalMemberCurrent?: number | null;
-            noOfInstitutionalMemberTarget?: number | null;
-            regdAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
+            data?: {
+              nameOfInstitutionEn?: string | null;
+              nameOfInstitutionNp?: string | null;
+              institutionType?: string | null;
+              natureOfBusinessEn?: string | null;
+              natureOfBusinessNp?: string | null;
+              regdDate?: string | null;
+              vatOrPan?: string | null;
+              noOfBranches?: number | null;
+              regdNo?: string | null;
+              issuingOffice?: string | null;
+              phone?: string | null;
+              fax?: string | null;
+              contactEmail?: string | null;
+              website?: string | null;
+              postBoxNo?: string | null;
+              noOfEmployee?: number | null;
+              lastAgmDate?: string | null;
+              nameOfBank?: string | null;
+              accountNumber?: string | null;
+              accountName?: string | null;
+              applicantName?: string | null;
+              applicantNameNp?: string | null;
+              applicantDesignationEn?: string | null;
+              applicantDesignationNp?: string | null;
+              applicantEmail?: string | null;
+              applicantContactNo?: string | null;
+              applicantPanNo?: string | null;
+              applicantDateOfMembership?: string | null;
+              applicantHighestQualification?: string | null;
+              applicantIsPermanentAndTemporaryAddrSame?: boolean | null;
+              noOfMaleMemberCurrent?: number | null;
+              noOfMaleMemberTarget?: number | null;
+              noOfFemaleMemberCurrent?: number | null;
+              noOfFemaleMemberTarget?: number | null;
+              noOfInstitutionalMemberCurrent?: number | null;
+              noOfInstitutionalMemberTarget?: number | null;
+              regdAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: {
+                  longitude?: number | null;
+                  latitude?: number | null;
+                } | null;
               } | null;
-            } | null;
-            operatingOfficeAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
+              operatingOfficeAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: {
+                  longitude?: number | null;
+                  latitude?: number | null;
+                } | null;
               } | null;
-            } | null;
-            branchOfficeAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
+              branchOfficeAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: {
+                  longitude?: number | null;
+                  latitude?: number | null;
+                } | null;
               } | null;
-            } | null;
-            applicantPermanentAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
+              applicantPermanentAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: {
+                  longitude?: number | null;
+                  latitude?: number | null;
+                } | null;
               } | null;
-            } | null;
-            applicantTemporaryAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
+              applicantTemporaryAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: {
+                  longitude?: number | null;
+                  latitude?: number | null;
+                } | null;
               } | null;
             } | null;
           } | null;
@@ -9711,45 +9756,47 @@ export type GetEconimicDetailsEditDataQuery = {
       formState?: {
         formData?: {
           economicDetails?: {
-            cashAndCashEquivalentCurrent?: number | null;
-            cashAndCashEquivalentTarget?: number | null;
-            bankCurrent?: number | null;
-            bankTarget?: number | null;
-            investmentsCurrent?: number | null;
-            investmentsTarget?: number | null;
-            loanCurrent?: number | null;
-            loanTarget?: number | null;
-            nonCurrentAssetsCurrent?: number | null;
-            nonCurrentAssetsTarget?: number | null;
-            otherNonCurrentAssetsCurrent?: number | null;
-            otherNonCurrentAssetsTarget?: number | null;
-            shareCapitalCurrent?: number | null;
-            shareCapitalTarget?: number | null;
-            reserveAndSurplusCurrent?: number | null;
-            reserveAndSurplusTarget?: number | null;
-            savingDepositCurrent?: number | null;
-            savingDepositTarget?: number | null;
-            loanAccountCurrent?: number | null;
-            loanAccountTarget?: number | null;
-            capitalGrantCurrent?: number | null;
-            capitalGrantTarget?: number | null;
-            currentLiabilitiesCurrent?: number | null;
-            currentLiabilitiesTarget?: number | null;
-            nonCurrentLiabilitiesCurrent?: number | null;
-            nonCurrentLiabilitiesTarget?: number | null;
-            incomeFromFinancialInvestment?: number | null;
-            incomeFromNonFinancialInvestment?: number | null;
-            incomeFromInvestment?: number | null;
-            incomeFromServiceOperation?: number | null;
-            incomeFromSales?: number | null;
-            otherIncome?: number | null;
-            miscellaneousIncome?: number | null;
-            purchase?: number | null;
-            directExpense?: number | null;
-            administrativeExpense?: number | null;
-            financialCost?: number | null;
-            riskManagementCost?: number | null;
-            deferredTaxExpense?: number | null;
+            data?: {
+              cashAndCashEquivalentCurrent?: number | null;
+              cashAndCashEquivalentTarget?: number | null;
+              bankCurrent?: number | null;
+              bankTarget?: number | null;
+              investmentsCurrent?: number | null;
+              investmentsTarget?: number | null;
+              loanCurrent?: number | null;
+              loanTarget?: number | null;
+              nonCurrentAssetsCurrent?: number | null;
+              nonCurrentAssetsTarget?: number | null;
+              otherNonCurrentAssetsCurrent?: number | null;
+              otherNonCurrentAssetsTarget?: number | null;
+              shareCapitalCurrent?: number | null;
+              shareCapitalTarget?: number | null;
+              reserveAndSurplusCurrent?: number | null;
+              reserveAndSurplusTarget?: number | null;
+              savingDepositCurrent?: number | null;
+              savingDepositTarget?: number | null;
+              loanAccountCurrent?: number | null;
+              loanAccountTarget?: number | null;
+              capitalGrantCurrent?: number | null;
+              capitalGrantTarget?: number | null;
+              currentLiabilitiesCurrent?: number | null;
+              currentLiabilitiesTarget?: number | null;
+              nonCurrentLiabilitiesCurrent?: number | null;
+              nonCurrentLiabilitiesTarget?: number | null;
+              incomeFromFinancialInvestment?: number | null;
+              incomeFromNonFinancialInvestment?: number | null;
+              incomeFromInvestment?: number | null;
+              incomeFromServiceOperation?: number | null;
+              incomeFromSales?: number | null;
+              otherIncome?: number | null;
+              miscellaneousIncome?: number | null;
+              purchase?: number | null;
+              directExpense?: number | null;
+              administrativeExpense?: number | null;
+              financialCost?: number | null;
+              riskManagementCost?: number | null;
+              deferredTaxExpense?: number | null;
+            } | null;
           } | null;
         } | null;
       } | null;
@@ -9767,50 +9814,52 @@ export type GetBoardOfDirectorsDetailsListQuery = {
       formState?: {
         formData?: {
           boardOfDirectorsDetails?: {
-            personnelDetails?: Array<{
-              id?: string | null;
-              cooperativeUnionId?: string | null;
-              fullName?: string | null;
-              fullNameNp?: string | null;
-              designationEn?: string | null;
-              designationNp?: string | null;
-              isPermanentAndTemporaryAddressSame?: boolean | null;
-              dateOfMembership?: string | null;
-              highestQualification?: string | null;
-              mobileNumber?: string | null;
-              email?: string | null;
-              citizenshipNo?: string | null;
-              panNo?: string | null;
-              permanentAddress?: {
-                provinceId?: number | null;
-                districtId?: number | null;
-                localGovernmentId?: number | null;
-                wardNo?: number | null;
-                locality?: Record<'local' | 'en' | 'np', string> | null;
-                houseNo?: string | null;
-                coordinates?: {
-                  longitude?: number | null;
-                  latitude?: number | null;
+            data?: {
+              personnelDetails?: Array<{
+                id?: string | null;
+                cooperativeUnionId?: string | null;
+                fullName?: string | null;
+                fullNameNp?: string | null;
+                designationEn?: string | null;
+                designationNp?: string | null;
+                isPermanentAndTemporaryAddressSame?: boolean | null;
+                dateOfMembership?: string | null;
+                highestQualification?: string | null;
+                mobileNumber?: string | null;
+                email?: string | null;
+                citizenshipNo?: string | null;
+                panNo?: string | null;
+                permanentAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: {
+                    longitude?: number | null;
+                    latitude?: number | null;
+                  } | null;
                 } | null;
-              } | null;
-              temporaryAddress?: {
-                provinceId?: number | null;
-                districtId?: number | null;
-                localGovernmentId?: number | null;
-                wardNo?: number | null;
-                locality?: Record<'local' | 'en' | 'np', string> | null;
-                houseNo?: string | null;
-                coordinates?: {
-                  longitude?: number | null;
-                  latitude?: number | null;
+                temporaryAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: {
+                    longitude?: number | null;
+                    latitude?: number | null;
+                  } | null;
                 } | null;
-              } | null;
-              trainingAttended?: Array<{
-                subjectOfTraining?: string | null;
-                dateOfTraining?: string | null;
-                trainingOrganization?: string | null;
+                trainingAttended?: Array<{
+                  subjectOfTraining?: string | null;
+                  dateOfTraining?: string | null;
+                  trainingOrganization?: string | null;
+                } | null> | null;
               } | null> | null;
-            } | null> | null;
+            } | null;
           } | null;
         } | null;
       } | null;
@@ -9828,7 +9877,70 @@ export type GetAccountOperatorDetailsListQuery = {
       formState?: {
         formData?: {
           accountOperatorsDetails?: {
-            personnelDetails?: Array<{
+            data?: {
+              personnelDetails?: Array<{
+                id?: string | null;
+                cooperativeUnionId?: string | null;
+                fullName?: string | null;
+                fullNameNp?: string | null;
+                designationEn?: string | null;
+                designationNp?: string | null;
+                isPermanentAndTemporaryAddressSame?: boolean | null;
+                dateOfMembership?: string | null;
+                highestQualification?: string | null;
+                mobileNumber?: string | null;
+                email?: string | null;
+                citizenshipNo?: string | null;
+                panNo?: string | null;
+                permanentAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: {
+                    longitude?: number | null;
+                    latitude?: number | null;
+                  } | null;
+                } | null;
+                temporaryAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: {
+                    longitude?: number | null;
+                    latitude?: number | null;
+                  } | null;
+                } | null;
+                trainingAttended?: Array<{
+                  subjectOfTraining?: string | null;
+                  dateOfTraining?: string | null;
+                  trainingOrganization?: string | null;
+                } | null> | null;
+              } | null> | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetCentralRepresentativeDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCentralRepresentativeDetailsQuery = {
+  members: {
+    cooperativeUnion?: {
+      formState?: {
+        formData?: {
+          centralRepresentativeDetails?: {
+            data?: {
               id?: string | null;
               cooperativeUnionId?: string | null;
               fullName?: string | null;
@@ -9842,6 +9954,8 @@ export type GetAccountOperatorDetailsListQuery = {
               email?: string | null;
               citizenshipNo?: string | null;
               panNo?: string | null;
+              notAmongDirectors?: boolean | null;
+              centralRepID?: string | null;
               permanentAddress?: {
                 provinceId?: number | null;
                 districtId?: number | null;
@@ -9871,68 +9985,7 @@ export type GetAccountOperatorDetailsListQuery = {
                 dateOfTraining?: string | null;
                 trainingOrganization?: string | null;
               } | null> | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetCentralRepresentativeDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetCentralRepresentativeDetailsQuery = {
-  members: {
-    cooperativeUnion?: {
-      formState?: {
-        formData?: {
-          centralRepresentativeDetails?: {
-            id?: string | null;
-            cooperativeUnionId?: string | null;
-            fullName?: string | null;
-            fullNameNp?: string | null;
-            designationEn?: string | null;
-            designationNp?: string | null;
-            isPermanentAndTemporaryAddressSame?: boolean | null;
-            dateOfMembership?: string | null;
-            highestQualification?: string | null;
-            mobileNumber?: string | null;
-            email?: string | null;
-            citizenshipNo?: string | null;
-            panNo?: string | null;
-            notAmongDirectors?: boolean | null;
-            centralRepID?: string | null;
-            permanentAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
-              } | null;
             } | null;
-            temporaryAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
-              } | null;
-            } | null;
-            trainingAttended?: Array<{
-              subjectOfTraining?: string | null;
-              dateOfTraining?: string | null;
-              trainingOrganization?: string | null;
-            } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -10646,22 +10699,11 @@ export type GetKymFormStatusQuery = {
       formState?: {
         data?: {
           sectionStatus?: {
-            personal?: {
-              completed?: Array<KymIndPersonalSection | null> | null;
-              error?: Array<KymIndPersonalSection | null> | null;
-            } | null;
-            professional?: {
-              completed?: Array<KymIndProfessionalSection | null> | null;
-              error?: Array<KymIndProfessionalSection | null> | null;
-            } | null;
-            cooperativeMembership?: {
-              completed?: Array<KymIndCooperativeMemberSection | null> | null;
-              error?: Array<KymIndCooperativeMemberSection | null> | null;
-            } | null;
-            declaration?: {
-              completed?: Array<KymIndDeclarationSection | null> | null;
-              error?: Array<KymIndDeclarationSection | null> | null;
-            } | null;
+            id?: string | null;
+            errors?: Array<{
+              sectionName?: string | null;
+              errors?: Record<string, Array<string>> | null;
+            } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -10692,8 +10734,10 @@ export type GetMemberIndividualDataQuery = {
           | {
               id?: string | null;
               institutionInformation?: {
-                nameOfInstitutionEn?: string | null;
-                nameOfInstitutionNp?: string | null;
+                data?: {
+                  nameOfInstitutionEn?: string | null;
+                  nameOfInstitutionNp?: string | null;
+                } | null;
               } | null;
             }
           | {
@@ -10708,15 +10752,6 @@ export type GetMemberIndividualDataQuery = {
           | {
               data?: {
                 formData?: {
-                  institutionName?: string | null;
-                  institutionTypeId?: string | null;
-                  natureOfBusiness?: string | null;
-                } | null;
-              } | null;
-            }
-          | {
-              data?: {
-                formData?: {
                   maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
                   maritalStatusId?: string | null;
                   basicInformation?: {
@@ -10725,6 +10760,15 @@ export type GetMemberIndividualDataQuery = {
                     gender?: Record<'local' | 'en' | 'np', string> | null;
                   } | null;
                   contactDetails?: { email?: string | null } | null;
+                } | null;
+              } | null;
+            }
+          | {
+              data?: {
+                formData?: {
+                  institutionName?: string | null;
+                  institutionTypeId?: string | null;
+                  natureOfBusiness?: string | null;
                 } | null;
               } | null;
             }
@@ -12463,7 +12507,10 @@ export const SetMemberDataDocument = `
         recordId
         error {
           ... on KymIndAddInvalidDataError {
-            error
+            error {
+              sectionName
+              errors
+            }
           }
         }
       }
@@ -12824,7 +12871,10 @@ export const SetInstitutionDataDocument = `
         recordId
         error {
           ... on KymIndAddInvalidDataError {
-            error
+            error {
+              sectionName
+              errors
+            }
           }
         }
       }
@@ -15082,102 +15132,104 @@ export const GetCooperativeUnionKymEditDataDocument = `
       formState(id: $id) {
         formData {
           institutionInformation {
-            nameOfInstitutionEn
-            nameOfInstitutionNp
-            institutionType
-            natureOfBusinessEn
-            natureOfBusinessNp
-            regdDate
-            vatOrPan
-            noOfBranches
-            regdNo
-            issuingOffice
-            regdAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
+            data {
+              nameOfInstitutionEn
+              nameOfInstitutionNp
+              institutionType
+              natureOfBusinessEn
+              natureOfBusinessNp
+              regdDate
+              vatOrPan
+              noOfBranches
+              regdNo
+              issuingOffice
+              regdAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
               }
-            }
-            operatingOfficeAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
+              operatingOfficeAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
               }
-            }
-            branchOfficeAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
+              branchOfficeAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
               }
-            }
-            phone
-            fax
-            contactEmail
-            website
-            postBoxNo
-            noOfEmployee
-            lastAgmDate
-            nameOfBank
-            accountNumber
-            accountName
-            applicantName
-            applicantNameNp
-            applicantDesignationEn
-            applicantDesignationNp
-            applicantEmail
-            applicantContactNo
-            applicantPanNo
-            applicantDateOfMembership
-            applicantHighestQualification
-            applicantPermanentAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
+              phone
+              fax
+              contactEmail
+              website
+              postBoxNo
+              noOfEmployee
+              lastAgmDate
+              nameOfBank
+              accountNumber
+              accountName
+              applicantName
+              applicantNameNp
+              applicantDesignationEn
+              applicantDesignationNp
+              applicantEmail
+              applicantContactNo
+              applicantPanNo
+              applicantDateOfMembership
+              applicantHighestQualification
+              applicantPermanentAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
               }
-            }
-            applicantIsPermanentAndTemporaryAddrSame
-            applicantTemporaryAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
+              applicantIsPermanentAndTemporaryAddrSame
+              applicantTemporaryAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
               }
+              noOfMaleMemberCurrent
+              noOfMaleMemberTarget
+              noOfFemaleMemberCurrent
+              noOfFemaleMemberTarget
+              noOfInstitutionalMemberCurrent
+              noOfInstitutionalMemberTarget
             }
-            noOfMaleMemberCurrent
-            noOfMaleMemberTarget
-            noOfFemaleMemberCurrent
-            noOfFemaleMemberTarget
-            noOfInstitutionalMemberCurrent
-            noOfInstitutionalMemberTarget
           }
         }
       }
@@ -15207,45 +15259,47 @@ export const GetEconimicDetailsEditDataDocument = `
       formState(id: $id) {
         formData {
           economicDetails {
-            cashAndCashEquivalentCurrent
-            cashAndCashEquivalentTarget
-            bankCurrent
-            bankTarget
-            investmentsCurrent
-            investmentsTarget
-            loanCurrent
-            loanTarget
-            nonCurrentAssetsCurrent
-            nonCurrentAssetsTarget
-            otherNonCurrentAssetsCurrent
-            otherNonCurrentAssetsTarget
-            shareCapitalCurrent
-            shareCapitalTarget
-            reserveAndSurplusCurrent
-            reserveAndSurplusTarget
-            savingDepositCurrent
-            savingDepositTarget
-            loanAccountCurrent
-            loanAccountTarget
-            capitalGrantCurrent
-            capitalGrantTarget
-            currentLiabilitiesCurrent
-            currentLiabilitiesTarget
-            nonCurrentLiabilitiesCurrent
-            nonCurrentLiabilitiesTarget
-            incomeFromFinancialInvestment
-            incomeFromNonFinancialInvestment
-            incomeFromInvestment
-            incomeFromServiceOperation
-            incomeFromSales
-            otherIncome
-            miscellaneousIncome
-            purchase
-            directExpense
-            administrativeExpense
-            financialCost
-            riskManagementCost
-            deferredTaxExpense
+            data {
+              cashAndCashEquivalentCurrent
+              cashAndCashEquivalentTarget
+              bankCurrent
+              bankTarget
+              investmentsCurrent
+              investmentsTarget
+              loanCurrent
+              loanTarget
+              nonCurrentAssetsCurrent
+              nonCurrentAssetsTarget
+              otherNonCurrentAssetsCurrent
+              otherNonCurrentAssetsTarget
+              shareCapitalCurrent
+              shareCapitalTarget
+              reserveAndSurplusCurrent
+              reserveAndSurplusTarget
+              savingDepositCurrent
+              savingDepositTarget
+              loanAccountCurrent
+              loanAccountTarget
+              capitalGrantCurrent
+              capitalGrantTarget
+              currentLiabilitiesCurrent
+              currentLiabilitiesTarget
+              nonCurrentLiabilitiesCurrent
+              nonCurrentLiabilitiesTarget
+              incomeFromFinancialInvestment
+              incomeFromNonFinancialInvestment
+              incomeFromInvestment
+              incomeFromServiceOperation
+              incomeFromSales
+              otherIncome
+              miscellaneousIncome
+              purchase
+              directExpense
+              administrativeExpense
+              financialCost
+              riskManagementCost
+              deferredTaxExpense
+            }
           }
         }
       }
@@ -15275,49 +15329,51 @@ export const GetBoardOfDirectorsDetailsListDocument = `
       formState(id: $id) {
         formData {
           boardOfDirectorsDetails {
-            personnelDetails {
-              id
-              cooperativeUnionId
-              fullName
-              fullNameNp
-              designationEn
-              designationNp
-              permanentAddress {
-                provinceId
-                districtId
-                localGovernmentId
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
+            data {
+              personnelDetails {
+                id
+                cooperativeUnionId
+                fullName
+                fullNameNp
+                designationEn
+                designationNp
+                permanentAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
                 }
-              }
-              isPermanentAndTemporaryAddressSame
-              temporaryAddress {
-                provinceId
-                districtId
-                localGovernmentId
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
+                isPermanentAndTemporaryAddressSame
+                temporaryAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
                 }
+                dateOfMembership
+                highestQualification
+                mobileNumber
+                email
+                citizenshipNo
+                trainingAttended {
+                  subjectOfTraining
+                  dateOfTraining
+                  trainingOrganization
+                }
+                panNo
               }
-              dateOfMembership
-              highestQualification
-              mobileNumber
-              email
-              citizenshipNo
-              trainingAttended {
-                subjectOfTraining
-                dateOfTraining
-                trainingOrganization
-              }
-              panNo
             }
           }
         }
@@ -15348,7 +15404,82 @@ export const GetAccountOperatorDetailsListDocument = `
       formState(id: $id) {
         formData {
           accountOperatorsDetails {
-            personnelDetails {
+            data {
+              personnelDetails {
+                id
+                cooperativeUnionId
+                fullName
+                fullNameNp
+                designationEn
+                designationNp
+                permanentAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                isPermanentAndTemporaryAddressSame
+                temporaryAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                dateOfMembership
+                highestQualification
+                mobileNumber
+                email
+                citizenshipNo
+                trainingAttended {
+                  subjectOfTraining
+                  dateOfTraining
+                  trainingOrganization
+                }
+                panNo
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOperatorDetailsListQuery = <
+  TData = GetAccountOperatorDetailsListQuery,
+  TError = unknown
+>(
+  variables: GetAccountOperatorDetailsListQueryVariables,
+  options?: UseQueryOptions<GetAccountOperatorDetailsListQuery, TError, TData>
+) =>
+  useQuery<GetAccountOperatorDetailsListQuery, TError, TData>(
+    ['getAccountOperatorDetailsList', variables],
+    useAxios<
+      GetAccountOperatorDetailsListQuery,
+      GetAccountOperatorDetailsListQueryVariables
+    >(GetAccountOperatorDetailsListDocument).bind(null, variables),
+    options
+  );
+export const GetCentralRepresentativeDetailsDocument = `
+    query getCentralRepresentativeDetails($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        formData {
+          centralRepresentativeDetails {
+            data {
               id
               cooperativeUnionId
               fullName
@@ -15391,80 +15522,9 @@ export const GetAccountOperatorDetailsListDocument = `
                 trainingOrganization
               }
               panNo
+              notAmongDirectors
+              centralRepID
             }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetAccountOperatorDetailsListQuery = <
-  TData = GetAccountOperatorDetailsListQuery,
-  TError = unknown
->(
-  variables: GetAccountOperatorDetailsListQueryVariables,
-  options?: UseQueryOptions<GetAccountOperatorDetailsListQuery, TError, TData>
-) =>
-  useQuery<GetAccountOperatorDetailsListQuery, TError, TData>(
-    ['getAccountOperatorDetailsList', variables],
-    useAxios<
-      GetAccountOperatorDetailsListQuery,
-      GetAccountOperatorDetailsListQueryVariables
-    >(GetAccountOperatorDetailsListDocument).bind(null, variables),
-    options
-  );
-export const GetCentralRepresentativeDetailsDocument = `
-    query getCentralRepresentativeDetails($id: ID!) {
-  members {
-    cooperativeUnion {
-      formState(id: $id) {
-        formData {
-          centralRepresentativeDetails {
-            id
-            cooperativeUnionId
-            fullName
-            fullNameNp
-            designationEn
-            designationNp
-            permanentAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            isPermanentAndTemporaryAddressSame
-            temporaryAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            dateOfMembership
-            highestQualification
-            mobileNumber
-            email
-            citizenshipNo
-            trainingAttended {
-              subjectOfTraining
-              dateOfTraining
-              trainingOrganization
-            }
-            panNo
-            notAmongDirectors
-            centralRepID
           }
         }
       }
@@ -16470,7 +16530,7 @@ export const GetMemberListDocument = `
           createdAt
           dateJoined
           profile {
-            ... on kymIndFormStateQuery {
+            ... on KymIndFormStateQuery {
               data {
                 formData {
                   basicInformation {
@@ -16575,21 +16635,10 @@ export const GetKymFormStatusDocument = `
       formState {
         data {
           sectionStatus {
-            personal {
-              completed
-              error
-            }
-            professional {
-              completed
-              error
-            }
-            cooperativeMembership {
-              completed
-              error
-            }
-            declaration {
-              completed
-              error
+            id
+            errors {
+              sectionName
+              errors
             }
           }
         }
@@ -16629,7 +16678,7 @@ export const GetMemberIndividualDataDocument = `
         contact
         dateJoined
         profile {
-          ... on kymIndFormStateQuery {
+          ... on KymIndFormStateQuery {
             data {
               formData {
                 basicInformation {
@@ -16666,8 +16715,10 @@ export const GetMemberIndividualDataDocument = `
           ... on CooperativeUnionMember {
             id
             institutionInformation {
-              nameOfInstitutionEn
-              nameOfInstitutionNp
+              data {
+                nameOfInstitutionEn
+                nameOfInstitutionNp
+              }
             }
           }
         }

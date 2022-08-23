@@ -19,7 +19,7 @@ query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
           createdAt
           dateJoined
           profile {
-            ... on kymIndFormStateQuery {
+            ... on KymIndFormStateQuery {
               data {
                 formData {
                   basicInformation {
@@ -77,21 +77,10 @@ query getKymFormStatus($id: String!) {
       formState {
         data {
           sectionStatus {
-            personal {
-              completed
-              error
-            }
-            professional {
-              completed
-              error
-            }
-            cooperativeMembership {
-              completed
-              error
-            }
-            declaration {
-              completed
-              error
+            id
+            errors {
+              sectionName
+              errors
             }
           }
         }
@@ -116,7 +105,7 @@ query getMemberIndividualData($id: ID!) {
         contact
         dateJoined
         profile {
-          ... on kymIndFormStateQuery {
+          ... on KymIndFormStateQuery {
             data {
               formData {
                 basicInformation {
@@ -153,8 +142,10 @@ query getMemberIndividualData($id: ID!) {
           ... on CooperativeUnionMember {
             id
             institutionInformation {
-              nameOfInstitutionEn
-              nameOfInstitutionNp
+              data {
+                nameOfInstitutionEn
+                nameOfInstitutionNp
+              }
             }
           }
         }
