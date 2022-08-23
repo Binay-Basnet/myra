@@ -108,7 +108,7 @@ export function SettingsDepositProducts() {
 
   return (
     <>
-      <Box borderBottom="1px solid #E6E6E6" p="8px 16px">
+      <Box borderBottom="1px solid " borderColor="border.layout" p="8px 16px">
         <Box
           display="flex"
           justifyContent="space-between"

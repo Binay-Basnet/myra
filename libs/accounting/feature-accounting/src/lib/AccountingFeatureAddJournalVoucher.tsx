@@ -50,7 +50,8 @@ export function AccountingFeatureAddJournalVoucher() {
           alignItems="center"
           px="5"
           background="neutralColorLight.Gray-0"
-          borderBottom="1px solid #E6E6E6"
+          borderBottom="1px solid"
+          borderColor="border.layout"
           borderTopRadius={5}
           position="sticky"
           top="110px"

@@ -19,7 +19,6 @@ import {
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
-  GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
@@ -282,18 +281,30 @@ export const MemberKYMIncomeSourceDetails = ({
   };
 
   return (
-    <GroupContainer id="kymAccIndIncomeSourceDetails" scrollMarginTop={'200px'}>
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymIndINCOMESOURCEDETAILS']}
-      </Text>
-      <GroupContainer>
-        <FormProvider {...methods}>
-          <form
-            onFocus={(e) => {
-              const kymSection = getKymSection(e.target.id);
-              setKymCurrentSection(kymSection);
-            }}
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSection(e.target.id);
+          setKymCurrentSection(kymSection);
+        }}
+      >
+        <Box
+          p="s20"
+          gap="s16"
+          display="flex"
+          flexDirection="column"
+          id="kymAccIndIncomeSourceDetails"
+          borderBottom={'1px solid'}
+          borderBottomColor="border.layout"
+        >
+          <Text
+            fontSize="r1"
+            fontWeight="SemiBold"
+            color="neutralColorLight.Gray-80"
           >
+            {t['kymIndINCOMESOURCEDETAILS']}
+          </Text>
+          <Box display="flex" flexDirection="column" gap="s16">
             <Box display="flex" flexDirection="column">
               <FormRadioGroup
                 id="annualIncomeSourceId"
@@ -302,37 +313,37 @@ export const MemberKYMIncomeSourceDetails = ({
                 options={getFieldOption(familyIncomeData)}
               />
             </Box>
-          </form>
-        </FormProvider>
 
-        <div>
-          <Text fontSize="s3" mb="s4">
-            {t['kynIndIncomegreater']}
-          </Text>
-          <DynamicBoxGroupContainer>
-            {incomeSourceIds.map((id) => {
-              return (
-                <Box key={id}>
-                  <IncomeSource
-                    incomeSourceId={id}
-                    setKymCurrentSection={setKymCurrentSection}
-                    removeIncomeSource={removeIncomeSource}
-                  />
-                </Box>
-              );
-            })}
-            <Button
-              id="incomeSourceDetailsButton"
-              alignSelf="start"
-              leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-              variant="outline"
-              onClick={() => appendIncomeSource()}
-            >
-              {t['kynIndNewEntry']}
-            </Button>
-          </DynamicBoxGroupContainer>
-        </div>
-      </GroupContainer>
-    </GroupContainer>
+            <Box display="flex" flexDirection="column">
+              <Text fontSize="s3" mb="s4">
+                {t['kynIndIncomegreater']}
+              </Text>
+              <DynamicBoxGroupContainer>
+                {incomeSourceIds.map((id) => {
+                  return (
+                    <Box key={id}>
+                      <IncomeSource
+                        incomeSourceId={id}
+                        setKymCurrentSection={setKymCurrentSection}
+                        removeIncomeSource={removeIncomeSource}
+                      />
+                    </Box>
+                  );
+                })}
+                <Button
+                  id="incomeSourceDetailsButton"
+                  alignSelf="start"
+                  leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+                  variant="outline"
+                  onClick={() => appendIncomeSource()}
+                >
+                  {t['kynIndNewEntry']}
+                </Button>
+              </DynamicBoxGroupContainer>
+            </Box>
+          </Box>
+        </Box>
+      </form>
+    </FormProvider>
   );
 };

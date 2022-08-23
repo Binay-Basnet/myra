@@ -8,7 +8,6 @@ import debounce from 'lodash/debounce';
 import {
   FormFieldSearchTerm,
   useDeleteMemberOccupationMutation,
-  useGetIndividualKymEditDataQuery,
   useGetIndividualKymFamilyOccupationListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
@@ -17,7 +16,6 @@ import {
 import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxGroupContainer,
-  GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
@@ -35,7 +33,6 @@ interface DynamicInputProps {
 export const SpouseOccupationInput = ({
   option,
   optionIndex,
-  fieldIndex,
 }: DynamicInputProps) => {
   const { register } = useFormContext();
 
@@ -82,13 +79,13 @@ const HusbandWifeOccupation = ({
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id,
-  });
+  // const { data: editValues } = useGetIndividualKymEditDataQuery({
+  //   id,
+  // });
 
-  const profession =
-    editValues?.members?.individual?.formState?.data?.formData?.profession
-      ?.professionId ?? [];
+  // const profession =
+  //   editValues?.members?.individual?.formState?.data?.formData?.profession
+  //     ?.professionId ?? [];
 
   const { data: occupationData } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.Occupation,
@@ -350,9 +347,15 @@ export const MemberKYMHusbandWifeOccupation = ({
   };
 
   return (
-    <GroupContainer
+    <Box
+      p="s20"
+      gap="s16"
+      display="flex"
+      flexDirection="column"
       id="kymAccIndMainOccupationofHusabandWife"
-      scrollMarginTop={'200px'}
+      // scrollMarginTop={'200px'}
+      borderBottom={'1px solid'}
+      borderBottomColor="border.layout"
     >
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE']}
@@ -383,6 +386,6 @@ export const MemberKYMHusbandWifeOccupation = ({
           {t['kymIndAddOccupation']}
         </Button>
       </DynamicBoxGroupContainer>
-    </GroupContainer>
+    </Box>
   );
 };

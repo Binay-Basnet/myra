@@ -11,9 +11,8 @@ import {
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -85,7 +84,16 @@ export const MemberKYMProfession = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer id="kymAccIndProfession" scrollMarginTop={'200px'}>
+        <Box
+          p="s20"
+          display="flex"
+          flexDirection="column"
+          id="kymAccIndProfession"
+          // scrollMarginTop={'200px'}
+          gap="s16"
+          borderBottom={'1px solid'}
+          borderBottomColor="border.layout"
+        >
           <Text fontSize="r1" fontWeight="SemiBold">
             {t['kymIndPROFESSION']}
           </Text>
@@ -99,7 +107,7 @@ export const MemberKYMProfession = ({
               list={getFieldOption(occupationData)}
             />
           )}
-        </GroupContainer>
+        </Box>
       </form>
     </FormProvider>
   );

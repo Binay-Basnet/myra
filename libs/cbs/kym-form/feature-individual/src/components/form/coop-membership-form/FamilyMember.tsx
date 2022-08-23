@@ -108,7 +108,11 @@ export const FamilyMember = ({
         display="flex"
         flexDirection="column"
       >
-        <Box bg="background.500" borderBottom="1px solid #E6E6E6">
+        <Box
+          bg="background.500"
+          borderBottom="1px solid"
+          borderColor="border.layout"
+        >
           <Grid
             templateRows="repeat(1,1fr)"
             templateColumns="repeat(5,1fr)"

@@ -60,7 +60,7 @@ export const KYMDeclarationAgree = () => {
       //   setKymCurrentSection(kymSection);
       // }}
       >
-        <Box display="flex" gap="s16" alignItems="start">
+        <Box p="s20" display="flex" gap="s16" alignItems="start">
           <FormCheckbox name="declarationAgreement" fontSize="s3">
             {''}
           </FormCheckbox>

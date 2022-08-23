@@ -19,7 +19,7 @@ const TabElement = chakra(Tab, {
     px: 's16',
     boxSizing: 'border-box',
     borderBottom: '1px solid',
-    borderBottomColor: '#E6E6E6',
+    borderBottomColor: 'border.layout',
     _selected: {
       color: 'gray.800',
       borderBottom: '2px solid',

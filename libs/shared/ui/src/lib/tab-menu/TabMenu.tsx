@@ -102,11 +102,20 @@ export function TabMenu() {
                   alignItems="center"
                   gap="s8"
                   border="none"
+                  _hover={{
+                    bg: 'gray.200',
+                    color: 'neutralColorLight.Gray-60',
+                    borderRadius: 'br2',
+                  }}
                   _selected={{
                     bg: 'background.500',
                     color: 'gray.800',
                     borderRadius: 'br2',
                   }}
+                  _active={{
+                    color: 'gray.800',
+                  }}
+                  color="gray.0"
                 >
                   <Icon
                     as={icon}
@@ -117,7 +126,7 @@ export function TabMenu() {
                   <Text
                     fontSize="r1"
                     lineHeight="0"
-                    color={isActive ? 'gray.800' : 'gray.0'}
+                    // color={isActive ? 'gray.800' : 'gray.0'}
                     fontWeight={isActive ? '600' : '500'}
                   >
                     {t[title]}
