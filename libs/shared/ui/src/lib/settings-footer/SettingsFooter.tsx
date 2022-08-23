@@ -1,13 +1,14 @@
-import React from 'react';
+import { Button } from '@chakra-ui/react';
 
-import { Box, Button } from '@coop/shared/ui';
+import Box from '../box/Box';
 
-interface ISettingsFooterProps {
+/* eslint-disable-next-line */
+export interface SettingsFooterProps {
   handleDiscard?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   handleSave?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-export const SettingsPageFooter = (props: ISettingsFooterProps) => {
+export function SettingsFooter(props: SettingsFooterProps) {
   const { handleDiscard, handleSave } = props;
   return (
     <Box
@@ -27,4 +28,6 @@ export const SettingsPageFooter = (props: ISettingsFooterProps) => {
       <Button onClick={handleSave}>Save Changes</Button>
     </Box>
   );
-};
+}
+
+export default SettingsFooter;
