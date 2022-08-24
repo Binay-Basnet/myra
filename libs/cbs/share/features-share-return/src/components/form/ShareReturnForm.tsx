@@ -22,6 +22,7 @@ import {
   FormCustomSelect,
   FormMemberSelect,
 } from '@coop/cbs/transactions/ui-components';
+import { formatAddress } from '@coop/cbs/utils';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
@@ -247,29 +248,29 @@ const ShareReturnForm = () => {
                         setIDMember(id);
                         setTrigger(true);
                       }, 800)}
-                      options={memberListData?.map((member) => {
-                        const profileData = member?.node
-                          ?.profile as KymIndFormStateQuery;
-                        return (
-                          {
+                      options={
+                        memberListData?.map((member) => {
+                          const profileData = member?.node
+                            ?.profile as KymIndFormStateQuery;
+                          return {
                             memberInfo: {
                               // image:member?.node?.code,
                               memberName: member?.node?.name?.local,
                               memberId: member?.node?.id,
                               gender:
                                 profileData?.data?.formData?.basicInformation
-                                  ?.gender,
+                                  ?.gender?.local,
                               age: profileData?.data?.formData?.basicInformation
                                 ?.age,
                               maritialStatus:
                                 profileData?.data?.formData?.maritalStatus
                                   ?.local,
-                              address: member?.node?.address,
+                              address: formatAddress(member?.node?.address),
                             },
                             value: member?.node?.id as string,
-                          } ?? []
-                        );
-                      })}
+                          };
+                        }) ?? ([] as { label: string; value: string }[])
+                      }
                     />
                     {/* <FormSelect
                       name="memberId"

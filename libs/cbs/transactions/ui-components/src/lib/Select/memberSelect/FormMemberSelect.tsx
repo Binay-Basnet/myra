@@ -19,7 +19,6 @@ interface IFormMemberSelectProps<T> extends SelectProps {
   rules?: UseControllerProps['rules'];
 }
 
-type recordType = Record<'en' | 'local' | 'np', string> | null | undefined;
 interface Option {
   label?: string;
   value: string;
@@ -28,15 +27,9 @@ interface Option {
     memberName?: string;
     memberId?: string;
     gender?: string;
-    age?: number;
+    age?: number | null | undefined;
     maritialStatus?: string;
-    address?: {
-      district?: recordType;
-      localGovernment?: recordType;
-      locality?: recordType;
-      state?: recordType;
-      wardNo?: string | null | undefined;
-    } | null;
+    address?: string;
   };
 }
 

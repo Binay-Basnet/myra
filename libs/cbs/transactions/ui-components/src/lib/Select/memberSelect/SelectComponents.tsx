@@ -8,12 +8,6 @@ import {
 
 import { Avatar } from '@coop/shared/ui';
 
-type addressType = {
-  local: string;
-  en: string;
-  np: string;
-};
-
 export interface Option {
   label: string | number;
   value: string | number;
@@ -24,13 +18,7 @@ export interface Option {
     gender?: string;
     age?: number;
     maritialStatus?: string;
-    address?: {
-      district: addressType;
-      localGovernment: addressType;
-      locality: addressType;
-      state: addressType;
-      wardNo: addressType;
-    };
+    address?: string;
   };
 }
 
@@ -105,7 +93,7 @@ export const components: SelectComponentsConfig<
               fontSize="s3"
               color="neutralColorLight.Gray-60"
             >
-              {props.data.memberInfo?.address?.district?.local}, Nepal
+              {props.data.memberInfo?.address}
             </Text>
           </Box>
         </Box>

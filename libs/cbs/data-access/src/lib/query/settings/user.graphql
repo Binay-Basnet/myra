@@ -1,0 +1,35 @@
+query getSettingsUserListData(
+  $paginate: Pagination
+  $filter: MyraUserSearchFilter
+) {
+  settings {
+    myraUser {
+      list(paginate: $paginate, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            objState
+            createdAt
+            #createdBy
+            modifiedAt
+            #modifiedBy
+            name
+            email
+            contactNo
+            gender
+            dob
+            role
+            branch {
+              id
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}

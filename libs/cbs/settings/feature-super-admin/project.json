@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/settings/feature-super-admin",
+  "sourceRoot": "libs/cbs/settings/feature-super-admin/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/settings/feature-super-admin/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/settings/feature-super-admin"],
+      "options": {
+        "jestConfig": "libs/cbs/settings/feature-super-admin/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

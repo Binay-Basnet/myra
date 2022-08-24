@@ -3210,6 +3210,13 @@ const ne: Record<string, string> = {
   kynIndEstimatedannualaccounttransaction:
     'Estimated annual account transaction',
   moreThan: 'More Than',
+
+  settingsUserSidebarSuperAdmin: 'Super Admin',
+  settingsUserSidebarBranchManager: 'Service Center Manager',
+  settingsUserSidebarAgent: 'Agent',
+  settingsUserSidebarOtherUsers: 'Other Users',
+  settingsUserSidebarRoleReferences: 'Role References',
+  settingsUserSidebarInvitation: 'Invitation',
 };
 
 export default ne;

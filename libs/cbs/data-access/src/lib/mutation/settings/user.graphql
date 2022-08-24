@@ -1,0 +1,9 @@
+mutation setSettingsUserData($id: ID!, $data: MyraUserInput) {
+  settings {
+    myraUser {
+      add(id: $id, data: $data) {
+        recordId
+      }
+    }
+  }
+}
