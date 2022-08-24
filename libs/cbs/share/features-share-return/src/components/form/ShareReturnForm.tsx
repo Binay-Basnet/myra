@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { debounce, omit } from 'lodash';
 
 import {
+  KymIndFormStateQuery,
   NatureOfDepositProduct,
   Payment_Mode,
   useAddShareReturnMutation,
@@ -175,6 +176,7 @@ const ShareReturnForm = () => {
   const memberDetail =
     memberListData &&
     memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
+  const memberProfile = memberDetail?.profile as KymIndFormStateQuery;
 
   useEffect(() => {
     setTotalAmount(
@@ -245,24 +247,29 @@ const ShareReturnForm = () => {
                         setIDMember(id);
                         setTrigger(true);
                       }, 800)}
-                      options={
-                        memberListData?.map((member) => ({
-                          memberInfo: {
-                            memberName: member?.node?.name?.local,
-                            memberId: member?.node?.id,
-                            gender:
-                              member?.node?.profile?.data?.formData
-                                ?.basicInformation?.gender?.local,
-                            age: member?.node?.profile?.data?.formData
-                              ?.basicInformation?.age,
-                            maritialStatus:
-                              member?.node?.profile?.data?.formData
-                                ?.maritalStatus?.local,
-                            address: member?.node?.address,
-                          },
-                          value: member?.node?.id as string,
-                        })) ?? []
-                      }
+                      options={memberListData?.map((member) => {
+                        const profileData = member?.node
+                          ?.profile as KymIndFormStateQuery;
+                        return (
+                          {
+                            memberInfo: {
+                              // image:member?.node?.code,
+                              memberName: member?.node?.name?.local,
+                              memberId: member?.node?.id,
+                              gender:
+                                profileData?.data?.formData?.basicInformation
+                                  ?.gender,
+                              age: profileData?.data?.formData?.basicInformation
+                                ?.age,
+                              maritialStatus:
+                                profileData?.data?.formData?.maritalStatus
+                                  ?.local,
+                              address: member?.node?.address,
+                            },
+                            value: member?.node?.id as string,
+                          } ?? []
+                        );
+                      })}
                     />
                     {/* <FormSelect
                       name="memberId"
@@ -372,8 +379,8 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberDetail?.profile?.data?.formData
-                                  ?.contactDetails?.email ?? '-'}
+                                {memberProfile?.data?.formData?.contactDetails
+                                  ?.email ?? '-'}
                               </TextFields>
                             </Box>
 

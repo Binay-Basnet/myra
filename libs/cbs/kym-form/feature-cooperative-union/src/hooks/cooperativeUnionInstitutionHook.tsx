@@ -31,24 +31,24 @@ const getInstiutionData = (
   return {
     ...editValueData,
     regdAddress: {
-      ...editValueData?.regdAddress,
-      locality: editValueData?.regdAddress?.locality?.local,
+      ...editValueData?.data?.regdAddress,
+      locality: editValueData?.data?.regdAddress?.locality?.local,
     },
     operatingOfficeAddress: {
-      ...editValueData?.operatingOfficeAddress,
-      locality: editValueData?.operatingOfficeAddress?.locality?.local,
+      ...editValueData?.data?.operatingOfficeAddress,
+      locality: editValueData?.data?.operatingOfficeAddress?.locality?.local,
     },
     branchOfficeAddress: {
-      ...editValueData?.branchOfficeAddress,
-      locality: editValueData?.branchOfficeAddress?.locality?.local,
+      ...editValueData?.data?.branchOfficeAddress,
+      locality: editValueData?.data?.branchOfficeAddress?.locality?.local,
     },
     applicantPermanentAddress: {
-      ...editValueData?.applicantPermanentAddress,
-      locality: editValueData?.applicantPermanentAddress?.locality?.local,
+      ...editValueData?.data?.applicantPermanentAddress,
+      locality: editValueData?.data?.applicantPermanentAddress?.locality?.local,
     },
     applicantTemporaryAddress: {
-      ...editValueData?.applicantTemporaryAddress,
-      locality: editValueData?.applicantTemporaryAddress?.locality?.local,
+      ...editValueData?.data?.applicantTemporaryAddress,
+      locality: editValueData?.data?.applicantTemporaryAddress?.locality?.local,
     },
   };
 };

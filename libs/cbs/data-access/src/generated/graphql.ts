@@ -1552,6 +1552,7 @@ export type DepositLoanAccount = Base & {
   depositFrequencyYearlyDay?: Maybe<Scalars['Int']>;
   depositFrequencyYearlyMonth?: Maybe<Months>;
   id: Scalars['ID'];
+  installmentAmount?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['Float']>;
   memberId: Scalars['ID'];
   modifiedAt: Scalars['Time'];
@@ -1591,6 +1592,7 @@ export type DepositLoanAccountInput = {
   depositFrequencyWeekly?: InputMaybe<Week>;
   depositFrequencyYearlyDay?: InputMaybe<Scalars['Int']>;
   depositFrequencyYearlyMonth?: InputMaybe<Months>;
+  installmentAmount?: InputMaybe<Scalars['String']>;
   interestRate?: InputMaybe<Scalars['Float']>;
   memberId: Scalars['ID'];
   productId: Scalars['ID'];
@@ -1630,8 +1632,10 @@ export type DepositLoanAccountQueryGetArgs = {
 
 export type DepositLoanAccountQueryGetInstallmentsArgs = {
   from?: InputMaybe<Scalars['String']>;
+  fromN?: InputMaybe<Scalars['Int']>;
   id: Scalars['ID'];
   to?: InputMaybe<Scalars['String']>;
+  toN?: InputMaybe<Scalars['Int']>;
 };
 
 export type DepositLoanAccountQueryListArgs = {
@@ -3433,6 +3437,7 @@ export enum IndividualRequiredDocument {
 
 export type Installment = {
   dueDate: Scalars['String'];
+  dueDateAD?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
   monthName?: Maybe<Scalars['String']>;
   rebate?: Maybe<Scalars['String']>;

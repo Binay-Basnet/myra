@@ -10,6 +10,7 @@ import omit from 'lodash/omit';
 
 import { InputGroupContainer } from '@coop/accounting/ui-components';
 import {
+  KymIndFormStateQuery,
   NatureOfDepositProduct,
   Payment_Mode,
   useAddSharePurchaseMutation,
@@ -148,6 +149,7 @@ const SharePurchaseForm = () => {
     memberListData &&
     memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
 
+  const memberProfile = memberDetail?.profile as KymIndFormStateQuery;
   // const memberOptions = memberListData?.reduce((prevVal, curVal) => {
   //   return [
   //     ...prevVal,
@@ -241,25 +243,29 @@ const SharePurchaseForm = () => {
                         setIDMember(id);
                         setTrigger(true);
                       }, 800)}
-                      options={
-                        memberListData?.map((member) => ({
-                          memberInfo: {
-                            // image:member?.node?.code,
-                            memberName: member?.node?.name?.local,
-                            memberId: member?.node?.id,
-                            gender:
-                              member?.node?.profile?.data?.formData
-                                ?.basicInformation?.gender?.local,
-                            age: member?.node?.profile?.data?.formData
-                              ?.basicInformation?.age,
-                            maritialStatus:
-                              member?.node?.profile?.data?.formData
-                                ?.maritalStatus?.local,
-                            address: member?.node?.address,
-                          },
-                          value: member?.node?.id as string,
-                        })) ?? []
-                      }
+                      options={memberListData?.map((member) => {
+                        const profileData = member?.node
+                          ?.profile as KymIndFormStateQuery;
+                        return (
+                          {
+                            memberInfo: {
+                              // image:member?.node?.code,
+                              memberName: member?.node?.name?.local,
+                              memberId: member?.node?.id,
+                              gender:
+                                profileData?.data?.formData?.basicInformation
+                                  ?.gender,
+                              age: profileData?.data?.formData?.basicInformation
+                                ?.age,
+                              maritialStatus:
+                                profileData?.data?.formData?.maritalStatus
+                                  ?.local,
+                              address: member?.node?.address,
+                            },
+                            value: member?.node?.id as string,
+                          } ?? []
+                        );
+                      })}
                     />
                   </Box>
 
@@ -361,8 +367,8 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberDetail?.profile?.data?.formData
-                                  ?.contactDetails?.email ?? '-'}
+                                {memberProfile.data?.formData?.contactDetails
+                                  ?.email ?? '-'}
                               </TextFields>
                             </Box>
 

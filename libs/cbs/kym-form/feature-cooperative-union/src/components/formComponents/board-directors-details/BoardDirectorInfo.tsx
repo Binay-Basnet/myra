@@ -557,7 +557,7 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
     if (bodEditValues) {
       const editValueData =
         bodEditValues?.members?.cooperativeUnion?.formState?.formData
-          ?.boardOfDirectorsDetails?.personnelDetails;
+          ?.boardOfDirectorsDetails?.data?.personnelDetails;
 
       setDirectorIds(
         editValueData?.reduce(
@@ -622,7 +622,7 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
               directorId={directorId}
               removeDirector={removeDirector}
               setSection={setSection}
-              directorDetail={bodEditValues?.members?.cooperativeUnion?.formState?.formData?.boardOfDirectorsDetails?.personnelDetails?.find(
+              directorDetail={bodEditValues?.members?.cooperativeUnion?.formState?.formData?.boardOfDirectorsDetails?.data?.personnelDetails?.find(
                 (bod) => bod?.id === directorId
               )}
               refetch={refetch}

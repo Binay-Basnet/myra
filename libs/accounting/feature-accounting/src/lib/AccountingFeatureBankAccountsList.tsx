@@ -85,24 +85,29 @@ export function AccountingFeatureBankAccountsList() {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (cell) => (
-          <PopoverComponent
-            items={[
-              {
-                title: 'memberListTableViewMemberProfile',
-              },
-              {
-                title: 'memberListTableEditMember',
-                onClick: (member) =>
-                  router.push(`/members/individual/edit/${member?.id}`),
-              },
-              {
-                title: 'memberListTableMakeInactive',
-              },
-            ]}
-            member={cell?.row?.original?.node}
-          />
-        ),
+        cell: (cell) => {
+          const member = cell?.row?.original?.node;
+          const memberData = { id: member?.id, type: member?.type };
+          return (
+            <PopoverComponent
+              items={[
+                {
+                  title: 'memberListTableViewMemberProfile',
+                },
+                {
+                  title: 'memberListTableEditMember',
+                  onClick: (member) => {
+                    router.push(`/members/individul/edit/${member?.id}`);
+                  },
+                },
+                {
+                  title: 'memberListTableMakeInactive',
+                },
+              ]}
+              member={memberData}
+            />
+          );
+        },
         meta: {
           width: '60px',
         },

@@ -12,6 +12,7 @@ import { TextFields } from '@coop/shared/ui';
 import { components as customComponents } from './SelectComponents';
 import { chakraDefaultStyles } from './SelectStyles';
 
+type recordType = Record<'en' | 'local' | 'np', string> | null | undefined;
 interface SelectOption {
   label?: string;
   value: string;
@@ -23,12 +24,12 @@ interface SelectOption {
     age?: number;
     maritialStatus?: string;
     address?: {
-      district: string;
-      localGovernment: string;
-      locality: string;
-      state: string;
-      wardNo: string;
-    };
+      district?: recordType;
+      localGovernment?: recordType;
+      locality?: recordType;
+      state?: recordType;
+      wardNo?: string | null | undefined;
+    } | null;
   };
 }
 
