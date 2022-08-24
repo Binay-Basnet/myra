@@ -1,8 +1,8 @@
-mutation setSettingsShareGeneral($id: ID!, $data: ShareSettingsGeneralInput) {
+mutation setSettingsShareGeneral($data: ShareSettingsGeneralInput) {
   settings {
     general {
       share {
-        add(id: $id) {
+        add {
           general(data: $data) {
             bonus {
               taxPayer

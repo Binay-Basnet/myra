@@ -17,7 +17,6 @@ import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettings
 export const ShareSettingsBonusPage = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const id = 'abcdef';
   const taxpayerOpt = [
     {
       label: t['shareBonusCooperative'],
@@ -54,7 +53,6 @@ export const ShareSettingsBonusPage = () => {
       onSuccess: () => router.push('/share/register'),
       promise: mutateAsync(
         {
-          id: id,
           data: {
             ...values,
             // taxPayer: taxPayer ?? settingsBonusData?.taxPayer,

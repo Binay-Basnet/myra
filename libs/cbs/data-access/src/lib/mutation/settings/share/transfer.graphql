@@ -1,9 +1,9 @@
-mutation setSettingsShareFeeAndCharges($data: ShareFeeAndChargesInput) {
+mutation setSettingsShareTransfer($data: ShareTransferSettingsInput) {
   settings {
     general {
       share {
         add {
-          feeAndCharges(data: $data) {
+          transfer(data: $data) {
             bonus {
               taxPayer
               taxRate

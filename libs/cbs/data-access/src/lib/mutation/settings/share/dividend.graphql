@@ -1,8 +1,8 @@
-mutation setSettingsShareDividend($id: ID!, $data: ShareDividendSettingsInput) {
+mutation setSettingsShareDividend($data: ShareDividendSettingsInput) {
   settings {
     general {
       share {
-        add(id: $id) {
+        add {
           dividend(data: $data) {
             dividend {
               distributionCondition

@@ -1979,6 +1979,16 @@ export enum DividendDistributionCondition {
   Quarterly = 'QUARTERLY',
 }
 
+export type DividendRate = {
+  monthly?: Maybe<MonthlyDividendRate>;
+  quarterly?: Maybe<QuarterlyDividendRate>;
+};
+
+export type DividendRateInput = {
+  monthly?: InputMaybe<MonthlyDividendRateInput>;
+  quarterly?: InputMaybe<QuarterlyDividendRateInput>;
+};
+
 export enum DividendTransferTreatment {
   AccountTransfer = 'ACCOUNT_TRANSFER',
   BookPayable = 'BOOK_PAYABLE',
@@ -6334,6 +6344,36 @@ export type MemberTypeResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MonthlyDividendRate = {
+  eightMonth?: Maybe<Scalars['Float']>;
+  eleventhMonth?: Maybe<Scalars['Float']>;
+  fifthMonth?: Maybe<Scalars['Float']>;
+  firstMonth?: Maybe<Scalars['Float']>;
+  fourthMonth?: Maybe<Scalars['Float']>;
+  ninthMonth?: Maybe<Scalars['Float']>;
+  secondMonth?: Maybe<Scalars['Float']>;
+  seventhMonth?: Maybe<Scalars['Float']>;
+  sixthMonth?: Maybe<Scalars['Float']>;
+  tenthMonth?: Maybe<Scalars['Float']>;
+  thirdMonth?: Maybe<Scalars['Float']>;
+  twelfthMonth?: Maybe<Scalars['Float']>;
+};
+
+export type MonthlyDividendRateInput = {
+  eightMonth?: InputMaybe<Scalars['Float']>;
+  eleventhMonth?: InputMaybe<Scalars['Float']>;
+  fifthMonth?: InputMaybe<Scalars['Float']>;
+  firstMonth?: InputMaybe<Scalars['Float']>;
+  fourthMonth?: InputMaybe<Scalars['Float']>;
+  ninthMonth?: InputMaybe<Scalars['Float']>;
+  secondMonth?: InputMaybe<Scalars['Float']>;
+  seventhMonth?: InputMaybe<Scalars['Float']>;
+  sixthMonth?: InputMaybe<Scalars['Float']>;
+  tenthMonth?: InputMaybe<Scalars['Float']>;
+  thirdMonth?: InputMaybe<Scalars['Float']>;
+  twelfthMonth?: InputMaybe<Scalars['Float']>;
+};
+
 export type MonthlyTransactions = {
   closingBalance?: Maybe<Scalars['Float']>;
   id: Scalars['String'];
@@ -6762,6 +6802,20 @@ export type Province = {
   nameNp: Scalars['String'];
 };
 
+export type QuarterlyDividendRate = {
+  firstQuarter?: Maybe<Scalars['Float']>;
+  fourthQuarter?: Maybe<Scalars['Float']>;
+  secondQuarter?: Maybe<Scalars['Float']>;
+  thirdQuarter?: Maybe<Scalars['Float']>;
+};
+
+export type QuarterlyDividendRateInput = {
+  firstQuarter?: InputMaybe<Scalars['Float']>;
+  fourthQuarter?: InputMaybe<Scalars['Float']>;
+  secondQuarter?: InputMaybe<Scalars['Float']>;
+  thirdQuarter?: InputMaybe<Scalars['Float']>;
+};
+
 export type Query = {
   account: DepositLoanAccountQuery;
   administration: AdministrationQuery;
@@ -7075,6 +7129,7 @@ export type ShareCharge = {
   charge?: Maybe<Scalars['Float']>;
   maxShare?: Maybe<Scalars['Int']>;
   minShare?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
   type?: Maybe<ShareChargeType>;
 };
 
@@ -7082,6 +7137,7 @@ export type ShareChargeInput = {
   charge?: InputMaybe<Scalars['Float']>;
   maxShare?: InputMaybe<Scalars['Int']>;
   minShare?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<ShareChargeType>;
 };
 
@@ -7094,6 +7150,7 @@ export type ShareDividendSettingsInput = {
   accountForFractionalDividends?: InputMaybe<Scalars['ID']>;
   accountForShareDividends?: InputMaybe<Scalars['ID']>;
   distributionCondition?: InputMaybe<DividendDistributionCondition>;
+  dividendRate?: InputMaybe<DividendRateInput>;
   dividendTransferTreatment?: InputMaybe<DividendTransferTreatment>;
   organizationFundForDividends?: InputMaybe<Scalars['ID']>;
 };
@@ -7102,6 +7159,7 @@ export type ShareDividendSettingsResult = {
   accountForFractionalDividends?: Maybe<Scalars['ID']>;
   accountForShareDividends?: Maybe<Scalars['ID']>;
   distributionCondition?: Maybe<DividendDistributionCondition>;
+  dividendRate?: Maybe<DividendRate>;
   dividendTransferTreatment?: Maybe<DividendTransferTreatment>;
   organizationFundForDividends?: Maybe<Scalars['ID']>;
 };
@@ -7313,10 +7371,6 @@ export type ShareSettingsGeneralResult = {
 
 export type ShareSettingsMutation = {
   add?: Maybe<ShareSettingsAddMutation>;
-};
-
-export type ShareSettingsMutationAddArgs = {
-  id: Scalars['ID'];
 };
 
 export type ShareSettingsQuery = {
@@ -9003,7 +9057,6 @@ export type UpdateDeclarationMutation = {
 };
 
 export type SetSettingsShareBonusMutationVariables = Exact<{
-  id: Scalars['ID'];
   data?: InputMaybe<ShareBonusSettingsInput>;
 }>;
 
@@ -9026,7 +9079,6 @@ export type SetSettingsShareBonusMutation = {
 };
 
 export type SetSettingsShareDividendMutationVariables = Exact<{
-  id: Scalars['ID'];
   data?: InputMaybe<ShareDividendSettingsInput>;
 }>;
 
@@ -9051,7 +9103,6 @@ export type SetSettingsShareDividendMutation = {
 };
 
 export type SetSettingsShareFeeAndChargesMutationVariables = Exact<{
-  id: Scalars['ID'];
   data?: InputMaybe<ShareFeeAndChargesInput>;
 }>;
 
@@ -9074,7 +9125,6 @@ export type SetSettingsShareFeeAndChargesMutation = {
 };
 
 export type SetSettingsShareGeneralMutationVariables = Exact<{
-  id: Scalars['ID'];
   data?: InputMaybe<ShareSettingsGeneralInput>;
 }>;
 
@@ -9084,6 +9134,28 @@ export type SetSettingsShareGeneralMutation = {
       share?: {
         add?: {
           general?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsShareTransferMutationVariables = Exact<{
+  data?: InputMaybe<ShareTransferSettingsInput>;
+}>;
+
+export type SetSettingsShareTransferMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          transfer?: {
             bonus?: {
               taxPayer?: TaxPayerOptions | null;
               taxRate?: number | null;
@@ -11917,6 +11989,24 @@ export type GetSettingsShareGeneralDataQuery = {
   };
 };
 
+export type GetSettingsShareTransferDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareTransferDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        transfer?: {
+          type?: ShareTransferType | null;
+          accountForShareFund?: string | null;
+          mappedShareLedger?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetChartOfAccountsQuery = {
@@ -14420,11 +14510,11 @@ export const useUpdateDeclarationMutation = <
     options
   );
 export const SetSettingsShareBonusDocument = `
-    mutation setSettingsShareBonus($id: ID!, $data: ShareBonusSettingsInput) {
+    mutation setSettingsShareBonus($data: ShareBonusSettingsInput) {
   settings {
     general {
       share {
-        add(id: $id) {
+        add {
           bonus(data: $data) {
             bonus {
               taxPayer
@@ -14463,11 +14553,11 @@ export const useSetSettingsShareBonusMutation = <
     options
   );
 export const SetSettingsShareDividendDocument = `
-    mutation setSettingsShareDividend($id: ID!, $data: ShareDividendSettingsInput) {
+    mutation setSettingsShareDividend($data: ShareDividendSettingsInput) {
   settings {
     general {
       share {
-        add(id: $id) {
+        add {
           dividend(data: $data) {
             dividend {
               distributionCondition
@@ -14508,11 +14598,11 @@ export const useSetSettingsShareDividendMutation = <
     options
   );
 export const SetSettingsShareFeeAndChargesDocument = `
-    mutation setSettingsShareFeeAndCharges($id: ID!, $data: ShareFeeAndChargesInput) {
+    mutation setSettingsShareFeeAndCharges($data: ShareFeeAndChargesInput) {
   settings {
     general {
       share {
-        add(id: $id) {
+        add {
           feeAndCharges(data: $data) {
             bonus {
               taxPayer
@@ -14551,11 +14641,11 @@ export const useSetSettingsShareFeeAndChargesMutation = <
     options
   );
 export const SetSettingsShareGeneralDocument = `
-    mutation setSettingsShareGeneral($id: ID!, $data: ShareSettingsGeneralInput) {
+    mutation setSettingsShareGeneral($data: ShareSettingsGeneralInput) {
   settings {
     general {
       share {
-        add(id: $id) {
+        add {
           general(data: $data) {
             bonus {
               taxPayer
@@ -14591,6 +14681,49 @@ export const useSetSettingsShareGeneralMutation = <
       SetSettingsShareGeneralMutation,
       SetSettingsShareGeneralMutationVariables
     >(SetSettingsShareGeneralDocument),
+    options
+  );
+export const SetSettingsShareTransferDocument = `
+    mutation setSettingsShareTransfer($data: ShareTransferSettingsInput) {
+  settings {
+    general {
+      share {
+        add {
+          transfer(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareTransferMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareTransferMutation,
+    TError,
+    SetSettingsShareTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareTransferMutation,
+    TError,
+    SetSettingsShareTransferMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareTransfer'],
+    useAxios<
+      SetSettingsShareTransferMutation,
+      SetSettingsShareTransferMutationVariables
+    >(SetSettingsShareTransferDocument),
     options
   );
 export const AddSharePurchaseDocument = `
@@ -18509,6 +18642,38 @@ export const useGetSettingsShareGeneralDataQuery = <
       GetSettingsShareGeneralDataQuery,
       GetSettingsShareGeneralDataQueryVariables
     >(GetSettingsShareGeneralDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareTransferDataDocument = `
+    query getSettingsShareTransferData {
+  settings {
+    general {
+      share {
+        transfer {
+          type
+          accountForShareFund
+          mappedShareLedger
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareTransferDataQuery = <
+  TData = GetSettingsShareTransferDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareTransferDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareTransferDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareTransferDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareTransferData']
+      : ['getSettingsShareTransferData', variables],
+    useAxios<
+      GetSettingsShareTransferDataQuery,
+      GetSettingsShareTransferDataQueryVariables
+    >(GetSettingsShareTransferDataDocument).bind(null, variables),
     options
   );
 export const GetChartOfAccountsDocument = `
