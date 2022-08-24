@@ -2826,6 +2826,8 @@ const ne: Record<string, string> = {
   depositProductAccountCloseServiceCharge: 'Account Close Service Charge',
   depositProductIsThisForMinor: 'Is this a product for Minors ?',
   depositProductMinorAccount: 'Is this a Minor Account ? ',
+
+  // NEW TRANSLATIONS
 };
 
 export default ne;

@@ -63,7 +63,7 @@ export const ShareSettingsGeneralPage = () => {
         success: 'Saved',
         loading: 'Saving Changes ',
       },
-      onSuccess: () => router.push('/share/register'),
+      onSuccess: () => router.push('/settings/general/share'),
       promise: mutateAsync(
         {
           data: {
@@ -74,6 +74,9 @@ export const ShareSettingsGeneralPage = () => {
         { onSuccess: () => refetch() }
       ),
     });
+  };
+  const handleDiscard = () => {
+    router.back();
   };
 
   return (
@@ -311,7 +314,10 @@ export const ShareSettingsGeneralPage = () => {
             </Box>
           </ShareSettingsCard>
         </Box>
-        <SettingsFooter handleSave={handleSubmit} />
+        <SettingsFooter
+          handleSave={handleSubmit}
+          handleDiscard={handleDiscard}
+        />
       </form>
     </FormProvider>
   );
