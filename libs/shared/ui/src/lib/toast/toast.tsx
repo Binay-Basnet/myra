@@ -18,7 +18,7 @@ interface ToastProps {
 export function toast({ options, id, ...props }: ToastProps) {
   return rhToast.custom(<Toast {...props} />, {
     id,
-    duration: 6000,
+    duration: 2000,
     ...options,
   });
 }
@@ -51,14 +51,26 @@ export const asyncToast = async <T extends Record<string, unknown>>({
 
   try {
     const response = await promise;
+
     if (response) {
-      onSuccess && onSuccess(response);
-      toast({
-        id,
-        type: 'success',
-        message: msgs.success ?? 'Successful',
-      });
+      if ('error' in response) {
+        toast({
+          id,
+          type: 'error',
+          message:
+            (response as unknown as { error: { message: string }[] }).error[0]
+              .message ?? errMsg,
+        });
+      } else {
+        onSuccess && onSuccess(response);
+        toast({
+          id,
+          type: 'success',
+          message: msgs.success ?? 'Successful',
+        });
+      }
     }
+
     // TODO! ERROR HANDLE HERE!!!!
   } catch (e: unknown) {
     toast({

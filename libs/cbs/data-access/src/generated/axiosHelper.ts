@@ -40,11 +40,22 @@ export const useAxios = <TData, TVariables>(
     }
     return axios
       .post<{ data: TData }>(url, { query, variables }, config)
-      .then((res: AxiosResponse<{ data: TData; errors?: any[] }>) => {
-        return res.data.data;
-      })
+      .then(
+        (
+          res: AxiosResponse<{
+            data: TData;
+            errors?: { message: string }[];
+          }>
+        ) => {
+          if (!res.data.data) {
+            return { error: res.data.errors };
+          } else {
+            return res.data.data;
+          }
+        }
+      )
       .catch((err) => {
-        //assumin that whenever catch blocked is executed this means that the access token is invalid
+        // assumin that whenever catch blocked is executed this means that the access token is invalid
         return refreshToken().then((accessToken) => {
           if (accessToken) {
             const headers = {
@@ -65,9 +76,20 @@ export const useAxios = <TData, TVariables>(
 
           return axios
             .post<{ data: TData }>(url, { query, variables }, config)
-            .then((res) => {
-              return res.data.data;
-            });
+            .then(
+              (
+                res: AxiosResponse<{
+                  data: TData;
+                  errors?: { message: string }[];
+                }>
+              ) => {
+                if (!res.data.data) {
+                  return res.data.errors;
+                } else {
+                  return res.data.data;
+                }
+              }
+            );
         });
 
         return err;
