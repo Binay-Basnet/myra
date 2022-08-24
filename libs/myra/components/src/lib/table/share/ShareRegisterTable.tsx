@@ -134,6 +134,9 @@ export const ShareRegisterTable = () => {
         id: '_actions',
         header: '',
         cell: () => <PopoverComponent title={popoverTitle} />,
+        meta: {
+          width: '60px',
+        },
       },
     ],
     [router.locale]
