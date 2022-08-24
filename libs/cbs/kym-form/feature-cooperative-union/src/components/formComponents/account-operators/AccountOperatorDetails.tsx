@@ -584,7 +584,7 @@ export const AccountOperatorInfo = ({
     if (accountOperatorEditValues) {
       const editValueData =
         accountOperatorEditValues?.members?.cooperativeUnion?.formState
-          ?.formData?.accountOperatorsDetails?.personnelDetails;
+          ?.formData?.accountOperatorsDetails?.data?.personnelDetails;
 
       setAccountOperatorIds(
         editValueData?.reduce(
@@ -649,7 +649,7 @@ export const AccountOperatorInfo = ({
               setSection={setSection}
               accountOperatorId={accountOperatorId}
               removeAccount={() => removeAccountOperator(accountOperatorId)}
-              accountOperatorDetail={accountOperatorEditValues?.members?.cooperativeUnion?.formState?.formData?.accountOperatorsDetails?.personnelDetails?.find(
+              accountOperatorDetail={accountOperatorEditValues?.members?.cooperativeUnion?.formState?.formData?.accountOperatorsDetails?.data?.personnelDetails?.find(
                 (accOperator) => accOperator?.id === accountOperatorId
               )}
             />

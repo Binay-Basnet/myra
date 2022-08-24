@@ -1,6 +1,7 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
+import addUserSlice from './addUserSlice';
 import authSlice from './authSlice';
 import counterSlice from './counterSlice';
 import loanSettingSlice from './loanSettingsSlice';
@@ -10,6 +11,7 @@ export const store = configureStore({
     counter: counterSlice,
     auth: authSlice,
     loanSettings: loanSettingSlice,
+    addUser: addUserSlice,
   },
 });
 

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
-import { Member } from '@coop/cbs/data-access';
+import { KymMemberTypesEnum, Member } from '@coop/cbs/data-access';
 import {
   Box,
   Popover,
@@ -13,6 +13,11 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+type requiredMemberDetailType = {
+  id?: string;
+  type?: KymMemberTypesEnum;
+};
+
 type popoverType = {
   title?: string[];
 
@@ -21,7 +26,7 @@ type popoverType = {
     onClick?: (member?: Partial<Member> | null) => void;
   }[];
 
-  member?: Partial<Member> | null;
+  member?: requiredMemberDetailType | null;
 };
 
 export const PopoverComponent = ({ title, items, member }: popoverType) => {

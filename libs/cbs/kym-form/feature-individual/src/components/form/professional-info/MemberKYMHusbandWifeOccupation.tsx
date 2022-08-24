@@ -349,7 +349,7 @@ export const MemberKYMHusbandWifeOccupation = ({
   return (
     <Box
       id="kymAccIndMainOccupationofHusabandWife"
-      // scrollMarginTop={'200px'}
+      scrollMarginTop={'200px'}
       borderBottom={'1px solid'}
       borderBottomColor="border.layout"
     >

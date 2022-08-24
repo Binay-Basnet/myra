@@ -10,6 +10,7 @@ import omit from 'lodash/omit';
 
 import { InputGroupContainer } from '@coop/accounting/ui-components';
 import {
+  KymIndFormStateQuery,
   NatureOfDepositProduct,
   Payment_Mode,
   useAddSharePurchaseMutation,
@@ -22,6 +23,7 @@ import {
   FormCustomSelect,
   FormMemberSelect,
 } from '@coop/cbs/transactions/ui-components';
+import { formatAddress } from '@coop/cbs/utils';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
@@ -55,6 +57,8 @@ const Header = () => {
     </>
   );
 };
+
+type optionType = { label: string; value: string };
 
 const SharePurchaseForm = () => {
   const { t } = useTranslation();
@@ -148,6 +152,7 @@ const SharePurchaseForm = () => {
     memberListData &&
     memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
 
+  const memberProfile = memberDetail?.profile as KymIndFormStateQuery;
   // const memberOptions = memberListData?.reduce((prevVal, curVal) => {
   //   return [
   //     ...prevVal,
@@ -242,23 +247,27 @@ const SharePurchaseForm = () => {
                         setTrigger(true);
                       }, 800)}
                       options={
-                        memberListData?.map((member) => ({
-                          memberInfo: {
-                            // image:member?.node?.code,
-                            memberName: member?.node?.name?.local,
-                            memberId: member?.node?.id,
-                            gender:
-                              member?.node?.profile?.data?.formData
-                                ?.basicInformation?.gender?.local,
-                            age: member?.node?.profile?.data?.formData
-                              ?.basicInformation?.age,
-                            maritialStatus:
-                              member?.node?.profile?.data?.formData
-                                ?.maritalStatus?.local,
-                            address: member?.node?.address,
-                          },
-                          value: member?.node?.id as string,
-                        })) ?? []
+                        memberListData?.map((member) => {
+                          const profileData = member?.node
+                            ?.profile as KymIndFormStateQuery;
+                          return {
+                            memberInfo: {
+                              // image:member?.node?.code,
+                              memberName: member?.node?.name?.local,
+                              memberId: member?.node?.id,
+                              gender:
+                                profileData?.data?.formData?.basicInformation
+                                  ?.gender?.local,
+                              age: profileData?.data?.formData?.basicInformation
+                                ?.age,
+                              maritialStatus:
+                                profileData?.data?.formData?.maritalStatus
+                                  ?.local,
+                              address: formatAddress(member?.node?.address),
+                            },
+                            value: member?.node?.id as string,
+                          };
+                        }) ?? ([] as optionType[])
                       }
                     />
                   </Box>
@@ -361,8 +370,8 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberDetail?.profile?.data?.formData
-                                  ?.contactDetails?.email ?? '-'}
+                                {memberProfile.data?.formData?.contactDetails
+                                  ?.email ?? '-'}
                               </TextFields>
                             </Box>
 

@@ -27,7 +27,7 @@ interface Option {
     memberName?: string;
     memberId?: string;
     gender?: string;
-    age?: string;
+    age?: number | null | undefined;
     maritialStatus?: string;
     address?: string;
   };

@@ -1,13 +1,8 @@
 import React from 'react';
-import { AiFillCloseCircle } from 'react-icons/ai';
-import { BsCheckCircleFill } from 'react-icons/bs';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
+import { Box, Collapse, Text } from '@chakra-ui/react';
 
-import {
-  KymIndAddSectionStatus,
-  KymIndPersonalSection,
-} from '@coop/cbs/data-access';
+import { KymIndAddSectionStatus } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 const PersonalInformation = [
@@ -20,18 +15,18 @@ const PersonalInformation = [
   'kymAccIndFamilyDetails',
 ];
 
-const personalInfoEnum: Record<
-  typeof PersonalInformation[number],
-  KymIndPersonalSection
-> = {
-  kymAccIndBasicInformation: KymIndPersonalSection.BasicInformation,
-  kymAccIndContactDetails: KymIndPersonalSection.ContactDetails,
-  kymAccIndIdentificationDetails: KymIndPersonalSection.IdentificationDetails,
-  kymAccIndPermanentAddress: KymIndPersonalSection.PermanentAddress,
-  kymAccIndTemporaryAddress: KymIndPersonalSection.TemporaryAddress,
-  kymAccIndIncaseofresidinginRentedHouse: KymIndPersonalSection.RentedHouse,
-  kymAccIndFamilyDetails: KymIndPersonalSection.FamilyDetails,
-};
+// const personalInfoEnum: Record<
+//   typeof PersonalInformation[number],
+//   KymIndPersonalSection
+// > = {
+//   kymAccIndBasicInformation: KymIndPersonalSection.BasicInformation,
+//   kymAccIndContactDetails: KymIndPersonalSection.ContactDetails,
+//   kymAccIndIdentificationDetails: KymIndPersonalSection.IdentificationDetails,
+//   kymAccIndPermanentAddress: KymIndPersonalSection.PermanentAddress,
+//   kymAccIndTemporaryAddress: KymIndPersonalSection.TemporaryAddress,
+//   kymAccIndIncaseofresidinginRentedHouse: KymIndPersonalSection.RentedHouse,
+//   kymAccIndFamilyDetails: KymIndPersonalSection.FamilyDetails,
+// };
 
 const ProfessionalDetails: string[] = [
   'kymAccIndProfession',
@@ -64,7 +59,8 @@ interface AccordianProps {
 
 export function AccorrdianAddMember(props: AccordianProps) {
   const { t } = useTranslation();
-  const { formStatus, kymCurrentSection } = props;
+  // const { formStatus, kymCurrentSection } = props;
+  const { kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
   const [isOpenPersonal, setIsOpenPersonal] = React.useState(false);
   const [isOpenProfessional, setIsOpenProfessional] = React.useState(false);
@@ -112,14 +108,14 @@ export function AccorrdianAddMember(props: AccordianProps) {
                 </Text>
               </a>
               &nbsp; &nbsp;
-              {formStatus?.personal?.completed?.includes(
+              {/* {formStatus?.data?.personal?.completed?.includes(
                 personalInfoEnum[item]
               ) && (
                 <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
-              )}
-              {formStatus?.personal?.error?.includes(
+              )} */}
+              {/* {formStatus?.data?.personal?.error?.includes(
                 personalInfoEnum[item]
-              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />}
+              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />} */}
             </Box>
           ))}
         </Box>

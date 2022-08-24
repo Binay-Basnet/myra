@@ -1,0 +1,25 @@
+{
+  "root": "libs/cbs/settings/ui-containers",
+  "sourceRoot": "libs/cbs/settings/ui-containers/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/cbs/settings/ui-containers/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/cbs/settings/ui-containers"],
+      "options": {
+        "jestConfig": "libs/cbs/settings/ui-containers/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

@@ -589,6 +589,7 @@ export type BranchInput = {
 };
 
 export type BranchSearchFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
 };
@@ -1978,6 +1979,16 @@ export enum DividendDistributionCondition {
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
 }
+
+export type DividendRate = {
+  monthly?: Maybe<MonthlyDividendRate>;
+  quarterly?: Maybe<QuarterlyDividendRate>;
+};
+
+export type DividendRateInput = {
+  monthly?: InputMaybe<MonthlyDividendRateInput>;
+  quarterly?: InputMaybe<QuarterlyDividendRateInput>;
+};
 
 export enum DividendTransferTreatment {
   AccountTransfer = 'ACCOUNT_TRANSFER',
@@ -3398,6 +3409,8 @@ export enum Id_Type {
   Loanproduct = 'LOANPRODUCT',
   Loanproductcriteria = 'LOANPRODUCTCRITERIA',
   Member = 'MEMBER',
+  Myrauser = 'MYRAUSER',
+  Myrauseridetification = 'MYRAUSERIDETIFICATION',
   Organization = 'ORGANIZATION',
   Productdocument = 'PRODUCTDOCUMENT',
   Sharebalance = 'SHAREBALANCE',
@@ -3414,6 +3427,14 @@ export type Identity = {
   userType: UserType;
   username: Scalars['String'];
 };
+
+export enum IdetificationType {
+  Citizenship = 'CITIZENSHIP',
+  DrivingLicense = 'DRIVING_LICENSE',
+  NationalId = 'NATIONAL_ID',
+  Passport = 'PASSPORT',
+  VoterCard = 'VOTER_CARD',
+}
 
 export type IncompleteSection = {
   incomplete?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -6334,6 +6355,36 @@ export type MemberTypeResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MonthlyDividendRate = {
+  eightMonth?: Maybe<Scalars['Float']>;
+  eleventhMonth?: Maybe<Scalars['Float']>;
+  fifthMonth?: Maybe<Scalars['Float']>;
+  firstMonth?: Maybe<Scalars['Float']>;
+  fourthMonth?: Maybe<Scalars['Float']>;
+  ninthMonth?: Maybe<Scalars['Float']>;
+  secondMonth?: Maybe<Scalars['Float']>;
+  seventhMonth?: Maybe<Scalars['Float']>;
+  sixthMonth?: Maybe<Scalars['Float']>;
+  tenthMonth?: Maybe<Scalars['Float']>;
+  thirdMonth?: Maybe<Scalars['Float']>;
+  twelfthMonth?: Maybe<Scalars['Float']>;
+};
+
+export type MonthlyDividendRateInput = {
+  eightMonth?: InputMaybe<Scalars['Float']>;
+  eleventhMonth?: InputMaybe<Scalars['Float']>;
+  fifthMonth?: InputMaybe<Scalars['Float']>;
+  firstMonth?: InputMaybe<Scalars['Float']>;
+  fourthMonth?: InputMaybe<Scalars['Float']>;
+  ninthMonth?: InputMaybe<Scalars['Float']>;
+  secondMonth?: InputMaybe<Scalars['Float']>;
+  seventhMonth?: InputMaybe<Scalars['Float']>;
+  sixthMonth?: InputMaybe<Scalars['Float']>;
+  tenthMonth?: InputMaybe<Scalars['Float']>;
+  thirdMonth?: InputMaybe<Scalars['Float']>;
+  twelfthMonth?: InputMaybe<Scalars['Float']>;
+};
+
 export type MonthlyTransactions = {
   closingBalance?: Maybe<Scalars['Float']>;
   id: Scalars['String'];
@@ -6392,6 +6443,134 @@ export type MutationError =
   | NotFoundError
   | ServerError
   | ValidationError;
+
+export type MyraUser = Base & {
+  branch?: Maybe<Branch>;
+  contactNo?: Maybe<Scalars['String']>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  dob?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  gender?: Maybe<UserGender>;
+  id: Scalars['ID'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  name?: Maybe<Scalars['String']>;
+  objState: ObjState;
+  role?: Maybe<Roles>;
+};
+
+export type MyraUserConnection = {
+  edges?: Maybe<Array<MyraUserEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type MyraUserEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<MyraUser>;
+};
+
+export type MyraUserFormStateData = {
+  branch?: Maybe<Scalars['String']>;
+  contactNo?: Maybe<Scalars['String']>;
+  dob?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  gender?: Maybe<UserGender>;
+  identificationDetails?: Maybe<Array<Maybe<MyraUserIdentification>>>;
+  identificationSelection?: Maybe<Array<Maybe<Scalars['String']>>>;
+  isTempAsPermanentAddressSame?: Maybe<Scalars['Boolean']>;
+  landlordContact?: Maybe<Scalars['String']>;
+  landlordName?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  permanentAddress?: Maybe<KymAddress>;
+  profilePicture?: Maybe<Array<Maybe<Scalars['String']>>>;
+  role?: Maybe<Roles>;
+  temporaryAddress?: Maybe<KymAddress>;
+};
+
+export type MyraUserFormStateResult = {
+  data?: Maybe<MyraUserFormStateData>;
+  error?: Maybe<QueryError>;
+};
+
+export type MyraUserIdentification = {
+  date?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  idNo?: Maybe<Scalars['String']>;
+  idType?: Maybe<Scalars['String']>;
+  place?: Maybe<Scalars['String']>;
+};
+
+export type MyraUserIdentificationInput = {
+  date?: InputMaybe<Scalars['String']>;
+  idNo?: InputMaybe<Scalars['String']>;
+  idType?: InputMaybe<Scalars['String']>;
+  place?: InputMaybe<Scalars['String']>;
+};
+
+export type MyraUserIdentificationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MyraUserQuery>;
+  record?: Maybe<MyraUserIdentification>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type MyraUserInput = {
+  branch?: InputMaybe<Scalars['String']>;
+  contactNo: Scalars['String'];
+  dob: Scalars['String'];
+  email: Scalars['String'];
+  gender: UserGender;
+  identificationDetails?: InputMaybe<
+    Array<InputMaybe<MyraUserIdentificationInput>>
+  >;
+  identificationSelection?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  isTempAsPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
+  landlordContact?: InputMaybe<Scalars['String']>;
+  landlordName?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  profilePicture?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  role: Roles;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
+};
+
+export type MyraUserMutation = {
+  add?: Maybe<MyraUserResult>;
+};
+
+export type MyraUserMutationAddArgs = {
+  data?: InputMaybe<MyraUserInput>;
+  id: Scalars['ID'];
+};
+
+export type MyraUserQuery = {
+  formState?: Maybe<MyraUserFormStateResult>;
+  list?: Maybe<MyraUserConnection>;
+};
+
+export type MyraUserQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+export type MyraUserQueryListArgs = {
+  filter?: InputMaybe<MyraUserSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type MyraUserResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MyraUserQuery>;
+  record?: Maybe<MyraUser>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type MyraUserSearchFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Roles>;
+};
 
 export type Name = {
   firstName?: Maybe<Scalars['String']>;
@@ -6762,6 +6941,20 @@ export type Province = {
   nameNp: Scalars['String'];
 };
 
+export type QuarterlyDividendRate = {
+  firstQuarter?: Maybe<Scalars['Float']>;
+  fourthQuarter?: Maybe<Scalars['Float']>;
+  secondQuarter?: Maybe<Scalars['Float']>;
+  thirdQuarter?: Maybe<Scalars['Float']>;
+};
+
+export type QuarterlyDividendRateInput = {
+  firstQuarter?: InputMaybe<Scalars['Float']>;
+  fourthQuarter?: InputMaybe<Scalars['Float']>;
+  secondQuarter?: InputMaybe<Scalars['Float']>;
+  thirdQuarter?: InputMaybe<Scalars['Float']>;
+};
+
 export type Query = {
   account: DepositLoanAccountQuery;
   administration: AdministrationQuery;
@@ -6895,6 +7088,14 @@ export type Result = {
   nameNp: Scalars['String'];
 };
 
+export enum Roles {
+  Agent = 'AGENT',
+  BranchManager = 'BRANCH_MANAGER',
+  HeadTeller = 'HEAD_TELLER',
+  Superadmin = 'SUPERADMIN',
+  Teller = 'TELLER',
+}
+
 export type RoutesAndCodes = {
   code?: Maybe<Scalars['Int']>;
   slug?: Maybe<Scalars['String']>;
@@ -7026,6 +7227,7 @@ export type SettingsMutation = {
   declaration: DeclarationMutation;
   form?: Maybe<FormSettingMutation>;
   general?: Maybe<GeneralSettingsMutation>;
+  myraUser?: Maybe<MyraUserMutation>;
 };
 
 export type SettingsQuery = {
@@ -7033,6 +7235,7 @@ export type SettingsQuery = {
   declaration: DeclarationQuery;
   form?: Maybe<FormSettingQuery>;
   general?: Maybe<GeneralSettingsQuery>;
+  myraUser?: Maybe<MyraUserQuery>;
 };
 
 export type ShareBalance = {
@@ -7075,6 +7278,7 @@ export type ShareCharge = {
   charge?: Maybe<Scalars['Float']>;
   maxShare?: Maybe<Scalars['Int']>;
   minShare?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
   type?: Maybe<ShareChargeType>;
 };
 
@@ -7082,6 +7286,7 @@ export type ShareChargeInput = {
   charge?: InputMaybe<Scalars['Float']>;
   maxShare?: InputMaybe<Scalars['Int']>;
   minShare?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<ShareChargeType>;
 };
 
@@ -7094,6 +7299,7 @@ export type ShareDividendSettingsInput = {
   accountForFractionalDividends?: InputMaybe<Scalars['ID']>;
   accountForShareDividends?: InputMaybe<Scalars['ID']>;
   distributionCondition?: InputMaybe<DividendDistributionCondition>;
+  dividendRate?: InputMaybe<DividendRateInput>;
   dividendTransferTreatment?: InputMaybe<DividendTransferTreatment>;
   organizationFundForDividends?: InputMaybe<Scalars['ID']>;
 };
@@ -7102,6 +7308,7 @@ export type ShareDividendSettingsResult = {
   accountForFractionalDividends?: Maybe<Scalars['ID']>;
   accountForShareDividends?: Maybe<Scalars['ID']>;
   distributionCondition?: Maybe<DividendDistributionCondition>;
+  dividendRate?: Maybe<DividendRate>;
   dividendTransferTreatment?: Maybe<DividendTransferTreatment>;
   organizationFundForDividends?: Maybe<Scalars['ID']>;
 };
@@ -7313,10 +7520,6 @@ export type ShareSettingsGeneralResult = {
 
 export type ShareSettingsMutation = {
   add?: Maybe<ShareSettingsAddMutation>;
-};
-
-export type ShareSettingsMutationAddArgs = {
-  id: Scalars['ID'];
 };
 
 export type ShareSettingsQuery = {
@@ -7620,6 +7823,12 @@ export type User = Base & {
   organization: Organization;
   username: Scalars['String'];
 };
+
+export enum UserGender {
+  Female = 'FEMALE',
+  Male = 'MALE',
+  Other = 'OTHER',
+}
 
 export type UserMutation = {
   preference?: Maybe<UserPreferenceMutation>;
@@ -9003,7 +9212,6 @@ export type UpdateDeclarationMutation = {
 };
 
 export type SetSettingsShareBonusMutationVariables = Exact<{
-  id: Scalars['ID'];
   data?: InputMaybe<ShareBonusSettingsInput>;
 }>;
 
@@ -9026,7 +9234,6 @@ export type SetSettingsShareBonusMutation = {
 };
 
 export type SetSettingsShareDividendMutationVariables = Exact<{
-  id: Scalars['ID'];
   data?: InputMaybe<ShareDividendSettingsInput>;
 }>;
 
@@ -9051,7 +9258,6 @@ export type SetSettingsShareDividendMutation = {
 };
 
 export type SetSettingsShareFeeAndChargesMutationVariables = Exact<{
-  id: Scalars['ID'];
   data?: InputMaybe<ShareFeeAndChargesInput>;
 }>;
 
@@ -9074,7 +9280,6 @@ export type SetSettingsShareFeeAndChargesMutation = {
 };
 
 export type SetSettingsShareGeneralMutationVariables = Exact<{
-  id: Scalars['ID'];
   data?: InputMaybe<ShareSettingsGeneralInput>;
 }>;
 
@@ -9094,6 +9299,37 @@ export type SetSettingsShareGeneralMutation = {
       } | null;
     } | null;
   };
+};
+
+export type SetSettingsShareTransferMutationVariables = Exact<{
+  data?: InputMaybe<ShareTransferSettingsInput>;
+}>;
+
+export type SetSettingsShareTransferMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          transfer?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsUserDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<MyraUserInput>;
+}>;
+
+export type SetSettingsUserDataMutation = {
+  settings: { myraUser?: { add?: { recordId?: string | null } | null } | null };
 };
 
 export type AddSharePurchaseMutationVariables = Exact<{
@@ -11917,6 +12153,56 @@ export type GetSettingsShareGeneralDataQuery = {
   };
 };
 
+export type GetSettingsShareTransferDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareTransferDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        transfer?: {
+          type?: ShareTransferType | null;
+          accountForShareFund?: string | null;
+          mappedShareLedger?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsUserListDataQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<MyraUserSearchFilter>;
+}>;
+
+export type GetSettingsUserListDataQuery = {
+  settings: {
+    myraUser?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            objState: ObjState;
+            createdAt: string;
+            modifiedAt: string;
+            name?: string | null;
+            email?: string | null;
+            contactNo?: string | null;
+            gender?: UserGender | null;
+            dob?: string | null;
+            role?: Roles | null;
+            branch?: { id: string } | null;
+          } | null;
+        }> | null;
+        pageInfo: PaginationFragment;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetChartOfAccountsQuery = {
@@ -14420,11 +14706,11 @@ export const useUpdateDeclarationMutation = <
     options
   );
 export const SetSettingsShareBonusDocument = `
-    mutation setSettingsShareBonus($id: ID!, $data: ShareBonusSettingsInput) {
+    mutation setSettingsShareBonus($data: ShareBonusSettingsInput) {
   settings {
     general {
       share {
-        add(id: $id) {
+        add {
           bonus(data: $data) {
             bonus {
               taxPayer
@@ -14463,11 +14749,11 @@ export const useSetSettingsShareBonusMutation = <
     options
   );
 export const SetSettingsShareDividendDocument = `
-    mutation setSettingsShareDividend($id: ID!, $data: ShareDividendSettingsInput) {
+    mutation setSettingsShareDividend($data: ShareDividendSettingsInput) {
   settings {
     general {
       share {
-        add(id: $id) {
+        add {
           dividend(data: $data) {
             dividend {
               distributionCondition
@@ -14508,11 +14794,11 @@ export const useSetSettingsShareDividendMutation = <
     options
   );
 export const SetSettingsShareFeeAndChargesDocument = `
-    mutation setSettingsShareFeeAndCharges($id: ID!, $data: ShareFeeAndChargesInput) {
+    mutation setSettingsShareFeeAndCharges($data: ShareFeeAndChargesInput) {
   settings {
     general {
       share {
-        add(id: $id) {
+        add {
           feeAndCharges(data: $data) {
             bonus {
               taxPayer
@@ -14551,11 +14837,11 @@ export const useSetSettingsShareFeeAndChargesMutation = <
     options
   );
 export const SetSettingsShareGeneralDocument = `
-    mutation setSettingsShareGeneral($id: ID!, $data: ShareSettingsGeneralInput) {
+    mutation setSettingsShareGeneral($data: ShareSettingsGeneralInput) {
   settings {
     general {
       share {
-        add(id: $id) {
+        add {
           general(data: $data) {
             bonus {
               taxPayer
@@ -14591,6 +14877,83 @@ export const useSetSettingsShareGeneralMutation = <
       SetSettingsShareGeneralMutation,
       SetSettingsShareGeneralMutationVariables
     >(SetSettingsShareGeneralDocument),
+    options
+  );
+export const SetSettingsShareTransferDocument = `
+    mutation setSettingsShareTransfer($data: ShareTransferSettingsInput) {
+  settings {
+    general {
+      share {
+        add {
+          transfer(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareTransferMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareTransferMutation,
+    TError,
+    SetSettingsShareTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareTransferMutation,
+    TError,
+    SetSettingsShareTransferMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareTransfer'],
+    useAxios<
+      SetSettingsShareTransferMutation,
+      SetSettingsShareTransferMutationVariables
+    >(SetSettingsShareTransferDocument),
+    options
+  );
+export const SetSettingsUserDataDocument = `
+    mutation setSettingsUserData($id: ID!, $data: MyraUserInput) {
+  settings {
+    myraUser {
+      add(id: $id, data: $data) {
+        recordId
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsUserDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsUserDataMutation,
+    TError,
+    SetSettingsUserDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsUserDataMutation,
+    TError,
+    SetSettingsUserDataMutationVariables,
+    TContext
+  >(
+    ['setSettingsUserData'],
+    useAxios<SetSettingsUserDataMutation, SetSettingsUserDataMutationVariables>(
+      SetSettingsUserDataDocument
+    ),
     options
   );
 export const AddSharePurchaseDocument = `
@@ -18509,6 +18872,87 @@ export const useGetSettingsShareGeneralDataQuery = <
       GetSettingsShareGeneralDataQuery,
       GetSettingsShareGeneralDataQueryVariables
     >(GetSettingsShareGeneralDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareTransferDataDocument = `
+    query getSettingsShareTransferData {
+  settings {
+    general {
+      share {
+        transfer {
+          type
+          accountForShareFund
+          mappedShareLedger
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareTransferDataQuery = <
+  TData = GetSettingsShareTransferDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareTransferDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareTransferDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareTransferDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareTransferData']
+      : ['getSettingsShareTransferData', variables],
+    useAxios<
+      GetSettingsShareTransferDataQuery,
+      GetSettingsShareTransferDataQueryVariables
+    >(GetSettingsShareTransferDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsUserListDataDocument = `
+    query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilter) {
+  settings {
+    myraUser {
+      list(paginate: $paginate, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            objState
+            createdAt
+            modifiedAt
+            name
+            email
+            contactNo
+            gender
+            dob
+            role
+            branch {
+              id
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSettingsUserListDataQuery = <
+  TData = GetSettingsUserListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsUserListDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsUserListDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsUserListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsUserListData']
+      : ['getSettingsUserListData', variables],
+    useAxios<
+      GetSettingsUserListDataQuery,
+      GetSettingsUserListDataQueryVariables
+    >(GetSettingsUserListDataDocument).bind(null, variables),
     options
   );
 export const GetChartOfAccountsDocument = `

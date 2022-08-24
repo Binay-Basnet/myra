@@ -1,17 +1,18 @@
+import { UsersList } from '@coop/cbs/settings/super-admin';
 import {
-  SettingsGeneralLayout,
   SettingsLayout,
+  SettingsUserLayout,
 } from '@coop/cbs/settings/ui-layout';
 
 const Users = () => {
-  return <> Users</>;
+  return <UsersList />;
 };
 
 export default Users;
 Users.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
-      <SettingsGeneralLayout>{page}</SettingsGeneralLayout>
+      <SettingsUserLayout>{page}</SettingsUserLayout>
     </SettingsLayout>
   );
 };

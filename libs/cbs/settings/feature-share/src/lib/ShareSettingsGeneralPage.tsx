@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
-import { BranchCategory, TypeOfShare } from '@coop/cbs/data-access';
+import {
+  BranchCategory,
+  TypeOfShare,
+  useGetSettingsShareGeneralDataQuery,
+  useSetSettingsShareGeneralMutation,
+} from '@coop/cbs/data-access';
 import { FormCheckbox, FormCheckboxGroup, FormInput } from '@coop/shared/form';
-import { Box, SettingsFooter, Text } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -12,6 +18,10 @@ import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettings
 export const ShareSettingsGeneralPage = () => {
   const { t } = useTranslation();
   const methods = useForm();
+  const router = useRouter();
+
+  const { getValues, reset, watch } = methods;
+
   const shareIssueAuthorityOpt = [
     {
       label: t['shareHeadOffice'],
@@ -34,6 +44,37 @@ export const ShareSettingsGeneralPage = () => {
       value: BranchCategory?.BranchOffice,
     },
   ];
+  const { mutateAsync } = useSetSettingsShareGeneralMutation();
+  const { data, refetch } = useGetSettingsShareGeneralDataQuery();
+  const settingsGeneralData = data?.settings?.general?.share?.general;
+  useEffect(() => {
+    if (settingsGeneralData) {
+      reset(settingsGeneralData);
+    }
+  }, [settingsGeneralData]);
+  const typeWatch = watch('typeOfShare');
+
+  const handleSubmit = () => {
+    const values = getValues();
+    const typeValue = typeWatch ? TypeOfShare?.PaidUp : null;
+    asyncToast({
+      id: 'share-settings-bonus-id',
+      msgs: {
+        success: 'Saved',
+        loading: 'Saving Changes ',
+      },
+      onSuccess: () => router.push('/share/register'),
+      promise: mutateAsync(
+        {
+          data: {
+            ...values,
+            typeOfShare: typeValue,
+          },
+        },
+        { onSuccess: () => refetch() }
+      ),
+    });
+  };
 
   return (
     <FormProvider {...methods}>
@@ -270,7 +311,7 @@ export const ShareSettingsGeneralPage = () => {
             </Box>
           </ShareSettingsCard>
         </Box>
-        <SettingsFooter />
+        <SettingsFooter handleSave={handleSubmit} />
       </form>
     </FormProvider>
   );

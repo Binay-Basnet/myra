@@ -1,23 +1,29 @@
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
+import {
+  useGetSettingsShareFeesAndChargesDataQuery,
+  useSetSettingsShareFeeAndChargesMutation,
+} from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { Box, SettingsFooter, Text } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
 
 type ShareChargeTable = {
   type: string;
-  minShareQuantity: string;
-  maxShareQuantity: string;
+  minShare: string;
+  maxShare: string;
   charge: number;
 };
 
 type OtherChargeTable = {
   name: string;
   type: string;
-  minShareQuantity: string;
-  maxShareQuantity: string;
+  minShare: string;
+  maxShare: string;
   charge: number;
 };
 
@@ -35,6 +41,40 @@ const type = [
 export const ShareSettingsFeeAndCharges = () => {
   const { t } = useTranslation();
   const methods = useForm({});
+
+  const { reset, getValues } = methods;
+  const router = useRouter();
+  const { mutateAsync } = useSetSettingsShareFeeAndChargesMutation();
+  const { data, refetch } = useGetSettingsShareFeesAndChargesDataQuery();
+  const settingsFeesAndChargesData =
+    data?.settings?.general?.share?.feeAndCharges;
+
+  useEffect(() => {
+    if (settingsFeesAndChargesData) {
+      reset(settingsFeesAndChargesData);
+    }
+  }, [settingsFeesAndChargesData]);
+  const handleSubmit = () => {
+    const values = getValues();
+
+    asyncToast({
+      id: 'share-settings-bonus-id',
+      msgs: {
+        success: 'Saved',
+        loading: 'Saving Changes ',
+      },
+      onSuccess: () => router.push('/share/register'),
+      promise: mutateAsync(
+        {
+          data: {
+            ...values,
+          },
+        },
+        { onSuccess: () => refetch() }
+      ),
+    });
+  };
+
   return (
     <FormProvider {...methods}>
       <form>
@@ -60,7 +100,7 @@ export const ShareSettingsFeeAndCharges = () => {
                   </Text>
                 </Box>
                 <FormEditableTable<ShareChargeTable>
-                  name="data"
+                  name="shareCertificate"
                   columns={[
                     {
                       accessor: 'type',
@@ -69,11 +109,11 @@ export const ShareSettingsFeeAndCharges = () => {
                       selectOptions: type,
                     },
                     {
-                      accessor: 'minShareQuantity',
+                      accessor: 'minShare',
                       header: t['shareSettingsFeesMinQuantity'],
                     },
                     {
-                      accessor: 'maxShareQuantity',
+                      accessor: 'maxShare',
                       header: t['shareSettingsFeesMaxQuantity'],
                     },
                     {
@@ -103,7 +143,7 @@ export const ShareSettingsFeeAndCharges = () => {
                   </Text>
                 </Box>
                 <FormEditableTable<OtherChargeTable>
-                  name="data"
+                  name="other"
                   columns={[
                     {
                       accessor: 'name',
@@ -116,11 +156,11 @@ export const ShareSettingsFeeAndCharges = () => {
                       selectOptions: type,
                     },
                     {
-                      accessor: 'minShareQuantity',
+                      accessor: 'minShare',
                       header: t['shareSettingsFeesMinQuantity'],
                     },
                     {
-                      accessor: 'maxShareQuantity',
+                      accessor: 'maxShare',
                       header: t['shareSettingsFeesMaxQuantity'],
                     },
                     {
@@ -134,7 +174,7 @@ export const ShareSettingsFeeAndCharges = () => {
             </Box>
           </Box>
         </Box>
-        <SettingsFooter />
+        <SettingsFooter handleSave={handleSubmit} />
       </form>
     </FormProvider>
   );

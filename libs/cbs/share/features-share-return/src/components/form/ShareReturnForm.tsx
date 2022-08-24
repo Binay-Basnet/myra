@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { debounce, omit } from 'lodash';
 
 import {
+  KymIndFormStateQuery,
   NatureOfDepositProduct,
   Payment_Mode,
   useAddShareReturnMutation,
@@ -175,6 +176,7 @@ const ShareReturnForm = () => {
   const memberDetail =
     memberListData &&
     memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
+  const memberProfile = memberDetail?.profile as KymIndFormStateQuery;
 
   useEffect(() => {
     setTotalAmount(
@@ -378,8 +380,8 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberDetail?.profile?.data?.formData
-                                  ?.contactDetails?.email ?? '-'}
+                                {memberProfile?.data?.formData?.contactDetails
+                                  ?.email ?? '-'}
                               </TextFields>
                             </Box>
 

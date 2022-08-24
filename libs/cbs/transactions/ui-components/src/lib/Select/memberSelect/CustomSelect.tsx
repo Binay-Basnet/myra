@@ -20,15 +20,9 @@ interface SelectOption {
     memberName?: string;
     memberId?: string;
     gender?: string;
-    age?: number;
+    age?: number | null | undefined;
     maritialStatus?: string;
-    address?: {
-      district: string;
-      localGovernment: string;
-      locality: string;
-      state: string;
-      wardNo: string;
-    };
+    address?: string;
   };
 }
 

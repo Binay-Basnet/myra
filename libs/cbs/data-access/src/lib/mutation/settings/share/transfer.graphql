@@ -1,0 +1,17 @@
+mutation setSettingsShareTransfer($data: ShareTransferSettingsInput) {
+  settings {
+    general {
+      share {
+        add {
+          transfer(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}

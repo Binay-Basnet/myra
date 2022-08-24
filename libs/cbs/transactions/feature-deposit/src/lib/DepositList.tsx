@@ -97,9 +97,11 @@ export function DepositList() {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (cell) => (
-          <PopoverComponent items={[]} member={cell?.row?.original?.node} />
-        ),
+        cell: (cell) => {
+          const member = cell?.row?.original?.node;
+          const memberData = { id: member?.ID };
+          return <PopoverComponent items={[]} member={memberData} />;
+        },
         meta: {
           width: '60px',
         },
