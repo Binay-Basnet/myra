@@ -103,8 +103,17 @@ export const MemberKYMIdentificationDetails = ({
   }, [watch, router.isReady]);
 
   return (
-    <>
+    <Box borderBottom={'1px solid'} borderBottomColor="border.layout">
       <FormProvider {...methods}>
+        <Text
+          fontSize="r1"
+          p="s20"
+          pb="0"
+          fontWeight="semibold"
+          color="neutralColorLight.Gray-80"
+        >
+          {t['kymIndIDENTIFICATIONDETAILS']}
+        </Text>
         <form
           onFocus={(e) => {
             const kymSection = getKymSection(e.target.id);
@@ -119,13 +128,6 @@ export const MemberKYMIdentificationDetails = ({
             display="flex"
             flexDirection="column"
           >
-            <Text
-              fontSize="r1"
-              fontWeight="semibold"
-              color="neutralColorLight.Gray-80"
-            >
-              {t['kymIndIDENTIFICATIONDETAILS']}
-            </Text>
             <Text fontSize="r1" fontWeight="medium">
               {t['kymIndChooseidentificationdetails']}
             </Text>
@@ -194,7 +196,7 @@ export const MemberKYMIdentificationDetails = ({
               // ))
             )} */}
 
-      <Box p="s20" display="flex" flexDirection="column" gap="s16">
+      <Box mt="s16" display="flex" flexDirection="column">
         {identificationValues?.includes('citizenship') && (
           <Citizenship setKymCurrentSection={setKymCurrentSection} />
         )}
@@ -265,6 +267,6 @@ export const MemberKYMIdentificationDetails = ({
                 })}
             </GroupContainer>
           ) : null} */}
-    </>
+    </Box>
   );
 };

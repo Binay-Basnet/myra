@@ -3,8 +3,8 @@ import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
+import { isEmpty } from 'lodash';
 import debounce from 'lodash/debounce';
-import isEmpty from 'lodash/isEmpty';
 
 import {
   FormFieldSearchTerm,
@@ -24,16 +24,11 @@ import {
   DynamicBoxGroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormCheckbox,
-  FormInput,
-  FormSelect,
-  FormSwitch,
-} from '@coop/shared/form';
+import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import {
   Box,
   Button,
-  Grid,
+  FormSection,
   GridItem,
   Icon,
   Text,
@@ -195,11 +190,11 @@ const MainOccupation = ({
 
   return (
     <Box
+      p="s20"
       display="flex"
       borderRadius="br2"
       flexDirection="column"
       gap="s16"
-      p="s20"
       bg="background.500"
     >
       <FormProvider {...methods}>
@@ -209,7 +204,7 @@ const MainOccupation = ({
             setKymCurrentSection(kymSection);
           }}
         >
-          <Box display="flex" gap="32px" flexDirection="column">
+          <Box display="flex" gap="16px" flexDirection="column">
             <Box display="flex" flexDirection="column">
               <CloseIcon
                 cursor="pointer"
@@ -332,12 +327,6 @@ const MainOccupation = ({
   );
 };
 
-const visaTypes = [
-  { label: 'Student', value: 'Student' },
-  { label: 'Employement', value: 'Employement' },
-  { label: 'Tourist', value: 'Tourist' },
-];
-
 export const MemberKYMMainOccupation = ({
   setKymCurrentSection,
 }: IMemberKYMMainOccupationProps) => {
@@ -349,17 +338,7 @@ export const MemberKYMMainOccupation = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch, control, reset } = methods;
-
-  const isForeignEmployee = watch('isForeignEmployment');
-
-  const countryList = useGetConfigQuery()?.data?.config?.countries ?? [];
-  const countryOptions = !isEmpty(countryList)
-    ? countryList?.map((item) => ({
-        label: item?.name ?? '',
-        value: item?.code ?? '',
-      }))
-    : [];
+  const { watch, reset, control } = methods;
 
   const [occupationIds, setOccupationIds] = useState<string[]>([]);
 
@@ -370,13 +349,30 @@ export const MemberKYMMainOccupation = ({
     { enabled: !!id }
   );
 
+  // const { data: occupationData } = useGetIndividualKymOptionsQuery({
+  //   searchTerm: FormFieldSearchTerm.Occupation,
+  // });
+
+  // const professionId =
+  //   editValues?.members?.individual?.formState?.data?.formData?.profession
+  //     ?.professionId;
+
+  // const foreignId = occupationData?.form?.options?.predefined?.data;
+
+  // const foreignEmpEnable = professionId?.includes(foreignId[5]?.id);
+
   useEffect(() => {
     if (editValues) {
       const editValueData =
         editValues?.members?.individual?.formState?.data?.formData
           ?.foreignEmployment;
 
-      reset({ ...editValueData });
+      reset({ ...editValueData, isForeignEmployment: true });
+      // if (foreignEmpEnable)
+      //   reset({ ...editValueData, isForeignEmployment: true });
+      // else {
+      //   reset({ ...editValueData, isForeignEmployment: false });
+      // }
     }
   }, [editValues]);
 
@@ -450,45 +446,51 @@ export const MemberKYMMainOccupation = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
+  const countryList = useGetConfigQuery()?.data?.config?.countries ?? [];
+  const countryOptions = !isEmpty(countryList)
+    ? countryList?.map((item) => ({
+        label: item?.name ?? '',
+        value: item?.code ?? '',
+      }))
+    : [];
+
+  const visaTypes = [
+    { label: 'Student', value: 'Student' },
+    { label: 'Employement', value: 'Employement' },
+    { label: 'Tourist', value: 'Tourist' },
+  ];
+
   return (
-    <Box
-      p="s20"
-      gap="s16"
-      display="flex"
-      flexDirection="column"
-      id="kymAccIndMainProfession"
-      scrollMarginTop={'200px'}
-      borderBottom={'1px solid'}
-      borderBottomColor="border.layout"
-    >
-      <Text fontSize="r1" fontWeight="SemiBold">
+    <Box id="kymAccIndMainProfession" scrollMarginTop={'200px'}>
+      <Text p="s20" pb="0" fontSize="r1" fontWeight="SemiBold">
         {t['kymIndMAINOCCUPATION']}
       </Text>
-      <DynamicBoxGroupContainer>
-        {occupationIds.map((id) => {
-          return (
-            <Box key={id}>
+      <Box p="s20" display="flex" flexDirection="column" gap="s16">
+        <DynamicBoxGroupContainer>
+          {occupationIds.map((id) => {
+            return (
               <MainOccupation
+                key={id}
                 removeMainOccupation={removeOccuapation}
                 setKymCurrentSection={setKymCurrentSection}
                 occupationId={id}
               />
-            </Box>
-          );
-        })}
+            );
+          })}
 
-        <Button
-          id="mainOccupationButton"
-          alignSelf="start"
-          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-          variant="outline"
-          onClick={() => {
-            appendOccupation();
-          }}
-        >
-          {t['kymIndAddOccupation']}
-        </Button>
-      </DynamicBoxGroupContainer>
+          <Button
+            id="mainOccupationButton"
+            alignSelf="start"
+            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+            variant="outline"
+            onClick={() => {
+              appendOccupation();
+            }}
+          >
+            {t['kymIndAddOccupation']}
+          </Button>
+        </DynamicBoxGroupContainer>
+      </Box>
 
       <FormProvider {...methods}>
         <form
@@ -497,54 +499,35 @@ export const MemberKYMMainOccupation = ({
             setKymCurrentSection(kymSection);
           }}
         >
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Box display="flex" flexDirection="row">
-              <FormSwitch
-                control={control}
-                id="isForeignEmployee"
-                name="isForeignEmployment"
-                label={t['kymIndEnableforForeignEmployment']}
-              />
-            </Box>
-
-            {isForeignEmployee && (
-              <Grid mb="s16" templateColumns="repeat(3, 1fr)" gap="s16">
-                <GridItem>
-                  <FormSelect
-                    id="nameOfCountry"
-                    control={control}
-                    name="foreignEmpCountryId"
-                    label={t['kymIndNameofCountry']}
-                    placeholder={t['kymIndSelectCountry']}
-                    options={countryOptions}
-                  />
-                </GridItem>
-                <GridItem>
-                  <FormSelect
-                    control={control}
-                    id="typeOfVisa"
-                    name="typeOfVisaId"
-                    label={t['kymIndTypeofVisa']}
-                    placeholder={t['kymIndEnterTypeofVisa']}
-                    options={visaTypes}
-                  />
-                </GridItem>
-                <GridItem>
-                  <FormInput
-                    bg="white"
-                    control={control}
-                    type="number"
-                    textAlign={'right'}
-                    name={`foreignEstimatedAnnualIncome`}
-                    id="estimatedAnnualIncome"
-                    label={t['kymIndEstimatedAnnualIncome']}
-                    helperText={t['kymIndWriteStudentVISA']}
-                    placeholder="0.00"
-                  />
-                </GridItem>
-              </Grid>
-            )}
-          </Box>
+          <FormSection header="kymIndForeignEmploymentDetails">
+            <FormSelect
+              id="nameOfCountry"
+              control={control}
+              name="foreignEmpCountryId"
+              label={t['kymIndNameofCountry']}
+              placeholder={t['kymIndSelectCountry']}
+              options={countryOptions}
+            />
+            <FormSelect
+              control={control}
+              id="typeOfVisa"
+              name="typeOfVisaId"
+              label={t['kymIndTypeofVisa']}
+              placeholder={t['kymIndEnterTypeofVisa']}
+              options={visaTypes}
+            />
+            <FormInput
+              bg="white"
+              control={control}
+              type="number"
+              textAlign={'right'}
+              name={`foreignEstimatedAnnualIncome`}
+              id="estimatedAnnualIncome"
+              label={t['kymIndEstimatedAnnualIncome']}
+              helperText={t['kymIndWriteStudentVISA']}
+              placeholder="0.00"
+            />
+          </FormSection>
         </form>
       </FormProvider>
     </Box>

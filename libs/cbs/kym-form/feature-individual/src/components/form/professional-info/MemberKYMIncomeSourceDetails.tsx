@@ -281,41 +281,46 @@ export const MemberKYMIncomeSourceDetails = ({
   };
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSection(e.target.id);
-          setKymCurrentSection(kymSection);
-        }}
-      >
-        <Box
+    <Box>
+      <FormProvider {...methods}>
+        <Text
           p="s20"
-          gap="s16"
-          display="flex"
-          flexDirection="column"
-          id="kymAccIndIncomeSourceDetails"
-          borderBottom={'1px solid'}
-          borderBottomColor="border.layout"
+          pb="0"
+          fontSize="r1"
+          fontWeight="SemiBold"
+          color="neutralColorLight.Gray-80"
         >
-          <Text
-            fontSize="r1"
-            fontWeight="SemiBold"
-            color="neutralColorLight.Gray-80"
+          {t['kymIndINCOMESOURCEDETAILS']}
+        </Text>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSection(e.target.id);
+            setKymCurrentSection(kymSection);
+          }}
+        >
+          <Box
+            p="s20"
+            gap="s32"
+            display="flex"
+            flexDirection="column"
+            id="kymAccIndIncomeSourceDetails"
+            borderBottom={'1px solid'}
+            borderBottomColor="border.layout"
           >
-            {t['kymIndINCOMESOURCEDETAILS']}
-          </Text>
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Box display="flex" flexDirection="column">
-              <FormRadioGroup
-                id="annualIncomeSourceId"
-                name="annualIncomeSourceId"
-                label={t['kynIndAnnualFamilyIncome']}
-                options={getFieldOption(familyIncomeData)}
-              />
-            </Box>
+            <FormRadioGroup
+              id="annualIncomeSourceId"
+              name="annualIncomeSourceId"
+              label={t['kynIndAnnualFamilyIncome']}
+              options={getFieldOption(familyIncomeData)}
+            />
 
-            <Box display="flex" flexDirection="column">
-              <Text fontSize="s3" mb="s4">
+            <Box display="flex" gap="s16" flexDirection="column">
+              <Text
+                fontSize="s3"
+                fontWeight="Medium"
+                color="neutralColorLight.Gray-70"
+                mb="s4"
+              >
                 {t['kynIndIncomegreater']}
               </Text>
               <DynamicBoxGroupContainer>
@@ -342,8 +347,8 @@ export const MemberKYMIncomeSourceDetails = ({
               </DynamicBoxGroupContainer>
             </Box>
           </Box>
-        </Box>
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+    </Box>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
 import { KymIndAddSectionStatus } from '@coop/cbs/data-access';
@@ -76,7 +76,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
   }, [kymCurrentSection]);
 
   return (
-    <Box p={'1'} overflow="auto" h="700px">
+    <Box overflow="auto" h="700px">
       <Box
         display="flex"
         justifyContent="space-between"
@@ -88,11 +88,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymAccInd1PersonalDetails']}
         </Text>
-        {!isOpenPersonal ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenPersonal ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenPersonal} style={{ marginTop: '0px' }}>
@@ -136,11 +132,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymAccInd2ProfessionalDetails']}
         </Text>
-        {!isOpenProfessional ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenProfessional ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenProfessional}>
@@ -175,11 +167,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymAccInd3COOPMembership']}
         </Text>
-        {!isOpenCoopMemberShip ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenCoopMemberShip ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenCoopMemberShip}>
@@ -214,11 +202,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymAccInd4Declaration']}
         </Text>
-        {!isOpenDeclaration ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenDeclaration}>

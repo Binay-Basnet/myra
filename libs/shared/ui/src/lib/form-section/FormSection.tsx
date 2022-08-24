@@ -6,13 +6,19 @@ import { useTranslation } from '@coop/shared/utils';
 export interface FormSectionProps {
   id?: string;
   header?: string;
+  subHeader?: string;
   children?: React.ReactNode;
 }
 
-export function FormSection({ id, header, children }: FormSectionProps) {
+export function FormSection({
+  id,
+  header,
+  subHeader,
+  children,
+}: FormSectionProps) {
   const { t } = useTranslation();
   return (
-    <Box id={id}>
+    <Box scrollMarginTop={'200px'} id={id}>
       {header && (
         <Box p="s20" pb={0}>
           <Text
@@ -21,6 +27,18 @@ export function FormSection({ id, header, children }: FormSectionProps) {
             color="neutralColorLight.Gray-80"
           >
             {t[header]}
+          </Text>
+        </Box>
+      )}
+
+      {subHeader && (
+        <Box p="s20" py="s4">
+          <Text
+            fontSize="s3"
+            fontWeight="Regular"
+            color="neutralColorLight.Gray-70"
+          >
+            {t[subHeader]}
           </Text>
         </Box>
       )}

@@ -22,7 +22,7 @@ const Template: StoryFn<ButtonProps> = (props) => (
 export const Primary = Template.bind({});
 Primary.args = {
   size: 'md',
-  mod: 'primary',
+  // mod: 'primary',
   leftIcon: <BiArrowBack />,
   isLoading: false,
   variant: 'solid',
@@ -41,7 +41,7 @@ Danger.args = {
   children: 'Button',
   loadingText: 'Loading...',
 
-  mod: 'danger',
+  // mod: 'danger',
 };
 export const Neutral = Template.bind({});
 Neutral.args = {
@@ -51,5 +51,5 @@ Neutral.args = {
   children: 'Button',
   loadingText: 'Loading...',
 
-  mod: 'netral',
+  // mod: 'netral',
 };

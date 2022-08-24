@@ -78,6 +78,15 @@ export const MemberKYMProfession = ({
 
   return (
     <FormProvider {...methods}>
+      <Text
+        fontSize="r1"
+        p="s20"
+        pb="0"
+        fontWeight="SemiBold"
+        color="neutralColorLight.Gray-70"
+      >
+        {t['kymIndPROFESSION']}
+      </Text>
       <form
         onFocus={(e) => {
           const kymSection = getKymSection(e.target.id);
@@ -91,13 +100,7 @@ export const MemberKYMProfession = ({
           id="kymAccIndProfession"
           // scrollMarginTop={'200px'}
           gap="s16"
-          borderBottom={'1px solid'}
-          borderBottomColor="border.layout"
         >
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kymIndPROFESSION']}
-          </Text>
-
           {occupationLoading ? (
             <Skeleton height="40px" />
           ) : (
@@ -108,6 +111,36 @@ export const MemberKYMProfession = ({
             />
           )}
         </Box>
+
+        {/* <FormSection header="kymIndForeignEmploymentDetails">
+          <FormSelect
+            id="nameOfCountry"
+            control={control}
+            name="foreignEmpCountryId"
+            label={t['kymIndNameofCountry']}
+            placeholder={t['kymIndSelectCountry']}
+            options={countryOptions}
+          />
+          <FormSelect
+            control={control}
+            id="typeOfVisa"
+            name="typeOfVisaId"
+            label={t['kymIndTypeofVisa']}
+            placeholder={t['kymIndEnterTypeofVisa']}
+            options={visaTypes}
+          />
+          <FormInput
+            bg="white"
+            control={control}
+            type="number"
+            textAlign={'right'}
+            name={`foreignEstimatedAnnualIncome`}
+            id="estimatedAnnualIncome"
+            label={t['kymIndEstimatedAnnualIncome']}
+            helperText={t['kymIndWriteStudentVISA']}
+            placeholder="0.00"
+          />
+        </FormSection> */}
       </form>
     </FormProvider>
   );

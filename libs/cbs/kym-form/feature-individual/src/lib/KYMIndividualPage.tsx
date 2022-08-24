@@ -66,11 +66,12 @@ export function KYMIndividualPage() {
       </Box>
 
       <Container minW="container.xl" height="fit-content">
-        <Box pb="s40" display="flex" width="100%">
+        <Box display="flex" width="100%">
           <Box display="flex">
             <Box
               w={320}
-              p={2}
+              p="s16"
+              pr="s20"
               position="fixed"
               borderRight="1px solid"
               borderColor="border.layout"
@@ -86,7 +87,7 @@ export function KYMIndividualPage() {
             <Box background="white" ml="320" pb="120px">
               {/* <SectionContainer> */}
               <SectionContainer>
-                <Text p="s20" pb="0" fontSize="r3" fontWeight="600">
+                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                   {t['kymInd1PersonalInformation']}
                 </Text>
                 <MemberKYMBasicInfo
@@ -105,7 +106,7 @@ export function KYMIndividualPage() {
               </SectionContainer>
 
               <SectionContainer>
-                <Text p="s20" pb="0" fontSize="r3" fontWeight="600">
+                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                   {t['kymInd2ProfessionalInformation']}
                 </Text>
                 <MemberKYMProfession
@@ -123,7 +124,7 @@ export function KYMIndividualPage() {
               </SectionContainer>
 
               <SectionContainer>
-                <Text p="s20" pb="0" fontSize="r3" fontWeight="600">
+                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                   {t['kymInd3COOPmembership']}
                 </Text>
                 <KYMBasiccoopDetails
@@ -138,7 +139,7 @@ export function KYMIndividualPage() {
               </SectionContainer>
 
               <SectionContainer>
-                <Text p="s20" pb="0" fontSize="r3" fontWeight="600">
+                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                   {t['kymInd4Declaration']}
                 </Text>
                 <KYMDeclaration setKymCurrentSection={setKymCurrentSection} />

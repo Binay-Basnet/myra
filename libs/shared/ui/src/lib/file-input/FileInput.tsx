@@ -142,11 +142,11 @@ export function FileInput({
 
           {size === 'lg' ? (
             <Button shade="neutral" variant="outline">
-              Add File
+              <Text color="gray.800"> Add File</Text>
             </Button>
           ) : size === 'md' ? (
             <Text fontSize="r1" fontWeight="500">
-              Add File
+              <Text color="gray.800"> Add File</Text>
             </Text>
           ) : null}
 

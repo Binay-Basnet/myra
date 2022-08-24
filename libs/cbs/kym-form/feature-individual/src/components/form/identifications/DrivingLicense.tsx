@@ -134,45 +134,49 @@ export const DrivingLicense = ({
   }, [watch, mutationId, identificationListData]);
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSection(e.target.id);
-          setKymCurrentSection(kymSection);
-        }}
-      >
-        <Box display="flex" flexDirection="column" gap="s16">
-          <Text
-            fontSize="r1"
-            fontWeight="medium"
-            color="neutralColorLight.Gray-70"
-          >
-            {t['kymIndDrivingLicense']}
-          </Text>
-          <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-            <FormInput
-              type="text"
-              name="idNo"
-              label={t['kymIndDrivingLicenseNo']}
-              placeholder={t['kymIndDrivingLicenseNo']}
-            />
+    <Box>
+      <FormProvider {...methods}>
+        <Text
+          p="s20"
+          pb="0"
+          fontSize="r1"
+          fontWeight="medium"
+          color="neutralColorLight.Gray-70"
+        >
+          {t['kymIndDrivingLicense']}
+        </Text>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSection(e.target.id);
+            setKymCurrentSection(kymSection);
+          }}
+        >
+          <Box p="s20" display="flex" flexDirection="column" gap="s16">
+            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
+              <FormInput
+                type="text"
+                name="idNo"
+                label={t['kymIndDrivingLicenseNo']}
+                placeholder={t['kymIndDrivingLicenseNo']}
+              />
 
-            <FormInput
-              type="text"
-              name="place"
-              label={t['kymIndDrivingLicenseIssuePlace']}
-              placeholder={t['kymIndDrivingLicenseIssuePlace']}
-            />
+              <FormInput
+                type="text"
+                name="place"
+                label={t['kymIndDrivingLicenseIssuePlace']}
+                placeholder={t['kymIndDrivingLicenseIssuePlace']}
+              />
 
-            <FormInput
-              type="date"
-              name="date"
-              label={t['kymIndDrivingLicenseIssueDate']}
-              placeholder={t['kymIndDrivingLicenseIssueDate']}
-            />
-          </Grid>
-        </Box>
-      </form>
-    </FormProvider>
+              <FormInput
+                type="date"
+                name="date"
+                label={t['kymIndDrivingLicenseIssueDate']}
+                placeholder={t['kymIndDrivingLicenseIssueDate']}
+              />
+            </Grid>
+          </Box>
+        </form>
+      </FormProvider>
+    </Box>
   );
 };

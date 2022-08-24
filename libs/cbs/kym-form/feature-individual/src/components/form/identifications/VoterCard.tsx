@@ -130,38 +130,42 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
   }, [watch, mutationId, identificationListData]);
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSection(e.target.id);
-          setKymCurrentSection(kymSection);
-        }}
-      >
-        <Box display="flex" flexDirection="column" gap="s16">
-          <Text
-            fontSize="r1"
-            fontWeight="medium"
-            color="neutralColorLight.Gray-70"
-          >
-            {t['kymIndVoterCard']}
-          </Text>
-          <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-            <FormInput
-              type="text"
-              name="idNo"
-              label={t['kymIndVoterCardNo']}
-              placeholder={t['kymIndVoterCardNo']}
-            />
+    <Box>
+      <FormProvider {...methods}>
+        <Text
+          p="s20"
+          pb="0"
+          fontSize="r1"
+          fontWeight="medium"
+          color="neutralColorLight.Gray-70"
+        >
+          {t['kymIndVoterCard']}
+        </Text>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSection(e.target.id);
+            setKymCurrentSection(kymSection);
+          }}
+        >
+          <Box p="s20" display="flex" flexDirection="column" gap="s16">
+            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
+              <FormInput
+                type="text"
+                name="idNo"
+                label={t['kymIndVoterCardNo']}
+                placeholder={t['kymIndVoterCardNo']}
+              />
 
-            <FormInput
-              type="text"
-              name="place"
-              label={t['kymIndVoterCardPollingStation']}
-              placeholder={t['kymIndVoterCardPollingStation']}
-            />
-          </Grid>
-        </Box>
-      </form>
-    </FormProvider>
+              <FormInput
+                type="text"
+                name="place"
+                label={t['kymIndVoterCardPollingStation']}
+                placeholder={t['kymIndVoterCardPollingStation']}
+              />
+            </Grid>
+          </Box>
+        </form>
+      </FormProvider>
+    </Box>
   );
 };

@@ -26,6 +26,7 @@ export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>(
           variant="outline"
           placeholder={placeholder ?? 'Add description here'}
           id={id}
+          size="sm"
           ref={ref as unknown as ForwardedRef<HTMLTextAreaElement>}
           {...rest}
         ></Textarea>
