@@ -16,11 +16,7 @@ import {
   useGetNewIdMutation,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  ContainerWithDivider,
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
 import {
@@ -212,7 +208,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
   }, [id]);
 
   return (
-    <GroupContainer>
+    <Box display="flex" flexDirection="column" p="s20" pt="0" gap="s16">
       <FormProvider {...methods}>
         <form
           onFocus={(e) => {
@@ -222,10 +218,8 @@ const KYMBasiccoopDetailsFamilyMember = ({
         >
           <Box
             display="flex"
-            flexDirection="column"
-            gap="s8"
             id="kymAccIndFamilyMemberinthisinstitution"
-            scrollMarginTop={'200px'}
+            // scrollMarginTop={'200px'}
           >
             <FormSwitchTab
               label={t['kynIndFamilyMemberinthisinstitution']}
@@ -250,7 +244,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
           <FormProvider {...formMethods}>
             <form>
-              <Box display="flex" gap="s20" alignItems="center">
+              <Box display="flex" gap="s16" alignItems="center">
                 <FormInput
                   name="memberName"
                   mt={1}
@@ -290,7 +284,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
           </FormProvider>
         </>
       )}
-    </GroupContainer>
+    </Box>
   );
 };
 
@@ -362,7 +356,14 @@ const KYMBasiccoopDetailsBasic = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer id="kymAccIndMainPurposeofBecomingMember">
+        <Box
+          gap="s16"
+          p="s20"
+          display="flex"
+          flexDirection="column"
+          borderBottom={'1px solid'}
+          borderBottomColor="border.layout"
+        >
           <InputGroupContainer
             id="kymAccIndMainPurposeofBecomingMember"
             scrollMarginTop={'200px'}
@@ -378,7 +379,7 @@ const KYMBasiccoopDetailsBasic = ({
           <Box
             display="flex"
             flexDirection="column"
-            gap="s32"
+            gap="s16"
             id="kymAccIndMemberofAnothercooperative"
             scrollMarginTop={'200px'}
           >
@@ -433,7 +434,7 @@ const KYMBasiccoopDetailsBasic = ({
               </Box>
             )}
           </Box>
-        </GroupContainer>
+        </Box>
       </form>
     </FormProvider>
   );
@@ -510,7 +511,15 @@ const KYMBasiccoopDetailsIntroducer = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer>
+        <Box
+          gap="s16"
+          p="s20"
+          pt="0"
+          display="flex"
+          flexDirection="column"
+          borderBottom={'1px solid'}
+          borderBottomColor="border.layout"
+        >
           <Text fontWeight="600" fontSize="r1">
             {t['kymIndIntroducers']}
           </Text>
@@ -528,7 +537,7 @@ const KYMBasiccoopDetailsIntroducer = ({
               options={memberSelectOption}
             />
           </Grid>
-        </GroupContainer>
+        </Box>
       </form>
     </FormProvider>
   );
@@ -545,7 +554,14 @@ export const KYMBasiccoopDetails = ({
   setKymCurrentSection,
 }: IKYMBasiccoopDetailsProps) => {
   return (
-    <ContainerWithDivider>
+    <Box
+      gap="s16"
+      display="flex"
+      flexDirection="column"
+      id="kymAccIndIncomeSourceDetails"
+      borderBottom={'1px solid'}
+      borderBottomColor="border.layout"
+    >
       <KYMBasiccoopDetailsBasic setKymCurrentSection={setKymCurrentSection} />
 
       <KYMBasiccoopDetailsIntroducer
@@ -555,7 +571,7 @@ export const KYMBasiccoopDetails = ({
       <KYMBasiccoopDetailsFamilyMember
         setKymCurrentSection={setKymCurrentSection}
       />
-    </ContainerWithDivider>
+    </Box>
   );
 };
 

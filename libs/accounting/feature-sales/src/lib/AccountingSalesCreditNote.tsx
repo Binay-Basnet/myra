@@ -68,7 +68,8 @@ export function CreditNoteForm() {
           justifyContent="space-between"
           alignItems="center"
           px="5"
-          borderBottom="1px solid #E6E6E6"
+          borderBottom="1px solid "
+          borderColor="border.layout"
           borderTopRadius={5}
           bg={'gray.0'}
           position="sticky"

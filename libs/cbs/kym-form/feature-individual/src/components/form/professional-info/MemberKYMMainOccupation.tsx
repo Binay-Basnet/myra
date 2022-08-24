@@ -22,7 +22,6 @@ import {
 import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxGroupContainer,
-  GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
@@ -118,6 +117,11 @@ const MainOccupation = ({
   const profession =
     editValues?.members?.individual?.formState?.data?.formData?.profession
       ?.professionId ?? [];
+
+  // console.log(
+  //   'test',
+  //   editValues?.members?.individual?.formState?.data?.formData?.profession
+  // );
 
   const { data: occupationData } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.Occupation,
@@ -447,7 +451,16 @@ export const MemberKYMMainOccupation = ({
   }, [watch, router.isReady]);
 
   return (
-    <GroupContainer id="kymAccIndMainProfession" scrollMarginTop={'200px'}>
+    <Box
+      p="s20"
+      gap="s16"
+      display="flex"
+      flexDirection="column"
+      id="kymAccIndMainProfession"
+      scrollMarginTop={'200px'}
+      borderBottom={'1px solid'}
+      borderBottomColor="border.layout"
+    >
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymIndMAINOCCUPATION']}
       </Text>
@@ -534,6 +547,6 @@ export const MemberKYMMainOccupation = ({
           </Box>
         </form>
       </FormProvider>
-    </GroupContainer>
+    </Box>
   );
 };

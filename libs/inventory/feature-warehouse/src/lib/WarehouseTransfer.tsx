@@ -39,7 +39,8 @@ export function WarehouseTransfer() {
             px="s16"
             py="s20"
             background="neutralColorLight.Gray-0"
-            borderBottom="1px solid #E6E6E6"
+            borderBottom="1px solid "
+            borderColor="border.layout"
           >
             <Text
               fontSize="r2"

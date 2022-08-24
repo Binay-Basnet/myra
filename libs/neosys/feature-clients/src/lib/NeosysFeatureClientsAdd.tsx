@@ -18,7 +18,7 @@ import { NeosysClientForm } from '../form/NeosysClientForm';
 /* eslint-disable-next-line */
 export interface NeosysFeatureClientsAddProps {}
 
-export function NeosysFeatureClientsAdd(props: NeosysFeatureClientsAddProps) {
+export function NeosysFeatureClientsAdd() {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -33,7 +33,8 @@ export function NeosysFeatureClientsAdd(props: NeosysFeatureClientsAddProps) {
             alignItems={'center'}
             px="5"
             background="white"
-            borderBottom="1px solid #E6E6E6"
+            borderBottom="1px solid "
+            borderColor="border.layout"
             position="sticky"
             top="110px"
             zIndex="10"

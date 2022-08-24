@@ -19,11 +19,10 @@ import {
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
-  GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, FormSection, Icon, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -234,10 +233,7 @@ const MemberMaritalStatus = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <Text fontSize="r1" fontWeight="SemiBold">
-          {t['kymIndFAMILYDETAILS']}
-        </Text>
-        <InputGroupContainer>
+        <FormSection header="kymIndFAMILYDETAILS">
           <FormSelect
             name={'maritalStatusId'}
             label={t['kymIndMartialStatus']}
@@ -245,7 +241,7 @@ const MemberMaritalStatus = ({
             isLoading={maritalStatusLoading}
             options={getFieldOption(maritalStatusData)}
           />
-        </InputGroupContainer>
+        </FormSection>
       </form>
     </FormProvider>
   );
@@ -328,7 +324,7 @@ const MemberFamilyDetails = ({
   };
 
   return (
-    <Box>
+    <Box p="s20">
       <Text fontSize="s3" mb="s4">
         {t['kymIndFamilymembers']}
       </Text>
@@ -371,10 +367,10 @@ export const MemberKYMFamilyDetails = ({
   setKymCurrentSection,
 }: IMemberKYMFamilyDetailsProps) => {
   return (
-    <GroupContainer id="kymAccIndFamilyDetails" scrollMarginTop={'200px'}>
+    <Box id="kymAccIndFamilyDetails" scrollMarginTop={'200px'}>
       <MemberMaritalStatus setKymCurrentSection={setKymCurrentSection} />
 
       <MemberFamilyDetails setKymCurrentSection={setKymCurrentSection} />
-    </GroupContainer>
+    </Box>
   );
 };

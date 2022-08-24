@@ -10,11 +10,7 @@ import {
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  ContainerWithDivider,
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormInput,
   FormRadioGroup,
@@ -147,146 +143,156 @@ export const KYMDeclaration = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer>
+        <Box
+          display="flex"
+          flexDirection="column"
+          id="Next to Kin"
+          scrollMarginTop={'200px'}
+        >
+          <Box p="s20">
+            <TextFields variant="bodyRegular" fontWeight="SemiBold">
+              {t['kynIndNominee']}
+            </TextFields>
+          </Box>
           <Box
+            id="kymAccIndBeneficialOwner"
+            scrollMarginTop={'200px'}
             display="flex"
             flexDirection="column"
             gap="s16"
-            id="Next to Kin"
-            scrollMarginTop={'200px'}
+            p="s20"
+            pt="0"
+            borderBottom={'1px solid'}
+            borderBottomColor="border.layout"
           >
-            <TextFields variant="bodyRegular" fontWeight={600}>
-              {t['kynIndNominee']}
-            </TextFields>
-            <ContainerWithDivider>
-              <Box
-                id="kymAccIndBeneficialOwner"
-                scrollMarginTop={'200px'}
-                display="flex"
-                flexDirection="column"
-                gap="s32"
+            <FormSwitchTab
+              label={t['kynIndDoyouhavebeneficialowner']}
+              options={booleanList}
+              name="hasBeneficialOwner"
+            />
+            {hasBeneficialOwner && (
+              <Grid
+                gap="s20"
+                templateColumns="repeat(3,1fr)"
+                alignItems="last baseline"
               >
-                <FormSwitchTab
-                  label={t['kynIndDoyouhavebeneficialowner']}
-                  options={booleanList}
-                  name="hasBeneficialOwner"
-                />
-                {hasBeneficialOwner && (
-                  <Grid
-                    gap={2}
-                    templateColumns="repeat(3,1fr)"
-                    alignItems="last baseline"
-                  >
-                    <GridItem colSpan={1}>
-                      <FormSelect
-                        name={'beneficialRelationshipId'}
-                        isLoading={familyRelationshipLoading}
-                        options={getFieldOption(familyRelationShipData)}
-                        placeholder={t['kynIndRelationship']}
-                        label={t['kynIndIyespleasewritenameandrelationship']}
-                      />
-                    </GridItem>
+                <GridItem colSpan={1}>
+                  <FormSelect
+                    name={'beneficialRelationshipId'}
+                    isLoading={familyRelationshipLoading}
+                    options={getFieldOption(familyRelationShipData)}
+                    placeholder={t['kynIndRelationship']}
+                    label={t['kynIndIyespleasewritenameandrelationship']}
+                  />
+                </GridItem>
 
-                    <GridItem mt="20px" colSpan={2}>
-                      <FormInput
-                        type="text"
-                        id="beneficialFullName"
-                        name={'beneficialFullName'}
-                        label=" "
-                        placeholder={t['kynIndFullName']}
-                      />
-                    </GridItem>
-                  </Grid>
-                )}
-              </Box>
+                <GridItem mt="20px" colSpan={2}>
+                  <FormInput
+                    type="text"
+                    id="beneficialFullName"
+                    name={'beneficialFullName'}
+                    label=" "
+                    placeholder={t['kynIndFullName']}
+                  />
+                </GridItem>
+              </Grid>
+            )}
+          </Box>
 
-              <Box
-                id="kymAccIndFamilymembersinpolitics"
-                scrollMarginTop={'200px'}
-                display="flex"
-                flexDirection="column"
-                gap="s32"
-              >
-                <FormSwitchTab
-                  label={t['kynIndPoliticallyexposedperson']}
-                  options={booleanList}
-                  name="isPoliticallyExposed"
-                />
+          <Box
+            id="kymAccIndFamilymembersinpolitics"
+            scrollMarginTop={'200px'}
+            display="flex"
+            flexDirection="column"
+            gap="s16"
+            p="s20"
+            borderBottom={'1px solid'}
+            borderBottomColor="border.layout"
+          >
+            <FormSwitchTab
+              label={t['kynIndPoliticallyexposedperson']}
+              options={booleanList}
+              name="isPoliticallyExposed"
+            />
 
-                {isPoliticallyExposed && (
-                  <InputGroupContainer>
-                    <Box display="flex" flexDirection="column">
-                      <FormTextArea
-                        name="politicallyExposedDetails"
-                        id="politicallyExposedDetails"
-                        label={t['kynIndPleasespecify']}
-                        placeholder={t['kynIndEnterDetails']}
-                      />
-                    </Box>
-                  </InputGroupContainer>
-                )}
-              </Box>
+            {isPoliticallyExposed && (
+              <InputGroupContainer>
+                <Box display="flex" flexDirection="column">
+                  <FormTextArea
+                    name="politicallyExposedDetails"
+                    id="politicallyExposedDetails"
+                    label={t['kynIndPleasespecify']}
+                    placeholder={t['kynIndEnterDetails']}
+                  />
+                </Box>
+              </InputGroupContainer>
+            )}
+          </Box>
 
-              <Box
-                id="kymAccIndConvictedNonconvictedStatus"
-                scrollMarginTop={'200px'}
-                display="flex"
-                flexDirection="column"
-                gap="s32"
-              >
-                <FormSwitchTab
-                  label={t['kynIndDeclarationofconvicted']}
-                  options={booleanList}
-                  name="isConvicted"
-                />
+          <Box
+            id="kymAccIndConvictedNonconvictedStatus"
+            scrollMarginTop={'200px'}
+            display="flex"
+            flexDirection="column"
+            gap="s16"
+            p="s20"
+            borderBottom={'1px solid'}
+            borderBottomColor="border.layout"
+          >
+            <FormSwitchTab
+              label={t['kynIndDeclarationofconvicted']}
+              options={booleanList}
+              name="isConvicted"
+            />
 
-                {isConvicted && (
-                  <InputGroupContainer>
-                    <Box display="flex" flexDirection="column">
-                      {/* <FormTextArea
+            {isConvicted && (
+              <InputGroupContainer>
+                <Box display="flex" flexDirection="column">
+                  {/* <FormTextArea
                         name="convictedDetails"
                         id="convictedDetails"
                         label={t['kynIndPleasespecify']}
                         placeholder={t['kynIndEnterDetails']}
                       /> */}
-                      <Input
-                        id="convictedDetails"
-                        label={t['kynIndPleasespecify']}
-                        placeholder={t['kynIndEnterDetails']}
-                        {...methods.register('convictedDetails')}
-                      />
-                    </Box>
-                  </InputGroupContainer>
-                )}
-              </Box>
-
-              <Box
-                id="kymAccIndResidentialpermitofforeigncountry"
-                scrollMarginTop={'200px'}
-                display="flex"
-                flexDirection="column"
-                gap="s32"
-              >
-                <FormSwitchTab
-                  label={t['kynIndForeignCountry']}
-                  options={booleanList}
-                  name="hasForeignResidentialPermit"
-                />
-
-                {hasForeignResidentialPermit && (
-                  <Box display="flex" flexDirection="column">
-                    <FormRadioGroup
-                      name="foreignResidentialPermitTypeId"
-                      label={t['kynIndSpecifyfollowingdetails']}
-                      options={getFieldOption(foreignEmploymentOptions)}
-                      labelFontSize="s3"
-                    />
-                  </Box>
-                )}
-              </Box>
-            </ContainerWithDivider>
+                  <Input
+                    id="convictedDetails"
+                    label={t['kynIndPleasespecify']}
+                    placeholder={t['kynIndEnterDetails']}
+                    {...methods.register('convictedDetails')}
+                  />
+                </Box>
+              </InputGroupContainer>
+            )}
           </Box>
-        </GroupContainer>
+
+          <Box
+            id="kymAccIndResidentialpermitofforeigncountry"
+            scrollMarginTop={'200px'}
+            display="flex"
+            flexDirection="column"
+            gap="s16"
+            p="s20"
+            borderBottom={'1px solid'}
+            borderBottomColor="border.layout"
+          >
+            <FormSwitchTab
+              label={t['kynIndForeignCountry']}
+              options={booleanList}
+              name="hasForeignResidentialPermit"
+            />
+
+            {hasForeignResidentialPermit && (
+              <Box display="flex" flexDirection="column">
+                <FormRadioGroup
+                  name="foreignResidentialPermitTypeId"
+                  label={t['kynIndSpecifyfollowingdetails']}
+                  options={getFieldOption(foreignEmploymentOptions)}
+                  labelFontSize="s3"
+                />
+              </Box>
+            )}
+          </Box>
+        </Box>
       </form>
     </FormProvider>
   );

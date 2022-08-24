@@ -89,7 +89,9 @@ export const KYMEstimatedAmount = ({
       >
         <GroupContainer
           id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
-          scrollMarginTop={'200px'}
+          // scrollMarginTop={'200px'}
+          borderBottom={'1px solid'}
+          borderBottomColor="border.layout"
         >
           <Text fontSize="r1" fontWeight="SemiBold">
             {t['kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION']}

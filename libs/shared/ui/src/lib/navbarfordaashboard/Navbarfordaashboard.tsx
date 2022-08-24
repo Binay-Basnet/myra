@@ -168,7 +168,8 @@ export function Navbarfordaashboard() {
                         display="flex"
                         flexDirection="row"
                         alignItems="center"
-                        borderBottom="1px solid #E6E6E6"
+                        borderBottom="1px solid"
+                        borderColor="border.layout"
                       >
                         <Avatar src={'/avatar.png'} w="s32" h="s32" />
                         <Box
@@ -194,7 +195,11 @@ export function Navbarfordaashboard() {
                         </Box>
                       </Box>
 
-                      <Box p="s8" borderBottom="1px solid #E6E6E6">
+                      <Box
+                        p="s8"
+                        borderBottom="1px solid"
+                        borderColor="border.layout"
+                      >
                         <Select
                           label="Branch"
                           placeholder="Lalitpur"
@@ -220,7 +225,8 @@ export function Navbarfordaashboard() {
                         flexDirection="column"
                         justifyContent="space-between"
                         p="s8"
-                        borderBottom="1px solid #E6E6E6"
+                        borderBottom="1px solid"
+                        borderColor="border.layout"
                       >
                         <Text
                           mb="4px"
@@ -246,7 +252,8 @@ export function Navbarfordaashboard() {
                         flexDirection="column"
                         justifyContent="space-between"
                         p="s8"
-                        borderBottom="1px solid #E6E6E6"
+                        borderBottom="1px solid"
+                        borderColor="border.layout"
                       >
                         <Text
                           mb="4px"

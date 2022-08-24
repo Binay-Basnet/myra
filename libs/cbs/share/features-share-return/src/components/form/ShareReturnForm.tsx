@@ -235,7 +235,7 @@ const ShareReturnForm = () => {
               minH="calc(100vh - 170px)"
             >
               <Box w="100%" minHeight="100vh">
-                <Box borderBottom="1px solid #E6E6E6" p={5}>
+                <Box borderBottom="1px solid" borderColor="border.layout" p={5}>
                   <Box w="50%">
                     <FormMemberSelect
                       name="memberId"
@@ -435,7 +435,8 @@ const ShareReturnForm = () => {
                   p="5"
                   pb="28px"
                   background="white"
-                  borderBottom="1px solid #E6E6E6"
+                  borderBottom="1px solid "
+                  borderColor="border.layout"
                   borderTopRadius={5}
                 >
                   <Text

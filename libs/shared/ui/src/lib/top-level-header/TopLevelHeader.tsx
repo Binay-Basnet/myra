@@ -241,7 +241,6 @@ export function TopLevelHeader() {
                         fontWeight="500"
                         color="gray.0"
                       >
-                        {' '}
                         Date: {currentDate}
                       </Text>
                     </Box>
@@ -268,7 +267,7 @@ export function TopLevelHeader() {
                         </Text>
                       </PopoverBody>
                     )}
-                    <PopoverBody borderBottom="1px" borderColor="#E0E5EB">
+                    <PopoverBody borderBottom="1px" borderColor="border.layout">
                       <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                         Transaction Date
                       </Text>
@@ -276,7 +275,7 @@ export function TopLevelHeader() {
                         {closingDate}
                       </Text>
                     </PopoverBody>
-                    <PopoverBody borderBottom="1px" borderColor="#E0E5EB">
+                    <PopoverBody borderBottom="1px" borderColor="border.layout">
                       <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                         Calender Date
                       </Text>
@@ -301,6 +300,8 @@ export function TopLevelHeader() {
 
             <IconButton
               ml="s16"
+              width="40px"
+              height="40px"
               icon={<Icon size="md" as={BiBell} />}
               aria-label="help"
               variant={'ghost'}
@@ -314,6 +315,8 @@ export function TopLevelHeader() {
                 <>
                   <PopoverTrigger>
                     <IconButton
+                      width="40px"
+                      height="40px"
                       _hover={{ backgroundColor: 'secondary.900' }}
                       icon={<Icon size="lg" as={CgMenuGridO} />}
                       aria-label="menu"
@@ -517,13 +520,25 @@ export function TopLevelHeader() {
             </Popover>
 
             <Popover placement="bottom-end" gutter={3}>
-              {({ isOpen }) => (
+              {() => (
                 <>
                   <PopoverTrigger>
-                    <Box
+                    <IconButton
+                      width="40px"
+                      height="40px"
+                      _hover={{ backgroundColor: 'secondary.900' }}
+                      icon={<Avatar src={'/avatar.png'} size="sm" />}
+                      aria-label="menu"
+                      variant={'ghost'}
+                      color={'white'}
+                      borderRadius={'br1'}
+                      ref={appSwitcherRef}
+                    />
+                    {/* <Box
                       w="40px"
                       h="40px"
                       as="button"
+                      borderRadius="br1"
                       display={'flex'}
                       justifyContent={'center'}
                       alignItems={'center'}
@@ -531,7 +546,7 @@ export function TopLevelHeader() {
                       _hover={{ backgroundColor: 'secondary.900' }}
                     >
                       <Avatar src={'/avatar.png'} size="sm" />
-                    </Box>
+                    </Box> */}
                   </PopoverTrigger>
                   <PopoverContent
                     bg="gray.0"
@@ -554,7 +569,8 @@ export function TopLevelHeader() {
                           display="flex"
                           flexDirection="row"
                           alignItems="center"
-                          borderBottom="1px solid #E6E6E6"
+                          borderBottom="1px solid"
+                          borderColor="border.layout"
                         >
                           <Avatar src={'/avatar.png'} w="s32" h="s32" />
                           <Box
@@ -580,7 +596,11 @@ export function TopLevelHeader() {
                           </Box>
                         </Box>
 
-                        <Box p="s8" borderBottom="1px solid #E6E6E6">
+                        <Box
+                          p="s8"
+                          borderBottom="1px solid "
+                          borderColor="border.layout"
+                        >
                           <Select
                             label="Branch"
                             placeholder="Lalitpur"
@@ -606,7 +626,8 @@ export function TopLevelHeader() {
                           flexDirection="column"
                           justifyContent="space-between"
                           p="s8"
-                          borderBottom="1px solid #E6E6E6"
+                          borderBottom="1px solid "
+                          borderColor="border.layout"
                         >
                           <Text
                             mb="4px"
@@ -632,7 +653,8 @@ export function TopLevelHeader() {
                           flexDirection="column"
                           justifyContent="space-between"
                           p="s8"
-                          borderBottom="1px solid #E6E6E6"
+                          borderBottom="1px solid "
+                          borderColor="border.layout"
                         >
                           <Text
                             mb="4px"
