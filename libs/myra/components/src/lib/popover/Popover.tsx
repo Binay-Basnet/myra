@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
-import { ID, KymMemberTypesEnum, Member } from '@coop/cbs/data-access';
+import { KymMemberTypesEnum, Member } from '@coop/cbs/data-access';
 import {
   Box,
   Popover,
@@ -14,7 +14,7 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 type requiredMemberDetailType = {
-  id?: ID;
+  id?: string;
   type?: KymMemberTypesEnum;
 };
 

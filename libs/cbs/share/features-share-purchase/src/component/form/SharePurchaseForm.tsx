@@ -5,7 +5,6 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { debounce } from 'lodash';
 import omit from 'lodash/omit';
 
 import { InputGroupContainer } from '@coop/accounting/ui-components';
@@ -19,10 +18,7 @@ import {
   useGetMemberIndividualDataQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
-import {
-  FormCustomSelect,
-  FormMemberSelect,
-} from '@coop/cbs/transactions/ui-components';
+import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
@@ -79,8 +75,8 @@ const SharePurchaseForm = () => {
   const accountId = watch('accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
-  const [IDMember, setIDMember] = useState('');
-  const [trigger, setTrigger] = useState(false);
+  const [IDMember] = useState('');
+  const [trigger] = useState(false);
 
   const { data: bankData } = useGetBankListQuery();
 
@@ -235,7 +231,7 @@ const SharePurchaseForm = () => {
                   borderBottomColor={'border.layout'}
                 >
                   <Box w="50%">
-                    <FormMemberSelect
+                    {/* <FormMemberSelect
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
                       placeholder={t['sharePurchaseEnterMemberID']}
@@ -266,7 +262,7 @@ const SharePurchaseForm = () => {
                           } ?? []
                         );
                       })}
-                    />
+                    /> */}
                   </Box>
 
                   {data && (

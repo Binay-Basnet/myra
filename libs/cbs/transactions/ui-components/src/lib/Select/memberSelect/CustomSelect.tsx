@@ -1,16 +1,7 @@
 import { Flex } from '@chakra-ui/react';
-import {
-  ChakraStylesConfig,
-  GroupBase,
-  Props,
-  Select as ChakraSelect,
-  SelectComponentsConfig,
-} from 'chakra-react-select';
+import { GroupBase, Props, Select as ChakraSelect } from 'chakra-react-select';
 
 import { TextFields } from '@coop/shared/ui';
-
-import { components as customComponents } from './SelectComponents';
-import { chakraDefaultStyles } from './SelectStyles';
 
 type recordType = Record<'en' | 'local' | 'np', string> | null | undefined;
 interface SelectOption {
@@ -73,22 +64,22 @@ export function Select({
         isMulti={isMulti}
         hideSelectedOptions={false}
         isClearable={false}
-        chakraStyles={
-          chakraDefaultStyles as ChakraStylesConfig<
-            SelectOption,
-            boolean,
-            GroupBase<SelectOption>
-          >
-        }
-        components={
-          customComponents as Partial<
-            SelectComponentsConfig<
-              SelectOption,
-              boolean,
-              GroupBase<SelectOption>
-            >
-          >
-        }
+        // chakraStyles={
+        //   chakraDefaultStyles as ChakraStylesConfig<
+        //     SelectOption,
+        //     boolean,
+        //     GroupBase<SelectOption>
+        //   >
+        // }
+        // components={
+        //   customComponents as Partial<
+        //     SelectComponentsConfig<
+        //       SelectOption,
+        //       boolean,
+        //       GroupBase<SelectOption>
+        //     >
+        //   >
+        // }
         {...rest}
       />
       {errorText ? (

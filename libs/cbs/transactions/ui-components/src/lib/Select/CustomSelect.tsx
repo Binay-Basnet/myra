@@ -1,6 +1,5 @@
 import { Flex } from '@chakra-ui/react';
 import {
-  ChakraStylesConfig,
   GroupBase,
   Props,
   Select as ChakraSelect,
@@ -10,7 +9,6 @@ import {
 import { TextFields } from '@coop/shared/ui';
 
 import { components as customComponents } from './SelectComponents';
-import { chakraDefaultStyles } from './SelectStyles';
 
 interface SelectOption {
   label?: string;
@@ -91,13 +89,13 @@ export function Select({
         isMulti={isMulti}
         hideSelectedOptions={false}
         isClearable={false}
-        chakraStyles={
-          chakraDefaultStyles as ChakraStylesConfig<
-            SelectOption,
-            boolean,
-            GroupBase<SelectOption>
-          >
-        }
+        // chakraStyles={
+        //   chakraDefaultStyles as ChakraStylesConfig<
+        //     SelectOption,
+        //     boolean,
+        //     GroupBase<SelectOption>
+        //   >
+        // }
         components={
           customComponents as Partial<
             SelectComponentsConfig<
