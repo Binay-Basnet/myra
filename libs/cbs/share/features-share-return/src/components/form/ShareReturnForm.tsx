@@ -5,7 +5,7 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { omit } from 'lodash';
+import { debounce, omit } from 'lodash';
 
 import {
   KymIndFormStateQuery,
@@ -18,7 +18,10 @@ import {
   useGetMemberListQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
+import {
+  FormCustomSelect,
+  FormMemberSelect,
+} from '@coop/cbs/transactions/ui-components';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
@@ -84,8 +87,8 @@ const ShareReturnForm = () => {
   const accountId = watch('accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
-  const [IDMember] = useState('');
-  const [trigger] = useState(false);
+  const [IDMember, setIDMember] = useState('');
+  const [trigger, setTrigger] = useState(false);
 
   const { data } = useGetMemberIndividualDataQuery({ id: memberId });
 
@@ -236,7 +239,7 @@ const ShareReturnForm = () => {
               <Box w="100%" minHeight="100vh">
                 <Box borderBottom="1px solid" borderColor="border.layout" p={5}>
                   <Box w="50%">
-                    {/* <FormMemberSelect
+                    <FormMemberSelect
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
                       placeholder={t['sharePurchaseEnterMemberID']}
@@ -267,7 +270,7 @@ const ShareReturnForm = () => {
                           } ?? []
                         );
                       })}
-                    /> */}
+                    />
                     {/* <FormSelect
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
