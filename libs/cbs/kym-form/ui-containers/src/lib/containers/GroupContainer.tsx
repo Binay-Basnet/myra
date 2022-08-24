@@ -12,13 +12,7 @@ export const GroupContainer = ({
   ...otherProps
 }: IGroupContainer) => {
   return (
-    <Box
-      display="flex"
-      p="s20"
-      flexDirection="column"
-      gap="s16"
-      {...otherProps}
-    >
+    <Box display="flex" flexDirection="column" gap="s16" {...otherProps}>
       {children}
     </Box>
   );

@@ -11,7 +11,7 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
-import { Box, FormSection, Grid, Text } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 interface IMemberKYMAddressProps {
@@ -162,19 +162,6 @@ export const MemberKYMAddress = ({
           id="kymAccIndPermanentAddress"
           header="kymIndPermanentAddress"
         >
-          {/* <Box
-            id="kymAccIndPermanentAddress"
-            gap="s32"
-            display={'flex'}
-            flexDirection="column"
-            scrollMarginTop={'200px'}
-          > */}
-          {/* <Box
-            id="Permanent Address"
-            gap="s32"
-            display={'flex'}
-            flexDirection="column"
-          > */}
           <FormSelect
             name="permanentAddress.provinceId"
             label={t['kymIndProvince']}
@@ -220,26 +207,94 @@ export const MemberKYMAddress = ({
             label={t['kymIndHouseNo']}
             placeholder={t['kymIndEnterHouseNo']}
           />
-
-          <Box>
+          <GridItem colSpan={2}>
             <FormMap name="permanentAddress.coordinates" />
-          </Box>
-          {/* </Box> */}
-          {/* </Box> */}
+          </GridItem>
         </FormSection>
 
         {/* <FormSection
           id="kymAccIndTemporaryAddress"
           header="kymIndTemporaryAddress"
         > */}
-        <Box
+
+        <FormSection
+          id="kymAccIndTemporaryAddress"
+          header="kymIndTemporaryAddress"
+        >
+          <GridItem colSpan={3}>
+            <FormSwitch
+              name="sameTempAsPermanentAddress"
+              label={t['kymIndTemporaryAddressPermanent']}
+            />
+          </GridItem>
+          {!isPermanentAndTemporaryAddressSame && (
+            <>
+              <FormSelect
+                name="temporaryAddress.provinceId"
+                label={t['kymIndProvince']}
+                placeholder={t['kymIndSelectProvince']}
+                options={province}
+              />
+              <FormSelect
+                name="temporaryAddress.districtId"
+                label={t['kymIndDistrict']}
+                placeholder={t['kymIndSelectDistrict']}
+                options={districtTempList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormSelect
+                name="temporaryAddress.localGovernmentId"
+                label={t['kymIndLocalGovernment']}
+                placeholder={t['kymIndSelectLocalGovernment']}
+                options={localityTempList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormSelect
+                name="temporaryAddress.wardNo"
+                label={t['kymIndWardNo']}
+                placeholder={t['kymIndEnterWardNo']}
+                options={wardTempList.map((d) => ({
+                  label: d,
+                  value: d,
+                }))}
+              />
+              <FormInput
+                type="text"
+                name="temporaryAddress.locality"
+                label={t['kymIndLocality']}
+                placeholder={t['kymIndEnterLocality']}
+              />
+              <FormInput
+                type="number"
+                name="temporaryAddress.houseNo"
+                label={t['kymIndHouseNo']}
+                placeholder={t['kymIndEnterHouseNo']}
+              />
+              <GridItem colSpan={2}>
+                <FormMap name="temporaryAddress.coordinates" />
+              </GridItem>
+            </>
+          )}
+        </FormSection>
+        {/* <Box
           id="kymAccIndTemporaryAddress"
           gap="s16"
           display={'flex'}
           flexDirection="column"
           scrollMarginTop={'200px'}
         >
-          <Box p="s20" pb="0" display="flex" flexDirection="column" gap="s16">
+          <Box
+            borderBottom={'1px solid'}
+            borderBottomColor="border.layout"
+            p="s20"
+            display="flex"
+            flexDirection="column"
+            gap="s16"
+          >
             <Text
               fontSize="r1"
               fontWeight="semibold"
@@ -253,67 +308,8 @@ export const MemberKYMAddress = ({
             />
           </Box>
 
-          {!isPermanentAndTemporaryAddressSame && (
-            <Box
-              borderBottom={'1px solid'}
-              borderBottomColor="border.layout"
-              p="s20"
-              pt="0"
-            >
-              <Grid templateColumns={'repeat(3,1fr)'} gap="s20" rowGap={'s16'}>
-                <FormSelect
-                  name="temporaryAddress.provinceId"
-                  label={t['kymIndProvince']}
-                  placeholder={t['kymIndSelectProvince']}
-                  options={province}
-                />
-                <FormSelect
-                  name="temporaryAddress.districtId"
-                  label={t['kymIndDistrict']}
-                  placeholder={t['kymIndSelectDistrict']}
-                  options={districtTempList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name="temporaryAddress.localGovernmentId"
-                  label={t['kymIndLocalGovernment']}
-                  placeholder={t['kymIndSelectLocalGovernment']}
-                  options={localityTempList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name="temporaryAddress.wardNo"
-                  label={t['kymIndWardNo']}
-                  placeholder={t['kymIndEnterWardNo']}
-                  options={wardTempList.map((d) => ({
-                    label: d,
-                    value: d,
-                  }))}
-                />
-                <FormInput
-                  type="text"
-                  name="temporaryAddress.locality"
-                  label={t['kymIndLocality']}
-                  placeholder={t['kymIndEnterLocality']}
-                />
-                <FormInput
-                  type="number"
-                  name="temporaryAddress.houseNo"
-                  label={t['kymIndHouseNo']}
-                  placeholder={t['kymIndEnterHouseNo']}
-                />
-
-                <Box>
-                  <FormMap name="temporaryAddress.coordinates" />
-                </Box>
-              </Grid>
-            </Box>
-          )}
-        </Box>
+         
+        </Box> */}
         {/* </FormSection> */}
 
         <FormSection

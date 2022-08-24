@@ -19,7 +19,6 @@ import {
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
-  InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, FormSection, Icon, Text } from '@coop/shared/ui';
@@ -140,7 +139,7 @@ const AddFamilyMember = ({
             setKymCurrentSection(kymSection);
           }}
         >
-          <InputGroupContainer>
+          <FormSection>
             <FormSelect
               name="relationshipId"
               label={t['kymIndRelationship']}
@@ -161,7 +160,7 @@ const AddFamilyMember = ({
               id="familyDetailsDateOfBirth"
               label={t['kymIndDateofBirthBS']}
             />
-          </InputGroupContainer>
+          </FormSection>
         </form>
       </FormProvider>
     </DynamicBoxContainer>
@@ -324,34 +323,42 @@ const MemberFamilyDetails = ({
   };
 
   return (
-    <Box p="s20">
-      <Text fontSize="s3" mb="s4">
+    <Box>
+      <Text
+        p="s20"
+        pb="0"
+        fontSize="r1"
+        fontWeight="SemiBold"
+        color="neutralColorLight.Gray-70"
+      >
         {t['kymIndFamilymembers']}
       </Text>
-      <DynamicBoxGroupContainer>
-        {familyMemberIds.map((id) => {
-          return (
-            <Box key={id}>
-              <AddFamilyMember
-                removeFamilyMember={removeFamilyMember}
-                setKymCurrentSection={setKymCurrentSection}
-                familyMemberId={id}
-              />
-            </Box>
-          );
-        })}
-        <Button
-          id="addFamilyMemberButton"
-          alignSelf="start"
-          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-          variant="outline"
-          onClick={() => {
-            appendFamilyMember();
-          }}
-        >
-          {t['kymIndAddFamilyMember']}
-        </Button>
-      </DynamicBoxGroupContainer>
+      <Box p="s20" display="flex" flexDirection="column" gap="s16">
+        <DynamicBoxGroupContainer>
+          {familyMemberIds.map((id) => {
+            return (
+              <Box key={id}>
+                <AddFamilyMember
+                  removeFamilyMember={removeFamilyMember}
+                  setKymCurrentSection={setKymCurrentSection}
+                  familyMemberId={id}
+                />
+              </Box>
+            );
+          })}
+          <Button
+            id="addFamilyMemberButton"
+            alignSelf="start"
+            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+            variant="outline"
+            onClick={() => {
+              appendFamilyMember();
+            }}
+          >
+            {t['kymIndAddFamilyMember']}
+          </Button>
+        </DynamicBoxGroupContainer>
+      </Box>
     </Box>
   );
 };

@@ -348,44 +348,41 @@ export const MemberKYMHusbandWifeOccupation = ({
 
   return (
     <Box
-      p="s20"
-      gap="s16"
-      display="flex"
-      flexDirection="column"
       id="kymAccIndMainOccupationofHusabandWife"
       // scrollMarginTop={'200px'}
       borderBottom={'1px solid'}
       borderBottomColor="border.layout"
     >
-      <Text fontSize="r1" fontWeight="SemiBold">
+      <Text p="s20" pb="0" fontSize="r1" fontWeight="SemiBold">
         {t['kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE']}
       </Text>
+      <Box p="s20" display="flex" flexDirection="column" gap="s16">
+        <DynamicBoxGroupContainer>
+          {occupationIds.map((id) => {
+            return (
+              <Box key={id}>
+                <HusbandWifeOccupation
+                  removeHusbandWifeOccupation={removeOccuapation}
+                  setKymCurrentSection={setKymCurrentSection}
+                  occupationId={id}
+                />
+              </Box>
+            );
+          })}
 
-      <DynamicBoxGroupContainer>
-        {occupationIds.map((id) => {
-          return (
-            <Box key={id}>
-              <HusbandWifeOccupation
-                removeHusbandWifeOccupation={removeOccuapation}
-                setKymCurrentSection={setKymCurrentSection}
-                occupationId={id}
-              />
-            </Box>
-          );
-        })}
-
-        <Button
-          id="spouseOccupationButton"
-          alignSelf="start"
-          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-          variant="outline"
-          onClick={() => {
-            appendOccupation();
-          }}
-        >
-          {t['kymIndAddOccupation']}
-        </Button>
-      </DynamicBoxGroupContainer>
+          <Button
+            id="spouseOccupationButton"
+            alignSelf="start"
+            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+            variant="outline"
+            onClick={() => {
+              appendOccupation();
+            }}
+          >
+            {t['kymIndAddOccupation']}
+          </Button>
+        </DynamicBoxGroupContainer>
+      </Box>
     </Box>
   );
 };

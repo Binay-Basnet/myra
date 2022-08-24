@@ -245,24 +245,30 @@ const ShareReturnForm = () => {
                         setIDMember(id);
                         setTrigger(true);
                       }, 800)}
-                      options={
-                        memberListData?.map((member) => ({
-                          memberInfo: {
-                            memberName: member?.node?.name?.local,
-                            memberId: member?.node?.id,
-                            gender:
-                              member?.node?.profile?.data?.formData
-                                ?.basicInformation?.gender?.local,
-                            age: member?.node?.profile?.data?.formData
-                              ?.basicInformation?.age,
-                            maritialStatus:
-                              member?.node?.profile?.data?.formData
-                                ?.maritalStatus?.local,
-                            address: member?.node?.address,
-                          },
-                          value: member?.node?.id as string,
-                        })) ?? []
-                      }
+                      options={memberListData?.map((member) => {
+                        const profileData = member?.node?.profile;
+                        if ('data' in profileData) {
+                          return {
+                            memberInfo: {
+                              // image:member?.node?.code,
+                              memberName: member?.node?.name?.local,
+                              memberId: member?.node?.id,
+                              gender:
+                                profileData?.data?.formData?.basicInformation
+                                  ?.gender,
+                              age: profileData?.data?.formData?.basicInformation
+                                ?.age,
+                              maritialStatus:
+                                profileData?.data?.formData?.maritalStatus
+                                  ?.local,
+                              address: member?.node?.address,
+                            },
+                            value: member?.node?.id as string,
+                          };
+                        } else {
+                          return [];
+                        }
+                      })}
                     />
                     {/* <FormSelect
                       name="memberId"

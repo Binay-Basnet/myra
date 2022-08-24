@@ -132,45 +132,49 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
   }, [watch, mutationId, identificationListData]);
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSection(e.target.id);
-          setKymCurrentSection(kymSection);
-        }}
-      >
-        <Box display="flex" flexDirection="column" gap="s16">
-          <Text
-            fontSize="r1"
-            fontWeight="medium"
-            color="neutralColorLight.Gray-70"
-          >
-            {t['kynIndCitizenship']}
-          </Text>
-          <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-            <FormInput
-              type="text"
-              name="idNo"
-              label={t['kynIndCitizenshipNo']}
-              placeholder={t['kynIndCitizenshipNo']}
-            />
+    <Box>
+      <FormProvider {...methods}>
+        <Text
+          fontSize="r1"
+          p="s20"
+          pb="0"
+          fontWeight="medium"
+          color="neutralColorLight.Gray-70"
+        >
+          {t['kynIndCitizenship']}
+        </Text>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSection(e.target.id);
+            setKymCurrentSection(kymSection);
+          }}
+        >
+          <Box p="s20" display="flex" flexDirection="column" gap="s16">
+            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
+              <FormInput
+                type="text"
+                name="idNo"
+                label={t['kynIndCitizenshipNo']}
+                placeholder={t['kynIndCitizenshipNo']}
+              />
 
-            <FormInput
-              type="text"
-              name="place"
-              label={t['kynIndCitizenshipIssuePlace']}
-              placeholder={t['kynIndCitizenshipIssuePlace']}
-            />
+              <FormInput
+                type="text"
+                name="place"
+                label={t['kynIndCitizenshipIssuePlace']}
+                placeholder={t['kynIndCitizenshipIssuePlace']}
+              />
 
-            <FormInput
-              type="date"
-              name="date"
-              label={t['kynIndCitizenshipIssueDate']}
-              placeholder={t['kynIndCitizenshipIssueDate']}
-            />
-          </Grid>
-        </Box>
-      </form>
-    </FormProvider>
+              <FormInput
+                type="date"
+                name="date"
+                label={t['kynIndCitizenshipIssueDate']}
+                placeholder={t['kynIndCitizenshipIssueDate']}
+              />
+            </Grid>
+          </Box>
+        </form>
+      </FormProvider>
+    </Box>
   );
 };

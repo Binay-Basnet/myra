@@ -13,11 +13,11 @@ export const FormFileInput = ({ name, label, ...rest }: FormFileInputProps) => {
   const methods = useFormContext();
 
   const {
-    formState: { errors },
+    // formState: { errors },
     control,
   } = methods;
 
-  const error = errors[name];
+  // const error = errors[name];
 
   return (
     <Box display="flex" flexDir="column" gap="s4">

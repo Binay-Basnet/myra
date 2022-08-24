@@ -98,10 +98,7 @@ export const FamilyMember = ({
 
   return (
     <Box display="flex" flexDirection="column" gap="s4">
-      <Text fontSize="s3">{t['kynIndFamilyMemberinthisinstitution']}</Text>
-
       <Box
-        mt="s16"
         borderRadius="br2"
         border="1px solid"
         borderColor="border.layout"

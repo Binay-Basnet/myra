@@ -1120,7 +1120,6 @@ const ne: Record<string, string> = {
   kymIndSelectRelationship: 'Select Relationship',
   kymIndFullName: 'Full Name',
   kymIndEnterFullName: 'Enter Full Name',
-  kymIndFAMILYDETAILS: 'FAMILY DETAILS',
   kymIndMartialStatus: 'Martial Status',
   kymIndSelectMartialStatus: 'Select Martial Status',
   kymIndFamilymembers: 'Family Members',
@@ -1140,7 +1139,6 @@ const ne: Record<string, string> = {
   kymIndRegistrationNo: 'Registration No.',
   kymIndMAINOCCUPATION: 'MAIN OCCUPATION',
   kymIndAddOccupation: 'Add Occupation',
-  kymIndEnableforForeignEmployment: 'Enable for Foreign Employment',
   kymIndNameofCountry: 'Name of Country',
   kymIndSelectCountry: 'Select Country',
   kymIndTypeofVisa: 'Type of Visa',
@@ -3206,10 +3204,11 @@ const ne: Record<string, string> = {
   serviceCenterOfficeAddress: 'Service Center Office Address',
   serviceCenterNoOfServiceCenter: 'No of Service Center',
   serviceCenterEnterNoOfServiceCenter: 'Enter No of Service Center',
-
   kynIndEstimatedannualaccounttransaction:
     'Estimated annual account transaction',
   moreThan: 'More Than',
+  kymIndForeignEmploymentDetails: 'Foreign Employment Details',
+  kymIndFAMILYDETAILS: 'Family Details',
 };
 
 export default ne;

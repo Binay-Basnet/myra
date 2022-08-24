@@ -1100,7 +1100,6 @@ const en: Record<string, string> = {
   kymIndSelectRelationship: 'Select Relationship',
   kymIndFullName: 'Full Name',
   kymIndEnterFullName: 'Enter Full Name',
-  kymIndFAMILYDETAILS: 'FAMILY DETAILS',
   kymIndMartialStatus: 'Martial Status',
   kymIndSelectMartialStatus: 'Select Martial Status',
   kymIndFamilymembers: 'Family Members',
@@ -1118,7 +1117,6 @@ const en: Record<string, string> = {
   kymIndEstablishedDate: 'Established Date',
   kymIndRegistrationNo: 'Registration No.',
   kymIndAddOccupation: 'Add Occupation',
-  kymIndEnableforForeignEmployment: 'Enable for Foreign Employment',
   kymIndNameofCountry: 'Name of Country',
   kymIndSelectCountry: 'Select Country',
   kymIndTypeofVisa: 'Type of Visa',
@@ -3206,6 +3204,8 @@ const en: Record<string, string> = {
   kymIndBASICINFORMATION: 'Basic Information',
   kymCoopUnionBasicInformation: 'Basic Information',
   kymCoopBASICINFORMATION: 'Basic Information',
+  kymIndForeignEmploymentDetails: 'Foreign Employment Details',
+  kymIndFAMILYDETAILS: 'Family Details',
 };
 
 export default en;

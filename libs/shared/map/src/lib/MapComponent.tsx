@@ -26,7 +26,7 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
     latitude: 27.7172,
     longitude: 85.324,
   });
-  const [hasClickedModal, setHasClickedModal] = useState(false);
+  // const [hasClickedModal, setHasClickedModal] = useState(false);
   const { t } = useTranslation();
 
   const openModal = useCallback(() => setIsModalOpen(true), []);
@@ -53,7 +53,8 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
           }${address?.country ? address?.country : ''}`
         );
       } catch (e) {
-        console.error('Error:', e);
+        return 0;
+        // console.error('Error:', e);
       }
     };
 
@@ -73,7 +74,7 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
         leftIcon={<Icon size="md" as={FaMap} />}
         isDisabled={!!address}
         onClick={() => {
-          setHasClickedModal(true);
+          // setHasClickedModal(true);
           openModal();
         }}
         id={id}
@@ -118,7 +119,7 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
           p="s12"
           display="flex"
           shadow="E0"
-          width="50%"
+          width="100%"
           h={70}
           border="1px"
           borderColor="border.layout"

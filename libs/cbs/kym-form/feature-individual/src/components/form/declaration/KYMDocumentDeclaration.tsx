@@ -23,7 +23,7 @@ export const KYMDocumentDeclaration = ({
   const id = String(router?.query?.['id']);
 
   return (
-    <GroupContainer>
+    <GroupContainer p="s20">
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kynIndDOCUMENTDECLARATION']}
       </Text>

@@ -11,21 +11,21 @@ export interface FormMapProps<T> {
   id?: string;
 }
 
-export function FormMap<T>({ name, id }: FormMapProps<T>) {
+export function FormMap<T>({ name }: FormMapProps<T>) {
   const methods = useFormContext();
 
   const {
     // formState: { errors },
     control,
-    reset,
-    getValues,
+    // reset,
+    // getValues,
   } = methods;
 
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, value, ...fieldProps } }) => {
+      render={({ field: { onChange, value } }) => {
         return (
           <MapComponent id={name} currentLoc={value} setCurrentLoc={onChange} />
         );

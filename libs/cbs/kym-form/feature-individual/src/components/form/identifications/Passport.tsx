@@ -132,45 +132,49 @@ export const Passport = ({ setKymCurrentSection }: IPassportProps) => {
   }, [watch, mutationId, identificationListData]);
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSection(e.target.id);
-          setKymCurrentSection(kymSection);
-        }}
-      >
-        <Box display="flex" flexDirection="column" gap="s16">
-          <Text
-            fontSize="r1"
-            fontWeight="medium"
-            color="neutralColorLight.Gray-70"
-          >
-            {t['kymIndPassport']}
-          </Text>
-          <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-            <FormInput
-              type="text"
-              name="idNo"
-              label={t['kymIndPassportNo']}
-              placeholder={t['kymIndPassportNo']}
-            />
+    <Box>
+      <FormProvider {...methods}>
+        <Text
+          p="s20"
+          pb="0"
+          fontSize="r1"
+          fontWeight="medium"
+          color="neutralColorLight.Gray-70"
+        >
+          {t['kymIndPassport']}
+        </Text>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSection(e.target.id);
+            setKymCurrentSection(kymSection);
+          }}
+        >
+          <Box p="s20" display="flex" flexDirection="column" gap="s16">
+            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
+              <FormInput
+                type="text"
+                name="idNo"
+                label={t['kymIndPassportNo']}
+                placeholder={t['kymIndPassportNo']}
+              />
 
-            <FormInput
-              type="text"
-              name="place"
-              label={t['kymIndPassportIssuePlace']}
-              placeholder={t['kymIndPassportIssuePlace']}
-            />
+              <FormInput
+                type="text"
+                name="place"
+                label={t['kymIndPassportIssuePlace']}
+                placeholder={t['kymIndPassportIssuePlace']}
+              />
 
-            <FormInput
-              type="date"
-              name="date"
-              label={t['kymIndPassportIssueDate']}
-              placeholder={t['kymIndPassportIssueDate']}
-            />
-          </Grid>
-        </Box>
-      </form>
-    </FormProvider>
+              <FormInput
+                type="date"
+                name="date"
+                label={t['kymIndPassportIssueDate']}
+                placeholder={t['kymIndPassportIssueDate']}
+              />
+            </Grid>
+          </Box>
+        </form>
+      </FormProvider>
+    </Box>
   );
 };
