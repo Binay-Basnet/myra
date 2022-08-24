@@ -17,7 +17,7 @@ export const BottomOperatorCoop = ({
 }: IKYMDocumentDeclarationProps) => {
   const { t } = useTranslation();
   return (
-    <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
+    <Grid p="s20" templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
       <KYMDocumentField
         mutationId={accountId}
         label={t['kymCoopPhotograph']}

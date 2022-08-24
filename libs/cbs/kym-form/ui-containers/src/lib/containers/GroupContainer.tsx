@@ -14,7 +14,7 @@ export const GroupContainer = ({
   return (
     <Box
       display="flex"
-      p="s20"
+      p="s10"
       flexDirection="column"
       gap="s16"
       {...otherProps}

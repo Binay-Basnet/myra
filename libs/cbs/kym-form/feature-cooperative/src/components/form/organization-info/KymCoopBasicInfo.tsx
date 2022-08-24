@@ -2,12 +2,8 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -29,17 +25,10 @@ export const KymCoopBasicInfo = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer
+        <FormSection
           id="kymCoopAccBasicInformation"
-          scrollMarginTop={'200px'}
+          header="kymCoopBASICINFORMATION"
         >
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymCoopBASICINFORMATION']}
-          </Text>
           <FormInput
             w="65%"
             type="text"
@@ -47,27 +36,25 @@ export const KymCoopBasicInfo = (props: IProps) => {
             label={t['kymCoopNameofOrganization']}
             placeholder={t['kymCoopEnterNameofOrganization']}
           />
-          <InputGroupContainer>
-            <FormInput
-              type="number"
-              name="regdNumber"
-              label={t['kymCoopRegisrationNo']}
-              placeholder={t['kymCoopEnterRegisteredNumber']}
-            />
+          <FormInput
+            type="number"
+            name="regdNumber"
+            label={t['kymCoopRegisrationNo']}
+            placeholder={t['kymCoopEnterRegisteredNumber']}
+          />
 
-            <FormInput
-              type="text"
-              name="regdOffice"
-              label={t['kymCoopRegistrationoffice']}
-              placeholder={t['kymCoopEnterRegisteredAddress']}
-            />
-            <FormInput
-              type="date"
-              name="regdDate"
-              label={t['kymCoopRegistrationDate']}
-            />
-          </InputGroupContainer>
-        </GroupContainer>
+          <FormInput
+            type="text"
+            name="regdOffice"
+            label={t['kymCoopRegistrationoffice']}
+            placeholder={t['kymCoopEnterRegisteredAddress']}
+          />
+          <FormInput
+            type="date"
+            name="regdDate"
+            label={t['kymCoopRegistrationDate']}
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );

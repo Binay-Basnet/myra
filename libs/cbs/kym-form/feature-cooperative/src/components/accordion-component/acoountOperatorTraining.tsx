@@ -6,11 +6,10 @@ import { CloseIcon } from '@chakra-ui/icons';
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
-  GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, FormSection, GridItem, Icon } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAddTraining {
@@ -65,16 +64,11 @@ export const DynamicAddtraining = () => {
   } = useFieldArray({ name: 'coopRelatedTraining' });
 
   return (
-    <GroupContainer>
-      <Box display={'flex'} flexDirection="column" gap="s4">
-        <Text fontSize="r1" fontWeight="SemiBold">
-          {t['kymCoopTrainingRelatedToCoop']}
-        </Text>
-        <Text fontSize="s2" fontWeight="400">
-          {t['kymCoopTrainingRelatedToCoopsubText']}
-        </Text>
-      </Box>
-      <div>
+    <FormSection
+      header="kymCoopTrainingRelatedToCoop"
+      subHeader="kymCoopTrainingRelatedToCoopsubText"
+    >
+      <GridItem colSpan={3}>
         <DynamicBoxGroupContainer>
           {trainingFields.map((item, index) => {
             return (
@@ -98,7 +92,7 @@ export const DynamicAddtraining = () => {
             {t['kymInsNewDetail']}
           </Button>
         </DynamicBoxGroupContainer>
-      </div>
-    </GroupContainer>
+      </GridItem>
+    </FormSection>
   );
 };

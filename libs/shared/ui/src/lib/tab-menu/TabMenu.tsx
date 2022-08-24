@@ -103,8 +103,8 @@ export function TabMenu() {
                   gap="s8"
                   border="none"
                   _hover={{
-                    bg: 'gray.200',
-                    color: 'neutralColorLight.Gray-60',
+                    // bg: 'gray.200',
+                    // color: 'neutralColorLight.Gray-60',
                     borderRadius: 'br2',
                   }}
                   _selected={{
@@ -126,7 +126,6 @@ export function TabMenu() {
                   <Text
                     fontSize="r1"
                     lineHeight="0"
-                    // color={isActive ? 'gray.800' : 'gray.0'}
                     fontWeight={isActive ? '600' : '500'}
                   >
                     {t[title]}

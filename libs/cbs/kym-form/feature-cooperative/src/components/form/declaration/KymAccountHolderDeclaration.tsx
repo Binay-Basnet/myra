@@ -4,9 +4,8 @@ import { Grid, GridItem } from '@chakra-ui/react';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, FormSection } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -24,10 +23,7 @@ export const KymAccountHolderDeclaration = (props: IProps) => {
   useCooperative({ methods });
 
   return (
-    <GroupContainer
-      id="kymCoopAccAccountHolderDeclaration"
-      scrollMarginTop={'200px'}
-    >
+    <Box>
       <FormProvider {...methods}>
         <form
           onFocus={(e) => {
@@ -35,26 +31,21 @@ export const KymAccountHolderDeclaration = (props: IProps) => {
             setSection(kymSection);
           }}
         >
-          <Box display="flex" flexDirection="column" gap="s32">
-            <Text
-              fontSize="r1"
-              fontWeight="semibold"
-              color="neutralColorLight.Gray-80"
-            >
-              {t['kymCoopAccountHolderDeclaration']}
-            </Text>
+          <FormSection
+            id="kymCoopAccAccountHolderDeclaration"
+            header="kymCoopAccountHolderDeclaration"
+          >
             <FormInput
-              w="35%"
               type="text"
               name="accountHoldersName"
               label={t['kymCoopAccountHolderName']}
               placeholder={t['kymCoopEnterAccountHolderName']}
             />
-          </Box>
+          </FormSection>
         </form>
       </FormProvider>
       <Documents setSection={setSection} />
-    </GroupContainer>
+    </Box>
   );
 };
 
@@ -70,7 +61,14 @@ const Documents = ({ setSection }: IDocProps) => {
   const id = String(router?.query?.['id']);
 
   return (
-    <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
+    <Grid
+      borderBottom={'1px solid'}
+      borderBottomColor="border.layout"
+      p="s20"
+      templateColumns="repeat(2, 1fr)"
+      rowGap="s16"
+      columnGap="s20"
+    >
       <GridItem>
         <Box w="124px">
           <KYMDocumentField

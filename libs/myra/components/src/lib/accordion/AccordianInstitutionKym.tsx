@@ -76,7 +76,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
   }, [kymCurrentSection]);
 
   return (
-    <Box p={'1'} overflow="auto" h="700px">
+    <Box overflow="auto" h="700px">
       <Box
         display="flex"
         justifyContent="space-between"

@@ -2624,7 +2624,6 @@ const ne: Record<string, string> = {
   depositProductMinimumPostingFrequency: 'Minimum Posting Frequency',
   depositProductSelectPostingFrequency: 'Select Posting Frequency',
   depositProductMaximumPostingFrequency: 'Maximum Posting Frequency',
-  depositProductAccountServiceCharge: 'Account Service Charge',
   depositProductAdddifferentservicecharges: 'Add different service charges.',
   depositProductServiceName: 'Service Name',
   depositProductSelectServiceName: 'Select Service Name',
@@ -3209,6 +3208,10 @@ const ne: Record<string, string> = {
   moreThan: 'More Than',
   kymIndForeignEmploymentDetails: 'Foreign Employment Details',
   kymIndFAMILYDETAILS: 'Family Details',
+  depositProductAccountOpenServiceCharge: 'Account Open Service Charge',
+  depositProductAccountCloseServiceCharge: 'Account Close Service Charge',
+  depositProductIsThisForMinor: 'Is this a product for Minors ?',
+  depositProductMinorAccount: 'Is this a Minor Account ? ',
 };
 
 export default ne;
