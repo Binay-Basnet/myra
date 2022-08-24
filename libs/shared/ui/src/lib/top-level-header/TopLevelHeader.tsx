@@ -183,10 +183,10 @@ export function TopLevelHeader() {
                 noOfLines={1}
                 lineHeight="130%"
               >
-                {t['sahakariName']}
+                Neosys Saving and Credit Cooperative
               </Text>
               <Text fontSize="s3" color={'white'} p={0} lineHeight="100%">
-                {t['sahakariLocation']}
+                Lalitpur
               </Text>
             </Box>
           </Box>
