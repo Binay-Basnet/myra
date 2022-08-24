@@ -102,6 +102,17 @@ query getCooperativeUnionKymEditData($id: ID!) {
               noOfInstitutionalMemberCurrent
               noOfInstitutionalMemberTarget
             }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
+              }
+            }
           }
         }
       }
@@ -154,6 +165,17 @@ query getEconimicDetailsEditData($id: ID!) {
               financialCost
               riskManagementCost
               deferredTaxExpense
+            }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
+              }
             }
           }
         }
@@ -211,6 +233,17 @@ query getBoardOfDirectorsDetailsList($id: ID!) {
                   trainingOrganization
                 }
                 panNo
+              }
+            }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
               }
             }
           }
@@ -271,6 +304,17 @@ query getAccountOperatorDetailsList($id: ID!) {
                 panNo
               }
             }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
+              }
+            }
           }
         }
       }
@@ -328,6 +372,17 @@ query getCentralRepresentativeDetails($id: ID!) {
               panNo
               notAmongDirectors
               centralRepID
+            }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
+              }
             }
           }
         }
