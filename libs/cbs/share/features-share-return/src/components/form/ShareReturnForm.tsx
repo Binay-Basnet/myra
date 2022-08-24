@@ -5,7 +5,7 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { debounce, omit } from 'lodash';
+import { compact, debounce, omit } from 'lodash';
 
 import {
   KymIndFormStateQuery,
@@ -247,30 +247,33 @@ const ShareReturnForm = () => {
                         setIDMember(id);
                         setTrigger(true);
                       }, 800)}
-                      options={memberListData?.map((member) => {
-                        const profileData = member?.node?.profile;
-                        if ('data' in profileData) {
-                          return {
-                            memberInfo: {
-                              // image:member?.node?.code,
-                              memberName: member?.node?.name?.local,
-                              memberId: member?.node?.id,
-                              gender:
-                                profileData?.data?.formData?.basicInformation
-                                  ?.gender,
-                              age: profileData?.data?.formData?.basicInformation
-                                ?.age,
-                              maritialStatus:
-                                profileData?.data?.formData?.maritalStatus
-                                  ?.local,
-                              address: member?.node?.address,
-                            },
-                            value: member?.node?.id as string,
-                          };
-                        } else {
-                          return [];
-                        }
-                      })}
+                      // TODO! Fix this
+                      options={compact(
+                        memberListData?.map((member) => {
+                          const profileData = member?.node?.profile;
+                          if (profileData && 'data' in profileData) {
+                            return {
+                              memberInfo: {
+                                // image:member?.node?.code,
+                                memberName: member?.node?.name?.local,
+                                memberId: member?.node?.id,
+                                gender:
+                                  profileData?.data?.formData?.basicInformation
+                                    ?.gender?.local,
+                                age: profileData?.data?.formData
+                                  ?.basicInformation?.age,
+                                maritialStatus:
+                                  profileData?.data?.formData?.maritalStatus
+                                    ?.local,
+                                address: member?.node?.address?.district?.local,
+                              },
+                              value: member?.node?.id as string,
+                            };
+                          } else {
+                            return false;
+                          }
+                        })
+                      )}
                     />
                     {/* <FormSelect
                       name="memberId"
