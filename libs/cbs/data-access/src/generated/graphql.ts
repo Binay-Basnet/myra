@@ -9002,6 +9002,100 @@ export type UpdateDeclarationMutation = {
   };
 };
 
+export type SetSettingsShareBonusMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<ShareBonusSettingsInput>;
+}>;
+
+export type SetSettingsShareBonusMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          bonus?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsShareDividendMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<ShareDividendSettingsInput>;
+}>;
+
+export type SetSettingsShareDividendMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          dividend?: {
+            dividend?: {
+              distributionCondition?: DividendDistributionCondition | null;
+              dividendTransferTreatment?: DividendTransferTreatment | null;
+              accountForFractionalDividends?: string | null;
+              accountForShareDividends?: string | null;
+              organizationFundForDividends?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsShareFeeAndChargesMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<ShareFeeAndChargesInput>;
+}>;
+
+export type SetSettingsShareFeeAndChargesMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          feeAndCharges?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsShareGeneralMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<ShareSettingsGeneralInput>;
+}>;
+
+export type SetSettingsShareGeneralMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          general?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AddSharePurchaseMutationVariables = Exact<{
   data: SharePurchaseInput;
 }>;
@@ -11730,6 +11824,99 @@ export type GetSettingsOptionsFieldsQuery = {
   };
 };
 
+export type GetSettingsShareBonusDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareBonusDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        bonus?: {
+          taxPayer?: TaxPayerOptions | null;
+          taxRate?: number | null;
+          accountMapping?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsShareDividendDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareDividendDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        dividend?: {
+          distributionCondition?: DividendDistributionCondition | null;
+          dividendTransferTreatment?: DividendTransferTreatment | null;
+          accountForFractionalDividends?: string | null;
+          accountForShareDividends?: string | null;
+          organizationFundForDividends?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsShareFeesAndChargesDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareFeesAndChargesDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        feeAndCharges?: {
+          shareCertificate?: Array<{
+            minShare?: number | null;
+            maxShare?: number | null;
+            type?: ShareChargeType | null;
+            charge?: number | null;
+          } | null> | null;
+          other?: Array<{
+            minShare?: number | null;
+            maxShare?: number | null;
+            type?: ShareChargeType | null;
+            charge?: number | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsShareGeneralDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareGeneralDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        general?: {
+          typeOfShare?: TypeOfShare | null;
+          multiplicityFactor?: number | null;
+          minimumQuantityOfShare?: number | null;
+          maximumQuantityOfShare?: number | null;
+          paidUpShareRate?: number | null;
+          shareIssueAuthority?: Array<BranchCategory | null> | null;
+          typeOfShareKitta?: TypeOfShare | null;
+          noOfAuthorisedPaidUpShare?: number | null;
+          noOfIssuedShare?: number | null;
+          startNumber?: number | null;
+          endNumber?: number | null;
+          incrementor?: number | null;
+          noOfDigits?: number | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetChartOfAccountsQuery = {
@@ -14230,6 +14417,180 @@ export const useUpdateDeclarationMutation = <
     useAxios<UpdateDeclarationMutation, UpdateDeclarationMutationVariables>(
       UpdateDeclarationDocument
     ),
+    options
+  );
+export const SetSettingsShareBonusDocument = `
+    mutation setSettingsShareBonus($id: ID!, $data: ShareBonusSettingsInput) {
+  settings {
+    general {
+      share {
+        add(id: $id) {
+          bonus(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareBonusMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareBonusMutation,
+    TError,
+    SetSettingsShareBonusMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareBonusMutation,
+    TError,
+    SetSettingsShareBonusMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareBonus'],
+    useAxios<
+      SetSettingsShareBonusMutation,
+      SetSettingsShareBonusMutationVariables
+    >(SetSettingsShareBonusDocument),
+    options
+  );
+export const SetSettingsShareDividendDocument = `
+    mutation setSettingsShareDividend($id: ID!, $data: ShareDividendSettingsInput) {
+  settings {
+    general {
+      share {
+        add(id: $id) {
+          dividend(data: $data) {
+            dividend {
+              distributionCondition
+              dividendTransferTreatment
+              accountForFractionalDividends
+              accountForShareDividends
+              organizationFundForDividends
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareDividendMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareDividendMutation,
+    TError,
+    SetSettingsShareDividendMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareDividendMutation,
+    TError,
+    SetSettingsShareDividendMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareDividend'],
+    useAxios<
+      SetSettingsShareDividendMutation,
+      SetSettingsShareDividendMutationVariables
+    >(SetSettingsShareDividendDocument),
+    options
+  );
+export const SetSettingsShareFeeAndChargesDocument = `
+    mutation setSettingsShareFeeAndCharges($id: ID!, $data: ShareFeeAndChargesInput) {
+  settings {
+    general {
+      share {
+        add(id: $id) {
+          feeAndCharges(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareFeeAndChargesMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareFeeAndChargesMutation,
+    TError,
+    SetSettingsShareFeeAndChargesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareFeeAndChargesMutation,
+    TError,
+    SetSettingsShareFeeAndChargesMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareFeeAndCharges'],
+    useAxios<
+      SetSettingsShareFeeAndChargesMutation,
+      SetSettingsShareFeeAndChargesMutationVariables
+    >(SetSettingsShareFeeAndChargesDocument),
+    options
+  );
+export const SetSettingsShareGeneralDocument = `
+    mutation setSettingsShareGeneral($id: ID!, $data: ShareSettingsGeneralInput) {
+  settings {
+    general {
+      share {
+        add(id: $id) {
+          general(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareGeneralMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareGeneralMutation,
+    TError,
+    SetSettingsShareGeneralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareGeneralMutation,
+    TError,
+    SetSettingsShareGeneralMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareGeneral'],
+    useAxios<
+      SetSettingsShareGeneralMutation,
+      SetSettingsShareGeneralMutationVariables
+    >(SetSettingsShareGeneralDocument),
     options
   );
 export const AddSharePurchaseDocument = `
@@ -17995,6 +18356,159 @@ export const useGetSettingsOptionsFieldsQuery = <
       GetSettingsOptionsFieldsQuery,
       GetSettingsOptionsFieldsQueryVariables
     >(GetSettingsOptionsFieldsDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareBonusDataDocument = `
+    query getSettingsShareBonusData {
+  settings {
+    general {
+      share {
+        bonus {
+          taxPayer
+          taxRate
+          accountMapping
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareBonusDataQuery = <
+  TData = GetSettingsShareBonusDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareBonusDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareBonusDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareBonusDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareBonusData']
+      : ['getSettingsShareBonusData', variables],
+    useAxios<
+      GetSettingsShareBonusDataQuery,
+      GetSettingsShareBonusDataQueryVariables
+    >(GetSettingsShareBonusDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareDividendDataDocument = `
+    query getSettingsShareDividendData {
+  settings {
+    general {
+      share {
+        dividend {
+          distributionCondition
+          dividendTransferTreatment
+          accountForFractionalDividends
+          accountForShareDividends
+          organizationFundForDividends
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareDividendDataQuery = <
+  TData = GetSettingsShareDividendDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareDividendDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareDividendDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareDividendDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareDividendData']
+      : ['getSettingsShareDividendData', variables],
+    useAxios<
+      GetSettingsShareDividendDataQuery,
+      GetSettingsShareDividendDataQueryVariables
+    >(GetSettingsShareDividendDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareFeesAndChargesDataDocument = `
+    query getSettingsShareFeesAndChargesData {
+  settings {
+    general {
+      share {
+        feeAndCharges {
+          shareCertificate {
+            minShare
+            maxShare
+            type
+            charge
+          }
+          other {
+            minShare
+            maxShare
+            type
+            charge
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareFeesAndChargesDataQuery = <
+  TData = GetSettingsShareFeesAndChargesDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareFeesAndChargesDataQueryVariables,
+  options?: UseQueryOptions<
+    GetSettingsShareFeesAndChargesDataQuery,
+    TError,
+    TData
+  >
+) =>
+  useQuery<GetSettingsShareFeesAndChargesDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareFeesAndChargesData']
+      : ['getSettingsShareFeesAndChargesData', variables],
+    useAxios<
+      GetSettingsShareFeesAndChargesDataQuery,
+      GetSettingsShareFeesAndChargesDataQueryVariables
+    >(GetSettingsShareFeesAndChargesDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareGeneralDataDocument = `
+    query getSettingsShareGeneralData {
+  settings {
+    general {
+      share {
+        general {
+          typeOfShare
+          multiplicityFactor
+          minimumQuantityOfShare
+          maximumQuantityOfShare
+          paidUpShareRate
+          shareIssueAuthority
+          typeOfShareKitta
+          noOfAuthorisedPaidUpShare
+          noOfIssuedShare
+          startNumber
+          endNumber
+          incrementor
+          noOfDigits
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareGeneralDataQuery = <
+  TData = GetSettingsShareGeneralDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareGeneralDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareGeneralDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareGeneralDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareGeneralData']
+      : ['getSettingsShareGeneralData', variables],
+    useAxios<
+      GetSettingsShareGeneralDataQuery,
+      GetSettingsShareGeneralDataQueryVariables
+    >(GetSettingsShareGeneralDataDocument).bind(null, variables),
     options
   );
 export const GetChartOfAccountsDocument = `

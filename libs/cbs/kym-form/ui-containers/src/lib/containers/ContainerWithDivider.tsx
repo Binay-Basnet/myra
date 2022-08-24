@@ -17,7 +17,7 @@ export const ContainerWithDivider = ({
       width="100%"
       gap="s32"
       divider={
-        <Divider my="s32" border="1px solid" borderColor="background.500" />
+        <Divider my="s8" border="1px solid" borderColor="border.layout" />
       }
       {...rest}
     >

@@ -11,7 +11,7 @@ export const SectionContainer = ({
   ...rest
 }: ISectionContainerProps) => {
   return (
-    <Box display="flex" flexDirection="column" gap="s48" {...rest}>
+    <Box display="flex" flexDirection="column" {...rest}>
       {children}
     </Box>
   );

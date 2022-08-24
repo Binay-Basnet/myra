@@ -430,7 +430,8 @@ const SharePurchaseForm = () => {
                   p="5"
                   pb="28px"
                   background="white"
-                  borderBottom="1px solid #E6E6E6"
+                  borderBottom="1px solid "
+                  borderColor="border.layout"
                   borderTopRadius={5}
                 >
                   <Text

@@ -109,8 +109,8 @@ export function AccorrdianAddMember(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              borderRadius="br2"
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -157,8 +157,8 @@ export function AccorrdianAddMember(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              borderRadius="br2"
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -196,8 +196,8 @@ export function AccorrdianAddMember(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              borderRadius="br2"
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -236,8 +236,8 @@ export function AccorrdianAddMember(props: AccordianProps) {
                 key={`${item}${index}`}
                 display="flex"
                 alignItems={'center'}
-                px={subsection === item ? 's16' : '0'}
-                bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+                borderRadius="br2"
+                bg={subsection === item ? 'background.500' : 'gray.0'}
                 py="s8"
               >
                 <a href={`#${item}`}>

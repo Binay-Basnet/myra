@@ -82,6 +82,8 @@ export const KYMFinancialTransactionDetails = ({
         }}
       >
         <GroupContainer
+          borderBottom={'1px solid'}
+          borderBottomColor="border.layout"
           id="kymAccIndFinancialTransactionDetails"
           scrollMarginTop={'200px'}
         >

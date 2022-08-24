@@ -1,0 +1,15 @@
+query getSettingsShareDividendData {
+  settings {
+    general {
+      share {
+        dividend {
+          distributionCondition
+          dividendTransferTreatment
+          accountForFractionalDividends
+          accountForShareDividends
+          organizationFundForDividends
+        }
+      }
+    }
+  }
+}

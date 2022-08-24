@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
@@ -19,12 +18,10 @@ import { NeosysUsersForm } from '../form/NeosysUsersForm';
 /* eslint-disable-next-line */
 export interface NeosysFeatureUsersAddProps {}
 
-export function NeosysFeatureUsersAdd(props: NeosysFeatureUsersAddProps) {
+export function NeosysFeatureUsersAdd() {
   const { t } = useTranslation();
-  const methods = useForm({});
   const router = useRouter();
 
-  const { watch } = methods;
   return (
     <>
       <Container minW="container.lg" height="fit-content" paddingBottom="55px">
@@ -36,7 +33,8 @@ export function NeosysFeatureUsersAdd(props: NeosysFeatureUsersAddProps) {
             alignItems={'center'}
             px="5"
             background="white"
-            borderBottom="1px solid #E6E6E6"
+            borderBottom="1px solid "
+            borderColor="border.layout"
           >
             <Text fontSize="r2" fontWeight="SemiBold">
               {t['neoUsersNewUser']}

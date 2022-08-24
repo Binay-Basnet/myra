@@ -68,7 +68,8 @@ export function NewSalesForm() {
           justifyContent="space-between"
           alignItems="center"
           px="5"
-          borderBottom="1px solid #E6E6E6"
+          borderBottom="1px solid "
+          borderColor="border.layout"
           bg={'gray.0'}
           borderTopRadius={5}
           position="sticky"

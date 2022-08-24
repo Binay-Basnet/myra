@@ -132,7 +132,8 @@ const Details = () => {
           alignItems={'center'}
           p="5"
           background="white"
-          borderBottom="1px solid #E6E6E6"
+          borderBottom="1px solid"
+          borderColor="border.layout"
           boxShadow="xl"
         >
           <Box

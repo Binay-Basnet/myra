@@ -23,7 +23,8 @@ export const TableListPageHeader = ({
       bg="white"
       zIndex="10"
       w="100%"
-      borderBottom="1px solid #E6E6E6"
+      borderBottom="1px solid "
+      borderColor="border.layout"
       pl="s16"
     >
       <Flex justify="flex-start" alignItems="center" h="100%">

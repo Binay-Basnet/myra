@@ -41,8 +41,9 @@ export function RadioGroup(props: RadioGroupProps) {
                     id={`${item}${index}`}
                     value={item}
                     spacing="s8"
-                  />
-                  <Text fontSize={labelFontSize}>{item}</Text>
+                  >
+                    <Text fontSize={labelFontSize}>{item}</Text>
+                  </Radio>
                 </Box>
               );
             })
@@ -54,10 +55,15 @@ export function RadioGroup(props: RadioGroupProps) {
                   key={option.value}
                   value={option.value}
                   spacing="s8"
-                />
-                <TextFields variant="formInput" fontSize="s3" color="gray.800">
-                  {option.label}
-                </TextFields>
+                >
+                  <TextFields
+                    variant="formInput"
+                    fontSize="s3"
+                    color="gray.800"
+                  >
+                    {option.label}
+                  </TextFields>
+                </Radio>
               </Box>
             ))}
       </Stack>

@@ -18,9 +18,7 @@ import { AddSupplierForm } from '../component/form/AddSupplierForm';
 /* eslint-disable-next-line */
 export interface InventoryFeatureSuppliersProps {}
 
-export function InventoryFeatureSuppliers(
-  props: InventoryFeatureSuppliersProps
-) {
+export function InventoryFeatureSuppliers() {
   const { t } = useTranslation();
   const router = useRouter();
   return (
@@ -35,7 +33,8 @@ export function InventoryFeatureSuppliers(
             px="s16"
             py="s20"
             background="neutralColorLight.Gray-0"
-            borderBottom="1px solid #E6E6E6"
+            borderBottom="1px solid "
+            borderColor="border.layout"
           >
             <Text
               fontSize="r2"

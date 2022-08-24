@@ -391,7 +391,6 @@ const en: Record<string, string> = {
   settingsOrganizationTypeOfOrganization: ' Type of Organization',
   settingsOrganizationCooperative: ' Cooperative',
   settingsOrganizationCooperativeUnion: ' Cooperative Union',
-  settingsOrganizationContactDetails: 'CONTACT DETAILS',
   settingsOrganizationMainContactPerson: 'MAIN CONTACT PERSON',
   settingsOrganizationAddress: 'ADDRESS',
   settingsOrganizationPinOnMap: 'Pin on Map',
@@ -507,14 +506,12 @@ const en: Record<string, string> = {
   settingsMemberOccupation: 'Occupation',
   settingsMemberOccupationDetails: 'Occupation Details',
   settingsMemberFamilyIncome: 'Family Income',
-  settingsMemberIncomeSourceDetails: 'Income Source Details',
   settingsMemberEstimatedAnnualTransaction: 'Estimated Annual Transaction',
 
   settingsMemberSection3CooperativeMember: 'Section 3: Cooperative Member',
   settingsMemberPurposeOfBecomingAMemberOfThisCooperative:
     'Purpose of becoming a member of this cooperative',
   settingsMemberOtherCooperativeDetails: 'Other Cooperative Details',
-  settingsMemberFinancialTransactionDetails: 'Financial Transaction Details',
 
   settingsMemberSection4Declaration: 'Section 4: Declaration',
   settingsMemberForeignEmploymentOptions: 'Foreign Employment Options',
@@ -638,7 +635,6 @@ const en: Record<string, string> = {
   kymCoopSignature: 'Signature',
   kymCoopStamp: 'Stamp',
 
-  kymCoopDOCUMENTDECLARATION: 'DOCUMENT DECLARATION',
   kymCoopAGMDecisionDocument: 'AGM/BOD Decision Document',
   kymCoopRegisteredCertificate: 'Registered Certificate',
   kymCoopPANCertificate: 'PAN Certificate',
@@ -711,7 +707,6 @@ const en: Record<string, string> = {
   kymCoopNoncurrentliabilities: 'Non-current liabilities',
   kymCoopEnterTotalEquityandliabilities: 'Enter Total Equity and liabilities',
 
-  kymCoopBASICINFORMATION: 'BASIC INFORMATION',
   kymCoopNameofOrganization: 'Name of Organization',
   kymCoopEnterNameofOrganization: 'Enter Name of Organization',
   kymCoopRegisrationNo: 'Regisration No',
@@ -727,7 +722,6 @@ const en: Record<string, string> = {
   kymCoopLocalGovernment: 'Local Government',
   kymCoopSelectLocal: 'Select Local Government',
   kymCoopOperatingAddress: 'Operating Address',
-  kymCoopContactDetails: 'Contact Details',
   kymCoopOfficialEmail: 'Official Email',
   kymCoopEnterEmailAddress: 'Enter Email Address',
   kymCoopWebsiteLink: 'Website Link',
@@ -775,8 +769,6 @@ const en: Record<string, string> = {
   kymCoopRepresentativeTemporaryAddress: 'Temporary Address',
   kymCoopRepresentativeTemporaryAddressPermanent:
     'Temporary Address same as permanent',
-  kymCoopRepresentativeINCASERESIDINGINRENTEDHOUSE:
-    'INCASE RESIDING IN RENTED HOUSE',
   kymCoopRepresentativeLandlordName: "Landlord's Name",
   kymCoopRepresentativeContactNo: 'Contact No',
 
@@ -793,7 +785,6 @@ const en: Record<string, string> = {
   // kym coop union
   kymCoopUnionAddNewMembers: 'Add New Member',
   kymCoopUnionInstitutionInformation: '1. Cooperative Information',
-  kymCoopUnionBasicInformation: 'Basic Information',
   kymCoopUnionNameOfInstitution: 'Name of Institution',
   kymCoopUnionInstitutionType: 'Institution Type',
   kymCoopUnionSelectInstitutionType: 'Select Institution Type',
@@ -816,7 +807,6 @@ const en: Record<string, string> = {
 
   kymCoopUnionOperatorBranchAddress: 'Branch Office Address',
 
-  kymCoopUnionContactDetails: 'Contact Details',
   kymCoopUnionPhone: 'Phone',
   kymCoopUnionEnterPhoneNumber: 'Enter Phone Number',
   kymCoopUnionFax: 'Fax',
@@ -1060,7 +1050,6 @@ const en: Record<string, string> = {
   kymInd3COOPmembership: '3. COOP membership',
   kymInd4Declaration: '4. Declaration',
 
-  kymIndBASICINFORMATION: 'BASIC INFORMATION',
   kymIndFirstName: 'First Name',
   kymIndEnterFirstName: 'Enter First Name',
   kymIndMiddleName: 'Middle Name',
@@ -1080,7 +1069,6 @@ const en: Record<string, string> = {
   kymIndReligion: 'Religion',
   kymIndSelectReligion: 'Select Religion',
 
-  kymIndCONTACTDETAILS: 'CONTACT DETAILS',
   kymIndMobileNo: 'Mobile No',
   kymIndEnterMobileNo: 'Enter Mobile No',
   kymIndPhoneNo: 'Phone No',
@@ -1088,7 +1076,6 @@ const en: Record<string, string> = {
   kymIndEmail: 'Email',
   kymIndEnterEmail: 'Enter Email',
 
-  kymIndIDENTIFICATIONDETAILS: 'IDENTIFICATION DETAILS',
   kymIndChooseidentificationdetails: 'Choose identification details',
 
   kymIndPermanentAddress: 'Permanent Address',
@@ -1106,7 +1093,6 @@ const en: Record<string, string> = {
   kymIndEnterHouseNo: 'Enter House No',
   kymIndTemporaryAddress: 'Temporary Address',
   kymIndTemporaryAddressPermanent: 'Temporary Address same as permanent',
-  kymIndINCASERESIDINGINRENTEDHOUSE: 'INCASE RESIDING IN RENTED HOUSE',
   kymIndLandlordName: "Landlord's Name",
   kymIndContactNo: 'Contact No',
 
@@ -1120,7 +1106,6 @@ const en: Record<string, string> = {
   kymIndFamilymembers: 'Family Members',
   kymIndAddFamilyMember: 'Add Family Member',
 
-  kymIndPROFESSION: 'PROFESSION',
   kymIndOccupation: 'Occupation',
   kymIndSelectOccupation: 'Select Occupation',
   kymIndOrgFirmName: 'Org/Firm Name',
@@ -1132,31 +1117,26 @@ const en: Record<string, string> = {
   kymIndAreyouowner: 'I own this business.',
   kymIndEstablishedDate: 'Established Date',
   kymIndRegistrationNo: 'Registration No.',
-  kymIndMAINOCCUPATION: 'MAIN OCCUPATION',
   kymIndAddOccupation: 'Add Occupation',
   kymIndEnableforForeignEmployment: 'Enable for Foreign Employment',
   kymIndNameofCountry: 'Name of Country',
   kymIndSelectCountry: 'Select Country',
   kymIndTypeofVisa: 'Type of Visa',
   kymIndEnterTypeofVisa: 'Enter Type of Visa',
-  kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE: 'MAIN OCCUPATION OF HUSBAND/WIFE',
+  kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE: 'Main Occupation OF Husband/Wife',
 
   kymIndIncomeSource: 'Income Source',
   kymIndEnterIncomeSource: 'Enter Income Source',
   kymIndAmount: 'Amount',
-  kymIndINCOMESOURCEDETAILS: 'INCOME SOURCE DETAILS',
   kynIndAnnualFamilyIncome: 'Annual Family Income',
   kynIndIncomegreater:
     'Income greater than 4 lakhs in the previous fiscal year',
   kynIndNewEntry: 'New Entry',
 
-  kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION:
-    'ESTIMATED WITHDRAW / DEPOSIT AMOUNT IN THE INSTITUTION',
   kynIndEstimatednoofAnnualTransaction: 'Estimated no. of Annual Transaction',
   kynIndEstimatedAnnualDeposit: 'Estimated Annual Deposit',
   kynIndEstimatedAnnualLoan: 'Estimated Annual Loan',
 
-  kynIndFINANCIALTRANSACTIONDETAILS: 'FINANCIAL TRANSACTION DETAILS',
   kynIndDetailsoftheamount:
     'Details of the amount initially deposited in the instituion or  deposited till now',
 
@@ -1182,7 +1162,6 @@ const en: Record<string, string> = {
   kynIndEnterMemberID: 'Enter Member ID',
   kynIndFindMember: 'Find Member',
 
-  kynIndDOCUMENTDECLARATION: 'DOCUMENT DECLARATION',
   kynIndNominee: 'Nominee',
   kynIndDoyouhavebeneficialowner: 'Do you have a beneficial owner?',
   kynIndIyespleasewritenameandrelationship:
@@ -1201,9 +1180,7 @@ const en: Record<string, string> = {
   // accordion
 
   // kym coop union
-  kymCoopUnionAccBasicInformation: 'Basic Information',
   kymCoopUnionAccRegisteredDetails: 'Registered Details',
-  kymCoopUnionAccContactDetails: 'Contact Details',
   kymCoopUnionAccBankAccountDetails: 'Bank Account Details',
   kymCoopUnionAccDetailsofProprietor:
     'Details of Proprietor, Partners, Directors',
@@ -1243,9 +1220,7 @@ const en: Record<string, string> = {
   kymCoopUnionCRNotDir: 'Central Representative is not among Directors',
 
   // kym ins
-  kymInsBasicInformation: 'Basic Information',
   kymInsRegisteredDetails: 'Registered Details',
-  kymInsContactDetails: 'Contact Details',
   kymInsBankAccountDetails: 'Bank Account Details',
   kymInsDetailsofsisterconcern: 'Details of sister concern',
   kymInsTransactionProfile: 'Transaction Profile',
@@ -1399,21 +1374,14 @@ const en: Record<string, string> = {
 
   // kym individual
 
-  kymAccIndBasicInformation: 'Basic Information',
-  kymAccIndContactDetails: 'Contact Details',
-  kymAccIndIdentificationDetails: 'Identification Details',
   kymAccIndPermanentAddress: 'Permanent Address',
   kymAccIndTemporaryAddress: 'Temporary Address',
   kymAccIndIncaseofresidinginRentedHouse: 'Incase of residing in Rented House',
   kymAccIndFamilyDetails: 'Family Details',
-  kymAccIndProfession: 'Profession',
   kymAccIndMainProfession: 'Main Profession',
-  kymAccIndMainOccupationofHusabandWife: 'Main Occupation of Husaband/Wife',
-  kymAccIndIncomeSourceDetails: 'Income Source Details',
   kymAccIndMainPurposeofBecomingMember: 'Main Purpose of Becoming a Member',
   kymAccIndMemberofAnothercooperative: 'Member of Another Cooperative',
   kymAccIndFamilyMemberinthisinstitution: 'Family Member in this institution',
-  kymAccIndFinancialTransactionDetails: 'Financial Transaction Details',
   kymAccIndEstimatedWithdrawDepositAmountintheInstitureion:
     'Estimated Withdraw/Deposit Amount in the Institureion',
   kymAccIndNexttoKin: 'Next to Kin',
@@ -1428,10 +1396,8 @@ const en: Record<string, string> = {
   kymAccInd4Declaration: '4. Declaration',
 
   // kym coop
-  kymCoopAccBasicInformation: 'Basic Information',
   kymCoopAccRegisteredAddress: 'Registered Address',
   kymCoopAccOperatingAddress: 'Operating Address',
-  kymCoopAccContactDetails: 'Contact Details',
   kymCoopAccCurrentMembers: 'Current Members',
   kymCoopAccCooperativeDate: 'Cooperative Date',
   kymCoopAccRepresentative: 'Representative',
@@ -1442,7 +1408,6 @@ const en: Record<string, string> = {
   kymCoopAccBoardOfDirectorDetails: 'Board Of Director Details',
   kymCoopAccAccountOperatorDetail: 'Account Operator Detail',
   kymCoopAccAccountHolderDeclaration: 'Account Holder Declaration',
-  kymCoopAccDocumentDeclaration: 'Document Declaration',
   kymCoopAcc1OrganizationDetails: '1. Organization Details',
   kymCoopAcc2EconomicDetails: '2. Economic Details',
   kymCoopAcc3DetailsofBoardDirectors: '3. Details of Board Directors',
@@ -2946,7 +2911,6 @@ const en: Record<string, string> = {
     'Section 3: Details of Proprietary, Partners, Directors',
   settingsCooperativeDirectors: 'Directors',
   settingsCooperativeDirectorDetails: 'Director Details',
-  settingsCooperativeDocumentDeclaration: 'Document Declaration',
 
   settingsMemberCooperativeSection4: 'Section 4: Details of Account Operators',
   settingsCooperativeAccountOperators: 'Account Operators',
@@ -2970,14 +2934,12 @@ const en: Record<string, string> = {
   settingsCoopUnionBankAccountDetails: 'Bank Account Details',
   settingsCoopUnionApplicant: 'Applicant',
   settingsCoopUnionApplicantDetails: 'Applicant Details',
-  settingsCoopUnionApplicantDocumentDeclaration: 'Document Declaration',
 
   settingsCoopUnionSection2:
     'Section 2: Details of Proprietary, Partners, Directors',
   settingsCoopDirectors: 'Directors',
   settingsCoopDirectorDetails: 'Director Details',
   settingsCoopTrainingRelatedToCoop: 'Training Related to Co-operatives',
-  settingsCoopDocumentDeclaration: 'Document Declaration',
 
   settingsCoopUnionSection3: 'Details of Account Operators',
   settingsCoopUnionAccountOperators: 'Account Operators',
@@ -2994,7 +2956,6 @@ const en: Record<string, string> = {
 
   settingsDirector: 'Directors',
   settingsDirectorDetails: 'Director Details',
-  settingsDocumentDeclaration: 'Document Declaration',
   settingsDeclarationOfDirectionAffiliated:
     'Details of directors affiliated with other firms',
 
@@ -3205,6 +3166,46 @@ const en: Record<string, string> = {
   kymIndCooperativeServiceCenter: 'Service Center',
   kymIndCooperativeEnterServiceCenter: 'Enter Service Center',
   moreThan: 'More Than',
+
+  kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION:
+    'Estimated Withdraw / Deposit Amount In The Institution',
+  kymCoopDOCUMENTDECLARATION: 'Document Declaration',
+  kynIndDOCUMENTDECLARATION: 'Document Declaration',
+  kymCoopAccDocumentDeclaration: 'Document Declaration',
+  settingsCoopUnionApplicantDocumentDeclaration: 'Document Declaration',
+  settingsCooperativeDocumentDeclaration: 'Document Declaration',
+  settingsCoopDocumentDeclaration: 'Document Declaration',
+  settingsDocumentDeclaration: 'Document Declaration',
+  kymAccIndFinancialTransactionDetails: 'Financial Transaction Details',
+  kynIndFINANCIALTRANSACTIONDETAILS: 'Financial Transaction Details',
+  settingsMemberFinancialTransactionDetails: 'Financial Transaction Details',
+  kymAccIndMainOccupationofHusabandWife: 'Main Occupation of Husaband/Wife',
+  kymAccIndIncomeSourceDetails: 'Income Source Details',
+  kymIndINCOMESOURCEDETAILS: 'Income Source Details',
+  settingsMemberIncomeSourceDetails: 'Income Source Details',
+  kymAccIndProfession: 'Profession',
+  kymIndPROFESSION: 'Profession',
+  kymIndMAINOCCUPATION: 'Main Occupation',
+  kymIndINCASERESIDINGINRENTEDHOUSE: 'Incase Residing In Rented House',
+  kymCoopRepresentativeINCASERESIDINGINRENTEDHOUSE:
+    'Incase Residing In Rented House',
+  kymAccIndIdentificationDetails: 'Identification Details',
+  kymIndIDENTIFICATIONDETAILS: 'Identification Details',
+  kymCoopAccContactDetails: 'Contact Details',
+  kymAccIndContactDetails: 'Contact Details',
+  kymInsContactDetails: 'Contact Details',
+  kymCoopUnionAccContactDetails: 'Contact Details',
+  kymIndCONTACTDETAILS: 'Contact Details',
+  kymCoopUnionContactDetails: 'Contact Details',
+  kymCoopContactDetails: 'Contact Details',
+  settingsOrganizationContactDetails: 'Contact Details',
+  kymCoopAccBasicInformation: 'Basic Information',
+  kymAccIndBasicInformation: 'Basic Information',
+  kymInsBasicInformation: 'Basic Information',
+  kymCoopUnionAccBasicInformation: 'Basic Information',
+  kymIndBASICINFORMATION: 'Basic Information',
+  kymCoopUnionBasicInformation: 'Basic Information',
+  kymCoopBASICINFORMATION: 'Basic Information',
 };
 
 export default en;

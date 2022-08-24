@@ -66,7 +66,8 @@ const AddNewAccount = () => {
                   justifyContent="space-between"
                   alignItems={'center'}
                   px="5"
-                  borderBottom="1px solid #E6E6E6"
+                  borderBottom="1px solid"
+                  borderColor="border.layout"
                   position="sticky"
                   bg="white"
                   zIndex="10"
@@ -89,7 +90,8 @@ const AddNewAccount = () => {
                   flexDirection="column"
                   p="5"
                   background="white"
-                  borderBottom="1px solid #E6E6E6"
+                  borderBottom="1px solid"
+                  borderColor="border.layout"
                   borderTopRadius={5}
                 >
                   <Grid gap={5} templateColumns="repeat(3,1fr)">
@@ -183,7 +185,8 @@ const AddNewAccount = () => {
                   gap="s16"
                   p="5"
                   background="white"
-                  borderBottom="1px solid #E6E6E6"
+                  borderBottom="1px solid"
+                  borderColor="border.layout"
                   borderTopRadius={5}
                 >
                   <Box mb="5px">
