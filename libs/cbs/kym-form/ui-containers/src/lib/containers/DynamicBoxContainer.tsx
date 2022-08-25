@@ -13,7 +13,7 @@ export const DynamicBoxContainer = ({ children, ...rest }: IGroupContainer) => {
       borderRadius="br2"
       flexDirection="column"
       p="s20"
-      bg="highlight.500"
+      bg="background.500"
       {...rest}
     >
       {children}

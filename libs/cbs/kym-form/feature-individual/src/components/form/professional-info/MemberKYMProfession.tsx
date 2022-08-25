@@ -12,8 +12,8 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import { FormSection } from '@coop/shared/ui';
+import { getKymSection } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -27,8 +27,6 @@ interface IMemberKYMProfessionProps {
 export const MemberKYMProfession = ({
   setKymCurrentSection,
 }: IMemberKYMProfessionProps) => {
-  const { t } = useTranslation();
-
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -78,29 +76,13 @@ export const MemberKYMProfession = ({
 
   return (
     <FormProvider {...methods}>
-      <Text
-        fontSize="r1"
-        p="s20"
-        pb="0"
-        fontWeight="SemiBold"
-        color="neutralColorLight.Gray-70"
-      >
-        {t['kymIndPROFESSION']}
-      </Text>
       <form
         onFocus={(e) => {
           const kymSection = getKymSection(e.target.id);
           setKymCurrentSection(kymSection);
         }}
       >
-        <Box
-          p="s20"
-          display="flex"
-          flexDirection="column"
-          id="kymAccIndProfession"
-          scrollMarginTop={'200px'}
-          gap="s16"
-        >
+        <FormSection header="kymIndPROFESSION" flexLayout={true}>
           {occupationLoading ? (
             <Skeleton height="40px" />
           ) : (
@@ -110,37 +92,7 @@ export const MemberKYMProfession = ({
               list={getFieldOption(occupationData)}
             />
           )}
-        </Box>
-
-        {/* <FormSection header="kymIndForeignEmploymentDetails">
-          <FormSelect
-            id="nameOfCountry"
-            control={control}
-            name="foreignEmpCountryId"
-            label={t['kymIndNameofCountry']}
-            placeholder={t['kymIndSelectCountry']}
-            options={countryOptions}
-          />
-          <FormSelect
-            control={control}
-            id="typeOfVisa"
-            name="typeOfVisaId"
-            label={t['kymIndTypeofVisa']}
-            placeholder={t['kymIndEnterTypeofVisa']}
-            options={visaTypes}
-          />
-          <FormInput
-            bg="white"
-            control={control}
-            type="number"
-            textAlign={'right'}
-            name={`foreignEstimatedAnnualIncome`}
-            id="estimatedAnnualIncome"
-            label={t['kymIndEstimatedAnnualIncome']}
-            helperText={t['kymIndWriteStudentVISA']}
-            placeholder="0.00"
-          />
-        </FormSection> */}
+        </FormSection>
       </form>
     </FormProvider>
   );

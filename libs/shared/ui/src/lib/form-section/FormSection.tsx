@@ -9,6 +9,7 @@ export interface FormSectionProps {
   subHeader?: string;
   gridLayout?: boolean;
   flexLayout?: boolean;
+  divider?: boolean;
   templateColumns?: number;
   children?: React.ReactNode;
 }
@@ -19,12 +20,18 @@ export function FormSection({
   subHeader,
   gridLayout,
   flexLayout,
+  divider = true,
   templateColumns,
   children,
 }: FormSectionProps) {
   const { t } = useTranslation();
   return (
-    <Box scrollMarginTop={'200px'} id={id}>
+    <Box
+      borderBottom={divider ? '1px solid' : 'none'}
+      borderBottomColor={divider ? 'border.layout' : 'none'}
+      scrollMarginTop={'200px'}
+      id={id}
+    >
       {header && (
         <Box p="s20" pb={0}>
           <Text
@@ -48,7 +55,7 @@ export function FormSection({
           </Text>
         </Box>
       )}
-      <Box borderBottom={'1px solid'} borderBottomColor="border.layout" p="s20">
+      <Box p="s20">
         {gridLayout && (
           <Grid
             templateColumns={`repeat(${
@@ -61,7 +68,7 @@ export function FormSection({
           </Grid>
         )}
 
-        {flexLayout && <Box display="flex">{children}</Box>}
+        {flexLayout && <Box>{children}</Box>}
       </Box>
     </Box>
   );

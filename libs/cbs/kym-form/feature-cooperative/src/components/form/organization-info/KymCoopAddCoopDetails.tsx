@@ -37,6 +37,7 @@ export const KymCoopAddCoopDetails = (props: IProps) => {
         }}
       >
         <FormSection
+          gridLayout={true}
           id="kymCoopAccAdditionalCoorperativeDetails"
           header="kymCoopAdditionalCoorperativeDetails"
         >

@@ -159,6 +159,7 @@ export const MemberKYMAddress = ({
         }}
       >
         <FormSection
+          gridLayout={true}
           id="kymAccIndPermanentAddress"
           header="kymIndPermanentAddress"
         >
@@ -212,12 +213,8 @@ export const MemberKYMAddress = ({
           </GridItem>
         </FormSection>
 
-        {/* <FormSection
-          id="kymAccIndTemporaryAddress"
-          header="kymIndTemporaryAddress"
-        > */}
-
         <FormSection
+          gridLayout={true}
           id="kymAccIndTemporaryAddress"
           header="kymIndTemporaryAddress"
         >
@@ -313,6 +310,7 @@ export const MemberKYMAddress = ({
         {/* </FormSection> */}
 
         <FormSection
+          gridLayout={true}
           header="kymIndINCASERESIDINGINRENTEDHOUSE"
           id="kymAccIndIncaseofresidinginRentedHouse"
         >

@@ -102,8 +102,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -150,8 +149,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -189,8 +187,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -228,8 +225,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -266,8 +262,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>

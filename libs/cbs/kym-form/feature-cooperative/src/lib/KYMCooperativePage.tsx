@@ -126,15 +126,10 @@ export function KYMCooperativePage() {
               <Box p="s20" display="flex" gap="s16" alignItems="start">
                 <Checkbox fontSize="s3">{''}</Checkbox>
                 <TextFields variant="formInput" mt="-6px">
-                  I/We hereby confirm that the information provede by me/us in
-                  this form and documents provided to the Bank are true and
-                  corrent. I/We further confirm that I/We have read and
-                  understood to the Bank's terms and conditions governing
-                  account opening/operations and shall abide and be bound by
-                  present/future rules Nepal Rastra Bank, Himalayan Bank Limited
-                  and Laws of the country. In the event I/We fail to abide by
-                  the terms and conditions, I/We shall bear the damage and/or
-                  penalties resulting as a consequence thereof.
+                  I/We agree to the&nbsp;
+                  <TextFields as="span" variant="link">
+                    Terms and condition.
+                  </TextFields>
                 </TextFields>
               </Box>
             </Box>

@@ -167,6 +167,7 @@ export const KymCoopRepresentative = (props: IProps) => {
         }}
       >
         <FormSection
+          gridLayout={true}
           id="kymCoopAccRepresentative"
           header="kymCoopRepresentative"
         >
@@ -202,6 +203,7 @@ export const KymCoopRepresentative = (props: IProps) => {
         </FormSection>
 
         <FormSection
+          gridLayout={true}
           id="kymAccIndPermanentAddress"
           header="kymCoopRepresentativePermanentAddress"
         >
@@ -257,6 +259,7 @@ export const KymCoopRepresentative = (props: IProps) => {
         </FormSection>
 
         <FormSection
+          gridLayout={true}
           id="kymAccIndTemporaryAddress"
           header="kymCoopRepresentativeTemporaryAddress"
         >

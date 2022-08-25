@@ -6495,6 +6495,7 @@ export type MyraUserFormStateData = {
   profilePicture?: Maybe<Array<Maybe<Scalars['String']>>>;
   role?: Maybe<Roles>;
   temporaryAddress?: Maybe<KymAddress>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export type MyraUserFormStateResult = {

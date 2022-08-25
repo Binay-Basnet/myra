@@ -22,7 +22,14 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  FormSection,
+  GridItem,
+  Icon,
+  Text,
+} from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -283,29 +290,17 @@ export const MemberKYMIncomeSourceDetails = ({
   return (
     <Box>
       <FormProvider {...methods}>
-        <Text
-          p="s20"
-          pb="0"
-          fontSize="r1"
-          fontWeight="SemiBold"
-          color="neutralColorLight.Gray-80"
-        >
-          {t['kymIndINCOMESOURCEDETAILS']}
-        </Text>
         <form
           onFocus={(e) => {
             const kymSection = getKymSection(e.target.id);
             setKymCurrentSection(kymSection);
           }}
         >
-          <Box
-            p="s20"
-            gap="s32"
-            display="flex"
-            flexDirection="column"
+          <FormSection
+            gridLayout={true}
+            templateColumns={1}
+            header="kymIndINCOMESOURCEDETAILS"
             id="kymAccIndIncomeSourceDetails"
-            borderBottom={'1px solid'}
-            borderBottomColor="border.layout"
           >
             <FormRadioGroup
               id="annualIncomeSourceId"
@@ -346,7 +341,7 @@ export const MemberKYMIncomeSourceDetails = ({
                 </Button>
               </DynamicBoxGroupContainer>
             </Box>
-          </Box>
+          </FormSection>
         </form>
       </FormProvider>
     </Box>

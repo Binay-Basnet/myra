@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { Grid, GridItem } from '@chakra-ui/react';
+import { GridItem } from '@chakra-ui/react';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
@@ -32,6 +32,7 @@ export const KymAccountHolderDeclaration = (props: IProps) => {
           }}
         >
           <FormSection
+            gridLayout={true}
             id="kymCoopAccAccountHolderDeclaration"
             header="kymCoopAccountHolderDeclaration"
           >
@@ -61,13 +62,10 @@ const Documents = ({ setSection }: IDocProps) => {
   const id = String(router?.query?.['id']);
 
   return (
-    <Grid
-      borderBottom={'1px solid'}
-      borderBottomColor="border.layout"
-      p="s20"
-      templateColumns="repeat(2, 1fr)"
-      rowGap="s16"
-      columnGap="s20"
+    <FormSection
+      header="kymCoopDOCUMENTDECLARATION"
+      gridLayout={true}
+      templateColumns={2}
     >
       <GridItem>
         <Box w="124px">
@@ -93,6 +91,39 @@ const Documents = ({ setSection }: IDocProps) => {
           />
         </Box>
       </GridItem>
-    </Grid>
+    </FormSection>
+    // <Grid
+    //   borderBottom={'1px solid'}
+    //   borderBottomColor="border.layout"
+    //   p="s20"
+    //   templateColumns="repeat(2, 1fr)"
+    //   rowGap="s16"
+    //   columnGap="s20"
+    // >
+    //   <GridItem>
+    //     <Box w="124px">
+    //       <KYMDocumentField
+    //         mutationId={id}
+    //         size="md"
+    //         label={t['kymCoopSignature']}
+    //         name="accountHolderSignature"
+    //         getKymSection={getKymCoopSection}
+    //         setKymCurrentSection={setSection}
+    //       />
+    //     </Box>
+    //   </GridItem>
+    //   <GridItem>
+    //     <Box w="124px">
+    //       <KYMDocumentField
+    //         mutationId={id}
+    //         size="md"
+    //         label={t['kymCoopStamp']}
+    //         name="accountHolderStamp"
+    //         getKymSection={getKymCoopSection}
+    //         setKymCurrentSection={setSection}
+    //       />
+    //     </Box>
+    //   </GridItem>
+    // </Grid>
   );
 };

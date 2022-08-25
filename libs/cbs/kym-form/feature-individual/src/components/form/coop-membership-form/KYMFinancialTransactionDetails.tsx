@@ -78,6 +78,7 @@ export const KYMFinancialTransactionDetails = ({
         }}
       >
         <FormSection
+          gridLayout={true}
           id="kymAccIndFinancialTransactionDetails"
           header="kynIndFINANCIALTRANSACTIONDETAILS"
           subHeader="kynIndDetailsoftheamount"

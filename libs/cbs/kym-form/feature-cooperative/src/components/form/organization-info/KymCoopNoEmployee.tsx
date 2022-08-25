@@ -37,6 +37,7 @@ export const KymCoopNoEmployee = (props: IProps) => {
         }}
       >
         <FormSection
+          gridLayout={true}
           id="kymCoopAccNumberofEmployee"
           header="kymCoopNumberofEmployee"
         >

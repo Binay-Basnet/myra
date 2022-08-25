@@ -13,7 +13,10 @@ import {
   useGetCoOperativeDirectorEditDataQuery,
   useSetCooPdirectorDataMutation,
 } from '@coop/cbs/data-access';
-import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import {
+  DynamicBoxGroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Box,
@@ -230,7 +233,9 @@ export const AddDirector = ({
               }}
             >
               <Box display={'flex'} flexDirection="column" gap="s48">
-                <FormSection>
+                {/* <FormSection gridLayout={true}> */}
+                <InputGroupContainer>
+                  {' '}
                   <FormInput
                     id="boardDirectorCoop"
                     type="text"
@@ -245,9 +250,24 @@ export const AddDirector = ({
                     label={t['kymCoopDesignation']}
                     placeholder={t['kymCoopEnterDesignation']}
                   />
-                </FormSection>
+                </InputGroupContainer>
+                <FormInput
+                  id="boardDirectorCoop"
+                  type="text"
+                  name={`nameEn`}
+                  label={t['kymCoopFullName']}
+                  placeholder={t['kymCoopEnterFullName']}
+                />
+                <FormInput
+                  id="boardDirectorCoop"
+                  type="text"
+                  name={`designation`}
+                  label={t['kymCoopDesignation']}
+                  placeholder={t['kymCoopEnterDesignation']}
+                />
+                {/* </FormSection> */}
 
-                <FormSection header="kymCoopPermanentAddress">
+                <FormSection gridLayout={true} header="kymCoopPermanentAddress">
                   <FormSelect
                     id="boardDirectorCoop"
                     name={`permanentAddress.provinceId`}
@@ -301,7 +321,7 @@ export const AddDirector = ({
                   </GridItem>
                 </FormSection>
 
-                <FormSection header="kymCoopTemporaryAddress">
+                <FormSection gridLayout={true} header="kymCoopTemporaryAddress">
                   <GridItem colSpan={3}>
                     <FormSwitch
                       id="boardOfDirectorsDetails"
@@ -363,7 +383,7 @@ export const AddDirector = ({
                   )}
                 </FormSection>
 
-                <FormSection>
+                <FormSection gridLayout={true}>
                   <FormInput
                     id="boardDirectorCoop"
                     type="date"
