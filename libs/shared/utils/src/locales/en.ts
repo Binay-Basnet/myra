@@ -3222,6 +3222,11 @@ const en: Record<string, string> = {
   depositProductAccountCloseServiceCharge: 'Account Close Service Charge',
   depositProductIsThisForMinor: 'Is this a product for Minors ?',
   depositProductMinorAccount: 'Is this a Minor Account ? ',
+
+  // new translations
+
+  // AcountOpen
+  accinstallmentAmount: 'Installment Amount',
 };
 
 export default en;

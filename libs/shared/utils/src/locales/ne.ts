@@ -2828,6 +2828,8 @@ const ne: Record<string, string> = {
   depositProductMinorAccount: 'Is this a Minor Account ? ',
 
   // NEW TRANSLATIONS
+  // AcountOpen
+  accinstallmentAmount: 'Installment Amount',
 };
 
 export default ne;
