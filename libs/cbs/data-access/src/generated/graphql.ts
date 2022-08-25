@@ -1691,6 +1691,7 @@ export type DepositProductEdge = {
 };
 
 export type DepositProductFormStateData = {
+  accountCloseCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   accountType?: Maybe<Scalars['ID']>;
   allowLoan?: Maybe<Scalars['Boolean']>;
   alternativeChannels?: Maybe<Scalars['Boolean']>;
@@ -1702,6 +1703,7 @@ export type DepositProductFormStateData = {
   criteria?: Maybe<Array<Maybe<CriteriaSection>>>;
   depositAmount?: Maybe<AmountLimitFormState>;
   depositFrequency?: Maybe<Frequency>;
+  description?: Maybe<Scalars['String']>;
   dormantSetup?: Maybe<Array<Maybe<DormantSetupFormState>>>;
   educationQualification?: Maybe<Array<Maybe<Scalars['ID']>>>;
   ethnicity?: Maybe<Array<Maybe<Scalars['ID']>>>;
@@ -1710,6 +1712,7 @@ export type DepositProductFormStateData = {
   individualDocuments?: Maybe<Array<Maybe<IndividualRequiredDocument>>>;
   institutionDocuments?: Maybe<Array<Maybe<InstitutionRequiredDocument>>>;
   interest?: Maybe<InterestFormState>;
+  isForMinors?: Maybe<Scalars['Boolean']>;
   ladderRate?: Maybe<Scalars['Boolean']>;
   ladderRateData?: Maybe<Array<Maybe<LadderRateFormState>>>;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
@@ -1741,6 +1744,7 @@ export type DepositProductFormStateData = {
   supportMultiple?: Maybe<Scalars['Boolean']>;
   typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: Maybe<Scalars['Boolean']>;
+  withdrawPenalty?: Maybe<WithdrawPenaltyFormState>;
   withdrawRestricted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -1750,6 +1754,7 @@ export type DepositProductFormStateResult = {
 };
 
 export type DepositProductInput = {
+  accountCloseCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   accountType?: InputMaybe<Scalars['ID']>;
   allowLoan?: InputMaybe<Scalars['Boolean']>;
   alternativeChannels?: InputMaybe<Scalars['Boolean']>;
@@ -1761,6 +1766,7 @@ export type DepositProductInput = {
   criteria?: InputMaybe<Array<InputMaybe<CriteriaSection>>>;
   depositAmount?: InputMaybe<AmountLimit>;
   depositFrequency?: InputMaybe<Frequency>;
+  description?: InputMaybe<Scalars['String']>;
   dormantSetup?: InputMaybe<Array<InputMaybe<DormantSetup>>>;
   educationQualification?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   ethnicity?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -1773,6 +1779,7 @@ export type DepositProductInput = {
     Array<InputMaybe<InstitutionRequiredDocument>>
   >;
   interest: InterestRate;
+  isForMinors?: InputMaybe<Scalars['Boolean']>;
   ladderRate?: InputMaybe<Scalars['Boolean']>;
   ladderRateData?: InputMaybe<Array<InputMaybe<LadderRate>>>;
   maritalStatusId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -1804,6 +1811,7 @@ export type DepositProductInput = {
   supportMultiple?: InputMaybe<Scalars['Boolean']>;
   typeOfMember?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: InputMaybe<Scalars['Boolean']>;
+  withdrawPenalty?: InputMaybe<WithdrawPenalty>;
   withdrawRestricted?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -8091,6 +8099,18 @@ export enum WithdrawPaymentType {
   WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
+export type WithdrawPenalty = {
+  penaltyAmount?: InputMaybe<Scalars['Amount']>;
+  penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
+  penaltyRate?: InputMaybe<Scalars['Float']>;
+};
+
+export type WithdrawPenaltyFormState = {
+  penaltyAmount?: Maybe<Scalars['Amount']>;
+  penaltyLedgerMapping?: Maybe<Scalars['String']>;
+  penaltyRate?: Maybe<Scalars['Float']>;
+};
+
 export type WithdrawResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
@@ -12276,6 +12296,64 @@ export type GetSettingsUserListDataQuery = {
           } | null;
         }> | null;
         pageInfo: PaginationFragment;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsUserEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSettingsUserEditDataQuery = {
+  settings: {
+    myraUser?: {
+      formState?: {
+        data?: {
+          name?: string | null;
+          email?: string | null;
+          contactNo?: string | null;
+          gender?: UserGender | null;
+          dob?: string | null;
+          role?: Roles | null;
+          branch?: string | null;
+          identificationSelection?: Array<string | null> | null;
+          isTempAsPermanentAddressSame?: boolean | null;
+          landlordName?: string | null;
+          landlordContact?: string | null;
+          profilePicture?: Array<string | null> | null;
+          identificationDetails?: Array<{
+            id?: string | null;
+            idNo?: string | null;
+            idType?: string | null;
+            place?: string | null;
+            date?: string | null;
+          } | null> | null;
+          permanentAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: {
+              longitude?: number | null;
+              latitude?: number | null;
+            } | null;
+          } | null;
+          temporaryAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: {
+              longitude?: number | null;
+              latitude?: number | null;
+            } | null;
+          } | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -19109,6 +19187,76 @@ export const useGetSettingsUserListDataQuery = <
       GetSettingsUserListDataQuery,
       GetSettingsUserListDataQueryVariables
     >(GetSettingsUserListDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsUserEditDataDocument = `
+    query getSettingsUserEditData($id: ID!) {
+  settings {
+    myraUser {
+      formState(id: $id) {
+        data {
+          name
+          email
+          contactNo
+          gender
+          dob
+          role
+          branch
+          identificationSelection
+          identificationDetails {
+            id
+            idNo
+            idType
+            place
+            date
+          }
+          permanentAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isTempAsPermanentAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          landlordName
+          landlordContact
+          profilePicture
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsUserEditDataQuery = <
+  TData = GetSettingsUserEditDataQuery,
+  TError = unknown
+>(
+  variables: GetSettingsUserEditDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsUserEditDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsUserEditDataQuery, TError, TData>(
+    ['getSettingsUserEditData', variables],
+    useAxios<
+      GetSettingsUserEditDataQuery,
+      GetSettingsUserEditDataQueryVariables
+    >(GetSettingsUserEditDataDocument).bind(null, variables),
     options
   );
 export const GetChartOfAccountsDocument = `

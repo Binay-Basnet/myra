@@ -14,23 +14,23 @@ const tabList: TabList[] = [
   },
   {
     title: 'settingsUserSidebarBranchManager',
-    to: '/settings/general/service-center',
+    to: '/settings/users/service-center-manager',
   },
   {
     title: 'settingsUserSidebarAgent',
-    to: '/settings/general/charts-of-accounts',
+    to: '/settings/users/agent',
   },
   {
     title: 'settingsUserSidebarOtherUsers',
-    to: '/settings/general/members',
+    to: '/settings/users/other-users',
   },
   {
     title: 'settingsUserSidebarRoleReferences',
-    to: '/settings/general/share',
+    to: '/settings/users/role-references',
   },
   {
     title: 'settingsUserSidebarInvitation',
-    to: '/settings/general/deposit/tds',
+    to: '/settings/users/invitation',
   },
 ];
 

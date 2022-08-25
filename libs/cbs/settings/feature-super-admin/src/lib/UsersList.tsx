@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
-import { PopoverComponent } from '@coop/myra/components';
+import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -21,15 +22,18 @@ export function UsersList() {
 
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState<boolean>(false);
 
-  // const router = useRouter();
+  const router = useRouter();
 
-  const { data: userListQueryData, isLoading: isFetching } =
-    useGetSettingsUserListDataQuery(
-      {
-        paginate: getRouterQuery({ type: ['PAGINATION'] }),
-      },
-      { staleTime: 0 }
-    );
+  const {
+    data: userListQueryData,
+    isLoading: isFetching,
+    refetch: refetchUserList,
+  } = useGetSettingsUserListDataQuery(
+    {
+      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    { staleTime: 0 }
+  );
 
   const rowData = useMemo(
     () => userListQueryData?.settings?.myraUser?.list?.edges ?? [],
@@ -92,7 +96,23 @@ export function UsersList() {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: () => <PopoverComponent items={[]} />,
+
+        cell: (props) => (
+          <ActionPopoverComponent
+            id={props?.row?.original?.node?.id as string}
+            items={[
+              {
+                title: 'settingsUserUserListEdit',
+                onClick: () => {
+                  router.push(
+                    `/settings/users/super-admin/edit/${props?.row?.original?.node?.id}`
+                  );
+                },
+              },
+            ]}
+          />
+        ),
+
         meta: {
           width: '60px',
         },
@@ -141,6 +161,7 @@ export function UsersList() {
       <NewUserModal
         isOpen={isAddUserModalOpen}
         onClose={handleAddUserModalClose}
+        refetchUserList={refetchUserList}
       />
     </>
   );
