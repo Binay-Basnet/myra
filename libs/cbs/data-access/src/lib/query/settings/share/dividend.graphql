@@ -4,6 +4,28 @@ query getSettingsShareDividendData {
       share {
         dividend {
           distributionCondition
+          dividendRate {
+            quarterly {
+              firstQuarter
+              secondQuarter
+              thirdQuarter
+              fourthQuarter
+            }
+            monthly {
+              firstMonth
+              secondMonth
+              thirdMonth
+              fourthMonth
+              fifthMonth
+              sixthMonth
+              seventhMonth
+              eightMonth
+              ninthMonth
+              tenthMonth
+              eleventhMonth
+              twelfthMonth
+            }
+          }
           dividendTransferTreatment
           accountForFractionalDividends
           accountForShareDividends

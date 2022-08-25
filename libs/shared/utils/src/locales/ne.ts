@@ -1523,6 +1523,8 @@ const ne: Record<string, string> = {
   share2ndQuarter: '2nd Quarter',
   share3rdQuarter: '3rd Quarter',
   share4thQuarter: '4th Quarter',
+  shareDividendSettingsDailyInput:
+    'Interest is calculated daily and dividend is calculated based on the Interest.',
 
   shareDividentTransferTreatment: 'Dividend Transfer Treatment',
   shareDividentTransferTreatmentSubtitle:
@@ -1530,6 +1532,18 @@ const ne: Record<string, string> = {
   shareDividentTransferTreatmentShareAndAccount: 'Share And Account',
   shareDividentTransferTreatmentAccountTransfer: 'Account Transfer',
   shareDividentTransferTreatmentBookPayable: 'Book Payable',
+  firstMonth: 'Janaury',
+  secondMonth: 'February',
+  thirdMonth: 'March',
+  fourthMonth: 'April',
+  fifthMonth: 'May',
+  sixthMonth: 'June',
+  seventhMonth: 'July',
+  eightMonth: 'August',
+  ninthMonth: 'September',
+  tenthMonth: 'October',
+  eleventhMonth: 'November',
+  twelfthMonth: 'December',
 
   shareAndAccount: 'Share And Account',
   shareAndAccountSubtitle:
