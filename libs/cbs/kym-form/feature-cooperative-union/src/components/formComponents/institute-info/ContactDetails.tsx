@@ -21,7 +21,8 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  useCooperativeUnionInstitution({ methods });
+  const { sectionStatus } = useCooperativeUnionInstitution({ methods });
+  const sectionErrors = sectionStatus?.errors[0]?.errors;
 
   return (
     <FormProvider {...methods}>
@@ -48,6 +49,7 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
               name="phone"
               label={t['kymCoopUnionPhone']}
               placeholder={t['kymCoopUnionEnterPhoneNumber']}
+              errorText={sectionErrors?.['phone'] && sectionErrors['phone'][0]}
             />
 
             <FormInput
@@ -55,12 +57,17 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
               name="fax"
               label={t['kymCoopUnionFax']}
               placeholder={t['kymCoopUnionEnterFax']}
+              errorText={sectionErrors?.['fax'] && sectionErrors['fax'][0]}
             />
 
             <FormEmailInput
               name="contactEmail"
               label={t['kymCoopUnionEmail']}
               placeholder={t['kymCoopUnionEnterEmailAddress']}
+              errorText={
+                sectionErrors?.['contactEmail'] &&
+                sectionErrors['contactEmail'][0]
+              }
             />
 
             <FormInput
@@ -68,6 +75,9 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
               name="website"
               label={t['kymCoopUnionWebsiteLinkAny']}
               placeholder={t['kymCoopUnionEnterWebsiteURL']}
+              errorText={
+                sectionErrors?.['website'] && sectionErrors['website'][0]
+              }
             />
 
             <FormInput
@@ -75,6 +85,9 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
               name="postBoxNo"
               label={t['kymCoopUnionPostBoxNo']}
               placeholder={t['kymCoopUnionEnterPostBoxNo']}
+              errorText={
+                sectionErrors?.['postBoxNo'] && sectionErrors['postBoxNo'][0]
+              }
             />
             <Box></Box>
             <Box mt="44px">
@@ -83,6 +96,10 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
                 name="noOfEmployee"
                 label={t['kymCoopUnionNumberOfEmployees']}
                 placeholder={t['kymCoopUnionEnterNumberOfEmployees']}
+                errorText={
+                  sectionErrors?.['noOfEmployee'] &&
+                  sectionErrors['noOfEmployee'][0]
+                }
               />
             </Box>
             <Box mt="44px">
@@ -91,6 +108,10 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
                 name="lastAgmDate"
                 label={t['kymCoopUnionAGMDetailsDate']}
                 placeholder="DD-MM-YYYY"
+                errorText={
+                  sectionErrors?.['lastAgmDate'] &&
+                  sectionErrors['lastAgmDate'][0]
+                }
               />
             </Box>
           </InputGroupContainer>
