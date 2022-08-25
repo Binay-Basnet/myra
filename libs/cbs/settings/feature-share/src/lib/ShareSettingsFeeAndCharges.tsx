@@ -3,11 +3,12 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import {
+  ShareChargeType,
   useGetSettingsShareFeesAndChargesDataQuery,
   useSetSettingsShareFeeAndChargesMutation,
 } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, Text } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, Text, toast } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
@@ -30,11 +31,11 @@ type OtherChargeTable = {
 const type = [
   {
     label: 'Fixed Amount',
-    value: 'fixedAmount',
+    value: ShareChargeType?.FixedAmount,
   },
   {
-    label: 'Share Amount',
-    value: 'shareAmount',
+    label: 'Percentage',
+    value: ShareChargeType?.Percentage,
   },
 ];
 
@@ -58,12 +59,12 @@ export const ShareSettingsFeeAndCharges = () => {
     const values = getValues();
 
     asyncToast({
-      id: 'share-settings-bonus-id',
+      id: 'share-settings-fees-id',
       msgs: {
         success: 'Saved',
         loading: 'Saving Changes ',
       },
-      onSuccess: () => router.push('/share/register'),
+      onSuccess: () => router.push('/settings/general/share/fee-and-charges'),
       promise: mutateAsync(
         {
           data: {
@@ -72,6 +73,14 @@ export const ShareSettingsFeeAndCharges = () => {
         },
         { onSuccess: () => refetch() }
       ),
+    });
+  };
+  const handleDiscard = () => {
+    router.reload();
+    toast({
+      message: 'Changes have been discarded',
+      id: 'Discard-settings-shareFees',
+      type: 'info',
     });
   };
 
@@ -111,10 +120,14 @@ export const ShareSettingsFeeAndCharges = () => {
                     {
                       accessor: 'minShare',
                       header: t['shareSettingsFeesMinQuantity'],
+                      isNumeric: true,
+                      fieldType: 'number',
                     },
                     {
                       accessor: 'maxShare',
                       header: t['shareSettingsFeesMaxQuantity'],
+                      isNumeric: true,
+                      fieldType: 'number',
                     },
                     {
                       accessor: 'charge',
@@ -158,10 +171,14 @@ export const ShareSettingsFeeAndCharges = () => {
                     {
                       accessor: 'minShare',
                       header: t['shareSettingsFeesMinQuantity'],
+                      isNumeric: true,
+                      fieldType: 'number',
                     },
                     {
                       accessor: 'maxShare',
                       header: t['shareSettingsFeesMaxQuantity'],
+                      isNumeric: true,
+                      fieldType: 'number',
                     },
                     {
                       accessor: 'charge',
@@ -174,7 +191,10 @@ export const ShareSettingsFeeAndCharges = () => {
             </Box>
           </Box>
         </Box>
-        <SettingsFooter handleSave={handleSubmit} />
+        <SettingsFooter
+          handleSave={handleSubmit}
+          handleDiscard={handleDiscard}
+        />
       </form>
     </FormProvider>
   );

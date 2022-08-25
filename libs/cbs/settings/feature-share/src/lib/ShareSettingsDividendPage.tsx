@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { IoInformationCircle } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import { Box } from '@chakra-ui/react';
 
 import {
   DividendDistributionCondition,
@@ -10,12 +10,75 @@ import {
   useGetSettingsShareDividendDataQuery,
   useSetSettingsShareDividendMutation,
 } from '@coop/cbs/data-access';
-import { FormRadioGroup, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { asyncToast, Input, SettingsFooter, Text } from '@coop/shared/ui';
+import {
+  FormInput,
+  FormRadioGroup,
+  FormSelect,
+  FormSwitchTab,
+} from '@coop/shared/form';
+import {
+  asyncToast,
+  Box,
+  Icon,
+  SettingsFooter,
+  Text,
+  toast,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
+
+const months = [
+  {
+    label: 'firstMonth',
+    name: 'firstMonth',
+  },
+  {
+    label: 'firstMonth',
+    name: 'secondMonth',
+  },
+  {
+    label: 'thirdMonth',
+    name: 'thirdMonth',
+  },
+  {
+    label: 'fourthMonth',
+    name: 'fourthMonth',
+  },
+  {
+    label: 'fifthMonth',
+    name: 'fifthMonth',
+  },
+  {
+    label: 'sixthMonth',
+    name: 'sixthMonth',
+  },
+  {
+    label: 'seventhMonth',
+    name: 'seventhMonth',
+  },
+  {
+    label: 'eightMonth',
+    name: 'eightMonth',
+  },
+  {
+    label: 'ninthMonth',
+    name: 'ninthMonth',
+  },
+  {
+    label: 'tenthMonth',
+    name: 'tenthMonth',
+  },
+  {
+    label: 'eleventhMonth',
+    name: 'eleventhMonth',
+  },
+  {
+    label: 'twelfthMonth',
+    name: 'twelfthMonth',
+  },
+];
 
 export const ShareSettingsDividendPage = () => {
   const { t } = useTranslation();
@@ -40,12 +103,12 @@ export const ShareSettingsDividendPage = () => {
   const handleSubmit = () => {
     const values = getValues();
     asyncToast({
-      id: 'share-settings-bonus-id',
+      id: 'share-settings-dividend-id',
       msgs: {
         success: 'Saved',
         loading: 'Saving Changes ',
       },
-      onSuccess: () => router.push('/share/register'),
+      onSuccess: () => router.push('/settings/general/share/dividend'),
       promise: mutateAsync(
         {
           data: {
@@ -56,7 +119,18 @@ export const ShareSettingsDividendPage = () => {
       ),
     });
   };
+  const handleDiscard = () => {
+    router.reload();
+    toast({
+      message: 'Changes have been discarded',
+      id: 'Discard-settings-sharedividend',
+      type: 'info',
+    });
+  };
+
   const dividentTransferTreatment = watch('dividendTransferTreatment');
+  const distributionCond = watch('distributionCondition');
+  watch('dividendRate.quarterly.fourthQuarter');
 
   return (
     <FormProvider {...methods}>
@@ -86,58 +160,125 @@ export const ShareSettingsDividendPage = () => {
                   },
                 ]}
               />
-              <Box
-                width="100%"
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Text fontSize="r1" color="gray.800">
-                  {t['share1stQuarter']}
-                </Text>
-                <Box w="33%">
-                  <Input size="sm" placeholder="100%" />
+              {distributionCond === DividendDistributionCondition?.Daily && (
+                <Box
+                  bg="info.0"
+                  display={'flex'}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent={'flex-start'}
+                  borderRadius="br2"
+                  gap="s16"
+                  p="s16"
+                >
+                  <Icon as={IoInformationCircle} color="info.900" />
+                  <Text fontWeight={'500'} fontSize="r1" color={'info.900'}>
+                    {t['shareDividendSettingsDailyInput']}
+                  </Text>
                 </Box>
-              </Box>
-              <Box
-                width="100%"
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Text fontSize="r1" color="gray.800">
-                  {t['share2ndQuarter']}
-                </Text>
-                <Box w="33%">
-                  <Input size="sm" placeholder="100%" />
+              )}
+              {distributionCond ===
+                DividendDistributionCondition?.Quarterly && (
+                <>
+                  {' '}
+                  <Box
+                    width="100%"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Text fontSize="r1" color="gray.800">
+                      {t['share1stQuarter']}
+                    </Text>
+                    <Box w="33%">
+                      <FormInput
+                        name="dividendRate.quarterly.firstQuarter"
+                        size="sm"
+                        placeholder="100%"
+                      />
+                    </Box>
+                  </Box>
+                  <Box
+                    width="100%"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Text fontSize="r1" color="gray.800">
+                      {t['share2ndQuarter']}
+                    </Text>
+                    <Box w="33%">
+                      <FormInput
+                        name="dividendRate.quarterly.secondQuarter"
+                        size="sm"
+                        placeholder="100%"
+                      />
+                    </Box>
+                  </Box>
+                  <Box
+                    width="100%"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Text fontSize="r1" color="gray.800">
+                      {t['share3rdQuarter']}
+                    </Text>
+                    <Box w="33%">
+                      <FormInput
+                        name="dividendRate.quarterly.thirdQuarter"
+                        size="sm"
+                        placeholder="100%"
+                      />
+                    </Box>
+                  </Box>
+                  <Box
+                    width="100%"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Text fontSize="r1" color="gray.800">
+                      {t['share4thQuarter']}
+                    </Text>
+                    <Box w="33%">
+                      <FormInput
+                        name="dividendRate.quarterly.fourthQuarter"
+                        size="sm"
+                        placeholder="100%"
+                      />
+                    </Box>
+                  </Box>
+                </>
+              )}
+              {distributionCond === DividendDistributionCondition?.Monthly && (
+                <Box display={'flex'} flexDirection="column" gap="s16">
+                  {months.map(({ label, name }) => {
+                    return (
+                      <Box
+                        display={'flex'}
+                        flexDir="row"
+                        alignItems={'center'}
+                        justifyContent={'space-between'}
+                        key={name}
+                        gap="s8"
+                      >
+                        <Text fontWeight={'400'} fontSize="r1">
+                          {t[label]}
+                        </Text>
+                        <Box w="20%">
+                          <FormInput
+                            name={`dividendRate.monthly.${name}`}
+                            size="sm"
+                            type="number"
+                            placeholder="100%"
+                          />
+                        </Box>
+                      </Box>
+                    );
+                  })}
                 </Box>
-              </Box>
-              <Box
-                width="100%"
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Text fontSize="r1" color="gray.800">
-                  {t['share3rdQuarter']}
-                </Text>
-                <Box w="33%">
-                  <Input size="sm" placeholder="100%" />
-                </Box>
-              </Box>
-              <Box
-                width="100%"
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Text fontSize="r1" color="gray.800">
-                  {t['share4thQuarter']}
-                </Text>
-                <Box w="33%">
-                  <Input size="sm" placeholder="100%" />
-                </Box>
-              </Box>
+              )}
             </Box>
           </ShareSettingsCard>
           <ShareSettingsCard
@@ -226,7 +367,10 @@ export const ShareSettingsDividendPage = () => {
             </ShareSettingsCard>
           ) : null}
         </Box>
-        <SettingsFooter handleSave={handleSubmit} />
+        <SettingsFooter
+          handleSave={handleSubmit}
+          handleDiscard={handleDiscard}
+        />
       </form>
     </FormProvider>
   );

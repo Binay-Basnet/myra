@@ -25,30 +25,30 @@ const getInstiutionData = (
   }
 
   const editValueData =
-    data?.members?.cooperativeUnion?.formState?.formData
-      ?.institutionInformation;
+    data?.members?.cooperativeUnion?.formState?.formData?.institutionInformation
+      ?.data;
 
   return {
     ...editValueData,
     regdAddress: {
-      ...editValueData?.data?.regdAddress,
-      locality: editValueData?.data?.regdAddress?.locality?.local,
+      ...editValueData?.regdAddress,
+      locality: editValueData?.regdAddress?.locality?.local,
     },
     operatingOfficeAddress: {
-      ...editValueData?.data?.operatingOfficeAddress,
-      locality: editValueData?.data?.operatingOfficeAddress?.locality?.local,
+      ...editValueData?.operatingOfficeAddress,
+      locality: editValueData?.operatingOfficeAddress?.locality?.local,
     },
     branchOfficeAddress: {
-      ...editValueData?.data?.branchOfficeAddress,
-      locality: editValueData?.data?.branchOfficeAddress?.locality?.local,
+      ...editValueData?.branchOfficeAddress,
+      locality: editValueData?.branchOfficeAddress?.locality?.local,
     },
     applicantPermanentAddress: {
-      ...editValueData?.data?.applicantPermanentAddress,
-      locality: editValueData?.data?.applicantPermanentAddress?.locality?.local,
+      ...editValueData?.applicantPermanentAddress,
+      locality: editValueData?.applicantPermanentAddress?.locality?.local,
     },
     applicantTemporaryAddress: {
-      ...editValueData?.data?.applicantTemporaryAddress,
-      locality: editValueData?.data?.applicantTemporaryAddress?.locality?.local,
+      ...editValueData?.applicantTemporaryAddress,
+      locality: editValueData?.applicantTemporaryAddress?.locality?.local,
     },
   };
 };

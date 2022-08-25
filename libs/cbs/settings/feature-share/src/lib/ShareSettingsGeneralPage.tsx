@@ -9,7 +9,7 @@ import {
   useSetSettingsShareGeneralMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckbox, FormCheckboxGroup, FormInput } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, Text } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, Text, toast } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -58,12 +58,12 @@ export const ShareSettingsGeneralPage = () => {
     const values = getValues();
     const typeValue = typeWatch ? TypeOfShare?.PaidUp : null;
     asyncToast({
-      id: 'share-settings-bonus-id',
+      id: 'share-settings-general-id',
       msgs: {
         success: 'Saved',
         loading: 'Saving Changes ',
       },
-      onSuccess: () => router.push('/share/register'),
+      onSuccess: () => router.push('/settings/general/share'),
       promise: mutateAsync(
         {
           data: {
@@ -73,6 +73,14 @@ export const ShareSettingsGeneralPage = () => {
         },
         { onSuccess: () => refetch() }
       ),
+    });
+  };
+  const handleDiscard = () => {
+    router.reload();
+    toast({
+      message: 'Changes have been discarded',
+      id: 'Discard-settings-Sharegeneral',
+      type: 'info',
     });
   };
 
@@ -311,7 +319,10 @@ export const ShareSettingsGeneralPage = () => {
             </Box>
           </ShareSettingsCard>
         </Box>
-        <SettingsFooter handleSave={handleSubmit} />
+        <SettingsFooter
+          handleSave={handleSubmit}
+          handleDiscard={handleDiscard}
+        />
       </form>
     </FormProvider>
   );

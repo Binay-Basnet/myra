@@ -244,6 +244,20 @@ export const DepositFrequency = () => {
               </Box>
             </Box>
           )}
+          <Box
+            display="grid"
+            mt="s16"
+            gridTemplateColumns="repeat(3, 1fr)"
+            gap="s16"
+          >
+            <FormInput
+              name="installmentAmount"
+              label={t['accinstallmentAmount']}
+              placeholder={'0.00'}
+              type="text"
+              textAlign={'right'}
+            />
+          </Box>
         </Box>
       </GroupContainer>
     )

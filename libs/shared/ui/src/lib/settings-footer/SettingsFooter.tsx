@@ -20,7 +20,9 @@ export function SettingsFooter(props: SettingsFooterProps) {
       borderColor="gray.100"
       w="calc(100vw - 570px)"
       justifyContent="flex-end"
+      bg="white"
       gap={2}
+      zIndex="12"
     >
       <Button variant="ghost" onClick={handleDiscard}>
         Discard Changes

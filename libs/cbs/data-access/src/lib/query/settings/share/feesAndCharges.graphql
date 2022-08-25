@@ -10,6 +10,7 @@ query getSettingsShareFeesAndChargesData {
             charge
           }
           other {
+            name
             minShare
             maxShare
             type

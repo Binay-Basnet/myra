@@ -49,7 +49,7 @@ export function Toast({
             color="white"
           />
         )}
-        <Text fontSize="r2" color="white" fontWeight="400">
+        <Text fontSize="r2" color="white" fontWeight="400" noOfLines={1}>
           {message}
         </Text>
       </Box>
@@ -78,7 +78,7 @@ export const Toaster = () => {
         inset: '48px',
       }}
       toastOptions={{
-        duration: 6000,
+        duration: 2000,
       }}
     />
   );

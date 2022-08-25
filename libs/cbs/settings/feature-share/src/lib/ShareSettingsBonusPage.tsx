@@ -8,7 +8,7 @@ import {
   useSetSettingsShareBonusMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, toast } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -50,7 +50,7 @@ export const ShareSettingsBonusPage = () => {
         success: 'Saved',
         loading: 'Saving Changes ',
       },
-      onSuccess: () => router.push('/share/register'),
+      onSuccess: () => router.push('/settings/general/share/bonus'),
       promise: mutateAsync(
         {
           data: {
@@ -62,6 +62,14 @@ export const ShareSettingsBonusPage = () => {
         },
         { onSuccess: () => refetch() }
       ),
+    });
+  };
+  const handleDiscard = () => {
+    router.reload();
+    toast({
+      message: 'Changes have been discarded',
+      id: 'Discard-settings-shareBonus',
+      type: 'info',
     });
   };
 
@@ -112,7 +120,10 @@ export const ShareSettingsBonusPage = () => {
               </Box>
             </ShareSettingsCard>
           </Box>
-          <SettingsFooter handleSave={handleSubmit} />
+          <SettingsFooter
+            handleSave={handleSubmit}
+            handleDiscard={handleDiscard}
+          />
         </form>
       </FormProvider>
     </>

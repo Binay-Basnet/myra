@@ -10074,6 +10074,17 @@ export type GetCooperativeUnionKymEditDataQuery = {
                 } | null;
               } | null;
             } | null;
+            sectionStatus?: {
+              id?: string | null;
+              errors?: Array<{
+                sectionName?: string | null;
+                errors?: Record<string, Array<string>> | null;
+              } | null> | null;
+              incomplete?: Array<{
+                sectionName?: string | null;
+                incomplete?: Array<string | null> | null;
+              } | null> | null;
+            } | null;
           } | null;
         } | null;
       } | null;
@@ -10131,6 +10142,17 @@ export type GetEconimicDetailsEditDataQuery = {
               financialCost?: number | null;
               riskManagementCost?: number | null;
               deferredTaxExpense?: number | null;
+            } | null;
+            sectionStatus?: {
+              id?: string | null;
+              errors?: Array<{
+                sectionName?: string | null;
+                errors?: Record<string, Array<string>> | null;
+              } | null> | null;
+              incomplete?: Array<{
+                sectionName?: string | null;
+                incomplete?: Array<string | null> | null;
+              } | null> | null;
             } | null;
           } | null;
         } | null;
@@ -10195,6 +10217,17 @@ export type GetBoardOfDirectorsDetailsListQuery = {
                 } | null> | null;
               } | null> | null;
             } | null;
+            sectionStatus?: Array<{
+              id?: string | null;
+              errors?: Array<{
+                sectionName?: string | null;
+                errors?: Record<string, Array<string>> | null;
+              } | null> | null;
+              incomplete?: Array<{
+                sectionName?: string | null;
+                incomplete?: Array<string | null> | null;
+              } | null> | null;
+            } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -10258,6 +10291,17 @@ export type GetAccountOperatorDetailsListQuery = {
                 } | null> | null;
               } | null> | null;
             } | null;
+            sectionStatus?: Array<{
+              id?: string | null;
+              errors?: Array<{
+                sectionName?: string | null;
+                errors?: Record<string, Array<string>> | null;
+              } | null> | null;
+              incomplete?: Array<{
+                sectionName?: string | null;
+                incomplete?: Array<string | null> | null;
+              } | null> | null;
+            } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -10319,6 +10363,17 @@ export type GetCentralRepresentativeDetailsQuery = {
                 subjectOfTraining?: string | null;
                 dateOfTraining?: string | null;
                 trainingOrganization?: string | null;
+              } | null> | null;
+            } | null;
+            sectionStatus?: {
+              id?: string | null;
+              errors?: Array<{
+                sectionName?: string | null;
+                errors?: Record<string, Array<string>> | null;
+              } | null> | null;
+              incomplete?: Array<{
+                sectionName?: string | null;
+                incomplete?: Array<string | null> | null;
               } | null> | null;
             } | null;
           } | null;
@@ -12092,6 +12147,28 @@ export type GetSettingsShareDividendDataQuery = {
           accountForFractionalDividends?: string | null;
           accountForShareDividends?: string | null;
           organizationFundForDividends?: string | null;
+          dividendRate?: {
+            quarterly?: {
+              firstQuarter?: number | null;
+              secondQuarter?: number | null;
+              thirdQuarter?: number | null;
+              fourthQuarter?: number | null;
+            } | null;
+            monthly?: {
+              firstMonth?: number | null;
+              secondMonth?: number | null;
+              thirdMonth?: number | null;
+              fourthMonth?: number | null;
+              fifthMonth?: number | null;
+              sixthMonth?: number | null;
+              seventhMonth?: number | null;
+              eightMonth?: number | null;
+              ninthMonth?: number | null;
+              tenthMonth?: number | null;
+              eleventhMonth?: number | null;
+              twelfthMonth?: number | null;
+            } | null;
+          } | null;
         } | null;
       } | null;
     } | null;
@@ -12114,6 +12191,7 @@ export type GetSettingsShareFeesAndChargesDataQuery = {
             charge?: number | null;
           } | null> | null;
           other?: Array<{
+            name?: string | null;
             minShare?: number | null;
             maxShare?: number | null;
             type?: ShareChargeType | null;
@@ -15959,6 +16037,17 @@ export const GetCooperativeUnionKymEditDataDocument = `
               noOfInstitutionalMemberCurrent
               noOfInstitutionalMemberTarget
             }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
+              }
+            }
           }
         }
       }
@@ -16028,6 +16117,17 @@ export const GetEconimicDetailsEditDataDocument = `
               financialCost
               riskManagementCost
               deferredTaxExpense
+            }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
+              }
             }
           }
         }
@@ -16102,6 +16202,17 @@ export const GetBoardOfDirectorsDetailsListDocument = `
                   trainingOrganization
                 }
                 panNo
+              }
+            }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
               }
             }
           }
@@ -16179,6 +16290,17 @@ export const GetAccountOperatorDetailsListDocument = `
                 panNo
               }
             }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
+              }
+            }
           }
         }
       }
@@ -16253,6 +16375,17 @@ export const GetCentralRepresentativeDetailsDocument = `
               panNo
               notAmongDirectors
               centralRepID
+            }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
+              }
             }
           }
         }
@@ -18760,6 +18893,28 @@ export const GetSettingsShareDividendDataDocument = `
       share {
         dividend {
           distributionCondition
+          dividendRate {
+            quarterly {
+              firstQuarter
+              secondQuarter
+              thirdQuarter
+              fourthQuarter
+            }
+            monthly {
+              firstMonth
+              secondMonth
+              thirdMonth
+              fourthMonth
+              fifthMonth
+              sixthMonth
+              seventhMonth
+              eightMonth
+              ninthMonth
+              tenthMonth
+              eleventhMonth
+              twelfthMonth
+            }
+          }
           dividendTransferTreatment
           accountForFractionalDividends
           accountForShareDividends
@@ -18800,6 +18955,7 @@ export const GetSettingsShareFeesAndChargesDataDocument = `
             charge
           }
           other {
+            name
             minShare
             maxShare
             type
