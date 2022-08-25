@@ -79,6 +79,7 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
 
   return (
     <FormSection
+      gridLayout={true}
       id="kymCoopAccBoardOfDirectorDetails"
       header="kymCoopBoardofdirectordetails"
     >

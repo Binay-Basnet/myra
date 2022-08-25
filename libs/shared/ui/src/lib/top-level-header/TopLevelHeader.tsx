@@ -4,9 +4,9 @@ import { BiBell } from 'react-icons/bi';
 import { BsArrowRight } from 'react-icons/bs';
 import { CgMenuGridO } from 'react-icons/cg';
 import { RiHistoryFill } from 'react-icons/ri';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Image, Text } from '@chakra-ui/react';
 import { format } from 'date-fns';
 
 import { useAppDispatch } from '@coop/cbs/data-access';
@@ -26,6 +26,7 @@ import {
   Select,
   ShortcutTab,
   SwitchTabs,
+  Text,
   TextFields,
 } from '@coop/shared/ui';
 import { logout, useTranslation } from '@coop/shared/utils';
@@ -165,7 +166,7 @@ export function TopLevelHeader() {
             cursor={'pointer'}
             _hover={{ backgroundColor: 'secondary.900' }}
           >
-            <Image boxSize={'32px'} src={'/neosystest.png'} alt="logo" />
+            <Image height={32} width={32} src={'/neosystest.png'} alt="logo" />
 
             <Box
               maxH="100%"
@@ -362,8 +363,8 @@ export function TopLevelHeader() {
                           onClick={() => router.push('/members/list')}
                         >
                           <Image
-                            width={12}
-                            height={12}
+                            width={48}
+                            height={48}
                             src="/cbs.svg"
                             alt="Core Banking System"
                           />
@@ -390,8 +391,8 @@ export function TopLevelHeader() {
                           onClick={() => router.push('/inventory/register')}
                         >
                           <Image
-                            width={12}
-                            height={12}
+                            width={48}
+                            height={48}
                             src="/inventory.svg"
                             alt="Inventory System"
                           />
@@ -418,8 +419,8 @@ export function TopLevelHeader() {
                           onClick={() => router.push('/loan')}
                         >
                           <Image
-                            w={12}
-                            h={12}
+                            height={48}
+                            width={48}
                             src="/memberandshare.svg"
                             alt="Fixed Asset Management"
                           />
@@ -448,8 +449,8 @@ export function TopLevelHeader() {
                           onClick={() => router.push('/accounting/sales/list')}
                         >
                           <Image
-                            width={12}
-                            height={12}
+                            width={48}
+                            height={48}
                             src="/accounting.svg"
                             alt="Accounting System"
                           />
@@ -481,8 +482,8 @@ export function TopLevelHeader() {
                             }
                           >
                             <Image
-                              width={12}
-                              height={12}
+                              width={48}
+                              height={48}
                               src="/settings.svg"
                               alt="Settings"
                             />
@@ -589,7 +590,7 @@ export function TopLevelHeader() {
                             <Text
                               fontWeight="Regular"
                               fontSize="s2"
-                              color="gray.500"
+                              color="gray.600"
                             >
                               Teller
                             </Text>
@@ -697,6 +698,7 @@ export function TopLevelHeader() {
                           <Box
                             _hover={{
                               bg: 'background.500',
+                              borderRadius: 'br2',
                             }}
                             h="40px"
                             px="s16"

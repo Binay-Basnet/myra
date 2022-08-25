@@ -64,6 +64,7 @@ export const KymCoopOpAddress = (props: IProps) => {
         }}
       >
         <FormSection
+          gridLayout={true}
           id="kymCoopAccOperatingAddress"
           header="kymCoopOperatingAddress"
         >

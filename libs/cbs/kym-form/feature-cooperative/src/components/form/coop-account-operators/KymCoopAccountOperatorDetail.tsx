@@ -83,6 +83,7 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
 
   return (
     <FormSection
+      gridLayout={true}
       id="kymCoopAccAccountOperatorDetail"
       header="kymCoopDetailsofAccountOperators"
     >

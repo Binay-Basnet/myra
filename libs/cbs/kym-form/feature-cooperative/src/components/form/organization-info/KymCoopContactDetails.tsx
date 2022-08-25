@@ -28,6 +28,7 @@ export const KymCoopContactDetails = (props: IProps) => {
         }}
       >
         <FormSection
+          gridLayout={true}
           id="kymCoopAccContactDetails"
           header="kymCoopContactDetails"
         >

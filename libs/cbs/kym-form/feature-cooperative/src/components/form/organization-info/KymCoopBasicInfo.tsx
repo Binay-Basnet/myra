@@ -26,11 +26,11 @@ export const KymCoopBasicInfo = (props: IProps) => {
         }}
       >
         <FormSection
+          gridLayout={true}
           id="kymCoopAccBasicInformation"
           header="kymCoopBASICINFORMATION"
         >
           <FormInput
-            w="65%"
             type="text"
             name={'nameOfOrganization'}
             label={t['kymCoopNameofOrganization']}

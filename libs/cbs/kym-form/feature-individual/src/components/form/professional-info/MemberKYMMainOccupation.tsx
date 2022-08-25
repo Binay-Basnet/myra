@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { CloseIcon } from '@chakra-ui/icons';
+import { CloseButton } from '@chakra-ui/react';
 import { isEmpty } from 'lodash';
 import debounce from 'lodash/debounce';
 
@@ -31,7 +31,7 @@ import {
   FormSection,
   GridItem,
   Icon,
-  Text,
+  IconButton,
   TextFields,
 } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
@@ -194,19 +194,18 @@ const MainOccupation = ({
         >
           <Box display="flex" gap="16px" flexDirection="column">
             <Box display="flex" flexDirection="column">
-              <CloseIcon
-                cursor="pointer"
-                onClick={() => {
-                  removeMainOccupation(occupationId);
-                }}
-                color="gray.500"
-                _hover={{
-                  color: 'gray.900',
-                }}
-                aria-label="close"
-                alignSelf="flex-end"
-                id="removeMainOccupationButton"
-              />
+              <Box display="flex" justifyContent="flex-end">
+                <IconButton
+                  aria-label="close"
+                  variant="ghost"
+                  size="sm"
+                  icon={<CloseButton />}
+                  onClick={() => {
+                    removeMainOccupation(occupationId);
+                  }}
+                  id="removeMainOccupationButton"
+                />
+              </Box>
 
               <InputGroupContainer>
                 <GridItem colSpan={1}>
@@ -450,10 +449,11 @@ export const MemberKYMMainOccupation = ({
 
   return (
     <Box id="kymAccIndMainProfession" scrollMarginTop={'200px'}>
-      <Text p="s20" pb="0" fontSize="r1" fontWeight="SemiBold">
-        {t['kymIndMAINOCCUPATION']}
-      </Text>
-      <Box p="s20" display="flex" flexDirection="column" gap="s16">
+      <FormSection
+        gridLayout={true}
+        templateColumns={1}
+        header="kymIndMAINOCCUPATION"
+      >
         <DynamicBoxGroupContainer>
           {occupationIds.map((id) => {
             return (
@@ -478,7 +478,7 @@ export const MemberKYMMainOccupation = ({
             {t['kymIndAddOccupation']}
           </Button>
         </DynamicBoxGroupContainer>
-      </Box>
+      </FormSection>
 
       <FormProvider {...methods}>
         <form
@@ -487,7 +487,10 @@ export const MemberKYMMainOccupation = ({
             setKymCurrentSection(kymSection);
           }}
         >
-          <FormSection header="kymIndForeignEmploymentDetails">
+          <FormSection
+            gridLayout={true}
+            header="kymIndForeignEmploymentDetails"
+          >
             <FormSelect
               id="nameOfCountry"
               control={control}

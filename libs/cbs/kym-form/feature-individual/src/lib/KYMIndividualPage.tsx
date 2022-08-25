@@ -66,90 +66,84 @@ export function KYMIndividualPage() {
       </Box>
 
       <Container minW="container.xl" height="fit-content">
-        <Box display="flex" width="100%">
-          <Box display="flex">
-            <Box
-              w={320}
-              p="s16"
-              pr="s20"
-              position="fixed"
-              borderRight="1px solid"
-              borderColor="border.layout"
-              minHeight="100%"
-              bg="white"
-              zIndex={2}
-            >
-              <AccorrdianAddMember
-                formStatus={kymFormStatus}
-                kymCurrentSection={kymCurrentSection}
+        <Box>
+          <Box
+            w={320}
+            p="s16"
+            pr="s20"
+            position="fixed"
+            borderRight="1px solid"
+            borderColor="border.layout"
+            minHeight="100%"
+            bg="white"
+            zIndex={2}
+          >
+            <AccorrdianAddMember
+              formStatus={kymFormStatus}
+              kymCurrentSection={kymCurrentSection}
+            />
+          </Box>
+
+          <Box zIndex={1} background="white" ml="320" pb="120px">
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymInd1PersonalInformation']}
+              </Text>
+              <MemberKYMBasicInfo setKymCurrentSection={setKymCurrentSection} />
+              <MemberKYMContactDetails
+                setKymCurrentSection={setKymCurrentSection}
               />
-            </Box>
+              <MemberKYMIdentificationDetails
+                setKymCurrentSection={setKymCurrentSection}
+              />
+              <MemberKYMAddress setKymCurrentSection={setKymCurrentSection} />
+              <MemberKYMFamilyDetails
+                setKymCurrentSection={setKymCurrentSection}
+              />
+            </SectionContainer>
 
-            <Box zIndex={1} background="white" ml="320" pb="120px">
-              <SectionContainer>
-                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                  {t['kymInd1PersonalInformation']}
-                </Text>
-                <MemberKYMBasicInfo
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-                <MemberKYMContactDetails
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-                <MemberKYMIdentificationDetails
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-                <MemberKYMAddress setKymCurrentSection={setKymCurrentSection} />
-                <MemberKYMFamilyDetails
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-              </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymInd2ProfessionalInformation']}
+              </Text>
+              <MemberKYMProfession
+                setKymCurrentSection={setKymCurrentSection}
+              />
+              <MemberKYMMainOccupation
+                setKymCurrentSection={setKymCurrentSection}
+              />
+              <MemberKYMHusbandWifeOccupation
+                setKymCurrentSection={setKymCurrentSection}
+              />
+              <MemberKYMIncomeSourceDetails
+                setKymCurrentSection={setKymCurrentSection}
+              />
+            </SectionContainer>
 
-              <SectionContainer>
-                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                  {t['kymInd2ProfessionalInformation']}
-                </Text>
-                <MemberKYMProfession
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-                <MemberKYMMainOccupation
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-                <MemberKYMHusbandWifeOccupation
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-                <MemberKYMIncomeSourceDetails
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-              </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymInd3COOPmembership']}
+              </Text>
+              <KYMBasiccoopDetails
+                setKymCurrentSection={setKymCurrentSection}
+              />
+              <KYMFinancialTransactionDetails
+                setKymCurrentSection={setKymCurrentSection}
+              />
+              <KYMEstimatedAmount setKymCurrentSection={setKymCurrentSection} />
+            </SectionContainer>
 
-              <SectionContainer>
-                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                  {t['kymInd3COOPmembership']}
-                </Text>
-                <KYMBasiccoopDetails
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-                <KYMFinancialTransactionDetails
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-                <KYMEstimatedAmount
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-              </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymInd4Declaration']}
+              </Text>
+              <KYMDeclaration setKymCurrentSection={setKymCurrentSection} />
+              <KYMDocumentDeclaration
+                setKymCurrentSection={setKymCurrentSection}
+              />
+            </SectionContainer>
 
-              <SectionContainer>
-                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                  {t['kymInd4Declaration']}
-                </Text>
-                <KYMDeclaration setKymCurrentSection={setKymCurrentSection} />
-                <KYMDocumentDeclaration
-                  setKymCurrentSection={setKymCurrentSection}
-                />
-              </SectionContainer>
-
-              <KYMDeclarationAgree />
-            </Box>
+            <KYMDeclarationAgree />
           </Box>
         </Box>
       </Container>

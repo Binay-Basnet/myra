@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { CloseIcon } from '@chakra-ui/icons';
+import { CloseButton } from '@chakra-ui/react';
 import debounce from 'lodash/debounce';
 
 import {
@@ -19,7 +19,15 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon, Text, TextFields } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  FormSection,
+  GridItem,
+  Icon,
+  IconButton,
+  TextFields,
+} from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -162,19 +170,18 @@ const HusbandWifeOccupation = ({
           bg="background.500"
         >
           <Box display="flex" flexDirection="column">
-            <CloseIcon
-              cursor="pointer"
-              onClick={() => {
-                removeHusbandWifeOccupation(occupationId);
-              }}
-              id="removeSpouseOccupationButton"
-              color="gray.500"
-              _hover={{
-                color: 'gray.900',
-              }}
-              aria-label="close"
-              alignSelf="flex-end"
-            />
+            <Box display="flex" justifyContent="flex-end">
+              <IconButton
+                aria-label="close"
+                variant="ghost"
+                size="sm"
+                icon={<CloseButton />}
+                onClick={() => {
+                  removeHusbandWifeOccupation(occupationId);
+                }}
+                id="removeSpouseOccupationButton"
+              />
+            </Box>
 
             <InputGroupContainer>
               <GridItem colSpan={1}>
@@ -347,42 +354,37 @@ export const MemberKYMHusbandWifeOccupation = ({
   };
 
   return (
-    <Box
+    <FormSection
+      gridLayout={true}
+      templateColumns={1}
       id="kymAccIndMainOccupationofHusabandWife"
-      scrollMarginTop={'200px'}
-      borderBottom={'1px solid'}
-      borderBottomColor="border.layout"
+      header="kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE"
     >
-      <Text p="s20" pb="0" fontSize="r1" fontWeight="SemiBold">
-        {t['kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE']}
-      </Text>
-      <Box p="s20" display="flex" flexDirection="column" gap="s16">
-        <DynamicBoxGroupContainer>
-          {occupationIds.map((id) => {
-            return (
-              <Box key={id}>
-                <HusbandWifeOccupation
-                  removeHusbandWifeOccupation={removeOccuapation}
-                  setKymCurrentSection={setKymCurrentSection}
-                  occupationId={id}
-                />
-              </Box>
-            );
-          })}
+      <DynamicBoxGroupContainer>
+        {occupationIds.map((id) => {
+          return (
+            <Box key={id}>
+              <HusbandWifeOccupation
+                removeHusbandWifeOccupation={removeOccuapation}
+                setKymCurrentSection={setKymCurrentSection}
+                occupationId={id}
+              />
+            </Box>
+          );
+        })}
 
-          <Button
-            id="spouseOccupationButton"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              appendOccupation();
-            }}
-          >
-            {t['kymIndAddOccupation']}
-          </Button>
-        </DynamicBoxGroupContainer>
-      </Box>
-    </Box>
+        <Button
+          id="spouseOccupationButton"
+          alignSelf="start"
+          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+          variant="outline"
+          onClick={() => {
+            appendOccupation();
+          }}
+        >
+          {t['kymIndAddOccupation']}
+        </Button>
+      </DynamicBoxGroupContainer>
+    </FormSection>
   );
 };

@@ -17,6 +17,7 @@ import {
   useGetNewIdMutation,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { formatAddress } from '@coop/cbs/utils';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
@@ -24,7 +25,6 @@ import {
   Button,
   FormMemberSelect,
   FormSection,
-  Grid,
   GridItem,
   Icon,
 } from '@coop/shared/ui';
@@ -223,34 +223,27 @@ const KYMBasiccoopDetailsFamilyMember = ({
   }, [id]);
 
   return (
-    <Box
-      p="s20"
-      gap="s16"
-      display="flex"
-      flexDirection="column"
-      borderBottom={'1px solid'}
-      borderBottomColor="border.layout"
-    >
-      <FormProvider {...methods}>
-        <form
-          onFocus={(e) => {
-            const kymSection = getKymSection(e.target.id);
-            setKymCurrentSection(kymSection);
-          }}
-        >
-          <Box id="kymAccIndFamilyMemberinthisinstitution">
+    <FormSection gridLayout={true} id="kymAccIndFamilyMemberinthisinstitution">
+      <GridItem colSpan={3}>
+        <FormProvider {...methods}>
+          <form
+            onFocus={(e) => {
+              const kymSection = getKymSection(e.target.id);
+              setKymCurrentSection(kymSection);
+            }}
+          >
             <FormSwitchTab
               label={t['kynIndFamilyMemberinthisinstitution']}
               options={booleanList}
               name="isFamilyAMember"
               id="familyMemberInThisInstitution"
             />
-          </Box>
-        </form>
-      </FormProvider>
+          </form>
+        </FormProvider>
+      </GridItem>
 
       {isFamilyAMember && (
-        <>
+        <GridItem colSpan={3}>
           {familyMemberMutationIds.map((mutationId, index) => (
             <FamilyMember
               mutationId={mutationId}
@@ -262,7 +255,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
           <FormProvider {...formMethods}>
             <form>
-              <Grid templateColumns={'repeat(3,1fr)'} gap="s20" rowGap={'s16'}>
+              <InputGroupContainer>
                 <FormInput
                   name="memberName"
                   mt={1}
@@ -271,7 +264,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
                   id={`familyMemberInThisCooperative.0.memberId`}
                   placeholder={t['kynIndFirstName']}
                   bg="white"
-                />{' '}
+                />
                 <FormSelect
                   name="memberId"
                   placeholder={t['kynIndEnterMemberID']}
@@ -282,19 +275,18 @@ const KYMBasiccoopDetailsFamilyMember = ({
                 />
                 <Button
                   id="findmemberButton"
-                  // h="44px"
                   variant="outline"
                   leftIcon={<Icon size="md" as={AiOutlineSearch} />}
                   onClick={() => appendFamilyMember()}
                 >
                   {t['kynIndFindMember']}
                 </Button>
-              </Grid>
+              </InputGroupContainer>
             </form>
           </FormProvider>
-        </>
+        </GridItem>
       )}
-    </Box>
+    </FormSection>
   );
 };
 
@@ -380,7 +372,7 @@ const KYMBasiccoopDetailsBasic = ({
           />
         </FormSection>
 
-        <FormSection>
+        <FormSection gridLayout={true}>
           <GridItem colSpan={3}>
             <FormSwitchTab
               label={t['kynIndMemberofAnothercooperative']}

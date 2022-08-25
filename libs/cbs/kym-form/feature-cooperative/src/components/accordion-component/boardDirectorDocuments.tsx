@@ -1,5 +1,5 @@
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import { Box, Grid } from '@coop/shared/ui';
+import { Box, FormSection } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 import { getKymSectionInstitution } from '@coop/shared/utils';
 
@@ -17,7 +17,7 @@ export const Bottomdirectorcoop = ({
 }: IKYMDocumentDeclarationProps) => {
   const { t } = useTranslation();
   return (
-    <Grid p="s20" templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
+    <FormSection gridLayout={true} templateColumns={2}>
       <KYMDocumentField
         mutationId={directorId}
         label={t['kymCoopPhotograph']}
@@ -35,7 +35,6 @@ export const Bottomdirectorcoop = ({
         getKymSection={getKymSectionInstitution}
         setKymCurrentSection={setKymCurrentSection}
       />
-
       <Box w="124px">
         <KYMDocumentField
           mutationId={directorId}
@@ -47,6 +46,6 @@ export const Bottomdirectorcoop = ({
           setKymCurrentSection={setKymCurrentSection}
         />
       </Box>
-    </Grid>
+    </FormSection>
   );
 };

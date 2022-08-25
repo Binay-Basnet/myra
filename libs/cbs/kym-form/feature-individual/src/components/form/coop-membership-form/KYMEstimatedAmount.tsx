@@ -84,6 +84,7 @@ export const KYMEstimatedAmount = ({
         }}
       >
         <FormSection
+          gridLayout={true}
           id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
           header="kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION"
         >
@@ -126,7 +127,7 @@ export const KYMEstimatedAmount = ({
           />
         </Box>
 
-        <FormSection>
+        <FormSection gridLayout={true}>
           <FormInput
             type="number"
             name="estimatedAnnualDepositAmount"
