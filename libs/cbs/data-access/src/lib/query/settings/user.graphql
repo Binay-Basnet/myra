@@ -33,3 +33,57 @@ query getSettingsUserListData(
     }
   }
 }
+
+query getSettingsUserEditData($id: ID!) {
+  settings {
+    myraUser {
+      formState(id: $id) {
+        data {
+          name
+          email
+          contactNo
+          gender
+          dob
+          role
+          branch
+          identificationSelection
+          identificationDetails {
+            id
+            idNo
+            idType
+            place
+            date
+          }
+          permanentAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isTempAsPermanentAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          landlordName
+          landlordContact
+          profilePicture
+        }
+      }
+    }
+  }
+}

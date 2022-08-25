@@ -8,6 +8,7 @@ import {
   MyraUserInput,
   Roles,
   useAllAdministrationQuery,
+  useGetSettingsUserEditDataQuery,
   UserGender,
   useSetSettingsUserDataMutation,
 } from '@coop/cbs/data-access';
@@ -26,6 +27,7 @@ import {
   FormSwitch,
 } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Container,
   FormFooter,
@@ -155,7 +157,7 @@ export function AddUser() {
     reset({ ...addUser.userData });
   }, [addUser]);
 
-  const { mutate } = useSetSettingsUserDataMutation();
+  const { mutateAsync } = useSetSettingsUserDataMutation();
 
   const handleSendInvitation = () => {
     let formValues = getValues();
@@ -205,15 +207,67 @@ export function AddUser() {
       'nationalId',
     ]);
 
-    mutate(
-      { id: id as string, data: formValues },
+    asyncToast({
+      id: 'create-new-user',
+      msgs: {
+        success: 'New User Created',
+        loading: 'Creating New User',
+      },
+      onSuccess: () => router.push('/settings/users/super-admin'),
+      promise: mutateAsync({ id: id as string, data: formValues }),
+    });
+  };
+
+  const { data: userQueryData, refetch: refetchUserData } =
+    useGetSettingsUserEditDataQuery(
       {
-        onSuccess: () => {
-          router.push('/settings/users/super-admin');
-        },
+        id: id as string,
+      },
+      {
+        enabled: !!id,
       }
     );
-  };
+
+  useEffect(() => {
+    const userData = userQueryData?.settings?.myraUser?.formState?.data;
+
+    if (userData) {
+      const formData = omit(userData, [
+        'permanentAddress',
+        'temporaryAddress',
+        'identificationDetails',
+        'profilePicture',
+      ]) as MyraUserInput;
+
+      userData?.identificationDetails?.forEach((identification) => {
+        if (identification?.idType) {
+          formData[identification?.idType] = omit(
+            identification,
+            'idType',
+            'id'
+          );
+        }
+      });
+
+      reset({
+        ...formData,
+        permanentAddress: {
+          ...userData?.permanentAddress,
+          locality: userData?.permanentAddress?.locality?.local,
+        },
+        temporaryAddress: {
+          ...userData?.temporaryAddress,
+          locality: userData?.temporaryAddress?.locality?.local,
+        },
+      });
+    }
+  }, [userQueryData]);
+
+  useEffect(() => {
+    if (id) {
+      refetchUserData();
+    }
+  }, [id]);
 
   return (
     <>

@@ -15498,6 +15498,22 @@
         "description": null,
         "fields": [
           {
+            "name": "accountCloseCharge",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ServiceTypeFormState",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "accountType",
             "description": null,
             "args": [],
@@ -15638,6 +15654,18 @@
             "deprecationReason": null
           },
           {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "dormantSetup",
             "description": null,
             "args": [],
@@ -15752,6 +15780,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "InterestFormState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isForMinors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
               "ofType": null
             },
             "isDeprecated": false,
@@ -16162,6 +16202,18 @@
             "deprecationReason": null
           },
           {
+            "name": "withdrawPenalty",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "WithdrawPenaltyFormState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "withdrawRestricted",
             "description": null,
             "args": [],
@@ -16220,6 +16272,22 @@
         "description": null,
         "fields": null,
         "inputFields": [
+          {
+            "name": "accountCloseCharge",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "ServiceType",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "accountType",
             "description": null,
@@ -16361,6 +16429,18 @@
             "deprecationReason": null
           },
           {
+            "name": "description",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "dormantSetup",
             "description": null,
             "type": {
@@ -16479,6 +16559,18 @@
                 "name": "InterestRate",
                 "ofType": null
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isForMinors",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -16890,6 +16982,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "withdrawPenalty",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "WithdrawPenalty",
               "ofType": null
             },
             "defaultValue": null,
@@ -69091,6 +69195,100 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "WithdrawPenalty",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "penaltyAmount",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Amount",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penaltyLedgerMapping",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penaltyRate",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "WithdrawPenaltyFormState",
+        "description": null,
+        "fields": [
+          {
+            "name": "penaltyAmount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Amount",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penaltyLedgerMapping",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penaltyRate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "WithdrawResult",
         "description": null,
@@ -70073,19 +70271,14 @@
         "name": "asBase",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "OBJECT"
-        ],
+        "locations": ["OBJECT"],
         "args": []
       },
       {
         "name": "date",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "after",
@@ -70154,10 +70347,7 @@
         "name": "email",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "required",
@@ -70189,9 +70379,7 @@
         "name": "faker",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION"],
         "args": [
           {
             "name": "tag",
@@ -70211,10 +70399,7 @@
         "name": "goField",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "forceResolver",
@@ -70246,11 +70431,7 @@
         "name": "include",
         "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": [
-          "FIELD",
-          "FRAGMENT_SPREAD",
-          "INLINE_FRAGMENT"
-        ],
+        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
         "args": [
           {
             "name": "if",
@@ -70274,10 +70455,7 @@
         "name": "localized",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "format",
@@ -70345,10 +70523,7 @@
         "name": "nestedField",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "section_name",
@@ -70380,10 +70555,7 @@
         "name": "number",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "max",
@@ -70427,11 +70599,7 @@
         "name": "skip",
         "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": [
-          "FIELD",
-          "FRAGMENT_SPREAD",
-          "INLINE_FRAGMENT"
-        ],
+        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
         "args": [
           {
             "name": "if",
@@ -70455,9 +70623,7 @@
         "name": "specifiedBy",
         "description": "Exposes a URL that specifies the behavior of this scalar.",
         "isRepeatable": false,
-        "locations": [
-          "SCALAR"
-        ],
+        "locations": ["SCALAR"],
         "args": [
           {
             "name": "url",
@@ -70481,10 +70647,7 @@
         "name": "text",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "FIELD_DEFINITION",
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "format",
@@ -70552,9 +70715,7 @@
         "name": "translate",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "INPUT_FIELD_DEFINITION"
-        ],
+        "locations": ["INPUT_FIELD_DEFINITION"],
         "args": [
           {
             "name": "lang",
@@ -70578,9 +70739,7 @@
         "name": "validate",
         "description": null,
         "isRepeatable": false,
-        "locations": [
-          "OBJECT"
-        ],
+        "locations": ["OBJECT"],
         "args": []
       }
     ]

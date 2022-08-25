@@ -2821,6 +2821,17 @@ const ne: Record<string, string> = {
   serviceCenterEnterNoOfServiceCenter: 'Enter No of Service Center',
 
   moreThan: 'More Than',
+
+  settingsUserSidebarSuperAdmin: 'Super Admin',
+  settingsUserSidebarBranchManager: 'Service Center Manager',
+  settingsUserSidebarAgent: 'Agent',
+  settingsUserSidebarOtherUsers: 'Other Users',
+  settingsUserSidebarRoleReferences: 'Role References',
+  settingsUserSidebarInvitation: 'Invitation',
+
+  settingsUserAddUserBasicInformation: 'Basic Information',
+  settingsUserUserListEdit: 'Edit User',
+
   kymIndForeignEmploymentDetails: 'Foreign Employment Details',
   depositProductAccountOpenServiceCharge: 'Account Open Service Charge',
   depositProductAccountCloseServiceCharge: 'Account Close Service Charge',

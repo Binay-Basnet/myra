@@ -25,7 +25,7 @@ import {
   FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
-import { Box, Button, Divider, Grid, Text } from '@coop/shared/ui';
+import { asyncToast, Box, Button, Divider, Grid, Text } from '@coop/shared/ui';
 import { setAddUserData, useAppDispatch } from '@coop/shared/utils';
 
 import { BranchSelect } from './BranchSelect';
@@ -33,6 +33,7 @@ import { BranchSelect } from './BranchSelect';
 interface INewUserModalProps {
   isOpen: boolean;
   onClose: () => void;
+  refetchUserList: () => void;
 }
 
 const genderOptions = [
@@ -49,7 +50,11 @@ const roleOptions = [
   { label: 'Super Admin', value: Roles.Superadmin },
 ];
 
-export const NewUserModal = ({ isOpen, onClose }: INewUserModalProps) => {
+export const NewUserModal = ({
+  isOpen,
+  onClose,
+  refetchUserList,
+}: INewUserModalProps) => {
   const methods = useForm<MyraUserInput>();
 
   const { getValues, watch, reset } = methods;
@@ -60,18 +65,22 @@ export const NewUserModal = ({ isOpen, onClose }: INewUserModalProps) => {
 
   const { mutateAsync: newIdMutate } = useGetNewIdMutation();
 
-  const { mutate } = useSetSettingsUserDataMutation();
+  const { mutateAsync: userMutateAsync } = useSetSettingsUserDataMutation();
 
   const handleSendInvitation = () => {
     newIdMutate({ idType: Id_Type.Myrauser }).then((res) => {
-      mutate(
-        { id: res.newId, data: getValues() },
-        {
-          onSuccess: () => {
-            handleModalClose();
-          },
-        }
-      );
+      asyncToast({
+        id: 'create-new-user-modal',
+        msgs: {
+          success: 'New User Created',
+          loading: 'Creating New User',
+        },
+        onSuccess: () => {
+          refetchUserList();
+          handleModalClose();
+        },
+        promise: userMutateAsync({ id: res.newId, data: getValues() }),
+      });
     });
   };
 
@@ -83,11 +92,11 @@ export const NewUserModal = ({ isOpen, onClose }: INewUserModalProps) => {
       })
     );
 
-    handleModalClose();
-
     newIdMutate({ idType: Id_Type.Myrauser }).then((res) => {
       router.push(`/settings/users/super-admin/add/${res.newId}`);
     });
+
+    handleModalClose();
   };
 
   const role = watch('role');

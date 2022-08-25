@@ -3177,6 +3177,13 @@ const en: Record<string, string> = {
   kymIndCooperativeEnterServiceCenter: 'Enter Service Center',
   moreThan: 'More Than',
 
+  settingsUserSidebarSuperAdmin: 'Super Admin',
+  settingsUserSidebarBranchManager: 'Service Center Manager',
+  settingsUserSidebarAgent: 'Agent',
+  settingsUserSidebarOtherUsers: 'Other Users',
+  settingsUserSidebarRoleReferences: 'Role References',
+  settingsUserSidebarInvitation: 'Invitation',
+
   kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION:
     'Estimated Withdraw / Deposit Amount In The Institution',
   kymCoopDOCUMENTDECLARATION: 'Document Declaration',
@@ -3216,6 +3223,10 @@ const en: Record<string, string> = {
   kymIndBASICINFORMATION: 'Basic Information',
   kymCoopUnionBasicInformation: 'Basic Information',
   kymCoopBASICINFORMATION: 'Basic Information',
+
+  settingsUserAddUserBasicInformation: 'Basic Information',
+  settingsUserUserListEdit: 'Edit User',
+
   kymIndForeignEmploymentDetails: 'Foreign Employment Details',
   kymIndFAMILYDETAILS: 'Family Details',
   depositProductAccountOpenServiceCharge: 'Account Open Service Charge',
