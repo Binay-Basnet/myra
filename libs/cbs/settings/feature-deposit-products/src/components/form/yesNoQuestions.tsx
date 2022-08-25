@@ -107,6 +107,17 @@ export const Questions = () => {
         <SubHeadingText>{t['depositProductStaffProduct']} </SubHeadingText>
         <FormSwitchTab name={'staffProduct'} options={yesNo} />
       </Box>
+
+      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+        <SubHeadingText>{t['depositProductIsThisForMinor']} </SubHeadingText>
+        <FormSwitchTab name={'staffProduct'} options={yesNo} />
+      </Box>
+
+      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+        <SubHeadingText>{t['depositProductMinorAccount']} </SubHeadingText>
+        <FormSwitchTab name={'staffProduct'} options={yesNo} />
+      </Box>
+
       {depositNature === NatureOfDepositProduct.RecurringSaving && (
         <Box display={'flex'} flexDirection="column" gap="s16">
           <Box

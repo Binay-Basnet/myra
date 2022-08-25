@@ -1,12 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -30,38 +26,32 @@ export const KymCoopCurrentMembers = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer id="kymCoopAccCurrentMembers" scrollMarginTop={'200px'}>
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymCoopCurrentMembers']}
-          </Text>
-          <InputGroupContainer>
-            <FormInput
-              type="number"
-              min={0}
-              name="noOfMaleMembers"
-              label={t['kymCoopNoofMalemembers']}
-              placeholder={t['kymCoopEnternumberofMaleMembers']}
-            />
-            <FormInput
-              type="number"
-              min={0}
-              name="noOfFemaleMembers"
-              label={t['kymCoopNoofFemalemembers']}
-              placeholder={t['kymCoopEnternumberofFemaleMembers']}
-            />
+        <FormSection
+          id="kymCoopAccCurrentMembers"
+          header="kymCoopCurrentMembers"
+        >
+          <FormInput
+            type="number"
+            min={0}
+            name="noOfMaleMembers"
+            label={t['kymCoopNoofMalemembers']}
+            placeholder={t['kymCoopEnternumberofMaleMembers']}
+          />
+          <FormInput
+            type="number"
+            min={0}
+            name="noOfFemaleMembers"
+            label={t['kymCoopNoofFemalemembers']}
+            placeholder={t['kymCoopEnternumberofFemaleMembers']}
+          />
 
-            <FormInput
-              type="text"
-              name="noOfOtherMembers"
-              label={t['kymCoopNoofOthermembers']}
-              placeholder={t['kymCoopEnternumberofOthermembers']}
-            />
-          </InputGroupContainer>
-        </GroupContainer>
+          <FormInput
+            type="text"
+            name="noOfOtherMembers"
+            label={t['kymCoopNoofOthermembers']}
+            placeholder={t['kymCoopEnternumberofOthermembers']}
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );

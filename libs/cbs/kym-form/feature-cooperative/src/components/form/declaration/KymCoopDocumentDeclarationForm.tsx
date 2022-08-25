@@ -32,7 +32,7 @@ export const KymCoopDocumentDeclarationForm = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer id="Document Declaration">
+        <GroupContainer p="s20" id="Document Declaration">
           <Text fontSize="r1" fontWeight="SemiBold">
             {t['kymCoopDOCUMENTDECLARATION']}
           </Text>

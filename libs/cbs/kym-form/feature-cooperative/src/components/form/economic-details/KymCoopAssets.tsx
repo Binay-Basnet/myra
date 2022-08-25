@@ -42,7 +42,12 @@ export const KymCoopAssets = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <Box id="kymCoopAccAssets" display="flex" flexDirection="column">
+        <Box
+          p="s20"
+          id="kymCoopAccAssets"
+          display="flex"
+          flexDirection="column"
+        >
           <Grid
             columnGap={40}
             alignItems="center"

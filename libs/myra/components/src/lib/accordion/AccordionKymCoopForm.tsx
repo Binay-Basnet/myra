@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import { Box, Collapse, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -80,7 +80,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
   }, [kymCurrentSection]);
 
   return (
-    <Box p={'1'} overflow="auto" h="700px">
+    <Box overflow="auto" h="700px">
       <Box
         display="flex"
         justifyContent="space-between"
@@ -89,14 +89,10 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         cursor="pointer"
         onClick={() => setIsOpenOrganization(!isOpenOrganization)}
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopAcc1OrganizationDetails']}
         </Text>
-        {!isOpenOrganization ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenOrganization ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenOrganization} style={{ marginTop: '0px' }}>
@@ -140,11 +136,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopAcc2EconomicDetails']}
         </Text>
-        {!isOpenEconomic ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenEconomic ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenEconomic}>
@@ -179,11 +171,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopAcc3DetailsofBoardDirectors']}
         </Text>
-        {!isOpenBoardOfDirectors ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenBoardOfDirectors ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenBoardOfDirectors}>
@@ -218,11 +206,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopAcc4DetailsofAccountOperators']}
         </Text>
-        {!isOpenAccountOperator ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenAccountOperator ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenAccountOperator}>
@@ -257,11 +241,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopAcc5Declaration']}
         </Text>
-        {!isOpenDeclaration ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenDeclaration}>

@@ -85,7 +85,6 @@ export function KYMIndividualPage() {
             </Box>
 
             <Box background="white" ml="320" pb="120px">
-              {/* <SectionContainer> */}
               <SectionContainer>
                 <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                   {t['kymInd1PersonalInformation']}

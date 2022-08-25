@@ -2,12 +2,8 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -40,54 +36,44 @@ export const KymCoopNoEmployee = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        {' '}
-        <GroupContainer
+        <FormSection
           id="kymCoopAccNumberofEmployee"
-          scrollMarginTop={'200px'}
+          header="kymCoopNumberofEmployee"
         >
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymCoopNumberofEmployee']}
-          </Text>
-          <InputGroupContainer>
-            <FormInput
-              type="number"
-              textAlign={'right'}
-              name="noOfMaleEmployee"
-              label={t['kymCoopMale']}
-              placeholder="0"
-              // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              //   setMaleNum(Number(e.target.value))
-              // }
-            />
-            <FormInput
-              type="number"
-              textAlign={'right'}
-              name="noOfFemaleEmployee"
-              label={t['kymCoopFemale']}
-              placeholder="0"
-              // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              //   setFemaleNum(Number(e.target.value))
-              // }
-            />
+          <FormInput
+            type="number"
+            textAlign={'right'}
+            name="noOfMaleEmployee"
+            label={t['kymCoopMale']}
+            placeholder="0"
+            // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            //   setMaleNum(Number(e.target.value))
+            // }
+          />
+          <FormInput
+            type="number"
+            textAlign={'right'}
+            name="noOfFemaleEmployee"
+            label={t['kymCoopFemale']}
+            placeholder="0"
+            // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            //   setFemaleNum(Number(e.target.value))
+            // }
+          />
 
-            <FormInput
-              bg="neutralColorLight.Gray-20"
-              border="1px solid"
-              borderColor="disabled.disabled"
-              isDisabled={true}
-              type="number"
-              textAlign={'right'}
-              name="totalEmployee"
-              label={t['kymCoopTotal']}
-              placeholder="0"
-              value={totalEmployee}
-            />
-          </InputGroupContainer>
-        </GroupContainer>
+          <FormInput
+            bg="neutralColorLight.Gray-20"
+            border="1px solid"
+            borderColor="disabled.disabled"
+            isDisabled={true}
+            type="number"
+            textAlign={'right'}
+            name="totalEmployee"
+            label={t['kymCoopTotal']}
+            placeholder="0"
+            value={totalEmployee}
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
 import { KymInsAddSectionStatus } from '@coop/cbs/data-access';
@@ -71,7 +71,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
   }, [kymCurrentSection]);
 
   return (
-    <Box p={'1'} overflow="auto" h="700px">
+    <Box overflow="auto" h="700px">
       <Box
         display="flex"
         justifyContent="space-between"
@@ -83,11 +83,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopUnionAcc1InstitutionInformation']}
         </Text>
-        {!isOpenOrganizational ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenOrganizational ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenOrganizational} style={{ marginTop: '0px' }}>
@@ -131,11 +127,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopUnionAcc2Detailsofdirectorsboardmemberspartners']}
         </Text>
-        {!isopenDirector ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isopenDirector ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isopenDirector}>
@@ -170,11 +162,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopUnionAcc3AccountOperators']}
         </Text>
-        {!isopenAccountOperators ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isopenAccountOperators ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isopenAccountOperators}>
@@ -212,9 +200,9 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
           {t['kymCoopUnionAcc4DetailsofCentralRepresentative']}
         </Text>
         {!isopenCentralRepresentatives ? (
-          <AiOutlineCaretRight fontSize="12px" />
+          <ChevronRightIcon />
         ) : (
-          <AiOutlineCaretDown fontSize="12px" />
+          <ChevronDownIcon />
         )}
       </Box>
 
@@ -288,11 +276,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopUnionAcc6EconomicDetails']}
         </Text>
-        {!isOpenEconmoicDetails ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenEconmoicDetails ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenEconmoicDetails}>
@@ -326,11 +310,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymCoopUnionAcc7Declaration']}
         </Text>
-        {!isOpenDeclaration ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenDeclaration}>

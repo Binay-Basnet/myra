@@ -85,7 +85,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         cursor="pointer"
         onClick={() => setIsOpenPersonal(!isOpenPersonal)}
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymAccInd1PersonalDetails']}
         </Text>
         {!isOpenPersonal ? <ChevronRightIcon /> : <ChevronDownIcon />}

@@ -45,6 +45,7 @@ export const KymEquityLiabilities = (props: IProps) => {
         }}
       >
         <Box
+          p="s20"
           id="kymCoopAccEquityandLiabilities"
           display="flex"
           flexDirection="column"
