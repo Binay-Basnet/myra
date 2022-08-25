@@ -8,7 +8,7 @@ import {
   useSetSettingsShareFeeAndChargesMutation,
 } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, Text } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, Text, toast } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
@@ -59,7 +59,7 @@ export const ShareSettingsFeeAndCharges = () => {
     const values = getValues();
 
     asyncToast({
-      id: 'share-settings-bonus-id',
+      id: 'share-settings-fees-id',
       msgs: {
         success: 'Saved',
         loading: 'Saving Changes ',
@@ -76,7 +76,12 @@ export const ShareSettingsFeeAndCharges = () => {
     });
   };
   const handleDiscard = () => {
-    router.back();
+    router.reload();
+    toast({
+      message: 'Changes have been discarded',
+      id: 'Discard-settings-shareFees',
+      type: 'info',
+    });
   };
 
   return (

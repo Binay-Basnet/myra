@@ -8,7 +8,7 @@ import {
   useSetSettingsShareBonusMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, toast } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -65,7 +65,12 @@ export const ShareSettingsBonusPage = () => {
     });
   };
   const handleDiscard = () => {
-    router.back();
+    router.reload();
+    toast({
+      message: 'Changes have been discarded',
+      id: 'Discard-settings-shareBonus',
+      type: 'info',
+    });
   };
 
   return (

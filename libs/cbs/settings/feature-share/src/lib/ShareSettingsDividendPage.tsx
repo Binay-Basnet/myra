@@ -16,7 +16,14 @@ import {
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
-import { asyncToast, Box, Icon, SettingsFooter, Text } from '@coop/shared/ui';
+import {
+  asyncToast,
+  Box,
+  Icon,
+  SettingsFooter,
+  Text,
+  toast,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -96,7 +103,7 @@ export const ShareSettingsDividendPage = () => {
   const handleSubmit = () => {
     const values = getValues();
     asyncToast({
-      id: 'share-settings-bonus-id',
+      id: 'share-settings-dividend-id',
       msgs: {
         success: 'Saved',
         loading: 'Saving Changes ',
@@ -113,7 +120,12 @@ export const ShareSettingsDividendPage = () => {
     });
   };
   const handleDiscard = () => {
-    router.back();
+    router.reload();
+    toast({
+      message: 'Changes have been discarded',
+      id: 'Discard-settings-sharedividend',
+      type: 'info',
+    });
   };
 
   const dividentTransferTreatment = watch('dividendTransferTreatment');
