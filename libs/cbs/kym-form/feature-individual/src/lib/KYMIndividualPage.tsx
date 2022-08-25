@@ -77,6 +77,7 @@ export function KYMIndividualPage() {
               borderColor="border.layout"
               minHeight="100%"
               bg="white"
+              zIndex={2}
             >
               <AccorrdianAddMember
                 formStatus={kymFormStatus}
@@ -84,7 +85,7 @@ export function KYMIndividualPage() {
               />
             </Box>
 
-            <Box background="white" ml="320" pb="120px">
+            <Box zIndex={1} background="white" ml="320" pb="120px">
               <SectionContainer>
                 <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                   {t['kymInd1PersonalInformation']}

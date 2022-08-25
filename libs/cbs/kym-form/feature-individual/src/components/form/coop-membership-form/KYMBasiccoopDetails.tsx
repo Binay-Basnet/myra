@@ -8,6 +8,7 @@ import debounce from 'lodash/debounce';
 import {
   FormFieldSearchTerm,
   Id_Type,
+  KymIndFormStateQuery,
   useDeleteMemberFamilyDetailsMutation,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymFamilyMembersListQuery,
@@ -16,10 +17,12 @@ import {
   useGetNewIdMutation,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
+import { formatAddress } from '@coop/cbs/utils';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Box,
   Button,
+  FormMemberSelect,
   FormSection,
   Grid,
   GridItem,
@@ -46,6 +49,7 @@ const booleanList = [
   },
 ];
 
+type optionType = { label: string; value: string };
 interface IKYMBasiccoopDetailsFamilyMemberProps {
   setKymCurrentSection: (section?: {
     section: string;
@@ -362,7 +366,11 @@ const KYMBasiccoopDetailsBasic = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection id="kymAccIndMainPurposeofBecomingMember">
+        <FormSection
+          gridLayout={true}
+          templateColumns={2}
+          id="kymAccIndMainPurposeofBecomingMember"
+        >
           <FormSelect
             name="purposeId"
             label={t['kynIndMainpurposeofbecomingmember']}
@@ -449,6 +457,9 @@ const KYMBasiccoopDetailsIntroducer = ({
 
   const { watch, reset } = methods;
 
+  const [IDMember, setIDMember] = useState('');
+  const [trigger, setTrigger] = useState(false);
+
   const { data: editValues } = useGetIndividualKymEditDataQuery(
     {
       id: String(id),
@@ -481,16 +492,20 @@ const KYMBasiccoopDetailsIntroducer = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
-  const { data: memberListData } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-  });
-
-  const memberSelectOption = memberListData?.members?.list?.edges?.map(
-    (item) => ({
-      value: item?.node?.id ?? '',
-      label: `${item?.node?.id ?? ''}-${item?.node?.name?.local ?? ''}`,
-    })
+  const { data: memberList } = useGetMemberListQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        query: IDMember,
+      },
+    },
+    {
+      staleTime: 0,
+      enabled: trigger,
+    }
   );
+
+  const memberListData = memberList?.members?.list?.edges;
 
   return (
     <FormProvider {...methods}>
@@ -500,23 +515,71 @@ const KYMBasiccoopDetailsIntroducer = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection header="kymIndIntroducers">
-          <GridItem colSpan={3}>
-            <Grid templateColumns="repeat(2,1fr)" gap="s20">
-              <FormSelect
-                name="firstIntroducerId"
-                label={t['kymIndFirstIntroducer']}
-                placeholder={t['kynmIndFirstIntroducerDetail']}
-                options={memberSelectOption}
-              />
-              <FormSelect
-                name="secondIntroducerId"
-                label={t['kymIndSecondIntroducer']}
-                placeholder={t['kymIndSecondIntroducerDetails']}
-                options={memberSelectOption}
-              />
-            </Grid>
-          </GridItem>
+        <FormSection
+          header="kymIndIntroducers"
+          gridLayout={true}
+          templateColumns={2}
+        >
+          <FormMemberSelect
+            name="firstIntroducerId"
+            label={t['kymIndFirstIntroducer']}
+            placeholder={t['kynmIndFirstIntroducerDetail']}
+            onInputChange={debounce((id) => {
+              setIDMember(id);
+              setTrigger(true);
+            }, 800)}
+            options={
+              memberListData?.map((member) => {
+                const profileData = member?.node
+                  ?.profile as KymIndFormStateQuery;
+                return {
+                  memberInfo: {
+                    // image:member?.node?.code,
+                    memberName: member?.node?.name?.local,
+                    memberId: member?.node?.id,
+                    gender:
+                      profileData?.data?.formData?.basicInformation?.gender
+                        ?.local,
+                    age: profileData?.data?.formData?.basicInformation?.age,
+                    maritialStatus:
+                      profileData?.data?.formData?.maritalStatus?.local,
+                    address: formatAddress(member?.node?.address),
+                  },
+                  value: member?.node?.id as string,
+                };
+              }) ?? ([] as optionType[])
+            }
+          />
+          <FormMemberSelect
+            name="secondIntroducerId"
+            label={t['kymIndSecondIntroducer']}
+            placeholder={t['kymIndSecondIntroducerDetails']}
+            onInputChange={debounce((id) => {
+              setIDMember(id);
+              setTrigger(true);
+            }, 800)}
+            options={
+              memberListData?.map((member) => {
+                const profileData = member?.node
+                  ?.profile as KymIndFormStateQuery;
+                return {
+                  memberInfo: {
+                    // image:member?.node?.code,
+                    memberName: member?.node?.name?.local,
+                    memberId: member?.node?.id,
+                    gender:
+                      profileData?.data?.formData?.basicInformation?.gender
+                        ?.local,
+                    age: profileData?.data?.formData?.basicInformation?.age,
+                    maritialStatus:
+                      profileData?.data?.formData?.maritalStatus?.local,
+                    address: formatAddress(member?.node?.address),
+                  },
+                  value: member?.node?.id as string,
+                };
+              }) ?? ([] as optionType[])
+            }
+          />
         </FormSection>
       </form>
     </FormProvider>

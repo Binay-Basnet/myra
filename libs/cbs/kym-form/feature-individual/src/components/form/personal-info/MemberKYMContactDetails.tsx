@@ -78,7 +78,11 @@ export const MemberKYMContactDetails = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection id="kymAccIndContactDetails" header="kymIndCONTACTDETAILS">
+        <FormSection
+          id="kymAccIndContactDetails"
+          header="kymIndCONTACTDETAILS"
+          gridLayout={true}
+        >
           <FormPhoneNumber
             name="mobileNumber"
             label={t['kymIndMobileNo']}

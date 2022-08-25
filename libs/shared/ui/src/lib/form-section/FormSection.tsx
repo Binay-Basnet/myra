@@ -7,6 +7,9 @@ export interface FormSectionProps {
   id?: string;
   header?: string;
   subHeader?: string;
+  gridLayout?: boolean;
+  flexLayout?: boolean;
+  templateColumns?: number;
   children?: React.ReactNode;
 }
 
@@ -14,6 +17,9 @@ export function FormSection({
   id,
   header,
   subHeader,
+  gridLayout,
+  flexLayout,
+  templateColumns,
   children,
 }: FormSectionProps) {
   const { t } = useTranslation();
@@ -43,9 +49,19 @@ export function FormSection({
         </Box>
       )}
       <Box borderBottom={'1px solid'} borderBottomColor="border.layout" p="s20">
-        <Grid templateColumns={'repeat(3,1fr)'} gap="s20" rowGap={'s16'}>
-          {children}
-        </Grid>
+        {gridLayout && (
+          <Grid
+            templateColumns={`repeat(${
+              templateColumns ? templateColumns : 3
+            },1fr)`}
+            gap="s20"
+            rowGap={'s16'}
+          >
+            {children}
+          </Grid>
+        )}
+
+        {flexLayout && <Box display="flex">{children}</Box>}
       </Box>
     </Box>
   );
