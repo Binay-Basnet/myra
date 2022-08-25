@@ -18,10 +18,7 @@ import {
   useGetMemberListQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
-import {
-  FormCustomSelect,
-  FormMemberSelect,
-} from '@coop/cbs/transactions/ui-components';
+import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
@@ -38,6 +35,7 @@ import {
   DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
+  FormMemberSelect,
   Grid,
   GridItem,
   Icon,

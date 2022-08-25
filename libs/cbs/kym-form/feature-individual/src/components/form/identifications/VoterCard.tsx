@@ -12,7 +12,7 @@ import {
   useSetKymIndividualIdentificationDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, Grid, Text } from '@coop/shared/ui';
+import { Box, FormSection, Text } from '@coop/shared/ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface IVoterCardProps {
@@ -147,23 +147,21 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
             setKymCurrentSection(kymSection);
           }}
         >
-          <Box p="s20" display="flex" flexDirection="column" gap="s16">
-            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-              <FormInput
-                type="text"
-                name="idNo"
-                label={t['kymIndVoterCardNo']}
-                placeholder={t['kymIndVoterCardNo']}
-              />
+          <FormSection gridLayout={true}>
+            <FormInput
+              type="text"
+              name="idNo"
+              label={t['kymIndVoterCardNo']}
+              placeholder={t['kymIndVoterCardNo']}
+            />
 
-              <FormInput
-                type="text"
-                name="place"
-                label={t['kymIndVoterCardPollingStation']}
-                placeholder={t['kymIndVoterCardPollingStation']}
-              />
-            </Grid>
-          </Box>
+            <FormInput
+              type="text"
+              name="place"
+              label={t['kymIndVoterCardPollingStation']}
+              placeholder={t['kymIndVoterCardPollingStation']}
+            />
+          </FormSection>
         </form>
       </FormProvider>
     </Box>

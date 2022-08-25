@@ -98,7 +98,7 @@ export const MemberKYMProfession = ({
           display="flex"
           flexDirection="column"
           id="kymAccIndProfession"
-          // scrollMarginTop={'200px'}
+          scrollMarginTop={'200px'}
           gap="s16"
         >
           {occupationLoading ? (

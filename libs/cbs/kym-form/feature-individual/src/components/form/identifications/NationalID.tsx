@@ -12,7 +12,7 @@ import {
   useSetKymIndividualIdentificationDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, Grid, Text } from '@coop/shared/ui';
+import { Box, FormSection, Text } from '@coop/shared/ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface INationalIDProps {
@@ -145,16 +145,14 @@ export const NationalID = ({ setKymCurrentSection }: INationalIDProps) => {
             setKymCurrentSection(kymSection);
           }}
         >
-          <Box p="s20" display="flex" flexDirection="column" gap="s16">
-            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-              <FormInput
-                type="text"
-                name="idNo"
-                label={t['kymIndNationalIDNo']}
-                placeholder={t['kymIndNationalIDNo']}
-              />
-            </Grid>
-          </Box>
+          <FormSection gridLayout={true}>
+            <FormInput
+              type="text"
+              name="idNo"
+              label={t['kymIndNationalIDNo']}
+              placeholder={t['kymIndNationalIDNo']}
+            />
+          </FormSection>
         </form>
       </FormProvider>
     </Box>

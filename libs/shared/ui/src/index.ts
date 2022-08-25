@@ -24,6 +24,7 @@ export * from './lib/floating-shortcut-button/FloatingShortcutButton';
 export * from './lib/floating-shortcut-button/FloatingShortcutButton';
 export * from './lib/form-footer/FormFooter';
 export * from './lib/form-header/FormHeader';
+export * from './lib/form-member-select/FormMemberSelect';
 export * from './lib/form-section/FormSection';
 export * from './lib/grid/Grid';
 export * from './lib/grid-item/GridItem';
