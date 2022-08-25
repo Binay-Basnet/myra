@@ -353,20 +353,21 @@ export function SettingsDepositProductsAdd() {
                   <DefaultAccountName />
                 )}
                 <Questions />
-                {depositNature === NatureOfDepositProduct.Mandatory && (
+                {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (
                   <DormantSetup />
                 )}
+
+                {depositNature !==
+                  NatureOfDepositProduct.VoluntaryOrOptional && (
+                  <PrematuredPenalty />
+                )}
+
                 {(typesOfMember?.includes(KymMemberTypesEnum.Individual) ||
                   typesOfMember?.includes(KymMemberTypesEnum.Institution) ||
                   typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
                   typesOfMember?.includes(
                     KymMemberTypesEnum.CooperativeUnion
                   )) && <RequiredDocumentSetup />}
-
-                {depositNature !==
-                  NatureOfDepositProduct.VoluntaryOrOptional && (
-                  <PrematuredPenalty />
-                )}
               </ContainerWithDivider>
             </Box>
           </form>

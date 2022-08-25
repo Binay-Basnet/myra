@@ -2586,12 +2586,7 @@ const en: Record<string, string> = {
   depositProductSelectServiceName: 'Select Service Name',
   depositProductLedgerName: 'Ledger Name',
   depositProductAmount: 'Amount',
-  depositProductAutoOpenwhenmemberjoins: 'Auto Open when member joins',
-  depositProductAlternativeChannels: 'Alternative Channels',
-  depositProductAllowLoan: 'Allow Loan',
-  depositProductPercentageDeposit: 'Percentage of Deposit',
-  depositProductSupportMultipleAccount: 'Support Multiple Account',
-  depositProductStaffProduct: 'Staff Product',
+
   depositProductWidthdrawRestricted: 'Widthdraw Restricted',
   depositProductSpecify: 'Specify',
   depositProductNote: 'Note',
@@ -2622,7 +2617,6 @@ const en: Record<string, string> = {
   depositProductSelectAccount: 'Select Account',
   depositProductATMFacility: 'ATM Facility',
   depositProductChequeIssue: 'Cheque Issue',
-  depositProductDuration: 'Duration',
   depositProductSelectDuration: 'Select Duration',
   depositProductCondition: 'Condition',
   depositProductSelectCondition: 'Select Condition',
@@ -3208,7 +3202,15 @@ const en: Record<string, string> = {
   depositProductAccountOpenServiceCharge: 'Account Open Service Charge',
   depositProductAccountCloseServiceCharge: 'Account Close Service Charge',
   depositProductIsThisForMinor: 'Is this a product for Minors ?',
-  depositProductMinorAccount: 'Is this a Minor Account ? ',
+  depositProductAlternativeChannels:
+    'Does this product allow Alternative Channels?',
+  depositProductPercentageDeposit: 'Maximum percentage of Deposit',
+  depositProductSupportMultipleAccount: 'Support Multiple Account',
+  depositProductAutoOpenwhenmemberjoins: 'Auto Open when member joins?',
+  depositProductAllowLoan: 'Allow Loan from this product ?',
+  depositProductStaffProduct: 'Is this a Staff Product ?',
+  depositProductDuration: 'Dormant Duration',
+  kymIndLoan: 'Loan',
 };
 
 export default en;

@@ -122,18 +122,6 @@ const MainOccupation = ({
     searchTerm: FormFieldSearchTerm.Occupation,
   });
 
-  // const { data: occupationDetailsDefaultFields } =
-  //   useGetIndividualKymOptionsQuery({
-  //     id,
-  //     filter: {
-  //       customId: Kym_Field_Custom_Id.OccupationDetails,
-  //     },
-  //   });
-
-  // const occupationFieldNames =
-  //   occupationDetailsDefaultFields?.members.individual?.options.list?.data?.[0]
-  //     ?.options ?? [];
-
   const { data: familyOccupationListData } =
     useGetIndividualKymFamilyOccupationListQuery(
       {
