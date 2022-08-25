@@ -5,8 +5,8 @@ import { useTranslation } from '@coop/shared/utils';
 import { TextBoxContainer, TopText } from '../formui';
 
 type DormantSetupTable = {
-  duration: string;
   condition: string;
+  duration: string;
 };
 
 const durationList = [
@@ -38,18 +38,18 @@ export const DormantSetup = () => {
         debug={false}
         columns={[
           {
-            accessor: 'duration',
-            header: t['depositProductDuration'],
-            fieldType: 'select',
-            cellWidth: 'auto',
-            selectOptions: durationList,
-          },
-          {
             accessor: 'condition',
             header: t['depositProductCondition'],
             fieldType: 'select',
             cellWidth: 'auto',
             selectOptions: conditionList,
+          },
+          {
+            accessor: 'duration',
+            header: t['depositProductDuration'],
+            fieldType: 'select',
+            cellWidth: 'auto',
+            selectOptions: durationList,
           },
         ]}
       />

@@ -12,7 +12,7 @@ import {
   useSetKymIndividualIdentificationDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, Grid, Text } from '@coop/shared/ui';
+import { Box, FormSection, Text } from '@coop/shared/ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface IDrivingLicenseProps {
@@ -151,30 +151,28 @@ export const DrivingLicense = ({
             setKymCurrentSection(kymSection);
           }}
         >
-          <Box p="s20" display="flex" flexDirection="column" gap="s16">
-            <Grid templateColumns="repeat(3, 1fr)" gap="s20">
-              <FormInput
-                type="text"
-                name="idNo"
-                label={t['kymIndDrivingLicenseNo']}
-                placeholder={t['kymIndDrivingLicenseNo']}
-              />
+          <FormSection gridLayout={true}>
+            <FormInput
+              type="text"
+              name="idNo"
+              label={t['kymIndDrivingLicenseNo']}
+              placeholder={t['kymIndDrivingLicenseNo']}
+            />
 
-              <FormInput
-                type="text"
-                name="place"
-                label={t['kymIndDrivingLicenseIssuePlace']}
-                placeholder={t['kymIndDrivingLicenseIssuePlace']}
-              />
+            <FormInput
+              type="text"
+              name="place"
+              label={t['kymIndDrivingLicenseIssuePlace']}
+              placeholder={t['kymIndDrivingLicenseIssuePlace']}
+            />
 
-              <FormInput
-                type="date"
-                name="date"
-                label={t['kymIndDrivingLicenseIssueDate']}
-                placeholder={t['kymIndDrivingLicenseIssueDate']}
-              />
-            </Grid>
-          </Box>
+            <FormInput
+              type="date"
+              name="date"
+              label={t['kymIndDrivingLicenseIssueDate']}
+              placeholder={t['kymIndDrivingLicenseIssueDate']}
+            />
+          </FormSection>
         </form>
       </FormProvider>
     </Box>

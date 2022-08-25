@@ -9,8 +9,8 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import { Box, FormSection } from '@coop/shared/ui';
+import { getKymSection } from '@coop/shared/utils';
 
 import {
   Citizenship,
@@ -38,7 +38,6 @@ const identificationOptions = [
 export const MemberKYMIdentificationDetails = ({
   setKymCurrentSection,
 }: IMemberKYMIdentificationDetailsProps) => {
-  const { t } = useTranslation();
   const methods = useForm<KymIndMemberInput>();
 
   const { reset, watch } = methods;
@@ -103,41 +102,25 @@ export const MemberKYMIdentificationDetails = ({
   }, [watch, router.isReady]);
 
   return (
-    <Box borderBottom={'1px solid'} borderBottomColor="border.layout">
+    <Box>
       <FormProvider {...methods}>
-        <Text
-          fontSize="r1"
-          p="s20"
-          pb="0"
-          fontWeight="semibold"
-          color="neutralColorLight.Gray-80"
-        >
-          {t['kymIndIDENTIFICATIONDETAILS']}
-        </Text>
         <form
           onFocus={(e) => {
             const kymSection = getKymSection(e.target.id);
             setKymCurrentSection(kymSection);
           }}
         >
-          {/* <FormSection header="kymIndIDENTIFICATIONDETAILS"> */}
-          <Box
-            p="s20"
-            gap="s16"
-            id="kymAccIndIdentificationDetails"
-            display="flex"
-            flexDirection="column"
+          <FormSection
+            flexLayout={true}
+            header="kymIndIDENTIFICATIONDETAILS"
+            subHeader="kymIndChooseidentificationdetails"
           >
-            <Text fontSize="r1" fontWeight="medium">
-              {t['kymIndChooseidentificationdetails']}
-            </Text>
             <FormCheckboxGroup
               name={'identificationSelection'}
               showOther={false}
               list={identificationOptions}
             />
-          </Box>
-          {/* </FormSection> */}
+          </FormSection>
         </form>
       </FormProvider>
       {/* {identificationOptions.map(
