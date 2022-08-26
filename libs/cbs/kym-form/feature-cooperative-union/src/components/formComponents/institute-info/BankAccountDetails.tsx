@@ -26,7 +26,8 @@ export const BankAccountDetails = ({
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  useCooperativeUnionInstitution({ methods });
+  const { sectionStatus } = useCooperativeUnionInstitution({ methods });
+  const sectionErrors = sectionStatus?.errors?.[0]?.errors;
 
   const { data: bankList } = useGetBankListQuery();
 
@@ -59,12 +60,19 @@ export const BankAccountDetails = ({
                 label: bank?.name,
                 value: bank?.id,
               }))}
+              errorText={
+                sectionErrors?.['nameOfBank'] && sectionErrors['nameOfBank'][0]
+              }
             />
             <FormInput
               type="text"
               name="accountNumber"
               label={t['kymCoopUnionAccountNumber']}
               placeholder={t['kymCoopUnionEnterAccountNumber']}
+              errorText={
+                sectionErrors?.['accountNumber'] &&
+                sectionErrors['accountNumber'][0]
+              }
             />
 
             <FormInput
@@ -72,6 +80,10 @@ export const BankAccountDetails = ({
               name="accountName"
               label={t['kymCoopUnionAccountName']}
               placeholder={t['kymCoopUnionEnterAccountName']}
+              errorText={
+                sectionErrors?.['accountName'] &&
+                sectionErrors['accountName'][0]
+              }
             />
           </InputGroupContainer>
         </GroupContainer>

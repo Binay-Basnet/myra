@@ -30,7 +30,7 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
   const { watch } = methods;
 
   const { sectionStatus } = useCooperativeUnionInstitution({ methods });
-  const sectionErrors = sectionStatus?.errors[0]?.errors;
+  const sectionErrors = sectionStatus?.errors?.[0]?.errors;
 
   const province = useMemo(() => {
     return (

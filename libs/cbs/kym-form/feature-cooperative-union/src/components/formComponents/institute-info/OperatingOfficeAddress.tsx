@@ -30,7 +30,6 @@ export const OperatingOfficeAddress = ({
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
   const { watch } = methods;
-
   useCooperativeUnionInstitution({ methods });
 
   const province = useMemo(() => {

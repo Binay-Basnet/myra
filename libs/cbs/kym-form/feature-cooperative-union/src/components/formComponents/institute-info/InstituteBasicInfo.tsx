@@ -33,7 +33,7 @@ export const InstituteBasicInfo = ({
   });
 
   const { sectionStatus } = useCooperativeUnionInstitution({ methods });
-  const sectionErrors = sectionStatus?.errors[0]?.errors;
+  const sectionErrors = sectionStatus?.errors?.[0]?.errors;
 
   return (
     <FormProvider {...methods}>
