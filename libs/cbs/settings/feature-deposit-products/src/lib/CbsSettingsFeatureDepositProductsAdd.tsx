@@ -6,7 +6,6 @@ import {
   DepositProductInput,
   KymMemberTypesEnum,
   NatureOfDepositProduct,
-  PrematurePenaltyDateType,
   useGetDepositProductSettingsEditDataQuery,
   useSetDepositProductMutation,
 } from '@coop/cbs/data-access';
@@ -94,14 +93,7 @@ export function SettingsDepositProductsAdd() {
     },
   ];
 
-  const methods = useForm<DepositForm>({
-    defaultValues: {
-      nature: NatureOfDepositProduct.RecurringSaving,
-      prematurePenalty: {
-        penaltyDateType: PrematurePenaltyDateType.EffectiveDaysFromStart,
-      },
-    },
-  });
+  const methods = useForm<DepositForm>({});
 
   const { getValues, watch, reset, resetField } = methods;
   const depositNature = watch('nature');
@@ -283,17 +275,19 @@ export function SettingsDepositProductsAdd() {
                       <FormInput
                         name="productName"
                         label={t['depositProductProductName']}
-                        placeholder={t['depositProductEnterProductName']}
                       />
                     </GridItem>
                     <FormSelect
+                      label={t['depositProductNatureofDepositProduct']}
                       name="nature"
                       options={optionsSaving}
-                      label={t['depositProductNatureofDepositProduct']}
-                      placeholder={
-                        t['depositProductSelectNatureofDepositProduct']
-                      }
                     />
+                    <GridItem colSpan={3}>
+                      <FormInput
+                        name="description"
+                        label={t['depositProductDescription']}
+                      />
+                    </GridItem>
                   </InputGroupContainer>
                 </Box>
                 <Box>
@@ -306,12 +300,10 @@ export function SettingsDepositProductsAdd() {
                   <InputGroupContainer mt="s16">
                     <FormInput
                       label={t['depositProductPrefix']}
-                      placeholder={t['depositProductEnterPrefix']}
                       name="productCode.prefix"
                     />
                     <FormInput
                       label={t['depositProductIntitialNumber']}
-                      placeholder={t['depositProductIntitialNumber']}
                       name="productCode.initialNo"
                     />
                   </InputGroupContainer>
@@ -352,7 +344,9 @@ export function SettingsDepositProductsAdd() {
                 {depositNature === NatureOfDepositProduct.TermSavingOrFd && (
                   <DefaultAccountName />
                 )}
+
                 <Questions />
+
                 {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (
                   <DormantSetup />
                 )}
@@ -368,6 +362,8 @@ export function SettingsDepositProductsAdd() {
                   typesOfMember?.includes(
                     KymMemberTypesEnum.CooperativeUnion
                   )) && <RequiredDocumentSetup />}
+
+                {/* <WithdrawPenalty /> */}
               </ContainerWithDivider>
             </Box>
           </form>

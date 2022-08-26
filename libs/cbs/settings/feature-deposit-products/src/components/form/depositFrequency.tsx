@@ -78,12 +78,10 @@ export const DepositFrequency = () => {
             <FormInput
               name="depositAmount.minAmount"
               label={t['depositProductMinimumAmount']}
-              placeholder={t['depositProductEnterMinimumAmount']}
             />
             <FormInput
               name="depositAmount.maxAmount"
               label={t['depositProductMaximumAmount']}
-              placeholder={t['depositProductEnterMaximumAmount']}
             />
           </InputGroupContainer>
         </>
@@ -122,7 +120,6 @@ export const DepositFrequency = () => {
                 name="penaltyData.dayAfterInstallmentDate"
                 type="number"
                 label={t['depositProductDayaftertheinstallmentdate']}
-                placeholder={t['depositProductDayfromenddate']}
               />
             </GridItem>
             <GridItem>
@@ -168,7 +165,6 @@ export const DepositFrequency = () => {
                 name="penaltyData.penaltyAmount"
                 type="number"
                 label={t['depositProductPenaltyAmount']}
-                placeholder={t['depositProductPenaltyAmount']}
               />
             )}
           </InputGroupContainer>
@@ -198,7 +194,6 @@ export const DepositFrequency = () => {
                 name="rebateData.daysBeforeInstallmentDate"
                 type="number"
                 label={t['depositProductDayaftertheinstallmentdate']}
-                placeholder={t['depositProductDayfromenddate']}
               />
             </GridItem>
             <GridItem>
@@ -219,7 +214,6 @@ export const DepositFrequency = () => {
                 name="rebateData.rebateAmount"
                 type="number"
                 label={t['depositProductRebateAmount']}
-                placeholder={t['depositProductRebateAmount']}
               />
             </GridItem>
             <GridItem>

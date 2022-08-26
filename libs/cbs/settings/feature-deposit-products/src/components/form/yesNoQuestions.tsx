@@ -149,7 +149,7 @@ export const Questions = () => {
 
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
         <SubHeadingText>{t['depositProductIsThisForMinor']} </SubHeadingText>
-        <FormSwitchTab name={'staffProduct'} options={yesNo} />
+        <FormSwitchTab name={'isForMinors'} options={yesNo} />
       </Box>
 
       {depositNature === NatureOfDepositProduct.RecurringSaving && (
