@@ -1438,6 +1438,7 @@ export type DepositAccount = Base & {
   createdBy: Identity;
   fine?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  installmentAmount?: Maybe<Scalars['String']>;
   lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
@@ -6258,7 +6259,9 @@ export type Member = Base & {
   name?: Maybe<Scalars['Localized']>;
   objState: ObjState;
   profile?: Maybe<MemberProfile>;
+  profilePicUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
   share?: Maybe<MemberShare>;
+  signaturePicUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
   type: KymMemberTypesEnum;
 };
 
@@ -8129,7 +8132,17 @@ export type SetAccountOpenDataMutationVariables = Exact<{
 }>;
 
 export type SetAccountOpenDataMutation = {
-  account: { add?: { recordId: string } | null };
+  account: {
+    add?: {
+      recordId: string;
+      error?:
+        | { message: string }
+        | { in: string }
+        | { message: string }
+        | {}
+        | null;
+    } | null;
+  };
 };
 
 export type SetAccountDocumentDataMutationVariables = Exact<{
@@ -9617,6 +9630,7 @@ export type GetAccountTableListQuery = {
           objState: ObjState;
           createdAt: string;
           modifiedAt: string;
+          installmentAmount?: string | null;
           balance?: string | null;
           accountOpenedDate?: string | null;
           lastTransactionDate?: string | null;
@@ -12628,6 +12642,17 @@ export const SetAccountOpenDataDocument = `
   account {
     add(id: $id, data: $data) {
       recordId
+      error {
+        ... on AuthorizationError {
+          message
+        }
+        ... on BadRequestError {
+          in: message
+        }
+        ... on ServerError {
+          message
+        }
+      }
     }
   }
 }
@@ -15573,6 +15598,7 @@ export const GetAccountTableListDocument = `
           modifiedBy {
             id
           }
+          installmentAmount
           balance
           accountOpenedDate
           lastTransactionDate

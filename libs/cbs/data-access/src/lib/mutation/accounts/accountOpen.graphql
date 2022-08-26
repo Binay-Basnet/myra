@@ -2,6 +2,18 @@ mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
   account {
     add(id: $id, data: $data) {
       recordId
+
+      error {
+        ... on AuthorizationError {
+          message
+        }
+        ... on BadRequestError {
+          in: message
+        }
+        ... on ServerError {
+          message
+        }
+      }
     }
   }
 }

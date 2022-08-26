@@ -216,6 +216,7 @@ query getAccountTableList(
             # username
             # userType
           }
+          installmentAmount
           balance
           accountOpenedDate
           lastTransactionDate
