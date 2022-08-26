@@ -20,6 +20,7 @@ import {
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Button,
   Container,
@@ -183,10 +184,14 @@ export function AddWithdraw() {
           ) ?? [],
       };
 
-      mutateAsync({ data: filteredValues as WithdrawInput }).then((res) => {
-        if (res?.transaction?.withdraw?.recordId) {
-          router.push('/transactions/withdraw/list');
-        }
+      asyncToast({
+        id: 'add-new-withdraw',
+        msgs: {
+          success: 'New Withdraw Added',
+          loading: 'Adding New Withdraw',
+        },
+        onSuccess: () => router.push('/transactions/withdraw/list'),
+        promise: mutateAsync({ data: filteredValues as WithdrawInput }),
       });
     }
 
@@ -197,16 +202,16 @@ export function AddWithdraw() {
         'withdrawBy',
       ]);
 
-      mutateAsync({ data: filteredValues as WithdrawInput }).then((res) => {
-        if (res?.transaction?.withdraw?.recordId) {
-          router.push('/transactions/withdraw/list');
-        }
+      asyncToast({
+        id: 'add-new-withdraw',
+        msgs: {
+          success: 'New Withdraw Added',
+          loading: 'Adding New Withdraw',
+        },
+        onSuccess: () => router.push('/transactions/withdraw/list'),
+        promise: mutateAsync({ data: filteredValues as WithdrawInput }),
       });
     }
-
-    // mutate({ data: filteredValues });
-
-    // const proccessedValues = {...values, cash:{...values.cash,denominations:}
   };
 
   return (

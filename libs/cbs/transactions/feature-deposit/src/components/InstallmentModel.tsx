@@ -72,7 +72,7 @@ export const InstallmentModel = ({
         <Divider />
 
         <ModalCloseButton />
-        <ModalBody p="s16" height="60vh" overflowY="scroll">
+        <ModalBody p="s16" maxHeight="60vh" overflowY="scroll">
           <Box
             borderRadius="br2"
             px="s12"

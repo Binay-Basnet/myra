@@ -150,6 +150,7 @@ export function MemberCard({
                     fontWeight="500"
                     color="primary.500"
                     cursor="pointer"
+                    wordBreak="break-word"
                   >
                     {memberDetails.name}
                   </Text>

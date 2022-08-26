@@ -1438,6 +1438,7 @@ export type DepositAccount = Base & {
   createdBy: Identity;
   fine?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  installmentAmount?: Maybe<Scalars['String']>;
   lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
@@ -6258,7 +6259,9 @@ export type Member = Base & {
   name?: Maybe<Scalars['Localized']>;
   objState: ObjState;
   profile?: Maybe<MemberProfile>;
+  profilePicUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
   share?: Maybe<MemberShare>;
+  signaturePicUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
   type: KymMemberTypesEnum;
 };
 
@@ -8129,7 +8132,17 @@ export type SetAccountOpenDataMutationVariables = Exact<{
 }>;
 
 export type SetAccountOpenDataMutation = {
-  account: { add?: { recordId: string } | null };
+  account: {
+    add?: {
+      recordId: string;
+      error?:
+        | { message: string }
+        | { in: string }
+        | { message: string }
+        | {}
+        | null;
+    } | null;
+  };
 };
 
 export type SetAccountDocumentDataMutationVariables = Exact<{
@@ -9617,6 +9630,7 @@ export type GetAccountTableListQuery = {
           objState: ObjState;
           createdAt: string;
           modifiedAt: string;
+          installmentAmount?: string | null;
           balance?: string | null;
           accountOpenedDate?: string | null;
           lastTransactionDate?: string | null;
@@ -10397,6 +10411,45 @@ export type GetCentralRepresentativeDetailsQuery = {
                 incomplete?: Array<string | null> | null;
               } | null> | null;
             } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetCoopUnionSectionStatusQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCoopUnionSectionStatusQuery = {
+  members: {
+    cooperativeUnion?: {
+      formState?: {
+        sectionStatus?: {
+          institutionInformation?: {
+            completed?: Array<KymCoopUnionInstitutionInformationSection | null> | null;
+            error?: Array<KymCoopUnionInstitutionInformationSection | null> | null;
+          } | null;
+          economicDetails?: {
+            completed?: Array<KymCoopUnionEconomicDetailsSection | null> | null;
+            error?: Array<KymCoopUnionEconomicDetailsSection | null> | null;
+          } | null;
+          bodDetails?: {
+            completed?: Array<KymCoopUnionBodSection | null> | null;
+            error?: Array<KymCoopUnionBodSection | null> | null;
+          } | null;
+          accountOperatorDetails?: {
+            completed?: Array<KymCoopUnionAccountOperatorSection | null> | null;
+            error?: Array<KymCoopUnionAccountOperatorSection | null> | null;
+          } | null;
+          centralRepresentativeDetails?: {
+            completed?: Array<KymCoopUnionCentralRepresentativeSection | null> | null;
+            error?: Array<KymCoopUnionCentralRepresentativeSection | null> | null;
+          } | null;
+          declaration?: {
+            completed?: Array<KymCoopUnionDeclarationSection | null> | null;
+            error?: Array<KymCoopUnionDeclarationSection | null> | null;
           } | null;
         } | null;
       } | null;
@@ -12628,6 +12681,17 @@ export const SetAccountOpenDataDocument = `
   account {
     add(id: $id, data: $data) {
       recordId
+      error {
+        ... on AuthorizationError {
+          message
+        }
+        ... on BadRequestError {
+          in: message
+        }
+        ... on ServerError {
+          message
+        }
+      }
     }
   }
 }
@@ -15573,6 +15637,7 @@ export const GetAccountTableListDocument = `
           modifiedBy {
             id
           }
+          installmentAmount
           balance
           accountOpenedDate
           lastTransactionDate
@@ -16486,6 +16551,57 @@ export const useGetCentralRepresentativeDetailsQuery = <
       GetCentralRepresentativeDetailsQuery,
       GetCentralRepresentativeDetailsQueryVariables
     >(GetCentralRepresentativeDetailsDocument).bind(null, variables),
+    options
+  );
+export const GetCoopUnionSectionStatusDocument = `
+    query getCoopUnionSectionStatus($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        sectionStatus {
+          institutionInformation {
+            completed
+            error
+          }
+          economicDetails {
+            completed
+            error
+          }
+          bodDetails {
+            completed
+            error
+          }
+          accountOperatorDetails {
+            completed
+            error
+          }
+          centralRepresentativeDetails {
+            completed
+            error
+          }
+          declaration {
+            completed
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopUnionSectionStatusQuery = <
+  TData = GetCoopUnionSectionStatusQuery,
+  TError = unknown
+>(
+  variables: GetCoopUnionSectionStatusQueryVariables,
+  options?: UseQueryOptions<GetCoopUnionSectionStatusQuery, TError, TData>
+) =>
+  useQuery<GetCoopUnionSectionStatusQuery, TError, TData>(
+    ['getCoopUnionSectionStatus', variables],
+    useAxios<
+      GetCoopUnionSectionStatusQuery,
+      GetCoopUnionSectionStatusQueryVariables
+    >(GetCoopUnionSectionStatusDocument).bind(null, variables),
     options
   );
 export const GetAccountListDocument = `

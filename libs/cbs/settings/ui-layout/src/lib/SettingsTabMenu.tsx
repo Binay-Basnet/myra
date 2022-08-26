@@ -38,7 +38,7 @@ const demoTabs: { title: string; icon: IconType; link: string }[] = [
 
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/settings/general': 0,
-  '/settings/users/super-admin': 1,
+  '/settings/users': 1,
   '/settings/import': 2,
   '/settings/subscriptions': 3,
 };

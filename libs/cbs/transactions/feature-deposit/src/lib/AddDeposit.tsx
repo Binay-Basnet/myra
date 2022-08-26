@@ -20,6 +20,7 @@ import {
 } from '@coop/cbs/transactions/ui-components';
 import { FormInput } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Button,
   Container,
@@ -138,15 +139,7 @@ export function AddDeposit() {
     setIsModalOpen(false);
   };
 
-  const amountToBeDeposited = watch('amount') ?? 0;
-
-  const totalDeposit = useMemo(
-    () =>
-      amountToBeDeposited
-        ? Number(amountToBeDeposited) + Number(FINE) - Number(REBATE)
-        : 0,
-    [amountToBeDeposited]
-  );
+  let amountToBeDeposited: string | number = watch('amount') ?? 0;
 
   const { mutateAsync } = useSetDepositDataMutation();
 
@@ -166,47 +159,6 @@ export function AddDeposit() {
   );
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
-
-  const returnAmount = Number(totalCashPaid) - totalDeposit;
-
-  const handleSubmit = () => {
-    const values = getValues();
-    let filteredValues = {
-      ...values,
-      fine: FINE,
-      rebate: REBATE,
-    };
-
-    if (values['payment_type'] === DepositPaymentType.Cash) {
-      filteredValues = omit({ ...filteredValues }, ['cheque', 'bankVoucher']);
-      filteredValues['cash'] = {
-        ...values['cash'],
-        cashPaid: values.cash?.cashPaid as string,
-        disableDenomination: Boolean(values.cash?.disableDenomination),
-        total: String(totalCashPaid),
-        returned_amount: String(returnAmount),
-        denominations:
-          values.cash?.denominations?.map(({ value, quantity }) => ({
-            value: cashOptions[value as string],
-            quantity,
-          })) ?? [],
-      };
-    }
-
-    if (values['payment_type'] === DepositPaymentType.BankVoucher) {
-      filteredValues = omit({ ...filteredValues }, ['cheque', 'cash']);
-    }
-
-    if (values['payment_type'] === DepositPaymentType.Cheque) {
-      filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash']);
-    }
-
-    mutateAsync({ data: filteredValues as DepositInput }).then((res) => {
-      if (res?.transaction?.deposit?.recordId) {
-        router.push('/transactions/deposit/list');
-      }
-    });
-  };
 
   const { data: installmentsListQueryData, refetch } =
     useGetInstallmentsListDataQuery(
@@ -257,10 +209,78 @@ export function AddDeposit() {
     return {
       firstMonth: pendingInstallments[0]?.monthName,
       lastMonth: pendingInstallments[pendingInstallments.length - 1]?.monthName,
-      fine,
-      rebate,
+      fine: String(fine),
+      rebate: String(rebate),
     };
   }, [noOfInstallments, installmentsListQueryData]);
+
+  amountToBeDeposited = useMemo(
+    () => Number(noOfInstallments) * Number(selectedAccount?.installmentAmount),
+    [noOfInstallments, selectedAccount]
+  );
+
+  const totalDeposit = useMemo(
+    () =>
+      amountToBeDeposited
+        ? Number(amountToBeDeposited) +
+          Number(fine ?? FINE) +
+          Number(rebate ?? REBATE)
+        : 0,
+    [amountToBeDeposited]
+  );
+
+  const returnAmount = Number(totalCashPaid) - totalDeposit;
+
+  const handleSubmit = () => {
+    const values = getValues();
+    let filteredValues = {
+      ...values,
+      fine: fine ?? FINE,
+      rebate: rebate ?? REBATE,
+    };
+
+    if (
+      selectedAccount?.product?.nature ===
+        NatureOfDepositProduct.RecurringSaving ||
+      selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory
+    ) {
+      filteredValues['amount'] = String(amountToBeDeposited);
+    }
+
+    if (values['payment_type'] === DepositPaymentType.Cash) {
+      filteredValues = omit({ ...filteredValues }, ['cheque', 'bankVoucher']);
+      filteredValues['cash'] = {
+        ...values['cash'],
+        cashPaid: values.cash?.cashPaid as string,
+        disableDenomination: Boolean(values.cash?.disableDenomination),
+        total: String(totalCashPaid),
+        returned_amount: String(returnAmount),
+        denominations:
+          values.cash?.denominations?.map(({ value, quantity }) => ({
+            value: cashOptions[value as string],
+            quantity,
+          })) ?? [],
+      };
+    }
+
+    if (values['payment_type'] === DepositPaymentType.BankVoucher) {
+      filteredValues = omit({ ...filteredValues }, ['cheque', 'cash']);
+    }
+
+    if (values['payment_type'] === DepositPaymentType.Cheque) {
+      filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash']);
+    }
+
+    asyncToast({
+      id: 'add-new-deposit',
+      msgs: {
+        success: 'New Deposit Added',
+        loading: 'Adding New Deposit',
+      },
+      onSuccess: () => router.push('/transactions/deposit/list'),
+      promise: mutateAsync({ data: filteredValues as DepositInput }),
+    });
+  };
 
   return (
     <>

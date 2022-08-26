@@ -12,7 +12,7 @@ import {
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-import { FormRadioGroup } from '@coop/shared/form';
+import { FormInput, FormRadioGroup } from '@coop/shared/form';
 
 import React from 'react';
 import {
@@ -78,7 +78,39 @@ export function CbsAccountClose() {
   ];
   const loanData = [
     {
-      label: 'Loan',
+      label: 'Loan Amount',
+      amount: '200',
+    },
+  ];
+  const interestData = [
+    {
+      label: 'Interest Payable',
+      amount: '200',
+    },
+    {
+      label: 'Interest Receivable',
+      amount: '200',
+    },
+    {
+      label: 'Total Interest Tax',
+      amount: '200',
+    },
+  ];
+  const OtherChargesData = [
+    {
+      label: 'Administration Fees',
+      amount: '200',
+    },
+    {
+      label: 'Printing Fees',
+      amount: '200',
+    },
+    {
+      label: 'Closing Charge',
+      amount: '200',
+    },
+    {
+      label: 'Minimum Balance Charge',
       amount: '200',
     },
   ];
@@ -136,63 +168,148 @@ export function CbsAccountClose() {
                   )}
                 />
               )}
-              <Box>
-                {' '}
-                <Divider />
-                <Box display={'flex'} flexDirection="column" gap="s4" p="s16">
-                  <Text fontSize="s3" fontWeight="600">
-                    Reason for closing
-                  </Text>
-                  <FormRadioGroup
-                    name="radioGroup"
-                    options={radioList}
-                    direction={'row'}
-                  />
-                </Box>
-                <Divider />
-                <Box display={'flex'} flexDirection="column" gap="s16">
-                  <Box display="flex" flexDirection={'column'} gap="s4">
-                    <Text fontSize={'r1'} fontWeight="600">
-                      Fees & Charges Summary
-                    </Text>
-                    <Text fontSize={'s2'} fontWeight="400">
-                      All charges and fees must be paid to get approved.
-                    </Text>
-                  </Box>
-                </Box>
+              {memberId && accountId && (
                 <Box>
-                  <Box
-                    display="flex"
-                    flexDirection={'column'}
-                    gap="s16"
-                    p="s16"
-                  >
-                    <Box display="flex" flexDirection={'column'} gap="s8">
-                      <Text fontWeight={'600'} fontSize="s3">
-                        Loan
+                  {' '}
+                  <Divider />
+                  <Box display={'flex'} flexDirection="column" gap="s4" p="s16">
+                    <Text fontSize="s3" fontWeight="600">
+                      Reason for closing
+                    </Text>
+                    <FormRadioGroup
+                      name="radioGroup"
+                      options={radioList}
+                      direction={'row'}
+                    />
+                  </Box>
+                  <Divider />
+                  <Box display={'flex'} flexDirection="column" gap="s16">
+                    <Box
+                      display="flex"
+                      flexDirection={'column'}
+                      gap="s4"
+                      pt="s16"
+                    >
+                      <Text fontSize={'r1'} fontWeight="600">
+                        Fees & Charges Summary
                       </Text>
-                      {loanData?.map(({ label, amount }) => {
-                        return (
-                          <Box
-                            h="36px"
-                            display={'flex'}
-                            justifyContent="space-between"
-                            alignItems={'center'}
-                            key={`${label}${amount}`}
-                          >
-                            <Text fontWeight={'500'} fontSize="s3">
-                              {label}
-                            </Text>
-                            <Text fontWeight={'600'} fontSize="r1">
-                              {amount}
-                            </Text>
+                      <Text fontSize={'s2'} fontWeight="400">
+                        All charges and fees must be paid to get approved.
+                      </Text>
+                    </Box>
+                  </Box>
+                  <Box bg="background.500" borderRadius="br2" mt="s16">
+                    <Box
+                      display="flex"
+                      flexDirection={'column'}
+                      gap="s16"
+                      p="s16"
+                    >
+                      <Box display="flex" flexDirection={'column'} gap="s8">
+                        <Text fontWeight={'600'} fontSize="s3">
+                          Loan
+                        </Text>
+                        {loanData?.map(({ label, amount }) => {
+                          return (
+                            <Box
+                              h="36px"
+                              display={'flex'}
+                              justifyContent="space-between"
+                              alignItems={'center'}
+                              key={`${label}${amount}`}
+                            >
+                              <Text fontWeight={'500'} fontSize="s3">
+                                {label}
+                              </Text>
+                              <Text fontWeight={'600'} fontSize="r1">
+                                {amount}
+                              </Text>
+                            </Box>
+                          );
+                        })}
+                      </Box>
+                      <Box display="flex" flexDirection={'column'} gap="s8">
+                        <Text fontWeight={'600'} fontSize="s3">
+                          Interest
+                        </Text>
+                        {interestData?.map(({ label, amount }) => {
+                          return (
+                            <Box
+                              h="36px"
+                              display={'flex'}
+                              justifyContent="space-between"
+                              alignItems={'center'}
+                              key={`${label}${amount}`}
+                            >
+                              <Text fontWeight={'500'} fontSize="s3">
+                                {label}
+                              </Text>
+                              <Text fontWeight={'600'} fontSize="r1">
+                                {amount}
+                              </Text>
+                            </Box>
+                          );
+                        })}
+                        <Box
+                          h="36px"
+                          display={'flex'}
+                          justifyContent="space-between"
+                          alignItems={'center'}
+                        >
+                          <Text fontWeight={'500'} fontSize="s3">
+                            Adjusted Interest
+                          </Text>
+                          <Box>
+                            <FormInput
+                              name="adjustedInput"
+                              type={'number'}
+                              textAlign="right"
+                              size={'xs'}
+                              w="160px"
+                            />
                           </Box>
-                        );
-                      })}
+                        </Box>
+                        <Box
+                          h="36px"
+                          display={'flex'}
+                          justifyContent="space-between"
+                          alignItems={'center'}
+                        >
+                          <Text fontWeight={'500'} fontSize="s3">
+                            Net Interest Payable{' '}
+                          </Text>
+                          <Text fontWeight={'600'} fontSize="r1">
+                            250.00
+                          </Text>
+                        </Box>
+                      </Box>
+                      <Box display="flex" flexDirection={'column'} gap="s8">
+                        <Text fontWeight={'600'} fontSize="s3">
+                          Other Charges
+                        </Text>
+                        {OtherChargesData?.map(({ label, amount }) => {
+                          return (
+                            <Box
+                              h="36px"
+                              display={'flex'}
+                              justifyContent="space-between"
+                              alignItems={'center'}
+                              key={`${label}${amount}`}
+                            >
+                              <Text fontWeight={'500'} fontSize="s3">
+                                {label}
+                              </Text>
+                              <Text fontWeight={'600'} fontSize="r1">
+                                {amount}
+                              </Text>
+                            </Box>
+                          );
+                        })}
+                      </Box>
                     </Box>
                   </Box>
                 </Box>
-              </Box>
+              )}
             </Box>
             {memberId && (
               <Box>
