@@ -31,7 +31,8 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  useCooperativeUnionInstitution({ methods });
+  const { sectionStatus } = useCooperativeUnionInstitution({ methods });
+  const sectionErrors = sectionStatus?.errors?.[0]?.errors;
 
   const { watch } = methods;
 
@@ -128,12 +129,20 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
                 name="applicantName"
                 label={t['kymCoopUnionName']}
                 placeholder={t['kymCoopUnionEnterName']}
+                errorText={
+                  sectionErrors?.['applicantName'] &&
+                  sectionErrors['applicantName'][0]
+                }
               />
               <FormInput
                 type="text"
                 name="applicantDesignationEn"
                 label={t['kymCoopUnionDesignation']}
                 placeholder={t['kymCoopUnionEnterDesignation']}
+                errorText={
+                  sectionErrors?.['applicantDesignationEn'] &&
+                  sectionErrors['applicantDesignationEn'][0]
+                }
               />
               <Box></Box>
               <FormInput
@@ -141,18 +150,30 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
                 name="applicantEmail"
                 label={t['kymCoopUnionEmailAddress']}
                 placeholder={t['kymCoopUnionEmailAddressPlaceholder']}
+                errorText={
+                  sectionErrors?.['applicantEmail'] &&
+                  sectionErrors['applicantEmail'][0]
+                }
               />
               <FormInput
                 type="text"
                 name="applicantContactNo"
                 label={t['kymCoopUnionContactNo']}
                 placeholder={t['kymCoopUnionContactNoPlaceholder']}
+                errorText={
+                  sectionErrors?.['applicantContactNo'] &&
+                  sectionErrors['applicantContactNo'][0]
+                }
               />
               <FormInput
                 type="text"
                 name="applicantPanNo"
                 label={t['kymCoopUnionPANNo']}
                 placeholder={t['kymCoopUnionPANNoPlaceholder']}
+                errorText={
+                  sectionErrors?.['applicantPanNo'] &&
+                  sectionErrors['applicantPanNo'][0]
+                }
               />
             </InputGroupContainer>
 

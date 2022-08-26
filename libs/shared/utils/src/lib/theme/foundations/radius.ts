@@ -5,6 +5,7 @@ const radii = {
   br3: '8px',
   br4: '16px',
   br5: '20px',
+  br6: '32px',
 };
 
 /**
