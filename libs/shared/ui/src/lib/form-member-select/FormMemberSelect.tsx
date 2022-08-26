@@ -1,104 +1,87 @@
-import { useEffect } from 'react';
-import {
-  Control,
-  Controller,
-  FieldValues,
-  useFormContext,
-} from 'react-hook-form';
-import {
-  ControllerRenderProps,
-  UseControllerProps,
-} from 'react-hook-form/dist/types/controller';
+import { useState } from 'react';
+import { debounce } from 'lodash';
 
-// import { Select, SelectProps } from '@coop/shared/ui';
-import { Select, SelectProps } from './CustomSelect';
+import {
+  Filter_Mode,
+  KymIndFormStateQuery,
+  ObjState,
+  useGetMemberListQuery,
+} from '@coop/cbs/data-access';
+import { getRouterQuery } from '@coop/shared/utils';
 
-interface IFormMemberSelectProps<T> extends SelectProps {
-  control?: Control<T>;
+import { Option } from './CustomSelect';
+import FormCustomSelect from './FormCustomSelect';
+
+interface IMemberSelectProps {
   name: string;
-  rules?: UseControllerProps['rules'];
-}
-
-interface Option {
   label?: string;
-  value: string;
-  memberInfo?: {
-    image?: string;
-    memberName?: string;
-    memberId?: string;
-    gender?: string;
-    age?: number | null | undefined;
-    maritialStatus?: string;
-    address?: string;
-  };
+  placeholder?: string;
 }
 
-export const FormMemberSelect = <T,>(props: IFormMemberSelectProps<T>) => {
-  const { name, ...rest } = props;
-
-  const methods = useFormContext();
-  const {
-    formState: { errors },
-    control: formControl,
-  } = methods;
-
-  return (
-    <Controller
-      control={formControl}
-      rules={rest.rules}
-      name={name}
-      render={({ field }) => {
-        return <FormControl field={field} errors={errors} {...props} />;
-      }}
-    />
-  );
-};
-
-interface FormControlProps<T> extends IFormMemberSelectProps<T> {
-  errors: any;
-  field: ControllerRenderProps<FieldValues, string>;
-}
-
-const FormControl = <T,>({
+export const FormMemberSelect = ({
   name,
-  options,
-  errors,
-  field: { onChange, value },
-  ...rest
-}: FormControlProps<T>) => {
-  const foundValue = options?.find((option) => option.value === value);
+  label,
+  placeholder,
+}: IMemberSelectProps) => {
+  const [IDMember, setIDMember] = useState('');
+  const [trigger, setTrigger] = useState(false);
 
-  const filteredValue = rest.isMulti
-    ? options?.filter(
-        (option) =>
-          value?.some((v: Option) => v?.value === option.value) ||
-          value?.includes(option?.value)
-      )
-    : [];
-
-  useEffect(() => {
-    if (rest.isMulti) {
-      onChange(filteredValue);
+  const { data: memberList, isFetching } = useGetMemberListQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        query: IDMember,
+        id: IDMember,
+        filterMode: Filter_Mode.Or,
+        objState: ObjState?.Approved,
+      },
+    },
+    {
+      staleTime: 0,
+      enabled: trigger,
     }
-  }, []);
+  );
+
+  // useEffect(() => {
+  //   setIDMember(watch(name));
+  // }, [watch(name)]);
+
+  const memberListData = memberList?.members?.list?.edges;
+
+  const memberOptions: Option[] =
+    memberListData?.reduce((prevVal, curVal) => {
+      const profileData = curVal?.node?.profile as KymIndFormStateQuery;
+      return [
+        ...prevVal,
+        {
+          label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
+          value: curVal?.node?.id as string,
+          memberInfo: {
+            address: curVal?.node?.address?.district?.local,
+            memberId: curVal?.node?.id,
+            memberName: curVal?.node?.name?.local,
+            age: profileData?.data?.formData?.basicInformation?.age,
+            gender:
+              profileData?.data?.formData?.basicInformation?.gender?.local,
+            maritialStatus: profileData?.data?.formData?.maritalStatus?.local,
+          },
+        },
+      ];
+    }, [] as Option[]) ?? [];
 
   return (
-    <Select
-      errorText={errors[name]?.message}
-      options={options}
-      value={rest.isMulti ? filteredValue : foundValue}
-      inputId={name}
-      {...rest}
-      onChange={(newValue: Option | Option[]) => {
-        if (Array.isArray(newValue)) {
-          onChange(newValue);
-        } else {
-          const { value } = newValue as Option;
-          onChange(value);
+    <FormCustomSelect
+      name={name}
+      label={label}
+      isLoading={isFetching}
+      placeholder={placeholder}
+      onInputChange={debounce((id) => {
+        if (id) {
+          setIDMember(id);
+          setTrigger(true);
         }
-      }}
+      }, 800)}
+      options={memberOptions}
     />
   );
 };
-
-export default FormMemberSelect;

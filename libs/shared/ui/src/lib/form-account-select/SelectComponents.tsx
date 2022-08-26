@@ -6,19 +6,15 @@ import {
   SelectComponentsConfig,
 } from 'chakra-react-select';
 
-import { Avatar } from '@coop/shared/ui';
-
 export interface Option {
   label: string | number;
   value: string | number;
-  memberInfo?: {
-    image?: string;
-    memberName?: string;
-    memberId?: string;
-    gender?: string;
-    age?: number;
-    maritialStatus?: string;
-    address?: string;
+  accountInfo: {
+    accountName: string;
+    accountId: string;
+    accountType: string;
+    balance: string;
+    fine?: string;
   };
 }
 
@@ -56,45 +52,50 @@ export const components: SelectComponentsConfig<
   Option: (props) => {
     return (
       <chakraComponents.Option {...props}>
-        <Box display="flex" p="s8" gap="s16">
-          <Box borderRadius="50%">
-            <Avatar
-              // src="/passport.jpg"
-              size="lg"
-              name={props.data.memberInfo?.memberName}
-            />
-          </Box>
-          <Box display="flex" flexDirection="column">
+        <Box display="flex" justifyContent="space-between" p="s12" width="100%">
+          <Box display="flex" flexDirection="column" gap="s4">
             <Text
-              fontWeight="Medium"
               fontSize="r1"
+              fontWeight={500}
               color="neutralColorLight.Gray-80"
             >
-              {props.data.memberInfo?.memberName}
+              {props.data.accountInfo.accountName}
             </Text>
             <Text
-              fontWeight="Regular"
               fontSize="s3"
-              color="neutralColorLight.Gray-80"
-            >
-              {props.data.memberInfo?.memberId}
-            </Text>
-            <Text
-              fontWeight="Regular"
-              fontSize="s3"
-              color="neutralColorLight.Gray-80"
-            >
-              {props.data.memberInfo?.gender ?? '-'} |{' '}
-              {props.data.memberInfo?.age ?? '-'} |{' '}
-              {props.data.memberInfo?.maritialStatus ?? '-'}
-            </Text>
-            <Text
-              fontWeight="Regular"
-              fontSize="s3"
+              fontWeight={500}
               color="neutralColorLight.Gray-60"
             >
-              {props.data.memberInfo?.address}
+              {props.data.accountInfo.accountId}
             </Text>
+            <Text
+              fontSize="s3"
+              fontWeight={400}
+              color="neutralColorLight.Gray-60"
+            >
+              {props.data.accountInfo.accountType}
+            </Text>
+          </Box>
+
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap="s4"
+            alignItems="flex-end"
+          >
+            <Text
+              fontSize="s3"
+              fontWeight={500}
+              color="neutralColorLight.Gray-80"
+            >
+              {props.data.accountInfo.balance}
+            </Text>
+
+            {props.data.accountInfo.fine && (
+              <Text fontSize="s3" fontWeight={500} color="danger.500">
+                Fine: {props.data.accountInfo.fine}
+              </Text>
+            )}
           </Box>
         </Box>
       </chakraComponents.Option>
@@ -103,7 +104,7 @@ export const components: SelectComponentsConfig<
   SingleValue: (props) => {
     return (
       <chakraComponents.SingleValue {...props}>
-        <Text>{`${props.data.memberInfo?.memberName} [${props.data.memberInfo?.memberId}]`}</Text>
+        <Text>{`${props.data.accountInfo.accountName} [${props.data.accountInfo.accountId}]`}</Text>
       </chakraComponents.SingleValue>
     );
   },

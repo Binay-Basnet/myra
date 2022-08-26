@@ -35,7 +35,7 @@ const months = [
     name: 'firstMonth',
   },
   {
-    label: 'firstMonth',
+    label: 'secondMonth',
     name: 'secondMonth',
   },
   {

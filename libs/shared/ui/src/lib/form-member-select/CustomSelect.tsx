@@ -12,7 +12,7 @@ import { TextFields } from '@coop/shared/ui';
 import { components as customComponents } from './SelectComponents';
 import { chakraDefaultStyles } from './SelectStyles';
 
-interface SelectOption {
+export interface Option {
   label?: string;
   value: string;
   memberInfo?: {
@@ -27,16 +27,13 @@ interface SelectOption {
 }
 
 export interface SelectProps
-  extends Omit<
-    Props<SelectOption, boolean, GroupBase<SelectOption>>,
-    'size' | 'onChange'
-  > {
-  options?: SelectOption[] | undefined;
+  extends Omit<Props<Option, boolean, GroupBase<Option>>, 'size' | 'onChange'> {
+  options?: Option[] | undefined;
   helperText?: string;
   errorText?: string;
   label?: string;
   // size?: 'sm' | 'default';
-  onChange?: ((newValue: SelectOption) => void) | any;
+  onChange?: ((newValue: Option) => void) | any;
 }
 
 export function Select({
@@ -53,12 +50,7 @@ export function Select({
       <TextFields variant="formLabel" color="gray.700">
         {label}
       </TextFields>
-      <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
-        key={
-          !isMulti
-            ? `my_unique_select_key__${JSON.stringify(value)}`
-            : 'isMulti'
-        }
+      <ChakraSelect<Option, boolean, GroupBase<Option>>
         options={options}
         value={value}
         controlShouldRenderValue={!isMulti}
@@ -68,18 +60,14 @@ export function Select({
         isClearable={false}
         chakraStyles={
           chakraDefaultStyles as ChakraStylesConfig<
-            SelectOption,
+            Option,
             boolean,
-            GroupBase<SelectOption>
+            GroupBase<Option>
           >
         }
         components={
           customComponents as Partial<
-            SelectComponentsConfig<
-              SelectOption,
-              boolean,
-              GroupBase<SelectOption>
-            >
+            SelectComponentsConfig<Option, boolean, GroupBase<Option>>
           >
         }
         {...rest}
