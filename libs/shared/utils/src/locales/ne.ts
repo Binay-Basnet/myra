@@ -2838,6 +2838,10 @@ const ne: Record<string, string> = {
   depositProductStaffProduct: 'Is this a Staff Product ?',
   depositProductDuration: 'Dormant Duration',
   depositProductMinorAccount: 'Is this a Minor Account ? ',
+  depositProductDescription: 'Description about the product',
+  depositProductWithdrawPenaltySetup: 'Withdraw Penalty Setup',
+  depositProductPenaltyedgerMapping: 'Penalty Ledger Mapping',
+  select: '-- Select --',
 
   // NEW TRANSLATIONS
   // AcountOpen

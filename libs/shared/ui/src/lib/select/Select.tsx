@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 import { GroupBase, Props, Select as ChakraSelect } from 'chakra-react-select';
 
+import { useTranslation } from '@coop/shared/utils';
+
 import { getComponents, Option } from './SelectComponents';
 import { chakraDefaultStyles } from './SelectStyles';
 import TextFields from '../text-fields/TextFields';
@@ -37,6 +39,7 @@ export function Select({
   hasRadioOption,
   ...rest
 }: SelectProps) {
+  const { t } = useTranslation();
   const [sortedOptions, setSortedOptions] = useState(options ?? []);
 
   useEffect(() => {
@@ -75,6 +78,7 @@ export function Select({
             );
           }
         }}
+        placeholder={t['select']}
         options={isMulti ? sortedOptions : options}
         value={value}
         controlShouldRenderValue={!isMulti}

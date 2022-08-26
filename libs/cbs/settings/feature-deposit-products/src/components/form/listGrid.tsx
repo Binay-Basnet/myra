@@ -189,20 +189,12 @@ export const GridItems = () => {
         {memberType &&
           memberType?.indexOf('INDIVIDUAL') !== -1 &&
           criteria?.includes('AGE') && (
-            <FormInput
-              name="minAge"
-              placeholder={t['depositProductEnterMinimumAge']}
-              label={t['depositProductMinAge']}
-            />
+            <FormInput name="minAge" label={t['depositProductMinAge']} />
           )}
         {memberType &&
           memberType?.indexOf('INDIVIDUAL') !== -1 &&
           criteria?.includes('AGE') && (
-            <FormInput
-              name="maxAge"
-              placeholder={t['depositProductEnterMaxinumAge']}
-              label={t['depositProductMaxAge']}
-            />
+            <FormInput name="maxAge" label={t['depositProductMaxAge']} />
           )}
         {memberType &&
           memberType?.indexOf('INDIVIDUAL') !== -1 &&
@@ -211,7 +203,6 @@ export const GridItems = () => {
               name="genderId"
               options={GenderList}
               label={t['depositProductGender']}
-              placeholder={t['depositProductSelectGender']}
               isMulti
             />
           )}
@@ -222,7 +213,6 @@ export const GridItems = () => {
               name="maritalStatusId"
               options={MartialOptions}
               label={t['depositProductMaritalStatus']}
-              placeholder={t['depositProductSelectMaritalStatus']}
               isMulti
             />
           )}
@@ -233,7 +223,6 @@ export const GridItems = () => {
               name="educationQualification"
               options={EducationalOptions}
               label={t['depositProductEducationQualification']}
-              placeholder={t['depositProductSelectEducationQualification']}
               isMulti
             />
           )}
@@ -244,7 +233,6 @@ export const GridItems = () => {
               name="ethnicity"
               options={EthnicityList}
               label={t['depositProductEthinicity']}
-              placeholder={t['depositProductSelectEthinicity']}
               isMulti
             />
           )}
@@ -255,7 +243,6 @@ export const GridItems = () => {
               name="occupation"
               options={OccupationOptions}
               label={t['depositProductOccupationDetails']}
-              placeholder={t['depositProductSelectOccupationDetails']}
               isMulti
             />
           )}
@@ -275,7 +262,6 @@ export const GridItems = () => {
             <FormSelect
               name="natureOfBusinessInstitution"
               label={t['depositProductNatureofBusinessIns']}
-              placeholder={t['depositProductSelectNatureofBusiness']}
               options={InstituitionList}
               isMulti
             />
@@ -287,7 +273,6 @@ export const GridItems = () => {
               name="natureOFBusinessCoop"
               options={CoopUnionList}
               label={t['depositProductNatureofBusinessCoopUnion']}
-              placeholder={t['depositProductSelectNatureofBusiness']}
               isMulti
             />
           )}

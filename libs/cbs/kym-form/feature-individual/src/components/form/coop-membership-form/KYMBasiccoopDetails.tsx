@@ -8,7 +8,6 @@ import debounce from 'lodash/debounce';
 import {
   FormFieldSearchTerm,
   Id_Type,
-  KymIndFormStateQuery,
   useDeleteMemberFamilyDetailsMutation,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymFamilyMembersListQuery,
@@ -18,7 +17,6 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { formatAddress } from '@coop/cbs/utils';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Box,
@@ -49,7 +47,6 @@ const booleanList = [
   },
 ];
 
-type optionType = { label: string; value: string };
 interface IKYMBasiccoopDetailsFamilyMemberProps {
   setKymCurrentSection: (section?: {
     section: string;
@@ -449,9 +446,6 @@ const KYMBasiccoopDetailsIntroducer = ({
 
   const { watch, reset } = methods;
 
-  const [IDMember, setIDMember] = useState('');
-  const [trigger, setTrigger] = useState(false);
-
   const { data: editValues } = useGetIndividualKymEditDataQuery(
     {
       id: String(id),
@@ -484,21 +478,6 @@ const KYMBasiccoopDetailsIntroducer = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
-  const { data: memberList } = useGetMemberListQuery(
-    {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      filter: {
-        query: IDMember,
-      },
-    },
-    {
-      staleTime: 0,
-      enabled: trigger,
-    }
-  );
-
-  const memberListData = memberList?.members?.list?.edges;
-
   return (
     <FormProvider {...methods}>
       <form
@@ -515,62 +494,11 @@ const KYMBasiccoopDetailsIntroducer = ({
           <FormMemberSelect
             name="firstIntroducerId"
             label={t['kymIndFirstIntroducer']}
-            placeholder={t['kynmIndFirstIntroducerDetail']}
-            onInputChange={debounce((id) => {
-              setIDMember(id);
-              setTrigger(true);
-            }, 800)}
-            options={
-              memberListData?.map((member) => {
-                const profileData = member?.node
-                  ?.profile as KymIndFormStateQuery;
-                return {
-                  memberInfo: {
-                    // image:member?.node?.code,
-                    memberName: member?.node?.name?.local,
-                    memberId: member?.node?.id,
-                    gender:
-                      profileData?.data?.formData?.basicInformation?.gender
-                        ?.local,
-                    age: profileData?.data?.formData?.basicInformation?.age,
-                    maritialStatus:
-                      profileData?.data?.formData?.maritalStatus?.local,
-                    address: formatAddress(member?.node?.address),
-                  },
-                  value: member?.node?.id as string,
-                };
-              }) ?? ([] as optionType[])
-            }
           />
+
           <FormMemberSelect
             name="secondIntroducerId"
             label={t['kymIndSecondIntroducer']}
-            placeholder={t['kymIndSecondIntroducerDetails']}
-            onInputChange={debounce((id) => {
-              setIDMember(id);
-              setTrigger(true);
-            }, 800)}
-            options={
-              memberListData?.map((member) => {
-                const profileData = member?.node
-                  ?.profile as KymIndFormStateQuery;
-                return {
-                  memberInfo: {
-                    // image:member?.node?.code,
-                    memberName: member?.node?.name?.local,
-                    memberId: member?.node?.id,
-                    gender:
-                      profileData?.data?.formData?.basicInformation?.gender
-                        ?.local,
-                    age: profileData?.data?.formData?.basicInformation?.age,
-                    maritialStatus:
-                      profileData?.data?.formData?.maritalStatus?.local,
-                    address: formatAddress(member?.node?.address),
-                  },
-                  value: member?.node?.id as string,
-                };
-              }) ?? ([] as optionType[])
-            }
           />
         </FormSection>
       </form>

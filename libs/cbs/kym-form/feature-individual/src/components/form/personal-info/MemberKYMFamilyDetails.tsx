@@ -192,7 +192,7 @@ const MemberMaritalStatus = ({
       searchTerm: FormFieldSearchTerm.MaritalStatus,
     });
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
     {
       id: String(id),
     },
@@ -216,7 +216,7 @@ const MemberMaritalStatus = ({
     const subscription = watch(
       debounce((data) => {
         if (id) {
-          mutate({ id: String(id), data });
+          mutate({ id: String(id), data }, { onSuccess: () => refetch() });
         }
       }, 800)
     );

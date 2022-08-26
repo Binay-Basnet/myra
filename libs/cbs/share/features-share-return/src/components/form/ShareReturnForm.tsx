@@ -5,7 +5,7 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { compact, debounce, omit } from 'lodash';
+import { omit } from 'lodash';
 
 import {
   KymIndFormStateQuery,
@@ -85,8 +85,6 @@ const ShareReturnForm = () => {
   const accountId = watch('accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
-  const [IDMember, setIDMember] = useState('');
-  const [trigger, setTrigger] = useState(false);
 
   const { data } = useGetMemberIndividualDataQuery({ id: memberId });
 
@@ -159,13 +157,9 @@ const ShareReturnForm = () => {
   const { data: memberList } = useGetMemberListQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      filter: {
-        query: IDMember,
-      },
     },
     {
       staleTime: 0,
-      enabled: trigger,
     }
   );
 
@@ -239,50 +233,8 @@ const ShareReturnForm = () => {
                   <Box w="50%">
                     <FormMemberSelect
                       name="memberId"
-                      label={t['sharePurchaseSelectMember']}
-                      placeholder={t['sharePurchaseEnterMemberID']}
-                      onInputChange={debounce((id) => {
-                        setIDMember(id);
-                        setTrigger(true);
-                      }, 800)}
-                      // TODO! Fix this
-                      options={compact(
-                        memberListData?.map((member) => {
-                          const profileData = member?.node?.profile;
-                          if (profileData && 'data' in profileData) {
-                            return {
-                              memberInfo: {
-                                // image:member?.node?.code,
-                                memberName: member?.node?.name?.local,
-                                memberId: member?.node?.id,
-                                gender:
-                                  profileData?.data?.formData?.basicInformation
-                                    ?.gender?.local,
-                                age: profileData?.data?.formData
-                                  ?.basicInformation?.age,
-                                maritialStatus:
-                                  profileData?.data?.formData?.maritalStatus
-                                    ?.local,
-                                address: member?.node?.address?.district?.local,
-                              },
-                              value: member?.node?.id as string,
-                            };
-                          } else {
-                            return false;
-                          }
-                        })
-                      )}
+                      label={t['sharePurchaseEnterMemberID']}
                     />
-                    {/* <FormSelect
-                      name="memberId"
-                      label={t['sharePurchaseSelectMember']}
-                      placeholder={t['sharePurchaseEnterMemberID']}
-                      onInputChange={debounce((id) => {
-                        setIDMember(id);
-                        setTrigger(true);
-                      }, 800)}
-                      options={memberOptions ?? []}
-                    /> */}
                   </Box>
 
                   {data && (

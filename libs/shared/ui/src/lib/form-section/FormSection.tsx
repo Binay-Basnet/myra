@@ -18,7 +18,7 @@ export function FormSection({
   id,
   header,
   subHeader,
-  gridLayout,
+  gridLayout = true,
   flexLayout,
   divider = true,
   templateColumns,

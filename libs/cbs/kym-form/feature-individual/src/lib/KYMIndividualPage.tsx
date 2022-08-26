@@ -1,8 +1,13 @@
 /* eslint-disable-next-line */
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useGetKymFormStatusQuery } from '@coop/cbs/data-access';
+import {
+  FormFieldSearchTerm,
+  useGetIndividualKymEditDataQuery,
+  useGetIndividualKymOptionsQuery,
+  useGetKymFormStatusQuery,
+} from '@coop/cbs/data-access';
 import {
   Box,
   Button,
@@ -35,9 +40,10 @@ import { AccorrdianAddMember } from '@coop/myra/components';
 
 export function KYMIndividualPage() {
   const { t } = useTranslation();
-
   const router = useRouter();
   const id = String(router?.query?.['id']);
+
+  const [isMarried, setIsMarried] = useState(false);
 
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
@@ -51,6 +57,32 @@ export function KYMIndividualPage() {
   const kymFormStatus =
     kymFormStatusQuery?.data?.members?.individual?.formState?.data
       ?.sectionStatus;
+
+  const { data: editValues } = useGetIndividualKymEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
+
+  const { data: maritalStatusData, refetch } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.MaritalStatus,
+  });
+
+  const maritialStatus = maritalStatusData?.form?.options?.predefined?.data;
+  const marriedData =
+    editValues?.members?.individual?.formState?.data?.formData?.maritalStatusId;
+
+  useEffect(() => {
+    refetch();
+    if (marriedData && maritialStatus) {
+      if (maritialStatus[0]?.id === marriedData) {
+        setIsMarried(true);
+      } else {
+        setIsMarried(false);
+      }
+    }
+  }, [marriedData]);
 
   return (
     <>
@@ -112,9 +144,12 @@ export function KYMIndividualPage() {
               <MemberKYMMainOccupation
                 setKymCurrentSection={setKymCurrentSection}
               />
-              <MemberKYMHusbandWifeOccupation
-                setKymCurrentSection={setKymCurrentSection}
-              />
+              {isMarried && (
+                <MemberKYMHusbandWifeOccupation
+                  setKymCurrentSection={setKymCurrentSection}
+                />
+              )}
+
               <MemberKYMIncomeSourceDetails
                 setKymCurrentSection={setKymCurrentSection}
               />

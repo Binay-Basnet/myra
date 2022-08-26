@@ -141,7 +141,6 @@ export function CbsAccountClose() {
               borderColor="border.layout"
             >
               <FormMemberSelect name="memberId" label="Member" />
-
               {memberId && (
                 <FormAccountSelect
                   name="accountId"

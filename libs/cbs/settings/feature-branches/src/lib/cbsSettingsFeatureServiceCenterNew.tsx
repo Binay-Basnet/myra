@@ -134,7 +134,7 @@ export function CbsSettingsFeatureServiceCenterNew() {
         id,
         data: updatedValues,
       },
-      { onSuccess: () => router.push('/settings/general/branches') }
+      { onSuccess: () => router.push('/settings/general/service-center') }
     );
   };
 

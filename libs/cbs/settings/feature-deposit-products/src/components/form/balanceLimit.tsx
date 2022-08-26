@@ -16,12 +16,10 @@ export const BalanceLimit = () => {
         <FormInput
           name="balanceLimit.minAmount"
           label={t['depositProductMinimumAmount']}
-          placeholder={t['depositProductEnterMinimumAmount']}
         />
         <FormInput
           name="balanceLimit.maxAmount"
           label={t['depositProductMaximumAmount']}
-          placeholder={t['depositProductEnterMaximumAmount']}
         />
       </InputGroupContainer>
     </BoxContainer>

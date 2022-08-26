@@ -72,7 +72,7 @@ export const AccountServicesCharge = () => {
         <SubText>{t['depositProductAdddifferentservicecharges']} </SubText>
       </TextBoxContainer>
       <FormEditableTable<AccountServiceTable>
-        name="serviceCharge"
+        name="accountCloseCharge"
         debug={false}
         columns={[
           {

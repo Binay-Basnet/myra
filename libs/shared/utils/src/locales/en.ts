@@ -3236,6 +3236,10 @@ const en: Record<string, string> = {
   depositProductDuration: 'Dormant Duration',
   kymIndLoan: 'Loan',
   depositProductMinorAccount: 'Is this a Minor Account ? ',
+  depositProductDescription: 'Description about the product',
+  depositProductWithdrawPenaltySetup: 'Withdraw Penalty Setup',
+  depositProductPenaltyedgerMapping: 'Penalty Ledger Mapping',
+  select: '-- Select --',
 
   // new translations
 
