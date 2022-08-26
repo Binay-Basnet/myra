@@ -1,0 +1,23 @@
+query getSettingsShareGeneralData {
+  settings {
+    general {
+      share {
+        general {
+          typeOfShare
+          multiplicityFactor
+          minimumQuantityOfShare
+          maximumQuantityOfShare
+          paidUpShareRate
+          shareIssueAuthority
+          typeOfShareKitta
+          noOfAuthorisedPaidUpShare
+          noOfIssuedShare
+          startNumber
+          endNumber
+          incrementor
+          noOfDigits
+        }
+      }
+    }
+  }
+}

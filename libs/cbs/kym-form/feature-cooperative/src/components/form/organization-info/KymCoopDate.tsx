@@ -1,11 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
+import { FormSection } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -19,7 +16,7 @@ export const KymCoopDate = (props: IProps) => {
   const methods = useForm<KymCooperativeFormInput>({
     defaultValues: {},
   });
-  const { control, handleSubmit, getValues, watch, setError } = methods;
+
   useCooperative({ methods });
   return (
     <FormProvider {...methods}>
@@ -29,24 +26,19 @@ export const KymCoopDate = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer
-          id="kymCoopAccCooperativeDate"
-          scrollMarginTop={'200px'}
-        >
-          <InputGroupContainer>
-            <FormInput
-              type="date"
-              name="lastAuditDate"
-              label={t['kymCoopLastAuditDate']}
-            />
+        <FormSection gridLayout={true} id="kymCoopAccCooperativeDate">
+          <FormInput
+            type="date"
+            name="lastAuditDate"
+            label={t['kymCoopLastAuditDate']}
+          />
 
-            <FormInput
-              type="date"
-              name="lastAgmDate"
-              label={t['kymCoopLastAGMDate']}
-            />
-          </InputGroupContainer>
-        </GroupContainer>
+          <FormInput
+            type="date"
+            name="lastAgmDate"
+            label={t['kymCoopLastAGMDate']}
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );

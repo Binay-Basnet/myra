@@ -16,13 +16,16 @@ import {
   useGetNewIdMutation,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  ContainerWithDivider,
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  FormMemberSelect,
+  FormSection,
+  GridItem,
+  Icon,
+} from '@coop/shared/ui';
 import {
   getKymSection,
   getRouterQuery,
@@ -67,7 +70,12 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
   const { watch, reset } = methods;
 
-  const formMethods = useForm();
+  const formMethods = useForm({
+    // defaultValues: {
+    //   isFamilyAMember: false,
+    //   isMemberOfAnotherCooperative: false,
+    // },
+  });
 
   const { reset: formReset } = formMethods;
 
@@ -212,20 +220,14 @@ const KYMBasiccoopDetailsFamilyMember = ({
   }, [id]);
 
   return (
-    <GroupContainer>
-      <FormProvider {...methods}>
-        <form
-          onFocus={(e) => {
-            const kymSection = getKymSection(e.target.id);
-            setKymCurrentSection(kymSection);
-          }}
-        >
-          <Box
-            display="flex"
-            flexDirection="column"
-            gap="s8"
-            id="kymAccIndFamilyMemberinthisinstitution"
-            scrollMarginTop={'200px'}
+    <FormSection gridLayout={true} id="kymAccIndFamilyMemberinthisinstitution">
+      <GridItem colSpan={3}>
+        <FormProvider {...methods}>
+          <form
+            onFocus={(e) => {
+              const kymSection = getKymSection(e.target.id);
+              setKymCurrentSection(kymSection);
+            }}
           >
             <FormSwitchTab
               label={t['kynIndFamilyMemberinthisinstitution']}
@@ -233,12 +235,12 @@ const KYMBasiccoopDetailsFamilyMember = ({
               name="isFamilyAMember"
               id="familyMemberInThisInstitution"
             />
-          </Box>
-        </form>
-      </FormProvider>
+          </form>
+        </FormProvider>
+      </GridItem>
 
       {isFamilyAMember && (
-        <>
+        <GridItem colSpan={3}>
           {familyMemberMutationIds.map((mutationId, index) => (
             <FamilyMember
               mutationId={mutationId}
@@ -250,7 +252,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
           <FormProvider {...formMethods}>
             <form>
-              <Box display="flex" gap="s20" alignItems="center">
+              <InputGroupContainer>
                 <FormInput
                   name="memberName"
                   mt={1}
@@ -260,14 +262,6 @@ const KYMBasiccoopDetailsFamilyMember = ({
                   placeholder={t['kynIndFirstName']}
                   bg="white"
                 />
-
-                {/* <Input
-              type="text"
-              flexGrow="1"
-              id={`familyMemberInThisCooperative.0.memberId`}
-              placeholder={t['kynIndEnterMemberID']}
-              bg="white"
-            /> */}
                 <FormSelect
                   name="memberId"
                   placeholder={t['kynIndEnterMemberID']}
@@ -278,19 +272,18 @@ const KYMBasiccoopDetailsFamilyMember = ({
                 />
                 <Button
                   id="findmemberButton"
-                  h="44px"
                   variant="outline"
                   leftIcon={<Icon size="md" as={AiOutlineSearch} />}
                   onClick={() => appendFamilyMember()}
                 >
                   {t['kynIndFindMember']}
                 </Button>
-              </Box>
+              </InputGroupContainer>
             </form>
           </FormProvider>
-        </>
+        </GridItem>
       )}
-    </GroupContainer>
+    </FormSection>
   );
 };
 
@@ -362,54 +355,53 @@ const KYMBasiccoopDetailsBasic = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer id="kymAccIndMainPurposeofBecomingMember">
-          <InputGroupContainer
-            id="kymAccIndMainPurposeofBecomingMember"
-            scrollMarginTop={'200px'}
-          >
-            <FormSelect
-              name="purposeId"
-              label={t['kynIndMainpurposeofbecomingmember']}
-              placeholder={t['kynIndSelectpurposeofbecomingmember']}
-              isLoading={purposeLoading}
-              options={getFieldOption(purposeData)}
-            />
-          </InputGroupContainer>
-          <Box
-            display="flex"
-            flexDirection="column"
-            gap="s32"
-            id="kymAccIndMemberofAnothercooperative"
-            scrollMarginTop={'200px'}
-          >
+        <FormSection
+          gridLayout={true}
+          templateColumns={2}
+          id="kymAccIndMainPurposeofBecomingMember"
+        >
+          <FormSelect
+            name="purposeId"
+            label={t['kynIndMainpurposeofbecomingmember']}
+            placeholder={t['kynIndSelectpurposeofbecomingmember']}
+            isLoading={purposeLoading}
+            options={getFieldOption(purposeData)}
+          />
+        </FormSection>
+
+        <FormSection gridLayout={true}>
+          <GridItem colSpan={3}>
             <FormSwitchTab
               label={t['kynIndMemberofAnothercooperative']}
               options={booleanList}
               name="isMemberOfAnotherCooperative"
             />
-            {isMemberOfAnotherCooperative && (
-              <Box display="flex" flexDirection="column" gap="s4">
-                <InputGroupContainer>
-                  <FormInput
-                    type="text"
-                    name="otherCoopName"
-                    label={t['kymIndCooperativeName']}
-                    placeholder={t['kymIndCooperativeName']}
-                  />
+          </GridItem>
+          {isMemberOfAnotherCooperative && (
+            <>
+              <FormInput
+                type="text"
+                name="otherCoopName"
+                label={t['kymIndCooperativeName']}
+                placeholder={t['kymIndCooperativeName']}
+              />
 
-                  <FormInput
-                    name="otherCoopBranchId"
-                    label={t['kymIndCooperativeServiceCenter']}
-                    placeholder={t['kymIndCooperativeEnterServiceCenter']}
-                  />
+              <FormInput
+                name="otherCoopBranchId"
+                label={t['kymIndCooperativeServiceCenter']}
+                placeholder={t['kymIndCooperativeEnterServiceCenter']}
+              />
 
-                  <FormInput
-                    type="text"
-                    name="otherCoopMemberId"
-                    label={t['kymIndCooperativeMemberID']}
-                    placeholder={t['kymIndCooperativeMemberID']}
-                  />
-                  {/* {otherCooperative?.members?.individual?.options?.list?.data?.[0]?.options?.map(
+              <FormInput
+                type="text"
+                name="otherCoopMemberId"
+                label={t['kymIndCooperativeMemberID']}
+                placeholder={t['kymIndCooperativeMemberID']}
+              />
+            </>
+          )}
+        </FormSection>
+        {/* {otherCooperative?.members?.individual?.options?.list?.data?.[0]?.options?.map(
                     (option, optionIndex) => {
                       register(
                         `otherMembershipDetails.options.${optionIndex}.id`,
@@ -429,11 +421,6 @@ const KYMBasiccoopDetailsBasic = ({
                       );
                     }
                   )} */}
-                </InputGroupContainer>
-              </Box>
-            )}
-          </Box>
-        </GroupContainer>
       </form>
     </FormProvider>
   );
@@ -491,17 +478,6 @@ const KYMBasiccoopDetailsIntroducer = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
 
-  const { data: memberListData } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-  });
-
-  const memberSelectOption = memberListData?.members?.list?.edges?.map(
-    (item) => ({
-      value: item?.node?.id ?? '',
-      label: `${item?.node?.id ?? ''}-${item?.node?.name?.local ?? ''}`,
-    })
-  );
-
   return (
     <FormProvider {...methods}>
       <form
@@ -510,25 +486,21 @@ const KYMBasiccoopDetailsIntroducer = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer>
-          <Text fontWeight="600" fontSize="r1">
-            {t['kymIndIntroducers']}
-          </Text>
-          <Grid templateColumns="repeat(2,1fr)" gap="s20">
-            <FormSelect
-              name="firstIntroducerId"
-              label={t['kymIndFirstIntroducer']}
-              placeholder={t['kynmIndFirstIntroducerDetail']}
-              options={memberSelectOption}
-            />
-            <FormSelect
-              name="secondIntroducerId"
-              label={t['kymIndSecondIntroducer']}
-              placeholder={t['kymIndSecondIntroducerDetails']}
-              options={memberSelectOption}
-            />
-          </Grid>
-        </GroupContainer>
+        <FormSection
+          header="kymIndIntroducers"
+          gridLayout={true}
+          templateColumns={2}
+        >
+          <FormMemberSelect
+            name="firstIntroducerId"
+            label={t['kymIndFirstIntroducer']}
+          />
+
+          <FormMemberSelect
+            name="secondIntroducerId"
+            label={t['kymIndSecondIntroducer']}
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );
@@ -545,7 +517,11 @@ export const KYMBasiccoopDetails = ({
   setKymCurrentSection,
 }: IKYMBasiccoopDetailsProps) => {
   return (
-    <ContainerWithDivider>
+    <Box
+      display="flex"
+      flexDirection="column"
+      id="kymAccIndIncomeSourceDetails"
+    >
       <KYMBasiccoopDetailsBasic setKymCurrentSection={setKymCurrentSection} />
 
       <KYMBasiccoopDetailsIntroducer
@@ -555,7 +531,7 @@ export const KYMBasiccoopDetails = ({
       <KYMBasiccoopDetailsFamilyMember
         setKymCurrentSection={setKymCurrentSection}
       />
-    </ContainerWithDivider>
+    </Box>
   );
 };
 

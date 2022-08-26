@@ -97,7 +97,7 @@ const CRDirectorsSelection = ({
   );
 
   const directorArray =
-    bodEditValues?.members?.cooperativeUnion?.formState?.formData?.boardOfDirectorsDetails?.personnelDetails?.map(
+    bodEditValues?.members?.cooperativeUnion?.formState?.formData?.boardOfDirectorsDetails?.data?.personnelDetails?.map(
       (personnel) => ({ name: personnel?.fullName, id: personnel?.id })
     );
 
@@ -125,7 +125,7 @@ const CRDirectorsSelection = ({
           ),
         });
 
-        setNotAmongDirectors(crDetail.notAmongDirectors ?? false);
+        setNotAmongDirectors(crDetail.data?.notAmongDirectors ?? false);
       }
     }
   }, [crDetailsEditData]);
@@ -301,11 +301,11 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
           ),
         });
 
-        if (crDetail?.id) {
-          setCRId(crDetail?.id);
+        if (crDetail?.data?.id) {
+          setCRId(crDetail?.data?.id);
         }
 
-        setNotAmongDirectors(crDetail.notAmongDirectors ?? false);
+        setNotAmongDirectors(crDetail.data?.notAmongDirectors ?? false);
       }
     }
   }, [crDetailsEditData]);

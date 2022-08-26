@@ -18,5 +18,13 @@
     "**/*.spec.jsx",
     "**/*.test.jsx"
   ],
-  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+  "include": [
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+    "../../../shared/ui/src/lib/form-member-select/SelectStyles.ts",
+    "../../../shared/ui/src/lib/form-member-select/SelectComponents.tsx",
+    "../../../shared/ui/src/lib/form-member-select/CustomSelect.tsx"
+  ]
 }

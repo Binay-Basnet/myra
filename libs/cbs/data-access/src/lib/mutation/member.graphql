@@ -9,7 +9,10 @@ mutation setMemberData($id: ID!, $data: KymIndMemberInput!) {
         recordId
         error {
           ... on KymIndAddInvalidDataError {
-            error
+            error {
+              sectionName
+              errors
+            }
           }
         }
       }

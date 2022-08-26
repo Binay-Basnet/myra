@@ -1,21 +1,12 @@
 import React, { ReactElement } from 'react';
 
-import { AccountPagesLayout } from '@coop/myra/components';
-import { Box, MainLayout, WIPState } from '@coop/shared/ui';
-
+import { CbsAccountClose } from '@coop/cbs/accounts/account-form';
+import { MainLayout } from '@coop/shared/ui';
 const AccountCloseAdd = () => {
-  return (
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <WIPState />
-    </Box>
-  );
+  return <CbsAccountClose />;
 };
 
 AccountCloseAdd.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <MainLayout>
-      <AccountPagesLayout>{page}</AccountPagesLayout>
-    </MainLayout>
-  );
+  return <MainLayout>{page}</MainLayout>;
 };
 export default AccountCloseAdd;

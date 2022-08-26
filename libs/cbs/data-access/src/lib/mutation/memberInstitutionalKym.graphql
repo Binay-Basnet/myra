@@ -5,7 +5,10 @@ mutation setInstitutionData($id: ID!, $data: KymInsInput!) {
         recordId
         error {
           ... on KymIndAddInvalidDataError {
-            error
+            error {
+              sectionName
+              errors
+            }
           }
         }
       }

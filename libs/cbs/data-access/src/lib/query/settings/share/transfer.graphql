@@ -1,0 +1,13 @@
+query getSettingsShareTransferData {
+  settings {
+    general {
+      share {
+        transfer {
+          type
+          accountForShareFund
+          mappedShareLedger
+        }
+      }
+    }
+  }
+}

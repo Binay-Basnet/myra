@@ -29,7 +29,8 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
 
   const { watch } = methods;
 
-  useCooperativeUnionInstitution({ methods });
+  const { sectionStatus } = useCooperativeUnionInstitution({ methods });
+  const sectionErrors = sectionStatus?.errors?.[0]?.errors;
 
   const province = useMemo(() => {
     return (
@@ -89,6 +90,9 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
               name="regdNo"
               label={t['kymCoopUnionRegisteredNumber']}
               placeholder={t['kymCoopUnionEnterRegisteredNumber']}
+              errorText={
+                sectionErrors?.['regdNo'] && sectionErrors['regdNo'][0]
+              }
             />
 
             <GridItem colSpan={2}>
@@ -97,6 +101,10 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
                 name="issuingOffice"
                 label={t['kymCoopUnionIssuingOffice']}
                 placeholder={t['kymCoopUnionEnterIssuingOffice']}
+                errorText={
+                  sectionErrors?.['issuingOffice'] &&
+                  sectionErrors['issuingOffice'][0]
+                }
               />
             </GridItem>
 

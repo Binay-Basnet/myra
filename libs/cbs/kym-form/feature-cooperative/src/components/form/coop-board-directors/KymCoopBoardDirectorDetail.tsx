@@ -7,8 +7,7 @@ import {
   useGetCoOperativeDirectorEditDataQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Button, FormSection, GridItem, Icon } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AddDirector } from '../../accordion-component/KymCoopDirectorAccordion';
@@ -79,35 +78,36 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
   };
 
   return (
-    <GroupContainer
+    <FormSection
+      gridLayout={true}
       id="kymCoopAccBoardOfDirectorDetails"
-      scrollMarginTop={'200px'}
+      header="kymCoopBoardofdirectordetails"
     >
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymCoopBoardofdirectordetails']}
-      </Text>
       {coopDirectorIds.map((id) => {
         return (
-          <Box key={id} display="flex" flexDirection={'column'}>
+          <GridItem key={id} colSpan={3}>
             <AddDirector
               setSection={setSection}
               directorId={id}
               removeDirector={removeDirector}
             />
-          </Box>
+          </GridItem>
         );
       })}
-      <Button
-        id="directorButton"
-        alignSelf="start"
-        leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-        variant="outline"
-        onClick={() => {
-          addCoopDirector();
-        }}
-      >
-        {t['kymCoopAddDirector']}
-      </Button>
-    </GroupContainer>
+
+      <GridItem colSpan={2}>
+        <Button
+          id="directorButton"
+          alignSelf="start"
+          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+          variant="outline"
+          onClick={() => {
+            addCoopDirector();
+          }}
+        >
+          {t['kymCoopAddDirector']}
+        </Button>
+      </GridItem>
+    </FormSection>
   );
 };

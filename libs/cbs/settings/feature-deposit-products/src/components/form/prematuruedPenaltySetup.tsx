@@ -49,7 +49,6 @@ export const PrematuredPenalty = () => {
           name="prematurePenalty.penaltyDateType"
           label={t['depositProductPenaltyDateType']}
           options={penaltyDataType}
-          placeholder={t['depositProductEffectiveDaysfromStart']}
         />
         <FormInput
           name="prematurePenalty.noOfDays"
@@ -59,7 +58,6 @@ export const PrematuredPenalty = () => {
         <FormSelect
           name="prematurePenalty.penaltyLedgerMapping"
           label={t['depositProductPenaltyLedgerMapping']}
-          placeholder={t['depositProductPenaltyLedgerMapping']}
           options={coaList}
         />
         <FormInput

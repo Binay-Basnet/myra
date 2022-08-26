@@ -7,10 +7,6 @@ import {
   useAllAdministrationQuery,
 } from '@coop/cbs/data-access';
 import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
   FormEmailInput,
   FormInput,
   FormMap,
@@ -18,7 +14,7 @@ import {
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -170,192 +166,164 @@ export const KymCoopRepresentative = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer id="kymCoopAccRepresentative" scrollMarginTop={'200px'}>
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymCoopRepresentative']}
-          </Text>
-          <InputGroupContainer>
-            <GridItem colSpan={2}>
-              <FormInput
-                type="text"
-                name="representativeFullName"
-                label={t['kymCoopName']}
-                placeholder={t['kymCoopEnterName']}
-              />
-            </GridItem>
+        <FormSection
+          gridLayout={true}
+          id="kymCoopAccRepresentative"
+          header="kymCoopRepresentative"
+        >
+          <GridItem colSpan={2}>
             <FormInput
               type="text"
-              name="representativeDesignatiton"
-              label={t['kymCoopDesignation']}
-              placeholder={t['kymCoopEnterDesignation']}
+              name="representativeFullName"
+              label={t['kymCoopName']}
+              placeholder={t['kymCoopEnterName']}
             />
-            <FormEmailInput
-              name={'representativeEmail'}
-              label={t['kymCoopRepresentativeEmail']}
-              placeholder={t['kymCoopRepresentativeEnterEmail']}
-            />
-            <FormPhoneNumber
-              name={'representativeContactNumber'}
-              label={t['kymCoopRepresentativePhone']}
-              placeholder={t['kymCoopRepresentativeEnterPhone']}
-            />
-            <FormInput
-              name="representativePanNo"
-              label={t['kymCoopRepresentativePanOrVat']}
-              placeholder={t['kymCoopRepresentativeEnterPan']}
-            />
-          </InputGroupContainer>
-        </GroupContainer>
-        <GroupContainer>
-          <Box
-            id="kymAccIndPermanentAddress"
-            gap="s32"
-            display={'flex'}
-            flexDirection="column"
-            scrollMarginTop={'200px'}
-            pt="s32"
-          >
-            <Text fontSize="r1" fontWeight="SemiBold">
-              {t['kymCoopRepresentativePermanentAddress']}
-            </Text>
-            <Box
-              id="Permanent Address"
-              gap="s32"
-              display={'flex'}
-              flexDirection="column"
-            >
-              <InputGroupContainer>
-                <FormSelect
-                  name="permanentRepresentativeAddress.provinceId"
-                  label={t['kymCoopRepresentativeProvince']}
-                  placeholder={t['kymCoopRepresentativeSelectProvince']}
-                  options={province}
-                />
-                <FormSelect
-                  name="permanentRepresentativeAddress.districtId"
-                  label={t['kymCoopRepresentativeDistrict']}
-                  placeholder={t['kymCoopRepresentativeSelectDistrict']}
-                  options={districtList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name="permanentRepresentativeAddress.localGovernmentId"
-                  label={t['kymCoopRepresentativeLocalGovernment']}
-                  placeholder={t['kymCoopRepresentativeSelectLocalGovernment']}
-                  options={localityList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name="permanentRepresentativeAddress.wardNo"
-                  label={t['kymCoopRepresentativeWardNo']}
-                  placeholder={t['kymCoopRepresentativeEnterWardNo']}
-                  options={wardList?.map((d) => ({
-                    label: d,
-                    value: d,
-                  }))}
-                />
-                <FormInput
-                  type="text"
-                  name="permanentRepresentativeAddress.locality"
-                  label={t['kymCoopRepresentativeLocality']}
-                  placeholder={t['kymCoopRepresentativeEnterLocality']}
-                />
-                <FormInput
-                  type="text"
-                  name="permanentRepresentativeAddress.houseNo"
-                  label={t['kymCoopRepresentativeHouseNo']}
-                  placeholder={t['kymCoopRepresentativeEnterHouseNo']}
-                />
-              </InputGroupContainer>
+          </GridItem>
+          <FormInput
+            type="text"
+            name="representativeDesignatiton"
+            label={t['kymCoopDesignation']}
+            placeholder={t['kymCoopEnterDesignation']}
+          />
+          <FormEmailInput
+            name={'representativeEmail'}
+            label={t['kymCoopRepresentativeEmail']}
+            placeholder={t['kymCoopRepresentativeEnterEmail']}
+          />
+          <FormPhoneNumber
+            name={'representativeContactNumber'}
+            label={t['kymCoopRepresentativePhone']}
+            placeholder={t['kymCoopRepresentativeEnterPhone']}
+          />
+          <FormInput
+            name="representativePanNo"
+            label={t['kymCoopRepresentativePanOrVat']}
+            placeholder={t['kymCoopRepresentativeEnterPan']}
+          />
+        </FormSection>
 
-              <Box mt="-16px">
-                <FormMap name="permanentRepresentativeAddress.coordinates" />
-              </Box>
-            </Box>
-          </Box>
-          <Box
-            id="kymAccIndTemporaryAddress"
-            gap="s32"
-            display={'flex'}
-            flexDirection="column"
-            scrollMarginTop={'200px'}
-          >
-            <Text fontSize="r1" fontWeight="SemiBold">
-              {t['kymCoopRepresentativeTemporaryAddress']}
-            </Text>
+        <FormSection
+          gridLayout={true}
+          id="kymAccIndPermanentAddress"
+          header="kymCoopRepresentativePermanentAddress"
+        >
+          <FormSelect
+            name="permanentRepresentativeAddress.provinceId"
+            label={t['kymCoopRepresentativeProvince']}
+            placeholder={t['kymCoopRepresentativeSelectProvince']}
+            options={province}
+          />
+          <FormSelect
+            name="permanentRepresentativeAddress.districtId"
+            label={t['kymCoopRepresentativeDistrict']}
+            placeholder={t['kymCoopRepresentativeSelectDistrict']}
+            options={districtList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            name="permanentRepresentativeAddress.localGovernmentId"
+            label={t['kymCoopRepresentativeLocalGovernment']}
+            placeholder={t['kymCoopRepresentativeSelectLocalGovernment']}
+            options={localityList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            name="permanentRepresentativeAddress.wardNo"
+            label={t['kymCoopRepresentativeWardNo']}
+            placeholder={t['kymCoopRepresentativeEnterWardNo']}
+            options={wardList?.map((d) => ({
+              label: d,
+              value: d,
+            }))}
+          />
+          <FormInput
+            type="text"
+            name="permanentRepresentativeAddress.locality"
+            label={t['kymCoopRepresentativeLocality']}
+            placeholder={t['kymCoopRepresentativeEnterLocality']}
+          />
+          <FormInput
+            type="text"
+            name="permanentRepresentativeAddress.houseNo"
+            label={t['kymCoopRepresentativeHouseNo']}
+            placeholder={t['kymCoopRepresentativeEnterHouseNo']}
+          />
 
+          <GridItem colSpan={2}>
+            <FormMap name="permanentRepresentativeAddress.coordinates" />
+          </GridItem>
+        </FormSection>
+
+        <FormSection
+          gridLayout={true}
+          id="kymAccIndTemporaryAddress"
+          header="kymCoopRepresentativeTemporaryAddress"
+        >
+          <GridItem colSpan={3}>
             <FormSwitch
               name="isPermanentAndTemporaryAddressSame"
               label={t['kymCoopRepresentativeTemporaryAddressPermanent']}
             />
+          </GridItem>
 
-            {!isPermanentAndTemporaryAddressSame && (
-              <>
-                <InputGroupContainer>
-                  <FormSelect
-                    name="temporaryRepresentativeAddress.provinceId"
-                    label={t['kymCoopRepresentativeProvince']}
-                    placeholder={t['kymCoopRepresentativeSelectProvince']}
-                    options={province}
-                  />
-                  <FormSelect
-                    name="temporaryRepresentativeAddress.districtId"
-                    label={t['kymCoopRepresentativeDistrict']}
-                    placeholder={t['kymCoopRepresentativeSelectDistrict']}
-                    options={districtTempList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    name="temporaryRepresentativeAddress.localGovernmentId"
-                    label={t['kymCoopRepresentativeLocalGovernment']}
-                    placeholder={
-                      t['kymCoopRepresentativeSelectLocalGovernment']
-                    }
-                    options={localityTempList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    name="temporaryRepresentativeAddress.wardNo"
-                    label={t['kymCoopRepresentativeWardNo']}
-                    placeholder={t['kymCoopRepresentativeEnterWardNo']}
-                    options={wardTempList.map((d) => ({
-                      label: d,
-                      value: d,
-                    }))}
-                  />
-                  <FormInput
-                    type="text"
-                    name="temporaryRepresentativeAddress.locality"
-                    label={t['kymCoopRepresentativeLocality']}
-                    placeholder={t['kymCoopRepresentativeEnterLocality']}
-                  />
-                  <FormInput
-                    type="text"
-                    name="temporaryRepresentativeAddress.houseNo"
-                    label={t['kymCoopRepresentativeHouseNo']}
-                    placeholder={t['kymCoopRepresentativeEnterHouseNo']}
-                  />
-                </InputGroupContainer>
+          {!isPermanentAndTemporaryAddressSame && (
+            <>
+              <FormSelect
+                name="temporaryRepresentativeAddress.provinceId"
+                label={t['kymCoopRepresentativeProvince']}
+                placeholder={t['kymCoopRepresentativeSelectProvince']}
+                options={province}
+              />
+              <FormSelect
+                name="temporaryRepresentativeAddress.districtId"
+                label={t['kymCoopRepresentativeDistrict']}
+                placeholder={t['kymCoopRepresentativeSelectDistrict']}
+                options={districtTempList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormSelect
+                name="temporaryRepresentativeAddress.localGovernmentId"
+                label={t['kymCoopRepresentativeLocalGovernment']}
+                placeholder={t['kymCoopRepresentativeSelectLocalGovernment']}
+                options={localityTempList.map((d) => ({
+                  label: d.name,
+                  value: d.id,
+                }))}
+              />
+              <FormSelect
+                name="temporaryRepresentativeAddress.wardNo"
+                label={t['kymCoopRepresentativeWardNo']}
+                placeholder={t['kymCoopRepresentativeEnterWardNo']}
+                options={wardTempList.map((d) => ({
+                  label: d,
+                  value: d,
+                }))}
+              />
+              <FormInput
+                type="text"
+                name="temporaryRepresentativeAddress.locality"
+                label={t['kymCoopRepresentativeLocality']}
+                placeholder={t['kymCoopRepresentativeEnterLocality']}
+              />
+              <FormInput
+                type="text"
+                name="temporaryRepresentativeAddress.houseNo"
+                label={t['kymCoopRepresentativeHouseNo']}
+                placeholder={t['kymCoopRepresentativeEnterHouseNo']}
+              />
 
-                <Box mt="-16px">
-                  <FormMap name="temporaryRepresentativeAddress.coordinates" />
-                </Box>
-              </>
-            )}
-          </Box>
-        </GroupContainer>
+              <GridItem colSpan={2}>
+                <FormMap name="temporaryRepresentativeAddress.coordinates" />
+              </GridItem>
+            </>
+          )}
+        </FormSection>
       </form>
     </FormProvider>
   );

@@ -8,12 +8,8 @@ import {
   useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 interface IKYMFinancialTransactionDetailsProps {
@@ -81,41 +77,44 @@ export const KYMFinancialTransactionDetails = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer
+        <FormSection
+          gridLayout={true}
           id="kymAccIndFinancialTransactionDetails"
-          scrollMarginTop={'200px'}
+          header="kynIndFINANCIALTRANSACTIONDETAILS"
+          subHeader="kynIndDetailsoftheamount"
         >
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kynIndFINANCIALTRANSACTIONDETAILS']}
-          </Text>
+          <FormInput
+            type="number"
+            name="initialShare"
+            textAlign="right"
+            label={t['kymIndFinancialShare']}
+            placeholder="0.00"
+          />
+          <FormInput
+            type="number"
+            name="initialSaving"
+            label={t['kymIndFinancialSavings']}
+            textAlign="right"
+            placeholder="0.00"
+          />
 
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-              {t['kynIndDetailsoftheamount']}
-            </Text>
-            <InputGroupContainer>
-              <FormInput
-                type="number"
-                name="initialShare"
-                textAlign="right"
-                label={t['kymIndFinancialShare']}
-                placeholder="0.00"
-              />
-              <FormInput
-                type="number"
-                name="initialSaving"
-                label={t['kymIndFinancialSavings']}
-                textAlign="right"
-                placeholder="0.00"
-              />
-              <FormInput
-                type="number"
-                name="otherFinancialAmount"
-                label={t['kymIndFinancialOther']}
-                textAlign="right"
-                placeholder="0.00"
-              />
-              {/* {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
+          <FormInput
+            type="number"
+            name="initialLoan"
+            label={t['kymIndLoan']}
+            textAlign="right"
+            placeholder="0.00"
+          />
+
+          <FormInput
+            type="number"
+            name="otherFinancialAmount"
+            label={t['kymIndFinancialOther']}
+            textAlign="right"
+            placeholder="0.00"
+          />
+        </FormSection>
+        {/* {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
                 (option, index) => {
                   register(`initialTransactionDetails.options.${index}.id`, {
                     value: option.id,
@@ -134,9 +133,6 @@ export const KYMFinancialTransactionDetails = ({
                   );
                 }
               )} */}
-            </InputGroupContainer>
-          </Box>
-        </GroupContainer>
       </form>
     </FormProvider>
   );

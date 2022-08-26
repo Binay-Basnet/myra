@@ -66,7 +66,8 @@ export function KYMInstitutionPage() {
               w={320}
               p={2}
               position="fixed"
-              borderRight="1px solid #E6E6E6"
+              borderRight="1px solid "
+              borderColor="border.layout"
               minHeight="100%"
               bg="white"
             >
@@ -158,41 +159,38 @@ export function KYMInstitutionPage() {
         {/* </form>
         </FormProvider> */}
       </Container>
-      <Box position="relative" margin="0px auto">
-        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
-            <FormFooter
-              status={
-                <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
-                  </Text>
-                </Box>
-              }
-              draftButton={
-                <Button type="submit" variant="ghost">
-                  <Icon as={BiSave} color="primary.500" />
-                  <Text
-                    alignSelf="center"
-                    color="primary.500"
-                    fontWeight="Medium"
-                    fontSize="s2"
-                    ml="5px"
-                  >
-                    {t['saveDraft']}
-                  </Text>
-                </Button>
-              }
-              mainButtonLabel={t['next']}
-              mainButtonHandler={() =>
-                router.push(`/members/translation/${id}`)
-              }
-            />
-          </Container>
-        </Box>
+
+      <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
+        <Container minW="container.xl" height="fit-content">
+          <FormFooter
+            status={
+              <Box display="flex" gap="s8">
+                <Text as="i" fontSize="r1">
+                  {t['formDetails']}
+                </Text>
+                <Text as="i" fontSize="r1">
+                  09:41 AM
+                </Text>
+              </Box>
+            }
+            draftButton={
+              <Button type="submit" variant="ghost">
+                <Icon as={BiSave} color="primary.500" />
+                <Text
+                  alignSelf="center"
+                  color="primary.500"
+                  fontWeight="Medium"
+                  fontSize="s2"
+                  ml="5px"
+                >
+                  {t['saveDraft']}
+                </Text>
+              </Button>
+            }
+            mainButtonLabel={t['next']}
+            mainButtonHandler={() => router.push(`/members/translation/${id}`)}
+          />
+        </Container>
       </Box>
     </>
   );

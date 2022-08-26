@@ -589,6 +589,7 @@ export type BranchInput = {
 };
 
 export type BranchSearchFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
 };
@@ -793,7 +794,7 @@ export type CoopRelatedTrainingType = {
 
 export type CoopUnionAccountOperatorDetailsResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<KymCoopUnionAccountOperatorDetails>;
   recordId: Scalars['ID'];
 };
@@ -809,14 +810,14 @@ export type CoopUnionAddLastUpdated = {
 
 export type CoopUnionBodDetailsResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<KymCoopUnionBodDetails>;
   recordId: Scalars['ID'];
 };
 
 export type CoopUnionCentralRepresentativeDetailsResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<CooperativeUnionCentralRepresentativeDetails>;
   recordId: Scalars['ID'];
 };
@@ -876,7 +877,7 @@ export type CoopUnionEconomicDetailsInput = {
 
 export type CoopUnionEconomicDetailsResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<CooperativeUnionEconomicDetails>;
   recordId: Scalars['ID'];
 };
@@ -928,7 +929,7 @@ export type CoopUnionInstitutionInformationInput = {
 
 export type CoopUnionInstitutionInformationResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<CooperativeUnionInstitutionInformation>;
   recordId: Scalars['ID'];
 };
@@ -956,9 +957,15 @@ export type CoopUnionPersonnelDetails = {
 
 export type CoopUnionPersonnelDetailsResult = {
   error?: Maybe<KymCoopUnionAddError>;
-  query?: Maybe<KymCoopUnionQuery>;
+  query?: Maybe<CooperativeUnionMember>;
   record?: Maybe<CoopUnionPersonnelDetails>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type CoopUnionPersonnelDetailsResultType = {
+  data?: Maybe<CoopUnionPersonnelDetails>;
+  id?: Maybe<Scalars['ID']>;
+  sectionStatus?: Maybe<KymIndAddSectionStatus>;
 };
 
 export type CoopUnionPersonnelInput = {
@@ -1195,6 +1202,12 @@ export type CooperativeUnionEconomicDetails = {
   shareCapitalTarget?: Maybe<Scalars['Float']>;
 };
 
+export type CooperativeUnionEconomicDetailsResult = {
+  data?: Maybe<CooperativeUnionEconomicDetails>;
+  id?: Maybe<Scalars['ID']>;
+  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+};
+
 export type CooperativeUnionInstitutionInformation = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
@@ -1240,14 +1253,20 @@ export type CooperativeUnionInstitutionInformation = {
   website?: Maybe<Scalars['String']>;
 };
 
-export type CooperativeUnionMember = {
-  accountOperatorsDetails?: Maybe<KymCooperativeUnionPersonnelDetails>;
-  boardOfDirectorsDetails?: Maybe<KymCooperativeUnionPersonnelDetails>;
-  centralRepresentativeDetails?: Maybe<CoopUnionPersonnelDetails>;
-  declaration?: Maybe<CooperativeUnionDeclaration>;
-  economicDetails?: Maybe<CooperativeUnionEconomicDetails>;
+export type CooperativeUnionInstitutionInformationResult = {
+  data?: Maybe<CooperativeUnionInstitutionInformation>;
   id?: Maybe<Scalars['ID']>;
-  institutionInformation?: Maybe<CooperativeUnionInstitutionInformation>;
+  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+};
+
+export type CooperativeUnionMember = {
+  accountOperatorsDetails?: Maybe<KymCooperativeUnionPersonnelDetailsResult>;
+  boardOfDirectorsDetails?: Maybe<KymCooperativeUnionPersonnelDetailsResult>;
+  centralRepresentativeDetails?: Maybe<CoopUnionPersonnelDetailsResultType>;
+  declaration?: Maybe<CooperativeUnionDeclaration>;
+  economicDetails?: Maybe<CooperativeUnionEconomicDetailsResult>;
+  id?: Maybe<Scalars['ID']>;
+  institutionInformation?: Maybe<CooperativeUnionInstitutionInformationResult>;
 };
 
 export enum CooperativeUnionPersonnelSection {
@@ -1419,6 +1438,7 @@ export type DepositAccount = Base & {
   createdBy: Identity;
   fine?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  installmentAmount?: Maybe<Scalars['String']>;
   lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
@@ -1534,6 +1554,7 @@ export type DepositLoanAccount = Base & {
   depositFrequencyYearlyDay?: Maybe<Scalars['Int']>;
   depositFrequencyYearlyMonth?: Maybe<Months>;
   id: Scalars['ID'];
+  installmentAmount?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['Float']>;
   memberId: Scalars['ID'];
   modifiedAt: Scalars['Time'];
@@ -1573,6 +1594,7 @@ export type DepositLoanAccountInput = {
   depositFrequencyWeekly?: InputMaybe<Week>;
   depositFrequencyYearlyDay?: InputMaybe<Scalars['Int']>;
   depositFrequencyYearlyMonth?: InputMaybe<Months>;
+  installmentAmount?: InputMaybe<Scalars['String']>;
   interestRate?: InputMaybe<Scalars['Float']>;
   memberId: Scalars['ID'];
   productId: Scalars['ID'];
@@ -1612,8 +1634,10 @@ export type DepositLoanAccountQueryGetArgs = {
 
 export type DepositLoanAccountQueryGetInstallmentsArgs = {
   from?: InputMaybe<Scalars['String']>;
+  fromN?: InputMaybe<Scalars['Int']>;
   id: Scalars['ID'];
   to?: InputMaybe<Scalars['String']>;
+  toN?: InputMaybe<Scalars['Int']>;
 };
 
 export type DepositLoanAccountQueryListArgs = {
@@ -1668,6 +1692,7 @@ export type DepositProductEdge = {
 };
 
 export type DepositProductFormStateData = {
+  accountCloseCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   accountType?: Maybe<Scalars['ID']>;
   allowLoan?: Maybe<Scalars['Boolean']>;
   alternativeChannels?: Maybe<Scalars['Boolean']>;
@@ -1679,6 +1704,7 @@ export type DepositProductFormStateData = {
   criteria?: Maybe<Array<Maybe<CriteriaSection>>>;
   depositAmount?: Maybe<AmountLimitFormState>;
   depositFrequency?: Maybe<Frequency>;
+  description?: Maybe<Scalars['String']>;
   dormantSetup?: Maybe<Array<Maybe<DormantSetupFormState>>>;
   educationQualification?: Maybe<Array<Maybe<Scalars['ID']>>>;
   ethnicity?: Maybe<Array<Maybe<Scalars['ID']>>>;
@@ -1687,6 +1713,7 @@ export type DepositProductFormStateData = {
   individualDocuments?: Maybe<Array<Maybe<IndividualRequiredDocument>>>;
   institutionDocuments?: Maybe<Array<Maybe<InstitutionRequiredDocument>>>;
   interest?: Maybe<InterestFormState>;
+  isForMinors?: Maybe<Scalars['Boolean']>;
   ladderRate?: Maybe<Scalars['Boolean']>;
   ladderRateData?: Maybe<Array<Maybe<LadderRateFormState>>>;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
@@ -1718,6 +1745,7 @@ export type DepositProductFormStateData = {
   supportMultiple?: Maybe<Scalars['Boolean']>;
   typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: Maybe<Scalars['Boolean']>;
+  withdrawPenalty?: Maybe<WithdrawPenaltyFormState>;
   withdrawRestricted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -1727,6 +1755,7 @@ export type DepositProductFormStateResult = {
 };
 
 export type DepositProductInput = {
+  accountCloseCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   accountType?: InputMaybe<Scalars['ID']>;
   allowLoan?: InputMaybe<Scalars['Boolean']>;
   alternativeChannels?: InputMaybe<Scalars['Boolean']>;
@@ -1738,6 +1767,7 @@ export type DepositProductInput = {
   criteria?: InputMaybe<Array<InputMaybe<CriteriaSection>>>;
   depositAmount?: InputMaybe<AmountLimit>;
   depositFrequency?: InputMaybe<Frequency>;
+  description?: InputMaybe<Scalars['String']>;
   dormantSetup?: InputMaybe<Array<InputMaybe<DormantSetup>>>;
   educationQualification?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   ethnicity?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -1750,6 +1780,7 @@ export type DepositProductInput = {
     Array<InputMaybe<InstitutionRequiredDocument>>
   >;
   interest: InterestRate;
+  isForMinors?: InputMaybe<Scalars['Boolean']>;
   ladderRate?: InputMaybe<Scalars['Boolean']>;
   ladderRateData?: InputMaybe<Array<InputMaybe<LadderRate>>>;
   maritalStatusId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -1781,6 +1812,7 @@ export type DepositProductInput = {
   supportMultiple?: InputMaybe<Scalars['Boolean']>;
   typeOfMember?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: InputMaybe<Scalars['Boolean']>;
+  withdrawPenalty?: InputMaybe<WithdrawPenalty>;
   withdrawRestricted?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1956,6 +1988,16 @@ export enum DividendDistributionCondition {
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
 }
+
+export type DividendRate = {
+  monthly?: Maybe<MonthlyDividendRate>;
+  quarterly?: Maybe<QuarterlyDividendRate>;
+};
+
+export type DividendRateInput = {
+  monthly?: InputMaybe<MonthlyDividendRateInput>;
+  quarterly?: InputMaybe<QuarterlyDividendRateInput>;
+};
 
 export enum DividendTransferTreatment {
   AccountTransfer = 'ACCOUNT_TRANSFER',
@@ -3376,6 +3418,8 @@ export enum Id_Type {
   Loanproduct = 'LOANPRODUCT',
   Loanproductcriteria = 'LOANPRODUCTCRITERIA',
   Member = 'MEMBER',
+  Myrauser = 'MYRAUSER',
+  Myrauseridetification = 'MYRAUSERIDETIFICATION',
   Organization = 'ORGANIZATION',
   Productdocument = 'PRODUCTDOCUMENT',
   Sharebalance = 'SHAREBALANCE',
@@ -3391,6 +3435,19 @@ export type Identity = {
   name: Scalars['String'];
   userType: UserType;
   username: Scalars['String'];
+};
+
+export enum IdetificationType {
+  Citizenship = 'CITIZENSHIP',
+  DrivingLicense = 'DRIVING_LICENSE',
+  NationalId = 'NATIONAL_ID',
+  Passport = 'PASSPORT',
+  VoterCard = 'VOTER_CARD',
+}
+
+export type IncompleteSection = {
+  incomplete?: Maybe<Array<Maybe<Scalars['String']>>>;
+  sectionName?: Maybe<Scalars['String']>;
 };
 
 export type IndividualMember = {
@@ -3410,6 +3467,7 @@ export enum IndividualRequiredDocument {
 
 export type Installment = {
   dueDate: Scalars['String'];
+  dueDateAD?: Maybe<Scalars['String']>;
   fine?: Maybe<Scalars['String']>;
   monthName?: Maybe<Scalars['String']>;
   rebate?: Maybe<Scalars['String']>;
@@ -4968,6 +5026,12 @@ export type KymCooperativeUnionPersonnelDetails = {
   personnelDetails?: Maybe<Array<Maybe<CoopUnionPersonnelDetails>>>;
 };
 
+export type KymCooperativeUnionPersonnelDetailsResult = {
+  data?: Maybe<KymCooperativeUnionPersonnelDetails>;
+  id?: Maybe<Scalars['ID']>;
+  sectionStatus?: Maybe<Array<Maybe<KymIndAddSectionStatus>>>;
+};
+
 export type KymDocuments = {
   documentUrl?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   id: Scalars['ID'];
@@ -5054,7 +5118,7 @@ export type KymIndAddFormStatus = {
 };
 
 export type KymIndAddInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
+  error?: Maybe<Array<Maybe<SectionWiseError>>>;
 };
 
 export type KymIndAddLus =
@@ -5078,10 +5142,9 @@ export type KymIndAddResult = {
 };
 
 export type KymIndAddSectionStatus = {
-  cooperativeMembership?: Maybe<KymIndCooperativeMemberStatus>;
-  declaration?: Maybe<KymIndDeclarationStatus>;
-  personal?: Maybe<KymIndPersonalStatus>;
-  professional?: Maybe<KymIndProfessionalStatus>;
+  errors?: Maybe<Array<Maybe<SectionWiseError>>>;
+  id?: Maybe<Scalars['ID']>;
+  incomplete?: Maybe<Array<Maybe<IncompleteSection>>>;
 };
 
 export type KymIndCooperativeLus = {
@@ -5157,6 +5220,11 @@ export type KymIndFormState = {
   formData?: Maybe<KymIndFormData>;
   lastUpdated: KymIndAddLus;
   sectionStatus?: Maybe<KymIndAddSectionStatus>;
+};
+
+export type KymIndFormStateQuery = {
+  data?: Maybe<KymIndFormState>;
+  error?: Maybe<QueryError>;
 };
 
 export type KymIndGetResult = {
@@ -6191,7 +6259,9 @@ export type Member = Base & {
   name?: Maybe<Scalars['Localized']>;
   objState: ObjState;
   profile?: Maybe<MemberProfile>;
+  profilePicUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
   share?: Maybe<MemberShare>;
+  signaturePicUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
   type: KymMemberTypesEnum;
 };
 
@@ -6250,8 +6320,8 @@ export type MemberMutationTranslateArgs = {
 export type MemberProfile =
   | CooperativeUnionMember
   | KymCooperativeFormStateQuery
-  | KymInsFormStateQuery
-  | KymIndFormStateQuery;
+  | KymIndFormStateQuery
+  | KymInsFormStateQuery;
 
 export type MemberQuery = {
   cooperative?: Maybe<KymCooperativeQuery>;
@@ -6294,6 +6364,36 @@ export type MemberShare = {
 export type MemberTypeResult = {
   data?: Maybe<Array<Maybe<KymMemberTypes>>>;
   error?: Maybe<QueryError>;
+};
+
+export type MonthlyDividendRate = {
+  eightMonth?: Maybe<Scalars['Float']>;
+  eleventhMonth?: Maybe<Scalars['Float']>;
+  fifthMonth?: Maybe<Scalars['Float']>;
+  firstMonth?: Maybe<Scalars['Float']>;
+  fourthMonth?: Maybe<Scalars['Float']>;
+  ninthMonth?: Maybe<Scalars['Float']>;
+  secondMonth?: Maybe<Scalars['Float']>;
+  seventhMonth?: Maybe<Scalars['Float']>;
+  sixthMonth?: Maybe<Scalars['Float']>;
+  tenthMonth?: Maybe<Scalars['Float']>;
+  thirdMonth?: Maybe<Scalars['Float']>;
+  twelfthMonth?: Maybe<Scalars['Float']>;
+};
+
+export type MonthlyDividendRateInput = {
+  eightMonth?: InputMaybe<Scalars['Float']>;
+  eleventhMonth?: InputMaybe<Scalars['Float']>;
+  fifthMonth?: InputMaybe<Scalars['Float']>;
+  firstMonth?: InputMaybe<Scalars['Float']>;
+  fourthMonth?: InputMaybe<Scalars['Float']>;
+  ninthMonth?: InputMaybe<Scalars['Float']>;
+  secondMonth?: InputMaybe<Scalars['Float']>;
+  seventhMonth?: InputMaybe<Scalars['Float']>;
+  sixthMonth?: InputMaybe<Scalars['Float']>;
+  tenthMonth?: InputMaybe<Scalars['Float']>;
+  thirdMonth?: InputMaybe<Scalars['Float']>;
+  twelfthMonth?: InputMaybe<Scalars['Float']>;
 };
 
 export type MonthlyTransactions = {
@@ -6354,6 +6454,135 @@ export type MutationError =
   | NotFoundError
   | ServerError
   | ValidationError;
+
+export type MyraUser = Base & {
+  branch?: Maybe<Branch>;
+  contactNo?: Maybe<Scalars['String']>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  dob?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  gender?: Maybe<UserGender>;
+  id: Scalars['ID'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  name?: Maybe<Scalars['String']>;
+  objState: ObjState;
+  role?: Maybe<Roles>;
+};
+
+export type MyraUserConnection = {
+  edges?: Maybe<Array<MyraUserEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type MyraUserEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<MyraUser>;
+};
+
+export type MyraUserFormStateData = {
+  branch?: Maybe<Scalars['String']>;
+  contactNo?: Maybe<Scalars['String']>;
+  dob?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  gender?: Maybe<UserGender>;
+  identificationDetails?: Maybe<Array<Maybe<MyraUserIdentification>>>;
+  identificationSelection?: Maybe<Array<Maybe<Scalars['String']>>>;
+  isTempAsPermanentAddressSame?: Maybe<Scalars['Boolean']>;
+  landlordContact?: Maybe<Scalars['String']>;
+  landlordName?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  permanentAddress?: Maybe<KymAddress>;
+  profilePicture?: Maybe<Array<Maybe<Scalars['String']>>>;
+  role?: Maybe<Roles>;
+  temporaryAddress?: Maybe<KymAddress>;
+  url?: Maybe<Scalars['String']>;
+};
+
+export type MyraUserFormStateResult = {
+  data?: Maybe<MyraUserFormStateData>;
+  error?: Maybe<QueryError>;
+};
+
+export type MyraUserIdentification = {
+  date?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  idNo?: Maybe<Scalars['String']>;
+  idType?: Maybe<Scalars['String']>;
+  place?: Maybe<Scalars['String']>;
+};
+
+export type MyraUserIdentificationInput = {
+  date?: InputMaybe<Scalars['String']>;
+  idNo?: InputMaybe<Scalars['String']>;
+  idType?: InputMaybe<Scalars['String']>;
+  place?: InputMaybe<Scalars['String']>;
+};
+
+export type MyraUserIdentificationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MyraUserQuery>;
+  record?: Maybe<MyraUserIdentification>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type MyraUserInput = {
+  branch?: InputMaybe<Scalars['String']>;
+  contactNo: Scalars['String'];
+  dob: Scalars['String'];
+  email: Scalars['String'];
+  gender: UserGender;
+  identificationDetails?: InputMaybe<
+    Array<InputMaybe<MyraUserIdentificationInput>>
+  >;
+  identificationSelection?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  isTempAsPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
+  landlordContact?: InputMaybe<Scalars['String']>;
+  landlordName?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  profilePicture?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  role: Roles;
+  temporaryAddress?: InputMaybe<KymAddressInput>;
+};
+
+export type MyraUserMutation = {
+  add?: Maybe<MyraUserResult>;
+};
+
+export type MyraUserMutationAddArgs = {
+  data?: InputMaybe<MyraUserInput>;
+  id: Scalars['ID'];
+};
+
+export type MyraUserQuery = {
+  formState?: Maybe<MyraUserFormStateResult>;
+  list?: Maybe<MyraUserConnection>;
+};
+
+export type MyraUserQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+export type MyraUserQueryListArgs = {
+  filter?: InputMaybe<MyraUserSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type MyraUserResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MyraUserQuery>;
+  record?: Maybe<MyraUser>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type MyraUserSearchFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Roles>;
+};
 
 export type Name = {
   firstName?: Maybe<Scalars['String']>;
@@ -6724,6 +6953,20 @@ export type Province = {
   nameNp: Scalars['String'];
 };
 
+export type QuarterlyDividendRate = {
+  firstQuarter?: Maybe<Scalars['Float']>;
+  fourthQuarter?: Maybe<Scalars['Float']>;
+  secondQuarter?: Maybe<Scalars['Float']>;
+  thirdQuarter?: Maybe<Scalars['Float']>;
+};
+
+export type QuarterlyDividendRateInput = {
+  firstQuarter?: InputMaybe<Scalars['Float']>;
+  fourthQuarter?: InputMaybe<Scalars['Float']>;
+  secondQuarter?: InputMaybe<Scalars['Float']>;
+  thirdQuarter?: InputMaybe<Scalars['Float']>;
+};
+
 export type Query = {
   account: DepositLoanAccountQuery;
   administration: AdministrationQuery;
@@ -6857,6 +7100,14 @@ export type Result = {
   nameNp: Scalars['String'];
 };
 
+export enum Roles {
+  Agent = 'AGENT',
+  BranchManager = 'BRANCH_MANAGER',
+  HeadTeller = 'HEAD_TELLER',
+  Superadmin = 'SUPERADMIN',
+  Teller = 'TELLER',
+}
+
 export type RoutesAndCodes = {
   code?: Maybe<Scalars['Int']>;
   slug?: Maybe<Scalars['String']>;
@@ -6953,6 +7204,11 @@ export type SectionDetailsQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export type SectionWiseError = {
+  errors?: Maybe<Scalars['InvalidData']>;
+  sectionName?: Maybe<Scalars['String']>;
+};
+
 export type ServerError = {
   code: Scalars['Int'];
   message: Scalars['String'];
@@ -6983,6 +7239,7 @@ export type SettingsMutation = {
   declaration: DeclarationMutation;
   form?: Maybe<FormSettingMutation>;
   general?: Maybe<GeneralSettingsMutation>;
+  myraUser?: Maybe<MyraUserMutation>;
 };
 
 export type SettingsQuery = {
@@ -6990,6 +7247,7 @@ export type SettingsQuery = {
   declaration: DeclarationQuery;
   form?: Maybe<FormSettingQuery>;
   general?: Maybe<GeneralSettingsQuery>;
+  myraUser?: Maybe<MyraUserQuery>;
 };
 
 export type ShareBalance = {
@@ -7032,6 +7290,7 @@ export type ShareCharge = {
   charge?: Maybe<Scalars['Float']>;
   maxShare?: Maybe<Scalars['Int']>;
   minShare?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
   type?: Maybe<ShareChargeType>;
 };
 
@@ -7039,6 +7298,7 @@ export type ShareChargeInput = {
   charge?: InputMaybe<Scalars['Float']>;
   maxShare?: InputMaybe<Scalars['Int']>;
   minShare?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<ShareChargeType>;
 };
 
@@ -7051,6 +7311,7 @@ export type ShareDividendSettingsInput = {
   accountForFractionalDividends?: InputMaybe<Scalars['ID']>;
   accountForShareDividends?: InputMaybe<Scalars['ID']>;
   distributionCondition?: InputMaybe<DividendDistributionCondition>;
+  dividendRate?: InputMaybe<DividendRateInput>;
   dividendTransferTreatment?: InputMaybe<DividendTransferTreatment>;
   organizationFundForDividends?: InputMaybe<Scalars['ID']>;
 };
@@ -7059,6 +7320,7 @@ export type ShareDividendSettingsResult = {
   accountForFractionalDividends?: Maybe<Scalars['ID']>;
   accountForShareDividends?: Maybe<Scalars['ID']>;
   distributionCondition?: Maybe<DividendDistributionCondition>;
+  dividendRate?: Maybe<DividendRate>;
   dividendTransferTreatment?: Maybe<DividendTransferTreatment>;
   organizationFundForDividends?: Maybe<Scalars['ID']>;
 };
@@ -7270,10 +7532,6 @@ export type ShareSettingsGeneralResult = {
 
 export type ShareSettingsMutation = {
   add?: Maybe<ShareSettingsAddMutation>;
-};
-
-export type ShareSettingsMutationAddArgs = {
-  id: Scalars['ID'];
 };
 
 export type ShareSettingsQuery = {
@@ -7578,6 +7836,12 @@ export type User = Base & {
   username: Scalars['String'];
 };
 
+export enum UserGender {
+  Female = 'FEMALE',
+  Male = 'MALE',
+  Other = 'OTHER',
+}
+
 export type UserMutation = {
   preference?: Maybe<UserPreferenceMutation>;
 };
@@ -7839,6 +8103,18 @@ export enum WithdrawPaymentType {
   WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
+export type WithdrawPenalty = {
+  penaltyAmount?: InputMaybe<Scalars['Amount']>;
+  penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
+  penaltyRate?: InputMaybe<Scalars['Float']>;
+};
+
+export type WithdrawPenaltyFormState = {
+  penaltyAmount?: Maybe<Scalars['Amount']>;
+  penaltyLedgerMapping?: Maybe<Scalars['String']>;
+  penaltyRate?: Maybe<Scalars['Float']>;
+};
+
 export type WithdrawResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
@@ -7850,18 +8126,23 @@ export enum WithdrawWith {
   WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
-export type KymIndFormStateQuery = {
-  data?: Maybe<KymIndFormState>;
-  error?: Maybe<QueryError>;
-};
-
 export type SetAccountOpenDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: DepositLoanAccountInput;
 }>;
 
 export type SetAccountOpenDataMutation = {
-  account: { add?: { recordId: string } | null };
+  account: {
+    add?: {
+      recordId: string;
+      error?:
+        | { message: string }
+        | { in: string }
+        | { message: string }
+        | {}
+        | null;
+    } | null;
+  };
 };
 
 export type SetAccountDocumentDataMutationVariables = Exact<{
@@ -8059,7 +8340,12 @@ export type SetMemberDataMutation = {
     individual?: {
       add?: {
         recordId: string;
-        error?: { error?: Record<string, Array<string>> | null } | null;
+        error?: {
+          error?: Array<{
+            sectionName?: string | null;
+            errors?: Record<string, Array<string>> | null;
+          } | null> | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -8186,7 +8472,12 @@ export type SetInstitutionDataMutation = {
     institution?: {
       add?: {
         recordId: string;
-        error?: { error?: Record<string, Array<string>> | null } | null;
+        error?: {
+          error?: Array<{
+            sectionName?: string | null;
+            errors?: Record<string, Array<string>> | null;
+          } | null> | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -8954,6 +9245,127 @@ export type UpdateDeclarationMutation = {
   };
 };
 
+export type SetSettingsShareBonusMutationVariables = Exact<{
+  data?: InputMaybe<ShareBonusSettingsInput>;
+}>;
+
+export type SetSettingsShareBonusMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          bonus?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsShareDividendMutationVariables = Exact<{
+  data?: InputMaybe<ShareDividendSettingsInput>;
+}>;
+
+export type SetSettingsShareDividendMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          dividend?: {
+            dividend?: {
+              distributionCondition?: DividendDistributionCondition | null;
+              dividendTransferTreatment?: DividendTransferTreatment | null;
+              accountForFractionalDividends?: string | null;
+              accountForShareDividends?: string | null;
+              organizationFundForDividends?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsShareFeeAndChargesMutationVariables = Exact<{
+  data?: InputMaybe<ShareFeeAndChargesInput>;
+}>;
+
+export type SetSettingsShareFeeAndChargesMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          feeAndCharges?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsShareGeneralMutationVariables = Exact<{
+  data?: InputMaybe<ShareSettingsGeneralInput>;
+}>;
+
+export type SetSettingsShareGeneralMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          general?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsShareTransferMutationVariables = Exact<{
+  data?: InputMaybe<ShareTransferSettingsInput>;
+}>;
+
+export type SetSettingsShareTransferMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          transfer?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsUserDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<MyraUserInput>;
+}>;
+
+export type SetSettingsUserDataMutation = {
+  settings: { myraUser?: { add?: { recordId?: string | null } | null } | null };
+};
+
 export type AddSharePurchaseMutationVariables = Exact<{
   data: SharePurchaseInput;
 }>;
@@ -9218,6 +9630,7 @@ export type GetAccountTableListQuery = {
           objState: ObjState;
           createdAt: string;
           modifiedAt: string;
+          installmentAmount?: string | null;
           balance?: string | null;
           accountOpenedDate?: string | null;
           lastTransactionDate?: string | null;
@@ -9598,101 +10011,114 @@ export type GetCooperativeUnionKymEditDataQuery = {
       formState?: {
         formData?: {
           institutionInformation?: {
-            nameOfInstitutionEn?: string | null;
-            nameOfInstitutionNp?: string | null;
-            institutionType?: string | null;
-            natureOfBusinessEn?: string | null;
-            natureOfBusinessNp?: string | null;
-            regdDate?: string | null;
-            vatOrPan?: string | null;
-            noOfBranches?: number | null;
-            regdNo?: string | null;
-            issuingOffice?: string | null;
-            phone?: string | null;
-            fax?: string | null;
-            contactEmail?: string | null;
-            website?: string | null;
-            postBoxNo?: string | null;
-            noOfEmployee?: number | null;
-            lastAgmDate?: string | null;
-            nameOfBank?: string | null;
-            accountNumber?: string | null;
-            accountName?: string | null;
-            applicantName?: string | null;
-            applicantNameNp?: string | null;
-            applicantDesignationEn?: string | null;
-            applicantDesignationNp?: string | null;
-            applicantEmail?: string | null;
-            applicantContactNo?: string | null;
-            applicantPanNo?: string | null;
-            applicantDateOfMembership?: string | null;
-            applicantHighestQualification?: string | null;
-            applicantIsPermanentAndTemporaryAddrSame?: boolean | null;
-            noOfMaleMemberCurrent?: number | null;
-            noOfMaleMemberTarget?: number | null;
-            noOfFemaleMemberCurrent?: number | null;
-            noOfFemaleMemberTarget?: number | null;
-            noOfInstitutionalMemberCurrent?: number | null;
-            noOfInstitutionalMemberTarget?: number | null;
-            regdAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
+            data?: {
+              nameOfInstitutionEn?: string | null;
+              nameOfInstitutionNp?: string | null;
+              institutionType?: string | null;
+              natureOfBusinessEn?: string | null;
+              natureOfBusinessNp?: string | null;
+              regdDate?: string | null;
+              vatOrPan?: string | null;
+              noOfBranches?: number | null;
+              regdNo?: string | null;
+              issuingOffice?: string | null;
+              phone?: string | null;
+              fax?: string | null;
+              contactEmail?: string | null;
+              website?: string | null;
+              postBoxNo?: string | null;
+              noOfEmployee?: number | null;
+              lastAgmDate?: string | null;
+              nameOfBank?: string | null;
+              accountNumber?: string | null;
+              accountName?: string | null;
+              applicantName?: string | null;
+              applicantNameNp?: string | null;
+              applicantDesignationEn?: string | null;
+              applicantDesignationNp?: string | null;
+              applicantEmail?: string | null;
+              applicantContactNo?: string | null;
+              applicantPanNo?: string | null;
+              applicantDateOfMembership?: string | null;
+              applicantHighestQualification?: string | null;
+              applicantIsPermanentAndTemporaryAddrSame?: boolean | null;
+              noOfMaleMemberCurrent?: number | null;
+              noOfMaleMemberTarget?: number | null;
+              noOfFemaleMemberCurrent?: number | null;
+              noOfFemaleMemberTarget?: number | null;
+              noOfInstitutionalMemberCurrent?: number | null;
+              noOfInstitutionalMemberTarget?: number | null;
+              regdAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: {
+                  longitude?: number | null;
+                  latitude?: number | null;
+                } | null;
+              } | null;
+              operatingOfficeAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: {
+                  longitude?: number | null;
+                  latitude?: number | null;
+                } | null;
+              } | null;
+              branchOfficeAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: {
+                  longitude?: number | null;
+                  latitude?: number | null;
+                } | null;
+              } | null;
+              applicantPermanentAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: {
+                  longitude?: number | null;
+                  latitude?: number | null;
+                } | null;
+              } | null;
+              applicantTemporaryAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: {
+                  longitude?: number | null;
+                  latitude?: number | null;
+                } | null;
               } | null;
             } | null;
-            operatingOfficeAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
-              } | null;
-            } | null;
-            branchOfficeAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
-              } | null;
-            } | null;
-            applicantPermanentAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
-              } | null;
-            } | null;
-            applicantTemporaryAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
-              } | null;
+            sectionStatus?: {
+              id?: string | null;
+              errors?: Array<{
+                sectionName?: string | null;
+                errors?: Record<string, Array<string>> | null;
+              } | null> | null;
+              incomplete?: Array<{
+                sectionName?: string | null;
+                incomplete?: Array<string | null> | null;
+              } | null> | null;
             } | null;
           } | null;
         } | null;
@@ -9711,45 +10137,58 @@ export type GetEconimicDetailsEditDataQuery = {
       formState?: {
         formData?: {
           economicDetails?: {
-            cashAndCashEquivalentCurrent?: number | null;
-            cashAndCashEquivalentTarget?: number | null;
-            bankCurrent?: number | null;
-            bankTarget?: number | null;
-            investmentsCurrent?: number | null;
-            investmentsTarget?: number | null;
-            loanCurrent?: number | null;
-            loanTarget?: number | null;
-            nonCurrentAssetsCurrent?: number | null;
-            nonCurrentAssetsTarget?: number | null;
-            otherNonCurrentAssetsCurrent?: number | null;
-            otherNonCurrentAssetsTarget?: number | null;
-            shareCapitalCurrent?: number | null;
-            shareCapitalTarget?: number | null;
-            reserveAndSurplusCurrent?: number | null;
-            reserveAndSurplusTarget?: number | null;
-            savingDepositCurrent?: number | null;
-            savingDepositTarget?: number | null;
-            loanAccountCurrent?: number | null;
-            loanAccountTarget?: number | null;
-            capitalGrantCurrent?: number | null;
-            capitalGrantTarget?: number | null;
-            currentLiabilitiesCurrent?: number | null;
-            currentLiabilitiesTarget?: number | null;
-            nonCurrentLiabilitiesCurrent?: number | null;
-            nonCurrentLiabilitiesTarget?: number | null;
-            incomeFromFinancialInvestment?: number | null;
-            incomeFromNonFinancialInvestment?: number | null;
-            incomeFromInvestment?: number | null;
-            incomeFromServiceOperation?: number | null;
-            incomeFromSales?: number | null;
-            otherIncome?: number | null;
-            miscellaneousIncome?: number | null;
-            purchase?: number | null;
-            directExpense?: number | null;
-            administrativeExpense?: number | null;
-            financialCost?: number | null;
-            riskManagementCost?: number | null;
-            deferredTaxExpense?: number | null;
+            data?: {
+              cashAndCashEquivalentCurrent?: number | null;
+              cashAndCashEquivalentTarget?: number | null;
+              bankCurrent?: number | null;
+              bankTarget?: number | null;
+              investmentsCurrent?: number | null;
+              investmentsTarget?: number | null;
+              loanCurrent?: number | null;
+              loanTarget?: number | null;
+              nonCurrentAssetsCurrent?: number | null;
+              nonCurrentAssetsTarget?: number | null;
+              otherNonCurrentAssetsCurrent?: number | null;
+              otherNonCurrentAssetsTarget?: number | null;
+              shareCapitalCurrent?: number | null;
+              shareCapitalTarget?: number | null;
+              reserveAndSurplusCurrent?: number | null;
+              reserveAndSurplusTarget?: number | null;
+              savingDepositCurrent?: number | null;
+              savingDepositTarget?: number | null;
+              loanAccountCurrent?: number | null;
+              loanAccountTarget?: number | null;
+              capitalGrantCurrent?: number | null;
+              capitalGrantTarget?: number | null;
+              currentLiabilitiesCurrent?: number | null;
+              currentLiabilitiesTarget?: number | null;
+              nonCurrentLiabilitiesCurrent?: number | null;
+              nonCurrentLiabilitiesTarget?: number | null;
+              incomeFromFinancialInvestment?: number | null;
+              incomeFromNonFinancialInvestment?: number | null;
+              incomeFromInvestment?: number | null;
+              incomeFromServiceOperation?: number | null;
+              incomeFromSales?: number | null;
+              otherIncome?: number | null;
+              miscellaneousIncome?: number | null;
+              purchase?: number | null;
+              directExpense?: number | null;
+              administrativeExpense?: number | null;
+              financialCost?: number | null;
+              riskManagementCost?: number | null;
+              deferredTaxExpense?: number | null;
+            } | null;
+            sectionStatus?: {
+              id?: string | null;
+              errors?: Array<{
+                sectionName?: string | null;
+                errors?: Record<string, Array<string>> | null;
+              } | null> | null;
+              incomplete?: Array<{
+                sectionName?: string | null;
+                incomplete?: Array<string | null> | null;
+              } | null> | null;
+            } | null;
           } | null;
         } | null;
       } | null;
@@ -9767,48 +10206,61 @@ export type GetBoardOfDirectorsDetailsListQuery = {
       formState?: {
         formData?: {
           boardOfDirectorsDetails?: {
-            personnelDetails?: Array<{
+            data?: {
+              personnelDetails?: Array<{
+                id?: string | null;
+                cooperativeUnionId?: string | null;
+                fullName?: string | null;
+                fullNameNp?: string | null;
+                designationEn?: string | null;
+                designationNp?: string | null;
+                isPermanentAndTemporaryAddressSame?: boolean | null;
+                dateOfMembership?: string | null;
+                highestQualification?: string | null;
+                mobileNumber?: string | null;
+                email?: string | null;
+                citizenshipNo?: string | null;
+                panNo?: string | null;
+                permanentAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: {
+                    longitude?: number | null;
+                    latitude?: number | null;
+                  } | null;
+                } | null;
+                temporaryAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: {
+                    longitude?: number | null;
+                    latitude?: number | null;
+                  } | null;
+                } | null;
+                trainingAttended?: Array<{
+                  subjectOfTraining?: string | null;
+                  dateOfTraining?: string | null;
+                  trainingOrganization?: string | null;
+                } | null> | null;
+              } | null> | null;
+            } | null;
+            sectionStatus?: Array<{
               id?: string | null;
-              cooperativeUnionId?: string | null;
-              fullName?: string | null;
-              fullNameNp?: string | null;
-              designationEn?: string | null;
-              designationNp?: string | null;
-              isPermanentAndTemporaryAddressSame?: boolean | null;
-              dateOfMembership?: string | null;
-              highestQualification?: string | null;
-              mobileNumber?: string | null;
-              email?: string | null;
-              citizenshipNo?: string | null;
-              panNo?: string | null;
-              permanentAddress?: {
-                provinceId?: number | null;
-                districtId?: number | null;
-                localGovernmentId?: number | null;
-                wardNo?: number | null;
-                locality?: Record<'local' | 'en' | 'np', string> | null;
-                houseNo?: string | null;
-                coordinates?: {
-                  longitude?: number | null;
-                  latitude?: number | null;
-                } | null;
-              } | null;
-              temporaryAddress?: {
-                provinceId?: number | null;
-                districtId?: number | null;
-                localGovernmentId?: number | null;
-                wardNo?: number | null;
-                locality?: Record<'local' | 'en' | 'np', string> | null;
-                houseNo?: string | null;
-                coordinates?: {
-                  longitude?: number | null;
-                  latitude?: number | null;
-                } | null;
-              } | null;
-              trainingAttended?: Array<{
-                subjectOfTraining?: string | null;
-                dateOfTraining?: string | null;
-                trainingOrganization?: string | null;
+              errors?: Array<{
+                sectionName?: string | null;
+                errors?: Record<string, Array<string>> | null;
+              } | null> | null;
+              incomplete?: Array<{
+                sectionName?: string | null;
+                incomplete?: Array<string | null> | null;
               } | null> | null;
             } | null> | null;
           } | null;
@@ -9828,7 +10280,81 @@ export type GetAccountOperatorDetailsListQuery = {
       formState?: {
         formData?: {
           accountOperatorsDetails?: {
-            personnelDetails?: Array<{
+            data?: {
+              personnelDetails?: Array<{
+                id?: string | null;
+                cooperativeUnionId?: string | null;
+                fullName?: string | null;
+                fullNameNp?: string | null;
+                designationEn?: string | null;
+                designationNp?: string | null;
+                isPermanentAndTemporaryAddressSame?: boolean | null;
+                dateOfMembership?: string | null;
+                highestQualification?: string | null;
+                mobileNumber?: string | null;
+                email?: string | null;
+                citizenshipNo?: string | null;
+                panNo?: string | null;
+                permanentAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: {
+                    longitude?: number | null;
+                    latitude?: number | null;
+                  } | null;
+                } | null;
+                temporaryAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: {
+                    longitude?: number | null;
+                    latitude?: number | null;
+                  } | null;
+                } | null;
+                trainingAttended?: Array<{
+                  subjectOfTraining?: string | null;
+                  dateOfTraining?: string | null;
+                  trainingOrganization?: string | null;
+                } | null> | null;
+              } | null> | null;
+            } | null;
+            sectionStatus?: Array<{
+              id?: string | null;
+              errors?: Array<{
+                sectionName?: string | null;
+                errors?: Record<string, Array<string>> | null;
+              } | null> | null;
+              incomplete?: Array<{
+                sectionName?: string | null;
+                incomplete?: Array<string | null> | null;
+              } | null> | null;
+            } | null> | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetCentralRepresentativeDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCentralRepresentativeDetailsQuery = {
+  members: {
+    cooperativeUnion?: {
+      formState?: {
+        formData?: {
+          centralRepresentativeDetails?: {
+            data?: {
               id?: string | null;
               cooperativeUnionId?: string | null;
               fullName?: string | null;
@@ -9842,6 +10368,8 @@ export type GetAccountOperatorDetailsListQuery = {
               email?: string | null;
               citizenshipNo?: string | null;
               panNo?: string | null;
+              notAmongDirectors?: boolean | null;
+              centralRepID?: string | null;
               permanentAddress?: {
                 provinceId?: number | null;
                 districtId?: number | null;
@@ -9871,7 +10399,18 @@ export type GetAccountOperatorDetailsListQuery = {
                 dateOfTraining?: string | null;
                 trainingOrganization?: string | null;
               } | null> | null;
-            } | null> | null;
+            } | null;
+            sectionStatus?: {
+              id?: string | null;
+              errors?: Array<{
+                sectionName?: string | null;
+                errors?: Record<string, Array<string>> | null;
+              } | null> | null;
+              incomplete?: Array<{
+                sectionName?: string | null;
+                incomplete?: Array<string | null> | null;
+              } | null> | null;
+            } | null;
           } | null;
         } | null;
       } | null;
@@ -9879,60 +10418,38 @@ export type GetAccountOperatorDetailsListQuery = {
   };
 };
 
-export type GetCentralRepresentativeDetailsQueryVariables = Exact<{
+export type GetCoopUnionSectionStatusQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type GetCentralRepresentativeDetailsQuery = {
+export type GetCoopUnionSectionStatusQuery = {
   members: {
     cooperativeUnion?: {
       formState?: {
-        formData?: {
+        sectionStatus?: {
+          institutionInformation?: {
+            completed?: Array<KymCoopUnionInstitutionInformationSection | null> | null;
+            error?: Array<KymCoopUnionInstitutionInformationSection | null> | null;
+          } | null;
+          economicDetails?: {
+            completed?: Array<KymCoopUnionEconomicDetailsSection | null> | null;
+            error?: Array<KymCoopUnionEconomicDetailsSection | null> | null;
+          } | null;
+          bodDetails?: {
+            completed?: Array<KymCoopUnionBodSection | null> | null;
+            error?: Array<KymCoopUnionBodSection | null> | null;
+          } | null;
+          accountOperatorDetails?: {
+            completed?: Array<KymCoopUnionAccountOperatorSection | null> | null;
+            error?: Array<KymCoopUnionAccountOperatorSection | null> | null;
+          } | null;
           centralRepresentativeDetails?: {
-            id?: string | null;
-            cooperativeUnionId?: string | null;
-            fullName?: string | null;
-            fullNameNp?: string | null;
-            designationEn?: string | null;
-            designationNp?: string | null;
-            isPermanentAndTemporaryAddressSame?: boolean | null;
-            dateOfMembership?: string | null;
-            highestQualification?: string | null;
-            mobileNumber?: string | null;
-            email?: string | null;
-            citizenshipNo?: string | null;
-            panNo?: string | null;
-            notAmongDirectors?: boolean | null;
-            centralRepID?: string | null;
-            permanentAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
-              } | null;
-            } | null;
-            temporaryAddress?: {
-              provinceId?: number | null;
-              districtId?: number | null;
-              localGovernmentId?: number | null;
-              wardNo?: number | null;
-              locality?: Record<'local' | 'en' | 'np', string> | null;
-              houseNo?: string | null;
-              coordinates?: {
-                longitude?: number | null;
-                latitude?: number | null;
-              } | null;
-            } | null;
-            trainingAttended?: Array<{
-              subjectOfTraining?: string | null;
-              dateOfTraining?: string | null;
-              trainingOrganization?: string | null;
-            } | null> | null;
+            completed?: Array<KymCoopUnionCentralRepresentativeSection | null> | null;
+            error?: Array<KymCoopUnionCentralRepresentativeSection | null> | null;
+          } | null;
+          declaration?: {
+            completed?: Array<KymCoopUnionDeclarationSection | null> | null;
+            error?: Array<KymCoopUnionDeclarationSection | null> | null;
           } | null;
         } | null;
       } | null;
@@ -10646,22 +11163,11 @@ export type GetKymFormStatusQuery = {
       formState?: {
         data?: {
           sectionStatus?: {
-            personal?: {
-              completed?: Array<KymIndPersonalSection | null> | null;
-              error?: Array<KymIndPersonalSection | null> | null;
-            } | null;
-            professional?: {
-              completed?: Array<KymIndProfessionalSection | null> | null;
-              error?: Array<KymIndProfessionalSection | null> | null;
-            } | null;
-            cooperativeMembership?: {
-              completed?: Array<KymIndCooperativeMemberSection | null> | null;
-              error?: Array<KymIndCooperativeMemberSection | null> | null;
-            } | null;
-            declaration?: {
-              completed?: Array<KymIndDeclarationSection | null> | null;
-              error?: Array<KymIndDeclarationSection | null> | null;
-            } | null;
+            id?: string | null;
+            errors?: Array<{
+              sectionName?: string | null;
+              errors?: Record<string, Array<string>> | null;
+            } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -10692,8 +11198,10 @@ export type GetMemberIndividualDataQuery = {
           | {
               id?: string | null;
               institutionInformation?: {
-                nameOfInstitutionEn?: string | null;
-                nameOfInstitutionNp?: string | null;
+                data?: {
+                  nameOfInstitutionEn?: string | null;
+                  nameOfInstitutionNp?: string | null;
+                } | null;
               } | null;
             }
           | {
@@ -10708,15 +11216,6 @@ export type GetMemberIndividualDataQuery = {
           | {
               data?: {
                 formData?: {
-                  institutionName?: string | null;
-                  institutionTypeId?: string | null;
-                  natureOfBusiness?: string | null;
-                } | null;
-              } | null;
-            }
-          | {
-              data?: {
-                formData?: {
                   maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
                   maritalStatusId?: string | null;
                   basicInformation?: {
@@ -10725,6 +11224,15 @@ export type GetMemberIndividualDataQuery = {
                     gender?: Record<'local' | 'en' | 'np', string> | null;
                   } | null;
                   contactDetails?: { email?: string | null } | null;
+                } | null;
+              } | null;
+            }
+          | {
+              data?: {
+                formData?: {
+                  institutionName?: string | null;
+                  institutionTypeId?: string | null;
+                  natureOfBusiness?: string | null;
                 } | null;
               } | null;
             }
@@ -11681,6 +12189,230 @@ export type GetSettingsOptionsFieldsQuery = {
   };
 };
 
+export type GetSettingsShareBonusDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareBonusDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        bonus?: {
+          taxPayer?: TaxPayerOptions | null;
+          taxRate?: number | null;
+          accountMapping?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsShareDividendDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareDividendDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        dividend?: {
+          distributionCondition?: DividendDistributionCondition | null;
+          dividendTransferTreatment?: DividendTransferTreatment | null;
+          accountForFractionalDividends?: string | null;
+          accountForShareDividends?: string | null;
+          organizationFundForDividends?: string | null;
+          dividendRate?: {
+            quarterly?: {
+              firstQuarter?: number | null;
+              secondQuarter?: number | null;
+              thirdQuarter?: number | null;
+              fourthQuarter?: number | null;
+            } | null;
+            monthly?: {
+              firstMonth?: number | null;
+              secondMonth?: number | null;
+              thirdMonth?: number | null;
+              fourthMonth?: number | null;
+              fifthMonth?: number | null;
+              sixthMonth?: number | null;
+              seventhMonth?: number | null;
+              eightMonth?: number | null;
+              ninthMonth?: number | null;
+              tenthMonth?: number | null;
+              eleventhMonth?: number | null;
+              twelfthMonth?: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsShareFeesAndChargesDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareFeesAndChargesDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        feeAndCharges?: {
+          shareCertificate?: Array<{
+            minShare?: number | null;
+            maxShare?: number | null;
+            type?: ShareChargeType | null;
+            charge?: number | null;
+          } | null> | null;
+          other?: Array<{
+            name?: string | null;
+            minShare?: number | null;
+            maxShare?: number | null;
+            type?: ShareChargeType | null;
+            charge?: number | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsShareGeneralDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareGeneralDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        general?: {
+          typeOfShare?: TypeOfShare | null;
+          multiplicityFactor?: number | null;
+          minimumQuantityOfShare?: number | null;
+          maximumQuantityOfShare?: number | null;
+          paidUpShareRate?: number | null;
+          shareIssueAuthority?: Array<BranchCategory | null> | null;
+          typeOfShareKitta?: TypeOfShare | null;
+          noOfAuthorisedPaidUpShare?: number | null;
+          noOfIssuedShare?: number | null;
+          startNumber?: number | null;
+          endNumber?: number | null;
+          incrementor?: number | null;
+          noOfDigits?: number | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsShareTransferDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareTransferDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        transfer?: {
+          type?: ShareTransferType | null;
+          accountForShareFund?: string | null;
+          mappedShareLedger?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsUserListDataQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<MyraUserSearchFilter>;
+}>;
+
+export type GetSettingsUserListDataQuery = {
+  settings: {
+    myraUser?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            objState: ObjState;
+            createdAt: string;
+            modifiedAt: string;
+            name?: string | null;
+            email?: string | null;
+            contactNo?: string | null;
+            gender?: UserGender | null;
+            dob?: string | null;
+            role?: Roles | null;
+            branch?: { id: string } | null;
+          } | null;
+        }> | null;
+        pageInfo: PaginationFragment;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsUserEditDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSettingsUserEditDataQuery = {
+  settings: {
+    myraUser?: {
+      formState?: {
+        data?: {
+          name?: string | null;
+          email?: string | null;
+          contactNo?: string | null;
+          gender?: UserGender | null;
+          dob?: string | null;
+          role?: Roles | null;
+          branch?: string | null;
+          identificationSelection?: Array<string | null> | null;
+          isTempAsPermanentAddressSame?: boolean | null;
+          landlordName?: string | null;
+          landlordContact?: string | null;
+          profilePicture?: Array<string | null> | null;
+          identificationDetails?: Array<{
+            id?: string | null;
+            idNo?: string | null;
+            idType?: string | null;
+            place?: string | null;
+            date?: string | null;
+          } | null> | null;
+          permanentAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: {
+              longitude?: number | null;
+              latitude?: number | null;
+            } | null;
+          } | null;
+          temporaryAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: {
+              longitude?: number | null;
+              latitude?: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetChartOfAccountsQuery = {
@@ -11949,6 +12681,17 @@ export const SetAccountOpenDataDocument = `
   account {
     add(id: $id, data: $data) {
       recordId
+      error {
+        ... on AuthorizationError {
+          message
+        }
+        ... on BadRequestError {
+          in: message
+        }
+        ... on ServerError {
+          message
+        }
+      }
     }
   }
 }
@@ -12463,7 +13206,10 @@ export const SetMemberDataDocument = `
         recordId
         error {
           ... on KymIndAddInvalidDataError {
-            error
+            error {
+              sectionName
+              errors
+            }
           }
         }
       }
@@ -12824,7 +13570,10 @@ export const SetInstitutionDataDocument = `
         recordId
         error {
           ... on KymIndAddInvalidDataError {
-            error
+            error {
+              sectionName
+              errors
+            }
           }
         }
       }
@@ -14177,6 +14926,257 @@ export const useUpdateDeclarationMutation = <
     ),
     options
   );
+export const SetSettingsShareBonusDocument = `
+    mutation setSettingsShareBonus($data: ShareBonusSettingsInput) {
+  settings {
+    general {
+      share {
+        add {
+          bonus(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareBonusMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareBonusMutation,
+    TError,
+    SetSettingsShareBonusMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareBonusMutation,
+    TError,
+    SetSettingsShareBonusMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareBonus'],
+    useAxios<
+      SetSettingsShareBonusMutation,
+      SetSettingsShareBonusMutationVariables
+    >(SetSettingsShareBonusDocument),
+    options
+  );
+export const SetSettingsShareDividendDocument = `
+    mutation setSettingsShareDividend($data: ShareDividendSettingsInput) {
+  settings {
+    general {
+      share {
+        add {
+          dividend(data: $data) {
+            dividend {
+              distributionCondition
+              dividendTransferTreatment
+              accountForFractionalDividends
+              accountForShareDividends
+              organizationFundForDividends
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareDividendMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareDividendMutation,
+    TError,
+    SetSettingsShareDividendMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareDividendMutation,
+    TError,
+    SetSettingsShareDividendMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareDividend'],
+    useAxios<
+      SetSettingsShareDividendMutation,
+      SetSettingsShareDividendMutationVariables
+    >(SetSettingsShareDividendDocument),
+    options
+  );
+export const SetSettingsShareFeeAndChargesDocument = `
+    mutation setSettingsShareFeeAndCharges($data: ShareFeeAndChargesInput) {
+  settings {
+    general {
+      share {
+        add {
+          feeAndCharges(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareFeeAndChargesMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareFeeAndChargesMutation,
+    TError,
+    SetSettingsShareFeeAndChargesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareFeeAndChargesMutation,
+    TError,
+    SetSettingsShareFeeAndChargesMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareFeeAndCharges'],
+    useAxios<
+      SetSettingsShareFeeAndChargesMutation,
+      SetSettingsShareFeeAndChargesMutationVariables
+    >(SetSettingsShareFeeAndChargesDocument),
+    options
+  );
+export const SetSettingsShareGeneralDocument = `
+    mutation setSettingsShareGeneral($data: ShareSettingsGeneralInput) {
+  settings {
+    general {
+      share {
+        add {
+          general(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareGeneralMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareGeneralMutation,
+    TError,
+    SetSettingsShareGeneralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareGeneralMutation,
+    TError,
+    SetSettingsShareGeneralMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareGeneral'],
+    useAxios<
+      SetSettingsShareGeneralMutation,
+      SetSettingsShareGeneralMutationVariables
+    >(SetSettingsShareGeneralDocument),
+    options
+  );
+export const SetSettingsShareTransferDocument = `
+    mutation setSettingsShareTransfer($data: ShareTransferSettingsInput) {
+  settings {
+    general {
+      share {
+        add {
+          transfer(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareTransferMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareTransferMutation,
+    TError,
+    SetSettingsShareTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareTransferMutation,
+    TError,
+    SetSettingsShareTransferMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareTransfer'],
+    useAxios<
+      SetSettingsShareTransferMutation,
+      SetSettingsShareTransferMutationVariables
+    >(SetSettingsShareTransferDocument),
+    options
+  );
+export const SetSettingsUserDataDocument = `
+    mutation setSettingsUserData($id: ID!, $data: MyraUserInput) {
+  settings {
+    myraUser {
+      add(id: $id, data: $data) {
+        recordId
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsUserDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsUserDataMutation,
+    TError,
+    SetSettingsUserDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsUserDataMutation,
+    TError,
+    SetSettingsUserDataMutationVariables,
+    TContext
+  >(
+    ['setSettingsUserData'],
+    useAxios<SetSettingsUserDataMutation, SetSettingsUserDataMutationVariables>(
+      SetSettingsUserDataDocument
+    ),
+    options
+  );
 export const AddSharePurchaseDocument = `
     mutation addSharePurchase($data: SharePurchaseInput!) {
   share {
@@ -14637,6 +15637,7 @@ export const GetAccountTableListDocument = `
           modifiedBy {
             id
           }
+          installmentAmount
           balance
           accountOpenedDate
           lastTransactionDate
@@ -15082,102 +16083,115 @@ export const GetCooperativeUnionKymEditDataDocument = `
       formState(id: $id) {
         formData {
           institutionInformation {
-            nameOfInstitutionEn
-            nameOfInstitutionNp
-            institutionType
-            natureOfBusinessEn
-            natureOfBusinessNp
-            regdDate
-            vatOrPan
-            noOfBranches
-            regdNo
-            issuingOffice
-            regdAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
+            data {
+              nameOfInstitutionEn
+              nameOfInstitutionNp
+              institutionType
+              natureOfBusinessEn
+              natureOfBusinessNp
+              regdDate
+              vatOrPan
+              noOfBranches
+              regdNo
+              issuingOffice
+              regdAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              operatingOfficeAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              branchOfficeAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              phone
+              fax
+              contactEmail
+              website
+              postBoxNo
+              noOfEmployee
+              lastAgmDate
+              nameOfBank
+              accountNumber
+              accountName
+              applicantName
+              applicantNameNp
+              applicantDesignationEn
+              applicantDesignationNp
+              applicantEmail
+              applicantContactNo
+              applicantPanNo
+              applicantDateOfMembership
+              applicantHighestQualification
+              applicantPermanentAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              applicantIsPermanentAndTemporaryAddrSame
+              applicantTemporaryAddress {
+                provinceId
+                districtId
+                localGovernmentId
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+              noOfMaleMemberCurrent
+              noOfMaleMemberTarget
+              noOfFemaleMemberCurrent
+              noOfFemaleMemberTarget
+              noOfInstitutionalMemberCurrent
+              noOfInstitutionalMemberTarget
+            }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
               }
             }
-            operatingOfficeAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            branchOfficeAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            phone
-            fax
-            contactEmail
-            website
-            postBoxNo
-            noOfEmployee
-            lastAgmDate
-            nameOfBank
-            accountNumber
-            accountName
-            applicantName
-            applicantNameNp
-            applicantDesignationEn
-            applicantDesignationNp
-            applicantEmail
-            applicantContactNo
-            applicantPanNo
-            applicantDateOfMembership
-            applicantHighestQualification
-            applicantPermanentAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            applicantIsPermanentAndTemporaryAddrSame
-            applicantTemporaryAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            noOfMaleMemberCurrent
-            noOfMaleMemberTarget
-            noOfFemaleMemberCurrent
-            noOfFemaleMemberTarget
-            noOfInstitutionalMemberCurrent
-            noOfInstitutionalMemberTarget
           }
         }
       }
@@ -15207,45 +16221,58 @@ export const GetEconimicDetailsEditDataDocument = `
       formState(id: $id) {
         formData {
           economicDetails {
-            cashAndCashEquivalentCurrent
-            cashAndCashEquivalentTarget
-            bankCurrent
-            bankTarget
-            investmentsCurrent
-            investmentsTarget
-            loanCurrent
-            loanTarget
-            nonCurrentAssetsCurrent
-            nonCurrentAssetsTarget
-            otherNonCurrentAssetsCurrent
-            otherNonCurrentAssetsTarget
-            shareCapitalCurrent
-            shareCapitalTarget
-            reserveAndSurplusCurrent
-            reserveAndSurplusTarget
-            savingDepositCurrent
-            savingDepositTarget
-            loanAccountCurrent
-            loanAccountTarget
-            capitalGrantCurrent
-            capitalGrantTarget
-            currentLiabilitiesCurrent
-            currentLiabilitiesTarget
-            nonCurrentLiabilitiesCurrent
-            nonCurrentLiabilitiesTarget
-            incomeFromFinancialInvestment
-            incomeFromNonFinancialInvestment
-            incomeFromInvestment
-            incomeFromServiceOperation
-            incomeFromSales
-            otherIncome
-            miscellaneousIncome
-            purchase
-            directExpense
-            administrativeExpense
-            financialCost
-            riskManagementCost
-            deferredTaxExpense
+            data {
+              cashAndCashEquivalentCurrent
+              cashAndCashEquivalentTarget
+              bankCurrent
+              bankTarget
+              investmentsCurrent
+              investmentsTarget
+              loanCurrent
+              loanTarget
+              nonCurrentAssetsCurrent
+              nonCurrentAssetsTarget
+              otherNonCurrentAssetsCurrent
+              otherNonCurrentAssetsTarget
+              shareCapitalCurrent
+              shareCapitalTarget
+              reserveAndSurplusCurrent
+              reserveAndSurplusTarget
+              savingDepositCurrent
+              savingDepositTarget
+              loanAccountCurrent
+              loanAccountTarget
+              capitalGrantCurrent
+              capitalGrantTarget
+              currentLiabilitiesCurrent
+              currentLiabilitiesTarget
+              nonCurrentLiabilitiesCurrent
+              nonCurrentLiabilitiesTarget
+              incomeFromFinancialInvestment
+              incomeFromNonFinancialInvestment
+              incomeFromInvestment
+              incomeFromServiceOperation
+              incomeFromSales
+              otherIncome
+              miscellaneousIncome
+              purchase
+              directExpense
+              administrativeExpense
+              financialCost
+              riskManagementCost
+              deferredTaxExpense
+            }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
+              }
+            }
           }
         }
       }
@@ -15275,49 +16302,62 @@ export const GetBoardOfDirectorsDetailsListDocument = `
       formState(id: $id) {
         formData {
           boardOfDirectorsDetails {
-            personnelDetails {
+            data {
+              personnelDetails {
+                id
+                cooperativeUnionId
+                fullName
+                fullNameNp
+                designationEn
+                designationNp
+                permanentAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                isPermanentAndTemporaryAddressSame
+                temporaryAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                dateOfMembership
+                highestQualification
+                mobileNumber
+                email
+                citizenshipNo
+                trainingAttended {
+                  subjectOfTraining
+                  dateOfTraining
+                  trainingOrganization
+                }
+                panNo
+              }
+            }
+            sectionStatus {
               id
-              cooperativeUnionId
-              fullName
-              fullNameNp
-              designationEn
-              designationNp
-              permanentAddress {
-                provinceId
-                districtId
-                localGovernmentId
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
+              errors {
+                sectionName
+                errors
               }
-              isPermanentAndTemporaryAddressSame
-              temporaryAddress {
-                provinceId
-                districtId
-                localGovernmentId
-                wardNo
-                locality
-                houseNo
-                coordinates {
-                  longitude
-                  latitude
-                }
+              incomplete {
+                sectionName
+                incomplete
               }
-              dateOfMembership
-              highestQualification
-              mobileNumber
-              email
-              citizenshipNo
-              trainingAttended {
-                subjectOfTraining
-                dateOfTraining
-                trainingOrganization
-              }
-              panNo
             }
           }
         }
@@ -15348,7 +16388,93 @@ export const GetAccountOperatorDetailsListDocument = `
       formState(id: $id) {
         formData {
           accountOperatorsDetails {
-            personnelDetails {
+            data {
+              personnelDetails {
+                id
+                cooperativeUnionId
+                fullName
+                fullNameNp
+                designationEn
+                designationNp
+                permanentAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                isPermanentAndTemporaryAddressSame
+                temporaryAddress {
+                  provinceId
+                  districtId
+                  localGovernmentId
+                  wardNo
+                  locality
+                  houseNo
+                  coordinates {
+                    longitude
+                    latitude
+                  }
+                }
+                dateOfMembership
+                highestQualification
+                mobileNumber
+                email
+                citizenshipNo
+                trainingAttended {
+                  subjectOfTraining
+                  dateOfTraining
+                  trainingOrganization
+                }
+                panNo
+              }
+            }
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOperatorDetailsListQuery = <
+  TData = GetAccountOperatorDetailsListQuery,
+  TError = unknown
+>(
+  variables: GetAccountOperatorDetailsListQueryVariables,
+  options?: UseQueryOptions<GetAccountOperatorDetailsListQuery, TError, TData>
+) =>
+  useQuery<GetAccountOperatorDetailsListQuery, TError, TData>(
+    ['getAccountOperatorDetailsList', variables],
+    useAxios<
+      GetAccountOperatorDetailsListQuery,
+      GetAccountOperatorDetailsListQueryVariables
+    >(GetAccountOperatorDetailsListDocument).bind(null, variables),
+    options
+  );
+export const GetCentralRepresentativeDetailsDocument = `
+    query getCentralRepresentativeDetails($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        formData {
+          centralRepresentativeDetails {
+            data {
               id
               cooperativeUnionId
               fullName
@@ -15391,80 +16517,20 @@ export const GetAccountOperatorDetailsListDocument = `
                 trainingOrganization
               }
               panNo
+              notAmongDirectors
+              centralRepID
             }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetAccountOperatorDetailsListQuery = <
-  TData = GetAccountOperatorDetailsListQuery,
-  TError = unknown
->(
-  variables: GetAccountOperatorDetailsListQueryVariables,
-  options?: UseQueryOptions<GetAccountOperatorDetailsListQuery, TError, TData>
-) =>
-  useQuery<GetAccountOperatorDetailsListQuery, TError, TData>(
-    ['getAccountOperatorDetailsList', variables],
-    useAxios<
-      GetAccountOperatorDetailsListQuery,
-      GetAccountOperatorDetailsListQueryVariables
-    >(GetAccountOperatorDetailsListDocument).bind(null, variables),
-    options
-  );
-export const GetCentralRepresentativeDetailsDocument = `
-    query getCentralRepresentativeDetails($id: ID!) {
-  members {
-    cooperativeUnion {
-      formState(id: $id) {
-        formData {
-          centralRepresentativeDetails {
-            id
-            cooperativeUnionId
-            fullName
-            fullNameNp
-            designationEn
-            designationNp
-            permanentAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
+            sectionStatus {
+              id
+              errors {
+                sectionName
+                errors
+              }
+              incomplete {
+                sectionName
+                incomplete
               }
             }
-            isPermanentAndTemporaryAddressSame
-            temporaryAddress {
-              provinceId
-              districtId
-              localGovernmentId
-              wardNo
-              locality
-              houseNo
-              coordinates {
-                longitude
-                latitude
-              }
-            }
-            dateOfMembership
-            highestQualification
-            mobileNumber
-            email
-            citizenshipNo
-            trainingAttended {
-              subjectOfTraining
-              dateOfTraining
-              trainingOrganization
-            }
-            panNo
-            notAmongDirectors
-            centralRepID
           }
         }
       }
@@ -15485,6 +16551,57 @@ export const useGetCentralRepresentativeDetailsQuery = <
       GetCentralRepresentativeDetailsQuery,
       GetCentralRepresentativeDetailsQueryVariables
     >(GetCentralRepresentativeDetailsDocument).bind(null, variables),
+    options
+  );
+export const GetCoopUnionSectionStatusDocument = `
+    query getCoopUnionSectionStatus($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        sectionStatus {
+          institutionInformation {
+            completed
+            error
+          }
+          economicDetails {
+            completed
+            error
+          }
+          bodDetails {
+            completed
+            error
+          }
+          accountOperatorDetails {
+            completed
+            error
+          }
+          centralRepresentativeDetails {
+            completed
+            error
+          }
+          declaration {
+            completed
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopUnionSectionStatusQuery = <
+  TData = GetCoopUnionSectionStatusQuery,
+  TError = unknown
+>(
+  variables: GetCoopUnionSectionStatusQueryVariables,
+  options?: UseQueryOptions<GetCoopUnionSectionStatusQuery, TError, TData>
+) =>
+  useQuery<GetCoopUnionSectionStatusQuery, TError, TData>(
+    ['getCoopUnionSectionStatus', variables],
+    useAxios<
+      GetCoopUnionSectionStatusQuery,
+      GetCoopUnionSectionStatusQueryVariables
+    >(GetCoopUnionSectionStatusDocument).bind(null, variables),
     options
   );
 export const GetAccountListDocument = `
@@ -16470,7 +17587,7 @@ export const GetMemberListDocument = `
           createdAt
           dateJoined
           profile {
-            ... on kymIndFormStateQuery {
+            ... on KymIndFormStateQuery {
               data {
                 formData {
                   basicInformation {
@@ -16575,21 +17692,10 @@ export const GetKymFormStatusDocument = `
       formState {
         data {
           sectionStatus {
-            personal {
-              completed
-              error
-            }
-            professional {
-              completed
-              error
-            }
-            cooperativeMembership {
-              completed
-              error
-            }
-            declaration {
-              completed
-              error
+            id
+            errors {
+              sectionName
+              errors
             }
           }
         }
@@ -16629,7 +17735,7 @@ export const GetMemberIndividualDataDocument = `
         contact
         dateJoined
         profile {
-          ... on kymIndFormStateQuery {
+          ... on KymIndFormStateQuery {
             data {
               formData {
                 basicInformation {
@@ -16666,8 +17772,10 @@ export const GetMemberIndividualDataDocument = `
           ... on CooperativeUnionMember {
             id
             institutionInformation {
-              nameOfInstitutionEn
-              nameOfInstitutionNp
+              data {
+                nameOfInstitutionEn
+                nameOfInstitutionNp
+              }
             }
           }
         }
@@ -17939,6 +19047,333 @@ export const useGetSettingsOptionsFieldsQuery = <
       GetSettingsOptionsFieldsQuery,
       GetSettingsOptionsFieldsQueryVariables
     >(GetSettingsOptionsFieldsDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareBonusDataDocument = `
+    query getSettingsShareBonusData {
+  settings {
+    general {
+      share {
+        bonus {
+          taxPayer
+          taxRate
+          accountMapping
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareBonusDataQuery = <
+  TData = GetSettingsShareBonusDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareBonusDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareBonusDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareBonusDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareBonusData']
+      : ['getSettingsShareBonusData', variables],
+    useAxios<
+      GetSettingsShareBonusDataQuery,
+      GetSettingsShareBonusDataQueryVariables
+    >(GetSettingsShareBonusDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareDividendDataDocument = `
+    query getSettingsShareDividendData {
+  settings {
+    general {
+      share {
+        dividend {
+          distributionCondition
+          dividendRate {
+            quarterly {
+              firstQuarter
+              secondQuarter
+              thirdQuarter
+              fourthQuarter
+            }
+            monthly {
+              firstMonth
+              secondMonth
+              thirdMonth
+              fourthMonth
+              fifthMonth
+              sixthMonth
+              seventhMonth
+              eightMonth
+              ninthMonth
+              tenthMonth
+              eleventhMonth
+              twelfthMonth
+            }
+          }
+          dividendTransferTreatment
+          accountForFractionalDividends
+          accountForShareDividends
+          organizationFundForDividends
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareDividendDataQuery = <
+  TData = GetSettingsShareDividendDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareDividendDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareDividendDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareDividendDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareDividendData']
+      : ['getSettingsShareDividendData', variables],
+    useAxios<
+      GetSettingsShareDividendDataQuery,
+      GetSettingsShareDividendDataQueryVariables
+    >(GetSettingsShareDividendDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareFeesAndChargesDataDocument = `
+    query getSettingsShareFeesAndChargesData {
+  settings {
+    general {
+      share {
+        feeAndCharges {
+          shareCertificate {
+            minShare
+            maxShare
+            type
+            charge
+          }
+          other {
+            name
+            minShare
+            maxShare
+            type
+            charge
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareFeesAndChargesDataQuery = <
+  TData = GetSettingsShareFeesAndChargesDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareFeesAndChargesDataQueryVariables,
+  options?: UseQueryOptions<
+    GetSettingsShareFeesAndChargesDataQuery,
+    TError,
+    TData
+  >
+) =>
+  useQuery<GetSettingsShareFeesAndChargesDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareFeesAndChargesData']
+      : ['getSettingsShareFeesAndChargesData', variables],
+    useAxios<
+      GetSettingsShareFeesAndChargesDataQuery,
+      GetSettingsShareFeesAndChargesDataQueryVariables
+    >(GetSettingsShareFeesAndChargesDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareGeneralDataDocument = `
+    query getSettingsShareGeneralData {
+  settings {
+    general {
+      share {
+        general {
+          typeOfShare
+          multiplicityFactor
+          minimumQuantityOfShare
+          maximumQuantityOfShare
+          paidUpShareRate
+          shareIssueAuthority
+          typeOfShareKitta
+          noOfAuthorisedPaidUpShare
+          noOfIssuedShare
+          startNumber
+          endNumber
+          incrementor
+          noOfDigits
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareGeneralDataQuery = <
+  TData = GetSettingsShareGeneralDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareGeneralDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareGeneralDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareGeneralDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareGeneralData']
+      : ['getSettingsShareGeneralData', variables],
+    useAxios<
+      GetSettingsShareGeneralDataQuery,
+      GetSettingsShareGeneralDataQueryVariables
+    >(GetSettingsShareGeneralDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareTransferDataDocument = `
+    query getSettingsShareTransferData {
+  settings {
+    general {
+      share {
+        transfer {
+          type
+          accountForShareFund
+          mappedShareLedger
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareTransferDataQuery = <
+  TData = GetSettingsShareTransferDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareTransferDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareTransferDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareTransferDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareTransferData']
+      : ['getSettingsShareTransferData', variables],
+    useAxios<
+      GetSettingsShareTransferDataQuery,
+      GetSettingsShareTransferDataQueryVariables
+    >(GetSettingsShareTransferDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsUserListDataDocument = `
+    query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilter) {
+  settings {
+    myraUser {
+      list(paginate: $paginate, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            objState
+            createdAt
+            modifiedAt
+            name
+            email
+            contactNo
+            gender
+            dob
+            role
+            branch {
+              id
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetSettingsUserListDataQuery = <
+  TData = GetSettingsUserListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsUserListDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsUserListDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsUserListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsUserListData']
+      : ['getSettingsUserListData', variables],
+    useAxios<
+      GetSettingsUserListDataQuery,
+      GetSettingsUserListDataQueryVariables
+    >(GetSettingsUserListDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsUserEditDataDocument = `
+    query getSettingsUserEditData($id: ID!) {
+  settings {
+    myraUser {
+      formState(id: $id) {
+        data {
+          name
+          email
+          contactNo
+          gender
+          dob
+          role
+          branch
+          identificationSelection
+          identificationDetails {
+            id
+            idNo
+            idType
+            place
+            date
+          }
+          permanentAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          isTempAsPermanentAddressSame
+          temporaryAddress {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          landlordName
+          landlordContact
+          profilePicture
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsUserEditDataQuery = <
+  TData = GetSettingsUserEditDataQuery,
+  TError = unknown
+>(
+  variables: GetSettingsUserEditDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsUserEditDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsUserEditDataQuery, TError, TData>(
+    ['getSettingsUserEditData', variables],
+    useAxios<
+      GetSettingsUserEditDataQuery,
+      GetSettingsUserEditDataQueryVariables
+    >(GetSettingsUserEditDataDocument).bind(null, variables),
     options
   );
 export const GetChartOfAccountsDocument = `

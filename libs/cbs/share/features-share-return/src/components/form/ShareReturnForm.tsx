@@ -5,9 +5,10 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { debounce, omit } from 'lodash';
+import { omit } from 'lodash';
 
 import {
+  KymIndFormStateQuery,
   NatureOfDepositProduct,
   Payment_Mode,
   useAddShareReturnMutation,
@@ -17,10 +18,7 @@ import {
   useGetMemberListQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
-import {
-  FormCustomSelect,
-  FormMemberSelect,
-} from '@coop/cbs/transactions/ui-components';
+import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import {
@@ -30,12 +28,14 @@ import {
   FormSwitchTab,
 } from '@coop/shared/form';
 import {
+  asyncToast,
   Avatar,
   Box,
   Container,
   DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
+  FormMemberSelect,
   Grid,
   GridItem,
   Icon,
@@ -68,7 +68,7 @@ const ShareReturnForm = () => {
   const methods = useForm();
   const { watch, getValues, reset } = methods;
 
-  const { mutate } = useAddShareReturnMutation();
+  const { mutateAsync } = useAddShareReturnMutation();
 
   const accountList = [
     { label: t['shareReturnBankVoucher'], value: Payment_Mode.BankVoucher },
@@ -85,8 +85,6 @@ const ShareReturnForm = () => {
   const accountId = watch('accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
-  const [IDMember, setIDMember] = useState('');
-  const [trigger, setTrigger] = useState(false);
 
   const { data } = useGetMemberIndividualDataQuery({ id: memberId });
 
@@ -120,12 +118,15 @@ const ShareReturnForm = () => {
       memberId,
     };
 
-    mutate(
-      { data: updatedValues },
-      {
-        onSuccess: () => router.push(`/share/register`),
-      }
-    );
+    asyncToast({
+      id: 'share-return-id',
+      msgs: {
+        success: 'Share Returned',
+        loading: 'Returning Share',
+      },
+      onSuccess: () => router.push('/share/register'),
+      promise: mutateAsync({ data: updatedValues }),
+    });
   };
 
   const { data: accountListData } = useGetAccountTableListQuery(
@@ -156,13 +157,9 @@ const ShareReturnForm = () => {
   const { data: memberList } = useGetMemberListQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      filter: {
-        query: IDMember,
-      },
     },
     {
       staleTime: 0,
-      enabled: trigger,
     }
   );
 
@@ -171,6 +168,7 @@ const ShareReturnForm = () => {
   const memberDetail =
     memberListData &&
     memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
+  const memberProfile = memberDetail?.profile as KymIndFormStateQuery;
 
   useEffect(() => {
     setTotalAmount(
@@ -231,45 +229,12 @@ const ShareReturnForm = () => {
               minH="calc(100vh - 170px)"
             >
               <Box w="100%" minHeight="100vh">
-                <Box borderBottom="1px solid #E6E6E6" p={5}>
+                <Box borderBottom="1px solid" borderColor="border.layout" p={5}>
                   <Box w="50%">
                     <FormMemberSelect
                       name="memberId"
-                      label={t['sharePurchaseSelectMember']}
-                      placeholder={t['sharePurchaseEnterMemberID']}
-                      onInputChange={debounce((id) => {
-                        setIDMember(id);
-                        setTrigger(true);
-                      }, 800)}
-                      options={
-                        memberListData?.map((member) => ({
-                          memberInfo: {
-                            memberName: member?.node?.name?.local,
-                            memberId: member?.node?.id,
-                            gender:
-                              member?.node?.profile?.data?.formData
-                                ?.basicInformation?.gender?.local,
-                            age: member?.node?.profile?.data?.formData
-                              ?.basicInformation?.age,
-                            maritialStatus:
-                              member?.node?.profile?.data?.formData
-                                ?.maritalStatus?.local,
-                            address: member?.node?.address,
-                          },
-                          value: member?.node?.id as string,
-                        })) ?? []
-                      }
+                      label={t['sharePurchaseEnterMemberID']}
                     />
-                    {/* <FormSelect
-                      name="memberId"
-                      label={t['sharePurchaseSelectMember']}
-                      placeholder={t['sharePurchaseEnterMemberID']}
-                      onInputChange={debounce((id) => {
-                        setIDMember(id);
-                        setTrigger(true);
-                      }, 800)}
-                      options={memberOptions ?? []}
-                    /> */}
                   </Box>
 
                   {data && (
@@ -368,8 +333,8 @@ const ShareReturnForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberDetail?.profile?.data?.formData
-                                  ?.contactDetails?.email ?? '-'}
+                                {memberProfile?.data?.formData?.contactDetails
+                                  ?.email ?? '-'}
                               </TextFields>
                             </Box>
 
@@ -431,7 +396,8 @@ const ShareReturnForm = () => {
                   p="5"
                   pb="28px"
                   background="white"
-                  borderBottom="1px solid #E6E6E6"
+                  borderBottom="1px solid "
+                  borderColor="border.layout"
                   borderTopRadius={5}
                 >
                   <Text

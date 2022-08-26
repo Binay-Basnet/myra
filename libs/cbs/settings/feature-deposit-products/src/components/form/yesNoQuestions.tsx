@@ -1,24 +1,63 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
-// import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import {
+  FormEditableTable,
+  FormInput,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { DividerContainer, SubHeadingText } from '../formui';
 
+type SalesTable = {
+  type: string;
+  amount: number;
+  rate: number;
+};
+
 export const Questions = () => {
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext<{
+    ladderRateData: SalesTable[];
+    nature: NatureOfDepositProduct;
+    ladderRate: boolean;
+    allowLoan: boolean;
+    withdrawRestricted: boolean;
+  }>();
   const depositNature = watch('nature');
   const allowLoan = watch('allowLoan');
   const withdrawRestricted = watch('withdrawRestricted');
   const { t } = useTranslation();
 
+  const ladderRateEditData = watch('ladderRateData');
+
+  useEffect(() => {
+    setValue(
+      'ladderRateData',
+      ladderRateEditData?.map((data) => ({ ...data, type: 'More Than' }))
+    );
+  }, [ladderRateEditData?.length]);
+
   const yesNo = [
     { label: t['yes'], value: true },
     { label: t['no'], value: false },
+  ];
+
+  const ladderRate = watch('ladderRate');
+
+  const ladderSwitch = [
+    {
+      label: t['yes'],
+      value: true,
+    },
+    {
+      label: t['no'],
+      value: false,
+    },
   ];
 
   return (
@@ -107,6 +146,12 @@ export const Questions = () => {
         <SubHeadingText>{t['depositProductStaffProduct']} </SubHeadingText>
         <FormSwitchTab name={'staffProduct'} options={yesNo} />
       </Box>
+
+      <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+        <SubHeadingText>{t['depositProductIsThisForMinor']} </SubHeadingText>
+        <FormSwitchTab name={'isForMinors'} options={yesNo} />
+      </Box>
+
       {depositNature === NatureOfDepositProduct.RecurringSaving && (
         <Box display={'flex'} flexDirection="column" gap="s16">
           <Box
@@ -149,6 +194,47 @@ export const Questions = () => {
             {t['depositProductWealthBuildingProduct']}
           </SubHeadingText>
           <FormSwitchTab name={'wealthBuildingProduct'} options={yesNo} />
+        </Box>
+      )}
+      {depositNature === NatureOfDepositProduct.RecurringSaving && (
+        <Box display={'flex'} flexDirection="column" gap="s20">
+          <Box
+            alignItems="center"
+            display={'flex'}
+            justifyContent="space-between"
+          >
+            <Text
+              color="neutralColorLight.Gray-70"
+              fontSize={'s3'}
+              fontWeight="Medium"
+            >
+              {t['depositProductLadderRate']}
+            </Text>
+            <FormSwitchTab name="ladderRate" options={ladderSwitch} />
+          </Box>
+          {ladderRate && (
+            <FormEditableTable<SalesTable>
+              name="ladderRateData"
+              columns={[
+                {
+                  accessor: 'type',
+                  header: t['depositProductInterestType'],
+                  cell: () => 'More Than',
+                },
+                {
+                  accessor: 'amount',
+                  header: t['depositProductInterestLadderAmount'],
+                  isNumeric: true,
+                },
+                {
+                  accessor: 'rate',
+                  header: t['depositProductInterestLadderRate'],
+                  fieldType: 'percentage',
+                  isNumeric: true,
+                },
+              ]}
+            />
+          )}
         </Box>
       )}
     </DividerContainer>

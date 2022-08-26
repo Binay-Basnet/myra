@@ -83,29 +83,33 @@ export function MemberListPage() {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (cell) => (
-          <PopoverComponent
-            items={[
-              {
-                title: 'memberListTableViewMemberProfile',
-              },
-              {
-                title: 'memberListTableEditMember',
-                onClick: (member) => {
-                  router.push(
-                    `/members/${
-                      memberTypeSlug[member?.type || 'INDIVIDUAL']
-                    }/edit/${member?.id}`
-                  );
+        cell: (cell) => {
+          const member = cell?.row?.original?.node;
+          const memberData = { id: member?.id, type: member?.type };
+          return (
+            <PopoverComponent
+              items={[
+                {
+                  title: 'memberListTableViewMemberProfile',
                 },
-              },
-              {
-                title: 'memberListTableMakeInactive',
-              },
-            ]}
-            member={cell?.row?.original?.node}
-          />
-        ),
+                {
+                  title: 'memberListTableEditMember',
+                  onClick: (member) => {
+                    router.push(
+                      `/members/${
+                        memberTypeSlug[member?.type || 'INDIVIDUAL']
+                      }/edit/${member?.id}`
+                    );
+                  },
+                },
+                {
+                  title: 'memberListTableMakeInactive',
+                },
+              ]}
+              member={memberData}
+            />
+          );
+        },
         meta: {
           width: '60px',
         },

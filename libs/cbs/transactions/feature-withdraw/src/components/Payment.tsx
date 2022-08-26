@@ -5,6 +5,7 @@ import {
   WithdrawBy,
   WithdrawPaymentType,
 } from '@coop/cbs/data-access';
+import { AgentSelect } from '@coop/cbs/transactions/ui-components';
 import {
   BoxContainer,
   ContainerWithDivider,
@@ -84,7 +85,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
 
   const selectedPaymentMode = watch('payment_type');
 
-  // const withdrawnBy = watch('withdrawnBy');
+  const withdrawnBy = watch('withdrawnBy');
 
   const denominations = watch('cash.denominations');
 
@@ -313,11 +314,15 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
           name="withdrawnBy"
         />
 
-        {/* {withdrawnBy === WithdrawBy.Agent && (
+        {withdrawnBy === WithdrawBy.Agent && (
           <InputGroupContainer>
-            <FormSelect name="agent" label="Agent" placeholder="Select Agent" />
+            <AgentSelect
+              name="agentId"
+              label="Agent"
+              placeholder="Select Agent"
+            />
           </InputGroupContainer>
-        )} */}
+        )}
       </BoxContainer>
 
       <BoxContainer>

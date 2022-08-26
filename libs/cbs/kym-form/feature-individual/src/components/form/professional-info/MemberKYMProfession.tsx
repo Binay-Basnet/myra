@@ -11,10 +11,9 @@ import {
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import { FormSection } from '@coop/shared/ui';
+import { getKymSection } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -28,8 +27,6 @@ interface IMemberKYMProfessionProps {
 export const MemberKYMProfession = ({
   setKymCurrentSection,
 }: IMemberKYMProfessionProps) => {
-  const { t } = useTranslation();
-
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -85,11 +82,7 @@ export const MemberKYMProfession = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer id="kymAccIndProfession" scrollMarginTop={'200px'}>
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kymIndPROFESSION']}
-          </Text>
-
+        <FormSection header="kymIndPROFESSION" flexLayout={true}>
           {occupationLoading ? (
             <Skeleton height="40px" />
           ) : (
@@ -99,7 +92,7 @@ export const MemberKYMProfession = ({
               list={getFieldOption(occupationData)}
             />
           )}
-        </GroupContainer>
+        </FormSection>
       </form>
     </FormProvider>
   );

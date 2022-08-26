@@ -98,17 +98,18 @@ export const FamilyMember = ({
 
   return (
     <Box display="flex" flexDirection="column" gap="s4">
-      <Text fontSize="s3">{t['kynIndFamilyMemberinthisinstitution']}</Text>
-
       <Box
-        mt="s16"
         borderRadius="br2"
         border="1px solid"
         borderColor="border.layout"
         display="flex"
         flexDirection="column"
       >
-        <Box bg="background.500" borderBottom="1px solid #E6E6E6">
+        <Box
+          bg="background.500"
+          borderBottom="1px solid"
+          borderColor="border.layout"
+        >
           <Grid
             templateRows="repeat(1,1fr)"
             templateColumns="repeat(5,1fr)"

@@ -11,29 +11,15 @@ import {
 } from 'react-hook-form/dist/types/controller';
 
 // import { Select, SelectProps } from '@coop/shared/ui';
-import { Select, SelectProps } from './CustomSelect';
+import { Option, Select, SelectProps } from './CustomSelect';
 
-interface IFormMemberSelectProps<T> extends SelectProps {
+interface IFormCustomSelectProps<T> extends SelectProps {
   control?: Control<T>;
   name: string;
   rules?: UseControllerProps['rules'];
 }
 
-interface Option {
-  label?: string;
-  value: string;
-  memberInfo?: {
-    image?: string;
-    memberName?: string;
-    memberId?: string;
-    gender?: string;
-    age?: string;
-    maritialStatus?: string;
-    address?: string;
-  };
-}
-
-export const FormMemberSelect = <T,>(props: IFormMemberSelectProps<T>) => {
+export const FormCustomSelect = <T,>(props: IFormCustomSelectProps<T>) => {
   const { name, ...rest } = props;
 
   const methods = useFormContext();
@@ -54,7 +40,7 @@ export const FormMemberSelect = <T,>(props: IFormMemberSelectProps<T>) => {
   );
 };
 
-interface FormControlProps<T> extends IFormMemberSelectProps<T> {
+interface FormControlProps<T> extends IFormCustomSelectProps<T> {
   errors: any;
   field: ControllerRenderProps<FieldValues, string>;
 }
@@ -101,4 +87,4 @@ const FormControl = <T,>({
   );
 };
 
-export default FormMemberSelect;
+export default FormCustomSelect;

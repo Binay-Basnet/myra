@@ -5,6 +5,7 @@ import {
   DepositPaymentType,
   useGetBankListQuery,
 } from '@coop/cbs/data-access';
+import { AgentSelect } from '@coop/cbs/transactions/ui-components';
 import {
   BoxContainer,
   ContainerWithDivider,
@@ -381,11 +382,15 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
           name="depositedBy"
         />
 
-        {/* {depositedBy === DepositedBy.Agent && (
+        {depositedBy === DepositedBy.Agent && (
           <InputGroupContainer>
-            <FormSelect name="agent" label="Agent" placeholder="Select Agent" />
+            <AgentSelect
+              name="agentId"
+              label="Agent"
+              placeholder="Select Agent"
+            />
           </InputGroupContainer>
-        )} */}
+        )}
 
         {depositedBy === DepositedBy.Other && (
           <>

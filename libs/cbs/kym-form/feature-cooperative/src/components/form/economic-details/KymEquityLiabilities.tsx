@@ -45,9 +45,12 @@ export const KymEquityLiabilities = (props: IProps) => {
         }}
       >
         <Box
+          p="s20"
           id="kymCoopAccEquityandLiabilities"
           display="flex"
           flexDirection="column"
+          borderBottom={'1px solid'}
+          borderBottomColor={'border.layout'}
         >
           <Grid
             columnGap={40}
@@ -99,6 +102,7 @@ export const KymEquityLiabilities = (props: IProps) => {
 
             <GridItem>
               <FormInput
+                size="xs"
                 textAlign="right"
                 type="number"
                 min={0}
@@ -126,6 +130,7 @@ export const KymEquityLiabilities = (props: IProps) => {
 
             <GridItem>
               <FormInput
+                size="xs"
                 textAlign="right"
                 type="number"
                 min={0}
@@ -153,6 +158,7 @@ export const KymEquityLiabilities = (props: IProps) => {
 
             <GridItem>
               <FormInput
+                size="xs"
                 textAlign="right"
                 type="number"
                 min={0}
@@ -180,6 +186,7 @@ export const KymEquityLiabilities = (props: IProps) => {
 
             <GridItem>
               <FormInput
+                size="xs"
                 textAlign="right"
                 type="number"
                 min={0}
@@ -207,6 +214,7 @@ export const KymEquityLiabilities = (props: IProps) => {
 
             <GridItem>
               <FormInput
+                size="xs"
                 textAlign="right"
                 type="number"
                 min={0}
@@ -234,6 +242,7 @@ export const KymEquityLiabilities = (props: IProps) => {
 
             <GridItem>
               <FormInput
+                size="xs"
                 textAlign="right"
                 type="number"
                 min={0}
@@ -261,6 +270,7 @@ export const KymEquityLiabilities = (props: IProps) => {
 
             <GridItem>
               <FormInput
+                size="xs"
                 textAlign="right"
                 type="number"
                 min={0}
@@ -292,6 +302,7 @@ export const KymEquityLiabilities = (props: IProps) => {
 
             <GridItem>
               <FormInput
+                size="xs"
                 isDisabled={true}
                 bg="neutralColorLight.Gray-20"
                 border="1px solid"

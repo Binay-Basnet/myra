@@ -8,12 +8,8 @@ import {
   useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormEmailInput, FormPhoneNumber } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 interface IMemberKYMContactDetailsProps {
@@ -82,33 +78,28 @@ export const MemberKYMContactDetails = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer id="kymAccIndContactDetails" scrollMarginTop={'200px'}>
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymIndCONTACTDETAILS']}
-          </Text>
-          <InputGroupContainer>
-            <FormPhoneNumber
-              name="mobileNumber"
-              label={t['kymIndMobileNo']}
-              placeholder={t['kymIndEnterMobileNo']}
-            />
-            <FormPhoneNumber
-              name="phoneNumber"
-              label={t['kymIndPhoneNo']}
-              placeholder={t['kymIndEnterPhoneNo']}
-            />
-            <FormEmailInput
-              type="text"
-              name="email"
-              label={t['kymIndEmail']}
-              placeholder={t['kymIndEnterEmail']}
-            />
-          </InputGroupContainer>
-        </GroupContainer>
+        <FormSection
+          id="kymAccIndContactDetails"
+          header="kymIndCONTACTDETAILS"
+          gridLayout={true}
+        >
+          <FormPhoneNumber
+            name="mobileNumber"
+            label={t['kymIndMobileNo']}
+            placeholder={t['kymIndEnterMobileNo']}
+          />
+          <FormPhoneNumber
+            name="phoneNumber"
+            label={t['kymIndPhoneNo']}
+            placeholder={t['kymIndEnterPhoneNo']}
+          />
+          <FormEmailInput
+            type="text"
+            name="email"
+            label={t['kymIndEmail']}
+            placeholder={t['kymIndEnterEmail']}
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );

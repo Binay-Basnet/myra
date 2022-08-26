@@ -12,7 +12,7 @@ import {
   useSetKymIndividualIdentificationDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, Grid, Text } from '@coop/shared/ui';
+import { Box, FormSection, Text } from '@coop/shared/ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface IVoterCardProps {
@@ -130,22 +130,24 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
   }, [watch, mutationId, identificationListData]);
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onFocus={(e) => {
-          const kymSection = getKymSection(e.target.id);
-          setKymCurrentSection(kymSection);
-        }}
-      >
-        <Box display="flex" flexDirection="column" gap="s16">
-          <Text
-            fontSize="r1"
-            fontWeight="medium"
-            color="neutralColorLight.Gray-70"
-          >
-            {t['kymIndVoterCard']}
-          </Text>
-          <Grid templateColumns="repeat(3, 1fr)" gap="s20">
+    <Box>
+      <FormProvider {...methods}>
+        <Text
+          p="s20"
+          pb="0"
+          fontSize="r1"
+          fontWeight="medium"
+          color="neutralColorLight.Gray-70"
+        >
+          {t['kymIndVoterCard']}
+        </Text>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSection(e.target.id);
+            setKymCurrentSection(kymSection);
+          }}
+        >
+          <FormSection gridLayout={true}>
             <FormInput
               type="text"
               name="idNo"
@@ -159,9 +161,9 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
               label={t['kymIndVoterCardPollingStation']}
               placeholder={t['kymIndVoterCardPollingStation']}
             />
-          </Grid>
-        </Box>
-      </form>
-    </FormProvider>
+          </FormSection>
+        </form>
+      </FormProvider>
+    </Box>
   );
 };

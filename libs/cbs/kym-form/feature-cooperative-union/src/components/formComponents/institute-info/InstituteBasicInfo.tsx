@@ -32,7 +32,8 @@ export const InstituteBasicInfo = ({
     searchTerm: FormFieldSearchTerm.OrganizationType,
   });
 
-  useCooperativeUnionInstitution({ methods });
+  const { sectionStatus } = useCooperativeUnionInstitution({ methods });
+  const sectionErrors = sectionStatus?.errors?.[0]?.errors;
 
   return (
     <FormProvider {...methods}>
@@ -62,6 +63,10 @@ export const InstituteBasicInfo = ({
                 name="nameOfInstitutionEn"
                 label={t['kymCoopUnionNameOfInstitution']}
                 placeholder={t['kymCoopUnionNameOfInstitution']}
+                errorText={
+                  sectionErrors?.['nameOfInstitutionEn'] &&
+                  sectionErrors['nameOfInstitutionEn'][0]
+                }
               />
             </GridItem>
             <FormSelect
@@ -69,12 +74,20 @@ export const InstituteBasicInfo = ({
               label={t['kymCoopUnionInstitutionType']}
               placeholder={t['kymCoopUnionSelectInstitutionType']}
               options={getFieldOption(organizationTypeFields)}
+              errorText={
+                sectionErrors?.['institutionType'] &&
+                sectionErrors['institutionType'][0]
+              }
             />
             <FormInput
               type="text"
               name="natureOfBusinessEn"
               label={t['kymCoopUnionNatureOfBusiness']}
               placeholder={t['kymCoopUnionNatureOfBusiness']}
+              errorText={
+                sectionErrors?.['natureOfBusinessEn'] &&
+                sectionErrors['natureOfBusinessEn'][0]
+              }
             />
 
             <FormInput
@@ -82,12 +95,18 @@ export const InstituteBasicInfo = ({
               name="regdDate"
               label={t['kymCoopUnionRegistrationDate']}
               placeholder="DD-MM-YYYY"
+              errorText={
+                sectionErrors?.['regdDate'] && sectionErrors['regdDate'][0]
+              }
             />
             <FormInput
               type="number"
               name="vatOrPan"
               label={t['kymCoopUnionVATPanNo']}
               placeholder={t['kymCoopUnionEnterVATPanNo']}
+              errorText={
+                sectionErrors?.['vatOrPan'] && sectionErrors['vatOrPan'][0]
+              }
             />
             {/* <FormInput
           type="text"
@@ -101,6 +120,10 @@ export const InstituteBasicInfo = ({
               name="noOfBranches"
               label={t['serviceCenterNoOfServiceCenter']}
               placeholder={t['serviceCenterEnterNoOfServiceCenter']}
+              errorText={
+                sectionErrors?.['noOfBranches'] &&
+                sectionErrors['noOfBranches'][0]
+              }
             />
 
             {/* <FormInput

@@ -8,10 +8,9 @@ import {
   useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import { Box, FormSection } from '@coop/shared/ui';
+import { getKymSection } from '@coop/shared/utils';
 
 import {
   Citizenship,
@@ -39,7 +38,6 @@ const identificationOptions = [
 export const MemberKYMIdentificationDetails = ({
   setKymCurrentSection,
 }: IMemberKYMIdentificationDetailsProps) => {
-  const { t } = useTranslation();
   const methods = useForm<KymIndMemberInput>();
 
   const { reset, watch } = methods;
@@ -104,32 +102,28 @@ export const MemberKYMIdentificationDetails = ({
   }, [watch, router.isReady]);
 
   return (
-    <GroupContainer
-      id="kymAccIndIdentificationDetails"
-      scrollMarginTop={'200px'}
-    >
-      <Text fontSize="r1" fontWeight="semibold">
-        {t['kymIndIDENTIFICATIONDETAILS']}
-      </Text>
-      <Text fontSize="r1" fontWeight="medium">
-        {t['kymIndChooseidentificationdetails']}
-      </Text>
-      <Box display="flex">
-        <FormProvider {...methods}>
-          <form
-            onFocus={(e) => {
-              const kymSection = getKymSection(e.target.id);
-              setKymCurrentSection(kymSection);
-            }}
+    <Box>
+      <FormProvider {...methods}>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSection(e.target.id);
+            setKymCurrentSection(kymSection);
+          }}
+        >
+          <FormSection
+            flexLayout={true}
+            header="kymIndIDENTIFICATIONDETAILS"
+            subHeader="kymIndChooseidentificationdetails"
           >
             <FormCheckboxGroup
               name={'identificationSelection'}
               showOther={false}
               list={identificationOptions}
             />
-          </form>
-        </FormProvider>
-        {/* {identificationOptions.map(
+          </FormSection>
+        </form>
+      </FormProvider>
+      {/* {identificationOptions.map(
               (item, index) => {
                 // const isChecked = checkedIds?.includes(item.name);
                 return (
@@ -156,7 +150,7 @@ export const MemberKYMIdentificationDetails = ({
               // ))
             )} */}
 
-        {/* {identificationDocs.map(
+      {/* {identificationDocs.map(
               (item, index) => {
                 const isChecked = checkedIds?.includes(item?.id);
                 return (
@@ -184,9 +178,8 @@ export const MemberKYMIdentificationDetails = ({
               }
               // ))
             )} */}
-      </Box>
 
-      <GroupContainer>
+      <Box mt="s16" display="flex" flexDirection="column">
         {identificationValues?.includes('citizenship') && (
           <Citizenship setKymCurrentSection={setKymCurrentSection} />
         )}
@@ -206,7 +199,7 @@ export const MemberKYMIdentificationDetails = ({
         {identificationValues?.includes('nationalId') && (
           <NationalID setKymCurrentSection={setKymCurrentSection} />
         )}
-      </GroupContainer>
+      </Box>
 
       {/* {currentShownDetails?.length !== 0 ? (
             <GroupContainer>
@@ -257,6 +250,6 @@ export const MemberKYMIdentificationDetails = ({
                 })}
             </GroupContainer>
           ) : null} */}
-    </GroupContainer>
+    </Box>
   );
 };

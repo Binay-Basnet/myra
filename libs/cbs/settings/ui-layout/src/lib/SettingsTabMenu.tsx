@@ -22,7 +22,7 @@ const demoTabs: { title: string; icon: IconType; link: string }[] = [
   {
     title: 'settingsTabMenuUsers',
     icon: IoPerson,
-    link: '/settings/users',
+    link: '/settings/users/super-admin',
   },
   {
     title: 'settingsTabMenuImport',

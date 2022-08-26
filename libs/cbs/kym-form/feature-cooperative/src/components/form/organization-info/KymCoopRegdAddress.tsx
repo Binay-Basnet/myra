@@ -5,12 +5,8 @@ import {
   KymCooperativeFormInput,
   useAllAdministrationQuery,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -116,76 +112,68 @@ export const KymCoopRegdAddress = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer
+        <FormSection
+          gridLayout={true}
           id="kymCoopAccRegisteredAddress"
-          scrollMarginTop={'200px'}
+          header="kymCoopRegisteredAddress"
         >
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymCoopRegisteredAddress']}
-          </Text>
-          <InputGroupContainer>
-            <FormSelect
-              id="registeredCoopAddress"
-              name="registeredAddress.provinceId"
-              label={t['kymCoopProvince']}
-              placeholder={t['kymCoopSelectState']}
-              options={province}
-            />
-            <FormSelect
-              id="registeredCoopAddress"
-              name="registeredAddress.districtId"
-              label={t['kymCoopDistrict']}
-              placeholder={t['kymCoopSelectDistrict']}
-              options={districtList.map((d) => ({
-                label: d.name,
-                value: d.id,
-              }))}
-            />
-            <FormSelect
-              id="registeredCoopAddress"
-              name="registeredAddress.localGovernmentId"
-              label={t['kymCoopMunicipality']}
-              placeholder={t['kymCoopSelectMunicipality']}
-              options={muncipalityList.map((d) => ({
-                label: d.name,
-                value: d.id,
-              }))}
-            />
+          <FormSelect
+            id="registeredCoopAddress"
+            name="registeredAddress.provinceId"
+            label={t['kymCoopProvince']}
+            placeholder={t['kymCoopSelectState']}
+            options={province}
+          />
+          <FormSelect
+            id="registeredCoopAddress"
+            name="registeredAddress.districtId"
+            label={t['kymCoopDistrict']}
+            placeholder={t['kymCoopSelectDistrict']}
+            options={districtList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            id="registeredCoopAddress"
+            name="registeredAddress.localGovernmentId"
+            label={t['kymCoopMunicipality']}
+            placeholder={t['kymCoopSelectMunicipality']}
+            options={muncipalityList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
 
-            <FormSelect
-              id="registeredCoopAddress"
-              name="registeredAddress.wardNo"
-              label={t['kymCoopWardNo']}
-              placeholder={t['kymCoopEnterWardNo']}
-              options={wardList?.map((d) => ({
-                label: d,
-                value: d,
-              }))}
-            />
-            <FormInput
-              id="registeredCoopAddress"
-              type="text"
-              name="registeredAddress.locality"
-              label={t['kymCoopLocality']}
-              placeholder={t['kymCoopEnterLocality']}
-            />
-            <FormInput
-              id="registeredCoopAddress"
-              type="text"
-              name="registeredAddress.houseNo"
-              label={t['kymCoopRepresentativeHouseNo']}
-              placeholder={t['kymCoopRepresentativeEnterHouseNo']}
-            />
-          </InputGroupContainer>
+          <FormSelect
+            id="registeredCoopAddress"
+            name="registeredAddress.wardNo"
+            label={t['kymCoopWardNo']}
+            placeholder={t['kymCoopEnterWardNo']}
+            options={wardList?.map((d) => ({
+              label: d,
+              value: d,
+            }))}
+          />
+          <FormInput
+            id="registeredCoopAddress"
+            type="text"
+            name="registeredAddress.locality"
+            label={t['kymCoopLocality']}
+            placeholder={t['kymCoopEnterLocality']}
+          />
+          <FormInput
+            id="registeredCoopAddress"
+            type="text"
+            name="registeredAddress.houseNo"
+            label={t['kymCoopRepresentativeHouseNo']}
+            placeholder={t['kymCoopRepresentativeEnterHouseNo']}
+          />
 
-          <Box>
+          <GridItem colSpan={2}>
             <FormMap name="registeredAddress.coordinates" />
-          </Box>
-        </GroupContainer>
+          </GridItem>
+        </FormSection>
       </form>
     </FormProvider>
   );

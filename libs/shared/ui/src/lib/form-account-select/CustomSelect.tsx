@@ -15,20 +15,12 @@ import { chakraDefaultStyles } from './SelectStyles';
 interface SelectOption {
   label?: string;
   value: string;
-  memberInfo?: {
-    image?: string;
-    memberName?: string;
-    memberId?: string;
-    gender?: string;
-    age?: number;
-    maritialStatus?: string;
-    address?: {
-      district: string;
-      localGovernment: string;
-      locality: string;
-      state: string;
-      wardNo: string;
-    };
+  accountInfo?: {
+    accountName?: string;
+    accountId?: string;
+    accountType?: string;
+    balance?: string;
+    fine?: string;
   };
 }
 
@@ -46,6 +38,7 @@ export interface SelectProps
 }
 
 export function Select({
+  // size,
   errorText,
   helperText,
   isMulti,
@@ -54,6 +47,14 @@ export function Select({
   value,
   ...rest
 }: SelectProps) {
+  // const [sortedOptions, setSortedOptions] = useState(options ?? []);
+
+  // useEffect(() => {
+  //   if (isMulti) {
+  //     setSortedOptions(options ?? []);
+  //   }
+  // }, [JSON.stringify(options)]);
+
   return (
     <Flex direction="column" gap="s4">
       <TextFields variant="formLabel" color="gray.700">
@@ -65,6 +66,24 @@ export function Select({
             ? `my_unique_select_key__${JSON.stringify(value)}`
             : 'isMulti'
         }
+        // onMenuClose={() => {
+        //   if (isMulti) {
+        //     setSortedOptions((prev) =>
+        //       (prev as Array<Option>)?.sort((optionA) => {
+        //         if (
+        //           (value as Array<Option>)?.find(
+        //             (v) => optionA.value === v.value
+        //           )
+        //         ) {
+        //           return -1;
+        //         } else {
+        //           return 1;
+        //         }
+        //       })
+        //     );
+        //   }
+        // }}
+        // options={isMulti ? sortedOptions : options}
         options={options}
         value={value}
         controlShouldRenderValue={!isMulti}

@@ -35,18 +35,44 @@ export const AccountServicesCharge = () => {
   });
 
   return (
-    <GroupContainer
-      scrollMarginTop={'200px'}
-      display="flex"
-      flexDirection={'column'}
-      gap="s16"
-    >
+    <GroupContainer>
       <TextBoxContainer>
-        <TopText>{t['depositProductAccountServiceCharge']} </TopText>
+        <TopText>{t['depositProductAccountOpenServiceCharge']} </TopText>
         <SubText>{t['depositProductAdddifferentservicecharges']} </SubText>
       </TextBoxContainer>
       <FormEditableTable<AccountServiceTable>
         name="serviceCharge"
+        debug={false}
+        columns={[
+          {
+            accessor: 'serviceName',
+            header: t['depositProductAccServiceTableServiceName'],
+            fieldType: 'select',
+            cellWidth: 'auto',
+            selectOptions: service_name,
+          },
+          {
+            accessor: 'ledgerName',
+            header: t['depositProductAccServiceTableLedgerName'],
+            fieldType: 'select',
+            cellWidth: 'auto',
+            selectOptions: coaList,
+          },
+          {
+            accessor: 'amount',
+            header: t['depositProductAccServiceTableAmount'],
+            cellWidth: 'auto',
+            isNumeric: true,
+          },
+        ]}
+      />
+
+      <TextBoxContainer>
+        <TopText>{t['depositProductAccountCloseServiceCharge']} </TopText>
+        <SubText>{t['depositProductAdddifferentservicecharges']} </SubText>
+      </TextBoxContainer>
+      <FormEditableTable<AccountServiceTable>
+        name="accountCloseCharge"
         debug={false}
         columns={[
           {

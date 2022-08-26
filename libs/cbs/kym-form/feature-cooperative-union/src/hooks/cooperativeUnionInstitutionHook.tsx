@@ -25,8 +25,8 @@ const getInstiutionData = (
   }
 
   const editValueData =
-    data?.members?.cooperativeUnion?.formState?.formData
-      ?.institutionInformation;
+    data?.members?.cooperativeUnion?.formState?.formData?.institutionInformation
+      ?.data;
 
   return {
     ...editValueData,
@@ -59,7 +59,7 @@ export const useCooperativeUnionInstitution = ({
   const router = useRouter();
   const id = router?.query?.['id'];
   const { watch, reset } = methods;
-  const { mutate } = useSetCooperativeUnionInstitutionDataMutation();
+  const { mutateAsync } = useSetCooperativeUnionInstitutionDataMutation();
 
   const {
     data: editValues,
@@ -71,6 +71,9 @@ export const useCooperativeUnionInstitution = ({
     },
     { enabled: !!id }
   );
+  const sectionStatus =
+    editValues?.members?.cooperativeUnion?.formState?.formData
+      ?.institutionInformation?.sectionStatus;
 
   useEffect(() => {
     if (editValues) {
@@ -93,7 +96,7 @@ export const useCooperativeUnionInstitution = ({
           !isDeepEmpty(data) &&
           !isEqual(institutionData, data)
         ) {
-          mutate({ id: String(id), data });
+          mutateAsync({ id: String(id), data }).then(() => refetch());
           // refetch();
         }
       }, 800)
@@ -107,4 +110,5 @@ export const useCooperativeUnionInstitution = ({
       refetch();
     }
   }, [id]);
+  return { sectionStatus };
 };

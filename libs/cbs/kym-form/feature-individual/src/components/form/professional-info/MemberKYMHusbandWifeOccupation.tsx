@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { CloseIcon } from '@chakra-ui/icons';
+import { CloseButton } from '@chakra-ui/react';
 import debounce from 'lodash/debounce';
 
 import {
   FormFieldSearchTerm,
   useDeleteMemberOccupationMutation,
-  useGetIndividualKymEditDataQuery,
   useGetIndividualKymFamilyOccupationListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
@@ -17,11 +16,18 @@ import {
 import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import {
   DynamicBoxGroupContainer,
-  GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon, Text, TextFields } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  FormSection,
+  GridItem,
+  Icon,
+  IconButton,
+  TextFields,
+} from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -35,7 +41,6 @@ interface DynamicInputProps {
 export const SpouseOccupationInput = ({
   option,
   optionIndex,
-  fieldIndex,
 }: DynamicInputProps) => {
   const { register } = useFormContext();
 
@@ -82,13 +87,13 @@ const HusbandWifeOccupation = ({
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery({
-    id,
-  });
+  // const { data: editValues } = useGetIndividualKymEditDataQuery({
+  //   id,
+  // });
 
-  const profession =
-    editValues?.members?.individual?.formState?.data?.formData?.profession
-      ?.professionId ?? [];
+  // const profession =
+  //   editValues?.members?.individual?.formState?.data?.formData?.profession
+  //     ?.professionId ?? [];
 
   const { data: occupationData } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.Occupation,
@@ -165,19 +170,18 @@ const HusbandWifeOccupation = ({
           bg="background.500"
         >
           <Box display="flex" flexDirection="column">
-            <CloseIcon
-              cursor="pointer"
-              onClick={() => {
-                removeHusbandWifeOccupation(occupationId);
-              }}
-              id="removeSpouseOccupationButton"
-              color="gray.500"
-              _hover={{
-                color: 'gray.900',
-              }}
-              aria-label="close"
-              alignSelf="flex-end"
-            />
+            <Box display="flex" justifyContent="flex-end">
+              <IconButton
+                aria-label="close"
+                variant="ghost"
+                size="sm"
+                icon={<CloseButton />}
+                onClick={() => {
+                  removeHusbandWifeOccupation(occupationId);
+                }}
+                id="removeSpouseOccupationButton"
+              />
+            </Box>
 
             <InputGroupContainer>
               <GridItem colSpan={1}>
@@ -350,14 +354,12 @@ export const MemberKYMHusbandWifeOccupation = ({
   };
 
   return (
-    <GroupContainer
+    <FormSection
+      gridLayout={true}
+      templateColumns={1}
       id="kymAccIndMainOccupationofHusabandWife"
-      scrollMarginTop={'200px'}
+      header="kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE"
     >
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE']}
-      </Text>
-
       <DynamicBoxGroupContainer>
         {occupationIds.map((id) => {
           return (
@@ -383,6 +385,6 @@ export const MemberKYMHusbandWifeOccupation = ({
           {t['kymIndAddOccupation']}
         </Button>
       </DynamicBoxGroupContainer>
-    </GroupContainer>
+    </FormSection>
   );
 };

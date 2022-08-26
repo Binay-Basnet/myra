@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-  AiFillCloseCircle,
-  AiOutlineCaretDown,
-  AiOutlineCaretRight,
-} from 'react-icons/ai';
-import { BsCheckCircleFill } from 'react-icons/bs';
-import { Box, Collapse, Icon, Text } from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { Box, Collapse, Text } from '@chakra-ui/react';
 
-import {
-  KymIndAddSectionStatus,
-  KymIndPersonalSection,
-} from '@coop/cbs/data-access';
+import { KymIndAddSectionStatus } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 const PersonalInformation = [
@@ -23,18 +15,18 @@ const PersonalInformation = [
   'kymAccIndFamilyDetails',
 ];
 
-const personalInfoEnum: Record<
-  typeof PersonalInformation[number],
-  KymIndPersonalSection
-> = {
-  kymAccIndBasicInformation: KymIndPersonalSection.BasicInformation,
-  kymAccIndContactDetails: KymIndPersonalSection.ContactDetails,
-  kymAccIndIdentificationDetails: KymIndPersonalSection.IdentificationDetails,
-  kymAccIndPermanentAddress: KymIndPersonalSection.PermanentAddress,
-  kymAccIndTemporaryAddress: KymIndPersonalSection.TemporaryAddress,
-  kymAccIndIncaseofresidinginRentedHouse: KymIndPersonalSection.RentedHouse,
-  kymAccIndFamilyDetails: KymIndPersonalSection.FamilyDetails,
-};
+// const personalInfoEnum: Record<
+//   typeof PersonalInformation[number],
+//   KymIndPersonalSection
+// > = {
+//   kymAccIndBasicInformation: KymIndPersonalSection.BasicInformation,
+//   kymAccIndContactDetails: KymIndPersonalSection.ContactDetails,
+//   kymAccIndIdentificationDetails: KymIndPersonalSection.IdentificationDetails,
+//   kymAccIndPermanentAddress: KymIndPersonalSection.PermanentAddress,
+//   kymAccIndTemporaryAddress: KymIndPersonalSection.TemporaryAddress,
+//   kymAccIndIncaseofresidinginRentedHouse: KymIndPersonalSection.RentedHouse,
+//   kymAccIndFamilyDetails: KymIndPersonalSection.FamilyDetails,
+// };
 
 const ProfessionalDetails: string[] = [
   'kymAccIndProfession',
@@ -67,7 +59,8 @@ interface AccordianProps {
 
 export function AccorrdianAddMember(props: AccordianProps) {
   const { t } = useTranslation();
-  const { formStatus, kymCurrentSection } = props;
+  // const { formStatus, kymCurrentSection } = props;
+  const { kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
   const [isOpenPersonal, setIsOpenPersonal] = React.useState(false);
   const [isOpenProfessional, setIsOpenProfessional] = React.useState(false);
@@ -83,7 +76,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
   }, [kymCurrentSection]);
 
   return (
-    <Box p={'1'} overflow="auto" h="700px">
+    <Box overflow="auto" h="700px">
       <Box
         display="flex"
         justifyContent="space-between"
@@ -92,14 +85,10 @@ export function AccorrdianAddMember(props: AccordianProps) {
         cursor="pointer"
         onClick={() => setIsOpenPersonal(!isOpenPersonal)}
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymAccInd1PersonalDetails']}
         </Text>
-        {!isOpenPersonal ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenPersonal ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenPersonal} style={{ marginTop: '0px' }}>
@@ -109,8 +98,8 @@ export function AccorrdianAddMember(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              borderRadius="br2"
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -119,14 +108,14 @@ export function AccorrdianAddMember(props: AccordianProps) {
                 </Text>
               </a>
               &nbsp; &nbsp;
-              {formStatus?.personal?.completed?.includes(
+              {/* {formStatus?.data?.personal?.completed?.includes(
                 personalInfoEnum[item]
               ) && (
                 <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
-              )}
-              {formStatus?.personal?.error?.includes(
+              )} */}
+              {/* {formStatus?.data?.personal?.error?.includes(
                 personalInfoEnum[item]
-              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />}
+              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />} */}
             </Box>
           ))}
         </Box>
@@ -143,11 +132,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymAccInd2ProfessionalDetails']}
         </Text>
-        {!isOpenProfessional ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenProfessional ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenProfessional}>
@@ -157,8 +142,8 @@ export function AccorrdianAddMember(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              borderRadius="br2"
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -182,11 +167,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymAccInd3COOPMembership']}
         </Text>
-        {!isOpenCoopMemberShip ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenCoopMemberShip ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenCoopMemberShip}>
@@ -196,8 +177,8 @@ export function AccorrdianAddMember(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              px={subsection === item ? 's16' : '0'}
-              bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+              borderRadius="br2"
+              bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -221,11 +202,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="600">
           {t['kymAccInd4Declaration']}
         </Text>
-        {!isOpenDeclaration ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenDeclaration}>
@@ -236,8 +213,8 @@ export function AccorrdianAddMember(props: AccordianProps) {
                 key={`${item}${index}`}
                 display="flex"
                 alignItems={'center'}
-                px={subsection === item ? 's16' : '0'}
-                bg={subsection === item ? '#EEF2F7' : 'FFFFFF'}
+                borderRadius="br2"
+                bg={subsection === item ? 'background.500' : 'gray.0'}
                 py="s8"
               >
                 <a href={`#${item}`}>

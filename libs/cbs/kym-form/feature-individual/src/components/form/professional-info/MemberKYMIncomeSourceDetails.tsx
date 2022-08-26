@@ -19,11 +19,17 @@ import {
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
-  GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon, Text } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  FormSection,
+  GridItem,
+  Icon,
+  Text,
+} from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -282,57 +288,62 @@ export const MemberKYMIncomeSourceDetails = ({
   };
 
   return (
-    <GroupContainer id="kymAccIndIncomeSourceDetails" scrollMarginTop={'200px'}>
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymIndINCOMESOURCEDETAILS']}
-      </Text>
-      <GroupContainer>
-        <FormProvider {...methods}>
-          <form
-            onFocus={(e) => {
-              const kymSection = getKymSection(e.target.id);
-              setKymCurrentSection(kymSection);
-            }}
+    <Box>
+      <FormProvider {...methods}>
+        <form
+          onFocus={(e) => {
+            const kymSection = getKymSection(e.target.id);
+            setKymCurrentSection(kymSection);
+          }}
+        >
+          <FormSection
+            gridLayout={true}
+            templateColumns={1}
+            header="kymIndINCOMESOURCEDETAILS"
+            id="kymAccIndIncomeSourceDetails"
           >
-            <Box display="flex" flexDirection="column">
-              <FormRadioGroup
-                id="annualIncomeSourceId"
-                name="annualIncomeSourceId"
-                label={t['kynIndAnnualFamilyIncome']}
-                options={getFieldOption(familyIncomeData)}
-              />
-            </Box>
-          </form>
-        </FormProvider>
+            <FormRadioGroup
+              id="annualIncomeSourceId"
+              name="annualIncomeSourceId"
+              label={t['kynIndAnnualFamilyIncome']}
+              options={getFieldOption(familyIncomeData)}
+            />
 
-        <div>
-          <Text fontSize="s3" mb="s4">
-            {t['kynIndIncomegreater']}
-          </Text>
-          <DynamicBoxGroupContainer>
-            {incomeSourceIds.map((id) => {
-              return (
-                <Box key={id}>
-                  <IncomeSource
-                    incomeSourceId={id}
-                    setKymCurrentSection={setKymCurrentSection}
-                    removeIncomeSource={removeIncomeSource}
-                  />
-                </Box>
-              );
-            })}
-            <Button
-              id="incomeSourceDetailsButton"
-              alignSelf="start"
-              leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-              variant="outline"
-              onClick={() => appendIncomeSource()}
-            >
-              {t['kynIndNewEntry']}
-            </Button>
-          </DynamicBoxGroupContainer>
-        </div>
-      </GroupContainer>
-    </GroupContainer>
+            <Box display="flex" gap="s16" flexDirection="column">
+              <Text
+                fontSize="s3"
+                fontWeight="Medium"
+                color="neutralColorLight.Gray-70"
+                mb="s4"
+              >
+                {t['kynIndIncomegreater']}
+              </Text>
+              <DynamicBoxGroupContainer>
+                {incomeSourceIds.map((id) => {
+                  return (
+                    <Box key={id}>
+                      <IncomeSource
+                        incomeSourceId={id}
+                        setKymCurrentSection={setKymCurrentSection}
+                        removeIncomeSource={removeIncomeSource}
+                      />
+                    </Box>
+                  );
+                })}
+                <Button
+                  id="incomeSourceDetailsButton"
+                  alignSelf="start"
+                  leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+                  variant="outline"
+                  onClick={() => appendIncomeSource()}
+                >
+                  {t['kynIndNewEntry']}
+                </Button>
+              </DynamicBoxGroupContainer>
+            </Box>
+          </FormSection>
+        </form>
+      </FormProvider>
+    </Box>
   );
 };

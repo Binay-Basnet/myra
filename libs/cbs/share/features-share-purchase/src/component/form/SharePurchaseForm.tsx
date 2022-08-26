@@ -5,11 +5,11 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { debounce } from 'lodash';
 import omit from 'lodash/omit';
 
 import { InputGroupContainer } from '@coop/accounting/ui-components';
 import {
+  KymIndFormStateQuery,
   NatureOfDepositProduct,
   Payment_Mode,
   useAddSharePurchaseMutation,
@@ -18,20 +18,19 @@ import {
   useGetMemberIndividualDataQuery,
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
-import {
-  FormCustomSelect,
-  FormMemberSelect,
-} from '@coop/cbs/transactions/ui-components';
+import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
+  asyncToast,
   Avatar,
   Box,
   Container,
   DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
+  FormMemberSelect,
   Grid,
   GridItem,
   Icon,
@@ -61,7 +60,7 @@ const SharePurchaseForm = () => {
   const methods = useForm();
   const { watch, getValues } = methods;
 
-  const { mutate } = useAddSharePurchaseMutation();
+  const { mutateAsync } = useAddSharePurchaseMutation();
 
   const accountList = [
     { label: t['sharePurchaseBankVoucher'], value: Payment_Mode.BankVoucher },
@@ -77,8 +76,6 @@ const SharePurchaseForm = () => {
   const accountId = watch('accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
-  const [IDMember, setIDMember] = useState('');
-  const [trigger, setTrigger] = useState(false);
 
   const { data: bankData } = useGetBankListQuery();
 
@@ -97,20 +94,6 @@ const SharePurchaseForm = () => {
     },
     {
       staleTime: 0,
-      enabled: trigger,
-    }
-  );
-
-  const { data: memberList } = useGetMemberListQuery(
-    {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      filter: {
-        query: IDMember,
-      },
-    },
-    {
-      staleTime: 0,
-      enabled: trigger,
     }
   );
 
@@ -139,23 +122,22 @@ const SharePurchaseForm = () => {
     [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
   };
 
-  const memberListData = memberList?.members?.list?.edges;
+  const { data: memberList } = useGetMemberListQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    {
+      staleTime: 0,
+    }
+  );
 
-  // type optionType = { label: string; value: string };
+  const memberListData = memberList?.members?.list?.edges;
 
   const memberDetail =
     memberListData &&
     memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
 
-  // const memberOptions = memberListData?.reduce((prevVal, curVal) => {
-  //   return [
-  //     ...prevVal,
-  //     {
-  //       label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
-  //       value: curVal?.node?.id as string,
-  //     },
-  //   ];
-  // }, [] as optionType[]);
+  const memberProfile = memberDetail?.profile as KymIndFormStateQuery;
 
   useEffect(() => {
     setTotalAmount(
@@ -183,12 +165,15 @@ const SharePurchaseForm = () => {
       memberId,
     };
 
-    mutate(
-      { data: updatedValues },
-      {
-        onSuccess: () => router.push(`/share/register`),
-      }
-    );
+    asyncToast({
+      id: 'share-purchase-id',
+      msgs: {
+        success: 'Share Purchased',
+        loading: 'Purchasing Share',
+      },
+      onSuccess: () => router.push('/share/register'),
+      promise: mutateAsync({ data: updatedValues }),
+    });
   };
 
   return (
@@ -232,30 +217,6 @@ const SharePurchaseForm = () => {
                     <FormMemberSelect
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
-                      placeholder={t['sharePurchaseEnterMemberID']}
-                      onInputChange={debounce((id) => {
-                        setIDMember(id);
-                        setTrigger(true);
-                      }, 800)}
-                      options={
-                        memberListData?.map((member) => ({
-                          memberInfo: {
-                            // image:member?.node?.code,
-                            memberName: member?.node?.name?.local,
-                            memberId: member?.node?.id,
-                            gender:
-                              member?.node?.profile?.data?.formData
-                                ?.basicInformation?.gender?.local,
-                            age: member?.node?.profile?.data?.formData
-                              ?.basicInformation?.age,
-                            maritialStatus:
-                              member?.node?.profile?.data?.formData
-                                ?.maritalStatus?.local,
-                            address: member?.node?.address,
-                          },
-                          value: member?.node?.id as string,
-                        })) ?? []
-                      }
                     />
                   </Box>
 
@@ -357,8 +318,8 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberDetail?.profile?.data?.formData
-                                  ?.contactDetails?.email ?? '-'}
+                                {memberProfile?.data?.formData?.contactDetails
+                                  ?.email ?? '-'}
                               </TextFields>
                             </Box>
 
@@ -420,7 +381,8 @@ const SharePurchaseForm = () => {
                   p="5"
                   pb="28px"
                   background="white"
-                  borderBottom="1px solid #E6E6E6"
+                  borderBottom="1px solid "
+                  borderColor="border.layout"
                   borderTopRadius={5}
                 >
                   <Text

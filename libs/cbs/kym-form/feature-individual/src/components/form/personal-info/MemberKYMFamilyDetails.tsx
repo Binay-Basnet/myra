@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { CloseIcon } from '@chakra-ui/icons';
+import { CloseButton } from '@chakra-ui/react';
 import debounce from 'lodash/debounce';
 
+import { InputGroupContainer } from '@coop/accounting/ui-components';
 import {
   FormFieldSearchTerm,
   KymIndMemberInput,
@@ -19,11 +20,9 @@ import {
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
-  GroupContainer,
-  InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, FormSection, Icon, IconButton } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -121,18 +120,17 @@ const AddFamilyMember = ({
 
   return (
     <DynamicBoxContainer>
-      <CloseIcon
-        cursor="pointer"
-        onClick={() => {
-          removeFamilyMember(familyMemberId);
-        }}
-        color="gray.500"
-        _hover={{
-          color: 'gray.900',
-        }}
-        aria-label="close"
-        alignSelf="flex-end"
-      />
+      <Box display="flex" justifyContent="flex-end">
+        <IconButton
+          aria-label="close"
+          variant="ghost"
+          size="sm"
+          icon={<CloseButton />}
+          onClick={() => {
+            removeFamilyMember(familyMemberId);
+          }}
+        />
+      </Box>
 
       <FormProvider {...methods}>
         <form
@@ -194,7 +192,7 @@ const MemberMaritalStatus = ({
       searchTerm: FormFieldSearchTerm.MaritalStatus,
     });
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
+  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
     {
       id: String(id),
     },
@@ -218,7 +216,7 @@ const MemberMaritalStatus = ({
     const subscription = watch(
       debounce((data) => {
         if (id) {
-          mutate({ id: String(id), data });
+          mutate({ id: String(id), data }, { onSuccess: () => refetch() });
         }
       }, 800)
     );
@@ -234,10 +232,7 @@ const MemberMaritalStatus = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <Text fontSize="r1" fontWeight="SemiBold">
-          {t['kymIndFAMILYDETAILS']}
-        </Text>
-        <InputGroupContainer>
+        <FormSection gridLayout={true} header="kymIndFAMILYDETAILS">
           <FormSelect
             name={'maritalStatusId'}
             label={t['kymIndMartialStatus']}
@@ -245,7 +240,7 @@ const MemberMaritalStatus = ({
             isLoading={maritalStatusLoading}
             options={getFieldOption(maritalStatusData)}
           />
-        </InputGroupContainer>
+        </FormSection>
       </form>
     </FormProvider>
   );
@@ -328,10 +323,11 @@ const MemberFamilyDetails = ({
   };
 
   return (
-    <Box>
-      <Text fontSize="s3" mb="s4">
-        {t['kymIndFamilymembers']}
-      </Text>
+    <FormSection
+      gridLayout={true}
+      templateColumns={1}
+      header="kymIndFamilymembers"
+    >
       <DynamicBoxGroupContainer>
         {familyMemberIds.map((id) => {
           return (
@@ -356,7 +352,7 @@ const MemberFamilyDetails = ({
           {t['kymIndAddFamilyMember']}
         </Button>
       </DynamicBoxGroupContainer>
-    </Box>
+    </FormSection>
   );
 };
 
@@ -371,10 +367,10 @@ export const MemberKYMFamilyDetails = ({
   setKymCurrentSection,
 }: IMemberKYMFamilyDetailsProps) => {
   return (
-    <GroupContainer id="kymAccIndFamilyDetails" scrollMarginTop={'200px'}>
+    <Box id="kymAccIndFamilyDetails" scrollMarginTop={'200px'}>
       <MemberMaritalStatus setKymCurrentSection={setKymCurrentSection} />
 
       <MemberFamilyDetails setKymCurrentSection={setKymCurrentSection} />
-    </GroupContainer>
+    </Box>
   );
 };

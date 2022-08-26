@@ -60,15 +60,13 @@ export const KYMDeclarationAgree = () => {
       //   setKymCurrentSection(kymSection);
       // }}
       >
-        <Box display="flex" gap="s16" alignItems="start">
-          <FormCheckbox name="declarationAgreement" fontSize="s3">
-            {''}
-          </FormCheckbox>
+        <Box p="s20" display="flex" gap="s16" alignItems="center">
+          <FormCheckbox name="declarationAgreement" fontSize="s3" />
           <TextFields variant="formInput" mt="-6px">
-            I hereby declare that the information provided by me/us in this form
-            and documents provided to the co-operative are true and correct. All
-            transaction in this account are from legitimate source. If found
-            otherwise, I shall bear the consequences thereof.
+            I/We agree to the&nbsp;
+            <TextFields as="span" variant="link">
+              Terms and condition.
+            </TextFields>
           </TextFields>
         </Box>
       </form>

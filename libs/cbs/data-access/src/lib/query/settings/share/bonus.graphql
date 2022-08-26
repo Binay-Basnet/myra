@@ -1,0 +1,13 @@
+query getSettingsShareBonusData {
+  settings {
+    general {
+      share {
+        bonus {
+          taxPayer
+          taxRate
+          accountMapping
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+mutation setSettingsShareGeneral($data: ShareSettingsGeneralInput) {
+  settings {
+    general {
+      share {
+        add {
+          general(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}

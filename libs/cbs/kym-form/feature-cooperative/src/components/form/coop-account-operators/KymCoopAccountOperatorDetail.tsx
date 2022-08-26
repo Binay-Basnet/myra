@@ -7,8 +7,7 @@ import {
   useGetCoOperativeAccountOperatorEditDataQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Button, FormSection, GridItem, Icon } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AddOperator } from '../../accordion-component/KymCoopAccountOperator';
@@ -83,35 +82,35 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
   }, [id]);
 
   return (
-    <GroupContainer
+    <FormSection
+      gridLayout={true}
       id="kymCoopAccAccountOperatorDetail"
-      scrollMarginTop={'200px'}
+      header="kymCoopDetailsofAccountOperators"
     >
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymCoopDetailsofAccountOperators']}
-      </Text>
       {accOperatorIds.map((id) => {
         return (
-          <Box key={id} display="flex" flexDirection={'column'}>
+          <GridItem key={id} colSpan={3}>
             <AddOperator
               setKymCurrentSection={setSection}
               removeDirector={removeAccountOperator}
               accountId={id}
             />
-          </Box>
+          </GridItem>
         );
       })}
-      <Button
-        id="accountOperatorButton"
-        alignSelf="start"
-        leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-        variant="outline"
-        onClick={() => {
-          addAccountOperator();
-        }}
-      >
-        {t['kymCoopAddOperator']}
-      </Button>
-    </GroupContainer>
+      <GridItem colSpan={2}>
+        <Button
+          id="accountOperatorButton"
+          alignSelf="start"
+          leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+          variant="outline"
+          onClick={() => {
+            addAccountOperator();
+          }}
+        >
+          {t['kymCoopAddOperator']}
+        </Button>
+      </GridItem>
+    </FormSection>
   );
 };

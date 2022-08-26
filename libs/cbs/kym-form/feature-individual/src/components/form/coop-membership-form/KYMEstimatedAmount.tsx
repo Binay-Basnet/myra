@@ -10,12 +10,8 @@ import {
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, FormSection } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -87,11 +83,21 @@ export const KYMEstimatedAmount = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <GroupContainer
+        <FormSection
+          gridLayout={true}
           id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
-          scrollMarginTop={'200px'}
+          header="kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION"
         >
-          <Text fontSize="r1" fontWeight="SemiBold">
+          <FormInput
+            type="number"
+            name="estimatedAnnualTransactionAmount"
+            label={t['kynIndEstimatedannualaccounttransaction']}
+            placeholder="0.00"
+            textAlign="right"
+          />
+        </FormSection>
+
+        {/* <Text fontSize="r1" fontWeight="SemiBold">
             {t['kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION']}
           </Text>
 
@@ -103,41 +109,40 @@ export const KYMEstimatedAmount = ({
               placeholder="0.00"
               textAlign="right"
             />
-          </InputGroupContainer>
+          </InputGroupContainer> */}
 
-          <Box display="flex" flexDirection="column">
-            <FormRadioGroup
-              label={t['kynIndEstimatednoofAnnualTransaction']}
-              id="estimatedAnnualTransactionFrequencyId"
-              name="estimatedAnnualTransactionFrequencyId"
-              options={getFieldOption(
-                estimatedAnnualTransactionData,
-                (label) => label
-              )}
-              labelFontSize="s3"
-            />
-          </Box>
+        <Box
+          p="s20"
+          id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
+        >
+          <FormRadioGroup
+            label={t['kynIndEstimatednoofAnnualTransaction']}
+            id="estimatedAnnualTransactionFrequencyId"
+            name="estimatedAnnualTransactionFrequencyId"
+            options={getFieldOption(
+              estimatedAnnualTransactionData,
+              (label) => label
+            )}
+            labelFontSize="s3"
+          />
+        </Box>
 
-          <InputGroupContainer>
-            <FormInput
-              type="number"
-              name="estimatedAnnualDepositAmount"
-              label={t['kynIndEstimatedAnnualDeposit']}
-              placeholder="0.00"
-              textAlign="right"
-            />
-          </InputGroupContainer>
-
-          <InputGroupContainer>
-            <FormInput
-              type="number"
-              name="estimatedAnnualLoanAmount"
-              label={t['kynIndEstimatedAnnualLoan']}
-              placeholder="0.00"
-              textAlign="right"
-            />
-          </InputGroupContainer>
-        </GroupContainer>
+        <FormSection gridLayout={true}>
+          <FormInput
+            type="number"
+            name="estimatedAnnualDepositAmount"
+            label={t['kynIndEstimatedAnnualDeposit']}
+            placeholder="0.00"
+            textAlign="right"
+          />
+          <FormInput
+            type="number"
+            name="estimatedAnnualLoanAmount"
+            label={t['kynIndEstimatedAnnualLoan']}
+            placeholder="0.00"
+            textAlign="right"
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );

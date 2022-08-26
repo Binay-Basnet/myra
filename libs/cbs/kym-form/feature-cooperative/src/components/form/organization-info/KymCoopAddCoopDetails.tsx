@@ -6,12 +6,8 @@ import {
   KymCooperativeFormInput,
   useGetCooperativeKymOptionsQuery,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -40,32 +36,24 @@ export const KymCoopAddCoopDetails = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer
+        <FormSection
+          gridLayout={true}
           id="kymCoopAccAdditionalCoorperativeDetails"
-          scrollMarginTop={'200px'}
+          header="kymCoopAdditionalCoorperativeDetails"
         >
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymCoopAdditionalCoorperativeDetails']}
-          </Text>
-          <InputGroupContainer>
-            <FormSelect
-              name="cooperativeTypeId"
-              label={t['kymCoopType']}
-              placeholder={t['kymCoopSelectType']}
-              options={getFieldOption(cooperativeTypeFields)}
-            />
-            <FormInput
-              type="text"
-              name="mainServiceProduct"
-              label={t['kymCoopMainServiceProduct']}
-              placeholder={t['kymCoopEnterMainServiceProduct']}
-            />
-          </InputGroupContainer>
-        </GroupContainer>
+          <FormSelect
+            name="cooperativeTypeId"
+            label={t['kymCoopType']}
+            placeholder={t['kymCoopSelectType']}
+            options={getFieldOption(cooperativeTypeFields)}
+          />
+          <FormInput
+            type="text"
+            name="mainServiceProduct"
+            label={t['kymCoopMainServiceProduct']}
+            placeholder={t['kymCoopEnterMainServiceProduct']}
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );

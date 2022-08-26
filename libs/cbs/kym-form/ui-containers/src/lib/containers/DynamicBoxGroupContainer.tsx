@@ -18,6 +18,7 @@ export const DynamicBoxGroupContainer = ({
       gap="s16"
       border="1px solid"
       borderColor="border.layout"
+      borderRadius="br2"
       {...rest}
     >
       {children}

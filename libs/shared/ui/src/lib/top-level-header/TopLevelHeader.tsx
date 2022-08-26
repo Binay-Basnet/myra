@@ -4,9 +4,9 @@ import { BiBell } from 'react-icons/bi';
 import { BsArrowRight } from 'react-icons/bs';
 import { CgMenuGridO } from 'react-icons/cg';
 import { RiHistoryFill } from 'react-icons/ri';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Image, Text } from '@chakra-ui/react';
 import { format } from 'date-fns';
 
 import { useAppDispatch } from '@coop/cbs/data-access';
@@ -26,6 +26,7 @@ import {
   Select,
   ShortcutTab,
   SwitchTabs,
+  Text,
   TextFields,
 } from '@coop/shared/ui';
 import { logout, useTranslation } from '@coop/shared/utils';
@@ -165,7 +166,7 @@ export function TopLevelHeader() {
             cursor={'pointer'}
             _hover={{ backgroundColor: 'secondary.900' }}
           >
-            <Image boxSize={'32px'} src={'/neosystest.png'} alt="logo" />
+            <Image height={32} width={32} src={'/neosystest.png'} alt="logo" />
 
             <Box
               maxH="100%"
@@ -183,10 +184,10 @@ export function TopLevelHeader() {
                 noOfLines={1}
                 lineHeight="130%"
               >
-                {t['sahakariName']}
+                Neosys Saving and Credit Cooperative
               </Text>
               <Text fontSize="s3" color={'white'} p={0} lineHeight="100%">
-                {t['sahakariLocation']}
+                Lalitpur
               </Text>
             </Box>
           </Box>
@@ -241,7 +242,6 @@ export function TopLevelHeader() {
                         fontWeight="500"
                         color="gray.0"
                       >
-                        {' '}
                         Date: {currentDate}
                       </Text>
                     </Box>
@@ -268,7 +268,7 @@ export function TopLevelHeader() {
                         </Text>
                       </PopoverBody>
                     )}
-                    <PopoverBody borderBottom="1px" borderColor="#E0E5EB">
+                    <PopoverBody borderBottom="1px" borderColor="border.layout">
                       <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                         Transaction Date
                       </Text>
@@ -276,7 +276,7 @@ export function TopLevelHeader() {
                         {closingDate}
                       </Text>
                     </PopoverBody>
-                    <PopoverBody borderBottom="1px" borderColor="#E0E5EB">
+                    <PopoverBody borderBottom="1px" borderColor="border.layout">
                       <Text fontSize={'s3'} fontWeight="500" color="gray.700">
                         Calender Date
                       </Text>
@@ -301,6 +301,8 @@ export function TopLevelHeader() {
 
             <IconButton
               ml="s16"
+              width="40px"
+              height="40px"
               icon={<Icon size="md" as={BiBell} />}
               aria-label="help"
               variant={'ghost'}
@@ -314,6 +316,8 @@ export function TopLevelHeader() {
                 <>
                   <PopoverTrigger>
                     <IconButton
+                      width="40px"
+                      height="40px"
                       _hover={{ backgroundColor: 'secondary.900' }}
                       icon={<Icon size="lg" as={CgMenuGridO} />}
                       aria-label="menu"
@@ -359,8 +363,8 @@ export function TopLevelHeader() {
                           onClick={() => router.push('/members/list')}
                         >
                           <Image
-                            width={12}
-                            height={12}
+                            width={48}
+                            height={48}
                             src="/cbs.svg"
                             alt="Core Banking System"
                           />
@@ -387,8 +391,8 @@ export function TopLevelHeader() {
                           onClick={() => router.push('/inventory/register')}
                         >
                           <Image
-                            width={12}
-                            height={12}
+                            width={48}
+                            height={48}
                             src="/inventory.svg"
                             alt="Inventory System"
                           />
@@ -415,8 +419,8 @@ export function TopLevelHeader() {
                           onClick={() => router.push('/loan')}
                         >
                           <Image
-                            w={12}
-                            h={12}
+                            height={48}
+                            width={48}
                             src="/memberandshare.svg"
                             alt="Fixed Asset Management"
                           />
@@ -445,8 +449,8 @@ export function TopLevelHeader() {
                           onClick={() => router.push('/accounting/sales/list')}
                         >
                           <Image
-                            width={12}
-                            height={12}
+                            width={48}
+                            height={48}
                             src="/accounting.svg"
                             alt="Accounting System"
                           />
@@ -478,8 +482,8 @@ export function TopLevelHeader() {
                             }
                           >
                             <Image
-                              width={12}
-                              height={12}
+                              width={48}
+                              height={48}
                               src="/settings.svg"
                               alt="Settings"
                             />
@@ -517,13 +521,25 @@ export function TopLevelHeader() {
             </Popover>
 
             <Popover placement="bottom-end" gutter={3}>
-              {({ isOpen }) => (
+              {() => (
                 <>
                   <PopoverTrigger>
-                    <Box
+                    <IconButton
+                      width="40px"
+                      height="40px"
+                      _hover={{ backgroundColor: 'secondary.900' }}
+                      icon={<Avatar src={'/avatar.png'} size="sm" />}
+                      aria-label="menu"
+                      variant={'ghost'}
+                      color={'white'}
+                      borderRadius={'br1'}
+                      ref={appSwitcherRef}
+                    />
+                    {/* <Box
                       w="40px"
                       h="40px"
                       as="button"
+                      borderRadius="br1"
                       display={'flex'}
                       justifyContent={'center'}
                       alignItems={'center'}
@@ -531,7 +547,7 @@ export function TopLevelHeader() {
                       _hover={{ backgroundColor: 'secondary.900' }}
                     >
                       <Avatar src={'/avatar.png'} size="sm" />
-                    </Box>
+                    </Box> */}
                   </PopoverTrigger>
                   <PopoverContent
                     bg="gray.0"
@@ -554,7 +570,8 @@ export function TopLevelHeader() {
                           display="flex"
                           flexDirection="row"
                           alignItems="center"
-                          borderBottom="1px solid #E6E6E6"
+                          borderBottom="1px solid"
+                          borderColor="border.layout"
                         >
                           <Avatar src={'/avatar.png'} w="s32" h="s32" />
                           <Box
@@ -573,14 +590,18 @@ export function TopLevelHeader() {
                             <Text
                               fontWeight="Regular"
                               fontSize="s2"
-                              color="gray.500"
+                              color="gray.600"
                             >
                               Teller
                             </Text>
                           </Box>
                         </Box>
 
-                        <Box p="s8" borderBottom="1px solid #E6E6E6">
+                        <Box
+                          p="s8"
+                          borderBottom="1px solid "
+                          borderColor="border.layout"
+                        >
                           <Select
                             label="Branch"
                             placeholder="Lalitpur"
@@ -606,7 +627,8 @@ export function TopLevelHeader() {
                           flexDirection="column"
                           justifyContent="space-between"
                           p="s8"
-                          borderBottom="1px solid #E6E6E6"
+                          borderBottom="1px solid "
+                          borderColor="border.layout"
                         >
                           <Text
                             mb="4px"
@@ -632,7 +654,8 @@ export function TopLevelHeader() {
                           flexDirection="column"
                           justifyContent="space-between"
                           p="s8"
-                          borderBottom="1px solid #E6E6E6"
+                          borderBottom="1px solid "
+                          borderColor="border.layout"
                         >
                           <Text
                             mb="4px"
@@ -675,6 +698,7 @@ export function TopLevelHeader() {
                           <Box
                             _hover={{
                               bg: 'background.500',
+                              borderRadius: 'br2',
                             }}
                             h="40px"
                             px="s16"

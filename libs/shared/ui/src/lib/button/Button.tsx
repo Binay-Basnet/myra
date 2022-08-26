@@ -19,7 +19,7 @@ export interface ButtonProps extends ChakrabuttonProps {
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
-    const { children, bg, shade, ...rest } = props;
+    const { children, shade, ...rest } = props;
 
     switch (shade) {
       case 'primary':

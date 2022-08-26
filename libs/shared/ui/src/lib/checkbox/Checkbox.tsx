@@ -18,8 +18,13 @@ export function Checkbox(props: CheckboxProps) {
 
   return (
     <Box display="flex" alignItems="center" gap="s8">
-      <ChakraCheckbox {...rest} />
-      {label ? <TextFields variant="formInput">{label}</TextFields> : children}
+      <ChakraCheckbox {...rest}>
+        {label ? (
+          <TextFields variant="formInput">{label}</TextFields>
+        ) : (
+          children
+        )}
+      </ChakraCheckbox>
     </Box>
   );
 }
