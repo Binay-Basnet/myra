@@ -112,7 +112,6 @@ export const MemberKYMIdentificationDetails = ({
         >
           <FormSection
             flexLayout={true}
-            gridLayout={false}
             header="kymIndIDENTIFICATIONDETAILS"
             subHeader="kymIndChooseidentificationdetails"
           >
