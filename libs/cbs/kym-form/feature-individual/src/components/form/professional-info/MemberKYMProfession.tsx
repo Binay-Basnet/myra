@@ -82,7 +82,11 @@ export const MemberKYMProfession = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection header="kymIndPROFESSION" flexLayout={true}>
+        <FormSection
+          header="kymIndPROFESSION"
+          gridLayout={false}
+          flexLayout={true}
+        >
           {occupationLoading ? (
             <Skeleton height="40px" />
           ) : (
