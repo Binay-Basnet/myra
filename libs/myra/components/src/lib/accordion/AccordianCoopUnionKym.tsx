@@ -1,8 +1,14 @@
 import React from 'react';
+import { AiFillCloseCircle } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
-import { KymInsAddSectionStatus } from '@coop/cbs/data-access';
+import {
+  KymInsAddSectionStatus,
+  useGetCooperativeUnionKymEditDataQuery,
+} from '@coop/cbs/data-access';
+import { Icon } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const OrganizationInformation = [
@@ -43,9 +49,32 @@ interface AccordianProps {
   };
 }
 
+const cooperativeInfoObject = {
+  kymCoopUnionAccBasicInformation: 'BASIC_INFORMATION',
+  kymCoopUnionAccRegisteredDetails: 'REGISTERED_DETAILS',
+  kymCoopUnionAccOperatingOfficeAddress: 'OPERATING_OFFICE_ADDRESS',
+  serviceCenterOfficeAddress: 'SERVICE_CENTER_OFFICE',
+  kymCoopUnionAccContactDetails: 'CONTACT_DETAILS',
+  kymCoopUnionAccBankAccountDetails: 'ANK_ACCOUNT_DETAILS',
+  kymCoopUnionAccApplicant: 'APPLICANT',
+};
+
 export function AccorrdianAddCOOPUnion(props: AccordianProps) {
   const { t } = useTranslation();
   const { kymCurrentSection } = props;
+  const route = useRouter();
+  const id = route?.query['id'] as string;
+  const { data: coopUnionCooperativeData } =
+    useGetCooperativeUnionKymEditDataQuery({
+      id,
+    });
+  const cooperativeInfoSectionStatus =
+    coopUnionCooperativeData?.members?.cooperativeUnion?.formState?.formData
+      ?.institutionInformation?.sectionStatus?.incomplete;
+  const inCompleteSections = cooperativeInfoSectionStatus?.map(
+    (item) => item?.sectionName
+  );
+
   const subsection = kymCurrentSection?.subSection;
   const [isOpenOrganizational, setIsOpenOrganizational] = React.useState(false);
   const [isopenDirector, setIsopenDirector] = React.useState(false);
@@ -102,14 +131,9 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                 </Text>
               </a>
               &nbsp; &nbsp;
-              {/* {formStatus?.personal?.completed?.includes(
-                personalInfoEnum[item]
-              ) && (
-                <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
+              {inCompleteSections?.includes(cooperativeInfoObject[item]) && (
+                <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
               )}
-              {formStatus?.personal?.error?.includes(
-                personalInfoEnum[item]
-              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />} */}
             </Box>
           ))}
         </Box>
@@ -144,6 +168,15 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                   {t[item]}
                 </Text>
               </a>
+              &nbsp; &nbsp;
+              {/* {formStatus?.data?.personal?.completed?.includes(
+                personalInfoEnum[item]
+              ) && (
+                <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
+              )} */}
+              {/* {formStatus?.data?.personal?.error?.includes(
+                personalInfoEnum[item]
+              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />} */}
             </Box>
           ))}
         </Box>
@@ -248,7 +281,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              
+
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >

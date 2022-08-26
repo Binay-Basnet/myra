@@ -390,3 +390,38 @@ query getCentralRepresentativeDetails($id: ID!) {
     }
   }
 }
+
+query getCoopUnionSectionStatus($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        sectionStatus {
+          institutionInformation {
+            completed
+            error
+          }
+          economicDetails {
+            completed
+            error
+          }
+          bodDetails {
+            completed
+            error
+          }
+          accountOperatorDetails {
+            completed
+            error
+          }
+          centralRepresentativeDetails {
+            completed
+            error
+          }
+          declaration {
+            completed
+            error
+          }
+        }
+      }
+    }
+  }
+}

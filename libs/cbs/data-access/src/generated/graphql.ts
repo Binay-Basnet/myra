@@ -10418,6 +10418,45 @@ export type GetCentralRepresentativeDetailsQuery = {
   };
 };
 
+export type GetCoopUnionSectionStatusQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCoopUnionSectionStatusQuery = {
+  members: {
+    cooperativeUnion?: {
+      formState?: {
+        sectionStatus?: {
+          institutionInformation?: {
+            completed?: Array<KymCoopUnionInstitutionInformationSection | null> | null;
+            error?: Array<KymCoopUnionInstitutionInformationSection | null> | null;
+          } | null;
+          economicDetails?: {
+            completed?: Array<KymCoopUnionEconomicDetailsSection | null> | null;
+            error?: Array<KymCoopUnionEconomicDetailsSection | null> | null;
+          } | null;
+          bodDetails?: {
+            completed?: Array<KymCoopUnionBodSection | null> | null;
+            error?: Array<KymCoopUnionBodSection | null> | null;
+          } | null;
+          accountOperatorDetails?: {
+            completed?: Array<KymCoopUnionAccountOperatorSection | null> | null;
+            error?: Array<KymCoopUnionAccountOperatorSection | null> | null;
+          } | null;
+          centralRepresentativeDetails?: {
+            completed?: Array<KymCoopUnionCentralRepresentativeSection | null> | null;
+            error?: Array<KymCoopUnionCentralRepresentativeSection | null> | null;
+          } | null;
+          declaration?: {
+            completed?: Array<KymCoopUnionDeclarationSection | null> | null;
+            error?: Array<KymCoopUnionDeclarationSection | null> | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetAccountListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAccountListQuery = {
@@ -16512,6 +16551,57 @@ export const useGetCentralRepresentativeDetailsQuery = <
       GetCentralRepresentativeDetailsQuery,
       GetCentralRepresentativeDetailsQueryVariables
     >(GetCentralRepresentativeDetailsDocument).bind(null, variables),
+    options
+  );
+export const GetCoopUnionSectionStatusDocument = `
+    query getCoopUnionSectionStatus($id: ID!) {
+  members {
+    cooperativeUnion {
+      formState(id: $id) {
+        sectionStatus {
+          institutionInformation {
+            completed
+            error
+          }
+          economicDetails {
+            completed
+            error
+          }
+          bodDetails {
+            completed
+            error
+          }
+          accountOperatorDetails {
+            completed
+            error
+          }
+          centralRepresentativeDetails {
+            completed
+            error
+          }
+          declaration {
+            completed
+            error
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopUnionSectionStatusQuery = <
+  TData = GetCoopUnionSectionStatusQuery,
+  TError = unknown
+>(
+  variables: GetCoopUnionSectionStatusQueryVariables,
+  options?: UseQueryOptions<GetCoopUnionSectionStatusQuery, TError, TData>
+) =>
+  useQuery<GetCoopUnionSectionStatusQuery, TError, TData>(
+    ['getCoopUnionSectionStatus', variables],
+    useAxios<
+      GetCoopUnionSectionStatusQuery,
+      GetCoopUnionSectionStatusQueryVariables
+    >(GetCoopUnionSectionStatusDocument).bind(null, variables),
     options
   );
 export const GetAccountListDocument = `
