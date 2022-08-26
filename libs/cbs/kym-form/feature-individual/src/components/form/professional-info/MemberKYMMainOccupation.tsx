@@ -461,11 +461,9 @@ export const MemberKYMMainOccupation = ({
   useEffect(() => {
     refetch();
     if (professionId && professionData) {
-      setIsForeignEmp(professionData.includes(professionId[5]?.id));
+      setIsForeignEmp(professionData.includes(professionId[5]?.id as string));
     }
   }, [editValues]);
-
-  // console.log('isForeignEmp', professionId, professionData);
 
   return (
     <Box id="kymAccIndMainProfession" scrollMarginTop={'200px'}>

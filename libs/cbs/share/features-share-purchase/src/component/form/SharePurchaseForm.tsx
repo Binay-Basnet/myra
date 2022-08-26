@@ -5,7 +5,6 @@ import { GrMail } from 'react-icons/gr';
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { debounce } from 'lodash';
 import omit from 'lodash/omit';
 
 import { InputGroupContainer } from '@coop/accounting/ui-components';
@@ -20,7 +19,6 @@ import {
   useGetMemberListQuery,
 } from '@coop/cbs/data-access';
 import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
-import { formatAddress } from '@coop/cbs/utils';
 import { SharePurchaseHistoryTable } from '@coop/myra/components';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
@@ -56,8 +54,6 @@ const Header = () => {
   );
 };
 
-type optionType = { label: string; value: string };
-
 const SharePurchaseForm = () => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -80,8 +76,6 @@ const SharePurchaseForm = () => {
   const accountId = watch('accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
-  const [IDMember, setIDMember] = useState('');
-  const [trigger, setTrigger] = useState(false);
 
   const { data: bankData } = useGetBankListQuery();
 
@@ -100,20 +94,6 @@ const SharePurchaseForm = () => {
     },
     {
       staleTime: 0,
-      enabled: trigger,
-    }
-  );
-
-  const { data: memberList } = useGetMemberListQuery(
-    {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      filter: {
-        query: IDMember,
-      },
-    },
-    {
-      staleTime: 0,
-      enabled: trigger,
     }
   );
 
@@ -142,24 +122,22 @@ const SharePurchaseForm = () => {
     [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
   };
 
-  const memberListData = memberList?.members?.list?.edges;
+  const { data: memberList } = useGetMemberListQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    {
+      staleTime: 0,
+    }
+  );
 
-  // type optionType = { label: string; value: string };
+  const memberListData = memberList?.members?.list?.edges;
 
   const memberDetail =
     memberListData &&
     memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
 
   const memberProfile = memberDetail?.profile as KymIndFormStateQuery;
-  // const memberOptions = memberListData?.reduce((prevVal, curVal) => {
-  //   return [
-  //     ...prevVal,
-  //     {
-  //       label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
-  //       value: curVal?.node?.id as string,
-  //     },
-  //   ];
-  // }, [] as optionType[]);
 
   useEffect(() => {
     setTotalAmount(
@@ -239,34 +217,6 @@ const SharePurchaseForm = () => {
                     <FormMemberSelect
                       name="memberId"
                       label={t['sharePurchaseSelectMember']}
-                      placeholder={t['sharePurchaseEnterMemberID']}
-                      onInputChange={debounce((id) => {
-                        setIDMember(id);
-                        setTrigger(true);
-                      }, 800)}
-                      options={
-                        memberListData?.map((member) => {
-                          const profileData = member?.node
-                            ?.profile as KymIndFormStateQuery;
-                          return {
-                            memberInfo: {
-                              // image:member?.node?.code,
-                              memberName: member?.node?.name?.local,
-                              memberId: member?.node?.id,
-                              gender:
-                                profileData?.data?.formData?.basicInformation
-                                  ?.gender?.local,
-                              age: profileData?.data?.formData?.basicInformation
-                                ?.age,
-                              maritialStatus:
-                                profileData?.data?.formData?.maritalStatus
-                                  ?.local,
-                              address: formatAddress(member?.node?.address),
-                            },
-                            value: member?.node?.id as string,
-                          };
-                        }) ?? ([] as optionType[])
-                      }
                     />
                   </Box>
 
@@ -368,7 +318,7 @@ const SharePurchaseForm = () => {
                                 fontSize="s3"
                                 fontWeight="Regular"
                               >
-                                {memberProfile.data?.formData?.contactDetails
+                                {memberProfile?.data?.formData?.contactDetails
                                   ?.email ?? '-'}
                               </TextFields>
                             </Box>
