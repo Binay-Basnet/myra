@@ -5,7 +5,7 @@ import Checkbox from './checkbox';
 import Input from './input';
 import Modal from './modal';
 import Radio from './radio';
-import Switches from './switches';
+import Switch from './switches';
 import Table from './table';
 import Tags from './tags';
 import Textarea from './textarea';
@@ -18,7 +18,7 @@ export const components = {
   Input,
   Modal,
   Radio,
-  Switches,
+  Switch,
   Table,
   Tags,
   Textarea,
