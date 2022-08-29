@@ -11134,6 +11134,8 @@ export type GetMemberListQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           type: KymMemberTypesEnum;
+          profilePicUrl?: Array<string | null> | null;
+          signaturePicUrl?: Array<string | null> | null;
           contact?: string | null;
           createdAt: string;
           dateJoined?: string | null;
@@ -17639,6 +17641,8 @@ export const GetMemberListDocument = `
             wardNo
             locality
           }
+          profilePicUrl
+          signaturePicUrl
           contact
           createdAt
           dateJoined
