@@ -25,7 +25,7 @@ export const Interest = () => {
           type="number"
           label={t['depositProductMinimumRate']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -37,7 +37,7 @@ export const Interest = () => {
           type="number"
           label={t['depositProductMaximumRate']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -49,7 +49,7 @@ export const Interest = () => {
           type="number"
           label={t['depositProductDefaultRate']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -62,7 +62,7 @@ export const Interest = () => {
             name="interest.additionalRate"
             label={t['depositProductAdditionalBaseRate']}
             textAlign={'right'}
-            placeholder="0.00"
+            __placeholder="0.00"
             rightElement={
               <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                 %
@@ -75,7 +75,7 @@ export const Interest = () => {
           type="number"
           label={t['depositProductCEOAuthority']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -87,7 +87,7 @@ export const Interest = () => {
           type="number"
           label={t['depositProductBoardAuthority']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %

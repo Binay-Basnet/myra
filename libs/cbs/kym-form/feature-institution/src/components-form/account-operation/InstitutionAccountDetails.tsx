@@ -242,21 +242,21 @@ const AddAccountDetails = ({
                     type="text"
                     name={'name'}
                     label={t['kymInsFullName']}
-                    placeholder={t['kymInsEnterFullName']}
+                    __placeholder={t['kymInsEnterFullName']}
                   />
                   <FormInput
                     id="AccountOperatorInstitution"
                     type="text"
                     name={'contact'}
                     label={t['kymInsContactNo']}
-                    placeholder={t['kymInsContactNoPlaceholder']}
+                    __placeholder={t['kymInsContactNo__placeholder']}
                   />
                   <FormInput
                     id="AccountOperatorInstitution"
                     type="text"
                     name={'email'}
                     label={t['kymInsEmail']}
-                    placeholder={t['kymInsEnterEmailAddress']}
+                    __placeholder={t['kymInsEnterEmailAddress']}
                   />
                 </InputGroupContainer>
 
@@ -268,14 +268,14 @@ const AddAccountDetails = ({
                     id="AccountOperatorInstitution"
                     name={'permanentAddress.provinceId'}
                     label={t['kymInsState']}
-                    placeholder={t['kymInsSelectState']}
+                    __placeholder={t['kymInsSelectState']}
                     options={province}
                   />
                   <FormSelect
                     id="AccountOperatorInstitution"
                     name={'permanentAddress.districtId'}
                     label={t['kymInsDistrict']}
-                    placeholder={t['kymInsSelectDistrict']}
+                    __placeholder={t['kymInsSelectDistrict']}
                     options={districtList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -285,7 +285,7 @@ const AddAccountDetails = ({
                     id="AccountOperatorInstitution"
                     name={'permanentAddress.localGovernmentId'}
                     label={t['kymInsVDCMunicipality']}
-                    placeholder={t['kymInsSelectVDCMunicipality']}
+                    __placeholder={t['kymInsSelectVDCMunicipality']}
                     options={localityList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -295,7 +295,7 @@ const AddAccountDetails = ({
                     id="AccountOperatorInstitution"
                     name={'permanentAddress.wardNo'}
                     label={t['kymInsWardNo']}
-                    placeholder={t['kymInsEnterWardNo']}
+                    __placeholder={t['kymInsEnterWardNo']}
                     options={wardList?.map((d) => ({
                       label: d,
                       value: d,
@@ -306,13 +306,13 @@ const AddAccountDetails = ({
                     type="text"
                     name={'permanentAddress.locality'}
                     label={t['kymInsLocality']}
-                    placeholder={t['kymInsEnterLocality']}
+                    __placeholder={t['kymInsEnterLocality']}
                   />
                   <FormInput
                     type="text"
                     name={'permanentAddress.houseNo'}
                     label={t['kymInsHouseNo']}
-                    placeholder={t['kymInsEnterHouseNo']}
+                    __placeholder={t['kymInsEnterHouseNo']}
                   />
                 </InputGroupContainer>
 
@@ -347,14 +347,14 @@ const AddAccountDetails = ({
                           id="AccountOperatorInstitution"
                           name={'temporaryAddress.provinceId'}
                           label={t['kymInsState']}
-                          placeholder={t['kymInsSelectState']}
+                          __placeholder={t['kymInsSelectState']}
                           options={province}
                         />
                         <FormSelect
                           id="AccountOperatorInstitution"
                           name={'temporaryAddress.districtId'}
                           label={t['kymInsDistrict']}
-                          placeholder={t['kymInsSelectDistrict']}
+                          __placeholder={t['kymInsSelectDistrict']}
                           options={districtTempList.map((d) => ({
                             label: d.name,
                             value: d.id,
@@ -364,7 +364,7 @@ const AddAccountDetails = ({
                           id="AccountOperatorInstitution"
                           name={'temporaryAddress.localGovernmentId'}
                           label={t['kymInsVDCMunicipality']}
-                          placeholder={t['kymInsSelectVDCMunicipality']}
+                          __placeholder={t['kymInsSelectVDCMunicipality']}
                           options={localityTempList.map((d) => ({
                             label: d.name,
                             value: d.id,
@@ -384,14 +384,14 @@ const AddAccountDetails = ({
                           type="text"
                           name={'temporaryAddress.locality'}
                           label={t['kymInsLocality']}
-                          placeholder={t['kymInsEnterLocality']}
+                          __placeholder={t['kymInsEnterLocality']}
                         />
                         <FormInput
                           id="AccountOperatorInstitution"
                           type="text"
                           name={'temporaryAddress.houseNo'}
                           label={t['kymInsHouseNo']}
-                          placeholder={t['kymInsEnterHouseNo']}
+                          __placeholder={t['kymInsEnterHouseNo']}
                         />
                       </InputGroupContainer>
                       <FormMap
@@ -428,7 +428,7 @@ const AddAccountDetails = ({
                       id="AccountOperatorInstitution"
                       name={'designation'}
                       label={t['kymInsDesignation']}
-                      placeholder={t['kymInsSelectposition']}
+                      __placeholder={t['kymInsSelectposition']}
                       options={[
                         { value: 'precident', label: 'President' },
                         { value: 'viceprecident', label: 'Vice-President' },
@@ -438,7 +438,7 @@ const AddAccountDetails = ({
                     />
                     <FormInput
                       name="panNo"
-                      placeholder={t['kymInsPanNoPlaceholder']}
+                      __placeholder={t['kymInsPanNo__placeholder']}
                       label={t['kymInsPanNo']}
                     />
                   </Box>

@@ -259,14 +259,14 @@ const AddDirector = ({
                         name={`fullName`}
                         id="accountOperator.fullName"
                         label={t['kymCoopUnionOpFullName']}
-                        placeholder={t['kymCoopUnionOpEnterFullName']}
+                        __placeholder={t['kymCoopUnionOpEnterFullName']}
                       />
                       <FormInput
                         type="text"
                         name={`designationEn`}
                         id="accountOperator.designationEn"
                         label={t['kymCoopUnionOpDesignation']}
-                        placeholder={t['kymCoopUnionOpEnterDesignation']}
+                        __placeholder={t['kymCoopUnionOpEnterDesignation']}
                       />
                     </InputGroupContainer>
 
@@ -279,14 +279,14 @@ const AddDirector = ({
                         name={`permanentAddress.provinceId`}
                         id="accountOperator.permanentAddress.provinceId"
                         label={t['kymCoopUnionOpState']}
-                        placeholder={t['kymCoopUnionOpSelectState']}
+                        __placeholder={t['kymCoopUnionOpSelectState']}
                         options={province}
                       />
                       <FormSelect
                         name={`permanentAddress.districtId`}
                         id="accountOperator.permanentAddress.districtId"
                         label={t['kymCoopUnionOpDistrict']}
-                        placeholder={t['kymCoopUnionOpSelectDistrict']}
+                        __placeholder={t['kymCoopUnionOpSelectDistrict']}
                         options={districtList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -296,7 +296,7 @@ const AddDirector = ({
                         name={`permanentAddress.localGovernmentId`}
                         id="accountOperator.permanentAddress.localGovernmentId"
                         label={t['kymCoopUnionOpVDCMunicipality']}
-                        placeholder={t['kymCoopUnionOpSelectVDCMunicipality']}
+                        __placeholder={t['kymCoopUnionOpSelectVDCMunicipality']}
                         options={localityList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -306,7 +306,7 @@ const AddDirector = ({
                         name={`permanentAddress.wardNo`}
                         id="accountOperator.permanentAddress.wardNo"
                         label={t['kymCoopUnionOpWardNo']}
-                        placeholder={t['kymCoopUnionOpEnterWardNo']}
+                        __placeholder={t['kymCoopUnionOpEnterWardNo']}
                         options={wardList.map((d) => ({ label: d, value: d }))}
                       />
                       <FormInput
@@ -314,14 +314,14 @@ const AddDirector = ({
                         name={`permanentAddress.locality`}
                         id="accountOperator.permanentAddress.locality"
                         label={t['kymCoopUnionOpLocality']}
-                        placeholder={t['kymCoopUnionOpEnterLocality']}
+                        __placeholder={t['kymCoopUnionOpEnterLocality']}
                       />
                       <FormInput
                         type="text"
                         name={`permanentAddress.houseNo`}
                         id="accountOperator.permanentAddress.houseNo"
                         label={t['kymIndHouseNo']}
-                        placeholder={t['kymIndEnterHouseNo']}
+                        __placeholder={t['kymIndEnterHouseNo']}
                       />
                     </InputGroupContainer>
 
@@ -357,14 +357,14 @@ const AddDirector = ({
                             name={`temporaryAddress.provinceId`}
                             id="accountOperator.temporaryAddress.provinceId"
                             label={t['kymCoopUnionOpState']}
-                            placeholder={t['kymCoopUnionOpSelectState']}
+                            __placeholder={t['kymCoopUnionOpSelectState']}
                             options={province}
                           />
                           <FormSelect
                             name={`temporaryAddress.districtId`}
                             id="accountOperator.temporaryAddress.districtId"
                             label={t['kymCoopUnionOpDistrict']}
-                            placeholder={t['kymCoopUnionOpSelectDistrict']}
+                            __placeholder={t['kymCoopUnionOpSelectDistrict']}
                             options={districtTempList.map((d) => ({
                               label: d.name,
                               value: d.id,
@@ -374,7 +374,7 @@ const AddDirector = ({
                             name={`temporaryAddress.localGovernmentId`}
                             id="accountOperator.temporaryAddress.localGovernmentId"
                             label={t['kymCoopUnionOpVDCMunicipality']}
-                            placeholder={
+                            __placeholder={
                               t['kymCoopUnionOpSelectVDCMunicipality']
                             }
                             options={localityTempList.map((d) => ({
@@ -386,7 +386,7 @@ const AddDirector = ({
                             name={`temporaryAddress.wardNo`}
                             id="accountOperator.temporaryAddress.wardNo"
                             label={t['kymCoopUnionOpWardNo']}
-                            placeholder={t['kymCoopUnionOpEnterWardNo']}
+                            __placeholder={t['kymCoopUnionOpEnterWardNo']}
                             options={wardTempList.map((d) => ({
                               label: d,
                               value: d,
@@ -397,14 +397,14 @@ const AddDirector = ({
                             name={`temporaryAddress.locality`}
                             id="accountOperator.temporaryAddress.locality"
                             label={t['kymCoopUnionOpLocality']}
-                            placeholder={t['kymCoopUnionOpEnterLocality']}
+                            __placeholder={t['kymCoopUnionOpEnterLocality']}
                           />
                           <FormInput
                             type="text"
                             name={`temporaryAddress.houseNo`}
                             id="accountOperator.temporaryAddress.houseNo"
                             label={t['kymIndHouseNo']}
-                            placeholder={t['kymIndEnterHouseNo']}
+                            __placeholder={t['kymIndEnterHouseNo']}
                           />
                         </InputGroupContainer>
 
@@ -423,28 +423,30 @@ const AddDirector = ({
                       name={`dateOfMembership`}
                       id="accountOperator.dateOfMembership"
                       label={t['kymCoopUnionOpDateOfMembership']}
-                      placeholder="DD-MM-YYYY"
+                      __placeholder="DD-MM-YYYY"
                     />
                     <FormInput
                       type="text"
                       name={`highestQualification`}
                       id="accountOperator.highestQualification"
                       label={t['kymCoopUnionOpHighestQualification']}
-                      placeholder={t['kymCoopUnionOpEnterHighestQualification']}
+                      __placeholder={
+                        t['kymCoopUnionOpEnterHighestQualification']
+                      }
                     />
                     <FormInput
                       type="number"
                       name={`mobileNumber`}
                       id="accountOperator.mobileNumber"
                       label={t['kymCoopUnionOpMobileNo']}
-                      placeholder={t['kymCoopUnionOpEnterMobileNo']}
+                      __placeholder={t['kymCoopUnionOpEnterMobileNo']}
                     />
                     <FormInput
                       type="text"
                       name={`email`}
                       id="accountOperator.email"
                       label={t['kymCoopUnionOpEmail']}
-                      placeholder={t['kymCoopUnionOpEnterEmail']}
+                      __placeholder={t['kymCoopUnionOpEnterEmail']}
                     />
                     <FormInput
                       type="string"
@@ -453,7 +455,7 @@ const AddDirector = ({
                       label={
                         t['kymCoopUnionOpCitizenshipPassportDrivingLicenseNo']
                       }
-                      placeholder={t['kymCoopUnionOpEnterCitizenshipNo']}
+                      __placeholder={t['kymCoopUnionOpEnterCitizenshipNo']}
                     />
 
                     <FormInput
@@ -461,7 +463,7 @@ const AddDirector = ({
                       name={`panNo`}
                       id="centralRepresentative.panNo"
                       label={t['kymCoopUnionPANNo']}
-                      placeholder={t['kymCoopUnionPANNoPlaceholder']}
+                      __placeholder={t['kymCoopUnionPANNo__placeholder']}
                     />
                   </InputGroupContainer>
                   {/* <Text fontSize="r1" fontWeight="SemiBold">
@@ -472,19 +474,19 @@ const AddDirector = ({
                 type="text"
                 name={`subjectOfTraining`}
                 label={t['kymCoopUnionOpSubjectofTraining']}
-                placeholder={t['kymCoopUnionOpEnterSubjectofTraining']}
+                __placeholder={t['kymCoopUnionOpEnterSubjectofTraining']}
               />
               <FormInput
                 type="date"
                 name={`dateOfTraining`}
                 label={t['kymCoopUnionOpDateofTraining']}
-                placeholder={t['kymCoopUnionOpEnterDateofTraining']}
+                __placeholder={t['kymCoopUnionOpEnterDateofTraining']}
               />
               <FormInput
                 type="number"
                 name={`trainingOrganization`}
                 label={t['kymCoopUnionOpTrainingOrganization']}
-                placeholder={t['kymCoopUnionOpEnterTrainingOrganization']}
+                __placeholder={t['kymCoopUnionOpEnterTrainingOrganization']}
               />
             </InputGroupContainer> */}
 

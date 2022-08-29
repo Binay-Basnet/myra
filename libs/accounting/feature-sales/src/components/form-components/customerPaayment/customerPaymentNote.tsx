@@ -9,7 +9,7 @@ export const CustomerPaymentBox = () => {
     <FormTextArea
       name="note"
       label={t['accountingCustomerPaymentAddNotes']}
-      placeholder={t['accountingCustomerPaymentAddNote']}
+      __placeholder={t['accountingCustomerPaymentAddNote']}
       rows={5}
     />
   );

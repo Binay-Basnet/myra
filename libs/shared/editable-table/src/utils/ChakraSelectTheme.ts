@@ -45,7 +45,7 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
       opacity: 1,
     },
   }),
-  control: (provided, state) => ({
+  control: (provided) => ({
     ...provided,
     bg: 'white',
     px: 's8',
@@ -159,7 +159,7 @@ export const searchBarStyle: ChakraStylesConfig<any> | undefined = {
       opacity: 1,
     },
   }),
-  control: (provided, state) => ({
+  control: (provided) => ({
     ...provided,
     bg: 'white',
     px: 's8',

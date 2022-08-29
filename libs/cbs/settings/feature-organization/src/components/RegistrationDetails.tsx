@@ -10,14 +10,14 @@ export const RegistrationDetailsOrganization = () => {
         <GridItem colSpan={2}>
           <FormInput
             label={t['settingsOrgRegRegdOffice']}
-            placeholder={t['settingsOrgRegEnterRegdOffice']}
+            __placeholder={t['settingsOrgRegEnterRegdOffice']}
             name="regdOffice"
           />
         </GridItem>
         <GridItem>
           <FormInput
             label={t['settingsOrgRegRegdNo']}
-            placeholder={t['settingsOrgRegEnterRegdNo']}
+            __placeholder={t['settingsOrgRegEnterRegdNo']}
             name={'regdNo'}
           />
         </GridItem>
@@ -25,7 +25,7 @@ export const RegistrationDetailsOrganization = () => {
       <Box mt="s16">
         <FormInput
           label={t['settingsOrgRegRegdAddress']}
-          placeholder={t['settingsOrgRegEnterRegdAddress']}
+          __placeholder={t['settingsOrgRegEnterRegdAddress']}
           name="regdAddress"
         />
       </Box>
@@ -33,7 +33,7 @@ export const RegistrationDetailsOrganization = () => {
         <GridItem>
           <FormInput
             label={t['settingsOrgRegPANVATNo']}
-            placeholder={t['settingsOrgRegPANVATNo']}
+            __placeholder={t['settingsOrgRegPANVATNo']}
             name="panOrVat"
           />
         </GridItem>

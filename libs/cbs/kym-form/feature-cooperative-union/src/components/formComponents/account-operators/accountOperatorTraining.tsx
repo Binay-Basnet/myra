@@ -40,21 +40,21 @@ const AddRelatedTraining = ({
           name={`trainingAttended.${index}.subjectOfTraining`}
           id="accountOperator.trainingAttended.subjectOfTraining"
           label={t['kymCoopUnionSubjectOfTraining']}
-          placeholder={t['kymCoopUnionEnterSubjectOfTraining']}
+          __placeholder={t['kymCoopUnionEnterSubjectOfTraining']}
         />
         <FormInput
           type="date"
           name={`trainingAttended.${index}.dateOfTraining`}
           id="accountOperator.trainingAttended.dateOfTraining"
           label={t['kymCoopUnionDateOfTraining']}
-          placeholder={t['kymCoopUnionEnterDateOfTraining']}
+          __placeholder={t['kymCoopUnionEnterDateOfTraining']}
         />
         <FormInput
           type="text"
           name={`trainingAttended.${index}.trainingOrganization`}
           id="accountOperator.trainingAttended.trainingOrganization"
           label={t['kymCoopUnionTrainingOrganization']}
-          placeholder={t['kymCoopUnionEnterTrainingOrganization']}
+          __placeholder={t['kymCoopUnionEnterTrainingOrganization']}
         />
       </InputGroupContainer>
     </DynamicBoxContainer>

@@ -92,7 +92,7 @@ export function AccountingFeaturePurchaseAddDebitNote() {
                     <FormSelect
                       name="supplierName"
                       label={t['accountingDebitNoteAddSupplierName']}
-                      placeholder={t['accountingDebitNoteAddSupplierName']}
+                      __placeholder={t['accountingDebitNoteAddSupplierName']}
                       options={[]}
                     />
 
@@ -100,7 +100,7 @@ export function AccountingFeaturePurchaseAddDebitNote() {
                       name="billReference"
                       type="text"
                       label={t['accountingDebitNoteAddBillReference']}
-                      placeholder={
+                      __placeholder={
                         t['accountingDebitNoteAddBillReferenceEnter']
                       }
                     />
@@ -123,7 +123,7 @@ export function AccountingFeaturePurchaseAddDebitNote() {
                   <FormTextArea
                     name="note"
                     label={t['accountingDebitNoteAddNotes']}
-                    placeholder={t['accountingDebitNoteAddNote']}
+                    __placeholder={t['accountingDebitNoteAddNote']}
                     rows={5}
                   />
                   <FieldCardComponents rows={'repeat(5,1fr)'}>

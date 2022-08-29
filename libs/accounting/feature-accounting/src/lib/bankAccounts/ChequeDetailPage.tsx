@@ -141,7 +141,7 @@ export function ChequeDetailPage() {
                   <FormSelect
                     name="bank"
                     label={t['bankAccountChequeBank']}
-                    placeholder={t['bankAccountChequeSelectBank']}
+                    __placeholder={t['bankAccountChequeSelectBank']}
                     options={[
                       {
                         label: '1',
@@ -161,7 +161,7 @@ export function ChequeDetailPage() {
                     type="text"
                     name="micr"
                     label={t['bankAccountChequeEnterMICR']}
-                    placeholder={t['bankAccountChequeEnterMICR']}
+                    __placeholder={t['bankAccountChequeEnterMICR']}
                   />
                   <Box
                     display="grid"
@@ -172,19 +172,19 @@ export function ChequeDetailPage() {
                       type="text"
                       name="chequeStart"
                       label={t['bankAccountChequeChequeStart']}
-                      placeholder={t['bankAccountChequeEg00005']}
+                      __placeholder={t['bankAccountChequeEg00005']}
                     />
                     <FormInput
                       type="text"
                       name="chequeEnd"
                       label={t['bankAccountChequeChequeEnd']}
-                      placeholder={t['bankAccountChequeEg00050']}
+                      __placeholder={t['bankAccountChequeEg00050']}
                     />
                     <FormInput
                       type="text"
                       name="totalLeafs"
                       label={t['bankAccountChequeTotalLeafs']}
-                      placeholder={t['bankAccountChequeTotalLeafs']}
+                      __placeholder={t['bankAccountChequeTotalLeafs']}
                     />
                   </Box>
                 </Box>

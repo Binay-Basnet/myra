@@ -104,7 +104,7 @@ export const KymCoopAssets = (props: IProps) => {
                 type="number"
                 min={0}
                 name="cashAndCashEquivalent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -132,7 +132,7 @@ export const KymCoopAssets = (props: IProps) => {
                 type="number"
                 min={0}
                 name="bank"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -161,7 +161,7 @@ export const KymCoopAssets = (props: IProps) => {
                 type="number"
                 min={0}
                 name="investments"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -189,7 +189,7 @@ export const KymCoopAssets = (props: IProps) => {
                 type="number"
                 min={0}
                 name="loan"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -218,7 +218,7 @@ export const KymCoopAssets = (props: IProps) => {
                 type="number"
                 min={0}
                 name="nonCurrentAssets"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -246,7 +246,7 @@ export const KymCoopAssets = (props: IProps) => {
                 type="number"
                 min={0}
                 name="otherNonCurrentAssets"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -282,7 +282,7 @@ export const KymCoopAssets = (props: IProps) => {
                 type="text"
                 name="totalAssets"
                 value={isNaN(totalAssets) ? '0.00' : totalAssets}
-                placeholder={t['kymCoopTotalassets']}
+                __placeholder={t['kymCoopTotalassets']}
               />
             </GridItem>
           </Grid>

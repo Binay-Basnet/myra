@@ -39,14 +39,14 @@ export const NeosysUsersForm = () => {
                   type="text"
                   name="name"
                   label={t['neoUsersName']}
-                  placeholder={t['neoUsersName']}
+                  __placeholder={t['neoUsersName']}
                 />
               </GridItem>
               <GridItem>
                 <FormSelect
                   name="role"
                   label={t['neoUsersRole']}
-                  placeholder={t['neoUsersSelectRole']}
+                  __placeholder={t['neoUsersSelectRole']}
                   options={roles.map((d) => ({
                     label: d.label,
                     value: d.value,
@@ -61,7 +61,7 @@ export const NeosysUsersForm = () => {
                   // type="text"
                   name="emailAddress"
                   label={t['neoUsersEmailAddress']}
-                  placeholder={t['neoUsersEmailAddress']}
+                  __placeholder={t['neoUsersEmailAddress']}
                 />
               </GridItem>
               <GridItem>
@@ -69,7 +69,7 @@ export const NeosysUsersForm = () => {
                   // type="text"
                   name="phoneNumber"
                   label={t['neoUsersPhoneNumber']}
-                  placeholder={t['neoUsersPhoneNumber']}
+                  __placeholder={t['neoUsersPhoneNumber']}
                 />
               </GridItem>
             </Grid>

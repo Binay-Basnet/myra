@@ -54,13 +54,13 @@ export const LoanRepaymentSchemes = () => {
             <FormSelect
               name="modeOfPayment"
               label={t['loanProductModePayment']}
-              placeholder={t['loanProductSelectModePayment']}
+              __placeholder={t['loanProductSelectModePayment']}
               options={modeOfPaymentList}
             />
             <FormSelect
               name="installmentType"
               label={t['loanProductInstallmentType']}
-              placeholder={t['loanProductSelectInstallmentType']}
+              __placeholder={t['loanProductSelectInstallmentType']}
               options={installmentTypeList}
             />
           </InputGroupContainer>

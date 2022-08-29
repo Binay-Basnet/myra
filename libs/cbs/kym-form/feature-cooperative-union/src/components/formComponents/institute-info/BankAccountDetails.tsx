@@ -43,7 +43,7 @@ export const BankAccountDetails = ({
           <FormSelect
             name="nameOfBank"
             label={t['kymCoopUnionNameOfBank']}
-            placeholder={t['kymCoopUnionSelectBank']}
+            __placeholder={t['kymCoopUnionSelectBank']}
             options={bankList?.bank?.bank?.list?.map((bank) => ({
               label: bank?.name,
               value: bank?.id,
@@ -56,7 +56,7 @@ export const BankAccountDetails = ({
             type="text"
             name="accountNumber"
             label={t['kymCoopUnionAccountNumber']}
-            placeholder={t['kymCoopUnionEnterAccountNumber']}
+            __placeholder={t['kymCoopUnionEnterAccountNumber']}
             errorText={
               sectionErrors?.['accountNumber'] &&
               sectionErrors['accountNumber'][0]
@@ -67,7 +67,7 @@ export const BankAccountDetails = ({
             type="text"
             name="accountName"
             label={t['kymCoopUnionAccountName']}
-            placeholder={t['kymCoopUnionEnterAccountName']}
+            __placeholder={t['kymCoopUnionEnterAccountName']}
             errorText={
               sectionErrors?.['accountName'] && sectionErrors['accountName'][0]
             }

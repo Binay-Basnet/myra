@@ -1,8 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  FormProvider,
-  useForm,
-} from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
@@ -10,17 +7,9 @@ import {
   useGetInsBoardDirectorEditListQuery,
   useSetAddDirectorInstitutionMutation,
 } from '@coop/cbs/data-access';
-import {
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormInput,
-  FormSwitch,
-} from '@coop/shared/form';
-import {
-  Box,
-  Grid,
-} from '@coop/shared/ui';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormInput, FormSwitch } from '@coop/shared/form';
+import { Box, Grid } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IAddDirector {
@@ -103,7 +92,7 @@ export const DirectorsWithAffliation = ({
                   bg="white"
                   name={`firmDetails.directorName`}
                   label={t['kymInsNameofDirector']}
-                  placeholder={t['kymInsEnterNameofDirector']}
+                  __placeholder={t['kymInsEnterNameofDirector']}
                 />
                 <FormInput
                   id="DirectorInstitutionAffiliationId"
@@ -111,7 +100,7 @@ export const DirectorsWithAffliation = ({
                   bg="white"
                   name={`firmDetails.institutionName`}
                   label={t['kymInsNameofInstitution']}
-                  placeholder={t['kymInsEnterNameofInstitution']}
+                  __placeholder={t['kymInsEnterNameofInstitution']}
                 />
               </Grid>
               <InputGroupContainer mt="s16">
@@ -121,7 +110,7 @@ export const DirectorsWithAffliation = ({
                   bg="white"
                   name={`firmDetails.address`}
                   label={t['kymInsAddressofInstitution']}
-                  placeholder={t['kymInsEnterAddressofInstitution']}
+                  __placeholder={t['kymInsEnterAddressofInstitution']}
                 />
                 <FormInput
                   id="DirectorInstitutionAffiliationId"
@@ -129,7 +118,7 @@ export const DirectorsWithAffliation = ({
                   bg="white"
                   name={`firmDetails.designation`}
                   label={t['kymInsDesignation']}
-                  placeholder={t['kymInsEnterDesignation']}
+                  __placeholder={t['kymInsEnterDesignation']}
                 />
                 <FormInput
                   id="DirectorInstitutionAffiliationId"
@@ -138,7 +127,7 @@ export const DirectorsWithAffliation = ({
                   bg="white"
                   name={`firmDetails.yearlyIncome`}
                   label={t['kymInsYearlyIncome']}
-                  placeholder="0.00"
+                  __placeholder="0.00"
                 />
               </InputGroupContainer>
             </Box>

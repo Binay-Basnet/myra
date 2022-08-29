@@ -115,7 +115,7 @@ const AddSister = ({
               bg="white"
               name={'name'}
               label={t['kymInsNameofSisterConcern']}
-              placeholder={t['kymInsEnterNameofSisterConcern']}
+              __placeholder={t['kymInsEnterNameofSisterConcern']}
             />
             <FormInput
               id="sisterConcernsDetails"
@@ -123,7 +123,7 @@ const AddSister = ({
               bg="white"
               name={`natureOfBusiness`}
               label={t['kymInsNatureofBusiness']}
-              placeholder={t['kymInsNatureofBusiness']}
+              __placeholder={t['kymInsNatureofBusiness']}
             />
             <FormInput
               id="sisterConcernsDetails"
@@ -131,7 +131,7 @@ const AddSister = ({
               bg="white"
               name={`address`}
               label={t['kymInsAddress']}
-              placeholder={t['kymInsAddress']}
+              __placeholder={t['kymInsAddress']}
             />
             <FormInput
               id="sisterConcernsDetails"
@@ -139,7 +139,7 @@ const AddSister = ({
               bg="white"
               name={`phone`}
               label={t['kymInsPhoneNo']}
-              placeholder={t['kymInsEnterPhoneNumber']}
+              __placeholder={t['kymInsEnterPhoneNumber']}
             />
           </Grid>
         </DynamicBoxContainer>

@@ -77,7 +77,7 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
             type="number"
             name="regdNo"
             label={t['kymCoopUnionRegisteredNumber']}
-            placeholder={t['kymCoopUnionEnterRegisteredNumber']}
+            __placeholder={t['kymCoopUnionEnterRegisteredNumber']}
             errorText={sectionErrors?.['regdNo'] && sectionErrors['regdNo'][0]}
           />
           <GridItem colSpan={2}>
@@ -85,7 +85,7 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
               type="text"
               name="issuingOffice"
               label={t['kymCoopUnionIssuingOffice']}
-              placeholder={t['kymCoopUnionEnterIssuingOffice']}
+              __placeholder={t['kymCoopUnionEnterIssuingOffice']}
               errorText={
                 sectionErrors?.['issuingOffice'] &&
                 sectionErrors['issuingOffice'][0]
@@ -95,13 +95,13 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
           <FormSelect
             name="regdAddress.provinceId"
             label={t['kymIndProvince']}
-            placeholder={t['kymIndSelectProvince']}
+            __placeholder={t['kymIndSelectProvince']}
             options={province}
           />
           <FormSelect
             name="regdAddress.districtId"
             label={t['kymIndDistrict']}
-            placeholder={t['kymIndSelectDistrict']}
+            __placeholder={t['kymIndSelectDistrict']}
             options={districtList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -110,7 +110,7 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
           <FormSelect
             name="regdAddress.localGovernmentId"
             label={t['kymIndLocalGovernment']}
-            placeholder={t['kymIndSelectLocalGovernment']}
+            __placeholder={t['kymIndSelectLocalGovernment']}
             options={localityList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -119,7 +119,7 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
           <FormSelect
             name="regdAddress.wardNo"
             label={t['kymIndWardNo']}
-            placeholder={t['kymIndEnterWardNo']}
+            __placeholder={t['kymIndEnterWardNo']}
             options={wardList?.map((d) => ({
               label: d,
               value: d,
@@ -129,7 +129,7 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
             type="text"
             name="regdAddress.locality"
             label={t['kymIndLocality']}
-            placeholder={t['kymIndEnterLocality']}
+            __placeholder={t['kymIndEnterLocality']}
           />
           <GridItem colSpan={2}>
             <FormMap name={`regdAddress.coordinates`} />

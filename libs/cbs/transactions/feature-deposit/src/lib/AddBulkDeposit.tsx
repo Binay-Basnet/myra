@@ -319,7 +319,7 @@ export function AddBulkDeposit() {
                   <MemberSelect
                     name="memberId"
                     label="Member"
-                    placeholder="Select Member"
+                    __placeholder="Select Member"
                   />
 
                   {memberId && (

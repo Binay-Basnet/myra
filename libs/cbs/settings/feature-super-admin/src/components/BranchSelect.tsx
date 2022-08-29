@@ -10,11 +10,11 @@ import { getRouterQuery } from '@coop/shared/utils';
 interface IBranchSelectProps extends SelectProps {
   name: string;
   label: string;
-  placeholder: string;
+  __placeholder: string;
 }
 
 export const BranchSelect = (props: IBranchSelectProps) => {
-  const { name, label, placeholder, ...rest } = props;
+  const { name, label, __placeholder, ...rest } = props;
 
   const { watch } = useFormContext();
 
@@ -64,7 +64,7 @@ export const BranchSelect = (props: IBranchSelectProps) => {
       name={name}
       label={label}
       isLoading={isFetching}
-      placeholder={placeholder}
+      __placeholder={__placeholder}
       onInputChange={debounce((id) => {
         if (id) {
           setBranchId(id);

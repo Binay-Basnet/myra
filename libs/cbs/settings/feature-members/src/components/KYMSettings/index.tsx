@@ -230,7 +230,7 @@ export const KYMCustomField = ({ kymType, section }: KYMCustomFieldProps) => {
             >
               <FormInput
                 name="name"
-                placeholder="Name of Field"
+                __placeholder="Name of Field"
                 helperText="This name will appear in the KYM Form"
               />
             </Box>
@@ -374,13 +374,13 @@ export const KYMCustomFieldAdd = ({ kymType }: { kymType: KYMCategory }) => {
                   rules={{
                     required: 'This field is required!',
                   }}
-                  placeholder="Name of Custom Field"
+                  __placeholder="Name of Custom Field"
                 />
               </Box>
               <Box w="50%">
                 <FormSelect
                   name="fieldType"
-                  placeholder="Select Field Type"
+                  __placeholder="Select Field Type"
                   rules={{
                     required: 'This field is required!',
                   }}

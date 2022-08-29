@@ -250,14 +250,14 @@ export function AddWithdraw() {
                   <MemberSelect
                     name="memberId"
                     label="Member"
-                    placeholder="Select Member"
+                    __placeholder="Select Member"
                   />
 
                   {memberId && (
                     <FormCustomSelect
                       name="accountId"
                       label="Select Withdraw Account"
-                      placeholder="Select Account"
+                      __placeholder="Select Account"
                       options={accountListData?.account?.list?.edges?.map(
                         (account) => ({
                           accountInfo: {
@@ -294,7 +294,7 @@ export function AddWithdraw() {
                       <FormInput
                         name="chequeNo"
                         label="Cheque No"
-                        placeholder="Cheque No"
+                        __placeholder="Cheque No"
                       />
                     </InputGroupContainer>
                   )}
@@ -306,7 +306,7 @@ export function AddWithdraw() {
                         <FormInput
                           name="withdrawSlipNo"
                           label="Withdraw Slip No"
-                          placeholder="Withdraw Slip No"
+                          __placeholder="Withdraw Slip No"
                         />
                       </InputGroupContainer>
                     )}
@@ -318,7 +318,7 @@ export function AddWithdraw() {
                       name="amount"
                       label="Withdraw Amount"
                       textAlign="right"
-                      placeholder="0.0"
+                      __placeholder="0.0"
                     />
                   )}
 

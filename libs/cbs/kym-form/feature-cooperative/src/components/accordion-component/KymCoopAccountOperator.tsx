@@ -229,14 +229,14 @@ export const AddOperator = ({
                     type="text"
                     name={`nameEn`}
                     label={t['kymCoopFullName']}
-                    placeholder={t['kymCoopEnterFullName']}
+                    __placeholder={t['kymCoopEnterFullName']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="text"
                     name={`designation`}
                     label={t['kymCoopDesignation']}
-                    placeholder={t['kymCoopEnterDesignation']}
+                    __placeholder={t['kymCoopEnterDesignation']}
                   />
                 </FormSection>
 
@@ -245,14 +245,14 @@ export const AddOperator = ({
                     id="accountOperatorCoop"
                     name={`permanentAddress.provinceId`}
                     label={t['kymCoopState']}
-                    placeholder={t['kymCoopSelectState']}
+                    __placeholder={t['kymCoopSelectState']}
                     options={province}
                   />
                   <FormSelect
                     id="accountOperatorCoop"
                     name={`permanentAddress.districtId`}
                     label={t['kymCoopDistrict']}
-                    placeholder={t['kymCoopSelectDistrict']}
+                    __placeholder={t['kymCoopSelectDistrict']}
                     options={districtList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -262,7 +262,7 @@ export const AddOperator = ({
                     id="accountOperatorCoop"
                     name={`permanentAddress.localGovernmentId`}
                     label={t['kymCoopLocalGovernment']}
-                    placeholder={t['kymCoopSelectLocal']}
+                    __placeholder={t['kymCoopSelectLocal']}
                     options={localityList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -272,7 +272,7 @@ export const AddOperator = ({
                     id="accountOperatorCoop"
                     name={`permanentAddress.wardNo`}
                     label={t['kymCoopWardNo']}
-                    placeholder={t['kymCoopEnterWardNo']}
+                    __placeholder={t['kymCoopEnterWardNo']}
                     options={wardList?.map((d) => ({
                       label: d,
                       value: d,
@@ -283,14 +283,14 @@ export const AddOperator = ({
                     type="text"
                     name={`permanentAddress.locality`}
                     label={t['kymCoopLocality']}
-                    placeholder={t['kymCoopEnterLocality']}
+                    __placeholder={t['kymCoopEnterLocality']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="text"
                     name={`permanentAddress.houseNo`}
                     label={t['kymCoopRepresentativeHouseNo']}
-                    placeholder={t['kymCoopRepresentativeEnterHouseNo']}
+                    __placeholder={t['kymCoopRepresentativeEnterHouseNo']}
                   />
 
                   <GridItem colSpan={2}>
@@ -312,14 +312,14 @@ export const AddOperator = ({
                         id="accountOperatorCoop"
                         name={`temporaryAddress.provinceId`}
                         label={t['kymCoopState']}
-                        placeholder={t['kymCoopSelectState']}
+                        __placeholder={t['kymCoopSelectState']}
                         options={province}
                       />
                       <FormSelect
                         id="accountOperatorCoop"
                         name={`temporaryAddress.districtId`}
                         label={t['kymCoopDistrict']}
-                        placeholder={t['kymCoopSelectDistrict']}
+                        __placeholder={t['kymCoopSelectDistrict']}
                         options={districtTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -329,7 +329,7 @@ export const AddOperator = ({
                         id="accountOperatorCoop"
                         name={`temporaryAddress.localGovernmentId`}
                         label={t['kymCoopLocalGovernment']}
-                        placeholder={t['kymCoopSelectLocal']}
+                        __placeholder={t['kymCoopSelectLocal']}
                         options={localityTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -339,7 +339,7 @@ export const AddOperator = ({
                         id="accountOperatorCoop"
                         name={`temporaryAddress.wardNo`}
                         label={t['kymCoopWardNo']}
-                        placeholder={t['kymCoopEnterWardNo']}
+                        __placeholder={t['kymCoopEnterWardNo']}
                         options={wardTempList.map((d) => ({
                           label: d,
                           value: d,
@@ -350,14 +350,14 @@ export const AddOperator = ({
                         type="text"
                         name={`temporaryAddress.locality`}
                         label={t['kymCoopLocality']}
-                        placeholder={t['kymCoopEnterLocality']}
+                        __placeholder={t['kymCoopEnterLocality']}
                       />
                       <FormInput
                         id="accountOperatorCoop"
                         type="text"
                         name={`temporaryAddress.houseNo`}
                         label={t['kymCoopRepresentativeHouseNo']}
-                        placeholder={t['kymCoopRepresentativeEnterHouseNo']}
+                        __placeholder={t['kymCoopRepresentativeEnterHouseNo']}
                       />
 
                       <GridItem colSpan={2}>
@@ -376,42 +376,42 @@ export const AddOperator = ({
                     type="date"
                     name={`dateOfMembership`}
                     label={t['kymCoopDateOfMembership']}
-                    placeholder="DD-MM-YYYY"
+                    __placeholder="DD-MM-YYYY"
                   />
                   <FormInput
                     type="text"
                     id="accountOperatorCoop"
                     name={`highestQualification`}
                     label={t['kymCoopHighestQualification']}
-                    placeholder={t['kymCoopEnterHigestQualification']}
+                    __placeholder={t['kymCoopEnterHigestQualification']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="number"
                     name={`contactNumber`}
                     label={t['kymCoopMobileNo']}
-                    placeholder={t['kymCoopEnterMobileNo']}
+                    __placeholder={t['kymCoopEnterMobileNo']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="text"
                     name={`email`}
                     label={t['kymCoopEmail']}
-                    placeholder={t['kymCoopEnterEmail']}
+                    __placeholder={t['kymCoopEnterEmail']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="string"
                     name={`citizenshipNo`}
                     label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
-                    placeholder={t['kymCoopEnterNo']}
+                    __placeholder={t['kymCoopEnterNo']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="string"
                     name={`panNo`}
                     label={t['kymCoopPanOrVatNo']}
-                    placeholder={t['kymCoopEnterPanOrVat']}
+                    __placeholder={t['kymCoopEnterPanOrVat']}
                   />
                 </FormSection>
                 <DynamicAddtraining />

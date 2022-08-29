@@ -58,7 +58,7 @@ export default function Login() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           w={300}
-          placeholder="Enter Username"
+          __placeholder="Enter Username"
           {...register('username')}
           autoFocus
         />
@@ -70,7 +70,7 @@ export default function Login() {
             pr="58px"
             variant={'outline'}
             type={show ? 'text' : 'password'}
-            placeholder="Enter password"
+            __placeholder="Enter password"
             {...register('password')}
           />
           <InputRightElement width="fit-content" pr="s16" cursor={'pointer'}>

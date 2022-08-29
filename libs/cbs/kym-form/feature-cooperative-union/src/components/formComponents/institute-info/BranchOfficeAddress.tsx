@@ -79,13 +79,13 @@ export const BranchOfficeAddress = ({
           <FormSelect
             name="branchOfficeAddress.provinceId"
             label={t['kymIndProvince']}
-            placeholder={t['kymIndSelectProvince']}
+            __placeholder={t['kymIndSelectProvince']}
             options={province}
           />
           <FormSelect
             name="branchOfficeAddress.districtId"
             label={t['kymIndDistrict']}
-            placeholder={t['kymIndSelectDistrict']}
+            __placeholder={t['kymIndSelectDistrict']}
             options={districtList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -94,7 +94,7 @@ export const BranchOfficeAddress = ({
           <FormSelect
             name="branchOfficeAddress.localGovernmentId"
             label={t['kymIndLocalGovernment']}
-            placeholder={t['kymIndSelectLocalGovernment']}
+            __placeholder={t['kymIndSelectLocalGovernment']}
             options={localityList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -103,7 +103,7 @@ export const BranchOfficeAddress = ({
           <FormSelect
             name="branchOfficeAddress.wardNo"
             label={t['kymIndWardNo']}
-            placeholder={t['kymIndEnterWardNo']}
+            __placeholder={t['kymIndEnterWardNo']}
             options={wardList?.map((d) => ({
               label: d,
               value: d,
@@ -113,13 +113,13 @@ export const BranchOfficeAddress = ({
             type="text"
             name="branchOfficeAddress.locality"
             label={t['kymIndLocality']}
-            placeholder={t['kymIndEnterLocality']}
+            __placeholder={t['kymIndEnterLocality']}
           />
           <FormInput
             type="text"
             name="branchOfficeAddress.houseNo"
             label={t['kymIndHouseNo']}
-            placeholder={t['kymIndEnterHouseNo']}
+            __placeholder={t['kymIndEnterHouseNo']}
           />
           <GridItem colSpan={2}>
             <FormMap name="branchOfficeAddress.coordinates" />

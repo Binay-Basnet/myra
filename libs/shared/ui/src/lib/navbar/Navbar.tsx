@@ -39,7 +39,7 @@ export function Navbar() {
           <InputGroup>
             <Input
               background="#EEF1F7"
-              placeholder={t.searchMembersNameReportsEtc}
+              placeholder={t['searchMembersNameReportsEtc']}
               _placeholder={{ color: '#333333' }}
             />
             <InputLeftElement

@@ -59,7 +59,7 @@ export const Penalty = () => {
                 name="penalty.dayAfterInstallmentDate"
                 type="number"
                 label={t['loanProductDaysafterinstallmentdate']}
-                placeholder={t['loanProductDayfromenddate']}
+                __placeholder={t['loanProductDayfromenddate']}
               />
             </GridItem>
             <GridItem>
@@ -77,7 +77,7 @@ export const Penalty = () => {
                 type="number"
                 label={t['loanProductFlatratePenalty']}
                 textAlign={'right'}
-                placeholder={'00.0'}
+                __placeholder={'00.0'}
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %
@@ -91,7 +91,7 @@ export const Penalty = () => {
                 type="number"
                 label={t['loanProductpenalty']}
                 textAlign={'right'}
-                placeholder="0.00"
+                __placeholder="0.00"
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %
@@ -105,7 +105,7 @@ export const Penalty = () => {
                 name="penalty.penaltyAmount"
                 type="number"
                 label={t['loanProductPenaltyAmount']}
-                placeholder={t['loanProductPenaltyAmount']}
+                __placeholder={t['loanProductPenaltyAmount']}
               />
             )}
           </InputGroupContainer>

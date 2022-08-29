@@ -41,13 +41,13 @@ export const BasicDetailsInstitution = (props: IProps) => {
               type="text"
               name={'institutionName'}
               label={t['kymInsNameofInstitution']}
-              placeholder={t['kymInsNameofInstitution']}
+              __placeholder={t['kymInsNameofInstitution']}
             />
           </GridItem>
           <FormSelect
             name="institutionTypeId"
             label={t['kymInsOrganizationType']}
-            placeholder={t['kymInsSelectOrganizationType']}
+            __placeholder={t['kymInsSelectOrganizationType']}
             options={getOption(organizationFields)}
             isLoading={OrganizationLoading}
           />
@@ -55,27 +55,27 @@ export const BasicDetailsInstitution = (props: IProps) => {
             type="text"
             name="natureOfBusiness"
             label={t['kymInsNatureofBusiness']}
-            placeholder={t['kymInsNatureofBusiness']}
+            __placeholder={t['kymInsNatureofBusiness']}
           />
 
           <FormInput
             type="date"
             name="registrationDate"
             label={t['kymInsRegistrationDate']}
-            placeholder="DD-MM-YYYY"
+            __placeholder="DD-MM-YYYY"
           />
           <FormInput
             type="number"
             name="vatOrPanNo"
             label={t['kymInsVATPanNo']}
-            placeholder={t['kymInsEnterVATPanNo']}
+            __placeholder={t['kymInsEnterVATPanNo']}
           />
 
           <FormInput
             type="text"
             name="noOfBranches"
             label={t['serviceCenterNoOfServiceCenter']}
-            placeholder={t['serviceCenterEnterNoOfServiceCenter']}
+            __placeholder={t['serviceCenterEnterNoOfServiceCenter']}
           />
         </FormSection>
       </form>

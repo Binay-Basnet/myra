@@ -35,14 +35,14 @@ export const TDS = () => {
           <FormSelect
             name="tdsLedgerAccount"
             label={t['accountingPurchaseAddTDSLedgerAccount']}
-            placeholder={t['accountingPurchaseAddTDSLedgerAccount']}
+            __placeholder={t['accountingPurchaseAddTDSLedgerAccount']}
             options={[]}
           />
 
           <FormSelect
             name="tdsType"
             label={t['accountingPurchaseAddTDSType']}
-            placeholder={t['accountingPurchaseAddTDSType']}
+            __placeholder={t['accountingPurchaseAddTDSType']}
             options={[]}
           />
 
@@ -51,7 +51,7 @@ export const TDS = () => {
             type="number"
             label={t['accountingPurchaseAddTDSAmount']}
             textAlign={'right'}
-            placeholder="0.00"
+            __placeholder="0.00"
           />
         </InputGroupContainer>
       )}

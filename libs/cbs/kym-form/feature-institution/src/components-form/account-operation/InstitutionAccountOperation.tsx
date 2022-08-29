@@ -66,7 +66,7 @@ export const AccountOperationInstitution = (props: IProps) => {
                   <FormTextArea
                     name="specialInstruction"
                     label={t['kymInsSpecialInstruction']}
-                    placeholder={t['kymInsEnterInstruction']}
+                    __placeholder={t['kymInsEnterInstruction']}
                     rows={4}
                   />
                 </Box>

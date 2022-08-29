@@ -150,7 +150,7 @@ export const NationalID = ({ setKymCurrentSection }: INationalIDProps) => {
               type="text"
               name="idNo"
               label={t['kymIndNationalIDNo']}
-              placeholder={t['kymIndNationalIDNo']}
+              __placeholder={t['kymIndNationalIDNo']}
             />
           </FormSection>
         </form>

@@ -45,13 +45,13 @@ export const Questions = () => {
                 type="text"
                 name="disburementOfFMV"
                 label={t['loanProductDisburementofFMV']}
-                placeholder={t['loanProductDisburementofFMV']}
+                __placeholder={t['loanProductDisburementofFMV']}
               />
               <FormInput
                 type="text"
                 name="disburementOfDMV"
                 label={t['loanProductDisburementDMV']}
-                placeholder={t['loanProductDisburementofFMV']}
+                __placeholder={t['loanProductDisburementofFMV']}
               />
             </InputGroupContainer>
           </Box>

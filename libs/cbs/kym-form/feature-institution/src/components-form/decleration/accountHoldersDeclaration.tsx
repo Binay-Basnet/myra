@@ -77,17 +77,17 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
           <FormInput
             name="accountHolderName"
             label={t['kymInsAccountHolderName']}
-            placeholder={t['kymInsEnterAccountHolderName']}
+            __placeholder={t['kymInsEnterAccountHolderName']}
           />
           <FormInput
             name="accountHolderPhone"
             label={t['kymInsPhone']}
-            placeholder={t['kymInsEnterPhoneNumber']}
+            __placeholder={t['kymInsEnterPhoneNumber']}
           />
           <FormInput
             name="accountHolderEmail"
             label={t['kymInsEmail']}
-            placeholder={t['kymInsEnterEmailAddress']}
+            __placeholder={t['kymInsEnterEmailAddress']}
           />
         </FormSection>
 
@@ -97,14 +97,14 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
             id="accountHolderAddress"
             name={`accountHolderAddress.provinceId`}
             label={t['kymInsState']}
-            placeholder={t['kymInsSelectState']}
+            __placeholder={t['kymInsSelectState']}
             options={province}
           />
           <FormSelect
             id="accountHolderAddress"
             name="accountHolderAddress.districtId"
             label={t['kymInsDistrict']}
-            placeholder={t['kymInsSelectDistrict']}
+            __placeholder={t['kymInsSelectDistrict']}
             options={districtList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -114,7 +114,7 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
             id="accountHolderAddress"
             name="accountHolderAddress.localGovernmentId"
             label={t['kymInsVDCMunicipality']}
-            placeholder={t['kymInsSelectVDCMunicipality']}
+            __placeholder={t['kymInsSelectVDCMunicipality']}
             options={localityList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -124,7 +124,7 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
             id="accountHolderAddress"
             name="accountHolderAddress.wardNo"
             label={t['kymInsWardNo']}
-            placeholder={t['kymInsEnterWardNo']}
+            __placeholder={t['kymInsEnterWardNo']}
             options={wardList?.map((d) => ({
               label: d,
               value: d,
@@ -135,14 +135,14 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
             type="text"
             name="accountHolderAddress.locality"
             label={t['kymInsLocality']}
-            placeholder={t['kymInsEnterLocality']}
+            __placeholder={t['kymInsEnterLocality']}
           />
           <FormInput
             id="accountHolderAddress"
             type="text"
             name="accountHolderAddress.houseNo"
             label={t['kymInsHouseNo']}
-            placeholder={t['kymInsEnterHouseNo']}
+            __placeholder={t['kymInsEnterHouseNo']}
           />
           <GridItem colSpan={2}>
             <FormMap

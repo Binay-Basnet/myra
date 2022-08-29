@@ -70,7 +70,7 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
             type="number"
             name="registeredNumber"
             label={t['kymInsRegisteredNumber']}
-            placeholder={t['kymInsEnterRegisteredNumber']}
+            __placeholder={t['kymInsEnterRegisteredNumber']}
           />
           <GridItem colSpan={2}>
             <FormInput
@@ -78,21 +78,21 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
               type="text"
               name="issuingOffice"
               label={t['kymInsIssuingOffice']}
-              placeholder={t['kymInsEnterIssuingOffice']}
+              __placeholder={t['kymInsEnterIssuingOffice']}
             />
           </GridItem>
           <FormSelect
             name="registeredAddress.provinceId"
             id="registeredDetailsInstitution"
             label={t['kymIndProvince']}
-            placeholder={t['kymIndSelectProvince']}
+            __placeholder={t['kymIndSelectProvince']}
             options={province}
           />
           <FormSelect
             name="registeredAddress.districtId"
             id="registeredDetailsInstitution"
             label={t['kymIndDistrict']}
-            placeholder={t['kymIndSelectDistrict']}
+            __placeholder={t['kymIndSelectDistrict']}
             options={districtList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -102,7 +102,7 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
             id="registeredDetailsInstitution"
             name="registeredAddress.localGovernmentId"
             label={t['kymIndLocalGovernment']}
-            placeholder={t['kymIndSelectLocalGovernment']}
+            __placeholder={t['kymIndSelectLocalGovernment']}
             options={localityList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -112,7 +112,7 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
             id="registeredDetailsInstitution"
             name="registeredAddress.wardNo"
             label={t['kymIndWardNo']}
-            placeholder={t['kymIndEnterWardNo']}
+            __placeholder={t['kymIndEnterWardNo']}
             options={wardList?.map((d) => ({
               label: d,
               value: d,
@@ -123,14 +123,14 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
             type="text"
             name="registeredAddress.locality"
             label={t['kymIndLocality']}
-            placeholder={t['kymIndEnterLocality']}
+            __placeholder={t['kymIndEnterLocality']}
           />
           <FormInput
             id="registeredDetailsInstitution"
             type="text"
             name="registeredAddress.houseNo"
             label={t['kymIndHouseNo']}
-            placeholder={t['kymIndEnterHouseNo']}
+            __placeholder={t['kymIndEnterHouseNo']}
           />
           <GridItem colSpan={2}>
             <FormMap

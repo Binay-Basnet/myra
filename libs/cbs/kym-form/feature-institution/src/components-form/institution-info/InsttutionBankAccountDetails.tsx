@@ -41,21 +41,21 @@ export const BankAccountDetailsInstitution = (props: IProps) => {
           <FormSelect
             name="bank"
             label={t['kymInsNameofBank']}
-            placeholder={t['kymInsSelectBank']}
+            __placeholder={t['kymInsSelectBank']}
             options={Options}
           />
           <FormInput
             type="text"
             name="accountNumber"
             label={t['kymInsAccountNumber']}
-            placeholder={t['kymInsEnterAccountNumber']}
+            __placeholder={t['kymInsEnterAccountNumber']}
           />
 
           <FormInput
             type="text"
             name="accountName"
             label={t['kymInsAccountName']}
-            placeholder={t['kymInsEnterAccountName']}
+            __placeholder={t['kymInsEnterAccountName']}
           />
         </FormSection>
       </form>

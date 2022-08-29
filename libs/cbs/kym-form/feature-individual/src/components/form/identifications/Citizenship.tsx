@@ -154,21 +154,21 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
               type="text"
               name="idNo"
               label={t['kynIndCitizenshipNo']}
-              placeholder={t['kynIndCitizenshipNo']}
+              __placeholder={t['kynIndCitizenshipNo']}
             />
 
             <FormInput
               type="text"
               name="place"
               label={t['kynIndCitizenshipIssuePlace']}
-              placeholder={t['kynIndCitizenshipIssuePlace']}
+              __placeholder={t['kynIndCitizenshipIssuePlace']}
             />
 
             <FormInput
               type="date"
               name="date"
               label={t['kynIndCitizenshipIssueDate']}
-              placeholder={t['kynIndCitizenshipIssueDate']}
+              __placeholder={t['kynIndCitizenshipIssueDate']}
             />
           </FormSection>
         </form>

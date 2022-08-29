@@ -88,14 +88,14 @@ export const KYMFinancialTransactionDetails = ({
             name="initialShare"
             textAlign="right"
             label={t['kymIndFinancialShare']}
-            placeholder="0.00"
+            __placeholder="0.00"
           />
           <FormInput
             type="number"
             name="initialSaving"
             label={t['kymIndFinancialSavings']}
             textAlign="right"
-            placeholder="0.00"
+            __placeholder="0.00"
           />
 
           <FormInput
@@ -103,7 +103,7 @@ export const KYMFinancialTransactionDetails = ({
             name="initialLoan"
             label={t['kymIndLoan']}
             textAlign="right"
-            placeholder="0.00"
+            __placeholder="0.00"
           />
 
           <FormInput
@@ -111,7 +111,7 @@ export const KYMFinancialTransactionDetails = ({
             name="otherFinancialAmount"
             label={t['kymIndFinancialOther']}
             textAlign="right"
-            placeholder="0.00"
+            __placeholder="0.00"
           />
         </FormSection>
         {/* {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(
@@ -128,7 +128,7 @@ export const KYMFinancialTransactionDetails = ({
                       name={`initialTransactionDetails.options.${index}.value`}
                       textAlign="right"
                       label={option?.name.local}
-                      placeholder="0.00"
+                      __placeholder="0.00"
                     />
                   );
                 }

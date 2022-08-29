@@ -58,14 +58,14 @@ const VariantProduct = ({ index, removeVariantProduct }: IVariantProduct) => {
           bg="white"
           name={`variantProduct.${index}.variantName`}
           label={t['invItemsVariantnName']}
-          placeholder={t['invItemSizes']}
+          __placeholder={t['invItemSizes']}
         />
         <FormInput
           type="text"
           bg="white"
           name={`variantProduct.${index}.options`}
           label={t['invItemsOptions']}
-          placeholder={t['invItemsSml']}
+          __placeholder={t['invItemsSml']}
         />
       </Grid>
     </DynamicBoxContainer>
@@ -138,7 +138,7 @@ export const InventoryItemForm = () => {
               },
             ]}
             label={t['invItemName']}
-            placeholder={t['invItemSelectItem']}
+            __placeholder={t['invItemSelectItem']}
           />
         </GridItem>
         <GridItem>
@@ -146,14 +146,14 @@ export const InventoryItemForm = () => {
             type="text"
             name="itemCode"
             label={t['invItemCode']}
-            placeholder={t['invItemCode']}
+            __placeholder={t['invItemCode']}
           />
         </GridItem>
         <GridItem>
           <FormSelect
             name="group"
             label={t['invItemGroup']}
-            placeholder={t['invItemCategory']}
+            __placeholder={t['invItemCategory']}
             options={[
               {
                 label: 'Recurring Saving',
@@ -179,7 +179,7 @@ export const InventoryItemForm = () => {
             type="text"
             name="tax"
             label={t['invItemTax']}
-            placeholder={t['invItemTaxType']}
+            __placeholder={t['invItemTaxType']}
           />
         </GridItem>
         <GridItem>
@@ -187,7 +187,7 @@ export const InventoryItemForm = () => {
             type="text"
             name="primaryUnit"
             label={t['invItemPrimaryUnit']}
-            placeholder={t['invItemPrimaryUnit']}
+            __placeholder={t['invItemPrimaryUnit']}
           />
         </GridItem>
       </Grid>
@@ -216,7 +216,7 @@ export const InventoryItemForm = () => {
                 type="text"
                 name="purchasePrice"
                 label={t['invItemPurchasePrice']}
-                placeholder={t['invItemPurchasePrice']}
+                __placeholder={t['invItemPurchasePrice']}
               />
             </GridItem>
             <GridItem>
@@ -224,7 +224,7 @@ export const InventoryItemForm = () => {
                 type="text"
                 name="profit"
                 label={t['invItemProfit']}
-                placeholder={t['invItemProfit']}
+                __placeholder={t['invItemProfit']}
               />
             </GridItem>
             <GridItem>
@@ -232,7 +232,7 @@ export const InventoryItemForm = () => {
                 type="text"
                 name="sellingPrice"
                 label={t['invItemSellingPrice']}
-                placeholder={t['invItemSellingPrice']}
+                __placeholder={t['invItemSellingPrice']}
               />
             </GridItem>
           </Grid>
@@ -339,7 +339,7 @@ export const InventoryItemForm = () => {
                 <FormSelect
                   name="salesLedger"
                   label={t['invItemSalesLedger']}
-                  placeholder={t['invItemSelectAccount']}
+                  __placeholder={t['invItemSelectAccount']}
                   options={[
                     {
                       label: '1',
@@ -360,7 +360,7 @@ export const InventoryItemForm = () => {
                 <FormSelect
                   name="purchaseLedger"
                   label={t['invItemPurchaseLedger']}
-                  placeholder={t['invItemSelectAccount']}
+                  __placeholder={t['invItemSelectAccount']}
                   options={[
                     {
                       label: '1',
@@ -381,7 +381,7 @@ export const InventoryItemForm = () => {
                 <FormSelect
                   name="salesReturnLedger"
                   label={t['invItemSalesReturnLedger']}
-                  placeholder={t['invItemSelectAccount']}
+                  __placeholder={t['invItemSelectAccount']}
                   options={[
                     {
                       label: '1',
@@ -402,7 +402,7 @@ export const InventoryItemForm = () => {
                 <FormSelect
                   name="purchaseReturnLedger"
                   label={t['invItemPurchaseReturnLedger']}
-                  placeholder={t['invItemSelectAccount']}
+                  __placeholder={t['invItemSelectAccount']}
                   options={[
                     {
                       label: '1',
@@ -423,7 +423,7 @@ export const InventoryItemForm = () => {
                 <FormSelect
                   name="valuationMethod"
                   label={t['invItemValuationMethod']}
-                  placeholder={t['invItemSelectMethod']}
+                  __placeholder={t['invItemSelectMethod']}
                   options={[
                     {
                       label: '1',
@@ -445,7 +445,7 @@ export const InventoryItemForm = () => {
                   type="text"
                   name="minimumStockQuantity"
                   label={t['invItemMinimumStockQuantity']}
-                  placeholder={t['invItemMinimumStock']}
+                  __placeholder={t['invItemMinimumStock']}
                 />
               </GridItem>
             </Grid>

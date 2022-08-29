@@ -45,7 +45,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
             id="institutionTransactionProfile"
             name="natureOfTransaction"
             label={t['kymInsNatureofTransaction']}
-            placeholder={t['kymInsEnterNatureofTransaction']}
+            __placeholder={t['kymInsEnterNatureofTransaction']}
           />
           <FormInput
             id="institutionTransactionProfile"
@@ -53,7 +53,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
             name="annualTurnover"
             label={t['kymInsAnnualTurnover']}
             textAlign={'right'}
-            placeholder="0.00"
+            __placeholder="0.00"
           />
           <FormInput
             id="institutionTransactionProfile"
@@ -61,7 +61,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
             name="initialDepositAmount"
             label={t['kymInsInitialDepositAmount']}
             textAlign={'right'}
-            placeholder="0.00"
+            __placeholder="0.00"
           />
           <GridItem colSpan={3}>
             <Grid templateColumns="repeat(2, 1fr)">

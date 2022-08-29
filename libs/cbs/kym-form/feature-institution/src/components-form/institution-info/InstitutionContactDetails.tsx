@@ -32,42 +32,42 @@ export const ContactDetailsInstitution = (props: IProps) => {
           <FormPhoneNumber
             name={'phone'}
             label={t['kymInsPhone']}
-            placeholder={t['kymInsEnterPhoneNumber']}
+            __placeholder={t['kymInsEnterPhoneNumber']}
           />
           <FormInput
             type="number"
             name="fax"
             label={t['kymInsFax']}
-            placeholder={t['kymInsEnterFax']}
+            __placeholder={t['kymInsEnterFax']}
           />
           <FormEmailInput
             name="email"
             label={t['kymInsEmail']}
-            placeholder={t['kymInsEnterEmailAddress']}
+            __placeholder={t['kymInsEnterEmailAddress']}
           />
           <FormInput
             type="text"
             name="website"
             label={t['kymInsWebsiteLinkany']}
-            placeholder={t['kymInsEnterWebsiteURL']}
+            __placeholder={t['kymInsEnterWebsiteURL']}
           />
           <FormInput
             type="number"
             name="postBoxNo"
             label={t['kymInsPostBoxNo']}
-            placeholder={t['kymInsEnterPostBoxNo']}
+            __placeholder={t['kymInsEnterPostBoxNo']}
           />{' '}
           <FormInput
             type="number"
             name="numberOfEmployee"
             label={t['kymInsNumberofEmployees']}
-            placeholder={t['kymInsEnterNumberofEmployees']}
+            __placeholder={t['kymInsEnterNumberofEmployees']}
           />
           <FormInput
             type="date"
             name="dateOfLastAGM"
             label={t['kymInsAGMDetailsDate']}
-            placeholder="DD-MM-YYYY"
+            __placeholder="DD-MM-YYYY"
           />
         </FormSection>
       </form>

@@ -42,7 +42,7 @@ export const Interest = () => {
           type="number"
           label={t['loanProductMinimumRate']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -54,7 +54,7 @@ export const Interest = () => {
           type="number"
           label={t['loanProductMaximumRate']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -66,7 +66,7 @@ export const Interest = () => {
           type="number"
           label={t['loanProductDefaultRate']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -78,7 +78,7 @@ export const Interest = () => {
           type="number"
           label={t['loanProductCEOAuthority']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -90,7 +90,7 @@ export const Interest = () => {
           type="number"
           label={t['loanProductBoardAuthority']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -101,7 +101,7 @@ export const Interest = () => {
         <FormSelect
           name="interest.interestMethod"
           label={t['loanProductInterestMethod']}
-          placeholder={t['loanProductSelectInterestMethod']}
+          __placeholder={t['loanProductSelectInterestMethod']}
           options={interestMethodList}
         />
       </InputGroupContainer>

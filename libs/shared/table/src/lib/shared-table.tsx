@@ -59,7 +59,7 @@ export const Table = <T extends Record<string, unknown>>({
       </Collapse>
       {!isStatic && (
         <TableSearch
-          placeholder={searchPlaceholder}
+          __placeholder={searchPlaceholder}
           pagination={pagination}
           size={tableSize}
           setSize={setTableSize}

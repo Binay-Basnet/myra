@@ -362,9 +362,9 @@ const en: Record<string, string> = {
   settingsBranchEstablishedDate: 'Established Date',
   settingsBranchAddressLabel: 'Branch Address',
   settingsBranchPhoneNumber: 'Phone Number',
-  settingsBranchPhoneNumberPlaceholder: 'Enter Phone Number',
+  settingsBranchPhoneNumber__placeholder: 'Enter Phone Number',
   settingsBranchEmail: 'Email',
-  settingsBranchEmailPlaceholder: 'Enter Email',
+  settingsBranchEmail__placeholder: 'Enter Email',
   settingsBranchABBSTransaction: 'ABBS Transaction',
   settingsBranchStatus: 'Status',
   settingsBranchStatusLabel: 'Branch Status',
@@ -377,7 +377,7 @@ const en: Record<string, string> = {
   settingsBranchCategoriesService: 'Service Center',
   settingsBranchCategoriesContact: 'Contact Office',
   settingsBranchSave: 'Save Account',
-  settingsBranchBranchCodePlaceholder: 'Enter Branch Code',
+  settingsBranchBranchCode__placeholder: 'Enter Branch Code',
 
   // SETTINGS PAGE
 
@@ -1038,11 +1038,11 @@ const en: Record<string, string> = {
   kymCoopUnionTrainingAttended: 'Training Attended',
 
   kymCoopUnionEmailAddress: 'Email Address',
-  kymCoopUnionEmailAddressPlaceholder: 'Enter Email Address',
+  kymCoopUnionEmailAddress__placeholder: 'Enter Email Address',
   kymCoopUnionContactNo: 'Contact No',
-  kymCoopUnionContactNoPlaceholder: 'Enter Contact No',
+  kymCoopUnionContactNo__placeholder: 'Enter Contact No',
   kymCoopUnionPANNo: 'PAN No',
-  kymCoopUnionPANNoPlaceholder: 'Enter PAN No',
+  kymCoopUnionPANNo__placeholder: 'Enter PAN No',
 
   // kym individual
   kymInd1PersonalInformation: '1. Personal Information',
@@ -1332,9 +1332,9 @@ const en: Record<string, string> = {
   kymInsReset: 'Reset',
   kymInsDelete: 'Delete',
   kymInsContactNo: 'Contact No',
-  kymInsContactNoPlaceholder: 'Enter Contact No',
+  kymInsContactNo__placeholder: 'Enter Contact No',
   kymInsPanNo: 'PAN No',
-  kymInsPanNoPlaceholder: 'Enter PAN No',
+  kymInsPanNo__placeholder: 'Enter PAN No',
 
   kymInsNatureofTransaction: 'Nature of Transaction',
   kymInsEnterNatureofTransaction: 'Enter Nature of Transaction',
@@ -1463,7 +1463,7 @@ const en: Record<string, string> = {
 
   shareBonusTaxRate: 'Tax Rate',
   shareBonusAddRateOfTax: 'Add Rate of Tax (Temporal) for Bonus Share (in %)',
-  shareBonusRateTaxRatePlaceholder: '22.23 %',
+  shareBonusRateTaxRate__placeholder: '22.23 %',
 
   shareAccountMapping: 'Account Mapping',
   shareAccountBonusShareDebited: 'Where is the bonus share debited',
@@ -3088,9 +3088,9 @@ const en: Record<string, string> = {
   branchEnterEstablishedDate: 'Enter Established Date',
   branchEnterManagerName: 'Enter Branch Manager Name',
   settingsBranchRecievableAccount: 'Recievable Ledger',
-  settingsBranchRecievableAccountPlaceholder: 'Select Recievable Ledger',
+  settingsBranchRecievableAccount__placeholder: 'Select Recievable Ledger',
   settingsBranchPayableAccount: 'Payable Ledger',
-  settingsBranchPayableAccountPlaceholder: 'Select Payable Ledger',
+  settingsBranchPayableAccount__placeholder: 'Select Payable Ledger',
   settinsBranchPLTransfer: 'PL Ledger',
   settingsBranchPLTransderLabel: 'Select PL Transfer Ledger',
   settinsBranchTDSTransfer: 'TDS / Tax Ledger',

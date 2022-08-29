@@ -86,18 +86,18 @@ export const MemberKYMContactDetails = ({
           <FormPhoneNumber
             name="mobileNumber"
             label={t['kymIndMobileNo']}
-            placeholder={t['kymIndEnterMobileNo']}
+            __placeholder={t['kymIndEnterMobileNo']}
           />
           <FormPhoneNumber
             name="phoneNumber"
             label={t['kymIndPhoneNo']}
-            placeholder={t['kymIndEnterPhoneNo']}
+            __placeholder={t['kymIndEnterPhoneNo']}
           />
           <FormEmailInput
             type="text"
             name="email"
             label={t['kymIndEmail']}
-            placeholder={t['kymIndEnterEmail']}
+            __placeholder={t['kymIndEnterEmail']}
           />
         </FormSection>
       </form>

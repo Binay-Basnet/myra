@@ -74,7 +74,7 @@ export const SendMoneyForm = ({ setPaymentStatus }: SendMoneyProps) => {
                 <FormSelect
                   name="source_account"
                   label="Source Account"
-                  placeholder="Select Source Account"
+                  __placeholder="Select Source Account"
                   options={accounts}
                 />
               </GridItem>
@@ -82,21 +82,21 @@ export const SendMoneyForm = ({ setPaymentStatus }: SendMoneyProps) => {
               <FormInput
                 name="recipient name"
                 label="Recipient Name"
-                placeholder="Enter recipient full name"
+                __placeholder="Enter recipient full name"
                 rules={{ required: 'Name is Required.' }}
               />
 
               <FormInput
                 name="recipient_mobile_number"
                 label="Recipient Mobile Number"
-                placeholder="Enter Recipient Mobile Number"
+                __placeholder="Enter Recipient Mobile Number"
                 rules={{ required: 'Mobile Number is Required.' }}
               />
 
               <FormInput
                 name="recipient_account_number"
                 label="Recipient Account Number"
-                placeholder="Enter Account Number"
+                __placeholder="Enter Account Number"
                 rules={{ required: 'Account Number is Required.' }}
               />
 
@@ -104,20 +104,20 @@ export const SendMoneyForm = ({ setPaymentStatus }: SendMoneyProps) => {
                 name="amount"
                 type="number"
                 label="Amount"
-                placeholder="0.00"
+                __placeholder="0.00"
                 rules={{ required: 'Transaction Amount is Required.' }}
               />
               <FormSelect
                 name="purpose"
                 label="Purpose"
-                placeholder="Select Purpose of transaction"
+                __placeholder="Select Purpose of transaction"
                 options={purposes}
                 rules={{ required: 'Purpose is Required.' }}
               />
               <FormInput
                 name="remarks"
                 label="Remarks"
-                placeholder="Enter Remarks"
+                __placeholder="Enter Remarks"
                 rules={{ required: 'Remarks is Required.' }}
               />
             </Box>

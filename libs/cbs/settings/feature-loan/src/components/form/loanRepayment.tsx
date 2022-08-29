@@ -78,7 +78,7 @@ export const LoanRepayment = () => {
               name="minGraceDurationUnitNumber"
               textAlign={'right'}
               label={t['loanProductNumber']}
-              placeholder="0"
+              __placeholder="0"
               rightAddonText={
                 rightElementMin && rightElementMin === Frequency.Daily
                   ? t['days']
@@ -120,7 +120,7 @@ export const LoanRepayment = () => {
               name="maxGraceDurationUnitNumber"
               textAlign={'right'}
               label={t['loanProductNumber']}
-              placeholder="0"
+              __placeholder="0"
               rightAddonText={
                 rightElementMax && rightElementMax === Frequency.Daily
                   ? t['days']

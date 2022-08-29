@@ -12,13 +12,14 @@ import { TextFields } from '@coop/shared/ui';
 export interface EmailInputProps extends InputProps {
   label?: string;
   labelColor?: string;
+  __placeholder?: string;
   placeholder?: string;
   id?: string;
 }
 
 export const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
   (props, ref) => {
-    const { label, labelColor, placeholder, id, ...rest } = props;
+    const { label, labelColor, placeholder, id } = props;
     return (
       <>
         <TextFields variant="formLabel" color={labelColor ?? 'gray.700'}>

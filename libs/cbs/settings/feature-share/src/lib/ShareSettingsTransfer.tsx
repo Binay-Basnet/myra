@@ -84,7 +84,7 @@ export const ShareSettingsTransfer = () => {
             <Box width="33%">
               <FormSelect
                 name="accountForShareFund"
-                placeholder={t['shareFundAccountName']}
+                __placeholder={t['shareFundAccountName']}
               />
             </Box>
           </ShareSettingsCard>
@@ -96,7 +96,7 @@ export const ShareSettingsTransfer = () => {
             <Box width="33%">
               <FormSelect
                 name="mappedShareLedger"
-                placeholder={t['shareTransferLedgerName']}
+                __placeholder={t['shareTransferLedgerName']}
               />
             </Box>
           </ShareSettingsCard>

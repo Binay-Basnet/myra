@@ -240,7 +240,7 @@ export const MemberKYMIdentificationDetails = ({
                               id="identificationFields"
                               name={`identification.${fieldIndex}.options.${optionIndex}.value`}
                               label={String(option?.name?.local)}
-                              placeholder={String(option?.name?.local)}
+                              __placeholder={String(option?.name?.local)}
                             />
                           );
                         })}

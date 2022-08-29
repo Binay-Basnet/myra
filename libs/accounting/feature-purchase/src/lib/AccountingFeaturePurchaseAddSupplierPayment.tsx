@@ -115,14 +115,14 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                     <FormSelect
                       name="paidTo"
                       label={t['accountingSupplierPaymentAddPaidTo']}
-                      placeholder={t['accountingSupplierPaymentAddPaidTo']}
+                      __placeholder={t['accountingSupplierPaymentAddPaidTo']}
                       options={[]}
                     />
 
                     <FormSelect
                       name="paidFrom"
                       label={t['accountingSupplierPaymentAddPaidFrom']}
-                      placeholder={t['accountingSupplierPaymentAddPaidFrom']}
+                      __placeholder={t['accountingSupplierPaymentAddPaidFrom']}
                       options={[]}
                     />
 
@@ -137,7 +137,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                       type="number"
                       label={t['accountingSupplierPaymentAddAmount']}
                       textAlign={'right'}
-                      placeholder="0.00"
+                      __placeholder="0.00"
                     />
 
                     <FormInput
@@ -166,7 +166,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                       label={
                         t['accountingSupplierPaymentAddPaymentReferenceNo']
                       }
-                      placeholder={
+                      __placeholder={
                         t['accountingSupplierPaymentAddPaymentReferenceNo']
                       }
                     />
@@ -187,7 +187,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                       <FormSelect
                         name="tdsAccount"
                         label={t['accountingSupplierPaymentAddTDSAccount']}
-                        placeholder={
+                        __placeholder={
                           t['accountingSupplierPaymentAddTDSAccount']
                         }
                         options={[]}
@@ -196,7 +196,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                       <FormSelect
                         name="tdsType"
                         label={t['accountingSupplierPaymentAddTDSType']}
-                        placeholder={t['accountingSupplierPaymentAddTDSType']}
+                        __placeholder={t['accountingSupplierPaymentAddTDSType']}
                         options={[]}
                       />
 
@@ -205,7 +205,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                         type="number"
                         label={t['accountingSupplierPaymentAddTDSAmount']}
                         textAlign={'right'}
-                        placeholder="0.00"
+                        __placeholder="0.00"
                       />
                     </InputGroupContainer>
                   )}
@@ -217,7 +217,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                   <FormTextArea
                     name="note"
                     label={t['invFormNotes']}
-                    placeholder={t['invFormNote']}
+                    __placeholder={t['invFormNote']}
                     rows={5}
                   />
                 </BoxContainer>

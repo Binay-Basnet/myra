@@ -13,20 +13,20 @@ export const ContactDetailsOrganization = () => {
           <FormPhoneNumber
             name={'phoneNumber'}
             label={t['settingsOrgContactPhoneNo']}
-            placeholder={t['settingsOrgContactPhoneNo']}
+            __placeholder={t['settingsOrgContactPhoneNo']}
           />
         </GridItem>
         <GridItem>
           <FormEmailInput
             label={t['settingsOrgContactEmailAddress']}
-            placeholder={t['settingsOrgContactEmailAddress']}
+            __placeholder={t['settingsOrgContactEmailAddress']}
             name={'email'}
           />
         </GridItem>
         <GridItem>
           <FormInput
             label={t['settingsOrgContactWebsite']}
-            placeholder={t['settingsOrgContactWebsiteAddress']}
+            __placeholder={t['settingsOrgContactWebsiteAddress']}
             name={'website'}
           />
         </GridItem>

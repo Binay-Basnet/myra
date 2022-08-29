@@ -140,7 +140,7 @@ export const ReportHeader = ({ paths, filters }: PathBarProps) => {
       >
         <Box pb="s12" borderBottom="1px" borderBottomColor="border.layout">
           <Input
-            placeholder="Untitled Report"
+            __placeholder="Untitled Report"
             label="Give your untitled report a name"
             {...register('name')}
           />

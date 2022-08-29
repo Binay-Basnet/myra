@@ -36,20 +36,20 @@ export const KymCoopContactDetails = (props: IProps) => {
             type="text"
             name="email"
             label={t['kymCoopOfficialEmail']}
-            placeholder={t['kymCoopEnterEmailAddress']}
+            __placeholder={t['kymCoopEnterEmailAddress']}
           />
           <FormInput
             type="text"
             name="website"
             label={t['kymCoopWebsiteLink']}
-            placeholder={t['kymCoopEnterWebsiteURL']}
+            __placeholder={t['kymCoopEnterWebsiteURL']}
           />
 
           <FormInput
             type="text"
             name="contactNumber"
             label={t['kymCoopPhoneno']}
-            placeholder={t['kymCoopEnterPhoneNumber']}
+            __placeholder={t['kymCoopEnterPhoneNumber']}
           />
         </FormSection>
       </form>

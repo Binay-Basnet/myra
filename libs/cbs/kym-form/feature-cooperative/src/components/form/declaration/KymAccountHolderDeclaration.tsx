@@ -40,7 +40,7 @@ export const KymAccountHolderDeclaration = (props: IProps) => {
               type="text"
               name="accountHoldersName"
               label={t['kymCoopAccountHolderName']}
-              placeholder={t['kymCoopEnterAccountHolderName']}
+              __placeholder={t['kymCoopEnterAccountHolderName']}
             />
           </FormSection>
         </form>

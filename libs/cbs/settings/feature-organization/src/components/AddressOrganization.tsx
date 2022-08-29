@@ -57,13 +57,13 @@ export const AddressOrganization = () => {
         <FormSelect
           name="provinceId"
           label={t['kymIndProvince']}
-          placeholder={t['kymIndSelectProvince']}
+          __placeholder={t['kymIndSelectProvince']}
           options={province}
         />
         <FormSelect
           name="districtId"
           label={t['kymIndDistrict']}
-          placeholder={t['kymIndSelectDistrict']}
+          __placeholder={t['kymIndSelectDistrict']}
           options={districtList.map((d) => ({
             label: d.name,
             value: d.id,
@@ -72,7 +72,7 @@ export const AddressOrganization = () => {
         <FormSelect
           name="localGovernmentId"
           label={t['kymIndLocalGovernment']}
-          placeholder={t['kymIndSelectLocalGovernment']}
+          __placeholder={t['kymIndSelectLocalGovernment']}
           options={localityList.map((d) => ({
             label: d.name,
             value: d.id,
@@ -81,7 +81,7 @@ export const AddressOrganization = () => {
         <FormSelect
           name="wardNo"
           label={t['kymIndWardNo']}
-          placeholder={t['kymIndEnterWardNo']}
+          __placeholder={t['kymIndEnterWardNo']}
           options={wardList.map((d) => ({
             label: d,
             value: d,
@@ -91,13 +91,13 @@ export const AddressOrganization = () => {
           type="text"
           name="locality"
           label={t['kymIndLocality']}
-          placeholder={t['kymIndEnterLocality']}
+          __placeholder={t['kymIndEnterLocality']}
         />
         {/* <FormInput
           type="text"
           name="permanentHouseNo"
           label={t['kymIndHouseNo']}
-          placeholder={t['kymIndEnterHouseNo']}
+          __placeholder={t['kymIndEnterHouseNo']}
         /> */}
       </InputGroupContainer>
 

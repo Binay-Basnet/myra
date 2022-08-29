@@ -71,13 +71,13 @@ export const OperatorOfficeAddress = (props: IProps) => {
           <FormSelect
             name={`operatingOfficeAddress.provinceId`}
             label={t['kymIndProvince']}
-            placeholder={t['kymIndSelectProvince']}
+            __placeholder={t['kymIndSelectProvince']}
             options={province}
           />
           <FormSelect
             name={`operatingOfficeAddress.districtId`}
             label={t['kymIndDistrict']}
-            placeholder={t['kymIndSelectDistrict']}
+            __placeholder={t['kymIndSelectDistrict']}
             options={districtList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -86,7 +86,7 @@ export const OperatorOfficeAddress = (props: IProps) => {
           <FormSelect
             name="operatingOfficeAddress.localGovernmentId"
             label={t['kymIndLocalGovernment']}
-            placeholder={t['kymIndSelectLocalGovernment']}
+            __placeholder={t['kymIndSelectLocalGovernment']}
             options={localityList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -95,7 +95,7 @@ export const OperatorOfficeAddress = (props: IProps) => {
           <FormSelect
             name="operatingOfficeAddress.wardNo"
             label={t['kymIndWardNo']}
-            placeholder={t['kymIndEnterWardNo']}
+            __placeholder={t['kymIndEnterWardNo']}
             options={wardList?.map((d) => ({
               label: d,
               value: d,
@@ -105,13 +105,13 @@ export const OperatorOfficeAddress = (props: IProps) => {
             type="text"
             name="operatingOfficeAddress.locality"
             label={t['kymIndLocality']}
-            placeholder={t['kymIndEnterLocality']}
+            __placeholder={t['kymIndEnterLocality']}
           />
           <FormInput
             type="text"
             name="operatingOfficeAddress.houseNo"
             label={t['kymIndHouseNo']}
-            placeholder={t['kymIndEnterHouseNo']}
+            __placeholder={t['kymIndEnterHouseNo']}
           />
           <GridItem colSpan={2}>
             <FormMap name="operatingOfficeAddress.coordinates" />

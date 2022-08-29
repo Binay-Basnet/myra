@@ -73,14 +73,14 @@ export const BranchOfficeAddress = (props: IProps) => {
             id="branchOfficeAddress"
             name={`branchOfficeAddress.provinceId`}
             label={t['kymIndProvince']}
-            placeholder={t['kymIndSelectProvince']}
+            __placeholder={t['kymIndSelectProvince']}
             options={province}
           />
           <FormSelect
             id="branchOfficeAddress"
             name={`branchOfficeAddress.districtId`}
             label={t['kymIndDistrict']}
-            placeholder={t['kymIndSelectDistrict']}
+            __placeholder={t['kymIndSelectDistrict']}
             options={districtList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -90,7 +90,7 @@ export const BranchOfficeAddress = (props: IProps) => {
             id="branchOfficeAddress"
             name="branchOfficeAddress.localGovernmentId"
             label={t['kymIndLocalGovernment']}
-            placeholder={t['kymIndSelectLocalGovernment']}
+            __placeholder={t['kymIndSelectLocalGovernment']}
             options={localityList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -104,21 +104,21 @@ export const BranchOfficeAddress = (props: IProps) => {
               label: d,
               value: d,
             }))}
-            placeholder={t['kymIndEnterWardNo']}
+            __placeholder={t['kymIndEnterWardNo']}
           />
           <FormInput
             id="branchOfficeAddress"
             type="text"
             name="branchOfficeAddress.locality"
             label={t['kymIndLocality']}
-            placeholder={t['kymIndEnterLocality']}
+            __placeholder={t['kymIndEnterLocality']}
           />
           <FormInput
             id="branchOfficeAddress"
             type="text"
             name="branchOfficeAddress.houseNo"
             label={t['kymIndHouseNo']}
-            placeholder={t['kymIndEnterHouseNo']}
+            __placeholder={t['kymIndEnterHouseNo']}
           />
           <GridItem colSpan={2}>
             <FormMap

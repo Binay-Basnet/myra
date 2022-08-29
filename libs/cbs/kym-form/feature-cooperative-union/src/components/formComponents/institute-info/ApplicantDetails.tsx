@@ -121,7 +121,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
               type="text"
               name="applicantName"
               label={t['kymCoopUnionName']}
-              placeholder={t['kymCoopUnionEnterName']}
+              __placeholder={t['kymCoopUnionEnterName']}
               errorText={
                 sectionErrors?.['applicantName'] &&
                 sectionErrors['applicantName'][0]
@@ -131,7 +131,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
               type="text"
               name="applicantDesignationEn"
               label={t['kymCoopUnionDesignation']}
-              placeholder={t['kymCoopUnionEnterDesignation']}
+              __placeholder={t['kymCoopUnionEnterDesignation']}
               errorText={
                 sectionErrors?.['applicantDesignationEn'] &&
                 sectionErrors['applicantDesignationEn'][0]
@@ -142,7 +142,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
               type="text"
               name="applicantEmail"
               label={t['kymCoopUnionEmailAddress']}
-              placeholder={t['kymCoopUnionEmailAddressPlaceholder']}
+              __placeholder={t['kymCoopUnionEmailAddress__placeholder']}
               errorText={
                 sectionErrors?.['applicantEmail'] &&
                 sectionErrors['applicantEmail'][0]
@@ -152,7 +152,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
               type="text"
               name="applicantContactNo"
               label={t['kymCoopUnionContactNo']}
-              placeholder={t['kymCoopUnionContactNoPlaceholder']}
+              __placeholder={t['kymCoopUnionContactNo__placeholder']}
               errorText={
                 sectionErrors?.['applicantContactNo'] &&
                 sectionErrors['applicantContactNo'][0]
@@ -162,7 +162,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
               type="text"
               name="applicantPanNo"
               label={t['kymCoopUnionPANNo']}
-              placeholder={t['kymCoopUnionPANNoPlaceholder']}
+              __placeholder={t['kymCoopUnionPANNo__placeholder']}
               errorText={
                 sectionErrors?.['applicantPanNo'] &&
                 sectionErrors['applicantPanNo'][0]
@@ -177,13 +177,13 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
             <FormSelect
               name="applicantPermanentAddress.provinceId"
               label={t['kymIndProvince']}
-              placeholder={t['kymIndSelectProvince']}
+              __placeholder={t['kymIndSelectProvince']}
               options={province}
             />
             <FormSelect
               name="applicantPermanentAddress.districtId"
               label={t['kymIndDistrict']}
-              placeholder={t['kymIndSelectDistrict']}
+              __placeholder={t['kymIndSelectDistrict']}
               options={districtList.map((d) => ({
                 label: d.name,
                 value: d.id,
@@ -192,7 +192,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
             <FormSelect
               name="applicantPermanentAddress.localGovernmentId"
               label={t['kymIndLocalGovernment']}
-              placeholder={t['kymIndSelectLocalGovernment']}
+              __placeholder={t['kymIndSelectLocalGovernment']}
               options={localityList.map((d) => ({
                 label: d.name,
                 value: d.id,
@@ -202,7 +202,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
             <FormSelect
               name="applicantPermanentAddress.wardNo"
               label={t['kymIndWardNo']}
-              placeholder={t['kymIndEnterWardNo']}
+              __placeholder={t['kymIndEnterWardNo']}
               options={permanentWardList?.map((d) => ({
                 label: d,
                 value: d,
@@ -212,13 +212,13 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
               type="text"
               name="applicantPermanentAddress.locality"
               label={t['kymIndLocality']}
-              placeholder={t['kymIndEnterLocality']}
+              __placeholder={t['kymIndEnterLocality']}
             />
             {/* <FormInput
                 type="text"
                 name="applicantPermanentAddress.HouseNo"
                 label={t['kymIndHouseNo']}
-                placeholder={t['kymIndEnterHouseNo']}
+                __placeholder={t['kymIndEnterHouseNo']}
               /> */}
 
             <GridItem colSpan={2}>
@@ -241,13 +241,13 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
                 <FormSelect
                   name="applicantTemporaryAddress.provinceId"
                   label={t['kymIndProvince']}
-                  placeholder={t['kymIndSelectProvince']}
+                  __placeholder={t['kymIndSelectProvince']}
                   options={province}
                 />
                 <FormSelect
                   name="applicantTemporaryAddress.districtId"
                   label={t['kymIndDistrict']}
-                  placeholder={t['kymIndSelectDistrict']}
+                  __placeholder={t['kymIndSelectDistrict']}
                   options={districtTempList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -256,7 +256,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
                 <FormSelect
                   name="applicantTemporaryAddress.localGovernmentId"
                   label={t['kymIndLocalGovernment']}
-                  placeholder={t['kymIndSelectLocalGovernment']}
+                  __placeholder={t['kymIndSelectLocalGovernment']}
                   options={localityTempList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -265,7 +265,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
                 <FormSelect
                   name="applicantTemporaryAddress.wardNo"
                   label={t['kymIndWardNo']}
-                  placeholder={t['kymIndEnterWardNo']}
+                  __placeholder={t['kymIndEnterWardNo']}
                   options={temporaryWardList?.map((d) => ({
                     label: d,
                     value: d,
@@ -275,13 +275,13 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
                   type="text"
                   name="applicantTemporaryAddress.locality"
                   label={t['kymIndLocality']}
-                  placeholder={t['kymIndEnterLocality']}
+                  __placeholder={t['kymIndEnterLocality']}
                 />
                 {/* <FormInput
                   type="text"
                   name="applicantTemporaryAddress.HouseNo"
                   label={t['kymIndHouseNo']}
-                  placeholder={t['kymIndEnterHouseNo']}
+                  __placeholder={t['kymIndEnterHouseNo']}
                 /> */}
 
                 <GridItem colSpan={2}>

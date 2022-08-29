@@ -50,7 +50,7 @@ export const InstituteBasicInfo = ({
               type="text"
               name="nameOfInstitutionEn"
               label={t['kymCoopUnionNameOfInstitution']}
-              placeholder={t['kymCoopUnionNameOfInstitution']}
+              __placeholder={t['kymCoopUnionNameOfInstitution']}
               errorText={
                 sectionErrors?.['nameOfInstitutionEn'] &&
                 sectionErrors['nameOfInstitutionEn'][0]
@@ -60,7 +60,7 @@ export const InstituteBasicInfo = ({
           <FormSelect
             name="institutionType"
             label={t['kymCoopUnionInstitutionType']}
-            placeholder={t['kymCoopUnionSelectInstitutionType']}
+            __placeholder={t['kymCoopUnionSelectInstitutionType']}
             options={getFieldOption(organizationTypeFields)}
             errorText={
               sectionErrors?.['institutionType'] &&
@@ -71,7 +71,7 @@ export const InstituteBasicInfo = ({
             type="text"
             name="natureOfBusinessEn"
             label={t['kymCoopUnionNatureOfBusiness']}
-            placeholder={t['kymCoopUnionNatureOfBusiness']}
+            __placeholder={t['kymCoopUnionNatureOfBusiness']}
             errorText={
               sectionErrors?.['natureOfBusinessEn'] &&
               sectionErrors['natureOfBusinessEn'][0]
@@ -82,7 +82,7 @@ export const InstituteBasicInfo = ({
             type="date"
             name="regdDate"
             label={t['kymCoopUnionRegistrationDate']}
-            placeholder="DD-MM-YYYY"
+            __placeholder="DD-MM-YYYY"
             errorText={
               sectionErrors?.['regdDate'] && sectionErrors['regdDate'][0]
             }
@@ -91,7 +91,7 @@ export const InstituteBasicInfo = ({
             type="number"
             name="vatOrPan"
             label={t['kymCoopUnionVATPanNo']}
-            placeholder={t['kymCoopUnionEnterVATPanNo']}
+            __placeholder={t['kymCoopUnionEnterVATPanNo']}
             errorText={
               sectionErrors?.['vatOrPan'] && sectionErrors['vatOrPan'][0]
             }
@@ -100,14 +100,14 @@ export const InstituteBasicInfo = ({
           type="text"
           name="oprOfficeAddress"
           label={t['kymCoopUnionOperatingOfficeAddress']}
-          placeholder={t['kymCoopUnionOperatingOfficeAddress']}
+          __placeholder={t['kymCoopUnionOperatingOfficeAddress']}
         /> */}
 
           <FormInput
             type="text"
             name="noOfBranches"
             label={t['serviceCenterNoOfServiceCenter']}
-            placeholder={t['serviceCenterEnterNoOfServiceCenter']}
+            __placeholder={t['serviceCenterEnterNoOfServiceCenter']}
             errorText={
               sectionErrors?.['noOfBranches'] &&
               sectionErrors['noOfBranches'][0]
@@ -118,7 +118,7 @@ export const InstituteBasicInfo = ({
           type="text"
           name="branchOfficeAddress"
           label={t['kymCoopUnionBranchOfficeAddress']}
-          placeholder={t['kymCoopUnionBranchOfficeAddress']}
+          __placeholder={t['kymCoopUnionBranchOfficeAddress']}
         /> */}
         </FormSection>
       </form>

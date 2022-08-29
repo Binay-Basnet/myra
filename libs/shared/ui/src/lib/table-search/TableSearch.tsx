@@ -93,6 +93,7 @@ export const OptionsIcon = () => {
 };
 
 export type TableSearchProps = {
+  __placeholder?: string;
   placeholder?: string;
   pagination?: {
     pageInfo?: {

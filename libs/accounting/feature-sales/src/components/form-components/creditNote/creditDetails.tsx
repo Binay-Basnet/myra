@@ -19,31 +19,31 @@ export const CreditNoteDetails = () => {
           <FormSelect
             name="customerName"
             label={t['accountingCreditNoteAddCustomerName']}
-            placeholder={t['accountingCreditNoteAddSelectCustomer']}
+            __placeholder={t['accountingCreditNoteAddSelectCustomer']}
           />
         </GridItem>
         {/* <FormInput
           name="invoiceRefrence"
           type="number"
           label="Invoice Reference"
-          placeholder="Enter Invoice Reference"
+          __placeholder="Enter Invoice Reference"
         /> */}
         <FormInput
           name="date"
           type="date"
           label={t['accountingCreditNoteAddDate']}
-          placeholder="DD-MM-YYYY"
+          __placeholder="DD-MM-YYYY"
         />
         {/* <FormInput
           name="dueDate"
           type="date"
           label="Due Date"
-          placeholder="DD-MM-YYYY"
+          __placeholder="DD-MM-YYYY"
         /> */}
         <FormSelect
           name="invoiceReference"
           label={t['accountingCreditNoteAddInvoiceReference']}
-          placeholder={t['accountingCreditNoteAddInvoiceReference']}
+          __placeholder={t['accountingCreditNoteAddInvoiceReference']}
         />
       </InputGroupContainer>
     </BoxContainer>

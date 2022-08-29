@@ -36,7 +36,7 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
           <FormPhoneNumber
             name="phone"
             label={t['kymCoopUnionPhone']}
-            placeholder={t['kymCoopUnionEnterPhoneNumber']}
+            __placeholder={t['kymCoopUnionEnterPhoneNumber']}
             errorText={sectionErrors?.['phone'] && sectionErrors['phone'][0]}
           />
 
@@ -44,14 +44,14 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
             type="number"
             name="fax"
             label={t['kymCoopUnionFax']}
-            placeholder={t['kymCoopUnionEnterFax']}
+            __placeholder={t['kymCoopUnionEnterFax']}
             errorText={sectionErrors?.['fax'] && sectionErrors['fax'][0]}
           />
 
           <FormEmailInput
             name="contactEmail"
             label={t['kymCoopUnionEmail']}
-            placeholder={t['kymCoopUnionEnterEmailAddress']}
+            __placeholder={t['kymCoopUnionEnterEmailAddress']}
             errorText={
               sectionErrors?.['contactEmail'] &&
               sectionErrors['contactEmail'][0]
@@ -62,7 +62,7 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
             type="text"
             name="website"
             label={t['kymCoopUnionWebsiteLinkAny']}
-            placeholder={t['kymCoopUnionEnterWebsiteURL']}
+            __placeholder={t['kymCoopUnionEnterWebsiteURL']}
             errorText={
               sectionErrors?.['website'] && sectionErrors['website'][0]
             }
@@ -72,7 +72,7 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
             type="number"
             name="postBoxNo"
             label={t['kymCoopUnionPostBoxNo']}
-            placeholder={t['kymCoopUnionEnterPostBoxNo']}
+            __placeholder={t['kymCoopUnionEnterPostBoxNo']}
             errorText={
               sectionErrors?.['postBoxNo'] && sectionErrors['postBoxNo'][0]
             }
@@ -81,7 +81,7 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
             type="number"
             name="noOfEmployee"
             label={t['kymCoopUnionNumberOfEmployees']}
-            placeholder={t['kymCoopUnionEnterNumberOfEmployees']}
+            __placeholder={t['kymCoopUnionEnterNumberOfEmployees']}
             errorText={
               sectionErrors?.['noOfEmployee'] &&
               sectionErrors['noOfEmployee'][0]
@@ -91,7 +91,7 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
             type="date"
             name="lastAgmDate"
             label={t['kymCoopUnionAGMDetailsDate']}
-            placeholder="DD-MM-YYYY"
+            __placeholder="DD-MM-YYYY"
             errorText={
               sectionErrors?.['lastAgmDate'] && sectionErrors['lastAgmDate'][0]
             }

@@ -19,14 +19,12 @@ export interface InputProps extends ChakraInputProps {
   errorText?: string;
   label?: string;
   placeholder?: string;
+  /**
+   * @deprecated __placeholder
+   */
+  __placeholder?: string;
   rightAddonText?: string;
 }
-
-type _ForwardRefInputProps = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
-> &
-  InputProps;
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
@@ -34,10 +32,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       rightElement,
       leftElement,
       helperText,
+      placeholder,
       errorText,
       label,
       // fontSize,
-      // placeholder,
+      // __placeholder,
       size = 'default',
       // fontWeight,
       rightAddonText,
@@ -65,7 +64,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             h="100%"
             isInvalid={!!errorText}
-            // placeholder={String(placeholder ?? '')}
+            placeholder={placeholder}
+            // __placeholder={String(__placeholder ?? '')}
             autoComplete="none"
             borderRight={rightAddonText && 'none'}
             {...rest}

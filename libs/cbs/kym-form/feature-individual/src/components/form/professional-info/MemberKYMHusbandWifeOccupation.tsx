@@ -58,7 +58,7 @@ export const SpouseOccupationInput = ({
       formType={option?.fieldType}
       name={`options.${optionIndex}.value`}
       label={option?.name?.local}
-      placeholder={option?.name?.local}
+      __placeholder={option?.name?.local}
     />
   );
 };
@@ -189,7 +189,7 @@ const HusbandWifeOccupation = ({
                   name={`occupationId`}
                   id="spouseOccupationId"
                   label={t['kymIndOccupation']}
-                  placeholder={t['kymIndSelectOccupation']}
+                  __placeholder={t['kymIndSelectOccupation']}
                   options={getFieldOption(occupationData)}
                 />
               </GridItem>
@@ -199,7 +199,7 @@ const HusbandWifeOccupation = ({
                   name={`orgName`}
                   id="spouseOrgName"
                   label={t['kymIndOrgFirmName']}
-                  placeholder={t['kymIndOrgFirmName']}
+                  __placeholder={t['kymIndOrgFirmName']}
                   bg="white"
                 />
               </GridItem>
@@ -208,7 +208,7 @@ const HusbandWifeOccupation = ({
                 name={`panVatNo`}
                 id="spousePanVatNo"
                 label={t['kymIndPanVATNo']}
-                placeholder={t['kymIndPanVATNumber']}
+                __placeholder={t['kymIndPanVATNumber']}
                 bg="white"
               />
               <FormInput
@@ -216,7 +216,7 @@ const HusbandWifeOccupation = ({
                 name={`address`}
                 id="spouseAddress"
                 label={t['kymIndAddress']}
-                placeholder={t['kymIndEnterAddress']}
+                __placeholder={t['kymIndEnterAddress']}
                 bg="white"
               />
               <FormInput
@@ -226,7 +226,7 @@ const HusbandWifeOccupation = ({
                 name={`estimatedAnnualIncome`}
                 label={t['kymIndEstimatedAnnualIncome']}
                 bg="white"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
               {/* {occupationFieldNames.map((option, optionIndex) => {
                 return (
@@ -258,7 +258,7 @@ const HusbandWifeOccupation = ({
                 id="spouseEstablishedDate"
                 name={`establishedDate`}
                 label={t['kymIndEstablishedDate']}
-                placeholder={t['kymIndEstablishedDate']}
+                __placeholder={t['kymIndEstablishedDate']}
               />
               <FormInput
                 bg="white"
@@ -266,7 +266,7 @@ const HusbandWifeOccupation = ({
                 id="spouseRegistrationNo"
                 name={`registrationNo`}
                 label={t['kymIndRegistrationNo']}
-                placeholder={t['kymIndRegistrationNo']}
+                __placeholder={t['kymIndRegistrationNo']}
               />
               <FormInput
                 bg="white"
@@ -274,7 +274,7 @@ const HusbandWifeOccupation = ({
                 id="spouseContact"
                 name={`contact`}
                 label={t['kymIndContactNo']}
-                placeholder={t['kymIndContactNo']}
+                __placeholder={t['kymIndContactNo']}
               />
             </InputGroupContainer>
           )}

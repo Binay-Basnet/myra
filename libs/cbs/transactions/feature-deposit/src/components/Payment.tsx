@@ -146,7 +146,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
               <FormSelect
                 name="bankVoucher.bankId"
                 label={'Bank Name'}
-                placeholder={'Bank Name'}
+                __placeholder={'Bank Name'}
                 options={
                   bankList?.bank?.bank?.list?.map((bank) => ({
                     label: bank?.name as string,
@@ -159,7 +159,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
             <FormInput
               name="bankVoucher.voucherId"
               label="Voucher ID"
-              placeholder="Voucher ID"
+              __placeholder="Voucher ID"
             />
 
             <FormInput
@@ -167,7 +167,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
               type="number"
               label={'Amount'}
               textAlign={'right'}
-              placeholder="0.00"
+              __placeholder="0.00"
             />
 
             <FormInput
@@ -179,7 +179,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
             <FormInput
               type="text"
               name="bankVoucher.depositedBy"
-              placeholder="Deposited By"
+              __placeholder="Deposited By"
               label="Deposited By"
             />
           </InputGroupContainer>
@@ -191,7 +191,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
               <FormSelect
                 name="cheque.bankId"
                 label={'Bank Name'}
-                placeholder={'Bank Name'}
+                __placeholder={'Bank Name'}
                 options={
                   bankList?.bank?.bank?.list?.map((bank) => ({
                     label: bank?.name as string,
@@ -204,7 +204,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
             <FormInput
               name="cheque.chequeNo"
               label="Cheque No"
-              placeholder="Cheque No"
+              __placeholder="Cheque No"
             />
 
             <FormInput
@@ -212,7 +212,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
               type="number"
               label={'Amount'}
               textAlign={'right'}
-              placeholder="0.00"
+              __placeholder="0.00"
             />
 
             <FormInput
@@ -237,7 +237,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
                 type="number"
                 label={'Cash'}
                 textAlign={'right'}
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </InputGroupContainer>
 
@@ -360,7 +360,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
           <FormSelect
             name="sourceOfFund"
             label="Source of Fund"
-            placeholder="Select Source of Fund"
+            __placeholder="Select Source of Fund"
             options={sourceOfFundsList.map((source) => ({
               label: source,
               value: source,
@@ -387,7 +387,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
             <AgentSelect
               name="agentId"
               label="Agent"
-              placeholder="Select Agent"
+              __placeholder="Select Agent"
             />
           </InputGroupContainer>
         )}
@@ -398,7 +398,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
               <FormInput
                 name="other_name"
                 label="Name"
-                placeholder="Enter Name"
+                __placeholder="Enter Name"
               />
             </InputGroupContainer>
 
@@ -414,7 +414,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
       </BoxContainer>
 
       <BoxContainer>
-        <FormTextArea name="notes" label="Note" placeholder="Note" rows={5} />
+        <FormTextArea name="notes" label="Note" __placeholder="Note" rows={5} />
       </BoxContainer>
     </ContainerWithDivider>
   );

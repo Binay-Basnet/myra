@@ -37,14 +37,14 @@ const AddDirector = ({ index, removeDirector }: IAddDirector) => {
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.nameOfDirector`}
           label={t['kymInsNameofDirector']}
-          placeholder={t['kymInsEnterNameofDirector']}
+          __placeholder={t['kymInsEnterNameofDirector']}
         />
         <FormInput
           type="text"
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.nameOfInstitution`}
           label={t['kymInsNameofInstitution']}
-          placeholder={t['kymInsEnterNameofInstitution']}
+          __placeholder={t['kymInsEnterNameofInstitution']}
         />
       </Grid>
       <InputGroupContainer mt="s16">
@@ -53,14 +53,14 @@ const AddDirector = ({ index, removeDirector }: IAddDirector) => {
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.addressOfInstitution`}
           label={t['kymInsAddressofInstitution']}
-          placeholder={t['kymInsEnterAddressofInstitution']}
+          __placeholder={t['kymInsEnterAddressofInstitution']}
         />
         <FormInput
           type="text"
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.designation`}
           label={t['kymInsDesignation']}
-          placeholder={t['kymInsEnterDesignation']}
+          __placeholder={t['kymInsEnterDesignation']}
         />
         <FormInput
           type="number"
@@ -68,7 +68,7 @@ const AddDirector = ({ index, removeDirector }: IAddDirector) => {
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.yearlyIncome`}
           label={t['kymInsYearlyIncome']}
-          placeholder="0.00"
+          __placeholder="0.00"
         />
       </InputGroupContainer>
     </DynamicBoxContainer>

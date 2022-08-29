@@ -12,7 +12,7 @@ interface FormAccountInputProps<T> extends InputProps {
 export const FormAccountInput = <T,>({
   name,
   label,
-  placeholder,
+  __placeholder,
   ...rest
 }: FormAccountInputProps<T>) => {
   const methods = useFormContext();

@@ -119,24 +119,24 @@ export const MemberKYMBasicInfo = ({
             type="text"
             name="firstName"
             label={t['kymIndFirstName']}
-            placeholder={t['kymIndEnterFirstName']}
+            __placeholder={t['kymIndEnterFirstName']}
           />
           <FormInput
             type="text"
             name="middleName"
             label={t['kymIndMiddleName']}
-            placeholder={t['kymIndEnterMiddlename']}
+            __placeholder={t['kymIndEnterMiddlename']}
           />
           <FormInput
             type="text"
             name="lastName"
             label={t['kymIndLastName']}
-            placeholder={t['kymIndEnterLastname']}
+            __placeholder={t['kymIndEnterLastname']}
           />
           <FormSelect
             name="genderId"
             label={t['kymIndGender']}
-            placeholder={t['kymIndSelectGender']}
+            __placeholder={t['kymIndSelectGender']}
             isLoading={genderLoading}
             options={getFieldOption(genderFields)}
           />
@@ -144,12 +144,12 @@ export const MemberKYMBasicInfo = ({
             type="date"
             name="dateOfBirth"
             label={t['kymIndDateofBirthBS']}
-            placeholder={t['kymIndEnterdateofbirth']}
+            __placeholder={t['kymIndEnterdateofbirth']}
           />
           <FormSelect
             name="ethnicityId"
             label={t['kymIndEthnicity']}
-            placeholder={t['kymIndSelectEthnicity']}
+            __placeholder={t['kymIndSelectEthnicity']}
             isLoading={ethnicityLoading}
             options={getFieldOption(ethnicityFields)}
           />
@@ -158,7 +158,7 @@ export const MemberKYMBasicInfo = ({
             name="nationalityId"
             isDisabled
             label={t['kymIndNationality']}
-            placeholder={t['kymIndEnterNationality']}
+            __placeholder={t['kymIndEnterNationality']}
             isLoading={nationalityLoading}
             options={getFieldOption(nationalityFields)}
           />
@@ -166,14 +166,14 @@ export const MemberKYMBasicInfo = ({
           <FormSelect
             name={'educationQualificationId'}
             label={t['kymIndEducationalQualification']}
-            placeholder={t['kymIndSelectEducationalQualification']}
+            __placeholder={t['kymIndSelectEducationalQualification']}
             isLoading={educationLoading}
             options={getFieldOption(educationFields)}
           />
           <FormSelect
             name="religionId"
             label={t['kymIndReligion']}
-            placeholder={t['kymIndSelectReligion']}
+            __placeholder={t['kymIndSelectReligion']}
             isLoading={religionLoading}
             options={getFieldOption(religionFields)}
           />
