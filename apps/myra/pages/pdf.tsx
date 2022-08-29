@@ -27,8 +27,12 @@ export const Pdf = () => {
         const response = await mutateAsync({
           id: router.query['id'] as string,
         });
-        if (response && response.members.memberPDF !== '') {
-          setFileUrl(response.members.memberPDF as string);
+        if (
+          response &&
+          response?.members?.memberPDF &&
+          response?.members?.memberPDF !== ''
+        ) {
+          setFileUrl(response?.members?.memberPDF as string);
         } else {
           setFileUrl('not');
         }
@@ -75,6 +79,7 @@ export const Pdf = () => {
               <Button
                 variant="ghost"
                 gap="s8"
+                isDisabled={fileUrl === '' || fileUrl === 'not'}
                 onClick={() => window.open(fileUrl, '_blank')}
               >
                 <Icon as={BsPrinter} />
