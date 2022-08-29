@@ -8638,6 +8638,12 @@ export type SetOrganizationDataMutation = {
   };
 };
 
+export type GetMemberPdfMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberPdfMutation = { members: { memberPDF: string } };
+
 export type GetPreSignedUrlMutationVariables = Exact<{
   contentType?: InputMaybe<Scalars['String']>;
 }>;
@@ -11134,6 +11140,8 @@ export type GetMemberListQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           type: KymMemberTypesEnum;
+          profilePicUrl?: Array<string | null> | null;
+          signaturePicUrl?: Array<string | null> | null;
           contact?: string | null;
           createdAt: string;
           dateJoined?: string | null;
@@ -12200,6 +12208,11 @@ export type GetDepositProductSettingsEditDataQuery = {
               rate?: number | null;
             } | null> | null;
             serviceCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            accountCloseCharge?: Array<{
               serviceName?: string | null;
               ledgerName?: string | null;
               amount?: any | null;
@@ -13912,6 +13925,33 @@ export const useSetOrganizationDataMutation = <
     ['setOrganizationData'],
     useAxios<SetOrganizationDataMutation, SetOrganizationDataMutationVariables>(
       SetOrganizationDataDocument
+    ),
+    options
+  );
+export const GetMemberPdfDocument = `
+    mutation getMemberPDF($id: ID!) {
+  members {
+    memberPDF(id: $id)
+  }
+}
+    `;
+export const useGetMemberPdfMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    GetMemberPdfMutation,
+    TError,
+    GetMemberPdfMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    GetMemberPdfMutation,
+    TError,
+    GetMemberPdfMutationVariables,
+    TContext
+  >(
+    ['getMemberPDF'],
+    useAxios<GetMemberPdfMutation, GetMemberPdfMutationVariables>(
+      GetMemberPdfDocument
     ),
     options
   );
@@ -17634,6 +17674,8 @@ export const GetMemberListDocument = `
             wardNo
             locality
           }
+          profilePicUrl
+          signaturePicUrl
           contact
           createdAt
           dateJoined
@@ -19017,6 +19059,11 @@ export const GetDepositProductSettingsEditDataDocument = `
             maxPostingFreqDifference
             accountType
             serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            accountCloseCharge {
               serviceName
               ledgerName
               amount
