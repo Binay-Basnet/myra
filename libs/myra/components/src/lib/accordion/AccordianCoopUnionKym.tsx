@@ -1,11 +1,14 @@
 import React from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { BsCheckCircleFill } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
 import {
   KymInsAddSectionStatus,
+  useGetAccountOperatorDetailsListQuery,
+  useGetBoardOfDirectorsDetailsListQuery,
   useGetCooperativeUnionKymEditDataQuery,
 } from '@coop/cbs/data-access';
 import { Icon } from '@coop/shared/ui';
@@ -68,10 +71,56 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
     useGetCooperativeUnionKymEditDataQuery({
       id,
     });
-  const cooperativeInfoSectionStatus =
+  const { data: bodEditValues } = useGetBoardOfDirectorsDetailsListQuery({
+    id: String(id),
+  });
+
+  const { data: accountOperatorValues } = useGetAccountOperatorDetailsListQuery(
+    {
+      id: String(id),
+    }
+  );
+
+  const cooperativeInfo =
     coopUnionCooperativeData?.members?.cooperativeUnion?.formState?.formData
-      ?.institutionInformation?.sectionStatus?.incomplete;
-  const inCompleteSections = cooperativeInfoSectionStatus?.map(
+      ?.institutionInformation?.sectionStatus;
+
+  const bodInfo =
+    bodEditValues?.members?.cooperativeUnion?.formState?.formData
+      ?.boardOfDirectorsDetails?.sectionStatus;
+
+  const getBodInfoStatus = () => {
+    let bodStatus = false;
+    bodInfo?.forEach((item) => {
+      if (item?.errors === null && item?.incomplete === null) {
+        bodStatus = true;
+      } else {
+        bodStatus = false;
+      }
+    });
+    return bodStatus;
+  };
+  const accountOperatorDetails =
+    accountOperatorValues?.members?.cooperativeUnion?.formState?.formData
+      ?.accountOperatorsDetails?.sectionStatus;
+
+  const getAccountOperatorStatus = () => {
+    let accountOperatorStatus = false;
+    accountOperatorDetails?.forEach((item) => {
+      if (item?.errors === null && item?.incomplete === null) {
+        accountOperatorStatus = true;
+      } else {
+        accountOperatorStatus = false;
+      }
+    });
+    return accountOperatorStatus;
+  };
+
+  const cooperativeInfoIncompleteSections = cooperativeInfo?.incomplete?.map(
+    (item) => item?.sectionName
+  );
+
+  const cooperativeInfoSectionsWithError = cooperativeInfo?.errors?.map(
     (item) => item?.sectionName
   );
 
@@ -131,8 +180,15 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                 </Text>
               </a>
               &nbsp; &nbsp;
-              {inCompleteSections?.includes(cooperativeInfoObject[item]) && (
+              {cooperativeInfoIncompleteSections?.includes(
+                cooperativeInfoObject[item]
+              ) ||
+              cooperativeInfoSectionsWithError?.includes(
+                cooperativeInfoObject[item]
+              ) ? (
                 <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
+              ) : (
+                <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
               )}
             </Box>
           ))}
@@ -169,14 +225,11 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                 </Text>
               </a>
               &nbsp; &nbsp;
-              {/* {formStatus?.data?.personal?.completed?.includes(
-                personalInfoEnum[item]
-              ) && (
-                <Icon size="xs" as={BsCheckCircleFill} color="primary.500" />
-              )} */}
-              {/* {formStatus?.data?.personal?.error?.includes(
-                personalInfoEnum[item]
-              ) && <Icon size="xs" as={AiFillCloseCircle} color="danger.500" />} */}
+              {getBodInfoStatus() ? (
+                <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
+              ) : (
+                <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
+              )}
             </Box>
           ))}
         </Box>
@@ -205,12 +258,18 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               alignItems={'center'}
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
+              gap={2}
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
+              {getAccountOperatorStatus() ? (
+                <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
+              ) : (
+                <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
+              )}
             </Box>
           ))}
         </Box>

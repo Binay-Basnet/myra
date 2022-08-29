@@ -79,7 +79,7 @@ const AddDirector = ({
 
   const { reset, watch, control } = methods;
 
-  const { mutate } = useSetPersonnelDetailsMutation({
+  const { mutateAsync } = useSetPersonnelDetailsMutation({
     onSuccess: () => refetch(),
   });
 
@@ -114,13 +114,12 @@ const AddDirector = ({
           },
         };
         if (id && data && !isDeepEmpty(data) && !isEqual(editData, data)) {
-          mutate({
+          mutateAsync({
             id,
             personnelId: directorId,
             sectionType: CooperativeUnionPersonnelSection.Directors,
             data,
-          });
-          // refetch();
+          }).then(() => refetch());
         }
       }, 800)
     );
