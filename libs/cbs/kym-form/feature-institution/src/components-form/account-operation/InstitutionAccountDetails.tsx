@@ -15,12 +15,20 @@ import {
 } from '@coop/cbs/data-access';
 import {
   DynamicBoxGroupContainer,
-  GroupContainer,
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Collapse, Icon, IconButton, Text } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  Collapse,
+  FormSection,
+  GridItem,
+  Icon,
+  IconButton,
+  Text,
+} from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { BottomDocument } from './components/BottomComponents';
@@ -539,16 +547,11 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
     deleteMutate({ insId: id, acc: accOperatorId });
   };
   return (
-    <GroupContainer
-      gap="s16"
+    <FormSection
       id="kymInsDetailsofAccountOperators"
-      scrollMarginTop="200px"
+      header="kymInsDetailsofAccountOperators"
     >
-      <Text fontSize="r1" fontWeight="SemiBold">
-        {t['kymInsDetailsofAccountOperators']}
-      </Text>
-
-      <div>
+      <GridItem colSpan={3}>
         <DynamicBoxGroupContainer>
           {accOperatorIds.map((id) => {
             return (
@@ -573,7 +576,7 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
             {t['kymInsNewOperator']}
           </Button>
         </DynamicBoxGroupContainer>
-      </div>
-    </GroupContainer>
+      </GridItem>
+    </FormSection>
   );
 };

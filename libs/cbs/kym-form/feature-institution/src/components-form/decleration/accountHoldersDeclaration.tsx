@@ -3,16 +3,14 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { useAllAdministrationQuery } from '@coop/cbs/data-access';
 import { KymInsInput } from '@coop/cbs/data-access';
+import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
+  FormCheckbox,
   FormInput,
   FormMap,
   FormSelect,
 } from '@coop/shared/form';
-import { Box, Checkbox, Text, TextFields } from '@coop/shared/ui';
+import { Box, FormSection, GridItem, TextFields } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -28,7 +26,7 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
     defaultValues: {},
   });
   const { setSection } = props;
-  const { watch, setError, reset } = methods;
+  const { watch } = methods;
 
   useInstitution({ methods });
 
@@ -72,100 +70,103 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer
+        <FormSection
           id="kymInsAccountHolderDeclaration"
-          scrollMarginTop={'200px'}
+          header="kymInAccountHolderDeclarations"
         >
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymInAccountHolderDeclarations']}
-          </Text>
-          <InputGroupContainer>
-            <FormInput
-              name="accountHolderName"
-              label={t['kymInsAccountHolderName']}
-              placeholder={t['kymInsEnterAccountHolderName']}
-            />
-            <FormInput
-              name="accountHolderPhone"
-              label={t['kymInsPhone']}
-              placeholder={t['kymInsEnterPhoneNumber']}
-            />
-            <FormInput
-              name="accountHolderEmail"
-              label={t['kymInsEmail']}
-              placeholder={t['kymInsEnterEmailAddress']}
-            />
-          </InputGroupContainer>
+          <FormInput
+            name="accountHolderName"
+            label={t['kymInsAccountHolderName']}
+            placeholder={t['kymInsEnterAccountHolderName']}
+          />
+          <FormInput
+            name="accountHolderPhone"
+            label={t['kymInsPhone']}
+            placeholder={t['kymInsEnterPhoneNumber']}
+          />
+          <FormInput
+            name="accountHolderEmail"
+            label={t['kymInsEmail']}
+            placeholder={t['kymInsEnterEmailAddress']}
+          />
+        </FormSection>
 
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Text fontSize="r1" fontWeight="SemiBold">
-              {t['kymInsAddress']}
-            </Text>
-            <InputGroupContainer>
-              <FormSelect
-                id="accountHolderAddress"
-                name={`accountHolderAddress.provinceId`}
-                label={t['kymInsState']}
-                placeholder={t['kymInsSelectState']}
-                options={province}
-              />
-              <FormSelect
-                id="accountHolderAddress"
-                name="accountHolderAddress.districtId"
-                label={t['kymInsDistrict']}
-                placeholder={t['kymInsSelectDistrict']}
-                options={districtList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                id="accountHolderAddress"
-                name="accountHolderAddress.localGovernmentId"
-                label={t['kymInsVDCMunicipality']}
-                placeholder={t['kymInsSelectVDCMunicipality']}
-                options={localityList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                id="accountHolderAddress"
-                name="accountHolderAddress.wardNo"
-                label={t['kymInsWardNo']}
-                placeholder={t['kymInsEnterWardNo']}
-                options={wardList?.map((d) => ({
-                  label: d,
-                  value: d,
-                }))}
-              />
-              <FormInput
-                id="accountHolderAddress"
-                type="text"
-                name="accountHolderAddress.locality"
-                label={t['kymInsLocality']}
-                placeholder={t['kymInsEnterLocality']}
-              />
-              <FormInput
-                id="accountHolderAddress"
-                type="text"
-                name="accountHolderAddress.houseNo"
-                label={t['kymInsHouseNo']}
-                placeholder={t['kymInsEnterHouseNo']}
-              />
-            </InputGroupContainer>
+        <FormSection header="kymInsAddress">
+          {' '}
+          <FormSelect
+            id="accountHolderAddress"
+            name={`accountHolderAddress.provinceId`}
+            label={t['kymInsState']}
+            placeholder={t['kymInsSelectState']}
+            options={province}
+          />
+          <FormSelect
+            id="accountHolderAddress"
+            name="accountHolderAddress.districtId"
+            label={t['kymInsDistrict']}
+            placeholder={t['kymInsSelectDistrict']}
+            options={districtList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            id="accountHolderAddress"
+            name="accountHolderAddress.localGovernmentId"
+            label={t['kymInsVDCMunicipality']}
+            placeholder={t['kymInsSelectVDCMunicipality']}
+            options={localityList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            id="accountHolderAddress"
+            name="accountHolderAddress.wardNo"
+            label={t['kymInsWardNo']}
+            placeholder={t['kymInsEnterWardNo']}
+            options={wardList?.map((d) => ({
+              label: d,
+              value: d,
+            }))}
+          />
+          <FormInput
+            id="accountHolderAddress"
+            type="text"
+            name="accountHolderAddress.locality"
+            label={t['kymInsLocality']}
+            placeholder={t['kymInsEnterLocality']}
+          />
+          <FormInput
+            id="accountHolderAddress"
+            type="text"
+            name="accountHolderAddress.houseNo"
+            label={t['kymInsHouseNo']}
+            placeholder={t['kymInsEnterHouseNo']}
+          />
+          <GridItem colSpan={2}>
+            <FormMap
+              name="accountHolderAddress.coordinates"
+              id="accountHolderAddress"
+            />
+          </GridItem>
+        </FormSection>
 
-            <Box>
-              <FormMap
-                name="accountHolderAddress.coordinates"
-                id="accountHolderAddress"
-              />
-            </Box>
-          </Box>
+        <Box p="s20" display="flex" gap="s16" alignItems="center">
+          <FormCheckbox
+            id="weAgree"
+            name="declarationAgreement"
+            fontSize="s3"
+          />
+          <TextFields variant="formInput" mt="-6px">
+            I/We agree to the&nbsp;
+            <TextFields as="span" variant="link">
+              Terms and condition.
+            </TextFields>
+          </TextFields>
+        </Box>
+
+        <GroupContainer scrollMarginTop={'200px'}>
           {/* <Grid templateColumns={'repeat(2, 1fr)'} gap="s32">
             <Box w="124px">
               <FormFileInput
@@ -182,21 +183,6 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
               />
             </Box>
           </Grid> */}
-          <Box display="flex" gap="s16" alignItems="start">
-            <Checkbox fontSize="s3" id="weAgree">
-              {''}
-            </Checkbox>
-            <TextFields variant="formInput" mt="-6px">
-              I/We hereby confirm that the information provede by me/us in this
-              form and documents provided to the Bank are true and corrent. I/We
-              further confirm that I/We have read and understood to the Bank's
-              terms and conditions governing account opening/operations and
-              shall abide and be bound by present/future rules Nepal Rastra
-              Bank, Himalayan Bank Limited and Laws of the country. In the event
-              I/We fail to abide by the terms and conditions, I/We shall bear
-              the damage and/or penalties resulting as a consequence thereof.
-            </TextFields>
-          </Box>
         </GroupContainer>
       </form>
     </FormProvider>

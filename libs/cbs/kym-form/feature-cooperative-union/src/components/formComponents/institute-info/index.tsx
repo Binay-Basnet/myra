@@ -1,9 +1,6 @@
 import React from 'react';
 
-import {
-  ContainerWithDivider,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -26,19 +23,17 @@ export const InstituteInfo = (props: interfaceInfoProps) => {
 
   return (
     <SectionContainer>
-      <Text fontSize="r3" fontWeight="600">
+      <Text p="s20" fontSize="r3" fontWeight="600">
         {t['kymCoopUnionInstitutionInformation']}
       </Text>
-      <ContainerWithDivider>
-        <InstituteBasicInfo setSection={setSection} />
-        <RegisteredDetails setSection={setSection} />
-        <OperatingOfficeAddress setSection={setSection} />
-        <BranchOfficeAddress setSection={setSection} />
-        <ContactDetails setSection={setSection} />
-        <BankAccountDetails setSection={setSection} />
-        <ApplicantDetails setSection={setSection} />
-        <CooperativeMemberInformation setSection={setSection} />
-      </ContainerWithDivider>
+      <InstituteBasicInfo setSection={setSection} />
+      <RegisteredDetails setSection={setSection} />
+      <OperatingOfficeAddress setSection={setSection} />
+      <BranchOfficeAddress setSection={setSection} />
+      <ContactDetails setSection={setSection} />
+      <BankAccountDetails setSection={setSection} />
+      <ApplicantDetails setSection={setSection} />
+      <CooperativeMemberInformation setSection={setSection} />
     </SectionContainer>
     //   </form>
     // </FormProvider>

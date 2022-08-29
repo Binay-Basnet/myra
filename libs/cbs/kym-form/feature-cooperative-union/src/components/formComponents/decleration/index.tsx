@@ -3,10 +3,7 @@ import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
 import { useSetDeclarationDataMutation } from '@coop/cbs/data-access';
-import {
-  ContainerWithDivider,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 import { useTranslation } from '@coop/shared/utils';
@@ -39,12 +36,10 @@ export const Declaration = (props: declarationProps) => {
         }}
       >
         <SectionContainer>
-          <Text fontSize="r3" fontWeight="600">
+          <Text p="s20" fontSize="r3" fontWeight="600">
             {t['kymCoopUnionDec7Declaration']}
           </Text>
-          <ContainerWithDivider>
-            <DocumentDeclarationInstitutionCOOPUnion setSection={setSection} />
-          </ContainerWithDivider>
+          <DocumentDeclarationInstitutionCOOPUnion setSection={setSection} />
         </SectionContainer>
       </form>
     </FormProvider>

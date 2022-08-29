@@ -109,7 +109,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         cursor="pointer"
         onClick={() => setIsOpenOrganizational(!isOpenOrganizational)}
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc1InstitutionInformation']}
         </Text>
         {!isOpenOrganizational ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -126,7 +126,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -147,7 +147,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         onClick={() => setIsopenDirector(!isopenDirector)}
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc2Detailsofdirectorsboardmemberspartners']}
         </Text>
         {!isopenDirector ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -164,7 +164,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -190,7 +190,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc3AccountOperators']}
         </Text>
         {!isopenAccountOperators ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -207,7 +207,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -226,7 +226,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc4DetailsofCentralRepresentative']}
         </Text>
         {!isopenCentralRepresentatives ? (
@@ -247,7 +247,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -264,7 +264,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
 
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc5Detailsofmember']}
         </Text>
         {!isOpenmemberDetails ? (
@@ -286,7 +286,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -302,7 +302,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc6EconomicDetails']}
         </Text>
         {!isOpenEconmoicDetails ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -319,7 +319,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -335,7 +335,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc7Declaration']}
         </Text>
         {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -352,7 +352,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>

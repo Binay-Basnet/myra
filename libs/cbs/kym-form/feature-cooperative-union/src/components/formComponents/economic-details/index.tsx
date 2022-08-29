@@ -1,7 +1,4 @@
-import {
-  ContainerWithDivider,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -19,16 +16,14 @@ export const EconomicDetails = (props: economicDetailsProps) => {
   const { setSection } = props;
 
   return (
-    <SectionContainer>
+    <SectionContainer p="s20">
       <Text fontSize="r3" fontWeight="600">
         {t['kymCoopUnionEco6EconomicDetails']}
       </Text>
-      <ContainerWithDivider>
-        <KymAssestsAndtarget setSection={setSection} />
-        <KymEquilities setSection={setSection} />
-        <IncomeDetails setSection={setSection} />
-        <ExpenseDetails setSection={setSection} />
-      </ContainerWithDivider>
+      <KymAssestsAndtarget setSection={setSection} />
+      <KymEquilities setSection={setSection} />
+      <IncomeDetails setSection={setSection} />
+      <ExpenseDetails setSection={setSection} />
     </SectionContainer>
   );
 };

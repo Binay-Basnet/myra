@@ -1,8 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import {
-  FormProvider,
-  useForm,
-} from 'react-hook-form';
+import React, { useEffect, useMemo } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
@@ -26,7 +23,6 @@ interface IAddDirector {
 }
 
 export const DirectorTopPart = ({
-  removeDirector,
   setKymCurrentSection,
   directorId,
 }: IAddDirector) => {
@@ -94,8 +90,6 @@ export const DirectorTopPart = ({
   }, [watch, router.isReady]);
 
   const { data } = useAllAdministrationQuery();
-  const [temporaryAddress, setTemporaryAddress] = useState(false);
-  const [isOpen, setIsOpen] = React.useState(true);
 
   const province = useMemo(() => {
     return (

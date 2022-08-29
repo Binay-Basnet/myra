@@ -5,12 +5,8 @@ import {
   CoopUnionInstitutionInformationInput,
   useAllAdministrationQuery,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
@@ -73,73 +69,59 @@ export const OperatingOfficeAddress = ({
           setSection(kymSection);
         }}
       >
-        <GroupContainer id="Operating Office Address" scrollMarginTop={'200px'}>
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymCoopUnionOperatorOfficeAddress']}
-          </Text>
-          <Box
-            id="Operating Office Address"
-            gap="s16"
-            display={'flex'}
-            flexDirection="column"
-          >
-            <InputGroupContainer>
-              <FormSelect
-                name="operatingOfficeAddress.provinceId"
-                label={t['kymIndProvince']}
-                placeholder={t['kymIndSelectProvince']}
-                options={province}
-              />
-              <FormSelect
-                name="operatingOfficeAddress.districtId"
-                label={t['kymIndDistrict']}
-                placeholder={t['kymIndSelectDistrict']}
-                options={districtList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                name="operatingOfficeAddress.localGovernmentId"
-                label={t['kymIndLocalGovernment']}
-                placeholder={t['kymIndSelectLocalGovernment']}
-                options={localityList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                name="operatingOfficeAddress.wardNo"
-                label={t['kymIndWardNo']}
-                placeholder={t['kymIndEnterWardNo']}
-                options={wardList?.map((d) => ({
-                  label: d,
-                  value: d,
-                }))}
-              />
-              <FormInput
-                type="text"
-                name="operatingOfficeAddress.locality"
-                label={t['kymIndLocality']}
-                placeholder={t['kymIndEnterLocality']}
-              />
-              <FormInput
-                type="text"
-                name="operatingOfficeAddress.houseNo"
-                label={t['kymIndHouseNo']}
-                placeholder={t['kymIndEnterHouseNo']}
-              />
-            </InputGroupContainer>
-
-            <Box>
-              <FormMap name="operatingOfficeAddress.coordinates" />
-            </Box>
-          </Box>
-        </GroupContainer>
+        <FormSection
+          id="Operating Office Address"
+          header="kymCoopUnionOperatorOfficeAddress"
+        >
+          <FormSelect
+            name="operatingOfficeAddress.provinceId"
+            label={t['kymIndProvince']}
+            placeholder={t['kymIndSelectProvince']}
+            options={province}
+          />
+          <FormSelect
+            name="operatingOfficeAddress.districtId"
+            label={t['kymIndDistrict']}
+            placeholder={t['kymIndSelectDistrict']}
+            options={districtList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            name="operatingOfficeAddress.localGovernmentId"
+            label={t['kymIndLocalGovernment']}
+            placeholder={t['kymIndSelectLocalGovernment']}
+            options={localityList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            name="operatingOfficeAddress.wardNo"
+            label={t['kymIndWardNo']}
+            placeholder={t['kymIndEnterWardNo']}
+            options={wardList?.map((d) => ({
+              label: d,
+              value: d,
+            }))}
+          />
+          <FormInput
+            type="text"
+            name="operatingOfficeAddress.locality"
+            label={t['kymIndLocality']}
+            placeholder={t['kymIndEnterLocality']}
+          />
+          <FormInput
+            type="text"
+            name="operatingOfficeAddress.houseNo"
+            label={t['kymIndHouseNo']}
+            placeholder={t['kymIndEnterHouseNo']}
+          />
+          <GridItem colSpan={2}>
+            <FormMap name="operatingOfficeAddress.coordinates" />
+          </GridItem>
+        </FormSection>
       </form>
     </FormProvider>
   );

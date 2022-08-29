@@ -4,12 +4,8 @@ import {
   CoopUnionInstitutionInformationInput,
   useGetBankListQuery,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
@@ -40,53 +36,43 @@ export const BankAccountDetails = ({
           setSection(kymSection);
         }}
       >
-        <GroupContainer
+        <FormSection
           id="kymCoopUnionAccBankAccountDetails"
-          scrollMarginTop={'200px'}
+          header="kymCoopUnionBankAccountDetails"
         >
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymCoopUnionBankAccountDetails']}
-          </Text>
-          <InputGroupContainer>
-            <FormSelect
-              name="nameOfBank"
-              label={t['kymCoopUnionNameOfBank']}
-              placeholder={t['kymCoopUnionSelectBank']}
-              options={bankList?.bank?.bank?.list?.map((bank) => ({
-                label: bank?.name,
-                value: bank?.id,
-              }))}
-              errorText={
-                sectionErrors?.['nameOfBank'] && sectionErrors['nameOfBank'][0]
-              }
-            />
-            <FormInput
-              type="text"
-              name="accountNumber"
-              label={t['kymCoopUnionAccountNumber']}
-              placeholder={t['kymCoopUnionEnterAccountNumber']}
-              errorText={
-                sectionErrors?.['accountNumber'] &&
-                sectionErrors['accountNumber'][0]
-              }
-            />
+          <FormSelect
+            name="nameOfBank"
+            label={t['kymCoopUnionNameOfBank']}
+            placeholder={t['kymCoopUnionSelectBank']}
+            options={bankList?.bank?.bank?.list?.map((bank) => ({
+              label: bank?.name,
+              value: bank?.id,
+            }))}
+            errorText={
+              sectionErrors?.['nameOfBank'] && sectionErrors['nameOfBank'][0]
+            }
+          />
+          <FormInput
+            type="text"
+            name="accountNumber"
+            label={t['kymCoopUnionAccountNumber']}
+            placeholder={t['kymCoopUnionEnterAccountNumber']}
+            errorText={
+              sectionErrors?.['accountNumber'] &&
+              sectionErrors['accountNumber'][0]
+            }
+          />
 
-            <FormInput
-              type="text"
-              name="accountName"
-              label={t['kymCoopUnionAccountName']}
-              placeholder={t['kymCoopUnionEnterAccountName']}
-              errorText={
-                sectionErrors?.['accountName'] &&
-                sectionErrors['accountName'][0]
-              }
-            />
-          </InputGroupContainer>
-        </GroupContainer>
+          <FormInput
+            type="text"
+            name="accountName"
+            label={t['kymCoopUnionAccountName']}
+            placeholder={t['kymCoopUnionEnterAccountName']}
+            errorText={
+              sectionErrors?.['accountName'] && sectionErrors['accountName'][0]
+            }
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );

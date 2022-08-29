@@ -112,9 +112,7 @@ export const MemberKYMBasicInfo = ({
         }}
       >
         <FormSection
-          gridLayout={true}
           id="kymAccIndBasicInformation"
-          // scrollMarginTop={'200px'}
           header="kymIndBASICINFORMATION"
         >
           <FormInput

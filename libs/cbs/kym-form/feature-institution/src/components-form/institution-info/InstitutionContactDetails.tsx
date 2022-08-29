@@ -1,16 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymInsInput } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormEmailInput,
-  FormInput,
-  FormPhoneNumber,
-} from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormEmailInput, FormInput, FormPhoneNumber } from '@coop/shared/form';
+import { FormSection } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -25,7 +17,6 @@ export const ContactDetailsInstitution = (props: IProps) => {
   });
   const { setSection } = props;
 
-  const { control, handleSubmit, getValues, watch, setError } = methods;
   useInstitution({ methods });
 
   return (
@@ -36,66 +27,49 @@ export const ContactDetailsInstitution = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer id="kymInsContactDetails" scrollMarginTop={'200px'}>
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymInsContactDetails']}
-          </Text>
-          <InputGroupContainer>
-            <FormPhoneNumber
-              name={'phone'}
-              label={t['kymInsPhone']}
-              placeholder={t['kymInsEnterPhoneNumber']}
-            />
-
-            <FormInput
-              type="number"
-              name="fax"
-              label={t['kymInsFax']}
-              placeholder={t['kymInsEnterFax']}
-            />
-
-            <FormEmailInput
-              name="email"
-              label={t['kymInsEmail']}
-              placeholder={t['kymInsEnterEmailAddress']}
-            />
-
-            <FormInput
-              type="text"
-              name="website"
-              label={t['kymInsWebsiteLinkany']}
-              placeholder={t['kymInsEnterWebsiteURL']}
-            />
-
-            <FormInput
-              type="number"
-              name="postBoxNo"
-              label={t['kymInsPostBoxNo']}
-              placeholder={t['kymInsEnterPostBoxNo']}
-            />
-            <Box></Box>
-            <Box mt="44px">
-              <FormInput
-                type="number"
-                name="numberOfEmployee"
-                label={t['kymInsNumberofEmployees']}
-                placeholder={t['kymInsEnterNumberofEmployees']}
-              />
-            </Box>
-            <Box mt="44px">
-              <FormInput
-                type="date"
-                name="dateOfLastAGM"
-                label={t['kymInsAGMDetailsDate']}
-                placeholder="DD-MM-YYYY"
-              />
-            </Box>
-          </InputGroupContainer>
-        </GroupContainer>
+        <FormSection id="kymInsContactDetails" header="kymInsContactDetails">
+          {' '}
+          <FormPhoneNumber
+            name={'phone'}
+            label={t['kymInsPhone']}
+            placeholder={t['kymInsEnterPhoneNumber']}
+          />
+          <FormInput
+            type="number"
+            name="fax"
+            label={t['kymInsFax']}
+            placeholder={t['kymInsEnterFax']}
+          />
+          <FormEmailInput
+            name="email"
+            label={t['kymInsEmail']}
+            placeholder={t['kymInsEnterEmailAddress']}
+          />
+          <FormInput
+            type="text"
+            name="website"
+            label={t['kymInsWebsiteLinkany']}
+            placeholder={t['kymInsEnterWebsiteURL']}
+          />
+          <FormInput
+            type="number"
+            name="postBoxNo"
+            label={t['kymInsPostBoxNo']}
+            placeholder={t['kymInsEnterPostBoxNo']}
+          />{' '}
+          <FormInput
+            type="number"
+            name="numberOfEmployee"
+            label={t['kymInsNumberofEmployees']}
+            placeholder={t['kymInsEnterNumberofEmployees']}
+          />
+          <FormInput
+            type="date"
+            name="dateOfLastAGM"
+            label={t['kymInsAGMDetailsDate']}
+            placeholder="DD-MM-YYYY"
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );

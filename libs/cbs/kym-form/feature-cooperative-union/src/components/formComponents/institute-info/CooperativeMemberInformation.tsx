@@ -96,6 +96,7 @@ export const CooperativeMemberInformation = ({
         }}
       >
         <GroupContainer
+          p="s20"
           id="kymCoopUnionAccContactDetails"
           scrollMarginTop={'200px'}
         >

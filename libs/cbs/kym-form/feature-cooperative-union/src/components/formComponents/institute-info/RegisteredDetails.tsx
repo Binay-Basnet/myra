@@ -5,12 +5,8 @@ import {
   CoopUnionInstitutionInformationInput,
   useAllAdministrationQuery,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
@@ -73,85 +69,72 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer
+        <FormSection
           id="kymCoopUnionAccRegisteredDetails"
-          scrollMarginTop={'200px'}
+          header="kymCoopUnionRegisteredDetails"
         >
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymCoopUnionRegisteredDetails']}
-          </Text>
-          <InputGroupContainer>
-            <FormInput
-              type="number"
-              name="regdNo"
-              label={t['kymCoopUnionRegisteredNumber']}
-              placeholder={t['kymCoopUnionEnterRegisteredNumber']}
-              errorText={
-                sectionErrors?.['regdNo'] && sectionErrors['regdNo'][0]
-              }
-            />
-
-            <GridItem colSpan={2}>
-              <FormInput
-                type="text"
-                name="issuingOffice"
-                label={t['kymCoopUnionIssuingOffice']}
-                placeholder={t['kymCoopUnionEnterIssuingOffice']}
-                errorText={
-                  sectionErrors?.['issuingOffice'] &&
-                  sectionErrors['issuingOffice'][0]
-                }
-              />
-            </GridItem>
-
-            <FormSelect
-              name="regdAddress.provinceId"
-              label={t['kymIndProvince']}
-              placeholder={t['kymIndSelectProvince']}
-              options={province}
-            />
-            <FormSelect
-              name="regdAddress.districtId"
-              label={t['kymIndDistrict']}
-              placeholder={t['kymIndSelectDistrict']}
-              options={districtList.map((d) => ({
-                label: d.name,
-                value: d.id,
-              }))}
-            />
-            <FormSelect
-              name="regdAddress.localGovernmentId"
-              label={t['kymIndLocalGovernment']}
-              placeholder={t['kymIndSelectLocalGovernment']}
-              options={localityList.map((d) => ({
-                label: d.name,
-                value: d.id,
-              }))}
-            />
-            <FormSelect
-              name="regdAddress.wardNo"
-              label={t['kymIndWardNo']}
-              placeholder={t['kymIndEnterWardNo']}
-              options={wardList?.map((d) => ({
-                label: d,
-                value: d,
-              }))}
-            />
+          <FormInput
+            type="number"
+            name="regdNo"
+            label={t['kymCoopUnionRegisteredNumber']}
+            placeholder={t['kymCoopUnionEnterRegisteredNumber']}
+            errorText={sectionErrors?.['regdNo'] && sectionErrors['regdNo'][0]}
+          />
+          <GridItem colSpan={2}>
             <FormInput
               type="text"
-              name="regdAddress.locality"
-              label={t['kymIndLocality']}
-              placeholder={t['kymIndEnterLocality']}
+              name="issuingOffice"
+              label={t['kymCoopUnionIssuingOffice']}
+              placeholder={t['kymCoopUnionEnterIssuingOffice']}
+              errorText={
+                sectionErrors?.['issuingOffice'] &&
+                sectionErrors['issuingOffice'][0]
+              }
             />
-          </InputGroupContainer>
-          <Box>
+          </GridItem>
+          <FormSelect
+            name="regdAddress.provinceId"
+            label={t['kymIndProvince']}
+            placeholder={t['kymIndSelectProvince']}
+            options={province}
+          />
+          <FormSelect
+            name="regdAddress.districtId"
+            label={t['kymIndDistrict']}
+            placeholder={t['kymIndSelectDistrict']}
+            options={districtList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            name="regdAddress.localGovernmentId"
+            label={t['kymIndLocalGovernment']}
+            placeholder={t['kymIndSelectLocalGovernment']}
+            options={localityList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            name="regdAddress.wardNo"
+            label={t['kymIndWardNo']}
+            placeholder={t['kymIndEnterWardNo']}
+            options={wardList?.map((d) => ({
+              label: d,
+              value: d,
+            }))}
+          />
+          <FormInput
+            type="text"
+            name="regdAddress.locality"
+            label={t['kymIndLocality']}
+            placeholder={t['kymIndEnterLocality']}
+          />
+          <GridItem colSpan={2}>
             <FormMap name={`regdAddress.coordinates`} />
-          </Box>
-        </GroupContainer>
+          </GridItem>
+        </FormSection>
       </form>
     </FormProvider>
   );
