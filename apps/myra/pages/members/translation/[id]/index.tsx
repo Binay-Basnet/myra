@@ -223,8 +223,7 @@ const Translation = () => {
                   </Text>
                 </Button>
               }
-              mainButtonLabel={t['complete']}
-              mainButtonHandler={() => router.push(`/members/list`)}
+              mainButtonHandler={() => router.push(`/pdf?id=${id}`)}
             />
           </Container>
         </Box>

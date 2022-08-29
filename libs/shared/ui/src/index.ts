@@ -50,6 +50,7 @@ export * from './lib/pagination/Pagination';
 export * from './lib/password-input/PasswordInput';
 export * from './lib/password-input/PasswordInput';
 export * from './lib/path-bar/PathBar';
+export * from './lib/pdfviewer/PDFViewer';
 export * from './lib/phone-number/PhoneNumber';
 export * from './lib/phone-number/PhoneNumber';
 export * from './lib/pop-over-component-for-button-list/PopOverComponentForButtonList';

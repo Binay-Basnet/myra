@@ -8638,6 +8638,12 @@ export type SetOrganizationDataMutation = {
   };
 };
 
+export type GetMemberPdfMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberPdfMutation = { members: { memberPDF: string } };
+
 export type GetPreSignedUrlMutationVariables = Exact<{
   contentType?: InputMaybe<Scalars['String']>;
 }>;
@@ -13919,6 +13925,33 @@ export const useSetOrganizationDataMutation = <
     ['setOrganizationData'],
     useAxios<SetOrganizationDataMutation, SetOrganizationDataMutationVariables>(
       SetOrganizationDataDocument
+    ),
+    options
+  );
+export const GetMemberPdfDocument = `
+    mutation getMemberPDF($id: ID!) {
+  members {
+    memberPDF(id: $id)
+  }
+}
+    `;
+export const useGetMemberPdfMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    GetMemberPdfMutation,
+    TError,
+    GetMemberPdfMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    GetMemberPdfMutation,
+    TError,
+    GetMemberPdfMutationVariables,
+    TContext
+  >(
+    ['getMemberPDF'],
+    useAxios<GetMemberPdfMutation, GetMemberPdfMutationVariables>(
+      GetMemberPdfDocument
     ),
     options
   );
