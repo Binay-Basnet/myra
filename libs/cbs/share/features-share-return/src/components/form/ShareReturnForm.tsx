@@ -172,7 +172,7 @@ const ShareReturnForm = () => {
 
   useEffect(() => {
     setTotalAmount(
-      noOfShares * 100 + Number(adminFees ?? 0) + Number(printingFees ?? 0)
+      noOfShares * 100 - (Number(adminFees ?? 0) + Number(printingFees ?? 0))
     );
   }, [noOfShares, adminFees, printingFees]);
 

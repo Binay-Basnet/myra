@@ -54,6 +54,7 @@ export * from './lib/phone-number/PhoneNumber';
 export * from './lib/phone-number/PhoneNumber';
 export * from './lib/pop-over-component-for-button-list/PopOverComponentForButtonList';
 export * from './lib/popover/Popover';
+export * from './lib/quick-links/QuickLinks';
 export * from './lib/radio-button/RadioButton';
 export * from './lib/radio-group/RadioGroup';
 export * from './lib/search-bar/SearchBar';

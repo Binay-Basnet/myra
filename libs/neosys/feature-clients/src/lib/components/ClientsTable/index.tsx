@@ -129,11 +129,6 @@ export const ClientsTable = () => {
         filter={true}
         disableFilterAll={true}
         searchPlaceholder={t['neoClientTableSearch']}
-        pagination={{
-          total: 1200,
-          endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
-          startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
-        }}
       />
     </>
   );
