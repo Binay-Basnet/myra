@@ -3245,6 +3245,8 @@ const en: Record<string, string> = {
 
   // AcountOpen
   accinstallmentAmount: 'Installment Amount',
+
+  transactionsAgentListViewDetail: 'View Detail',
 };
 
 export default en;
