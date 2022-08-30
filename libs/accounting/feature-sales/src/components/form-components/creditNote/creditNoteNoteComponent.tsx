@@ -12,7 +12,7 @@ export const CreditBox = () => {
       <FormTextArea
         name="note"
         label={t['accountingCreditNoteAddNotes']}
-        placeholder={t['accountingCreditNoteAddNote']}
+        __placeholder={t['accountingCreditNoteAddNote']}
         rows={5}
       />
       <FieldCardComponents rows={'repeat(5,1fr)'}>
@@ -48,7 +48,7 @@ export const CreditBox = () => {
               width="100%"
               name="adminFee"
               label=""
-              placeholder="34000.00"
+              __placeholder="34000.00"
               textAlign="right"
               bg="gray.0"
             />

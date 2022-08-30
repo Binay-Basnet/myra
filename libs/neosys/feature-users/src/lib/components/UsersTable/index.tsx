@@ -5,6 +5,7 @@ import { Avatar, Flex } from '@chakra-ui/react';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table, TableListPageHeader } from '@coop/shared/ui';
+import { getRouterQuery } from '@coop/shared/utils';
 
 export const UsersTable = () => {
   const router = useRouter();
@@ -112,11 +113,11 @@ export const UsersTable = () => {
         filter={true}
         disableFilterAll={true}
         searchPlaceholder="Search Users"
-        pagination={{
-          total: 1200,
-          endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
-          startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
-        }}
+        // pagination={{
+        //   total: 1200,
+        //   endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
+        //   startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
+        // }}
       />
     </>
   );

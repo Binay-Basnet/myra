@@ -12,6 +12,6 @@ const Template: Story<AlertProps> = (args) => <Alert {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
   status: 'error',
-  title: 'Placeholder',
+  title: '__placeholder',
   subtitle: 'There was an error processing your request',
 };

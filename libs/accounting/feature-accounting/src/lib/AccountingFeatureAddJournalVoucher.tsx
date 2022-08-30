@@ -88,7 +88,7 @@ export function AccountingFeatureAddJournalVoucher() {
                       name="reference"
                       type="text"
                       label={t['accountingJournalVoucherAddReference']}
-                      placeholder={t['accountingJournalVoucherAddReference']}
+                      __placeholder={t['accountingJournalVoucherAddReference']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -103,7 +103,7 @@ export function AccountingFeatureAddJournalVoucher() {
                   <FormTextArea
                     name="note"
                     label={t['accountingJournalVoucherAddNotes']}
-                    placeholder={t['accountingJournalVoucherAddNote']}
+                    __placeholder={t['accountingJournalVoucherAddNote']}
                     rows={5}
                   />
                 </Box>

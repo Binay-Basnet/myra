@@ -47,7 +47,7 @@ export const WarehouseTransferForm = () => {
               <FormSelect
                 name="sourceWarehouse"
                 label={t['warehouseTransferSourceWarehouse']}
-                placeholder={t['warehouseTransferSourceWarehouse']}
+                __placeholder={t['warehouseTransferSourceWarehouse']}
                 options={[
                   {
                     label: '1',
@@ -68,7 +68,7 @@ export const WarehouseTransferForm = () => {
               <FormSelect
                 name="destinationWarehouse"
                 label={t['warehouseTransferDestinationWarehouse']}
-                placeholder={t['warehouseTransferDestinationWarehouse']}
+                __placeholder={t['warehouseTransferDestinationWarehouse']}
                 options={[
                   {
                     label: '1',
@@ -92,7 +92,7 @@ export const WarehouseTransferForm = () => {
                 type="text"
                 name="code"
                 label={t['warehouseTransferCode']}
-                placeholder={t['warehouseTransferCode']}
+                __placeholder={t['warehouseTransferCode']}
               />
             </GridItem>
             <GridItem>
@@ -100,7 +100,7 @@ export const WarehouseTransferForm = () => {
                 type="date"
                 name="date"
                 label={t['warehouseTransferDate']}
-                placeholder={t['warehouseTransferDate']}
+                __placeholder={t['warehouseTransferDate']}
               />
             </GridItem>
             <GridItem>
@@ -108,14 +108,14 @@ export const WarehouseTransferForm = () => {
                 type="text"
                 name="referenceNumber"
                 label={t['warehouseTransferReferenceNumber']}
-                placeholder={t['warehouseTransferReferenceNumber']}
+                __placeholder={t['warehouseTransferReferenceNumber']}
               />
             </GridItem>
             <GridItem>
               <FormSelect
                 name="authorizedSender"
                 label={t['warehouseTransferAuthorizedSender']}
-                placeholder={t['warehouseTransferSelectAuthorizedSender']}
+                __placeholder={t['warehouseTransferSelectAuthorizedSender']}
                 options={[
                   {
                     label: '1',
@@ -136,7 +136,7 @@ export const WarehouseTransferForm = () => {
               <FormSelect
                 name="authorizedReceiver"
                 label={t['warehouseTransferAuthorizedReceiver']}
-                placeholder={t['warehouseTransferSelectAuthorizedReceiver']}
+                __placeholder={t['warehouseTransferSelectAuthorizedReceiver']}
                 options={[
                   {
                     label: '1',
@@ -190,7 +190,7 @@ export const WarehouseTransferForm = () => {
             <FormTextArea
               name="description"
               label={t['warehouseTransferDescription']}
-              placeholder={t['warehouseTransferNote']}
+              __placeholder={t['warehouseTransferNote']}
             />
           </Box>
         </Box>

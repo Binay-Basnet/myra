@@ -106,7 +106,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -132,7 +132,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         onClick={() => setIsOpenEconomic(!isOpenEconomic)}
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopAcc2EconomicDetails']}
         </Text>
         {!isOpenEconomic ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -149,7 +149,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -166,7 +166,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopAcc3DetailsofBoardDirectors']}
         </Text>
         {!isOpenBoardOfDirectors ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -183,7 +183,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -200,7 +200,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopAcc4DetailsofAccountOperators']}
         </Text>
         {!isOpenAccountOperator ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -217,7 +217,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -234,7 +234,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopAcc5Declaration']}
         </Text>
         {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -251,7 +251,7 @@ export function AccordionKymCoopForm(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>

@@ -17,7 +17,7 @@ export const CustomerDetails = () => {
         <FormSelect
           name="receivedFrom"
           label={t['accountingCustomerPaymentAddReceivedFrom']}
-          placeholder={t['accountingCustomerPaymentAddReceivedFrom']}
+          __placeholder={t['accountingCustomerPaymentAddReceivedFrom']}
         />
 
         <FormInput
@@ -25,25 +25,25 @@ export const CustomerDetails = () => {
           type="number"
           label={t['accountingCustomerPaymentAddReceivedAccount']}
           textAlign={'right'}
-          placeholder={t['accountingCustomerPaymentAddSelectReceivedAccount']}
+          __placeholder={t['accountingCustomerPaymentAddSelectReceivedAccount']}
         />
         <FormInput
           name="recievedDate"
           type="date"
           label={t['accountingCustomerPaymentAddReceivedDate']}
-          placeholder="DD-MM-YYYY"
+          __placeholder="DD-MM-YYYY"
         />
         <FormInput
           name="amount"
           type="number"
           label={t['accountingCustomerPaymentAddAmount']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
         />
         {/* <FormSelect
           name="invoiceReference2"
           label="Invoice Reference"
-          placeholder="Invoice Reference"
+          __placeholder="Invoice Reference"
         /> */}
       </InputGroupContainer>
     </BoxContainer>

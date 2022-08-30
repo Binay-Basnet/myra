@@ -215,7 +215,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="shareCapitalCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -224,7 +224,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="shareCapitalTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -251,7 +251,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="reserveAndSurplusCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -260,7 +260,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="reserveAndSurplusTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -287,7 +287,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="savingDepositCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -296,7 +296,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="savingDepositTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -323,7 +323,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="loanAccountCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -332,7 +332,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="loanAccountTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -359,7 +359,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="capitalGrantCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -368,7 +368,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="capitalGrantTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -395,7 +395,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="currentLiabilitiesCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -404,7 +404,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="currentLiabilitiesTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -431,7 +431,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="nonCurrentLiabilitiesCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -440,7 +440,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="number"
                 min={0}
                 name="nonCurrentLiabilitiesTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -474,7 +474,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="text"
                 name="totalEquityAndLiabilitiesCurrent"
                 value={totalequitycurrent}
-                placeholder={t['kymCoopUnionEqtTotalassets']}
+                __placeholder={t['kymCoopUnionEqtTotalassets']}
               />
             </GridItem>
             <GridItem>
@@ -487,7 +487,7 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
                 type="text"
                 name="totalEquityAndLiabilitiesTarget"
                 value={totalequityTarget}
-                placeholder={t['kymCoopUnionEqtTotal']}
+                __placeholder={t['kymCoopUnionEqtTotal']}
               />
             </GridItem>
           </Grid>

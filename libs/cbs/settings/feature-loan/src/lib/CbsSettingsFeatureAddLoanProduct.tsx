@@ -540,7 +540,7 @@ export function SettingsLoanProductForm() {
                       <FormInput
                         name="productName"
                         label={t['loanProductProductName']}
-                        placeholder={t['loanProductEnterProductName']}
+                        __placeholder={t['loanProductEnterProductName']}
                       />
                     </GridItem>
 
@@ -548,14 +548,14 @@ export function SettingsLoanProductForm() {
                       name="productType"
                       options={productType}
                       label={t['loanProductProductType']}
-                      placeholder={t['loanProductSelectProductType']}
+                      __placeholder={t['loanProductSelectProductType']}
                     />
                     <GridItem colSpan={2}>
                       <FormSelect
                         name="productSubType"
                         options={productSubType}
                         label={t['loanProductProductSubtype']}
-                        placeholder={t['loanProductSelectProductType']}
+                        __placeholder={t['loanProductSelectProductType']}
                       />
                     </GridItem>
 
@@ -563,7 +563,9 @@ export function SettingsLoanProductForm() {
                       name="productNature"
                       options={productNature}
                       label={t['loanProductNatureLoanProduct']}
-                      placeholder={t['loanProductSelectNatureofDepositProduct']}
+                      __placeholder={
+                        t['loanProductSelectNatureofDepositProduct']
+                      }
                     />
                   </InputGroupContainer>
                 </Box>
@@ -582,12 +584,12 @@ export function SettingsLoanProductForm() {
                   <InputGroupContainer mt="s16">
                     <FormInput
                       label={t['loanProductPrefix']}
-                      placeholder={t['loanProductEnterPrefix']}
+                      __placeholder={t['loanProductEnterPrefix']}
                       name="productCode.prefix"
                     />
                     <FormInput
                       label={t['loanProductIntitialNumber']}
-                      placeholder={t['loanProductIntitialNumber']}
+                      __placeholder={t['loanProductIntitialNumber']}
                       name="productCode.initialNo"
                     />
                     <Box></Box>

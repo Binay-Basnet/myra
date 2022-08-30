@@ -14,6 +14,7 @@ export const spacing = {
   s48: '48px',
   s60: '60px',
 };
+export default spacing;
 
 /**
  * @deprecated

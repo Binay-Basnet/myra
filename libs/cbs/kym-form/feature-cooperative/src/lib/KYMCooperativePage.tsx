@@ -56,82 +56,76 @@ export function KYMCooperativePage() {
       </Box>
 
       <Container minW="container.xl" height="fit-content">
-        <Box display="flex" width="100%">
-          <Box display="flex">
-            <Box
-              w={320}
-              p="s16"
-              pr="s20"
-              position="fixed"
-              borderRight="1px solid"
-              borderColor="border.layout"
-              minHeight="100%"
-              bg="white"
-            >
-              <AccordionKymCoopForm kymCurrentSection={kymCurrentSection} />
-            </Box>
+        <Box>
+          <Box
+            w={320}
+            p="s16"
+            pr="s20"
+            position="fixed"
+            borderRight="1px solid"
+            borderColor="border.layout"
+            minHeight="100%"
+            bg="gray.0"
+          >
+            <AccordionKymCoopForm kymCurrentSection={kymCurrentSection} />
+          </Box>
 
-            <Box background="white" ml="320" pb="120px">
-              <SectionContainer>
-                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                  {t['kymCoop1InformationofOrganization']}
-                </Text>
-                <KymCoopBasicInfo setSection={setKymCurrentSection} />
-                <KymCoopRegdAddress setSection={setKymCurrentSection} />
-                <KymCoopOpAddress setSection={setKymCurrentSection} />
-                <KymCoopContactDetails setSection={setKymCurrentSection} />
-                <KymCoopCurrentMembers setSection={setKymCurrentSection} />
-                <KymCoopDate setSection={setKymCurrentSection} />
-                <KymCoopRepresentative setSection={setKymCurrentSection} />
-                <KymCoopAddCoopDetails setSection={setKymCurrentSection} />
-                <KymCoopNoEmployee setSection={setKymCurrentSection} />
-              </SectionContainer>
+          <Box background="gray.0" ml="320" pb="120px">
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymCoop1InformationofOrganization']}
+              </Text>
+              <KymCoopBasicInfo setSection={setKymCurrentSection} />
+              <KymCoopRegdAddress setSection={setKymCurrentSection} />
+              <KymCoopOpAddress setSection={setKymCurrentSection} />
+              <KymCoopContactDetails setSection={setKymCurrentSection} />
+              <KymCoopCurrentMembers setSection={setKymCurrentSection} />
+              <KymCoopDate setSection={setKymCurrentSection} />
+              <KymCoopRepresentative setSection={setKymCurrentSection} />
+              <KymCoopAddCoopDetails setSection={setKymCurrentSection} />
+              <KymCoopNoEmployee setSection={setKymCurrentSection} />
+            </SectionContainer>
 
-              <SectionContainer>
-                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                  {t['kymCoop2EconomicDetails']}
-                </Text>
-                <KymEquityLiabilities setSection={setKymCurrentSection} />
-                <KymCoopAssets setSection={setKymCurrentSection} />
-              </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymCoop2EconomicDetails']}
+              </Text>
+              <KymEquityLiabilities setSection={setKymCurrentSection} />
+              <KymCoopAssets setSection={setKymCurrentSection} />
+            </SectionContainer>
 
-              <SectionContainer>
-                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                  {t['kymCoop3DetailsofBoardDirectors']}
-                </Text>
-                <KymCoopBoardDirectorDetail setSection={setKymCurrentSection} />
-              </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymCoop3DetailsofBoardDirectors']}
+              </Text>
+              <KymCoopBoardDirectorDetail setSection={setKymCurrentSection} />
+            </SectionContainer>
 
-              <SectionContainer>
-                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                  {t['kymCoop4DetailsofAccountOperators']}
-                </Text>
-                <KymCoopAccountOperatorDetail
-                  setSection={setKymCurrentSection}
-                />
-              </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymCoop4DetailsofAccountOperators']}
+              </Text>
+              <KymCoopAccountOperatorDetail setSection={setKymCurrentSection} />
+            </SectionContainer>
 
-              <SectionContainer>
-                <Text p="s20" fontSize="r3" fontWeight="SemiBold">
-                  {t['kymCoop5Declaration']}
-                </Text>
-                <KymAccountHolderDeclaration
-                  setSection={setKymCurrentSection}
-                />
-                <KymCoopDocumentDeclarationForm
-                  setSection={setKymCurrentSection}
-                />
-              </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymCoop5Declaration']}
+              </Text>
+              <KymAccountHolderDeclaration setSection={setKymCurrentSection} />
+              <KymCoopDocumentDeclarationForm
+                setSection={setKymCurrentSection}
+              />
+            </SectionContainer>
 
-              <Box p="s20" display="flex" gap="s16" alignItems="start">
-                <Checkbox fontSize="s3">{''}</Checkbox>
-                <TextFields variant="formInput" mt="-6px">
-                  I/We agree to the&nbsp;
-                  <TextFields as="span" variant="link">
-                    Terms and condition.
-                  </TextFields>
+            <Box p="s20" display="flex" gap="s16" alignItems="start">
+              <Checkbox fontSize="s3">{''}</Checkbox>
+              <TextFields variant="formInput" mt="-6px">
+                I/We agree to the&nbsp;
+                <TextFields as="span" variant="link">
+                  Terms and condition.
                 </TextFields>
-              </Box>
+              </TextFields>
             </Box>
           </Box>
         </Box>

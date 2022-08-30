@@ -116,7 +116,7 @@ export const ShareSettingsGeneralPage = () => {
                   <FormInput
                     name="multiplicityFactor"
                     size="sm"
-                    placeholder="50"
+                    __placeholder="50"
                   />
                 </Box>
               </Box>
@@ -133,7 +133,7 @@ export const ShareSettingsGeneralPage = () => {
                   <FormInput
                     name="minimumQuantityOfShare"
                     size="sm"
-                    placeholder="100"
+                    __placeholder="100"
                   />
                 </Box>
               </Box>
@@ -150,7 +150,7 @@ export const ShareSettingsGeneralPage = () => {
                   <FormInput
                     name="maximumQuantityOfShare"
                     size="sm"
-                    placeholder="200"
+                    __placeholder="200"
                   />
                 </Box>
               </Box>
@@ -170,7 +170,7 @@ export const ShareSettingsGeneralPage = () => {
                   <FormInput
                     name="paidUpShareRate"
                     size="sm"
-                    placeholder="100"
+                    __placeholder="100"
                   />
                 </Box>
               </Box>
@@ -214,7 +214,7 @@ export const ShareSettingsGeneralPage = () => {
                         value: 'non-transactable',
                       },
                     ]}
-                    placeholder={t['sharePaidUpShare']}
+                    __placeholder={t['sharePaidUpShare']}
                   />
                 </Box>
               </Box>
@@ -227,7 +227,7 @@ export const ShareSettingsGeneralPage = () => {
                   {t['shareNumberOfAuthorizedPaidUpShare']}
                 </Text>
                 <Box>
-                  <Input size="sm" placeholder="10,000" />
+                  <Input size="sm" __placeholder="10,000" />
                 </Box>
               </Box>
               <Box
@@ -239,7 +239,7 @@ export const ShareSettingsGeneralPage = () => {
                   {t['shareNumberOfIssuedShare']}
                 </Text>
                 <Box>
-                  <Input size="sm" placeholder="25,000" />
+                  <Input size="sm" __placeholder="25,000" />
                 </Box>
               </Box>
             </Box>
@@ -258,7 +258,11 @@ export const ShareSettingsGeneralPage = () => {
                   {t['shareStartNumber']}
                 </Text>
                 <Box>
-                  <FormInput name="startNumber" size="sm" placeholder="00001" />
+                  <FormInput
+                    name="startNumber"
+                    size="sm"
+                    __placeholder="00001"
+                  />
                 </Box>
               </Box>
               <Box
@@ -270,7 +274,7 @@ export const ShareSettingsGeneralPage = () => {
                   {t['shareEndNumber']}
                 </Text>
                 <Box>
-                  <FormInput name="endNumber" size="sm" placeholder="00001" />
+                  <FormInput name="endNumber" size="sm" __placeholder="00001" />
                 </Box>
               </Box>
 
@@ -283,7 +287,7 @@ export const ShareSettingsGeneralPage = () => {
                   {t['shareIncrementer']}
                 </Text>
                 <Box>
-                  <FormInput name="incrementor" size="sm" placeholder="1" />
+                  <FormInput name="incrementor" size="sm" __placeholder="1" />
                 </Box>
               </Box>
               <Box
@@ -295,7 +299,7 @@ export const ShareSettingsGeneralPage = () => {
                   {t['shareNumberOfDigits']}
                 </Text>
                 <Box>
-                  <FormInput name="noOfDigits" size="sm" placeholder="7" />
+                  <FormInput name="noOfDigits" size="sm" __placeholder="7" />
                 </Box>
               </Box>
             </Box>{' '}

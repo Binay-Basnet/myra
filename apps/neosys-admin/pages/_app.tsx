@@ -8,7 +8,7 @@ import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import { store, theme, useInit, useSnap } from '@coop/shared/utils';
+import { neosysTheme, store, useInit, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
@@ -70,7 +70,7 @@ function CustomApp(props: AppPropsWithLayout) {
     <Provider store={store}>
       {/* <AuthProvider> */}
       <QueryClientProvider client={queryClient}>
-        <ChakraProvider theme={theme}>
+        <ChakraProvider theme={neosysTheme}>
           <MainApp {...props} />
         </ChakraProvider>
         <ReactQueryDevtools />

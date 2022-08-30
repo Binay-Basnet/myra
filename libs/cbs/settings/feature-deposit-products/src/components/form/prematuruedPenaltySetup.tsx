@@ -53,7 +53,7 @@ export const PrematuredPenalty = () => {
         <FormInput
           name="prematurePenalty.noOfDays"
           label={t['depositProductNumberofDays']}
-          placeholder={t['depositProductNoofdays']}
+          __placeholder={t['depositProductNoofdays']}
         />
         <FormSelect
           name="prematurePenalty.penaltyLedgerMapping"
@@ -65,12 +65,12 @@ export const PrematuredPenalty = () => {
           type={'number'}
           label={t['depositProductPenaltyRs']}
           textAlign={'right'}
-          placeholder="0"
+          __placeholder="0"
         />
         <FormInput
           name="prematurePenalty.penaltyRate"
           label={t['depositProductPenaltyRate']}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %

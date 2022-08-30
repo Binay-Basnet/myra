@@ -13,6 +13,7 @@ export interface NumberInputProps extends ChakraNumberInputProps {
   helperText?: string;
   errorText?: string;
   label?: string;
+  __placeholder?: string;
   placeholder?: string;
   value?: string;
   handleChange?: (val: string) => void;

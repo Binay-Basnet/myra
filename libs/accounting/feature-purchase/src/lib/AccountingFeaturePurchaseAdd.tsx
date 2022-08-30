@@ -102,7 +102,7 @@ export function AccountingFeaturePurchaseAdd() {
                   <FormTextArea
                     name="note"
                     label={t['accountingPurchaseAddNotes']}
-                    placeholder={t['accountingPurchaseAddNote']}
+                    __placeholder={t['accountingPurchaseAddNote']}
                     rows={5}
                   />
                   <FieldCardComponents rows={'repeat(5,1fr)'}>

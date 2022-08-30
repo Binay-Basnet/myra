@@ -51,7 +51,7 @@ import { getFieldOption } from '../../../utils/getFieldOption';
 //       formType={option?.fieldType}
 //       name={`incomeSourceDetails.${fieldIndex}.options.${optionIndex}.value`}
 //       label={String(option?.name?.local)}
-//       placeholder={String(option?.name?.local)}
+//       __placeholder={String(option?.name?.local)}
 //     />
 //   );
 // };
@@ -150,7 +150,7 @@ const IncomeSource = ({
                 bg="white"
                 name={`incomeSource`}
                 label={t['kymIndIncomeSource']}
-                placeholder={t['kymIndEnterIncomeSource']}
+                __placeholder={t['kymIndEnterIncomeSource']}
               />
             </GridItem>
             <GridItem colSpan={1}>
@@ -160,7 +160,7 @@ const IncomeSource = ({
                 bg="white"
                 name={`amount`}
                 label={t['kymIndAmount']}
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
 

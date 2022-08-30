@@ -14,7 +14,7 @@ export const SalesBox = () => {
       <FormTextArea
         name="note"
         label={t['invFormNotes']}
-        placeholder={t['invFormNote']}
+        __placeholder={t['invFormNote']}
         rows={5}
       />
       <FieldCardComponents rows={'repeat(5,1fr)'}>
@@ -50,7 +50,7 @@ export const SalesBox = () => {
               width="100%"
               name="adminFee"
               label=""
-              placeholder="34000.00"
+              __placeholder="34000.00"
               textAlign="right"
               bg="gray.0"
             />

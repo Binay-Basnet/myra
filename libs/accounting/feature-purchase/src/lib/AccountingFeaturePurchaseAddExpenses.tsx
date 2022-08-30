@@ -101,7 +101,7 @@ export function AccountingFeaturePurchaseAddExpenses() {
                         name="supplierName"
                         type="text"
                         label={t['accountingExpensesAddSupplierName']}
-                        placeholder={t['accountingExpensesAddSupplierName']}
+                        __placeholder={t['accountingExpensesAddSupplierName']}
                       />
                     </GridItem>
 
@@ -121,7 +121,7 @@ export function AccountingFeaturePurchaseAddExpenses() {
                       name="reference"
                       type="text"
                       label={t['accountingExpensesAddReference']}
-                      placeholder={t['accountingExpensesAddReference']}
+                      __placeholder={t['accountingExpensesAddReference']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -136,7 +136,7 @@ export function AccountingFeaturePurchaseAddExpenses() {
                   <FormTextArea
                     name="note"
                     label={t['accountingExpensesAddNotes']}
-                    placeholder={t['accountingExpensesAddNote']}
+                    __placeholder={t['accountingExpensesAddNote']}
                     rows={5}
                   />
                   <FieldCardComponents rows={'repeat(5,1fr)'}>
@@ -246,14 +246,16 @@ export function AccountingFeaturePurchaseAddExpenses() {
                       <FormSelect
                         name="tdsAccount"
                         label={t['accountingExpensesAddTDSLedgerAccount']}
-                        placeholder={t['accountingExpensesAddTDSLedgerAccount']}
+                        __placeholder={
+                          t['accountingExpensesAddTDSLedgerAccount']
+                        }
                         options={[]}
                       />
 
                       <FormSelect
                         name="tdsType"
                         label={t['accountingExpensesAddTDSType']}
-                        placeholder={t['accountingExpensesAddTDSType']}
+                        __placeholder={t['accountingExpensesAddTDSType']}
                         options={[]}
                       />
 
@@ -262,7 +264,7 @@ export function AccountingFeaturePurchaseAddExpenses() {
                         type="number"
                         label={t['accountingExpensesAddTDSAmount']}
                         textAlign={'right'}
-                        placeholder="0.00"
+                        __placeholder="0.00"
                       />
                     </InputGroupContainer>
                   )}

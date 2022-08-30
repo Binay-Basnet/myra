@@ -95,6 +95,19 @@ export type AccountActivityListEdges = {
   node?: Maybe<AccountActivityEntry>;
 };
 
+export enum AccountClosePaymentMode {
+  AccountTransfer = 'ACCOUNT_TRANSFER',
+  BankCheque = 'BANK_CHEQUE',
+  Cash = 'CASH',
+}
+
+export enum AccountCloseReason {
+  Death = 'DEATH',
+  Migration = 'MIGRATION',
+  Other = 'OTHER',
+  PersonalReason = 'PERSONAL_REASON',
+}
+
 export type AccountConnection = {
   edges: Array<AccountEdge>;
   pageInfo: PageInfo;
@@ -174,6 +187,13 @@ export type AccountTransferListConnection = {
 export type AccountTransferListEdges = {
   cursor: Scalars['Cursor'];
   node?: Maybe<AccountTransferEntry>;
+};
+
+export type AccountTransferPaymentForAccountClose = {
+  depositedBy: Scalars['String'];
+  depositedDate: Scalars['String'];
+  destination_account: Scalars['ID'];
+  note?: InputMaybe<Scalars['String']>;
 };
 
 export type AccountTypeDetailsUnion =
@@ -427,6 +447,13 @@ export type BankChartsOfAccount = {
   bankAccountNumber: Scalars['String'];
   bankGLCode: Scalars['String'];
   bankId: Scalars['ID'];
+};
+
+export type BankChequePaymentForAccountClose = {
+  amount: Scalars['String'];
+  bank: Scalars['ID'];
+  cheque_no: Scalars['String'];
+  note?: InputMaybe<Scalars['String']>;
 };
 
 export type BankDataMutation = {
@@ -1448,6 +1475,24 @@ export type DepositAccount = Base & {
   product: DepositProduct;
 };
 
+export type DepositAccountClose = {
+  accountID: Scalars['ID'];
+  accountTransfer?: InputMaybe<AccountTransferPaymentForAccountClose>;
+  bankCheque?: InputMaybe<BankChequePaymentForAccountClose>;
+  cash?: InputMaybe<DepositCash>;
+  memberID: Scalars['ID'];
+  notes?: InputMaybe<Scalars['String']>;
+  otherReason?: InputMaybe<Scalars['String']>;
+  paymentMode: AccountClosePaymentMode;
+  reason: AccountCloseReason;
+};
+
+export type DepositAccountCloseResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['Any']>;
+  recordId: Scalars['ID'];
+};
+
 export type DepositAccountInstallmentResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<DepositLoanAccountQuery>;
@@ -1467,6 +1512,7 @@ export type DepositCash = {
   cashPaid: Scalars['String'];
   denominations?: InputMaybe<Array<Denomination>>;
   disableDenomination: Scalars['Boolean'];
+  note?: InputMaybe<Scalars['String']>;
   returned_amount: Scalars['String'];
   total: Scalars['String'];
 };
@@ -1604,12 +1650,17 @@ export type DepositLoanAccountInput = {
 
 export type DepositLoanAccountMutation = {
   add?: Maybe<DepositLoanAccountResult>;
+  close?: Maybe<DepositAccountCloseResult>;
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
 };
 
 export type DepositLoanAccountMutationAddArgs = {
   data?: InputMaybe<DepositLoanAccountInput>;
   id: Scalars['ID'];
+};
+
+export type DepositLoanAccountMutationCloseArgs = {
+  data?: InputMaybe<DepositAccountClose>;
 };
 
 export type DepositLoanAccountMutationForgiveInstallmentArgs = {
@@ -8587,6 +8638,12 @@ export type SetOrganizationDataMutation = {
   };
 };
 
+export type GetMemberPdfMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberPdfMutation = { members: { memberPDF: string } };
+
 export type GetPreSignedUrlMutationVariables = Exact<{
   contentType?: InputMaybe<Scalars['String']>;
 }>;
@@ -11083,6 +11140,8 @@ export type GetMemberListQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           type: KymMemberTypesEnum;
+          profilePicUrl?: Array<string | null> | null;
+          signaturePicUrl?: Array<string | null> | null;
           contact?: string | null;
           createdAt: string;
           dateJoined?: string | null;
@@ -12149,6 +12208,11 @@ export type GetDepositProductSettingsEditDataQuery = {
               rate?: number | null;
             } | null> | null;
             serviceCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            accountCloseCharge?: Array<{
               serviceName?: string | null;
               ledgerName?: string | null;
               amount?: any | null;
@@ -13861,6 +13925,33 @@ export const useSetOrganizationDataMutation = <
     ['setOrganizationData'],
     useAxios<SetOrganizationDataMutation, SetOrganizationDataMutationVariables>(
       SetOrganizationDataDocument
+    ),
+    options
+  );
+export const GetMemberPdfDocument = `
+    mutation getMemberPDF($id: ID!) {
+  members {
+    memberPDF(id: $id)
+  }
+}
+    `;
+export const useGetMemberPdfMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    GetMemberPdfMutation,
+    TError,
+    GetMemberPdfMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    GetMemberPdfMutation,
+    TError,
+    GetMemberPdfMutationVariables,
+    TContext
+  >(
+    ['getMemberPDF'],
+    useAxios<GetMemberPdfMutation, GetMemberPdfMutationVariables>(
+      GetMemberPdfDocument
     ),
     options
   );
@@ -17583,6 +17674,8 @@ export const GetMemberListDocument = `
             wardNo
             locality
           }
+          profilePicUrl
+          signaturePicUrl
           contact
           createdAt
           dateJoined
@@ -18966,6 +19059,11 @@ export const GetDepositProductSettingsEditDataDocument = `
             maxPostingFreqDifference
             accountType
             serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            accountCloseCharge {
               serviceName
               ledgerName
               amount

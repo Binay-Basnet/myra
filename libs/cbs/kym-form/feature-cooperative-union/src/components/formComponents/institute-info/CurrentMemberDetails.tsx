@@ -25,25 +25,25 @@ export const CurrentMemberDetails = () => {
           type="number"
           name="noOfMaleMember"
           label={t['kymCoopUnionNoofMalemembers']}
-          placeholder={t['kymCoopUnionEnternoofMaleMembers']}
+          __placeholder={t['kymCoopUnionEnternoofMaleMembers']}
         />
         <FormInput
           type="number"
           name="noOfFemaleMember"
           label={t['kymCoopUnionNoofFemalemembers']}
-          placeholder={t['kymCoopUnionEnternoofFemaleMembers']}
+          __placeholder={t['kymCoopUnionEnternoofFemaleMembers']}
         />
         <FormInput
           type="number"
           name="noOfInstitutionalMember"
           label={t['kymCoopUnionNoofInstitutionalmembers']}
-          placeholder={t['kymCoopUnionEnternoofInstitutuionalMembers']}
+          __placeholder={t['kymCoopUnionEnternoofInstitutuionalMembers']}
         />
         <FormInput
           type="number"
           name="totalCurrentMmeber"
           label={t['kymCoopUnionTotalcurrentmembers']}
-          placeholder={t['kymCoopUnionEntertotalcurrentmembers']}
+          __placeholder={t['kymCoopUnionEntertotalcurrentmembers']}
         />
       </InputGroupContainer>
     </GroupContainer>

@@ -181,7 +181,7 @@ export const ProductTest = () => {
           <FormSelect
             name="productId"
             label={t['accProductName']}
-            placeholder={t['accSelectProduct']}
+            __placeholder={t['accSelectProduct']}
             isLoading={isFetching}
             options={productOptions}
           />

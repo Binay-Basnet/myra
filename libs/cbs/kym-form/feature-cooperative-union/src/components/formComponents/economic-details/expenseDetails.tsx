@@ -139,7 +139,7 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
                 type="number"
                 min={0}
                 name="purchase"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -165,7 +165,7 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
                 textAlign="right"
                 type="text"
                 name="directExpense"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -193,7 +193,7 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
                 type="number"
                 min={0}
                 name="administrativeExpense"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -220,7 +220,7 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
                 type="number"
                 min={0}
                 name="financialCost"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -248,7 +248,7 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
                 type="number"
                 min={0}
                 name="riskManagementCost"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -275,7 +275,7 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
                 type="number"
                 min={0}
                 name="deferredTaxExpense"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -310,7 +310,7 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
                 type="text"
                 name="totalExpense"
                 value={totalExpense}
-                placeholder={t['kymCoopUnionExpTotalAssets']}
+                __placeholder={t['kymCoopUnionExpTotalAssets']}
               />
             </GridItem>
           </Grid>

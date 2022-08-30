@@ -17,7 +17,7 @@ export const DefaultAccountName = () => {
         <FormSelect
           name="accountType"
           label={t['depositProductAccountType']}
-          placeholder={t['depositProductSelectAccount']}
+          __placeholder={t['depositProductSelectAccount']}
         />
       </InputGroupContainer>
     </BoxContainer>

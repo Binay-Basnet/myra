@@ -191,14 +191,14 @@ export function NewAccountTransfer() {
                       <MemberSelect
                         name="memberId"
                         label="Member"
-                        placeholder="Select Member"
+                        __placeholder="Select Member"
                       />
 
                       {memberId && (
                         <FormCustomSelect
                           name="srcAccountId"
                           label="Source Account"
-                          placeholder="Select Account"
+                          __placeholder="Select Account"
                           options={accountListData?.account?.list?.edges?.map(
                             (account) => ({
                               accountInfo: {
@@ -235,7 +235,7 @@ export function NewAccountTransfer() {
                           <FormCustomSelect
                             name="destAccountId"
                             label="Receipent Account"
-                            placeholder="Select Receipent Account"
+                            __placeholder="Select Receipent Account"
                             options={accountListData?.account?.list?.edges?.map(
                               (account) => ({
                                 accountInfo: {
@@ -267,13 +267,13 @@ export function NewAccountTransfer() {
                             <MemberSelect
                               name="destMemberId"
                               label="Receipent Member"
-                              placeholder="Select Receipent Member"
+                              __placeholder="Select Receipent Member"
                             />
 
                             <FormCustomSelect
                               name="destAccountId"
                               label="Receipent Account"
-                              placeholder="Select Receipent Account"
+                              __placeholder="Select Receipent Account"
                               options={destAccountListData?.account?.list?.edges?.map(
                                 (account) => ({
                                   accountInfo: {
@@ -316,7 +316,7 @@ export function NewAccountTransfer() {
                             <FormInput
                               name="chequeNo"
                               label="Cheque No"
-                              placeholder="Cheque No"
+                              __placeholder="Cheque No"
                             />
                           </InputGroupContainer>
                         )}
@@ -326,7 +326,7 @@ export function NewAccountTransfer() {
                             <FormInput
                               name="withdrawSlipNo"
                               label="Withdraw Slip No"
-                              placeholder="Withdraw Slip No"
+                              __placeholder="Withdraw Slip No"
                             />
                           </InputGroupContainer>
                         )}
@@ -342,14 +342,14 @@ export function NewAccountTransfer() {
                             name="amount"
                             label="Transfer Amount"
                             textAlign="right"
-                            placeholder="0.0"
+                            __placeholder="0.0"
                           />
                         </InputGroupContainer>
 
                         <FormTextArea
                           name="notes"
                           label="Note"
-                          placeholder="Note"
+                          __placeholder="Note"
                           rows={5}
                         />
                       </BoxContainer>

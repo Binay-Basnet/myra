@@ -402,7 +402,7 @@ const SharePurchaseForm = () => {
                         name="shareCount"
                         max={10}
                         label={t['sharePurchaseNoOfShares']}
-                        placeholder="0"
+                        __placeholder="0"
                       />
                     </GridItem>
 
@@ -447,13 +447,13 @@ const SharePurchaseForm = () => {
                               name="adminFee"
                               type="number"
                               textAlign={'right'}
-                              placeholder="0.00"
+                              __placeholder="0.00"
                             />
 
                             {/* <FormNumberInput
                               name="adminFee"
                               id="administrationFees"
-                              placeholder="34000.00"
+                              __placeholder="34000.00"
                               bg="gray.0"
                             /> */}
                           </Box>
@@ -476,14 +476,14 @@ const SharePurchaseForm = () => {
                               name="printingFee"
                               type="number"
                               textAlign={'right'}
-                              placeholder="0.00"
+                              __placeholder="0.00"
                             />
 
                             {/* <FormNumberInput
                               name="printingFee"
                               id="printingFees"
                               label=""
-                              placeholder="54.00"
+                              __placeholder="54.00"
                               bg="gray.0"
                             /> */}
                           </Box>
@@ -548,7 +548,7 @@ const SharePurchaseForm = () => {
                       <FormCustomSelect
                         name="accountId"
                         label={t['sharePurchaseSelectAccount']}
-                        placeholder={t['sharePurchaseSelectAccount']}
+                        __placeholder={t['sharePurchaseSelectAccount']}
                         options={accountListData?.account?.list?.edges?.map(
                           (account) => ({
                             accountInfo: {
@@ -594,7 +594,7 @@ const SharePurchaseForm = () => {
                         <FormSelect
                           name="bankId"
                           label={t['sharePurchaseSelectBank']}
-                          placeholder={t['sharePurchaseSelectBank']}
+                          __placeholder={t['sharePurchaseSelectBank']}
                           options={bankList}
                         />
                       </InputGroupContainer>
@@ -602,7 +602,7 @@ const SharePurchaseForm = () => {
                         <FormInput
                           type="text"
                           name="voucherNumber"
-                          placeholder={t['sharePurchaseEnterVoucherNumber']}
+                          __placeholder={t['sharePurchaseEnterVoucherNumber']}
                           label={t['sharePurchaseEnterVoucherNumber']}
                         />
                       </InputGroupContainer>
@@ -614,7 +614,7 @@ const SharePurchaseForm = () => {
                       <FormInput
                         type="text"
                         name="totalAmount"
-                        placeholder={t['sharePurchaseEnterCashAmount']}
+                        __placeholder={t['sharePurchaseEnterCashAmount']}
                         label={t['sharePurchaseEnterCashAmount']}
                       />
                     </Box>

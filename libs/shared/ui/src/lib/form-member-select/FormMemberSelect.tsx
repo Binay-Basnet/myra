@@ -15,6 +15,7 @@ import FormCustomSelect from './FormCustomSelect';
 interface IMemberSelectProps {
   name: string;
   label?: string;
+  __placeholder?: string;
   placeholder?: string;
 }
 

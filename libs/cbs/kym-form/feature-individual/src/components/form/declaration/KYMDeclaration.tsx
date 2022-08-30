@@ -169,7 +169,7 @@ export const KYMDeclaration = ({
                     name={'beneficialRelationshipId'}
                     isLoading={familyRelationshipLoading}
                     options={getFieldOption(familyRelationShipData)}
-                    placeholder={t['kynIndRelationship']}
+                    __placeholder={t['kynIndRelationship']}
                     label={t['kynIndIyespleasewritenameandrelationship']}
                   />
                 </GridItem>
@@ -180,7 +180,7 @@ export const KYMDeclaration = ({
                     id="beneficialFullName"
                     name={'beneficialFullName'}
                     label=" "
-                    placeholder={t['kynIndFullName']}
+                    __placeholder={t['kynIndFullName']}
                   />
                 </GridItem>
               </>
@@ -202,7 +202,7 @@ export const KYMDeclaration = ({
                     name="politicallyExposedDetails"
                     id="politicallyExposedDetails"
                     label={t['kynIndPleasespecify']}
-                    placeholder={t['kynIndEnterDetails']}
+                    __placeholder={t['kynIndEnterDetails']}
                   />
                 </Box>
               </GridItem>
@@ -226,7 +226,7 @@ export const KYMDeclaration = ({
                   <FormTextArea
                     id="convictedDetails"
                     label={t['kynIndPleasespecify']}
-                    placeholder={t['kynIndEnterDetails']}
+                    __placeholder={t['kynIndEnterDetails']}
                     name="politicallyExposedDetails"
                   />
                 </Box>

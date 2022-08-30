@@ -75,7 +75,7 @@ export const InventoryUnitsLayout = ({
                 h="44px"
                 w="100%"
                 variant="outline"
-                placeholder="NIBL Bank"
+                __placeholder="NIBL Bank"
               />
             </Box>
             <Box display="flex" flexDirection={'column'} gap="s4">
@@ -87,7 +87,7 @@ export const InventoryUnitsLayout = ({
                 h="44px"
                 w="100%"
                 variant="outline"
-                placeholder="NIBL Bank"
+                __placeholder="NIBL Bank"
               />
             </Box>
             <Box display="flex" flexDirection={'column'} gap="s4">
@@ -99,7 +99,7 @@ export const InventoryUnitsLayout = ({
                 h="44px"
                 w="100%"
                 variant="outline"
-                placeholder="NIBL Bank"
+                __placeholder="NIBL Bank"
               />
             </Box>
             <Box display={'flex'} flexDirection={'row'} gap="s16">

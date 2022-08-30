@@ -49,7 +49,7 @@ const transactionSidebarColumns = [
     title: 'transactionsSidebarAgentList',
     link: '/transactions/agent/list',
     name: 'agent-list',
-    addLink: '/transactions/agent/add',
+    // addLink: '/transactions/agent/add',
   },
   {
     title: 'transactionsSidebarAgentTransaction',

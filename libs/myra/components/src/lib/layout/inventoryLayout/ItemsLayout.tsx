@@ -136,12 +136,12 @@ export const InventoryItemsLayout = ({
                     type="text"
                     name="name"
                     label={t['catgItemGroupName']}
-                    placeholder={t['catgItemGroupName']}
+                    __placeholder={t['catgItemGroupName']}
                   />
                   <FormSelect
                     name="group"
                     label={t['catgUnderItemGroup']}
-                    placeholder={t['catgSelectItemGroup']}
+                    __placeholder={t['catgSelectItemGroup']}
                     options={[
                       {
                         label: '1',
@@ -161,7 +161,7 @@ export const InventoryItemsLayout = ({
                     type="text"
                     name="name"
                     label={t['catgDescription']}
-                    placeholder={t['catgDescription']}
+                    __placeholder={t['catgDescription']}
                   />
                 </Box>
               </form>
@@ -199,19 +199,19 @@ export const InventoryItemsLayout = ({
                     type="text"
                     name="name"
                     label={t['itemUnitFormName']}
-                    placeholder={t['itemUnitFormName']}
+                    __placeholder={t['itemUnitFormName']}
                   />
                   <FormInput
                     type="text"
                     name="shortName"
                     label={t['itemUnitFormShortName']}
-                    placeholder={t['itemUnitFormShortName']}
+                    __placeholder={t['itemUnitFormShortName']}
                   />
                   <FormInput
                     type="text"
                     name="description"
                     label={t['itemUnitFormDescription']}
-                    placeholder={t['itemUnitFormDescription']}
+                    __placeholder={t['itemUnitFormDescription']}
                   />
                   <FormSwitch
                     name="acceptFraction"

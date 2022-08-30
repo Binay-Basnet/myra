@@ -152,14 +152,14 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
               type="text"
               name="idNo"
               label={t['kymIndVoterCardNo']}
-              placeholder={t['kymIndVoterCardNo']}
+              __placeholder={t['kymIndVoterCardNo']}
             />
 
             <FormInput
               type="text"
               name="place"
               label={t['kymIndVoterCardPollingStation']}
-              placeholder={t['kymIndVoterCardPollingStation']}
+              __placeholder={t['kymIndVoterCardPollingStation']}
             />
           </FormSection>
         </form>

@@ -96,6 +96,7 @@ export const CooperativeMemberInformation = ({
         }}
       >
         <GroupContainer
+          p="s20"
           id="kymCoopUnionAccContactDetails"
           scrollMarginTop={'200px'}
         >
@@ -142,14 +143,14 @@ export const CooperativeMemberInformation = ({
                 type="number"
                 min={0}
                 name="noOfMaleMemberCurrent"
-                placeholder={t['kymCoopUnionEnterNoMaleMembers']}
+                __placeholder={t['kymCoopUnionEnterNoMaleMembers']}
               />
 
               <FormInput
                 type="number"
                 min={0}
                 name="noOfMaleMemberTarget"
-                placeholder={t['kymCoopUnionEnterNoMaleMembers']}
+                __placeholder={t['kymCoopUnionEnterNoMaleMembers']}
               />
             </InputGroupContainer>
 
@@ -162,14 +163,14 @@ export const CooperativeMemberInformation = ({
                 type="number"
                 min={0}
                 name="noOfFemaleMemberCurrent"
-                placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
+                __placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
               />
 
               <FormInput
                 type="number"
                 min={0}
                 name="noOfFemaleMemberTarget"
-                placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
+                __placeholder={t['kymCoopUnionEnterNoFemaleMembers']}
               />
             </InputGroupContainer>
 
@@ -182,14 +183,14 @@ export const CooperativeMemberInformation = ({
                 type="number"
                 min={0}
                 name="noOfInstitutionalMemberCurrent"
-                placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
+                __placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
               />
 
               <FormInput
                 type="number"
                 min={0}
                 name="noOfInstitutionalMemberTarget"
-                placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
+                __placeholder={t['kymCoopUnionEnterNoInstitutionalMembers']}
               />
             </InputGroupContainer>
 
@@ -200,14 +201,14 @@ export const CooperativeMemberInformation = ({
 
               <Input
                 type="number"
-                // placeholder={'0'}
+                // __placeholder={'0'}
                 isDisabled
                 value={currentTotal}
               />
 
               <Input
                 type="number"
-                // placeholder={'0'}
+                // __placeholder={'0'}
                 isDisabled
                 value={targetTotal}
               />

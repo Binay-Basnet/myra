@@ -202,7 +202,7 @@ export function Navbarfordaashboard() {
                       >
                         <Select
                           label="Branch"
-                          placeholder="Lalitpur"
+                          __placeholder="Lalitpur"
                           options={[
                             {
                               label: 'Lalitpur',

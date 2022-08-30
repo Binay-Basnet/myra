@@ -33,7 +33,7 @@ export const Agent = () => {
           <Box w="300px">
             <FormSelect
               name="agentId"
-              placeholder={t['accountOpenSelectAgent']}
+              __placeholder={t['accountOpenSelectAgent']}
               options={agentList}
             />
           </Box>

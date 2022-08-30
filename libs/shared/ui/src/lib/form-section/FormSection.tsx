@@ -18,7 +18,6 @@ export function FormSection({
   id,
   header,
   subHeader,
-  gridLayout = true,
   flexLayout,
   divider = true,
   templateColumns,
@@ -56,7 +55,9 @@ export function FormSection({
         </Box>
       )}
       <Box p="s20">
-        {gridLayout && (
+        {flexLayout ? (
+          <Box>{children}</Box>
+        ) : (
           <Grid
             templateColumns={`repeat(${
               templateColumns ? templateColumns : 3
@@ -67,8 +68,6 @@ export function FormSection({
             {children}
           </Grid>
         )}
-
-        {flexLayout && <Box>{children}</Box>}
       </Box>
     </Box>
   );

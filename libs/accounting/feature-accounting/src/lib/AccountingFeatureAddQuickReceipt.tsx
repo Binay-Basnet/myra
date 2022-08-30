@@ -73,7 +73,7 @@ export function AccountingFeatureAddQuickReceipt() {
                     <FormSelect
                       name="depositTo"
                       label={t['accountingQuickReceiptAddDepositTo']}
-                      placeholder={
+                      __placeholder={
                         t['accountingQuickReceiptAddSelectLedgerName']
                       }
                       options={[]}
@@ -88,7 +88,9 @@ export function AccountingFeatureAddQuickReceipt() {
                       name="reference"
                       type="text"
                       label={t['accountingQuickReceiptAddReference']}
-                      placeholder={t['accountingQuickReceiptAddEnterReference']}
+                      __placeholder={
+                        t['accountingQuickReceiptAddEnterReference']
+                      }
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -99,7 +101,7 @@ export function AccountingFeatureAddQuickReceipt() {
                   <FormTextArea
                     name="note"
                     label={t['accountingQuickReceiptAddNotes']}
-                    placeholder={t['accountingQuickReceiptAddNote']}
+                    __placeholder={t['accountingQuickReceiptAddNote']}
                     rows={5}
                   />
                 </Box>

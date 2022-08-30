@@ -6,6 +6,7 @@ import { useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface FormFooterProps {
   status?: React.ReactNode;
+  statusHandler?: () => void;
   draftButton?: React.ReactNode;
   mainButtonLabel?: string;
   mainButtonHandler?: () => void;

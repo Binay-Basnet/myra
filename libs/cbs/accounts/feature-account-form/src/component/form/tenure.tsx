@@ -80,7 +80,7 @@ export const Tenure = () => {
                 name="tenureNumber"
                 textAlign={'right'}
                 label={t['accountOpenNumber']}
-                placeholder="0"
+                __placeholder="0"
                 rightAddonText={
                   rightElement && rightElement === FrequencyTenure.Day
                     ? t['days']

@@ -166,13 +166,13 @@ export const MemberKYMAddress = ({
           <FormSelect
             name="permanentAddress.provinceId"
             label={t['kymIndProvince']}
-            placeholder={t['kymIndSelectProvince']}
+            __placeholder={t['kymIndSelectProvince']}
             options={province}
           />
           <FormSelect
             name="permanentAddress.districtId"
             label={t['kymIndDistrict']}
-            placeholder={t['kymIndSelectDistrict']}
+            __placeholder={t['kymIndSelectDistrict']}
             options={districtList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -181,7 +181,7 @@ export const MemberKYMAddress = ({
           <FormSelect
             name="permanentAddress.localGovernmentId"
             label={t['kymIndLocalGovernment']}
-            placeholder={t['kymIndSelectLocalGovernment']}
+            __placeholder={t['kymIndSelectLocalGovernment']}
             options={localityList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -190,7 +190,7 @@ export const MemberKYMAddress = ({
           <FormSelect
             name="permanentAddress.wardNo"
             label={t['kymIndWardNo']}
-            placeholder={t['kymIndEnterWardNo']}
+            __placeholder={t['kymIndEnterWardNo']}
             options={wardList?.map((d) => ({
               label: d,
               value: d,
@@ -200,13 +200,13 @@ export const MemberKYMAddress = ({
             type="text"
             name="permanentAddress.locality"
             label={t['kymIndLocality']}
-            placeholder={t['kymIndEnterLocality']}
+            __placeholder={t['kymIndEnterLocality']}
           />
           <FormInput
             type="number"
             name="permanentAddress.houseNo"
             label={t['kymIndHouseNo']}
-            placeholder={t['kymIndEnterHouseNo']}
+            __placeholder={t['kymIndEnterHouseNo']}
           />
           <GridItem colSpan={2}>
             <FormMap name="permanentAddress.coordinates" />
@@ -229,13 +229,13 @@ export const MemberKYMAddress = ({
               <FormSelect
                 name="temporaryAddress.provinceId"
                 label={t['kymIndProvince']}
-                placeholder={t['kymIndSelectProvince']}
+                __placeholder={t['kymIndSelectProvince']}
                 options={province}
               />
               <FormSelect
                 name="temporaryAddress.districtId"
                 label={t['kymIndDistrict']}
-                placeholder={t['kymIndSelectDistrict']}
+                __placeholder={t['kymIndSelectDistrict']}
                 options={districtTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -244,7 +244,7 @@ export const MemberKYMAddress = ({
               <FormSelect
                 name="temporaryAddress.localGovernmentId"
                 label={t['kymIndLocalGovernment']}
-                placeholder={t['kymIndSelectLocalGovernment']}
+                __placeholder={t['kymIndSelectLocalGovernment']}
                 options={localityTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -253,7 +253,7 @@ export const MemberKYMAddress = ({
               <FormSelect
                 name="temporaryAddress.wardNo"
                 label={t['kymIndWardNo']}
-                placeholder={t['kymIndEnterWardNo']}
+                __placeholder={t['kymIndEnterWardNo']}
                 options={wardTempList.map((d) => ({
                   label: d,
                   value: d,
@@ -263,13 +263,13 @@ export const MemberKYMAddress = ({
                 type="text"
                 name="temporaryAddress.locality"
                 label={t['kymIndLocality']}
-                placeholder={t['kymIndEnterLocality']}
+                __placeholder={t['kymIndEnterLocality']}
               />
               <FormInput
                 type="number"
                 name="temporaryAddress.houseNo"
                 label={t['kymIndHouseNo']}
-                placeholder={t['kymIndEnterHouseNo']}
+                __placeholder={t['kymIndEnterHouseNo']}
               />
               <GridItem colSpan={2}>
                 <FormMap name="temporaryAddress.coordinates" />
@@ -318,14 +318,14 @@ export const MemberKYMAddress = ({
             type="text"
             name={'landlordName'}
             label={t['kymIndLandlordName']}
-            placeholder={t['kymIndLandlordName']}
+            __placeholder={t['kymIndLandlordName']}
           />
           <FormInput
             control={control}
             type="number"
             name={'landlordContact'}
             label={t['kymIndContactNo']}
-            placeholder={t['kymIndContactNo']}
+            __placeholder={t['kymIndContactNo']}
           />
         </FormSection>
       </form>

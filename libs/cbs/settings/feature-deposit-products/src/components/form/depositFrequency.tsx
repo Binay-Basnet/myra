@@ -137,7 +137,7 @@ export const DepositFrequency = () => {
                 type="number"
                 label={t['depositProductFlatratePenalty']}
                 textAlign={'right'}
-                placeholder="0.00"
+                __placeholder="0.00"
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %
@@ -151,7 +151,7 @@ export const DepositFrequency = () => {
                 type="number"
                 label={t['depositProductPenalty']}
                 textAlign={'right'}
-                placeholder="0.00"
+                __placeholder="0.00"
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %
@@ -201,7 +201,7 @@ export const DepositFrequency = () => {
                 name="rebateData.noOfInstallment"
                 type="number"
                 label={t['depositProductNoInstallment']}
-                placeholder="0"
+                __placeholder="0"
                 helperText={t['depositProductEnterNumberInstallments']}
                 textAlign={'right'}
               />
@@ -222,7 +222,7 @@ export const DepositFrequency = () => {
                 type="number"
                 label={t['depositProductPercentageDepositedAmount']}
                 textAlign={'right'}
-                placeholder="0.00"
+                __placeholder="0.00"
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %

@@ -7,12 +7,12 @@ import { TextFields } from '../text-fields/TextFields';
 export interface TextInputProps extends InputProps {
   label?: string;
   labelColor?: string;
-  placeholder?: string;
+  __placeholder?: string;
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   (props, ref) => {
-    const { labelColor, label, placeholder, ...rest } = props;
+    const { labelColor, label, __placeholder, ...rest } = props;
     return (
       <>
         {label && (
@@ -31,7 +31,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           variant={'outline'}
           type="text"
           borderRadius="br2"
-          placeholder={placeholder ?? 'Enter'}
+          __placeholder={__placeholder ?? 'Enter'}
           ref={ref}
           {...rest}
         />

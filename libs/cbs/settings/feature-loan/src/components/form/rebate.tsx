@@ -45,7 +45,7 @@ export const Rebate = () => {
                 name="rebate.daysBeforeInstallmentDate"
                 type="number"
                 label={t['loanProductDaysafterinstallmentdate']}
-                placeholder={t['loanProductDayfromenddate']}
+                __placeholder={t['loanProductDayfromenddate']}
               />
             </GridItem>
             <GridItem>
@@ -53,7 +53,7 @@ export const Rebate = () => {
                 name="rebate.noOfInstallment"
                 type="number"
                 label={t['loanProductNoInstallment']}
-                placeholder="0"
+                __placeholder="0"
                 helperText={t['loanProductEnterNumberInstallments']}
                 textAlign={'right'}
               />
@@ -66,7 +66,7 @@ export const Rebate = () => {
                 name="rebate.rebateAmount"
                 type="number"
                 label={t['loanProductRebateAmount']}
-                placeholder={t['loanProductRebateAmount']}
+                __placeholder={t['loanProductRebateAmount']}
               />
             </GridItem>
             <GridItem>
@@ -75,7 +75,7 @@ export const Rebate = () => {
                 type="number"
                 label={t['loanProductPercentageDepositedAmount']}
                 textAlign={'right'}
-                placeholder="0.00"
+                __placeholder="0.00"
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %

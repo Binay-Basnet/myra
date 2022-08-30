@@ -33,6 +33,7 @@ export interface SelectProps
   helperText?: string;
   errorText?: string;
   label?: string;
+  __placeholder?: string;
   // size?: 'sm' | 'default';
   onChange?: ((newValue: SelectOption) => void) | any;
 }

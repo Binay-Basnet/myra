@@ -69,7 +69,7 @@ export const MainOccupationInput = ({
       formType={option?.field?.fieldType}
       name={`mainOccupation.${fieldIndex}.options.${optionIndex}.value`}
       label={String(option?.name?.local)}
-      placeholder={String(option?.name?.local)}
+      __placeholder={String(option?.name?.local)}
     />
   );
 };
@@ -212,7 +212,7 @@ const MainOccupation = ({
                   <FormSelect
                     name={`occupationId`}
                     label={t['kymIndOccupation']}
-                    placeholder={t['kymIndSelectOccupation']}
+                    __placeholder={t['kymIndSelectOccupation']}
                     options={
                       (profession as string[])?.map((data: string) => ({
                         label: String(
@@ -231,7 +231,7 @@ const MainOccupation = ({
                     type="text"
                     name={`orgName`}
                     label={t['kymIndOrgFirmName']}
-                    placeholder={t['kymIndOrgFirmName']}
+                    __placeholder={t['kymIndOrgFirmName']}
                   />
                 </GridItem>
 
@@ -240,14 +240,14 @@ const MainOccupation = ({
                   type="number"
                   name={`panVatNo`}
                   label={t['kymIndPanVATNo']}
-                  placeholder={t['kymIndPanVATNumber']}
+                  __placeholder={t['kymIndPanVATNumber']}
                 />
                 <FormInput
                   type="text"
                   bg="white"
                   name={`address`}
                   label={t['kymIndAddress']}
-                  placeholder={t['kymIndEnterAddress']}
+                  __placeholder={t['kymIndEnterAddress']}
                 />
                 <FormInput
                   bg="white"
@@ -255,7 +255,7 @@ const MainOccupation = ({
                   textAlign={'right'}
                   name={`estimatedAnnualIncome`}
                   label={t['kymIndEstimatedAnnualIncome']}
-                  placeholder="0.00"
+                  __placeholder="0.00"
                 />
 
                 {/* {occupationFieldNames.map((option, optionIndex) => {
@@ -288,21 +288,21 @@ const MainOccupation = ({
                     type="date"
                     name={`establishedDate`}
                     label={t['kymIndEstablishedDate']}
-                    placeholder={t['kymIndEstablishedDate']}
+                    __placeholder={t['kymIndEstablishedDate']}
                   />
                   <FormInput
                     bg="white"
                     type="number"
                     name={`registrationNo`}
                     label={t['kymIndRegistrationNo']}
-                    placeholder={t['kymIndRegistrationNo']}
+                    __placeholder={t['kymIndRegistrationNo']}
                   />
                   <FormInput
                     bg="white"
                     type="number"
                     name={`contact`}
                     label={t['kymIndContactNo']}
-                    placeholder={t['kymIndContactNo']}
+                    __placeholder={t['kymIndContactNo']}
                   />
                 </InputGroupContainer>
               )}
@@ -515,7 +515,7 @@ export const MemberKYMMainOccupation = ({
                 control={control}
                 name="foreignEmpCountryId"
                 label={t['kymIndNameofCountry']}
-                placeholder={t['kymIndSelectCountry']}
+                __placeholder={t['kymIndSelectCountry']}
                 options={countryOptions}
               />
               <FormSelect
@@ -523,7 +523,7 @@ export const MemberKYMMainOccupation = ({
                 id="typeOfVisa"
                 name="typeOfVisaId"
                 label={t['kymIndTypeofVisa']}
-                placeholder={t['kymIndEnterTypeofVisa']}
+                __placeholder={t['kymIndEnterTypeofVisa']}
                 options={visaTypes}
               />
               <FormInput
@@ -535,7 +535,7 @@ export const MemberKYMMainOccupation = ({
                 id="estimatedAnnualIncome"
                 label={t['kymIndEstimatedAnnualIncome']}
                 helperText={t['kymIndWriteStudentVISA']}
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </FormSection>
           </form>

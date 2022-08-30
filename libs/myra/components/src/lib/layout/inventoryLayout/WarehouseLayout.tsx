@@ -86,7 +86,7 @@ export const WarehouseLayout = ({ children }: IInventoryPageLayoutProps) => {
                         type="text"
                         name="name"
                         label={t['warehouseFormName']}
-                        placeholder={t['warehouseFormEnterName']}
+                        __placeholder={t['warehouseFormEnterName']}
                       />
                     </GridItem>
                     <GridItem>
@@ -94,7 +94,7 @@ export const WarehouseLayout = ({ children }: IInventoryPageLayoutProps) => {
                         type="text"
                         name="phoneNumber"
                         label={t['warehouseFormPhoneNumber']}
-                        placeholder={t['warehouseFormEnterPhoneNumber']}
+                        __placeholder={t['warehouseFormEnterPhoneNumber']}
                       />
                     </GridItem>
                   </Grid>
@@ -109,7 +109,7 @@ export const WarehouseLayout = ({ children }: IInventoryPageLayoutProps) => {
                       type="text"
                       name="address"
                       label={t['warehouseFormAddress']}
-                      placeholder={t['warehouseFormEnterAddress']}
+                      __placeholder={t['warehouseFormEnterAddress']}
                     />
 
                     <Box>

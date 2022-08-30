@@ -24,7 +24,7 @@ export const AddSupplierForm = () => {
               <FormSelect
                 name="name"
                 label={t['addSuppliersName']}
-                placeholder={t['addSuppliersEnterName']}
+                __placeholder={t['addSuppliersEnterName']}
                 options={[
                   {
                     label: '1',
@@ -46,14 +46,14 @@ export const AddSupplierForm = () => {
                 type="text"
                 name="SuppliersCode"
                 label={t['addSuppliersVendorCode']}
-                placeholder={t['addSuppliersEnterVendorCode']}
+                __placeholder={t['addSuppliersEnterVendorCode']}
               />
             </GridItem>
             <GridItem colSpan={2}>
               <FormSelect
                 name="address"
                 label={t['addSuppliersAddress']}
-                placeholder={t['addSuppliersSelectAddress']}
+                __placeholder={t['addSuppliersSelectAddress']}
                 options={[
                   {
                     label: '1',
@@ -75,7 +75,7 @@ export const AddSupplierForm = () => {
                 type="text"
                 name="panNo"
                 label={t['addSuppliersPanNo']}
-                placeholder={t['addSuppliersEnterPanNo']}
+                __placeholder={t['addSuppliersEnterPanNo']}
               />
             </GridItem>
             <GridItem colSpan={1}>
@@ -83,7 +83,7 @@ export const AddSupplierForm = () => {
                 type="text"
                 name="phoneNumber"
                 label={t['addSuppliersPhoneNumber']}
-                placeholder={t['addSuppliersPhoneNumber']}
+                __placeholder={t['addSuppliersPhoneNumber']}
               />
             </GridItem>
             <GridItem colSpan={1}>
@@ -91,7 +91,7 @@ export const AddSupplierForm = () => {
                 type="text"
                 name="emailAddress"
                 label={t['addSuppliersEmailAddress']}
-                placeholder={t['addSuppliersEmailAddress']}
+                __placeholder={t['addSuppliersEmailAddress']}
               />
             </GridItem>
           </Grid>
@@ -106,7 +106,7 @@ export const AddSupplierForm = () => {
                   type="text"
                   name="contactName"
                   label={t['addSuppliersContactName']}
-                  placeholder={t['addSuppliersContactName']}
+                  __placeholder={t['addSuppliersContactName']}
                 />
               </GridItem>
               <GridItem>
@@ -114,7 +114,7 @@ export const AddSupplierForm = () => {
                   type="text"
                   name="email"
                   label={t['addSuppliersEmailAddress']}
-                  placeholder={t['addSuppliersEmailAddress']}
+                  __placeholder={t['addSuppliersEmailAddress']}
                 />
               </GridItem>
             </Grid>
@@ -135,7 +135,7 @@ export const AddSupplierForm = () => {
                 <FormSelect
                   name="creditTerms"
                   label={t['addSuppliersCreditTerms']}
-                  placeholder={t['addSuppliersCreditTerms']}
+                  __placeholder={t['addSuppliersCreditTerms']}
                   options={[
                     {
                       label: '1',
@@ -157,7 +157,7 @@ export const AddSupplierForm = () => {
                   type="text"
                   name="creditLimit"
                   label={t['addSuppliersCreditLimit']}
-                  placeholder={t['addSuppliersCreditLimit']}
+                  __placeholder={t['addSuppliersCreditLimit']}
                 />
               </GridItem>
             </Grid>

@@ -125,7 +125,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
               <FormSelect
                 name="bankCheque.bankId"
                 label={'Bank Name'}
-                placeholder={'Bank Name'}
+                __placeholder={'Bank Name'}
                 options={
                   bankList?.bank?.bank?.list?.map((bank) => ({
                     label: bank?.name as string,
@@ -138,7 +138,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
             <FormInput
               name="bankCheque.chequeNo"
               label="Cheque No"
-              placeholder="Cheque No"
+              __placeholder="Cheque No"
             />
 
             <FormInput
@@ -146,7 +146,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
               type="number"
               label={'Amount'}
               textAlign={'right'}
-              placeholder="0.00"
+              __placeholder="0.00"
             />
 
             <FormInput
@@ -159,7 +159,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
               type="text"
               name="bankCheque.depositedBy"
               label="Deposited By"
-              placeholder="Deposited By"
+              __placeholder="Deposited By"
             />
           </InputGroupContainer>
         )}
@@ -172,7 +172,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
                 type="number"
                 label={'Cash'}
                 textAlign={'right'}
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </InputGroupContainer>
 
@@ -292,7 +292,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
           {/* <FormSelect
             name="sourceOfFund"
             label="Source of Fund"
-            placeholder="Select Source of Fund"
+            __placeholder="Select Source of Fund"
             options={sourceOfFundsList.map((source) => ({
               label: source,
               value: source,
@@ -319,14 +319,14 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
             <AgentSelect
               name="agentId"
               label="Agent"
-              placeholder="Select Agent"
+              __placeholder="Select Agent"
             />
           </InputGroupContainer>
         )}
       </BoxContainer>
 
       <BoxContainer>
-        <FormTextArea name="notes" label="Note" placeholder="Note" rows={5} />
+        <FormTextArea name="notes" label="Note" __placeholder="Note" rows={5} />
       </BoxContainer>
     </ContainerWithDivider>
   );

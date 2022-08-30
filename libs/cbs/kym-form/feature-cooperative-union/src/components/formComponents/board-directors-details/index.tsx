@@ -1,7 +1,4 @@
-import {
-  ContainerWithDivider,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -17,12 +14,10 @@ export const DirectorDetails = (props: directorDetailsProps) => {
 
   return (
     <SectionContainer>
-      <Text fontSize="r3" fontWeight="600">
+      <Text p="s20" fontSize="r3" fontWeight="600">
         {t['kymCoopUnionDetailsOfBoardDirectors']}
       </Text>
-      <ContainerWithDivider>
-        <BoardDirectorInfo setSection={setSection} />
-      </ContainerWithDivider>
+      <BoardDirectorInfo setSection={setSection} />
     </SectionContainer>
   );
 };

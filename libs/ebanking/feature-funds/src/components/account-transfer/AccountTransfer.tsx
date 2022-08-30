@@ -64,7 +64,7 @@ export const AccountTransferForm = ({
                 <FormSelect
                   name="source_account"
                   label="Source Account"
-                  placeholder="Select Source Account"
+                  __placeholder="Select Source Account"
                   options={accounts}
                 />
               </GridItem>
@@ -73,7 +73,7 @@ export const AccountTransferForm = ({
                 <FormSelect
                   name="destination_account"
                   label="Destination Account"
-                  placeholder="Select Destination Account"
+                  __placeholder="Select Destination Account"
                   options={accounts}
                   rules={{ required: 'Destination Account is Required.' }}
                 />
@@ -83,13 +83,13 @@ export const AccountTransferForm = ({
                 name="amount"
                 type="number"
                 label="Amount"
-                placeholder="0.00"
+                __placeholder="0.00"
                 rules={{ required: 'Transaction Amount is Required.' }}
               />
               <FormInput
                 name="remarks"
                 label="Remarks"
-                placeholder="Enter Remarks"
+                __placeholder="Enter Remarks"
                 rules={{ required: 'Remarks is Required.' }}
               />
             </Box>

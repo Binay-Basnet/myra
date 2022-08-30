@@ -12,12 +12,12 @@ import {
 export interface AmountInputProps extends InputProps {
   labelColor?: string;
   label?: string | number;
-  placeholder?: string;
+  __placeholder?: string;
 }
 
 export const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
   (props, ref) => {
-    const { labelColor, label, placeholder, ...rest } = props;
+    const { labelColor, label, __placeholder, ...rest } = props;
     const [isDebit, setIsDebit] = useState(true);
     const handleClick = () => setIsDebit(!isDebit);
 
@@ -39,7 +39,7 @@ export const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
             type="number"
             fontSize={'s2'}
             textAlign={'right'}
-            placeholder={placeholder ?? '0.00'}
+            __placeholder={__placeholder ?? '0.00'}
             ref={ref}
             {...rest}
           />

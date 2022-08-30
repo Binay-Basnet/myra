@@ -185,13 +185,13 @@ export function CbsSettingsFeatureServiceCenterNew() {
                           <FormInput
                             name="name"
                             label={t['serviceCenterFormName']}
-                            placeholder={t['serviceCenterEnterName']}
+                            __placeholder={t['serviceCenterEnterName']}
                           />
                         </GridItem>
                         <FormInput
                           name={'branchCode'}
                           label={t['serviceCenterCode']}
-                          placeholder={t['serviceCenterCodeEnter']}
+                          __placeholder={t['serviceCenterCodeEnter']}
                         />
                       </InputGroupContainer>
 
@@ -200,18 +200,18 @@ export function CbsSettingsFeatureServiceCenterNew() {
                           type="text"
                           name="managerName"
                           label={t['serviceCenterManager']}
-                          placeholder={t['serviceCenterEnterManager']}
+                          __placeholder={t['serviceCenterEnterManager']}
                         />
                         <FormSelect
                           label={t['serviceCenterCategory']}
-                          placeholder={t['serviceCenterCategoryEnter']}
+                          __placeholder={t['serviceCenterCategoryEnter']}
                           name="category"
                           options={branchCategories}
                         />
                         <FormInput
                           type="date"
                           label={t['settingsBranchEstablishedDate']}
-                          placeholder={t['branchEnterEstablishedDate']}
+                          __placeholder={t['branchEnterEstablishedDate']}
                           name="estDate"
                         />
                       </InputGroupContainer>
@@ -230,13 +230,13 @@ export function CbsSettingsFeatureServiceCenterNew() {
                           <FormSelect
                             name="provinceId"
                             label={t['kymIndProvince']}
-                            placeholder={t['kymIndSelectProvince']}
+                            __placeholder={t['kymIndSelectProvince']}
                             options={province}
                           />
                           <FormSelect
                             name="districtId"
                             label={t['kymIndDistrict']}
-                            placeholder={t['kymIndSelectDistrict']}
+                            __placeholder={t['kymIndSelectDistrict']}
                             options={districtList.map((d) => ({
                               label: d.name,
                               value: d.id,
@@ -245,7 +245,7 @@ export function CbsSettingsFeatureServiceCenterNew() {
                           <FormSelect
                             name="localGovernmentId"
                             label={t['kymIndLocalGovernment']}
-                            placeholder={t['kymIndSelectLocalGovernment']}
+                            __placeholder={t['kymIndSelectLocalGovernment']}
                             options={localityList.map((d) => ({
                               label: d.name,
                               value: d.id,
@@ -254,7 +254,7 @@ export function CbsSettingsFeatureServiceCenterNew() {
                           <FormSelect
                             name="wardNo"
                             label={t['kymIndWardNo']}
-                            placeholder={t['kymIndEnterWardNo']}
+                            __placeholder={t['kymIndEnterWardNo']}
                             options={wardList.map((d) => ({
                               label: d,
                               value: d,
@@ -264,7 +264,7 @@ export function CbsSettingsFeatureServiceCenterNew() {
                             type="text"
                             name="locality"
                             label={t['kymIndLocality']}
-                            placeholder={t['kymIndEnterLocality']}
+                            __placeholder={t['kymIndEnterLocality']}
                           />
                         </InputGroupContainer>
 
@@ -279,14 +279,14 @@ export function CbsSettingsFeatureServiceCenterNew() {
                         <FormInput
                           name="phoneNumber"
                           label={t['settingsBranchPhoneNumber']}
-                          placeholder={
-                            t['settingsBranchPhoneNumberPlaceholder']
+                          __placeholder={
+                            t['settingsBranchPhoneNumber__placeholder']
                           }
                         />
                         <FormInput
                           name="email"
                           label={t['settingsBranchEmail']}
-                          placeholder={t['settingsBranchEmailPlaceholder']}
+                          __placeholder={t['settingsBranchEmail__placeholder']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -311,16 +311,18 @@ export function CbsSettingsFeatureServiceCenterNew() {
                           <InputGroupContainer>
                             <FormSelect
                               label={t['settingsBranchRecievableAccount']}
-                              placeholder={
-                                t['settingsBranchRecievableAccountPlaceholder']
+                              __placeholder={
+                                t[
+                                  'settingsBranchRecievableAccount__placeholder'
+                                ]
                               }
                               name="receivableAccountId"
                               options={coaList}
                             />
                             <FormSelect
                               label={t['settingsBranchPayableAccount']}
-                              placeholder={
-                                t['settingsBranchPayableAccountPlaceholder']
+                              __placeholder={
+                                t['settingsBranchPayableAccount__placeholder']
                               }
                               name="payableAccountId"
                               options={coaList}
@@ -334,13 +336,13 @@ export function CbsSettingsFeatureServiceCenterNew() {
                       <InputGroupContainer>
                         <FormSelect
                           label={t['settinsBranchPLTransfer']}
-                          placeholder={t['settingsBranchPLTransderLabel']}
+                          __placeholder={t['settingsBranchPLTransderLabel']}
                           name="plTransferId"
                           options={coaList}
                         />
                         <FormSelect
                           label={t['settinsBranchTDSTransfer']}
-                          placeholder={t['settingsBranchTDSTransderLabel']}
+                          __placeholder={t['settingsBranchTDSTransderLabel']}
                           name="tdsTransaferId"
                           options={coaList}
                         />

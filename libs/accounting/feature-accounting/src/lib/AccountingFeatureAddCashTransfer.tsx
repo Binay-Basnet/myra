@@ -74,7 +74,9 @@ export function AccountingFeatureAddCashTransfer() {
                       label={
                         t['accountingCashTransferAddTransferredFromAccount']
                       }
-                      placeholder={t['accountingCashTransferAddSelectAccount']}
+                      __placeholder={
+                        t['accountingCashTransferAddSelectAccount']
+                      }
                       options={[]}
                     />
                     <FormInput
@@ -87,7 +89,7 @@ export function AccountingFeatureAddCashTransfer() {
                       name="reference"
                       type="text"
                       label={t['accountingCashTransferAddReference']}
-                      placeholder={t['accountingCashTransferAddReference']}
+                      __placeholder={t['accountingCashTransferAddReference']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -102,7 +104,7 @@ export function AccountingFeatureAddCashTransfer() {
                   <FormTextArea
                     name="note"
                     label={t['accountingCashTransferAddNotes']}
-                    placeholder={t['accountingCashTransferAddNote']}
+                    __placeholder={t['accountingCashTransferAddNote']}
                     rows={5}
                   />
                 </Box>

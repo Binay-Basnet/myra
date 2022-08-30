@@ -102,7 +102,7 @@ export const ShareSettingsBonusPage = () => {
                 <FormInput
                   name="taxRate"
                   size="sm"
-                  placeholder={t['shareBonusRateTaxRatePlaceholder']}
+                  __placeholder={t['shareBonusRateTaxRate__placeholder']}
                 />
               </Box>
             </ShareSettingsCard>
@@ -115,7 +115,7 @@ export const ShareSettingsBonusPage = () => {
                 <FormInput
                   name="accountMapping"
                   size="sm"
-                  placeholder={t['shareAccountName']}
+                  __placeholder={t['shareAccountName']}
                 />
               </Box>
             </ShareSettingsCard>

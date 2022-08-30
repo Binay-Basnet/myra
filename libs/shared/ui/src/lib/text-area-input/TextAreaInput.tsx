@@ -7,16 +7,16 @@ import { TextFields } from '../text-fields/TextFields';
 export interface TextAreaInputProps extends TextareaProps {
   label?: string;
   labelColor?: string;
-  placeholder?: string;
+  __placeholder?: string;
   id?: string;
 }
 
 export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>(
   (props, ref) => {
-    const { labelColor, label, placeholder, id, ...rest } = props;
+    const { labelColor, label, __placeholder, id, ...rest } = props;
     return (
       <Flex flexDir="column" gap="s4">
-        {placeholder && (
+        {__placeholder && (
           <TextFields variant="formLabel" color={labelColor}>
             {label ?? 'Description'}
           </TextFields>
@@ -24,7 +24,7 @@ export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>(
 
         <Textarea
           variant="outline"
-          placeholder={placeholder ?? 'Add description here'}
+          __placeholder={__placeholder ?? 'Add description here'}
           id={id}
           size="sm"
           ref={ref as unknown as ForwardedRef<HTMLTextAreaElement>}

@@ -1,12 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymInsInput, useGetBankListQuery } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -29,7 +25,6 @@ export const BankAccountDetailsInstitution = (props: IProps) => {
     return [...prevVal, { label: curVal?.name, value: curVal?.id }];
   }, [] as optionType[]);
 
-  const { control, handleSubmit, getValues, watch, setError } = methods;
   useInstitution({ methods });
   return (
     <FormProvider {...methods}>
@@ -39,36 +34,30 @@ export const BankAccountDetailsInstitution = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer id="kymInsBankAccountDetails" scrollMarginTop={'200px'}>
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymInsBankAccountDetails']}
-          </Text>
-          <InputGroupContainer>
-            <FormSelect
-              name="bank"
-              label={t['kymInsNameofBank']}
-              placeholder={t['kymInsSelectBank']}
-              options={Options}
-            />
-            <FormInput
-              type="text"
-              name="accountNumber"
-              label={t['kymInsAccountNumber']}
-              placeholder={t['kymInsEnterAccountNumber']}
-            />
+        <FormSection
+          id="kymInsBankAccountDetails"
+          header="kymInsBankAccountDetails"
+        >
+          <FormSelect
+            name="bank"
+            label={t['kymInsNameofBank']}
+            __placeholder={t['kymInsSelectBank']}
+            options={Options}
+          />
+          <FormInput
+            type="text"
+            name="accountNumber"
+            label={t['kymInsAccountNumber']}
+            __placeholder={t['kymInsEnterAccountNumber']}
+          />
 
-            <FormInput
-              type="text"
-              name="accountName"
-              label={t['kymInsAccountName']}
-              placeholder={t['kymInsEnterAccountName']}
-            />
-          </InputGroupContainer>
-        </GroupContainer>
+          <FormInput
+            type="text"
+            name="accountName"
+            label={t['kymInsAccountName']}
+            __placeholder={t['kymInsEnterAccountName']}
+          />
+        </FormSection>
       </form>
     </FormProvider>
   );

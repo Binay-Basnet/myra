@@ -11,6 +11,7 @@ import { TextFields } from '@coop/shared/ui';
 /* eslint-disable-next-line */
 export interface PhoneNumberProps extends InputProps {
   label?: string;
+  __placeholder?: string;
   placeholder?: string;
   labelColor?: string;
   id?: string;
@@ -18,11 +19,10 @@ export interface PhoneNumberProps extends InputProps {
 
 export const PhoneNumber = forwardRef<HTMLInputElement, PhoneNumberProps>(
   (props, ref) => {
-    const { label, id, placeholder, labelColor, ...rest } = props;
+    const { label, id, placeholder, labelColor } = props;
     return (
       <>
         <TextFields variant="formLabel" color={labelColor ?? 'gray.700'}>
-          {' '}
           {label}
         </TextFields>
         <InputGroup mt="s4">

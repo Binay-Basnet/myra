@@ -11,7 +11,7 @@ import { TextFields } from '@coop/shared/ui';
 export interface SlugInputProps extends InputProps {
   label?: string;
   labelColor?: string;
-  placeholder?: string;
+  __placeholder?: string;
   leftAddon?: string;
   leftAddonColor?: string;
   leftAddonBg?: string;
@@ -25,7 +25,7 @@ export const SlugInput = forwardRef<HTMLInputElement, SlugInputProps>(
     const {
       labelColor,
       label,
-      placeholder,
+      __placeholder,
       leftAddon,
       rightAddon,
       leftAddonBg,
@@ -51,7 +51,7 @@ export const SlugInput = forwardRef<HTMLInputElement, SlugInputProps>(
             variant={'outline'}
             type="text"
             fontSize={'s2'}
-            placeholder={placeholder ?? 'Enter your Name'}
+            __placeholder={__placeholder ?? 'Enter your Name'}
             ref={ref}
             mr={'0'}
             {...rest}

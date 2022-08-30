@@ -259,12 +259,12 @@ const KYMBasiccoopDetailsFamilyMember = ({
                   type="text"
                   flexGrow="1"
                   id={`familyMemberInThisCooperative.0.memberId`}
-                  placeholder={t['kynIndFirstName']}
+                  __placeholder={t['kynIndFirstName']}
                   bg="white"
                 />
                 <FormSelect
                   name="memberId"
-                  placeholder={t['kynIndEnterMemberID']}
+                  __placeholder={t['kynIndEnterMemberID']}
                   options={memberSelectOption}
                   onChange={(e: { label: string; value: string }) =>
                     setSelectedFamilyMember(e.value)
@@ -363,7 +363,7 @@ const KYMBasiccoopDetailsBasic = ({
           <FormSelect
             name="purposeId"
             label={t['kynIndMainpurposeofbecomingmember']}
-            placeholder={t['kynIndSelectpurposeofbecomingmember']}
+            __placeholder={t['kynIndSelectpurposeofbecomingmember']}
             isLoading={purposeLoading}
             options={getFieldOption(purposeData)}
           />
@@ -383,20 +383,20 @@ const KYMBasiccoopDetailsBasic = ({
                 type="text"
                 name="otherCoopName"
                 label={t['kymIndCooperativeName']}
-                placeholder={t['kymIndCooperativeName']}
+                __placeholder={t['kymIndCooperativeName']}
               />
 
               <FormInput
                 name="otherCoopBranchId"
                 label={t['kymIndCooperativeServiceCenter']}
-                placeholder={t['kymIndCooperativeEnterServiceCenter']}
+                __placeholder={t['kymIndCooperativeEnterServiceCenter']}
               />
 
               <FormInput
                 type="text"
                 name="otherCoopMemberId"
                 label={t['kymIndCooperativeMemberID']}
-                placeholder={t['kymIndCooperativeMemberID']}
+                __placeholder={t['kymIndCooperativeMemberID']}
               />
             </>
           )}
@@ -416,7 +416,7 @@ const KYMBasiccoopDetailsBasic = ({
                           formType={option?.fieldType}
                           name={`otherMembershipDetails.options.${optionIndex}.value`}
                           label={option?.name?.local}
-                          placeholder={option?.name?.local}
+                          __placeholder={option?.name?.local}
                         />
                       );
                     }
@@ -550,7 +550,7 @@ export const KYMBasiccoopDetails = ({
 //             <Input
 //               type="text"
 //               id={`familyMemberInThisCooperative.${index}.memberId`}
-//               placeholder={t['kynIndFirstName']}
+//               __placeholder={t['kynIndFirstName']}
 //               onChange={onChange}
 //               bg="white"
 //             />
@@ -567,7 +567,7 @@ export const KYMBasiccoopDetails = ({
 //           render={({ field: { onChange } }) => (
 //             <Input
 //               type="text"
-//               placeholder={t['kynIndEnterCitizenshipNo']}
+//               __placeholder={t['kynIndEnterCitizenshipNo']}
 //               id={`familyMemberInThisCooperative.${index}.memberId`}
 //               onChange={onChange}
 //               bg="white"
@@ -585,7 +585,7 @@ export const KYMBasiccoopDetails = ({
 //           render={({ field: { onChange } }) => (
 //             <Input
 //               type="text"
-//               placeholder={t['kynIndEnterMemberID']}
+//               __placeholder={t['kynIndEnterMemberID']}
 //               id={`familyMemberInThisCooperative.${index}.memberId`}
 //               onChange={onChange}
 //               bg="white"

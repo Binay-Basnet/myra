@@ -40,7 +40,7 @@ export const PostingFrequency = () => {
           name="maxPostingFreqDifference"
           textAlign={'right'}
           label={t['depositProductMaximumPostingFrequencyDifference']}
-          placeholder="0"
+          __placeholder="0"
           rightAddonText={'days'}
         />
       </Box>

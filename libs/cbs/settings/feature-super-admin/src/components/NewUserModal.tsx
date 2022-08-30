@@ -136,7 +136,7 @@ export const NewUserModal = ({
                   type="text"
                   name="name"
                   label="Name"
-                  placeholder="Enter Name"
+                  __placeholder="Enter Name"
                 />
 
                 <Grid
@@ -147,7 +147,7 @@ export const NewUserModal = ({
                   <FormSelect
                     name="gender"
                     label="Gender"
-                    placeholder="Select Gender"
+                    __placeholder="Select Gender"
                     options={genderOptions}
                   />
 
@@ -160,27 +160,27 @@ export const NewUserModal = ({
                   <FormPhoneNumber
                     name="contactNo"
                     label="Mobile No"
-                    placeholder="Mobile No"
+                    __placeholder="Mobile No"
                   />
 
                   <FormEmailInput
                     name="email"
                     label="Email"
-                    placeholder="Email"
+                    __placeholder="Email"
                   />
                 </Grid>
 
                 <FormSelect
                   name="role"
                   label="Role"
-                  placeholder="Select Role"
+                  __placeholder="Select Role"
                   options={roleOptions}
                 />
 
                 <BranchSelect
                   name="branch"
                   label="Service Center"
-                  placeholder="Select Service Center"
+                  __placeholder="Select Service Center"
                   isDisabled={role === Roles.Superadmin}
                 />
               </Box>

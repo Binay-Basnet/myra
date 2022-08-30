@@ -75,7 +75,7 @@ export function AccountingFeatureAddBankAccount() {
                     <FormSelect
                       name="bank"
                       label={t['accountingBankAccountAddSelectBank']}
-                      placeholder={t['accountingBankAccountAddSelectBank']}
+                      __placeholder={t['accountingBankAccountAddSelectBank']}
                       options={[]}
                     />
 
@@ -83,14 +83,14 @@ export function AccountingFeatureAddBankAccount() {
                       name="bankDisplayName"
                       type="text"
                       label={t['accountingBankAccountAddDisplayName']}
-                      placeholder={t['accountingBankAccountAddDisplayName']}
+                      __placeholder={t['accountingBankAccountAddDisplayName']}
                     />
 
                     <FormInput
                       name="code"
                       type="text"
                       label={t['accountingBankAccountAddCode']}
-                      placeholder={t['accountingBankAccountAddCodeEnter']}
+                      __placeholder={t['accountingBankAccountAddCodeEnter']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -100,7 +100,7 @@ export function AccountingFeatureAddBankAccount() {
                     <FormSelect
                       name="accountName"
                       label={t['accountingBankAccountAddAccountName']}
-                      placeholder={
+                      __placeholder={
                         t['accountingBankAccountAddEnterAccountName']
                       }
                       options={[]}
@@ -110,7 +110,7 @@ export function AccountingFeatureAddBankAccount() {
                       name="accountNumber"
                       type="text"
                       label={t['accountingBankAccountAddAccountNumber']}
-                      placeholder={
+                      __placeholder={
                         t['accountingBankAccountAddEnterAccountNumber']
                       }
                     />
@@ -118,7 +118,7 @@ export function AccountingFeatureAddBankAccount() {
                     <FormSelect
                       name="accountType"
                       label={t['accountingBankAccountAddAccountType']}
-                      placeholder={
+                      __placeholder={
                         t['accountingBankAccountAddSelectAccountType']
                       }
                       options={[]}
@@ -128,14 +128,16 @@ export function AccountingFeatureAddBankAccount() {
                       name="openingBalance"
                       type="text"
                       label={t['accountingBankAccountAddOpeningBalance']}
-                      placeholder={t['accountingBankAccountAddOpeningBalance']}
+                      __placeholder={
+                        t['accountingBankAccountAddOpeningBalance']
+                      }
                     />
 
                     <GridItem colSpan={3}>
                       <FormTextArea
                         name="description"
                         label={t['accountingBankAccountAddDesciption']}
-                        placeholder={t['accountingBankAccountAddDesciption']}
+                        __placeholder={t['accountingBankAccountAddDesciption']}
                         rows={5}
                       />
                     </GridItem>

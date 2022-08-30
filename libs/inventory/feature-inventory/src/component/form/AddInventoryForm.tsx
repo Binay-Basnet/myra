@@ -45,7 +45,7 @@ export const AddInventoryForm = () => {
               <FormSelect
                 name="supplierName"
                 label={t['invFormSupplierName']}
-                placeholder={t['invFormSelectSupplier']}
+                __placeholder={t['invFormSelectSupplier']}
                 options={[
                   {
                     label: '1',
@@ -67,7 +67,7 @@ export const AddInventoryForm = () => {
                 type="text"
                 name="invoiceReference"
                 label={t['invFormSupplierInvoiceReference']}
-                placeholder={t['invFormEnterSupplierInvoiceReference']}
+                __placeholder={t['invFormEnterSupplierInvoiceReference']}
               />
             </GridItem>
             <GridItem>
@@ -84,7 +84,7 @@ export const AddInventoryForm = () => {
               <FormSelect
                 name="warehouse"
                 label={t['invFormWarehouse']}
-                placeholder={t['invFormSelectWarehouse']}
+                __placeholder={t['invFormSelectWarehouse']}
                 options={[
                   {
                     label: '1',
@@ -109,7 +109,7 @@ export const AddInventoryForm = () => {
             <FormTextArea
               name="note"
               label={t['invFormNotes']}
-              placeholder={t['invFormNote']}
+              __placeholder={t['invFormNote']}
             />
             <FieldCardComponents rows={'repeat(5,1fr)'}>
               <GridItem
@@ -252,7 +252,7 @@ export const AddInventoryForm = () => {
                 <FormSelect
                   name="tdsLedgerAccount"
                   label={t['invFormTDSLedgerAccount']}
-                  placeholder={t['invFormSelectSupplier']}
+                  __placeholder={t['invFormSelectSupplier']}
                   options={[
                     {
                       label: '1',
@@ -272,7 +272,7 @@ export const AddInventoryForm = () => {
                 <FormSelect
                   name="tdsType"
                   label={t['invFormTDSType']}
-                  placeholder={t['invFormSelectSupplier']}
+                  __placeholder={t['invFormSelectSupplier']}
                   options={[
                     {
                       label: '1',
@@ -294,7 +294,7 @@ export const AddInventoryForm = () => {
                   textAlign="right"
                   name="tdsAmount"
                   label={t['invFormTDSAmount']}
-                  placeholder="0.00"
+                  __placeholder="0.00"
                 />
               </InputGroupContainer>
             </Box>

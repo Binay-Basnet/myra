@@ -74,7 +74,7 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
                 <FormInput
                   name="otherProfession"
                   id={name}
-                  placeholder="Other"
+                  __placeholder="Other"
                   isDisabled={!hasOtherField}
                 />
               </Box>

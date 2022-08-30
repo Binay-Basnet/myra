@@ -293,13 +293,13 @@ export function AddUser() {
                   type="text"
                   name="name"
                   label="Name"
-                  placeholder="Enter Name"
+                  __placeholder="Enter Name"
                 />
 
                 <FormSelect
                   name="gender"
                   label="Gender"
-                  placeholder="Select Gender"
+                  __placeholder="Select Gender"
                   options={genderOptions}
                 />
 
@@ -308,26 +308,26 @@ export function AddUser() {
                 <FormPhoneNumber
                   name="contactNo"
                   label="Mobile No"
-                  placeholder="Mobile No"
+                  __placeholder="Mobile No"
                 />
 
                 <FormEmailInput
                   name="email"
                   label="Email"
-                  placeholder="Email"
+                  __placeholder="Email"
                 />
 
                 <FormSelect
                   name="role"
                   label="Role"
-                  placeholder="Select Role"
+                  __placeholder="Select Role"
                   options={roleOptions}
                 />
 
                 <BranchSelect
                   name="branch"
                   label="Service Center"
-                  placeholder="Select Service Center"
+                  __placeholder="Select Service Center"
                   isDisabled={role === Roles.Superadmin}
                 />
               </FormSection>
@@ -367,21 +367,21 @@ export function AddUser() {
                           type="text"
                           name="citizenship.idNo"
                           label={t['kynIndCitizenshipNo']}
-                          placeholder={t['kynIndCitizenshipNo']}
+                          __placeholder={t['kynIndCitizenshipNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="citizenship.place"
                           label={t['kynIndCitizenshipIssuePlace']}
-                          placeholder={t['kynIndCitizenshipIssuePlace']}
+                          __placeholder={t['kynIndCitizenshipIssuePlace']}
                         />
 
                         <FormInput
                           type="date"
                           name="citizenship.date"
                           label={t['kynIndCitizenshipIssueDate']}
-                          placeholder={t['kynIndCitizenshipIssueDate']}
+                          __placeholder={t['kynIndCitizenshipIssueDate']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -402,21 +402,21 @@ export function AddUser() {
                           type="text"
                           name="drivingLicense.idNo"
                           label={t['kymIndDrivingLicenseNo']}
-                          placeholder={t['kymIndDrivingLicenseNo']}
+                          __placeholder={t['kymIndDrivingLicenseNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="drivingLicense.place"
                           label={t['kymIndDrivingLicenseIssuePlace']}
-                          placeholder={t['kymIndDrivingLicenseIssuePlace']}
+                          __placeholder={t['kymIndDrivingLicenseIssuePlace']}
                         />
 
                         <FormInput
                           type="date"
                           name="drivingLicense.date"
                           label={t['kymIndDrivingLicenseIssueDate']}
-                          placeholder={t['kymIndDrivingLicenseIssueDate']}
+                          __placeholder={t['kymIndDrivingLicenseIssueDate']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -437,21 +437,21 @@ export function AddUser() {
                           type="text"
                           name="passport.idNo"
                           label={t['kymIndPassportNo']}
-                          placeholder={t['kymIndPassportNo']}
+                          __placeholder={t['kymIndPassportNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="passportIssue.place"
                           label={t['kymIndPassportIssuePlace']}
-                          placeholder={t['kymIndPassportIssuePlace']}
+                          __placeholder={t['kymIndPassportIssuePlace']}
                         />
 
                         <FormInput
                           type="date"
                           name="passportIssue.date"
                           label={t['kymIndPassportIssueDate']}
-                          placeholder={t['kymIndPassportIssueDate']}
+                          __placeholder={t['kymIndPassportIssueDate']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -472,14 +472,14 @@ export function AddUser() {
                           type="text"
                           name="voterCard.idNo"
                           label={t['kymIndVoterCardNo']}
-                          placeholder={t['kymIndVoterCardNo']}
+                          __placeholder={t['kymIndVoterCardNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="voterCard.place"
                           label={t['kymIndVoterCardPollingStation']}
-                          placeholder={t['kymIndVoterCardPollingStation']}
+                          __placeholder={t['kymIndVoterCardPollingStation']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -500,7 +500,7 @@ export function AddUser() {
                           type="text"
                           name="nationalId.idNo"
                           label={t['kymIndNationalIDNo']}
-                          placeholder={t['kymIndNationalIDNo']}
+                          __placeholder={t['kymIndNationalIDNo']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -515,13 +515,13 @@ export function AddUser() {
                 <FormSelect
                   name="permanentAddress.provinceId"
                   label={t['kymIndProvince']}
-                  placeholder={t['kymIndSelectProvince']}
+                  __placeholder={t['kymIndSelectProvince']}
                   options={province}
                 />
                 <FormSelect
                   name="permanentAddress.districtId"
                   label={t['kymIndDistrict']}
-                  placeholder={t['kymIndSelectDistrict']}
+                  __placeholder={t['kymIndSelectDistrict']}
                   options={districtList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -530,7 +530,7 @@ export function AddUser() {
                 <FormSelect
                   name="permanentAddress.localGovernmentId"
                   label={t['kymIndLocalGovernment']}
-                  placeholder={t['kymIndSelectLocalGovernment']}
+                  __placeholder={t['kymIndSelectLocalGovernment']}
                   options={localityList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -539,7 +539,7 @@ export function AddUser() {
                 <FormSelect
                   name="permanentAddress.wardNo"
                   label={t['kymIndWardNo']}
-                  placeholder={t['kymIndEnterWardNo']}
+                  __placeholder={t['kymIndEnterWardNo']}
                   options={wardList?.map((d) => ({
                     label: d,
                     value: d,
@@ -549,13 +549,13 @@ export function AddUser() {
                   type="text"
                   name="permanentAddress.locality"
                   label={t['kymIndLocality']}
-                  placeholder={t['kymIndEnterLocality']}
+                  __placeholder={t['kymIndEnterLocality']}
                 />
                 <FormInput
                   type="number"
                   name="permanentAddress.houseNo"
                   label={t['kymIndHouseNo']}
-                  placeholder={t['kymIndEnterHouseNo']}
+                  __placeholder={t['kymIndEnterHouseNo']}
                 />
 
                 <GridItem colSpan={2}>
@@ -605,13 +605,13 @@ export function AddUser() {
                       <FormSelect
                         name="temporaryAddress.provinceId"
                         label={t['kymIndProvince']}
-                        placeholder={t['kymIndSelectProvince']}
+                        __placeholder={t['kymIndSelectProvince']}
                         options={province}
                       />
                       <FormSelect
                         name="temporaryAddress.districtId"
                         label={t['kymIndDistrict']}
-                        placeholder={t['kymIndSelectDistrict']}
+                        __placeholder={t['kymIndSelectDistrict']}
                         options={districtTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -620,7 +620,7 @@ export function AddUser() {
                       <FormSelect
                         name="temporaryAddress.localGovernmentId"
                         label={t['kymIndLocalGovernment']}
-                        placeholder={t['kymIndSelectLocalGovernment']}
+                        __placeholder={t['kymIndSelectLocalGovernment']}
                         options={localityTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -629,7 +629,7 @@ export function AddUser() {
                       <FormSelect
                         name="temporaryAddress.wardNo"
                         label={t['kymIndWardNo']}
-                        placeholder={t['kymIndEnterWardNo']}
+                        __placeholder={t['kymIndEnterWardNo']}
                         options={wardTempList.map((d) => ({
                           label: d,
                           value: d,
@@ -639,13 +639,13 @@ export function AddUser() {
                         type="text"
                         name="temporaryAddress.locality"
                         label={t['kymIndLocality']}
-                        placeholder={t['kymIndEnterLocality']}
+                        __placeholder={t['kymIndEnterLocality']}
                       />
                       <FormInput
                         type="number"
                         name="temporaryAddress.houseNo"
                         label={t['kymIndHouseNo']}
-                        placeholder={t['kymIndEnterHouseNo']}
+                        __placeholder={t['kymIndEnterHouseNo']}
                       />
 
                       <GridItem colSpan={2}>
@@ -664,13 +664,13 @@ export function AddUser() {
                   type="text"
                   name={'landlordName'}
                   label={t['kymIndLandlordName']}
-                  placeholder={t['kymIndLandlordName']}
+                  __placeholder={t['kymIndLandlordName']}
                 />
                 <FormInput
                   type="number"
                   name={'landlordContact'}
                   label={t['kymIndContactNo']}
-                  placeholder={t['kymIndContactNo']}
+                  __placeholder={t['kymIndContactNo']}
                 />
               </FormSection>
 

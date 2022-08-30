@@ -148,7 +148,7 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
                 type="number"
                 min={0}
                 name="incomeFromFinancialInvestment"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -175,7 +175,7 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
                 type="number"
                 min={0}
                 name="incomeFromNonFinancialInvestment"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -203,7 +203,7 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
                 type="number"
                 min={0}
                 name="incomeFromInvestment"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -230,7 +230,7 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
                 type="number"
                 min={0}
                 name="incomeFromServiceOperation"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -258,7 +258,7 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
                 type="number"
                 min={0}
                 name="incomeFromSales"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -285,7 +285,7 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
                 type="number"
                 min={0}
                 name="otherIncome"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -313,7 +313,7 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
                 type="number"
                 min={0}
                 name="miscellaneousIncome"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -348,7 +348,7 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
                 type="text"
                 name="totalIncome"
                 value={totalIncome}
-                placeholder={t['kymCoopUnionIncTotalIncome']}
+                __placeholder={t['kymCoopUnionIncTotalIncome']}
               />
             </GridItem>
           </Grid>
