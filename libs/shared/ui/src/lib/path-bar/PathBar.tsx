@@ -24,6 +24,7 @@ export function PathBar({ paths, button }: PathBarProps) {
       justifyContent="space-between"
       borderBottom="1px"
       borderColor="border.layout"
+      pl="s16"
     >
       <Box display="flex" alignItems="center" gap="s8">
         <Icon
@@ -51,7 +52,13 @@ export function PathBar({ paths, button }: PathBarProps) {
               {path.label}
             </Text>
             {paths.length !== index + 1 && (
-              <Text fontSize="r3" mt="-3px" color="gray.800" fontWeight="500">
+              <Text
+                fontSize="r2"
+                mt="-3px"
+                px="s8"
+                color="gray.800"
+                fontWeight="500"
+              >
                 /
               </Text>
             )}

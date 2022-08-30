@@ -16,6 +16,7 @@ export * from './lib/checkbox/Checkbox';
 export * from './lib/checkbox-group/CheckboxGroup';
 export * from './lib/collapse/Collapse';
 export * from './lib/container-/Container';
+export * from './lib/detail-page-content-card/DetailPageContentCard';
 export * from './lib/divider/Divider';
 export * from './lib/email-input/EmailInput';
 export * from './lib/email-input/EmailInput';
