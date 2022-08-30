@@ -1,10 +1,10 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { BsPrinter } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import { Spinner } from '@chakra-ui/react';
 
-import { useGetMemberPdfMutation } from '@coop/cbs/data-access';
+import { useGetMemberPdfQuery } from '@coop/cbs/data-access';
 import {
   Box,
   Button,
@@ -17,30 +17,15 @@ import {
 
 export const Pdf = () => {
   const router = useRouter();
-  const [fileUrl, setFileUrl] = useState('');
 
-  const { mutateAsync } = useGetMemberPdfMutation();
-
-  useEffect(() => {
-    const getFile = async () => {
-      if (router.query['id']) {
-        const response = await mutateAsync({
-          id: router.query['id'] as string,
-        });
-        if (
-          response &&
-          response?.members?.memberPDF &&
-          response?.members?.memberPDF !== ''
-        ) {
-          setFileUrl(response?.members?.memberPDF as string);
-        } else {
-          setFileUrl('not');
-        }
-      }
-    };
-
-    getFile();
-  }, [mutateAsync, router.isReady]);
+  const { data, isLoading } = useGetMemberPdfQuery(
+    {
+      id: router.query['id'] as string,
+    },
+    {
+      enabled: !!router.query['id'],
+    }
+  );
 
   return (
     <>
@@ -52,10 +37,12 @@ export const Pdf = () => {
         bg="white"
         minH="calc(100vh - 170px)"
       >
-        {!fileUrl ? (
+        {isLoading ? (
           <Spinner />
         ) : (
-          <PDFViewer file={fileUrl.replace(/http/g, 'https')} />
+          <PDFViewer
+            file={data?.members?.memberPDF?.replace(/http/g, 'https') ?? 'pdf'}
+          />
         )}
       </Container>
       <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
@@ -79,8 +66,11 @@ export const Pdf = () => {
               <Button
                 variant="ghost"
                 gap="s8"
-                isDisabled={fileUrl === '' || fileUrl === 'not'}
-                onClick={() => window.open(fileUrl, '_blank')}
+                isDisabled={
+                  data?.members?.memberPDF === '' ||
+                  data?.members?.memberPDF === 'not'
+                }
+                onClick={() => window.open(data?.members?.memberPDF, '_blank')}
               >
                 <Icon as={BsPrinter} />
                 Print
