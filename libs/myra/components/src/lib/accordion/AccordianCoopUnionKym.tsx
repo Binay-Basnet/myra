@@ -69,6 +69,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
     getAccountOperatorStatus,
     cooperativeInfoIncompleteSections,
     cooperativeInfoSectionsWithError,
+    cooperativeInfo,
   } = useGetSectionStatus(id);
 
   const subsection = kymCurrentSection?.subSection;
@@ -127,12 +128,13 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                   {t[item]}
                 </Text>
               </a>
-              {cooperativeInfoIncompleteSections?.includes(
-                cooperativeInfoObject[item]
-              ) ||
-              cooperativeInfoSectionsWithError?.includes(
-                cooperativeInfoObject[item]
-              ) ? (
+              {cooperativeInfo ===
+              undefined ? null : cooperativeInfoIncompleteSections?.includes(
+                  cooperativeInfoObject[item]
+                ) ||
+                cooperativeInfoSectionsWithError?.includes(
+                  cooperativeInfoObject[item]
+                ) ? (
                 <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
               ) : (
                 <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
@@ -172,7 +174,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                   {t[item]}
                 </Text>
               </a>
-              {getBodInfoStatus() ? (
+              {getBodInfoStatus() === null ? null : getBodInfoStatus() ? (
                 <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
               ) : (
                 <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
@@ -212,7 +214,8 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                   {t[item]}
                 </Text>
               </a>
-              {getAccountOperatorStatus() ? (
+              {getAccountOperatorStatus() ===
+              null ? null : getAccountOperatorStatus() ? (
                 <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
               ) : (
                 <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
