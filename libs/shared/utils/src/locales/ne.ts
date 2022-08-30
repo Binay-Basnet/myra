@@ -2846,6 +2846,8 @@ const ne: Record<string, string> = {
   // NEW TRANSLATIONS
   // AcountOpen
   accinstallmentAmount: 'Installment Amount',
+
+  transactionsAgentListViewDetail: 'View Detail',
 };
 
 export default ne;

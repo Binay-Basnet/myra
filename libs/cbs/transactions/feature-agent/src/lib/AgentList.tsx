@@ -2,17 +2,10 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
-import { PopoverComponent } from '@coop/myra/components';
+import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
-
-const memberTypeSlug = {
-  INDIVIDUAL: 'individual',
-  INSTITUTION: 'institution',
-  COOPERATIVE: 'coop',
-  COOPERATIVE_UNION: 'coop_union',
-};
 
 const MEMBER_TAB_ITEMS = [
   {
@@ -92,29 +85,17 @@ export function AgentList() {
         header: '',
         accessorKey: 'actions',
         cell: (cell) => {
-          const member = cell?.row?.original?.node;
-          const memberData = { id: member?.id, type: member?.type };
           return (
-            <PopoverComponent
+            <ActionPopoverComponent
               items={[
                 {
-                  title: 'memberListTableViewMemberProfile',
-                },
-                {
-                  title: 'memberListTableEditMember',
-                  onClick: (member) => {
-                    router.push(
-                      `/members/${
-                        memberTypeSlug[member?.type || 'INDIVIDUAL']
-                      }/edit/${member?.id}`
-                    );
+                  title: 'transactionsAgentListViewDetail',
+                  onClick: () => {
+                    router.push('/transactions/agent/123456/overview');
                   },
                 },
-                {
-                  title: 'memberListTableMakeInactive',
-                },
               ]}
-              member={memberData}
+              id={cell?.row?.original?.node?.id as string}
             />
           );
         },

@@ -76,10 +76,10 @@ const dropdownButtons = [
     label: 'New Loan Payment',
     link: '/transactions/loan-payment/add',
   },
-  {
-    label: 'New Agent',
-    link: '/transactions/agent/add',
-  },
+  // {
+  //   label: 'New Agent',
+  //   link: '/transactions/agent/add',
+  // },
   {
     label: 'New Agent Transaction',
     link: '/transactions/agent-transaction/add',
