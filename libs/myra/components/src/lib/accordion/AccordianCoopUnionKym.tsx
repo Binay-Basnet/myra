@@ -5,14 +5,11 @@ import { useRouter } from 'next/router';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
-import {
-  KymInsAddSectionStatus,
-  useGetAccountOperatorDetailsListQuery,
-  useGetBoardOfDirectorsDetailsListQuery,
-  useGetCooperativeUnionKymEditDataQuery,
-} from '@coop/cbs/data-access';
+import { KymInsAddSectionStatus } from '@coop/cbs/data-access';
 import { Icon } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+
+import { useGetSectionStatus } from '../hooks/useGetSectionStatus';
 
 const OrganizationInformation = [
   'kymCoopUnionAccBasicInformation',
@@ -67,62 +64,12 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
   const { kymCurrentSection } = props;
   const route = useRouter();
   const id = route?.query['id'] as string;
-  const { data: coopUnionCooperativeData } =
-    useGetCooperativeUnionKymEditDataQuery({
-      id,
-    });
-  const { data: bodEditValues } = useGetBoardOfDirectorsDetailsListQuery({
-    id: String(id),
-  });
-
-  const { data: accountOperatorValues } = useGetAccountOperatorDetailsListQuery(
-    {
-      id: String(id),
-    }
-  );
-
-  const cooperativeInfo =
-    coopUnionCooperativeData?.members?.cooperativeUnion?.formState?.formData
-      ?.institutionInformation?.sectionStatus;
-
-  const bodInfo =
-    bodEditValues?.members?.cooperativeUnion?.formState?.formData
-      ?.boardOfDirectorsDetails?.sectionStatus;
-
-  const getBodInfoStatus = () => {
-    let bodStatus = false;
-    bodInfo?.forEach((item) => {
-      if (item?.errors === null && item?.incomplete === null) {
-        bodStatus = true;
-      } else {
-        bodStatus = false;
-      }
-    });
-    return bodStatus;
-  };
-  const accountOperatorDetails =
-    accountOperatorValues?.members?.cooperativeUnion?.formState?.formData
-      ?.accountOperatorsDetails?.sectionStatus;
-
-  const getAccountOperatorStatus = () => {
-    let accountOperatorStatus = false;
-    accountOperatorDetails?.forEach((item) => {
-      if (item?.errors === null && item?.incomplete === null) {
-        accountOperatorStatus = true;
-      } else {
-        accountOperatorStatus = false;
-      }
-    });
-    return accountOperatorStatus;
-  };
-
-  const cooperativeInfoIncompleteSections = cooperativeInfo?.incomplete?.map(
-    (item) => item?.sectionName
-  );
-
-  const cooperativeInfoSectionsWithError = cooperativeInfo?.errors?.map(
-    (item) => item?.sectionName
-  );
+  const {
+    getBodInfoStatus,
+    getAccountOperatorStatus,
+    cooperativeInfoIncompleteSections,
+    cooperativeInfoSectionsWithError,
+  } = useGetSectionStatus(id);
 
   const subsection = kymCurrentSection?.subSection;
   const [isOpenOrganizational, setIsOpenOrganizational] = React.useState(false);
@@ -173,13 +120,13 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               alignItems={'center'}
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
+              gap={2}
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
-              &nbsp; &nbsp;
               {cooperativeInfoIncompleteSections?.includes(
                 cooperativeInfoObject[item]
               ) ||
@@ -218,13 +165,13 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               alignItems={'center'}
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
+              gap={2}
             >
               <a href={`#${item}`}>
                 <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
-              &nbsp; &nbsp;
               {getBodInfoStatus() ? (
                 <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
               ) : (

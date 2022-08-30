@@ -2,6 +2,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from 'react-query';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 import debounce from 'lodash/debounce';
@@ -12,6 +17,7 @@ import {
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelDetails,
   CoopUnionPersonnelInput,
+  GetAccountOperatorDetailsListQuery,
   useAllAdministrationQuery,
   useDeletePersonnelDetailsMutation,
   useGetAccountOperatorDetailsListQuery,
@@ -50,6 +56,11 @@ interface IAddDirectorProps {
   index: number;
   accountOperatorId: string;
   accountOperatorDetail: CoopUnionPersonnelDetails | null | undefined;
+  refetch: <TPageData>(
+    options?: RefetchOptions & RefetchQueryFilters<TPageData>
+  ) => Promise<
+    QueryObserverResult<GetAccountOperatorDetailsListQuery, unknown>
+  >;
 }
 
 const AddDirector = ({
@@ -58,6 +69,7 @@ const AddDirector = ({
   index,
   accountOperatorId,
   accountOperatorDetail,
+  refetch,
 }: IAddDirectorProps) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
@@ -85,7 +97,7 @@ const AddDirector = ({
     );
   }, [data?.administration?.all]);
 
-  const { mutate } = useSetPersonnelDetailsMutation();
+  const { mutateAsync } = useSetPersonnelDetailsMutation();
 
   useEffect(() => {
     if (accountOperatorDetail) {
@@ -121,13 +133,12 @@ const AddDirector = ({
         };
 
         if (id && data && !isDeepEmpty(data) && !isEqual(operatorData, data)) {
-          mutate({
+          mutateAsync({
             id,
             personnelId: accountOperatorId,
             sectionType: CooperativeUnionPersonnelSection.AccountOperators,
             data,
-          });
-          // refetch();
+          }).then(() => refetch());
         }
       }, 800)
     );
@@ -654,6 +665,7 @@ export const AccountOperatorInfo = ({
                   accountOperatorDetail={accountOperatorEditValues?.members?.cooperativeUnion?.formState?.formData?.accountOperatorsDetails?.data?.personnelDetails?.find(
                     (accOperator) => accOperator?.id === accountOperatorId
                   )}
+                  refetch={refetch}
                 />
               </Box>
             );

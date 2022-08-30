@@ -26,14 +26,14 @@ export const KymAssestsAndtarget = ({
   useCooperativeUnionEconomicDetails({ methods });
 
   const cashCurrent = watch('cashAndCashEquivalentCurrent');
-  const cashCurrent2 = isNaN(cashCurrent) == true ? 0 : cashCurrent;
+  const cashCurrent2 = isNaN(cashCurrent) === true ? 0 : cashCurrent;
   const bankCurrent = watch('bankCurrent');
-  const bankCurrent2 = isNaN(bankCurrent) == true ? 0 : bankCurrent;
+  const bankCurrent2 = isNaN(bankCurrent) === true ? 0 : bankCurrent;
   const investemntCurrent = watch('investmentsCurrent');
   const investmentCurrent2 =
-    isNaN(investemntCurrent) == true ? 0 : investemntCurrent;
+    isNaN(investemntCurrent) === true ? 0 : investemntCurrent;
   const loanCurrent = watch('loanCurrent');
-  const loanCurrent2 = isNaN(loanCurrent) == true ? 0 : loanCurrent;
+  const loanCurrent2 = isNaN(loanCurrent) === true ? 0 : loanCurrent;
   const nonCurrentAssetsCurrent = watch('nonCurrentAssetsCurrent');
   const nonCurrentAssetsCurrent2 =
     isNaN(nonCurrentAssetsCurrent) === true ? 0 : nonCurrentAssetsCurrent;

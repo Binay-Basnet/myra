@@ -160,7 +160,10 @@ const CRDirectorsSelection = ({
               personnelId: null,
               sectionType:
                 CooperativeUnionPersonnelSection.CentralRepresentative,
-              data,
+              data: omit(data?.data ? data?.data : data, [
+                'id',
+                'cooperativeUnionId',
+              ]),
             });
           }
 
@@ -170,7 +173,10 @@ const CRDirectorsSelection = ({
               personnelId: crId,
               sectionType:
                 CooperativeUnionPersonnelSection.CentralRepresentative,
-              data: omit(data, ['centralRepID']),
+              data: omit(data?.data ? data?.data : data, [
+                'id',
+                'cooperativeUnionId',
+              ]),
             });
           }
         }
