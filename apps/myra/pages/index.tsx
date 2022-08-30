@@ -1,193 +1,105 @@
 import { ReactElement } from 'react';
+import {
+  AiFillInfoCircle,
+  AiOutlineBarcode,
+  AiOutlineUnorderedList,
+  AiOutlineUser,
+  AiOutlineUserAdd,
+} from 'react-icons/ai';
+import { BsLockFill } from 'react-icons/bs';
+import { FiSettings } from 'react-icons/fi';
+import { IoMdPersonAdd } from 'react-icons/io';
+import { RiNewspaperLine } from 'react-icons/ri';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Flex, HStack, Img, Spacer } from '@chakra-ui/react';
 
-import { useGetNewIdMutation } from '@coop/cbs/data-access';
+import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { HomePageLayout } from '@coop/myra/components';
-import { Box, Button, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, Button, Grid, GridItem, QuickLinks, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const Dashboard = () => {
   const { t } = useTranslation();
-  const newId = useGetNewIdMutation();
   const router = useRouter();
+  const newId = useGetNewIdMutation();
+
+  const quickLinksList = [
+    {
+      text: 'Add New Member',
+      icon: IoMdPersonAdd,
+      onclick: () =>
+        newId
+          .mutateAsync({ idType: Id_Type.Kymindividual })
+          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+    },
+    {
+      text: 'Ledgers',
+      icon: RiNewspaperLine,
+    },
+    {
+      text: 'Applications',
+      icon: AiOutlineBarcode,
+    },
+    {
+      text: 'List Pages',
+      icon: AiOutlineUnorderedList,
+    },
+    {
+      text: 'Items',
+      icon: BsLockFill,
+    },
+    {
+      text: 'Settings',
+      icon: FiSettings,
+    },
+    {
+      text: 'Ram Krishna (CA2234)',
+      subText: 'Member Profile',
+      icon: AiOutlineUser,
+    },
+    {
+      text: 'Form Pages',
+      icon: AiOutlineUserAdd,
+    },
+    {
+      text: 'Reports',
+      icon: AiFillInfoCircle,
+    },
+  ];
 
   return (
     <Box height="fit-content" p="0" pb="55px">
-      <Box display="flex" flexDir="column" gap="s16">
-        <Box>
-          <Flex>
-            <Box>
-              <Text
-                fontSize={'s3'}
-                color="gray.600"
-                fontWeight={'600'}
-                textTransform={'uppercase'}
-              >
-                {t.quickLinks}
-              </Text>
-            </Box>
-            <Spacer />
-            <Box>
-              <Button variant="link" shade="neutral">
-                {t.editLinks}
-              </Button>
-            </Box>
-          </Flex>
+      <Box display="flex" flexDir="column" gap="s8">
+        <Box display="flex" justifyContent="space-between">
+          <Text
+            fontSize={'s3'}
+            color="gray.600"
+            fontWeight={'SemiBold'}
+            textTransform={'uppercase'}
+          >
+            {t.quickLinks}
+          </Text>
+          <Button variant="link" shade="neutral">
+            {t.editLinks}
+          </Button>
         </Box>
-        <Box>
-          <Grid templateColumns="repeat(3, 1fr)" gap="9px">
-            <GridItem>
-              <Box
-                w="100%"
-                h="58px"
-                bg="#FFFFFF"
-                p="20px"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <HStack spacing="14px">
-                  <Box>
-                    <Img src="/Icon_Add.svg" alt="add icon" />
-                  </Box>
-                  <Box>
-                    <Text
-                      fontSize="12px"
-                      fontWeight="500"
-                      color="#343C46"
-                      cursor="pointer"
-                      onClick={() =>
-                        newId
-                          .mutateAsync({})
-                          .then(() => router.push(`members/list`))
-                      }
-                    >
-                      {t.addNewMember}
-                    </Text>
-                  </Box>
-                </HStack>
-              </Box>
+
+        <Grid templateColumns="repeat(3,1fr)" columnGap="s16" rowGap="s8">
+          {quickLinksList?.map((item, index) => (
+            <GridItem key={index}>
+              <QuickLinks
+                icon={item.icon}
+                text={item.text}
+                subText={item.subText}
+                onclick={item.onclick}
+              />
             </GridItem>
-            <GridItem>
-              <Box
-                w="100%"
-                h="58px"
-                bg="#FFFFFF"
-                p="12px"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <HStack spacing="14px">
-                  <Box>
-                    <Img src="/list_icon.svg" alt="add icon" />
-                  </Box>
-                  <Box>
-                    <Text fontSize="12px" fontWeight="400" color="#343C46">
-                      {t.transactionHistory}
-                    </Text>
-                    <Text fontSize="12px" fontWeight="400" color="#91979F">
-                      {t.transactionHistoryReport}
-                    </Text>
-                  </Box>
-                </HStack>
-              </Box>
-            </GridItem>
-            <GridItem>
-              <Box
-                w="100%"
-                h="58px"
-                bg="#FFFFFF"
-                p="12px"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <HStack spacing="14px">
-                  <Box>
-                    <Img src="/bxs_user.svg" alt="user icon" />
-                  </Box>
-                  <Box>
-                    <Text fontSize="12px" fontWeight="400" color="#343C46">
-                      Ram Krishna (CA2234)
-                    </Text>
-                    <Text fontSize="12px" fontWeight="400" color="#91979F">
-                      {t.memberProfile}
-                    </Text>
-                  </Box>
-                </HStack>
-              </Box>
-            </GridItem>
-            <GridItem>
-              <Box
-                w="100%"
-                h="58px"
-                bg="#FFFFFF"
-                p="12px"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <HStack spacing="14px">
-                  <Box>
-                    <Img src="/list_icon.svg" alt="list icon" />
-                  </Box>
-                  <Box>
-                    <Text fontSize="12px" fontWeight="400" color="#343C46">
-                      {t.shareInformation}
-                    </Text>
-                    <Text fontSize="12px" fontWeight="400" color="#91979F">
-                      {t.shareInformationReport}
-                    </Text>
-                  </Box>
-                </HStack>
-              </Box>
-            </GridItem>
-            <GridItem>
-              <Box
-                w="100%"
-                h="58px"
-                bg="#FFFFFF"
-                p="20px"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <HStack spacing="14px">
-                  <Box>
-                    <Img src="/Icon_Add.svg" alt="add icon" />
-                  </Box>
-                  <Box>
-                    <Text fontSize="12px" fontWeight="400" color="#343C46">
-                      {t.addNewLoan}
-                    </Text>
-                  </Box>
-                </HStack>
-              </Box>
-            </GridItem>
-            <GridItem>
-              <Box
-                w="100%"
-                h="58px"
-                bg="#FFFFFF"
-                p="20px"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <HStack spacing="14px">
-                  <Box>
-                    <Img src="/Icon_Add.svg" alt="add icon" />
-                  </Box>
-                  <Box>
-                    <Text fontSize="12px" fontWeight="500" color="#343C46">
-                      {t.addDeposit}
-                    </Text>
-                  </Box>
-                </HStack>
-              </Box>
-            </GridItem>
-          </Grid>
-        </Box>
+          ))}
+        </Grid>
       </Box>
 
       <Box mt="s32" display="flex" flexDir="column" gap="s16">

@@ -26,14 +26,14 @@ export const KymAssestsAndtarget = ({
   useCooperativeUnionEconomicDetails({ methods });
 
   const cashCurrent = watch('cashAndCashEquivalentCurrent');
-  const cashCurrent2 = isNaN(cashCurrent) == true ? 0 : cashCurrent;
+  const cashCurrent2 = isNaN(cashCurrent) === true ? 0 : cashCurrent;
   const bankCurrent = watch('bankCurrent');
-  const bankCurrent2 = isNaN(bankCurrent) == true ? 0 : bankCurrent;
+  const bankCurrent2 = isNaN(bankCurrent) === true ? 0 : bankCurrent;
   const investemntCurrent = watch('investmentsCurrent');
   const investmentCurrent2 =
-    isNaN(investemntCurrent) == true ? 0 : investemntCurrent;
+    isNaN(investemntCurrent) === true ? 0 : investemntCurrent;
   const loanCurrent = watch('loanCurrent');
-  const loanCurrent2 = isNaN(loanCurrent) == true ? 0 : loanCurrent;
+  const loanCurrent2 = isNaN(loanCurrent) === true ? 0 : loanCurrent;
   const nonCurrentAssetsCurrent = watch('nonCurrentAssetsCurrent');
   const nonCurrentAssetsCurrent2 =
     isNaN(nonCurrentAssetsCurrent) === true ? 0 : nonCurrentAssetsCurrent;
@@ -153,7 +153,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="cashAndCashEquivalentCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -162,7 +162,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="cashAndCashEquivalentTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -189,7 +189,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="bankCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -198,7 +198,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="bankTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -225,7 +225,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="investmentsCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -234,7 +234,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="investmentsTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -261,7 +261,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="loanCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -270,7 +270,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="loanTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -297,7 +297,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="nonCurrentAssetsCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -306,7 +306,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="nonCurrentAssetsTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -333,7 +333,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="otherNonCurrentAssetsCurrent"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
             <GridItem>
@@ -342,7 +342,7 @@ export const KymAssestsAndtarget = ({
                 type="number"
                 min={0}
                 name="otherNonCurrentAssetsTarget"
-                placeholder="0.00"
+                __placeholder="0.00"
               />
             </GridItem>
           </Grid>
@@ -376,7 +376,7 @@ export const KymAssestsAndtarget = ({
                 type="text"
                 name="totalAssetsCurrent"
                 value={totalassestscurrent}
-                placeholder={t['kymCoopUnionEcoTotalAssets']}
+                __placeholder={t['kymCoopUnionEcoTotalAssets']}
               />
             </GridItem>
             <GridItem>
@@ -389,7 +389,7 @@ export const KymAssestsAndtarget = ({
                 type="text"
                 name="totalAssetsTarget"
                 value={totalassestsTARGET}
-                placeholder={t['kymCoopUnionEcoTotal']}
+                __placeholder={t['kymCoopUnionEcoTotal']}
               />
             </GridItem>
           </Grid>

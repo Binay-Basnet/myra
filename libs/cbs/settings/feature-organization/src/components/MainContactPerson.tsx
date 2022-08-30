@@ -11,7 +11,7 @@ export const MainContactPersonOrganization = () => {
         <GridItem>
           <FormInput
             label={t['settingsOrgMainName']}
-            placeholder={t['settingsOrgMainEnterName']}
+            __placeholder={t['settingsOrgMainEnterName']}
             name={'contactPersonName'}
           />
         </GridItem>
@@ -19,13 +19,13 @@ export const MainContactPersonOrganization = () => {
           <FormPhoneNumber
             label={t['settingsOrgMainContactNo']}
             name={'contactPersonContactNumber'}
-            placeholder={t['settingsOrgMainContactPersonPhone']}
+            __placeholder={t['settingsOrgMainContactPersonPhone']}
           />
         </GridItem>
         <GridItem>
           <FormInput
             label={t['settingsOrgMainDesignation']}
-            placeholder={t['settingsOrgMainDesignation']}
+            __placeholder={t['settingsOrgMainDesignation']}
             name={'title'}
           />
         </GridItem>

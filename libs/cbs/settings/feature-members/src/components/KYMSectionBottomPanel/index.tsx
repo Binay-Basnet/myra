@@ -85,7 +85,7 @@ export const KYMBottomPanel = ({
               });
             }}
           >
-            <FormInput placeholder="Name of Field" name="name" />
+            <FormInput __placeholder="Name of Field" name="name" />
             <Icon
               onClick={() => {
                 setHasNewField(false);

@@ -74,7 +74,7 @@ export const KYMFormFieldNewOption = ({
       >
         <FormInput
           name="name"
-          placeholder="Name of Field"
+          __placeholder="Name of Field"
           rules={{ required: "This field shouldn't be empty" }}
         />
         <Icon

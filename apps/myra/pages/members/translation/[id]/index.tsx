@@ -209,7 +209,7 @@ const Translation = () => {
                 <Button
                   type="submit"
                   variant="ghost"
-                  onClick={() => router.push(`/members/details/${id}`)}
+                  onClick={() => router.push(`/pdf?id=${id}`)}
                 >
                   <Icon as={AiOutlineEye} color="primary.500" />
                   <Text

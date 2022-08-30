@@ -34,20 +34,20 @@ export const KymCoopBasicInfo = (props: IProps) => {
             type="text"
             name={'nameOfOrganization'}
             label={t['kymCoopNameofOrganization']}
-            placeholder={t['kymCoopEnterNameofOrganization']}
+            __placeholder={t['kymCoopEnterNameofOrganization']}
           />
           <FormInput
             type="number"
             name="regdNumber"
             label={t['kymCoopRegisrationNo']}
-            placeholder={t['kymCoopEnterRegisteredNumber']}
+            __placeholder={t['kymCoopEnterRegisteredNumber']}
           />
 
           <FormInput
             type="text"
             name="regdOffice"
             label={t['kymCoopRegistrationoffice']}
-            placeholder={t['kymCoopEnterRegisteredAddress']}
+            __placeholder={t['kymCoopEnterRegisteredAddress']}
           />
           <FormInput
             type="date"

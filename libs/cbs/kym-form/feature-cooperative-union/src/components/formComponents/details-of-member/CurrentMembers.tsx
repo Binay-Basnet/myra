@@ -28,28 +28,28 @@ export const CurrentMembers = () => {
           name="firstName"
           textAlign={'left'}
           label={t['kymCoopUnionNoofMalemembers']}
-          placeholder={t['kymCoopUnionEnternoofMaleMembers']}
+          __placeholder={t['kymCoopUnionEnternoofMaleMembers']}
         />
         <FormInput
           type="number"
           name="firstName"
           textAlign={'left'}
           label={t['kymCoopUnionNoofFemalemembers']}
-          placeholder={t['kymCoopUnionEnternoofFemaleMembers']}
+          __placeholder={t['kymCoopUnionEnternoofFemaleMembers']}
         />
         <FormInput
           type="number"
           name="firstName"
           textAlign={'left'}
           label={t['kymCoopUnionNoofInstitutionalmembers']}
-          placeholder={t['kymCoopUnionEnternoofInstitutuionalMembers']}
+          __placeholder={t['kymCoopUnionEnternoofInstitutuionalMembers']}
         />
         <FormInput
           type="number"
           name="firstName"
           textAlign={'left'}
           label={t['kymCoopUnionTotalcurrentmembers']}
-          placeholder={t['kymCoopUnionEntertotalcurrentmembers']}
+          __placeholder={t['kymCoopUnionEntertotalcurrentmembers']}
         />
       </InputGroupContainer>
     </GroupContainer>

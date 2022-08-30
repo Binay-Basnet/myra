@@ -322,14 +322,14 @@ export function AddDeposit() {
                   <MemberSelect
                     name="memberId"
                     label="Member"
-                    placeholder="Select Member"
+                    __placeholder="Select Member"
                   />
 
                   {memberId && (
                     <FormCustomSelect
                       name="accountId"
                       label="Select Deposit Account"
-                      placeholder="Select Account"
+                      __placeholder="Select Account"
                       options={accountListData?.account?.list?.edges?.map(
                         (account) => ({
                           accountInfo: {

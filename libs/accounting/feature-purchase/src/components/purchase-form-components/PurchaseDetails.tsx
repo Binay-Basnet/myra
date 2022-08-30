@@ -16,7 +16,7 @@ export const PurchaseDetails = () => {
             name="supplierName"
             type="text"
             label={t['accountingPurchaseAddSupplierName']}
-            placeholder={t['accountingPurchaseAddSupplierName']}
+            __placeholder={t['accountingPurchaseAddSupplierName']}
           />
         </GridItem>
 
@@ -24,7 +24,7 @@ export const PurchaseDetails = () => {
           name="supplierInvoiceReference"
           type="text"
           label={t['accountingPurchaseAddSupplierInvoiceReference']}
-          placeholder={t['accountingPurchaseAddSupplierInvoiceReference']}
+          __placeholder={t['accountingPurchaseAddSupplierInvoiceReference']}
         />
 
         <FormInput

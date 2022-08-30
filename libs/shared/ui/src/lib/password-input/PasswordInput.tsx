@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { forwardRef } from 'react';
-import { IoEyeOffOutline,IoEyeOutline, IoLockClosed } from 'react-icons/io5';
+import { IoEyeOffOutline, IoEyeOutline, IoLockClosed } from 'react-icons/io5';
 import {
   Box,
   Input,
@@ -36,7 +36,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             pr="58px"
             variant={'outline'}
             type={show ? 'text' : 'password'}
-            placeholder="Enter password"
+            __placeholder="Enter password"
             ref={ref}
             fontSize="s2"
             {...rest}

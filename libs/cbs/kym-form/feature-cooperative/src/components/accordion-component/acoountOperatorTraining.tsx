@@ -36,19 +36,19 @@ const AddSister = ({ index, removeTraining }: IAddTraining) => {
           type="text"
           name={`coopRelatedTraining.${index}.subjectOfTraining`}
           label={t['kymCoopSubjectOfTraining']}
-          placeholder={t['kymCoopEnterSubjectOfTraining']}
+          __placeholder={t['kymCoopEnterSubjectOfTraining']}
         />
         <FormInput
           type="date"
           name={`coopRelatedTraining.${index}.dateOfTraining`}
           label={t['kymCoopDateOfTraining']}
-          placeholder={t['kymCoopEnterDateOfTraining']}
+          __placeholder={t['kymCoopEnterDateOfTraining']}
         />
         <FormInput
           type="text"
           name={`coopRelatedTraining.${index}.trainingOrganization`}
           label={t['kymCoopTrainingOrganization']}
-          placeholder={t['kymCoopEnterTrainingOrganization']}
+          __placeholder={t['kymCoopEnterTrainingOrganization']}
         />
       </InputGroupContainer>
     </DynamicBoxContainer>

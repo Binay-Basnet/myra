@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { CloseIcon } from '@chakra-ui/icons';
+import { CloseButton } from '@chakra-ui/react';
 import debounce from 'lodash/debounce';
 
 import {
@@ -15,10 +15,17 @@ import {
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
-  GroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  FormSection,
+  Grid,
+  GridItem,
+  Icon,
+  IconButton,
+} from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IAddSisterConcern {
@@ -91,17 +98,15 @@ const AddSister = ({
         }}
       >
         <DynamicBoxContainer>
-          <CloseIcon
-            cursor="pointer"
+          <IconButton
+            aria-label="close"
+            variant="ghost"
+            size="sm"
+            icon={<CloseButton />}
             onClick={() => {
               removeSister(sisterId);
             }}
-            color="gray.500"
-            _hover={{
-              color: 'gray.900',
-            }}
-            aria-label="close"
-            alignSelf="flex-end"
+            id="removeSpouseOccupationButton"
           />
           <Grid templateColumns={'repeat(2, 1fr)'} gap="s20">
             <FormInput
@@ -110,7 +115,7 @@ const AddSister = ({
               bg="white"
               name={'name'}
               label={t['kymInsNameofSisterConcern']}
-              placeholder={t['kymInsEnterNameofSisterConcern']}
+              __placeholder={t['kymInsEnterNameofSisterConcern']}
             />
             <FormInput
               id="sisterConcernsDetails"
@@ -118,7 +123,7 @@ const AddSister = ({
               bg="white"
               name={`natureOfBusiness`}
               label={t['kymInsNatureofBusiness']}
-              placeholder={t['kymInsNatureofBusiness']}
+              __placeholder={t['kymInsNatureofBusiness']}
             />
             <FormInput
               id="sisterConcernsDetails"
@@ -126,7 +131,7 @@ const AddSister = ({
               bg="white"
               name={`address`}
               label={t['kymInsAddress']}
-              placeholder={t['kymInsAddress']}
+              __placeholder={t['kymInsAddress']}
             />
             <FormInput
               id="sisterConcernsDetails"
@@ -134,7 +139,7 @@ const AddSister = ({
               bg="white"
               name={`phone`}
               label={t['kymInsPhoneNo']}
-              placeholder={t['kymInsEnterPhoneNumber']}
+              __placeholder={t['kymInsEnterPhoneNumber']}
             />
           </Grid>
         </DynamicBoxContainer>
@@ -222,15 +227,11 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer
+        <FormSection
           id="kymInsDetailsofsisterconcern"
-          scrollMarginTop={'200px'}
+          header="kymInsDetailsofsisterconcern"
         >
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kymInsDetailsofsisterconcern']}
-          </Text>
-
-          <div>
+          <GridItem colSpan={3}>
             <DynamicBoxGroupContainer>
               {sisterIds.map((id) => {
                 return (
@@ -255,8 +256,8 @@ export const InstitutionKYMSisterConcernDetails = (props: IProps) => {
                 {t['kymInsNewDetail']}
               </Button>
             </DynamicBoxGroupContainer>
-          </div>
-        </GroupContainer>
+          </GridItem>
+        </FormSection>
       </form>
     </FormProvider>
   );

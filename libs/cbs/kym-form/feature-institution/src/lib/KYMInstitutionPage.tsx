@@ -3,10 +3,7 @@ import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
 import { useGetKymFormStatusInstitutionQuery } from '@coop/cbs/data-access';
-import {
-  ContainerWithDivider,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { AccorrdianAddInstitution } from '@coop/myra/components';
 import {
   Box,
@@ -60,104 +57,79 @@ export function KYMInstitutionPage() {
       </Box>
 
       <Container minW="container.xl" height="fit-content">
-        <Box pb="s40" display="flex" width="100%">
-          <Box display="flex">
-            <Box
-              w={320}
-              p={2}
-              position="fixed"
-              borderRight="1px solid "
-              borderColor="border.layout"
-              minHeight="100%"
-              bg="white"
-            >
-              <AccorrdianAddInstitution
-                formStatus={kymFormStatus}
-                kymCurrentSection={kymCurrentSection}
+        <Box>
+          <Box
+            w={320}
+            p="s16"
+            pr="s20"
+            position="fixed"
+            borderRight="1px solid "
+            borderColor="border.layout"
+            minHeight="100%"
+            bg="gray.0"
+            zIndex={2}
+          >
+            <AccorrdianAddInstitution
+              formStatus={kymFormStatus}
+              kymCurrentSection={kymCurrentSection}
+            />
+          </Box>
+
+          <Box zIndex={1} background="gray.0" ml="320" pb="120px">
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymIns1InformationofInstitution']}
+              </Text>
+              <BasicDetailsInstitution setSection={setKymCurrentSection} />
+              <RegisteredDetailsInstitution setSection={setKymCurrentSection} />
+              <OperatorOfficeAddress setSection={setKymCurrentSection} />
+              <BranchOfficeAddress setSection={setKymCurrentSection} />
+              <ContactDetailsInstitution setSection={setKymCurrentSection} />
+              <BankAccountDetailsInstitution
+                setSection={setKymCurrentSection}
               />
-            </Box>
+              <InstitutionKYMSisterConcernDetails
+                setSection={setKymCurrentSection}
+              />
+            </SectionContainer>
 
-            <Box background="white" ml={320} px="s20" pt="s20" pb="120px">
-              <SectionContainer>
-                <SectionContainer>
-                  <Text fontSize="r3" fontWeight="600">
-                    {t['kymIns1InformationofInstitution']}
-                  </Text>
-                  <ContainerWithDivider>
-                    <BasicDetailsInstitution
-                      setSection={setKymCurrentSection}
-                    />
-                    <RegisteredDetailsInstitution
-                      setSection={setKymCurrentSection}
-                    />
-                    <OperatorOfficeAddress setSection={setKymCurrentSection} />
-                    <BranchOfficeAddress setSection={setKymCurrentSection} />
-                    <ContactDetailsInstitution
-                      setSection={setKymCurrentSection}
-                    />
-                    <BankAccountDetailsInstitution
-                      setSection={setKymCurrentSection}
-                    />
-                    <InstitutionKYMSisterConcernDetails
-                      setSection={setKymCurrentSection}
-                    />
-                  </ContainerWithDivider>
-                </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymIns2TransactionProfile']}
+              </Text>
+              <TransactionProfileInstitution
+                setSection={setKymCurrentSection}
+              />
+            </SectionContainer>
 
-                <SectionContainer>
-                  <Text fontSize="r3" fontWeight="600">
-                    {t['kymIns2TransactionProfile']}
-                  </Text>
-                  <ContainerWithDivider>
-                    {' '}
-                    <TransactionProfileInstitution
-                      setSection={setKymCurrentSection}
-                    />
-                  </ContainerWithDivider>
-                </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymIns3DetailsofProprietorpartnersDirectors']}
+              </Text>
+              <BoardDirectorInfo setSection={setKymCurrentSection} />
+              {/* <InstitutionKYMDirectorWithAffiliation /> */}
+            </SectionContainer>
 
-                <SectionContainer>
-                  <Text fontSize="r3" fontWeight="600">
-                    {t['kymIns3DetailsofProprietorpartnersDirectors']}
-                  </Text>
-                  <ContainerWithDivider>
-                    <BoardDirectorInfo setSection={setKymCurrentSection} />
-                    {/* <InstitutionKYMDirectorWithAffiliation /> */}
-                  </ContainerWithDivider>
-                </SectionContainer>
-
-                <SectionContainer>
-                  <Text fontSize="r3" fontWeight="600">
-                    {t['kymIns4AccountOperations']}
-                  </Text>
-                  <ContainerWithDivider>
-                    <InstitutionKYMAccountDetail
-                      setSection={setKymCurrentSection}
-                    />
-                    <AccountOperationInstitution
-                      setSection={setKymCurrentSection}
-                    />
-                  </ContainerWithDivider>
-                </SectionContainer>
-                <SectionContainer>
-                  <Text fontSize="r3" fontWeight="600">
-                    {t['kymIns5Declaration']}
-                  </Text>
-                  <ContainerWithDivider>
-                    <DocumentDeclarationInstitution
-                      setSection={setKymCurrentSection}
-                    />
-                    <AccountHolderDeclarationInstitution
-                      setSection={setKymCurrentSection}
-                    />
-                  </ContainerWithDivider>
-                </SectionContainer>
-              </SectionContainer>
-            </Box>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymIns4AccountOperations']}
+              </Text>
+              <InstitutionKYMAccountDetail setSection={setKymCurrentSection} />
+              <AccountOperationInstitution setSection={setKymCurrentSection} />
+            </SectionContainer>
+            <SectionContainer>
+              <Text p="s20" fontSize="r3" fontWeight="SemiBold">
+                {t['kymIns5Declaration']}
+              </Text>
+              <DocumentDeclarationInstitution
+                setSection={setKymCurrentSection}
+              />
+              <AccountHolderDeclarationInstitution
+                setSection={setKymCurrentSection}
+              />
+            </SectionContainer>
           </Box>
         </Box>
-        {/* </form>
-        </FormProvider> */}
       </Container>
 
       <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">

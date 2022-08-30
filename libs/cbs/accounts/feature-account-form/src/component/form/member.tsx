@@ -83,7 +83,7 @@ export const Member = () => {
             name="memberId"
             label={t['accountOpenMemberId']}
             isLoading={isFetching}
-            placeholder={t['accountOpenMemberId']}
+            __placeholder={t['accountOpenMemberId']}
             onInputChange={debounce((id) => {
               setIDMember(id);
               setTrigger(true);

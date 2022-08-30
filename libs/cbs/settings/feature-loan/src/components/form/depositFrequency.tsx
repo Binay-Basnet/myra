@@ -76,33 +76,33 @@ export const DepositFrequency = ({ watch }: any) => {
               name="dayFromTheEndPenalty"
               type="number"
               label="Day from end date"
-              placeholder="Day from end date"
+              __placeholder="Day from end date"
             />
             <FormInput
               name="minimumAmount"
               type="number"
               label="Minimum Amount"
-              placeholder="Minimum Amount"
+              __placeholder="Minimum Amount"
             />
             <FormInput
               name="flatRatePenalty"
               type="number"
               label="Flat-rate Penalty"
-              placeholder="Flat-rate penalty"
+              __placeholder="Flat-rate penalty"
             />
             <FormInput
               name="penaltyPercentage"
               type="number"
               label="Penalty"
               textAlign={'right'}
-              placeholder="0.00"
+              __placeholder="0.00"
               rightElement={'%'}
             />
             <FormInput
               name="penaltyAmount"
               type="number"
               label="Penalty Amount"
-              placeholder="Penalty Amount"
+              __placeholder="Penalty Amount"
               textAlign={'right'}
             />
           </InputGroupContainer>
@@ -127,13 +127,13 @@ export const DepositFrequency = ({ watch }: any) => {
               name="dayFromTheEndRebate"
               type="number"
               label="Day from end date"
-              placeholder="Day from end date"
+              __placeholder="Day from end date"
             />
             <FormInput
               name="rebateAmount"
               type="number"
               label="Rebate Amount"
-              placeholder="Rebate Amount"
+              __placeholder="Rebate Amount"
             />
 
             <FormInput
@@ -141,14 +141,14 @@ export const DepositFrequency = ({ watch }: any) => {
               type="number"
               label="Percentage of Deposited Amount"
               textAlign={'right'}
-              placeholder="0.00"
+              __placeholder="0.00"
               rightElement={'%'}
             />
             <FormInput
               name="nosOfInstallment"
               type="number"
               label="No. of Installment"
-              placeholder="Enter Number of Installments"
+              __placeholder="Enter Number of Installments"
               textAlign={'right'}
             />
           </InputGroupContainer>

@@ -69,7 +69,7 @@ export function CbsSettingsFeatureOrganization() {
                 <Box mt="s24" w="100%">
                   <FormInput
                     label={t['settingsOrganizationOrganizationName']}
-                    placeholder={t['settingsOrganizationEntername']}
+                    __placeholder={t['settingsOrganizationEntername']}
                     // control={control}
                     name="name"
                     type="text"

@@ -96,7 +96,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfMaleMemberCurrent"
-            placeholder={t['kymCoopUnionRepEnterNofMaleMembers']}
+            __placeholder={t['kymCoopUnionRepEnterNofMaleMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -105,7 +105,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfMaleMemberTarget"
-            placeholder={t['kymCoopUnionRepEnterNofMaleMembers']}
+            __placeholder={t['kymCoopUnionRepEnterNofMaleMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -132,7 +132,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfFemaleMemberCurrent"
-            placeholder={t['kymCoopUnionRepEnterNoofFemaleMembers']}
+            __placeholder={t['kymCoopUnionRepEnterNoofFemaleMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -141,7 +141,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfFemaleMemberTarget"
-            placeholder={t['kymCoopUnionRepEnterNoofFemaleMembers']}
+            __placeholder={t['kymCoopUnionRepEnterNoofFemaleMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -168,7 +168,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfInstituionalMemberCurrent"
-            placeholder={t['kymCoopUnionRepEnterNoOfInstitutionalMembers']}
+            __placeholder={t['kymCoopUnionRepEnterNoOfInstitutionalMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -177,7 +177,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             textAlign="left"
             type="number"
             name="detailsOfMember.noOfInstituionalMemberTarget"
-            placeholder={t['kymCoopUnionRepEnterNoOfInstitutionalMembers']}
+            __placeholder={t['kymCoopUnionRepEnterNoOfInstitutionalMembers']}
             defaultValue={0}
           />
         </GridItem>
@@ -212,7 +212,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             type="text"
             name="totalAssetsCurrent"
             value={isNaN(totalmembersCurrent) ? '-' : totalmembersCurrent}
-            placeholder={t['kymCoopUnionRepTotalAssets']}
+            __placeholder={t['kymCoopUnionRepTotalAssets']}
           />
         </GridItem>
         <GridItem>
@@ -225,7 +225,7 @@ export const KymMemberdetailsCOOP = ({ watch }: any) => {
             type="text"
             name="totalAssetsTarget"
             value={isNaN(totalmembersTarget) ? '-' : totalmembersTarget}
-            placeholder={t['kymCoopUnionRepTotal']}
+            __placeholder={t['kymCoopUnionRepTotal']}
           />
         </GridItem>
       </Grid>

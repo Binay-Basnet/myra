@@ -186,7 +186,7 @@ export function SearchBar() {
           />
           <Input
             type="text"
-            // placeholder="खोज्नुहोस्"
+            // __placeholder="खोज्नुहोस्"
             placeholder="Search"
             color={'white'}
             fontSize="r1"

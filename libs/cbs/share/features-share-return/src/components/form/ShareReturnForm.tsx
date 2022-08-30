@@ -172,7 +172,7 @@ const ShareReturnForm = () => {
 
   useEffect(() => {
     setTotalAmount(
-      noOfShares * 100 + Number(adminFees ?? 0) + Number(printingFees ?? 0)
+      noOfShares * 100 - (Number(adminFees ?? 0) + Number(printingFees ?? 0))
     );
   }, [noOfShares, adminFees, printingFees]);
 
@@ -525,7 +525,7 @@ const ShareReturnForm = () => {
                               name="adminFee"
                               type="number"
                               textAlign={'right'}
-                              placeholder="0.00"
+                              __placeholder="0.00"
                             />
                           </Box>
                         </GridItem>
@@ -548,7 +548,7 @@ const ShareReturnForm = () => {
                               name="printingFee"
                               type="number"
                               textAlign={'right'}
-                              placeholder="0.00"
+                              __placeholder="0.00"
                             />
                           </Box>
                         </GridItem>
@@ -616,7 +616,7 @@ const ShareReturnForm = () => {
                       <FormCustomSelect
                         name="accountId"
                         label={t['shareReturnSelectAccount']}
-                        placeholder={t['shareReturnSavingAccount']}
+                        __placeholder={t['shareReturnSavingAccount']}
                         options={accountListData?.account?.list?.edges?.map(
                           (account) => ({
                             accountInfo: {
@@ -662,14 +662,14 @@ const ShareReturnForm = () => {
                       <FormSelect
                         name="bankId"
                         label={t['shareReturnSelectBank']}
-                        placeholder={t['shareReturnSelectBank']}
+                        __placeholder={t['shareReturnSelectBank']}
                         options={bankList}
                       />
                       <Box>
                         <FormInput
                           type="text"
                           name="voucherNumber"
-                          placeholder={t['shareReturnEnterVoucherNumber']}
+                          __placeholder={t['shareReturnEnterVoucherNumber']}
                           label={t['shareReturnEnterVoucherNumber']}
                         />
                       </Box>
@@ -681,7 +681,7 @@ const ShareReturnForm = () => {
                       <TextInput
                         type="text"
                         name="name"
-                        placeholder={t['shareReturnEnterCashAmount']}
+                        __placeholder={t['shareReturnEnterCashAmount']}
                         label={t['shareReturnEnterCashAmount']}
                       />
                     </Box>

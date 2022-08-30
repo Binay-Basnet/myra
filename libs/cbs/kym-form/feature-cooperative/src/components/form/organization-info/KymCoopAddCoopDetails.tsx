@@ -44,14 +44,14 @@ export const KymCoopAddCoopDetails = (props: IProps) => {
           <FormSelect
             name="cooperativeTypeId"
             label={t['kymCoopType']}
-            placeholder={t['kymCoopSelectType']}
+            __placeholder={t['kymCoopSelectType']}
             options={getFieldOption(cooperativeTypeFields)}
           />
           <FormInput
             type="text"
             name="mainServiceProduct"
             label={t['kymCoopMainServiceProduct']}
-            placeholder={t['kymCoopEnterMainServiceProduct']}
+            __placeholder={t['kymCoopEnterMainServiceProduct']}
           />
         </FormSection>
       </form>

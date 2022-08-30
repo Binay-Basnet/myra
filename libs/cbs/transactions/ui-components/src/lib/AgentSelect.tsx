@@ -8,13 +8,13 @@ import { getRouterQuery } from '@coop/shared/utils';
 interface IAgentSelectProps {
   name: string;
   label: string;
-  placeholder?: string;
+  __placeholder?: string;
 }
 
 export const AgentSelect = ({
   name,
   label,
-  placeholder,
+  __placeholder,
 }: IAgentSelectProps) => {
   const [agentId, setAgentId] = useState('');
   const [trigger, setTrigger] = useState(false);
@@ -57,7 +57,7 @@ export const AgentSelect = ({
       name={name}
       label={label}
       isLoading={isFetching}
-      placeholder={placeholder}
+      __placeholder={__placeholder}
       onInputChange={debounce((id) => {
         if (id) {
           setAgentId(id);

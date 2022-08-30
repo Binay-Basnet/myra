@@ -17,13 +17,13 @@ export const AmountLimit = () => {
           textAlign={'right'}
           name="minimumLoanAmount"
           label={t['loanProductMinimumAmount']}
-          placeholder="0.00"
+          __placeholder="0.00"
         />
         <FormInput
           textAlign={'right'}
           name="maxLoanAmount"
           label={t['loanProductMaximumAmount']}
-          placeholder="0.00"
+          __placeholder="0.00"
         />
       </InputGroupContainer>
     </BoxContainer>

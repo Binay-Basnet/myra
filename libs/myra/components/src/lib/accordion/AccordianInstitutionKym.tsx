@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineCaretDown, AiOutlineCaretRight } from 'react-icons/ai';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import { KymInsAddSectionStatus } from '@coop/cbs/data-access';
 import { Box, Collapse, Text } from '@coop/shared/ui';
@@ -85,14 +85,10 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         cursor="pointer"
         onClick={() => setIsOpenOrganizational(!isOpenOrganizational)}
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="Semibold">
           {t['kymIns1InformationofInstitution']}
         </Text>
-        {!isOpenOrganizational ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenOrganizational ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenOrganizational} style={{ marginTop: '0px' }}>
@@ -106,7 +102,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -132,14 +128,10 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         onClick={() => setIsOpenTransaction(!isOpenTransaction)}
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="Semibold">
           {t['kymIns2TransactionProfile']}
         </Text>
-        {!isOpenTransaction ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenTransaction ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenTransaction}>
@@ -153,7 +145,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -170,14 +162,10 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="Semibold">
           {t['kymIns3DetailsofProprietorpartnersDirectors']}
         </Text>
-        {!isOpenDetails ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenDetails ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenDetails}>
@@ -191,7 +179,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -208,14 +196,10 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="Semibold">
           {t['kymIns4AccountOperations']}
         </Text>
-        {!isOpenAccountOperations ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenAccountOperations ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenAccountOperations}>
@@ -229,7 +213,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -245,14 +229,10 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="Semibold">
           {t['kymIns5Declaration']}
         </Text>
-        {!isOpenDeclaration ? (
-          <AiOutlineCaretRight fontSize="12px" />
-        ) : (
-          <AiOutlineCaretDown fontSize="12px" />
-        )}
+        {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenDeclaration}>
@@ -266,7 +246,7 @@ export function AccorrdianAddInstitution(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>

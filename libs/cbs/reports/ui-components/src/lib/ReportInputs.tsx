@@ -78,7 +78,7 @@ export const ReportInputs = ({
             name={'memberId'}
             options={memberOptions ?? []}
             label="Member Search"
-            placeholder="Search Member"
+            __placeholder="Search Member"
             isLoading={isLoading}
           />
         </GridItem>

@@ -133,6 +133,14 @@ export function SettingsDepositProductsAdd() {
       };
     });
 
+    const accountCloseChargeList = values?.accountCloseCharge?.map((data) => {
+      return {
+        serviceName: data?.serviceName,
+        ledgerName: data?.ledgerName,
+        amount: data?.amount.toString(),
+      };
+    });
+
     const updatedData = {
       ...values,
       genderId: genderList,
@@ -144,6 +152,7 @@ export function SettingsDepositProductsAdd() {
       natureOFBusinessCoop: natureOFBusinessCoopList,
       ladderRateData: ladderRateDataList,
       serviceCharge: serviceChargeList,
+      accountCloseCharge: accountCloseChargeList,
       minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
       maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
       maxTenureUnitNumber: values?.maxTenureUnitNumber

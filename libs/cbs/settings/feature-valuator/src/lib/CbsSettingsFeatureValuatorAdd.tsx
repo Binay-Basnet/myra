@@ -113,7 +113,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         <FormInput
                           name="valuatorName"
                           label={t['settingsGeneralValuatorFormValuatorName']}
-                          placeholder={
+                          __placeholder={
                             t['settingsGeneralValuatorFormValuatorName']
                           }
                         />
@@ -122,7 +122,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                       <FormSelect
                         name="valuatorType"
                         label={t['settingsGeneralValuatorFormValuatorType']}
-                        placeholder={
+                        __placeholder={
                           t['settingsGeneralValuatorFormSelectValuatorType']
                         }
                       />
@@ -131,7 +131,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         type="text"
                         name="valuatorId"
                         label={t['settingsGeneralValuatorFormValuatorID']}
-                        placeholder={t['settingsGeneralValuatorFormID']}
+                        __placeholder={t['settingsGeneralValuatorFormID']}
                       />
 
                       <FormSelect
@@ -139,7 +139,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         label={
                           t['settingsGeneralValuatorFormAcademicQualification']
                         }
-                        placeholder={
+                        __placeholder={
                           t['settingsGeneralValuatorFormAcademicQualification']
                         }
                       />
@@ -150,7 +150,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         label={
                           t['settingsGeneralValuatorFormValuationLicenseNo']
                         }
-                        placeholder={
+                        __placeholder={
                           t['settingsGeneralValuatorFormValuationLicenseNo']
                         }
                       />
@@ -184,7 +184,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                           ]
                         }
                         textAlign={'right'}
-                        placeholder="0.00"
+                        __placeholder="0.00"
                         rightElement={
                           <Text
                             fontWeight="Medium"
@@ -207,19 +207,19 @@ export function CbsSettingsFeatureValuatorAdd() {
                       <FormPhoneNumber
                         name="mobileNo"
                         label={t['settingsGeneralValuatorFormMobileNo']}
-                        placeholder={t['settingsGeneralValuatorFormMobileNo']}
+                        __placeholder={t['settingsGeneralValuatorFormMobileNo']}
                       />
 
                       <FormPhoneNumber
                         name="phoneNo"
                         label={t['settingsGeneralValuatorFormPhoneNo']}
-                        placeholder={t['settingsGeneralValuatorFormPhoneNo']}
+                        __placeholder={t['settingsGeneralValuatorFormPhoneNo']}
                       />
 
                       <FormEmailInput
                         name="email"
                         label={t['settingsGeneralValuatorFormEmail']}
-                        placeholder={t['settingsGeneralValuatorFormEmail']}
+                        __placeholder={t['settingsGeneralValuatorFormEmail']}
                       />
                     </InputGroupContainer>
                   </Box>
@@ -233,7 +233,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         <FormSelect
                           name="provinceId"
                           label={t['settingsGeneralValuatorFormProvince']}
-                          placeholder={
+                          __placeholder={
                             t['settingsGeneralValuatorFormSelectProvince']
                           }
                           options={province}
@@ -241,7 +241,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         <FormSelect
                           name="districtId"
                           label={t['settingsGeneralValuatorFormDistrict']}
-                          placeholder={
+                          __placeholder={
                             t['settingsGeneralValuatorFormSelectDistrict']
                           }
                           options={districtList.map((d) => ({
@@ -252,7 +252,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         <FormSelect
                           name="localGovernmentId"
                           label={t['settingsGeneralValuatorFormLocalGoverment']}
-                          placeholder={
+                          __placeholder={
                             t['settingsGeneralValuatorFormSelectLocalGoverment']
                           }
                           options={localityList.map((d) => ({
@@ -264,7 +264,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         <FormSelect
                           name="wardNo"
                           label={t['settingsGeneralValuatorFormWardNo']}
-                          placeholder={
+                          __placeholder={
                             t['settingsGeneralValuatorFormEnterWardNo']
                           }
                           options={wardList.map((d) => ({
@@ -276,7 +276,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                           type="text"
                           name="locality"
                           label={t['settingsGeneralValuatorFormLocality']}
-                          placeholder={
+                          __placeholder={
                             t['settingsGeneralValuatorFormEnterLocality']
                           }
                         />
@@ -284,7 +284,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                           type="text"
                           name="houseNo"
                           label={t['settingsGeneralValuatorFormHouseNo']}
-                          placeholder={
+                          __placeholder={
                             t['settingsGeneralValuatorFormEnterHouseNo']
                           }
                         />

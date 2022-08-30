@@ -1,0 +1,5 @@
+query getMemberPDF($id: ID!) {
+  members {
+    memberPDF(id: $id)
+  }
+}

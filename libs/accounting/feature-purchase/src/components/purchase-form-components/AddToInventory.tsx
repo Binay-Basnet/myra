@@ -30,7 +30,7 @@ export const AddToInventory = () => {
         <FormSelect
           name="warehouse"
           label={t['accountingPurchaseAddWarehouse']}
-          placeholder={t['accountingPurchaseAddWarehouseSelect']}
+          __placeholder={t['accountingPurchaseAddWarehouseSelect']}
           options={[]}
         />
       )}

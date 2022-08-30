@@ -103,7 +103,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -129,7 +129,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         onClick={() => setIsOpenProfessional(!isOpenProfessional)}
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="Semibold">
           {t['kymAccInd2ProfessionalDetails']}
         </Text>
         {!isOpenProfessional ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -147,7 +147,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -164,7 +164,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="Semibold">
           {t['kymAccInd3COOPMembership']}
         </Text>
         {!isOpenCoopMemberShip ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -182,7 +182,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
               py="s8"
             >
               <a href={`#${item}`}>
-                <Text pl="s16" fontSize="r1" fontWeight="400">
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
                   {t[item]}
                 </Text>
               </a>
@@ -199,7 +199,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="600">
+        <Text fontSize={'r1'} fontWeight="Semibold">
           {t['kymAccInd4Declaration']}
         </Text>
         {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
@@ -218,7 +218,7 @@ export function AccorrdianAddMember(props: AccordianProps) {
                 py="s8"
               >
                 <a href={`#${item}`}>
-                  <Text pl="s16" fontSize="r1" fontWeight="400">
+                  <Text pl="s16" fontSize="r1" fontWeight="Regular">
                     {t[item]}
                   </Text>
                 </a>

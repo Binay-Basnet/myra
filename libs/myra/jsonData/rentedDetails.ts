@@ -6,14 +6,14 @@ export const rentedDetails = {
       type: 'text',
       name: 'landlordsName',
       label: 'Landlords Name',
-      placeholder: 'Landlords name',
+      __placeholder: 'Landlords name',
     },
     {
       variant: 'input',
       type: 'number',
       name: 'landlordsContactNo',
       label: 'Contact No',
-      placeholder: 'Contact No',
+      __placeholder: 'Contact No',
     },
   ],
 };

@@ -126,6 +126,11 @@ query getDepositProductSettingsEditData($id: ID!) {
               ledgerName
               amount
             }
+            accountCloseCharge {
+              serviceName
+              ledgerName
+              amount
+            }
             dormantSetup {
               duration
               condition

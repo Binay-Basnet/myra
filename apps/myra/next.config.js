@@ -11,6 +11,25 @@ const nextConfig = {
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
 
+  webpack: (config) => {
+    // load worker files as a urls with `file-loader`
+    config.module.rules.unshift({
+      test: /pdf\.worker\.(min\.)?js/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[contenthash].[ext]',
+            publicPath: '_next/static/worker',
+            outputPath: 'static/worker',
+          },
+        },
+      ],
+    });
+
+    return config;
+  },
+
   // nx: {
   //   // Set this to true if you would like to to use SVGR
   //   // See: https://github.com/gregberge/svgr

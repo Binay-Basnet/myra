@@ -194,7 +194,7 @@ export const ShareSettingsDividendPage = () => {
                       <FormInput
                         name="dividendRate.quarterly.firstQuarter"
                         size="sm"
-                        placeholder="100%"
+                        __placeholder="100%"
                       />
                     </Box>
                   </Box>
@@ -211,7 +211,7 @@ export const ShareSettingsDividendPage = () => {
                       <FormInput
                         name="dividendRate.quarterly.secondQuarter"
                         size="sm"
-                        placeholder="100%"
+                        __placeholder="100%"
                       />
                     </Box>
                   </Box>
@@ -228,7 +228,7 @@ export const ShareSettingsDividendPage = () => {
                       <FormInput
                         name="dividendRate.quarterly.thirdQuarter"
                         size="sm"
-                        placeholder="100%"
+                        __placeholder="100%"
                       />
                     </Box>
                   </Box>
@@ -245,7 +245,7 @@ export const ShareSettingsDividendPage = () => {
                       <FormInput
                         name="dividendRate.quarterly.fourthQuarter"
                         size="sm"
-                        placeholder="100%"
+                        __placeholder="100%"
                       />
                     </Box>
                   </Box>
@@ -271,7 +271,7 @@ export const ShareSettingsDividendPage = () => {
                             name={`dividendRate.monthly.${name}`}
                             size="sm"
                             type="number"
-                            placeholder="100%"
+                            __placeholder="100%"
                           />
                         </Box>
                       </Box>
@@ -332,7 +332,7 @@ export const ShareSettingsDividendPage = () => {
                   </Text>
                   <FormSelect
                     name="accountForFractionalDividends"
-                    placeholder={t['shareSelectAccount']}
+                    __placeholder={t['shareSelectAccount']}
                   />
                 </Box>
               </Box>
@@ -347,7 +347,7 @@ export const ShareSettingsDividendPage = () => {
                 <FormSelect
                   name="accountForShareDividends"
                   options={[]}
-                  placeholder={t['shareSelectAccount']}
+                  __placeholder={t['shareSelectAccount']}
                 />
               </Box>
             </ShareSettingsCard>
@@ -361,7 +361,7 @@ export const ShareSettingsDividendPage = () => {
                 <FormSelect
                   name="organizationFundForDividends"
                   options={[]}
-                  placeholder={t['shareNameOfTheFund']}
+                  __placeholder={t['shareNameOfTheFund']}
                 />
               </Box>
             </ShareSettingsCard>

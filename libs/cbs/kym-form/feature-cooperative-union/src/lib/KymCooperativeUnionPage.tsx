@@ -19,7 +19,6 @@ import {
   EconomicDetails,
   InstituteInfo,
 } from '../components';
-import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccorrdianAddCOOPUnion } from '@coop/myra/components';
 import { useRouter } from 'next/router';
@@ -49,37 +48,28 @@ export function KYMCooperativeUnionPage() {
       </Box>
 
       <Container minW="container.xl" height="fit-content">
-        <Box pb="s40" display="flex" width="100%">
-          <Box display="flex" width="100%">
-            <Box
-              w={320}
-              p={2}
-              position="fixed"
-              borderRight="1px solid "
-              borderColor="border.layout"
-              minHeight="100%"
-              bg="white"
-            >
-              <AccorrdianAddCOOPUnion kymCurrentSection={kymCurrentSection} />
-            </Box>
+        <Box>
+          <Box
+            w={320}
+            p="s16"
+            pr="s20"
+            position="fixed"
+            borderRight="1px solid "
+            borderColor="border.layout"
+            minHeight="100%"
+            bg="gray.0"
+            zIndex={2}
+          >
+            <AccorrdianAddCOOPUnion kymCurrentSection={kymCurrentSection} />
+          </Box>
 
-            <Box
-              background="white"
-              ml={320}
-              px="s20"
-              pb="120px"
-              pt="s20"
-              width="100%"
-            >
-              <SectionContainer>
-                <InstituteInfo setSection={setSection} />
-                <DirectorDetails setSection={setSection} />
-                <AccountOperatorDetails setSection={setSection} />
-                <CentralRepresentativeDetails setSection={setSection} />
-                <EconomicDetails setSection={setSection} />
-                <Declaration setSection={setSection} />
-              </SectionContainer>
-            </Box>
+          <Box zIndex={1} background="gray.0" ml="320" pb="120px">
+            <InstituteInfo setSection={setSection} />
+            <DirectorDetails setSection={setSection} />
+            <AccountOperatorDetails setSection={setSection} />
+            <CentralRepresentativeDetails setSection={setSection} />
+            <EconomicDetails setSection={setSection} />
+            <Declaration setSection={setSection} />
           </Box>
         </Box>
       </Container>

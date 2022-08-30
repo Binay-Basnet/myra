@@ -2,12 +2,8 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymInsInput, useAllAdministrationQuery } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -59,103 +55,90 @@ export const RegisteredDetailsInstitution = (props: IProps) => {
   return (
     <FormProvider {...methods}>
       <form
-        // onChange={debounce(() => {
-        //
-        //   mutate({ id, data: getValues() });
-        // }, 800)}
-        // onSubmit={handleSubmit((data) => {
-        //
-        // })}
         onFocus={(e) => {
           const kymSection = getKymSectionInstitution(e.target.id);
           setSection(kymSection);
         }}
       >
-        <GroupContainer id="kymInsRegisteredDetails" scrollMarginTop={'200px'}>
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymInsRegisteredDetails']}
-          </Text>
-          <InputGroupContainer>
-            <FormInput
-              id="registeredDetailsInstitution"
-              type="number"
-              name="registeredNumber"
-              label={t['kymInsRegisteredNumber']}
-              placeholder={t['kymInsEnterRegisteredNumber']}
-            />
-            <GridItem colSpan={2}>
-              <FormInput
-                id="registeredDetailsInstitution"
-                type="text"
-                name="issuingOffice"
-                label={t['kymInsIssuingOffice']}
-                placeholder={t['kymInsEnterIssuingOffice']}
-              />
-            </GridItem>
-            <FormSelect
-              name="registeredAddress.provinceId"
-              id="registeredDetailsInstitution"
-              label={t['kymIndProvince']}
-              placeholder={t['kymIndSelectProvince']}
-              options={province}
-            />
-            <FormSelect
-              name="registeredAddress.districtId"
-              id="registeredDetailsInstitution"
-              label={t['kymIndDistrict']}
-              placeholder={t['kymIndSelectDistrict']}
-              options={districtList.map((d) => ({
-                label: d.name,
-                value: d.id,
-              }))}
-            />
-            <FormSelect
-              id="registeredDetailsInstitution"
-              name="registeredAddress.localGovernmentId"
-              label={t['kymIndLocalGovernment']}
-              placeholder={t['kymIndSelectLocalGovernment']}
-              options={localityList.map((d) => ({
-                label: d.name,
-                value: d.id,
-              }))}
-            />
-            <FormSelect
-              id="registeredDetailsInstitution"
-              name="registeredAddress.wardNo"
-              label={t['kymIndWardNo']}
-              placeholder={t['kymIndEnterWardNo']}
-              options={wardList?.map((d) => ({
-                label: d,
-                value: d,
-              }))}
-            />
+        <FormSection
+          id="kymInsRegisteredDetails"
+          header="kymInsRegisteredDetails"
+        >
+          {' '}
+          <FormInput
+            id="registeredDetailsInstitution"
+            type="number"
+            name="registeredNumber"
+            label={t['kymInsRegisteredNumber']}
+            __placeholder={t['kymInsEnterRegisteredNumber']}
+          />
+          <GridItem colSpan={2}>
             <FormInput
               id="registeredDetailsInstitution"
               type="text"
-              name="registeredAddress.locality"
-              label={t['kymIndLocality']}
-              placeholder={t['kymIndEnterLocality']}
+              name="issuingOffice"
+              label={t['kymInsIssuingOffice']}
+              __placeholder={t['kymInsEnterIssuingOffice']}
             />
-            <FormInput
-              id="registeredDetailsInstitution"
-              type="text"
-              name="registeredAddress.houseNo"
-              label={t['kymIndHouseNo']}
-              placeholder={t['kymIndEnterHouseNo']}
-            />
-          </InputGroupContainer>
-
-          <Box>
+          </GridItem>
+          <FormSelect
+            name="registeredAddress.provinceId"
+            id="registeredDetailsInstitution"
+            label={t['kymIndProvince']}
+            __placeholder={t['kymIndSelectProvince']}
+            options={province}
+          />
+          <FormSelect
+            name="registeredAddress.districtId"
+            id="registeredDetailsInstitution"
+            label={t['kymIndDistrict']}
+            __placeholder={t['kymIndSelectDistrict']}
+            options={districtList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            id="registeredDetailsInstitution"
+            name="registeredAddress.localGovernmentId"
+            label={t['kymIndLocalGovernment']}
+            __placeholder={t['kymIndSelectLocalGovernment']}
+            options={localityList.map((d) => ({
+              label: d.name,
+              value: d.id,
+            }))}
+          />
+          <FormSelect
+            id="registeredDetailsInstitution"
+            name="registeredAddress.wardNo"
+            label={t['kymIndWardNo']}
+            __placeholder={t['kymIndEnterWardNo']}
+            options={wardList?.map((d) => ({
+              label: d,
+              value: d,
+            }))}
+          />
+          <FormInput
+            id="registeredDetailsInstitution"
+            type="text"
+            name="registeredAddress.locality"
+            label={t['kymIndLocality']}
+            __placeholder={t['kymIndEnterLocality']}
+          />
+          <FormInput
+            id="registeredDetailsInstitution"
+            type="text"
+            name="registeredAddress.houseNo"
+            label={t['kymIndHouseNo']}
+            __placeholder={t['kymIndEnterHouseNo']}
+          />
+          <GridItem colSpan={2}>
             <FormMap
               id="registeredDetailsInstitution"
               name="registeredAddress.coordinates"
             />
-          </Box>
-        </GroupContainer>
+          </GridItem>
+        </FormSection>
       </form>
     </FormProvider>
   );

@@ -38,7 +38,7 @@ export const PaymentMode = () => {
           type="text"
           name="paymentReferenceNo"
           label={t['accountingCustomerPaymentAddPaymentReferenceNo']}
-          placeholder={t['accountingCustomerPaymentAddPaymentReferenceNo']}
+          __placeholder={t['accountingCustomerPaymentAddPaymentReferenceNo']}
         />
       </InputGroupContainer>
     </BoxContainer>

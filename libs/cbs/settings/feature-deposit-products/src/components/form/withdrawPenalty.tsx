@@ -42,7 +42,7 @@ export const WithdrawPenalty = () => {
           name="withdrawPenalty.penaltyRate"
           label={t['depositProductPenaltyRate']}
           textAlign={'right'}
-          placeholder="0.00"
+          __placeholder="0.00"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -53,7 +53,7 @@ export const WithdrawPenalty = () => {
         <FormSelect
           name="withdrawPenalty.penaltyLedgerMapping"
           label={t['depositProductPenaltyedgerMapping']}
-          placeholder={t['depositProductPenaltyedgerMapping']}
+          __placeholder={t['depositProductPenaltyedgerMapping']}
           options={coaList}
         />
       </InputGroupContainer>

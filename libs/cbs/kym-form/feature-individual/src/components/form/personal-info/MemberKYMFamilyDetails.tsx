@@ -59,7 +59,7 @@ interface IAddFamilyMember {
 //       formType={option?.fieldType}
 //       name={`familyDetails.${fieldIndex}.options.${optionIndex}.value`}
 //       label={option?.name?.local}
-//       placeholder={option?.name?.local}
+//       __placeholder={option?.name?.local}
 //     />
 //   );
 // };
@@ -143,7 +143,7 @@ const AddFamilyMember = ({
             <FormSelect
               name="relationshipId"
               label={t['kymIndRelationship']}
-              placeholder={t['kymIndSelectRelationship']}
+              __placeholder={t['kymIndSelectRelationship']}
               options={getFieldOption(relationshipData)}
             />
 
@@ -151,7 +151,7 @@ const AddFamilyMember = ({
               type="text"
               name="fullName"
               label={t['kymIndFullName']}
-              placeholder={t['kymIndEnterFullName']}
+              __placeholder={t['kymIndEnterFullName']}
             />
 
             <FormInput
@@ -236,7 +236,7 @@ const MemberMaritalStatus = ({
           <FormSelect
             name={'maritalStatusId'}
             label={t['kymIndMartialStatus']}
-            placeholder={t['kymIndSelectMartialStatus']}
+            __placeholder={t['kymIndSelectMartialStatus']}
             isLoading={maritalStatusLoading}
             options={getFieldOption(maritalStatusData)}
           />

@@ -1,14 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymInsInput } from '@coop/cbs/data-access';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormCheckbox,
   FormFileInput,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, FormSection, Grid, GridItem } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -49,50 +48,42 @@ export const AccountOperationInstitution = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer
+        <FormSection
           id="kymInsAccountOperationInstruction"
-          scrollMarginTop={'200px'}
-          gap="s32"
+          header="kymInsAccountOperationInstruction"
         >
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
-            {t['kymInsAccountOperationInstruction']}
-          </Text>
-
-          <Box display={'flex'} flexDirection="column" gap="s32" mt="-16px">
+          <GridItem colSpan={3}>
             <FormSwitchTab options={booleanList} name="accountType" />
-          </Box>
+          </GridItem>
+          <GridItem colSpan={3}>
+            <Grid gap="s16">
+              <FormCheckbox
+                name="isCompanyStampCompulsory"
+                label={t['kynInsCompanyStampCompulsory']}
+              />
+              {isCompanyStampCompulsory && (
+                <Box w="30%">
+                  <FormTextArea
+                    name="specialInstruction"
+                    label={t['kymInsSpecialInstruction']}
+                    __placeholder={t['kymInsEnterInstruction']}
+                    rows={4}
+                  />
+                </Box>
+              )}
 
-          <Box display="flex" flexDirection="column" gap="s32">
-            <FormCheckbox
-              name="isCompanyStampCompulsory"
-              label={t['kynInsCompanyStampCompulsory']}
-            />
-            {isCompanyStampCompulsory && (
-              <Box w="30%">
-                <FormTextArea
-                  name="specialInstruction"
-                  label={t['kymInsSpecialInstruction']}
-                  placeholder={t['kymInsEnterInstruction']}
-                  rows={4}
-                />
-              </Box>
-            )}
-
-            {isCompanyStampCompulsory && (
-              <Box w="13%">
-                <FormFileInput
-                  size="md"
-                  label={t['kymInsCompanyStamp']}
-                  name="companyStamp"
-                />
-              </Box>
-            )}
-          </Box>
-        </GroupContainer>
+              {isCompanyStampCompulsory && (
+                <Box w="13%">
+                  <FormFileInput
+                    size="md"
+                    label={t['kymInsCompanyStamp']}
+                    name="companyStamp"
+                  />
+                </Box>
+              )}
+            </Grid>
+          </GridItem>
+        </FormSection>
       </form>
     </FormProvider>
   );

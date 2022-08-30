@@ -39,7 +39,7 @@ export const KYMFileSize = ({ section }: FileSizeInputProps) => {
                 maxSize: +e.target.value,
               });
             }, 800)}
-            placeholder="File Size"
+            __placeholder="File Size"
           />
         </Box>
       </Box>

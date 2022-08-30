@@ -46,7 +46,7 @@ export const KymCoopNoEmployee = (props: IProps) => {
             textAlign={'right'}
             name="noOfMaleEmployee"
             label={t['kymCoopMale']}
-            placeholder="0"
+            __placeholder="0"
             // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             //   setMaleNum(Number(e.target.value))
             // }
@@ -56,7 +56,7 @@ export const KymCoopNoEmployee = (props: IProps) => {
             textAlign={'right'}
             name="noOfFemaleEmployee"
             label={t['kymCoopFemale']}
-            placeholder="0"
+            __placeholder="0"
             // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             //   setFemaleNum(Number(e.target.value))
             // }
@@ -71,7 +71,7 @@ export const KymCoopNoEmployee = (props: IProps) => {
             textAlign={'right'}
             name="totalEmployee"
             label={t['kymCoopTotal']}
-            placeholder="0"
+            __placeholder="0"
             value={totalEmployee}
           />
         </FormSection>

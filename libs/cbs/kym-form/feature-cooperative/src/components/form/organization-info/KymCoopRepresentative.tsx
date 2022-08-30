@@ -176,29 +176,29 @@ export const KymCoopRepresentative = (props: IProps) => {
               type="text"
               name="representativeFullName"
               label={t['kymCoopName']}
-              placeholder={t['kymCoopEnterName']}
+              __placeholder={t['kymCoopEnterName']}
             />
           </GridItem>
           <FormInput
             type="text"
             name="representativeDesignatiton"
             label={t['kymCoopDesignation']}
-            placeholder={t['kymCoopEnterDesignation']}
+            __placeholder={t['kymCoopEnterDesignation']}
           />
           <FormEmailInput
             name={'representativeEmail'}
             label={t['kymCoopRepresentativeEmail']}
-            placeholder={t['kymCoopRepresentativeEnterEmail']}
+            __placeholder={t['kymCoopRepresentativeEnterEmail']}
           />
           <FormPhoneNumber
             name={'representativeContactNumber'}
             label={t['kymCoopRepresentativePhone']}
-            placeholder={t['kymCoopRepresentativeEnterPhone']}
+            __placeholder={t['kymCoopRepresentativeEnterPhone']}
           />
           <FormInput
             name="representativePanNo"
             label={t['kymCoopRepresentativePanOrVat']}
-            placeholder={t['kymCoopRepresentativeEnterPan']}
+            __placeholder={t['kymCoopRepresentativeEnterPan']}
           />
         </FormSection>
 
@@ -210,13 +210,13 @@ export const KymCoopRepresentative = (props: IProps) => {
           <FormSelect
             name="permanentRepresentativeAddress.provinceId"
             label={t['kymCoopRepresentativeProvince']}
-            placeholder={t['kymCoopRepresentativeSelectProvince']}
+            __placeholder={t['kymCoopRepresentativeSelectProvince']}
             options={province}
           />
           <FormSelect
             name="permanentRepresentativeAddress.districtId"
             label={t['kymCoopRepresentativeDistrict']}
-            placeholder={t['kymCoopRepresentativeSelectDistrict']}
+            __placeholder={t['kymCoopRepresentativeSelectDistrict']}
             options={districtList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -225,7 +225,7 @@ export const KymCoopRepresentative = (props: IProps) => {
           <FormSelect
             name="permanentRepresentativeAddress.localGovernmentId"
             label={t['kymCoopRepresentativeLocalGovernment']}
-            placeholder={t['kymCoopRepresentativeSelectLocalGovernment']}
+            __placeholder={t['kymCoopRepresentativeSelectLocalGovernment']}
             options={localityList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -234,7 +234,7 @@ export const KymCoopRepresentative = (props: IProps) => {
           <FormSelect
             name="permanentRepresentativeAddress.wardNo"
             label={t['kymCoopRepresentativeWardNo']}
-            placeholder={t['kymCoopRepresentativeEnterWardNo']}
+            __placeholder={t['kymCoopRepresentativeEnterWardNo']}
             options={wardList?.map((d) => ({
               label: d,
               value: d,
@@ -244,13 +244,13 @@ export const KymCoopRepresentative = (props: IProps) => {
             type="text"
             name="permanentRepresentativeAddress.locality"
             label={t['kymCoopRepresentativeLocality']}
-            placeholder={t['kymCoopRepresentativeEnterLocality']}
+            __placeholder={t['kymCoopRepresentativeEnterLocality']}
           />
           <FormInput
             type="text"
             name="permanentRepresentativeAddress.houseNo"
             label={t['kymCoopRepresentativeHouseNo']}
-            placeholder={t['kymCoopRepresentativeEnterHouseNo']}
+            __placeholder={t['kymCoopRepresentativeEnterHouseNo']}
           />
 
           <GridItem colSpan={2}>
@@ -275,13 +275,13 @@ export const KymCoopRepresentative = (props: IProps) => {
               <FormSelect
                 name="temporaryRepresentativeAddress.provinceId"
                 label={t['kymCoopRepresentativeProvince']}
-                placeholder={t['kymCoopRepresentativeSelectProvince']}
+                __placeholder={t['kymCoopRepresentativeSelectProvince']}
                 options={province}
               />
               <FormSelect
                 name="temporaryRepresentativeAddress.districtId"
                 label={t['kymCoopRepresentativeDistrict']}
-                placeholder={t['kymCoopRepresentativeSelectDistrict']}
+                __placeholder={t['kymCoopRepresentativeSelectDistrict']}
                 options={districtTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -290,7 +290,7 @@ export const KymCoopRepresentative = (props: IProps) => {
               <FormSelect
                 name="temporaryRepresentativeAddress.localGovernmentId"
                 label={t['kymCoopRepresentativeLocalGovernment']}
-                placeholder={t['kymCoopRepresentativeSelectLocalGovernment']}
+                __placeholder={t['kymCoopRepresentativeSelectLocalGovernment']}
                 options={localityTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -299,7 +299,7 @@ export const KymCoopRepresentative = (props: IProps) => {
               <FormSelect
                 name="temporaryRepresentativeAddress.wardNo"
                 label={t['kymCoopRepresentativeWardNo']}
-                placeholder={t['kymCoopRepresentativeEnterWardNo']}
+                __placeholder={t['kymCoopRepresentativeEnterWardNo']}
                 options={wardTempList.map((d) => ({
                   label: d,
                   value: d,
@@ -309,13 +309,13 @@ export const KymCoopRepresentative = (props: IProps) => {
                 type="text"
                 name="temporaryRepresentativeAddress.locality"
                 label={t['kymCoopRepresentativeLocality']}
-                placeholder={t['kymCoopRepresentativeEnterLocality']}
+                __placeholder={t['kymCoopRepresentativeEnterLocality']}
               />
               <FormInput
                 type="text"
                 name="temporaryRepresentativeAddress.houseNo"
                 label={t['kymCoopRepresentativeHouseNo']}
-                placeholder={t['kymCoopRepresentativeEnterHouseNo']}
+                __placeholder={t['kymCoopRepresentativeEnterHouseNo']}
               />
 
               <GridItem colSpan={2}>

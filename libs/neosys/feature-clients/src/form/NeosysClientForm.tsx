@@ -61,21 +61,21 @@ export const NeosysClientForm = () => {
               <FormSelect
                 name="orgnanizationType"
                 label={t['neoClientOrganizationType']}
-                placeholder={t['neoClientOrganizationType']}
+                __placeholder={t['neoClientOrganizationType']}
               />
 
               <FormInput
                 type="text"
                 name="orgnanizationCode"
                 label={t['neoClientOrganizationCode']}
-                placeholder={t['neoClientOrganizationCode']}
+                __placeholder={t['neoClientOrganizationCode']}
               />
             </InputGroupContainer>
             <FormInput
               type="text"
               name="orgnanizationName"
               label={t['neoClientOrganizationName']}
-              placeholder={t['neoClientOrganizationName']}
+              __placeholder={t['neoClientOrganizationName']}
             />
             <Box w="110px">
               <FormFileInput
@@ -89,7 +89,7 @@ export const NeosysClientForm = () => {
               name="URL"
               rightAddon=".myraerp.com"
               label={t['neoClientURL']}
-              placeholder={t['neoClientSlug']}
+              __placeholder={t['neoClientSlug']}
             />
           </Box>
 
@@ -108,19 +108,19 @@ export const NeosysClientForm = () => {
                 type="text"
                 name="officePhone"
                 label={t['neoClientOfficePhone']}
-                placeholder={t['neoClientOfficePhone']}
+                __placeholder={t['neoClientOfficePhone']}
               />
               <FormInput
                 type="text"
                 name="emailAddress"
                 label={t['neoClientEmailAddress']}
-                placeholder={t['neoClientEmailAddress']}
+                __placeholder={t['neoClientEmailAddress']}
               />
               <FormInput
                 type="text"
                 name="cientWebsite"
                 label={t['neoClientWebsite']}
-                placeholder={t['neoClientWebsite']}
+                __placeholder={t['neoClientWebsite']}
               />
             </InputGroupContainer>
           </Box>
@@ -141,7 +141,7 @@ export const NeosysClientForm = () => {
                   type="text"
                   name="registeredOffice"
                   label={t['neoClientRegisteredOffice']}
-                  placeholder={t['neoClientRegisteredOffice']}
+                  __placeholder={t['neoClientRegisteredOffice']}
                 />
               </GridItem>
               <GridItem>
@@ -149,7 +149,7 @@ export const NeosysClientForm = () => {
                   type="text"
                   name="registeredNo"
                   label={t['neoClientRegisteredNo']}
-                  placeholder={t['neoClientRegisteredNo']}
+                  __placeholder={t['neoClientRegisteredNo']}
                 />
               </GridItem>
             </Grid>
@@ -157,20 +157,20 @@ export const NeosysClientForm = () => {
               type="text"
               name="registeredAddress"
               label={t['neoClientRegisteredAddress']}
-              placeholder={t['neoClientRegisteredAddress']}
+              __placeholder={t['neoClientRegisteredAddress']}
             />
             <InputGroupContainer>
               <FormInput
                 type="text"
                 name="registrationDate"
                 label={t['neoClientRegistrationDate']}
-                placeholder={t['neoClientRegistrationDate']}
+                __placeholder={t['neoClientRegistrationDate']}
               />
               <FormInput
                 type="text"
                 name="clientPANVATNo"
                 label={t['neoClientPANVATNo']}
-                placeholder={t['neoClientPANVATNo']}
+                __placeholder={t['neoClientPANVATNo']}
               />
             </InputGroupContainer>
           </Box>
@@ -189,7 +189,7 @@ export const NeosysClientForm = () => {
               <FormSelect
                 name="provinceId"
                 label={t['neoClientProvince']}
-                placeholder={t['neoClientSelectProvince']}
+                __placeholder={t['neoClientSelectProvince']}
                 options={province.map((d) => ({
                   label: d.label,
                   value: d.value,
@@ -199,7 +199,7 @@ export const NeosysClientForm = () => {
               <FormSelect
                 name="districtId"
                 label={t['neoClientDistrict']}
-                placeholder={t['neoClientSelectDistrict']}
+                __placeholder={t['neoClientSelectDistrict']}
                 options={districtList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -209,7 +209,7 @@ export const NeosysClientForm = () => {
               <FormSelect
                 name="localityId"
                 label={t['neoClientLocalGovernment']}
-                placeholder={t['neoClienSelectLocalGovernment']}
+                __placeholder={t['neoClienSelectLocalGovernment']}
                 options={muncipalityList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -218,7 +218,7 @@ export const NeosysClientForm = () => {
               <FormSelect
                 name="wardNo"
                 label={t['neoClientWardNo']}
-                placeholder={t['neoClientEnterWardNo']}
+                __placeholder={t['neoClientEnterWardNo']}
                 options={wardList.map((d) => ({
                   label: d,
                   value: d,
@@ -228,13 +228,13 @@ export const NeosysClientForm = () => {
                 type="text"
                 name="locality"
                 label={t['neoClientLocality']}
-                placeholder={t['neoClientEnterLocality']}
+                __placeholder={t['neoClientEnterLocality']}
               />
               <FormInput
                 type="text"
                 name="houseNo"
                 label={t['neoClientHouseNo']}
-                placeholder={t['neoClientEnterHouseNo']}
+                __placeholder={t['neoClientEnterHouseNo']}
               />
             </InputGroupContainer>
             <Box>
@@ -255,21 +255,21 @@ export const NeosysClientForm = () => {
                 type="text"
                 name="name"
                 label={t['neoClientName']}
-                placeholder={t['neoClientName']}
+                __placeholder={t['neoClientName']}
               />
 
               <FormPhoneNumber
                 // type="text"
                 name="phoneNumber"
                 label={t['neoClientPhoneNumber']}
-                placeholder={t['neoClientPhoneNumber']}
+                __placeholder={t['neoClientPhoneNumber']}
               />
 
               <FormEmailInput
                 // type="email"
                 name="emailAddress"
                 label={t['neoClientEmailAddress']}
-                placeholder={t['neoClientEmailAddress']}
+                __placeholder={t['neoClientEmailAddress']}
               />
             </InputGroupContainer>
           </Box>

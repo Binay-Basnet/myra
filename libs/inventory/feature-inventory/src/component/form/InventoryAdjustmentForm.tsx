@@ -44,14 +44,14 @@ const InventoryAdjustmentForm = () => {
               type="text"
               name="code"
               label={t['itemUnitCode']}
-              placeholder={t['itemUnitCode']}
+              __placeholder={t['itemUnitCode']}
             />
             <FormInput type="date" name="date" label={t['itemUnitDate']} />
             <FormInput
               type="text"
               name="referenceNumber"
               label={t['itemUnitReferenceNumber']}
-              placeholder={t['itemUnitReferenceNumber']}
+              __placeholder={t['itemUnitReferenceNumber']}
             />
           </InputGroupContainer>
 
@@ -103,7 +103,7 @@ const InventoryAdjustmentForm = () => {
             <FormTextArea
               name="note"
               label=" "
-              placeholder={t['invFormNote']}
+              __placeholder={t['invFormNote']}
             />
           </Box>
         </Box>

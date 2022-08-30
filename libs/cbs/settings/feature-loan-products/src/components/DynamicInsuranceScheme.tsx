@@ -60,20 +60,20 @@ const AddServiceCharge = ({
           bg="white"
           name={`insuranceScheme.${index}.schemeName`}
           label={t['settingsLoanNewSchemeName']}
-          placeholder={t['settingsLoanNewSchemeName']}
+          __placeholder={t['settingsLoanNewSchemeName']}
         />
         <FormInput
           type="text"
           bg="white"
           name={`insuranceScheme.${index}.insuranceCompany`}
           label={t['settingsLoanInsuranceCompany']}
-          placeholder={t['settingsLoanInsuranceCompany']}
+          __placeholder={t['settingsLoanInsuranceCompany']}
         />
 
         <FormSelect
           name={`insuranceScheme.${index}.paymentFrequency`}
           label={t['settingsLoanPaymentFreq']}
-          placeholder={t['settingsLoanPaymentFreq']}
+          __placeholder={t['settingsLoanPaymentFreq']}
           options={[
             {
               label: 'daily',
@@ -122,7 +122,7 @@ const AddServiceCharge = ({
                 bg="white"
                 name={`insuranceScheme.${index}.minAmount`}
                 label={t['settingsLoanMinimumAmount']}
-                placeholder={t['settingsLoanPlceholderNumber']}
+                __placeholder={t['settingsLoanPlceholderNumber']}
               />
               <FormInput
                 type="number"
@@ -130,7 +130,7 @@ const AddServiceCharge = ({
                 bg="white"
                 name={`insuranceScheme.${index}.maxAmount`}
                 label={t['settingsLoanMaximumAmount']}
-                placeholder={t['settingsLoanPlceholderNumber']}
+                __placeholder={t['settingsLoanPlceholderNumber']}
               />
               <FormInput
                 type="number"
@@ -138,7 +138,7 @@ const AddServiceCharge = ({
                 bg="white"
                 name={`insuranceScheme.${index}.insurancePremiumPercent`}
                 label={t['settingsLoanInsurancePremium']}
-                placeholder={t['settingsLoanPlceholderNumber']}
+                __placeholder={t['settingsLoanPlceholderNumber']}
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %
@@ -162,7 +162,7 @@ const AddServiceCharge = ({
                 bg="white"
                 name={`insuranceScheme.${index}.minPercentage`}
                 label={t['settingsLoanMinimumPer']}
-                placeholder={t['settingsLoanPlceholderNumber']}
+                __placeholder={t['settingsLoanPlceholderNumber']}
               />
               <FormInput
                 type="number"
@@ -170,7 +170,7 @@ const AddServiceCharge = ({
                 bg="white"
                 name={`insuranceScheme.${index}.maxPercentage`}
                 label={t['settingsLoanMaximumPer']}
-                placeholder={t['settingsLoanPlceholderNumber']}
+                __placeholder={t['settingsLoanPlceholderNumber']}
               />
               <FormInput
                 type="number"
@@ -178,7 +178,7 @@ const AddServiceCharge = ({
                 bg="white"
                 name={`insuranceScheme.${index}.insurancePremiumPercent`}
                 label={t['settingsLoanInsurancePremium']}
-                placeholder={t['settingsLoanPlceholderNumber']}
+                __placeholder={t['settingsLoanPlceholderNumber']}
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %

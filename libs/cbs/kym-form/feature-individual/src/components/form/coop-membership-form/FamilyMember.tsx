@@ -267,7 +267,7 @@ export const FamilyMember = ({
                 name={`relationshipId`}
                 id="familyMemberInThisCooperative"
                 label={t['kymIndRelationship']}
-                placeholder={t['kymIndSelectRelationship']}
+                __placeholder={t['kymIndSelectRelationship']}
                 isLoading={familyRelationshipLoading}
                 options={getFieldOption(familyRelationShipData)}
               />

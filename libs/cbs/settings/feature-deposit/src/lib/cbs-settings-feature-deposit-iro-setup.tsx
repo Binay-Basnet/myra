@@ -100,7 +100,7 @@ export function CbsSettingsFeatureDepositIROSetup(
                         type="text"
                         control={control}
                         label={t['settingsDepositIroName']}
-                        placeholder={t['settingsDepositIroName']}
+                        __placeholder={t['settingsDepositIroName']}
                       />
                     </Box>
                     <Box display="flex" columnGap="s16" alignItems="center">
@@ -109,7 +109,7 @@ export function CbsSettingsFeatureDepositIROSetup(
                         type="text"
                         control={control}
                         label={t['settingsDepositIroAddress']}
-                        placeholder={t['settingsDepositIroAddress']}
+                        __placeholder={t['settingsDepositIroAddress']}
                         w="100%"
                       />
                       <FormInput
@@ -117,7 +117,7 @@ export function CbsSettingsFeatureDepositIROSetup(
                         type="text"
                         control={control}
                         label={t['settingsDepositIroCode']}
-                        placeholder={t['settingsDepositIroCode']}
+                        __placeholder={t['settingsDepositIroCode']}
                         w="100%"
                       />
                     </Box>

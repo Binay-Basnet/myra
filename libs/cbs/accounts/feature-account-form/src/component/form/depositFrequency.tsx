@@ -173,7 +173,7 @@ export const DepositFrequency = () => {
                     type="text"
                     name="depositFrequencyDay"
                     label={t['accDay']}
-                    placeholder={t['accEnterDay']}
+                    __placeholder={t['accEnterDay']}
                   />
                 </Box>
               )}
@@ -188,13 +188,13 @@ export const DepositFrequency = () => {
                   <FormInput
                     name="depositFrequencyFrequencyDay"
                     label={t['accFrequencyDay']}
-                    placeholder={t['accFrequencyDay']}
+                    __placeholder={t['accFrequencyDay']}
                   />
 
                   <FormSelect
                     name="depositFrequencyDayOfWeek"
                     label={t['accDayOfWeek']}
-                    placeholder={t['accDayOfWeek']}
+                    __placeholder={t['accDayOfWeek']}
                     options={daysList}
                   />
                 </Box>
@@ -231,14 +231,14 @@ export const DepositFrequency = () => {
                 <FormSelect
                   name="depositFrequencyYearlyMonth"
                   label={t['accSelectMonth']}
-                  placeholder={t['accSelectMonth']}
+                  __placeholder={t['accSelectMonth']}
                   options={monthsList}
                 />
 
                 <FormSelect
                   name="depositFrequencyYearlyDay"
                   label={t['accSelectDay']}
-                  placeholder={t['accSelectDay']}
+                  __placeholder={t['accSelectDay']}
                   options={daysList}
                 />
               </Box>
@@ -253,7 +253,7 @@ export const DepositFrequency = () => {
             <FormInput
               name="installmentAmount"
               label={t['accinstallmentAmount']}
-              placeholder={'0.00'}
+              __placeholder={'0.00'}
               type="text"
               textAlign={'right'}
             />

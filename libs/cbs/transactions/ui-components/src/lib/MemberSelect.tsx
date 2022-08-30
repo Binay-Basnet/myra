@@ -8,13 +8,13 @@ import { getRouterQuery } from '@coop/shared/utils';
 interface IMemberSelectProps {
   name: string;
   label: string;
-  placeholder?: string;
+  __placeholder?: string;
 }
 
 export const MemberSelect = ({
   name,
   label,
-  placeholder,
+  __placeholder,
 }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
   const [trigger, setTrigger] = useState(false);
@@ -57,7 +57,7 @@ export const MemberSelect = ({
       name={name}
       label={label}
       isLoading={isFetching}
-      placeholder={placeholder}
+      __placeholder={__placeholder}
       onInputChange={debounce((id) => {
         if (id) {
           setIDMember(id);

@@ -21,14 +21,10 @@ export const useCooperativeUnionEconomicDetails = ({
 }: ICooperativeUnionEconomicDetailsHookProps) => {
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const { setError, watch, reset } = methods;
-  const { mutate } = useSetEconomicDetailsDataMutation();
+  const { watch, reset } = methods;
+  const { mutateAsync } = useSetEconomicDetailsDataMutation();
 
-  const {
-    data: editValues,
-    isLoading: editLoading,
-    refetch,
-  } = useGetEconimicDetailsEditDataQuery(
+  const { data: editValues, refetch } = useGetEconimicDetailsEditDataQuery(
     {
       id: id,
     },
@@ -41,7 +37,7 @@ export const useCooperativeUnionEconomicDetails = ({
         const economicDetail = {
           ...pickBy(
             editValues?.members?.cooperativeUnion?.formState?.formData
-              ?.economicDetails ?? {},
+              ?.economicDetails?.data ?? {},
             (v) => v !== null
           ),
         };
@@ -52,7 +48,7 @@ export const useCooperativeUnionEconomicDetails = ({
           !isDeepEmpty(data) &&
           !isEqual(economicDetail, data)
         ) {
-          mutate({ id, data });
+          mutateAsync({ id, data }).then(() => refetch());
         }
       }, 800)
     );
@@ -64,13 +60,12 @@ export const useCooperativeUnionEconomicDetails = ({
     if (editValues) {
       const editValueData =
         editValues?.members?.cooperativeUnion?.formState?.formData
-          ?.economicDetails;
-
+          ?.economicDetails?.data;
       reset({
         ...pickBy(editValueData ?? {}, (v) => v !== null),
       });
     }
-  }, [editLoading]);
+  }, [editValues]);
 
   useEffect(() => {
     if (id) {

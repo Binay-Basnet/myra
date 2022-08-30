@@ -108,7 +108,7 @@ export function Table<T extends Record<string, unknown>>({
 
       {!isStatic && (
         <TableSearch
-          placeholder={searchPlaceholder}
+          __placeholder={searchPlaceholder}
           pagination={pagination}
           size={tableSize}
           setSize={setTableSize}

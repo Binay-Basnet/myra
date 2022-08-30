@@ -92,7 +92,7 @@ export const KYMEstimatedAmount = ({
             type="number"
             name="estimatedAnnualTransactionAmount"
             label={t['kynIndEstimatedannualaccounttransaction']}
-            placeholder="0.00"
+            __placeholder="0.00"
             textAlign="right"
           />
         </FormSection>
@@ -106,7 +106,7 @@ export const KYMEstimatedAmount = ({
               type="number"
               name="estimatedAnnualTransactionAmount"
               label={t['kynIndEstimatedannualaccounttransaction']}
-              placeholder="0.00"
+              __placeholder="0.00"
               textAlign="right"
             />
           </InputGroupContainer> */}
@@ -132,14 +132,14 @@ export const KYMEstimatedAmount = ({
             type="number"
             name="estimatedAnnualDepositAmount"
             label={t['kynIndEstimatedAnnualDeposit']}
-            placeholder="0.00"
+            __placeholder="0.00"
             textAlign="right"
           />
           <FormInput
             type="number"
             name="estimatedAnnualLoanAmount"
             label={t['kynIndEstimatedAnnualLoan']}
-            placeholder="0.00"
+            __placeholder="0.00"
             textAlign="right"
           />
         </FormSection>

@@ -95,6 +95,19 @@ export type AccountActivityListEdges = {
   node?: Maybe<AccountActivityEntry>;
 };
 
+export enum AccountClosePaymentMode {
+  AccountTransfer = 'ACCOUNT_TRANSFER',
+  BankCheque = 'BANK_CHEQUE',
+  Cash = 'CASH',
+}
+
+export enum AccountCloseReason {
+  Death = 'DEATH',
+  Migration = 'MIGRATION',
+  Other = 'OTHER',
+  PersonalReason = 'PERSONAL_REASON',
+}
+
 export type AccountConnection = {
   edges: Array<AccountEdge>;
   pageInfo: PageInfo;
@@ -174,6 +187,13 @@ export type AccountTransferListConnection = {
 export type AccountTransferListEdges = {
   cursor: Scalars['Cursor'];
   node?: Maybe<AccountTransferEntry>;
+};
+
+export type AccountTransferPaymentForAccountClose = {
+  depositedBy: Scalars['String'];
+  depositedDate: Scalars['String'];
+  destination_account: Scalars['ID'];
+  note?: InputMaybe<Scalars['String']>;
 };
 
 export type AccountTypeDetailsUnion =
@@ -427,6 +447,13 @@ export type BankChartsOfAccount = {
   bankAccountNumber: Scalars['String'];
   bankGLCode: Scalars['String'];
   bankId: Scalars['ID'];
+};
+
+export type BankChequePaymentForAccountClose = {
+  amount: Scalars['String'];
+  bank: Scalars['ID'];
+  cheque_no: Scalars['String'];
+  note?: InputMaybe<Scalars['String']>;
 };
 
 export type BankDataMutation = {
@@ -1448,6 +1475,24 @@ export type DepositAccount = Base & {
   product: DepositProduct;
 };
 
+export type DepositAccountClose = {
+  accountID: Scalars['ID'];
+  accountTransfer?: InputMaybe<AccountTransferPaymentForAccountClose>;
+  bankCheque?: InputMaybe<BankChequePaymentForAccountClose>;
+  cash?: InputMaybe<DepositCash>;
+  memberID: Scalars['ID'];
+  notes?: InputMaybe<Scalars['String']>;
+  otherReason?: InputMaybe<Scalars['String']>;
+  paymentMode: AccountClosePaymentMode;
+  reason: AccountCloseReason;
+};
+
+export type DepositAccountCloseResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['Any']>;
+  recordId: Scalars['ID'];
+};
+
 export type DepositAccountInstallmentResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<DepositLoanAccountQuery>;
@@ -1467,6 +1512,7 @@ export type DepositCash = {
   cashPaid: Scalars['String'];
   denominations?: InputMaybe<Array<Denomination>>;
   disableDenomination: Scalars['Boolean'];
+  note?: InputMaybe<Scalars['String']>;
   returned_amount: Scalars['String'];
   total: Scalars['String'];
 };
@@ -1604,12 +1650,17 @@ export type DepositLoanAccountInput = {
 
 export type DepositLoanAccountMutation = {
   add?: Maybe<DepositLoanAccountResult>;
+  close?: Maybe<DepositAccountCloseResult>;
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
 };
 
 export type DepositLoanAccountMutationAddArgs = {
   data?: InputMaybe<DepositLoanAccountInput>;
   id: Scalars['ID'];
+};
+
+export type DepositLoanAccountMutationCloseArgs = {
+  data?: InputMaybe<DepositAccountClose>;
 };
 
 export type DepositLoanAccountMutationForgiveInstallmentArgs = {
@@ -4504,12 +4555,12 @@ export type KymCoopUnionAddLus =
   | KymCoopUnionInstitutionInformationLus;
 
 export type KymCoopUnionAddSectionStatus = {
-  accountOperatorDetails?: Maybe<KymCoopUnionAccountOperatorStatus>;
-  bodDetails?: Maybe<KymCoopUnionBodDetailsStatus>;
-  centralRepresentativeDetails?: Maybe<KymCoopUnionCentralRepresentativeStatus>;
-  declaration?: Maybe<KymCoopUnionDeclarationStatus>;
-  economicDetails?: Maybe<KymCoopUnionEconomicDetailsStatus>;
-  institutionInformation?: Maybe<KymCoopUnionInstitutionalInformationStatus>;
+  accountOperatorDetails?: Maybe<Array<Maybe<KymIndAddSectionStatus>>>;
+  bodDetails?: Maybe<Array<Maybe<KymIndAddSectionStatus>>>;
+  centralRepresentativeDetails?: Maybe<KymIndAddSectionStatus>;
+  declaration?: Maybe<KymIndAddSectionStatus>;
+  economicDetails?: Maybe<KymIndAddSectionStatus>;
+  institutionInformation?: Maybe<KymIndAddSectionStatus>;
 };
 
 export type KymCoopUnionBodDetails = {
@@ -6282,7 +6333,6 @@ export type MemberMutation = {
   generateExcel: Scalars['String'];
   individual?: Maybe<KymIndMutation>;
   institution?: Maybe<KymInsMutation>;
-  memberPDF: Scalars['String'];
   /**  id is the ID of member  */
   translate?: Maybe<TranslateData>;
 };
@@ -6308,10 +6358,6 @@ export type MemberMutationInstitutionArgs = {
   id: Scalars['ID'];
 };
 
-export type MemberMutationMemberPdfArgs = {
-  id: Scalars['ID'];
-};
-
 export type MemberMutationTranslateArgs = {
   data: TranslateInput;
   memberId: Scalars['ID'];
@@ -6331,6 +6377,7 @@ export type MemberQuery = {
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
+  memberPDF: Scalars['String'];
   memberTypes: MemberTypeResult;
   translate: TranslateQueryResult;
 };
@@ -6350,6 +6397,10 @@ export type MemberQueryIndividualArgs = {
 export type MemberQueryListArgs = {
   filter?: InputMaybe<KymMemberDataFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type MemberQueryMemberPdfArgs = {
+  id: Scalars['ID'];
 };
 
 export type MemberQueryTranslateArgs = {
@@ -10428,28 +10479,64 @@ export type GetCoopUnionSectionStatusQuery = {
       formState?: {
         sectionStatus?: {
           institutionInformation?: {
-            completed?: Array<KymCoopUnionInstitutionInformationSection | null> | null;
-            error?: Array<KymCoopUnionInstitutionInformationSection | null> | null;
+            incomplete?: Array<{
+              sectionName?: string | null;
+              incomplete?: Array<string | null> | null;
+            } | null> | null;
+            errors?: Array<{
+              sectionName?: string | null;
+              errors?: Record<string, Array<string>> | null;
+            } | null> | null;
           } | null;
           economicDetails?: {
-            completed?: Array<KymCoopUnionEconomicDetailsSection | null> | null;
-            error?: Array<KymCoopUnionEconomicDetailsSection | null> | null;
+            incomplete?: Array<{
+              sectionName?: string | null;
+              incomplete?: Array<string | null> | null;
+            } | null> | null;
+            errors?: Array<{
+              sectionName?: string | null;
+              errors?: Record<string, Array<string>> | null;
+            } | null> | null;
           } | null;
-          bodDetails?: {
-            completed?: Array<KymCoopUnionBodSection | null> | null;
-            error?: Array<KymCoopUnionBodSection | null> | null;
-          } | null;
-          accountOperatorDetails?: {
-            completed?: Array<KymCoopUnionAccountOperatorSection | null> | null;
-            error?: Array<KymCoopUnionAccountOperatorSection | null> | null;
-          } | null;
+          bodDetails?: Array<{
+            incomplete?: Array<{
+              sectionName?: string | null;
+              incomplete?: Array<string | null> | null;
+            } | null> | null;
+            errors?: Array<{
+              sectionName?: string | null;
+              errors?: Record<string, Array<string>> | null;
+            } | null> | null;
+          } | null> | null;
+          accountOperatorDetails?: Array<{
+            incomplete?: Array<{
+              sectionName?: string | null;
+              incomplete?: Array<string | null> | null;
+            } | null> | null;
+            errors?: Array<{
+              sectionName?: string | null;
+              errors?: Record<string, Array<string>> | null;
+            } | null> | null;
+          } | null> | null;
           centralRepresentativeDetails?: {
-            completed?: Array<KymCoopUnionCentralRepresentativeSection | null> | null;
-            error?: Array<KymCoopUnionCentralRepresentativeSection | null> | null;
+            incomplete?: Array<{
+              sectionName?: string | null;
+              incomplete?: Array<string | null> | null;
+            } | null> | null;
+            errors?: Array<{
+              sectionName?: string | null;
+              errors?: Record<string, Array<string>> | null;
+            } | null> | null;
           } | null;
           declaration?: {
-            completed?: Array<KymCoopUnionDeclarationSection | null> | null;
-            error?: Array<KymCoopUnionDeclarationSection | null> | null;
+            incomplete?: Array<{
+              sectionName?: string | null;
+              incomplete?: Array<string | null> | null;
+            } | null> | null;
+            errors?: Array<{
+              sectionName?: string | null;
+              errors?: Record<string, Array<string>> | null;
+            } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -11083,6 +11170,8 @@ export type GetMemberListQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           type: KymMemberTypesEnum;
+          profilePicUrl?: Array<string | null> | null;
+          signaturePicUrl?: Array<string | null> | null;
           contact?: string | null;
           createdAt: string;
           dateJoined?: string | null;
@@ -11454,6 +11543,12 @@ export type GetIndividualKymIdentificationListQuery = {
     } | null;
   };
 };
+
+export type GetMemberPdfQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberPdfQuery = { members: { memberPDF: string } };
 
 export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
@@ -12149,6 +12244,11 @@ export type GetDepositProductSettingsEditDataQuery = {
               rate?: number | null;
             } | null> | null;
             serviceCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            accountCloseCharge?: Array<{
               serviceName?: string | null;
               ledgerName?: string | null;
               amount?: any | null;
@@ -16560,28 +16660,64 @@ export const GetCoopUnionSectionStatusDocument = `
       formState(id: $id) {
         sectionStatus {
           institutionInformation {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+            errors {
+              sectionName
+              errors
+            }
           }
           economicDetails {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+            errors {
+              sectionName
+              errors
+            }
           }
           bodDetails {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+            errors {
+              sectionName
+              errors
+            }
           }
           accountOperatorDetails {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+            errors {
+              sectionName
+              errors
+            }
           }
           centralRepresentativeDetails {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+            errors {
+              sectionName
+              errors
+            }
           }
           declaration {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+            errors {
+              sectionName
+              errors
+            }
           }
         }
       }
@@ -17583,6 +17719,8 @@ export const GetMemberListDocument = `
             wardNo
             locality
           }
+          profilePicUrl
+          signaturePicUrl
           contact
           createdAt
           dateJoined
@@ -18100,6 +18238,27 @@ export const useGetIndividualKymIdentificationListQuery = <
       GetIndividualKymIdentificationListQuery,
       GetIndividualKymIdentificationListQueryVariables
     >(GetIndividualKymIdentificationListDocument).bind(null, variables),
+    options
+  );
+export const GetMemberPdfDocument = `
+    query getMemberPDF($id: ID!) {
+  members {
+    memberPDF(id: $id)
+  }
+}
+    `;
+export const useGetMemberPdfQuery = <
+  TData = GetMemberPdfQuery,
+  TError = unknown
+>(
+  variables: GetMemberPdfQueryVariables,
+  options?: UseQueryOptions<GetMemberPdfQuery, TError, TData>
+) =>
+  useQuery<GetMemberPdfQuery, TError, TData>(
+    ['getMemberPDF', variables],
+    useAxios<GetMemberPdfQuery, GetMemberPdfQueryVariables>(
+      GetMemberPdfDocument
+    ).bind(null, variables),
     options
   );
 export const GetAllSavedReportsDocument = `
@@ -18966,6 +19125,11 @@ export const GetDepositProductSettingsEditDataDocument = `
             maxPostingFreqDifference
             accountType
             serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            accountCloseCharge {
               serviceName
               ledgerName
               amount

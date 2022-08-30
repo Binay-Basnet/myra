@@ -26,6 +26,7 @@ export interface SelectProps
   // size?: 'sm' | 'default';
   onChange?: ((newValue: SelectOption) => void) | any;
   hasRadioOption?: boolean;
+  __placeholder?: string;
 }
 
 export function Select({
@@ -37,6 +38,8 @@ export function Select({
   options,
   value,
   hasRadioOption,
+  placeholder,
+
   ...rest
 }: SelectProps) {
   const { t } = useTranslation();
@@ -78,7 +81,7 @@ export function Select({
             );
           }
         }}
-        placeholder={t['select']}
+        placeholder={placeholder ?? t['select']}
         options={isMulti ? sortedOptions : options}
         value={value}
         controlShouldRenderValue={!isMulti}

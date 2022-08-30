@@ -13,11 +13,18 @@ import {
   useGetNewIdMutation,
   useSetAddDirectorInstitutionMutation,
 } from '@coop/cbs/data-access';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
-  GroupContainer,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import { Box, Button, Collapse, Icon, IconButton, Text } from '@coop/shared/ui';
+  Box,
+  Button,
+  Collapse,
+  FormSection,
+  Grid,
+  GridItem,
+  Icon,
+  IconButton,
+  Text,
+} from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import {
@@ -250,45 +257,40 @@ export const BoardDirectorInfo = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <GroupContainer
-          gap={'s16'}
+        <FormSection
           id="kymInsDetailsofProprietorPartnersDirectors"
-          scrollMarginTop={'200px'}
+          header="kymInsDetailsofProprietorPartnersDirectors"
         >
-          <Text fontSize="r1" fontWeight="SemiBold">
-            {t['kymInsDetailsofProprietorPartnersDirectors']}
-          </Text>
-          {directorIds.map((id, index) => {
-            return (
-              <Box
-                key={id}
-                display="flex"
-                flexDirection={'column'}
-                // gap="s16"
-                // border="1px solid"
-                // borderColor="border.layout"
-              >
-                <AddDirector
-                  setKymCurrentSection={setSection}
-                  removeDirector={removeDirector}
-                  directorId={id}
-                  index={index + 1}
-                />
-              </Box>
-            );
-          })}
-          <Button
-            id="addDirectorButton"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              addDirector();
-            }}
-          >
-            {t['kymInsAddDirector']}
-          </Button>
-        </GroupContainer>
+          <GridItem colSpan={3}>
+            <Grid gap="s16">
+              {directorIds.map((id, index) => {
+                return (
+                  <Box key={id} display="flex" flexDirection={'column'}>
+                    <AddDirector
+                      setKymCurrentSection={setSection}
+                      removeDirector={removeDirector}
+                      directorId={id}
+                      index={index + 1}
+                    />
+                  </Box>
+                );
+              })}
+              <GridItem colSpan={1}>
+                <Button
+                  id="addDirectorButton"
+                  alignSelf="start"
+                  leftIcon={<Icon size="md" as={AiOutlinePlus} />}
+                  variant="outline"
+                  onClick={() => {
+                    addDirector();
+                  }}
+                >
+                  {t['kymInsAddDirector']}
+                </Button>
+              </GridItem>
+            </Grid>
+          </GridItem>
+        </FormSection>
       </form>
     </FormProvider>
   );

@@ -119,7 +119,7 @@ export const Questions = () => {
                 textAlign="right"
                 name="percentageOfDeposit"
                 label={t['depositProductPercentageDeposit']}
-                placeholder="0.00"
+                __placeholder="0.00"
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %
@@ -176,7 +176,7 @@ export const Questions = () => {
                 <FormTextArea
                   name="specifyWithdrawRestriction"
                   label={t['depositProductSpecify']}
-                  placeholder={t['depositProductNote']}
+                  __placeholder={t['depositProductNote']}
                   rows={3}
                 />
               </Box>

@@ -72,7 +72,7 @@ export function AccountingFeatureAddQuickPayment() {
                     <FormSelect
                       name="paidFrom"
                       label={t['accountingQuickPaymentAddPaidFrom']}
-                      placeholder={
+                      __placeholder={
                         t['accountingQuickPaymentAddSelectLedgerName']
                       }
                       options={[]}
@@ -87,7 +87,9 @@ export function AccountingFeatureAddQuickPayment() {
                       name="reference"
                       type="text"
                       label={t['accountingQuickPaymentAddReference']}
-                      placeholder={t['accountingQuickPaymentAddEnterReference']}
+                      __placeholder={
+                        t['accountingQuickPaymentAddEnterReference']
+                      }
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -98,7 +100,7 @@ export function AccountingFeatureAddQuickPayment() {
                   <FormTextArea
                     name="note"
                     label={t['accountingQuickPaymentAddNotes']}
-                    placeholder={t['accountingQuickPaymentAddNote']}
+                    __placeholder={t['accountingQuickPaymentAddNote']}
                     rows={5}
                   />
                 </Box>

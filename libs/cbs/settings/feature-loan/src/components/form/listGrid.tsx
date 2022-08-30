@@ -183,7 +183,7 @@ export const GridItems = () => {
             criteria.indexOf('AGE') !== -1 && (
               <FormInput
                 name="maxAge"
-                placeholder={t['loanProductMinAgeEnter']}
+                __placeholder={t['loanProductMinAgeEnter']}
                 label={t['loanProductMinAge']}
               />
             )}
@@ -193,7 +193,7 @@ export const GridItems = () => {
             criteria.indexOf('AGE') !== -1 && (
               <FormInput
                 name="minAge"
-                placeholder={t['loanProductMaxAgeEnter']}
+                __placeholder={t['loanProductMaxAgeEnter']}
                 label={t['loanProductMaxAge']}
               />
             )}
@@ -205,7 +205,7 @@ export const GridItems = () => {
                 name="genderId"
                 options={GenderList}
                 label={t['loanProductGender']}
-                placeholder={t['loanProductSelectGender']}
+                __placeholder={t['loanProductSelectGender']}
                 isMulti
               />
             )}
@@ -217,7 +217,7 @@ export const GridItems = () => {
                 name="maritalStatusId"
                 options={MartialOptions}
                 label={t['loanProductMarital']}
-                placeholder={t['loanProductSelectMaritalStatus']}
+                __placeholder={t['loanProductSelectMaritalStatus']}
                 isMulti
               />
             )}
@@ -229,7 +229,7 @@ export const GridItems = () => {
                 name="educationQualification"
                 options={EducationalOptions}
                 label={t['loanProductEducationQualification']}
-                placeholder={t['loanProductSelectEducationQualification']}
+                __placeholder={t['loanProductSelectEducationQualification']}
                 isMulti
               />
             )}
@@ -241,7 +241,7 @@ export const GridItems = () => {
                 name="ethnicity"
                 options={EthnicityList}
                 label={t['loanProductEthinicity']}
-                placeholder={t['loanProductSelectEthinicity']}
+                __placeholder={t['loanProductSelectEthinicity']}
                 isMulti
               />
             )}
@@ -253,7 +253,7 @@ export const GridItems = () => {
                 name="occupation"
                 options={OccupationOptions}
                 label={t['loanProductOccupationDetails']}
-                placeholder={t['loanProductSelectOccupationDetails']}
+                __placeholder={t['loanProductSelectOccupationDetails']}
                 isMulti
               />
             )}
@@ -266,7 +266,7 @@ export const GridItems = () => {
                 name="natureOfBusinessInstitution"
                 options={InstituitionList}
                 label={t['loanProductNatureBusinessIns']}
-                placeholder={t['loanProductSelectNatureofBusiness']}
+                __placeholder={t['loanProductSelectNatureofBusiness']}
                 isMulti
               />
             )}
@@ -312,7 +312,7 @@ export const GridItems = () => {
                 name="natureOFBusinessCoop"
                 options={CoopUnionList}
                 label={t['loanProductNatureBusinessCoopUnion']}
-                placeholder={t['loanProductSelectNatureofBusiness']}
+                __placeholder={t['loanProductSelectNatureofBusiness']}
                 isMulti
               />
             )}

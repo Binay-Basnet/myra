@@ -36,21 +36,21 @@ export const KymCoopCurrentMembers = (props: IProps) => {
             min={0}
             name="noOfMaleMembers"
             label={t['kymCoopNoofMalemembers']}
-            placeholder={t['kymCoopEnternumberofMaleMembers']}
+            __placeholder={t['kymCoopEnternumberofMaleMembers']}
           />
           <FormInput
             type="number"
             min={0}
             name="noOfFemaleMembers"
             label={t['kymCoopNoofFemalemembers']}
-            placeholder={t['kymCoopEnternumberofFemaleMembers']}
+            __placeholder={t['kymCoopEnternumberofFemaleMembers']}
           />
 
           <FormInput
             type="text"
             name="noOfOtherMembers"
             label={t['kymCoopNoofOthermembers']}
-            placeholder={t['kymCoopEnternumberofOthermembers']}
+            __placeholder={t['kymCoopEnternumberofOthermembers']}
           />
         </FormSection>
       </form>

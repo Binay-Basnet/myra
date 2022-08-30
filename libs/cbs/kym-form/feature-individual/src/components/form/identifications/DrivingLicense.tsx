@@ -156,21 +156,21 @@ export const DrivingLicense = ({
               type="text"
               name="idNo"
               label={t['kymIndDrivingLicenseNo']}
-              placeholder={t['kymIndDrivingLicenseNo']}
+              __placeholder={t['kymIndDrivingLicenseNo']}
             />
 
             <FormInput
               type="text"
               name="place"
               label={t['kymIndDrivingLicenseIssuePlace']}
-              placeholder={t['kymIndDrivingLicenseIssuePlace']}
+              __placeholder={t['kymIndDrivingLicenseIssuePlace']}
             />
 
             <FormInput
               type="date"
               name="date"
               label={t['kymIndDrivingLicenseIssueDate']}
-              placeholder={t['kymIndDrivingLicenseIssueDate']}
+              __placeholder={t['kymIndDrivingLicenseIssueDate']}
             />
           </FormSection>
         </form>

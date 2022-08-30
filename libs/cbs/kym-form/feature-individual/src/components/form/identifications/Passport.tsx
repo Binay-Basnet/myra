@@ -154,21 +154,21 @@ export const Passport = ({ setKymCurrentSection }: IPassportProps) => {
               type="text"
               name="idNo"
               label={t['kymIndPassportNo']}
-              placeholder={t['kymIndPassportNo']}
+              __placeholder={t['kymIndPassportNo']}
             />
 
             <FormInput
               type="text"
               name="place"
               label={t['kymIndPassportIssuePlace']}
-              placeholder={t['kymIndPassportIssuePlace']}
+              __placeholder={t['kymIndPassportIssuePlace']}
             />
 
             <FormInput
               type="date"
               name="date"
               label={t['kymIndPassportIssueDate']}
-              placeholder={t['kymIndPassportIssueDate']}
+              __placeholder={t['kymIndPassportIssueDate']}
             />
           </FormSection>
         </form>

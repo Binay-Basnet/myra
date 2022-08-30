@@ -48,7 +48,7 @@ export const chakraDefaultStyles:
       opacity: 1,
     },
   }),
-  control: (provided, state) => ({
+  control: (provided) => ({
     ...provided,
     bg: 'white',
     borderRadius: 'br2',
@@ -156,7 +156,7 @@ export const chakraSmallStyles: ChakraStylesConfig = {
       opacity: 1,
     },
   }),
-  control: (provided, state) => ({
+  control: (provided) => ({
     ...provided,
     bg: 'white',
     borderRadius: 'br2',
