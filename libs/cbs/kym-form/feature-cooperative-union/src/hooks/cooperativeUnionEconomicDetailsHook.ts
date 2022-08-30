@@ -22,7 +22,7 @@ export const useCooperativeUnionEconomicDetails = ({
   const router = useRouter();
   const id = String(router?.query?.['id']);
   const { watch, reset } = methods;
-  const { mutate } = useSetEconomicDetailsDataMutation();
+  const { mutateAsync } = useSetEconomicDetailsDataMutation();
 
   const { data: editValues, refetch } = useGetEconimicDetailsEditDataQuery(
     {
@@ -48,7 +48,7 @@ export const useCooperativeUnionEconomicDetails = ({
           !isDeepEmpty(data) &&
           !isEqual(economicDetail, data)
         ) {
-          mutate({ id, data });
+          mutateAsync({ id, data }).then(() => refetch());
         }
       }, 800)
     );

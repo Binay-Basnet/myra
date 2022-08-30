@@ -28,14 +28,16 @@ export const useGetSectionStatus = (id: string) => {
       ?.boardOfDirectorsDetails?.sectionStatus;
 
   const getBodInfoStatus = () => {
-    let bodStatus = false;
-    bodInfo?.forEach((item) => {
-      if (item?.errors === null && item?.incomplete === null) {
-        bodStatus = true;
-      } else {
-        bodStatus = false;
-      }
-    });
+    let bodStatus = null;
+    if (bodInfo !== null) {
+      bodInfo?.forEach((item) => {
+        if (item?.errors === null && item?.incomplete === null) {
+          bodStatus = true;
+        } else {
+          bodStatus = false;
+        }
+      });
+    }
     return bodStatus;
   };
   const accountOperatorDetails =
@@ -43,14 +45,16 @@ export const useGetSectionStatus = (id: string) => {
       ?.accountOperatorsDetails?.sectionStatus;
 
   const getAccountOperatorStatus = () => {
-    let accountOperatorStatus = false;
-    accountOperatorDetails?.forEach((item) => {
-      if (item?.errors === null && item?.incomplete === null) {
-        accountOperatorStatus = true;
-      } else {
-        accountOperatorStatus = false;
-      }
-    });
+    let accountOperatorStatus = null;
+    if (accountOperatorDetails !== null) {
+      accountOperatorDetails?.forEach((item) => {
+        if (item?.errors === null && item?.incomplete === null) {
+          accountOperatorStatus = true;
+        } else {
+          accountOperatorStatus = false;
+        }
+      });
+    }
     return accountOperatorStatus;
   };
 
@@ -66,10 +70,15 @@ export const useGetSectionStatus = (id: string) => {
   //   id: String(id),
   // });
 
+  // const { data: economicDetails } = useGetEconimicDetailsEditDataQuery({
+  //   id: id,
+  // });
+
   return {
-    getBodInfoStatus,
-    getAccountOperatorStatus,
+    cooperativeInfo,
     cooperativeInfoIncompleteSections,
     cooperativeInfoSectionsWithError,
+    getBodInfoStatus,
+    getAccountOperatorStatus,
   };
 };

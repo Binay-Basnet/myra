@@ -1,4 +1,4 @@
-mutation getMemberPDF($id: ID!) {
+query getMemberPDF($id: ID!) {
   members {
     memberPDF(id: $id)
   }

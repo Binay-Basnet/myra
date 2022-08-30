@@ -39162,9 +39162,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "OBJECT",
-              "name": "KymCoopUnionAccountOperatorStatus",
-              "ofType": null
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KymIndAddSectionStatus",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -39174,9 +39178,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "OBJECT",
-              "name": "KymCoopUnionBodDetailsStatus",
-              "ofType": null
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KymIndAddSectionStatus",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -39187,7 +39195,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCoopUnionCentralRepresentativeStatus",
+              "name": "KymIndAddSectionStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -39199,7 +39207,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCoopUnionDeclarationStatus",
+              "name": "KymIndAddSectionStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -39211,7 +39219,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCoopUnionEconomicDetailsStatus",
+              "name": "KymIndAddSectionStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -39223,7 +39231,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCoopUnionInstitutionalInformationStatus",
+              "name": "KymIndAddSectionStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -54591,39 +54599,6 @@
             "deprecationReason": null
           },
           {
-            "name": "memberPDF",
-            "description": null,
-            "args": [
-              {
-                "name": "id",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "translate",
             "description": " id is the ID of member ",
             "args": [
@@ -54872,6 +54847,39 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "KymMemberListConnection",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "memberPDF",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },

@@ -397,28 +397,70 @@ query getCoopUnionSectionStatus($id: ID!) {
       formState(id: $id) {
         sectionStatus {
           institutionInformation {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+
+            errors {
+              sectionName
+              errors
+            }
           }
           economicDetails {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+
+            errors {
+              sectionName
+              errors
+            }
           }
           bodDetails {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+
+            errors {
+              sectionName
+              errors
+            }
           }
           accountOperatorDetails {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+
+            errors {
+              sectionName
+              errors
+            }
           }
           centralRepresentativeDetails {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+
+            errors {
+              sectionName
+              errors
+            }
           }
           declaration {
-            completed
-            error
+            incomplete {
+              sectionName
+              incomplete
+            }
+
+            errors {
+              sectionName
+              errors
+            }
           }
         }
       }
