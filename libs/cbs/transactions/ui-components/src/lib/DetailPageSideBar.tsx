@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
-import { Avatar, Divider, Icon } from '@coop/shared/ui';
+import { Avatar, Divider, Icon, toast } from '@coop/shared/ui';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
@@ -50,6 +50,16 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
     [router.pathname]
   );
 
+  const handleCopyAgentId = (agentId: string) => {
+    navigator.clipboard.writeText(agentId).then(() => {
+      toast({
+        id: 'copy-agent-id',
+        type: 'success',
+        message: 'Agent ID Copied to Clipboard',
+      });
+    });
+  };
+
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" p="s16" gap="s16">
@@ -82,6 +92,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
                 _hover={{ cursor: 'pointer' }}
                 size="sm"
                 as={IoCopyOutline}
+                onClick={() => handleCopyAgentId('123456')}
               />
             </Box>
           </Box>
