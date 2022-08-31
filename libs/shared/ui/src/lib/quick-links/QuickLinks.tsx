@@ -11,9 +11,16 @@ export interface QuickLinksProps {
   subText?: string;
   icon: IconType;
   onclick: () => void;
+  editable?: boolean;
 }
 
-export function QuickLinks({ text, subText, icon, onclick }: QuickLinksProps) {
+export function QuickLinks({
+  text,
+  subText,
+  icon,
+  onclick,
+  editable,
+}: QuickLinksProps) {
   return (
     <Box
       bg="gray.0"
@@ -52,9 +59,11 @@ export function QuickLinks({ text, subText, icon, onclick }: QuickLinksProps) {
           )}
         </Box>
       </Box>
-      <Box>
-        <Icon as={AiOutlineClose} color="red.500" size="sm" />
-      </Box>
+      {editable && (
+        <Box>
+          <Icon as={AiOutlineClose} color="red.500" size="sm" />
+        </Box>
+      )}
     </Box>
   );
 }

@@ -1,4 +1,5 @@
 import { ReactElement, useState } from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import {
   AiFillInfoCircle,
   AiOutlineBarcode,
@@ -89,6 +90,10 @@ const Dashboard = () => {
     },
   ];
 
+  const handleDragEnd = async () => {
+    setOpenModal(false);
+  };
+
   return (
     <Box height="fit-content" p="0" pb="55px">
       <Box display="flex" flexDir="column" gap="s8">
@@ -141,23 +146,46 @@ const Dashboard = () => {
           </Text>
         }
       >
-        <Grid
-          templateColumns="repeat(3,1fr)"
-          py="s16"
-          columnGap="s16"
-          rowGap="s8"
-        >
-          {quickLinksList?.map((item, index) => (
-            <GridItem key={index}>
-              <QuickLinks
-                icon={item.icon}
-                text={item.text}
-                subText={item.subText}
-                onclick={item.onclick}
-              />
-            </GridItem>
-          ))}
-        </Grid>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId={'quick'}>
+            {(provided) => (
+              <Box {...provided.droppableProps} ref={provided.innerRef}>
+                <Grid
+                  templateColumns="repeat(3,1fr)"
+                  py="s16"
+                  columnGap="s16"
+                  rowGap="s8"
+                >
+                  {quickLinksList?.map((item, index) => (
+                    <Draggable
+                      key={item?.text}
+                      draggableId={item?.text ?? 'no-id'}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <Box
+                          key={index}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                        >
+                          <QuickLinks
+                            editable={true}
+                            icon={item.icon}
+                            text={item.text}
+                            subText={item.subText}
+                            onclick={item.onclick}
+                          />
+                        </Box>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </Grid>
+              </Box>
+            )}
+          </Droppable>
+        </DragDropContext>
+        {/* </Grid> */}
       </Modal>
 
       <Box mt="s32" display="flex" flexDir="column" gap="s16">
