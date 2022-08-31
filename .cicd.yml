@@ -216,7 +216,7 @@ steps:
 
 ---
 kind: pipeline
-name: Build and push myra-ui-ebanking
+name: Build and push myra-ui-storybook
 type: docker
 
 platform:
