@@ -35,7 +35,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Payment } from '../component/AccountCloseForm/payment';
 
-type AccountCloseInput = Omit<DepositAccountClose, 'cash'> & {
+export type AccountCloseInput = Omit<DepositAccountClose, 'cash'> & {
   cash?:
     | {
         cashPaid: string;
@@ -195,7 +195,7 @@ export function CbsAccountClose() {
     [accountId]
   );
   const mainButtonHandlermode0 = () => {
-    if (memberId && accountId) {
+    if (memberId) {
       setMode('1');
     }
   };

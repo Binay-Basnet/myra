@@ -2,7 +2,6 @@ import { useFormContext } from 'react-hook-form';
 
 import {
   AccountClosePaymentMode,
-  DepositAccountClose,
   useGetBankListQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -72,14 +71,13 @@ type PaymentTableType = {
 };
 
 export function Payment({ totalDeposit }: PaymentProps) {
-  const { watch } = useFormContext<DepositAccountClose>();
+  const { watch } = useFormContext();
 
   const selectedPaymentMode = watch('paymentMode');
 
   const denominations = watch('cash.denominations');
 
   const { data: bankList } = useGetBankListQuery();
-
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount: string }) =>
