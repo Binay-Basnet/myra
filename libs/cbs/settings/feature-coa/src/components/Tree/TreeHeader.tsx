@@ -33,7 +33,7 @@ function TreeHeader(props: ITreeHeaderProps) {
 
       <Box display="flex" alignItems="center" gap="s8" role="group">
         <Text fontWeight="bold" fontSize="14px">
-          {props.data?.name?.en.split(' ')[0]}
+          {props.data.accountCode}
         </Text>
         <Text fontWeight="400" fontSize="14px" color="gray.800">
           {props.data?.name?.en}

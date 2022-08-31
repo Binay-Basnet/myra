@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
 
-import { AddCoaAccountInput, CoaTypesOfAccount } from '@coop/cbs/data-access';
+import {
+  AddCoaAccountInput,
+  CoaTypesOfAccount,
+  useAddNewAccountInCoaMutation,
+  useGetCoaFullViewQuery,
+} from '@coop/cbs/data-access';
 import { SettingsLayout } from '@coop/cbs/settings/ui-layout';
 import {
   FormAccountInput,
@@ -13,6 +19,7 @@ import {
   FormSwitchTab,
 } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Button,
   Container,
@@ -26,6 +33,7 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 const AddNewAccount = () => {
+  const queryClient = useQueryClient();
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -40,11 +48,47 @@ const AddNewAccount = () => {
     { label: t['settingsCoaListBank'], value: CoaTypesOfAccount.Bank },
   ];
 
-  const methods = useForm<AddCoaAccountInput>();
+  const methods = useForm<NonNullable<AddCoaAccountInput>>({
+    defaultValues: {
+      under: (router.query.under as string) ?? null,
+      accountType: CoaTypesOfAccount.Cash,
+      isAllowFreeEntry: false,
+      isLedgerAccount: false,
+      isAllowTransaction: false,
+      isProfitAndLossAccount: false,
+      isSummationAccount: false,
+      isBalanceSheetAccount: false,
+      isApplicableToAllBranches: false,
+      isIbtAccount: false,
+      openingBalance: null,
+      isInTransitAccount: false,
+    },
+  });
 
   const { watch } = methods;
 
   const accountType = watch('accountType');
+
+  const { mutateAsync: addNewAccount } = useAddNewAccountInCoaMutation();
+  const { data: coaFullView } = useGetCoaFullViewQuery();
+
+  const underAccounts =
+    coaFullView?.settings?.chartsOfAccount.fullView.data?.map((d) => ({
+      label: d.name.en,
+      value: d.id,
+    }));
+
+  useEffect(() => {
+    methods.reset({
+      ...methods.getValues(),
+      // DID THIS BECAUSE VAlUE WAS NOT CLEARING ON RESET
+      openingBalance: '' as unknown as number,
+      journalCode: undefined,
+      bankAccountNumber: undefined,
+      bankGLCode: undefined,
+      bankId: undefined,
+    });
+  }, [accountType]);
 
   return (
     <>
@@ -99,49 +143,38 @@ const AddNewAccount = () => {
                       type="text"
                       name="name"
                       label={t['settingsCoaAccountName']}
-                      __placeholder={t['settingsCoaEnterAccountName']}
                     />
                   </GridItem>
                   <GridItem>
                     <FormSelect
                       id="accountName"
-                      name="parentId"
+                      name="under"
                       label={t['settingsCoaUnder']}
-                      __placeholder={t['settingsCoaStaffBonusFund']}
-                      options={[
-                        {
-                          label: 'Tree',
-                          value: 'Tree',
-                        },
-                        {
-                          label: 'Option 2',
-                          value: 'option-2',
-                        },
-                        {
-                          label: 'Option 3',
-                          value: 'option-3',
-                        },
-                      ]}
+                      options={underAccounts}
                     />
                   </GridItem>
 
                   <GridItem>
                     <FormSelect
                       id="type"
-                      name="classId"
+                      name="accountClass"
                       label={t['settingsCoaFormAccountClass']}
                       options={[
                         {
-                          label: 'Liabilities',
-                          value: 'Liabilities',
+                          label: 'Equity and Liabilities',
+                          value: 'EQUITY_AND_LIABILITIES',
                         },
                         {
-                          label: 'Option 2',
-                          value: 'option-2',
+                          label: 'Assets',
+                          value: 'ASSETS',
                         },
                         {
-                          label: 'Option 3',
-                          value: 'option-3',
+                          label: 'Expenditure',
+                          value: 'EXPENDITURE',
+                        },
+                        {
+                          label: 'Income',
+                          value: 'INCOME',
                         },
                       ]}
                     />
@@ -149,9 +182,8 @@ const AddNewAccount = () => {
                   <GridItem>
                     <FormInput
                       id="type"
-                      name="code"
+                      name="accountCode"
                       label={t['settingsCoaFormAccountCode']}
-                      __placeholder={t['settingsCoaFormAccountCode']}
                     />
                   </GridItem>
                   <GridItem>
@@ -163,14 +195,6 @@ const AddNewAccount = () => {
                         {
                           label: 'NPR',
                           value: 'NPR',
-                        },
-                        {
-                          label: 'Option 2',
-                          value: 'option-2',
-                        },
-                        {
-                          label: 'Option 3',
-                          value: 'option-3',
                         },
                       ]}
                     />
@@ -195,93 +219,65 @@ const AddNewAccount = () => {
                   <FormSwitchTab name="accountType" options={accountList} />
                 </Box>
 
-                {accountType === CoaTypesOfAccount.Cash && (
-                  <Grid templateColumns="repeat(3,1fr)" gap={5}>
+                <Grid templateColumns="repeat(3,1fr)" gap="s16">
+                  {accountType === CoaTypesOfAccount.Bank && (
+                    <>
+                      <GridItem colSpan={2}>
+                        <FormSelect
+                          id="type"
+                          name="bankId"
+                          label={t['settingsCoaBank']}
+                          options={[
+                            {
+                              label: 'Credit Terms',
+                              value: 'Credit Terms',
+                            },
+                            {
+                              label: 'Option 2',
+                              value: 'option-2',
+                            },
+                            {
+                              label: 'Option 3',
+                              value: 'option-3',
+                            },
+                          ]}
+                        />
+                      </GridItem>
+                      <GridItem>
+                        <FormInput
+                          id="type"
+                          name="bankAccountNumber"
+                          label={t['settingsCoaBankAccountNumber']}
+                        />
+                      </GridItem>
+                    </>
+                  )}
+
+                  <GridItem>
+                    <FormAccountInput
+                      name="openingBalance"
+                      label={t['settingsCoaOpeningBalance']}
+                    />
+                  </GridItem>
+
+                  {accountType === CoaTypesOfAccount.Journal && (
                     <GridItem>
-                      <FormAccountInput
-                        name="openingBalance"
-                        label={t['settingsCoaOpeningBalance']}
-                      />
-                    </GridItem>
-                  </Grid>
-                )}
-
-                {accountType === CoaTypesOfAccount.Journal && (
-                  <Grid templateColumns="repeat(3,1fr)">
-                    <GridItem colSpan={2}>
-                      <Grid templateColumns="repeat(2,1fr)" gap={5}>
-                        <GridItem>
-                          <FormAccountInput
-                            name="openingBalance"
-                            label={t['settingsCoaOpeningBalance']}
-                          />
-                        </GridItem>
-                        <GridItem>
-                          <FormInput
-                            name="journalCode"
-                            label={t['settingsCoaJournalCode']}
-                            __placeholder={t['settingsCoaAccoutNumber']}
-                          />
-                        </GridItem>
-                      </Grid>
-                    </GridItem>
-                  </Grid>
-                )}
-
-                {accountType === CoaTypesOfAccount.Bank && (
-                  <Box display="flex" justifyContent="center" gap={5}>
-                    <Box flex={1}>
-                      <FormSelect
-                        id="type"
-                        name="bankId"
-                        label={t['settingsCoaBank']}
-                        options={[
-                          {
-                            label: 'Credit Terms',
-                            value: 'Credit Terms',
-                          },
-                          {
-                            label: 'Option 2',
-                            value: 'option-2',
-                          },
-                          {
-                            label: 'Option 3',
-                            value: 'option-3',
-                          },
-                        ]}
-                      />
-
-                      <Box
-                        mt="3"
-                        display="flex"
-                        gap={5}
-                        justifyContent="space-around"
-                      >
-                        <Box w="50%">
-                          <FormAccountInput
-                            name="openingBalance"
-                            label={t['settingsCoaOpeningBalance']}
-                          />
-                        </Box>
-                        <Box w="50%">
-                          <FormInput
-                            name="bankGLCode"
-                            label={t['settingsCoaBankGLCode']}
-                            __placeholder={t['settingsCoaGLCode']}
-                          />
-                        </Box>
-                      </Box>
-                    </Box>
-                    <Box w="30%">
                       <FormInput
-                        id="type"
-                        name="bankAccountNumber"
-                        label={t['settingsCoaBankAccountNumber']}
-                        __placeholder={t['settingsCoaBankAccountNumber']}
+                        name="journalCode"
+                        label={t['settingsCoaJournalCode']}
                       />
-                    </Box>
-                  </Box>
-                )}
+                    </GridItem>
+                  )}
+
+                  {accountType === CoaTypesOfAccount.Bank && (
+                    <GridItem>
+                      <FormInput
+                        name="bankGLCode"
+                        label={t['settingsCoaBankGLCode']}
+                      />
+                    </GridItem>
+                  )}
+                </Grid>
               </Box>
 
               <Box
@@ -303,11 +299,12 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab name="ledgerAccount" options={list} />
+                    <FormSwitchTab name="isLedgerAccount" options={list} />
                   </Box>
                 </Box>
 
                 <Divider />
+
                 <Box display="grid" gridTemplateColumns="repeat(2, 2fr)">
                   <Box>
                     <Text color="Gray.700" fontWeight="medium" fontSize="s3">
@@ -319,7 +316,10 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab name="allicableAllBranch" options={list} />
+                    <FormSwitchTab
+                      name="isApplicableToAllBranches"
+                      options={list}
+                    />
                   </Box>
                 </Box>
 
@@ -336,7 +336,10 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab name="balanceSheetAccount" options={list} />
+                    <FormSwitchTab
+                      name="isBalanceSheetAccount"
+                      options={list}
+                    />
                   </Box>
                 </Box>
 
@@ -353,7 +356,7 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab name="summationAccount" options={list} />
+                    <FormSwitchTab name="isSummationAccount" options={list} />
                   </Box>
                 </Box>
 
@@ -370,7 +373,7 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab name="ibtAccount" options={list} />
+                    <FormSwitchTab name="isIbtAccount" options={list} />
                   </Box>
                 </Box>
 
@@ -387,7 +390,7 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab name="inTransitAccount" options={list} />
+                    <FormSwitchTab name="isInTransitAccount" options={list} />
                   </Box>
                 </Box>
 
@@ -404,7 +407,10 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab name="profitAndLossAccount" options={list} />
+                    <FormSwitchTab
+                      name="isProfitAndLossAccount"
+                      options={list}
+                    />
                   </Box>
                 </Box>
 
@@ -424,7 +430,7 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab name="allowFreeEntry" options={list} />
+                    <FormSwitchTab name="isAllowFreeEntry" options={list} />
                   </Box>
                 </Box>
 
@@ -441,7 +447,7 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab name="allowTransaction" options={list} />
+                    <FormSwitchTab name="isAllowTransaction" options={list} />
                   </Box>
                 </Box>
               </Box>
@@ -468,7 +474,22 @@ const AddNewAccount = () => {
                 </Button>
               }
               mainButtonLabel={t['next']}
-              mainButtonHandler={null}
+              mainButtonHandler={methods.handleSubmit(async (data) => {
+                await asyncToast({
+                  id: 'add-new-account',
+                  promise: addNewAccount({
+                    data: data,
+                  }),
+                  msgs: {
+                    loading: 'Adding New Account',
+                    success: 'Added New Account',
+                  },
+                  onSuccess: () => {
+                    queryClient.invalidateQueries('getCoaFullView');
+                    router.push('/settings/general/charts-of-accounts');
+                  },
+                });
+              })}
             />
           </Container>
         </Box>
