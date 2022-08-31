@@ -63333,8 +63333,47 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "ShareHistory",
+        "description": null,
+        "fields": [
+          {
+            "name": "balance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShareBalance",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "history",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ShareRegister",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
-        "name": "ShareFeeAndChargesInput",
+        "name": "ShareIssueChargesInput",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -63377,7 +63416,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "ShareFeeAndChargesResult",
+        "name": "ShareIssueChargesResult",
         "description": null,
         "fields": [
           {
@@ -63406,45 +63445,6 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "ShareCharge",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "ShareHistory",
-        "description": null,
-        "fields": [
-          {
-            "name": "balance",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "ShareBalance",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "history",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "ShareRegister",
                 "ofType": null
               }
             },
@@ -64330,6 +64330,60 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "ShareReturnChargesInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "other",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "ShareChargeInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ShareReturnChargesResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "other",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ShareCharge",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "UNION",
         "name": "ShareReturnError",
         "description": null,
@@ -64583,7 +64637,7 @@
             "deprecationReason": null
           },
           {
-            "name": "feeAndCharges",
+            "name": "general",
             "description": null,
             "args": [
               {
@@ -64591,7 +64645,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "ShareFeeAndChargesInput",
+                  "name": "ShareSettingsGeneralInput",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -64608,7 +64662,7 @@
             "deprecationReason": null
           },
           {
-            "name": "general",
+            "name": "shareIssueCharges",
             "description": null,
             "args": [
               {
@@ -64616,7 +64670,32 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "ShareSettingsGeneralInput",
+                  "name": "ShareIssueChargesInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShareSettingsQuery",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shareReturnCharges",
+            "description": null,
+            "args": [
+              {
+                "name": "data",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ShareReturnChargesInput",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -65058,24 +65137,36 @@
             "deprecationReason": null
           },
           {
-            "name": "feeAndCharges",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "ShareFeeAndChargesResult",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "general",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
               "name": "ShareSettingsGeneralResult",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shareIssueCharges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShareIssueChargesResult",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shareReturnCharges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ShareReturnChargesResult",
               "ofType": null
             },
             "isDeprecated": false,
