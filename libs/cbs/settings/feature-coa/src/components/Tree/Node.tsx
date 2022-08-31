@@ -1,16 +1,15 @@
 import Tree from './index';
 import NodeWrapper from './NodeWrapper';
+import { CoaTree } from '../../types';
 
 interface INodeProps {
-  code: string;
-  title: string;
-  isExtensible: boolean;
+  data: CoaTree[];
+  current: CoaTree;
 }
 function Node(props: INodeProps) {
-  const { code, title, isExtensible } = props;
   return (
     <NodeWrapper>
-      <Tree code={code} title={title} isExtensible={isExtensible} />
+      <Tree {...props} />
     </NodeWrapper>
   );
 }

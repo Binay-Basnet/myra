@@ -41,6 +41,8 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   variant?: 'simple' | 'report';
   showFooter?: boolean;
   noDataTitle?: string;
+
+  rowOnClick?: (row: TData) => void;
 }
 
 export type TableInstance<T> = Table<T>;

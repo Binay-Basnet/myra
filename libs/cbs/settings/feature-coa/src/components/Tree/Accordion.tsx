@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
-import { Box } from '@chakra-ui/react';
+
+import { Box } from '@coop/shared/ui';
 
 const AccordionContext = createContext<{
   isOpen: boolean;
@@ -56,6 +57,7 @@ function AccordionDetails({ children }: IAccordionDetailsProps) {
   return (
     <Box
       borderLeft="1px"
+      ml="4px"
       maxH={isOpen ? 999 : 0}
       transition="0.5s all ease"
       overflow="hidden"

@@ -69,6 +69,7 @@
       "@coop/cbs/settings/branches": [
         "libs/cbs/settings/feature-branches/src/index.ts"
       ],
+      "@coop/cbs/settings/coa": ["libs/cbs/settings/feature-coa/src/index.ts"],
       "@coop/cbs/settings/deposit": [
         "libs/cbs/settings/feature-deposit/src/index.ts"
       ],

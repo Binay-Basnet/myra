@@ -16,7 +16,12 @@ export const EconomicDetails = (props: economicDetailsProps) => {
   const { setSection } = props;
 
   return (
-    <SectionContainer p="s20">
+    <SectionContainer
+      p="s20"
+      borderBottom="1px solid"
+      borderBottomColor="border.layout"
+      gap="s32"
+    >
       <Text fontSize="r3" fontWeight="600">
         {t['kymCoopUnionEco6EconomicDetails']}
       </Text>

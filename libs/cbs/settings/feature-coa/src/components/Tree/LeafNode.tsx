@@ -1,28 +1,27 @@
 import { MdOutlineCircle } from 'react-icons/md';
-import { HStack, Icon, Text } from '@chakra-ui/react';
+
+import { Box, Icon, Text } from '@coop/shared/ui';
 
 import NodeWrapper from './NodeWrapper';
+import { CoaTree } from '../../types';
 
 interface ITestProps {
-  code: string;
-  title: string;
+  data: CoaTree;
 }
 function LeafNode(props: ITestProps) {
-  const { code, title } = props;
-
   return (
     <NodeWrapper>
-      <HStack ml="-5px" alignItems="center">
-        <Icon pl={1} as={MdOutlineCircle} color="gray.500" />
-        <HStack alignItems="center">
+      <Box display="flex" ml="-3px" alignItems="center">
+        <Icon size="sm" as={MdOutlineCircle} color="gray.500" />
+        <Box display="flex" alignItems="center">
           <Text fontWeight="bold" fontSize="14px">
-            {code}
+            110
           </Text>
           <Text fontWeight="400" fontSize="14px">
-            {title}
+            {props.data.name?.en}
           </Text>
-        </HStack>
-      </HStack>
+        </Box>
+      </Box>
     </NodeWrapper>
   );
 }

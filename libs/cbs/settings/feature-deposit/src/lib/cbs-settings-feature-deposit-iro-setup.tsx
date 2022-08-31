@@ -14,9 +14,7 @@ import { useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface CbsSettingsFeatureDepositIROSetupProps {}
 
-export function CbsSettingsFeatureDepositIROSetup(
-  props: CbsSettingsFeatureDepositIROSetupProps
-) {
+export function CbsSettingsFeatureDepositIROSetup() {
   const { t } = useTranslation();
 
   const methods = useForm({});
