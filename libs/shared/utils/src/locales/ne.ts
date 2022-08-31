@@ -2847,6 +2847,7 @@ const ne: Record<string, string> = {
   // AcountOpen
   accinstallmentAmount: 'Installment Amount',
 
+  editQuickLink: 'Edit Quick Link',
   transactionsAgentListViewDetail: 'View Detail',
 };
 

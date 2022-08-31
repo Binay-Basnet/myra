@@ -94,6 +94,9 @@ export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {
           flexDirection="column"
           id="kymCoopUnionAccIncomeDetails"
           scrollMarginTop={'200px'}
+          borderBottom="1px solid"
+          pb="s20"
+          borderBottomColor="border.layout"
         >
           <Grid
             columnGap={40}
