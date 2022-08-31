@@ -88,6 +88,10 @@ export const KymAssestsAndtarget = ({
           flexDirection="column"
           id="kymCoopUnionAccAssets"
           scrollMarginTop={'200px'}
+          mt="s32"
+          pb="s20"
+          borderBottom="1px solid"
+          borderBottomColor="border.layout"
         >
           <Grid
             columnGap={10}
