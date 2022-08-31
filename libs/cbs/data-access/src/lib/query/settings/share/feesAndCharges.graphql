@@ -1,14 +1,31 @@
-query getSettingsShareFeesAndChargesData {
+query getSettingsShareIssueChargesData {
   settings {
     general {
       share {
-        feeAndCharges {
+        shareIssueCharges {
           shareCertificate {
             minShare
             maxShare
             type
             charge
           }
+          other {
+            name
+            minShare
+            maxShare
+            type
+            charge
+          }
+        }
+      }
+    }
+  }
+}
+query getSettingsShareReturnChargesData {
+  settings {
+    general {
+      share {
+        shareReturnCharges {
           other {
             name
             minShare

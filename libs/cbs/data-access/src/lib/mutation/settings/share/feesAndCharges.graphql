@@ -1,9 +1,27 @@
-mutation setSettingsShareFeeAndCharges($data: ShareFeeAndChargesInput) {
+mutation setSettingsShareIssueCharges($data: ShareIssueChargesInput) {
   settings {
     general {
       share {
         add {
-          feeAndCharges(data: $data) {
+          shareIssueCharges(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setSettingsShareReturnCharges($data: ShareReturnChargesInput) {
+  settings {
+    general {
+      share {
+        add {
+          shareReturnCharges(data: $data) {
             bonus {
               taxPayer
               taxRate

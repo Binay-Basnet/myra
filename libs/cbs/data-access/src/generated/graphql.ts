@@ -201,24 +201,25 @@ export type AccountTypeDetailsUnion =
   | JournalChartsOfAccount;
 
 export type AddCoaAccountInput = {
+  accountClass: Scalars['String'];
+  accountCode: Scalars['String'];
   accountType: CoaTypesOfAccount;
-  allowFreeEntry: Scalars['Boolean'];
-  allowTransaction: Scalars['Boolean'];
-  balanceSheetAccount: Scalars['Boolean'];
   bankAccountNumber?: InputMaybe<Scalars['String']>;
   bankGLCode?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['ID']>;
-  classId: Scalars['ID'];
-  code: Scalars['String'];
   currency: Scalars['String'];
-  ibtAccount: Scalars['Boolean'];
-  inTransitAccount: Scalars['Boolean'];
+  isAllowFreeEntry: Scalars['Boolean'];
+  isAllowTransaction: Scalars['Boolean'];
+  isApplicableToAllBranches: Scalars['Boolean'];
+  isBalanceSheetAccount: Scalars['Boolean'];
+  isIbtAccount: Scalars['Boolean'];
+  isInTransitAccount: Scalars['Boolean'];
+  isLedgerAccount: Scalars['Boolean'];
+  isProfitAndLossAccount: Scalars['Boolean'];
+  isSummationAccount: Scalars['Boolean'];
   journalCode?: InputMaybe<Scalars['String']>;
-  ledgerAccount: Scalars['Boolean'];
   name: Scalars['String'];
   openingBalance: Scalars['Float'];
-  profitAndLossAccount: Scalars['Boolean'];
-  summationAccount: Scalars['Boolean'];
   under?: InputMaybe<Scalars['ID']>;
 };
 
@@ -8177,25 +8178,6 @@ export enum WithdrawWith {
   WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
-export type SetAccountCloseDataMutationVariables = Exact<{
-  data?: InputMaybe<DepositAccountClose>;
-}>;
-
-export type SetAccountCloseDataMutation = {
-  account: {
-    close?: {
-      recordId: string;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
-
 export type SetAccountOpenDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: DepositLoanAccountInput;
@@ -8206,11 +8188,10 @@ export type SetAccountOpenDataMutation = {
     add?: {
       recordId: string;
       error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
+        | { message: string }
+        | { in: string }
+        | { message: string }
+        | {}
         | null;
     } | null;
   };
@@ -8264,6 +8245,29 @@ export type RefreshMutation = {
         | MutationError_ServerError_Fragment
         | MutationError_ValidationError_Fragment
         | null;
+    } | null;
+  };
+};
+
+export type AddNewAccountInCoaMutationVariables = Exact<{
+  data: AddCoaAccountInput;
+}>;
+
+export type AddNewAccountInCoaMutation = {
+  settings: {
+    chartsOfAccount?: {
+      account?: {
+        add: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
     } | null;
   };
 };
@@ -12815,53 +12819,26 @@ export const PaginationFragmentDoc = `
   hasPreviousPage
 }
     `;
-export const SetAccountCloseDataDocument = `
-    mutation setAccountCloseData($data: DepositAccountClose) {
-  account {
-    close(data: $data) {
-      recordId
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useSetAccountCloseDataMutation = <
-  TError = unknown,
-  TContext = unknown
->(
-  options?: UseMutationOptions<
-    SetAccountCloseDataMutation,
-    TError,
-    SetAccountCloseDataMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    SetAccountCloseDataMutation,
-    TError,
-    SetAccountCloseDataMutationVariables,
-    TContext
-  >(
-    ['setAccountCloseData'],
-    useAxios<SetAccountCloseDataMutation, SetAccountCloseDataMutationVariables>(
-      SetAccountCloseDataDocument
-    ),
-    options
-  );
 export const SetAccountOpenDataDocument = `
     mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
   account {
     add(id: $id, data: $data) {
       recordId
       error {
-        ...MutationError
+        ... on AuthorizationError {
+          message
+        }
+        ... on BadRequestError {
+          in: message
+        }
+        ... on ServerError {
+          message
+        }
       }
     }
   }
 }
-    ${MutationErrorFragmentDoc}`;
+    `;
 export const useSetAccountOpenDataMutation = <
   TError = unknown,
   TContext = unknown
@@ -12982,6 +12959,45 @@ export const useRefreshMutation = <TError = unknown, TContext = unknown>(
   useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
     ['refresh'],
     useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+    options
+  );
+export const AddNewAccountInCoaDocument = `
+    mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
+  settings {
+    chartsOfAccount {
+      account {
+        add(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddNewAccountInCoaMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    AddNewAccountInCoaMutation,
+    TError,
+    AddNewAccountInCoaMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    AddNewAccountInCoaMutation,
+    TError,
+    AddNewAccountInCoaMutationVariables,
+    TContext
+  >(
+    ['addNewAccountInCOA'],
+    useAxios<AddNewAccountInCoaMutation, AddNewAccountInCoaMutationVariables>(
+      AddNewAccountInCoaDocument
+    ),
     options
   );
 export const SetCooperativeDataDocument = `
