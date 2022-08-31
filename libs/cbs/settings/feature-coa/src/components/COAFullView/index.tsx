@@ -1,6 +1,10 @@
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 
-import { useGetChartOfAccountsQuery } from '@coop/cbs/data-access';
+import {
+  CoaView,
+  useGetChartOfAccountsQuery,
+  useGetCoaFullViewQuery,
+} from '@coop/cbs/data-access';
 import {
   Accordion,
   AccordionButton,
@@ -10,11 +14,21 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-import Tree from './Tree';
+import Tree from '../Tree';
+import { arrayToTreeCOA } from '../../utils/arrayToTree';
 
-export const FullView = () => {
+export const COAFullView = () => {
   const { data } = useGetChartOfAccountsQuery();
   const memberTypes = data?.settings?.general?.chartsOfAccount?.class?.data;
+
+  const { data: fullView } = useGetCoaFullViewQuery();
+
+  const coaFullView =
+    fullView?.settings?.chartsOfAccount?.fullView.data?.filter(
+      (account) => account?.accountClass === 'EQUITY_AND_LIABILITIES'
+    ) ?? [];
+
+  const coaTree = arrayToTreeCOA(coaFullView as CoaView[]);
 
   return (
     <Box
@@ -44,8 +58,10 @@ export const FullView = () => {
                     <IoChevronDownOutline fontSize="18px" />
                   )}
                 </AccordionButton>
-                <AccordionPanel>
-                  <Tree code="10" title="Share Capital" isExtensible={false} />
+                <AccordionPanel display="flex" flexDir="column" gap="s16">
+                  {coaTree.map((account) => (
+                    <Tree current={account} data={account.children} />
+                  ))}
                 </AccordionPanel>
               </>
             )}

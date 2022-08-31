@@ -11778,6 +11778,25 @@ export type GetCoaListQuery = {
   };
 };
 
+export type GetCoaFullViewQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCoaFullViewQuery = {
+  settings: {
+    chartsOfAccount?: {
+      fullView: {
+        data?: Array<{
+          id: string;
+          name: Record<'local' | 'en' | 'np', string>;
+          under?: string | null;
+          accountType: CoaTypesOfAccount;
+          accountClass: string;
+          accountCode: string;
+        } | null> | null;
+      };
+    } | null;
+  };
+};
+
 export type GetLoanProductListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<LoanProductSearchFilter>;
@@ -18580,6 +18599,40 @@ export const useGetCoaListQuery = <TData = GetCoaListQuery, TError = unknown>(
     ['getCOAList', variables],
     useAxios<GetCoaListQuery, GetCoaListQueryVariables>(
       GetCoaListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCoaFullViewDocument = `
+    query getCoaFullView {
+  settings {
+    chartsOfAccount {
+      fullView {
+        data {
+          id
+          name
+          under
+          accountType
+          accountClass
+          accountCode
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoaFullViewQuery = <
+  TData = GetCoaFullViewQuery,
+  TError = unknown
+>(
+  variables?: GetCoaFullViewQueryVariables,
+  options?: UseQueryOptions<GetCoaFullViewQuery, TError, TData>
+) =>
+  useQuery<GetCoaFullViewQuery, TError, TData>(
+    variables === undefined
+      ? ['getCoaFullView']
+      : ['getCoaFullView', variables],
+    useAxios<GetCoaFullViewQuery, GetCoaFullViewQueryVariables>(
+      GetCoaFullViewDocument
     ).bind(null, variables),
     options
   );
