@@ -307,7 +307,12 @@ export function CbsAccountClose() {
                   <Box>
                     {' '}
                     <Divider />
-                    <Box display={'flex'} flexDirection="column" gap="s4">
+                    <Box
+                      display={'flex'}
+                      flexDirection="column"
+                      gap="s4"
+                      pt="s16"
+                    >
                       <Text fontSize="s3" fontWeight="600">
                         Reason for closing
                       </Text>
@@ -316,6 +321,7 @@ export function CbsAccountClose() {
                           name="reason"
                           options={radioList}
                           direction={'row'}
+                          pb="s16"
                         />
                         {radioOther === AccountCloseReason?.Other && (
                           <Grid templateColumns={'repeat(3,1fr)'}>
@@ -487,7 +493,6 @@ export function CbsAccountClose() {
                 flexDirection={'column'}
                 minH={'100%'}
                 gap="s16"
-                p="s20"
                 w="100%"
                 borderRight={'1px solid'}
                 borderColor="border.layout"

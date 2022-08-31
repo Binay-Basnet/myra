@@ -10,6 +10,7 @@ export * from './lib/base-select/BaseSelect';
 export * from './lib/box/Box';
 export * from './lib/button/Button';
 export * from './lib/chakra-list/ChakraList';
+export * from './lib/chakra-modal/ChakraModal';
 export * from './lib/chakra-tab/ChakraTab';
 export * from './lib/chakra-table/ChakraTable';
 export * from './lib/checkbox/Checkbox';
