@@ -11,7 +11,13 @@ export const useAxios = <TData, TVariables>(
 ) => Promise<TData>) => {
   // it is safe to call React Hooks here.
   // const { url, headers } = React.useContext(FetchParamsContext)
-  const url = process.env['NX_SCHEMA_PATH'] ?? '';
+
+  let url = process.env['NX_SCHEMA_PATH'] || '';
+
+  if (typeof window !== 'undefined') {
+    url = window.localStorage.getItem('url') || process.env['NX_SCHEMA_PATH'];
+  }
+
   // return axios.post<TData>(url,data:{query,variables}).then((res) => res.data);
 
   const auth = useAppSelector((state: RootState) => state?.auth);
