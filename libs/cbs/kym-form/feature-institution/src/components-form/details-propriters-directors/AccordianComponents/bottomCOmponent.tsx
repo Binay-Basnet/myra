@@ -21,7 +21,6 @@ interface IAddDirector {
   directorId: string;
 }
 export const DirectorsWithAffliation = ({
-  removeDirector,
   setKymCurrentSection,
   directorId,
 }: IAddDirector) => {
