@@ -10,6 +10,7 @@ platform:
 
 steps:
   - name: publishing myra-ui-main
+    failure: ignore
     image: plugins/ecr
     environment:
       PLUGIN_STORAGE_DRIVER: overlay2
@@ -41,6 +42,7 @@ steps:
         - push
 
   - name: publishing myra-ui-dev
+    failure: ignore
     image: plugins/ecr
     environment:
       PLUGIN_STORAGE_DRIVER: overlay2
@@ -83,6 +85,7 @@ platform:
 steps:
 
 - name: publishing storybook-dev
+  failure: ignore
   image: plugins/ecr
   environment:
     PLUGIN_STORAGE_DRIVER: overlay2
@@ -124,6 +127,7 @@ platform:
 
 steps:
   - name: publishing myra-ui-admin-main
+    failure: ignore
     image: plugins/ecr
     environment:
       PLUGIN_STORAGE_DRIVER: overlay2
@@ -155,6 +159,7 @@ steps:
         - push
 
   - name: publishing myra-ui-admin-dev
+    failure: ignore
     image: plugins/ecr
     environment:
       PLUGIN_STORAGE_DRIVER: overlay2
@@ -196,6 +201,7 @@ platform:
 
 steps:
   - name: publishing myra-ui-ebanking-main
+    failure: ignore
     image: plugins/ecr
     environment:
       PLUGIN_STORAGE_DRIVER: overlay2
@@ -227,6 +233,7 @@ steps:
         - push
 
   - name: publishing myra-ui-ebanking-dev
+    failure: ignore
     image: plugins/ecr
     environment:
       PLUGIN_STORAGE_DRIVER: overlay2
