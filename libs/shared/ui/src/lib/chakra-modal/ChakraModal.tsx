@@ -15,7 +15,7 @@ import { Button } from '@coop/shared/ui';
 import { Icon, IconButton, TextFields } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
-export interface ModalProps
+export interface ModalChakraProps
   extends Omit<ChakraModalProps, 'isOpen' | 'onClose'> {
   open: boolean;
   onClose: () => void;
@@ -30,7 +30,7 @@ export interface ModalProps
   isDanger?: boolean;
 }
 
-export function ChakraModal(props: ModalProps) {
+export function ChakraModal(props: ModalChakraProps) {
   const {
     open,
     onClose,

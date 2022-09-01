@@ -29,6 +29,7 @@ export interface InputProps extends ChakraInputProps {
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
+      name,
       rightElement,
       leftElement,
       helperText,
@@ -61,6 +62,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
 
           <ChakraInput
+            data-testId={name}
             ref={ref}
             h="100%"
             isInvalid={!!errorText}

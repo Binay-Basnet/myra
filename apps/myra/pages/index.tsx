@@ -185,7 +185,6 @@ const Dashboard = () => {
             )}
           </Droppable>
         </DragDropContext>
-        {/* </Grid> */}
       </Modal>
 
       <Box mt="s32" display="flex" flexDir="column" gap="s16">

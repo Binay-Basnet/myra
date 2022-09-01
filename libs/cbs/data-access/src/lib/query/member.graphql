@@ -347,3 +347,50 @@ query getIndividualKymIdentificationList($id: String!) {
     }
   }
 }
+
+query getMemberDetails($id: ID!) {
+  members {
+    details(id: $id) {
+      data {
+        id
+        name
+        code
+        address {
+          state
+          district
+          localGovernment
+          wardNo
+          locality
+          houseNo
+        }
+        contact
+        share {
+          summary {
+            memberId
+            member {
+              id
+              name
+            }
+            count
+            amount
+          }
+        }
+        profilePicUrl
+        signaturePicUrl
+        profile {
+          ... on KymIndFormStateQuery {
+            data {
+              formData {
+                basicInformation {
+                  gender
+                  dateOfBirth
+                  age
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
