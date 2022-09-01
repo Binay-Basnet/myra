@@ -2,10 +2,12 @@ name: Code Check
 on:
   push:
     branches:
-      - dev
+      # - dev
+      - abc
   pull_request:
     branches:
-      - dev
+      # - dev
+      - abc
 
 jobs:
   test:
