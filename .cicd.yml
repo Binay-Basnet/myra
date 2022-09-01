@@ -87,9 +87,9 @@ steps:
 - name: publishing storybook-dev
   failure: ignore
   image: plugins/ecr
-  environment:
-    PLUGIN_STORAGE_DRIVER: overlay2
-    PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/storybook:dev
+  # environment:
+  #   PLUGIN_STORAGE_DRIVER: overlay2
+  #   PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/storybook:dev
   settings:
     access_key:
       from_secret: aws_access_key
