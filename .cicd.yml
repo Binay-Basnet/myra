@@ -321,23 +321,23 @@ steps:
     secret_key:
       from_secret: aws_secret_key
     nx_schema_path:
-      from_secret: NX_SCHEMA_PATH_DEV
+      from_secret: NX_SCHEMA_PATH
     myra_container_name:
-      from_secret: MYRA_CONTAINER_NAME_DEV
+      from_secret: MYRA_CONTAINER_NAME
     myra_port:
-      from_secret: MYRA_PORT_DEV
+      from_secret: MYRA_PORT
     admin_container_name:
-      from_secret: ADMIN_CONTAINER_NAME_DEV
+      from_secret: ADMIN_CONTAINER_NAME
     admin_port:
-      from_secret: ADMIN_PORT_DEV
+      from_secret: ADMIN_PORT
     ebank_container_name:
-      from_secret: EBANKING_CONTAINER_NAME_DEV
+      from_secret: EBANKING_CONTAINER_NAME
     ebank_port:
-      from_secret: EBANKING_PORT_DEV
+      from_secret: EBANKING_PORT
     storybook_container_name:
-      from_secret: STORYBOOK_CONTAINER_NAME_DEV
+      from_secret: STORYBOOK_CONTAINER_NAME
     storybook_port:
-      from_secret: STORYBOOK_PORT_DEV
+      from_secret: STORYBOOK_PORT
   commands:
   - echo "NX_SCHEMA_PATH=$nx_schema_path" >> .env
   - echo "MYRA_CONTAINER_NAME=$myra_container_name" >> .env
@@ -373,23 +373,23 @@ steps:
     secret_key:
       from_secret: aws_secret_key
     nx_schema_path:
-      from_secret: NX_SCHEMA_PATH
+      from_secret: NX_SCHEMA_PATH_DEV
     myra_container_name:
-      from_secret: MYRA_CONTAINER_NAME
+      from_secret: MYRA_CONTAINER_NAME_DEV
     myra_port:
-      from_secret: MYRA_PORT
+      from_secret: MYRA_PORT_DEV
     admin_container_name:
-      from_secret: ADMIN_CONTAINER_NAME
+      from_secret: ADMIN_CONTAINER_NAME_DEV
     admin_port:
-      from_secret: ADMIN_PORT
+      from_secret: ADMIN_PORT_DEV
     ebank_container_name:
-      from_secret: EBANKING_CONTAINER_NAME
+      from_secret: EBANKING_CONTAINER_NAME_DEV
     ebank_port:
-      from_secret: EBANKING_PORT
+      from_secret: EBANKING_PORT_DEV
     storybook_container_name:
-      from_secret: STORYBOOK_CONTAINER_NAME
+      from_secret: STORYBOOK_CONTAINER_NAME_DEV
     storybook_port:
-      from_secret: STORYBOOK_PORT
+      from_secret: STORYBOOK_PORT_DEV
   commands:
   - echo "NX_SCHEMA_PATH=$nx_schema_path" >> .env
   - echo "MYRA_CONTAINER_NAME=$myra_container_name" >> .env
