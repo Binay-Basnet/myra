@@ -73,6 +73,48 @@ steps:
 
 ---
 kind: pipeline
+name: Build and push myra-ui-storybook
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+
+- name: publishing storybook-dev
+  image: plugins/ecr
+  environment:
+    PLUGIN_STORAGE_DRIVER: overlay2
+    PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/storybook:dev
+  settings:
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+    repo: storybook
+    registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+    region: us-east-1
+    tags: dev
+    dockerfile: Dockerfile.storybook
+    build_args:
+      - NX_SCHEMA_PATH=${NX_SCHEMA_PATH_DEV}
+      - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME_DEV}
+      - MYRA_PORT=${MYRA_PORT_DEV}
+      - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME_DEV}
+      - ADMIN_PORT=${ADMIN_PORT_DEV}
+      - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME_DEV}
+      - EBANKING_PORT=${EBANKING_PORT_DEV}
+      - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME_DEV}
+      - STORYBOOK_PORT=${STORYBOOK_PORT_DEV}
+  when:
+    branch:
+    - dev
+    event:
+    - push
+
+---
+kind: pipeline
 name: Build and push myra-ui-admin
 type: docker
 
@@ -214,50 +256,6 @@ steps:
       - dev
       event:
       - push
-
-
----
-kind: pipeline
-name: Build and push myra-ui-storybook
-type: docker
-
-platform:
-  arch: amd64
-  os: linux
-
-steps:
-
-- name: publishing storybook-dev
-  image: plugins/ecr
-  environment:
-    PLUGIN_STORAGE_DRIVER: overlay2
-    PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/storybook:dev
-  settings:
-    access_key:
-      from_secret: aws_access_key
-    secret_key:
-      from_secret: aws_secret_key
-    repo: storybook
-    registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-    region: us-east-1
-    tags: dev
-    dockerfile: Dockerfile.storybook
-    build_args:
-      - NX_SCHEMA_PATH=${NX_SCHEMA_PATH_DEV}
-      - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME_DEV}
-      - MYRA_PORT=${MYRA_PORT_DEV}
-      - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME_DEV}
-      - ADMIN_PORT=${ADMIN_PORT_DEV}
-      - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME_DEV}
-      - EBANKING_PORT=${EBANKING_PORT_DEV}
-      - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME_DEV}
-      - STORYBOOK_PORT=${STORYBOOK_PORT_DEV}
-  when:
-    branch:
-    - dev
-    event:
-    - push
-
 
 ---
 kind: pipeline
