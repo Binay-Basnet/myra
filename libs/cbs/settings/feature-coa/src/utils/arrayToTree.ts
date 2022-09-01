@@ -10,6 +10,6 @@ export const arrayToTreeCOA = (
     ?.filter((item) => item?.under === parent)
     .map((child) => ({
       ...child,
-      children: arrayToTreeCOA(arr, child?.id),
+      children: arrayToTreeCOA(arr, child?.accountCode),
     })) as CoaTree[];
 };

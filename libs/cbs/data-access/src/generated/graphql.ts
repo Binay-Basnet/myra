@@ -33,16 +33,6 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
-  /**
-   * # For Localization of every data from backend
-   * ```javascript
-   * {
-   *    local: "localized data based on user lang setting",
-   *    en: "data in english",
-   *    np: "data in nepali"
-   * }
-   * ```
-   */
   Localized: Record<'local' | 'en' | 'np', string>;
   Map: Record<string, string>;
   Time: string;
@@ -93,6 +83,24 @@ export type AccountActivityListConnection = {
 export type AccountActivityListEdges = {
   cursor: Scalars['Cursor'];
   node?: Maybe<AccountActivityEntry>;
+};
+
+export type AccountAgent = {
+  agentName?: Maybe<Scalars['String']>;
+  assignedMember?: Maybe<Scalars['Int']>;
+  id: Scalars['ID'];
+  phoneNo?: Maybe<Scalars['String']>;
+};
+
+export type AccountAgentListConnection = {
+  edges?: Maybe<Array<Maybe<AccountAgentListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AccountAgentListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AccountAgent>;
 };
 
 export enum AccountClosePaymentMode {
@@ -292,6 +300,41 @@ export type AffiliatedDirectorDetailsType = {
   yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
+export type AgentDetails = {
+  branch?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  totalMembers?: Maybe<Scalars['Int']>;
+};
+
+export type AgentRecord = {
+  data?: Maybe<AgentDetails>;
+  error?: Maybe<QueryError>;
+};
+
+export type AgentTodayList = {
+  account?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['Amount']>;
+  member?: Maybe<Scalars['String']>;
+};
+
+export type AgentTodayListData = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<Array<Maybe<AgentTodayList>>>;
+};
+
+export type AgentTodayListInput = {
+  account?: InputMaybe<Scalars['String']>;
+  amount?: InputMaybe<Scalars['Amount']>;
+  member?: InputMaybe<Scalars['String']>;
+};
+
+export type AgentTodayListResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  record?: Maybe<Array<Maybe<AgentTodayList>>>;
+};
+
 export type AmountLimit = {
   avgAmount?: InputMaybe<Scalars['Amount']>;
   maxAmount?: InputMaybe<Scalars['Amount']>;
@@ -308,6 +351,35 @@ export enum Arrange {
   Asc = 'ASC',
   Desc = 'DESC',
 }
+
+export type AssignMembersInput = {
+  accountId: Scalars['String'];
+  memberId: Scalars['String'];
+};
+
+export type AssignedMemberList = {
+  account?: Maybe<DepositLoanAccount>;
+  assignedDate?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  member?: Maybe<Member>;
+};
+
+export type AssignedMemberListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AssignedMemberList>;
+};
+
+export type AssignedMemberListFiler = {
+  agentId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type AssignedMembersListConnection = {
+  edges?: Maybe<Array<Maybe<AssignedMemberListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
 
 export type AuthMutation = {
   login?: Maybe<LoginResult>;
@@ -1616,6 +1688,11 @@ export type DepositLoanAccountConnection = {
   edges?: Maybe<Array<DepositLoanAccountEdge>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export type DepositLoanAccountData = {
+  data?: Maybe<DepositLoanAccount>;
+  error?: Maybe<MutationError>;
 };
 
 export type DepositLoanAccountEdge = {
@@ -7769,9 +7846,21 @@ export type TransactionFilter = {
 };
 
 export type TransactionMutation = {
+  addMemberToAgent?: Maybe<DepositLoanAccountData>;
+  agentTodayList?: Maybe<AgentTodayListResult>;
   deposit: DepositResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
+};
+
+export type TransactionMutationAddMemberToAgentArgs = {
+  agentId: Scalars['String'];
+  data?: InputMaybe<AssignMembersInput>;
+};
+
+export type TransactionMutationAgentTodayListArgs = {
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
+  id: Scalars['ID'];
 };
 
 export type TransactionMutationDepositArgs = {
@@ -7787,9 +7876,31 @@ export type TransactionMutationWithdrawArgs = {
 };
 
 export type TransactionQuery = {
+  agentDetail?: Maybe<AgentRecord>;
+  assignedMemberList: AssignedMembersListConnection;
+  listAgent: AccountAgentListConnection;
+  listAgentTask?: Maybe<AgentTodayListData>;
   listDeposit: AccountActivityListConnection;
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
+};
+
+export type TransactionQueryAgentDetailArgs = {
+  id: Scalars['ID'];
+};
+
+export type TransactionQueryAssignedMemberListArgs = {
+  filter?: InputMaybe<AssignedMemberListFiler>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListAgentArgs = {
+  filter?: InputMaybe<AccountTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListAgentTaskArgs = {
+  id: Scalars['ID'];
 };
 
 export type TransactionQueryListDepositArgs = {
@@ -8289,7 +8400,20 @@ export type AddNewAccountInCoaMutationVariables = Exact<{
 
 export type AddNewAccountInCoaMutation = {
   settings: {
-    chartsOfAccount?: { account?: { add: { recordId: string } } | null } | null;
+    chartsOfAccount?: {
+      account?: {
+        add: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
   };
 };
 
@@ -13112,12 +13236,15 @@ export const AddNewAccountInCoaDocument = `
       account {
         add(data: $data) {
           recordId
+          error {
+            ...MutationError
+          }
         }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useAddNewAccountInCoaMutation = <
   TError = unknown,
   TContext = unknown

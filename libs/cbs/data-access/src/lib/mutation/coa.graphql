@@ -4,6 +4,9 @@ mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
       account {
         add(data: $data) {
           recordId
+          error {
+            ...MutationError
+          }
         }
       }
     }
