@@ -1,3 +1,4 @@
+# TODO: add test step before merging to dev
 # Trigger pipeline
 kind: pipeline
 name: Build and Push myra-ui

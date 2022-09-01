@@ -26,9 +26,18 @@ export const COAFullView = () => {
 
   const coaLiabilitiesFullView = useMemo(
     () =>
-      fullView?.settings?.chartsOfAccount?.fullView.data?.filter(
-        (account) => account?.accountClass === 'EQUITY_AND_LIABILITIES'
-      ) ?? [],
+      fullView?.settings?.chartsOfAccount?.fullView.data
+        ?.filter(
+          (account) => account?.accountClass === 'EQUITY_AND_LIABILITIES'
+        )
+        .sort((a, b) =>
+          Number(
+            a?.accountCode?.localeCompare(b?.accountCode as string, undefined, {
+              numeric: true,
+              sensitivity: 'base',
+            })
+          )
+        ) ?? [],
     [isFetching]
   );
 
@@ -39,9 +48,17 @@ export const COAFullView = () => {
 
   const coaAssetsFullView = useMemo(
     () =>
-      fullView?.settings?.chartsOfAccount?.fullView.data?.filter(
-        (account) => account?.accountClass === 'ASSETS'
-      ) ?? [],
+      fullView?.settings?.chartsOfAccount?.fullView.data
+        ?.filter((account) => account?.accountClass === 'ASSETS')
+        .sort((a, b) =>
+          Number(
+            a?.accountCode?.localeCompare(b?.accountCode as string, undefined, {
+              numeric: true,
+              sensitivity: 'base',
+            })
+          )
+        ) ?? [],
+
     [isFetching]
   );
 
@@ -52,9 +69,12 @@ export const COAFullView = () => {
 
   const coaExpenditureFullView = useMemo(
     () =>
-      fullView?.settings?.chartsOfAccount?.fullView.data?.filter(
-        (account) => account?.accountClass === 'EXPENDITURE'
-      ) ?? [],
+      fullView?.settings?.chartsOfAccount?.fullView.data
+        ?.filter((account) => account?.accountClass === 'EXPENDITURE')
+        .sort((a, b) =>
+          String(a?.accountCode) > String(b?.accountCode) ? 1 : -1
+        ) ?? [],
+
     [isFetching]
   );
 
@@ -65,9 +85,12 @@ export const COAFullView = () => {
 
   const coaIncomeFullView = useMemo(
     () =>
-      fullView?.settings?.chartsOfAccount?.fullView.data?.filter(
-        (account) => account?.accountClass === 'EXPENDITURE'
-      ) ?? [],
+      fullView?.settings?.chartsOfAccount?.fullView.data
+        ?.filter((account) => account?.accountClass === 'INCOME')
+        .sort((a, b) =>
+          String(a?.accountCode) > String(b?.accountCode) ? 1 : -1
+        ) ?? [],
+
     [isFetching]
   );
 
