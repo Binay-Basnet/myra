@@ -14,11 +14,11 @@ export interface CheckboxProps extends ChakraCheckboxProps {
 }
 
 export function Checkbox(props: CheckboxProps) {
-  const { children, label, ...rest } = props;
+  const { children, label, name, ...rest } = props;
 
   return (
     <Box display="flex" alignItems="center" gap="s8">
-      <ChakraCheckbox {...rest}>
+      <ChakraCheckbox data-testId={name} {...rest}>
         {label ? (
           <TextFields variant="formInput">{label}</TextFields>
         ) : (

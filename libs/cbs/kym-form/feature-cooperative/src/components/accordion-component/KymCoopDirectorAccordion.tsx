@@ -251,20 +251,6 @@ export const AddDirector = ({
                     __placeholder={t['kymCoopEnterDesignation']}
                   />
                 </InputGroupContainer>
-                <FormInput
-                  id="boardDirectorCoop"
-                  type="text"
-                  name={`nameEn`}
-                  label={t['kymCoopFullName']}
-                  __placeholder={t['kymCoopEnterFullName']}
-                />
-                <FormInput
-                  id="boardDirectorCoop"
-                  type="text"
-                  name={`designation`}
-                  label={t['kymCoopDesignation']}
-                  __placeholder={t['kymCoopEnterDesignation']}
-                />
                 {/* </FormSection> */}
 
                 <FormSection gridLayout={true} header="kymCoopPermanentAddress">

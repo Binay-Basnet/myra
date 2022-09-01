@@ -81,15 +81,18 @@ export const AccountOperationInstitution = (props: IProps) => {
           </FormSection>
         </form>
       </FormProvider>
-      {isCompanyStampCompulsory && (
-        <KYMDocumentField
-          mutationId={id}
-          label={t['kymInsCompanyStamp']}
-          name="companyStamp"
-          setKymCurrentSection={setSection}
-          getKymSection={getKymSection}
-        />
-      )}
+      <Box display="flex" p="s20">
+        {isCompanyStampCompulsory && (
+          <KYMDocumentField
+            size="md"
+            mutationId={id}
+            label={t['kymInsCompanyStamp']}
+            name="companyStamp"
+            setKymCurrentSection={setSection}
+            getKymSection={getKymSection}
+          />
+        )}
+      </Box>
     </>
   );
 };

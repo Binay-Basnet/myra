@@ -8178,6 +8178,25 @@ export enum WithdrawWith {
   WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
+export type SetAccountCloseDataMutationVariables = Exact<{
+  data?: InputMaybe<DepositAccountClose>;
+}>;
+
+export type SetAccountCloseDataMutation = {
+  account: {
+    close?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type SetAccountOpenDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: DepositLoanAccountInput;
@@ -8188,10 +8207,11 @@ export type SetAccountOpenDataMutation = {
     add?: {
       recordId: string;
       error?:
-        | { message: string }
-        | { in: string }
-        | { message: string }
-        | {}
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
         | null;
     } | null;
   };
@@ -12819,6 +12839,41 @@ export const PaginationFragmentDoc = `
   hasPreviousPage
 }
     `;
+export const SetAccountCloseDataDocument = `
+    mutation setAccountCloseData($data: DepositAccountClose) {
+  account {
+    close(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAccountCloseDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetAccountCloseDataMutation,
+    TError,
+    SetAccountCloseDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAccountCloseDataMutation,
+    TError,
+    SetAccountCloseDataMutationVariables,
+    TContext
+  >(
+    ['setAccountCloseData'],
+    useAxios<SetAccountCloseDataMutation, SetAccountCloseDataMutationVariables>(
+      SetAccountCloseDataDocument
+    ),
+    options
+  );
 export const SetAccountOpenDataDocument = `
     mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
   account {
@@ -12959,45 +13014,6 @@ export const useRefreshMutation = <TError = unknown, TContext = unknown>(
   useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
     ['refresh'],
     useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
-    options
-  );
-export const AddNewAccountInCoaDocument = `
-    mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
-  settings {
-    chartsOfAccount {
-      account {
-        add(data: $data) {
-          recordId
-          error {
-            ...MutationError
-          }
-        }
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useAddNewAccountInCoaMutation = <
-  TError = unknown,
-  TContext = unknown
->(
-  options?: UseMutationOptions<
-    AddNewAccountInCoaMutation,
-    TError,
-    AddNewAccountInCoaMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    AddNewAccountInCoaMutation,
-    TError,
-    AddNewAccountInCoaMutationVariables,
-    TContext
-  >(
-    ['addNewAccountInCOA'],
-    useAxios<AddNewAccountInCoaMutation, AddNewAccountInCoaMutationVariables>(
-      AddNewAccountInCoaDocument
-    ),
     options
   );
 export const SetCooperativeDataDocument = `
